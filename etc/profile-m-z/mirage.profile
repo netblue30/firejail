@@ -11,6 +11,7 @@ noblacklist ${HOME}/.config/mirage
 noblacklist ${HOME}/.local/share/mirage
 noblacklist /sbin
 
+include allow-bin-sh.inc
 include allow-python2.inc
 include allow-python3.inc
 
@@ -50,7 +51,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin ldconfig,mirage
+private-bin ldconfig,mirage,sh
 private-cache
 private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,mime.types,nsswitch.conf,pki,pulse,resolv.conf,selinux,ssl,X11,xdg

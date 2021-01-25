@@ -1,0 +1,41 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+
+###################################################################
+# Client filter rejecting local network traffic, with the exception of
+# DNS traffic
+#
+# Usage:
+#     firejail --net=eth0 --netfilter6=/etc/firejail/nolocal6.net firefox
+#
+###################################################################
+
+#allow all loopback traffic
+-A INPUT -i lo -j ACCEPT
+
+# no incoming connections
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+# allow ping etc.
+-A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type destination-unreachable -j ACCEPT
+-A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type time-exceeded -j ACCEPT
+-A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type echo-request -j ACCEPT
+# required for ipv6
+-A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type router-solicitation -j ACCEPT
+-A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type neighbour-solicitation -j ACCEPT
+-A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type router-advertisement -j ACCEPT
+-A INPUT -p ipv6-icmp -m icmp6 --icmpv6-type neighbour-advertisement -j ACCEPT
+
+# accept dns requests going out to a server on the local network
+-A OUTPUT -p udp --dport 53 -j ACCEPT
+
+# drop all local network traffic
+-A OUTPUT -d FC00::/7 -j DROP
+
+# drop multicast traffic
+# required for ipv6
+-A OUTPUT -d ff02::2 -j ACCEPT
+-A OUTPUT -d ff00::/8 -j DROP
+COMMIT

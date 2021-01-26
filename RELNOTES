@@ -1,4 +1,4 @@
-firejail (0.9.65) baseline; urgency=low
+firejail (0.9.64.2) baseline; urgency=low
   * allow --tmpfs inside $HOME for unprivileged users
   * --disable-usertmpfs  compile time option
   * allow AF_BLUETOOTH via --protocol=bluetooth
@@ -10,8 +10,7 @@ firejail (0.9.65) baseline; urgency=low
   * new profiles: straw-viewer, lutris, dolphin-emu, authenticator-rs, servo
   * new profiles: npm, marker, yarn, lsar, unar, agetpkg, mdr, shotwell, qnapi
   * new profiles: guvcview, pkglog, kdiff3, CoyIM
-
- -- netblue30 <netblue30@yahoo.com>  Wed, 21 Oct 2020 09:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Tue, 26 Jan 2020 09:00:00 -0500
 
 firejail (0.9.64) baseline; urgency=low
   * replaced --nowrap option with --wrap in firemon

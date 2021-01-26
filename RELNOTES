@@ -10,7 +10,7 @@ firejail (0.9.64.2) baseline; urgency=low
   * new profiles: straw-viewer, lutris, dolphin-emu, authenticator-rs, servo
   * new profiles: npm, marker, yarn, lsar, unar, agetpkg, mdr, shotwell, qnapi
   * new profiles: guvcview, pkglog, kdiff3, CoyIM
- -- netblue30 <netblue30@yahoo.com>  Tue, 26 Jan 2020 09:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Tue, 26 Jan 2021 09:00:00 -0500
 
 firejail (0.9.64) baseline; urgency=low
   * replaced --nowrap option with --wrap in firemon

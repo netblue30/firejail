@@ -6,7 +6,8 @@ include totem.local
 # Persistent global definitions
 include globals.local
 
-# Allow lua (required for youtube video)
+# Allow lua (blacklisted by disable-interpreters.inc)
+# required for youtube video
 include allow-lua.inc
 
 # Allow python (blacklisted by disable-interpreters.inc)

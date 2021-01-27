@@ -58,11 +58,12 @@ whitelist ${HOME}/.wine-pipelight64
 whitelist ${HOME}/.zotero
 whitelist ${HOME}/dwhelper
 
-# GNOME Shell integration (chrome-gnome-shell) needs dbus and python 3 (blacklisted by disable-interpreters.inc)
+# GNOME Shell integration (chrome-gnome-shell) needs dbus and python
 noblacklist ${HOME}/.local/share/gnome-shell
 whitelist ${HOME}/.local/share/gnome-shell
 ignore dbus-user none
 ignore dbus-system none
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
 # KeePassXC Browser Integration

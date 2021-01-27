@@ -6,11 +6,11 @@ include meld.local
 # Persistent global definitions
 include globals.local
 
-# If you want to use meld as git-mergetool (and maybe some other VCS integrations) you need
+# If you want to use meld as git mergetool (and maybe some other VCS integrations) you need
 # to bypass firejail, you can do this by removing the symlink or calling it by its absolute path
 # Removing the symlink:
 #  sudo rm /usr/local/bin/meld
-# Calling by its absolute path (example for git-mergetool):
+# Calling it by its absolute path (example for git mergetool):
 #  git config --global mergetool.meld.cmd /usr/bin/meld
 
 noblacklist ${HOME}/.config/meld
@@ -22,10 +22,9 @@ noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.subversion
 
 # Allow python (blacklisted by disable-interpreters.inc)
-include allow-python3.inc
-
 # Python 2 is EOL (see #3164). Uncomment the next line (or put it into your meld.local) if you understand the risks but want python 2 support for older meld versions.
 #include allow-python2.inc
+include allow-python3.inc
 
 # Uncomment the next line (or put it into your meld.local) if you don't need to compare files in disable-common.inc.
 #include disable-common.inc

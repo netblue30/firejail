@@ -6,6 +6,7 @@ include aosp.local
 include globals.local
 
 noblacklist ${HOME}/.android
+noblacklist ${HOME}/.bash_history
 noblacklist ${HOME}/.jack-server
 noblacklist ${HOME}/.jack-settings
 noblacklist ${HOME}/.repo_.gitconfig.json

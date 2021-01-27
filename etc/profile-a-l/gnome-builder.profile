@@ -6,8 +6,6 @@ include gnome-builder.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.bash_history
-
 noblacklist ${HOME}/.cache/gnome-builder
 noblacklist ${HOME}/.config/gnome-builder
 noblacklist ${HOME}/.local/share/gnome-builder

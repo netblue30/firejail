@@ -9,7 +9,10 @@ include globals.local
 
 noblacklist ${HOME}/.config/youtube-viewer
 
+# Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
+
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
 

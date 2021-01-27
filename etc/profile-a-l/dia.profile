@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.dia
 noblacklist ${DOCUMENTS}
 
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
 

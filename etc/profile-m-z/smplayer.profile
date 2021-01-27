@@ -10,7 +10,10 @@ noblacklist ${HOME}/.config/smplayer
 noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.mplayer
 
+# Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
+
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
 

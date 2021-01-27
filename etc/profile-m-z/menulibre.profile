@@ -6,6 +6,7 @@ include menulibre.local
 # Persistent global definitions
 include globals.local
 
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
 

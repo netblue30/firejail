@@ -11,6 +11,7 @@ noblacklist ${HOME}/.config/mirage
 noblacklist ${HOME}/.local/share/mirage
 noblacklist /sbin
 
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
 

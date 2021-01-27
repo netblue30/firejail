@@ -18,6 +18,7 @@ noblacklist ${HOME}/.config/git-cola
 # Put your editor,diff viewer config path below and uncomment to load settings
 # noblacklist ${HOME}/
 
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
 

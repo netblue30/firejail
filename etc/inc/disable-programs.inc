@@ -344,6 +344,7 @@ blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage
 blacklist ${HOME}/.config/org.gabmus.gfeeds.json
+blacklist ${HOME}/.config/org.gabmus.gfeeds.saved_articles
 blacklist ${HOME}/.config/org.kde.gwenviewrc
 blacklist ${HOME}/.config/otter
 blacklist ${HOME}/.config/pavucontrol-qt

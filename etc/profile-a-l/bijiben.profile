@@ -57,3 +57,5 @@ dbus-user.own org.gnome.Notes
 dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.freedesktop.Tracker1
 dbus-system none
+
+env WEBKIT_FORCE_SANDBOX=0

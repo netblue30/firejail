@@ -6,6 +6,7 @@ include bsdtar.local
 # Persistent global definitions
 include globals.local
 
-include archiver-common.inc
-
 private-etc alternatives,group,localtime,passwd
+
+# Redirect
+include archiver-common.inc

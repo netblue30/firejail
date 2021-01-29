@@ -9,10 +9,12 @@ include globals.local
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
-include archiver-common.inc
 
 noroot
 
 # without login.defs atool complains and uses UID/GID 1000 by default
 private-etc alternatives,group,login.defs,passwd
 private-tmp
+
+# Redirect
+include archiver-common.inc

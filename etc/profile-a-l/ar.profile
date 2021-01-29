@@ -7,4 +7,5 @@ include ar.local
 # Persistent global definitions
 include globals.local
 
+# Redirect
 include archiver-common.inc

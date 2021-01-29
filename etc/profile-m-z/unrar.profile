@@ -7,8 +7,9 @@ include unrar.local
 # Persistent global definitions
 include globals.local
 
-include archiver-common.inc
-
 private-bin unrar
 private-etc alternatives,group,localtime,passwd
 private-tmp
+
+# Redirect
+include archiver-common.inc

@@ -17,7 +17,6 @@ blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.AndroidStudio*
 blacklist ${HOME}/.Atom
-blacklist ${HOME}/.avidemux6
 blacklist ${HOME}/.CLion*
 blacklist ${HOME}/.FBReader
 blacklist ${HOME}/.FontForge
@@ -51,6 +50,7 @@ blacklist ${HOME}/.asunder_album_title
 blacklist ${HOME}/.atom
 blacklist ${HOME}/.attic
 blacklist ${HOME}/.audacity-data
+blacklist ${HOME}/.avidemux6
 blacklist ${HOME}/.balsa
 blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.bibletime

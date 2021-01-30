@@ -2148,6 +2148,13 @@ installed with \-\-seccomp.32.
 .br
 
 .br
+Note that there is a semantic difference between using plain "seccomp" and
+using for example "seccomp @default". "seccomp" will default to killing the
+process, while "seccomp @default" will default to returning EPERM. This may be
+adjusted using \-\-seccomp-error-action.
+.br
+
+.br
 Firejail will print seccomp violations to the audit log if the kernel was compiled with audit support (CONFIG_AUDIT flag).
 .br
 

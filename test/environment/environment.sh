@@ -70,12 +70,12 @@ echo "TESTING: firejail in firejail - single sandbox (test/environment/firejail-
 ./firejail-in-firejail.exp
 
 which aplay 2>/dev/null
-if [ "$?" -eq 0 ];
+if [ "$?" -eq 0 ] && [ "$(aplay -l | grep -c "List of PLAYBACK")" -gt 0 ];
 then
         echo "TESTING: sound (test/environment/sound.exp)"
         ./sound.exp
 else
-        echo "TESTING SKIP: aplay not found"
+        echo "TESTING SKIP: no aplay or sound card found"
 fi
 
 echo "TESTING: nice (test/environment/nice.exp)"

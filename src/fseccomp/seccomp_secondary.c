@@ -126,7 +126,7 @@ void seccomp_secondary_block(const char *fname) {
 		EXAMINE_SYSCALL,
 #if defined(__x86_64__)
 		// block x32
-		HANDLE_X32_KILL,
+		HANDLE_X32,
 #endif
 		// block personality(2) where domain != PER_LINUX or 0xffffffff (query current personality)
 		// 0: if  personality(2), continue to 1, else goto 7 (allow)

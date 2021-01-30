@@ -120,7 +120,7 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 			// handle X32 ABI
 			BPF_JUMP(BPF_JMP + BPF_JGE + BPF_K, X32_SYSCALL_BIT, 1, 0),
 			BPF_JUMP(BPF_JMP + BPF_JGE + BPF_K, 0, 1, 0),
-			RETURN_ERRNO(EPERM),
+			KILL_OR_RETURN_ERRNO,
 #endif
 
 		// syscall list

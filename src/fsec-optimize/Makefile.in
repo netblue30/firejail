@@ -6,7 +6,7 @@ include ../common.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 fsec-optimize: $(OBJS) ../lib/common.o ../lib/libnetlink.o
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o $(LIBS) $(EXTRA_LDFLAGS)
+	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/errno.o $(LIBS) $(EXTRA_LDFLAGS)
 
 clean:; rm -fr *.o fsec-optimize *.gcov *.gcda *.gcno *.plist
 

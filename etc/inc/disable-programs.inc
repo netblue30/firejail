@@ -50,6 +50,7 @@ blacklist ${HOME}/.asunder_album_title
 blacklist ${HOME}/.atom
 blacklist ${HOME}/.attic
 blacklist ${HOME}/.audacity-data
+blacklist ${HOME}/.avidemux6
 blacklist ${HOME}/.balsa
 blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.bibletime
@@ -158,6 +159,7 @@ blacklist ${HOME}/.config/asunder
 blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/audacious
 blacklist ${HOME}/.config/autokey
+blacklist ${HOME}/.config/avidemux3_qt5rc
 blacklist ${HOME}/.config/aweather
 blacklist ${HOME}/.config/backintime
 blacklist ${HOME}/.config/baloofilerc

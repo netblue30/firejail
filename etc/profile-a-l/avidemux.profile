@@ -18,6 +18,16 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.avidemux6
+mkdir ${HOME}/.config/avidemux3_qt5rc
+whitelist ${HOME}/.avidemux6
+whitelist ${HOME}/.config/avidemux3_qt5rc
+whitelist ${VIDEOS}
+include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
+
 apparmor
 caps.drop all
 net none
@@ -33,16 +43,6 @@ seccomp
 seccomp.block-secondary
 shell none
 tracelog
-
-mkdir ${HOME}/.avidemux6
-mkdir ${HOME}/.config/avidemux3_qt5rc
-whitelist ${HOME}/.avidemux6
-whitelist ${HOME}/.config/avidemux3_qt5rc
-whitelist ${VIDEOS}
-include whitelist-common.inc
-include whitelist-runuser-common.inc
-include whitelist-usr-share-common.inc
-include whitelist-var-common.inc
 
 private-bin avidemux3_cli,avidemux3_jobs_qt5,avidemux3_qt5
 private-cache

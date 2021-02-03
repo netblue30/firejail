@@ -18,7 +18,7 @@ echo "TESTING: build (test/utils/build.exp)"
 rm -f ~/firejail-test-file-7699
 rm -f firejail-test-file-4388
 
-if [ $(readlink /proc/self) -lt 100 ]; then
+if [ $(faudit | grep -c "is running in a PID namespace.") -gt 0 ]; then
 	echo "TESTING SKIP: already running in pid namespace (test/utils/audit.exp)"
 else
 	echo "TESTING: audit (test/utils/audit.exp)"

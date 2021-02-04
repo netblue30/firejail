@@ -198,3 +198,5 @@ Stats:
 ```
 
 ### New profiles:
+
+vmware-view

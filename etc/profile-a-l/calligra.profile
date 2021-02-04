@@ -27,6 +27,7 @@ nou2f
 novideo
 protocol unix
 seccomp
+seccomp.block-secondary
 shell none
 
 private-bin calligra,calligraauthor,calligraconverter,calligraflow,calligragemini,calligraplan,calligraplanwork,calligrasheets,calligrastage,calligrawords,dbus-launch,kbuildsycoca4,kdeinit4

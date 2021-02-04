@@ -49,7 +49,7 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,dconf,drirc,fonts,gai.conf,gconf,glvnd,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,login.defs,machine-id,magic,magic.mgc,mime.types,nsswitch.conf,nvidia,pango,passwd,pki,protocols,proxychains.conf,pulse,resolv.conf,rpc,services,ssl,terminfo,vmware,X11,xdg,vmware-tools,vmware-vix
+private-etc alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,dconf,drirc,fonts,gai.conf,gconf,glvnd,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,login.defs,machine-id,magic,magic.mgc,mime.types,nsswitch.conf,nvidia,pango,passwd,pki,protocols,proxychains.conf,pulse,resolv.conf,rpc,services,ssl,terminfo,vmware,vmware-tools,vmware-vix,X11,xdg
 # Logs are "stored" in /tmp, comment (or add 'ignore private-tmp' to your vmware-view.local)
 # if you need them without joining the sandbox.
 private-tmp

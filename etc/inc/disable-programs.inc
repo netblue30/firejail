@@ -607,6 +607,7 @@ blacklist ${HOME}/.local/share/bibletime
 blacklist ${HOME}/.local/share/bijiben
 blacklist ${HOME}/.local/share/bohemiainteractive
 blacklist ${HOME}/.local/share/caja-python
+blacklist ${HOME}/.local/share/calligragemini
 blacklist ${HOME}/.local/share/cantata
 blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/clipit

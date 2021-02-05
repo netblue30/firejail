@@ -12,7 +12,7 @@
 #
 
 AC_PREREQ([2.68])
-AC_INIT(firejail, 0.9.64.2, netblue30@protonmail.com, , https://firejail.wordpress.com)
+AC_INIT(firejail, 0.9.64.4, netblue30@protonmail.com, , https://firejail.wordpress.com)
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 
 AC_CONFIG_MACRO_DIR([m4])
@@ -66,13 +66,16 @@ AS_IF([test "x$enable_dbusproxy" != "xno"], [
 	AC_SUBST(HAVE_DBUSPROXY)
 ])
 
+# overlayfs features temporarely disabled pending fixes
 HAVE_OVERLAYFS=""
-AC_ARG_ENABLE([overlayfs],
-    AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
-AS_IF([test "x$enable_overlayfs" != "xno"], [
-	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
-	AC_SUBST(HAVE_OVERLAYFS)
-])
+AC_SUBST(HAVE_OVERLAYFS)
+#
+#AC_ARG_ENABLE([overlayfs],
+#    AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
+#AS_IF([test "x$enable_overlayfs" != "xno"], [
+#	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
+#	AC_SUBST(HAVE_OVERLAYFS)
+#])
 
 HAVE_USERTMPS=""
 AC_ARG_ENABLE([usertmpfs],

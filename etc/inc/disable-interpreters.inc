@@ -6,8 +6,8 @@ include disable-interpreters.local
 blacklist ${PATH}/gjs
 blacklist ${PATH}/gjs-console
 blacklist /usr/lib/gjs
-blacklist /usr/lib64/gjs
 blacklist /usr/lib/libgjs*
+blacklist /usr/lib64/gjs
 blacklist /usr/lib64/libgjs*
 
 # Lua
@@ -30,8 +30,8 @@ blacklist /usr/include/node
 blacklist ${HOME}/.nvm
 
 # Perl
-blacklist ${PATH}/cpan*
 blacklist ${PATH}/core_perl
+blacklist ${PATH}/cpan*
 blacklist ${PATH}/perl
 blacklist ${PATH}/site_perl
 blacklist ${PATH}/vendor_perl

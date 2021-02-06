@@ -12,6 +12,8 @@ Linux  namespace support. It supports sandboxing specific users upon login.
 Download: https://sourceforge.net/projects/firejail/files/
 Build and install: ./configure && make && sudo make install
 Documentation and support: https://firejail.wordpress.com/
+Video Channel: https://www.youtube.com/channel/UCi5u-syndQYyOeV4NZ04hNA
+Backup Video Channel: https://www.bitchute.com/profile/JSBsA1aoQVfW/
 Development: https://github.com/netblue30/firejail
 License: GPL v2
 

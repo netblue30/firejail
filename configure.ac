@@ -66,13 +66,16 @@ AS_IF([test "x$enable_dbusproxy" != "xno"], [
 	AC_SUBST(HAVE_DBUSPROXY)
 ])
 
+# overlayfs features temporarely disabled pending fixes
 HAVE_OVERLAYFS=""
-AC_ARG_ENABLE([overlayfs],
-    AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
-AS_IF([test "x$enable_overlayfs" != "xno"], [
-	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
-	AC_SUBST(HAVE_OVERLAYFS)
-])
+AC_SUBST(HAVE_OVERLAYFS)
+#
+#AC_ARG_ENABLE([overlayfs],
+#    AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
+#AS_IF([test "x$enable_overlayfs" != "xno"], [
+#	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
+#	AC_SUBST(HAVE_OVERLAYFS)
+#])
 
 HAVE_USERTMPS=""
 AC_ARG_ENABLE([usertmpfs],

@@ -711,7 +711,6 @@ enable_option_checking
 enable_analyzer
 enable_apparmor
 enable_dbusproxy
-enable_overlayfs
 enable_usertmpfs
 enable_man
 enable_firetunnel
@@ -1367,7 +1366,6 @@ Optional Features:
   --enable-analyzer       enable GCC 10 static analyzer
   --enable-apparmor       enable apparmor
   --disable-dbusproxy     disable dbus proxy
-  --disable-overlayfs     disable overlayfs
   --disable-usertmpfs     disable tmpfs as regular user
   --disable-man           disable man pages
   --disable-firetunnel    disable firetunnel
@@ -3530,18 +3528,16 @@ if test "x$enable_dbusproxy" != "xno"; then :
 
 fi
 
+# overlayfs features temporarely disabled pending fixes
 HAVE_OVERLAYFS=""
-# Check whether --enable-overlayfs was given.
-if test "${enable_overlayfs+set}" = set; then :
-  enableval=$enable_overlayfs;
-fi
 
-if test "x$enable_overlayfs" != "xno"; then :
-
-	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
-
-
-fi
+#
+#AC_ARG_ENABLE([overlayfs],
+#    AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
+#AS_IF([test "x$enable_overlayfs" != "xno"], [
+#	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
+#	AC_SUBST(HAVE_OVERLAYFS)
+#])
 
 HAVE_USERTMPS=""
 # Check whether --enable-usertmpfs was given.

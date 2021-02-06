@@ -24,19 +24,19 @@ implemented directly in Linux kernel and available on any Linux computer.
 <td>
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=7RMz7tePA98
 " target="_blank"><img src="http://img.youtube.com/vi/7RMz7tePA98/0.jpg"
-alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Firejail Intro</a>
+alt="Firejail Introduction" width="240" height="180" border="10" /><br/>Firejail Intro</a>
 </td>
 
 <td>
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=J1ZsXrpAgBU
 " target="_blank"><img src="http://img.youtube.com/vi/J1ZsXrpAgBU/0.jpg"
-alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Firejail Demo</a>
+alt="Firejail Demo" width="240" height="180" border="10" /><br/>Firejail Demo</a>
 </td>
 
 <td>
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=EyEz65RYfw4
 " target="_blank"><img src="http://img.youtube.com/vi/EyEz65RYfw4/0.jpg"
-alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Debian Install</a>
+alt="Debian Install" width="240" height="180" border="10" /><br/>Debian Install</a>
 </td>
 
 
@@ -44,13 +44,19 @@ alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Debian In
 <td>
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=Uy2ZTHc4s0w
 " target="_blank"><img src="http://img.youtube.com/vi/Uy2ZTHc4s0w/0.jpg"
-alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Arch Linux Install</a>
+alt="Arch Linux Install" width="240" height="180" border="10" /><br/>Arch Linux Install</a>
 
 </td>
 <td>
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=xuMxRx0zSfQ
 " target="_blank"><img src="http://img.youtube.com/vi/xuMxRx0zSfQ/0.jpg"
-alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Disable Network Access</a>
+alt="Disable Network Access" width="240" height="180" border="10" /><br/>Disable Network Access</a>
+
+</td>
+<td>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=N-Mso2bSr3o
+" target="_blank"><img src="http://img.youtube.com/vi/N-Mso2bSr3o/0.jpg"
+alt="Firejail Security Deep Dive" width="240" height="180" border="10" /><br/>Firejail Security Deep Dive</a>
 
 </td>
 </tr></table>
@@ -69,6 +75,9 @@ Wiki: https://github.com/netblue30/firejail/wiki
 
 GitLab-CI status: https://gitlab.com/Firejail/firejail_ci/pipelines/
 
+Video Channel: https://www.youtube.com/channel/UCi5u-syndQYyOeV4NZ04hNA
+
+Backup Video Channel: https://www.bitchute.com/profile/JSBsA1aoQVfW/
 
 ## Security vulnerabilities
 

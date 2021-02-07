@@ -1,3 +1,7 @@
+firejail (0.9.64.4) baseline; urgency=low
+  * disabled overlayfs, pending multiple fixes
+ -- netblue30 <netblue30@yahoo.com>  Sun, 7 Feb 2021 09:00:00 -0500
+
 firejail (0.9.64.2) baseline; urgency=low
   * allow --tmpfs inside $HOME for unprivileged users
   * --disable-usertmpfs  compile time option

@@ -35,7 +35,7 @@ mkdir ${HOME}/.cache/winetricks
 mkdir ${HOME}/.config/lutris
 mkdir ${HOME}/.local/share/lutris
 # mkdir ${HOME}/.wine
-whitelist ${HOME}/Downloads
+whitelist ${DOWNLOADS}
 whitelist ${HOME}/Games
 whitelist ${HOME}/.cache/lutris
 whitelist ${HOME}/.cache/winetricks

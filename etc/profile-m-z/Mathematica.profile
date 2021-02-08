@@ -16,10 +16,10 @@ include disable-programs.inc
 
 mkdir ${HOME}/.Mathematica
 mkdir ${HOME}/.Wolfram Research
-mkdir ${HOME}/Documents/Wolfram Mathematica
+mkdir ${DOCUMENTS}/Wolfram Mathematica
 whitelist ${HOME}/.Mathematica
 whitelist ${HOME}/.Wolfram Research
-whitelist ${HOME}/Documents/Wolfram Mathematica
+whitelist ${DOCUMENTS}/Wolfram Mathematica
 include whitelist-common.inc
 
 caps.drop all

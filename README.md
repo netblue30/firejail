@@ -86,11 +86,14 @@ We take security bugs very seriously. If you believe you have found one, please 
 `````
 Security Adivsory - Feb 8, 2021
 
-Summary: A vulnerability resulting in root privilege escalation was discovered in Firejail's OverlayFS code,
+Summary: A vulnerability resulting in root privilege escalation was discovered in
+Firejail's OverlayFS code,
 
-Versions affected: Firejail software versions starting with 0.9.30. Long Term Support (LTS) Firejail branch is not affected by this bug.
+Versions affected: Firejail software versions starting with 0.9.30.
+Long Term Support (LTS) Firejail branch is not affected by this bug.
 
-Workaround: Disable overlayfs feature at runtime. In a text editor open /etc/firejail/firejail.config file, and set "overlayfs" entry to "no".
+Workaround: Disable overlayfs feature at runtime.
+In a text editor open /etc/firejail/firejail.config file, and set "overlayfs" entry to "no".
 
       $ grep overlayfs /etc/firejail/firejail.config
       # Enable or disable overlayfs features, default enabled.

@@ -5,8 +5,8 @@ include calligragemini.local
 # Persistent global definitions
 # added by included profile
 #include globals.local
-      
-noblacklist ${HOME}/.local/share/calligragemini      
-               
-# Redirect     
+
+noblacklist ${HOME}/.local/share/calligragemini
+
+# Redirect
 include calligra.profile

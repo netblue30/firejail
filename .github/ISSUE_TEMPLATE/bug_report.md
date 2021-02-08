@@ -25,7 +25,7 @@ Steps to reproduce the behavior:
 
 **Environment**
  - Linux distribution and version (ie output of `lsb_release -a`, `screenfetch` or `cat /etc/os-release`)
- - Firejail version (output of `firejail --version`) exclusive or used git commit (`git rev-parse HEAD`) 
+ - Firejail version (output of `firejail --version`) exclusive or used git commit (`git rev-parse HEAD`)
 
 **Additional context**
 Other context about the problem like related errors to understand the problem.

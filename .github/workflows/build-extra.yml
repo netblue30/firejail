@@ -1,6 +1,6 @@
 name: Build-extra CI
 
-on:   
+on:
   push:
     branches: [ master ]
     paths-ignore:
@@ -19,7 +19,7 @@ on:
       - RELNOTES
       - SECURITY.md
       - 'etc/**'
-        
+
 jobs:
   build-clang:
     if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}

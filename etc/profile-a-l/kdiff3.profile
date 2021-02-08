@@ -19,7 +19,7 @@ include disable-passwdmgr.inc
 #include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
-           
+
 include whitelist-runuser-common.inc
 # Uncomment the next lines (or put it into your kdiff3.local) if you don't need to compare files in /usr/share.
 #include whitelist-usr-share-common.inc

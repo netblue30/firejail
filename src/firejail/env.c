@@ -274,7 +274,8 @@ static const char * const env_whitelist[] = {
 	"LANG",
 	"LANGUAGE",
 	"LC_MESSAGES",
-	"PATH"
+	"PATH",
+	"DISPLAY"	// required by X11
 };
 
 static const char * const env_whitelist_sbox[] = {

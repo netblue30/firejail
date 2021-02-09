@@ -215,10 +215,8 @@ int checkcfg(int val) {
 			}
 
 			// file copy limit
-			else if (strncmp(ptr, "file-copy-limit ", 16) == 0) {
-				if (setenv("FIREJAIL_FILE_COPY_LIMIT", ptr + 16, 1) == -1)
-					errExit("setenv");
-			}
+			else if (strncmp(ptr, "file-copy-limit ", 16) == 0)
+				env_store_name_val("FIREJAIL_FILE_COPY_LIMIT", ptr + 16, SETENV);
 
 			// timeout for join option
 			else if (strncmp(ptr, "join-timeout ", 13) == 0)

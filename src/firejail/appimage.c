@@ -131,14 +131,16 @@ void appimage_set(const char *appimage) {
 		errExit("Failed to obtain absolute path");
 
 	// set environment
-	if (setenv("APPIMAGE", abspath, 1) < 0)
-		errExit("setenv");
-	if (mntdir && setenv("APPDIR", mntdir, 1) < 0)
-		errExit("setenv");
-	if (size != 0 && setenv("ARGV0", appimage, 1) < 0)
-		errExit("setenv");
-	if (cfg.cwd && setenv("OWD", cfg.cwd, 1) < 0)
-		errExit("setenv");
+	env_store_name_val("APPIMAGE", abspath, SETENV);
+
+	if (mntdir)
+		env_store_name_val("APPDIR", mntdir, SETENV);
+
+	if (size != 0)
+		env_store_name_val("ARGV0", appimage, SETENV);
+
+	if (cfg.cwd)
+		env_store_name_val("OWD", cfg.cwd, SETENV);
 
 	// build new command line
 	if (asprintf(&cfg.command_line, "%s/AppRun", mntdir) == -1)

@@ -18,10 +18,13 @@ whitelist ${HOME}/.claws-mail
 
 whitelist /usr/share/doc/claws-mail
 
+# private-bin claws-mail,curl,gpg,gpg2,gpg-agent,gpgsm,gpgme-config,pinentry,pinentry-gtk-2
+
+dbus-user filter
+dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.gnome.keyring.SystemPrompter
 # if you use the notification plugin you need to uncomment the below (or put them in your claws-mail.local)
-#ignore dbus-user none
-#dbus-user filter
-#dbus-user.talk org.freedesktop.Notifications
+# dbus-user.talk org.freedesktop.Notifications
 
 # Redirect
 include email-common.profile

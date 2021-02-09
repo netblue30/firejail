@@ -324,11 +324,13 @@ blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mps-youtube
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus
+blacklist ${HOME}/.config/mutt
 blacklist ${HOME}/.config/mutter
 blacklist ${HOME}/.config/mypaint
 blacklist ${HOME}/.config/nano
 blacklist ${HOME}/.config/nautilus
 blacklist ${HOME}/.config/nemo
+blacklist ${HOME}/.config/neomutt
 blacklist ${HOME}/.config/netsurf
 blacklist ${HOME}/.config/newsbeuter
 blacklist ${HOME}/.config/newsflash
@@ -918,6 +920,7 @@ blacklist ${HOME}/.cache/evolution
 blacklist ${HOME}/.cache/falkon
 blacklist ${HOME}/.cache/feedreader
 blacklist ${HOME}/.cache/flaska.net/trojita
+blacklist ${HOME}/.cache/folks
 blacklist ${HOME}/.cache/font-manager
 blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/fractal

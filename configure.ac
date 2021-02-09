@@ -12,7 +12,7 @@
 #
 
 AC_PREREQ([2.68])
-AC_INIT(firejail, 0.9.64.4, netblue30@protonmail.com, , https://firejail.wordpress.com)
+AC_INIT(firejail, 0.9.64.5, netblue30@protonmail.com, , https://firejail.wordpress.com)
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 
 AC_CONFIG_MACRO_DIR([m4])
@@ -77,7 +77,7 @@ AC_SUBST(HAVE_OVERLAYFS)
 #	AC_SUBST(HAVE_OVERLAYFS)
 #])
 
-HAVE_USERTMPS=""
+HAVE_USERTMPFS=""
 AC_ARG_ENABLE([usertmpfs],
     AS_HELP_STRING([--disable-usertmpfs], [disable tmpfs as regular user]))
 AS_IF([test "x$enable_usertmpfs" != "xno"], [

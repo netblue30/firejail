@@ -3539,7 +3539,7 @@ HAVE_OVERLAYFS=""
 #	AC_SUBST(HAVE_OVERLAYFS)
 #])
 
-HAVE_USERTMPS=""
+HAVE_USERTMPFS=""
 # Check whether --enable-usertmpfs was given.
 if test "${enable_usertmpfs+set}" = set; then :
   enableval=$enable_usertmpfs;

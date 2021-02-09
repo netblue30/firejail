@@ -31,9 +31,9 @@ include disable-shell.inc
 include disable-xdg.inc
 
 # You can enable whitelisting for keepassxc by uncommenting (or adding to you keepassxc.local) the following lines.
-# If you do so, you MUST store your database under ${DOCUMENTS}/KeePassXC/foo.kdbx
-#mkdir ${DOCUMENTS}/KeePassXC
-#whitelist ${DOCUMENTS}/KeePassXC
+# If you do so, you MUST store your database under ${HOME}/Documents/KeePassXC/foo.kdbx
+#mkdir ${HOME}/Documents/KeePassXC
+#whitelist ${HOME}/Documents/KeePassXC
 # Needed for KeePassXC-Browser
 #mkfile ${HOME}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json

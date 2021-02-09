@@ -77,7 +77,7 @@ AC_SUBST(HAVE_OVERLAYFS)
 #	AC_SUBST(HAVE_OVERLAYFS)
 #])
 
-HAVE_USERTMPS=""
+HAVE_USERTMPFS=""
 AC_ARG_ENABLE([usertmpfs],
     AS_HELP_STRING([--disable-usertmpfs], [disable tmpfs as regular user]))
 AS_IF([test "x$enable_usertmpfs" != "xno"], [

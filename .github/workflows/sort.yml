@@ -12,7 +12,6 @@ on:
 
 jobs:
   profile-sort:
-    if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2

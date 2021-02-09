@@ -22,7 +22,6 @@ on:
 
 jobs:
   build-clang:
-    if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
@@ -31,7 +30,6 @@ jobs:
     - name: make
       run: make
   scan-build:
-    if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
@@ -42,7 +40,6 @@ jobs:
     - name: scan-build
       run: NO_EXTRA_CFLAGS="yes" scan-build-10 --status-bugs make
   cppcheck:
-    if: ${{ ! contains(github.event.commits[0].message, '[skip ci]') }}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2

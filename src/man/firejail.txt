@@ -693,6 +693,12 @@ Example:
 $ firejail \-\-net=eth0 \-\-defaultgw=10.10.20.1 firefox
 #endif
 .TP
+\fB\-\-deterministic-exit-code
+Always exit firejail with the first child's exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
+.br
+
+.br
+.TP
 \fB\-\-disable-mnt
 Blacklist /mnt, /media, /run/mount and /run/media access.
 .br
@@ -701,10 +707,6 @@ Blacklist /mnt, /media, /run/mount and /run/media access.
 Example:
 .br
 $ firejail \-\-disable-mnt firefox
-
-.TP
-\fB\-\-deterministic-exit-code
-Always exit firejail with the first child's exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
 
 .TP
 \fB\-\-dns=address

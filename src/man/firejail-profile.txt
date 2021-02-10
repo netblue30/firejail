@@ -266,7 +266,7 @@ Mount new /root and /home/user directories in temporary
 filesystems. All modifications are discarded when the sandbox is
 closed.
 .TP
-\fBprivate directory
+\fBprivate=directory
 Use directory as user home.
 .TP
 \fBprivate-bin file,file

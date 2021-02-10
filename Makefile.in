@@ -44,7 +44,6 @@ mydirs: $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
 
-
 $(MANPAGES): src/man
 	./mkman.sh $(VERSION) src/man/$(basename $@).man $@
 
@@ -231,7 +230,6 @@ cppcheck: clean
 
 scan-build: clean
 	NO_EXTRA_CFLAGS="yes" scan-build make
-
 
 #
 # make test

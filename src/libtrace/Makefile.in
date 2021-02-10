@@ -19,7 +19,6 @@ all: libtrace.so
 libtrace.so: $(OBJS)
 	$(CC) $(LDFLAGS) -shared -fPIC -z relro -o $@ $(OBJS) -ldl
 
-
 clean:; rm -fr $(OBJS) libtrace.so *.plist
 
 distclean: clean

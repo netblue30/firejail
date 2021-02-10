@@ -47,6 +47,7 @@
 { "exit", 60 },
 { "exit_group", 231 },
 { "faccessat", 269 },
+{ "faccessat2", 439 },
 { "fadvise64", 221 },
 { "fallocate", 285 },
 { "fanotify_init", 300 },

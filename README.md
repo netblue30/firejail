@@ -237,4 +237,4 @@ Stats:
 
 ### New profiles:
 
-vmware-view
+vmware-view, display-im6.q16

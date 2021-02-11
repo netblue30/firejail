@@ -2,7 +2,7 @@ all: firemon
 
 include ../common.mk
 
-%.o : %.c $(H_FILE_LIST)
+%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/pid.h
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 firemon: $(OBJS) ../lib/common.o ../lib/pid.o

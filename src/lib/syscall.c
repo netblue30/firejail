@@ -359,6 +359,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_faccessat
 	  "faccessat,"
 #endif
+#ifdef SYS_faccessat2
+	  "faccessat2,"
+#endif
 #ifdef SYS_fallocate
 	  "fallocate,"
 #endif

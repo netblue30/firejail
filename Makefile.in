@@ -22,6 +22,7 @@ MAN_SRC = src/man
 endif
 
 COMPLETIONDIRS = src/zsh_completion src/bash_completion
+
 all: all_items mydirs $(MAN_TARGET) filters
 APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailtest/jailtest
 SBOX_APPS = src/fbuilder/fbuilder src/ftee/ftee

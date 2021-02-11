@@ -1004,7 +1004,7 @@ int main(int argc, char **argv, char **envp) {
 
 	// Stash environment variables
 	for (i = 0, ptr = envp; ptr && *ptr && i < MAX_ENVS; i++, ptr++)
-		env_store(*ptr, SETENV_ALLOW_EMPTY);
+		env_store(*ptr, SETENV);
 
 	// sanity check for environment variables
 	if (i >= MAX_ENVS) {

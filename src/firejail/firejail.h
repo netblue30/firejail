@@ -661,7 +661,6 @@ void run_no_sandbox(int argc, char **argv) __attribute__((noreturn));
 // env.c
 typedef enum {
 	SETENV = 0,
-	SETENV_ALLOW_EMPTY,
 	RMENV
 } ENV_OP;
 

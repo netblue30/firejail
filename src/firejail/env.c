@@ -166,12 +166,10 @@ void env_store(const char *str, ENV_OP op) {
 	if (*str == '\0')
 		goto errexit;
 	char *ptr = strchr(str, '=');
-	if (op == SETENV || op == SETENV_ALLOW_EMPTY) {
+	if (op == SETENV) {
 		if (!ptr)
 			goto errexit;
 		ptr++;
-		if (*ptr == '\0' && op != SETENV_ALLOW_EMPTY)
-			goto errexit;
 		op = SETENV;
 	}
 
@@ -206,11 +204,6 @@ void env_store_name_val(const char *name, const char *val, ENV_OP op) {
 	// some basic checking
 	if (*name == '\0')
 		goto errexit;
-	if (*val == '\0' && op != SETENV_ALLOW_EMPTY)
-		goto errexit;
-
-	if (op == SETENV_ALLOW_EMPTY)
-		op = SETENV;
 
 	// build list entry
 	Env *env = calloc(1, sizeof(Env));

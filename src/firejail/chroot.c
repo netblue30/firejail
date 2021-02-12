@@ -176,6 +176,18 @@ void fs_chroot(const char *rootdir) {
 	if (env_get("FIREJAIL_X11") || env_get("FIREJAIL_CHROOT_X11")) {
 		if (arg_debug)
 			printf("Mounting /tmp/.X11-unix on chroot /tmp/.X11-unix\n");
+		struct stat s1, s2;
+		if (stat("/tmp", &s1) || lstat("/tmp/.X11-unix", &s2))
+			errExit("mounting /tmp/.X11-unix");
+		if ((s1.st_mode & S_ISVTX) != S_ISVTX) {
+			fprintf(stderr, "Error: sticky bit not set on /tmp directory\n");
+			exit(1);
+		}
+		if (s2.st_uid != 0) {
+			fprintf(stderr, "Error: /tmp/.X11-unix not owned by root user\n");
+			exit(1);
+		}
+
 		check_subdir(parentfd, "tmp/.X11-unix", 0);
 		fd = openat(parentfd, "tmp/.X11-unix", O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		if (fd == -1)

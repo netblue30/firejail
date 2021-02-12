@@ -489,13 +489,13 @@ void fs_tmpfs(const char *dir, unsigned check_owner) {
 
 // remount path, preserving other mount flags; requires a resolved path
 static void fs_remount_simple(const char *path, OPERATION op) {
-	struct stat s1, s2;
 	assert(path);
 
 	// open path without following symbolic links
 	int fd1 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd1 == -1)
 		goto out;
+	struct stat s1;
 	if (fstat(fd1, &s1) == -1) {
 		// fstat can fail with EACCES if path is a FUSE mount,
 		// mounted without 'allow_root' or 'allow_other'
@@ -561,6 +561,7 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 	int fd2 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd2 == -1)
 		errExit("open");
+	struct stat s2;
 	if (fstat(fd2, &s2) == -1)
 		errExit("fstat");
 	// device and inode number should be the same

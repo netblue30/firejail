@@ -23,6 +23,7 @@ endif
 
 COMPLETIONDIRS = src/zsh_completion src/bash_completion
 
+.PHONY: all
 all: all_items mydirs $(MAN_TARGET) filters
 APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailtest/jailtest
 SBOX_APPS = src/fbuilder/fbuilder src/ftee/ftee
@@ -72,6 +73,7 @@ seccomp.mdwx: src/fseccomp/fseccomp
 seccomp.mdwx.32: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp memory-deny-write-execute.32 seccomp.mdwx.32
 
+.PHONY: clean
 clean:
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
 		$(MAKE) -C $$dir clean; \
@@ -91,6 +93,7 @@ clean:
 	rm -f test/sysutils/firejail_t*
 	cd test/compile; ./compile.sh --clean; cd ../..
 
+.PHONY: distclean
 distclean: clean
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
 		$(MAKE) -C $$dir distclean; \

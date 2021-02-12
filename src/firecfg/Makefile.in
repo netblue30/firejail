@@ -1,3 +1,4 @@
+.PHONY: all
 all: firecfg
 
 include ../common.mk
@@ -8,7 +9,9 @@ include ../common.mk
 firecfg: $(OBJS) ../lib/common.o ../lib/firejail_user.o
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/firejail_user.o $(LIBS) $(EXTRA_LDFLAGS)
 
+.PHONY: clean
 clean:; rm -fr *.o firecfg *.gcov *.gcda *.gcno *.plist
 
+.PHONY: distclean
 distclean: clean
 	rm -fr Makefile

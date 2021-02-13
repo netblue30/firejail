@@ -120,8 +120,8 @@ def main(args):
         except PermissionError:
             print(f"[ Error ] Can't read/write `{filename}'")
             exit_code = 1
-        except:
-            print(f"[ Error ] An error occurred while processing `{filename}'")
+        except Exception as err:
+            print(f"[ Error ] An error occurred while processing `{filename}': {err}")
             exit_code = 1
     return exit_code
 

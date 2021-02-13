@@ -49,7 +49,7 @@ dbus-user.own org.mpris.MediaPlayer2.firefox.*
 # implementation)
 #ignore noroot
 # Uncomment or put in your firefox.local one of the following whitelist to enable KeePassXC Plugin
-# note: run KeePassXC before Firefox to allow coomunication between them
+# NOTE: start KeePassXC before Firefox and keep it open to allow communication between them
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 ignore dbus-user none

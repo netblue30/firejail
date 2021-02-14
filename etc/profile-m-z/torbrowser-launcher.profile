@@ -31,6 +31,7 @@ whitelist ${HOME}/.local/share/torbrowser
 include whitelist-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 netfilter
 nodvd

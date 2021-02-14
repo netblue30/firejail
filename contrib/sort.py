@@ -111,6 +111,7 @@ def fix_profile(filename):
 
 def main(args):
     exit_code = 0
+    print(f"sort.py: checking {len(args)} {'profiles' if len(args) != 1 else 'profile'} ...")
     for filename in args:
         try:
             if exit_code not in (1, 101):

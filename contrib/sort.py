@@ -24,7 +24,6 @@ Exit-Codes:
 
 # Requirements:
 #  python >= 3.6
-from os import getenv
 from sys import argv
 
 
@@ -96,8 +95,10 @@ def fix_profile(filename):
                 fixed_line = line
             if fixed_line != line:
                 was_fixed = True
-                if getenv("CI"):
-                    print(f"{filename}:{lineno + 1}:{fixed_line}")
+                print(
+                    f"{filename}:{lineno + 1}:-{line}\n"
+                    f"{filename}:{lineno + 1}:+{fixed_line}"
+                )
             fixed_profile.append(fixed_line)
         if was_fixed:
             profile.seek(0)

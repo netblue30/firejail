@@ -31,7 +31,10 @@ whitelist ${HOME}/.local/share/torbrowser
 include whitelist-common.inc
 include whitelist-var-common.inc
 
-apparmor
+# Uncomment the line below or put 'apparmor' in your torbrowser-launcher.local.
+# IMPORTANT: the relevant rule in /etc/apparmor.d/local/firejail-default will need
+# to be uncommented too for this to work as expected.
+#apparmor
 caps.drop all
 netfilter
 nodvd

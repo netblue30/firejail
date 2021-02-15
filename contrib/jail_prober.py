@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # This file is part of Firejail project
-# Copyright (C) 2014-2020 Firejail Authors
+# Copyright (C) 2014-2021 Firejail Authors
 # License GPL v2
 """
 Figure out which profile options may be causing a particular program to break

@@ -1011,4 +1011,4 @@ Zack Weinberg (https://github.com/zackw)
 	  with firejail --x11
 	- support for xpra-extra-params in firejail.config
 
-Copyright (C) 2014-2020 Firejail Authors
+Copyright (C) 2014-2021 Firejail Authors

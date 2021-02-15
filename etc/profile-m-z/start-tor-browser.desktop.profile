@@ -4,7 +4,7 @@
 include start-tor-browser.desktop.local
 # Persistent global definitions
 # added by included profile
-include globals.local
+#include globals.local
 
 noblacklist ${HOME}/.tor-browser*
 

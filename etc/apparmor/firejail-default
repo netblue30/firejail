@@ -82,9 +82,6 @@ owner /proc/@{PID}/{uid_map,gid_map,setgroups} w,
 owner /proc/@{PID}/oom_score_adj w,
 owner /proc/@{PID}/clear_refs w,
 
-# Needed for torbrowser-launcher
-owner @{HOME}/.local/share/torbrowser/tbb/{i686,x86_64}/tor-browser_*/Browser/** ix,
-
 ##########
 # Allow running programs only from well-known system directories. If you need
 # to run programs from your home directory, uncomment /home line.

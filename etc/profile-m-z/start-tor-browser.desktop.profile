@@ -72,8 +72,5 @@ whitelist ${HOME}/.tor-browser_vi
 whitelist ${HOME}/.tor-browser_zh-CN
 whitelist ${HOME}/.tor-browser_zh-TW
 
-# Ignoring apparmor, tor browser is installed in user home directory using the binary archive distributed by Tor Foundation
-ignore apparmor
-
 # Redirect
 include torbrowser-launcher.profile

@@ -52,7 +52,7 @@ private-tmp
 
 dbus-user filter
 dbus-user.talk org.freedesktop.secrets
-# Comment the above line and uncomment below lines for notification popups
+# Uncomment the lines below for native notification and tray icons
 # dbus-user.talk org.freedesktop.Notifications
 # dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-system none

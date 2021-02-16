@@ -1,5 +1,5 @@
  /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -30,6 +30,8 @@ static int cnt_seccomp = 0;
 static int cnt_caps = 0;
 static int cnt_dbus_system_none = 0;
 static int cnt_dbus_user_none = 0;
+static int cnt_dbus_system_filter = 0;
+static int cnt_dbus_user_filter = 0;
 static int cnt_dotlocal = 0;
 static int cnt_globalsdotlocal = 0;
 static int cnt_netnone = 0;
@@ -107,6 +109,7 @@ void process_file(const char *fname) {
 		return;
 	}
 
+	int have_include_local = 0;
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
 		char *ptr = strchr(buf, '\n');
@@ -152,11 +155,16 @@ void process_file(const char *fname) {
 			cnt_privateetc++;
 		else if (strncmp(ptr, "dbus-system none", 16) == 0)
 			cnt_dbus_system_none++;
+		else if (strncmp(ptr, "dbus-system", 11) == 0)
+			cnt_dbus_system_filter++;
 		else if (strncmp(ptr, "dbus-user none", 14) == 0)
 			cnt_dbus_user_none++;
+		else if (strncmp(ptr, "dbus-user", 9) == 0)
+			cnt_dbus_user_filter++;
 		else if (strncmp(ptr, "include ", 8) == 0) {
 			// not processing .local files
 			if (strstr(ptr, ".local")) {
+				have_include_local = 1;
 //printf("dotlocal %d, level %d - #%s#, redirect #%s#\n", cnt_dotlocal, level, fname, buf + 8);
 				if (strstr(ptr, "globals.local"))
 					cnt_globalsdotlocal++;
@@ -174,6 +182,8 @@ void process_file(const char *fname) {
 	}
 
 	fclose(fp);
+	if (!have_include_local)
+		printf("No include .local found in %s\n", fname);
 	level--;
 }
 
@@ -257,7 +267,9 @@ int main(int argc, char **argv) {
 		int whitelistrunuser = cnt_whitelistrunuser;
 		int whitelistusrshare = cnt_whitelistusrshare;
 		int dbussystemnone = cnt_dbus_system_none;
+		int dbussystemfilter = cnt_dbus_system_filter;
 		int dbususernone = cnt_dbus_user_none;
+		int dbususerfilter = cnt_dbus_user_filter;
 		int ssh = cnt_ssh;
 		int mdwx = cnt_mdwx;
 
@@ -278,6 +290,16 @@ int main(int argc, char **argv) {
 			cnt_globalsdotlocal = globalsdotlocal + 1;
 		if (cnt_whitelistrunuser > (whitelistrunuser + 1))
 			cnt_whitelistrunuser = whitelistrunuser + 1;
+		if (cnt_seccomp > (seccomp + 1))
+			cnt_seccomp = seccomp + 1;
+		if (cnt_dbus_user_none > (dbususernone + 1))
+			cnt_dbus_user_none = dbususernone + 1;
+		if (cnt_dbus_user_filter > (dbususerfilter + 1))
+			cnt_dbus_user_filter = dbususerfilter + 1;
+		if (cnt_dbus_system_none > (dbussystemnone + 1))
+			cnt_dbus_system_none = dbussystemnone + 1;
+		if (cnt_dbus_system_filter > (dbussystemfilter + 1))
+			cnt_dbus_system_filter = dbussystemfilter + 1;
 
 		if (arg_dbus_system_none && dbussystemnone == cnt_dbus_system_none)
 			printf("No dbus-system none found in %s\n", argv[i]);
@@ -337,7 +359,9 @@ int main(int argc, char **argv) {
 	printf("    whitelist usr/share\t\t%d   (include whitelist-usr-share-common.inc\n", cnt_whitelistusrshare);
 	printf("    net none\t\t\t%d\n", cnt_netnone);
 	printf("    dbus-user none \t\t%d\n", cnt_dbus_user_none);
+	printf("    dbus-user filter \t\t%d\n", cnt_dbus_user_filter);
 	printf("    dbus-system none \t\t%d\n", cnt_dbus_system_none);
+	printf("    dbus-system filter \t\t%d\n", cnt_dbus_system_filter);
 	printf("\n");
 	return 0;
 }

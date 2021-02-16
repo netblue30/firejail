@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.nicotine
 
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 
 include disable-common.inc

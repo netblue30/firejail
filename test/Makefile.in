@@ -8,3 +8,6 @@ $(TESTS):
 
 clean:
 	for test in $(TESTS); do rm -f "$$test/$$test.log"; done
+
+distclean: clean
+	rm -f Makefile

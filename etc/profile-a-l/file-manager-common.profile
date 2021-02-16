@@ -15,7 +15,7 @@ ignore noexec ${HOME}
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
-# Allow perl
+# Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
 
 # Allow python (blacklisted by disable-interpreters.inc)

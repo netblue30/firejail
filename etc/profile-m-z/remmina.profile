@@ -9,7 +9,9 @@ include globals.local
 noblacklist ${HOME}/.remmina
 noblacklist ${HOME}/.config/remmina
 noblacklist ${HOME}/.local/share/remmina
-noblacklist ${HOME}/.ssh
+
+# Allow ssh (blacklisted by disable-common.inc)
+include allow-ssh.inc
 
 include disable-common.inc
 include disable-devel.inc

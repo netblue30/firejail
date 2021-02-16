@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -158,7 +158,7 @@ static int check_nosound(void) {
 }
 
 static int check_x11(void) {
-	return (arg_x11_block || arg_x11_xorg || getenv("FIREJAIL_X11"));
+	return (arg_x11_block || arg_x11_xorg || env_get("FIREJAIL_X11"));
 }
 
 static int check_disable_u2f(void) {
@@ -1181,7 +1181,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strcmp(ptr, "x11 xephyr") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
-			char *x11env = getenv("FIREJAIL_X11");
+			const char *x11env = env_get("FIREJAIL_X11");
 			if (x11env && strcmp(x11env, "yes") == 0) {
 				return 0;
 			}
@@ -1210,7 +1210,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strcmp(ptr, "x11 xpra") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
-			char *x11env = getenv("FIREJAIL_X11");
+			const char *x11env = env_get("FIREJAIL_X11");
 			if (x11env && strcmp(x11env, "yes") == 0) {
 				return 0;
 			}
@@ -1229,7 +1229,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strcmp(ptr, "x11 xvfb") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
-			char *x11env = getenv("FIREJAIL_X11");
+			const char *x11env = env_get("FIREJAIL_X11");
 			if (x11env && strcmp(x11env, "yes") == 0) {
 				return 0;
 			}
@@ -1248,7 +1248,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strcmp(ptr, "x11") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
-			char *x11env = getenv("FIREJAIL_X11");
+			const char *x11env = env_get("FIREJAIL_X11");
 			if (x11env && strcmp(x11env, "yes") == 0) {
 				return 0;
 			}

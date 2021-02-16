@@ -61,7 +61,7 @@ $ sudo firecfg --add-users dustin lucas mike eleven
 
 .TP
 \fB\-\-bindir=directory
-Create and search symbolic links in directory instead of the default location /user/local/bin.
+Create and search symbolic links in directory instead of the default location /usr/local/bin.
 Directory should precede /usr/bin and /bin in the PATH environment variable.
 
 .TP

@@ -11,9 +11,15 @@ noblacklist ${HOME}/*.kdbx
 noblacklist ${HOME}/.cache/keepassxc
 noblacklist ${HOME}/.config/keepassxc
 noblacklist ${HOME}/.keepassxc
-# 2.2.4 needs this path when compiled with "Native messaging browser extension"
-noblacklist ${HOME}/.mozilla
 noblacklist ${DOCUMENTS}
+
+# Allow browser profiles, required for browser integration.
+noblacklist ${HOME}/.config/BraveSoftware
+noblacklist ${HOME}/.config/chromium
+noblacklist ${HOME}/.config/google-chrome
+noblacklist ${HOME}/.config/vivaldi
+noblacklist ${HOME}/.local/share/torbrowser
+noblacklist ${HOME}/.mozilla
 
 include disable-common.inc
 include disable-devel.inc
@@ -29,6 +35,16 @@ include disable-xdg.inc
 #mkdir ${HOME}/Documents/KeePassXC
 #whitelist ${HOME}/Documents/KeePassXC
 # Needed for KeePassXC-Browser
+#mkfile ${HOME}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+#whitelist ${HOME}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+#mkfile ${HOME}/.config/chromium/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+#whitelist ${HOME}/.config/chromium/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+#mkfile ${HOME}/.config/google-chrome/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+#whitelist ${HOME}/.config/google-chrome/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+#mkfile ${HOME}/.config/vivaldi/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+#whitelist ${HOME}/.config/vivaldi/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+#mkfile ${HOME}/.local/share/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
+#whitelist ${HOME}/.local/share/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #mkfile ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #mkdir ${HOME}/.cache/keepassxc

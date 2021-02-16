@@ -66,15 +66,18 @@ AS_IF([test "x$enable_dbusproxy" != "xno"], [
 	AC_SUBST(HAVE_DBUSPROXY)
 ])
 
+# overlayfs features temporarely disabled pending fixes
 HAVE_OVERLAYFS=""
-AC_ARG_ENABLE([overlayfs],
-    AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
-AS_IF([test "x$enable_overlayfs" != "xno"], [
-	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
-	AC_SUBST(HAVE_OVERLAYFS)
-])
+AC_SUBST(HAVE_OVERLAYFS)
+#
+#AC_ARG_ENABLE([overlayfs],
+#    AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
+#AS_IF([test "x$enable_overlayfs" != "xno"], [
+#	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
+#	AC_SUBST(HAVE_OVERLAYFS)
+#])
 
-HAVE_USERTMPS=""
+HAVE_USERTMPFS=""
 AC_ARG_ENABLE([usertmpfs],
     AS_HELP_STRING([--disable-usertmpfs], [disable tmpfs as regular user]))
 AS_IF([test "x$enable_usertmpfs" != "xno"], [
@@ -231,7 +234,7 @@ AC_CONFIG_FILES([mkdeb.sh], [chmod +x mkdeb.sh])
 AC_OUTPUT(Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile \
 src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile \
 src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile \
-src/profstats/Makefile src/man/Makefile test/Makefile)
+src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile)
 
 echo
 echo "Configuration options:"

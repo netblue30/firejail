@@ -13,5 +13,14 @@ whitelist ${HOME}/.sylpheed-2.0
 
 whitelist /usr/share/sylpheed
 
+# private-bin curl,gpg,gpg2,gpg-agent,gpgsm,pinentry,pinentry-gtk-2,sylpheed
+
+dbus-user filter
+dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.gnome.keyring.SystemPrompter
+# Uncomment below for notifications (or put them in your sylpheed.local)
+# dbus-user.talk org.freedesktop.Notifications
+
 # Redirect
 include email-common.profile

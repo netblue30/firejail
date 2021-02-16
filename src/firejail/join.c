@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -561,7 +561,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			char *display_str;
 			if (asprintf(&display_str, ":%d", display) == -1)
 				errExit("asprintf");
-			setenv("DISPLAY", display_str, 1);
+			env_store_name_val("DISPLAY", display_str, SETENV);
 			free(display_str);
 		}
 

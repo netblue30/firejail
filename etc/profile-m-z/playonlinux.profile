@@ -12,9 +12,12 @@ noblacklist ${HOME}/.PlayOnLinux
 # nc is needed to run playonlinux
 noblacklist ${PATH}/nc
 
+# Allow perl (blacklisted by disable-interpreters.inc)
+include allow-perl.inc
+
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
-include allow-perl.inc
 
 # Redirect
 include wine.profile

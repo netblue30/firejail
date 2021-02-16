@@ -1,16 +1,26 @@
 firejail (0.9.65) baseline; urgency=low
+  * filtering environment variables
+  * zsh completion
+  * new profiles: vmware-view, display-im6.q16
+ -- netblue30 <netblue30@yahoo.com>  Tue, 9 Feb 2021 09:00:00 -0500
+
+firejail (0.9.64.4) baseline; urgency=low
+  * disabled overlayfs, pending multiple fixes (CVE-2021-26910)
+ -- netblue30 <netblue30@yahoo.com>  Sun, 7 Feb 2021 09:00:00 -0500
+
+firejail (0.9.64.2) baseline; urgency=low
   * allow --tmpfs inside $HOME for unprivileged users
   * --disable-usertmpfs  compile time option
   * allow AF_BLUETOOTH via --protocol=bluetooth
   * Setup guide for new users: contrib/firejail-welcome.sh
   * implement netns in profiles
+  * added nolocal6.net IPv6 network filter
   * new profiles: spectacle, chromium-browser-privacy, gtk-straw-viewer
   * new profiles: gtk-youtube-viewer, gtk2-youtube-viewer, gtk3-youtube-viewer
   * new profiles: straw-viewer, lutris, dolphin-emu, authenticator-rs, servo
   * new profiles: npm, marker, yarn, lsar, unar, agetpkg, mdr, shotwell, qnapi
-  * new profiles: guvcview, pkglog
-
- -- netblue30 <netblue30@yahoo.com>  Wed, 21 Oct 2020 09:00:00 -0500
+  * new profiles: guvcview, pkglog, kdiff3, CoyIM
+ -- netblue30 <netblue30@yahoo.com>  Tue, 26 Jan 2021 09:00:00 -0500
 
 firejail (0.9.64) baseline; urgency=low
   * replaced --nowrap option with --wrap in firemon

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -41,7 +41,7 @@ int check_namespace_virt(void) {
 	EUID_ASSERT();
 
 	// check container environment variable
-	char *str = getenv("container");
+	const char *str = env_get("container");
 	if (str && is_container(str))
 		return 1;
 

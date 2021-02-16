@@ -12,6 +12,8 @@ Linux  namespace support. It supports sandboxing specific users upon login.
 Download: https://sourceforge.net/projects/firejail/files/
 Build and install: ./configure && make && sudo make install
 Documentation and support: https://firejail.wordpress.com/
+Video Channel: https://www.youtube.com/channel/UCi5u-syndQYyOeV4NZ04hNA
+Backup Video Channel: https://www.bitchute.com/profile/JSBsA1aoQVfW/
 Development: https://github.com/netblue30/firejail
 License: GPL v2
 
@@ -40,6 +42,7 @@ Committers
 - curiosityseeker (https://github.com/curiosityseeker)
 - glitsj16 (https://github.com/glitsj16)
 - Fred-Barclay (https://github.com/Fred-Barclay)
+- Kelvin M. Klann (https://github.com/kmk3)
 - Kristóf Marussy (https://github.com/kris7t)
 - Reiner Herrmann (https://github.com/reinerh - Debian/Ubuntu maintainer)
 - rusty-snake (https://github.com/rusty-snake)
@@ -70,6 +73,7 @@ Adrian L. Shaw (https://github.com/adrianlshaw)
 	- add barrirer profile
 Aidan Gauland (https://github.com/aidalgol)
 	- added electron, riot-web and npm profiles
+	- whitelist Bohemia Interactive config dir for Steam
 Akhil Hans Maulloo (https://github.com/kouul)
 	- xz profile
 Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)
@@ -159,6 +163,11 @@ Bandie (https://github.com/Bandie)
 	- fixed riot-desktop
 Barış Ekin Yıldırım (https://github.com/circuitshaker)
 	- removing net none from code.profile
+bbhtt (https://github.com/bbhtt)
+	- improvements to balsa,fractal,gajim,trojita profiles
+	- improvements to nheko, spectral, feh, links, lynx profiles
+	- added alacartem com.github.bleakgrey.tootle, photoflare profiles
+	- add profiles for MS Edge dev build for Linux and Librewolf
 Benjamin Kampmann (https://github.com/ligthyear)
 	- Forward exit code from child process
 bitfreak25 (https://github.com/bitfreak25)
@@ -178,6 +187,8 @@ Brad Ackerman
 	- blacklist Bitwarden config in disable-passwdmgr.inc
 briaeros (https://github.com/briaeros)
 	- fix command test in jail_prober.py
+botherer (https://github.com/botherder)
+	- add CoyIM profile
 Bruno Nova (https://github.com/brunonova)
 	- whitelist fix
 	- bash arguments fix
@@ -301,6 +312,8 @@ Fabian Würfl (https://github.com/BafDyce)
 	- Liferea profile
 Felipe Barriga Richards (https://github.com/fbarriga)
 	- --private-etc fix
+fenuks (https://github.com/fenuks)
+	- fix sound in games using FMOD
 Florian Begusch (https://github.com/florianbegusch)
 	- (la)tex profiles
 	- fixed transmission-common.profile
@@ -420,6 +433,8 @@ hawkey116477 (https://github.com/hawkeye116477)
 	- updated Waterfox profile
 Helmut Grohne (https://github.com/helmutg)
 	-  compiler support in the build system - Debian bug #869707
+hhzek0014 (https://github.com/hhzek0014)
+	- updated  bibletime.profile
 hlein (https://github.com/hlein)
 	- strip out \r's from jail prober
 Holger Heinz (https://github.com/hheinz)
@@ -518,7 +533,11 @@ KellerFuchs (https://github.com/KellerFuchs)
 	- fixed Cryptocat profile
 	- make ~/.local read-only
 Kelvin (https://github.com/kmk3)
-	- disable ldns utilities
+	- disable ldns utilities, dnssec-*, khost, unbound-host
+	- sort DNS / RUNUSER paths
+	- improve bug_report.md
+	- fix keypassxc
+	- blacklist oksh shell in disable-shell.inc
 Kishore96in (https://github.com/Kishore96in)
 	- added falkon profile
 	- kxmlgui fixes
@@ -610,6 +629,7 @@ Neo00001 (https://github.com/Neo00001)
 	- update virtualbox profile
 	- update telegram profile
 	- add spectacle profile
+	- add kdiff3 profile
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory
@@ -620,6 +640,8 @@ Niklas Haas (https://github.com/haasn)
 	- blacklisting for keybase.io's client
 Niklas Goerke (https://github.com/Niklas974)
 	- update QOwnNotes profile
+Nikos Chantziaras (https://github.com/realnc)
+	- fix audio support for Discord
 nyancat18 (https://github.com/nyancat18)
 	- added ardour4, dooble, karbon, krita profiles
 Ondra Nekola (https://github.com/satai)
@@ -732,6 +754,8 @@ RD PROJEKT (https://github.com/RDProjekt)
 	- support AMD GPU by OpenCL in Blender
 rogshdo (https://github.com/rogshdo)
 	- BitlBee profile
+rootalc (https://github.com/rootalc)
+	- add nolocal6.net filter
 Ruan (https://github.com/ruany)
 	- fixed hexchat profile
 rusty-snake (https://github.com/rusty-snake)
@@ -987,4 +1011,4 @@ Zack Weinberg (https://github.com/zackw)
 	  with firejail --x11
 	- support for xpra-extra-params in firejail.config
 
-Copyright (C) 2014-2020 Firejail Authors
+Copyright (C) 2014-2021 Firejail Authors

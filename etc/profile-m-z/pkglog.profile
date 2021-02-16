@@ -6,7 +6,7 @@ include pkglog.local
 # Persistent global definitions
 include globals.local
 
-# Allow python3 (blacklisted by disable-interpreters.inc)
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
 include disable-common.inc

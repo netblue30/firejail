@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -201,7 +201,7 @@
 #define VALIDATE_ARCHITECTURE_KILL \
      BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
      BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_NR, 1, 0), \
-     BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_KILL)
+     KILL_OR_RETURN_ERRNO
 
 #define VALIDATE_ARCHITECTURE_64 \
      BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
@@ -222,11 +222,7 @@
 #define HANDLE_X32 \
 		BPF_JUMP(BPF_JMP+BPF_JGE+BPF_K, X32_SYSCALL_BIT, 1, 0), \
 		BPF_JUMP(BPF_JMP+BPF_JGE+BPF_K, 0, 1, 0), \
-		RETURN_ERRNO(EPERM)
-#define HANDLE_X32_KILL \
-		BPF_JUMP(BPF_JMP+BPF_JGE+BPF_K, X32_SYSCALL_BIT, 1, 0), \
-		BPF_JUMP(BPF_JMP+BPF_JGE+BPF_K, 0, 1, 0), \
-		BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_KILL)
+		KILL_OR_RETURN_ERRNO
 #endif
 
 #define EXAMINE_SYSCALL BPF_STMT(BPF_LD+BPF_W+BPF_ABS,	\
@@ -258,6 +254,8 @@
 	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ERRNO | nr)
 
 extern int arg_seccomp_error_action;	// error action: errno, log or kill
+#define DEFAULT_SECCOMP_ERROR_ACTION EPERM
+
 #define KILL_OR_RETURN_ERRNO \
 	BPF_STMT(BPF_RET+BPF_K, arg_seccomp_error_action)
 

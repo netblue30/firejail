@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -20,7 +20,7 @@
 #include "fseccomp.h"
 #include "../include/seccomp.h"
 int arg_quiet = 0;
-int arg_seccomp_error_action = EPERM; // error action: errno, log or kill
+int arg_seccomp_error_action = SECCOMP_RET_ERRNO | EPERM; // error action: errno, log or kill
 
 static void usage(void) {
 	printf("Usage:\n");

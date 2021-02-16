@@ -15,9 +15,11 @@ noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.nanorc
-noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.vim
 noblacklist ${HOME}/.viminfo
+
+# Allow ssh (blacklisted by disable-common.inc)
+include allow-ssh.inc
 
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*

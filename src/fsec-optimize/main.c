@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -18,6 +18,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "fsec_optimize.h"
+#include "../include/syscall.h"
+
+int arg_seccomp_error_action = SECCOMP_RET_ERRNO | EPERM; // error action: errno, log or kill
 
 static void usage(void) {
 	printf("Usage:\n");
@@ -45,6 +48,20 @@ printf("\n");
 	}
 
 	warn_dumpable();
+
+	char *error_action = getenv("FIREJAIL_SECCOMP_ERROR_ACTION");
+	if (error_action) {
+		if (strcmp(error_action, "kill") == 0)
+			arg_seccomp_error_action = SECCOMP_RET_KILL;
+		else if (strcmp(error_action, "log") == 0)
+			arg_seccomp_error_action = SECCOMP_RET_LOG;
+		else {
+			arg_seccomp_error_action = errno_find_name(error_action);
+			if (arg_seccomp_error_action == -1)
+				errExit("seccomp-error-action: unknown errno");
+			arg_seccomp_error_action |= SECCOMP_RET_ERRNO;
+		}
+	}
 
 	char *fname = argv[1];
 

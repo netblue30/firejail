@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -36,7 +36,7 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 	int env_index = 0;
 	char *new_environment[256] = { NULL };
 	// preserve firejail-specific env vars
-	char *cl = getenv("FIREJAIL_FILE_COPY_LIMIT");
+	const char *cl = env_get("FIREJAIL_FILE_COPY_LIMIT");
 	if (cl) {
 		if (asprintf(&new_environment[env_index++], "FIREJAIL_FILE_COPY_LIMIT=%s", cl) == -1)
 			errExit("asprintf");
@@ -120,7 +120,7 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 			// handle X32 ABI
 			BPF_JUMP(BPF_JMP + BPF_JGE + BPF_K, X32_SYSCALL_BIT, 1, 0),
 			BPF_JUMP(BPF_JMP + BPF_JGE + BPF_K, 0, 1, 0),
-			RETURN_ERRNO(EPERM),
+			KILL_OR_RETURN_ERRNO,
 #endif
 
 		// syscall list

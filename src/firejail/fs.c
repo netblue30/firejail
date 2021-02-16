@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -487,27 +487,26 @@ void fs_tmpfs(const char *dir, unsigned check_owner) {
 	close(fd);
 }
 
-// remount path, but preserve existing mount flags; requires a resolved path
+// remount path, preserving other mount flags; requires a resolved path
 static void fs_remount_simple(const char *path, OPERATION op) {
 	assert(path);
 
 	// open path without following symbolic links
-	int fd = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1)
+	int fd1 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (fd1 == -1)
 		goto out;
-	// identify file owner
-	struct stat s;
-	if (fstat(fd, &s) == -1) {
+	struct stat s1;
+	if (fstat(fd1, &s1) == -1) {
 		// fstat can fail with EACCES if path is a FUSE mount,
 		// mounted without 'allow_root' or 'allow_other'
 		if (errno != EACCES)
 			errExit("fstat");
-		close(fd);
+		close(fd1);
 		goto out;
 	}
 	// get mount flags
 	struct statvfs buf;
-	if (fstatvfs(fd, &buf) == -1)
+	if (fstatvfs(fd1, &buf) == -1)
 		errExit("fstatvfs");
 	unsigned long flags = buf.f_flag;
 
@@ -515,13 +514,13 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 	if (op == MOUNT_RDWR || op == MOUNT_RDWR_NOCHECK) {
 		// nothing to do if there is no read-only flag
 		if ((flags & MS_RDONLY) == 0) {
-			close(fd);
+			close(fd1);
 			return;
 		}
 		// allow only user owned directories, except the user is root
-		if (op == MOUNT_RDWR && getuid() != 0 && s.st_uid != getuid()) {
+		if (op != MOUNT_RDWR_NOCHECK && getuid() != 0 && s1.st_uid != getuid()) {
 			fwarning("you are not allowed to change %s to read-write\n", path);
-			close(fd);
+			close(fd1);
 			return;
 		}
 		flags &= ~MS_RDONLY;
@@ -530,7 +529,7 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 	else if (op == MOUNT_NOEXEC) {
 		// nothing to do if path is mounted noexec already
 		if ((flags & (MS_NOEXEC|MS_NODEV|MS_NOSUID)) == (MS_NOEXEC|MS_NODEV|MS_NOSUID)) {
-			close(fd);
+			close(fd1);
 			return;
 		}
 		flags |= MS_NOEXEC|MS_NODEV|MS_NOSUID;
@@ -539,7 +538,7 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 	else if (op == MOUNT_READONLY) {
 		// nothing to do if path is mounted read-only already
 		if ((flags & MS_RDONLY) == MS_RDONLY) {
-			close(fd);
+			close(fd1);
 			return;
 		}
 		flags |= MS_RDONLY;
@@ -549,21 +548,26 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 
 	if (arg_debug)
 		printf("Mounting %s %s\n", opstr[op], path);
-	// mount --bind /bin /bin
+	// mount --bind path path
 	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+	if (asprintf(&proc, "/proc/self/fd/%d", fd1) == -1)
 		errExit("asprintf");
 	if (mount(proc, proc, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount");
 	free(proc);
-	close(fd);
 
-	// mount --bind -o remount,ro /bin
-	// we need to open path again
-	fd = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1)
+	// mount --bind -o remount,ro path
+	// need to open path again without following symbolic links
+	int fd2 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (fd2 == -1)
 		errExit("open");
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+	struct stat s2;
+	if (fstat(fd2, &s2) == -1)
+		errExit("fstat");
+	// device and inode number should be the same
+	if (s1.st_dev != s2.st_dev || s1.st_ino != s2.st_ino)
+		errLogExit("invalid %s mount", opstr[op]);
+	if (asprintf(&proc, "/proc/self/fd/%d", fd2) == -1)
 		errExit("asprintf");
 	if (mount(NULL, proc, NULL, flags|MS_BIND|MS_REMOUNT, NULL) < 0)
 		errExit("mount");
@@ -579,7 +583,8 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 		errLogExit("invalid %s mount", opstr[op]);
 	fs_logger2(opstr[op], path);
 	free(proc);
-	close(fd);
+	close(fd1);
+	close(fd2);
 	return;
 
 out:
@@ -1221,7 +1226,7 @@ void fs_private_tmp(void) {
 		printf("Generate private-tmp whitelist commands\n");
 
 	// check XAUTHORITY file, KDE keeps it under /tmp
-	char *xauth = getenv("XAUTHORITY");
+	const char *xauth = env_get("XAUTHORITY");
 	if (xauth) {
 		char *rp = realpath(xauth, NULL);
 		if (rp && strncmp(rp, "/tmp/", 5) == 0) {

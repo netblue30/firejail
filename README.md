@@ -1,5 +1,7 @@
 # Firejail
 [![Build Status](https://gitlab.com/Firejail/firejail_ci/badges/master/pipeline.svg)](https://gitlab.com/Firejail/firejail_ci/pipelines/)
+[![CodeQL](https://github.com/netblue30/firejail/workflows/CodeQL/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACodeQL)
+[![Build CI](https://github.com/netblue30/firejail/workflows/Build%20CI/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3A%22Build+CI%22)
 [![Packaging status](https://repology.org/badge/tiny-repos/firejail.svg)](https://repology.org/project/firejail/versions)
 
 Firejail is a SUID sandbox program that reduces the risk of security breaches by restricting
@@ -22,19 +24,19 @@ implemented directly in Linux kernel and available on any Linux computer.
 <td>
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=7RMz7tePA98
 " target="_blank"><img src="http://img.youtube.com/vi/7RMz7tePA98/0.jpg"
-alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Firejail Intro</a>
+alt="Firejail Introduction" width="240" height="180" border="10" /><br/>Firejail Intro</a>
 </td>
 
 <td>
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=J1ZsXrpAgBU
 " target="_blank"><img src="http://img.youtube.com/vi/J1ZsXrpAgBU/0.jpg"
-alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Firejail Demo</a>
+alt="Firejail Demo" width="240" height="180" border="10" /><br/>Firejail Demo</a>
 </td>
 
 <td>
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=EyEz65RYfw4
 " target="_blank"><img src="http://img.youtube.com/vi/EyEz65RYfw4/0.jpg"
-alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Debian Install</a>
+alt="Debian Install" width="240" height="180" border="10" /><br/>Debian Install</a>
 </td>
 
 
@@ -42,13 +44,19 @@ alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Debian In
 <td>
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=Uy2ZTHc4s0w
 " target="_blank"><img src="http://img.youtube.com/vi/Uy2ZTHc4s0w/0.jpg"
-alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Arch Linux Install</a>
+alt="Arch Linux Install" width="240" height="180" border="10" /><br/>Arch Linux Install</a>
 
 </td>
 <td>
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=xuMxRx0zSfQ
 " target="_blank"><img src="http://img.youtube.com/vi/xuMxRx0zSfQ/0.jpg"
-alt="Firejail Intro video" width="240" height="180" border="10" /><br/>Disable Network Access</a>
+alt="Disable Network Access" width="240" height="180" border="10" /><br/>Disable Network Access</a>
+
+</td>
+<td>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=N-Mso2bSr3o
+" target="_blank"><img src="http://img.youtube.com/vi/N-Mso2bSr3o/0.jpg"
+alt="Firejail Security Deep Dive" width="240" height="180" border="10" /><br/>Firejail Security Deep Dive</a>
 
 </td>
 </tr></table>
@@ -67,10 +75,42 @@ Wiki: https://github.com/netblue30/firejail/wiki
 
 GitLab-CI status: https://gitlab.com/Firejail/firejail_ci/pipelines/
 
+Video Channel: https://www.youtube.com/channel/UCi5u-syndQYyOeV4NZ04hNA
+
+Backup Video Channel: https://www.bitchute.com/profile/JSBsA1aoQVfW/
 
 ## Security vulnerabilities
 
 We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@protonmail.com
+
+`````
+Security Adivsory - Feb 8, 2021
+
+Summary: A vulnerability resulting in root privilege escalation was discovered in
+Firejail's OverlayFS code,
+
+Versions affected: Firejail software versions starting with 0.9.30.
+Long Term Support (LTS) Firejail branch is not affected by this bug.
+
+Workaround: Disable overlayfs feature at runtime.
+In a text editor open /etc/firejail/firejail.config file, and set "overlayfs" entry to "no".
+
+      $ grep overlayfs /etc/firejail/firejail.config
+      # Enable or disable overlayfs features, default enabled.
+      overlayfs no
+
+Fix: The bug is fixed in Firejail version 0.9.64.4
+
+GitHub commit: (file configure.ac)
+https://github.com/netblue30/firejail/commit/97d8a03cad19501f017587cc4e47d8418273834b
+
+Credit:  Security researcher Roman Fiedler analyzed the code and discovered the vulnerability.
+Functional PoC exploit code was provided to Firejail development team.
+A description of the problem is here on Roman's blog:
+
+https://unparalleled.eu/publications/2021/advisory-unpar-2021-0.txt
+https://unparalleled.eu/blog/2021/20210208-rigged-race-against-firejail-for-local-root/
+`````
 
 ## Installing
 
@@ -170,29 +210,31 @@ $ ./profstats *.profile
 Warning: multiple caps in transmission-daemon.profile
 
 Stats:
-    profiles			1031
-    include local profile	1031   (include profile-name.local)
-    include globals		1031   (include globals.local)
-    blacklist ~/.ssh		1007   (include disable-common.inc)
-    seccomp			976
-    capabilities		1030
-    noexec			901   (include disable-exec.inc)
-    memory-deny-write-execute	221
-    apparmor			555
-    private-bin			544
-    private-dev			897
-    private-etc			435
-    private-tmp			785
-    whitelist home directory	474
-    whitelist var		699   (include whitelist-var-common.inc)
-    whitelist run/user		336   (include whitelist-runuser-common.inc
+    profiles			1064
+    include local profile	1064   (include profile-name.local)
+    include globals		1064   (include globals.local)
+    blacklist ~/.ssh		959   (include disable-common.inc)
+    seccomp			975
+    capabilities		1063
+    noexec			944   (include disable-exec.inc)
+    memory-deny-write-execute	229
+    apparmor			605
+    private-bin			564
+    private-dev			932
+    private-etc			462
+    private-tmp			823
+    whitelist home directory	502
+    whitelist var		744   (include whitelist-var-common.inc)
+    whitelist run/user		461   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		359   (include whitelist-usr-share-common.inc
-    net none			333
-    dbus-user none 		523
-    dbus-system none 		632
+    whitelist usr/share		451   (include whitelist-usr-share-common.inc
+    net none			345
+    dbus-user none 		564
+    dbus-user filter 		85
+    dbus-system none 		696
+    dbus-system filter 		7
 ```
 
 ### New profiles:
 
-spectacle, chromium-browser-privacy, gtk-straw-viewer, gtk-youtube-viewer, gtk2-youtube-viewer, gtk3-youtube-viewer, straw-viewer, lutris, dolphin-emu, authenticator-rs, servo, tutanota-desktop, npm, marker, yarn, lsar, unar, agetpkg, mdr, shotwell, qnapi, guvcview, pkglog
+vmware-view, display-im6.q16

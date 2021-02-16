@@ -1,7 +1,17 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2020 Firejail Authors
+# Copyright (C) 2014-2021 Firejail Authors
 # License GPL v2
+
+# not currently covered
+#  --disable-suid          install as a non-SUID executable
+#  --enable-fatal-warnings -W -Wall -Werror
+#  --enable-gcov           Gcov instrumentation
+#  --enable-contrib-install
+#                          install contrib scripts
+#  --enable-analyzer       enable GCC 10 static analyzer
+
+
 
 arr[1]="TEST 1: standard compilation"
 arr[2]="TEST 2: compile dbus proxy disabled"
@@ -18,7 +28,9 @@ arr[12]="TEST 12: compile apparmor"
 arr[13]="TEST 13: compile busybox"
 arr[14]="TEST 14: compile overlayfs disabled"
 arr[15]="TEST 15: compile private-home disabled"
-arr[15]="TEST 16: compile disable manpages"
+arr[16]="TEST 16: compile disable manpages"
+arr[17]="TEST 17: disable tmpfs as regular user"
+arr[18]="TEST 18: disable private home"
 
 # remove previous reports and output file
 cleanup() {
@@ -334,6 +346,40 @@ cp output-make om16
 rm output-configure output-make
 
 #*****************************************************************
+# TEST 17
+#*****************************************************************
+# - disable tmpfs as regular user"
+#*****************************************************************
+print_title "${arr[17]}"
+cd firejail
+make distclean
+./configure --prefix=/usr  --disable-usertmpfs --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test17
+grep Error output-configure output-make >> ./report-test17
+cp output-configure oc17
+cp output-make om17
+rm output-configure output-make
+
+#*****************************************************************
+# TEST 18
+#*****************************************************************
+# - disable private home feature
+#*****************************************************************
+print_title "${arr[18]}"
+cd firejail
+make distclean
+./configure --prefix=/usr --disable-private-home --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test18
+grep Error output-configure output-make >> ./report-test18
+cp output-configure oc18
+cp output-make om18
+rm output-configure output-make
+
+#*****************************************************************
 # PRINT REPORTS
 #*****************************************************************
 echo
@@ -363,3 +409,5 @@ echo ${arr[13]}
 echo ${arr[14]}
 echo ${arr[15]}
 echo ${arr[16]}
+echo ${arr[17]}
+echo ${arr[18]}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -268,8 +268,7 @@ static void sandbox_if_up(Bridge *br) {
 
 static void chk_chroot(void) {
 	// if we are starting firejail inside some other container technology, we don't care about this
-	char *mycont = getenv("container");
-	if (mycont)
+	if (env_get("container"))
 		return;
 
 	// check if this is a regular chroot
@@ -419,7 +418,7 @@ static int ok_to_run(const char *program) {
 			return 1;
 	}
 	else { // search $PATH
-		char *path1 = getenv("PATH");
+		const char *path1 = env_get("PATH");
 		if (path1) {
 			if (arg_debug)
 				printf("Searching $PATH for %s\n", program);
@@ -463,10 +462,10 @@ static int ok_to_run(const char *program) {
 
 void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	// set environment
-	if (no_sandbox == 0) {
+	if (no_sandbox == 0)
 		env_defaults();
-		env_apply();
-	}
+	env_apply_all();
+
 	// restore original umask
 	umask(orig_umask);
 

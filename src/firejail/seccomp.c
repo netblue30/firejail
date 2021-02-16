@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -208,7 +208,7 @@ int seccomp_filter_drop(bool native) {
 	//	- seccomp
 	if (cfg.seccomp_list_drop == NULL) {
 		// default seccomp if error action is not changed
-		if (cfg.seccomp_list == NULL && cfg.seccomp_error_action) {
+		if (cfg.seccomp_list == NULL && arg_seccomp_error_action == DEFAULT_SECCOMP_ERROR_ACTION) {
 			if (arg_seccomp_block_secondary)
 				seccomp_filter_block_secondary();
 			else {
@@ -221,11 +221,29 @@ int seccomp_filter_drop(bool native) {
 		}
 		// default seccomp filter with additional drop list
 		else { // cfg.seccomp_list != NULL
-			if (arg_seccomp_block_secondary)
+			int rv;
+
+			if (arg_seccomp_block_secondary) {
+				if (arg_seccomp_error_action != DEFAULT_SECCOMP_ERROR_ACTION) {
+					if (arg_debug)
+						printf("Rebuild secondary block seccomp filter\n");
+					rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 4,
+						      PATH_FSECCOMP, "secondary", "block", RUN_SECCOMP_BLOCK_SECONDARY);
+					if (rv)
+						exit(rv);
+				}
 				seccomp_filter_block_secondary();
-			else {
+			} else {
 #if defined(__x86_64__)
 #if defined(__LP64__)
+				if (arg_seccomp_error_action != DEFAULT_SECCOMP_ERROR_ACTION) {
+					if (arg_debug)
+						printf("Rebuild 32 bit seccomp filter\n");
+					rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 4,
+						      PATH_FSECCOMP, "secondary", "32", RUN_SECCOMP_32);
+					if (rv)
+						exit(rv);
+				}
 				seccomp_filter_32();
 #endif
 #endif
@@ -242,16 +260,22 @@ int seccomp_filter_drop(bool native) {
 				list = cfg.seccomp_list32;
 			}
 
-			if (list == NULL)
-				list = "";
 			// build the seccomp filter as a regular user
-			int rv;
-			if (arg_allow_debuggers)
-				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 7,
-					      PATH_FSECCOMP, command, "drop", filter, postexec_filter, list, "allow-debuggers");
+			if (list)
+				if (arg_allow_debuggers)
+					rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 7,
+						      PATH_FSECCOMP, command, "drop", filter, postexec_filter, list, "allow-debuggers");
+				else
+					rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 6,
+						      PATH_FSECCOMP, command, "drop", filter, postexec_filter, list);
 			else
-				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 6,
-					      PATH_FSECCOMP, command, "drop", filter, postexec_filter, list);
+				if (arg_allow_debuggers)
+					rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 4,
+						      PATH_FSECCOMP, command, filter, "allow-debuggers");
+				else
+					rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
+						      PATH_FSECCOMP, command, filter);
+
 			if (rv)
 				exit(rv);
 

@@ -61,6 +61,7 @@ whitelist /usr/share/texlive
 whitelist /usr/share/texmf
 whitelist /usr/share/themes
 whitelist /usr/share/thumbnail.so
+whitelist /usr/share/uim
 whitelist /usr/share/vulkan
 whitelist /usr/share/X11
 whitelist /usr/share/xml

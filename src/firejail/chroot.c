@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -173,9 +173,21 @@ void fs_chroot(const char *rootdir) {
 
 	// x11
 	// if users want this mount, they should set FIREJAIL_CHROOT_X11
-	if (getenv("FIREJAIL_X11") || getenv("FIREJAIL_CHROOT_X11")) {
+	if (env_get("FIREJAIL_X11") || env_get("FIREJAIL_CHROOT_X11")) {
 		if (arg_debug)
 			printf("Mounting /tmp/.X11-unix on chroot /tmp/.X11-unix\n");
+		struct stat s1, s2;
+		if (stat("/tmp", &s1) || lstat("/tmp/.X11-unix", &s2))
+			errExit("mounting /tmp/.X11-unix");
+		if ((s1.st_mode & S_ISVTX) != S_ISVTX) {
+			fprintf(stderr, "Error: sticky bit not set on /tmp directory\n");
+			exit(1);
+		}
+		if (s2.st_uid != 0) {
+			fprintf(stderr, "Error: /tmp/.X11-unix not owned by root user\n");
+			exit(1);
+		}
+
 		check_subdir(parentfd, "tmp/.X11-unix", 0);
 		fd = openat(parentfd, "tmp/.X11-unix", O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		if (fd == -1)
@@ -194,7 +206,7 @@ void fs_chroot(const char *rootdir) {
 	check_subdir(parentfd, "run", 1);
 
 	// pulseaudio; only support for default directory /run/user/$UID/pulse
-	if (getenv("FIREJAIL_CHROOT_PULSE")) {
+	if (env_get("FIREJAIL_CHROOT_PULSE")) {
 		char *pulse;
 		if (asprintf(&pulse, "%s/run/user/%d/pulse", cfg.chrootdir, getuid()) == -1)
 			errExit("asprintf");

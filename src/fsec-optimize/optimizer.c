@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -33,7 +33,7 @@
 static inline int is_blacklist(struct sock_filter *bpf) {
 	if (bpf->code == BPF_JMP + BPF_JEQ + BPF_K &&
 	    (bpf + 1)->code == BPF_RET + BPF_K &&
-	    (bpf + 1)->k == SECCOMP_RET_KILL )
+	    (bpf + 1)->k == (__u32)arg_seccomp_error_action)
 		return 1;
 	return 0;
 }
@@ -89,9 +89,9 @@ static int optimize_blacklists(struct sock_filter *filter, int entries) {
 		}
 	}
 
-	// step 3: add the new ret KILL, and recalculate entries
+	// step 3: add the new ret KILL/LOG/ERRNO, and recalculate entries
 	filter_step2[j].code = BPF_RET + BPF_K;
-	filter_step2[j].k = SECCOMP_RET_KILL;
+	filter_step2[j].k = arg_seccomp_error_action;
 	entries = j + 1;
 
 	// step 4: recalculate jumps

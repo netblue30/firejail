@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -861,19 +861,20 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 }
 
 char *guess_shell(void) {
-	char *shell = NULL;
+	const char *shell;
+	char *retval;
 	struct stat s;
 
-	shell = getenv("SHELL");
+	shell = env_get("SHELL");
 	if (shell) {
 		invalid_filename(shell, 0); // no globbing
 		if (!is_dir(shell) && strstr(shell, "..") == NULL && stat(shell, &s) == 0 && access(shell, X_OK) == 0 &&
 		    strcmp(shell, PATH_FIREJAIL) != 0)
-			return shell;
+			goto found;
 	}
 
 	// shells in order of preference
-	char *shells[] = {"/bin/bash", "/bin/csh", "/usr/bin/zsh", "/bin/sh", "/bin/ash", NULL };
+	static const char * const shells[] = {"/bin/bash", "/bin/csh", "/usr/bin/zsh", "/bin/sh", "/bin/ash", NULL };
 
 	int i = 0;
 	while (shells[i] != NULL) {
@@ -884,8 +885,11 @@ char *guess_shell(void) {
 		}
 		i++;
 	}
-
-	return shell;
+ found:
+	retval = strdup(shell);
+	if (!retval)
+		errExit("strdup");
+	return retval;
 }
 
 // return argument index
@@ -926,8 +930,12 @@ static void run_builder(int argc, char **argv) {
 	if (setresuid(-1, getuid(), getuid()) != 0)
 		errExit("setresuid");
 
+	assert(env_get("LD_PRELOAD") == NULL);
 	assert(getenv("LD_PRELOAD") == NULL);
 	umask(orig_umask);
+
+	// restore some environment variables
+	env_apply_whitelist_sbox();
 
 	argv[0] = LIBDIR "/firejail/fbuilder";
 	execvp(argv[0], argv);
@@ -994,6 +1002,16 @@ int main(int argc, char **argv, char **envp) {
 		exit(1);
 	}
 
+	// Stash environment variables
+	for (i = 0, ptr = envp; ptr && *ptr && i < MAX_ENVS; i++, ptr++)
+		env_store(*ptr, SETENV);
+
+	// sanity check for environment variables
+	if (i >= MAX_ENVS) {
+		fprintf(stderr, "Error: too many environment variables\n");
+		exit(1);
+	}
+
 	// sanity check for arguments
 	for (i = 0; i < argc; i++) {
 		if (*argv[i] == 0) {
@@ -1004,30 +1022,17 @@ int main(int argc, char **argv, char **envp) {
 			fprintf(stderr, "Error: too long arguments\n");
 			exit(1);
 		}
-		// Also remove requested environment variables
-		// entirely to avoid tripping the length check below
-		if (strncmp(argv[i], "--rmenv=", 8) == 0)
-			unsetenv(argv[i] + 8);
 	}
 
-	// sanity check for environment variables
-	for (i = 0, ptr = envp; ptr && *ptr && i < MAX_ENVS; i++, ptr++) {
-		if (strlen(*ptr) >= MAX_ENV_LEN) {
-			fprintf(stderr, "Error: too long environment variables, please use --rmenv\n");
-			exit(1);
-		}
-	}
-	if (i >= MAX_ENVS) {
-		fprintf(stderr, "Error: too many environment variables, please use --rmenv\n");
-		exit(1);
-	}
+	// Reapply a minimal set of environment variables
+	env_apply_whitelist();
 
 	// check if the user is allowed to use firejail
 	init_cfg(argc, argv);
 
 	// get starting timestamp, process --quiet
 	timetrace_start();
-	char *env_quiet = getenv("FIREJAIL_QUIET");
+	const char *env_quiet = env_get("FIREJAIL_QUIET");
 	if (check_arg(argc, argv, "--quiet", 1) || (env_quiet && strcmp(env_quiet, "yes") == 0))
 		arg_quiet = 1;
 
@@ -1037,7 +1042,7 @@ int main(int argc, char **argv, char **envp) {
 
 	// build /run/firejail directory structure
 	preproc_build_firejail_dir();
-	char *container_name = getenv("container");
+	const char *container_name = env_get("container");
 	if (!container_name || strcmp(container_name, "firejail")) {
 		lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
 		if (lockfd_directory != -1) {
@@ -1170,6 +1175,9 @@ int main(int argc, char **argv, char **envp) {
 
 							drop_privs(1);
 							umask(orig_umask);
+
+							// restore original environment variables
+							env_apply_all();
 							int rv = system(argv[2]);
 							exit(rv);
 						}

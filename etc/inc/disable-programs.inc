@@ -50,6 +50,7 @@ blacklist ${HOME}/.asunder_album_title
 blacklist ${HOME}/.atom
 blacklist ${HOME}/.attic
 blacklist ${HOME}/.audacity-data
+blacklist ${HOME}/.avidemux6
 blacklist ${HOME}/.balsa
 blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.bibletime
@@ -158,6 +159,7 @@ blacklist ${HOME}/.config/asunder
 blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/audacious
 blacklist ${HOME}/.config/autokey
+blacklist ${HOME}/.config/avidemux3_qt5rc
 blacklist ${HOME}/.config/aweather
 blacklist ${HOME}/.config/backintime
 blacklist ${HOME}/.config/baloofilerc
@@ -191,6 +193,7 @@ blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/com.github.bleakgrey.tootle
 blacklist ${HOME}/.config/corebird
 blacklist ${HOME}/.config/cower
+blacklist ${HOME}/.config/coyim
 blacklist ${HOME}/.config/darktable
 blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.config/deluge
@@ -275,6 +278,8 @@ blacklist ${HOME}/.config/katevirc
 blacklist ${HOME}/.config/kazam
 blacklist ${HOME}/.config/kdeconnect
 blacklist ${HOME}/.config/kdenliverc
+blacklist ${HOME}/.config/kdiff3fileitemactionrc
+blacklist ${HOME}/.config/kdiff3rc
 blacklist ${HOME}/.config/kfindrc
 blacklist ${HOME}/.config/kgetrc
 blacklist ${HOME}/.config/kid3rc
@@ -319,11 +324,13 @@ blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mps-youtube
 blacklist ${HOME}/.config/mpv
 blacklist ${HOME}/.config/mupen64plus
+blacklist ${HOME}/.config/mutt
 blacklist ${HOME}/.config/mutter
 blacklist ${HOME}/.config/mypaint
 blacklist ${HOME}/.config/nano
 blacklist ${HOME}/.config/nautilus
 blacklist ${HOME}/.config/nemo
+blacklist ${HOME}/.config/neomutt
 blacklist ${HOME}/.config/netsurf
 blacklist ${HOME}/.config/newsbeuter
 blacklist ${HOME}/.config/newsflash
@@ -341,6 +348,7 @@ blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage
 blacklist ${HOME}/.config/org.gabmus.gfeeds.json
+blacklist ${HOME}/.config/org.gabmus.gfeeds.saved_articles
 blacklist ${HOME}/.config/org.kde.gwenviewrc
 blacklist ${HOME}/.config/otter
 blacklist ${HOME}/.config/pavucontrol-qt
@@ -601,6 +609,7 @@ blacklist ${HOME}/.local/share/bibletime
 blacklist ${HOME}/.local/share/bijiben
 blacklist ${HOME}/.local/share/bohemiainteractive
 blacklist ${HOME}/.local/share/caja-python
+blacklist ${HOME}/.local/share/calligragemini
 blacklist ${HOME}/.local/share/cantata
 blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/clipit
@@ -856,7 +865,6 @@ blacklist ${HOME}/.yarncache
 blacklist ${HOME}/.yarnrc
 blacklist ${HOME}/.zoom
 blacklist /tmp/akonadi-*
-blacklist /tmp/ssh-*
 blacklist /tmp/.wine-*
 blacklist /var/games/nethack
 blacklist /var/games/slashem
@@ -912,6 +920,7 @@ blacklist ${HOME}/.cache/evolution
 blacklist ${HOME}/.cache/falkon
 blacklist ${HOME}/.cache/feedreader
 blacklist ${HOME}/.cache/flaska.net/trojita
+blacklist ${HOME}/.cache/folks
 blacklist ${HOME}/.cache/font-manager
 blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/fractal

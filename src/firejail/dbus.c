@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -329,7 +329,7 @@ void dbus_proxy_start(void) {
 			errExit("close");
 
 		if (arg_dbus_user == DBUS_POLICY_FILTER) {
-			char *user_env = getenv(DBUS_SESSION_BUS_ADDRESS_ENV);
+			const char *user_env = env_get(DBUS_SESSION_BUS_ADDRESS_ENV);
 			if (user_env == NULL) {
 				char *dbus_user_socket = find_user_socket();
 				write_arg(args_pipe[1], DBUS_SOCKET_PATH_PREFIX "%s",
@@ -350,7 +350,7 @@ void dbus_proxy_start(void) {
 		}
 
 		if (arg_dbus_system == DBUS_POLICY_FILTER) {
-			char *system_env = getenv(DBUS_SYSTEM_BUS_ADDRESS_ENV);
+			const char *system_env = env_get(DBUS_SYSTEM_BUS_ADDRESS_ENV);
 			if (system_env == NULL) {
 				write_arg(args_pipe[1],
 						  DBUS_SOCKET_PATH_PREFIX DBUS_SYSTEM_SOCKET);
@@ -435,8 +435,8 @@ static void socket_overlay(char *socket_path, char *proxy_path) {
 	close(fd);
 }
 
-static char *get_socket_env(const char *name) {
-	char *value = getenv(name);
+static const char *get_socket_env(const char *name) {
+	const char *value = env_get(name);
 	if (value == NULL)
 		return NULL;
 	if (strncmp(value, DBUS_SOCKET_PATH_PREFIX,
@@ -446,21 +446,13 @@ static char *get_socket_env(const char *name) {
 }
 
 void dbus_set_session_bus_env(void) {
-	if (setenv(DBUS_SESSION_BUS_ADDRESS_ENV,
-			DBUS_SOCKET_PATH_PREFIX RUN_DBUS_USER_SOCKET, 1) == -1) {
-		fprintf(stderr, "Error: cannot modify " DBUS_SESSION_BUS_ADDRESS_ENV
-						" required by --dbus-user\n");
-		exit(1);
-	}
+	env_store_name_val(DBUS_SESSION_BUS_ADDRESS_ENV,
+			   DBUS_SOCKET_PATH_PREFIX RUN_DBUS_USER_SOCKET, SETENV);
 }
 
 void dbus_set_system_bus_env(void) {
-	if (setenv(DBUS_SYSTEM_BUS_ADDRESS_ENV,
-			DBUS_SOCKET_PATH_PREFIX RUN_DBUS_SYSTEM_SOCKET, 1) == -1) {
-		fprintf(stderr, "Error: cannot modify " DBUS_SYSTEM_BUS_ADDRESS_ENV
-						" required by --dbus-system\n");
-		exit(1);
-	}
+	env_store_name_val(DBUS_SYSTEM_BUS_ADDRESS_ENV,
+			   DBUS_SOCKET_PATH_PREFIX RUN_DBUS_SYSTEM_SOCKET, SETENV);
 }
 
 static void disable_socket_dir(void) {
@@ -506,7 +498,7 @@ void dbus_apply_policy(void) {
 			errExit("asprintf");
 		disable_file_or_dir(dbus_user_socket2);
 
-		char *user_env = get_socket_env(DBUS_SESSION_BUS_ADDRESS_ENV);
+		const char *user_env = get_socket_env(DBUS_SESSION_BUS_ADDRESS_ENV);
 		if (user_env != NULL && strcmp(user_env, dbus_user_socket) != 0 &&
 			strcmp(user_env, dbus_user_socket2) != 0)
 			disable_file_or_dir(user_env);
@@ -535,7 +527,7 @@ void dbus_apply_policy(void) {
 
 		disable_file_or_dir(DBUS_SYSTEM_SOCKET);
 
-		char *system_env = get_socket_env(DBUS_SYSTEM_BUS_ADDRESS_ENV);
+		const char *system_env = get_socket_env(DBUS_SYSTEM_BUS_ADDRESS_ENV);
 		if (system_env != NULL && strcmp(system_env, DBUS_SYSTEM_SOCKET) != 0)
 			disable_file_or_dir(system_env);
 

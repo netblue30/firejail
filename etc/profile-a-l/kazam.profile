@@ -12,6 +12,7 @@ noblacklist ${PICTURES}
 noblacklist ${VIDEOS}
 noblacklist ${HOME}/.config/kazam
 
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
 

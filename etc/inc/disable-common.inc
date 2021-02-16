@@ -291,7 +291,15 @@ read-only ${HOME}/.zshrc
 read-only ${HOME}/.zshrc.local
 
 # Remote access
-read-only ${HOME}/.ssh/authorized_keys
+blacklist ${HOME}/.rhosts
+blacklist ${HOME}/.shosts
+blacklist ${HOME}/.ssh/authorized_keys
+blacklist ${HOME}/.ssh/authorized_keys2
+blacklist ${HOME}/.ssh/environment
+blacklist ${HOME}/.ssh/rc
+blacklist /etc/hosts.equiv
+read-only ${HOME}/.ssh/config
+read-only ${HOME}/.ssh/config.d
 
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc
@@ -347,6 +355,9 @@ read-only ${HOME}/.local/share/mime
 # Write-protection for thumbnailer dir
 read-only ${HOME}/.local/share/thumbnailers
 
+# prevent access to ssh-agent
+blacklist /tmp/ssh-*
+
 # top secret
 blacklist ${HOME}/*.kdb
 blacklist ${HOME}/*.kdbx
@@ -393,6 +404,7 @@ blacklist /etc/shadow
 blacklist /etc/shadow+
 blacklist /etc/shadow-
 blacklist /etc/ssh
+blacklist /etc/ssh/*
 blacklist /home/.ecryptfs
 blacklist /home/.fscrypt
 blacklist /var/backup

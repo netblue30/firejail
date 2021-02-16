@@ -11,15 +11,18 @@ ignore noexec ${HOME}
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.gnupg
-noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.subversion
 noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.config/git-cola
 # Put your editor,diff viewer config path below and uncomment to load settings
 # noblacklist ${HOME}/
 
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
+
+# Allow ssh (blacklisted by disable-common.inc)
+include allow-ssh.inc
 
 include disable-common.inc
 include disable-devel.inc

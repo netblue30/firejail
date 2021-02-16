@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2020 Firejail Authors
+ * Copyright (C) 2014-2021 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -41,7 +41,7 @@
 // Parse the DISPLAY environment variable and return a display number.
 // Returns -1 if DISPLAY is not set, or is set to anything other than :ddd.
 int x11_display(void) {
-	const char *display_str = getenv("DISPLAY");
+	const char *display_str = env_get("DISPLAY");
 	char *endp;
 	unsigned long display;
 
@@ -208,7 +208,7 @@ void x11_start_xvfb(int argc, char **argv) {
 	pid_t jail = 0;
 	pid_t server = 0;
 
-	setenv("FIREJAIL_X11", "yes", 1);
+	env_store_name_val("FIREJAIL_X11", "yes", SETENV);
 
 	// never try to run X servers as root!!!
 	if (getuid() == 0) {
@@ -326,7 +326,11 @@ void x11_start_xvfb(int argc, char **argv) {
 		if (arg_debug)
 			printf("Starting xvfb...\n");
 
+		// restore original environment variables
+		env_apply_all();
+
 		// running without privileges - see drop_privs call above
+		assert(env_get("LD_PRELOAD") == NULL);
 		assert(getenv("LD_PRELOAD") == NULL);
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
@@ -355,7 +359,7 @@ void x11_start_xvfb(int argc, char **argv) {
 	free(fname);
 
 	assert(display_str);
-	setenv("DISPLAY", display_str, 1);
+	env_store_name_val("DISPLAY", display_str, SETENV);
 	// run attach command
 	jail = fork();
 	if (jail < 0)
@@ -363,7 +367,11 @@ void x11_start_xvfb(int argc, char **argv) {
 	if (jail == 0) {
 		fmessage("\n*** Attaching to Xvfb display %d ***\n\n", display);
 
+		// restore original environment variables
+		env_apply_all();
+
 		// running without privileges - see drop_privs call above
+		assert(env_get("LD_PRELOAD") == NULL);
 		assert(getenv("LD_PRELOAD") == NULL);
 		execvp(jail_argv[0], jail_argv);
 		perror("execvp");
@@ -428,7 +436,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	if (newscreen)
 		xephyr_screen = newscreen;
 
-	setenv("FIREJAIL_X11", "yes", 1);
+	env_store_name_val("FIREJAIL_X11", "yes", SETENV);
 
 	// unfortunately, xephyr does a number of weird things when started by root user!!!
 	if (getuid() == 0) {
@@ -556,7 +564,11 @@ void x11_start_xephyr(int argc, char **argv) {
 		if (arg_debug)
 			printf("Starting xephyr...\n");
 
+		// restore original environment variables
+		env_apply_all();
+
 		// running without privileges - see drop_privs call above
+		assert(env_get("LD_PRELOAD") == NULL);
 		assert(getenv("LD_PRELOAD") == NULL);
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
@@ -585,7 +597,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	free(fname);
 
 	assert(display_str);
-	setenv("DISPLAY", display_str, 1);
+	env_store_name_val("DISPLAY", display_str, SETENV);
 	// run attach command
 	jail = fork();
 	if (jail < 0)
@@ -594,8 +606,12 @@ void x11_start_xephyr(int argc, char **argv) {
 		if (!arg_quiet)
 			printf("\n*** Attaching to Xephyr display %d ***\n\n", display);
 
+		// restore original environment variables
+		env_apply_all();
+
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
+		assert(env_get("LD_PRELOAD") == NULL);
 		execvp(jail_argv[0], jail_argv);
 		perror("execvp");
 		_exit(1);
@@ -780,8 +796,12 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 			dup2(fd_null,2);
 		}
 
+		// restore original environment variables
+		env_apply_all();
+
 		// running without privileges - see drop_privs call above
 		assert(getenv("LD_PRELOAD") == NULL);
+		assert(env_get("LD_PRELOAD") == NULL);
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		_exit(1);
@@ -827,7 +847,11 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 
 		fmessage("\n*** Attaching to xpra display %d ***\n\n", display);
 
+		// restore original environment variables
+		env_apply_all();
+
 		// running without privileges - see drop_privs call above
+		assert(env_get("LD_PRELOAD") == NULL);
 		assert(getenv("LD_PRELOAD") == NULL);
 		execvp(attach_argv[0], attach_argv);
 		perror("execvp");
@@ -835,7 +859,7 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 	}
 
 	assert(display_str);
-	setenv("DISPLAY", display_str, 1);
+	env_store_name_val("DISPLAY", display_str, SETENV);
 
 	// build jail command
 	char *firejail_argv[argc+2];
@@ -857,7 +881,12 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 		errExit("fork");
 	if (jail == 0) {
 		// running without privileges - see drop_privs call above
+		assert(env_get("LD_PRELOAD") == NULL);
 		assert(getenv("LD_PRELOAD") == NULL);
+
+		// restore original environment variables
+		env_apply_all();
+
 		if (firejail_argv[0])		  // shut up llvm scan-build
 			execvp(firejail_argv[0], firejail_argv);
 		perror("execvp");
@@ -883,7 +912,12 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 					dup2(fd_null,1);
 					dup2(fd_null,2);
 				}
+
+				// restore original environment variables
+				env_apply_all();
+
 				// running without privileges - see drop_privs call above
+				assert(env_get("LD_PRELOAD") == NULL);
 				assert(getenv("LD_PRELOAD") == NULL);
 				execvp(stop_argv[0], stop_argv);
 				perror("execvp");
@@ -1051,7 +1085,11 @@ static void __attribute__((noreturn)) x11_start_xpra_new(int argc, char **argv, 
 			dup2(fd_null,2);
 		}
 
+		// restore original environment variables
+		env_apply_all();
+
 		// running without privileges - see drop_privs call above
+		assert(env_get("LD_PRELOAD") == NULL);
 		assert(getenv("LD_PRELOAD") == NULL);
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
@@ -1072,7 +1110,7 @@ static void __attribute__((noreturn)) x11_start_xpra_new(int argc, char **argv, 
 void x11_start_xpra(int argc, char **argv) {
 	EUID_ASSERT();
 
-	setenv("FIREJAIL_X11", "yes", 1);
+	env_store_name_val("FIREJAIL_X11", "yes", SETENV);
 
 	// unfortunately, xpra does a number of weird things when started by root user!!!
 	if (getuid() == 0) {
@@ -1134,7 +1172,7 @@ void x11_xorg(void) {
 #ifdef HAVE_X11
 
 	// get DISPLAY env
-	char *display = getenv("DISPLAY");
+	const char *display = env_get("DISPLAY");
 	if (!display) {
 		fputs("Error: --x11=xorg requires an 'outer' X11 server to use.\n", stderr);
 		exit(1);
@@ -1259,7 +1297,7 @@ void x11_xorg(void) {
 	ASSERT_PERMS(dest, getuid(), getgid(), 0600);
 
 	// blacklist user .Xauthority file if it is not masked already
-	char *envar = getenv("XAUTHORITY");
+	const char *envar = env_get("XAUTHORITY");
 	if (envar) {
 		char *rp = realpath(envar, NULL);
 		if (rp) {
@@ -1269,8 +1307,7 @@ void x11_xorg(void) {
 		}
 	}
 	// set environment variable
-	if (setenv("XAUTHORITY", dest, 1) < 0)
-		errExit("setenv");
+	env_store_name_val("XAUTHORITY", dest, SETENV);
 	free(dest);
 
 	// mask RUN_XAUTHORITY_SEC_DIR
@@ -1391,7 +1428,7 @@ void x11_block(void) {
 		errExit("strdup");
 	profile_check_line(cmd, 0, NULL);
 	profile_add(cmd);
-	char *xauthority = getenv("XAUTHORITY");
+	const char *xauthority = env_get("XAUTHORITY");
 	if (xauthority) {
 		char *line;
 		if (asprintf(&line, "blacklist %s", xauthority) == -1)

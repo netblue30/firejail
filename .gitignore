@@ -38,6 +38,8 @@ src/fcopy/fcopy
 src/fldd/fldd
 src/fbuilder/fbuilder
 src/profstats/profstats
+src/bash_completion/firejail.bash_completion
+src/zsh_completion/_firejail
 uids.h
 seccomp
 seccomp.debug

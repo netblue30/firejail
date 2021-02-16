@@ -39,6 +39,7 @@ rm -rf %{buildroot}
 %{_datarootdir}/bash-completion/completions/__NAME__
 %{_datarootdir}/bash-completion/completions/firecfg
 %{_datarootdir}/bash-completion/completions/firemon
+%{_datarootdir}/zsh/site-functions/_firejail
 %{_docdir}/__NAME__
 %{_mandir}/man1/__NAME__.1.gz
 %{_mandir}/man1/firecfg.1.gz

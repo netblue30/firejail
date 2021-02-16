@@ -9,6 +9,17 @@ __interfaces(){
     cut -f 1 -d ':' /proc/net/dev | tail -n +3 | grep -v lo | xargs
 }
 
+_profiles() {
+    if [[ -d "$1" ]] ; then
+        ls -1 $1/*.profile 2>/dev/null | sed -E 's;^.*\/;;g'
+    fi
+}
+_all_profiles() {
+    local sys_profiles=$(_profiles _SYSCONFDIR_/firejail)
+    local user_profiles=$(_profiles $HOME/.config/firejail)
+    COMPREPLY=($(compgen -W "${sys_profiles} ${user_profiles}" -- "$cur"))
+}
+
 
 _firejail()
 {
@@ -20,7 +31,7 @@ _firejail()
             return 0
             ;;
         --profile)
-            _filedir
+            _all_profiles
             return 0
             ;;
         --hosts-file)

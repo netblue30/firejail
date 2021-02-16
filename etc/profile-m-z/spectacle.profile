@@ -46,6 +46,7 @@ nou2f
 novideo
 protocol unix
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 
@@ -53,7 +54,7 @@ disable-mnt
 private-bin spectacle
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.conf
+private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d
 private-tmp
 
 dbus-user filter

@@ -10,7 +10,9 @@ noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.local/share/gitg
-noblacklist ${HOME}/.ssh
+
+# Allow ssh (blacklisted by disable-common.inc)
+include allow-ssh.inc
 
 include disable-common.inc
 include disable-devel.inc

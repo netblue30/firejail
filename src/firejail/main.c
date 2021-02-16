@@ -1008,7 +1008,7 @@ int main(int argc, char **argv, char **envp) {
 
 	// sanity check for environment variables
 	if (i >= MAX_ENVS) {
-		fprintf(stderr, "Error: too many environment variables, please use --rmenv\n");
+		fprintf(stderr, "Error: too many environment variables\n");
 		exit(1);
 	}
 
@@ -1022,9 +1022,6 @@ int main(int argc, char **argv, char **envp) {
 			fprintf(stderr, "Error: too long arguments\n");
 			exit(1);
 		}
-		// Also remove requested environment variables
-		if (strncmp(argv[i], "--rmenv=", 8) == 0)
-			env_store(argv[i] + 8, RMENV);
 	}
 
 	// Reapply a minimal set of environment variables

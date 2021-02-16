@@ -51,9 +51,8 @@ tracelog
 
 disable-mnt
 #private-bin liferea
-private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-2.0,gtk-3.0,hostname,hosts,mime.types,nsswitch.conf,pki,pulse,resolv.conf,ssl,X11,xdg
+private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-2.0,gtk-3.0,hostname,hosts,login.defs,mime.types,nsswitch.conf,pki,pulse,resolv.conf,ssl,X11,xdg
 private-tmp
 
 dbus-user filter

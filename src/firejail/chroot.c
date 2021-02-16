@@ -171,7 +171,7 @@ void fs_chroot(const char *rootdir) {
 	free(proc);
 	close(fd);
 
-	// x11
+#ifdef HAVE_X11
 	// if users want this mount, they should set FIREJAIL_CHROOT_X11
 	if (env_get("FIREJAIL_X11") || env_get("FIREJAIL_CHROOT_X11")) {
 		if (arg_debug)
@@ -199,6 +199,7 @@ void fs_chroot(const char *rootdir) {
 		free(proc);
 		close(fd);
 	}
+#endif // HAVE_X11
 
 	// some older distros don't have a /run directory, create one by default
 	if (mkdirat(parentfd, "run", 0755) == -1 && errno != EEXIST)

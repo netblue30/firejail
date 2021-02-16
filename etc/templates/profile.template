@@ -211,7 +211,7 @@ include globals.local
 #dbus-system none
 
 ##env VAR=VALUE
+##join-or-start NAME
 #memory-deny-write-execute
 ##noexec PATH
 ##read-only ${HOME}
-##join-or-start NAME

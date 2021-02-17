@@ -176,8 +176,8 @@ include globals.local
 #private-etc FILES
 # private-etc templates (see also #1734, #2093)
 #  Common: alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg
-#  3D: bumblebee,drirc,glvnd,nvidia
 #    Extra: group,magic,magic.mgc,passwd
+#  3D: bumblebee,drirc,glvnd,nvidia
 #  Audio: alsa,asound.conf,machine-id,pulse
 #  D-Bus: dbus-1,machine-id
 #  GUI: fonts,pango,X11

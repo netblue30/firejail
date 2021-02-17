@@ -5,10 +5,12 @@ on:
     branches: [ master ]
     paths:
       - 'etc/**'
+      - 'contrib/sort.py'
   pull_request:
     branches: [ master ]
     paths:
       - 'etc/**'
+      - 'contrib/sort.py'
 
 jobs:
   profile-sort:

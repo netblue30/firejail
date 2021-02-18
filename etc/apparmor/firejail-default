@@ -126,6 +126,9 @@ signal (receive),
 # We let Firejail deal with capabilities, but ensure that
 # some AppArmor related capabilities will not be available.
 ##########
+capability checkpoint_restore,
+capability perfmon,
+capability bpf,
 capability chown,
 capability dac_override,
 capability dac_read_search,

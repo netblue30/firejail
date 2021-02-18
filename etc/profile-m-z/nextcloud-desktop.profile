@@ -13,9 +13,11 @@ noblacklist ${HOME}/.local/share/Nextcloud
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 
 mkdir ${HOME}/Nextcloud
 mkdir ${HOME}/.config/Nextcloud

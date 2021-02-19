@@ -8,9 +8,6 @@ include globals.local
 
 # Uncomment or put in your nextcloud-desktop.local to allow sync with Document directory.
 #noblacklist ${DOCUMENTS}
-noblacklist ${HOME}/Nextcloud
-noblacklist ${HOME}/.config/Nextcloud
-noblacklist ${HOME}/.local/share/Nextcloud
 
 include disable-common.inc
 include disable-devel.inc
@@ -60,6 +57,5 @@ private-dev
 private-tmp
 
 dbus-user filter
-dbus-user.own com.nextcloud.desktopclient.nextcloud
 dbus-user.talk org.freedesktop.secrets
 dbus-system none

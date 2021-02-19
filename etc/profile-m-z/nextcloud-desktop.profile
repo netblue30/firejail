@@ -59,4 +59,7 @@ private-cache
 private-dev
 private-tmp
 
+dbus-user filter
+dbus-user.own com.nextcloud.desktopclient.nextcloud
+dbus-user.talk org.freedesktop.secrets
 dbus-system none

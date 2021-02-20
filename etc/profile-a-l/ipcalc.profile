@@ -46,7 +46,7 @@ shell none
 
 disable-mnt
 private
-private-bin bash,sh,perl,ipcalc,ipcalc-ng
+private-bin bash,ipcalc,ipcalc-ng,perl,sh
 # private-cache
 private-dev
 # empty etc directory

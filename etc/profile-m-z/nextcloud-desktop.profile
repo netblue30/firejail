@@ -60,7 +60,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin nextcloud-desktop
+private-bin nextcloud,nextcloud-desktop
 private-cache
 private-dev
 private-tmp

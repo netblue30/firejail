@@ -23,13 +23,13 @@ endif
 
 COMPLETIONDIRS = src/zsh_completion src/bash_completion
 all: all_items mydirs $(MAN_TARGET) filters
-APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats
+APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailtest/jailtest
 SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/ftee/ftee
 SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter
 MYDIRS = src/lib $(MAN_SRC) $(COMPLETIONDIRS)
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 COMPLETIONS = src/zsh_completion/_firejail src/bash_completion/firejail.bash_completion
-MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
+MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5 jailtest.5
 SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
@@ -109,6 +109,8 @@ endif
 	install -m 0755 src/firemon/firemon $(DESTDIR)$(bindir)
 	# firecfg executable
 	install -m 0755 src/firecfg/firecfg $(DESTDIR)$(bindir)
+	# jailtest executable
+	install -m 0755 src/jailtest/jailtest $(DESTDIR)$(bindir)
 	# libraries and plugins
 	install -m 0755 -d $(DESTDIR)$(libdir)/firejail
 	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS) src/firecfg/firecfg.config
@@ -177,6 +179,7 @@ uninstall:
 	rm -f $(DESTDIR)$(bindir)/firemon
 	rm -f $(DESTDIR)$(bindir)/firecfg
 	rm -fr $(DESTDIR)$(libdir)/firejail
+	rm -fr $(DESTDIR)$(libdir)/jailtest
 	rm -fr $(DESTDIR)$(datarootdir)/doc/firejail
 	for man in $(MANPAGES); do \
 		rm -f $(DESTDIR)$(mandir)/man5/$$man*; \

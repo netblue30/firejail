@@ -1,0 +1,14 @@
+all: jailtest
+
+include ../common.mk
+
+%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/pid.h
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+
+jailtest: $(OBJS)
+	$(CC)  $(LDFLAGS) -o $@ $(OBJS)  ../lib/common.o ../lib/pid.o $(LIBS) $(EXTRA_LDFLAGS)
+
+clean:; rm -fr *.o jailtest *.gcov *.gcda *.gcno *.plist
+
+distclean: clean
+	rm -fr Makefile

@@ -1,4 +1,4 @@
-all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-profile.man firemon.man
+all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-profile.man firemon.man jailtest.man
 include ../common.mk
 
 %.man: %.txt

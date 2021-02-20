@@ -234,7 +234,8 @@ AC_CONFIG_FILES([mkdeb.sh], [chmod +x mkdeb.sh])
 AC_OUTPUT(Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile \
 src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile \
 src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile \
-src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile)
+src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile \
+src/jailtest/Makefile)
 
 echo
 echo "Configuration options:"

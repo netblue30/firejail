@@ -198,7 +198,84 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 Milestone page: https://github.com/netblue30/firejail/milestone/1
 Release discussion: https://github.com/netblue30/firejail/issues/3696
 
+### jailtest
+`````
+JAILTEST(1)                    JAILTEST man page                   JAILTEST(1)
 
+NAME
+       jailtest - Simple utility program to test running sandboxes
+
+SYNOPSIS
+       sudo jailtest [OPTIONS] [directory]
+
+DESCRIPTION
+       WORK IN PROGRESS!  jailtest attaches itself to all sandboxes started by
+       the user and performs some basic tests on the sandbox filesystem:
+
+       1. Virtual directories
+              jailtest extracts a list with the main virtual  directories  in‐
+              stalled by the sandbox.  These directories are build by firejail
+              at startup using --private* and --whitelist commands.
+
+       2. Noexec test
+              jailtest inserts executable programs  in  /home/username,  /tmp,
+              and  /var/tmp  directories and tries to run them form inside the
+              sandbox, thus testing if the directory is executable or not.
+
+       3. Read access test
+              jailtest creates test files in the directories specified by  the
+              user and tries to read them from inside the sandbox.
+
+       The program is running as root exclusively under sudo.
+
+OPTIONS
+       --debug
+              Print debug messages
+
+       -?, --help
+              Print options end exit.
+
+       --version
+              Print program version and exit.
+
+       [directory]
+              One or more directories in user home to test for read access.
+
+OUTPUT
+       For each sandbox detected we print the following line:
+
+            PID:USER:Sandbox Name:Command
+
+       It is followed by relevant sandbox information, such as the virtual di‐
+       rectories and various warnings.
+
+EXAMPLE
+       $ sudo jailtest ~/.ssh ~/.gnupg
+       1429:netblue::/usr/bin/firejail /opt/firefox/firefox
+          Virtual dirs: /home/netblue, /tmp, /var/tmp, /dev, /etc,
+       5602:netblue::/usr/bin/firejail /usr/bin/ssh netblue@x.y.z.net
+          Virtual dirs: /var/tmp, /dev,
+          Warning: I can read ~/.ssh
+       5926:netblue::/usr/bin/firejail /usr/bin/gimp-2.10
+          Virtual dirs: /tmp, /var/tmp, /dev,
+          Warning: I can run programs in /home/netblue
+       6394:netblue:libreoffice:/usr/bin/firejail libreoffice
+          Virtual dirs: /tmp, /var/tmp, /dev,
+
+LICENSE
+       This program is free software; you can redistribute it and/or modify it
+       under  the  terms of the GNU General Public License as published by the
+       Free Software Foundation; either version 2 of the License, or (at  your
+       option) any later version.
+
+       Homepage: https://firejail.wordpress.com
+
+SEE ALSO
+       firejail(1),  firecfg(1),  firejail-profile(5), firejail-login(5) fire‐
+       jail-users(5)
+
+0.9.65                             Feb 2021                        JAILTEST(1)
+`````
 
 ### Profile Statistics
 

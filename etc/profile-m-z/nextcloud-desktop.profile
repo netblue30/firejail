@@ -6,8 +6,14 @@ include nextcloud-desktop.local
 # Persistent global definitions
 include globals.local
 
-# Uncomment or put in your nextcloud-desktop.local to allow sync with Document directory.
+noblacklist ${HOME}/Nextcloud
+noblacklist ${HOME}/.config/Nextcloud
+noblacklist ${HOME}/.local/share/Nextcloud
+# Uncomment or put in your nextcloud-desktop.local to allow sync with more directories.
 #noblacklist ${DOCUMENTS}
+#noblacklist ${MUSIC}
+#noblacklist ${PICTURES}
+#noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,11 +27,14 @@ include disable-xdg.inc
 mkdir ${HOME}/Nextcloud
 mkdir ${HOME}/.config/Nextcloud
 mkdir ${HOME}/.local/share/Nextcloud
-# Uncomment or put in your nextcloud-desktop.local to allow sync with Document directory.
-#whitelist ${DOCUMENTS}
 whitelist ${HOME}/Nextcloud
 whitelist ${HOME}/.config/Nextcloud
 whitelist ${HOME}/.local/share/Nextcloud
+# Uncomment or put in your nextcloud-desktop.local to allow sync with more directories.
+#whitelist ${DOCUMENTS}
+#whitelist ${MUSIC}
+#whitelist ${PICTURES}
+#whitelist ${VIDEOS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

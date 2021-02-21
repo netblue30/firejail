@@ -3,7 +3,7 @@
 # Copyright (C) 2014-2020 Firejail Authors
 # License GPL v2
 
-echo "Calculationg SHA256 for all files in /transfer - firejail version $1"
+echo "Calculating SHA256 for all files in /transfer - firejail version $1"
 
 cd /transfer
 sha256sum * > firejail-$1-unsigned

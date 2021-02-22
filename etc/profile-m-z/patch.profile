@@ -43,7 +43,7 @@ x11 none
 
 private-bin patch,red
 private-dev
-private-lib libfakeroot
+private-lib libdl.so.*,libfakeroot
 
 dbus-user none
 dbus-system none

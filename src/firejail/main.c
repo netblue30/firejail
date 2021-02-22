@@ -38,6 +38,8 @@
 #include <time.h>
 #include <net/if.h>
 #include <sys/utsname.h>
+#include <sys/socket.h>
+#include <sys/un.h>
 
 #include <fcntl.h>
 #ifndef O_PATH
@@ -970,6 +972,136 @@ static int check_postexec(const char *list) {
 	return 0;
 }
 
+static int read_args(int *argcp, char **argv)
+{
+	struct msghdr msghdr;
+	struct iovec iovec;
+	struct ucred *ucred;
+	union {
+		struct cmsghdr cmsghdr;
+		uint8_t buf[CMSG_SPACE(sizeof(struct ucred))];
+	} control;
+	size_t len;
+	char *buf, *ptr;
+	int orig_argc = *argcp, i;
+
+	memset(&control, 0, sizeof(control));
+	memset(&msghdr, 0, sizeof(msghdr));
+
+	buf = calloc(MAX_ARGS * PATH_MAX + 1, 1);
+	if (!buf)
+		errExit("calloc");
+
+	iovec.iov_base = buf;
+	iovec.iov_len = MAX_ARGS * PATH_MAX;
+	msghdr.msg_iov = &iovec;
+	msghdr.msg_iovlen = 1;
+	msghdr.msg_control = &control;
+	msghdr.msg_controllen = sizeof(control);
+
+	len = recvmsg(3, &msghdr, 0);
+	if (len == -1 || len == 0 ||
+	    msghdr.msg_controllen < CMSG_LEN(sizeof(struct ucred)) ||
+	    control.cmsghdr.cmsg_level != SOL_SOCKET ||
+	    control.cmsghdr.cmsg_type != SCM_CREDENTIALS ||
+	    control.cmsghdr.cmsg_len != CMSG_LEN(sizeof(struct ucred)))
+		errExit("recvmsg");
+
+	ucred = (struct ucred*) CMSG_DATA(&control.cmsghdr);
+
+	firejail_uid = ucred->uid;
+	firejail_gid = ucred->gid;
+	if (setresgid(firejail_gid, firejail_gid, -1) == -1)
+		errExit("setresgid");
+
+	if (setresuid(firejail_gid, firejail_uid, -1) == -1)
+		errExit("setresuid");
+
+	// Prepare argc and argv
+	*argcp = *(int *)buf;
+
+	if (*argcp <= 0 || *argcp > MAX_ARGS)
+		errExit("argc");
+	//printf("argc %d\n", *argcp);
+
+	ptr = &buf[sizeof(int)];
+	for (i = 0; i < *argcp; i++) {
+		if (i > 0)
+			argv[i] = ptr;
+		ptr += strlen(ptr) + 1;
+		//printf("argv[%d]: %s, len %zd\n", i, argv[i], strlen(argv[i]));
+	}
+	for (i = *argcp; i < orig_argc; i++)
+		argv[i] = 0;
+	return 0;
+}
+
+static int send_args(int argc, char **argv)
+{
+	struct msghdr msghdr;
+	struct iovec *iovecs;
+	struct ucred *ucred;
+	union {
+		struct cmsghdr cmsghdr;
+		uint8_t buf[CMSG_SPACE(sizeof(struct ucred))];
+	} control;
+	size_t len;
+	char *args;
+	int fd, r, i, j;
+	struct sockaddr_un sa;
+	int iov_argc;
+
+	memset(&sa, 0, sizeof(sa));
+	memset(&control, 0, sizeof(control));
+	memset(&msghdr, 0, sizeof(msghdr));
+	fd = socket(AF_UNIX, SOCK_STREAM | SOCK_CLOEXEC, 0);
+	if (fd < 0)
+		errExit("socket");
+
+	sa.sun_family = AF_UNIX;
+	strncpy(sa.sun_path, "/run/firejail/firejail.socket", sizeof(sa.sun_path) - 1);
+        r = connect(fd, &sa, sizeof(struct sockaddr_un));
+        if (r < 0)
+		errExit("connect");
+
+	iovecs = calloc(sizeof(struct iovec), argc);
+	if (!iovecs)
+		errExit("calloc");
+
+	// Send argc and argv strings, except for --send-socket
+	iov_argc = argc - 1;
+	iovecs[0].iov_base = &iov_argc;
+	iovecs[0].iov_len = sizeof(int);
+
+	j = 1;
+	for (i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "--send-socket") == 0)
+			continue;
+		iovecs[j].iov_base = argv[i];
+		iovecs[j].iov_len = strlen(argv[i]) + 1;
+		j++;
+	}
+
+	msghdr.msg_iov = iovecs;
+	msghdr.msg_iovlen = j;
+	msghdr.msg_control = &control;
+	msghdr.msg_controllen = sizeof(control);
+
+	control.cmsghdr.cmsg_level = SOL_SOCKET;
+	control.cmsghdr.cmsg_type = SCM_CREDENTIALS;
+	control.cmsghdr.cmsg_len = CMSG_LEN(sizeof(struct ucred));;
+
+	ucred = (struct ucred*) CMSG_DATA(&control.cmsghdr);
+	ucred->uid = getuid();
+	ucred->gid = getgid();
+	ucred->pid = getpid();
+
+	len = sendmsg(fd, &msghdr, 0);
+	if (len == -1 || len == 0)
+		errExit("sendmsg");
+	return 0;
+}
+
 //*******************************************
 // Main program
 //*******************************************
@@ -989,8 +1121,11 @@ int main(int argc, char **argv, char **envp) {
 	// check standard streams before printing anything
 	fix_std_streams();
 
-	// drop permissions by default and rise them when required
-	EUID_INIT();
+	if (argc == 2 && strcmp(argv[1], "--socket-activation") == 0)
+		read_args(&argc, argv);
+	else
+		// drop permissions by default and rise them when required
+		EUID_INIT();
 	EUID_USER();
 
 	// argument count should be larger than 0
@@ -1035,6 +1170,9 @@ int main(int argc, char **argv, char **envp) {
 	const char *env_quiet = env_get("FIREJAIL_QUIET");
 	if (check_arg(argc, argv, "--quiet", 1) || (env_quiet && strcmp(env_quiet, "yes") == 0))
 		arg_quiet = 1;
+
+	if (check_arg(argc, argv, "--send-socket", 1))
+		return send_args(argc, argv);
 
 	// cleanup at exit
 	EUID_ROOT();

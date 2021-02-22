@@ -314,4 +314,4 @@ Stats:
 
 ### New profiles:
 
-vmware-view, display-im6.q16, ipcalc, ipcalc-ng
+vmware-view, display-im6.q16, ipcalc, ipcalc-ng, ebook-convert, ebook-edit, ebook-meta, ebook-polish

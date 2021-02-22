@@ -188,6 +188,17 @@ void fs_private_dir_copy(const char *private_dir, const char *private_run_dir, c
 }
 
 void fs_private_dir_mount(const char *private_dir, const char *private_run_dir) {
+	assert(private_dir);
+	assert(private_run_dir);
+
+	// nothing to do if directory does not exist
+	struct stat s;
+	if (stat(private_dir, &s) == -1) {
+		if (arg_debug)
+			printf("Cannot find %s\n", private_dir);
+		return;
+	}
+
 	if (arg_debug)
 		printf("Mount-bind %s on top of %s\n", private_run_dir, private_dir);
 	if (mount(private_run_dir, private_dir, NULL, MS_BIND|MS_REC, NULL) < 0)

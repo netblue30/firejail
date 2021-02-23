@@ -19,9 +19,12 @@ and tries to run them form inside the sandbox, thus testing if the directory is 
 \fB3. Read access test
 jailtest creates test files in the directories specified by the user and tries to read
 them from inside the sandbox.
-
 .TP
-The program is running as root exclusively under sudo.
+\fB4. AppArmor test
+.TP
+\fB5. Seccomp test
+.TP
+The program is started as root using sudo.
 
 .SH OPTIONS
 .TP
@@ -35,7 +38,7 @@ Print options end exit.
 Print program version and exit.
 .TP
 \fB[directory]
-One or more directories in user home to test for read access.
+One or more directories in user home to test for read access. ~/.ssh and ~/.gnupg are tested by default.
 
 .SH OUTPUT
 For each sandbox detected we print the following line:
@@ -46,37 +49,58 @@ It is followed by relevant sandbox information, such as the virtual directories 
 
 .SH EXAMPLE
 
+$ sudo jailtest
 .br
-$ sudo jailtest ~/.ssh ~/.gnupg
+2014:netblue::firejail /usr/bin/gimp
 .br
-1429:netblue::/usr/bin/firejail /opt/firefox/firefox
-.br
-   Virtual dirs: /home/netblue, /tmp, /var/tmp, /dev, /etc,
-.br
-5602:netblue::/usr/bin/firejail /usr/bin/ssh netblue@x.y.z.net
-.br
-   Virtual dirs: /var/tmp, /dev,
-.br
-   Warning: I can read ~/.ssh
-.br
-5926:netblue::/usr/bin/firejail /usr/bin/gimp-2.10
-.br
-   Virtual dirs: /tmp, /var/tmp, /dev,
+   Virtual dirs: /tmp, /var/tmp, /dev, /usr/share,
 .br
    Warning: I can run programs in /home/netblue
 .br
-6394:netblue:libreoffice:/usr/bin/firejail libreoffice
+
+.br
+2055:netblue::firejail /usr/bin/ssh -X netblue@x.y.z.net
+.br
+   Virtual dirs: /var/tmp, /dev, /usr/share, /run/user/1000,
+.br
+   Warning: I can read ~/.ssh
+.br
+
+.br
+2186:netblue:libreoffice:firejail --appimage /opt/LibreOffice-fresh.appimage
 .br
    Virtual dirs: /tmp, /var/tmp, /dev,
 .br
+
+.br
+26090:netblue::/usr/bin/firejail /opt/firefox/firefox
+.br
+   Virtual dirs: /home/netblue, /tmp, /var/tmp, /dev, /etc, /usr/share,
+.br
+                 /run/user/1000,
+.br
+
+.br
+26160:netblue:tor:firejail --private=~/tor-browser_en-US ./start-tor
+.br
+   Warning: AppArmor not enabled
+.br
+   Virtual dirs: /home/netblue, /tmp, /var/tmp, /dev, /etc, /bin,
+.br
+                 /usr/share, /run/user/1000,
+.br
+   Warning: I can run programs in /home/netblue
+.br
+
 
 .SH LICENSE
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 .PP
 Homepage: https://firejail.wordpress.com
 .SH SEE ALSO
-\&\flfirejail\fR\|(1),
-\&\flfirecfg\fR\|(1),
-\&\flfirejail-profile\fR\|(5),
-\&\flfirejail-login\fR\|(5)
-\&\flfirejail-users\fR\|(5)
+.BR firejail (1),
+.BR firemon (1),
+.BR firecfg (1),
+.BR firejail-profile (5),
+.BR firejail-login (5),
+.BR firejail-users (5),

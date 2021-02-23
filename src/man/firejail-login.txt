@@ -34,8 +34,9 @@ Firejail is free software; you can redistribute it and/or modify it under the te
 .PP
 Homepage: https://firejail.wordpress.com
 .SH SEE ALSO
-\&\flfirejail\fR\|(1),
-\&\flfiremon\fR\|(1),
-\&\flfirecfg\fR\|(1),
-\&\flfirejail-profile\fR\|(5)
-\&\flfirejail-users\fR\|(5)
+.BR firejail (1),
+.BR firemon (1),
+.BR firecfg (1),
+.BR firejail-profile (5),
+.BR firejail-users (5),
+.BR jailtest (1)

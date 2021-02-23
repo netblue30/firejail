@@ -1,4 +1,24 @@
+/*
+ * Copyright (C) 2014-2021 Firejail Authors
+ *
+ * This file is part of firejail project
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
 #include "jailtest.h"
+#include "../include/pid.h"
 #include <errno.h>
 #include <pwd.h>
 #include <dirent.h>
@@ -38,87 +58,45 @@ errexit:
 	exit(1);
 }
 
-int find_child(pid_t parent, pid_t *child) {
-	*child = 0;				  // use it to flag a found child
+// find the second child process for the specified pid
+// return -1 if not found
+//
+// Example:
+//14776:netblue:/usr/bin/firejail /usr/bin/transmission-qt
+//  14777:netblue:/usr/bin/firejail /usr/bin/transmission-qt
+//    14792:netblue:/usr/bin/transmission-qt
+// We need 14792, the first real sandboxed process
+// duplicate from src/firemon/main.c
+int find_child(int id) {
+	int i;
+	int first_child = -1;
 
-	DIR *dir;
-	if (!(dir = opendir("/proc"))) {
-		// sleep 2 seconds and try again
-		sleep(2);
-		if (!(dir = opendir("/proc"))) {
-			fprintf(stderr, "Error: cannot open /proc directory\n");
-			exit(1);
-		}
-	}
-
-	struct dirent *entry;
-	char *end;
-	while (*child == 0 && (entry = readdir(dir))) {
-		pid_t pid = strtol(entry->d_name, &end, 10);
-		if (end == entry->d_name || *end)
-			continue;
-		if (pid == parent)
-			continue;
-
-		// open stat file
-		char *file;
-		if (asprintf(&file, "/proc/%u/status", pid) == -1) {
-			perror("asprintf");
-			exit(1);
-		}
-		FILE *fp = fopen(file, "r");
-		if (!fp) {
-			free(file);
-			continue;
-		}
-
-		// look for firejail executable name
-		char buf[BUFLEN];
-		while (fgets(buf, BUFLEN - 1, fp)) {
-			if (strncmp(buf, "PPid:", 5) == 0) {
-				char *ptr = buf + 5;
-				while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
-					ptr++;
-				}
-				if (*ptr == '\0') {
-					fprintf(stderr, "Error: cannot read /proc file\n");
-					exit(1);
-				}
-				if (parent == atoi(ptr)) {
-					// we don't want /usr/bin/xdg-dbus-proxy!
-					char *cmdline = pid_proc_cmdline(pid);
-					if (strncmp(cmdline, XDG_DBUS_PROXY_PATH, strlen(XDG_DBUS_PROXY_PATH)) != 0)
-						*child = pid;
-					free(cmdline);
-				}
-				break;		  // stop reading the file
+	// find the first child
+	for (i = 0; i < max_pids; i++) {
+		if (pids[i].level == 2 && pids[i].parent == id) {
+			// skip /usr/bin/xdg-dbus-proxy (started by firejail for dbus filtering)
+			char *cmdline = pid_proc_cmdline(i);
+			if (strncmp(cmdline, XDG_DBUS_PROXY_PATH, strlen(XDG_DBUS_PROXY_PATH)) == 0) {
+				free(cmdline);
+				continue;
 			}
-		}
-		fclose(fp);
-		free(file);
-	}
-	closedir(dir);
-	return (*child)? 0:1;			  // 0 = found, 1 = not found
-}
-
-pid_t switch_to_child(pid_t pid) {
-	pid_t rv = pid;
-	errno = 0;
-	char *comm = pid_proc_comm(pid);
-	if (!comm) {
-		if (errno == ENOENT)
-			fprintf(stderr, "Error: cannot find process with pid %d\n", pid);
-		else
-			fprintf(stderr, "Error: cannot read /proc file\n");
-		exit(1);
-	}
-
-	if (strcmp(comm, "firejail") == 0) {
-		if (find_child(pid, &rv) == 1) {
-			fprintf(stderr, "Error: no valid sandbox\n");
-			exit(1);
+			free(cmdline);
+			first_child = i;
+			break;
 		}
 	}
-	free(comm);
-	return rv;
+
+	if (first_child == -1)
+		return -1;
+
+	// find the second-level child
+	for (i = 0; i < max_pids; i++) {
+		if (pids[i].level == 3 && pids[i].parent == first_child)
+			return i;
+	}
+
+	// if a second child is not found, return the first child pid
+	// this happens for processes sandboxed with --join
+	return first_child;
 }
+

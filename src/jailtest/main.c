@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2014-2021 Firejail Authors
+ *
+ * This file is part of firejail project
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
 #include "jailtest.h"
 #include "../include/firejail_user.h"
 #include "../include/pid.h"
@@ -7,6 +26,7 @@ uid_t user_uid = 0;
 gid_t user_gid = 0;
 char *user_name = NULL;
 char *user_home_dir = NULL;
+char *user_run_dir = NULL;
 int arg_debug = 0;
 
 static char *usage_str =
@@ -73,9 +93,13 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "Error: root user not supported\n");
 		exit(1);
 	}
+	if (asprintf(&user_run_dir, "/run/user/%d", user_uid) == -1)
+		errExit("asprintf");
 
 	// test setup
 	atexit(cleanup);
+	access_setup("~/.ssh");
+	access_setup("~/.gnupg");
 	if (findex > 0) {
 		for (i = findex; i < argc; i++)
 			access_setup(argv[i]);
@@ -88,6 +112,10 @@ int main(int argc, char **argv) {
 	virtual_setup("/dev");
 	virtual_setup("/etc");
 	virtual_setup("/bin");
+	virtual_setup("/usr/share");
+	virtual_setup(user_run_dir);
+
+
 
 	// print processes
 	pid_read(0);
@@ -98,8 +126,12 @@ int main(int argc, char **argv) {
 				continue;
 
 			// in case the pid is that of a firejail process, use the pid of the first child process
-			uid_t pid = switch_to_child(i);
+			uid_t pid = find_child(i);
+			printf("\n");
 			pid_print_list(i, 0); //  no wrapping
+			apparmor_test(pid);
+			seccomp_test(pid);
+			fflush(0);
 
 			pid_t child = fork();
 			if (child == -1)
@@ -111,6 +143,7 @@ int main(int argc, char **argv) {
 					noexec_test(user_home_dir);
 					noexec_test("/tmp");
 					noexec_test("/var/tmp");
+					noexec_test(user_run_dir);
 					access_test();
 				}
 				else {

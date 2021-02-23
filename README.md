@@ -226,7 +226,11 @@ DESCRIPTION
               jailtest creates test files in the directories specified by  the
               user and tries to read them from inside the sandbox.
 
-       The program is running as root exclusively under sudo.
+       4. AppArmor test
+
+       5. Seccomp test
+
+       The program is started as root using sudo.
 
 OPTIONS
        --debug
@@ -239,7 +243,8 @@ OPTIONS
               Print program version and exit.
 
        [directory]
-              One or more directories in user home to test for read access.
+              One  or  more  directories in user home to test for read access.
+              ~/.ssh and ~/.gnupg are tested by default.
 
 OUTPUT
        For each sandbox detected we print the following line:
@@ -250,17 +255,28 @@ OUTPUT
        rectories and various warnings.
 
 EXAMPLE
-       $ sudo jailtest ~/.ssh ~/.gnupg
-       1429:netblue::/usr/bin/firejail /opt/firefox/firefox
-          Virtual dirs: /home/netblue, /tmp, /var/tmp, /dev, /etc,
-       5602:netblue::/usr/bin/firejail /usr/bin/ssh netblue@x.y.z.net
-          Virtual dirs: /var/tmp, /dev,
-          Warning: I can read ~/.ssh
-       5926:netblue::/usr/bin/firejail /usr/bin/gimp-2.10
-          Virtual dirs: /tmp, /var/tmp, /dev,
+       $ sudo jailtest
+       2014:netblue::firejail /usr/bin/gimp
+          Virtual dirs: /tmp, /var/tmp, /dev, /usr/share,
           Warning: I can run programs in /home/netblue
-       6394:netblue:libreoffice:/usr/bin/firejail libreoffice
+
+       2055:netblue::firejail /usr/bin/ssh -X netblue@x.y.z.net
+          Virtual dirs: /var/tmp, /dev, /usr/share, /run/user/1000,
+          Warning: I can read ~/.ssh
+
+       2186:netblue:libreoffice:firejail --appimage /opt/LibreOffice-fresh.ap‐
+       pimage
           Virtual dirs: /tmp, /var/tmp, /dev,
+
+       26090:netblue::/usr/bin/firejail /opt/firefox/firefox
+          Virtual dirs: /home/netblue, /tmp, /var/tmp, /dev, /etc, /usr/share,
+                        /run/user/1000,
+
+       26160:netblue:tor:firejail --private=~/tor-browser_en-US ./start-tor
+          Warning: AppArmor not enabled
+          Virtual dirs: /home/netblue, /tmp, /var/tmp, /dev, /etc, /bin,
+                        /usr/share, /run/user/1000,
+          Warning: I can run programs in /home/netblue
 
 LICENSE
        This program is free software; you can redistribute it and/or modify it
@@ -271,8 +287,8 @@ LICENSE
        Homepage: https://firejail.wordpress.com
 
 SEE ALSO
-       firejail(1),  firecfg(1),  firejail-profile(5), firejail-login(5) fire‐
-       jail-users(5)
+       firejail(1),  firemon(1), firecfg(1), firejail-profile(5), firejail-lo‐
+       gin(5), firejail-users(5),
 
 0.9.65                             Feb 2021                        JAILTEST(1)
 `````
@@ -287,28 +303,28 @@ $ ./profstats *.profile
 Warning: multiple caps in transmission-daemon.profile
 
 Stats:
-    profiles			1064
-    include local profile	1064   (include profile-name.local)
-    include globals		1064   (include globals.local)
-    blacklist ~/.ssh		959   (include disable-common.inc)
-    seccomp			975
-    capabilities		1063
-    noexec			944   (include disable-exec.inc)
-    memory-deny-write-execute	229
-    apparmor			605
-    private-bin			564
-    private-dev			932
-    private-etc			462
-    private-tmp			823
-    whitelist home directory	502
-    whitelist var		744   (include whitelist-var-common.inc)
-    whitelist run/user		461   (include whitelist-runuser-common.inc
+    profiles			1077
+    include local profile	1077   (include profile-name.local)
+    include globals		1077   (include globals.local)
+    blacklist ~/.ssh		971   (include disable-common.inc)
+    seccomp			988
+    capabilities		1076
+    noexec			960   (include disable-exec.inc)
+    memory-deny-write-execute	231
+    apparmor			621
+    private-bin			571
+    private-dev			949
+    private-etc			470
+    private-tmp			835
+    whitelist home directory	508
+    whitelist var		758   (include whitelist-var-common.inc)
+    whitelist run/user		539   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		451   (include whitelist-usr-share-common.inc
-    net none			345
-    dbus-user none 		564
-    dbus-user filter 		85
-    dbus-system none 		696
+    whitelist usr/share		526   (include whitelist-usr-share-common.inc
+    net none			354
+    dbus-user none 		573
+    dbus-user filter 		86
+    dbus-system none 		706
     dbus-system filter 		7
 ```
 

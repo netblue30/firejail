@@ -17,42 +17,24 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#ifndef JAILTEST_H
-#define JAILTEST_H
+#include "jailtest.h"
 
-#include "../include/common.h"
+#ifdef HAVE_APPARMOR
+#include <sys/apparmor.h>
 
-// main.c
-extern uid_t user_uid;
-extern gid_t user_gid;
-extern char *user_name;
-extern char *user_home_dir;
-extern char *user_run_dir;
+void apparmor_test(pid_t pid) {
+	char *label = NULL;
+	char *mode = NULL;
+	int rv = aa_gettaskcon(pid, &label, &mode);
+	if (rv == -1 || mode == NULL)
+		printf("   Warning: AppArmor not enabled\n");
+}
 
-// access.c
-void access_setup(const char *directory);
-void access_test(void);
-void access_destroy(void);
 
-// noexec.c
-void noexec_setup(void);
-void noexec_test(const char *msg);
-
-// virtual.c
-void virtual_setup(const char *directory);
-void virtual_destroy(void);
-void virtual_test(void);
-
-// apparmor.c
-void apparmor_test(pid_t pid);
-
-// seccomp.c
-void seccomp_test(pid_t pid);
-
-// utils.c
-char *get_sudo_user(void);
-char *get_homedir(const char *user, uid_t *uid, gid_t *gid);
-int find_child(pid_t pid);
-pid_t switch_to_child(pid_t pid);
-
+#else
+void apparmor_test(uid_t pid) {
+	(void) pid;
+	return;
+}
 #endif
+

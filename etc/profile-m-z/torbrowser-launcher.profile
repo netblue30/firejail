@@ -15,6 +15,9 @@ noblacklist ${HOME}/.local/share/torbrowser
 include allow-python2.inc
 include allow-python3.inc
 
+blacklist /opt
+blacklist /srv
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -30,6 +33,8 @@ whitelist ${HOME}/.config/torbrowser
 whitelist ${HOME}/.local/share/torbrowser
 include whitelist-common.inc
 include whitelist-var-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 
 # Uncomment the line below or put 'apparmor' in your torbrowser-launcher.local.
 # IMPORTANT: the relevant rule in /etc/apparmor.d/local/firejail-default will need

@@ -24,6 +24,7 @@ whitelist ${RUNUSER}/keyring/ssh
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
 
+apparmor
 caps.drop all
 ipc-namespace
 netfilter

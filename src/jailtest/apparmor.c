@@ -32,7 +32,7 @@ void apparmor_test(pid_t pid) {
 
 
 #else
-void apparmor_test(uid_t pid) {
+void apparmor_test(pid_t pid) {
 	(void) pid;
 	return;
 }

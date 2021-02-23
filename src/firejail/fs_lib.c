@@ -28,6 +28,7 @@
 #define MAXBUF 4096
 
 extern void fslib_install_stdc(void);
+extern void fslib_install_firejail(void);
 extern void fslib_install_system(void);
 
 static int lib_cnt = 0;
@@ -141,14 +142,11 @@ void fslib_duplicate(const char *full_path) {
 // requires full path for lib
 // it could be a library or an executable
 // lib is not copied, only libraries used by it
-void fslib_copy_libs(const char *full_path) {
-	assert(full_path);
-	if (arg_debug || arg_debug_private_lib)
-		printf("    fslib_copy_libs %s\n", full_path);
-
+static void fslib_copy_libs(const char *full_path, unsigned mask) {
 	// if library/executable does not exist or the user does not have read access to it
 	// print a warning and exit the function.
-	if (access(full_path, R_OK)) {
+	if (((mask & SBOX_USER) && access(full_path, R_OK)) ||
+	    ((mask & SBOX_ROOT) && access(full_path, F_OK))) {
 		if (arg_debug || arg_debug_private_lib)
 			printf("cannot find %s for private-lib, skipping...\n", full_path);
 		return;
@@ -157,13 +155,15 @@ void fslib_copy_libs(const char *full_path) {
 	// create an empty RUN_LIB_FILE and allow the user to write to it
 	unlink(RUN_LIB_FILE);			  // in case is there
 	create_empty_file_as_root(RUN_LIB_FILE, 0644);
-	if (chown(RUN_LIB_FILE, getuid(), getgid()))
-		errExit("chown");
+	if (mask & SBOX_USER) {
+		if (chown(RUN_LIB_FILE, getuid(), getgid()))
+			errExit("chown");
+	}
 
 	// run fldd to extract the list of files
 	if (arg_debug || arg_debug_private_lib)
 		printf("    running fldd %s\n", full_path);
-	sbox_run(SBOX_USER | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, full_path, RUN_LIB_FILE);
+	sbox_run(mask | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, full_path, RUN_LIB_FILE);
 
 	// open the list of libraries and install them on by one
 	FILE *fp = fopen(RUN_LIB_FILE, "r");
@@ -182,6 +182,19 @@ void fslib_copy_libs(const char *full_path) {
 	unlink(RUN_LIB_FILE);
 }
 
+void fslib_copy_libs_parse_as_root(const char *full_path) {
+	assert(full_path);
+	if (arg_debug || arg_debug_private_lib)
+		printf("    fslib_copy_libs_parse_as_root %s\n", full_path);
+	fslib_copy_libs(full_path, SBOX_ROOT);
+}
+
+void fslib_copy_libs_parse_as_user(const char *full_path) {
+	assert(full_path);
+	if (arg_debug || arg_debug_private_lib)
+		printf("    fslib_copy_libs_parse_as_user %s\n", full_path);
+	fslib_copy_libs(full_path, SBOX_USER);
+}
 
 void fslib_copy_dir(const char *full_path) {
 	assert(full_path);
@@ -236,7 +249,7 @@ static void load_library(const char *fname) {
 				    access(fname, X_OK) != 0) // don't duplicate executables, just install the libraries
 					fslib_duplicate(fname);
 
-				fslib_copy_libs(fname);
+				fslib_copy_libs_parse_as_user(fname);
 			}
 		}
 	}
@@ -379,25 +392,12 @@ void fs_private_lib(void) {
 		printf("Installing standard C library\n");
 	fslib_install_stdc();
 
-	// start timetrace
-	timetrace_start();
-
-	// bring in firejail executable libraries in case we are redirected here by a firejail symlink from /usr/local/bin/firejail
+	// install other libraries needed by firejail
 	if (arg_debug || arg_debug_private_lib)
 		printf("Installing Firejail libraries\n");
-	fslib_install_list(PATH_FIREJAIL);
+	fslib_install_firejail();
 
-	// bring in firejail directory
-	fslib_install_list(LIBDIR "/firejail");
-
-	// bring in dhclient libraries
-	if (any_dhcp()) {
-		if (arg_debug || arg_debug_private_lib)
-			printf("Installing dhclient libraries\n");
-		fslib_install_list(RUN_MNT_DIR "/dhclient");
-	}
-	fmessage("Firejail libraries installed in %0.2f ms\n", timetrace_end());
-
+	// start timetrace
 	timetrace_start();
 
 	// copy the libs in the new lib directory for the main exe

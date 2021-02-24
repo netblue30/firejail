@@ -138,20 +138,10 @@ void fslib_duplicate(const char *full_path) {
 	lib_cnt++;
 }
 
-
 // requires full path for lib
 // it could be a library or an executable
 // lib is not copied, only libraries used by it
 static void fslib_copy_libs(const char *full_path, unsigned mask) {
-	// if library/executable does not exist or the user does not have read access to it
-	// print a warning and exit the function.
-	if (((mask & SBOX_USER) && access(full_path, R_OK)) ||
-	    ((mask & SBOX_ROOT) && access(full_path, F_OK))) {
-		if (arg_debug || arg_debug_private_lib)
-			printf("cannot find %s for private-lib, skipping...\n", full_path);
-		return;
-	}
-
 	// create an empty RUN_LIB_FILE and allow the user to write to it
 	unlink(RUN_LIB_FILE);			  // in case is there
 	create_empty_file_as_root(RUN_LIB_FILE, 0644);
@@ -186,13 +176,28 @@ void fslib_copy_libs_parse_as_root(const char *full_path) {
 	assert(full_path);
 	if (arg_debug || arg_debug_private_lib)
 		printf("    fslib_copy_libs_parse_as_root %s\n", full_path);
+
+	struct stat s;
+	if (stat(full_path, &s)) {
+		if (arg_debug || arg_debug_private_lib)
+			printf("cannot find %s for private-lib, skipping...\n", full_path);
+		return;
+	}
 	fslib_copy_libs(full_path, SBOX_ROOT);
 }
 
+// if library/executable does not exist or the user does not have read access to it
+// print a warning and exit the function.
 void fslib_copy_libs_parse_as_user(const char *full_path) {
 	assert(full_path);
 	if (arg_debug || arg_debug_private_lib)
 		printf("    fslib_copy_libs_parse_as_user %s\n", full_path);
+
+	if (access(full_path, R_OK)) {
+		if (arg_debug || arg_debug_private_lib)
+			printf("cannot find %s for private-lib, skipping...\n", full_path);
+		return;
+	}
 	fslib_copy_libs(full_path, SBOX_USER);
 }
 

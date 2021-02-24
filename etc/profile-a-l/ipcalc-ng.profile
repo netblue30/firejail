@@ -4,6 +4,8 @@ quiet
 # Persistent local customizations
 include ipcalc-ng.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
+# Redirect
 include ipcalc.profile

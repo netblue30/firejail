@@ -138,7 +138,7 @@ static void duplicate(const char *fname, const char *private_dir, const char *pr
 }
 
 
-void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list) {
+void fs_private_dir_copy(const char *private_dir, const char *private_run_dir, const char *private_list) {
 	assert(private_dir);
 	assert(private_run_dir);
 	assert(private_list);
@@ -185,6 +185,19 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 		free(dlist);
 		fs_logger_print();
 	}
+}
+
+void fs_private_dir_mount(const char *private_dir, const char *private_run_dir) {
+	assert(private_dir);
+	assert(private_run_dir);
+
+	// nothing to do if directory does not exist
+	struct stat s;
+	if (stat(private_dir, &s) == -1) {
+		if (arg_debug)
+			printf("Cannot find %s\n", private_dir);
+		return;
+	}
 
 	if (arg_debug)
 		printf("Mount-bind %s on top of %s\n", private_run_dir, private_dir);
@@ -198,4 +211,9 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	fs_logger2("tmpfs", private_run_dir);
 
 	fmessage("Private %s installed in %0.2f ms\n", private_dir, timetrace_end());
+}
+
+void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list) {
+	fs_private_dir_copy(private_dir, private_run_dir, private_list);
+	fs_private_dir_mount(private_dir, private_run_dir);
 }

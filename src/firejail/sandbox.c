@@ -969,8 +969,29 @@ int sandbox(void* sandbox_arg) {
 		else if (arg_overlay)
 			fwarning("private-etc feature is disabled in overlay\n");
 		else {
-			fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
-			fs_private_dir_list("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep); // openSUSE
+			/* Current /etc/passwd and /etc/group files are bind
+			 * mounted filtered versions of originals. Leaving
+			 * them underneath private-etc mount causes problems
+			 * in devices with older kernels, e.g. attempts to
+			 * update the real /etc/passwd file yield EBUSY.
+			 *
+			 * As we do want to retain filtered /etc content:
+			 * 1. duplicate /etc content to RUN_ETC_DIR
+			 * 2. unmount bind mounts from /etc
+			 * 3. mount RUN_ETC_DIR at /etc
+			 */
+			fs_private_dir_copy("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
+			fs_private_dir_copy("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep); // openSUSE
+
+			if (umount2("/etc/group", MNT_DETACH) == -1)
+				fprintf(stderr, "/etc/group: unmount: %m\n");
+
+			if (umount2("/etc/passwd", MNT_DETACH) == -1)
+				fprintf(stderr, "/etc/passwd: unmount: %m\n");
+
+			fs_private_dir_mount("/etc", RUN_ETC_DIR);
+			fs_private_dir_mount("/usr/etc", RUN_USR_ETC_DIR);
+
 			// create /etc/ld.so.preload file again
 			if (need_preload)
 				fs_trace_preload();

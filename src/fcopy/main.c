@@ -172,6 +172,47 @@ static void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
 	}
 }
 
+static char *proc_pid_to_self(const char *target)
+{
+	char *use_target = 0;
+	char *proc_pid = 0;
+
+	if (!(use_target = canonicalize_file_name(target)))
+		goto done;
+
+	// target is under /proc/<PID>?
+	static const char proc[] = "/proc/";
+	if (strncmp(use_target, proc, sizeof proc - 1))
+		goto done;
+
+	int digit = use_target[sizeof proc - 1];
+	if (digit < '1' || digit > '9')
+		goto done;
+
+	// check where /proc/self points to
+	static const char proc_self[] = "/proc/self";
+	if (!(proc_pid = canonicalize_file_name(proc_self)))
+		goto done;
+
+	// redirect /proc/PID/xxx -> /proc/self/XXX
+	size_t pfix = strlen(proc_pid);
+	if (strncmp(use_target, proc_pid, pfix))
+		goto done;
+
+	if (use_target[pfix] != 0 && use_target[pfix] != '/')
+		goto done;
+
+	char *tmp;
+	if (asprintf(&tmp, "%s%s", proc_self, use_target + pfix) != -1) {
+		if (arg_debug)
+			fprintf(stderr, "SYMLINK %s\n  -->   %s\n", use_target, tmp);
+		free(use_target), use_target = tmp;
+	}
+
+done:
+	free(proc_pid);
+	return use_target;
+}
 
 void copy_link(const char *target, const char *linkpath, mode_t mode, uid_t uid, gid_t gid) {
 	(void) mode;
@@ -183,7 +224,7 @@ void copy_link(const char *target, const char *linkpath, mode_t mode, uid_t uid,
 	if (lstat(linkpath, &s) == 0)
 	       return;
 
-	char *rp = realpath(target, NULL);
+	char *rp = proc_pid_to_self(target);
 	if (rp) {
 		if (symlink(rp, linkpath) == -1) {
 			free(rp);
@@ -227,16 +268,14 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 			first = 0;
 		else if (!arg_quiet)
 			fprintf(stderr, "Warning fcopy: skipping %s, file already present\n", infname);
-		free(outfname);
-		return 0;
+		goto out;
 	}
 
 	// extract mode and ownership
 	if (stat(infname, &s) != 0) {
 		if (!arg_quiet)
 			fprintf(stderr, "Warning fcopy: skipping %s, cannot find inode\n", infname);
-		free(outfname);
-		return 0;
+		goto out;
 	}
 	uid_t uid = s.st_uid;
 	gid_t gid = s.st_gid;
@@ -246,8 +285,7 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 	if ((s.st_size + size_cnt) > copy_limit) {
 		fprintf(stderr, "Error fcopy: size limit of %lu MB reached\n", (copy_limit / 1024) / 1024);
 		size_limit_reached = 1;
-		free(outfname);
-		return 0;
+		goto out;
 	}
 
 	file_cnt++;
@@ -262,7 +300,8 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 	else if (ftype == FTW_SL) {
 		copy_link(infname, outfname, mode, uid, gid);
 	}
-
+out:
+	free(outfname);
 	return(0);
 }
 
@@ -295,6 +334,7 @@ static char *check(const char *src) {
 		return rsrc;			  // normal exit from the function
 
 errexit:
+	free(rsrc);
 	fprintf(stderr, "Error fcopy: invalid file %s\n", src);
 	exit(1);
 }

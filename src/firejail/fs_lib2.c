@@ -22,7 +22,8 @@
 #include <sys/stat.h>
 
 extern void fslib_duplicate(const char *full_path);
-extern void fslib_copy_libs(const char *full_path);
+extern void fslib_copy_libs_parse_as_user(const char *full_path);
+extern void fslib_copy_libs_parse_as_root(const char *full_path);
 extern void fslib_copy_dir(const char *full_path);
 
 //***************************************************************
@@ -123,6 +124,52 @@ void fslib_install_stdc(void) {
 	fmessage("Standard C library installed in %0.2f ms\n", timetrace_end());
 }
 
+//***************************************************************
+// Firejail libraries
+//***************************************************************
+
+static void fdir(void) {
+	fslib_copy_dir(LIBDIR "/firejail");
+
+	// executables and libraries from firejail directory
+	static const char * const fbin[] = {
+		PATH_FCOPY, // currently sufficient to find all needed libraries
+		// PATH_FSECCOMP,
+		// PATH_FSEC_OPTIMIZE,
+		// PATH_FSEC_PRINT,
+		// RUN_FIREJAIL_LIB_DIR "/libtrace.so",
+		// RUN_FIREJAIL_LIB_DIR "/libtracelog.so",
+		// RUN_FIREJAIL_LIB_DIR "/libpostexecseccomp.so",
+		NULL,
+	};
+
+	// need to run fldd as root user, unprivileged users have no read permission on executables
+	int i;
+	for (i = 0; fbin[i]; i++)
+		fslib_copy_libs_parse_as_root(fbin[i]);
+}
+
+void fslib_install_firejail(void) {
+	timetrace_start();
+	// bring in firejail executable libraries, in case we are redirected here
+	// by a firejail symlink from /usr/local/bin/firejail
+	fslib_copy_libs_parse_as_user(PATH_FIREJAIL);
+
+	// bring in firejail directory
+	fdir();
+
+	// bring in dhclient libraries
+	if (any_dhcp())
+		fslib_copy_libs_parse_as_user(RUN_MNT_DIR "/dhclient");
+
+#ifdef HAVE_X11
+	// bring in xauth libraries
+	if (arg_x11_xorg)
+		fslib_copy_libs_parse_as_user("/usr/bin/xauth");
+#endif
+
+	fmessage("Firejail libraries installed in %0.2f ms\n", timetrace_end());
+}
 
 //***************************************************************
 // various system libraries
@@ -268,7 +315,7 @@ void fslib_install_system(void) {
 			if (asprintf(&name, "/usr/lib/x86_64-linux-gnu/%s", ptr->dir1) == -1)
 				errExit("asprintf");
 			if (access(name, R_OK) == 0) {
-				fslib_copy_libs(name);
+				fslib_copy_libs_parse_as_user(name);
 				fslib_copy_dir(name);
 			}
 			else {
@@ -277,7 +324,7 @@ void fslib_install_system(void) {
 				if (asprintf(&name, "/usr/lib64/%s", ptr->dir1) == -1)
 					errExit("asprintf");
 				if (access(name, R_OK) == 0) {
-					fslib_copy_libs(name);
+					fslib_copy_libs_parse_as_user(name);
 					fslib_copy_dir(name);
 				}
 			}
@@ -288,7 +335,7 @@ void fslib_install_system(void) {
 				if (asprintf(&name, "/usr/lib/x86_64-linux-gnu/%s", ptr->dir2) == -1)
 					errExit("asprintf");
 				if (access(name, R_OK) == 0) {
-					fslib_copy_libs(name);
+					fslib_copy_libs_parse_as_user(name);
 					fslib_copy_dir(name);
 				}
 				else {
@@ -297,7 +344,7 @@ void fslib_install_system(void) {
 					if (asprintf(&name, "/usr/lib64/%s", ptr->dir2) == -1)
 						errExit("asprintf");
 					if (access(name, R_OK) == 0) {
-						fslib_copy_libs(name);
+						fslib_copy_libs_parse_as_user(name);
 						fslib_copy_dir(name);
 					}
 				}

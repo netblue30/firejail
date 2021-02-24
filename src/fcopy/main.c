@@ -178,7 +178,7 @@ static char *proc_pid_to_self(const char *target) {
 	char *use_target = 0;
 	char *proc_pid = 0;
 
-	if (!(use_target = canonicalize_file_name(target)))
+	if (!(use_target = realpath(target, NULL)))
 		goto done;
 
 	// target is under /proc/<PID>?
@@ -192,7 +192,7 @@ static char *proc_pid_to_self(const char *target) {
 
 	// check where /proc/self points to
 	static const char proc_self[] = "/proc/self";
-	if (!(proc_pid = canonicalize_file_name(proc_self)))
+	if (!(proc_pid = realpath(proc_self, NULL)))
 		goto done;
 
 	// redirect /proc/PID/xxx -> /proc/self/XXX

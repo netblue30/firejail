@@ -6,7 +6,6 @@ include signal-desktop.local
 include globals.local
 
 # Disabled until someone reported positive feedback
-ignore include-xdg.inc
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 ignore private-cache

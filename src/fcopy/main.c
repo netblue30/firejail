@@ -51,8 +51,9 @@ static int selinux_enabled = -1;
 #endif
 
 // copy from firejail/selinux.c
-static void selinux_relabel_path(const char *path, const char *inside_path)
-{
+static void selinux_relabel_path(const char *path, const char *inside_path) {
+	assert(path);
+	assert(inside_path);
 #if HAVE_SELINUX
         char procfs_path[64];
 	char *fcon = NULL;
@@ -172,8 +173,8 @@ static void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
 	}
 }
 
-static char *proc_pid_to_self(const char *target)
-{
+static char *proc_pid_to_self(const char *target) {
+	assert(target);
 	char *use_target = 0;
 	char *proc_pid = 0;
 
@@ -182,10 +183,10 @@ static char *proc_pid_to_self(const char *target)
 
 	// target is under /proc/<PID>?
 	static const char proc[] = "/proc/";
-	if (strncmp(use_target, proc, sizeof proc - 1))
+	if (strncmp(use_target, proc, sizeof(proc) - 1))
 		goto done;
 
-	int digit = use_target[sizeof proc - 1];
+	int digit = use_target[sizeof(proc) - 1];
 	if (digit < '1' || digit > '9')
 		goto done;
 
@@ -206,11 +207,15 @@ static char *proc_pid_to_self(const char *target)
 	if (asprintf(&tmp, "%s%s", proc_self, use_target + pfix) != -1) {
 		if (arg_debug)
 			fprintf(stderr, "SYMLINK %s\n  -->   %s\n", use_target, tmp);
-		free(use_target), use_target = tmp;
+		free(use_target);
+		use_target = tmp;
 	}
+	else
+		errExit("asprintf");
 
 done:
-	free(proc_pid);
+	if (proc_pid)
+		free(proc_pid);
 	return use_target;
 }
 

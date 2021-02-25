@@ -931,7 +931,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	if (strncmp(ptr, "rmenv ", 6) == 0) {
-		unsetenv(ptr + 6); // Remove also immediately from Firejail itself
 		env_store(ptr + 6, RMENV);
 		return 0;
 	}

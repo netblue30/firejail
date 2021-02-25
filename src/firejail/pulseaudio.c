@@ -80,8 +80,6 @@ static void pulseaudio_fallback(const char *path) {
 
 	fmessage("Cannot mount tmpfs on %s/.config/pulse\n", cfg.homedir);
 	env_store_name_val("PULSE_CLIENTCONFIG", path, SETENV);
-	if (setenv("PULSE_CLIENTCONFIG", path, 1) < 0)
-		errExit("setenv");
 }
 
 // disable shm in pulseaudio (issue #69)
@@ -176,8 +174,7 @@ void pulseaudio_init(void) {
 	char *p;
 	if (asprintf(&p, "%s/client.conf", homeusercfg) == -1)
 		errExit("asprintf");
-	if (setenv("PULSE_CLIENTCONFIG", p, 1) < 0)
-		errExit("setenv");
+	env_store_name_val("PULSE_CLIENTCONFIG", p, SETENV);
 	fs_logger2("create", p);
 	free(p);
 

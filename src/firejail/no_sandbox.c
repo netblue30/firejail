@@ -167,15 +167,6 @@ void run_no_sandbox(int argc, char **argv) {
 	if (setresuid(-1, getuid(), getuid()) != 0)
 		errExit("setresuid");
 
-	// process limited subset of options
-	int i;
-	for (i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "--debug") == 0)
-			arg_debug = 1;
-		else if (strncmp(argv[i], "--shell=", 8) == 0)
-			fwarning("shell-related command line options are disregarded - using SHELL environment variable\n");
-	}
-
 	// use $SHELL to get shell used in sandbox, guess shell otherwise
 	cfg.shell = guess_shell();
 	if (!cfg.shell) {
@@ -185,12 +176,18 @@ void run_no_sandbox(int argc, char **argv) {
 	else if (arg_debug)
 		printf("Selecting %s as shell\n", cfg.shell);
 
-	int prog_index = 0;
-	// find first non option arg:
+	// process limited subset of options
+	// and find first non option arg:
 	//	- first argument not starting with --,
 	//	- whatever follows after -c (example: firejail -c ls)
+	int prog_index = 0;
+	int i;
 	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "-c") == 0) {
+		if (strcmp(argv[i], "--debug") == 0)
+			arg_debug = 1;
+		else if (strncmp(argv[i], "--shell=", 8) == 0)
+			fwarning("shell-related command line options are disregarded\n");
+		else if (strcmp(argv[i], "-c") == 0) {
 			prog_index = i + 1;
 			if (prog_index == argc) {
 				fprintf(stderr, "Error: option -c requires an argument\n");
@@ -199,17 +196,11 @@ void run_no_sandbox(int argc, char **argv) {
 			break;
 		}
 		// check first argument not starting with --
-		if (strncmp(argv[i],"--",2) != 0) {
+		else if (strncmp(argv[i],"--",2) != 0) {
 			prog_index = i;
 			break;
 		}
 	}
-
-// if shell is /usr/bin/firejail, replace it with /bin/bash
-//	if (strcmp(cfg.shell, PATH_FIREJAIL) == 0) {
-//		cfg.shell = "/bin/bash";
-//		prog_index = 0;
-//	}
 
 	if (prog_index == 0) {
 		assert(cfg.command_line == NULL); // runs cfg.shell
@@ -218,16 +209,11 @@ void run_no_sandbox(int argc, char **argv) {
 		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
 	}
 
+	fwarning("an existing sandbox was detected. "
+		"%s will run without any additional sandboxing features\n", prog_index ? argv[prog_index] : cfg.shell);
+
 	cfg.original_argv = argv;
 	cfg.original_program_index = prog_index;
-
-	char *command;
-	if (prog_index == 0)
-		command = cfg.shell;
-	else
-		command = argv[prog_index];
-	fwarning("an existing sandbox was detected. "
-		"%s will run without any additional sandboxing features\n", command);
 
 	arg_quiet = 1;
 

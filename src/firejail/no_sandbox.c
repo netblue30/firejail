@@ -167,15 +167,6 @@ void run_no_sandbox(int argc, char **argv) {
 	if (setresuid(-1, getuid(), getuid()) != 0)
 		errExit("setresuid");
 
-	// use $SHELL to get shell used in sandbox, guess shell otherwise
-	cfg.shell = guess_shell();
-	if (!cfg.shell) {
-		fprintf(stderr, "Error: unable to guess your shell, please set SHELL environment variable\n");
-		exit(1);
-	}
-	else if (arg_debug)
-		printf("Selecting %s as shell\n", cfg.shell);
-
 	// process limited subset of options
 	// and find first non option arg:
 	//	- first argument not starting with --,
@@ -203,9 +194,20 @@ void run_no_sandbox(int argc, char **argv) {
 	}
 
 	if (prog_index == 0) {
-		assert(cfg.command_line == NULL); // runs cfg.shell
+		// got no command, require a shell and try to execute it
+		cfg.shell = guess_shell();
+		if (!cfg.shell) {
+			fprintf(stderr, "Error: unable to guess your shell, please set SHELL environment variable\n");
+			exit(1);
+		}
+
+		assert(cfg.command_line == NULL);
 		cfg.window_title = cfg.shell;
 	} else {
+		// this sandbox might not allow execution of a shell
+		// force --shell=none in order to not break firecfg symbolic links
+		arg_shell_none = 1;
+
 		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
 	}
 

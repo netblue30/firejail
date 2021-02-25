@@ -31,6 +31,7 @@ mkdir ${HOME}/.local/share/torbrowser
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/torbrowser
 whitelist ${HOME}/.local/share/torbrowser
+whitelist /usr/share/torbrowser-launcher
 include whitelist-common.inc
 include whitelist-var-common.inc
 include whitelist-runuser-common.inc

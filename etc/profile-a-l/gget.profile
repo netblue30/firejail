@@ -1,5 +1,5 @@
 # Firejail profile for gget
-# Description:  a cli. to get things. from git repos
+# Description: a cli. to get things. from git repos
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

@@ -1,6 +1,7 @@
 firejail (0.9.65) baseline; urgency=low
   * filtering environment variables
   * zsh completion
+  * --mkdir, --mkfile
   * new profiles: vmware-view, display-im6.q16, ipcalc, ipcalc-ng
   * ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop
   * gget

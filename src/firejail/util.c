@@ -400,6 +400,8 @@ void touch_file_as_user(const char *fname, mode_t mode) {
 			SET_PERMS_STREAM(fp, -1, -1, mode);
 			fclose(fp);
 		}
+		else
+			fwarning("cannot create %s\n", fname);
 #ifdef HAVE_GCOV
 		__gcov_flush();
 #endif

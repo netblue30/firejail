@@ -125,6 +125,8 @@ static char *usage_str =
 	"    --machine-id - preserve /etc/machine-id\n"
 	"    --memory-deny-write-execute - seccomp filter to block attempts to create\n"
 	"\tmemory mappings that are both writable and executable.\n"
+	"    --mkdir=dirname - create a directory.\n"
+	"    --mkfile=filename - create a file.\n"
 #ifdef HAVE_NETWORK
 	"    --mtu=number - set interface MTU.\n"
 #endif
@@ -246,8 +248,6 @@ static char *usage_str =
 #ifdef HAVE_WHITELIST
 	"    --whitelist=filename - whitelist directory or file.\n"
 #endif
-	"    --mkdir=dirname - create a directory.\n"
-	"    --mkfile=filename - create a file.\n"
 	"    --writable-etc - /etc directory is mounted read-write.\n"
 	"    --writable-run-user - allow access to /run/user/$UID/systemd and\n"
 	"\t/run/user/$UID/gnupg.\n"

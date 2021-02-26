@@ -1105,6 +1105,26 @@ Example:
 $ firejail \-\-machine-id
 
 .TP
+\fB\-\-mkdir=dirname
+Create a directory in user home. Parent directories are created as needed.
+.br
+
+.br
+Example:
+.br
+$ firejail --mkdir=~/work/project
+
+.TP
+\fB\-\-mkfile=filename
+Create an empty file in user home.
+.br
+
+.br
+Example:
+.br
+$ firejail --mkfile=~/work/project/readme
+
+.TP
 \fB\-\-memory-deny-write-execute
 Install a seccomp filter to block attempts to create memory mappings
 that are both writable and executable, to change mappings to be

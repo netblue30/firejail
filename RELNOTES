@@ -3,7 +3,7 @@ firejail (0.9.65) baseline; urgency=low
   * zsh completion
   * --mkdir, --mkfile
   * Jolla/SailfishOS patches
-  * privatelib rework
+  * private-lib rework
   * jailtest
   * capabilities list update
   * faccessat2 syscall support

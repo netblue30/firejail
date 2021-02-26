@@ -451,6 +451,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname);
 // add a profile entry in cfg.profile list; use str to populate the list
 void profile_add(char *str);
 void profile_add_ignore(const char *str);
+char *profile_list_normalize(char *list);
+char *profile_list_compress(char *list);
+void profile_list_augment(char **list, const char *items);
 
 // list.c
 void list(void);

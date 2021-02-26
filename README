@@ -169,10 +169,10 @@ Barış Ekin Yıldırım (https://github.com/circuitshaker)
 	- removing net none from code.profile
 bbhtt (https://github.com/bbhtt)
 	- improvements to balsa,fractal,gajim,trojita profiles
-	- improvements to nheko, spectral, feh, links, lynx, smplayer, profiles
-	- added alacartem com.github.bleakgrey.tootle, photoflare profiles
+	- improvements to nheko, spectral, feh, links, lynx, smplayer profiles
+	- added alacarte, com.github.bleakgrey.tootle, photoflare profiles
 	- add profiles for MS Edge dev build for Linux and Librewolf
-	- fixes to cheese, authneticator, liferea
+	- fixes to cheese, authenticator, liferea
 	- add profile for straw-viewer
 	- email clients whitelisting and fixes
 Benjamin Kampmann (https://github.com/ligthyear)

@@ -2,6 +2,7 @@ firejail (0.9.65) baseline; urgency=low
   * filtering environment variables
   * zsh completion
   * --mkdir, --mkfile
+  * protocol now accumulates
   * Jolla/SailfishOS patches
   * private-lib rework
   * jailtest

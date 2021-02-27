@@ -12,6 +12,7 @@ include globals.local
 #private-etc ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf
 
 noblacklist ${HOME}/.cache/marker
+noblacklist ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

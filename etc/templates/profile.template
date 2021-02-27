@@ -155,8 +155,8 @@ include globals.local
 #  - unix is usually needed
 #  - inet,inet6 only if internet access is required (see 'net none'/'netfilter' above)
 #  - netlink is rarely needed
-#  - packet almost never
-#protocol unix,inet,inet6,netlink,packet
+#  - packet and bluetooth almost never
+#protocol unix,inet,inet6,netlink,packet,bluetooth
 #seccomp
 ##seccomp !chroot
 ##seccomp.drop SYSCALLS (see syscalls.txt)
@@ -200,6 +200,7 @@ include globals.local
 #    flatpak remote-info --show-metadata flathub <APP-ID>
 # Notes:
 #  - flatpak implicitly allows an app to own <APP-ID> on the session bus
+#  - Some features like native notifications are implemented as portal too.
 #  - In order to make dconf work (when used by the app) you need to allow
 #    'ca.desrt.dconf' even when not allowed by flatpak.
 # Notes and Policiy about addresses can be found at

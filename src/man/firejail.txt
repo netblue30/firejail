@@ -42,6 +42,15 @@ Miscellaneous:
 firejail {\-? | \-\-debug-caps | \-\-debug-errnos | \-\-debug-syscalls | \-\-debug-syscalls32 | \-\-debug-protocols | \-\-help | \-\-version}
 .RE
 .SH DESCRIPTION
+#ifdef HAVE_LTS
+This is Firejail long-term support (LTS), an enterprise focused version of the software,
+LTS is usually supported for two or three years.
+During this time  only bugs and the occasional documentation problems are fixed.
+The attack surface of the SUID executable was greatly reduced by removing some of the features.
+.br
+
+.br
+#endif
 Firejail is a SUID sandbox program that reduces the risk of security breaches by
 restricting the running environment of untrusted applications using Linux
 namespaces, seccomp-bpf and Linux capabilities.

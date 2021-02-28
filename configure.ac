@@ -54,6 +54,15 @@ AS_IF([test "x$enable_apparmor" = "xyes"], [
 	AC_SUBST(HAVE_APPARMOR)
 ])
 
+HAVE_SELINUX=""
+AC_ARG_ENABLE([selinux],
+    AS_HELP_STRING([--enable-selinux], [SELinux labeling support]))
+AS_IF([test "x$enable_selinux" = "xyes"], [
+	HAVE_SELINUX="-DHAVE_SELINUX"
+	EXTRA_LDFLAGS+=" -lselinux "
+	AC_SUBST(HAVE_SELINUX)
+])
+
 AC_SUBST([EXTRA_CFLAGS])
 AC_SUBST([EXTRA_LDFLAGS])
 
@@ -219,14 +228,61 @@ AS_IF([test "x$enable_contrib_install" = "xno"],
 )
 AC_SUBST(HAVE_CONTRIB_INSTALL)
 
-HAVE_SELINUX=""
-AC_ARG_ENABLE([selinux],
-    AS_HELP_STRING([--enable-selinux], [SELinux labeling support]))
-AS_IF([test "x$enable_selinux" = "xyes"], [
-	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS+=" -lselinux "
-	AC_SUBST(HAVE_SELINUX)
+HAVE_LTS=""
+AC_ARG_ENABLE([lts],
+    AS_HELP_STRING([--enable-lts], [enable long-term support software version (LTS)]))
+AS_IF([test "x$enable_lts" = "xyes"], [
+	HAVE_LTS="-DHAVE_LTS"
+	AC_SUBST(HAVE_LTS)
+
+	HAVE_DBUSPROXY=""
+	AC_SUBST(HAVE_DBUSPROXY)
+
+	HAVE_OVERLAYFS=""
+	AC_SUBST(HAVE_OVERLAYFS)
+
+	HAVE_OUTPUT=""
+	AC_SUBST(HAVE_OUTPUT)
+
+	HAVE_USERTMPFS=""
+	AC_SUBST(HAVE_USERTMPFS)
+
+	HAVE_MAN="-DHAVE_MAN"
+	AC_SUBST(HAVE_MAN)
+
+	HAVE_FIRETUNNEL=""
+	AC_SUBST(HAVE_FIRETUNNEL)
+
+	HAVE_PRIVATEHOME=""
+	AC_SUBST(HAVE_PRIVATE_HOME)
+
+	HAVE_CHROOT=""
+	AC_SUBST(HAVE_CHROOT)
+
+	HAVE_GLOBALCFG=""
+	AC_SUBST(HAVE_GLOBALCFG)
+
+	HAVE_USERNS=""
+	AC_SUBST(HAVE_USERNS)
+
+	HAVE_X11=""
+	AC_SUBST(HAVE_X11)
+
+	HAVE_FILE_TRANSFER=""
+	AC_SUBST(HAVE_FILE_TRANSFER)
+
+	HAVE_SUID="yes"
+	AC_SUBST(HAVE_SUID)
+
+	BUSYBOX_WORKAROUND="no"
+	AC_SUBST(BUSYBOX_WORKAROUND)
+
+	HAVE_CONTRIB_INSTALL="no",
+	AC_SUBST(HAVE_CONTRIB_INSTALL)
 ])
+
+
+
 
 # checking pthread library
 AC_CHECK_LIB([pthread], [main], [], AC_MSG_ERROR([*** POSIX thread support not installed ***]))
@@ -250,6 +306,7 @@ echo "Configuration options:"
 echo "   prefix: $prefix"
 echo "   sysconfdir: $sysconfdir"
 echo "   apparmor: $HAVE_APPARMOR"
+echo "   SELinux labeling support: $HAVE_SELINUX"
 echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
 echo "   network: $HAVE_NETWORK"
@@ -271,6 +328,19 @@ echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
-echo "   SELinux labeling support: $HAVE_SELINUX"
 echo "   Install as a SUID executable: $HAVE_SUID"
+echo "   LTS: $HAVE_LTS"
 echo
+
+
+if test "$HAVE_LTS" = -DHAVE_LTS; then
+	echo
+	echo
+	echo "*********************************************************"
+	echo "*    Warning: Long-term support (LTS) was enabled!      *"
+	echo "*    Most compile-time options have bean rewritten!     *"
+	echo "*********************************************************"
+	echo
+	echo
+fi
+

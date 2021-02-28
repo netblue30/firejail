@@ -627,7 +627,7 @@ LIBOBJS
 EGREP
 GREP
 CPP
-HAVE_SELINUX
+HAVE_LTS
 HAVE_CONTRIB_INSTALL
 HAVE_GCOV
 BUSYBOX_WORKAROUND
@@ -650,6 +650,7 @@ HAVE_OVERLAYFS
 HAVE_DBUSPROXY
 EXTRA_LDFLAGS
 EXTRA_CFLAGS
+HAVE_SELINUX
 HAVE_APPARMOR
 AA_LIBS
 AA_CFLAGS
@@ -711,6 +712,7 @@ ac_user_opts='
 enable_option_checking
 enable_analyzer
 enable_apparmor
+enable_selinux
 enable_dbusproxy
 enable_output
 enable_usertmpfs
@@ -729,7 +731,7 @@ enable_fatal_warnings
 enable_busybox_workaround
 enable_gcov
 enable_contrib_install
-enable_selinux
+enable_lts
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1367,6 +1369,7 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-analyzer       enable GCC 10 static analyzer
   --enable-apparmor       enable apparmor
+  --enable-selinux        SELinux labeling support
   --disable-dbusproxy     disable dbus proxy
   --disable-output        disable --output logging
   --disable-usertmpfs     disable tmpfs as regular user
@@ -1388,7 +1391,7 @@ Optional Features:
   --enable-gcov           Gcov instrumentation
   --enable-contrib-install
                           install contrib scripts
-  --enable-selinux        SELinux labeling support
+  --enable-lts            enable long-term support software version (LTS)
 
 Some influential environment variables:
   CC          C compiler command
@@ -3514,6 +3517,20 @@ fi
 
 fi
 
+HAVE_SELINUX=""
+# Check whether --enable-selinux was given.
+if test "${enable_selinux+set}" = set; then :
+  enableval=$enable_selinux;
+fi
+
+if test "x$enable_selinux" = "xyes"; then :
+
+	HAVE_SELINUX="-DHAVE_SELINUX"
+	EXTRA_LDFLAGS+=" -lselinux "
+
+
+fi
+
 
 
 
@@ -3808,19 +3825,66 @@ else
 fi
 
 
-HAVE_SELINUX=""
-# Check whether --enable-selinux was given.
-if test "${enable_selinux+set}" = set; then :
-  enableval=$enable_selinux;
+HAVE_LTS=""
+# Check whether --enable-lts was given.
+if test "${enable_lts+set}" = set; then :
+  enableval=$enable_lts;
 fi
 
-if test "x$enable_selinux" = "xyes"; then :
+if test "x$enable_lts" = "xyes"; then :
 
-	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS+=" -lselinux "
+	HAVE_LTS="-DHAVE_LTS"
+
+
+	HAVE_DBUSPROXY=""
+
+
+	HAVE_OVERLAYFS=""
+
+
+	HAVE_OUTPUT=""
+
+
+	HAVE_USERTMPFS=""
+
+
+	HAVE_MAN="-DHAVE_MAN"
+
+
+	HAVE_FIRETUNNEL=""
+
+
+	HAVE_PRIVATEHOME=""
+
+
+	HAVE_CHROOT=""
+
+
+	HAVE_GLOBALCFG=""
+
+
+	HAVE_USERNS=""
+
+
+	HAVE_X11=""
+
+
+	HAVE_FILE_TRANSFER=""
+
+
+	HAVE_SUID="yes"
+
+
+	BUSYBOX_WORKAROUND="no"
+
+
+	HAVE_CONTRIB_INSTALL="no",
 
 
 fi
+
+
+
 
 # checking pthread library
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpthread" >&5
@@ -5485,6 +5549,7 @@ echo "Configuration options:"
 echo "   prefix: $prefix"
 echo "   sysconfdir: $sysconfdir"
 echo "   apparmor: $HAVE_APPARMOR"
+echo "   SELinux labeling support: $HAVE_SELINUX"
 echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
 echo "   network: $HAVE_NETWORK"
@@ -5506,6 +5571,19 @@ echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
-echo "   SELinux labeling support: $HAVE_SELINUX"
 echo "   Install as a SUID executable: $HAVE_SUID"
+echo "   LTS: $HAVE_LTS"
 echo
+
+
+if test "$HAVE_LTS" = -DHAVE_LTS; then
+	echo
+	echo
+	echo "*********************************************************"
+	echo "*    Warning: Long-term support (LTS) was enabled!      *"
+	echo "*    Most compile-time options have bean rewritten!     *"
+	echo "*********************************************************"
+	echo
+	echo
+fi
+

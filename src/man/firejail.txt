@@ -1642,6 +1642,7 @@ Disable video devices.
 \fB\-\-nowhitelist=dirname_or_filename
 Disable whitelist for this directory or file.
 
+#ifdef HAVE_OUTPUT
 .TP
 \fB\-\-output=logfile
 stdout logging and log rotation. Copy stdout to logfile, and keep the size of the file under 500KB using log
@@ -1672,6 +1673,7 @@ $ ls -l sandboxlog*
 .TP
 \fB\-\-output-stderr=logfile
 Similar to \-\-output, but stderr is also stored.
+#endif
 
 #ifdef HAVE_OVERLAYFS
 .TP

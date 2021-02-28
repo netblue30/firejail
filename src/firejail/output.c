@@ -22,6 +22,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#ifdef HAVE_OUTPUT
 void check_output(int argc, char **argv) {
 	EUID_ASSERT();
 
@@ -149,3 +150,4 @@ void check_output(int argc, char **argv) {
 	perror("execvp");
 	exit(1);
 }
+#endif

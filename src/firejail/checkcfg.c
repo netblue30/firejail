@@ -380,4 +380,12 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
+
+	printf("\t- output logging is %s\n",
+#ifdef HAVE_OUTPUT
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
 }

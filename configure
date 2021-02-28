@@ -645,6 +645,7 @@ HAVE_FIRETUNNEL
 HAVE_GAWK
 HAVE_MAN
 HAVE_USERTMPFS
+HAVE_OUTPUT
 HAVE_OVERLAYFS
 HAVE_DBUSPROXY
 EXTRA_LDFLAGS
@@ -711,6 +712,7 @@ enable_option_checking
 enable_analyzer
 enable_apparmor
 enable_dbusproxy
+enable_output
 enable_usertmpfs
 enable_man
 enable_firetunnel
@@ -1366,6 +1368,7 @@ Optional Features:
   --enable-analyzer       enable GCC 10 static analyzer
   --enable-apparmor       enable apparmor
   --disable-dbusproxy     disable dbus proxy
+  --disable-output        disable --output logging
   --disable-usertmpfs     disable tmpfs as regular user
   --disable-man           disable man pages
   --disable-firetunnel    disable firetunnel
@@ -3539,6 +3542,19 @@ HAVE_OVERLAYFS=""
 #	AC_SUBST(HAVE_OVERLAYFS)
 #])
 
+HAVE_OUTPUT=""
+# Check whether --enable-output was given.
+if test "${enable_output+set}" = set; then :
+  enableval=$enable_output;
+fi
+
+if test "x$enable_output" != "xno"; then :
+
+	HAVE_OUTPUT="-DHAVE_OUTPUT"
+
+
+fi
+
 HAVE_USERTMPFS=""
 # Check whether --enable-usertmpfs was given.
 if test "${enable_usertmpfs+set}" = set; then :
@@ -5480,6 +5496,7 @@ echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   DBUS proxy support: $HAVE_DBUSPROXY"
 echo "   allow tmpfs as regular user: $HAVE_USERTMPFS"
+echo "   enable --ouput logging: $HAVE_OUTPUT"
 echo "   Manpage support: $HAVE_MAN"
 echo "   firetunnel support: $HAVE_FIRETUNNEL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"

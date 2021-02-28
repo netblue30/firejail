@@ -77,6 +77,14 @@ AC_SUBST(HAVE_OVERLAYFS)
 #	AC_SUBST(HAVE_OVERLAYFS)
 #])
 
+HAVE_OUTPUT=""
+AC_ARG_ENABLE([output],
+    AS_HELP_STRING([--disable-output], [disable --output logging]))
+AS_IF([test "x$enable_output" != "xno"], [
+	HAVE_OUTPUT="-DHAVE_OUTPUT"
+	AC_SUBST(HAVE_OUTPUT)
+])
+
 HAVE_USERTMPFS=""
 AC_ARG_ENABLE([usertmpfs],
     AS_HELP_STRING([--disable-usertmpfs], [disable tmpfs as regular user]))
@@ -253,6 +261,7 @@ echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   DBUS proxy support: $HAVE_DBUSPROXY"
 echo "   allow tmpfs as regular user: $HAVE_USERTMPFS"
+echo "   enable --ouput logging: $HAVE_OUTPUT"
 echo "   Manpage support: $HAVE_MAN"
 echo "   firetunnel support: $HAVE_FIRETUNNEL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"

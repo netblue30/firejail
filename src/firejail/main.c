@@ -1233,10 +1233,12 @@ int main(int argc, char **argv, char **envp) {
 #endif
 		}
 	}
+#ifdef HAVE_OUTPUT
 	else {
 		// check --output option and execute it;
 		check_output(argc, argv); // the function will not return if --output or --output-stderr option was found
 	}
+#endif
 	EUID_ASSERT();
 
 	// check for force-nonewprivs in /etc/firejail/firejail.config file

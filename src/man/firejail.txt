@@ -2476,7 +2476,7 @@ $ firejail --seccomp.print=browser
 $
 
 .TP
-\fB\-\-seccomp-error-action= kill | ERRNO
+\fB\-\-seccomp-error-action= kill | ERRNO | log
 By default, if a seccomp filter blocks a system call, the process gets
 EPERM as the error. With \-\-seccomp-error-action=error, another error
 number can be returned, for example ENOSYS or EACCES. The process can

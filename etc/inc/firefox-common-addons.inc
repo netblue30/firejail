@@ -4,7 +4,6 @@ include firefox-common-addons.local
 
 ignore include whitelist-runuser-common.inc
 
-noblacklist ${HOME}/.cache/youtube-dl/youtube-sigfuncs/
 noblacklist ${HOME}/.config/kgetrc
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/okularpartrc
@@ -28,7 +27,7 @@ noblacklist ${HOME}/.local/share/qpdfview
 noblacklist ${HOME}/.netrc
 
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
-whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs/
+whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
 whitelist ${HOME}/.config/gnome-mplayer
 whitelist ${HOME}/.config/kgetrc
 whitelist ${HOME}/.config/mpv
@@ -65,6 +64,9 @@ whitelist ${HOME}/.wine-pipelight
 whitelist ${HOME}/.wine-pipelight64
 whitelist ${HOME}/.zotero
 whitelist ${HOME}/dwhelper
+whitelist /usr/share/lua
+whitelist /usr/share/lua*
+whitelist /usr/share/vulkan
 
 # GNOME Shell integration (chrome-gnome-shell) needs dbus and python
 noblacklist ${HOME}/.local/share/gnome-shell
@@ -84,7 +86,4 @@ include allow-python3.inc
 # ff2mpv
 #ignore noexec ${HOME}
 #include allow-lua.inc
-#whitelist /usr/share/lua
-#whitelist /usr/share/lua*
-#whitelist /usr/share/vulkan
 #private-bin env,mpv,python3*,waf,youtube-dl

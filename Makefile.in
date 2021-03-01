@@ -191,7 +191,7 @@ uninstall:
 	@echo "If you want to install a different version of firejail, you might also need to run 'rm -fr $(DESTDIR)$(sysconfdir)/firejail', see #2038."
 
 DISTFILES = "src etc m4 platform contrib configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh.in COPYING README RELNOTES"
-DISTFILES_TEST = "test/Makefile.in test/apps test/apps-x11 test/apps-x11-xorg test/root test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils test/chroot"
+DISTFILES_TEST = "test/Makefile.in test/apps test/apps-x11 test/apps-x11-xorg test/root test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils test/chroot"
 
 dist:
 	mv config.status config.status.old
@@ -237,19 +237,19 @@ scan-build: clean
 # make test
 #
 
-TESTS=profiles private-lib apps apps-x11 apps-x11-xorg sysutils utils environment filters arguments fs fcopy fnetfilter
+TESTS=profiles private-lib apps apps-x11 apps-x11-xorg sysutils utils environment filters fs fcopy fnetfilter
 TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 
 $(TEST_TARGETS):
 	$(MAKE) -C test $(subst test-,,$@)
 
-test: test-profiles test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
+test: test-profiles test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"
 
-test-noprofiles: test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
+test-noprofiles: test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"
 
-test-github: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-arguments
+test-github: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
 	echo "TEST COMPLETE"
 
 ##########################################

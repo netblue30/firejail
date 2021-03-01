@@ -14,8 +14,7 @@ whitelist ${HOME}/.config/transmission-daemon
 whitelist /var/lib/transmission
 
 caps.keep ipc_lock,net_bind_service,setgid,setuid,sys_chroot
-ignore protocol unix,inet,inet6
-protocol unix,inet,inet6,packet
+protocol packet
 
 private-bin transmission-daemon
 private-etc alternatives,ca-certificates,crypto-policies,nsswitch.conf,pki,resolv.conf,ssl

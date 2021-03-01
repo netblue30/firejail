@@ -4,10 +4,13 @@ include firefox-common-addons.local
 
 ignore include whitelist-runuser-common.inc
 
+noblacklist ${HOME}/.cache/youtube-dl/youtube-sigfuncs/
 noblacklist ${HOME}/.config/kgetrc
+noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/okularpartrc
 noblacklist ${HOME}/.config/okularrc
 noblacklist ${HOME}/.config/qpdfview
+noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.kde/share/apps/kget
 noblacklist ${HOME}/.kde/share/apps/okular
 noblacklist ${HOME}/.kde/share/config/kgetrc
@@ -22,15 +25,19 @@ noblacklist ${HOME}/.local/share/kget
 noblacklist ${HOME}/.local/share/kxmlgui5/okular
 noblacklist ${HOME}/.local/share/okular
 noblacklist ${HOME}/.local/share/qpdfview
+noblacklist ${HOME}/.netrc
 
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
+whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs/
 whitelist ${HOME}/.config/gnome-mplayer
 whitelist ${HOME}/.config/kgetrc
+whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/okularpartrc
 whitelist ${HOME}/.config/okularrc
 whitelist ${HOME}/.config/pipelight-silverlight5.1
 whitelist ${HOME}/.config/pipelight-widevine
 whitelist ${HOME}/.config/qpdfview
+whitelist ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.kde/share/apps/kget
 whitelist ${HOME}/.kde/share/apps/okular
 whitelist ${HOME}/.kde/share/config/kgetrc
@@ -48,6 +55,7 @@ whitelist ${HOME}/.local/share/kxmlgui5/okular
 whitelist ${HOME}/.local/share/okular
 whitelist ${HOME}/.local/share/qpdfview
 whitelist ${HOME}/.local/share/tridactyl
+whitelist ${HOME}/.netrc
 whitelist ${HOME}/.pentadactyl
 whitelist ${HOME}/.pentadactylrc
 whitelist ${HOME}/.tridactylrc
@@ -75,16 +83,7 @@ include allow-python3.inc
 
 # ff2mpv
 #ignore noexec ${HOME}
-#noblacklist ${HOME}/.config/mpv
-#noblacklist ${HOME}/.config/youtube-dl
-#noblacklist ${HOME}/.netrc
 #include allow-lua.inc
-#include allow-python3.inc
-#mkdir ${HOME}/.config/mpv
-#mkdir ${HOME}/.config/youtube-dl
-#whitelist ${HOME}/.config/mpv
-#whitelist ${HOME}/.config/youtube-dl
-#whitelist ${HOME}/.netrc
 #whitelist /usr/share/lua
 #whitelist /usr/share/lua*
 #whitelist /usr/share/vulkan

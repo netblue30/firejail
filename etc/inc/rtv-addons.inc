@@ -11,7 +11,6 @@ ignore nosound
 ignore private-bin
 ignore dbus-user none
 
-noblacklist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.netrc

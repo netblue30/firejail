@@ -1,3 +1,4 @@
+.PHONY: all
 all: fldd
 
 include ../common.mk
@@ -8,7 +9,9 @@ include ../common.mk
 fldd: $(OBJS) ../lib/common.o ../lib/ldd_utils.o
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/ldd_utils.o $(LIBS) $(EXTRA_LDFLAGS)
 
+.PHONY: clean
 clean:; rm -fr *.o fldd *.gcov *.gcda *.gcno *.plist
 
+.PHONY: distclean
 distclean: clean
 	rm -fr Makefile

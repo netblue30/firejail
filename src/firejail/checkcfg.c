@@ -388,4 +388,12 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
+
+	printf("\t- Always force nonewprivs support is %s\n",
+#ifdef HAVE_FORCE_NONEWPRIVS
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
 }

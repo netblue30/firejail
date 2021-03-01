@@ -594,7 +594,7 @@ static void enforce_filters(void) {
 	force_nonewprivs = 1;
 
 	// disable all capabilities
-	fmessage("\n**     Warning: dropping all Linux capabilities     **\n\n");
+	fmessage("\n**     Warning: dropping all Linux capabilities and setting NO_NEW_PRIVS prctl     **\n\n");
 	arg_caps_drop_all = 1;
 
 	// drop all supplementary groups; /etc/group file inside chroot
@@ -795,11 +795,16 @@ int sandbox(void* sandbox_arg) {
 			exit(rv);
 	}
 
+#ifdef HAVE_FORCE_NONEWPRIVS
+	bool always_enforce_filters = true;
+#else
+	bool always_enforce_filters = false;
+#endif
 	// need ld.so.preload if tracing or seccomp with any non-default lists
 	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
 	// for --appimage, --chroot and --overlay* we force NO_NEW_PRIVS
 	// and drop all capabilities
-	if (getuid() != 0 && (arg_appimage || cfg.chrootdir || arg_overlay)) {
+	if (getuid() != 0 && (arg_appimage || cfg.chrootdir || arg_overlay || always_enforce_filters)) {
 		enforce_filters();
 		need_preload = arg_trace || arg_tracelog;
 	}

@@ -628,6 +628,7 @@ EGREP
 GREP
 CPP
 HAVE_LTS
+HAVE_FORCE_NONEWPRIVS
 HAVE_CONTRIB_INSTALL
 HAVE_GCOV
 BUSYBOX_WORKAROUND
@@ -731,6 +732,7 @@ enable_fatal_warnings
 enable_busybox_workaround
 enable_gcov
 enable_contrib_install
+enable_force_nonewprivs
 enable_lts
 '
       ac_precious_vars='build_alias
@@ -1391,6 +1393,8 @@ Optional Features:
   --enable-gcov           Gcov instrumentation
   --enable-contrib-install
                           install contrib scripts
+  --enable-force-nonewprivs
+                          enable force nonewprivs
   --enable-lts            enable long-term support software version (LTS)
 
 Some influential environment variables:
@@ -3825,6 +3829,19 @@ else
 fi
 
 
+HAVE_FORCE_NONEWPRIVS=""
+# Check whether --enable-force-nonewprivs was given.
+if test "${enable_force_nonewprivs+set}" = set; then :
+  enableval=$enable_force_nonewprivs;
+fi
+
+if test "x$enable_force_nonewprivs" = "xyes"; then :
+
+	HAVE_FORCE_NONEWPRIVS="-DHAVE_FORCE_NONEWPRIVS"
+
+
+fi
+
 HAVE_LTS=""
 # Check whether --enable-lts was given.
 if test "${enable_lts+set}" = set; then :
@@ -5573,6 +5590,7 @@ echo "   Gcov instrumentation: $HAVE_GCOV"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
 echo "   Install as a SUID executable: $HAVE_SUID"
 echo "   LTS: $HAVE_LTS"
+echo "   Always enforce filters: $HAVE_FORCE_NONEWPRIVS"
 echo
 
 

@@ -55,7 +55,7 @@ static char *usage_str =
 #endif
 	"    --cpu=cpu-number,cpu-number - set cpu affinity.\n"
 	"    --cpu.print=name|pid - print the cpus in use.\n"
-#ifdef HAVE_DBUSPROXy
+#ifdef HAVE_DBUSPROXY
 	"    --dbus-log=file - set DBus log file location.\n"
 	"    --dbus-system=filter|none - set system DBus access policy.\n"
 	"    --dbus-system.broadcast=rule - allow signals on the system DBus according to rule.\n"

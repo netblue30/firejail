@@ -76,6 +76,8 @@ _firejail_args=(
     '(--cpu.print)'{--cpu.print=,--cpu.print=}'[print the cpus in use name|pid]: : _all_firejails'
     '--list[list all sandboxes]'
     '(--dns)'{--dns=,--dns=}'[set DNS server]: :'
+    '*--mkdir=-[create a directory]:'
+    '*--mkfile=-[create a file]:'
     '(--protocol)'{--protocol=,--protocol=}'[enable protocol filter]: :'
     '(--join-or-start)'{--join-or-start=,--join-or-start=}'[join the sandbox or start a new one name|pid]: : _all_firejails'
     '(--hosts-file)'{--hosts-file=,--hosts-file=}'[use file as /etc/hosts]: : _files'
@@ -112,8 +114,6 @@ _firejail_args=(
     '(--nice)'{--nice=,--nice=}'[set nice value]: :(1 10 15 20)'
     # Should be _files, a comma and files or files -/
     '*'{--bind=,--bind=}'[mount-bind dirname1/filename1 on top of dirname2/filename2]: :(file1,file2 dir1,dir2)'
-    '--audit[audit the sandbox]'
-    '(--audit)'{--audit=,--audit=}'[audit the sandbox with a test-program]: :'
     '(--cgroup)'{--cgroup=,--cgroup=}'[place the sandbox in the specified control group]: :'
     '*'{--env=,--env=}'[set environment variable]: :'
     '(--hostname)'{--hostname=,--hostname=}'[set sandbox hostname]: :'

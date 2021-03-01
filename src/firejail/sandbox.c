@@ -594,7 +594,7 @@ static void enforce_filters(void) {
 	force_nonewprivs = 1;
 
 	// disable all capabilities
-	fmessage("\n**     Warning: dropping all Linux capabilities     **\n\n");
+	fmessage("\n**     Warning: dropping all Linux capabilities and setting NO_NEW_PRIVS prctl     **\n\n");
 	arg_caps_drop_all = 1;
 
 	// drop all supplementary groups; /etc/group file inside chroot

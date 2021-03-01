@@ -6,7 +6,7 @@
 export LC_ALL=C
 
 if [ -f /etc/debian_version ]; then
-	libdir=$(dirname "$(dpkg -L firejail | grep faudit)")
+	libdir=$(dirname "$(dpkg -L firejail | grep fcopy)")
 	export PATH="$PATH:$libdir"
 fi
 export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"

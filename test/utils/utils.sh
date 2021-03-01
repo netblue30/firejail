@@ -8,7 +8,7 @@ export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
 if [ -f /etc/debian_version ]; then
-	libdir=$(dirname "$(dpkg -L firejail | grep faudit)")
+	libdir=$(dirname "$(dpkg -L firejail | grep fcopy)")
 	export PATH="$PATH:$libdir"
 fi
 export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
@@ -17,13 +17,6 @@ echo "TESTING: build (test/utils/build.exp)"
 ./build.exp
 rm -f ~/firejail-test-file-7699
 rm -f firejail-test-file-4388
-
-if [ $(faudit | grep -c "is running in a PID namespace.") -gt 0 ]; then
-	echo "TESTING SKIP: already running in pid namespace (test/utils/audit.exp)"
-else
-	echo "TESTING: audit (test/utils/audit.exp)"
-	./audit.exp
-fi
 
 echo "TESTING: name (test/utils/name.exp)"
 ./name.exp

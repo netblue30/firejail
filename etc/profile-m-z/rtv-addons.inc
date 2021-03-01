@@ -9,7 +9,6 @@
 
 ignore nosound
 ignore private-bin
-ignore dbus-system none
 ignore dbus-user none
 
 noblacklist ${HOME}/.config/mpv

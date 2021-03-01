@@ -1,6 +1,15 @@
 # Firejail profile for rtv
 # Description: Browse Reddit from your terminal
 # This file is overwritten after every install/update
+
+# You can configure rtv to open different type of links
+# in external applications. Configuration here:
+# https://github.com/michael-lazar/rtv#viewing-media-links
+# This include is meant to facilitate that configuration
+# with the use of a .local file.
+
+
+
 # Persistent local customizations
 include rtv.local
 # Persistent global definitions
@@ -16,6 +25,8 @@ noblacklist ${HOME}/.local/share/rtv
 include allow-python2.inc
 include allow-python3.inc
 
+# Uncomment or put in rtv.local for external application support
+#include rtv-addons.inc
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

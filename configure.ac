@@ -228,6 +228,14 @@ AS_IF([test "x$enable_contrib_install" = "xno"],
 )
 AC_SUBST(HAVE_CONTRIB_INSTALL)
 
+HAVE_FORCE_NONEWPRIVS=""
+AC_ARG_ENABLE([force-nonewprivs],
+    AS_HELP_STRING([--enable-force-nonewprivs], [enable force nonewprivs]))
+AS_IF([test "x$enable_force_nonewprivs" = "xyes"], [
+	HAVE_FORCE_NONEWPRIVS="-DHAVE_FORCE_NONEWPRIVS"
+	AC_SUBST(HAVE_FORCE_NONEWPRIVS)
+])
+
 HAVE_LTS=""
 AC_ARG_ENABLE([lts],
     AS_HELP_STRING([--enable-lts], [enable long-term support software version (LTS)]))
@@ -330,6 +338,7 @@ echo "   Gcov instrumentation: $HAVE_GCOV"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
 echo "   Install as a SUID executable: $HAVE_SUID"
 echo "   LTS: $HAVE_LTS"
+echo "   Always enforce filters: $HAVE_FORCE_NONEWPRIVS"
 echo
 
 

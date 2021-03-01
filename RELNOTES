@@ -1,13 +1,17 @@
 firejail (0.9.65) baseline; urgency=low
   * filtering environment variables
   * zsh completion
-  * --mkdir, --mkfile
-  * protocol now accumulates
+  * command line: --mkdir, --mkfile
+  * --protocol now accumulates
   * Jolla/SailfishOS patches
   * private-lib rework
-  * jailtest
+  * jailtest utility for testing running sandboxes
+  * removed --audit options, relpaced by jailtest
   * capabilities list update
   * faccessat2 syscall support
+  * compile time: --enable-force-nonewprivs
+  * compile time: --disable-output
+  * compile time: --enable-lts
   * new profiles: vmware-view, display-im6.q16, ipcalc, ipcalc-ng
   * ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop,
   * avidemux, calligragemini, vmware-player, vmware-workstation

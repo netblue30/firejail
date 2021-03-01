@@ -269,6 +269,14 @@ errout:
 
 void print_compiletime_support(void) {
 	printf("Compile time support:\n");
+	printf("\t- Always force nonewprivs support is %s\n",
+#ifdef HAVE_FORCE_NONEWPRIVS
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
 	printf("\t- AppArmor support is %s\n",
 #ifdef HAVE_APPARMOR
 		"enabled"
@@ -333,6 +341,13 @@ void print_compiletime_support(void) {
 #endif
 		);
 
+	printf("\t- output logging is %s\n",
+#ifdef HAVE_OUTPUT
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
 	printf("\t- overlayfs support is %s\n",
 #ifdef HAVE_OVERLAYFS
 		"enabled"
@@ -381,19 +396,5 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- output logging is %s\n",
-#ifdef HAVE_OUTPUT
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
 
-	printf("\t- Always force nonewprivs support is %s\n",
-#ifdef HAVE_FORCE_NONEWPRIVS
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
 }

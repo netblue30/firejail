@@ -55,6 +55,7 @@ static char *usage_str =
 #endif
 	"    --cpu=cpu-number,cpu-number - set cpu affinity.\n"
 	"    --cpu.print=name|pid - print the cpus in use.\n"
+#ifdef HAVE_DBUSPROXy
 	"    --dbus-log=file - set DBus log file location.\n"
 	"    --dbus-system=filter|none - set system DBus access policy.\n"
 	"    --dbus-system.broadcast=rule - allow signals on the system DBus according to rule.\n"
@@ -70,6 +71,7 @@ static char *usage_str =
 	"    --dbus-user.own=name - allow ownership of name on the session DBus.\n"
 	"    --dbus-user.see=name - allow seeing name on the session DBus.\n"
 	"    --dbus-user.talk=name - allow talking to name on the session DBus.\n"
+#endif
 	"    --debug - print sandbox debug messages.\n"
 	"    --debug-blacklists - debug blacklisting.\n"
 	"    --debug-caps - print all recognized capabilities.\n"
@@ -162,14 +164,18 @@ static char *usage_str =
 	"    --novideo - disable video devices.\n"
 	"    --nou2f - disable U2F devices.\n"
 	"    --nowhitelist=filename - disable whitelist for file or directory.\n"
+#ifdef HAVE_OUTPUT
 	"    --output=logfile - stdout logging and log rotation.\n"
 	"    --output-stderr=logfile - stdout and stderr logging and log rotation.\n"
+#endif
+#ifdef HAVE_OVERLAYFS
 	"    --overlay - mount a filesystem overlay on top of the current filesystem.\n"
 	"    --overlay-named=name - mount a filesystem overlay on top of the current\n"
 	"\tfilesystem, and store it in name directory.\n"
 	"    --overlay-tmpfs - mount a temporary filesystem overlay on top of the\n"
 	"\tcurrent filesystem.\n"
 	"    --overlay-clean - clean all overlays stored in $HOME/.firejail directory.\n"
+#endif
 	"    --private - temporary home directory.\n"
 	"    --private=directory - use directory as user home.\n"
 	"    --private-cache - temporary ~/.cache directory.\n"

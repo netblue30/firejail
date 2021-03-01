@@ -130,8 +130,6 @@ int arg_keep_var_tmp = 0;                       // don't overwrite /var/tmp
 int arg_writable_run_user = 0;			// writable /run/user
 int arg_writable_var_log = 0;		// writable /var/log
 int arg_appimage = 0;				// appimage
-int arg_audit = 0;				// audit
-char *arg_audit_prog = NULL;			// audit
 int arg_apparmor = 0;				// apparmor
 int arg_allow_debuggers = 0;			// allow debuggers
 int arg_x11_block = 0;				// block X11
@@ -2608,28 +2606,6 @@ int main(int argc, char **argv, char **envp) {
 		//*************************************
 		else if (strncmp(argv[i], "--timeout=", 10) == 0)
 			cfg.timeout = extract_timeout(argv[i] + 10);
-		else if (strcmp(argv[i], "--audit") == 0) {
-			arg_audit_prog = LIBDIR "/firejail/faudit";
-			profile_add_ignore("shell none");
-			arg_audit = 1;
-		}
-		else if (strncmp(argv[i], "--audit=", 8) == 0) {
-			if (strlen(argv[i] + 8) == 0) {
-				fprintf(stderr, "Error: invalid audit program\n");
-				exit(1);
-			}
-			arg_audit_prog = strdup(argv[i] + 8);
-			if (!arg_audit_prog)
-				errExit("strdup");
-
-			struct stat s;
-			if (stat(arg_audit_prog, &s) != 0) {
-				fprintf(stderr, "Error: cannot find the audit program %s\n", arg_audit_prog);
-				exit(1);
-			}
-			profile_add_ignore("shell none");
-			arg_audit = 1;
-		}
 		else if (strcmp(argv[i], "--appimage") == 0)
 			arg_appimage = 1;
 		else if (strcmp(argv[i], "--shell=none") == 0) {

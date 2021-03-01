@@ -4366,7 +4366,7 @@ fi
 
 ac_config_files="$ac_config_files mkdeb.sh"
 
-ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile src/jailtest/Makefile"
+ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile src/ftee/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile src/jailtest/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -5090,7 +5090,6 @@ do
     "src/fbuilder/Makefile") CONFIG_FILES="$CONFIG_FILES src/fbuilder/Makefile" ;;
     "src/fsec-print/Makefile") CONFIG_FILES="$CONFIG_FILES src/fsec-print/Makefile" ;;
     "src/ftee/Makefile") CONFIG_FILES="$CONFIG_FILES src/ftee/Makefile" ;;
-    "src/faudit/Makefile") CONFIG_FILES="$CONFIG_FILES src/faudit/Makefile" ;;
     "src/fseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/fseccomp/Makefile" ;;
     "src/fldd/Makefile") CONFIG_FILES="$CONFIG_FILES src/fldd/Makefile" ;;
     "src/libpostexecseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/libpostexecseccomp/Makefile" ;;

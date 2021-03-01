@@ -475,23 +475,9 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	}
 
 	//****************************************
-	// audit
-	//****************************************
-	if (arg_audit) {
-		assert(arg_audit_prog);
-
-#ifdef HAVE_GCOV
-		__gcov_dump();
-#endif
-		seccomp_install_filters();
-		if (set_sandbox_status)
-			*set_sandbox_status = SANDBOX_DONE;
-		execl(arg_audit_prog, arg_audit_prog, NULL);
-	}
-	//****************************************
 	// start the program without using a shell
 	//****************************************
-	else if (arg_shell_none) {
+	if (arg_shell_none) {
 		if (arg_debug) {
 			int i;
 			for (i = cfg.original_program_index; i < cfg.original_argc; i++) {

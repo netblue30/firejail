@@ -33,7 +33,6 @@ static char *usage_str =
 	"    --apparmor - enable AppArmor confinement.\n"
 	"    --apparmor.print=name|pid - print apparmor status.\n"
 	"    --appimage - sandbox an AppImage application.\n"
-	"    --audit[=test-program] - audit the sandbox.\n"
 #ifdef HAVE_NETWORK
 	"    --bandwidth=name|pid - set bandwidth limits.\n"
 #endif

@@ -155,12 +155,6 @@ $ firejail --appimage --private krita-3.0-x86_64.appimage
 $ firejail --appimage --net=none --x11 krita-3.0-x86_64.appimage
 #endif
 .TP
-\fB\-\-audit
-Audit the sandbox, see \fBAUDIT\fR section for more details.
-.TP
-\fB\-\-audit=test-program
-Audit the sandbox, see \fBAUDIT\fR section for more details.
-.TP
 \fB\-\-bandwidth=name|pid
 Set bandwidth limits for the sandbox identified by name or PID, see \fBTRAFFIC SHAPING\fR section for more details.
 .TP
@@ -2971,30 +2965,6 @@ To enable AppArmor confinement on top of your current Firejail security features
 .br
 $ firejail --apparmor firefox
 #endif
-
-.SH AUDIT
-Audit feature allows the user to point out gaps in security profiles. The
-implementation replaces the program to be sandboxed with a test program. By
-default, we use faudit program distributed with Firejail. A custom test program
-can also be supplied by the user. Examples:
-
-Running the default audit program:
-.br
-	$ firejail --audit transmission-gtk
-
-Running a custom audit program:
-.br
-	$ firejail --audit=~/sandbox-test transmission-gtk
-
-In the examples above, the sandbox configures transmission-gtk profile and
-starts the test program. The real program, transmission-gtk, will not be
-started.
-
-You can also audit a specific profile without specifying a program.
-.br
-	$ firejail --audit --profile=/etc/firejail/zoom.profile
-
-Limitations: audit feature is not implemented for --x11 commands.
 
 .SH DESKTOP INTEGRATION
 A symbolic link to /usr/bin/firejail under the name of a program, will start the program in Firejail sandbox.

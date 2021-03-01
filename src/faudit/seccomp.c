@@ -58,7 +58,7 @@ void seccomp_test(void) {
 	else if (seccomp_status == 2) {
 		printf("GOOD: seccomp BPF enabled.\n");
 
-		printf("checking syscalls: "); fflush(0);
+		printf("checking syscalls:\n");
 		printf("mount... "); fflush(0);
 		syscall_run("mount");
 

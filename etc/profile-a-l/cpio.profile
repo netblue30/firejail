@@ -11,4 +11,4 @@ noblacklist /sbin
 noblacklist /usr/sbin
 
 # Redirect
-include archiver-common.inc
+include archiver-common.profile

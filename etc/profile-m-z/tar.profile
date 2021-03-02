@@ -7,7 +7,7 @@ include tar.local
 # Persistent global definitions
 include globals.local
 
-# Included in archiver-common.inc
+# Included in archiver-common.profile
 ignore include disable-shell.inc
 
 # Arch Linux (based distributions) need access to /var/lib/pacman. As we drop
@@ -20,4 +20,4 @@ private-etc alternatives,group,localtime,login.defs,passwd
 writable-var
 
 # Redirect
-include archiver-common.inc
+include archiver-common.profile

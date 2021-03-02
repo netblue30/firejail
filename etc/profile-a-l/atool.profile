@@ -17,4 +17,4 @@ private-etc alternatives,group,login.defs,passwd
 private-tmp
 
 # Redirect
-include archiver-common.inc
+include archiver-common.profile

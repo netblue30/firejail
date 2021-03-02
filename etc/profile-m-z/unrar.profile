@@ -12,4 +12,4 @@ private-etc alternatives,group,localtime,passwd
 private-tmp
 
 # Redirect
-include archiver-common.inc
+include archiver-common.profile

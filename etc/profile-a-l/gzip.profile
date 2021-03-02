@@ -12,4 +12,4 @@ include globals.local
 noblacklist /var/lib/pacman
 
 # Redirect
-include archiver-common.inc
+include archiver-common.profile

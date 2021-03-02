@@ -1,6 +1,6 @@
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-
+include rtv-addons.local
 # You can configure rtv to open different type of links
 # in external applications. Configuration here:
 # https://github.com/michael-lazar/rtv#viewing-media-links

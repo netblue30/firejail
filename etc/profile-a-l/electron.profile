@@ -20,7 +20,7 @@ include whitelist-var-common.inc
 
 # Uncomment the next line (or add it to your chromium-common.local)
 # if your kernel allows unprivileged userns clone.
-#include chromium-common-hardened.inc
+#include chromium-common-hardened.profile
 
 apparmor
 caps.keep sys_admin,sys_chroot

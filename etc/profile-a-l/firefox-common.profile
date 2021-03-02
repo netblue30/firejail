@@ -10,7 +10,7 @@ include firefox-common.local
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
 # Uncomment the following line (or put it in your firefox-common.local) to allow access to common programs/addons/plugins.
-#include firefox-common-addons.inc
+#include firefox-common-addons.profile
 
 noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.local/share/pki

@@ -7,8 +7,8 @@ include 7z.local
 # Persistent global definitions
 include globals.local
 
-# Included in archiver-common.inc
+# Included in archiver-common.profile
 ignore include disable-shell.inc
 
 # Redirect
-include archiver-common.inc
+include archiver-common.profile

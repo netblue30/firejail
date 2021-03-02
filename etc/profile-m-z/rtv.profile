@@ -1,7 +1,6 @@
 # Firejail profile for rtv
 # Description: Browse Reddit from your terminal
 # This file is overwritten after every install/update
-
 # Persistent local customizations
 include rtv.local
 # Persistent global definitions

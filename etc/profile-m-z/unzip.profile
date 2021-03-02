@@ -13,4 +13,4 @@ noblacklist ${HOME}/.local/share/gnome-shell
 private-etc alternatives,group,localtime,passwd
 
 # Redirect
-include archiver-common.inc
+include archiver-common.profile

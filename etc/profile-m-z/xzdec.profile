@@ -8,4 +8,4 @@ include xzdec.local
 include globals.local
 
 # Redirect
-include archiver-common.inc
+include archiver-common.profile

@@ -18,7 +18,7 @@ include disable-shell.inc
 # This profile disables network access
 # In order to enable network access,
 # uncomment the following or put it in your feh.local:
-# include feh-network.inc
+# include feh-network.profile
 
 caps.drop all
 net none

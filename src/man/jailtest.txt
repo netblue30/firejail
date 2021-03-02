@@ -14,7 +14,7 @@ These directories are build by firejail at startup using --private* and --whitel
 .TP
 \fB2. Noexec test
 jailtest inserts executable programs in /home/username, /tmp, and /var/tmp directories
-and tries to run them form inside the sandbox, thus testing if the directory is executable or not.
+and tries to run them from inside the sandbox, thus testing if the directory is executable or not.
 .TP
 \fB3. Read access test
 jailtest creates test files in the directories specified by the user and tries to read
@@ -29,10 +29,10 @@ The program is started as root using sudo.
 .SH OPTIONS
 .TP
 \fB\-\-debug
-Print debug messages
+Print debug messages.
 .TP
 \fB\-?\fR, \fB\-\-help\fR
-Print options end exit.
+Print options and exit.
 .TP
 \fB\-\-version
 Print program version and exit.

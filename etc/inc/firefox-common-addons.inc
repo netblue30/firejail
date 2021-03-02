@@ -3,7 +3,9 @@
 include firefox-common-addons.local
 
 ignore include whitelist-runuser-common.inc
+ignore private-cache
 
+nobalcklist ${HOME}/.cache/youtube-dl
 noblacklist ${HOME}/.config/kgetrc
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/okularpartrc

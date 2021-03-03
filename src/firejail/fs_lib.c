@@ -343,34 +343,20 @@ void fslib_install_list(const char *lib_list) {
 	fs_logger_print();
 }
 
-
-
 static void mount_directories(void) {
-	if (arg_debug || arg_debug_private_lib)
-		printf("Mount-bind %s on top of /lib /lib64 /usr/lib\n", RUN_LIB_DIR);
+	fs_remount(RUN_LIB_DIR, MOUNT_READONLY, 1); // should be redundant except for RUN_LIB_DIR itself
 
-	if (is_dir("/lib")) {
-		if (mount(RUN_LIB_DIR, "/lib", NULL, MS_BIND|MS_REC, NULL) < 0 ||
-			mount(NULL, "/lib", NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
-			errExit("mount bind");
-		fs_logger2("tmpfs", "/lib");
-		fs_logger("mount /lib");
-	}
-
-	if (is_dir("/lib64")) {
-		if (mount(RUN_LIB_DIR, "/lib64", NULL, MS_BIND|MS_REC, NULL) < 0 ||
-			mount(NULL, "/lib64", NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
-			errExit("mount bind");
-		fs_logger2("tmpfs", "/lib64");
-		fs_logger("mount /lib64");
-	}
-
-	if (is_dir("/usr/lib")) {
-		if (mount(RUN_LIB_DIR, "/usr/lib", NULL, MS_BIND|MS_REC, NULL) < 0 ||
-			mount(NULL, "/usr/lib", NULL, MS_BIND|MS_REMOUNT|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
-			errExit("mount bind");
-		fs_logger2("tmpfs", "/usr/lib");
-		fs_logger("mount /usr/lib");
+	int i = 0;
+	while (lib_dirs[i]) {
+		if (is_dir(lib_dirs[i])) {
+			if (arg_debug || arg_debug_private_lib)
+				printf("Mount-bind %s on top of %s\n", RUN_LIB_DIR, lib_dirs[i]);
+			if (mount(RUN_LIB_DIR, lib_dirs[i], NULL, MS_BIND|MS_REC, NULL) < 0)
+				errExit("mount bind");
+			fs_logger2("tmpfs", lib_dirs[i]);
+			fs_logger2("mount", lib_dirs[i]);
+		}
+		i++;
 	}
 
 	// for amd64 only - we'll deal with i386 later

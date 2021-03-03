@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include <errno.h>
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -147,7 +148,7 @@ void fs_private_dir_copy(const char *private_dir, const char *private_run_dir, c
 	struct stat s;
 	if (stat(private_dir, &s) == -1) {
 		if (arg_debug)
-			printf("Cannot find %s\n", private_dir);
+			printf("Cannot find %s: %s\n", private_dir, strerror(errno));
 		return;
 	}
 
@@ -191,16 +192,17 @@ void fs_private_dir_mount(const char *private_dir, const char *private_run_dir) 
 	assert(private_dir);
 	assert(private_run_dir);
 
+	if (arg_debug)
+		printf("Mount-bind %s on top of %s\n", private_run_dir, private_dir);
+
 	// nothing to do if directory does not exist
 	struct stat s;
 	if (stat(private_dir, &s) == -1) {
 		if (arg_debug)
-			printf("Cannot find %s\n", private_dir);
+			printf("Cannot find %s: %s\n", private_dir, strerror(errno));
 		return;
 	}
 
-	if (arg_debug)
-		printf("Mount-bind %s on top of %s\n", private_run_dir, private_dir);
 	if (mount(private_run_dir, private_dir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 	fs_logger2("mount", private_dir);

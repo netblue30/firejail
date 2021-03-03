@@ -1,5 +1,8 @@
 #compdef firejail
 
+# Documentation: man 1 zshcompsys
+# HowTo: https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+
 _all_firejails() {
     local -a _all_firejails_list
     for jail in ${(f)"$(_call_program modules_tag "firejail --list 2> /dev/null | cut -d: -f1")"}; do
@@ -37,8 +40,8 @@ _firejail_args=(
     '--join=-[join the sandbox name|pid]: :_all_firejails'
     '--join-filesystem=-[join the mount namespace name|pid]: :_all_firejails'
     '--list[list all sandboxes]'
-    '--noprofile[do not use a security profile]'
-    '--profile=-[use a custom profile]: :_all_profiles'
+    '(--profile)--noprofile[do not use a security profile]'
+    '(--noprofile)--profile=-[use a custom profile]: :_all_profiles'
     '--shutdown=-[shutdown the sandbox identified by name|pid]: :_all_firejails'
     '--top[monitor the most CPU-intensive sandboxes]'
     '--tree[print a tree of all sandboxed processes]'
@@ -106,7 +109,7 @@ _firejail_args=(
     '--private-cwd[do not inherit working directory inside jail]'
     '--private-cwd=-[set working directory inside jail]: :_files -/'
     '--private-dev[create a new /dev directory with a small number of common device files]'
-    '*--private-etc=-[build a new /etc in a temporary filesystem, and copy the files and directories in the list]: :_files'
+    '(--writable-etc)--private-etc=-[build a new /etc in a temporary filesystem, and copy the files and directories in the list]: :_files'
     '--private-opt=-[build a new /opt in a temporary filesystem]: :'
     '--private-srv=-[build a new /srv in a temporary filesystem]: :'
     '--private-tmp[mount a tmpfs on top of /tmp directory]'
@@ -132,10 +135,10 @@ _firejail_args=(
     '--shell=none[run the program directly without a user shell]'
     '--shell=-[set default user shell]: :_files -g "*(*)"'
     '--timeout=-[kill the sandbox automatically after the time has elapsed]: :(hh\:mm\:ss)'
-    '*--tmpfs=-[mount a tmpfs filesystem on directory dirname]: :_files -/'
-    '--trace[trace open, access and connect system calls]'
-    '--tracelog[add a syslog message for every access to files or directories blacklisted by the security profile]'
-    '--writable-etc[/etc directory is mounted read-write]'
+    #'(--tracelog)--trace[trace open, access and connect system calls]'
+    '(--tracelog)--trace=-[trace open, access and connect system calls]: :_files'
+    '(--trace)--tracelog[add a syslog message for every access to files or directories blacklisted by the security profile]'
+    '(--private-etc)--writable-etc[/etc directory is mounted read-write]'
     '--writable-run-user[allow access to /run/user/$UID/systemd and /run/user/$UID/gnupg]'
     '--writable-var[/var directory is mounted read-write]'
     '--writable-var-log[use the real /var/log directory, not a clone]'
@@ -146,7 +149,7 @@ _firejail_args=(
 #endif
 
 #ifdef HAVE_CHROOT
-    '--chroot=-[chroot into directory]: :_files -/'
+    '(--noroot --overlay --overlay-named --overlay-tmpfs)--chroot=-[chroot into directory]: :_files -/'
 #endif
 
 #ifdef HAVE_DBUSPROXY
@@ -208,10 +211,10 @@ _firejail_args=(
 #endif
 
 #ifdef HAVE_OVERLAYFS
-    '--overlay[mount a filesystem overlay on top of the current filesystem]'
+    '(--chroot --noroot)--overlay[mount a filesystem overlay on top of the current filesystem]'
     '--overlay-clean[clean all overlays stored in $HOME/.firejail directory]'
-    '--overlay-named=-[mount a filesystem overlay on top of the current filesystem, and store it in name directory]: :_files -/'
-    '--overlay-tmpfs[mount a temporary filesystem overlay on top of the current filesystem]'
+    '(--chroot --noroot)--overlay-named=-[mount a filesystem overlay on top of the current filesystem, and store it in name directory]: :_files -/'
+    '(--chroot --noroot)--overlay-tmpfs[mount a temporary filesystem overlay on top of the current filesystem]'
 #endif
 
 #ifdef HAVE_PRIVATE_HOME
@@ -219,11 +222,12 @@ _firejail_args=(
 #endif
 
 #ifdef HAVE_USERNS
-    '--noroot[install a user namespace with only the current user]'
+    '(--chroot --overlay --overlay-named --overlay-tmpfs)--noroot[install a user namespace with only the current user]'
 #endif
 
 #ifdef HAVE_USERTMPFS
     '--private-cache[temporary ~/.cache directory]'
+    '*--tmpfs=-[mount a tmpfs filesystem on directory dirname]: :_files -/'
 #endif
 
 #ifdef HAVE_WHITELIST
@@ -260,3 +264,5 @@ _firejail() {
             ;;
     esac
 }
+
+# vim: ft=zsh sw=2 ts=2 et

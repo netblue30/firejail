@@ -33,6 +33,31 @@ extern void fslib_install_system(void);
 static int lib_cnt = 0;
 static int dir_cnt = 0;
 
+static const char *lib_dirs[] = {
+	"/usr/lib64",
+	"/lib64",
+	"/usr/lib",
+	"/lib",
+	"/usr/local/lib64",
+	"/usr/local/lib",
+	NULL,
+};
+
+// return 1 if the file is in lib_dirs[]
+static int valid_full_path(const char *full_path) {
+	if (strstr(full_path, ".."))
+		return 0;
+
+	int i = 0;
+	while (lib_dirs[i]) {
+		if (strncmp(full_path, lib_dirs[i], strlen(lib_dirs[i])) == 0 &&
+		    full_path[strlen(lib_dirs[i])] == '/')
+			return 1;
+		i++;
+	}
+	return 0;
+}
+
 char *find_in_path(const char *program) {
 	EUID_ASSERT();
 	if (arg_debug)
@@ -107,7 +132,8 @@ void fslib_duplicate(const char *full_path) {
 	assert(full_path);
 
 	struct stat s;
-	if (stat(full_path, &s) != 0 || s.st_uid != 0 || access(full_path, R_OK))
+	if (stat(full_path, &s) != 0 || s.st_uid != 0 || access(full_path, R_OK)
+	   || !valid_full_path(full_path))
 		return;
 
 	char *dest_dir = build_dest_dir(full_path);
@@ -190,7 +216,8 @@ void fslib_copy_dir(const char *full_path) {
 
 	// do nothing if the directory does not exist or is not owned by root
 	struct stat s;
-	if (stat(full_path, &s) != 0 || s.st_uid != 0 || !S_ISDIR(s.st_mode) || access(full_path, R_OK))
+	if (stat(full_path, &s) != 0 || s.st_uid != 0 || !S_ISDIR(s.st_mode) || access(full_path, R_OK)
+	   || !valid_full_path(full_path))
 		return;
 
 	char *dir_name = strrchr(full_path, '/');

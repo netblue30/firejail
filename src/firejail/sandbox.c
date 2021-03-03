@@ -975,10 +975,10 @@ int sandbox(void* sandbox_arg) {
 			fs_private_dir_copy("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep); // openSUSE
 
 			if (umount2("/etc/group", MNT_DETACH) == -1)
-				fprintf(stderr, "/etc/group: unmount: %m\n");
+				fprintf(stderr, "/etc/group: unmount: %s\n", strerror(errno));
 
 			if (umount2("/etc/passwd", MNT_DETACH) == -1)
-				fprintf(stderr, "/etc/passwd: unmount: %m\n");
+				fprintf(stderr, "/etc/passwd: unmount: %s\n", strerror(errno));
 
 			fs_private_dir_mount("/etc", RUN_ETC_DIR);
 			fs_private_dir_mount("/usr/etc", RUN_USR_ETC_DIR);

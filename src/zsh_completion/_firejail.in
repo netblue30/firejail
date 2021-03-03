@@ -19,7 +19,7 @@ _all_cpus() {
 }
 
 _profiles() {
-    print $1/*.profile | sed -E "s;^$1/;;g;s;\.profile$;;g;"
+    print $1/*.profile | sed -E "s;$1/;;g;s;\.profile;;g;"
 }
 _profiles_with_ext() {
     print $1/*.profile
@@ -27,6 +27,21 @@ _profiles_with_ext() {
 
 _all_profiles() {
     _values 'profiles' $(_profiles _SYSCONFDIR_/firejail) $(_profiles $HOME/.config/firejail) $(_profiles_with_ext .)
+}
+
+_session_bus_names() {
+    _values names $(busctl --user list --no-legend --activatable | cut -d" " -f1)
+    # Alternatives to hack on for non-systemd systems:
+    #  dbus-send --session --dest=org.freedesktop.DBus --type=method_call --print-reply=literal /org/freedesktop/DBus org.freedesktop.DBus.ListNames
+    #  ls /usr/share/dbus-1/services | xargs -I FILENAME basename FILENAME .service
+}
+
+_system_bus_names() {
+    _values names $(busctl --system list --no-legend --activatable | cut -d" " -f1)
+}
+
+_caps() {
+    _values -s "," caps $(firejail --debug-caps | awk '/[0-9]+\s*- /{print $3}')
 }
 
 _firejail_args=(
@@ -70,8 +85,9 @@ _firejail_args=(
     '*--bind=-[mount-bind dirname1/filename1 on top of dirname2/filename2]: :(file1,file2 dir1,dir2)'
     '*--blacklist=-[blacklist directory or file]: :_files'
     '--caps[enable default Linux capabilities filter]'
-    '*--caps.drop=-[drop capabilities: all|cap1,cap2,...]: :->caps_drop'
-    '*--caps.keep=-[keep capabilities: cap1,cap2,...]: :->caps_keep'
+    '--caps.drop=all[drop all capabilities]'
+    '*--caps.drop=-[drop capabilities: all|cap1,cap2,...]: :_caps'
+    '*--caps.keep=-[keep capabilities: cap1,cap2,...]: :_caps'
     '--cgroup=-[place the sandbox in the specified control group]: :'
     '--cpu=-[set cpu affinity]: :->cpus'
     "--deterministic-exit-code[always exit with first child's status code]"
@@ -89,6 +105,7 @@ _firejail_args=(
     '*--mkdir=-[create a directory]:'
     '*--mkfile=-[create a file]:'
     '--name=-[set sandbox name]: :'
+    '--net=none[enable a new, unconnected network namespace]'
     # Sample values as I don't think
     # many would enjoy getting a list from -20..20
     '--nice=-[set nice value]: :(1 10 15 20)'
@@ -105,15 +122,15 @@ _firejail_args=(
     '--novideo[disable video devices]'
     '--private[temporary home directory]'
     '--private=-[use directory as user home]: :_files -/'
-    '--private-bin=-[build a new /bin in a temporary filesystem, and copy the programs in the list]: :'
+    '--private-bin=-[build a new /bin in a temporary filesystem, and copy the programs in the list]: :_files -W /usr/bin'
     '--private-cwd[do not inherit working directory inside jail]'
     '--private-cwd=-[set working directory inside jail]: :_files -/'
     '--private-dev[create a new /dev directory with a small number of common device files]'
-    '(--writable-etc)--private-etc=-[build a new /etc in a temporary filesystem, and copy the files and directories in the list]: :_files'
-    '--private-opt=-[build a new /opt in a temporary filesystem]: :'
-    '--private-srv=-[build a new /srv in a temporary filesystem]: :'
+    '(--writable-etc)--private-etc=-[build a new /etc in a temporary filesystem, and copy the files and directories in the list]: :_files -W /etc'
+    '--private-opt=-[build a new /opt in a temporary filesystem]: :_files -W /opt'
+    '--private-srv=-[build a new /srv in a temporary filesystem]: :_files -W /srv'
     '--private-tmp[mount a tmpfs on top of /tmp directory]'
-    '*--protocol=-[enable protocol filter]: :'
+    '*--protocol=-[enable protocol filter]: :_values -s , protocols unix inet inet6 netlink packet bluetooth'
     "--quiet[turn off Firejail's output.]"
     '*--read-only=-[set directory or file read-only]: :_files'
     '*--read-write=-[set directory or file read-write]: :_files'
@@ -123,18 +140,19 @@ _firejail_args=(
     '--rlimit-nofile=-[set the maximum number of files that can be opened by a process]: :'
     '--rlimit-nproc=-[set the maximum number of processes that can be created for the real user ID of the calling process]: :'
     '--rlimit-sigpending=-[set the maximum number of pending signals for a process]: :'
-    '*--rmenv=-[remove environment variable in the new sandbox]: :'
+    '*--rmenv=-[remove environment variable in the new sandbox]: :_values environment-variables $(env | cut -d= -f1)'
     '--seccomp[enable seccomp filter and apply the default blacklist]: :'
-    '--seccomp=-[enable seccomp filter, blacklist the default syscall list and the syscalls specified by the command]:'
+    '--seccomp=-[enable seccomp filter, blacklist the default syscall list and the syscalls specified by the command]: :->seccomp'
     '--seccomp.block-secondary[build only the native architecture filters]'
-    '*--seccomp.drop=-[enable seccomp filter, and blacklist the syscalls specified by the command]: :'
-    '*--seccomp.keep=-[enable seccomp filter, and whitelist the syscalls specified by the command]: :'
+    '*--seccomp.drop=-[enable seccomp filter, and blacklist the syscalls specified by the command]: :->seccomp'
+    '*--seccomp.keep=-[enable seccomp filter, and whitelist the syscalls specified by the command]: :->seccomp'
     '*--seccomp.32.drop=-[enable seccomp filter, and blacklist the 32 bit syscalls specified by the command]: :'
     '*--seccomp.32.keep=-[enable seccomp filter, and whitelist the 32 bit syscalls specified by the command]: :'
-    '--seccomp-error-action=-[change error code, kill process or log the attempt]: :(ERRNO kill log)'
+    # FIXME: Add errnos
+    '--seccomp-error-action=-[change error code, kill process or log the attempt]: :(kill log)'
     '--shell=none[run the program directly without a user shell]'
-    '--shell=-[set default user shell]: :_files -g "*(*)"'
-    '--timeout=-[kill the sandbox automatically after the time has elapsed]: :(hh\:mm\:ss)'
+    '--shell=-[set default user shell]: :_values $(cat /etc/shells)'
+    '--timeout=-[kill the sandbox automatically after the time has elapsed]: :'
     #'(--tracelog)--trace[trace open, access and connect system calls]'
     '(--tracelog)--trace=-[trace open, access and connect system calls]: :_files'
     '(--trace)--tracelog[add a syslog message for every access to files or directories blacklisted by the security profile]'
@@ -153,19 +171,21 @@ _firejail_args=(
 #endif
 
 #ifdef HAVE_DBUSPROXY
+    # FIXME: _xx_bus_names is actually wrong for --dbus-*.{broadcast,call}.
+    # We can steal some function from https://github.com/systemd/systemd/blob/main/shell-completion/zsh/_busctl
     '--dbus-log=-[set DBus log file location]: :_files'
     '--dbus-system=-[set system DBus access policy]: :(filter none)'
-    '--dbus-system.broadcast=-[allow signals on the system DBus according to rule]: :'
-    '--dbus-system.call=-[allow calls on the system DBus according to rule]: :'
-    '--dbus-system.own=-[allow ownership of name on the system DBus]: :'
-    '--dbus-system.see=-[allow seeing name on the system DBus]: :'
-    '--dbus-system.talk=-[allow talking to name on the system DBus]: :'
-    '--dbus-user=-[set session DBus access policy or none]: :'
-    '--dbus-user.broadcast=-[allow signals on the session DBus according to rule]: :'
-    '--dbus-user.call=-[allow calls on the session DBus according to rule]: :'
-    '--dbus-user.own=-[allow ownership of name on the session DBus]: :'
-    '--dbus-user.see=-[allow seeing name on the session DBus]: :'
-    '--dbus-user.talk=-[allow talking to name on the session DBus]: :'
+    '--dbus-system.broadcast=-[allow signals on the system DBus according to rule]: :_system_bus_names'
+    '--dbus-system.call=-[allow calls on the system DBus according to rule]: :_system_bus_names'
+    '--dbus-system.own=-[allow ownership of name on the system DBus]: :_system_bus_names'
+    '--dbus-system.see=-[allow seeing name on the system DBus]: :_system_bus_names'
+    '--dbus-system.talk=-[allow talking to name on the system DBus]: :_system_bus_names'
+    '--dbus-user=-[set session DBus access policy or none]: :(filter none)'
+    '--dbus-user.broadcast=-[allow signals on the session DBus according to rule]: :_session_bus_names'
+    '--dbus-user.call=-[allow calls on the session DBus according to rule]: :_session_bus_names'
+    '--dbus-user.own=-[allow ownership of name on the session DBus]: :_session_bus_names'
+    '--dbus-user.see=-[allow seeing name on the session DBus]: :_session_bus_names'
+    '--dbus-user.talk=-[allow talking to name on the session DBus]: :_session_bus_names'
 #endif
 
 #ifdef HAVE_FILE_TRANSFER
@@ -187,7 +207,6 @@ _firejail_args=(
     '--join-network=-[join the network namespace name|pid]: :_all_firejails'
     '--mac=-[set interface MAC address]: :(xx\:xx\:xx\:xx\:xx\:xx)'
     '--mtu=-[set interface MTU]: :'
-    # '--net=none[enable a new, unconnected network namespace]'
     '--net=-[enable network namespaces and connect to this bridge or Ethernet interface (or none to disable)]: :->net_or_none'
     '--net.print=-[print network interface configuration name|pid]: :_all_firejails'
     '--netfilter=-[enable firewall]: :'
@@ -246,14 +265,6 @@ _firejail_args=(
 _firejail() {
     _arguments -S $_firejail_args
     case "$state" in
-        caps_drop)
-            local caps_and_all=(all $(firejail --debug-caps | awk '/[0-9]+\s*- /{print $3}'))
-            _values -s "," 'caps_drop' $caps_and_all
-            ;;
-        caps_keep)
-            local caps=($(firejail --debug-caps | awk '/[0-9]+\s*- /{print $3}'))
-            _values -s "," 'caps_keep' $caps
-            ;;
         cpus)
             _values -s "," 'cpus' $(_all_cpus)
             ;;
@@ -262,7 +273,11 @@ _firejail() {
             local net_and_none=(none $netdevs)
             _values 'net' $net_and_none
             ;;
+        seccomp)
+            # TODO: syscall groups
+            _values -s "," 'syscalls' $(firejail --debug-syscalls | cut -d" " -f2)
+            ;;
     esac
 }
 
-# vim: ft=zsh sw=2 ts=2 et
+# vim: ft=zsh sw=4 ts=4 et sts=4 ai

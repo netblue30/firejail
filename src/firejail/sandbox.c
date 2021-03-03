@@ -971,21 +971,24 @@ int sandbox(void* sandbox_arg) {
 			 * 2. unmount bind mounts from /etc
 			 * 3. mount RUN_ETC_DIR at /etc
 			 */
+			timetrace_start();
 			fs_private_dir_copy("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
-			fs_private_dir_copy("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep); // openSUSE
 
 			if (umount2("/etc/group", MNT_DETACH) == -1)
 				fprintf(stderr, "/etc/group: unmount: %s\n", strerror(errno));
-
 			if (umount2("/etc/passwd", MNT_DETACH) == -1)
 				fprintf(stderr, "/etc/passwd: unmount: %s\n", strerror(errno));
 
 			fs_private_dir_mount("/etc", RUN_ETC_DIR);
-			fs_private_dir_mount("/usr/etc", RUN_USR_ETC_DIR);
+			fmessage("Private /etc installed in %0.2f ms\n", timetrace_end());
 
 			// create /etc/ld.so.preload file again
 			if (need_preload)
 				fs_trace_preload();
+
+			// openSUSE configuration is split between /etc and /usr/etc
+			// process private-etc a second time
+			fs_private_dir_list("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep);
 		}
 	}
 

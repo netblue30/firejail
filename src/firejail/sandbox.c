@@ -1026,12 +1026,6 @@ int sandbox(void* sandbox_arg) {
 	fs_resolvconf();
 
 	//****************************
-	// fs post-processing
-	//****************************
-	fs_logger_print();
-	fs_logger_change_owner();
-
-	//****************************
 	// start dhcp client
 	//****************************
 	dhcp_start();
@@ -1078,6 +1072,12 @@ int sandbox(void* sandbox_arg) {
 
 	// save original umask
 	save_umask();
+
+	//****************************
+	// fs post-processing
+	//****************************
+	fs_logger_print();
+	fs_logger_change_owner();
 
 	//****************************
 	// set security filters

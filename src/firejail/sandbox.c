@@ -575,12 +575,12 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 }
 
 static void enforce_filters(void) {
+	fmessage("\n** Warning: dropping all Linux capabilities and setting NO_NEW_PRIVS prctl **\n\n");
 	// enforce NO_NEW_PRIVS
 	arg_nonewprivs = 1;
 	force_nonewprivs = 1;
 
 	// disable all capabilities
-	fmessage("\n**     Warning: dropping all Linux capabilities and setting NO_NEW_PRIVS prctl     **\n\n");
 	arg_caps_drop_all = 1;
 
 	// drop all supplementary groups; /etc/group file inside chroot

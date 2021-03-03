@@ -1015,12 +1015,6 @@ int sandbox(void* sandbox_arg) {
 		fs_dev_disable_video();
 
 	//****************************
-	// install trace
-	//****************************
-	if (need_preload)
-		fs_trace();
-
-	//****************************
 	// set dns
 	//****************************
 	fs_resolvconf();
@@ -1135,6 +1129,16 @@ int sandbox(void* sandbox_arg) {
 	// make seccomp filters read-only
 	fs_remount(RUN_SECCOMP_DIR, MOUNT_READONLY, 0);
 	seccomp_debug();
+
+	//****************************
+	// install trace - still need capabilities
+	//****************************
+	if (need_preload)
+		fs_trace();
+
+	//****************************
+	// continue security filters
+	//****************************
 
 	// set capabilities
 	set_caps();

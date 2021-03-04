@@ -23,12 +23,14 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+// todo: resolve overlap with masked_lib_dirs[] array from fs_lib.c
 const char * const default_lib_paths[] = {
 	"/usr/lib/x86_64-linux-gnu",	// Debian & friends
 	"/lib/x86_64-linux-gnu",		// CentOS, Fedora
+	"/usr/lib64",
+	"/lib64",
 	"/usr/lib",
 	"/lib",
-	"/lib64",
 	LIBDIR,
 	"/usr/local/lib64",
 	"/usr/local/lib",

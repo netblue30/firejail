@@ -23,7 +23,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <dirent.h>
+#include <fcntl.h>
+#include <errno.h>
 #include <glob.h>
 #define MAXBUF 4096
 
@@ -34,7 +35,7 @@ extern void fslib_install_system(void);
 static int lib_cnt = 0;
 static int dir_cnt = 0;
 
-static const char *lib_dirs[] = {
+static const char *masked_lib_dirs[] = {
 	"/usr/lib64",
 	"/lib64",
 	"/usr/lib",
@@ -44,15 +45,15 @@ static const char *lib_dirs[] = {
 	NULL,
 };
 
-// return 1 if the file is in lib_dirs[]
+// return 1 if the file is in masked_lib_dirs[]
 static int valid_full_path(const char *full_path) {
 	if (strstr(full_path, ".."))
 		return 0;
 
 	int i = 0;
-	while (lib_dirs[i]) {
-		if (strncmp(full_path, lib_dirs[i], strlen(lib_dirs[i])) == 0 &&
-		    full_path[strlen(lib_dirs[i])] == '/')
+	while (masked_lib_dirs[i]) {
+		if (strncmp(full_path, masked_lib_dirs[i], strlen(masked_lib_dirs[i])) == 0 &&
+		    full_path[strlen(masked_lib_dirs[i])] == '/')
 			return 1;
 		i++;
 	}
@@ -70,9 +71,10 @@ char *find_in_path(const char *program) {
 		errExit("readlink");
 	self[len] = '\0';
 
-	char *path = getenv("PATH");
+	const char *path = env_get("PATH");
 	if (!path)
 		return NULL;
+
 	char *dup = strdup(path);
 	if (!dup)
 		errExit("strdup");
@@ -105,22 +107,6 @@ char *find_in_path(const char *program) {
 	return NULL;
 }
 
-static void report_duplication(const char *full_path) {
-	char *fname = strrchr(full_path, '/');
-	if (fname && *(++fname) != '\0') {
-		// report the file on all bin paths
-		int i = 0;
-		while (default_lib_paths[i]) {
-			char *p;
-			if (asprintf(&p, "%s/%s", default_lib_paths[i], fname) == -1)
-				errExit("asprintf");
-			fs_logger2("clone", p);
-			free(p);
-			i++;
-		}
-	}
-}
-
 static char *build_dest_dir(const char *full_path) {
 	assert(full_path);
 	if (strstr(full_path, "/x86_64-linux-gnu/"))
@@ -128,57 +114,107 @@ static char *build_dest_dir(const char *full_path) {
 	return RUN_LIB_DIR;
 }
 
-// copy fname in private_run_dir
-void fslib_duplicate(const char *full_path) {
+// return name of mount target in allocated memory
+static char *build_dest_name(const char *full_path) {
 	assert(full_path);
+	char *fname = strrchr(full_path, '/');
+	assert(fname);
+	fname++;
+	assert(*fname != '\0');
 
-	struct stat s;
-	if (stat(full_path, &s) != 0 || s.st_uid != 0 || access(full_path, R_OK)
-	   || !valid_full_path(full_path))
-		return;
-
-	char *dest_dir = build_dest_dir(full_path);
-
-	// don't copy it if the file is already there
-	char *ptr = strrchr(full_path, '/');
-	if (!ptr)
-		return;
-	ptr++;
-	if (*ptr == '\0')
-		return;
-
-	char *name;
-	if (asprintf(&name, "%s/%s", dest_dir, ptr) == -1)
+	char *dest;
+	if (asprintf(&dest, "%s/%s", build_dest_dir(full_path), fname) == -1)
 		errExit("asprintf");
-	if (stat(name, &s) == 0) {
-		free(name);
-		return;
+	return dest;
+}
+
+static void fslib_mount_dir(const char *full_path) {
+	// create new directory and mount the original on top of it
+	char *dest = build_dest_name(full_path);
+	if (mkdir(dest, 0755) == -1) {
+		if (errno == EEXIST) { // directory has been mounted already, nothing to do
+			free(dest);
+			return;
+		}
+		errExit("mkdir");
 	}
-	free(name);
 
 	if (arg_debug || arg_debug_private_lib)
-		printf("    copying %s to private %s\n", full_path, dest_dir);
+		printf("    mounting %s on %s\n", full_path, dest);
+	// if full_path is a symbolic link, mount will follow it
+	if (mount(full_path, dest, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mount bind");
+	free(dest);
+	dir_cnt++;
+}
 
-	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", full_path, dest_dir);
-	report_duplication(full_path);
+static void fslib_mount_file(const char *full_path) {
+	// create new file and mount the original on top of it
+	char *dest = build_dest_name(full_path);
+	int fd = open(dest, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWUSR);
+	if (fd == -1) {
+		if (errno == EEXIST) { // file has been mounted already, nothing to do
+			free(dest);
+			return;
+		}
+		errExit("open");
+	}
+	close(fd);
+
+	if (arg_debug || arg_debug_private_lib)
+		printf("    mounting %s on %s\n", full_path, dest);
+	// if full_path is a symbolic link, mount will follow it
+	if (mount(full_path, dest, NULL, MS_BIND, NULL) < 0)
+		errExit("mount bind");
+	free(dest);
 	lib_cnt++;
+}
+
+void fslib_mount(const char *full_path) {
+	assert(full_path);
+	struct stat s;
+
+	if (!valid_full_path(full_path) ||
+	    access(full_path, F_OK) != 0 ||
+	    stat(full_path, &s) != 0 ||
+	    s.st_uid != 0)
+		return;
+
+	if (S_ISDIR(s.st_mode))
+		fslib_mount_dir(full_path);
+	else if (S_ISREG(s.st_mode) && is_lib_64(full_path))
+		fslib_mount_file(full_path);
 }
 
 // requires full path for lib
 // it could be a library or an executable
 // lib is not copied, only libraries used by it
-static void fslib_copy_libs(const char *full_path, unsigned mask) {
+void fslib_mount_libs(const char *full_path, unsigned user) {
+	assert(full_path);
+	// if library/executable does not exist or the user does not have read access to it
+	// print a warning and exit the function.
+	if (user && access(full_path, R_OK)) {
+		if (arg_debug || arg_debug_private_lib)
+			printf("Cannot read %s, skipping...\n", full_path);
+		return;
+	}
+
+	if (arg_debug || arg_debug_private_lib)
+		printf("    fslib_mount_libs %s (parse as %s)\n", full_path, user ? "user" : "root");
 	// create an empty RUN_LIB_FILE and allow the user to write to it
 	unlink(RUN_LIB_FILE);			  // in case is there
 	create_empty_file_as_root(RUN_LIB_FILE, 0644);
-	if (mask & SBOX_USER) {
-		if (chown(RUN_LIB_FILE, getuid(), getgid()))
-			errExit("chown");
-	}
+	if (user && chown(RUN_LIB_FILE, getuid(), getgid()))
+		errExit("chown");
 
 	// run fldd to extract the list of files
 	if (arg_debug || arg_debug_private_lib)
 		printf("    running fldd %s\n", full_path);
+	unsigned mask;
+	if (user)
+		mask = SBOX_USER;
+	else
+		mask = SBOX_ROOT;
 	sbox_run(mask | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, full_path, RUN_LIB_FILE);
 
 	// open the list of libraries and install them on by one
@@ -192,97 +228,30 @@ static void fslib_copy_libs(const char *full_path, unsigned mask) {
 		char *ptr = strchr(buf, '\n');
 		if (ptr)
 			*ptr = '\0';
-		fslib_duplicate(buf);
+
+		fslib_mount(buf);
 	}
 	fclose(fp);
 	unlink(RUN_LIB_FILE);
 }
 
-void fslib_copy_libs_parse_as_root(const char *full_path) {
-	assert(full_path);
-	if (arg_debug || arg_debug_private_lib)
-		printf("    fslib_copy_libs_parse_as_root %s\n", full_path);
-
-	struct stat s;
-	if (stat(full_path, &s)) {
-		if (arg_debug || arg_debug_private_lib)
-			printf("cannot find %s for private-lib, skipping...\n", full_path);
-		return;
-	}
-	fslib_copy_libs(full_path, SBOX_ROOT);
-}
-
-// if library/executable does not exist or the user does not have read access to it
-// print a warning and exit the function.
-void fslib_copy_libs_parse_as_user(const char *full_path) {
-	assert(full_path);
-	if (arg_debug || arg_debug_private_lib)
-		printf("    fslib_copy_libs_parse_as_user %s\n", full_path);
-
-	if (access(full_path, R_OK)) {
-		if (arg_debug || arg_debug_private_lib)
-			printf("cannot find %s for private-lib, skipping...\n", full_path);
-		return;
-	}
-	fslib_copy_libs(full_path, SBOX_USER);
-}
-
-void fslib_copy_dir(const char *full_path) {
-	assert(full_path);
-	if (arg_debug || arg_debug_private_lib)
-		printf("    fslib_copy_dir %s\n", full_path);
-
-	// do nothing if the directory does not exist or is not owned by root
-	struct stat s;
-	if (stat(full_path, &s) != 0 || s.st_uid != 0 || !S_ISDIR(s.st_mode) || access(full_path, R_OK)
-	   || !valid_full_path(full_path))
-		return;
-
-	char *dir_name = strrchr(full_path, '/');
-	assert(dir_name);
-	dir_name++;
-	assert(*dir_name != '\0');
-
-	// do nothing if the directory is already there
-	char *dest;
-	if (asprintf(&dest, "%s/%s", build_dest_dir(full_path), dir_name) == -1)
-		errExit("asprintf");
-	if (stat(dest, &s) == 0) {
-		free(dest);
-		return;
-	}
-
-	// create new directory and mount the original on top of it
-	mkdir_attr(dest, 0755, 0, 0);
-
-	if (mount(full_path, dest, NULL, MS_BIND|MS_REC, NULL) < 0 ||
-		mount(NULL, dest, NULL, MS_BIND|MS_REMOUNT|MS_RDONLY|MS_NOSUID|MS_NODEV|MS_REC, NULL) < 0)
-		errExit("mount bind");
-	fs_logger2("clone", full_path);
-	fs_logger2("mount", full_path);
-	dir_cnt++;
-	free(dest);
-}
-
-// fname should be a vallid full path at this point
+// fname should be a valid full path at this point
 static void load_library(const char *fname) {
 	assert(fname);
 	assert(*fname == '/');
 
-	// existing file owned by root, read access
+	// existing file owned by root
 	struct stat s;
-	if (stat(fname, &s) == 0 && s.st_uid == 0 && !access(fname, R_OK)) {
+	if (!access(fname, F_OK) && stat(fname, &s) == 0 && s.st_uid == 0) {
 		// load directories, regular 64 bit libraries, and 64 bit executables
-		if (is_dir(fname) || is_lib_64(fname)) {
-			if (is_dir(fname))
-				fslib_copy_dir(fname);
-			else {
-				if (strstr(fname, ".so") ||
-				    access(fname, X_OK) != 0) // don't duplicate executables, just install the libraries
-					fslib_duplicate(fname);
+		if (S_ISDIR(s.st_mode))
+			fslib_mount(fname);
+		else if (S_ISREG(s.st_mode) && is_lib_64(fname)) {
+			if (strstr(fname, ".so") ||
+			    access(fname, X_OK) != 0) // don't duplicate executables, just install the libraries
+				fslib_mount(fname);
 
-				fslib_copy_libs_parse_as_user(fname);
-			}
+			fslib_mount_libs(fname, 1); // parse as user
 		}
 	}
 }
@@ -338,7 +307,6 @@ static void install_list_entry(const char *lib) {
 	return;
 }
 
-
 void fslib_install_list(const char *lib_list) {
 	assert(lib_list);
 	if (arg_debug || arg_debug_private_lib)
@@ -365,14 +333,14 @@ static void mount_directories(void) {
 	fs_remount(RUN_LIB_DIR, MOUNT_READONLY, 1); // should be redundant except for RUN_LIB_DIR itself
 
 	int i = 0;
-	while (lib_dirs[i]) {
-		if (is_dir(lib_dirs[i])) {
+	while (masked_lib_dirs[i]) {
+		if (is_dir(masked_lib_dirs[i])) {
 			if (arg_debug || arg_debug_private_lib)
-				printf("Mount-bind %s on top of %s\n", RUN_LIB_DIR, lib_dirs[i]);
-			if (mount(RUN_LIB_DIR, lib_dirs[i], NULL, MS_BIND|MS_REC, NULL) < 0)
+				printf("Mount-bind %s on top of %s\n", RUN_LIB_DIR, masked_lib_dirs[i]);
+			if (mount(RUN_LIB_DIR, masked_lib_dirs[i], NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
-			fs_logger2("tmpfs", lib_dirs[i]);
-			fs_logger2("mount", lib_dirs[i]);
+			fs_logger2("tmpfs", masked_lib_dirs[i]);
+			fs_logger2("mount", masked_lib_dirs[i]);
 		}
 		i++;
 	}
@@ -444,7 +412,6 @@ void fs_private_lib(void) {
 		fslib_install_list(cfg.shell);
 		// a shell is useless without some basic commands
 		fslib_install_list("/bin/ls,/bin/cat,/bin/mv,/bin/rm");
-
 	}
 
 	// for the listed libs and directories

@@ -157,6 +157,10 @@ static int check_nosound(void) {
 	return arg_nosound != 0;
 }
 
+static int check_private(void) {
+	return arg_private;
+}
+
 static int check_x11(void) {
 	return (arg_x11_block || arg_x11_xorg || env_get("FIREJAIL_X11"));
 }
@@ -174,6 +178,7 @@ Cond conditionals[] = {
 	{"HAS_NET", check_netoptions},
 	{"HAS_NODBUS", check_nodbus},
 	{"HAS_NOSOUND", check_nosound},
+	{"HAS_PRIVATE", check_private},
 	{"HAS_X11", check_x11},
 	{"BROWSER_DISABLE_U2F", check_disable_u2f},
 	{"BROWSER_ALLOW_DRM", check_allow_drm},

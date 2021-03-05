@@ -821,6 +821,16 @@ $ firejail \-\-ignore=shell --ignore=seccomp firefox
 $ firejail \-\-ignore="net eth0" firefox
 #endif
 
+.TP
+\fB\-\-\include=file.profile
+Include a profile file before the regular profiles are used.
+.br
+
+.br
+Example:
+.br
+$ firejail --include=/etc/firejail/disable-devel.inc gedit
+
 #ifdef HAVE_NETWORK
 .TP
 \fB\-\-interface=interface

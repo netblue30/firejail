@@ -30,6 +30,7 @@ const char * const default_lib_paths[] = {
 	"/lib",
 	"/lib64",
 	LIBDIR,
+	"/usr/local/lib64",
 	"/usr/local/lib",
 	"/usr/lib/x86_64-linux-gnu/mesa", // libGL.so is sometimes a symlink into this directory
 	"/usr/lib/x86_64-linux-gnu/mesa-egl", // libGL.so is sometimes a symlink into this directory

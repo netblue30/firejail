@@ -5,6 +5,7 @@ include disable-programs.local
 blacklist ${HOME}/Arduino
 blacklist ${HOME}/i2p
 blacklist ${HOME}/Monero/wallets
+blacklist ${HOME}/Nextcloud
 blacklist ${HOME}/Nextcloud/Notes
 blacklist ${HOME}/SoftMaker
 blacklist ${HOME}/Standard Notes Backups
@@ -117,6 +118,7 @@ blacklist ${HOME}/.config/MusE
 blacklist ${HOME}/.config/MuseScore
 blacklist ${HOME}/.config/MusicBrainz
 blacklist ${HOME}/.config/Nathan Osman
+blacklist ${HOME}/.config/Nextcloud
 blacklist ${HOME}/.config/Nylas Mail
 blacklist ${HOME}/.config/PacmanLogViewer
 blacklist ${HOME}/.config/PBE
@@ -582,6 +584,7 @@ blacklist ${HOME}/.local/share/JetBrains
 blacklist ${HOME}/.local/share/Kingsoft
 blacklist ${HOME}/.local/share/Mendeley Ltd.
 blacklist ${HOME}/.local/share/Mumble
+blacklist ${HOME}/.local/share/Nextcloud
 blacklist ${HOME}/.local/share/PBE
 blacklist ${HOME}/.local/share/Psi
 blacklist ${HOME}/.local/share/QGIS

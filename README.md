@@ -331,4 +331,4 @@ Stats:
 ### New profiles:
 
 vmware-view, display-im6.q16, ipcalc, ipcalc-ng, ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop.
-avidemux, calligragemini, vmware-player, vmware-workstation, gget
+avidemux, calligragemini, vmware-player, vmware-workstation, gget, com.github.phase1geo.minder, nextcloud-desktop

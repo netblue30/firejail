@@ -306,7 +306,6 @@ blacklist ${HOME}/.config/lugaru
 blacklist ${HOME}/.config/lutris
 blacklist ${HOME}/.config/lximage-qt
 blacklist ${HOME}/.config/mailtransports
-blacklist ${HOME}/.local/share/man
 blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
@@ -686,11 +685,13 @@ blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/love
 blacklist ${HOME}/.local/share/lugaru
 blacklist ${HOME}/.local/share/lutris
+blacklist ${HOME}/.local/share/man
 blacklist ${HOME}/.local/share/mana
 blacklist ${HOME}/.local/share/maps-places.json
 blacklist ${HOME}/.local/share/matrix-mirage
 blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/midori
+blacklist ${HOME}/.local/share/minder
 blacklist ${HOME}/.local/share/mirage
 blacklist ${HOME}/.local/share/multimc
 blacklist ${HOME}/.local/share/multimc5

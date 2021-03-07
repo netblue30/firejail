@@ -40,7 +40,7 @@ seccomp
 shell none
 tracelog
 
-private-bin atril,atril-previewer,atril-thumbnailer
+private-bin atril,atril-previewer,atril-thumbnailer,unzip,zipnote
 private-dev
 private-etc alternatives,fonts,ld.so.cache
 # atril uses webkit gtk to display epub files

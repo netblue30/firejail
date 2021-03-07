@@ -7,13 +7,17 @@ include newsbeuter.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.config/newsbeuter
-noblacklist ${HOME}/.newsbeuter
+ignore include newsboat.local
+ignore mkdir ${HOME}/.local/share/newsboat
+ignore noblacklist ${HOME}/.config/newsboat
+ignore noblacklist ${HOME}/.local/share/newsboat
+ignore noblacklist ${HOME}/.newsboat
+ignore private-bin newsboat
+ignore whitelist ${HOME}/.config/newsboat
+ignore whitelist ${HOME}/.local/share/newsboat
+ignore whitelist ${HOME}/.newsboat
 
-mkdir ${HOME}/.config/newsbeuter
-mkdir ${HOME}/.newsbeuter
-whitelist ${HOME}/.config/newsbeuter
-whitelist ${HOME}/.newsbeuter
+mkdir ${HOME}/.local/share/newsbeuter
 
 private-bin newsbeuter
 

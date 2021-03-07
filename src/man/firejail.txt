@@ -433,7 +433,7 @@ org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 
 .TP
 \fB\-\-dbus-system.log
-Turn on DBus logging for the system DBus. This option requires --dbus-system=log.
+Turn on DBus logging for the system DBus. This option requires --dbus-system=filter.
 
 .br
 Example:
@@ -560,7 +560,7 @@ org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 
 .TP
 \fB\-\-dbus-user.log
-Turn on DBus logging for the session DBus. This option requires --dbus-user=log.
+Turn on DBus logging for the session DBus. This option requires --dbus-user=filter.
 
 .br
 Example:

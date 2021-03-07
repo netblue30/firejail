@@ -6,6 +6,11 @@ include newsboat.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/newsbeuter
+noblacklist ${HOME}/.config/newsboat
+noblacklist ${HOME}/.local/share/newsbeuter
+noblacklist ${HOME}/.local/share/newsboat
+noblacklist ${HOME}/.newsbeuter
 noblacklist ${HOME}/.newsboat
 
 include disable-common.inc
@@ -16,7 +21,12 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.newsboat
+mkdir ${HOME}/.local/share/newsboat
+whitelist ${HOME}/.config/newsbeuter
+whitelist ${HOME}/.config/newsboat
+whitelist ${HOME}/.local/share/newsbeuter
+whitelist ${HOME}/.local/share/newsboat
+whitelist ${HOME}/.newsbeuter
 whitelist ${HOME}/.newsboat
 include whitelist-common.inc
 include whitelist-runuser-common.inc
@@ -38,7 +48,7 @@ seccomp
 shell none
 
 disable-mnt
-private-bin gzip,lynx,newsboat,sh
+private-bin gzip,lynx,newsboat,sh,w3m
 private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,lynx.cfg,lynx.lss,pki,resolv.conf,ssl,terminfo

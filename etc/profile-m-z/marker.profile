@@ -14,6 +14,8 @@ include globals.local
 noblacklist ${HOME}/.cache/marker
 noblacklist ${DOCUMENTS}
 
+include allow-python3.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -48,7 +50,7 @@ seccomp.block-secondary
 shell none
 tracelog
 
-private-bin marker
+private-bin marker,python3*
 private-cache
 private-dev
 private-etc alternatives,dconfgtk-3.0,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,pango,X11

@@ -10,6 +10,7 @@ include newsbeuter.local
 ignore include newsboat.local
 ignore mkdir ${HOME}/.config/newsboat
 ignore mkdir ${HOME}/.local/share/newsboat
+ignore mkdir ${HOME}/.newsboat
 ignore private-bin newsboat
 
 blacklist ${HOME}/.config/newsboat
@@ -22,6 +23,7 @@ nowhitelist ${HOME}/.newsboat
 
 mkdir ${HOME}/.config/newsbeuter
 mkdir ${HOME}/.local/share/newsbeuter
+mkdir ${HOME}/.newsbeuter
 
 private-bin newsbeuter
 

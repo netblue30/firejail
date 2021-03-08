@@ -19,6 +19,7 @@ nowhitelist ${HOME}/.config/newsboat
 nowhitelist ${HOME}/.local/share/newsboat
 nowhitelist ${HOME}/.newsboat
 
+mkdir ${HOME}/.config/newsbeuter
 mkdir ${HOME}/.local/share/newsbeuter
 
 private-bin newsbeuter

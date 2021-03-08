@@ -8,6 +8,7 @@ include newsbeuter.local
 #include globals.local
 
 ignore include newsboat.local
+ignore mkdir ${HOME}/.config/newsboat
 ignore mkdir ${HOME}/.local/share/newsboat
 ignore private-bin newsboat
 

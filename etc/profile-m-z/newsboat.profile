@@ -23,6 +23,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/newsboat
 mkdir ${HOME}/.local/share/newsboat
+mkdir ${HOME}/.newsboat
 whitelist ${HOME}/.config/newsbeuter
 whitelist ${HOME}/.config/newsboat
 whitelist ${HOME}/.local/share/newsbeuter

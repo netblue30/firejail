@@ -38,6 +38,10 @@ void access_destroy(void);
 void noexec_setup(void);
 void noexec_test(const char *msg);
 
+// sysfiles.c
+void sysfiles_setup(const char *file);
+void sysfiles_test(void);
+
 // virtual.c
 void virtual_setup(const char *directory);
 void virtual_destroy(void);

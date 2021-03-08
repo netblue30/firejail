@@ -114,8 +114,32 @@ int main(int argc, char **argv) {
 	virtual_setup("/bin");
 	virtual_setup("/usr/share");
 	virtual_setup(user_run_dir);
-
-
+	// basic sysfiles
+	sysfiles_setup("/etc/shadow");
+	sysfiles_setup("/etc/gshadow");
+	sysfiles_setup("/usr/bin/mount");
+	sysfiles_setup("/usr/bin/su");
+	sysfiles_setup("/usr/bin/ksu");
+	sysfiles_setup("/usr/bin/sudo");
+	sysfiles_setup("/usr/bin/strace");
+	// X11
+	sysfiles_setup("/usr/bin/xev");
+	sysfiles_setup("/usr/bin/xinput");
+	// compilers
+	sysfiles_setup("/usr/bin/gcc");
+	sysfiles_setup("/usr/bin/clang");
+	// networking
+	sysfiles_setup("/usr/bin/dig");
+	sysfiles_setup("/usr/bin/nslookup");
+	sysfiles_setup("/usr/bin/resolvectl");
+	sysfiles_setup("/usr/bin/nc");
+	sysfiles_setup("/usr/bin/ncat");
+	sysfiles_setup("/usr/bin/nmap");
+	sysfiles_setup("/usr/sbin/tcpdump");
+	// terminals
+	sysfiles_setup("/usr/bin/gnome-terminal");
+	sysfiles_setup("/usr/bin/xfce4-terminal");
+	sysfiles_setup("/usr/bin/lxterminal");
 
 	// print processes
 	pid_read(0);
@@ -145,6 +169,7 @@ int main(int argc, char **argv) {
 					noexec_test("/var/tmp");
 					noexec_test(user_run_dir);
 					access_test();
+					sysfiles_test();
 				}
 				else {
 					printf("   Error: I cannot join the process mount space\n");

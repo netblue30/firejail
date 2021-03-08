@@ -21,6 +21,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/newsboat
 mkdir ${HOME}/.local/share/newsboat
 whitelist ${HOME}/.config/newsbeuter
 whitelist ${HOME}/.config/newsboat

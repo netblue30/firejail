@@ -9,13 +9,15 @@ include newsbeuter.local
 
 ignore include newsboat.local
 ignore mkdir ${HOME}/.local/share/newsboat
-ignore noblacklist ${HOME}/.config/newsboat
-ignore noblacklist ${HOME}/.local/share/newsboat
-ignore noblacklist ${HOME}/.newsboat
 ignore private-bin newsboat
-ignore whitelist ${HOME}/.config/newsboat
-ignore whitelist ${HOME}/.local/share/newsboat
-ignore whitelist ${HOME}/.newsboat
+
+blacklist ${HOME}/.config/newsboat
+blacklist ${HOME}/.local/share/newsboat
+blacklist ${HOME}/.newsboat
+
+nowhitelist ${HOME}/.config/newsboat
+nowhitelist ${HOME}/.local/share/newsboat
+nowhitelist ${HOME}/.newsboat
 
 mkdir ${HOME}/.local/share/newsbeuter
 

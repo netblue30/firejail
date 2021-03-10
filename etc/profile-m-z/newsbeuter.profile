@@ -11,7 +11,7 @@ ignore include newsboat.local
 ignore mkdir ${HOME}/.config/newsboat
 ignore mkdir ${HOME}/.local/share/newsboat
 ignore mkdir ${HOME}/.newsboat
-ignore private-bin newsboat
+blacklist ${PATH}/newsboat
 
 blacklist ${HOME}/.config/newsboat
 blacklist ${HOME}/.local/share/newsboat

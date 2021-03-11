@@ -10,8 +10,8 @@
 #  - lines with two ## are only needed in special situations
 #  - make the profile as restrictive as possible while still keeping the program useful
 #    (e.g. a program that is unable to save user's work is considered bad practice)
-#  - dedicate ample time (based on the complexity of the application) to profile testing before raising
-#    a pull request
+#  - dedicate ample time (based on the complexity of the application) to profile testing before
+#    submitting a pull request
 #  - keep the sections structure, use a single empty line as separator
 #  - entries within sections are alphabetically sorted
 #  - consider putting binary into src/firecfg/firecfg.config (keep list sorted) but beware

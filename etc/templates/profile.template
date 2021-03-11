@@ -1,5 +1,5 @@
 # Firejail profile for PROGRAM_NAME
-# Description: DESCRIPTION
+# Description: DESCRIPTION OF THE PROGRAM
 # This file is overwritten after every install/update
 # --- CUT HERE ---
 # This is a generic template to help you create profiles.

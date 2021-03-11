@@ -44,6 +44,7 @@ shell none
 tracelog
 
 #disable-mnt
+#private-bin basename,grep,ps,gawk,whoami,readlink,bash,env,sh,virtualbox,VirtualBox,VBox,VBox*,vbox*,vboximg-mount,VBoxTunctl
 private-cache
 private-etc alsa,asound.conf,ca-certificates,conf.d,crypto-policies,dconf,fonts,hostname,hosts,ld.so.cache,localtime,machine-id,pki,pulse,resolv.conf,ssl
 private-tmp

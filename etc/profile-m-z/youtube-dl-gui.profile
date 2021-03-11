@@ -9,7 +9,6 @@ include allow-python2.inc
 include allow-python3.inc
 
 noblacklist ${HOME}/.config/youtube-dlg
-noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,7 +21,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/youtube-dlg
 whitelist ${HOME}/.config/youtube-dlg
-whitelist ${VIDEOS}
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -36,10 +36,15 @@ noroot
 notv
 protocol unix,inet,inet6,netlink
 seccomp
+seccomp.block-secondary
 shell none
+tracelog
 
 disable-mnt
+#private-bin bash,sh,telegram-desktop
 private-cache
 private-dev
 private-etc alsa,alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,localtime,machine-id,os-release,passwd,pki,pulse,resolv.conf,ssl,xdg
 private-tmp
+
+dbus-system none

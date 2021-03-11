@@ -1,6 +1,5 @@
 # Firejail profile for Node.js
 # Description: Asynchronous event-driven JavaScript runtime
-# See comments for enabling debugging with certain IDEs
 # This file is overwritten after every install/update
 # Persistent local customizations
 include nodejs-common.local

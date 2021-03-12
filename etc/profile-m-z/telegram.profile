@@ -48,7 +48,6 @@ private-etc alsa,alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.
 private-tmp
 
 dbus-user filter
-dbus-user.own org.telegram.desktop
 dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-user.talk org.gnome.Mutter.IdleMonitor

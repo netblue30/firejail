@@ -28,10 +28,11 @@ include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
-caps.drop all
-machine-id
-netfilter
-no3d
+# Following degrades performances
+#caps.drop all
+#machine-id
+#netfilter
+#no3d
 nodvd
 nogroups
 nonewprivs

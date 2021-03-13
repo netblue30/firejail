@@ -29,7 +29,7 @@
 #include <errno.h>
 
 static char *devloop = NULL;	// device file
-static char *mntdir = NULL;	// mount point in /tmp directory
+static long unsigned size = 0;	// offset into appimage file
 
 #ifdef LOOP_CTL_GET_FREE	// test for older kernels; this definition is found in /usr/include/linux/loop.h
 static void err_loop(void) {
@@ -44,26 +44,26 @@ void appimage_set(const char *appimage) {
 	EUID_ASSERT();
 
 #ifdef LOOP_CTL_GET_FREE
-	// check appimage file
+	// open appimage file
 	invalid_filename(appimage, 0); // no globbing
-	if (access(appimage, R_OK) == -1) {
-		fprintf(stderr, "Error: cannot access AppImage file\n");
+	int ffd = open(appimage, O_RDONLY|O_CLOEXEC);
+	if (ffd == -1) {
+		fprintf(stderr, "Error: cannot read AppImage file\n");
+		exit(1);
+	}
+	struct stat s;
+	if (fstat(ffd, &s) == -1)
+		errExit("fstat");
+	if (!S_ISREG(s.st_mode)) {
+		fprintf(stderr, "Error: invalid AppImage file\n");
 		exit(1);
 	}
 
 	// get appimage type and ELF size
 	// a value of 0 means we are dealing with a type1 appimage
-	long unsigned int size = appimage2_size(appimage);
+	size = appimage2_size(appimage);
 	if (arg_debug)
 		printf("AppImage ELF size %lu\n", size);
-
-	// open appimage file
-	/* coverity[toctou] */
-	int ffd = open(appimage, O_RDONLY|O_CLOEXEC);
-	if (ffd == -1) {
-		fprintf(stderr, "Error: cannot open AppImage file\n");
-		exit(1);
-	}
 
 	// find or allocate a free loop device to use
 	EUID_ROOT();
@@ -77,6 +77,7 @@ void appimage_set(const char *appimage) {
 	if (asprintf(&devloop, "/dev/loop%d", devnr) == -1)
 		errExit("asprintf");
 
+	// associate loop device with appimage
 	int lfd = open(devloop, O_RDONLY);
 	if (lfd == -1)
 		err_loop();
@@ -90,64 +91,24 @@ void appimage_set(const char *appimage) {
 		if (ioctl(lfd,  LOOP_SET_STATUS64, &info) == -1)
 			err_loop();
 	}
-
 	close(lfd);
 	close(ffd);
 	EUID_USER();
 
-	// creates appimage mount point perms 0700
-	if (asprintf(&mntdir, "%s/.appimage-%u",  RUN_FIREJAIL_APPIMAGE_DIR, getpid()) == -1)
-		errExit("asprintf");
-	EUID_ROOT();
-	mkdir_attr(mntdir, 0700, getuid(), getgid());
-	EUID_USER();
-
-	// mount
-	char *mode;
-	if (asprintf(&mode, "mode=700,uid=%d,gid=%d", getuid(), getgid()) == -1)
-		errExit("asprintf");
-	unsigned long flags = MS_MGC_VAL|MS_RDONLY;
-	if (getuid())
-		flags |= MS_NODEV|MS_NOSUID;
-
-	EUID_ROOT();
-	if (size == 0) {
-		fmessage("Mounting appimage type 1\n");
-		if (mount(devloop, mntdir, "iso9660", flags, mode) < 0)
-			errExit("mounting appimage");
-	}
-	else {
-		fmessage("Mounting appimage type 2\n");
-		if (mount(devloop, mntdir, "squashfs", flags, NULL) < 0)
-			errExit("mounting appimage");
-	}
-
-	if (arg_debug)
-		printf("appimage mounted on %s\n", mntdir);
-	EUID_USER();
-
+	// set environment
 	char* abspath = realpath(appimage, NULL);
 	if (abspath == NULL)
 		errExit("Failed to obtain absolute path");
-
-	// set environment
 	env_store_name_val("APPIMAGE", abspath, SETENV);
+	free(abspath);
 
-	if (mntdir)
-		env_store_name_val("APPDIR", mntdir, SETENV);
+	env_store_name_val("APPDIR", RUN_FIREJAIL_APPIMAGE_DIR, SETENV);
 
 	if (size != 0)
 		env_store_name_val("ARGV0", appimage, SETENV);
 
 	if (cfg.cwd)
 		env_store_name_val("OWD", cfg.cwd, SETENV);
-
-	// build new command line
-	if (asprintf(&cfg.command_line, "%s/AppRun", mntdir) == -1)
-		errExit("asprintf");
-
-	free(abspath);
-	free(mode);
 #ifdef HAVE_GCOV
 	__gcov_flush();
 #endif
@@ -157,44 +118,38 @@ void appimage_set(const char *appimage) {
 #endif
 }
 
-void appimage_clear(void) {
-	int rv;
+// mount appimage into sandbox file system
+void appimage_mount(void) {
+	if (!devloop)
+		return;
 
-	EUID_ROOT();
-	if (mntdir) {
-		int i;
-		int rv = 0;
-		for (i = 0; i < 5; i++) {
-			rv = umount2(mntdir, MNT_FORCE);
-			if (rv == 0) {
-				fmessage("AppImage unmounted\n");
+	unsigned long flags = MS_MGC_VAL|MS_RDONLY;
+	if (getuid())
+		flags |= MS_NODEV|MS_NOSUID;
 
-				break;
-			}
-			if (rv == -1 && errno == EBUSY) {
-				fwarning("EBUSY error trying to unmount %s\n", mntdir);
-				sleep(2);
-				continue;
-			}
-
-			// rv = -1
-			if (!arg_quiet) {
-				fwarning("error trying to unmount %s\n", mntdir);
-				perror("umount");
-			}
-		}
-
-		if (rv == 0) {
-			rmdir(mntdir);
-			free(mntdir);
-		}
+	if (size == 0) {
+		fmessage("Mounting appimage type 1\n");
+		char *mode;
+		if (asprintf(&mode, "mode=700,uid=%d,gid=%d", getuid(), getgid()) == -1)
+			errExit("asprintf");
+		if (mount(devloop, RUN_FIREJAIL_APPIMAGE_DIR, "iso9660", flags, mode) < 0)
+			errExit("mounting appimage");
+		free(mode);
 	}
+	else {
+		fmessage("Mounting appimage type 2\n");
+		if (mount(devloop, RUN_FIREJAIL_APPIMAGE_DIR, "squashfs", flags, NULL) < 0)
+			errExit("mounting appimage");
+	}
+}
 
+void appimage_clear(void) {
+	EUID_ROOT();
 	if (devloop) {
 		int lfd = open(devloop, O_RDONLY);
 		if (lfd != -1) {
-			rv = ioctl(lfd, LOOP_CLR_FD, 0);
-			(void) rv;
+			if (ioctl(lfd, LOOP_CLR_FD, 0) != -1)
+				fmessage("AppImage detached\n");
 			close(lfd);
 		}
 	}

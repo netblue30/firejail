@@ -17,7 +17,7 @@ after 100
 send -- "firejail --appimage /etc/shadow\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"cannot access"
+	"cannot read"
 }
 after 100
 

@@ -31,7 +31,7 @@ expect {
 }
 expect {
 	timeout {puts "shutdown\n"}
-	"AppImage unmounted"
+	"AppImage detached"
 }
 sleep 1
 
@@ -58,7 +58,7 @@ expect {
 }
 expect {
 	timeout {puts "shutdown\n"}
-	"AppImage unmounted"
+	"AppImage detached"
 }
 sleep 1
 

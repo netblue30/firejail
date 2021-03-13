@@ -630,6 +630,8 @@ int sandbox(void* sandbox_arg) {
 		errExit("mounting " RUN_FIREJAIL_LIB_DIR);
 	// keep a copy of dhclient executable before the filesystem is modified
 	dhcp_store_exec();
+	// mount appimage before the filesystem is modified
+	appimage_mount();
 
 	//****************************
 	// log sandbox data

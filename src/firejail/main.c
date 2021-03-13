@@ -2790,7 +2790,7 @@ int main(int argc, char **argv, char **envp) {
 		if (arg_debug)
 			printf("Configuring appimage environment\n");
 		appimage_set(cfg.command_name);
-		build_appimage_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index, cfg.command_line);
+		build_appimage_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
 	}
 	else {
 		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);

@@ -798,15 +798,15 @@ void print_compiletime_support(void);
 
 // appimage.c
 void appimage_set(const char *appimage_path);
+void appimage_mount(void);
 void appimage_clear(void);
-const char *appimage_getdir(void);
 
 // appimage_size.c
 long unsigned int appimage2_size(const char *fname);
 
 // cmdline.c
 void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
-void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, char *apprun_path);
+void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
 
 // sbox.c
 // programs

@@ -61,7 +61,7 @@ void appimage_set(const char *appimage) {
 
 	// get appimage type and ELF size
 	// a value of 0 means we are dealing with a type1 appimage
-	size = appimage2_size(appimage);
+	size = appimage2_size(ffd);
 	if (arg_debug)
 		printf("AppImage ELF size %lu\n", size);
 

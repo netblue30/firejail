@@ -802,7 +802,7 @@ void appimage_mount(void);
 void appimage_clear(void);
 
 // appimage_size.c
-long unsigned int appimage2_size(const char *fname);
+long unsigned int appimage2_size(int fd);
 
 // cmdline.c
 void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);

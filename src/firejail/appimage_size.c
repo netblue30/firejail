@@ -132,22 +132,20 @@ static long unsigned int read_elf64(int fd) {
 
 // return 0 if error
 // return 0 if this is not an appimgage2 file
-long unsigned int appimage2_size(const char *fname) {
+long unsigned int appimage2_size(int fd) {
 	ssize_t ret;
-	int fd;
 	long unsigned int size = 0;
 
-	fd = open(fname, O_RDONLY);
 	if (fd < 0)
 		return 0;
 
 	ret = pread(fd, ehdr.e_ident, EI_NIDENT, 0);
 	if (ret != EI_NIDENT)
-		goto getout;
+		return 0;
 
 	if ((ehdr.e_ident[EI_DATA] != ELFDATA2LSB) &&
 	     (ehdr.e_ident[EI_DATA] != ELFDATA2MSB))
-		goto getout;
+		return 0;
 
 	if(ehdr.e_ident[EI_CLASS] == ELFCLASS32) {
 		size = read_elf32(fd);
@@ -156,23 +154,19 @@ long unsigned int appimage2_size(const char *fname) {
 		size = read_elf64(fd);
 	}
 	else {
-		goto getout;
+		return 0;
 	}
 	if (size == 0)
-		goto getout;
+		return 0;
 
 
 	// look for a LZMA header at this location
 	unsigned char buf[4];
 	ret = pread(fd, buf, 4, size);
-	if (ret != 4) {
-		size = 0;
-		goto getout;
-	}
+	if (ret != 4)
+		return 0;
 	if (memcmp(buf, "hsqs", 4) != 0)
-		size = 0;
+		return 0;
 
-getout:
-	close(fd);
 	return size;
 }

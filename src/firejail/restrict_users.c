@@ -104,13 +104,13 @@ static void sanitize_home(void) {
 			errExit("mkpath");
 		if (mkdir(cfg.homedir, 0755) == -1)
 			errExit("mkdir");
-		selinux_relabel_path(cfg.homedir, cfg.homedir);
 	}
 	fs_logger2("mkdir", cfg.homedir);
 
 	// set mode and ownership
 	if (set_perms(cfg.homedir, s.st_uid, s.st_gid, s.st_mode))
 		errExit("set_perms");
+	selinux_relabel_path(cfg.homedir, cfg.homedir);
 
 	// mount user home directory
 	if (mount(RUN_WHITELIST_HOME_DIR, cfg.homedir, NULL, MS_BIND|MS_REC, NULL) < 0)

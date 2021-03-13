@@ -170,6 +170,7 @@ static void disable_file(OPERATION op, const char *filename) {
 				}
 			}
 			fs_tmpfs(fname, getuid());
+			selinux_relabel_path(fname, fname);
 			last_disable = SUCCESSFUL;
 		}
 		else

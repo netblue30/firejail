@@ -2,7 +2,6 @@
 # Description: directory and file compare utility
 # Disables the network, which only impacts checking for updates.
 # This file is overwritten after every install/update
-
 # Persistent local customizations
 include bcompare.local
 # Persistent global definitions

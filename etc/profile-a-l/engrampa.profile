@@ -17,7 +17,6 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-net none
 no3d
 nodvd
 nogroups
@@ -36,7 +35,4 @@ tracelog
 private-dev
 # private-tmp
 
-dbus-user none
 dbus-system none
-
-memory-deny-write-execute

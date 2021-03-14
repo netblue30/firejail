@@ -666,7 +666,7 @@ Disable DVB (Digital Video Broadcasting) TV devices.
 Disable U2F devices.
 .TP
 \fBnovideo
-Disable video devices.
+Disable video capture devices.
 .TP
 \fBshell none
 Run the program directly, without a shell.

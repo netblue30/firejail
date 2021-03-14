@@ -29,7 +29,6 @@ include disable-write-mnt.inc
 # include whitelist-usr-share-common.inc
 # include whitelist-var-common.inc
 
-#allusers
 apparmor
 caps.drop all
 # ipc-namespace

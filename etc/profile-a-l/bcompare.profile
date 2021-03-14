@@ -45,8 +45,8 @@ nou2f
 novideo
 protocol unix
 seccomp
-# shell none
-# tracelog
+shell none
+tracelog
 
 private-cache
 private-dev
@@ -55,5 +55,5 @@ private-dev
 # Necessary because of the `include disable-exec.inc` line. Prevents error "Error fstat: fs.c:504 fs_remount_simple: Transport endpoint is not connected ... cannot sync with peer: unexpected EOF Peer [...] unexpectedly exited with status 1"
 private-tmp
 
-# dbus-user none
-# dbus-system none
+dbus-user none
+dbus-system none

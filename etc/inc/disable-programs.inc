@@ -334,6 +334,7 @@ blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/neomutt
 blacklist ${HOME}/.config/netsurf
 blacklist ${HOME}/.config/newsbeuter
+blacklist ${HOME}/.config/newsboat
 blacklist ${HOME}/.config/newsflash
 blacklist ${HOME}/.config/nheko
 blacklist ${HOME}/.config/NitroShare
@@ -702,6 +703,8 @@ blacklist ${HOME}/.local/share/nautilus-python
 blacklist ${HOME}/.local/share/nemo
 blacklist ${HOME}/.local/share/nemo-python
 blacklist ${HOME}/.local/share/news-flash
+blacklist ${HOME}/.local/share/newsbeuter
+blacklist ${HOME}/.local/share/newsboat
 blacklist ${HOME}/.local/share/nomacs
 blacklist ${HOME}/.local/share/notes
 blacklist ${HOME}/.local/share/ocenaudio

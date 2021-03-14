@@ -64,7 +64,3 @@ private-tmp
 
 # dbus-user none
 # dbus-system none
-
-# memory-deny-write-execute
-noexec ${HOME}
-# read-only ${HOME}

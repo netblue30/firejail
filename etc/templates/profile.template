@@ -203,7 +203,7 @@ include globals.local
 #  - Some features like native notifications are implemented as portal too.
 #  - In order to make dconf work (when used by the app) you need to allow
 #    'ca.desrt.dconf' even when not allowed by flatpak.
-# Notes and Policiy about addresses can be found at
+# Notes and policies about addresses can be found at
 # <https://github.com/netblue30/firejail/wiki/Restrict-D-Bus>
 #dbus-user filter
 #dbus-user.own com.github.netblue30.firejail

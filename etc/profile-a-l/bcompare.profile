@@ -11,7 +11,8 @@ include globals.local
 # KDE's Gwenview to view images via right click -> Open With -> Associated Application
 noblacklist ${HOME}/.config/gwenviewrc
 
-include disable-common.inc
+# Uncomment the next line (or put it into your bcompare.local) if you don't need to compare files in disable-common.inc
+#include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc

@@ -33,7 +33,6 @@ include disable-write-mnt.inc
 
 apparmor
 caps.drop all
-# ipc-namespace
 machine-id
 net none
 no3d

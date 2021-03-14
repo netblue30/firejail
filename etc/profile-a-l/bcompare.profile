@@ -18,8 +18,8 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
-# Allow comparing e.g. Firefox profile files, so don't disable access to programs
-# include disable-programs.inc
+# Uncomment the next line (or put it into your bcompare.local) if you don't need to compare files in disable-programs.inc
+#include disable-programs.inc
 # Uncommenting this breaks launch
 # include disable-shell.inc
 include disable-write-mnt.inc
@@ -37,7 +37,7 @@ caps.drop all
 #machine-id
 net none
 no3d
-#nodvd
+nodvd
 nogroups
 nonewprivs
 noroot

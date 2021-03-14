@@ -8,12 +8,15 @@ include bcompare.local
 # Persistent global definitions
 include globals.local
 
+# In case the user decides to include disable-programs.inc, still allow KDE's Gwenview to view images via right click -> Open With -> Associated Application
+noblacklist ${HOME}/.config/gwenviewrc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
-# Allow comparing e.g. Firefox profile files
+# Allow comparing e.g. Firefox profile files, so don't disable access to programs
 # include disable-programs.inc
 # Uncommenting this breaks launch
 # include disable-shell.inc

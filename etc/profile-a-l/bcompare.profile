@@ -33,14 +33,16 @@ include disable-write-mnt.inc
 
 apparmor
 caps.drop all
-machine-id
+# Uncommenting might break Pulse Audio
+#machine-id
 net none
 no3d
-# nodvd
+#nodvd
 nogroups
 nonewprivs
 noroot
-# nosound
+# Allow applications launched on sound files to play them
+#nosound
 notv
 nou2f
 novideo

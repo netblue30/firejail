@@ -72,7 +72,7 @@ static void sanitize_home(void) {
 
 	if (arg_debug)
 		printf("Cleaning /home directory\n");
-	// keep a copy of the user home directory
+	// open user home directory in order to keep it around
 	int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
 		goto errout;
@@ -82,25 +82,16 @@ static void sanitize_home(void) {
 		close(fd);
 		goto errout;
 	}
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mkdir(RUN_WHITELIST_HOME_DIR, 0755) == -1)
-		errExit("mkdir");
-	if (mount(proc, RUN_WHITELIST_HOME_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mount bind");
-	free(proc);
-	close(fd);
 
-	// mount tmpfs in the new home
+	// mount tmpfs on /home
 	if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 		errExit("mount tmpfs");
 	selinux_relabel_path("/home", "/home");
 	fs_logger("tmpfs /home");
 
-	// create user home directory
+	// create new user home directory
 	if (mkdir(cfg.homedir, 0755) == -1) {
-		if (mkpath_as_root(cfg.homedir))
+		if (mkpath_as_root(cfg.homedir) == -1)
 			errExit("mkpath");
 		if (mkdir(cfg.homedir, 0755) == -1)
 			errExit("mkdir");
@@ -112,17 +103,17 @@ static void sanitize_home(void) {
 		errExit("set_perms");
 	selinux_relabel_path(cfg.homedir, cfg.homedir);
 
-	// mount user home directory
-	if (mount(RUN_WHITELIST_HOME_DIR, cfg.homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
+	// bring back real user home directory
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount(proc, cfg.homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	free(proc);
+	close(fd);
 
-	// mask home dir under /run
-	if (mount("tmpfs", RUN_WHITELIST_HOME_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
-		errExit("mount tmpfs");
-	fs_logger2("tmpfs", RUN_WHITELIST_HOME_DIR);
 	if (!arg_private)
 		fs_logger2("whitelist", cfg.homedir);
-
 	return;
 
 errout:
@@ -137,21 +128,14 @@ static void sanitize_run(void) {
 	if (asprintf(&runuser, "/run/user/%u", getuid()) == -1)
 		errExit("asprintf");
 
-	struct stat s;
-	if (stat(runuser, &s) == -1) {
-		// cannot find /user/run/$UID directory, just return
+	// open /run/user/$UID directory in order to keep it around
+	int fd = open(runuser, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (fd == -1) {
 		if (arg_debug)
-			printf("Cannot find %s directory\n", runuser);
+			printf("Cannot open %s directory\n", runuser);
 		free(runuser);
 		return;
 	}
-
-	if (mkdir(RUN_WHITELIST_RUN_DIR, 0755) == -1)
-		errExit("mkdir");
-
-	// keep a copy of the /run/user/$UID directory
-	if (mount(runuser, RUN_WHITELIST_RUN_DIR, NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mount bind");
 
 	// mount tmpfs on /run/user
 	if (mount("tmpfs", "/run/user", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
@@ -162,22 +146,23 @@ static void sanitize_run(void) {
 	// create new user directory
 	if (mkdir(runuser, 0700) == -1)
 		errExit("mkdir");
-	selinux_relabel_path(runuser, runuser);
 	fs_logger2("mkdir", runuser);
 
 	// set mode and ownership
 	if (set_perms(runuser, getuid(), getgid(), 0700))
 		errExit("set_perms");
+	selinux_relabel_path(runuser, runuser);
 
-	// mount /run/user/$UID directory
-	if (mount(RUN_WHITELIST_RUN_DIR, runuser, NULL, MS_BIND|MS_REC, NULL) < 0)
+	// bring back real run/user/$UID directory
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	if (mount(proc, runuser, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
+	free(proc);
+	close(fd);
 
-	// mask mirrored /run/user/$UID directory
-	if (mount("tmpfs", RUN_WHITELIST_RUN_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
-		errExit("mount tmpfs");
-	fs_logger2("tmpfs", RUN_WHITELIST_RUN_DIR);
-
+	fs_logger2("whitelist", runuser);
 	free(runuser);
 }
 

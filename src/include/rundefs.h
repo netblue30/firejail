@@ -84,8 +84,6 @@
 #define RUN_DEVLOG_FILE			RUN_MNT_DIR "/devlog"
 
 #define RUN_WHITELIST_X11_DIR		RUN_MNT_DIR "/orig-x11"
-#define RUN_WHITELIST_HOME_DIR		RUN_MNT_DIR "/orig-home"		// default home directory masking
-#define RUN_WHITELIST_RUN_DIR		RUN_MNT_DIR "/orig-run"		// default run directory masking
 #define RUN_WHITELIST_HOME_USER_DIR	RUN_MNT_DIR "/orig-home-user"		// home directory whitelisting
 #define RUN_WHITELIST_RUN_USER_DIR	RUN_MNT_DIR "/orig-run-user"		// run directory whitelisting
 #define RUN_WHITELIST_TMP_DIR		RUN_MNT_DIR "/orig-tmp"

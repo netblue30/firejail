@@ -57,8 +57,6 @@ private-cache
 private-dev
 # see /usr/share/doc/firejail/profile.template for more common private-etc paths.
 # private-etc alternatives,fonts,machine-id
-# private-lib
-# private-opt none
 # Necessary because of the `include disable-exec.inc` line. Prevents error "Error fstat: fs.c:504 fs_remount_simple: Transport endpoint is not connected ... cannot sync with peer: unexpected EOF Peer [...] unexpectedly exited with status 1"
 private-tmp
 

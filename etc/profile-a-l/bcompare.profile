@@ -1,5 +1,5 @@
-# Firejail profile for Scootersoft Beyond Compare
-# Description: directory compare and file compare utility
+# Firejail profile for Beyond Compare by Scooter Software
+# Description: directory and file compare utility
 # Disables the network, which only impacts checking for updates.
 # This file is overwritten after every install/update
 
@@ -18,7 +18,8 @@ include disable-passwdmgr.inc
 # Uncommenting this breaks launch
 # include disable-shell.inc
 include disable-write-mnt.inc
-include disable-xdg.inc
+# Don't disable ${DOCUMENTS}, ${MUSIC}, ${PICTURES}, ${VIDEOS}
+# include disable-xdg.inc
 
 # include whitelist-common.inc
 # include whitelist-runuser-common.inc

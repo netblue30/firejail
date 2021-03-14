@@ -48,9 +48,6 @@ seccomp
 # shell none
 # tracelog
 
-# disable-mnt
-# private
-# private-bin program
 private-cache
 private-dev
 # see /usr/share/doc/firejail/profile.template for more common private-etc paths.

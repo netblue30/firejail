@@ -267,6 +267,7 @@ blacklist ${HOME}/.config/inkscape
 blacklist ${HOME}/.config/inox
 blacklist ${HOME}/.config/iridium
 blacklist ${HOME}/.config/itch
+blacklist ${HOME}/.config/jami
 blacklist ${HOME}/.config/jd-gui.cfg
 blacklist ${HOME}/.config/k3brc
 blacklist ${HOME}/.config/kaffeinerc
@@ -662,6 +663,7 @@ blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
 blacklist ${HOME}/.local/share/i2p
 blacklist ${HOME}/.local/share/IntoTheBreach
+blacklist ${HOME}/.local/share/jami
 blacklist ${HOME}/.local/share/kaffeine
 blacklist ${HOME}/.local/share/kalgebra
 blacklist ${HOME}/.local/share/kate

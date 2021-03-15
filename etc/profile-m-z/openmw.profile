@@ -21,8 +21,8 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/openmw
 mkdir ${HOME}/.local/share/openmw
-whitelist ${HOME}/Downloads/Morrowind
 whitelist ${HOME}/.config/openmw
+# Copy Morrowind data files into the following directory or load it from /mnt
 whitelist ${HOME}/.local/share/openmw
 whitelist /usr/share/openmw
 include whitelist-common.inc

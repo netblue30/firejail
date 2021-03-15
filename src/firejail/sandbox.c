@@ -630,8 +630,6 @@ int sandbox(void* sandbox_arg) {
 		errExit("mounting " RUN_FIREJAIL_LIB_DIR);
 	// keep a copy of dhclient executable before the filesystem is modified
 	dhcp_store_exec();
-	// mount appimage before the filesystem is modified
-	appimage_mount();
 
 	//****************************
 	// log sandbox data
@@ -825,6 +823,11 @@ int sandbox(void* sandbox_arg) {
 	else
 #endif
 		fs_basic_fs();
+
+	//****************************
+	// appimage
+	//****************************
+	appimage_mount();
 
 	//****************************
 	// private mode
@@ -1155,14 +1158,12 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// continue security filters
 	//****************************
-
 	// set capabilities
 	set_caps();
 
 	//****************************************
 	// relay status information to join option
 	//****************************************
-
 	char *set_sandbox_status = create_join_file();
 
 	//****************************************
@@ -1223,7 +1224,6 @@ int sandbox(void* sandbox_arg) {
 	//****************************************
 	// set cpu affinity
 	//****************************************
-
 	if (cfg.cpus)
 		set_cpu_affinity();
 

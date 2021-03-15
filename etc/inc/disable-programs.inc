@@ -121,6 +121,7 @@ blacklist ${HOME}/.config/Nathan Osman
 blacklist ${HOME}/.config/Nextcloud
 blacklist ${HOME}/.config/Nylas Mail
 blacklist ${HOME}/.config/PacmanLogViewer
+blacklist ${HOME}/.config/PawelStolowski
 blacklist ${HOME}/.config/PBE
 blacklist ${HOME}/.config/Philipp Schmieder
 blacklist ${HOME}/.config/QGIS
@@ -358,6 +359,7 @@ blacklist ${HOME}/.config/pavucontrol.ini
 blacklist ${HOME}/.config/pcmanfm
 blacklist ${HOME}/.config/pdfmod
 blacklist ${HOME}/.config/Pinta
+blacklist ${HOME}/.config/pipe-viewer
 blacklist ${HOME}/.config/pitivi
 blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.config/pluma
@@ -587,6 +589,7 @@ blacklist ${HOME}/.local/share/Mendeley Ltd.
 blacklist ${HOME}/.local/share/Mumble
 blacklist ${HOME}/.local/share/Nextcloud
 blacklist ${HOME}/.local/share/PBE
+blacklist ${HOME}/.local/share/PawelStolowski
 blacklist ${HOME}/.local/share/Psi
 blacklist ${HOME}/.local/share/QGIS
 blacklist ${HOME}/.local/share/QMediathekView
@@ -896,6 +899,7 @@ blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/MusicBrainz
 blacklist ${HOME}/.cache/NewsFlashGTK
 blacklist ${HOME}/.cache/Otter
+blacklist ${HOME}/.cache/PawelStolowski
 blacklist ${HOME}/.cache/Psi
 blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/Quotient/quaternion
@@ -1004,6 +1008,7 @@ blacklist ${HOME}/.cache/org.gnome.Maps
 blacklist ${HOME}/.cache/pdfmod
 blacklist ${HOME}/.cache/peek
 blacklist ${HOME}/.cache/pip
+blacklist ${HOME}/.cache/pipe-viewer
 blacklist ${HOME}/.cache/plasmashell
 blacklist ${HOME}/.cache/plasmashellbookmarkrunnerfirefoxdbfile.sqlite*
 blacklist ${HOME}/.cache/psi

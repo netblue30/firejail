@@ -347,6 +347,7 @@ blacklist ${HOME}/.config/okularrc
 blacklist ${HOME}/.config/onboard
 blacklist ${HOME}/.config/onionshare
 blacklist ${HOME}/.config/onlyoffice
+blacklist ${HOME}/.config/openmw
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/orage
@@ -713,6 +714,7 @@ blacklist ${HOME}/.local/share/notes
 blacklist ${HOME}/.local/share/ocenaudio
 blacklist ${HOME}/.local/share/okular
 blacklist ${HOME}/.local/share/onlyoffice
+blacklist ${HOME}/.local/share/openmw
 blacklist ${HOME}/.local/share/orage
 blacklist ${HOME}/.local/share/org.kde.gwenview
 blacklist ${HOME}/.local/share/Paradox Interactive

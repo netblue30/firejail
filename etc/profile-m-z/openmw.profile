@@ -23,6 +23,7 @@ mkdir ${HOME}/.config/openmw
 mkdir ${HOME}/.local/share/openmw
 whitelist ${HOME}/.config/openmw
 # Copy Morrowind data files into the following directory or load it from /mnt
+# or whitelist it in a openmw.local
 whitelist ${HOME}/.local/share/openmw
 whitelist /usr/share/openmw
 include whitelist-common.inc
@@ -49,10 +50,10 @@ seccomp.block-secondary
 shell none
 tracelog
 
-private-bin bsatool,esmtool,niftest,openmw*
+private-bin bsatool,esmtool,niftest,openmw,openmw-cs,openmw-essimporter,openmw-iniimporter,openmw-launcher,openmw-wizard
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,bumblebee,drirc,fonts,glvnd,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nvidia,openmw,pango,pulse,Trolltech.conf,X11,xdg
+private-etc alsa,alternatives,asound.conf,bumblebee,drirc,fonts,glvnd,group,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nvidia,openmw,pango,passwd,pulse,Trolltech.conf,X11,xdg
 private-opt none
 private-tmp
 

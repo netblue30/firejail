@@ -798,6 +798,7 @@ blacklist ${HOME}/.opera-beta
 blacklist ${HOME}/.ostrichriders
 blacklist ${HOME}/.paradoxinteractive
 blacklist ${HOME}/.parallelrealities/blobwars
+blacklist ${HOME}/.pcsxr
 blacklist ${HOME}/.penguin-command
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.pioneer

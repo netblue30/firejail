@@ -1,10 +1,12 @@
 # Firejail profile for ppsspp
-# Description: A PSP emulator written in C++
+# Description: A PSP emulator
 # This file is overwritten after every install/update
 # Persistent local customizations
 include ppsspp.local
 # Persistent global definitions
 include globals.local
+
+# Note: you must whitelist your games folder in a ppsspp.local
 
 noblacklist ${HOME}/.config/ppsspp
 
@@ -17,10 +19,10 @@ include disable-programs.inc
 include disable-write-mnt.inc
 include disable-xdg.inc
 
-#mkdir ${HOME}/.config/ppsspp
-#whitelist ${HOME}/.config/ppsspp
+mkdir ${HOME}/.config/ppsspp
+whitelist ${HOME}/.config/ppsspp
 whitelist /usr/share/ppsspp
-#include whitelist-common.inc
+include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

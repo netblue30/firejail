@@ -40,7 +40,7 @@ noroot
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,netlink
 seccomp
 shell none
 tracelog

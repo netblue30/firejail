@@ -16,7 +16,7 @@ firejail (0.9.65) baseline; urgency=low
   * ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop,
   * avidemux, calligragemini, vmware-player, vmware-workstation
   * gget, com.github.phase1geo.minder, nextcloud-desktop, pcsxr
-  * PPSSPPSDL, openmw, openmw-launcher, jami-gnome
+  * PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2
  -- netblue30 <netblue30@yahoo.com>  Tue, 9 Feb 2021 09:00:00 -0500
 
 firejail (0.9.64.4) baseline; urgency=low

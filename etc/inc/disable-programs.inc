@@ -312,6 +312,7 @@ blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
 blacklist ${HOME}/.config/mate/mate-dictionary
 blacklist ${HOME}/.config/matrix-mirage
+blacklist ${HOME}/.config/mcomix
 blacklist ${HOME}/.config/meld
 blacklist ${HOME}/.config/meteo-qt
 blacklist ${HOME}/.config/menulibre.cfg
@@ -694,6 +695,7 @@ blacklist ${HOME}/.local/share/man
 blacklist ${HOME}/.local/share/mana
 blacklist ${HOME}/.local/share/maps-places.json
 blacklist ${HOME}/.local/share/matrix-mirage
+blacklist ${HOME}/.local/share/mcomix
 blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/midori
 blacklist ${HOME}/.local/share/minder

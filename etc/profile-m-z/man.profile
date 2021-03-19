@@ -19,16 +19,16 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.local/share/man
-whitelist ${HOME}/.local/share/man
-whitelist ${HOME}/.manpath
+#mkdir ${HOME}/.local/share/man
+#whitelist ${HOME}/.local/share/man
+#whitelist ${HOME}/.manpath
 whitelist /usr/share/groff
 whitelist /usr/share/info
 whitelist /usr/share/lintian
 whitelist /usr/share/locale
 whitelist /usr/share/man
 whitelist /var/cache/man
-include whitelist-common.inc
+#include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -58,9 +58,11 @@ disable-mnt
 private-cache
 private-dev
 private-etc alternatives,fonts,groff,locale,locale.alias,locale.conf,man_db.conf,manpath.config,selinux,sysless,xdg
-private-tmp
+#private-tmp
 
 dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+read-only ${HOME}
+read-only /tmp

@@ -14,6 +14,11 @@ mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.mozilla
 
+# Uncomment or put in your firefox.local one of the following whitelist to enable KeePassXC Plugin
+# NOTE: start KeePassXC before Firefox and keep it open to allow communication between them
+#whitelist ${RUNUSER}/kpxc_server
+#whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
+
 whitelist /usr/share/doc
 whitelist /usr/share/firefox
 whitelist /usr/share/gnome-shell/search-providers/firefox-search-provider.ini

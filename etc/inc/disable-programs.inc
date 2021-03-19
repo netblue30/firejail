@@ -166,6 +166,7 @@ blacklist ${HOME}/.config/aweather
 blacklist ${HOME}/.config/backintime
 blacklist ${HOME}/.config/baloofilerc
 blacklist ${HOME}/.config/baloorc
+blacklist ${HOME}/.config/bcompare
 blacklist ${HOME}/.config/blender
 blacklist ${HOME}/.config/bless
 blacklist ${HOME}/.config/bnox

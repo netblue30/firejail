@@ -33,3 +33,11 @@ shell none
 private-dev
 # private-etc alternatives,asound.conf,ca-certificates,crypto-policies,machine-id,pki,pulse,ssl
 private-tmp
+
+dbus-user filter
+dbus-user.own org.kde.amarok
+dbus-user.own org.mpris.amarok
+dbus-user.own org.mpris.MediaPlayer2.amarok
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.kde.StatusNotifierWatcher
+dbus-system none

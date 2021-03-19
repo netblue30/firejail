@@ -332,4 +332,5 @@ Stats:
 
 vmware-view, display-im6.q16, ipcalc, ipcalc-ng, ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop,
 avidemux, calligragemini, vmware-player, vmware-workstation, gget, com.github.phase1geo.minder, nextcloud-desktop,
-pcsxr, PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2
+pcsxr, PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2, bcompare, b2sum, cksum, md5sum, sha1sum, sha224sum,
+sha256sum, sha384sum, sha512sum, sum

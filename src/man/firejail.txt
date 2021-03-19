@@ -155,8 +155,10 @@ $ firejail --appimage --private krita-3.0-x86_64.appimage
 $ firejail --appimage --net=none --x11 krita-3.0-x86_64.appimage
 #endif
 .TP
+#ifdef HAVE_NETWORK
 \fB\-\-bandwidth=name|pid
 Set bandwidth limits for the sandbox identified by name or PID, see \fBTRAFFIC SHAPING\fR section for more details.
+#endif
 .TP
 \fB\-\-bind=filename1,filename2
 Mount-bind filename1 on top of filename2. This option is only available when running as root.

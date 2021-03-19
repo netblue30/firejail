@@ -715,6 +715,7 @@ blacklist ${HOME}/.local/share/nemo-python
 blacklist ${HOME}/.local/share/news-flash
 blacklist ${HOME}/.local/share/newsbeuter
 blacklist ${HOME}/.local/share/newsboat
+blacklist ${HOME}/.local/share/nheko
 blacklist ${HOME}/.local/share/nomacs
 blacklist ${HOME}/.local/share/notes
 blacklist ${HOME}/.local/share/ocenaudio

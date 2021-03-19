@@ -6,8 +6,9 @@ include nheko.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/nheko
 noblacklist ${HOME}/.cache/nheko
+noblacklist ${HOME}/.config/nheko
+noblacklist ${HOME}/.local/share/nheko
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,10 +19,12 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.cache/nheko
 mkdir ${HOME}/.config/nheko
-mkdir ${HOME}/.cache/nheko/nheko
-whitelist ${HOME}/.config/nheko
+mkdir ${HOME}/.local/share/nheko
 whitelist ${HOME}/.cache/nheko
+whitelist ${HOME}/.config/nheko
+whitelist ${HOME}/.local/share/nheko
 whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc

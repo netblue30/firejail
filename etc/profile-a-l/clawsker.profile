@@ -45,7 +45,7 @@ private-bin bash,clawsker,perl,sh,which
 private-cache
 private-dev
 private-etc alternatives,fonts
-private-lib girepository-1.*,libdbus-glib-1.so.*,libetpan.so.*,libgirepository-1.*,libgtk-x11-2.0.so.*,libstartup-notification-1.so.*,perl*
+private-lib girepository-1.*,libdbus-glib-1.so.*,libetpan.so.*,libgirepository-1.*,libgtk-3.so.*,libgtk-x11-2.0.so.*,libstartup-notification-1.so.*,perl*
 private-tmp
 
 dbus-user none

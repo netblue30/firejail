@@ -25,7 +25,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.cache/youtube-viewer
 mkdir ${HOME}/.config/youtube-viewer
+whitelist ${HOME}/.cache/youtube-viewer
 whitelist ${HOME}/.config/youtube-viewer
 include whitelist-common.inc
 include whitelist-usr-share-common.inc

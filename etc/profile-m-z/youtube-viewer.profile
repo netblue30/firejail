@@ -7,6 +7,7 @@ include youtube-viewer.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/youtube-viewer
 noblacklist ${HOME}/.config/youtube-viewer
 
 # Allow perl (blacklisted by disable-interpreters.inc)

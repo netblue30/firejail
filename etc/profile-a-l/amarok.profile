@@ -34,10 +34,16 @@ private-dev
 # private-etc alternatives,asound.conf,ca-certificates,crypto-policies,machine-id,pki,pulse,ssl
 private-tmp
 
+# If you ain't on kde-plasma you need to uncomment the following
 dbus-user filter
 dbus-user.own org.kde.amarok
+#dbus-user.own org.kde.kded
+#dbus-user.own org.kde.klauncher
+# The following one is needed for keyboard shortcuts even on kde. 
+#dbus-user.own org.kde.kglobalaccel
 dbus-user.own org.mpris.amarok
 dbus-user.own org.mpris.MediaPlayer2.amarok
 dbus-user.talk org.freedesktop.Notifications
+#dbus-user.talk org.kde.knotify
 dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-system none

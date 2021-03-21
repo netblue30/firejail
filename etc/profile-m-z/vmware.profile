@@ -23,6 +23,7 @@ whitelist ${HOME}/.cache/vmware
 whitelist ${HOME}/.vmware
 # Uncomment the following if you need to use "shared VM"
 #whitelist /var/lib/vmware
+#writable-var
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

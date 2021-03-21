@@ -1053,3 +1053,4 @@ blacklist ${HOME}/.cache/xreader
 blacklist ${HOME}/.cache/yandex-browser
 blacklist ${HOME}/.cache/yandex-browser-beta
 blacklist ${HOME}/.cache/youtube-dl
+blacklist ${HOME}/.cache/youtube-viewer

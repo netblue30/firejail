@@ -26,12 +26,7 @@ ipc-namespace
 net none
 no3d
 nodvd
-# When using 'volatile' storage (https://www.freedesktop.org/software/systemd/man/journald.conf.html),
-# comment both 'nogroups' and 'noroot'
-# or put 'ignore nogroups' and 'ignore noroot' in your gnome-logs.local.
-nogroups
 nonewprivs
-noroot
 nosound
 notv
 nou2f
@@ -50,7 +45,9 @@ private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.s
 private-tmp
 writable-var-log
 
-dbus-user none
+dbus-user filter
+dbus-user.own org.gnome.Logs
+dbus-user.talk ca.desrt.dconf
 dbus-system none
 
 # comment this if you export logs to a file in your ${HOME}

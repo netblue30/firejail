@@ -9,7 +9,6 @@ include youtube-viewers-common.local
 #include globals.local
 
 noblacklist ${HOME}/.cache/youtube-dl
-whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -30,6 +29,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 whitelist ${DOWNLOADS}
+whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

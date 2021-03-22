@@ -1,6 +1,7 @@
 # Firejail profile for straw-viewer
 # Description: Fork of youtube-viewer acts like an invidious frontend
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include straw-viewer.local
 # Persistent global definitions

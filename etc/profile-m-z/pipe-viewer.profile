@@ -1,6 +1,7 @@
 # Firejail profile for pipe-viewer
 # Description: Fork of youtube-viewer, scrapes youtube directly and with invidious
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include pipe-viewer.local
 # Persistent global definitions

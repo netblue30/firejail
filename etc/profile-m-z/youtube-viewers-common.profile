@@ -1,7 +1,6 @@
 # Firejail profile for youtube-viewer clones
 # Description: common profile for Trizen's Youtube viewers
 # This file is overwritten after every install/update
-quiet
 # Persistent local customizations
 include youtube-viewers-common.local
 # Persistent global definitions

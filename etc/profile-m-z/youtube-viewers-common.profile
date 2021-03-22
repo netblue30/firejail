@@ -8,6 +8,9 @@ include youtube-viewers-common.local
 # added by caller profile
 #include globals.local
 
+noblacklist ${HOME}/.cache/youtube-dl
+whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
+
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
@@ -47,7 +50,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin bash,ffmpeg,ffprobe,firefox,mpv,perl,python*,sh,smplayer,stty,vlc,wget,which,youtube-dl
+private-bin bash,ffmpeg,ffprobe,firefox,mpv,perl,python*,sh,smplayer,stty,vlc,wget,which,xterm,youtube-dl
 private-cache
 private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,machine-id,mime.types,nsswitch.conf,passwd,pki,pulse,resolv.conf,ssl,X11,xdg

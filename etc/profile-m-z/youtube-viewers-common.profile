@@ -5,7 +5,8 @@ quiet
 # Persistent local customizations
 include youtube-viewers-common.local
 # Persistent global definitions
-include globals.local
+# added by caller profile
+#include globals.local
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc

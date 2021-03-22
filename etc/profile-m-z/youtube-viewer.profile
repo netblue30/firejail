@@ -1,6 +1,7 @@
 # Firejail profile for youtube-viewer
 # Description: Trizen's CLI Youtube viewer with login support
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include youtube-viewer.local
 # Persistent global definitions

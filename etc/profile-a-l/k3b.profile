@@ -21,7 +21,7 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
-caps.keep ipc_lock,sys_nice,sys_rawio,sys_resource
+caps.keep chown,dac_override,ipc_lock,net_bind_service,sys_admin,sys_nice,sys_rawio,sys_resource
 # net none
 netfilter
 no3d

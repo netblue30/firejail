@@ -14,7 +14,7 @@ Write clear, concise and in textual form.
 
 **No profile and disabling firejail**
 - What changed calling `firejail --noprofile /path/to/program` in a terminal?
-- What changed calling the program by path (check `which <program>` or `firejail --list` while the sandbox is running)?
+- What changed calling the program by path (e.g. `/usr/bin/vlc`)?
 
 **Reproduce**
 Steps to reproduce the behavior:
@@ -37,6 +37,7 @@ Other context about the problem like related errors to understand the problem.
  - [ ] If it is a AppImage, `--profile=PROFILENAME` is used to set the right profile.
  - [ ] Used `LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 PROGRAM` to get english error-messages.
  - [ ] I'm aware of `browser-allow-drm yes`/`browser-disable-u2f no` in `firejail.config` to allow DRM/U2F in browsers.
+ - [ ] This is not a question. Questions should be asked in https://github.com/netblue30/firejail/discussions.
 
 
 <details><summary> debug output </summary>

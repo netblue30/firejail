@@ -32,7 +32,7 @@ include whitelist-var-common.inc
 
 # Uncomment the next line (or add it to your chromium-common.local)
 # if your kernel allows unprivileged userns clone.
-#include chromium-common-hardened.profile
+#include chromium-common-hardened.inc.profile
 
 # Uncomment or put in your chromium-common.local to allow screen sharing under
 # wayland.

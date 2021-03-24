@@ -29,7 +29,7 @@ HAVE_OUTPUT=@HAVE_OUTPUT@
 HAVE_LTS=@HAVE_LTS@
 HAVE_FORCE_NONEWPRIVS=@HAVE_FORCE_NONEWPRIVS@
 
-H_FILE_LIST       = $(sort $(wildcard *.[h]))
+H_FILE_LIST       = $(sort $(wildcard *.h))
 C_FILE_LIST       = $(sort $(wildcard *.c))
 OBJS = $(C_FILE_LIST:.c=.o)
 BINOBJS =  $(foreach file, $(OBJS), $file)

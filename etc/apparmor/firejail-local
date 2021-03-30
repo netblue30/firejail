@@ -1,5 +1,12 @@
 # Site-specific additions and overrides for 'firejail-default'.
 # For more details, please see /etc/apparmor.d/local/README.
 
+# Here are some examples to allow running programs from home directory.
+# Don't enable all of these, just pick a specific one or write a custom rule
+# instead as done below for torbrowser-launcher.
+#owner @HOME/** ix,
+#owner @HOME/bin/** ix
+#owner @HOME/.local/bin/** ix
+
 # Uncomment to opt-in to apparmor for torbrowser-launcher
 #owner @{HOME}/.local/share/torbrowser/tbb/{i686,x86_64}/tor-browser_*/Browser/** ix,

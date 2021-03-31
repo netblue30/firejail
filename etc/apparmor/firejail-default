@@ -84,7 +84,8 @@ owner /proc/@{PID}/clear_refs w,
 
 ##########
 # Allow running programs only from well-known system directories. If you need
-# to run programs from your home directory, uncomment /home line.
+# to run programs from your home directory, add "/{,run/firejail/mnt/oroot/}home/** ix,"
+# or similar to /etc/apparmor.d/local/firejail-default (without the quotes).
 ##########
 /{,run/firejail/mnt/oroot/}{,usr/,usr/local/}bin/** ix,
 /{,run/firejail/mnt/oroot/}{,usr/,usr/local/}sbin/** ix,

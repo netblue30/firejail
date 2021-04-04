@@ -19,6 +19,8 @@ whitelist ${HOME}/.librewolf
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.mozilla
 
+include whitelist-usr-share-common.inc
+
 # librewolf requires a shell to launch on Arch. We can possibly remove sh though.
 #private-bin bash,dbus-launch,dbus-send,env,librewolf,python*,sh,which
 # private-etc must first be enabled in firefox-common.profile

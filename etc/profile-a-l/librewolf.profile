@@ -18,7 +18,11 @@ whitelist ${HOME}/.librewolf
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.mozilla
 
-include whitelist-usr-share-common.inc
+whitelist /usr/share/doc
+whitelist /usr/share/gnome-shell/search-providers/firefox-search-provider.ini
+whitelist /usr/share/gtk-doc/html
+whitelist /usr/share/mozilla
+whitelist /usr/share/webext
 
 # librewolf requires a shell to launch on Arch. We can possibly remove sh though.
 # Add the next line to your librewolf.local to enable private-bin.

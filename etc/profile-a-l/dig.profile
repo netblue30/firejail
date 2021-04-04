@@ -21,7 +21,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-#mkfile ${HOME}/.digrc -- see #903
+#mkfile ${HOME}/.digrc - see #903
 whitelist ${HOME}/.digrc
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
@@ -49,7 +49,7 @@ tracelog
 disable-mnt
 private-bin bash,dig,sh
 private-dev
-# Uncomment the next line (or put 'private-lib' in your dig.local) on non Debian/Ubuntu OS (see issue #3038)
+# Add the next line to your dig.local on non Debian/Ubuntu OS (see issue #3038).
 #private-lib
 private-tmp
 

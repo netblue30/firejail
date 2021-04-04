@@ -34,6 +34,7 @@ blacklist ${HOME}/.config/autostart
 blacklist ${HOME}/.config/autostart-scripts
 blacklist ${HOME}/.config/awesome
 blacklist ${HOME}/.config/i3
+blacklist ${HOME}/.config/sway
 blacklist ${HOME}/.config/lxsession/LXDE/autostart
 blacklist ${HOME}/.config/openbox
 blacklist ${HOME}/.config/plasma-workspace

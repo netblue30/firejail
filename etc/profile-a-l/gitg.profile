@@ -59,6 +59,6 @@ private-tmp
 dbus-user filter
 dbus-user.own org.gnome.gitg
 dbus-user.talk ca.desrt.dconf
-# Uncomment (or put in your gitg.local) if you need keyring access.
+# Add the next line to your gitg.local if you need keyring access.
 #dbus-user.talk org.freedesktop.secrets
 dbus-system none

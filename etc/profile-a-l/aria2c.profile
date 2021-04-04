@@ -40,9 +40,9 @@ seccomp
 shell none
 
 # disable-mnt
-# Add your custom event hook commands to 'private-bin' in your aria2c.local
+# Add your custom event hook commands to 'private-bin' in your aria2c.local.
 private-bin aria2c,gzip
-# Uncomment the next line (or put 'private-cache' in your aria2c.local) if you don't use Lutris/winetricks (see issue #2772)
+# Add 'private-cache' to your aria2c.local if you don't use Lutris/winetricks (see issue #2772).
 #private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,groups,login.defs,machine-id,nsswitch.conf,passwd,pki,resolv.conf,ssl

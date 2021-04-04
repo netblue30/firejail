@@ -14,14 +14,15 @@ mkdir ${HOME}/.librewolf
 whitelist ${HOME}/.cache/librewolf
 whitelist ${HOME}/.librewolf
 
-# Uncomment (or add to librewolf.local) the following lines if you want to
-# use the migration wizard.
+# Add the next lines to your librewolf.local if you want to use the migration wizard.
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.mozilla
 
 # librewolf requires a shell to launch on Arch. We can possibly remove sh though.
+# Add the next line to your librewolf.local to enable private-bin.
 #private-bin bash,dbus-launch,dbus-send,env,librewolf,python*,sh,which
-# private-etc must first be enabled in firefox-common.profile
+# Add the next line to your librewolf.local to enable private-etc. Note
+# that private-etc must first be enabled in firefox-common.local.
 #private-etc librewolf
 
 # Redirect

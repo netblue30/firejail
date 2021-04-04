@@ -18,6 +18,8 @@ whitelist ${HOME}/.librewolf
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.mozilla
 
+include whitelist-usr-share-common.inc
+
 # librewolf requires a shell to launch on Arch. We can possibly remove sh though.
 # Add the next line to your librewolf.local to enable private-bin.
 #private-bin bash,dbus-launch,dbus-send,env,librewolf,python*,sh,which

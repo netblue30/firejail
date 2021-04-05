@@ -18,18 +18,40 @@ whitelist ${HOME}/.librewolf
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.mozilla
 
+# Uncomment or put in your librewolf.local one of the following whitelist to enable KeePassXC Plugin
+# NOTE: start KeePassXC before Librewolf and keep it open to allow communication between them
+#whitelist ${RUNUSER}/kpxc_server
+#whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
+
 whitelist /usr/share/doc
-whitelist /usr/share/gnome-shell/search-providers/firefox-search-provider.ini
 whitelist /usr/share/gtk-doc/html
 whitelist /usr/share/mozilla
 whitelist /usr/share/webext
 
 # librewolf requires a shell to launch on Arch. We can possibly remove sh though.
 # Add the next line to your librewolf.local to enable private-bin.
-#private-bin bash,dbus-launch,dbus-send,env,librewolf,python*,sh,which
+#private-bin dbus-launch,dbus-send,librewolf,sh
 # Add the next line to your librewolf.local to enable private-etc. Note
 # that private-etc must first be enabled in firefox-common.local.
 #private-etc librewolf
+
+dbus-user filter
+# Uncomment or put in your librewolf.local to enable native notifications.
+#dbus-user.talk org.freedesktop.Notifications
+# Uncomment or put in your librewolf.local to allow to inhibit screensavers
+#dbus-user.talk org.freedesktop.ScreenSaver
+# Uncomment or put in your librewolf.local for plasma browser integration
+#dbus-user.own org.mpris.MediaPlayer2.plasma-browser-integration
+#dbus-user.talk org.kde.JobViewServer
+#dbus-user.talk org.kde.kuiserver
+# Uncomment or put in your librewolf.local to allow screen sharing under wayland.
+#whitelist ${RUNUSER}/pipewire-0
+#dbus-user.talk org.freedesktop.portal.*
+# Also uncomment or put in your librewolf.local if screen sharing sharing still
+# does not work with the above lines (might depend on the portal
+# implementation)
+#ignore noroot
+ignore dbus-user none
 
 # Redirect
 include firefox-common.profile

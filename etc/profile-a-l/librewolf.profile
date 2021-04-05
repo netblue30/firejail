@@ -28,6 +28,7 @@ whitelist /usr/share/doc
 whitelist /usr/share/gtk-doc/html
 whitelist /usr/share/mozilla
 whitelist /usr/share/webext
+include whitelist-usr-share-common.inc
 
 # librewolf requires a shell to launch on Arch.
 #private-bin bash,dbus-launch,dbus-send,env,librewolf,sh,which

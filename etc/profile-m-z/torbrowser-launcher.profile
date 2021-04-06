@@ -37,7 +37,7 @@ include whitelist-var-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 
-# Uncomment the line below or put 'apparmor' in your torbrowser-launcher.local.
+# Add 'apparmor' to your torbrowser-launcher.local to enable AppArmor support.
 # IMPORTANT: the relevant rule in /etc/apparmor.d/local/firejail-default will need
 # to be uncommented too for this to work as expected.
 #apparmor
@@ -53,8 +53,7 @@ novideo
 protocol unix,inet,inet6
 seccomp !chroot
 shell none
-# tracelog may cause issues, see github issue #1930
-#tracelog
+#tracelog - may cause issues, see #1930
 
 disable-mnt
 private-bin bash,cat,cp,cut,dirname,env,expr,file,gpg,grep,gxmessage,id,kdialog,ln,mkdir,mv,python*,rm,sed,sh,tail,tar,tclsh,test,tor-browser,tor-browser-en,torbrowser-launcher,update-desktop-database,xmessage,xz,zenity

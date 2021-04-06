@@ -38,8 +38,7 @@ noblacklist ${HOME}/sent
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
-# Uncomment or put them in mutt.local for oauth.py,S/MIME
-
+# Add the next lines to your mutt.local for oauth.py,S/MIME support.
 #include allow-perl.inc
 #include allow-python2.inc
 #include allow-python3.inc

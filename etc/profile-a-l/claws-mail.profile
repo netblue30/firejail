@@ -11,7 +11,7 @@ noblacklist ${HOME}/.claws-mail
 mkdir ${HOME}/.claws-mail
 whitelist ${HOME}/.claws-mail
 
-# If you use python-based plugins you need to uncomment the below (or put them in your claws-mail.local)
+# Add the below lines to your claws-mail.local if you use python-based plugins.
 # Allow python (blacklisted by disable-interpreters.inc)
 #include allow-python2.inc
 #include allow-python3.inc
@@ -23,7 +23,7 @@ whitelist /usr/share/doc/claws-mail
 dbus-user filter
 dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.gnome.keyring.SystemPrompter
-# if you use the notification plugin you need to uncomment the below (or put them in your claws-mail.local)
+# Add the next line to your claws-mail.local if you use the notification plugin.
 # dbus-user.talk org.freedesktop.Notifications
 
 # Redirect

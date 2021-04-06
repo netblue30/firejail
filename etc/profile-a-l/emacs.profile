@@ -8,8 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.emacs
 noblacklist ${HOME}/.emacs.d
-# if you need gpg uncomment the following line
-# or put it into your emacs.local
+# Add the next line to your emacs.local if you need gpg support.
 #noblacklist ${HOME}/.gnupg
 
 # Allows files commonly used by IDEs

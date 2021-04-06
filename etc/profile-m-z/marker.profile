@@ -6,7 +6,7 @@ include marker.local
 # Persistent global definitions
 include globals.local
 
-# Uncomment (or add to your marker.local) if you need internet access.
+# Add the next lines to your marker.local if you need internet access.
 #ignore net none
 #protocol unix,inet,inet6
 #private-etc ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf

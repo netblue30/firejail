@@ -43,7 +43,7 @@ tracelog
 
 # private-bin gedit
 private-dev
-# private-lib breaks python plugins, uncomment or add to your gedit.local if you don't use them.
+# private-lib breaks python plugins - add the next line to your gedit.local if you don't use them.
 #private-lib aspell,gconv,gedit,libgspell-1.so.*,libgtksourceview-*,libpeas-gtk-1.0.so.*,libreadline.so.*,libtinfo.so.*
 private-tmp
 

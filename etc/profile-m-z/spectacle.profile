@@ -6,7 +6,7 @@ include spectacle.local
 # Persistent global definitions
 include globals.local
 
-# Uncomment the following lines to use sharing services.
+# Add the next lines to your spectacle.local to use sharing services.
 #netfilter
 #ignore net none
 #private-etc ca-certificates,crypto-policies,pki,resolv.conf,ssl

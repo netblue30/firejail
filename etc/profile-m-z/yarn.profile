@@ -13,7 +13,8 @@ noblacklist ${HOME}/.yarn-config
 noblacklist ${HOME}/.yarncache
 noblacklist ${HOME}/.yarnrc
 
-# If you want whitelisting, change ${HOME}/Projects below to your yarn projects directory and uncomment the lines below.
+# If you want whitelisting, change ${HOME}/Projects below to your yarn projects directory and
+# add the next lines to you yarn.local.
 #mkdir ${HOME}/.yarn
 #mkdir ${HOME}/.yarn-config
 #mkdir ${HOME}/.yarncache

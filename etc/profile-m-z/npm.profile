@@ -15,7 +15,7 @@ noblacklist ${HOME}/.npm
 noblacklist ${HOME}/.npmrc
 
 # If you want whitelisting, change ${HOME}/Projects below to your npm projects directory
-# and uncomment the lines below.
+# and add the next lines to your npm.local.
 #mkdir ${HOME}/.node-gyp
 #mkdir ${HOME}/.npm
 #mkfile ${HOME}/.npmrc

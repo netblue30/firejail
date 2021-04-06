@@ -14,8 +14,7 @@ mkdir ${HOME}/.librewolf
 whitelist ${HOME}/.cache/librewolf
 whitelist ${HOME}/.librewolf
 
-# Uncomment (or add to librewolf.local) the following lines if you want to
-# use the migration wizard.
+# Add the next lines to your librewolf.local if you want to use the migration wizard.
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.mozilla
 
@@ -30,11 +29,11 @@ whitelist /usr/share/mozilla
 whitelist /usr/share/webext
 include whitelist-usr-share-common.inc
 
-# librewolf requires a shell to launch on Arch.
-#private-bin bash,dbus-launch,dbus-send,env,librewolf,sh,which
-# Fedora use shell scripts to launch librewolf, at least this is required
-#private-bin basename,bash,cat,dirname,expr,false,librewolf,getenforce,ln,mkdir,pidof,restorecon,rm,rmdir,sed,sh,tclsh,true,uname
-# private-etc must first be enabled in firefox-common.profile
+# librewolf requires a shell to launch on Arch. We can possibly remove sh though.
+# Add the next line to your librewolf.local to enable private-bin.
+#private-bin bash,dbus-launch,dbus-send,env,librewolf,python*,sh,which
+# Add the next line to your librewolf.local to enable private-etc. Note
+# that private-etc must first be enabled in firefox-common.local.
 #private-etc librewolf
 
 dbus-user filter

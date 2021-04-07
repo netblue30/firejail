@@ -442,6 +442,7 @@ blacklist ${PATH}/mount
 blacklist ${PATH}/mount.ecryptfs_private
 blacklist ${PATH}/nc
 blacklist ${PATH}/ncat
+blacklist ${PATH}/nmap
 blacklist ${PATH}/newgidmap
 blacklist ${PATH}/newgrp
 blacklist ${PATH}/newuidmap
@@ -452,6 +453,7 @@ blacklist ${PATH}/sg
 blacklist ${PATH}/strace
 blacklist ${PATH}/su
 blacklist ${PATH}/sudo
+blacklist ${PATH}/tcpdump
 blacklist ${PATH}/umount
 blacklist ${PATH}/unix_chkpwd
 blacklist ${PATH}/xev

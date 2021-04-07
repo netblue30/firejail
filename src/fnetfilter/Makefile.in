@@ -1,3 +1,4 @@
+.PHONY: all
 all: fnetfilter
 
 include ../common.mk
@@ -8,7 +9,9 @@ include ../common.mk
 fnetfilter: $(OBJS) ../lib/common.o
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o $(LIBS) $(EXTRA_LDFLAGS)
 
+.PHONY: clean
 clean:; rm -fr *.o fnetfilter *.gcov *.gcda *.gcno *.plist
 
+.PHONY: distclean
 distclean: clean
 	rm -fr Makefile

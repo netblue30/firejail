@@ -31,7 +31,7 @@
 
 #include <fcntl.h>
 #ifndef O_PATH
-# define O_PATH 010000000
+#define O_PATH 010000000
 #endif
 
 static void skel(const char *homedir, uid_t u, gid_t g) {
@@ -384,7 +384,6 @@ void fs_private(void) {
 			if (chown(homedir, u, g) < 0)
 				errExit("chown");
 
-			selinux_relabel_path(homedir, homedir);
 			fs_logger2("mkdir", homedir);
 			fs_logger2("tmpfs", homedir);
 		}
@@ -392,6 +391,8 @@ void fs_private(void) {
 			// mask user home directory
 			// the directory should be owned by the current user
 			fs_tmpfs(homedir, 1);
+
+		selinux_relabel_path(homedir, homedir);
 	}
 
 	skel(homedir, u, g);
@@ -549,7 +550,7 @@ void fs_private_home_list(void) {
 
 	// create /run/firejail/mnt/home directory
 	mkdir_attr(RUN_HOME_DIR, 0755, uid, gid);
-	selinux_relabel_path(RUN_HOME_DIR, "/home");
+	selinux_relabel_path(RUN_HOME_DIR, homedir);
 	fs_logger_print();	// save the current log
 
 	if (arg_debug)

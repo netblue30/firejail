@@ -3,7 +3,8 @@
 # Persistent local customizations
 include start-tor-browser.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 # Redirect
 include start-tor-browser.desktop.profile

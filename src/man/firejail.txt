@@ -42,6 +42,15 @@ Miscellaneous:
 firejail {\-? | \-\-debug-caps | \-\-debug-errnos | \-\-debug-syscalls | \-\-debug-syscalls32 | \-\-debug-protocols | \-\-help | \-\-version}
 .RE
 .SH DESCRIPTION
+#ifdef HAVE_LTS
+This is Firejail long-term support (LTS), an enterprise focused version of the software,
+LTS is usually supported for two or three years.
+During this time  only bugs and the occasional documentation problems are fixed.
+The attack surface of the SUID executable was greatly reduced by removing some of the features.
+.br
+
+.br
+#endif
 Firejail is a SUID sandbox program that reduces the risk of security breaches by
 restricting the running environment of untrusted applications using Linux
 namespaces, seccomp-bpf and Linux capabilities.
@@ -146,14 +155,10 @@ $ firejail --appimage --private krita-3.0-x86_64.appimage
 $ firejail --appimage --net=none --x11 krita-3.0-x86_64.appimage
 #endif
 .TP
-\fB\-\-audit
-Audit the sandbox, see \fBAUDIT\fR section for more details.
-.TP
-\fB\-\-audit=test-program
-Audit the sandbox, see \fBAUDIT\fR section for more details.
-.TP
+#ifdef HAVE_NETWORK
 \fB\-\-bandwidth=name|pid
 Set bandwidth limits for the sandbox identified by name or PID, see \fBTRAFFIC SHAPING\fR section for more details.
+#endif
 .TP
 \fB\-\-bind=filename1,filename2
 Mount-bind filename1 on top of filename2. This option is only available when running as root.
@@ -430,7 +435,7 @@ org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 
 .TP
 \fB\-\-dbus-system.log
-Turn on DBus logging for the system DBus. This option requires --dbus-system=log.
+Turn on DBus logging for the system DBus. This option requires --dbus-system=filter.
 
 .br
 Example:
@@ -557,7 +562,7 @@ org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 
 .TP
 \fB\-\-dbus-user.log
-Turn on DBus logging for the session DBus. This option requires --dbus-user=log.
+Turn on DBus logging for the session DBus. This option requires --dbus-user=filter.
 
 .br
 Example:
@@ -817,6 +822,16 @@ $ firejail \-\-ignore=shell --ignore=seccomp firefox
 .br
 $ firejail \-\-ignore="net eth0" firefox
 #endif
+
+.TP
+\fB\-\-\include=file.profile
+Include a profile file before the regular profiles are used.
+.br
+
+.br
+Example:
+.br
+$ firejail --include=/etc/firejail/disable-devel.inc gedit
 
 #ifdef HAVE_NETWORK
 .TP
@@ -1103,6 +1118,26 @@ Note that this breaks audio support. Enable it when sound is not required.
 Example:
 .br
 $ firejail \-\-machine-id
+
+.TP
+\fB\-\-mkdir=dirname
+Create a directory in user home. Parent directories are created as needed.
+.br
+
+.br
+Example:
+.br
+$ firejail --mkdir=~/work/project
+
+.TP
+\fB\-\-mkfile=filename
+Create an empty file in user home.
+.br
+
+.br
+Example:
+.br
+$ firejail --mkfile=~/work/project/readme
 
 .TP
 \fB\-\-memory-deny-write-execute
@@ -1622,6 +1657,7 @@ Disable video devices.
 \fB\-\-nowhitelist=dirname_or_filename
 Disable whitelist for this directory or file.
 
+#ifdef HAVE_OUTPUT
 .TP
 \fB\-\-output=logfile
 stdout logging and log rotation. Copy stdout to logfile, and keep the size of the file under 500KB using log
@@ -1652,6 +1688,7 @@ $ ls -l sandboxlog*
 .TP
 \fB\-\-output-stderr=logfile
 Similar to \-\-output, but stderr is also stored.
+#endif
 
 #ifdef HAVE_OVERLAYFS
 .TP
@@ -2451,7 +2488,7 @@ $ firejail --seccomp.print=browser
 $
 
 .TP
-\fB\-\-seccomp-error-action= kill | ERRNO
+\fB\-\-seccomp-error-action= kill | ERRNO | log
 By default, if a seccomp filter blocks a system call, the process gets
 EPERM as the error. With \-\-seccomp-error-action=error, another error
 number can be returned, for example ENOSYS or EACCES. The process can
@@ -2941,30 +2978,6 @@ To enable AppArmor confinement on top of your current Firejail security features
 $ firejail --apparmor firefox
 #endif
 
-.SH AUDIT
-Audit feature allows the user to point out gaps in security profiles. The
-implementation replaces the program to be sandboxed with a test program. By
-default, we use faudit program distributed with Firejail. A custom test program
-can also be supplied by the user. Examples:
-
-Running the default audit program:
-.br
-	$ firejail --audit transmission-gtk
-
-Running a custom audit program:
-.br
-	$ firejail --audit=~/sandbox-test transmission-gtk
-
-In the examples above, the sandbox configures transmission-gtk profile and
-starts the test program. The real program, transmission-gtk, will not be
-started.
-
-You can also audit a specific profile without specifying a program.
-.br
-	$ firejail --audit --profile=/etc/firejail/zoom.profile
-
-Limitations: audit feature is not implemented for --x11 commands.
-
 .SH DESKTOP INTEGRATION
 A symbolic link to /usr/bin/firejail under the name of a program, will start the program in Firejail sandbox.
 The symbolic link should be placed in the first $PATH position. On most systems, a good place
@@ -3332,11 +3345,13 @@ This program is free software; you can redistribute it and/or modify it under th
 .PP
 Homepage: https://firejail.wordpress.com
 .SH SEE ALSO
-\&\flfiremon\fR\|(1),
-\&\flfirecfg\fR\|(1),
-\&\flfirejail-profile\fR\|(5),
-\&\flfirejail-login\fR\|(5),
-\&\flfirejail-users\fR\|(5),
+.BR firemon (1),
+.BR firecfg (1),
+.BR firejail-profile (5),
+.BR firejail-login (5),
+.BR firejail-users (5),
+.BR jailtest (1)
+
 .UR https://github.com/netblue30/firejail/wiki
 .UE ,
 .UR https://github.com/netblue30/firejail

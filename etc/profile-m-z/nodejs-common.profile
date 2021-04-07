@@ -1,5 +1,5 @@
 # Firejail profile for Node.js
-# Description: Common profile for npm/yarn
+# Description: Asynchronous event-driven JavaScript runtime
 # This file is overwritten after every install/update
 # Persistent local customizations
 include nodejs-common.local
@@ -45,7 +45,9 @@ shell none
 
 disable-mnt
 private-dev
+# May need to add `passwd` to `private-etc` below to enable debugging with some IDEs
 private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,login.defs,mime.types,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl,xdg
+# May need to be commented out in order to enable debugging with some IDEs
 private-tmp
 
 dbus-user none

@@ -6,7 +6,7 @@ include gimp.local
 # Persistent global definitions
 include globals.local
 
-# Uncomment or add to gimp.local in order to support scanning via xsane (see #3640).
+# Add the next lines to your gimp.local in order to support scanning via xsane (see #3640).
 # TODO: Replace 'ignore seccomp' with a less permissive option.
 #ignore seccomp
 #ignore dbus-system
@@ -15,8 +15,7 @@ include globals.local
 
 
 # gimp plugins are installed by the user in ${HOME}/.gimp-2.8/plug-ins/ directory
-# if you are not using external plugins, you can comment 'ignore noexec' statement below
-# or put 'noexec ${HOME}' in your gimp.local
+# If you are not using external plugins, you can add 'noexec ${HOME}' to your gimp.local.
 ignore noexec ${HOME}
 
 noblacklist ${HOME}/.cache/babl

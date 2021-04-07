@@ -130,8 +130,6 @@ int arg_keep_var_tmp = 0;                       // don't overwrite /var/tmp
 int arg_writable_run_user = 0;			// writable /run/user
 int arg_writable_var_log = 0;		// writable /var/log
 int arg_appimage = 0;				// appimage
-int arg_audit = 0;				// audit
-char *arg_audit_prog = NULL;			// audit
 int arg_apparmor = 0;				// apparmor
 int arg_allow_debuggers = 0;			// allow debuggers
 int arg_x11_block = 0;				// block X11
@@ -297,7 +295,7 @@ static void check_network(Bridge *br) {
 	else if (br->ipsandbox) { // for macvlan check network range
 		char *rv = in_netrange(br->ipsandbox, br->ip, br->mask);
 		if (rv) {
-			fprintf(stderr, "%s", rv);
+			fprintf(stderr, "%s\n", rv);
 			exit(1);
 		}
 	}
@@ -1233,10 +1231,12 @@ int main(int argc, char **argv, char **envp) {
 #endif
 		}
 	}
+#ifdef HAVE_OUTPUT
 	else {
 		// check --output option and execute it;
 		check_output(argc, argv); // the function will not return if --output or --output-stderr option was found
 	}
+#endif
 	EUID_ASSERT();
 
 	// check for force-nonewprivs in /etc/firejail/firejail.config file
@@ -1285,15 +1285,10 @@ int main(int argc, char **argv, char **envp) {
 #endif
 		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
-				if (cfg.protocol) {
-					fwarning("more than one protocol list is present, \"%s\" will be installed\n", cfg.protocol);
-				}
-				else {
-					// store list
-					cfg.protocol = strdup(argv[i] + 11);
-					if (!cfg.protocol)
-						errExit("strdup");
-				}
+				const char *add = argv[i] + 11;
+				profile_list_augment(&cfg.protocol, add);
+				if (arg_debug)
+					fprintf(stderr, "[option] combined protocol list: \"%s\"\n", cfg.protocol);
 			}
 			else
 				exit_err_feature("seccomp");
@@ -1589,7 +1584,26 @@ int main(int argc, char **argv, char **envp) {
 			profile_add(line);
 		}
 #endif
-
+		else if (strncmp(argv[i], "--mkdir=", 8) == 0) {
+			char *line;
+			if (asprintf(&line, "mkdir %s", argv[i] + 8) == -1)
+				errExit("asprintf");
+			/* Note: Applied both immediately in profile_check_line()
+			 *       and later on via fs_blacklist().
+			 */
+			profile_check_line(line, 0, NULL);
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--mkfile=", 9) == 0) {
+			char *line;
+			if (asprintf(&line, "mkfile %s", argv[i] + 9) == -1)
+				errExit("asprintf");
+			/* Note: Applied both immediately in profile_check_line()
+			 *       and later on via fs_blacklist().
+			 */
+			profile_check_line(line, 0, NULL);
+			profile_add(line);
+		}
 		else if (strncmp(argv[i], "--read-only=", 12) == 0) {
 			char *line;
 			if (asprintf(&line, "read-only %s", argv[i] + 12) == -1)
@@ -2592,28 +2606,6 @@ int main(int argc, char **argv, char **envp) {
 		//*************************************
 		else if (strncmp(argv[i], "--timeout=", 10) == 0)
 			cfg.timeout = extract_timeout(argv[i] + 10);
-		else if (strcmp(argv[i], "--audit") == 0) {
-			arg_audit_prog = LIBDIR "/firejail/faudit";
-			profile_add_ignore("shell none");
-			arg_audit = 1;
-		}
-		else if (strncmp(argv[i], "--audit=", 8) == 0) {
-			if (strlen(argv[i] + 8) == 0) {
-				fprintf(stderr, "Error: invalid audit program\n");
-				exit(1);
-			}
-			arg_audit_prog = strdup(argv[i] + 8);
-			if (!arg_audit_prog)
-				errExit("strdup");
-
-			struct stat s;
-			if (stat(arg_audit_prog, &s) != 0) {
-				fprintf(stderr, "Error: cannot find the audit program %s\n", arg_audit_prog);
-				exit(1);
-			}
-			profile_add_ignore("shell none");
-			arg_audit = 1;
-		}
 		else if (strcmp(argv[i], "--appimage") == 0)
 			arg_appimage = 1;
 		else if (strcmp(argv[i], "--shell=none") == 0) {
@@ -2798,7 +2790,7 @@ int main(int argc, char **argv, char **envp) {
 		if (arg_debug)
 			printf("Configuring appimage environment\n");
 		appimage_set(cfg.command_name);
-		build_appimage_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index, cfg.command_line);
+		build_appimage_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
 	}
 	else {
 		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);

@@ -15,6 +15,7 @@ include disable-shell.inc
 
 include whitelist-common.inc
 
+apparmor
 caps.drop all
 netfilter
 no3d

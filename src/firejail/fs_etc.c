@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include <errno.h>
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -138,7 +139,7 @@ static void duplicate(const char *fname, const char *private_dir, const char *pr
 }
 
 
-void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list) {
+void fs_private_dir_copy(const char *private_dir, const char *private_run_dir, const char *private_list) {
 	assert(private_dir);
 	assert(private_run_dir);
 	assert(private_list);
@@ -147,11 +148,9 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	struct stat s;
 	if (stat(private_dir, &s) == -1) {
 		if (arg_debug)
-			printf("Cannot find %s\n", private_dir);
+			printf("Cannot find %s: %s\n", private_dir, strerror(errno));
 		return;
 	}
-
-	timetrace_start();
 
 	// create /run/firejail/mnt/etc directory
 	mkdir_attr(private_run_dir, 0755, 0, 0);
@@ -185,9 +184,23 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 		free(dlist);
 		fs_logger_print();
 	}
+}
+
+void fs_private_dir_mount(const char *private_dir, const char *private_run_dir) {
+	assert(private_dir);
+	assert(private_run_dir);
 
 	if (arg_debug)
 		printf("Mount-bind %s on top of %s\n", private_run_dir, private_dir);
+
+	// nothing to do if directory does not exist
+	struct stat s;
+	if (stat(private_dir, &s) == -1) {
+		if (arg_debug)
+			printf("Cannot find %s: %s\n", private_dir, strerror(errno));
+		return;
+	}
+
 	if (mount(private_run_dir, private_dir, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 	fs_logger2("mount", private_dir);
@@ -196,6 +209,11 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	if (mount("tmpfs", private_run_dir, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 		errExit("mounting tmpfs");
 	fs_logger2("tmpfs", private_run_dir);
+}
 
+void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list) {
+	timetrace_start();
+	fs_private_dir_copy(private_dir, private_run_dir, private_list);
+	fs_private_dir_mount(private_dir, private_run_dir);
 	fmessage("Private %s installed in %0.2f ms\n", private_dir, timetrace_end());
 }

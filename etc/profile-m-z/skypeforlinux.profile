@@ -18,6 +18,7 @@ ignore dbus-user none
 ignore dbus-system none
 
 # breaks Skype
+ignore apparmor
 ignore noexec /tmp
 
 noblacklist ${HOME}/.config/skypeforlinux

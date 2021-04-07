@@ -50,7 +50,7 @@ tracelog
 disable-mnt
 private-bin supertuxkart
 private-cache
-# uncomment the following line if you do not need controller support
+# Add the next line to your supertuxkart.local if you do not need controller support.
 #private-dev
 private-etc alternatives,ca-certificates,crypto-policies,drirc,hosts,machine-id,openal,pki,resolv.conf,ssl
 private-tmp

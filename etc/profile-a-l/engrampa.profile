@@ -36,7 +36,6 @@ tracelog
 private-dev
 # private-tmp
 
-dbus-user none
+dbus-user filter
+dbus-user.talk ca.desrt.dconf
 dbus-system none
-
-memory-deny-write-execute

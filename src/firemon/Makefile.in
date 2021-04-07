@@ -1,3 +1,4 @@
+.PHONY: all
 all: firemon
 
 include ../common.mk
@@ -8,7 +9,9 @@ include ../common.mk
 firemon: $(OBJS) ../lib/common.o ../lib/pid.o
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/pid.o $(LIBS) $(EXTRA_LDFLAGS)
 
+.PHONY: clean
 clean:; rm -fr *.o firemon *.gcov *.gcda *.gcno *.plist
 
+.PHONY: distclean
 distclean: clean
 	rm -fr Makefile

@@ -111,7 +111,7 @@ static int check_object_path(const char *path) {
 		}
 		++p;
 	}
-	return in_segment && segments >= 2;
+	return in_segment && segments >= 1;
 }
 
 int dbus_check_name(const char *name) {

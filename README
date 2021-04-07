@@ -44,9 +44,10 @@ Committers
 - Fred-Barclay (https://github.com/Fred-Barclay)
 - Kelvin M. Klann (https://github.com/kmk3)
 - Kristóf Marussy (https://github.com/kris7t)
+- Neo00001 (https://github.com/Neo00001)
 - Reiner Herrmann (https://github.com/reinerh - Debian/Ubuntu maintainer)
 - rusty-snake (https://github.com/rusty-snake)
-- smithsohu (https://github.com/smitsohu)
+- smitsohu (https://github.com/smitsohu)
 - SkewedZeppelin (https://github.com/SkewedZeppelin)
 - startx2017 (https://github.com/startx2017) - LTS and *bugfixes branches maintainer)
 - Topi Miettinen (https://github.com/topimiettinen)
@@ -76,6 +77,9 @@ Aidan Gauland (https://github.com/aidalgol)
 	- whitelist Bohemia Interactive config dir for Steam
 Akhil Hans Maulloo (https://github.com/kouul)
 	- xz profile
+Albin Kauffmann (https://github.com/albinou)
+	- Firefox and Chromium profile fixes
+	- info to allow screen sharing in profiles
 Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)
 	- src/lib/libnetlink.c extracted from iproute2 software package
 Aleksey Manevich (https://github.com/manevich)
@@ -165,9 +169,12 @@ Barış Ekin Yıldırım (https://github.com/circuitshaker)
 	- removing net none from code.profile
 bbhtt (https://github.com/bbhtt)
 	- improvements to balsa,fractal,gajim,trojita profiles
-	- improvements to nheko, spectral, feh, links, lynx profiles
-	- added alacartem com.github.bleakgrey.tootle, photoflare profiles
+	- improvements to nheko, spectral, feh, links, lynx, smplayer profiles
+	- added alacarte, com.github.bleakgrey.tootle, photoflare profiles
 	- add profiles for MS Edge dev build for Linux and Librewolf
+	- fixes to cheese, authenticator, liferea
+	- add profile for straw-viewer
+	- email clients whitelisting and fixes
 Benjamin Kampmann (https://github.com/ligthyear)
 	- Forward exit code from child process
 bitfreak25 (https://github.com/bitfreak25)
@@ -452,6 +459,8 @@ Impyy (https://github.com/Impyy)
 	- added mumble profile
 intika (https://github.com/intika)
 	- added musixmatch profile
+irandms (https://github.com/irandms)
+	- man firecfg fixes
 irregulator (https://github.com/irregulator)
 	- thunderbird profile fixes for debian stretch
 Irvine (https://github.com/Irvinehimself)
@@ -798,7 +807,9 @@ Simon Peter (https://github.com/probonopd)
 sinkuu (https://github.com/sinkuu)
 	- blacklisting kwalletd
 	- fix symlink invocation for programs placing symlinks in $PATH
-smithsohu (https://github.com/smitsohu)
+Simo Piiroinen (https://github.com/spiiroin)
+	- Jolla/SailfishOS patches
+smitsohu (https://github.com/smitsohu)
 	- read-only kde4 services directory
 	- enhanced mediathekview profile
 	- added tuxguitar profile
@@ -913,6 +924,8 @@ Tom Mellor (https://github.com/kalegrill)
 	- mupen64plus profile
 Tomasz Jan Góralczyk (https://github.com/tjg)
 	- fixed Steam profile
+Tomi Leppänen (https://github.com/Tomin1)
+	- Jolla/SailfishOS patches
 Topi Miettinen (https://github.com/topimiettinen)
 	- improved seccomp printing
 	- improve mount handling, fix /run/user handling
@@ -1010,5 +1023,8 @@ Zack Weinberg (https://github.com/zackw)
 	- support for sandboxing Xpra, Xvfb and Xephyr in independent sandboxes when started
 	  with firejail --x11
 	- support for xpra-extra-params in firejail.config
+
+zupatisc (https://github.com/zupatisc)
+	- patch-util fix
 
 Copyright (C) 2014-2021 Firejail Authors

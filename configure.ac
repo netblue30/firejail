@@ -54,6 +54,15 @@ AS_IF([test "x$enable_apparmor" = "xyes"], [
 	AC_SUBST(HAVE_APPARMOR)
 ])
 
+HAVE_SELINUX=""
+AC_ARG_ENABLE([selinux],
+    AS_HELP_STRING([--enable-selinux], [SELinux labeling support]))
+AS_IF([test "x$enable_selinux" = "xyes"], [
+	HAVE_SELINUX="-DHAVE_SELINUX"
+	EXTRA_LDFLAGS+=" -lselinux "
+	AC_SUBST(HAVE_SELINUX)
+])
+
 AC_SUBST([EXTRA_CFLAGS])
 AC_SUBST([EXTRA_LDFLAGS])
 
@@ -76,6 +85,14 @@ AC_SUBST(HAVE_OVERLAYFS)
 #	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
 #	AC_SUBST(HAVE_OVERLAYFS)
 #])
+
+HAVE_OUTPUT=""
+AC_ARG_ENABLE([output],
+    AS_HELP_STRING([--disable-output], [disable --output logging]))
+AS_IF([test "x$enable_output" != "xno"], [
+	HAVE_OUTPUT="-DHAVE_OUTPUT"
+	AC_SUBST(HAVE_OUTPUT)
+])
 
 HAVE_USERTMPFS=""
 AC_ARG_ENABLE([usertmpfs],
@@ -211,14 +228,69 @@ AS_IF([test "x$enable_contrib_install" = "xno"],
 )
 AC_SUBST(HAVE_CONTRIB_INSTALL)
 
-HAVE_SELINUX=""
-AC_ARG_ENABLE([selinux],
-    AS_HELP_STRING([--enable-selinux], [SELinux labeling support]))
-AS_IF([test "x$enable_selinux" = "xyes"], [
-	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS+=" -lselinux "
-	AC_SUBST(HAVE_SELINUX)
+HAVE_FORCE_NONEWPRIVS=""
+AC_ARG_ENABLE([force-nonewprivs],
+    AS_HELP_STRING([--enable-force-nonewprivs], [enable force nonewprivs]))
+AS_IF([test "x$enable_force_nonewprivs" = "xyes"], [
+	HAVE_FORCE_NONEWPRIVS="-DHAVE_FORCE_NONEWPRIVS"
+	AC_SUBST(HAVE_FORCE_NONEWPRIVS)
 ])
+
+HAVE_LTS=""
+AC_ARG_ENABLE([lts],
+    AS_HELP_STRING([--enable-lts], [enable long-term support software version (LTS)]))
+AS_IF([test "x$enable_lts" = "xyes"], [
+	HAVE_LTS="-DHAVE_LTS"
+	AC_SUBST(HAVE_LTS)
+
+	HAVE_DBUSPROXY=""
+	AC_SUBST(HAVE_DBUSPROXY)
+
+	HAVE_OVERLAYFS=""
+	AC_SUBST(HAVE_OVERLAYFS)
+
+	HAVE_OUTPUT=""
+	AC_SUBST(HAVE_OUTPUT)
+
+	HAVE_USERTMPFS=""
+	AC_SUBST(HAVE_USERTMPFS)
+
+	HAVE_MAN="-DHAVE_MAN"
+	AC_SUBST(HAVE_MAN)
+
+	HAVE_FIRETUNNEL=""
+	AC_SUBST(HAVE_FIRETUNNEL)
+
+	HAVE_PRIVATEHOME=""
+	AC_SUBST(HAVE_PRIVATE_HOME)
+
+	HAVE_CHROOT=""
+	AC_SUBST(HAVE_CHROOT)
+
+	HAVE_GLOBALCFG=""
+	AC_SUBST(HAVE_GLOBALCFG)
+
+	HAVE_USERNS=""
+	AC_SUBST(HAVE_USERNS)
+
+	HAVE_X11=""
+	AC_SUBST(HAVE_X11)
+
+	HAVE_FILE_TRANSFER=""
+	AC_SUBST(HAVE_FILE_TRANSFER)
+
+	HAVE_SUID="yes"
+	AC_SUBST(HAVE_SUID)
+
+	BUSYBOX_WORKAROUND="no"
+	AC_SUBST(BUSYBOX_WORKAROUND)
+
+	HAVE_CONTRIB_INSTALL="no",
+	AC_SUBST(HAVE_CONTRIB_INSTALL)
+])
+
+
+
 
 # checking pthread library
 AC_CHECK_LIB([pthread], [main], [], AC_MSG_ERROR([*** POSIX thread support not installed ***]))
@@ -233,14 +305,16 @@ fi
 AC_CONFIG_FILES([mkdeb.sh], [chmod +x mkdeb.sh])
 AC_OUTPUT(Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile \
 src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile \
-src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile \
-src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile)
+src/ftee/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile \
+src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile \
+src/jailtest/Makefile)
 
 echo
 echo "Configuration options:"
 echo "   prefix: $prefix"
 echo "   sysconfdir: $sysconfdir"
 echo "   apparmor: $HAVE_APPARMOR"
+echo "   SELinux labeling support: $HAVE_SELINUX"
 echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
 echo "   network: $HAVE_NETWORK"
@@ -252,6 +326,7 @@ echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   DBUS proxy support: $HAVE_DBUSPROXY"
 echo "   allow tmpfs as regular user: $HAVE_USERTMPFS"
+echo "   enable --ouput logging: $HAVE_OUTPUT"
 echo "   Manpage support: $HAVE_MAN"
 echo "   firetunnel support: $HAVE_FIRETUNNEL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
@@ -261,6 +336,20 @@ echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
-echo "   SELinux labeling support: $HAVE_SELINUX"
 echo "   Install as a SUID executable: $HAVE_SUID"
+echo "   LTS: $HAVE_LTS"
+echo "   Always enforce filters: $HAVE_FORCE_NONEWPRIVS"
 echo
+
+
+if test "$HAVE_LTS" = -DHAVE_LTS; then
+	echo
+	echo
+	echo "*********************************************************"
+	echo "*    Warning: Long-term support (LTS) was enabled!      *"
+	echo "*    Most compile-time options have bean rewritten!     *"
+	echo "*********************************************************"
+	echo
+	echo
+fi
+

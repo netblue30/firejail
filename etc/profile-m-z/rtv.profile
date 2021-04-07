@@ -16,6 +16,10 @@ noblacklist ${HOME}/.local/share/rtv
 include allow-python2.inc
 include allow-python3.inc
 
+# You can configure rtv to open different type of links in external applications.
+# Configuration: https://github.com/michael-lazar/rtv#viewing-media-links.
+# Add the next line to your rtv.local to enable external application support.
+#include rtv-addons.profile
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

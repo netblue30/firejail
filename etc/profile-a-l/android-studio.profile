@@ -5,6 +5,7 @@ include android-studio.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/Google
 noblacklist ${HOME}/.AndroidStudio*
 noblacklist ${HOME}/.android
 noblacklist ${HOME}/.jack-server

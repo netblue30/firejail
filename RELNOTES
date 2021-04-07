@@ -1,7 +1,24 @@
 firejail (0.9.65) baseline; urgency=low
   * filtering environment variables
   * zsh completion
-  * new profiles: vmware-view, display-im6.q16
+  * command line: --mkdir, --mkfile
+  * --protocol now accumulates
+  * Jolla/SailfishOS patches
+  * private-lib rework
+  * jailtest utility for testing running sandboxes
+  * removed --audit options, relpaced by jailtest
+  * capabilities list update
+  * faccessat2 syscall support
+  * compile time: --enable-force-nonewprivs
+  * compile time: --disable-output
+  * compile time: --enable-lts
+  * new profiles: vmware-view, display-im6.q16, ipcalc, ipcalc-ng
+  * ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop,
+  * avidemux, calligragemini, vmware-player, vmware-workstation
+  * gget, com.github.phase1geo.minder, nextcloud-desktop, pcsxr
+  * PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2, sum
+  * bcompare, b2sum, cksum, md5sum, sha1sum, sha224sum, sha256sum
+  * sha384sum, sha512sum
  -- netblue30 <netblue30@yahoo.com>  Tue, 9 Feb 2021 09:00:00 -0500
 
 firejail (0.9.64.4) baseline; urgency=low

@@ -1,10 +1,14 @@
-all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-profile.man firemon.man
+.PHONY: all
+all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-profile.man firemon.man jailtest.man
+
 include ../common.mk
 
 %.man: %.txt
 	gawk -f ./preproc.awk -- $(MANFLAGS) < $< > $@
 
+.PHONY: clean
 clean:; rm -fr *.man
 
+.PHONY: distclean
 distclean: clean
 	rm -fr Makefile

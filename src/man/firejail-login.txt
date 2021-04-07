@@ -3,7 +3,7 @@
 login.users \- Login file syntax for Firejail
 
 .SH DESCRIPTION
-/etc/firejail/login.users file describes additional arguments passed to firejail executable
+/etc/firejail/login.users file describes additional arguments passed to the firejail executable
 upon user logging into a Firejail restricted shell. Each user entry in the file consists of
 a user name followed by the arguments passed to firejail. The format is as follows:
 
@@ -19,8 +19,8 @@ Wildcard patterns are accepted in the user name field:
 
 .SH RESTRICTED SHELL
 To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in
-/etc/passwd file for each user that needs to be restricted. Alternatively,
-you can specify /usr/bin/firejail  using adduser or usermod commands:
+the /etc/passwd file for each user that needs to be restricted. Alternatively,
+you can specify /usr/bin/firejail using the `adduser` or `usermod` commands:
 
 adduser \-\-shell /usr/bin/firejail username
 .br
@@ -34,8 +34,9 @@ Firejail is free software; you can redistribute it and/or modify it under the te
 .PP
 Homepage: https://firejail.wordpress.com
 .SH SEE ALSO
-\&\flfirejail\fR\|(1),
-\&\flfiremon\fR\|(1),
-\&\flfirecfg\fR\|(1),
-\&\flfirejail-profile\fR\|(5)
-\&\flfirejail-users\fR\|(5)
+.BR firejail (1),
+.BR firemon (1),
+.BR firecfg (1),
+.BR firejail-profile (5),
+.BR firejail-users (5),
+.BR jailtest (1)

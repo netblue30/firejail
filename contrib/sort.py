@@ -80,7 +80,7 @@ def fix_profile(filename):
         lines = profile.read().split("\n")
         was_fixed = False
         fixed_profile = []
-        for line in lines:
+        for lineno, line in enumerate(lines):
             if line[:12] in ("private-bin ", "private-etc ", "private-lib "):
                 fixed_line = f"{line[:12]}{sort_alphabetical(line[12:])}"
             elif line[:13] in ("seccomp.drop ", "seccomp.keep "):
@@ -95,6 +95,10 @@ def fix_profile(filename):
                 fixed_line = line
             if fixed_line != line:
                 was_fixed = True
+                print(
+                    f"{filename}:{lineno + 1}:-{line}\n"
+                    f"{filename}:{lineno + 1}:+{fixed_line}"
+                )
             fixed_profile.append(fixed_line)
         if was_fixed:
             profile.seek(0)
@@ -108,6 +112,7 @@ def fix_profile(filename):
 
 def main(args):
     exit_code = 0
+    print(f"sort.py: checking {len(args)} {'profiles' if len(args) != 1 else 'profile'}...")
     for filename in args:
         try:
             if exit_code not in (1, 101):
@@ -120,8 +125,8 @@ def main(args):
         except PermissionError:
             print(f"[ Error ] Can't read/write `{filename}'")
             exit_code = 1
-        except:
-            print(f"[ Error ] An error occurred while processing `{filename}'")
+        except Exception as err:
+            print(f"[ Error ] An error occurred while processing `{filename}': {err}")
             exit_code = 1
     return exit_code
 

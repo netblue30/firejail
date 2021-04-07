@@ -22,6 +22,7 @@ firejail-users.5
 firejail.1
 firemon.1
 firecfg.1
+jailtest.5
 mkdeb.sh
 src/firejail/firejail
 src/firemon/firemon
@@ -40,6 +41,7 @@ src/fbuilder/fbuilder
 src/profstats/profstats
 src/bash_completion/firejail.bash_completion
 src/zsh_completion/_firejail
+src/jailtest/jailtest
 uids.h
 seccomp
 seccomp.debug

@@ -7,7 +7,7 @@ include w3m.local
 # Persistent global definitions
 include globals.local
 
-# Uncomment or add to your w3m.local if you want to use w3m-img on a vconsole
+# Add the next lines to your w3m.local if you want to use w3m-img on a vconsole.
 #ignore nogroups
 #ignore private-dev
 #ignore private-etc

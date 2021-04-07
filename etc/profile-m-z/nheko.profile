@@ -6,8 +6,8 @@ include nheko.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/nheko
 noblacklist ${HOME}/.cache/nheko
+noblacklist ${HOME}/.config/nheko
 noblacklist ${HOME}/.local/share/nheko
 
 include disable-common.inc

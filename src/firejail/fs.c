@@ -170,6 +170,7 @@ static void disable_file(OPERATION op, const char *filename) {
 				}
 			}
 			fs_tmpfs(fname, getuid());
+			selinux_relabel_path(fname, fname);
 			last_disable = SUCCESSFUL;
 		}
 		else
@@ -800,8 +801,6 @@ void disable_config(void) {
 		disable_file(BLACKLIST_FILE, RUN_FIREJAIL_PROFILE_DIR);
 	if (stat(RUN_FIREJAIL_X11_DIR, &s) == 0)
 		disable_file(BLACKLIST_FILE, RUN_FIREJAIL_X11_DIR);
-	if (!arg_appimage && stat(RUN_FIREJAIL_APPIMAGE_DIR, &s) == 0)
-		disable_file(BLACKLIST_FILE, RUN_FIREJAIL_APPIMAGE_DIR);
 }
 
 

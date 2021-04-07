@@ -21,9 +21,8 @@
 #include <dirent.h>
 #include <sys/stat.h>
 
-extern void fslib_duplicate(const char *full_path);
-extern void fslib_copy_libs(const char *full_path);
-extern void fslib_copy_dir(const char *full_path);
+extern void fslib_mount_libs(const char *full_path, unsigned user);
+extern void fslib_mount(const char *full_path);
 
 //***************************************************************
 // Standard C library
@@ -97,7 +96,8 @@ static void stdc(const char *dirname) {
 				if (asprintf(&fname, "%s/%s", dirname, entry->d_name) == -1)
 					errExit("asprintf");
 
-				fslib_duplicate(fname);
+				fslib_mount(fname);
+				free(fname);
 			}
 		}
 		closedir(dir);
@@ -118,11 +118,56 @@ void fslib_install_stdc(void) {
 
 	// install locale
 	if (stat("/usr/lib/locale", &s) == 0)
-		fslib_copy_dir("/usr/lib/locale");
+		fslib_mount("/usr/lib/locale");
 
 	fmessage("Standard C library installed in %0.2f ms\n", timetrace_end());
 }
 
+//***************************************************************
+// Firejail libraries
+//***************************************************************
+
+static void fdir(void) {
+	// firejail directory itself
+	fslib_mount(LIBDIR "/firejail");
+
+	// executables and libraries from firejail directory
+	static const char * const fbin[] = {
+		PATH_FCOPY, // currently sufficient to find all needed libraries
+		// PATH_FSECCOMP,
+		// PATH_FSEC_OPTIMIZE,
+		// PATH_FSEC_PRINT,
+		// RUN_FIREJAIL_LIB_DIR "/libtrace.so",
+		// RUN_FIREJAIL_LIB_DIR "/libtracelog.so",
+		// RUN_FIREJAIL_LIB_DIR "/libpostexecseccomp.so",
+		NULL,
+	};
+
+	// need to parse as root user, unprivileged users have no read permission on executables
+	int i;
+	for (i = 0; fbin[i]; i++)
+		fslib_mount_libs(fbin[i], 0);
+}
+
+void fslib_install_firejail(void) {
+	timetrace_start();
+	// bring in firejail executable libraries, in case we are redirected here
+	// by a firejail symlink from /usr/local/bin/firejail
+	fslib_mount_libs(PATH_FIREJAIL, 1); // parse as user
+
+	// bring in firejail directory
+	fdir();
+
+	// bring in dhclient libraries
+	if (any_dhcp())
+		fslib_mount_libs(RUN_MNT_DIR "/dhclient", 1); // parse as user
+
+	// bring in xauth libraries
+	if (arg_x11_xorg)
+		fslib_mount_libs("/usr/bin/xauth", 1); // parse as user
+
+	fmessage("Firejail libraries installed in %0.2f ms\n", timetrace_end());
+}
 
 //***************************************************************
 // various system libraries
@@ -268,8 +313,8 @@ void fslib_install_system(void) {
 			if (asprintf(&name, "/usr/lib/x86_64-linux-gnu/%s", ptr->dir1) == -1)
 				errExit("asprintf");
 			if (access(name, R_OK) == 0) {
-				fslib_copy_libs(name);
-				fslib_copy_dir(name);
+				fslib_mount_libs(name, 1); // parse as user
+				fslib_mount(name);
 			}
 			else {
 				free(name);
@@ -277,8 +322,8 @@ void fslib_install_system(void) {
 				if (asprintf(&name, "/usr/lib64/%s", ptr->dir1) == -1)
 					errExit("asprintf");
 				if (access(name, R_OK) == 0) {
-					fslib_copy_libs(name);
-					fslib_copy_dir(name);
+					fslib_mount_libs(name, 1); // parse as user
+					fslib_mount(name);
 				}
 			}
 			free(name);
@@ -288,8 +333,8 @@ void fslib_install_system(void) {
 				if (asprintf(&name, "/usr/lib/x86_64-linux-gnu/%s", ptr->dir2) == -1)
 					errExit("asprintf");
 				if (access(name, R_OK) == 0) {
-					fslib_copy_libs(name);
-					fslib_copy_dir(name);
+					fslib_mount_libs(name, 1); // parse as user
+					fslib_mount(name);
 				}
 				else {
 					free(name);
@@ -297,8 +342,8 @@ void fslib_install_system(void) {
 					if (asprintf(&name, "/usr/lib64/%s", ptr->dir2) == -1)
 						errExit("asprintf");
 					if (access(name, R_OK) == 0) {
-						fslib_copy_libs(name);
-						fslib_copy_dir(name);
+						fslib_mount_libs(name, 1); // parse as user
+						fslib_mount(name);
 					}
 				}
 				free(name);

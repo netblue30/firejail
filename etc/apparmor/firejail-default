@@ -84,7 +84,8 @@ owner /proc/@{PID}/clear_refs w,
 
 ##########
 # Allow running programs only from well-known system directories. If you need
-# to run programs from your home directory, uncomment /home line.
+# to run programs from your home directory, add "/{,run/firejail/mnt/oroot/}home/** ix,"
+# or similar to /etc/apparmor.d/local/firejail-default (without the quotes).
 ##########
 /{,run/firejail/mnt/oroot/}{,usr/,usr/local/}bin/** ix,
 /{,run/firejail/mnt/oroot/}{,usr/,usr/local/}sbin/** ix,
@@ -126,40 +127,14 @@ signal (receive),
 # We let Firejail deal with capabilities, but ensure that
 # some AppArmor related capabilities will not be available.
 ##########
-capability chown,
-capability dac_override,
-capability dac_read_search,
-capability fowner,
-capability fsetid,
-capability kill,
-capability setgid,
-capability setuid,
-capability setpcap,
-capability linux_immutable,
-capability net_bind_service,
-capability net_broadcast,
-capability net_admin,
-capability net_raw,
-capability ipc_lock,
-capability ipc_owner,
-capability sys_module,
-capability sys_rawio,
-capability sys_chroot,
-capability sys_ptrace,
-capability sys_pacct,
-capability sys_admin,
-capability sys_boot,
-capability sys_nice,
-capability sys_resource,
-capability sys_time,
-capability sys_tty_config,
-capability mknod,
-capability lease,
-#capability audit_write,
-#capability audit_control,
-capability setfcap,
-#capability mac_override,
-#capability mac_admin,
+# The list of recognized capabilities varies from one apparmor version to another.
+# For example on Debian 10 (apparmor 2.13.2) checkpoint_restore, perfmon, bpf are not available
+# We allow all caps by default and remove the  ones we don't like:
+capability,
+deny capability audit_write,
+deny capability audit_control,
+deny capability mac_override,
+deny capability mac_admin,
 
 # Site-specific additions and overrides. See local/README for details.
 #include <local/firejail-default>

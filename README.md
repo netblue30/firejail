@@ -198,7 +198,100 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 Milestone page: https://github.com/netblue30/firejail/milestone/1
 Release discussion: https://github.com/netblue30/firejail/issues/3696
 
+### jailtest
+`````
+JAILTEST(1)                    JAILTEST man page                   JAILTEST(1)
 
+NAME
+       jailtest - Simple utility program to test running sandboxes
+
+SYNOPSIS
+       sudo jailtest [OPTIONS] [directory]
+
+DESCRIPTION
+       WORK IN PROGRESS!  jailtest attaches itself to all sandboxes started by
+       the user and performs some basic tests on the sandbox filesystem:
+
+       1. Virtual directories
+              jailtest extracts a list with the main virtual  directories  in‐
+              stalled by the sandbox.  These directories are build by firejail
+              at startup using --private* and --whitelist commands.
+
+       2. Noexec test
+              jailtest inserts executable programs  in  /home/username,  /tmp,
+              and  /var/tmp  directories and tries to run them form inside the
+              sandbox, thus testing if the directory is executable or not.
+
+       3. Read access test
+              jailtest creates test files in the directories specified by  the
+              user and tries to read them from inside the sandbox.
+
+       4. AppArmor test
+
+       5. Seccomp test
+
+       The program is started as root using sudo.
+
+OPTIONS
+       --debug
+              Print debug messages
+
+       -?, --help
+              Print options end exit.
+
+       --version
+              Print program version and exit.
+
+       [directory]
+              One  or  more  directories in user home to test for read access.
+              ~/.ssh and ~/.gnupg are tested by default.
+
+OUTPUT
+       For each sandbox detected we print the following line:
+
+            PID:USER:Sandbox Name:Command
+
+       It is followed by relevant sandbox information, such as the virtual di‐
+       rectories and various warnings.
+
+EXAMPLE
+       $ sudo jailtest
+       2014:netblue::firejail /usr/bin/gimp
+          Virtual dirs: /tmp, /var/tmp, /dev, /usr/share,
+          Warning: I can run programs in /home/netblue
+
+       2055:netblue::firejail /usr/bin/ssh -X netblue@x.y.z.net
+          Virtual dirs: /var/tmp, /dev, /usr/share, /run/user/1000,
+          Warning: I can read ~/.ssh
+
+       2186:netblue:libreoffice:firejail --appimage /opt/LibreOffice-fresh.ap‐
+       pimage
+          Virtual dirs: /tmp, /var/tmp, /dev,
+
+       26090:netblue::/usr/bin/firejail /opt/firefox/firefox
+          Virtual dirs: /home/netblue, /tmp, /var/tmp, /dev, /etc, /usr/share,
+                        /run/user/1000,
+
+       26160:netblue:tor:firejail --private=~/tor-browser_en-US ./start-tor
+          Warning: AppArmor not enabled
+          Virtual dirs: /home/netblue, /tmp, /var/tmp, /dev, /etc, /bin,
+                        /usr/share, /run/user/1000,
+          Warning: I can run programs in /home/netblue
+
+LICENSE
+       This program is free software; you can redistribute it and/or modify it
+       under  the  terms of the GNU General Public License as published by the
+       Free Software Foundation; either version 2 of the License, or (at  your
+       option) any later version.
+
+       Homepage: https://firejail.wordpress.com
+
+SEE ALSO
+       firejail(1),  firemon(1), firecfg(1), firejail-profile(5), firejail-lo‐
+       gin(5), firejail-users(5),
+
+0.9.65                             Feb 2021                        JAILTEST(1)
+`````
 
 ### Profile Statistics
 
@@ -210,31 +303,34 @@ $ ./profstats *.profile
 Warning: multiple caps in transmission-daemon.profile
 
 Stats:
-    profiles			1064
-    include local profile	1064   (include profile-name.local)
-    include globals		1064   (include globals.local)
-    blacklist ~/.ssh		959   (include disable-common.inc)
-    seccomp			975
-    capabilities		1063
-    noexec			944   (include disable-exec.inc)
-    memory-deny-write-execute	229
-    apparmor			605
-    private-bin			564
-    private-dev			932
-    private-etc			462
-    private-tmp			823
-    whitelist home directory	502
-    whitelist var		744   (include whitelist-var-common.inc)
-    whitelist run/user		461   (include whitelist-runuser-common.inc
+    profiles			1077
+    include local profile	1077   (include profile-name.local)
+    include globals		1077   (include globals.local)
+    blacklist ~/.ssh		971   (include disable-common.inc)
+    seccomp			988
+    capabilities		1076
+    noexec			960   (include disable-exec.inc)
+    memory-deny-write-execute	231
+    apparmor			621
+    private-bin			571
+    private-dev			949
+    private-etc			470
+    private-tmp			835
+    whitelist home directory	508
+    whitelist var		758   (include whitelist-var-common.inc)
+    whitelist run/user		539   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		451   (include whitelist-usr-share-common.inc
-    net none			345
-    dbus-user none 		564
-    dbus-user filter 		85
-    dbus-system none 		696
+    whitelist usr/share		526   (include whitelist-usr-share-common.inc
+    net none			354
+    dbus-user none 		573
+    dbus-user filter 		86
+    dbus-system none 		706
     dbus-system filter 		7
 ```
 
 ### New profiles:
 
-vmware-view, display-im6.q16
+vmware-view, display-im6.q16, ipcalc, ipcalc-ng, ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop,
+avidemux, calligragemini, vmware-player, vmware-workstation, gget, com.github.phase1geo.minder, nextcloud-desktop,
+pcsxr, PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2, bcompare, b2sum, cksum, md5sum, sha1sum, sha224sum,
+sha256sum, sha384sum, sha512sum, sum

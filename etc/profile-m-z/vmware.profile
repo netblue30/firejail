@@ -21,6 +21,9 @@ mkdir ${HOME}/.cache/vmware
 mkdir ${HOME}/.vmware
 whitelist ${HOME}/.cache/vmware
 whitelist ${HOME}/.vmware
+# Add the next lines to your vmware.local if you need to use "shared VM".
+#whitelist /var/lib/vmware
+#writable-var
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -34,6 +37,7 @@ shell none
 tracelog
 
 #disable-mnt
+# Add the next line to your vmware.local to enable private-bin.
 #private-bin env,bash,sh,ovftool,vmafossexec,vmaf_*,vmnet-*,vmplayer,vmrest,vmrun,vmss2core,vmstat,vmware,vmware-*
 private-etc alsa,asound.conf,ca-certificates,conf.d,crypto-policies,dconf,fonts,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl,vmware,vmware-installer,vmware-vix
 dbus-user none

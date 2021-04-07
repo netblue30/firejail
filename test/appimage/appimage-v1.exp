@@ -84,7 +84,7 @@ send -- "firejail --shutdown=appimage-test\r"
 set spawn_id $appimage_id
 expect {
 	timeout {puts "shutdown\n"}
-	"AppImage unmounted"
+	"AppImage detached"
 }
 
 after 100

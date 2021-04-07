@@ -6,12 +6,15 @@ include marker.local
 # Persistent global definitions
 include globals.local
 
-# Uncomment (or add to your marker.local) if you need internet access.
+# Add the next lines to your marker.local if you need internet access.
 #ignore net none
 #protocol unix,inet,inet6
 #private-etc ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf
 
 noblacklist ${HOME}/.cache/marker
+noblacklist ${DOCUMENTS}
+
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -47,7 +50,7 @@ seccomp.block-secondary
 shell none
 tracelog
 
-private-bin marker
+private-bin marker,python3*
 private-cache
 private-dev
 private-etc alternatives,dconfgtk-3.0,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,pango,X11

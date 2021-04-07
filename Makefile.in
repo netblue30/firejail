@@ -22,14 +22,16 @@ MAN_SRC = src/man
 endif
 
 COMPLETIONDIRS = src/zsh_completion src/bash_completion
+
+.PHONY: all
 all: all_items mydirs $(MAN_TARGET) filters
-APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats
-SBOX_APPS = src/faudit/faudit src/fbuilder/fbuilder src/ftee/ftee
+APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailtest/jailtest
+SBOX_APPS = src/fbuilder/fbuilder src/ftee/ftee
 SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter
 MYDIRS = src/lib $(MAN_SRC) $(COMPLETIONDIRS)
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 COMPLETIONS = src/zsh_completion/_firejail src/bash_completion/firejail.bash_completion
-MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
+MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5 jailtest.5
 SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
@@ -43,7 +45,6 @@ $(ALL_ITEMS): $(MYDIRS)
 mydirs: $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
-
 
 $(MANPAGES): src/man
 	./mkman.sh $(VERSION) src/man/$(basename $@).man $@
@@ -72,6 +73,7 @@ seccomp.mdwx: src/fseccomp/fseccomp
 seccomp.mdwx.32: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp memory-deny-write-execute.32 seccomp.mdwx.32
 
+.PHONY: clean
 clean:
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
 		$(MAKE) -C $$dir clean; \
@@ -91,6 +93,7 @@ clean:
 	rm -f test/sysutils/firejail_t*
 	cd test/compile; ./compile.sh --clean; cd ../..
 
+.PHONY: distclean
 distclean: clean
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
 		$(MAKE) -C $$dir distclean; \
@@ -109,6 +112,8 @@ endif
 	install -m 0755 src/firemon/firemon $(DESTDIR)$(bindir)
 	# firecfg executable
 	install -m 0755 src/firecfg/firecfg $(DESTDIR)$(bindir)
+	# jailtest executable
+	install -m 0755 src/jailtest/jailtest $(DESTDIR)$(bindir)
 	# libraries and plugins
 	install -m 0755 -d $(DESTDIR)$(libdir)/firejail
 	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS) src/firecfg/firecfg.config
@@ -177,6 +182,7 @@ uninstall:
 	rm -f $(DESTDIR)$(bindir)/firemon
 	rm -f $(DESTDIR)$(bindir)/firecfg
 	rm -fr $(DESTDIR)$(libdir)/firejail
+	rm -fr $(DESTDIR)$(libdir)/jailtest
 	rm -fr $(DESTDIR)$(datarootdir)/doc/firejail
 	for man in $(MANPAGES); do \
 		rm -f $(DESTDIR)$(mandir)/man5/$$man*; \
@@ -188,7 +194,7 @@ uninstall:
 	@echo "If you want to install a different version of firejail, you might also need to run 'rm -fr $(DESTDIR)$(sysconfdir)/firejail', see #2038."
 
 DISTFILES = "src etc m4 platform contrib configure configure.ac Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh.in COPYING README RELNOTES"
-DISTFILES_TEST = "test/Makefile.in test/apps test/apps-x11 test/apps-x11-xorg test/root test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils test/chroot"
+DISTFILES_TEST = "test/Makefile.in test/apps test/apps-x11 test/apps-x11-xorg test/root test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils test/chroot"
 
 dist:
 	mv config.status config.status.old
@@ -229,24 +235,23 @@ cppcheck: clean
 scan-build: clean
 	NO_EXTRA_CFLAGS="yes" scan-build make
 
-
 #
 # make test
 #
 
-TESTS=profiles private-lib apps apps-x11 apps-x11-xorg sysutils utils environment filters arguments fs fcopy fnetfilter
+TESTS=profiles private-lib apps apps-x11 apps-x11-xorg sysutils utils environment filters fs fcopy fnetfilter
 TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 
 $(TEST_TARGETS):
 	$(MAKE) -C test $(subst test-,,$@)
 
-test: test-profiles test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
+test: test-profiles test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"
 
-test-noprofiles: test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
+test-noprofiles: test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"
 
-test-github: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-arguments
+test-github: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
 	echo "TEST COMPLETE"
 
 ##########################################

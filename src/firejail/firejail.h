@@ -328,8 +328,6 @@ extern int arg_keep_var_tmp; // don't overwrite /var/tmp
 extern int arg_writable_run_user;	// writable /run/user
 extern int arg_writable_var_log; // writable /var/log
 extern int arg_appimage;	// appimage
-extern int arg_audit;		// audit
-extern char *arg_audit_prog;	// audit
 extern int arg_apparmor;	// apparmor
 extern int arg_allow_debuggers;	// allow debuggers
 extern int arg_x11_block;	// block X11
@@ -451,6 +449,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname);
 // add a profile entry in cfg.profile list; use str to populate the list
 void profile_add(char *str);
 void profile_add_ignore(const char *str);
+char *profile_list_normalize(char *list);
+char *profile_list_compress(char *list);
+void profile_list_augment(char **list, const char *items);
 
 // list.c
 void list(void);
@@ -649,6 +650,8 @@ void network_set_run_file(pid_t pid);
 
 // fs_etc.c
 void fs_machineid(void);
+void fs_private_dir_copy(const char *private_dir, const char *private_run_dir, const char *private_list);
+void fs_private_dir_mount(const char *private_dir, const char *private_run_dir);
 void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list);
 
 // no_sandbox.c
@@ -795,15 +798,15 @@ void print_compiletime_support(void);
 
 // appimage.c
 void appimage_set(const char *appimage_path);
+void appimage_mount(void);
 void appimage_clear(void);
-const char *appimage_getdir(void);
 
 // appimage_size.c
-long unsigned int appimage2_size(const char *fname);
+long unsigned int appimage2_size(int fd);
 
 // cmdline.c
 void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
-void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, char *apprun_path);
+void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
 
 // sbox.c
 // programs

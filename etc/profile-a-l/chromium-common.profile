@@ -30,12 +30,10 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-# Uncomment the next line (or add it to your chromium-common.local)
-# if your kernel allows unprivileged userns clone.
-#include chromium-common-hardened.inc
+# Add the next line to your chromium-common.local if your kernel allows unprivileged userns clone.
+#include chromium-common-hardened.inc.profile
 
-# Uncomment or put in your chromium-common.local to allow screen sharing under
-# wayland.
+# Add the next line to your chromium-common.local to allow screen sharing under wayland.
 #whitelist ${RUNUSER}/pipewire-0
 
 apparmor
@@ -50,12 +48,10 @@ shell none
 disable-mnt
 private-cache
 ?BROWSER_DISABLE_U2F: private-dev
-# problems with multiple browser sessions
-#private-tmp
+#private-tmp - issues when using multiple browser sessions
 
-# prevents access to passwords saved in GNOME Keyring and KWallet, also breaks Gnome connector
-# dbus-user none
+#dbus-user none - prevents access to passwords saved in GNOME Keyring and KWallet, also breaks Gnome connector.
 dbus-system none
 
-# the file dialog needs to work without d-bus
+# The file dialog needs to work without d-bus.
 ?HAS_NODBUS: env NO_CHROME_KDE_FILE_DIALOG=1

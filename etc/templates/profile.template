@@ -1,17 +1,17 @@
 # Firejail profile for PROGRAM_NAME
-# Description: DESCRIPTION
+# Description: DESCRIPTION OF THE PROGRAM
 # This file is overwritten after every install/update
 # --- CUT HERE ---
-# This is a generic template to help you with creation of profiles
-# for new programs. PRs welcome at https://github.com/netblue30/firejail/.
+# This is a generic template to help you create profiles.
+# PRs welcome at https://github.com/netblue30/firejail/.
 #
 # Rules to follow:
 #  - lines with one # are often used in profiles
 #  - lines with two ## are only needed in special situations
 #  - make the profile as restrictive as possible while still keeping the program useful
-#    (e. g. a program that is unable to save user's work is considered bad practice)
-#  - dedicate some time (based on the complexity of the application) to profile testing before raising
-#    a pull request
+#    (e.g. a program that is unable to save user's work is considered bad practice)
+#  - dedicate ample time (based on the complexity of the application) to profile testing before
+#    submitting a pull request
 #  - keep the sections structure, use a single empty line as separator
 #  - entries within sections are alphabetically sorted
 #  - consider putting binary into src/firecfg/firecfg.config (keep list sorted) but beware
@@ -42,7 +42,7 @@
 #  ${DOCUMENTS}
 #  ${DOWNLOADS}
 #  ${HOME} (user's home)
-#  ${PATH} (contents of PATH envvar)
+#  ${PATH} (contents of PATH env var)
 #  ${MUSIC}
 #  ${RUNUSER} (/run/user/UID)
 #  ${VIDEOS}
@@ -81,12 +81,11 @@ include globals.local
 #      `ls -aR`
 #noblacklist PATH
 
-# Allow python (blacklisted by disable-interpreters.inc)
-#include allow-python2.inc
-#include allow-python3.inc
+# Allows files commonly used by IDEs
+#include allow-common-devel.inc
 
-# Allow perl (blacklisted by disable-interpreters.inc)
-#include allow-perl.inc
+# Allow gjs (blacklisted by disable-interpreters.inc)
+#include allow-gjs.inc
 
 # Allow java (blacklisted by disable-devel.inc)
 #include allow-java.inc
@@ -94,14 +93,15 @@ include globals.local
 # Allow lua (blacklisted by disable-interpreters.inc)
 #include allow-lua.inc
 
+# Allow perl (blacklisted by disable-interpreters.inc)
+#include allow-perl.inc
+
+# Allow python (blacklisted by disable-interpreters.inc)
+#include allow-python2.inc
+#include allow-python3.inc
+
 # Allow ruby (blacklisted by disable-interpreters.inc)
 #include allow-ruby.inc
-
-# Allow gjs (blacklisted by disable-interpreters.inc)
-#include allow-gjs.inc
-
-# Allows files commonly used by IDEs
-#include allow-common-devel.inc
 
 # Allow ssh (blacklisted by disable-common.inc)
 #include allow-ssh.inc
@@ -117,10 +117,10 @@ include globals.local
 #include disable-xdg.inc
 
 # This section often mirrors noblacklist section above. The idea is
-# that if a user feels too restricted (he's unable to save files into
-# home directory for instance) he/she may disable whitelist (nowhitelist)
+# that if a user feels too restricted (e.g. unable to save files into
+# home directory) they may disable whitelist (nowhitelist)
 # in PROFILE.local but still be protected by BLACKLISTS section
-# (further explanation at https://github.com/netblue30/firejail/issues/1569)
+# (explanation at https://github.com/netblue30/firejail/issues/1569)
 #mkdir PATH
 ##mkfile PATH
 #whitelist PATH
@@ -136,7 +136,7 @@ include globals.local
 ##hostname NAME
 # CLI only
 ##ipc-namespace
-# breaks sound and sometime dbus related functions
+# breaks audio and sometimes dbus related functions
 #machine-id
 # 'net none' or 'netfilter'
 #net none
@@ -155,13 +155,13 @@ include globals.local
 #  - unix is usually needed
 #  - inet,inet6 only if internet access is required (see 'net none'/'netfilter' above)
 #  - netlink is rarely needed
-#  - packet almost never
-#protocol unix,inet,inet6,netlink,packet
+#  - packet and bluetooth almost never
+#protocol unix,inet,inet6,netlink,packet,bluetooth
 #seccomp
 ##seccomp !chroot
 ##seccomp.drop SYSCALLS (see syscalls.txt)
 #seccomp.block-secondary
-##seccomp-error-action log (Only for debugging seccomp issues)
+##seccomp-error-action log (only for debugging seccomp issues)
 #shell none
 #tracelog
 # Prefer 'x11 none' instead of 'blacklist /tmp/.X11-unix' if 'net none' is set
@@ -176,16 +176,16 @@ include globals.local
 #private-etc FILES
 # private-etc templates (see also #1734, #2093)
 #  Common: alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg
-#    Extra: magic,magic.mgc,passwd,group
-#  Networking: ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf,hosts,host.conf,hostname,protocols,services,rpc
-#    Extra: proxychains.conf,gai.conf
-#  Sound: alsa,asound.conf,pulse,machine-id
+#    Extra: group,magic,magic.mgc,passwd
+#  3D: bumblebee,drirc,glvnd,nvidia
+#  Audio: alsa,asound.conf,machine-id,pulse
+#  D-Bus: dbus-1,machine-id
 #  GUI: fonts,pango,X11
 #  GTK: dconf,gconf,gtk-2.0,gtk-3.0
-#  Qt: Trolltech.conf
 #  KDE: kde4rc,kde5rc
-#  3D: drirc,glvnd,bumblebee,nvidia
-#  D-Bus: dbus-1,machine-id
+#  Networking: ca-certificates,crypto-policies,host.conf,hostname,hosts,nsswitch.conf,pki,protocols,resolv.conf,services,rpc,ssl
+#    Extra: gai.conf,proxychains.conf
+#  Qt: Trolltech.conf
 ##private-lib LIBS
 ##private-opt NAME
 #private-tmp
@@ -194,15 +194,16 @@ include globals.local
 ##writable-var
 ##writable-var-log
 
-# Since 0.9.63 also a more granular regulation of dbus is supported.
-# To get the dbus-addresses to which an application needs access to.
-# You can look at flatpak if the application is also distriputed via flatpak:
+# Since 0.9.63 also a more granular control of dbus is supported.
+# To get the dbus-addresses an application needs access to you can
+# check with flatpak (when the application is distriputed that way):
 #    flatpak remote-info --show-metadata flathub <APP-ID>
 # Notes:
 #  - flatpak implicitly allows an app to own <APP-ID> on the session bus
-#  - In order to make dconf work (if it is used by the app) you need to allow
-#    'ca.desrt.dconf' even if it is not allowed by flatpak.
-# Notes and Policiy about addresses can be found at
+#  - Some features like native notifications are implemented as portal too.
+#  - In order to make dconf work (when used by the app) you need to allow
+#    'ca.desrt.dconf' even when not allowed by flatpak.
+# Notes and policies about addresses can be found at
 # <https://github.com/netblue30/firejail/wiki/Restrict-D-Bus>
 #dbus-user filter
 #dbus-user.own com.github.netblue30.firejail
@@ -211,7 +212,7 @@ include globals.local
 #dbus-system none
 
 ##env VAR=VALUE
+##join-or-start NAME
 #memory-deny-write-execute
 ##noexec PATH
 ##read-only ${HOME}
-##join-or-start NAME

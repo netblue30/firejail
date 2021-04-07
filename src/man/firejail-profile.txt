@@ -103,7 +103,7 @@ Example: "?HAS_APPIMAGE: whitelist ${HOME}/special/appimage/dir"
 
 This example will load the whitelist profile line only if the \-\-appimage option has been specified on the command line.
 
-Currently the only conditionals supported this way are HAS_APPIMAGE, HAS_NET, HAS_NODBUS, HAS_NOSOUND and HAS_X11. The conditionals BROWSER_DISABLE_U2F and BROWSER_ALLOW_DRM
+Currently the only conditionals supported this way are HAS_APPIMAGE, HAS_NET, HAS_NODBUS, HAS_NOSOUND, HAS_PRIVATE and HAS_X11. The conditionals BROWSER_DISABLE_U2F and BROWSER_ALLOW_DRM
 can be enabled or disabled globally in Firejail's configuration file.
 
 The profile line may be any profile line that you would normally use in a profile \fBexcept\fR for "quiet" and "include" lines.
@@ -266,7 +266,7 @@ Mount new /root and /home/user directories in temporary
 filesystems. All modifications are discarded when the sandbox is
 closed.
 .TP
-\fBprivate=directory
+\fBprivate directory
 Use directory as user home.
 .TP
 \fBprivate-bin file,file
@@ -666,7 +666,7 @@ Disable DVB (Digital Video Broadcasting) TV devices.
 Disable U2F devices.
 .TP
 \fBnovideo
-Disable video devices.
+Disable video capture devices.
 .TP
 \fBshell none
 Run the program directly, without a shell.
@@ -889,10 +889,12 @@ Firejail is free software; you can redistribute it and/or modify it under the te
 .PP
 Homepage: https://firejail.wordpress.com
 .SH SEE ALSO
-\&\flfirejail\fR\|(1),
-\&\flfiremon\fR\|(1),
-\&\flfirecfg\fR\|(1),
-\&\flfirejail-login\fR\|(5),
-\&\flfirejail-users\fR\|(5),
+.BR firejail (1),
+.BR firemon (1),
+.BR firecfg (1),
+.BR firejail-login (5),
+.BR firejail-users (5),
+.BR jailtest (1)
+
 .UR https://github.com/netblue30/firejail/wiki/Creating-Profiles
 .UE

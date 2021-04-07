@@ -627,7 +627,8 @@ LIBOBJS
 EGREP
 GREP
 CPP
-HAVE_SELINUX
+HAVE_LTS
+HAVE_FORCE_NONEWPRIVS
 HAVE_CONTRIB_INSTALL
 HAVE_GCOV
 BUSYBOX_WORKAROUND
@@ -645,10 +646,12 @@ HAVE_FIRETUNNEL
 HAVE_GAWK
 HAVE_MAN
 HAVE_USERTMPFS
+HAVE_OUTPUT
 HAVE_OVERLAYFS
 HAVE_DBUSPROXY
 EXTRA_LDFLAGS
 EXTRA_CFLAGS
+HAVE_SELINUX
 HAVE_APPARMOR
 AA_LIBS
 AA_CFLAGS
@@ -710,7 +713,9 @@ ac_user_opts='
 enable_option_checking
 enable_analyzer
 enable_apparmor
+enable_selinux
 enable_dbusproxy
+enable_output
 enable_usertmpfs
 enable_man
 enable_firetunnel
@@ -727,7 +732,8 @@ enable_fatal_warnings
 enable_busybox_workaround
 enable_gcov
 enable_contrib_install
-enable_selinux
+enable_force_nonewprivs
+enable_lts
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1365,7 +1371,9 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-analyzer       enable GCC 10 static analyzer
   --enable-apparmor       enable apparmor
+  --enable-selinux        SELinux labeling support
   --disable-dbusproxy     disable dbus proxy
+  --disable-output        disable --output logging
   --disable-usertmpfs     disable tmpfs as regular user
   --disable-man           disable man pages
   --disable-firetunnel    disable firetunnel
@@ -1385,7 +1393,9 @@ Optional Features:
   --enable-gcov           Gcov instrumentation
   --enable-contrib-install
                           install contrib scripts
-  --enable-selinux        SELinux labeling support
+  --enable-force-nonewprivs
+                          enable force nonewprivs
+  --enable-lts            enable long-term support software version (LTS)
 
 Some influential environment variables:
   CC          C compiler command
@@ -3511,6 +3521,20 @@ fi
 
 fi
 
+HAVE_SELINUX=""
+# Check whether --enable-selinux was given.
+if test "${enable_selinux+set}" = set; then :
+  enableval=$enable_selinux;
+fi
+
+if test "x$enable_selinux" = "xyes"; then :
+
+	HAVE_SELINUX="-DHAVE_SELINUX"
+	EXTRA_LDFLAGS+=" -lselinux "
+
+
+fi
+
 
 
 
@@ -3538,6 +3562,19 @@ HAVE_OVERLAYFS=""
 #	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
 #	AC_SUBST(HAVE_OVERLAYFS)
 #])
+
+HAVE_OUTPUT=""
+# Check whether --enable-output was given.
+if test "${enable_output+set}" = set; then :
+  enableval=$enable_output;
+fi
+
+if test "x$enable_output" != "xno"; then :
+
+	HAVE_OUTPUT="-DHAVE_OUTPUT"
+
+
+fi
 
 HAVE_USERTMPFS=""
 # Check whether --enable-usertmpfs was given.
@@ -3792,19 +3829,79 @@ else
 fi
 
 
-HAVE_SELINUX=""
-# Check whether --enable-selinux was given.
-if test "${enable_selinux+set}" = set; then :
-  enableval=$enable_selinux;
+HAVE_FORCE_NONEWPRIVS=""
+# Check whether --enable-force-nonewprivs was given.
+if test "${enable_force_nonewprivs+set}" = set; then :
+  enableval=$enable_force_nonewprivs;
 fi
 
-if test "x$enable_selinux" = "xyes"; then :
+if test "x$enable_force_nonewprivs" = "xyes"; then :
 
-	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS+=" -lselinux "
+	HAVE_FORCE_NONEWPRIVS="-DHAVE_FORCE_NONEWPRIVS"
 
 
 fi
+
+HAVE_LTS=""
+# Check whether --enable-lts was given.
+if test "${enable_lts+set}" = set; then :
+  enableval=$enable_lts;
+fi
+
+if test "x$enable_lts" = "xyes"; then :
+
+	HAVE_LTS="-DHAVE_LTS"
+
+
+	HAVE_DBUSPROXY=""
+
+
+	HAVE_OVERLAYFS=""
+
+
+	HAVE_OUTPUT=""
+
+
+	HAVE_USERTMPFS=""
+
+
+	HAVE_MAN="-DHAVE_MAN"
+
+
+	HAVE_FIRETUNNEL=""
+
+
+	HAVE_PRIVATEHOME=""
+
+
+	HAVE_CHROOT=""
+
+
+	HAVE_GLOBALCFG=""
+
+
+	HAVE_USERNS=""
+
+
+	HAVE_X11=""
+
+
+	HAVE_FILE_TRANSFER=""
+
+
+	HAVE_SUID="yes"
+
+
+	BUSYBOX_WORKAROUND="no"
+
+
+	HAVE_CONTRIB_INSTALL="no",
+
+
+fi
+
+
+
 
 # checking pthread library
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpthread" >&5
@@ -4269,7 +4366,7 @@ fi
 
 ac_config_files="$ac_config_files mkdeb.sh"
 
-ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile src/ftee/Makefile src/faudit/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile"
+ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile src/ftee/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile src/jailtest/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4993,14 +5090,16 @@ do
     "src/fbuilder/Makefile") CONFIG_FILES="$CONFIG_FILES src/fbuilder/Makefile" ;;
     "src/fsec-print/Makefile") CONFIG_FILES="$CONFIG_FILES src/fsec-print/Makefile" ;;
     "src/ftee/Makefile") CONFIG_FILES="$CONFIG_FILES src/ftee/Makefile" ;;
-    "src/faudit/Makefile") CONFIG_FILES="$CONFIG_FILES src/faudit/Makefile" ;;
     "src/fseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/fseccomp/Makefile" ;;
     "src/fldd/Makefile") CONFIG_FILES="$CONFIG_FILES src/fldd/Makefile" ;;
     "src/libpostexecseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/libpostexecseccomp/Makefile" ;;
     "src/fsec-optimize/Makefile") CONFIG_FILES="$CONFIG_FILES src/fsec-optimize/Makefile" ;;
     "src/profstats/Makefile") CONFIG_FILES="$CONFIG_FILES src/profstats/Makefile" ;;
     "src/man/Makefile") CONFIG_FILES="$CONFIG_FILES src/man/Makefile" ;;
+    "src/zsh_completion/Makefile") CONFIG_FILES="$CONFIG_FILES src/zsh_completion/Makefile" ;;
+    "src/bash_completion/Makefile") CONFIG_FILES="$CONFIG_FILES src/bash_completion/Makefile" ;;
     "test/Makefile") CONFIG_FILES="$CONFIG_FILES test/Makefile" ;;
+    "src/jailtest/Makefile") CONFIG_FILES="$CONFIG_FILES src/jailtest/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
@@ -5466,6 +5565,7 @@ echo "Configuration options:"
 echo "   prefix: $prefix"
 echo "   sysconfdir: $sysconfdir"
 echo "   apparmor: $HAVE_APPARMOR"
+echo "   SELinux labeling support: $HAVE_SELINUX"
 echo "   global config: $HAVE_GLOBALCFG"
 echo "   chroot: $HAVE_CHROOT"
 echo "   network: $HAVE_NETWORK"
@@ -5477,6 +5577,7 @@ echo "   file transfer support: $HAVE_FILE_TRANSFER"
 echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   DBUS proxy support: $HAVE_DBUSPROXY"
 echo "   allow tmpfs as regular user: $HAVE_USERTMPFS"
+echo "   enable --ouput logging: $HAVE_OUTPUT"
 echo "   Manpage support: $HAVE_MAN"
 echo "   firetunnel support: $HAVE_FIRETUNNEL"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
@@ -5486,6 +5587,20 @@ echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
 echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
 echo "   Gcov instrumentation: $HAVE_GCOV"
 echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
-echo "   SELinux labeling support: $HAVE_SELINUX"
 echo "   Install as a SUID executable: $HAVE_SUID"
+echo "   LTS: $HAVE_LTS"
+echo "   Always enforce filters: $HAVE_FORCE_NONEWPRIVS"
 echo
+
+
+if test "$HAVE_LTS" = -DHAVE_LTS; then
+	echo
+	echo
+	echo "*********************************************************"
+	echo "*    Warning: Long-term support (LTS) was enabled!      *"
+	echo "*    Most compile-time options have bean rewritten!     *"
+	echo "*********************************************************"
+	echo
+	echo
+fi
+

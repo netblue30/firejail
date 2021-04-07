@@ -15,6 +15,9 @@ noblacklist ${HOME}/.local/share/torbrowser
 include allow-python2.inc
 include allow-python3.inc
 
+blacklist /opt
+blacklist /srv
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -28,10 +31,16 @@ mkdir ${HOME}/.local/share/torbrowser
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/torbrowser
 whitelist ${HOME}/.local/share/torbrowser
+whitelist /usr/share/torbrowser-launcher
 include whitelist-common.inc
 include whitelist-var-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 
-apparmor
+# Add 'apparmor' to your torbrowser-launcher.local to enable AppArmor support.
+# IMPORTANT: the relevant rule in /etc/apparmor.d/local/firejail-default will need
+# to be uncommented too for this to work as expected.
+#apparmor
 caps.drop all
 netfilter
 nodvd
@@ -44,8 +53,7 @@ novideo
 protocol unix,inet,inet6
 seccomp !chroot
 shell none
-# tracelog may cause issues, see github issue #1930
-#tracelog
+#tracelog - may cause issues, see #1930
 
 disable-mnt
 private-bin bash,cat,cp,cut,dirname,env,expr,file,gpg,grep,gxmessage,id,kdialog,ln,mkdir,mv,python*,rm,sed,sh,tail,tar,tclsh,test,tor-browser,tor-browser-en,torbrowser-launcher,update-desktop-database,xmessage,xz,zenity

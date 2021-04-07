@@ -1,3 +1,4 @@
+.PHONY: all
 all: fseccomp
 
 include ../common.mk
@@ -8,7 +9,9 @@ include ../common.mk
 fseccomp: $(OBJS) ../lib/common.o ../lib/errno.o ../lib/syscall.o
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/errno.o ../lib/syscall.o $(LIBS) $(EXTRA_LDFLAGS)
 
+.PHONY: clean
 clean:; rm -fr *.o fseccomp *.gcov *.gcda *.gcno *.plist
 
+.PHONY: distclean
 distclean: clean
 	rm -fr Makefile

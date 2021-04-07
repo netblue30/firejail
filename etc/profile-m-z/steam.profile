@@ -6,16 +6,26 @@ include steam.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/Epic
+noblacklist ${HOME}/.config/Loop_Hero
+noblacklist ${HOME}/.config/ModTheSpire
+noblacklist ${HOME}/.config/RogueLegacy
 noblacklist ${HOME}/.killingfloor
+noblacklist ${HOME}/.klei
 noblacklist ${HOME}/.local/share/3909/PapersPlease
 noblacklist ${HOME}/.local/share/aspyr-media
 noblacklist ${HOME}/.local/share/bohemiainteractive
 noblacklist ${HOME}/.local/share/cdprojektred
+noblacklist ${HOME}/.local/share/Dredmor
 noblacklist ${HOME}/.local/share/FasterThanLight
 noblacklist ${HOME}/.local/share/feral-interactive
 noblacklist ${HOME}/.local/share/IntoTheBreach
 noblacklist ${HOME}/.local/share/Paradox Interactive
+noblacklist ${HOME}/.local/share/PillarsOfEternity
+noblacklist ${HOME}/.local/share/RogueLegacy*
 noblacklist ${HOME}/.local/share/Steam
+noblacklist ${HOME}/.local/share/SteamWorldDig
+noblacklist ${HOME}/.local/share/SteamWorld Dig 2
 noblacklist ${HOME}/.local/share/SuperHexagon
 noblacklist ${HOME}/.local/share/Terraria
 noblacklist ${HOME}/.local/share/vpltd
@@ -42,17 +52,27 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+mkdir ${HOME}/.config/Epic
+mkdir ${HOME}/.config/Loop_Hero
+mkdir ${HOME}/.config/ModTheSpire
+mkdir ${HOME}/.config/RogueLegacy
 mkdir ${HOME}/.config/unity3d
 mkdir ${HOME}/.killingfloor
+mkdir ${HOME}/.klei
 mkdir ${HOME}/.local/share/3909/PapersPlease
 mkdir ${HOME}/.local/share/aspyr-media
 mkdir ${HOME}/.local/share/bohemiainteractive
 mkdir ${HOME}/.local/share/cdprojektred
+mkdir ${HOME}/.local/share/Dredmor
 mkdir ${HOME}/.local/share/FasterThanLight
 mkdir ${HOME}/.local/share/feral-interactive
 mkdir ${HOME}/.local/share/IntoTheBreach
 mkdir ${HOME}/.local/share/Paradox Interactive
+mkdir ${HOME}/.local/share/PillarsOfEternity
+mkdir ${HOME}/.local/share/RogueLegacy*
 mkdir ${HOME}/.local/share/Steam
+mkdir ${HOME}/.local/share/SteamWorldDig
+mkdir ${HOME}/.local/share/SteamWorld Dig 2
 mkdir ${HOME}/.local/share/SuperHexagon
 mkdir ${HOME}/.local/share/Terraria
 mkdir ${HOME}/.local/share/vpltd
@@ -62,17 +82,27 @@ mkdir ${HOME}/.paradoxinteractive
 mkdir ${HOME}/.steam
 mkfile ${HOME}/.steampath
 mkfile ${HOME}/.steampid
+whitelist ${HOME}/.config/Epic
+whitelist ${HOME}/.config/Loop_Hero
+whitelist ${HOME}/.config/ModTheSpire
+whitelist ${HOME}/.config/RogueLegacy
 whitelist ${HOME}/.config/unity3d
 whitelist ${HOME}/.killingfloor
+whitelist ${HOME}/.klei
 whitelist ${HOME}/.local/share/3909/PapersPlease
 whitelist ${HOME}/.local/share/aspyr-media
 whitelist ${HOME}/.local/share/bohemiainteractive
 whitelist ${HOME}/.local/share/cdprojektred
+whitelist ${HOME}/.local/share/Dredmor
 whitelist ${HOME}/.local/share/FasterThanLight
 whitelist ${HOME}/.local/share/feral-interactive
 whitelist ${HOME}/.local/share/IntoTheBreach
 whitelist ${HOME}/.local/share/Paradox Interactive
+whitelist ${HOME}/.local/share/PillarsOfEternity
+whitelist ${HOME}/.local/share/RogueLegacy*
 whitelist ${HOME}/.local/share/Steam
+whitelist ${HOME}/.local/share/SteamWorldDig
+whitelist ${HOME}/.local/share/SteamWorld Dig 2
 whitelist ${HOME}/.local/share/SuperHexagon
 whitelist ${HOME}/.local/share/Terraria
 whitelist ${HOME}/.local/share/vpltd

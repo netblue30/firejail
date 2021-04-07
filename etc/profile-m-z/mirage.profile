@@ -9,7 +9,6 @@ include globals.local
 noblacklist ${HOME}/.cache/mirage
 noblacklist ${HOME}/.config/mirage
 noblacklist ${HOME}/.local/share/mirage
-noblacklist /sbin
 
 include allow-bin-sh.inc
 

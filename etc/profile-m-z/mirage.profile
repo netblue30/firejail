@@ -34,7 +34,7 @@ mkdir ${HOME}/.local/share/mirage
 whitelist ${HOME}/.cache/mirage
 whitelist ${HOME}/.config/mirage
 whitelist ${HOME}/.local/share/mirage
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
+whitelist ${HOME}/.mozilla/firefox
 whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
@@ -60,7 +60,7 @@ disable-mnt
 private-bin dirname,env,ldconfig,mirage,readlink,sh,uname
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,drirc,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,mime.types,nsswitch.conf,os-release,pki,pulse,resolv.conf,ssl,X11,xdg
+private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,drirc,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,login.defs,mime.types,nsswitch.conf,os-release,passwd,pki,pulse,resolv.conf,ssl,X11,xdg
 private-tmp
 
 dbus-user none
@@ -68,5 +68,3 @@ dbus-user none
 # dbus-user filter
 # dbus-user.talk org.freedesktop.Notifications
 dbus-system none
-
-read-only ${HOME}/.mozilla/firefox/profiles.ini

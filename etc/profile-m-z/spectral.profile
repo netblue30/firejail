@@ -51,7 +51,8 @@ private-tmp
 
 dbus-user filter
 dbus-user.talk org.freedesktop.secrets
-# Uncomment the lines below for native notification and tray icons
+dbus-user.talk org.kde.kwalletd5
+# Add below lines to 'spectral.local' for native notification and tray icons
 # dbus-user.talk org.freedesktop.Notifications
 # dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-system none

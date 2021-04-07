@@ -60,7 +60,7 @@ private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,drirc,
 private-tmp
 
 dbus-user none
-# Comment the above line and uncomment below lines for native notifications
+# Add 'ignore dbus-user none' and below lines to 'mirage.local' for native notifications
 # dbus-user filter
 # dbus-user.talk org.freedesktop.Notifications
 dbus-system none

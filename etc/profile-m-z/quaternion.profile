@@ -44,6 +44,7 @@ shell none
 tracelog
 
 disable-mnt
+# Add 'ignore private-bin' to 'quaternion.local' to use filemanager
 private-bin quaternion
 private-cache
 private-dev
@@ -52,4 +53,10 @@ private-tmp
 
 dbus-user.filter
 dbus-user.talk org.freedesktop.secrets
+# Add below line to 'quaternion.local' for native notifications
+# dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.kde.kwalletd5
+# Add below lines to 'quaternion.local' for KDE tray notifications
+# dbus-user.talk org.kde.StatusNotifierWatcher
+# dbus-user.talk org.kde.StatusNotifierItem-13-1
 dbus-system none

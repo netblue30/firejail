@@ -10,7 +10,6 @@ include matrix-mirage.local
 noblacklist ${HOME}/.cache/matrix-mirage
 noblacklist ${HOME}/.config/matrix-mirage
 noblacklist ${HOME}/.local/share/matrix-mirage
-noblacklist /sbin
 
 mkdir ${HOME}/.cache/matrix-mirage
 mkdir ${HOME}/.config/matrix-mirage

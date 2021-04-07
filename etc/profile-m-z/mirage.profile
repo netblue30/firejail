@@ -10,6 +10,8 @@ noblacklist ${HOME}/.cache/mirage
 noblacklist ${HOME}/.config/mirage
 noblacklist ${HOME}/.local/share/mirage
 noblacklist ${HOME}/.mozilla
+noblacklist /sbin
+nobalcklist /usr/sbin
 
 include allow-bin-sh.inc
 

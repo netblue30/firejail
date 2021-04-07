@@ -55,12 +55,11 @@ private-tmp
 
 dbus-user.filter
 dbus-user.talk org.freedesktop.secrets
-# Add below line to 'quaternion.local' for native notifications
-# dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.kde.kwalletd5
 # Add below lines to 'quaternion.local' for KDE tray notifications
+# dbus-user.talk org.freedesktop.Notifications
 # dbus-user.talk org.kde.StatusNotifierWatcher
-# dbus-user.talk org.kde.StatusNotifierItem-13-1
+# dbus-user.own org.kde.*
 dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini

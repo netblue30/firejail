@@ -20,7 +20,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/nheko
-mkdir ${HOME}/.cache/nheko/nheko
+mkdir ${HOME}/.cache/nheko
 mkdir ${HOME}/.local/share/nheko
 whitelist ${HOME}/.config/nheko
 whitelist ${HOME}/.cache/nheko

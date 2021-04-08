@@ -7,12 +7,15 @@ include nodejs-common.local
 # added by caller profile
 #include globals.local
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}
-
 ignore noexec ${HOME}
 
+# Required to run `npx`
+noblacklist ${HOME}/.npm
+
 include allow-bin-sh.inc
+
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-exec.inc
@@ -45,9 +48,8 @@ shell none
 
 disable-mnt
 private-dev
-# May need to add `passwd` to `private-etc` below to enable debugging with some IDEs
-private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,login.defs,mime.types,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl,xdg
-# May need to be commented out in order to enable debugging with some IDEs
+# Pass-through passwd because it's required to run `npx`
+private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,login.defs,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg
 private-tmp
 
 dbus-user none

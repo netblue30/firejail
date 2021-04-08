@@ -50,7 +50,6 @@ disable-mnt
 private-dev
 # Pass-through passwd because it's required to run `npx`
 private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,login.defs,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg
-private-tmp
 
 dbus-user none
 dbus-system none

@@ -44,7 +44,7 @@ shell none
 tracelog
 
 disable-mnt
-# Add 'ignore private-bin' to 'quaternion.local' to use filemanager
+# Add 'ignore private-bin' or modify below to 'quatenion.local' for filemanager
 private-bin quaternion
 private-cache
 private-dev

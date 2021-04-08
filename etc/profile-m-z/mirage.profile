@@ -54,6 +54,7 @@ shell none
 tracelog
 
 disable-mnt
+# Add 'ignore private-bin' or modify below to 'mirage.local' for filemanager
 private-bin dirname,env,ldconfig,mirage,readlink,sh,uname
 private-cache
 private-dev

@@ -9,7 +9,6 @@ include globals.local
 noblacklist ${HOME}/.cache/nheko
 noblacklist ${HOME}/.config/nheko
 noblacklist ${HOME}/.local/share/nheko
-noblacklist ${HOME}/.mozilla
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,13 +19,12 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.cache/nheko
 mkdir ${HOME}/.config/nheko
+mkdir ${HOME}/.cache/nheko/nheko
 mkdir ${HOME}/.local/share/nheko
-whitelist ${HOME}/.cache/nheko
 whitelist ${HOME}/.config/nheko
+whitelist ${HOME}/.cache/nheko
 whitelist ${HOME}/.local/share/nheko
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
@@ -47,7 +45,6 @@ shell none
 tracelog
 
 disable-mnt
-# Add 'ignore private-bin' to 'nheko.local' for hyperlink support
 private-bin nheko
 private-cache
 private-dev
@@ -61,5 +58,3 @@ dbus-user.talk org.kde.kwalletd5
 # dbus-user.talk org.freedesktop.Notifications
 # dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-system none
-
-read-only ${HOME}/.mozilla/firefox/profiles.ini

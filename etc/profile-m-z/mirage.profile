@@ -9,7 +9,6 @@ include globals.local
 noblacklist ${HOME}/.cache/mirage
 noblacklist ${HOME}/.config/mirage
 noblacklist ${HOME}/.local/share/mirage
-noblacklist ${HOME}/.mozilla
 noblacklist /sbin
 nobalcklist /usr/sbin
 
@@ -34,7 +33,6 @@ mkdir ${HOME}/.local/share/mirage
 whitelist ${HOME}/.cache/mirage
 whitelist ${HOME}/.config/mirage
 whitelist ${HOME}/.local/share/mirage
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
@@ -56,7 +54,6 @@ shell none
 tracelog
 
 disable-mnt
-# Add 'ignore private-bin' to 'mirage.local' for hyperlink support
 private-bin dirname,env,ldconfig,mirage,readlink,sh,uname
 private-cache
 private-dev
@@ -68,5 +65,3 @@ dbus-user none
 # dbus-user filter
 # dbus-user.talk org.freedesktop.Notifications
 dbus-system none
-
-read-only ${HOME}/.mozilla/firefox/profiles.ini

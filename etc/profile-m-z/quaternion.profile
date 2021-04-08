@@ -8,7 +8,6 @@ include globals.local
 
 noblacklist ${HOME}/.cache/Quotient/quaternion
 noblacklist ${HOME}/.config/Quotient
-noblacklist ${HOME}/.mozilla
 
 include disable-common.inc
 include disable-devel.inc
@@ -23,7 +22,6 @@ mkdir ${HOME}/.cache/Quotient/quaternion
 mkdir ${HOME}/.config/Quotient
 whitelist ${HOME}/.cache/Quotient/quaternion
 whitelist ${HOME}/.config/Quotient
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${DOWNLOADS}
 whitelist /usr/share/Quotient/quaternion
 include whitelist-common.inc
@@ -46,7 +44,7 @@ shell none
 tracelog
 
 disable-mnt
-# Add 'ignore private-bin' to 'quaternion.local' for filemanager or hyperlink support
+# Add 'ignore private-bin' to 'quaternion.local' to use filemanager
 private-bin quaternion
 private-cache
 private-dev
@@ -61,5 +59,3 @@ dbus-user.talk org.kde.kwalletd5
 # dbus-user.talk org.kde.StatusNotifierWatcher
 # dbus-user.own org.kde.*
 dbus-system none
-
-read-only ${HOME}/.mozilla/firefox/profiles.ini

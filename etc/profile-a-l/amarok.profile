@@ -39,8 +39,6 @@ dbus-user filter
 dbus-user.own org.kde.amarok
 #dbus-user.own org.kde.kded
 #dbus-user.own org.kde.klauncher
-# The following one is needed for keyboard shortcuts even on kde. 
-#dbus-user.own org.kde.kglobalaccel
 dbus-user.own org.mpris.amarok
 dbus-user.own org.mpris.MediaPlayer2.amarok
 dbus-user.talk org.freedesktop.Notifications

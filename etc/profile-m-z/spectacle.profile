@@ -59,6 +59,7 @@ private-tmp
 
 dbus-user filter
 dbus-user.own org.kde.spectacle
+dbus-user.own org.kde.Spectacle
 dbus-user.talk org.freedesktop.FileManager1
 #dbus-user.talk org.kde.JobViewServer
 #dbus-user.talk org.kde.kglobalaccel

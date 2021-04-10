@@ -12,6 +12,10 @@ include chromium-common.local
 noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.local/share/pki
 
+# Add the next line to your chromium-common.local if you want Google Chrome/Chromium browser
+# to have access to Gnome extensions (extensions.gnome.org) via browser connector
+#include allow-python3.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

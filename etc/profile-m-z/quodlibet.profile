@@ -12,6 +12,7 @@ noblacklist ${HOME}/.quodlibet
 noblacklist ${MUSIC}
 
 include allow-bin-sh.inc
+
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
@@ -29,13 +30,11 @@ mkdir ${HOME}/.cache/quodlibet
 mkdir ${HOME}/.config/quodlibet
 mkdir ${HOME}/.quodlibet
 
-
 whitelist ${HOME}/.cache/quodlibet
 whitelist ${HOME}/.config/quodlibet
 whitelist ${HOME}/.quodlibet
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
-
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

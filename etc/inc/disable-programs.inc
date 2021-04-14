@@ -380,6 +380,7 @@ blacklist ${HOME}/.config/qBittorrent
 blacklist ${HOME}/.config/qBittorrentrc
 blacklist ${HOME}/.config/qnapi.ini
 blacklist ${HOME}/.config/qpdfview
+blacklist ${HOME}/.config/quodlibet
 blacklist ${HOME}/.config/qupzilla
 blacklist ${HOME}/.config/qutebrowser
 blacklist ${HOME}/.config/ranger
@@ -921,6 +922,7 @@ blacklist ${HOME}/.cache/Otter
 blacklist ${HOME}/.cache/PawelStolowski
 blacklist ${HOME}/.cache/Psi
 blacklist ${HOME}/.cache/QuiteRss
+blacklist ${HOME}/.cache/quodlibet
 blacklist ${HOME}/.cache/Quotient/quaternion
 blacklist ${HOME}/.cache/Shortwave
 blacklist ${HOME}/.cache/Tox

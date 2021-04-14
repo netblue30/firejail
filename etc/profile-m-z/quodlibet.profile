@@ -60,7 +60,7 @@ tracelog
 private-bin exfalso,operon,python*,quodlibet,sh
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,pki,pulse,resolv.conf,ssl
+private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,passwd,pki,pulse,resolv.conf,ssl
 private-tmp
 
 dbus-system none

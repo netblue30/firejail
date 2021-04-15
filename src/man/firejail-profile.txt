@@ -295,7 +295,9 @@ Use the options no3d, nodvd, nosound, notv, nou2f and novideo for additional res
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
-the /etc directory.
+the /etc directory, and must not contain the / character
+(e.g., /etc/foo must be expressed as foo, but /etc/foo/bar --
+expressed as foo/bar -- is disallowed).
 All modifications are discarded when the sandbox is closed.
 #ifdef HAVE_PRIVATE_HOME
 .TP
@@ -319,14 +321,18 @@ This feature is still under development, see \fBman 1 firejail\fR for some examp
 Build a new /opt in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
-the /opt directory.
+the /opt directory, and must not contain the / character
+(e.g., /opt/foo must be expressed as foo, but /opt/foo/bar --
+expressed as foo/bar -- is disallowed).
 All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-srv file,directory
 Build a new /srv in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
-the /srv directory.
+the /srv directory, and must not contain the / character
+(e.g., /srv/foo must be expressed as foo, but /srv/foo/bar --
+expressed as foo/bar -- is disallowed).
 All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-tmp

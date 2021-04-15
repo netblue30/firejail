@@ -341,7 +341,7 @@ int main(int argc, char **argv) {
 	printf("Stats:\n");
 	printf("    profiles\t\t\t%d\n", cnt_profiles);
 	printf("    include local profile\t%d   (include profile-name.local)\n", cnt_dotlocal);
-	printf("    include globals\t\t%d   (include globals.local)\n", cnt_dotlocal);
+	printf("    include globals\t\t%d   (include globals.local)\n", cnt_globalsdotlocal);
 	printf("    blacklist ~/.ssh\t\t%d   (include disable-common.inc)\n", cnt_ssh);
 	printf("    seccomp\t\t\t%d\n", cnt_seccomp);
 	printf("    capabilities\t\t%d\n", cnt_caps);

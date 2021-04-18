@@ -228,6 +228,7 @@ blacklist ${HOME}/.config/evince
 blacklist ${HOME}/.config/evolution
 blacklist ${HOME}/.config/falkon
 blacklist ${HOME}/.config/filezilla
+blacklist ${HOME}/.config/firedragon
 blacklist ${HOME}/.config/flameshot
 blacklist ${HOME}/.config/flaska.net
 blacklist ${HOME}/.config/flowblade
@@ -952,6 +953,7 @@ blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution
 blacklist ${HOME}/.cache/falkon
 blacklist ${HOME}/.cache/feedreader
+blacklist ${HOME}/.cache/firedragon
 blacklist ${HOME}/.cache/flaska.net/trojita
 blacklist ${HOME}/.cache/folks
 blacklist ${HOME}/.cache/font-manager

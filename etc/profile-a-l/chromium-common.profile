@@ -36,11 +36,7 @@ include whitelist-var-common.inc
 # Add the next line to your chromium-common.local to allow screen sharing under wayland.
 #whitelist ${RUNUSER}/pipewire-0
 
-# AppArmor breaks brave's native Tor support, which is installed under ${HOME}.
-# Add 'apparmor' to your chromium-common.local to enable AppArmor support.
-# IMPORTANT: the relevant rule in /etc/apparmor.d/local/firejail-default will need
-# to be uncommented too for this to work as expected.
-#apparmor
+apparmor
 caps.keep sys_admin,sys_chroot
 netfilter
 nodvd

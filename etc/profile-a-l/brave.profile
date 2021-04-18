@@ -8,9 +8,10 @@ include globals.local
 
 # noexec /tmp is included in chromium-common.profile and breaks Brave
 ignore noexec /tmp
-# TOR is installed in ${HOME}. Note that this breaks when enabling apparmor in the included
-# chromium-common.profile _without_ uncommenting the relevant rule in your
-# /etc/apparmor.d/local/firejail-default.
+# TOR is installed in ${HOME}.
+# NOTE: chromium-common.profile enables apparmor. To keep that intact
+# you will need to uncomment the 'brave + tor' rule in /etc/apparmor.d/local/firejail-default.
+# Alternatively you can add 'ignore apparmor' to your brave.local.
 ignore noexec ${HOME}
 
 noblacklist ${HOME}/.cache/BraveSoftware

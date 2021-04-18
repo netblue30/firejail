@@ -89,6 +89,7 @@ blacklist ${HOME}/.config/Element
 blacklist ${HOME}/.config/Element (Riot)
 blacklist ${HOME}/.config/ENCOM
 blacklist ${HOME}/.config/Enox
+blacklist ${HOME}/.config/Epic
 blacklist ${HOME}/.config/Ferdi
 blacklist ${HOME}/.config/Flavio Tordini
 blacklist ${HOME}/.config/Franz
@@ -106,12 +107,14 @@ blacklist ${HOME}/.config/InSilmaril
 blacklist ${HOME}/.config/Jitsi Meet
 blacklist ${HOME}/.config/Kid3
 blacklist ${HOME}/.config/Kingsoft
+blacklist ${HOME}/.config/Loop_Hero
 blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/LyX
 blacklist ${HOME}/.config/Mattermost
 blacklist ${HOME}/.config/Meltytech
 blacklist ${HOME}/.config/Mendeley Ltd.
 blacklist ${HOME}/.config/Min
+blacklist ${HOME}/.config/ModTheSpire
 blacklist ${HOME}/.config/Mousepad
 blacklist ${HOME}/.config/Mumble
 blacklist ${HOME}/.config/MusE
@@ -133,6 +136,7 @@ blacklist ${HOME}/.config/Quotient
 blacklist ${HOME}/.config/Rambox
 blacklist ${HOME}/.config/Riot
 blacklist ${HOME}/.config/Rocket.Chat
+blacklist ${HOME}/.config/RogueLegacy
 blacklist ${HOME}/.config/Signal
 blacklist ${HOME}/.config/Sinew Software Systems
 blacklist ${HOME}/.config/Slack
@@ -376,6 +380,7 @@ blacklist ${HOME}/.config/qBittorrent
 blacklist ${HOME}/.config/qBittorrentrc
 blacklist ${HOME}/.config/qnapi.ini
 blacklist ${HOME}/.config/qpdfview
+blacklist ${HOME}/.config/quodlibet
 blacklist ${HOME}/.config/qupzilla
 blacklist ${HOME}/.config/qutebrowser
 blacklist ${HOME}/.config/ranger
@@ -573,6 +578,7 @@ blacklist ${HOME}/.kingsoft
 blacklist ${HOME}/.kino-history
 blacklist ${HOME}/.kinorc
 blacklist ${HOME}/.klatexformula
+blacklist ${HOME}/.klei
 blacklist ${HOME}/.kodi
 blacklist ${HOME}/.librewolf
 blacklist ${HOME}/.lincity-ng
@@ -584,6 +590,7 @@ blacklist ${HOME}/.local/lib/vivaldi
 blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/Anki2
+blacklist ${HOME}/.local/share/Dredmor
 blacklist ${HOME}/.local/share/Empathy
 blacklist ${HOME}/.local/share/Enpass
 blacklist ${HOME}/.local/share/Flavio Tordini
@@ -594,13 +601,17 @@ blacklist ${HOME}/.local/share/Mumble
 blacklist ${HOME}/.local/share/Nextcloud
 blacklist ${HOME}/.local/share/PBE
 blacklist ${HOME}/.local/share/PawelStolowski
+blacklist ${HOME}/.local/share/PillarsOfEternity
 blacklist ${HOME}/.local/share/Psi
 blacklist ${HOME}/.local/share/QGIS
 blacklist ${HOME}/.local/share/QMediathekView
 blacklist ${HOME}/.local/share/QuiteRss
 blacklist ${HOME}/.local/share/Ricochet
+blacklist ${HOME}/.local/share/RogueLegacy*
 blacklist ${HOME}/.local/share/Shortwave
 blacklist ${HOME}/.local/share/Steam
+blacklist ${HOME}/.local/share/SteamWorldDig
+blacklist ${HOME}/.local/share/SteamWorld Dig 2
 blacklist ${HOME}/.local/share/SuperHexagon
 blacklist ${HOME}/.local/share/TelegramDesktop
 blacklist ${HOME}/.local/share/Terraria
@@ -911,6 +922,7 @@ blacklist ${HOME}/.cache/Otter
 blacklist ${HOME}/.cache/PawelStolowski
 blacklist ${HOME}/.cache/Psi
 blacklist ${HOME}/.cache/QuiteRss
+blacklist ${HOME}/.cache/quodlibet
 blacklist ${HOME}/.cache/Quotient/quaternion
 blacklist ${HOME}/.cache/Shortwave
 blacklist ${HOME}/.cache/Tox

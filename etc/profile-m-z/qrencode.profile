@@ -48,7 +48,7 @@ private-bin qrencode
 private-cache
 private-dev
 private-etc none
-private-lib libpcre2-8.so.0
+private-lib libpcre*
 private-tmp
 
 dbus-user none

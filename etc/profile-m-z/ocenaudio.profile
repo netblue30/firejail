@@ -26,7 +26,7 @@ apparmor
 caps.drop all
 ipc-namespace
 # net none - breaks update functionality and AppArmor on Ubuntu systems
-# uncomment (or put 'net none' in your ocenaudio.local) when needed
+# Add 'net none' to your ocenaudio.local when you want that functionality.
 #net none
 netfilter
 no3d

@@ -103,6 +103,9 @@ include globals.local
 # Allow ruby (blacklisted by disable-interpreters.inc)
 #include allow-ruby.inc
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
+#include allow-bin-sh.inc
+
 # Allow ssh (blacklisted by disable-common.inc)
 #include allow-ssh.inc
 

@@ -350,7 +350,7 @@ Specify the location for the DBus log file.
 
 .br
 The log file contains events for both the system and session buses if both of
-the --dbus-sysem.log and --dbus-user.log options are specified. If no log file
+the --dbus-system.log and --dbus-user.log options are specified. If no log file
 path is given, logs are written to the standard output instead.
 .br
 

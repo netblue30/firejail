@@ -17,7 +17,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-# Add a whitelist for the directory where servo is installed and uncomment the lines below.
+# Add the next lines to your servo.local to turn this into a whitelisting profile.
+# You will need to add a whitelist for the directory where servo is installed.
 #whitelist ${DOWNLOADS}
 #include whitelist-common.inc
 include whitelist-runuser-common.inc

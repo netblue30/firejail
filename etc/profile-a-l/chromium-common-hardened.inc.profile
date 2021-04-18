@@ -6,4 +6,5 @@ caps.drop all
 nonewprivs
 noroot
 protocol unix,inet,inet6,netlink
-seccomp !chroot
+# kcmp is required for ozone-platform=wayland, see #3783.
+seccomp !chroot,!kcmp

@@ -84,7 +84,7 @@ Backup Video Channel: https://www.bitchute.com/profile/JSBsA1aoQVfW/
 We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@protonmail.com
 
 `````
-Security Adivsory - Feb 8, 2021
+Security Advisory - Feb 8, 2021
 
 Summary: A vulnerability resulting in root privilege escalation was discovered in
 Firejail's OverlayFS code,
@@ -333,4 +333,4 @@ Stats:
 vmware-view, display-im6.q16, ipcalc, ipcalc-ng, ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop,
 avidemux, calligragemini, vmware-player, vmware-workstation, gget, com.github.phase1geo.minder, nextcloud-desktop,
 pcsxr, PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2, bcompare, b2sum, cksum, md5sum, sha1sum, sha224sum,
-sha256sum, sha384sum, sha512sum, sum
+sha256sum, sha384sum, sha512sum, sum, librewold-nightly

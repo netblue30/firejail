@@ -6,14 +6,14 @@ include zoom.local
 # Persistent global definitions
 include globals.local
 
-# Disabled until someone reported positive feedback
+# Disabled until someone reports positive feedback.
 ignore apparmor
 ignore novideo
 ignore dbus-user none
 ignore dbus-system none
 
 # nogroups breaks webcam access on non-systemd systems (see #3711).
-# If you use such a system uncomment the line below or put 'ignore nogroups' in your zoom.local
+# If you use such a system, add 'ignore nogroups' to your zoom.local.
 #ignore nogroups
 
 noblacklist ${HOME}/.config/zoomus.conf

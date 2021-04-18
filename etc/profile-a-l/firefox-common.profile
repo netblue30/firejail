@@ -9,7 +9,7 @@ include firefox-common.local
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
-# Uncomment the following line (or put it in your firefox-common.local) to allow access to common programs/addons/plugins.
+# Add the next line to your firefox-common.local to allow access to common programs/addons/plugins.
 #include firefox-common-addons.profile
 
 noblacklist ${HOME}/.pki
@@ -32,7 +32,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-# machine-id breaks pulse audio; it should work fine in setups where sound is not required.
+# machine-id breaks pulse audio; add it to your firefox-common.local if sound is not required.
 #machine-id
 netfilter
 nodvd
@@ -52,10 +52,11 @@ shell none
 disable-mnt
 ?BROWSER_DISABLE_U2F: private-dev
 # private-etc below works fine on most distributions. There are some problems on CentOS.
+# Add it to your firefox-common.local if you want to enable it.
 #private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,group,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,machine-id,mailcap,mime.types,nsswitch.conf,pango,passwd,pki,pulse,resolv.conf,selinux,ssl,X11,xdg
 private-tmp
 
-# breaks various desktop integration features
-# among other things global menus, native notifications, Gnome connector, KDE connect and power management on KDE Plasma
+# 'dbus-user none' breaks various desktop integration features like global menus, native notifications,
+# Gnome connector, KDE connect and power management on KDE Plasma.
 dbus-user none
 dbus-system none

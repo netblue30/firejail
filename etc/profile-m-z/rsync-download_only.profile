@@ -7,9 +7,8 @@ include rsync.local
 # Persistent global definitions
 include globals.local
 
-# Warning: This profile is writte to use rsync as an client for downloading,
-# it is not writen to use rsync as an daemon (rsync --daemon) or to create backups.
-
+# WARNING: this profile is designed to use rsync as a client for downloading,
+# not as a daemon (rsync --daemon) nor to create backups.
 # Usage: firejail --profile=rsync-download_only rsync
 
 blacklist /tmp/.X11-unix
@@ -24,7 +23,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-# Uncomment or add to rsync.local to enable extra hardening
+# Add the next line to your rsync-download_only.local to enable extra hardening.
 #whitelist ${DOWNLOADS}
 include whitelist-var-common.inc
 

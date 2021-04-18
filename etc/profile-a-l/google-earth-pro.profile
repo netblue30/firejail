@@ -22,8 +22,7 @@ include google-earth-pro.local
 #[[ -e "$_lock_icon_cache" ]] && rm -f "${_lock_icon_cache:?}"
 # <--- end of snippet --->
 
-# If you see errors about missing commands, uncomment the below or put 'ignore private-bin' into your google-earth-pro.local
-#ignore private-bin
+# If you see errors about missing commands, add 'ignore private-bin' to your google-earth-pro.local.
 private-bin google-earth-pro,googleearth,googleearth-bin,gpsbabel,readlink,repair_tool,rm,which,xdg-mime,xdg-settings
 
 # Redirect

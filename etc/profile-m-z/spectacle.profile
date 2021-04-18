@@ -6,7 +6,7 @@ include spectacle.local
 # Persistent global definitions
 include globals.local
 
-# Uncomment the following lines to use sharing services.
+# Add the next lines to your spectacle.local to use sharing services.
 #netfilter
 #ignore net none
 #private-etc ca-certificates,crypto-policies,pki,resolv.conf,ssl
@@ -59,6 +59,7 @@ private-tmp
 
 dbus-user filter
 dbus-user.own org.kde.spectacle
+dbus-user.own org.kde.Spectacle
 dbus-user.talk org.freedesktop.FileManager1
 #dbus-user.talk org.kde.JobViewServer
 #dbus-user.talk org.kde.kglobalaccel

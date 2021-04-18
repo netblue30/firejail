@@ -9,6 +9,8 @@ noblacklist ${HOME}/.WebStorm*
 noblacklist ${HOME}/.android
 noblacklist ${HOME}/.local/share/JetBrains
 noblacklist ${HOME}/.tooling
+# Allow KDE file manager to open with log directories (blacklisted by disable-programs.inc)
+noblacklist ${HOME}/.config/dolphinrc
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc

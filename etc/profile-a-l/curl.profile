@@ -9,9 +9,9 @@ include globals.local
 
 # curl 7.74.0 introduces experimental support for HSTS cache
 # https://daniel.haxx.se/blog/2020/11/03/hsts-your-curl/
-# technically this file can be anywhere but let's assume users have it in ${HOME}/.curl-hsts
-# if your setup diverts, add 'blacklist /path/to/curl/hsts/file' to your disable-programs.local
-# and 'noblacklist /path/to/curl/hsts/file' to curl.local to keep the sandbox logic intact
+# Technically this file can be anywhere but let's assume users have it in ${HOME}/.curl-hsts.
+# If your setup diverts, add 'blacklist /path/to/curl/hsts/file' to your disable-programs.local
+# and 'noblacklist /path/to/curl/hsts/file' to curl.local to keep the sandbox logic intact.
 noblacklist ${HOME}/.curl-hsts
 noblacklist ${HOME}/.curlrc
 
@@ -22,7 +22,7 @@ include disable-common.inc
 include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-# depending on workflow you can uncomment the below or put 'include disable-xdg.inc' in your curl.local
+# Depending on workflow you can add 'include disable-xdg.inc' to your curl.local.
 #include disable-xdg.inc
 
 include whitelist-usr-share-common.inc

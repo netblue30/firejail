@@ -228,7 +228,6 @@ blacklist ${HOME}/.config/evince
 blacklist ${HOME}/.config/evolution
 blacklist ${HOME}/.config/falkon
 blacklist ${HOME}/.config/filezilla
-blacklist ${HOME}/.config/firedragon
 blacklist ${HOME}/.config/flameshot
 blacklist ${HOME}/.config/flaska.net
 blacklist ${HOME}/.config/flowblade
@@ -480,6 +479,7 @@ blacklist ${HOME}/.equalx
 blacklist ${HOME}/.ethereum
 blacklist ${HOME}/.etr
 blacklist ${HOME}/.filezilla
+blacklist ${HOME}/.firedragon
 blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.fltk
 blacklist ${HOME}/.fossamail

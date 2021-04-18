@@ -21,9 +21,6 @@ whitelist ${HOME}/.firedragon
 # FireDragon requires a shell to launch on Arch. We can possibly remove sh though.
 # Add the next line to your firedragon.local to enable private-bin.
 #private-bin bash,dbus-launch,dbus-send,env,firedragon,python*,sh,which
-# Add the next line to your firedragon.local to enable private-etc. Note
-# that private-etc must first be enabled in firefox-common.local.
-#private-etc firedragon
 
 # Redirect
 include firefox-common.profile

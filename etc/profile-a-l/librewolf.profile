@@ -29,8 +29,7 @@ whitelist /usr/share/mozilla
 whitelist /usr/share/webext
 include whitelist-usr-share-common.inc
 
-# librewolf requires a shell to launch on Arch. We can possibly remove sh though.
-# Add the next line to your librewolf.local to enable private-bin.
+# Add the next line to your librewolf.local to enable private-bin (Arch Linux).
 #private-bin dbus-launch,dbus-send,librewolf,sh
 # Add the next line to your librewolf.local to enable private-etc. Note
 # that private-etc must first be enabled in firefox-common.local.

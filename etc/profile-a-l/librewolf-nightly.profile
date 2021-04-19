@@ -6,5 +6,8 @@ include librewolf-nightly.local
 # added by included profile
 #include globals.local
 
+# Add the next line to your librewolf-nightly.local to enable private-bin.
+#private-bin librewolf-nightly
+
 # Redirect
 include librewolf.profile

@@ -44,7 +44,7 @@ disable-mnt
 private-bin etr
 private-cache
 private-dev
-# private-etc alternatives,drirc,machine-id,openal
+# private-etc alternatives,drirc,machine-id,openal,passwd
 private-tmp
 
 dbus-user none

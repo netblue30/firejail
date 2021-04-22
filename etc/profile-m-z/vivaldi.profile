@@ -23,7 +23,7 @@ whitelist ${HOME}/.cache/vivaldi
 whitelist ${HOME}/.config/vivaldi
 whitelist ${HOME}/.local/lib/vivaldi
 
-# Add the next line to your vivaldi.local to activate private-bin
+# Add the next line to your vivaldi.local to enable private-bin.
 #private-bin bash,cat,dirname,readlink,rm,vivaldi
 
 # vivaldi sync needs full D-Bus access

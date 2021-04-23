@@ -41,6 +41,7 @@ typedef enum {
 	DEV_TV,
 	DEV_DVD,
 	DEV_U2F,
+	DEV_INPUT
 } DEV_TYPE;
 
 
@@ -89,6 +90,7 @@ static DevEntry dev[] = {
 	{"/dev/hidraw8", RUN_DEV_DIR "/hidraw8", DEV_U2F},
 	{"/dev/hidraw9", RUN_DEV_DIR "/hidraw9", DEV_U2F},
 	{"/dev/usb", RUN_DEV_DIR "/usb", DEV_U2F},	// USB devices such as Yubikey, U2F
+	{"/dev/input", RUN_DEV_DIR "/input", DEV_INPUT},
 	{NULL, NULL, DEV_NONE}
 };
 
@@ -103,7 +105,8 @@ static void deventry_mount(void) {
 			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
 			    (dev[i].type == DEV_TV && arg_notv == 0) ||
 			    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
-			    (dev[i].type == DEV_U2F && arg_nou2f == 0)) {
+			    (dev[i].type == DEV_U2F && arg_nou2f == 0) ||
+			    (dev[i].type == DEV_INPUT && arg_noinput == 0)) {
 
 				int dir = is_dir(dev[i].run_fname);
 				if (arg_debug)
@@ -382,6 +385,15 @@ void fs_dev_disable_u2f(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
 		if (dev[i].type == DEV_U2F)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
+}
+
+void fs_dev_disable_input(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].type == DEV_INPUT)
 			disable_file_or_dir(dev[i].dev_fname);
 		i++;
 	}

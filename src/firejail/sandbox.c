@@ -1033,6 +1033,9 @@ int sandbox(void* sandbox_arg) {
 	if (arg_novideo)
 		fs_dev_disable_video();
 
+	if (arg_noinput)
+		fs_dev_disable_input();
+
 	//****************************
 	// set dns
 	//****************************

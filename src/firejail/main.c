@@ -143,6 +143,7 @@ int arg_memory_deny_write_execute = 0;		// block writable and executable memory
 int arg_notv = 0;	// --notv
 int arg_nodvd = 0; // --nodvd
 int arg_nou2f = 0; // --nou2f
+int arg_noinput = 0; // --noinput
 int arg_deterministic_exit_code = 0;	// always exit with first child's exit status
 DbusPolicy arg_dbus_user = DBUS_POLICY_ALLOW;	// --dbus-user
 DbusPolicy arg_dbus_system = DBUS_POLICY_ALLOW;	// --dbus-system
@@ -2086,6 +2087,8 @@ int main(int argc, char **argv, char **envp) {
 			arg_nodvd = 1;
 		else if (strcmp(argv[i], "--nou2f") == 0)
 			arg_nou2f = 1;
+		else if (strcmp(argv[i], "--noinput") == 0)
+			arg_noinput = 1;
 		else if (strcmp(argv[i], "--nodbus") == 0) {
 			arg_dbus_user = DBUS_POLICY_BLOCK;
 			arg_dbus_system = DBUS_POLICY_BLOCK;

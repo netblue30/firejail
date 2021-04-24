@@ -10,6 +10,9 @@ on:
       - RELNOTES
       - SECURITY.md
       - 'etc/**'
+      - 'src/firecfg/firecfg.config'
+      - '.github/ISSUE_TEMPLATE/*'
+      - '.github/pull_request_template.md'
   pull_request:
     branches: [ master ]
     paths-ignore:
@@ -19,6 +22,9 @@ on:
       - RELNOTES
       - SECURITY.md
       - 'etc/**'
+      - 'src/firecfg/firecfg.config'
+      - '.github/ISSUE_TEMPLATE/*'
+      - '.github/pull_request_template.md'
 
 jobs:
   build-clang:

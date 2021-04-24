@@ -1,12 +1,12 @@
-# Firejail profile for scorched3d
-# Description: Game based loosely on the classic DOS game Scorched Earth
+# Firejail profile for colorful
+# Description: simple 2D sideview shooter
 # This file is overwritten after every install/update
 # Persistent local customizations
-include scorched3d.local
+include colorful.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.scorched3d
+noblacklist ${HOME}/.suve/colorful
 
 include disable-common.inc
 include disable-devel.inc
@@ -14,19 +14,20 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.scorched3d
-whitelist ${HOME}/.scorched3d
-whitelist /usr/share/scorched3d
+mkdir ${HOME}/.suve/colorful
+whitelist ${HOME}/.suve/colorful
+whitelist /usr/share/suve
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
-ipc-namespace
-netfilter
+net none
 nodvd
 nogroups
 nonewprivs
@@ -34,15 +35,17 @@ noroot
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol unix
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 
 disable-mnt
-private-bin scorched3d,scorched3dc,scorched3ds
+private-bin colorful
 private-cache
 private-dev
+private-etc alsa,alternatives,asound.conf,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,pulse
 private-tmp
 
 dbus-user none

@@ -52,6 +52,7 @@ blacklist ${HOME}/.atom
 blacklist ${HOME}/.attic
 blacklist ${HOME}/.audacity-data
 blacklist ${HOME}/.avidemux6
+blacklist ${HOME}/.ballbuster.hs
 blacklist ${HOME}/.balsa
 blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.bibletime
@@ -220,6 +221,7 @@ blacklist ${HOME}/.config/d-feet
 blacklist ${HOME}/.config/electron-mail
 blacklist ${HOME}/.config/emaildefaults
 blacklist ${HOME}/.config/emailidentities
+blacklist ${HOME}/.config/emilia
 blacklist ${HOME}/.config/enchant
 blacklist ${HOME}/.config/eog
 blacklist ${HOME}/.config/epiphany
@@ -491,6 +493,8 @@ blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.gist
 blacklist ${HOME}/.gitconfig
+blacklist ${HOME}/.gl-117
+blacklist ${HOME}/.glaxiumrc
 blacklist ${HOME}/.gnome/gnome-schedule
 blacklist ${HOME}/.googleearth
 blacklist ${HOME}/.gradle
@@ -638,6 +642,7 @@ blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/clipit
 blacklist ${HOME}/.local/share/com.github.johnfactotum.Foliate
 blacklist ${HOME}/.local/share/contacts
+blacklist ${HOME}/.local/share/cor-games
 blacklist ${HOME}/.local/share/data/Mendeley Ltd.
 blacklist ${HOME}/.local/share/data/Mumble
 blacklist ${HOME}/.local/share/data/MusE
@@ -845,6 +850,7 @@ blacklist ${HOME}/.steampid
 blacklist ${HOME}/.stellarium
 blacklist ${HOME}/.subversion
 blacklist ${HOME}/.surf
+blacklist ${HOME}/.suve/colorful
 blacklist ${HOME}/.swb.ini
 blacklist ${HOME}/.sword
 blacklist ${HOME}/.sylpheed-2.0

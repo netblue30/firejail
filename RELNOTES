@@ -19,6 +19,10 @@ firejail (0.9.65) baseline; urgency=low
   * PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2, sum
   * bcompare, b2sum, cksum, md5sum, sha1sum, sha224sum, sha256sum
   * sha384sum, sha512sum, librewold-nightly, Quodlibet, tmux, sway
+  * alienarena, alienarena-wrapper, ballbuster, ballbuster-wrapper,
+  * colorful, colorful-wrapper, gl-117, gl-117-wrapper, glaxium,
+  * glaxium-wrapper, pinball, pinball-wrapper, etr-wrapper, firedragon
+  * neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper
  -- netblue30 <netblue30@yahoo.com>  Tue, 9 Feb 2021 09:00:00 -0500
 
 firejail (0.9.64.4) baseline; urgency=low

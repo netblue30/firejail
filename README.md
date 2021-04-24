@@ -333,4 +333,6 @@ Stats:
 vmware-view, display-im6.q16, ipcalc, ipcalc-ng, ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop,
 avidemux, calligragemini, vmware-player, vmware-workstation, gget, com.github.phase1geo.minder, nextcloud-desktop,
 pcsxr, PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2, bcompare, b2sum, cksum, md5sum, sha1sum, sha224sum,
-sha256sum, sha384sum, sha512sum, sum, librewold-nightly, Quodlibet, tmux, sway
+sha256sum, sha384sum, sha512sum, sum, librewold-nightly, Quodlibet, tmux, sway, alienarena, alienarena-wrapper,
+ballbuster, ballbuster-wrapper, colorful, colorful-wrapper, gl-117, gl-117-wrapper, glaxium, glaxium-wrapper,
+pinball, pinball-wrapper, etr-wrapper, neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper, firedragon

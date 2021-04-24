@@ -479,6 +479,7 @@ blacklist ${HOME}/.equalx
 blacklist ${HOME}/.ethereum
 blacklist ${HOME}/.etr
 blacklist ${HOME}/.filezilla
+blacklist ${HOME}/.firedragon
 blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.fltk
 blacklist ${HOME}/.fossamail
@@ -952,6 +953,7 @@ blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution
 blacklist ${HOME}/.cache/falkon
 blacklist ${HOME}/.cache/feedreader
+blacklist ${HOME}/.cache/firedragon
 blacklist ${HOME}/.cache/flaska.net/trojita
 blacklist ${HOME}/.cache/folks
 blacklist ${HOME}/.cache/font-manager

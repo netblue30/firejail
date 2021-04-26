@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/digikam
 noblacklist ${HOME}/.config/digikamrc
 noblacklist ${HOME}/.kde/share/apps/digikam
 noblacklist ${HOME}/.kde4/share/apps/digikam
+noblacklist ${HOME}/.local/share/kxmlgui5/digikam
 noblacklist ${PICTURES}
 
 include disable-common.inc

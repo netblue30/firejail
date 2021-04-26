@@ -7,6 +7,7 @@ blacklist ${HOME}/.config/KeePass
 blacklist ${HOME}/.config/keepass
 blacklist ${HOME}/.config/keepassx
 blacklist ${HOME}/.config/keepassxc
+blacklist ${HOME}/.config/KeePassXCrc
 blacklist ${HOME}/.config/Sinew Software Systems
 blacklist ${HOME}/.fpm
 blacklist ${HOME}/.keepass

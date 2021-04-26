@@ -26,6 +26,8 @@ include disable-xdg.inc
 mkfile  ${HOME}/.config/spectaclerc
 whitelist ${HOME}/.config/spectaclerc
 whitelist ${PICTURES}
+whitelist /usr/share/kconf_update/spectacle_newConfig.upd
+whitelist /usr/share/kconf_update/spectacle_shortcuts.upd
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

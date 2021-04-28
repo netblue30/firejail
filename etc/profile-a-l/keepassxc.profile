@@ -10,6 +10,7 @@ noblacklist ${HOME}/*.kdb
 noblacklist ${HOME}/*.kdbx
 noblacklist ${HOME}/.cache/keepassxc
 noblacklist ${HOME}/.config/keepassxc
+noblacklist ${HOME}/.config/KeePassXCrc
 noblacklist ${HOME}/.keepassxc
 noblacklist ${DOCUMENTS}
 
@@ -51,6 +52,7 @@ include disable-xdg.inc
 #mkdir ${HOME}/.config/keepassxc
 #whitelist ${HOME}/.cache/keepassxc
 #whitelist ${HOME}/.config/keepassxc
+#whitelist ${HOME}/.config/KeePassXCrc
 #include whitelist-common.inc
 
 whitelist /usr/share/keepassxc

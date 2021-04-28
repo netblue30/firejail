@@ -10,6 +10,7 @@ noblacklist ${HOME}/.config/Epic
 noblacklist ${HOME}/.config/Loop_Hero
 noblacklist ${HOME}/.config/ModTheSpire
 noblacklist ${HOME}/.config/RogueLegacy
+noblacklist ${HOME}/.config/RogueLegacyStorageContainer
 noblacklist ${HOME}/.killingfloor
 noblacklist ${HOME}/.klei
 noblacklist ${HOME}/.local/share/3909/PapersPlease
@@ -22,7 +23,8 @@ noblacklist ${HOME}/.local/share/feral-interactive
 noblacklist ${HOME}/.local/share/IntoTheBreach
 noblacklist ${HOME}/.local/share/Paradox Interactive
 noblacklist ${HOME}/.local/share/PillarsOfEternity
-noblacklist ${HOME}/.local/share/RogueLegacy*
+noblacklist ${HOME}/.local/share/RogueLegacy
+noblacklist ${HOME}/.local/share/RogueLegacyStorageContainer
 noblacklist ${HOME}/.local/share/Steam
 noblacklist ${HOME}/.local/share/SteamWorldDig
 noblacklist ${HOME}/.local/share/SteamWorld Dig 2
@@ -69,7 +71,7 @@ mkdir ${HOME}/.local/share/feral-interactive
 mkdir ${HOME}/.local/share/IntoTheBreach
 mkdir ${HOME}/.local/share/Paradox Interactive
 mkdir ${HOME}/.local/share/PillarsOfEternity
-mkdir ${HOME}/.local/share/RogueLegacy*
+mkdir ${HOME}/.local/share/RogueLegacy
 mkdir ${HOME}/.local/share/Steam
 mkdir ${HOME}/.local/share/SteamWorldDig
 mkdir ${HOME}/.local/share/SteamWorld Dig 2
@@ -86,6 +88,7 @@ whitelist ${HOME}/.config/Epic
 whitelist ${HOME}/.config/Loop_Hero
 whitelist ${HOME}/.config/ModTheSpire
 whitelist ${HOME}/.config/RogueLegacy
+whitelist ${HOME}/.config/RogueLegacyStorageContainer
 whitelist ${HOME}/.config/unity3d
 whitelist ${HOME}/.killingfloor
 whitelist ${HOME}/.klei
@@ -99,7 +102,8 @@ whitelist ${HOME}/.local/share/feral-interactive
 whitelist ${HOME}/.local/share/IntoTheBreach
 whitelist ${HOME}/.local/share/Paradox Interactive
 whitelist ${HOME}/.local/share/PillarsOfEternity
-whitelist ${HOME}/.local/share/RogueLegacy*
+whitelist ${HOME}/.local/share/RogueLegacy
+whitelist ${HOME}/.local/share/RogueLegacyStorageContainer
 whitelist ${HOME}/.local/share/Steam
 whitelist ${HOME}/.local/share/SteamWorldDig
 whitelist ${HOME}/.local/share/SteamWorld Dig 2
@@ -114,6 +118,14 @@ whitelist ${HOME}/.steampath
 whitelist ${HOME}/.steampid
 include whitelist-common.inc
 include whitelist-var-common.inc
+
+# Note: The following were intentionally left out as they are alternative
+# (i.e.: unnecessary and/or legacy) paths whose existence may potentially
+# clobber other paths (see #4225).  If you use any, either add the entry to
+# steam.local or move the contents to a path listed above (or open an issue if
+# it's missing above).
+#mkdir ${HOME}/.config/RogueLegacyStorageContainer
+#mkdir ${HOME}/.local/share/RogueLegacyStorageContainer
 
 caps.drop all
 #ipc-namespace

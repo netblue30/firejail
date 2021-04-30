@@ -44,7 +44,7 @@ disable-mnt
 private-bin neverball
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,fonts,machine-id
+private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,machine-id
 private-tmp
 
 dbus-user none

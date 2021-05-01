@@ -827,7 +827,7 @@ soredake (https://github.com/soredake)
 	- fix handling of STEAM_RUNTIME_PREFER_HOST_LIBRARIES in steam profile
 	- fix keepassxc.profile
 	- fix qtox.profile
-	- add ocaltime to private-etc to make qtox show correct time
+	- add localtime to private-etc to make qtox show correct time
 	- fixes for the keepassxc 2.2.5 version
 SkewedZeppelin (https://github.com/SkewedZeppelin)
 	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5 profiles

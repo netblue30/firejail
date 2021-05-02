@@ -63,7 +63,6 @@ dbus-user filter
 dbus-user.own org.kde.neochat
 dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.kde.StatusNotifierWatcher
-dbus-user.talk org.kde.kwalletd5
 dbus-system none
 
 join-or-start neochat

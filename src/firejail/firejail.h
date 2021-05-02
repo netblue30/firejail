@@ -528,7 +528,7 @@ void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid);
 unsigned extract_timeout(const char *str);
 void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
-int safe_fd(const char *path, int flags);
+int safer_openat(int dirfd, const char *path, int flags);
 int has_handler(pid_t pid, int signal);
 void enter_network_namespace(pid_t pid);
 int read_pid(const char *name, pid_t *pid);

@@ -416,7 +416,7 @@ void dbus_proxy_stop(void) {
 }
 
 static void socket_overlay(char *socket_path, char *proxy_path) {
-	int fd = safe_fd(proxy_path, O_PATH | O_NOFOLLOW | O_CLOEXEC);
+	int fd = safer_openat(-1, proxy_path, O_PATH | O_NOFOLLOW | O_CLOEXEC);
 	if (fd == -1)
 		errExit("opening DBus proxy socket");
 	struct stat s;

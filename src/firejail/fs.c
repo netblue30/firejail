@@ -453,7 +453,7 @@ void fs_tmpfs(const char *dir, unsigned check_owner) {
 	if (arg_debug)
 		printf("Mounting tmpfs on %s, check owner: %s\n", dir, (check_owner)? "yes": "no");
 	// get a file descriptor for dir, fails if there is any symlink
-	int fd = safe_fd(dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	int fd = safer_openat(-1, dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
 		errExit("while opening directory");
 	struct stat s;
@@ -493,7 +493,7 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 	assert(path);
 
 	// open path without following symbolic links
-	int fd1 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	int fd1 = safer_openat(-1, path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd1 == -1)
 		goto out;
 	struct stat s1;
@@ -559,7 +559,7 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 
 	// mount --bind -o remount,ro path
 	// need to open path again without following symbolic links
-	int fd2 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	int fd2 = safer_openat(-1, path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd2 == -1)
 		errExit("open");
 	struct stat s2;
@@ -992,9 +992,9 @@ void fs_overlayfs(void) {
 		char *firejail;
 		if (asprintf(&firejail, "%s/.firejail", cfg.homedir) == -1)
 			errExit("asprintf");
-		int fd = safe_fd(firejail, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		int fd = safer_openat(-1, firejail, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		if (fd == -1)
-			errExit("safe_fd");
+			errExit("safer_openat");
 		free(firejail);
 		// create basedir if it doesn't exist
 		// the new directory will be owned by root

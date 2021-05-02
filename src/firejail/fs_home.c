@@ -262,10 +262,10 @@ void fs_private_homedir(void) {
 	if (arg_debug)
 		printf("Mount-bind %s on top of %s\n", private_homedir, homedir);
 	// get file descriptors for homedir and private_homedir, fails if there is any symlink
-	int src = safe_fd(private_homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	int src = safer_openat(-1, private_homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (src == -1)
 		errExit("opening private directory");
-	int dst = safe_fd(homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	int dst = safer_openat(-1, homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (dst == -1)
 		errExit("opening home directory");
 	// both mount source and target should be owned by the user
@@ -576,7 +576,7 @@ void fs_private_home_list(void) {
 	if (arg_debug)
 		printf("Mount-bind %s on top of %s\n", RUN_HOME_DIR, homedir);
 
-	int fd = safe_fd(homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	int fd = safer_openat(-1, homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
 		errExit("opening home directory");
 	// home directory should be owned by the user

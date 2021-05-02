@@ -131,9 +131,9 @@ void fs_chroot(const char *rootdir) {
 	assert(rootdir);
 
 	// fails if there is any symlink or if rootdir is not a directory
-	int parentfd = safe_fd(rootdir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	int parentfd = safer_openat(-1, rootdir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (parentfd == -1)
-		errExit("safe_fd");
+		errExit("safer_openat");
 	// rootdir has to be owned by root and is not allowed to be generally writable,
 	// this also excludes /tmp and friends
 	struct stat s;
@@ -215,12 +215,12 @@ void fs_chroot(const char *rootdir) {
 
 		if (arg_debug)
 			printf("Mounting %s on chroot %s\n", orig_pulse, orig_pulse);
-		int src = safe_fd(orig_pulse, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		int src = safer_openat(-1, orig_pulse, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		if (src == -1) {
 			fprintf(stderr, "Error: cannot open %s\n", orig_pulse);
 			exit(1);
 		}
-		int dst = safe_fd(pulse, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+		int dst = safer_openat(-1, pulse, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		if (dst == -1) {
 			fprintf(stderr, "Error: cannot open %s\n", pulse);
 			exit(1);

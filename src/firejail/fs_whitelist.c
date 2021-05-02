@@ -28,7 +28,7 @@
 
 #include <fcntl.h>
 #ifndef O_PATH
-# define O_PATH 010000000
+#define O_PATH 010000000
 #endif
 
 // mountinfo functionality test;
@@ -220,7 +220,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	// confirm again the mount source exists and there is no symlink
 	struct stat wfilestat;
 	EUID_USER();
-	int fd = safe_fd(wfile, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	int fd = safer_openat(-1, wfile, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	EUID_ROOT();
 	if (fd == -1) {
 		if (arg_debug || arg_debug_whitelists)
@@ -317,9 +317,9 @@ static void whitelist_path(ProfileEntry *entry) {
 	if (mptr->dir == strrchr(mptr->dir, '/'))
 		errLogExit("invalid whitelist mount");
 	// confirm the right file was mounted by comparing device and inode numbers
-	int fd4 = safe_fd(path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	int fd4 = safer_openat(-1, path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd4 == -1)
-		errExit("safe_fd");
+		errExit("safer_openat");
 	struct stat s;
 	if (fstat(fd4, &s) == -1)
 		errExit("fstat");
@@ -1059,9 +1059,9 @@ void fs_whitelist(void) {
 		if (stat(cfg.homedir, &s) == 0) {
 			// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR
 			mkdir_attr(RUN_WHITELIST_HOME_USER_DIR, 0755, getuid(), getgid());
-			int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+			int fd = safer_openat(-1, cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 			if (fd == -1)
-				errExit("safe_fd");
+				errExit("safer_openat");
 			char *proc;
 			if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
 				errExit("asprintf");

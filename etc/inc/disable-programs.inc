@@ -995,6 +995,7 @@ blacklist ${HOME}/.cache/inkscape
 blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/iridium
 blacklist ${HOME}/.cache/kcmshell5
+blacklist ${HOME}/.cache/KDE/neochat
 blacklist ${HOME}/.cache/kdenlive
 blacklist ${HOME}/.cache/keepassxc
 blacklist ${HOME}/.cache/kfind

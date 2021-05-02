@@ -62,11 +62,8 @@ private-bin neochat
 private-dev
 ##private-etc Common,Networking,GUI,Qt,KDE,D-Bus
 private-etc alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg,ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf,hosts,host.conf,hostname,protocols,services,rpc,fonts,pango,X11,Trolltech.conf,kde4rc,kde5rc,dbus-1,machine-id
-##private-lib LIBS
-##private-opt NAME
 private-tmp
 
-## dbus-user permissions copied from the flatpak package
 dbus-user filter
 dbus-user.own org.kde.neochat
 dbus-user.talk org.freedesktop.Notifications

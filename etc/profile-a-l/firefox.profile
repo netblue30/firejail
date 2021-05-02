@@ -6,6 +6,14 @@ include firefox.local
 # Persistent global definitions
 include globals.local
 
+# NOTE: sandboxing web browsers is as important as it is complex. Users might be
+# interested in creating custom profiles depending on use case (e.g. one for
+# general browsing, another for banking, ...). Consult our FAQ/issue tracker for more
+# info. Here are a few links to get you going.
+# https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions#firefox-doesnt-open-in-a-new-sandbox-instead-it-opens-a-new-tab-in-an-existing-firefox-instance
+# https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions#how-do-i-run-two-instances-of-firefox
+# https://github.com/netblue30/firejail/issues/4206#issuecomment-824806968
+
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
 

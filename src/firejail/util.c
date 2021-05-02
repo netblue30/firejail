@@ -544,11 +544,13 @@ char *split_comma(char *str) {
 }
 
 
-// remove consecutive and trailing slashes
-// and return allocated memory
-// e.g. /home//user/ -> /home/user
+// simplify absolute path by removing
+// 1) consecutive and trailing slashes, and
+// 2) segments with a single dot
+// for example /foo//./bar/ -> /foo/bar
 char *clean_pathname(const char *path) {
-	assert(path);
+	assert(path && path[0] == '/');
+
 	size_t len = strlen(path);
 	char *rv = malloc(len + 1);
 	if (!rv)
@@ -557,15 +559,23 @@ char *clean_pathname(const char *path) {
 	size_t i = 0;
 	size_t j = 0;
 	while (path[i]) {
-		while (path[i] == '/' && path[i+1] == '/')
-			i++;
+		if (path[i] == '/') {
+			while (path[i+1] == '/' ||
+			      (path[i+1] == '.' && path[i+2] == '/'))
+				i++;
+		}
+
 		rv[j++] = path[i++];
 	}
 	rv[j] = '\0';
 
+	// remove a trailing dot
+	if (j > 1 && rv[j - 1] == '.' && rv[j - 2] == '/')
+		rv[--j] = '\0';
+
 	// remove a trailing slash
 	if (j > 1 && rv[j - 1] == '/')
-		rv[j - 1] = '\0';
+		rv[--j] = '\0';
 
 	return rv;
 }

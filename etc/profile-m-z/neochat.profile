@@ -6,7 +6,6 @@ include neochat.local
 # Persistent global definitions
 include globals.local
 
-#TODO: Add these to disable-programs
 noblacklist ${HOME}/.cache/KDE/neochat
 noblacklist ${HOME}/.config/KDE/neochat
 noblacklist ${HOME}/.config/neochatrc

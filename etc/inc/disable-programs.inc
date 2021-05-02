@@ -106,6 +106,7 @@ blacklist ${HOME}/.config/Gpredict
 blacklist ${HOME}/.config/INRIA
 blacklist ${HOME}/.config/InSilmaril
 blacklist ${HOME}/.config/Jitsi Meet
+blacklist ${HOME}/.config/KDE/neochat
 blacklist ${HOME}/.config/Kid3
 blacklist ${HOME}/.config/Kingsoft
 blacklist ${HOME}/.config/Loop_Hero
@@ -341,6 +342,8 @@ blacklist ${HOME}/.config/mypaint
 blacklist ${HOME}/.config/nano
 blacklist ${HOME}/.config/nautilus
 blacklist ${HOME}/.config/nemo
+blacklist ${HOME}/.config/neochatrc
+blacklist ${HOME}/.config/neochat.notifyrc
 blacklist ${HOME}/.config/neomutt
 blacklist ${HOME}/.config/netsurf
 blacklist ${HOME}/.config/newsbeuter
@@ -600,6 +603,7 @@ blacklist ${HOME}/.local/share/Empathy
 blacklist ${HOME}/.local/share/Enpass
 blacklist ${HOME}/.local/share/Flavio Tordini
 blacklist ${HOME}/.local/share/JetBrains
+blacklist ${HOME}/.local/share/KDE/neochat
 blacklist ${HOME}/.local/share/Kingsoft
 blacklist ${HOME}/.local/share/Mendeley Ltd.
 blacklist ${HOME}/.local/share/Mumble

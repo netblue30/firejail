@@ -61,7 +61,7 @@ disable-mnt
 private-bin neochat
 private-dev
 ##private-etc Common,Networking,GUI,Qt,KDE,D-Bus
-private-etc alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg,ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf,hosts,host.conf,hostname,protocols,services,rpc,fonts,pango,X11,Trolltech.conf,kde4rc,kde5rc,dbus-1,machine-id
+private-etc alternatives,ca-certificates,crypto-policies,dbus-1,fonts,host.conf,hostname,hosts,kde4rc,kde5rc,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,pki,protocols,resolv.conf,rpc,services,ssl,Trolltech.conf,X11,xdg
 private-tmp
 
 dbus-user filter

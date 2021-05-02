@@ -11,7 +11,6 @@ noblacklist ${HOME}/.config/KDE/neochat
 noblacklist ${HOME}/.config/neochatrc
 noblacklist ${HOME}/.config/neochat.notifyrc
 noblacklist ${HOME}/.local/share/KDE/neochat
-noblacklist ${DOWNLOADS}
 
 include disable-common.inc
 include disable-devel.inc

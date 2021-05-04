@@ -7,6 +7,7 @@ include neochat.local
 include globals.local
 
 noblacklist ${HOME}/.cache/KDE/neochat
+noblacklist ${HOME}/.config/KDE
 noblacklist ${HOME}/.config/KDE/neochat
 noblacklist ${HOME}/.config/neochatrc
 noblacklist ${HOME}/.config/neochat.notifyrc
@@ -22,16 +23,11 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.cache/KDE/neochat
-mkdir ${HOME}/.config/KDE/neochat.conf
 mkdir ${HOME}/.local/share/KDE/neochat
-mkfile ${HOME}/.config/neochatrc
-mkfile ${HOME}/.config/neochat.notifyrc
 whitelist ${HOME}/.cache/KDE/neochat
-whitelist ${HOME}/.config/KDE/neochat.conf
-whitelist ${HOME}/.config/neochatrc
 whitelist ${HOME}/.local/share/KDE/neochat
-whitelist ${HOME}/.config/neochat.notifyrc
 whitelist ${DOWNLOADS}
+include whitelist-1793-workaround.inc
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

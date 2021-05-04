@@ -18,6 +18,7 @@ ignore dbus-user none
 ignore dbus-system none
 
 ignore noexec ${HOME}
+ignore novideo
 
 whitelist ${HOME}/.config/BetterDiscord
 whitelist ${HOME}/.local/share/betterdiscordctl

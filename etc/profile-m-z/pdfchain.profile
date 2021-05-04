@@ -22,6 +22,7 @@ ipc-namespace
 net none
 no3d
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

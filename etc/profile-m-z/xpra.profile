@@ -33,6 +33,7 @@ caps.drop all
 # xpra needs to be allowed access to the abstract Unix socket namespace.
 nodvd
 nogroups
+noinput
 nonewprivs
 # In noroot mode, xpra cannot create a socket in the real /tmp/.X11-unix.
 #noroot

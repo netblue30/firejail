@@ -20,6 +20,7 @@ include disable-shell.inc
 caps.drop all
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

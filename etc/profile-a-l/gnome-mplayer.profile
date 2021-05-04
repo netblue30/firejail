@@ -20,6 +20,7 @@ include disable-xdg.inc
 
 caps.drop all
 nogroups
+noinput
 nonewprivs
 noroot
 nou2f

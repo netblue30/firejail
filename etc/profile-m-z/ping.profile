@@ -31,6 +31,7 @@ netfilter
 no3d
 nodvd
 nogroups
+noinput
 # ping needs to rise privileges, noroot and nonewprivs will kill it
 #nonewprivs
 #noroot

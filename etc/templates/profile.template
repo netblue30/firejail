@@ -148,6 +148,7 @@ include globals.local
 ##nodbus (deprecated, use 'dbus-user none' and 'dbus-system none', see below)
 #nodvd
 #nogroups
+#noinput
 #nonewprivs
 #noroot
 #nosound

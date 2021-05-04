@@ -22,6 +22,7 @@ caps.drop all
 machine-id
 nodvd
 nogroups
+noinput
 nosound
 notv
 nou2f

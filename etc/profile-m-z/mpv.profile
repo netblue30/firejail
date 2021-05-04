@@ -63,6 +63,7 @@ caps.drop all
 netfilter
 # nogroups seems to cause issues with Nvidia drivers sometimes
 nogroups
+noinput
 nonewprivs
 noroot
 nou2f

@@ -24,6 +24,7 @@ include whitelist-runuser-common.inc
 
 apparmor
 caps.drop all
+noinput
 nonewprivs
 noroot
 notv

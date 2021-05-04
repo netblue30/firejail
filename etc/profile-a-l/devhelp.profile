@@ -27,6 +27,7 @@ caps.drop all
 # net none - makes settings immutable
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

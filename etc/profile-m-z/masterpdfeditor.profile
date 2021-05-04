@@ -23,6 +23,7 @@ caps.drop all
 machine-id
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

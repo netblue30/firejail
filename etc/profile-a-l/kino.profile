@@ -22,6 +22,7 @@ apparmor
 caps.drop all
 netfilter
 nogroups
+noinput
 nonewprivs
 noroot
 notv

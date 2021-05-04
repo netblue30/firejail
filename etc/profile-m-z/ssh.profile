@@ -31,6 +31,7 @@ netfilter
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 # noroot - see issue #1543
 nosound

@@ -26,6 +26,7 @@ ipc-namespace
 net none
 no3d
 nodvd
+noinput
 nonewprivs
 nosound
 notv

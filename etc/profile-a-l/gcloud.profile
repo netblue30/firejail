@@ -24,6 +24,7 @@ netfilter
 nodvd
 # required for sudo-free docker
 #nogroups
+noinput
 nonewprivs
 noroot
 notv

@@ -133,6 +133,7 @@ netfilter
 nodvd
 # nVidia users may need to comment / ignore nogroups and noroot
 nogroups
+noinput
 nonewprivs
 noroot
 notv

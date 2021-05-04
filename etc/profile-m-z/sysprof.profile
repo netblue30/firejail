@@ -39,6 +39,7 @@ net none
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 # Ubuntu 16.04 version needs root privileges - comment or put 'ignore noroot' in sysprof.local if you run Xenial
 noroot

@@ -33,6 +33,7 @@ caps.drop all
 netfilter
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 # nosound - KWrite is using ALSA!

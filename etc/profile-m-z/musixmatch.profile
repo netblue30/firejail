@@ -20,9 +20,11 @@ netfilter
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nogroups
+noinput
 nosound
 notv
 nou2f

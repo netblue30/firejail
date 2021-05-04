@@ -24,6 +24,7 @@ apparmor
 caps.drop all
 net none
 nogroups
+noinput
 nonewprivs
 noroot
 nou2f

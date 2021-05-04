@@ -24,6 +24,7 @@ machine-id
 net none
 no3d
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

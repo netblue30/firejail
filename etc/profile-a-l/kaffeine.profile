@@ -28,6 +28,7 @@ include whitelist-var-common.inc
 caps.drop all
 netfilter
 nogroups
+noinput
 nonewprivs
 noroot
 nou2f

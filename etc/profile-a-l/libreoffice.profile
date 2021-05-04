@@ -29,6 +29,7 @@ caps.drop all
 netfilter
 nodvd
 nogroups
+noinput
 # comment nonewprivs when using the ubuntu 18.04/debian 10 apparmor profile
 nonewprivs
 noroot

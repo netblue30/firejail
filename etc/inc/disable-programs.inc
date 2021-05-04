@@ -138,6 +138,7 @@ blacklist ${HOME}/.config/Rambox
 blacklist ${HOME}/.config/Riot
 blacklist ${HOME}/.config/Rocket.Chat
 blacklist ${HOME}/.config/RogueLegacy
+blacklist ${HOME}/.config/RogueLegacyStorageContainer
 blacklist ${HOME}/.config/Signal
 blacklist ${HOME}/.config/Sinew Software Systems
 blacklist ${HOME}/.config/Slack
@@ -612,7 +613,8 @@ blacklist ${HOME}/.local/share/QGIS
 blacklist ${HOME}/.local/share/QMediathekView
 blacklist ${HOME}/.local/share/QuiteRss
 blacklist ${HOME}/.local/share/Ricochet
-blacklist ${HOME}/.local/share/RogueLegacy*
+blacklist ${HOME}/.local/share/RogueLegacy
+blacklist ${HOME}/.local/share/RogueLegacyStorageContainer
 blacklist ${HOME}/.local/share/Shortwave
 blacklist ${HOME}/.local/share/Steam
 blacklist ${HOME}/.local/share/SteamWorldDig

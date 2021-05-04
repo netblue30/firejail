@@ -141,7 +141,7 @@ void process_home(const char *fname, char *home, int home_len) {
 		}
 
 		// skip files and directories in whitelist-common.inc
-		if (filedb_find(db_skip, toadd)) {
+		if (strlen(toadd) == 0 || filedb_find(db_skip, toadd)) {
 			if (dir)
 				free(dir);
 			continue;

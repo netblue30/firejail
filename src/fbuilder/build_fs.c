@@ -220,6 +220,10 @@ static void tmp_callback(char *ptr) {
 	// skip strace file
 	if (strncmp(ptr, "/tmp/firejail-strace", 20) == 0)
 		return;
+	if (strncmp(ptr, "/tmp/runtime-", 13) == 0)
+		return;
+	if (strcmp(ptr, "/tmp") == 0)
+		return;
 
 	tmp_out = filedb_add(tmp_out, ptr);
 }
@@ -232,8 +236,7 @@ void build_tmp(const char *fname, FILE *fp) {
 	if (tmp_out == NULL)
 		fprintf(fp, "private-tmp\n");
 	else {
-		fprintf(fp, "\n");
-		fprintf(fp, "# private-tmp\n");
+		fprintf(fp, "#private-tmp\n");
 		fprintf(fp, "# File accessed in /tmp directory:\n");
 		fprintf(fp, "# ");
 		FileDB *ptr = tmp_out;
@@ -310,9 +313,8 @@ void build_dev(const char *fname, FILE *fp) {
 	if (dev_out == NULL)
 		fprintf(fp, "private-dev\n");
 	else {
-		fprintf(fp, "\n");
-		fprintf(fp, "# private-dev\n");
-		fprintf(fp, "# This is the list of devices accessed (on top of regular private-dev devices:\n");
+		fprintf(fp, "#private-dev\n");
+		fprintf(fp, "# This is the list of devices accessed on top of regular private-dev devices:\n");
 		fprintf(fp, "# ");
 		FileDB *ptr = dev_out;
 		while (ptr) {

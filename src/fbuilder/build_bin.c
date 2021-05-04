@@ -121,6 +121,6 @@ void build_bin(const char *fname, FILE *fp) {
 			ptr = ptr->next;
 		}
 		fprintf(fp, "\n");
-		fprintf(fp, "# private-lib\n");
+		fprintf(fp, "#private-lib\n");
 	}
 }

@@ -150,12 +150,12 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 
 		fprintf(fp, "### basic blacklisting\n");
 		fprintf(fp, "include disable-common.inc\n");
-		fprintf(fp, "# include disable-devel.inc\n");
-		fprintf(fp, "# include disable-exec.inc\n");
-		fprintf(fp, "# include disable-interpreters.inc\n");
+		fprintf(fp, "#include disable-devel.inc\n");
+		fprintf(fp, "#include disable-exec.inc\n");
+		fprintf(fp, "#include disable-interpreters.inc\n");
 		fprintf(fp, "include disable-passwdmgr.inc\n");
-		fprintf(fp, "# include disable-programs.inc\n");
-		fprintf(fp, "# include disable-xdg.inc\n");
+		fprintf(fp, "#include disable-programs.inc\n");
+		fprintf(fp, "#include disable-xdg.inc\n");
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### home directory whitelisting\n");
@@ -163,18 +163,17 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### filesystem\n");
-		fprintf(fp, "# /usr/share:\n");
+		fprintf(fp, "### /usr/share:\n");
 		build_share(trace_output, fp);
-		fprintf(fp, "# /var:\n");
+		fprintf(fp, "### /var:\n");
 		build_var(trace_output, fp);
-		fprintf(fp, "\n");
-		fprintf(fp, "# $PATH:\n");
+		fprintf(fp, "### /bin:\n");
 		build_bin(trace_output, fp);
-		fprintf(fp, "# /dev:\n");
+		fprintf(fp, "### /dev:\n");
 		build_dev(trace_output, fp);
-		fprintf(fp, "# /etc:\n");
+		fprintf(fp, "### /etc:\n");
 		build_etc(trace_output, fp);
-		fprintf(fp, "# /tmp:\n");
+		fprintf(fp, "### /tmp:\n");
 		build_tmp(trace_output, fp);
 		fprintf(fp, "\n");
 

@@ -674,6 +674,9 @@ Disable U2F devices.
 \fBnovideo
 Disable video capture devices.
 .TP
+\fBnoinput
+Disable input devices.
+.TP
 \fBshell none
 Run the program directly, without a shell.
 

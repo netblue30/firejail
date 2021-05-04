@@ -1515,6 +1515,15 @@ Example:
 .br
 $ firejail \-\-nodvd
 .TP
+\fB\-\-noinput
+Disable input devices.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-noinput
+.TP
 \fB\-\-noexec=dirname_or_filename
 Remount directory or file noexec, nodev and nosuid. File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br

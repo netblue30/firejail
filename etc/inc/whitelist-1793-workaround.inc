@@ -3,24 +3,27 @@
 include allow-nodejs.local
 # This works around bug 1793, and allows whitelisting to be used for some KDE applications.
 
-whitelist ${HOME}/.config/ibus
-whitelist ${HOME}/.config/mimeapps.list
-whitelist ${HOME}/.config/pkcs11
-read-only ${HOME}/.config/pkcs11
-whitelist ${HOME}/.config/user-dirs.dirs
-read-only ${HOME}/.config/user-dirs.dirs
-whitelist ${HOME}/.config/user-dirs.locale
-read-only ${HOME}/.config/user-dirs.locale
-whitelist ${HOME}/.config/fontconfig
-whitelist ${HOME}/.config/Kvantum
-whitelist ${HOME}/.config/Trolltech.conf
-whitelist ${HOME}/.config/QtProject.conf
-whitelist ${HOME}/.config/kdeglobals
-whitelist ${HOME}/.config/kio_httprc
-whitelist ${HOME}/.config/kioslaverc
-whitelist ${HOME}/.config/ksslcablacklist
-whitelist ${HOME}/.config/qt5ct
-whitelist ${HOME}/.config/qtcurve
+noblacklist ${HOME}/.config/ibus
+noblacklist ${HOME}/.config/mimeapps.list
+noblacklist ${HOME}/.config/pkcs11
+noblacklist ${HOME}/.config/user-dirs.dirs
+noblacklist ${HOME}/.config/user-dirs.locale
+noblacklist ${HOME}/.config/dconf
+noblacklist ${HOME}/.config/fontconfig
+noblacklist ${HOME}/.config/gtk-2.0
+noblacklist ${HOME}/.config/gtk-3.0
+noblacklist ${HOME}/.config/gtk-4.0
+noblacklist ${HOME}/.config/gtkrc
+noblacklist ${HOME}/.config/gtkrc-2.0
+noblacklist ${HOME}/.config/Kvantum
+noblacklist ${HOME}/.config/Trolltech.conf
+noblacklist ${HOME}/.config/QtProject.conf
+noblacklist ${HOME}/.config/kdeglobals
+noblacklist ${HOME}/.config/kio_httprc
+noblacklist ${HOME}/.config/kioslaverc
+noblacklist ${HOME}/.config/ksslcablacklist
+noblacklist ${HOME}/.config/qt5ct
+noblacklist ${HOME}/.config/qtcurve
 
 blacklist ${HOME}/.config/*
 whitelist ${HOME}/.config

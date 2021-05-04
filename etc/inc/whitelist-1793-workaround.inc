@@ -1,6 +1,6 @@
 # This file is overwritten during software install.
 # Persistent customizations should go in a .local file.
-include allow-nodejs.local
+include whitelist-1793-workaround.local
 # This works around bug 1793, and allows whitelisting to be used for some KDE applications.
 
 noblacklist ${HOME}/.config/ibus

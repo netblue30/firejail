@@ -25,6 +25,7 @@ apparmor
 caps.drop all
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 notv

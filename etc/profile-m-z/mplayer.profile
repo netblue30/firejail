@@ -28,6 +28,7 @@ caps.drop all
 # net none - mplayer can be used for streaming.
 netfilter
 # nogroups
+noinput
 nonewprivs
 noroot
 nou2f

@@ -30,6 +30,7 @@ nodvd
 # comment both 'nogroups' and 'noroot'
 # or put 'ignore nogroups' and 'ignore noroot' in your gnome-system-log.local.
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

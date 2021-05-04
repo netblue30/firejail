@@ -31,6 +31,7 @@ caps.drop all
 machine-id
 netfilter
 nodvd
+noinput
 nonewprivs
 noroot
 nosound

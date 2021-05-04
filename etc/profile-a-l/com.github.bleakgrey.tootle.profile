@@ -31,6 +31,7 @@ machine-id
 netfilter
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 notv

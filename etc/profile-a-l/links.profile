@@ -39,6 +39,7 @@ netfilter
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 # Add 'ignore nosound' to your links.local if you want to restrict access to

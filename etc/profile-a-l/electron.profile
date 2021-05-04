@@ -26,6 +26,7 @@ caps.keep sys_admin,sys_chroot
 netfilter
 nodvd
 nogroups
+noinput
 notv
 nou2f
 novideo

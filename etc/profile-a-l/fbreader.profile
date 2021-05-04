@@ -24,6 +24,7 @@ apparmor
 caps.drop all
 net none
 nodvd
+noinput
 nonewprivs
 noroot
 nosound

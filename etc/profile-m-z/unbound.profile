@@ -31,6 +31,7 @@ machine-id
 netfilter
 no3d
 nodvd
+noinput
 nonewprivs
 nosound
 notv

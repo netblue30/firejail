@@ -20,6 +20,7 @@ include disable-xdg.inc
 caps.drop all
 netfilter
 nogroups
+noinput
 nonewprivs
 noroot
 notv

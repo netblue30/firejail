@@ -9,6 +9,7 @@ caps.drop all
 ipc-namespace
 net none
 nogroups
+noinput
 noroot
 nou2f
 protocol unix

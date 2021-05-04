@@ -32,6 +32,7 @@ caps.drop all
 net none
 nodvd
 nogroups
+noinput
 nonewprivs
 notv
 nou2f

@@ -38,6 +38,7 @@ caps.drop all
 net none
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 # nosound - add the next line to your yelp.local if you don't need sound support.

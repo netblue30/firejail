@@ -39,6 +39,7 @@ netfilter
 # Add 'ignore nodvd' to your openmw.local when installing from disc.
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 notv

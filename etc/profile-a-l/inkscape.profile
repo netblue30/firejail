@@ -39,6 +39,7 @@ machine-id
 net none
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

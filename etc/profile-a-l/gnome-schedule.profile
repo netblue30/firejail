@@ -51,6 +51,7 @@ machine-id
 no3d
 nodvd
 nogroups
+noinput
 nosound
 notv
 nou2f

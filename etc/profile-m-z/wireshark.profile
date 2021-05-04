@@ -31,6 +31,7 @@ caps.keep dac_override,net_admin,net_raw
 netfilter
 no3d
 # nogroups - breaks network traffic capture for unprivileged users
+noinput
 # nonewprivs - breaks network traffic capture for unprivileged users
 # noroot
 nodvd

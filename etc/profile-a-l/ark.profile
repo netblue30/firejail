@@ -26,6 +26,7 @@ caps.drop all
 netfilter
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

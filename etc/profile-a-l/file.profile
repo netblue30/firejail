@@ -23,6 +23,7 @@ net none
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 nosound
 notv

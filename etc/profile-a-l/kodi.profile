@@ -32,6 +32,7 @@ apparmor
 caps.drop all
 netfilter
 nogroups
+noinput
 nonewprivs
 # Seems to cause issues with Nvidia drivers sometimes (#3501)
 noroot

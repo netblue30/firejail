@@ -33,6 +33,7 @@ netfilter
 # no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 # nosound

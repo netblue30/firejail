@@ -27,6 +27,7 @@ include disable-xdg.inc
 caps.drop all
 ipc-namespace
 netfilter
+noinput
 nonewprivs
 noroot
 nou2f

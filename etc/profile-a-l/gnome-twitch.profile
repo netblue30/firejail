@@ -25,6 +25,7 @@ include whitelist-common.inc
 caps.drop all
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 notv

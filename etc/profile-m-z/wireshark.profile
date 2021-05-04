@@ -39,7 +39,7 @@ notv
 nou2f
 novideo
 # protocol unix,inet,inet6,netlink,packet,bluetooth - commented out in case they bring in new protocols
-seccomp
+#seccomp
 shell none
 tracelog
 

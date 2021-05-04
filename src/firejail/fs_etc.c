@@ -76,6 +76,44 @@ void fs_machineid(void) {
 	}
 }
 
+// Duplicate directory structure from src to dst by creating empty directories.
+// The paths _must_ be identical after their respective prefixes.
+// When finished, dst will point to the target directory. That is, if
+// it starts out pointing to a file, it will instead be truncated so
+// that it contains the parent directory instead.
+static void build_dirs(char *src, char *dst, size_t src_prefix_len, size_t dst_prefix_len) {
+	char *p = src + src_prefix_len + 1;
+	char *q = dst + dst_prefix_len + 1;
+	char *r = dst + dst_prefix_len;
+	struct stat s;
+	bool last = false;
+	*r = '\0';
+	for (; !last; p++, q++) {
+		if (*p == '\0') {
+			last = true;
+		}
+		if (*p == '\0' || (*p == '/' && *(p - 1) != '/')) {
+			// We found a new component of our src path.
+			// Null-terminate it temporarily here so that we can work
+			// with it.
+			*p = '\0';
+			if (stat(src, &s) == 0 && S_ISDIR(s.st_mode)) {
+				// Null-terminate the dst path and undo its previous
+				// termination.
+				*q = '\0';
+				*r = '/';
+				r = q;
+				create_empty_dir_as_root(dst, s.st_mode);
+			}
+			if (!last) {
+				// If we're not at the final terminating null, restore
+				// the slash so that we can continue our traversal.
+				*p = '/';
+			}
+		}
+	}
+}
+
 // return 0 if file not found, 1 if found
 static int check_dir_or_file(const char *fname) {
 	assert(fname);
@@ -103,7 +141,7 @@ errexit:
 static void duplicate(const char *fname, const char *private_dir, const char *private_run_dir) {
 	assert(fname);
 
-	if (*fname == '~' || strchr(fname, '/') || strcmp(fname, "..") == 0) {
+	if (*fname == '~' || *fname == '/' || strncmp(fname, "..", 2) == 0) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
 	}
@@ -119,21 +157,16 @@ static void duplicate(const char *fname, const char *private_dir, const char *pr
 	}
 
 	if (arg_debug)
-		printf("copying %s to private %s\n", src, private_dir);
+		printf("Copying %s to private %s\n", src, private_dir);
 
-	struct stat s;
-	if (stat(src, &s) == 0 && S_ISDIR(s.st_mode)) {
-		// create the directory in RUN_ETC_DIR
-		char *dirname;
-		if (asprintf(&dirname, "%s/%s", private_run_dir, fname) == -1)
-			errExit("asprintf");
-		create_empty_dir_as_root(dirname, s.st_mode);
-		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, src, dirname);
-		free(dirname);
-	}
-	else
-		sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, src, private_run_dir);
+	char *dst;
+	if (asprintf(&dst, "%s/%s", private_run_dir, fname) == -1)
+		errExit("asprintf");
 
+	build_dirs(src, dst, strlen(private_dir), strlen(private_run_dir));
+	sbox_run(SBOX_ROOT | SBOX_SECCOMP, 3, PATH_FCOPY, src, dst);
+
+	free(dst);
 	fs_logger2("clone", src);
 	free(src);
 }

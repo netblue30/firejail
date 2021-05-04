@@ -12,6 +12,8 @@ firejail (0.9.65) baseline; urgency=low
   * compile time: --enable-force-nonewprivs
   * compile time: --disable-output
   * compile time: --enable-lts
+  * subdirs support in private-etc
+  * input devices support in private-dev, --no-input
   * new profiles: vmware-view, display-im6.q16, ipcalc, ipcalc-ng
   * ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop,
   * avidemux, calligragemini, vmware-player, vmware-workstation
@@ -22,7 +24,8 @@ firejail (0.9.65) baseline; urgency=low
   * alienarena, alienarena-wrapper, ballbuster, ballbuster-wrapper,
   * colorful, colorful-wrapper, gl-117, gl-117-wrapper, glaxium,
   * glaxium-wrapper, pinball, pinball-wrapper, etr-wrapper, firedragon
-  * neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper
+  * neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper,
+  * neochat
  -- netblue30 <netblue30@yahoo.com>  Tue, 9 Feb 2021 09:00:00 -0500
 
 firejail (0.9.64.4) baseline; urgency=low

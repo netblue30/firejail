@@ -160,24 +160,21 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 
 		fprintf(fp, "### home directory whitelisting\n");
 		build_home(trace_output, fp);
-		fprintf(fp, "\n");
 
-		fprintf(fp, "### filesystem\n");
-		fprintf(fp, "### /usr/share:\n");
+		fprintf(fp, "\n### /usr/share:\n");
 		build_share(trace_output, fp);
-		fprintf(fp, "### /var:\n");
+		fprintf(fp, "\n### /var:\n");
 		build_var(trace_output, fp);
-		fprintf(fp, "### /bin:\n");
+		fprintf(fp, "\n### /bin:\n");
 		build_bin(trace_output, fp);
-		fprintf(fp, "### /dev:\n");
+		fprintf(fp, "\n### /dev:\n");
 		build_dev(trace_output, fp);
-		fprintf(fp, "### /etc:\n");
+		fprintf(fp, "\n### /etc:\n");
 		build_etc(trace_output, fp);
-		fprintf(fp, "### /tmp:\n");
+		fprintf(fp, "\n### /tmp:\n");
 		build_tmp(trace_output, fp);
-		fprintf(fp, "\n");
 
-		fprintf(fp, "### security filters\n");
+		fprintf(fp, "\n### security filters\n");
 		fprintf(fp, "caps.drop all\n");
 		fprintf(fp, "nonewprivs\n");
 		fprintf(fp, "seccomp\n");
@@ -189,13 +186,11 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 			fprintf(fp, "# Yama security module prevents creation of a whitelisted seccomp filter\n");
 		else
 			build_seccomp(strace_output, fp);
-		fprintf(fp, "\n");
 
-		fprintf(fp, "### network\n");
+		fprintf(fp, "\n### network\n");
 		build_protocol(trace_output, fp);
-		fprintf(fp, "\n");
 
-		fprintf(fp, "### environment\n");
+		fprintf(fp, "\n### environment\n");
 		fprintf(fp, "shell none\n");
 
 		if (!arg_debug) {

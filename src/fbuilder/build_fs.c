@@ -177,6 +177,74 @@ void build_var(const char *fname, FILE *fp) {
 //*******************************************
 // usr/share directory
 //*******************************************
+// todo: load the list from whitelist-usr-share-common.inc
+static char *share_skip[] = {
+	"/usr/share/alsa",
+	"/usr/share/applications",
+	"/usr/share/ca-certificates",
+	"/usr/share/crypto-policies",
+	"/usr/share/cursors",
+	"/usr/share/dconf",
+	"/usr/share/distro-info",
+	"/usr/share/drirc.d",
+	"/usr/share/enchant",
+	"/usr/share/enchant-2",
+	"/usr/share/file",
+	"/usr/share/fontconfig",
+	"/usr/share/fonts",
+	"/usr/share/fonts-config",
+	"/usr/share/gir-1.0",
+	"/usr/share/gjs-1.0",
+	"/usr/share/glib-2.0",
+	"/usr/share/glvnd",
+	"/usr/share/gtk-2.0",
+	"/usr/share/gtk-3.0",
+	"/usr/share/gtk-engines",
+	"/usr/share/gtksourceview-3.0",
+	"/usr/share/gtksourceview-4",
+	"/usr/share/hunspell",
+	"/usr/share/hwdata",
+	"/usr/share/icons",
+	"/usr/share/icu",
+	"/usr/share/knotifications5",
+	"/usr/share/kservices5",
+	"/usr/share/Kvantum",
+	"/usr/share/kxmlgui5",
+	"/usr/share/libdrm",
+	"/usr/share/libthai",
+	"/usr/share/locale",
+	"/usr/share/mime",
+	"/usr/share/misc",
+	"/usr/share/Modules",
+	"/usr/share/myspell",
+	"/usr/share/p11-kit",
+	"/usr/share/perl",
+	"/usr/share/perl5",
+	"/usr/share/pixmaps",
+	"/usr/share/pki",
+	"/usr/share/plasma",
+	"/usr/share/publicsuffix",
+	"/usr/share/qt",
+	"/usr/share/qt4",
+	"/usr/share/qt5",
+	"/usr/share/qt5ct",
+	"/usr/share/sounds",
+	"/usr/share/tcl8.6",
+	"/usr/share/tcltk",
+	"/usr/share/terminfo",
+	"/usr/share/texlive",
+	"/usr/share/texmf",
+	"/usr/share/themes",
+	"/usr/share/thumbnail.so",
+	"/usr/share/uim",
+	"/usr/share/vulkan",
+	"/usr/share/X11",
+	"/usr/share/xml",
+	"/usr/share/zenity",
+	"/usr/share/zoneinfo",
+	NULL
+};
+
 static FileDB *share_out = NULL;
 static void share_callback(char *ptr) {
 	// extract the directory:
@@ -195,8 +263,17 @@ static void share_callback(char *ptr) {
 	if (p2)
 		*p2 = '\0';
 
-	// store the file
-	share_out = filedb_add(share_out, ptr);
+	int i = 0;
+	int found = 0;
+	while (share_skip[i]) {
+		if (strncmp(ptr, share_skip[i], strlen(share_skip[i])) == 0) {
+			found = 1;
+			break;
+		}
+		i++;
+	}
+	if (!found)
+		share_out = filedb_add(share_out, ptr);
 }
 
 void build_share(const char *fname, FILE *fp) {
@@ -252,40 +329,36 @@ void build_tmp(const char *fname, FILE *fp) {
 // dev directory
 //*******************************************
 static char *dev_skip[] = {
+	"/dev/stdin",
+	"/dev/stdout",
+	"/dev/stderr",
 	"/dev/zero",
 	"/dev/null",
 	"/dev/full",
 	"/dev/random",
 	"/dev/urandom",
+	"/dev/sr0",
+	"/dev/cdrom",
+	"/dev/cdrw",
+	"/dev/dvd",
+	"/dev/dvdrw",
+	"/dev/fd",
+	"/dev/pts",
+	"/dev/ptmx",
+	"/dev/log",
+
+	"/dev/aload",	// old ALSA devices, not covered in private-dev
+	"/dev/dsp",		// old OSS device, deprecated
+
 	"/dev/tty",
 	"/dev/snd",
 	"/dev/dri",
-	"/dev/pts",
-	"/dev/nvidia0",
-	"/dev/nvidia1",
-	"/dev/nvidia2",
-	"/dev/nvidia3",
-	"/dev/nvidia4",
-	"/dev/nvidia5",
-	"/dev/nvidia6",
-	"/dev/nvidia7",
-	"/dev/nvidia8",
-	"/dev/nvidia9",
-	"/dev/nvidiactl",
-	"/dev/nvidia-modeset",
-	"/dev/nvidia-uvm",
-	"/dev/video0",
-	"/dev/video1",
-	"/dev/video2",
-	"/dev/video3",
-	"/dev/video4",
-	"/dev/video5",
-	"/dev/video6",
-	"/dev/video7",
-	"/dev/video8",
-	"/dev/video9",
+	"/dev/nvidia",
+	"/dev/video",
 	"/dev/dvb",
-	"/dev/sr0",
+	"/dev/hidraw",
+	"/dev/usb",
+	"/dev/input",
 	NULL
 };
 
@@ -295,7 +368,7 @@ static void dev_callback(char *ptr) {
 	int i = 0;
 	int found = 0;
 	while (dev_skip[i]) {
-		if (strcmp(ptr, dev_skip[i]) == 0) {
+		if (strncmp(ptr, dev_skip[i], strlen(dev_skip[i])) == 0) {
 			found = 1;
 			break;
 		}

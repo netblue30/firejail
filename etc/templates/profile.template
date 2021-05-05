@@ -81,6 +81,9 @@ include globals.local
 #      `ls -aR`
 #noblacklist PATH
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
+#include allow-bin-sh.inc
+
 # Allows files commonly used by IDEs
 #include allow-common-devel.inc
 
@@ -102,9 +105,6 @@ include globals.local
 
 # Allow ruby (blacklisted by disable-interpreters.inc)
 #include allow-ruby.inc
-
-# Allow /bin/sh (blacklisted by disable-shell.inc)
-#include allow-bin-sh.inc
 
 # Allow ssh (blacklisted by disable-common.inc)
 #include allow-ssh.inc

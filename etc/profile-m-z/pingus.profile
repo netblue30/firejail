@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.pingus
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
 
 include disable-common.inc

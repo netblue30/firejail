@@ -8,7 +8,10 @@ include globals.local
 
 noblacklist ${HOME}/.local/share/love
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
+
+# Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
 include disable-common.inc

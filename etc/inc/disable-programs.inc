@@ -279,6 +279,7 @@ blacklist ${HOME}/.config/iridium
 blacklist ${HOME}/.config/itch
 blacklist ${HOME}/.config/jami
 blacklist ${HOME}/.config/jd-gui.cfg
+blacklist ${HOME}/.config/joplin
 blacklist ${HOME}/.config/k3brc
 blacklist ${HOME}/.config/kaffeinerc
 blacklist ${HOME}/.config/kalgebrarc

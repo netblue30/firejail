@@ -45,6 +45,10 @@ shell none
 tracelog
 
 # private-bin wireshark
+private-cache
 private-dev
 # private-etc alternatives,ca-certificates,crypto-policies,fonts,group,hosts,machine-id,passwd,pki,ssl
 private-tmp
+
+dbus-user none
+dbus-system none

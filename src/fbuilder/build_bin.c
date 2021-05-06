@@ -83,11 +83,9 @@ static void process_bin(const char *fname) {
 			continue;
 		*ptr2 = '\0';
 
-		// skip strace
-		if (strcmp(ptr, "strace") == 0)
-			continue;
-
-		bin_out = filedb_add(bin_out, ptr);
+		// skip strace and firejail (in case we hit a symlink in /usr/local/bin)
+		if (strcmp(ptr, "strace") && strcmp(ptr, "firejail"))
+			bin_out = filedb_add(bin_out, ptr);
 	}
 
 	fclose(fp);
@@ -121,6 +119,5 @@ void build_bin(const char *fname, FILE *fp) {
 			ptr = ptr->next;
 		}
 		fprintf(fp, "\n");
-		fprintf(fp, "#private-lib\n");
 	}
 }

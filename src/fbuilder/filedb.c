@@ -20,7 +20,9 @@
 
 #include "fbuilder.h"
 
+// find exact name or an exact name in a parent directory
 FileDB *filedb_find(FileDB *head, const char *fname) {
+	assert(fname);
 	FileDB *ptr = head;
 	int found = 0;
 	int len = strlen(fname);
@@ -52,6 +54,8 @@ FileDB *filedb_find(FileDB *head, const char *fname) {
 FileDB *filedb_add(FileDB *head, const char *fname) {
 	assert(fname);
 
+	// todo: support fnames such as ${RUNUSER}/.mutter-Xwaylandauth.*
+
 	// don't add it if it is already there or if the parent directory is already in the list
 	if (filedb_find(head, fname))
 		return head;
@@ -70,9 +74,52 @@ FileDB *filedb_add(FileDB *head, const char *fname) {
 };
 
 void filedb_print(FileDB *head, const char *prefix, FILE *fp) {
+	assert(head);
+	assert(prefix);
+
 	FileDB *ptr = head;
 	while (ptr) {
-		fprintf(fp, "%s%s\n", prefix, ptr->fname);
+		if (fp)
+			fprintf(fp, "%s%s\n", prefix, ptr->fname);
+		else
+			printf("%s%s\n", prefix, ptr->fname);
 		ptr = ptr->next;
 	}
+}
+
+FileDB *filedb_load_whitelist(FileDB *head, const char *fname, const char *prefix) {
+	assert(fname);
+	assert(prefix);
+	int len = strlen(prefix);
+	char *f;
+	if (asprintf(&f, "%s/%s", SYSCONFDIR, fname) == -1)
+		errExit("asprintf");
+	FILE *fp = fopen(f, "r");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot open whitelist-common.inc\n");
+		free(f);
+		exit(1);
+	}
+
+	char buf[MAX_BUF];
+	while (fgets(buf, MAX_BUF, fp)) {
+		if (strncmp(buf, prefix, len) != 0)
+			continue;
+
+		char *fn = buf + len;
+		char *ptr = strchr(buf, '\n');
+		if (!ptr)
+			continue;
+		*ptr = '\0';
+
+		// add the file to skip list
+		head = filedb_add(head, fn);
+	}
+
+	fclose(fp);
+	free(f);
+//printf("***************************************************\n");
+//filedb_print(head, prefix, NULL);
+//printf("***************************************************\n");
+	return head;
 }

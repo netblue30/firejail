@@ -146,106 +146,57 @@ void build_etc(const char *fname, FILE *fp) {
 //*******************************************
 // var directory
 //*******************************************
+#if 0
+// todo: load the list from whitelist-var-common.inc
+static char *var_skip[] = {
+	"/var/lib/ca-certificates",
+	"/var/lib/dbus",
+	"/var/lib/menu-xdg",
+	"/var/lib/uim",
+	"/var/cache/fontconfig",
+	"/var/tmp",
+	"/var/run",
+	"/var/lock",
+	NULL
+};
+#endif
 static FileDB *var_out = NULL;
+static FileDB *var_skip = NULL;
 static void var_callback(char *ptr) {
-	if (strcmp(ptr, "/var/lib") == 0)
-		;
-	else if (strcmp(ptr, "/var/cache") == 0)
-		;
-	else if (strncmp(ptr, "/var/lib/menu-xdg", 17) == 0)
-		var_out = filedb_add(var_out, "/var/lib/menu-xdg");
-	else if (strncmp(ptr, "/var/cache/fontconfig", 21) == 0)
-		var_out = filedb_add(var_out, "/var/cache/fontconfig");
-	else
-		var_out = filedb_add(var_out, ptr);
+	// extract the directory:
+	assert(strncmp(ptr, "/var", 4) == 0);
+	char *p1 = ptr + 4;
+	if (*p1 != '/')
+		return;
+	p1++;
+
+	if (*p1 == '/')	// double '/'
+		p1++;
+	if (*p1 == '\0')
+		return;
+
+	if (!filedb_find(var_skip, p1))
+		var_out = filedb_add(var_out, p1);
 }
 
 void build_var(const char *fname, FILE *fp) {
 	assert(fname);
 
+	var_skip = filedb_load_whitelist(var_skip, "whitelist-var-common.inc", "whitelist /var/");
 	process_files(fname, "/var", var_callback);
 
-	if (var_out == NULL) {
-		fprintf(fp, "blacklist /var\n");
-	} else {
-		filedb_print(var_out, "whitelist ", fp);
-		fprintf(fp, "include whitelist-var-common.inc\n");
-	}
+	// always whitelist /var
+	if (var_out)
+		filedb_print(var_out, "whitelist /var/", fp);
+	fprintf(fp, "include whitelist-var-common.inc\n");
 }
 
 
 //*******************************************
 // usr/share directory
 //*******************************************
-// todo: load the list from whitelist-usr-share-common.inc
-static char *share_skip[] = {
-	"/usr/share/alsa",
-	"/usr/share/applications",
-	"/usr/share/ca-certificates",
-	"/usr/share/crypto-policies",
-	"/usr/share/cursors",
-	"/usr/share/dconf",
-	"/usr/share/distro-info",
-	"/usr/share/drirc.d",
-	"/usr/share/enchant",
-	"/usr/share/enchant-2",
-	"/usr/share/file",
-	"/usr/share/fontconfig",
-	"/usr/share/fonts",
-	"/usr/share/fonts-config",
-	"/usr/share/gir-1.0",
-	"/usr/share/gjs-1.0",
-	"/usr/share/glib-2.0",
-	"/usr/share/glvnd",
-	"/usr/share/gtk-2.0",
-	"/usr/share/gtk-3.0",
-	"/usr/share/gtk-engines",
-	"/usr/share/gtksourceview-3.0",
-	"/usr/share/gtksourceview-4",
-	"/usr/share/hunspell",
-	"/usr/share/hwdata",
-	"/usr/share/icons",
-	"/usr/share/icu",
-	"/usr/share/knotifications5",
-	"/usr/share/kservices5",
-	"/usr/share/Kvantum",
-	"/usr/share/kxmlgui5",
-	"/usr/share/libdrm",
-	"/usr/share/libthai",
-	"/usr/share/locale",
-	"/usr/share/mime",
-	"/usr/share/misc",
-	"/usr/share/Modules",
-	"/usr/share/myspell",
-	"/usr/share/p11-kit",
-	"/usr/share/perl",
-	"/usr/share/perl5",
-	"/usr/share/pixmaps",
-	"/usr/share/pki",
-	"/usr/share/plasma",
-	"/usr/share/publicsuffix",
-	"/usr/share/qt",
-	"/usr/share/qt4",
-	"/usr/share/qt5",
-	"/usr/share/qt5ct",
-	"/usr/share/sounds",
-	"/usr/share/tcl8.6",
-	"/usr/share/tcltk",
-	"/usr/share/terminfo",
-	"/usr/share/texlive",
-	"/usr/share/texmf",
-	"/usr/share/themes",
-	"/usr/share/thumbnail.so",
-	"/usr/share/uim",
-	"/usr/share/vulkan",
-	"/usr/share/X11",
-	"/usr/share/xml",
-	"/usr/share/zenity",
-	"/usr/share/zoneinfo",
-	NULL
-};
-
 static FileDB *share_out = NULL;
+static FileDB *share_skip = NULL;
 static void share_callback(char *ptr) {
 	// extract the directory:
 	assert(strncmp(ptr, "/usr/share", 10) == 0);
@@ -263,30 +214,21 @@ static void share_callback(char *ptr) {
 	if (p2)
 		*p2 = '\0';
 
-	int i = 0;
-	int found = 0;
-	while (share_skip[i]) {
-		if (strncmp(ptr, share_skip[i], strlen(share_skip[i])) == 0) {
-			found = 1;
-			break;
-		}
-		i++;
-	}
-	if (!found)
-		share_out = filedb_add(share_out, ptr);
+
+	if (!filedb_find(share_skip, p1))
+		share_out = filedb_add(share_out, p1);
 }
 
 void build_share(const char *fname, FILE *fp) {
 	assert(fname);
 
+	share_skip = filedb_load_whitelist(share_skip, "whitelist-usr-share-common.inc", "whitelist /usr/share/");
 	process_files(fname, "/usr/share", share_callback);
 
-	if (share_out == NULL) {
-		fprintf(fp, "blacklist /usr/share\n");
-	} else {
-		filedb_print(share_out, "whitelist ", fp);
-		fprintf(fp, "include whitelist-usr-share-common.inc\n");
-	}
+	// always whitelist /usr/share
+	if (share_out)
+		filedb_print(share_out, "whitelist /usr/share/", fp);
+	fprintf(fp, "include whitelist-usr-share-common.inc\n");
 }
 
 //*******************************************
@@ -336,6 +278,7 @@ static char *dev_skip[] = {
 	"/dev/null",
 	"/dev/full",
 	"/dev/random",
+	"/dev/srandom",
 	"/dev/urandom",
 	"/dev/sr0",
 	"/dev/cdrom",

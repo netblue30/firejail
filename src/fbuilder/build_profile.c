@@ -141,57 +141,70 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
 		if (fp == stdout)
 			printf("--- Built profile beings after this line ---\n");
-		fprintf(fp, "# Firejail profile for %s\n", argv[index]);
+		fprintf(fp, "# Save this file as \"application.profile\" (change \"application\" with the\n");
+		fprintf(fp, "# program name) in ~/.config/firejail directory. Firejail will find it\n");
+		fprintf(fp, "# automatically every time you sandbox your application.\n#\n");
+		fprintf(fp, "# Run \"firejail application\" to test it. In the file there are\n");
+		fprintf(fp, "# some other commands you can try. Enable them by removing the \"#\".\n");
+
+		fprintf(fp, "\n# Firejail profile for %s\n", argv[index]);
 		fprintf(fp, "# Persistent local customizations\n");
 		fprintf(fp, "#include %s.local\n", argv[index]);
 		fprintf(fp, "# Persistent global definitions\n");
 		fprintf(fp, "#include globals.local\n");
 		fprintf(fp, "\n");
 
-		fprintf(fp, "### basic blacklisting\n");
+		fprintf(fp, "### Basic Blacklisting ###\n");
+		fprintf(fp, "### Enable as many of them as you can! A very important one is\n");
+		fprintf(fp, "### \"disable-exec.inc\". This will make among other things your home\n");
+		fprintf(fp, "### and /tmp directories non-executable.\n");
 		fprintf(fp, "include disable-common.inc\n");
 		fprintf(fp, "#include disable-devel.inc\n");
 		fprintf(fp, "#include disable-exec.inc\n");
 		fprintf(fp, "#include disable-interpreters.inc\n");
 		fprintf(fp, "include disable-passwdmgr.inc\n");
-		fprintf(fp, "#include disable-programs.inc\n");
+		fprintf(fp, "include disable-programs.inc\n");
 		fprintf(fp, "#include disable-xdg.inc\n");
 		fprintf(fp, "\n");
 
-		fprintf(fp, "### home directory whitelisting\n");
+		fprintf(fp, "### Home Directory Whitelisting ###\n");
+		fprintf(fp, "### If something goes wrong, this section is the first one to comment out.\n");
+		fprintf(fp, "### Instead, you'll have to relay on the basic blacklisting above.\n");
 		build_home(trace_output, fp);
 
-		fprintf(fp, "\n### /usr/share:\n");
+		fprintf(fp, "\n### The Rest of the Filesystem ###\n");
 		build_share(trace_output, fp);
-		fprintf(fp, "\n### /var:\n");
 		build_var(trace_output, fp);
-		fprintf(fp, "\n### /bin:\n");
 		build_bin(trace_output, fp);
-		fprintf(fp, "\n### /dev:\n");
 		build_dev(trace_output, fp);
-		fprintf(fp, "\n### /etc:\n");
+		fprintf(fp, "#nodvd\n");
+		fprintf(fp, "#noinput\n");
+		fprintf(fp, "#notv\n");
+		fprintf(fp, "#nou2f\n");
+		fprintf(fp, "#novideo\n");
 		build_etc(trace_output, fp);
-		fprintf(fp, "\n### /tmp:\n");
 		build_tmp(trace_output, fp);
 
-		fprintf(fp, "\n### security filters\n");
+		fprintf(fp, "\n### Security Filters ###\n");
+		fprintf(fp, "#apparmor\n");
 		fprintf(fp, "caps.drop all\n");
+		fprintf(fp, "netfilter\n");
+		fprintf(fp, "#nogroups\n");
+		fprintf(fp, "#noroot\n");
 		fprintf(fp, "nonewprivs\n");
-		fprintf(fp, "seccomp\n");
-		if (!have_strace) {
-			fprintf(fp, "# If you install strace on your system, Firejail will also create a\n");
-			fprintf(fp, "# whitelisted seccomp filter.\n");
-		}
-		else if (!have_yama_permission)
-			fprintf(fp, "# Yama security module prevents creation of a whitelisted seccomp filter\n");
-		else
-			build_seccomp(strace_output, fp);
-
-		fprintf(fp, "\n### network\n");
 		build_protocol(trace_output, fp);
 
-		fprintf(fp, "\n### environment\n");
-		fprintf(fp, "shell none\n");
+		fprintf(fp, "seccomp\n");
+		if (!have_strace) {
+			fprintf(fp, "### If you install strace on your system, Firejail will also create a\n");
+			fprintf(fp, "### whitelisted seccomp filter.\n");
+		}
+		else if (!have_yama_permission)
+			fprintf(fp, "### Yama security module prevents creation of a whitelisted seccomp filter\n");
+		else
+			build_seccomp(strace_output, fp);
+		fprintf(fp, "#shell none\n");
+		fprintf(fp, "#tracelog\n");
 
 		if (!arg_debug) {
 			unlink(trace_output);

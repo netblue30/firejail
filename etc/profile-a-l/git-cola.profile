@@ -84,5 +84,5 @@ dbus-system none
 
 read-only ${HOME}/.git-credentials
 
-# Add 'ignore read-only ${HOME}/.ssh' to your git-cola.local if you need to allow hosts.
+# Add 'read-write ${HOME}/.ssh' to your git-cola.local if you need to allow hosts.
 read-only ${HOME}/.ssh

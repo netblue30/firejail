@@ -67,7 +67,7 @@ dbus-system none
 # read-only ${HOME} breaks some features:
 #  1. yelp --editor-mode
 #  2. saving the window geometry
-# add 'read-write ${HOME}' to your yelp.local if you need these features.
+# add 'ignore read-only ${HOME}' to your yelp.local if you need these features.
 read-only ${HOME}
 read-write ${HOME}/.cache
 #  3. printing to PDF in ${DOCUMENTS}

@@ -7,9 +7,6 @@ include nodejs-common.local
 # added by caller profile
 #include globals.local
 
-# Add the next line to your nodejs-common.local if you prefer to disable gatsby telemetry.
-#env GATSBY_TELEMETRY_DISABLED=1
-
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
@@ -94,3 +91,6 @@ private-etc alternatives,ca-certificates,crypto-policies,group,host.conf,hostnam
 
 dbus-user none
 dbus-system none
+
+# Add the next line to your nodejs-common.local if you prefer to disable gatsby telemetry.
+#env GATSBY_TELEMETRY_DISABLED=1

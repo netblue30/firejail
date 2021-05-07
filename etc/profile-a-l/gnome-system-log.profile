@@ -53,5 +53,5 @@ writable-var-log
 # dbus-system none
 
 memory-deny-write-execute
-# Add 'read-write ${HOME}' to your gnome-system-log.local if you export logs to a file under your ${HOME}.
+# Add 'ignore read-only ${HOME}' to your gnome-system-log.local if you export logs to a file under your ${HOME}.
 read-only ${HOME}

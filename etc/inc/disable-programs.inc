@@ -816,6 +816,7 @@ blacklist ${HOME}/.node-gyp
 blacklist ${HOME}/.npm
 blacklist ${HOME}/.npmrc
 blacklist ${HOME}/.nv
+blacklist ${HOME}/.nvm
 blacklist ${HOME}/.nylas-mail
 blacklist ${HOME}/.openarena
 blacklist ${HOME}/.opencity

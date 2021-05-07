@@ -114,7 +114,7 @@ static void whitelist_file(int dirfd, const char *topdir, const char *relpath, c
 	// top level directory
 	// as the top level directory was opened before mounting the tmpfs
 	// we still have full access to all directory contents
-	// take care to no follow symbolic links
+	// take care to not follow symbolic links
 	int fd = safer_openat(dirfd, relpath, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1) {
 		if (arg_debug || arg_debug_whitelists)
@@ -307,51 +307,93 @@ static void globbing(const char *pattern) {
 }
 
 // mount tmpfs on all top level directories
-static void tmpfs_topdirs(TopDir *topdirs) {
-	// process user home directory first
+static void tmpfs_topdirs(const TopDir *topdirs) {
+	int tmpfs_home = 0;
+	int tmpfs_runuser = 0;
+
 	int i;
 	for (i = 0; i < TOP_MAX && topdirs[i].path; i++) {
+		// do user home and /run/user/$UID last
 		if (strcmp(topdirs[i].path, cfg.homedir) == 0) {
-			fs_private();
-			break;
+			tmpfs_home = 1;
+			continue;
 		}
+		if (strcmp(topdirs[i].path, runuser) == 0) {
+			tmpfs_runuser = 1;
+			continue;
+		}
+
+		// special case /run
+		// open /run/firejail, so it can be restored right after mounting the tmpfs
+		int fd = -1;
+		if (strcmp(topdirs[i].path, "/run") == 0) {
+			fd = open(RUN_FIREJAIL_DIR, O_PATH|O_CLOEXEC);
+			if (fd == -1)
+				errExit("open");
+		}
+
+		// mount tmpfs
+		fs_tmpfs(topdirs[i].path, 0);
+
+		// init tmpfs
+		if (strcmp(topdirs[i].path, "/run") == 0) {
+			// restore /run/firejail directory
+			if (mkdir(RUN_FIREJAIL_DIR, 0755) == -1)
+				errExit("mkdir");
+			char *proc;
+			if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+				errExit("asprintf");
+			if (mount(proc, RUN_FIREJAIL_DIR, NULL, MS_BIND | MS_REC, NULL) < 0)
+				errExit("mount bind");
+			free(proc);
+			close(fd);
+			fs_logger2("whitelist", RUN_FIREJAIL_DIR);
+
+			// restore /run/user/$UID directory
+			// get path relative to /run
+			const char *rel = runuser + 5;
+			whitelist_file(topdirs[i].fd, topdirs[i].path, rel, runuser);
+		}
+		else if (strcmp(topdirs[i].path, "/tmp") == 0) {
+			// fix pam-tmpdir (#2685)
+			const char *env = env_get("TMP");
+			if (env) {
+				char *pamtmpdir;
+				if (asprintf(&pamtmpdir, "/tmp/user/%u", getuid()) == -1)
+					errExit("asprintf");
+				if (strcmp(env, pamtmpdir) == 0) {
+					// create empty user-owned /tmp/user/$UID directory
+					mkdir_attr("/tmp/user", 0711, 0, 0);
+					selinux_relabel_path("/tmp/user", "/tmp/user");
+					fs_logger("mkdir /tmp/user");
+					mkdir_attr(pamtmpdir, 0700, getuid(), 0);
+					selinux_relabel_path(pamtmpdir, pamtmpdir);
+					fs_logger2("mkdir", pamtmpdir);
+				}
+				free(pamtmpdir);
+			}
+		}
+
+		// restore user home directory if it is masked by the tmpfs
+		// creates path owned by root
+		size_t topdir_len = strlen(topdirs[i].path);
+		if (strncmp(topdirs[i].path, cfg.homedir, topdir_len) == 0 && cfg.homedir[topdir_len] == '/') {
+			// get path relative to top level directory
+			const char *rel = cfg.homedir + topdir_len + 1;
+			whitelist_file(topdirs[i].fd, topdirs[i].path, rel, cfg.homedir);
+		}
+
+		selinux_relabel_path(topdirs[i].path, topdirs[i].path);
 	}
 
-	for (i = 0; i < TOP_MAX && topdirs[i].path; i++) {
-		if (strcmp(topdirs[i].path, cfg.homedir) != 0) {
-			// mount the tmpfs
-			fs_tmpfs(topdirs[i].path, 0);
-			selinux_relabel_path(topdirs[i].path, topdirs[i].path);
+	// user home directory
+	if (tmpfs_home)
+		fs_private(); // checks owner if outside /home
 
-			// init tmpfs
-			// fix pam-tmpdir (#2685)
-			if (strcmp(topdirs[i].path, "/tmp") == 0) {
-				const char *env = env_get("TMP");
-				if (env) {
-					char *pamtmpdir;
-					if (asprintf(&pamtmpdir, "/tmp/user/%u", getuid()) == -1)
-						errExit("asprintf");
-					if (strcmp(env, pamtmpdir) == 0) {
-						// create empty user-owned /tmp/user/$UID directory
-						mkdir_attr("/tmp/user", 0711, 0, 0);
-						selinux_relabel_path("/tmp/user", "/tmp/user");
-						fs_logger("mkdir /tmp/user");
-						mkdir_attr(pamtmpdir, 0700, getuid(), 0);
-						selinux_relabel_path(pamtmpdir, pamtmpdir);
-						fs_logger2("mkdir", pamtmpdir);
-					}
-					free(pamtmpdir);
-				}
-			}
-
-			// bring back user home directory if it is masked by the tmpfs
-			size_t topdir_len = strlen(topdirs[i].path);
-			if (strncmp(topdirs[i].path, cfg.homedir, topdir_len) == 0 && cfg.homedir[topdir_len] == '/') {
-				// get path relative to top level directory
-				const char *rel = cfg.homedir + topdir_len + 1;
-				whitelist_file(topdirs[i].fd, topdirs[i].path, rel, cfg.homedir);
-			}
-		}
+	// /run/user/$UID directory
+	if (tmpfs_runuser) {
+		fs_tmpfs(runuser, 0);
+		selinux_relabel_path(runuser, runuser);
 	}
 }
 
@@ -372,10 +414,9 @@ static int reject_topdir(const char *dir) {
 static TopDir *add_topdir(const char *dir, TopDir *topdirs, const char *path) {
 	assert(dir && path);
 
-	// /proc, /run and /sys are not allowed
+	// /proc and /sys are not allowed
 	if (strcmp(dir, "/") == 0 ||
 	    strcmp(dir, "/proc") == 0 ||
-	    strcmp(dir, "/run") == 0 ||
 	    strcmp(dir, "/sys") == 0)
 		whitelist_error(path);
 
@@ -448,14 +489,16 @@ static char *extract_topdir(const char *path) {
 	if (!dup)
 		errExit("strdup");
 
-	// user home is treated as top level directory
+	// user home directory can be anywhere; disconnect user home
+	// whitelisting from top level directory whitelisting
+	// by treating user home as separate whitelist top level directory
 	if (strncmp(dup, cfg.homedir, homedir_len) == 0 && dup[homedir_len] == '/')
 		dup[homedir_len] = '\0';
-	// whitelisting in /run and /sys is not allowed,
-	// but /run/user/$UID and /sys/module are exceptions
-	// and are treated as top level directories here
+	// /run/user/$UID is treated as top level directory
 	else if (strncmp(dup, runuser, runuser_len) == 0 && dup[runuser_len] == '/')
 		dup[runuser_len] = '\0';
+	// whitelisting in /sys is not allowed, but /sys/module is an exception
+	// and is treated as top level directory here
 	else if (strncmp(dup, "/sys/module", 11) == 0 && dup[11] == '/')
 		dup[11] = '\0';
 	// treat /usr subdirectories as top level directories

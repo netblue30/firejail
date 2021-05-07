@@ -51,5 +51,5 @@ dbus-user.own org.gnome.Logs
 dbus-user.talk ca.desrt.dconf
 dbus-system none
 
-# Add 'read-write ${HOME}' to your gnome-logs.local if you export logs to a file under your ${HOME}.
+# Add 'ignore read-only ${HOME}' to your gnome-logs.local if you export logs to a file under your ${HOME}.
 read-only ${HOME}

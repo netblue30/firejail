@@ -1140,7 +1140,7 @@ void disable_file_path(const char *path, const char *file) {
 // ignore dirfd if path is absolute
 // https://web.archive.org/web/20180419120236/https://blogs.gnome.org/jamesh/2018/04/19/secure-mounts
 int safer_openat(int dirfd, const char *path, int flags) {
-	assert(path);
+	assert(path && path[0]);
 	flags |= O_NOFOLLOW;
 
 	int fd = -1;
@@ -1161,7 +1161,7 @@ int safer_openat(int dirfd, const char *path, int flags) {
 	if (!dup)
 		errExit("strdup");
 	char *tok = strtok(dup, "/");
-	if (!tok) { // nothing to do, path is either empty string or the root directory
+	if (!tok) { // nothing to do, path is the root directory
 		free(dup);
 		return openat(dirfd, path, flags);
 	}

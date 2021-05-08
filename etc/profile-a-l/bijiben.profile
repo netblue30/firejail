@@ -22,6 +22,7 @@ whitelist ${HOME}/.local/share/bijiben
 whitelist ${HOME}/.cache/tracker
 whitelist /usr/share/bijiben
 whitelist /usr/share/tracker
+whitelist /usr/share/tracker3
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

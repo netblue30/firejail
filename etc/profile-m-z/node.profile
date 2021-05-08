@@ -1,9 +1,9 @@
-# Firejail profile for npm
-# Description: The Node.js Package Manager
+# Firejail profile for node
+# Description: Evented I/O for V8 javascript
 quiet
 # This file is overwritten after every install/update
 # Persistent local customizations
-include npm.local
+include node.local
 # Persistent global definitions
 include globals.local
 

@@ -15,6 +15,7 @@ noblacklist ${HOME}/.java
 noblacklist ${HOME}/.node-gyp
 noblacklist ${HOME}/.npm
 noblacklist ${HOME}/.npmrc
+noblacklist ${HOME}/.nvm
 noblacklist ${HOME}/.yarn
 noblacklist ${HOME}/.yarn-config
 noblacklist ${HOME}/.yarncache

@@ -336,4 +336,4 @@ pcsxr, PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2, bcompare, b2sum, c
 sha256sum, sha384sum, sha512sum, sum, librewold-nightly, Quodlibet, tmux, sway, alienarena, alienarena-wrapper,
 ballbuster, ballbuster-wrapper, colorful, colorful-wrapper, gl-117, gl-117-wrapper, glaxium, glaxium-wrapper,
 pinball, pinball-wrapper, etr-wrapper, neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper, firedragon
-neochat
+neochat, node, nvm

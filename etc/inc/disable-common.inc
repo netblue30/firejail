@@ -338,6 +338,7 @@ read-only ${HOME}/dotfiles
 read-only ${HOME}/.gem
 read-only ${HOME}/.luarocks
 read-only ${HOME}/.npm-packages
+read-only ${HOME}/.nvm
 read-only ${HOME}/bin
 read-only ${HOME}/.bin
 read-only ${HOME}/.local/bin

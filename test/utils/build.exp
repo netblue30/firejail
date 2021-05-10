@@ -21,11 +21,11 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"blacklist /usr/share"
+	"include whitelist-usr-share-common.inc"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"blacklist /var"
+	"include whitelist-var-common.inc"
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
@@ -37,7 +37,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"private-etc"
+	"private-etc none"
 }
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
@@ -49,11 +49,11 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
-	"nonewprivs"
+	"netfilter"
 }
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
-	"seccomp"
+	"nonewprivs"
 }
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
@@ -61,7 +61,11 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}
-	"shell none"
+	"seccomp"
+}
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"#shell none"
 }
 after 100
 

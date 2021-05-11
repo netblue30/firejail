@@ -32,7 +32,6 @@ caps.drop all
 hostname agetpkg
 ipc-namespace
 machine-id
-noautopulse
 netfilter
 no3d
 nodvd

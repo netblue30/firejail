@@ -10,11 +10,13 @@ noblacklist ${HOME}/.config/eog
 
 whitelist /usr/share/eog
 
-# private-bin, private-etc and private-lib break 'Open With' / 'Open in file manager'
-# comment those if you need that functionality
-# or put 'ignore private-bin', 'ignore private-etc' and 'ignore private-lib' in your eog.local
-private-bin eog
+# private-bin, private-etc and private-lib break 'Open With' / 'Open in file manager'.
+# Add the next lines to your eog.local if you need that functionality.
+#ignore private-bin
+#ignore private-etc
+#ignore private-lib
 
+private-bin eog
 
 # broken on Debian 10 (buster) running LXDE got the folowing error:
 # Failed to register: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: org.freedesktop.DBus.Error.ServiceUnknown

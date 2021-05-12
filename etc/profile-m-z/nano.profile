@@ -47,10 +47,14 @@ x11 none
 private-bin nano,rnano
 private-cache
 private-dev
-# Add 'ignore private-etc' to your nano.local if you want to edit files in /etc directly.
+# Add the next lines to your nano.local if you want to edit files in /etc directly.
+#ignore private-etc
+#writable-etc
 private-etc alternatives,nanorc
 
 dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+# Add the next line to your nano.local if you want to edit files in /var directly.
+#writable-var

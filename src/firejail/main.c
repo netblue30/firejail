@@ -1824,6 +1824,8 @@ int main(int argc, char **argv, char **envp) {
 				exit(1);
 			}
 			arg_noprofile = 1;
+			// force noautopulse in order to keep ~/.config/pulse as is
+			arg_noautopulse = 1;
 		}
 		else if (strncmp(argv[i], "--ignore=", 9) == 0) {
 			if (custom_profile) {

@@ -43,7 +43,7 @@ tracelog
 disable-mnt
 private-bin ostrichriders
 private-cache
-# comment the following line if you need controller support
+# Add 'ignore private-dev' to your ostrichriders.local if you need controller support.
 private-dev
 private-tmp
 

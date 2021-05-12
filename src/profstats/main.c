@@ -46,6 +46,7 @@ static int cnt_whitelistusrshare = 0;	// include whitelist-usr-share-common.inc
 static int cnt_ssh = 0;
 static int cnt_mdwx = 0;
 static int cnt_whitelisthome = 0;
+static int cnt_noroot = 0;
 
 static int level = 0;
 static int arg_debug = 0;
@@ -65,6 +66,7 @@ static int arg_mdwx = 0;
 static int arg_dbus_system_none = 0;
 static int arg_dbus_user_none = 0;
 static int arg_whitelisthome = 0;
+static int arg_noroot = 0;
 
 
 static char *profile = NULL;
@@ -80,6 +82,7 @@ static void usage(void) {
 	printf("   --dbus-user-none - profiles without  \"dbus-user none\"\n");
 	printf("   --ssh - print profiles without \"include disable-common.inc\"\n");
 	printf("   --noexec - print profiles without \"include disable-exec.inc\"\n");
+	printf("   --noroot - print profiles without \"noroot\"\n");
 	printf("   --private-bin - print profiles without private-bin\n");
 	printf("   --private-dev - print profiles without private-dev\n");
 	printf("   --private-etc - print profiles without private-etc\n");
@@ -128,6 +131,8 @@ void process_file(const char *fname) {
 			cnt_caps++;
 		else if (strncmp(ptr, "include disable-exec.inc", 24) == 0)
 			cnt_noexec++;
+		else if (strncmp(ptr, "noroot", 6) == 0)
+			cnt_noroot++;
 		else if (strncmp(ptr, "include whitelist-var-common.inc", 32) == 0)
 			cnt_whitelistvar++;
 		else if (strncmp(ptr, "include whitelist-runuser-common.inc", 36) == 0 ||
@@ -212,6 +217,8 @@ int main(int argc, char **argv) {
 			arg_mdwx = 1;
 		else if (strcmp(argv[i], "--noexec") == 0)
 			arg_noexec = 1;
+		else if (strcmp(argv[i], "--noroot") == 0)
+			arg_noroot = 1;
 		else if (strcmp(argv[i], "--private-bin") == 0)
 			arg_privatebin = 1;
 		else if (strcmp(argv[i], "--private-dev") == 0)
@@ -256,6 +263,7 @@ int main(int argc, char **argv) {
 		int caps = cnt_caps;
 		int apparmor = cnt_apparmor;
 		int noexec = cnt_noexec;
+		int noroot = cnt_noroot;
 		int privatebin = cnt_privatebin;
 		int privatetmp = cnt_privatetmp;
 		int privatedev = cnt_privatedev;
@@ -313,6 +321,8 @@ int main(int argc, char **argv) {
 			printf("No seccomp found in %s\n", argv[i]);
 		if (arg_noexec && noexec == cnt_noexec)
 			printf("No include disable-exec.inc found in %s\n", argv[i]);
+		if (arg_noroot && noroot == cnt_noroot)
+			printf("No noroot found in %s\n", argv[i]);
 		if (arg_privatedev && privatedev == cnt_privatedev)
 			printf("No private-dev found in %s\n", argv[i]);
 		if (arg_privatebin && privatebin == cnt_privatebin)
@@ -346,6 +356,7 @@ int main(int argc, char **argv) {
 	printf("    seccomp\t\t\t%d\n", cnt_seccomp);
 	printf("    capabilities\t\t%d\n", cnt_caps);
 	printf("    noexec\t\t\t%d   (include disable-exec.inc)\n", cnt_noexec);
+	printf("    noroot\t\t\t%d\n", cnt_noroot);
 	printf("    memory-deny-write-execute\t%d\n", cnt_mdwx);
 	printf("    apparmor\t\t\t%d\n", cnt_apparmor);
 	printf("    private-bin\t\t\t%d\n", cnt_privatebin);

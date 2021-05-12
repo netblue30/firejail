@@ -1,12 +1,78 @@
 .TH FIREJAIL-PROFILE 5 "MONTH YEAR" "VERSION" "firejail profiles man page"
 .SH NAME
-profile \- Security profile file syntax for Firejail
+profile \- Security profile file syntax, and information about building new application profiles.
 
-.SH USAGE
+.SH SYNOPSIS
+
+Using a specific profile:
+.PP
+.RS
 .TP
-firejail \-\-profile=filename.profile
+\fBfirejail \-\-profile=filename.profile
+.br
+
+.br
+Example:
+.br
+$ firejail --profile=/etc/firejail/kdenlive.profile --appimage kdenlive.appimage
+.br
+
+.br
+.TP
+\fBfirejail \-\-profile=profile_name
+.br
+
+.br
+Example:
+.br
+$ firejail --profile=kdenlive --appimage kdenlive.appimage
+.br
+
+.br
 .RE
-firejail \-\-profile=profile_name
+.PP
+
+
+
+Building a profile manually:
+.PP
+.RS
+Start with the template in /usr/share/doc/firejail/profile.template and modify it in a text editor.
+To integrate the program in your desktop environment copy the profile file in ~/.config/firejail
+directory and run "sudo firecfg".
+.RE
+.PP
+
+Aliases and redirections:
+.PP
+.RS
+In some cases the same profile can be used for several applications.
+One such example is LibreOffice.
+Build a regular profile for the main application, and for the rest use
+/usr/share/doc/firejail/redirect_alias-profile.template.
+.RE
+.PP
+
+Running the profile builder:
+.PP
+.RS
+.TP
+\fBfirejail \-\-build=appname.profile appname
+.br
+
+.br
+Example:
+.br
+$ firejail --build=blobby.profile blobby
+.br
+
+.br
+Run the program in "firejail \-\-build" and try to exercise as many program features as possible.
+The profile is extracted and saved in the current directory. Open it in a text editor and add or remove
+sandboxing options as necessary. Test again after modifying the profile. To integrate the program
+in your desktop environment copy the profile file in ~/.config/firejail directory and run "sudo firecfg".
+.RE
+.PP
 
 .SH DESCRIPTION
 Several command line options can be passed to the program using
@@ -891,7 +957,21 @@ Join the sandbox identified by name or start a new one.
 Same as "firejail --join=sandboxname" command if sandbox with specified name exists, otherwise same as "name sandboxname".
 
 .SH FILES
-/etc/firejail/filename.profile, $HOME/.config/firejail/filename.profile
+.TP
+\fB/etc/firejail/appname.profile
+Global Firejail configuration consisting mainly of profiles for each application supported by default.
+
+.TP
+\fB$HOME/.config/firejail/appname.profile
+User application profiles, will take precedence over the global profiles.
+
+.TP
+\fB/usr/share/doc/firejail/profile.template
+Template for building new profiles.
+
+.TP
+\fB/usr/share/doc/firejail/redirect_alias-profile.template
+Template for aliasing/redirecting profiles.
 
 .SH LICENSE
 Firejail is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.

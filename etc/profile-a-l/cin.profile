@@ -26,7 +26,7 @@ nou2f
 noroot
 protocol unix
 
-# if an 1-1.2% gap per thread hurts you, comment seccomp
+# If a 1-1.2% gap per thread hurts you, add 'ignore seccomp' to your cin.local.
 seccomp
 shell none
 

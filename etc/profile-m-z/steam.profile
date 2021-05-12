@@ -131,9 +131,9 @@ caps.drop all
 #ipc-namespace
 netfilter
 nodvd
-# If you use nVidia you might need to add 'ignore nogroups' and 'ignore noroot' to your steam.local.
 nogroups
 nonewprivs
+# If you use nVidia you might need to add 'ignore noroot' to your steam.local.
 noroot
 notv
 nou2f

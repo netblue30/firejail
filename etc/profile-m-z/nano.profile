@@ -47,7 +47,7 @@ x11 none
 private-bin nano,rnano
 private-cache
 private-dev
-# Comment the next line if you want to edit files in /etc directly
+# Add 'ignore private-etc' to your nano.local if you want to edit files in /etc directly.
 private-etc alternatives,nanorc
 
 dbus-user none

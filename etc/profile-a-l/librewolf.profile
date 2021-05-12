@@ -18,8 +18,8 @@ whitelist ${HOME}/.librewolf
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.mozilla
 
-# Uncomment or put in your librewolf.local one of the following whitelist to enable KeePassXC Plugin
-# NOTE: start KeePassXC before Librewolf and keep it open to allow communication between them
+# To enable KeePassXC Plugin add one of the following lines to your librewolf.local.
+# NOTE: start KeePassXC before Librewolf and keep it open to allow communication between them.
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 
@@ -31,25 +31,24 @@ include whitelist-usr-share-common.inc
 
 # Add the next line to your librewolf.local to enable private-bin (Arch Linux).
 #private-bin dbus-launch,dbus-send,librewolf,sh
-# Add the next line to your librewolf.local to enable private-etc. Note
-# that private-etc must first be enabled in firefox-common.local.
+# Add the next line to your librewolf.local to enable private-etc.
+# NOTE: private-etc must first be enabled in firefox-common.local.
 #private-etc librewolf
 
 dbus-user filter
-# Uncomment or put in your librewolf.local to enable native notifications.
+# Add the next line to your librewolf.local to enable native notifications.
 #dbus-user.talk org.freedesktop.Notifications
-# Uncomment or put in your librewolf.local to allow to inhibit screensavers
+# Add the next line to your librewolf.local to allow inhibiting screensavers.
 #dbus-user.talk org.freedesktop.ScreenSaver
-# Uncomment or put in your librewolf.local for plasma browser integration
+# Add the next lines to your librewolf.local for plasma browser integration.
 #dbus-user.own org.mpris.MediaPlayer2.plasma-browser-integration
 #dbus-user.talk org.kde.JobViewServer
 #dbus-user.talk org.kde.kuiserver
-# Uncomment or put in your librewolf.local to allow screen sharing under wayland.
+# Add the next lines to your librewolf.local to allow screensharing under Wayland.
 #whitelist ${RUNUSER}/pipewire-0
 #dbus-user.talk org.freedesktop.portal.*
-# Also uncomment or put in your librewolf.local if screen sharing sharing still
-# does not work with the above lines (might depend on the portal
-# implementation)
+# Also add the next line to your librewolf.local if screensharing does not work with
+# the above lines (depends on the portal implementation).
 #ignore noroot
 ignore dbus-user none
 

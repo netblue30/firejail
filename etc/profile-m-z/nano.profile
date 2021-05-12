@@ -51,10 +51,10 @@ private-dev
 #ignore private-etc
 #writable-etc
 private-etc alternatives,nanorc
+# Add the next line to your nano.local if you want to edit files in /var directly.
+#writable-var
 
 dbus-user none
 dbus-system none
 
 memory-deny-write-execute
-# Add the next line to your nano.local if you want to edit files in /var directly.
-#writable-var

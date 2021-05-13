@@ -119,7 +119,7 @@ whitelist ${HOME}/.steampid
 include whitelist-common.inc
 include whitelist-var-common.inc
 
-# Note: The following were intentionally left out as they are alternative
+# NOTE: The following were intentionally left out as they are alternative
 # (i.e.: unnecessary and/or legacy) paths whose existence may potentially
 # clobber other paths (see #4225).  If you use any, either add the entry to
 # steam.local or move the contents to a path listed above (or open an issue if
@@ -131,34 +131,36 @@ caps.drop all
 #ipc-namespace
 netfilter
 nodvd
-# nVidia users may need to comment / ignore nogroups and noroot
 nogroups
 nonewprivs
+# If you use nVidia you might need to add 'ignore noroot' to your steam.local.
 noroot
 notv
 nou2f
-# novideo should be commented for VR
+# For VR support add 'ignore novideo' to your steam.local.
 novideo
 protocol unix,inet,inet6,netlink
-# seccomp sometimes causes issues (see #2951, #3267),
-# comment it or add 'ignore seccomp' to steam.local if so.
+# seccomp sometimes causes issues (see #2951, #3267).
+# Add 'ignore seccomp' to your steam.local if you experience this.
 seccomp !ptrace
 shell none
 # tracelog breaks integrated browser
 #tracelog
 
-# private-bin is disabled while in testing, but has been tested working with multiple games
+# private-bin is disabled while in testing, but is known to work with multiple games.
+# Add the next line to your steam.local to enable private-bin.
 #private-bin awk,basename,bash,bsdtar,bzip2,cat,chmod,cksum,cmp,comm,compress,cp,curl,cut,date,dbus-launch,dbus-send,desktop-file-edit,desktop-file-install,desktop-file-validate,dirname,echo,env,expr,file,find,getopt,grep,gtar,gzip,head,hostname,id,lbzip2,ldconfig,ldd,ln,ls,lsb_release,lsof,lspci,lz4,lzip,lzma,lzop,md5sum,mkdir,mktemp,mv,netstat,ps,pulseaudio,python*,readlink,realpath,rm,sed,sh,sha1sum,sha256sum,sha512sum,sleep,sort,steam,steamdeps,steam-native,steam-runtime,sum,tail,tar,tclsh,test,touch,tr,umask,uname,update-desktop-database,wc,wget,which,whoami,xterm,xz,zenity
-# extra programs are available which might be needed for select games
+# Extra programs are available which might be needed for select games.
+# Add the next line to your steam.local to enable support for these programs.
 #private-bin java,java-config,mono
-# picture viewers are needed for viewing screenshots
+# To view screenshots add the next line to your steam.local.
 #private-bin eog,eom,gthumb,pix,viewnior,xviewer
 
 private-dev
-# private-etc breaks a small selection of games on some systems, comment to support those
+# private-etc breaks a small selection of games on some systems. Add 'ignore private-etc'
+# to your steam.local to support those.
 private-etc alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,dbus-1,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,lsb-release,machine-id,mime.types,nvidia,os-release,passwd,pki,pulse,resolv.conf,services,ssl
 private-tmp
 
-# breaks appindicator support
 # dbus-user none
 # dbus-system none

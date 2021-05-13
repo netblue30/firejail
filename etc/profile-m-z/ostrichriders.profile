@@ -29,6 +29,7 @@ ipc-namespace
 net none
 nodvd
 nogroups
+# Add 'ignore noinput' to your ostrichriders.local if you need controller support.
 noinput
 nonewprivs
 noroot
@@ -43,7 +44,6 @@ tracelog
 disable-mnt
 private-bin ostrichriders
 private-cache
-# comment the following line if you need controller support
 private-dev
 private-tmp
 

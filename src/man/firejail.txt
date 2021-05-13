@@ -1892,9 +1892,7 @@ $
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
-the /etc directory, and must not contain the / character
-(e.g., /etc/foo must be expressed as foo, but /etc/foo/bar --
-expressed as foo/bar -- is disallowed).
+the /etc directory (e.g., /etc/foo must be expressed as foo).
 If no listed file is found, /etc directory will be empty.
 All modifications are discarded when the sandbox is closed.
 .br
@@ -1997,7 +1995,7 @@ Build a new /srv in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
 the /srv directory, and must not contain the / character
-(e.g., /opt/srv must be expressed as foo, but /srv/foo/bar --
+(e.g., /srv/foo must be expressed as foo, but /srv/foo/bar --
 expressed as srv/bar -- is disallowed).
 If no listed file is found, /srv directory will be empty.
 All modifications are discarded when the sandbox is closed.

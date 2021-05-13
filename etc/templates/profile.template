@@ -64,7 +64,7 @@ include globals.local
 #blacklist /tmp/.X11-unix
 # Disable Wayland
 #blacklist ${RUNUSER}/wayland-*
-# Disable RUNUSER (cli only)
+# Disable RUNUSER (cli only; supersedes Disable Wayland)
 #blacklist ${RUNUSER}
 
 # It is common practice to add files/dirs containing program-specific configuration
@@ -109,6 +109,8 @@ include globals.local
 # Allow ssh (blacklisted by disable-common.inc)
 #include allow-ssh.inc
 
+# disable-*.inc includes
+# remove disable-write-mnt.inc if you set disable-mnt
 #include disable-common.inc
 #include disable-devel.inc
 #include disable-exec.inc

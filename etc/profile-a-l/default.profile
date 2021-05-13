@@ -32,12 +32,13 @@ netfilter
 # no3d
 # nodvd
 # nogroups
+noinput
 nonewprivs
 noroot
 # nosound
-# notv
+notv
 # nou2f
-# novideo
+novideo
 protocol unix,inet,inet6
 seccomp
 # shell none

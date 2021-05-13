@@ -45,6 +45,7 @@ caps.keep sys_admin,sys_chroot
 netfilter
 nodvd
 nogroups
+noinput
 notv
 ?BROWSER_DISABLE_U2F: nou2f
 shell none

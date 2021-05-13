@@ -1876,6 +1876,9 @@ int main(int argc, char **argv, char **envp) {
 			}
 			arg_writable_etc = 1;
 		}
+		else if (strcmp(argv[i], "--keep-config-pulse") == 0) {
+			arg_noautopulse = 1;
+		}
 		else if (strcmp(argv[i], "--writable-var") == 0) {
 			arg_writable_var = 1;
 		}

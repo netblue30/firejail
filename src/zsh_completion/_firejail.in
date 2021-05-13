@@ -98,6 +98,7 @@ _firejail_args=(
     '*--ignore=-[ignore command in profile files]: :'
     '--ipc-namespace[enable a new IPC namespace]'
     '--join-or-start=-[join the sandbox or start a new one name|pid]: :_all_firejails'
+    '--keep-config-pulse[disable automatic ~/.config/pulse init]'
     '--keep-dev-shm[/dev/shm directory is untouched (even with --private-dev)]'
     '--keep-var-tmp[/var/tmp directory is untouched]'
     '--machine-id[preserve /etc/machine-id]'

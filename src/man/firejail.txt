@@ -1052,6 +1052,17 @@ Same as "firejail --join=name" if sandbox with specified name exists, otherwise 
 Note that in contrary to other join options there is respective profile option.
 
 .TP
+\fB\-\-keep-config-pulse
+Disable automatic ~/.config/pulse init, for complex setups such as remote
+pulse servers or non-standard socket paths.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-keep-config-pulse firefox
+
+.TP
 \fB\-\-keep-dev-shm
 /dev/shm directory is untouched (even with --private-dev)
 .br
@@ -1460,15 +1471,8 @@ Example:
 $ firejail --no3d firefox
 
 .TP
-\fB\-\-noautopulse
-Disable automatic ~/.config/pulse init, for complex setups such as remote
-pulse servers or non-standard socket paths.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-noautopulse firefox
+\fB\-\-noautopulse \fR(deprecated)
+See --keep-config-pulse.
 
 .TP
 \fB\-\-noblacklist=dirname_or_filename

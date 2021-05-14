@@ -314,7 +314,6 @@ extern int arg_private_cwd;	// private working directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist command
 extern int arg_nosound;	// disable sound
-extern int arg_noautopulse; // disable automatic ~/.config/pulse init
 extern int arg_novideo; //disable video devices in /dev
 extern int arg_no3d;		// disable 3d hardware acceleration
 extern int arg_quiet;		// no output for scripting
@@ -323,6 +322,7 @@ extern int arg_join_filesystem;	// join only the mount namespace
 extern int arg_nice;		// nice value configured
 extern int arg_ipc;		// enable ipc namespace
 extern int arg_writable_etc;	// writable etc
+extern int arg_keep_config_pulse;	// disable automatic ~/.config/pulse init
 extern int arg_writable_var;	// writable var
 extern int arg_keep_var_tmp; // don't overwrite /var/tmp
 extern int arg_writable_run_user;	// writable /run/user

@@ -1015,7 +1015,7 @@ int sandbox(void* sandbox_arg) {
 		// disable /dev/snd
 		fs_dev_disable_sound();
 	}
-	else if (!arg_noautopulse)
+	else if (!arg_keep_config_pulse)
 		pulseaudio_init();
 
 	if (arg_no3d)

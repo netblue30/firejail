@@ -423,7 +423,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "noautopulse") == 0) {
-		arg_noautopulse = 1;
+		arg_keep_config_pulse = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "notv") == 0) {
@@ -1145,7 +1145,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 	if (strcmp(ptr, "keep-config-pulse") == 0) {
-		arg_noautopulse = 1;
+		arg_keep_config_pulse = 1;
 		return 0;
 	}
 

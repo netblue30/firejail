@@ -116,7 +116,6 @@ int arg_private_cwd = 0;			// private working directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist command
 int arg_nosound = 0;				// disable sound
-int arg_noautopulse = 0;			// disable automatic ~/.config/pulse init
 int arg_novideo = 0;			//disable video devices in /dev
 int arg_no3d;					// disable 3d hardware acceleration
 int arg_quiet = 0;				// no output for scripting
@@ -125,6 +124,7 @@ int arg_join_filesystem = 0;			// join only the mount namespace
 int arg_nice = 0;				// nice value configured
 int arg_ipc = 0;					// enable ipc namespace
 int arg_writable_etc = 0;			// writable etc
+int arg_keep_config_pulse = 0;			// disable automatic ~/.config/pulse init
 int arg_writable_var = 0;			// writable var
 int arg_keep_var_tmp = 0;                       // don't overwrite /var/tmp
 int arg_writable_run_user = 0;			// writable /run/user
@@ -1824,8 +1824,8 @@ int main(int argc, char **argv, char **envp) {
 				exit(1);
 			}
 			arg_noprofile = 1;
-			// force noautopulse in order to keep ~/.config/pulse as is
-			arg_noautopulse = 1;
+			// force keep-config-pulse in order to keep ~/.config/pulse as is
+			arg_keep_config_pulse = 1;
 		}
 		else if (strncmp(argv[i], "--ignore=", 9) == 0) {
 			if (custom_profile) {
@@ -1877,7 +1877,7 @@ int main(int argc, char **argv, char **envp) {
 			arg_writable_etc = 1;
 		}
 		else if (strcmp(argv[i], "--keep-config-pulse") == 0) {
-			arg_noautopulse = 1;
+			arg_keep_config_pulse = 1;
 		}
 		else if (strcmp(argv[i], "--writable-var") == 0) {
 			arg_writable_var = 1;
@@ -2081,7 +2081,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--nosound") == 0)
 			arg_nosound = 1;
 		else if (strcmp(argv[i], "--noautopulse") == 0)
-			arg_noautopulse = 1;
+			arg_keep_config_pulse = 1;
 		else if (strcmp(argv[i], "--novideo") == 0)
 			arg_novideo = 1;
 		else if (strcmp(argv[i], "--no3d") == 0)

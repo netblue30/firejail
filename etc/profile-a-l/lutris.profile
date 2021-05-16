@@ -14,6 +14,10 @@ noblacklist ${HOME}/.config/lutris
 noblacklist ${HOME}/.local/share/lutris
 # noblacklist ${HOME}/.wine
 noblacklist /tmp/.wine-*
+# Don't block access to /sbin and /usr/sbin to allow using ldconfig. Otherwise
+# Lutris won't even start.
+noblacklist /sbin
+noblacklist /usr/sbin
 
 ignore noexec ${HOME}
 

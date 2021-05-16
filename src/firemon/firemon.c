@@ -52,7 +52,7 @@ static void my_handler(int s){
 
 	if (terminal_set)
 		tcsetattr(0, TCSANOW, &tlocal);
-	exit(0);
+	_exit(0);
 }
 
 // find the second child process for the specified pid

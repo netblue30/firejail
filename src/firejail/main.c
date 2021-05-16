@@ -2874,12 +2874,6 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
- 	// create the parent-child communication pipe
- 	if (pipe(parent_to_child_fds) < 0)
- 		errExit("pipe");
- 	if (pipe(child_to_parent_fds) < 0)
-		errExit("pipe");
-
 	if (arg_noroot && arg_overlay) {
 		fwarning("--overlay and --noroot are mutually exclusive, noroot disabled\n");
 		arg_noroot = 0;
@@ -2920,6 +2914,12 @@ int main(int argc, char **argv, char **envp) {
 		}
 	}
 #endif
+
+	// create the parent-child communication pipe
+	if (pipe2(parent_to_child_fds, O_CLOEXEC) < 0)
+		errExit("pipe");
+	if (pipe2(child_to_parent_fds, O_CLOEXEC) < 0)
+		errExit("pipe");
 
 	// clone environment
 	int flags = CLONE_NEWNS | CLONE_NEWPID | CLONE_NEWUTS | SIGCHLD;

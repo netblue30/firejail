@@ -295,7 +295,7 @@ void fs_var_utmp(void) {
 		printf("Create the new utmp file\n");
 
 	/* coverity[toctou] */
-	FILE *fp = fopen(RUN_UTMP_FILE, "wxe");
+	FILE *fp = fopen(RUN_UTMP_FILE, "we");
 	if (!fp)
 		errExit("fopen");
 
@@ -322,5 +322,5 @@ void fs_var_utmp(void) {
 		printf("Mount the new utmp file\n");
 	if (mount(RUN_UTMP_FILE, UTMP_FILE, NULL, MS_BIND|MS_NOSUID|MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
 		errExit("mount bind utmp");
-	fs_logger("create /var/run/utmp");
+	fs_logger2("create", UTMP_FILE);
 }

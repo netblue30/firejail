@@ -286,7 +286,7 @@ void fs_var_utmp(void) {
 	if (stat(UTMP_FILE, &s) == 0)
 		utmp_group = s.st_gid;
 	else {
-		fwarning("cannot find /var/run/utmp\n");
+		fwarning("cannot find %s\n", UTMP_FILE);
 		return;
 	}
 

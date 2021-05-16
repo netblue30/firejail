@@ -222,3 +222,4 @@ include globals.local
 #memory-deny-write-execute
 ##noexec PATH
 ##read-only ${HOME}
+##read-write ${HOME}

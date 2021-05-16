@@ -74,5 +74,7 @@ shell none
 #private-dev
 private-tmp
 
-dbus-user none
+dbus-user filter
+dbus-user.own net.lutris.Lutris
+dbus-user.talk com.feralinteractive.GameMode
 dbus-system none

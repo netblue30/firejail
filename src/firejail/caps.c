@@ -389,7 +389,7 @@ static uint64_t extract_caps(int pid) {
 		errExit("asprintf");
 
 	EUID_ROOT();	// grsecurity
-	FILE *fp = fopen(file, "r");
+	FILE *fp = fopen(file, "re");
 	EUID_USER();	// grsecurity
 	if (!fp)
 		goto errexit;

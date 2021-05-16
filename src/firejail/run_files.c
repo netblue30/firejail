@@ -101,7 +101,7 @@ void set_name_run_file(pid_t pid) {
 		errExit("asprintf");
 
 	// the file is deleted first
-	FILE *fp = fopen(fname, "w");
+	FILE *fp = fopen(fname, "we");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot create %s\n", fname);
 		exit(1);
@@ -120,7 +120,7 @@ void set_x11_run_file(pid_t pid, int display) {
 		errExit("asprintf");
 
 	// the file is deleted first
-	FILE *fp = fopen(fname, "w");
+	FILE *fp = fopen(fname, "we");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot create %s\n", fname);
 		exit(1);
@@ -139,7 +139,7 @@ void set_profile_run_file(pid_t pid, const char *fname) {
 
 	EUID_ROOT();
 	// the file is deleted first
-	FILE *fp = fopen(runfile, "w");
+	FILE *fp = fopen(runfile, "we");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot create %s\n", runfile);
 		exit(1);

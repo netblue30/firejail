@@ -67,7 +67,7 @@ static void sandbox_handler(int sig){
 		if (asprintf(&monfile, "/proc/%d/cmdline", monitored_pid) == -1)
 			errExit("asprintf");
 		while (monsec) {
-			FILE *fp = fopen(monfile, "r");
+			FILE *fp = fopen(monfile, "re");
 			if (!fp)
 				break;
 
@@ -162,7 +162,7 @@ static void save_nogroups(void) {
 	if (arg_nogroups == 0)
 		return;
 
-	FILE *fp = fopen(RUN_GROUPS_CFG, "w");
+	FILE *fp = fopen(RUN_GROUPS_CFG, "wxe");
 	if (fp) {
 		fprintf(fp, "\n");
 		SET_PERMS_STREAM(fp, 0, 0, 0644); // assume mode 0644

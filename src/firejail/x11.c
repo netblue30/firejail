@@ -84,7 +84,7 @@ int x11_display(void) {
 static int x11_abstract_sockets_present(void) {
 
 	EUID_ROOT();				  // grsecurity fix
-	FILE *fp = fopen("/proc/net/unix", "r");
+	FILE *fp = fopen("/proc/net/unix", "re");
 	if (!fp)
 		errExit("fopen");
 	EUID_USER();
@@ -1363,7 +1363,7 @@ void fs_x11(void) {
 	fs_logger("tmpfs /tmp/.X11-unix");
 
 	// create an empty root-owned file which will have the desired socket bind-mounted over it
-	int fd = open(x11file, O_RDONLY|O_CREAT|O_EXCL, S_IRUSR | S_IWUSR);
+	int fd = open(x11file, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWUSR);
 	if (fd < 0)
 		errExit(x11file);
 	close(fd);

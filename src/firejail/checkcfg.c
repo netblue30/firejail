@@ -59,7 +59,7 @@ int checkcfg(int val) {
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
-		fp = fopen(fname, "r");
+		fp = fopen(fname, "re");
 		if (!fp) {
 #ifdef HAVE_GLOBALCFG
 			fprintf(stderr, "Error: Firejail configuration file %s not found\n", fname);

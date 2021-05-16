@@ -298,14 +298,14 @@ int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, m
 	assert(destname);
 
 	// open source
-	int src = open(srcname, O_RDONLY);
+	int src = open(srcname, O_RDONLY|O_CLOEXEC);
 	if (src < 0) {
 		fwarning("cannot open source file %s, file not copied\n", srcname);
 		return -1;
 	}
 
 	// open destination
-	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (dst < 0) {
 		fwarning("cannot open destination file %s, file not copied\n", destname);
 		close(src);
@@ -348,7 +348,7 @@ void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid
 
 void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode) {
 	// open destination
-	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	int dst = open(destname, O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (dst < 0) {
 		fwarning("cannot open destination file %s, file not copied\n", destname);
 		return;
@@ -361,7 +361,7 @@ void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_
 		// drop privileges
 		drop_privs(0);
 
-		int src = open(srcname, O_RDONLY);
+		int src = open(srcname, O_RDONLY|O_CLOEXEC);
 		if (src < 0) {
 			fwarning("cannot open source file %s, file not copied\n", srcname);
 		} else {
@@ -616,7 +616,7 @@ int find_child(pid_t parent, pid_t *child) {
 			perror("asprintf");
 			exit(1);
 		}
-		FILE *fp = fopen(file, "r");
+		FILE *fp = fopen(file, "re");
 		if (!fp) {
 			free(file);
 			continue;
@@ -722,7 +722,7 @@ void update_map(char *mapping, char *map_file) {
 		if (mapping[j] == ',')
 			mapping[j] = '\n';
 
-	fd = open(map_file, O_RDWR);
+	fd = open(map_file, O_RDWR|O_CLOEXEC);
 	if (fd == -1) {
 		fprintf(stderr, "Error: cannot open %s: %s\n", map_file, strerror(errno));
 		exit(EXIT_FAILURE);
@@ -742,9 +742,9 @@ void wait_for_other(int fd) {
 	// wait for the parent to be initialized
 	//****************************
 	char childstr[BUFLEN + 1];
-	int newfd = dup(fd);
+	int newfd = fcntl(fd, F_DUPFD_CLOEXEC, 0);
 	if (newfd == -1)
-		errExit("dup");
+		errExit("fcntl");
 	FILE* stream;
 	stream = fdopen(newfd, "r");
 	*childstr = '\0';
@@ -791,9 +791,9 @@ void wait_for_other(int fd) {
 
 void notify_other(int fd) {
 	FILE* stream;
-	int newfd = dup(fd);
+	int newfd = fcntl(fd, F_DUPFD_CLOEXEC, 0);
 	if (newfd == -1)
-		errExit("dup");
+		errExit("fcntl");
 	stream = fdopen(newfd, "w");
 	fprintf(stream, "arg_noroot=%d\n", arg_noroot);
 	fflush(stream);
@@ -811,7 +811,7 @@ uid_t pid_get_uid(pid_t pid) {
 		exit(1);
 	}
 	EUID_ROOT();				  // grsecurity fix
-	FILE *fp = fopen(file, "r");
+	FILE *fp = fopen(file, "re");
 	if (!fp) {
 		free(file);
 		fprintf(stderr, "Error: cannot open /proc file\n");
@@ -1021,8 +1021,7 @@ void create_empty_file_as_root(const char *fname, mode_t mode) {
 		if (arg_debug)
 			printf("Creating empty %s file\n", fname);
 
-		/* coverity[toctou] */
-		FILE *fp = fopen(fname, "w");
+		FILE *fp = fopen(fname, "wxe");
 		if (!fp)
 			errExit("fopen");
 		SET_PERMS_STREAM(fp, 0, 0, mode);

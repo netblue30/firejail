@@ -106,7 +106,7 @@ void pulseaudio_init(void) {
 		errExit("asprintf");
 	if (copy_file(PULSE_CLIENT_SYSCONF, pulsecfg, -1, -1, 0644)) // root needed
 		errExit("copy_file");
-	FILE *fp = fopen(pulsecfg, "a");
+	FILE *fp = fopen(pulsecfg, "ae");
 	if (!fp)
 		errExit("fopen");
 	fprintf(fp, "%s", "\nenable-shm = no\n");

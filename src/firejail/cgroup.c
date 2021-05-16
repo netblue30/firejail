@@ -26,7 +26,7 @@ void save_cgroup(void) {
 	if (cfg.cgroup == NULL)
 		return;
 
-	FILE *fp = fopen(RUN_CGROUP_CFG, "w");
+	FILE *fp = fopen(RUN_CGROUP_CFG, "wxe");
 	if (fp) {
 		fprintf(fp, "%s", cfg.cgroup);
 		fflush(0);
@@ -48,7 +48,7 @@ void load_cgroup(const char *fname) {
 	if (!fname)
 		return;
 
-	FILE *fp = fopen(fname, "r");
+	FILE *fp = fopen(fname, "re");
 	if (fp) {
 		char buf[MAXBUF];
 		if (fgets(buf, MAXBUF, fp)) {
@@ -91,19 +91,19 @@ void set_cgroup(const char *path) {
 		goto errout;
 
 	// tasks file exists
-	struct stat s;
-	if (stat(path, &s) == -1)
-		goto errout;
-
-	// task file belongs to the user running the sandbox
-	if (s.st_uid != getuid() && s.st_gid != getgid())
-		goto errout2;
-
-	// add the task to cgroup
-	/* coverity[toctou] */
-	FILE *fp = fopen(path,	"a");
+	FILE *fp = fopen(path, "ae");
 	if (!fp)
 		goto errout;
+	// task file belongs to the user running the sandbox
+	int fd = fileno(fp);
+	if (fd == -1)
+		errExit("fileno");
+	struct stat s;
+	if (fstat(fd, &s) == -1)
+		errExit("fstat");
+	if (s.st_uid != getuid() && s.st_gid != getgid())
+		goto errout2;
+	// add the task to cgroup
 	pid_t pid = getpid();
 	int rv = fprintf(fp, "%d\n", pid);
 	(void) rv;

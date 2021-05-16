@@ -22,6 +22,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <errno.h>
 #include <net/if.h>
 #include "firejail.h"
 
@@ -119,26 +120,19 @@ static void bandwidth_create_run_file(pid_t pid) {
 	if (asprintf(&fname, "%s/%d-bandwidth", RUN_FIREJAIL_BANDWIDTH_DIR, (int) pid) == -1)
 		errExit("asprintf");
 
-	// if the file already exists, do nothing
-	struct stat s;
-	if (stat(fname, &s) == 0) {
-		free(fname);
-		return;
-	}
-
 	// create an empty file and set mod and ownership
-	/* coverity[toctou] */
-	FILE *fp = fopen(fname, "w");
-	if (fp) {
-		SET_PERMS_STREAM(fp, 0, 0, 0644);
-		fclose(fp);
-	}
-	else {
+	// if the file already exists, do nothing
+	FILE *fp = fopen(fname, "wxe");
+	free(fname);
+	if (!fp) {
+		if (errno == EEXIST)
+			return;
 		fprintf(stderr, "Error: cannot create bandwidth file\n");
 		exit(1);
 	}
 
-	free(fname);
+	SET_PERMS_STREAM(fp, 0, 0, 0644);
+	fclose(fp);
 }
 
 
@@ -148,7 +142,7 @@ void network_set_run_file(pid_t pid) {
 		errExit("asprintf");
 
 	// create an empty file and set mod and ownership
-	FILE *fp = fopen(fname, "w");
+	FILE *fp = fopen(fname, "we");
 	if (fp) {
 		if (cfg.bridge0.configured)
 			fprintf(fp, "%s:%s\n", cfg.bridge0.dev, cfg.bridge0.devsandbox);
@@ -178,7 +172,7 @@ static void read_bandwidth_file(pid_t pid) {
 	if (asprintf(&fname, "%s/%d-bandwidth", RUN_FIREJAIL_BANDWIDTH_DIR, (int) pid) == -1)
 		errExit("asprintf");
 
-	FILE *fp = fopen(fname, "r");
+	FILE *fp = fopen(fname, "re");
 	if (fp) {
 		char buf[1024];
 		while (fgets(buf, 1024,fp)) {
@@ -214,7 +208,7 @@ static void write_bandwidth_file(pid_t pid) {
 	if (asprintf(&fname, "%s/%d-bandwidth", RUN_FIREJAIL_BANDWIDTH_DIR, (int) pid) == -1)
 		errExit("asprintf");
 
-	FILE *fp = fopen(fname, "w");
+	FILE *fp = fopen(fname, "we");
 	if (fp) {
 		IFBW *ptr = ifbw;
 		while (ptr) {
@@ -307,7 +301,7 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 		char *fname;
 		if (asprintf(&fname, "%s/%d-netmap", RUN_FIREJAIL_NETWORK_DIR, (int) pid) == -1)
 			errExit("asprintf");
-		FILE *fp = fopen(fname, "r");
+		FILE *fp = fopen(fname, "re");
 		if (!fp) {
 			fprintf(stderr, "Error: cannot read network map file %s\n", fname);
 			exit(1);

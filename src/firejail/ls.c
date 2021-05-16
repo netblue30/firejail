@@ -221,7 +221,7 @@ void cat(const char *path) {
 
 	if (arg_debug)
 		printf("cat %s\n", path);
-	FILE *fp = fopen(path, "r");
+	FILE *fp = fopen(path, "re");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot read %s\n", path);
 		exit(1);

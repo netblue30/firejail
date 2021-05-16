@@ -75,7 +75,7 @@ void save_cpu(void) {
 	if (cfg.cpus == 0)
 		return;
 
-	FILE *fp = fopen(RUN_CPU_CFG, "w");
+	FILE *fp = fopen(RUN_CPU_CFG, "wxe");
 	if (fp) {
 		fprintf(fp, "%x\n", cfg.cpus);
 		SET_PERMS_STREAM(fp, 0, 0, 0600);
@@ -91,7 +91,7 @@ void load_cpu(const char *fname) {
 	if (!fname)
 		return;
 
-	FILE *fp = fopen(fname, "r");
+	FILE *fp = fopen(fname, "re");
 	if (fp) {
 		unsigned tmp;
 		int rv = fscanf(fp, "%x", &tmp);
@@ -139,7 +139,7 @@ static void print_cpu(int pid) {
 	}
 
 	EUID_ROOT();	// grsecurity
-	FILE *fp = fopen(file, "r");
+	FILE *fp = fopen(file, "re");
 	EUID_USER();	// grsecurity
 	if (!fp) {
 		printf("  Error: cannot open %s\n", file);

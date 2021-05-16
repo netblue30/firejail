@@ -127,7 +127,7 @@ void fs_var_log(void) {
 
 		// create an empty /var/log/wtmp file
 		/* coverity[toctou] */
-		FILE *fp = fopen("/var/log/wtmp", "w");
+		FILE *fp = fopen("/var/log/wtmp", "wxe");
 		if (fp) {
 			SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH);
 			fclose(fp);
@@ -135,7 +135,7 @@ void fs_var_log(void) {
 		fs_logger("touch /var/log/wtmp");
 
 		// create an empty /var/log/btmp file
-		fp = fopen("/var/log/btmp", "w");
+		fp = fopen("/var/log/btmp", "wxe");
 		if (fp) {
 			SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP);
 			fclose(fp);
@@ -158,8 +158,7 @@ void fs_var_lib(void) {
 		fs_logger("tmpfs /var/lib/dhcp");
 
 		// isc dhcp server requires a /var/lib/dhcp/dhcpd.leases file
-		FILE *fp = fopen("/var/lib/dhcp/dhcpd.leases", "w");
-
+		FILE *fp = fopen("/var/lib/dhcp/dhcpd.leases", "wxe");
 		if (fp) {
 			fprintf(fp, "\n");
 			SET_PERMS_STREAM(fp, 0, 0, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
@@ -296,7 +295,7 @@ void fs_var_utmp(void) {
 		printf("Create the new utmp file\n");
 
 	/* coverity[toctou] */
-	FILE *fp = fopen(RUN_UTMP_FILE, "w");
+	FILE *fp = fopen(RUN_UTMP_FILE, "wxe");
 	if (!fp)
 		errExit("fopen");
 

@@ -32,7 +32,7 @@ int restricted_shell(const char *user) {
 	char *fname;
 	if (asprintf(&fname, "%s/login.users", SYSCONFDIR) == -1)
 		errExit("asprintf");
-	FILE *fp = fopen(fname, "r");
+	FILE *fp = fopen(fname, "re");
 	free(fname);
 	if (fp == NULL)
 		return 0;
@@ -96,7 +96,7 @@ int restricted_shell(const char *user) {
 		    		fullargv[i] = ptr;
 #ifdef DEBUG_RESTRICTED_SHELL
 				{EUID_ROOT();
-				FILE *fp = fopen("/firelog", "a");
+				FILE *fp = fopen("/firelog", "ae");
 				if (fp) {
 					fprintf(fp, "i %d ptr #%s#\n", i, fullargv[i]);
 					fclose(fp);

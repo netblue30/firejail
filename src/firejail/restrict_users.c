@@ -183,10 +183,10 @@ static void sanitize_passwd(void) {
 
 	// open files
 	/* coverity[toctou] */
-	fpin = fopen("/etc/passwd", "r");
+	fpin = fopen("/etc/passwd", "re");
 	if (!fpin)
 		goto errout;
-	fpout = fopen(RUN_PASSWD_FILE, "w");
+	fpout = fopen(RUN_PASSWD_FILE, "we");
 	if (!fpout)
 		goto errout;
 
@@ -318,10 +318,10 @@ static void sanitize_group(void) {
 
 	// open files
 	/* coverity[toctou] */
-	fpin = fopen("/etc/group", "r");
+	fpin = fopen("/etc/group", "re");
 	if (!fpin)
 		goto errout;
-	fpout = fopen(RUN_GROUP_FILE, "w");
+	fpout = fopen(RUN_GROUP_FILE, "we");
 	if (!fpout)
 		goto errout;
 

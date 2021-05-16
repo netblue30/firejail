@@ -103,7 +103,7 @@ static void extract_x11_display(pid_t pid) {
 	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
 		errExit("asprintf");
 
-	FILE *fp = fopen(fname, "r");
+	FILE *fp = fopen(fname, "re");
 	free(fname);
 	if (!fp)
 		return;
@@ -219,7 +219,7 @@ static void extract_caps(pid_t pid) {
 		perror("asprintf");
 		exit(1);
 	}
-	FILE *fp = fopen(file, "r");
+	FILE *fp = fopen(file, "re");
 	if (!fp)
 		goto errexit;
 
@@ -266,7 +266,7 @@ static void extract_user_namespace(pid_t pid) {
 	char *uidmap;
 	if (asprintf(&uidmap, "/proc/%u/uid_map", pid) == -1)
 		errExit("asprintf");
-	FILE *fp = fopen(uidmap, "r");
+	FILE *fp = fopen(uidmap, "re");
 	if (!fp) {
 		free(uidmap);
 		return;

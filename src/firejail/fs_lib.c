@@ -221,7 +221,7 @@ void fslib_mount_libs(const char *full_path, unsigned user) {
 	sbox_run(mask | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, full_path, RUN_LIB_FILE);
 
 	// open the list of libraries and install them on by one
-	FILE *fp = fopen(RUN_LIB_FILE, "r");
+	FILE *fp = fopen(RUN_LIB_FILE, "re");
 	if (!fp)
 		errExit("fopen");
 

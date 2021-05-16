@@ -122,7 +122,7 @@ static void deventry_mount(void) {
 						i++;
 						continue;
 					}
-					FILE *fp = fopen(dev[i].dev_fname, "w");
+					FILE *fp = fopen(dev[i].dev_fname, "we");
 					if (fp) {
 						fprintf(fp, "\n");
 						SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
@@ -218,7 +218,7 @@ void fs_private_dev(void){
 	struct stat s;
 	if (stat("/dev/log", &s) == 0) {
 		have_devlog = 1;
-		FILE *fp = fopen(RUN_DEVLOG_FILE, "w");
+		FILE *fp = fopen(RUN_DEVLOG_FILE, "we");
 		if (!fp)
 			have_devlog = 0;
 		else {
@@ -239,7 +239,7 @@ void fs_private_dev(void){
 
 	// bring back /dev/log
 	if (have_devlog) {
-		FILE *fp = fopen("/dev/log", "w");
+		FILE *fp = fopen("/dev/log", "we");
 		if (fp) {
 			fprintf(fp, "\n");
 			fclose(fp);

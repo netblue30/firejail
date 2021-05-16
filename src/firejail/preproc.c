@@ -164,7 +164,7 @@ void preproc_clean_run(void) {
 	int max_pids=32769;
 	int start_pid = 100;
 	// extract real max_pids
-	FILE *fp = fopen("/proc/sys/kernel/pid_max", "r");
+	FILE *fp = fopen("/proc/sys/kernel/pid_max", "re");
 	if (fp) {
 		int val;
 		if (fscanf(fp, "%d", &val) == 1) {

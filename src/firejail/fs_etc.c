@@ -52,7 +52,7 @@ void fs_machineid(void) {
 	mid.u8[8] = (mid.u8[8] & 0x3F) | 0x80;
 
 	// write it in a file
-	FILE *fp = fopen(RUN_MACHINEID, "w");
+	FILE *fp = fopen(RUN_MACHINEID, "we");
 	if (!fp)
 		errExit("fopen");
 	fprintf(fp, "%08x%08x%08x%08x\n", mid.u32[0], mid.u32[1], mid.u32[2], mid.u32[3]);

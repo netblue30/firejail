@@ -535,7 +535,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		char *fname;
 		if (asprintf(&fname, RUN_FIREJAIL_PROFILE_DIR "/%d", pid) == -1)
 			errExit("asprintf");
-		FILE *fp = fopen(fname, "r");
+		FILE *fp = fopen(fname, "re");
 		if (!fp) {
 			fprintf(stderr, "Error: sandbox %s not found\n", argv[i] + 16);
 			exit(1);
@@ -1043,7 +1043,7 @@ int main(int argc, char **argv, char **envp) {
 	preproc_build_firejail_dir();
 	const char *container_name = env_get("container");
 	if (!container_name || strcmp(container_name, "firejail")) {
-		lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+		lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
 		if (lockfd_directory != -1) {
 			int rv = fchown(lockfd_directory, 0, 0);
 			(void) rv;
@@ -1145,7 +1145,7 @@ int main(int argc, char **argv, char **envp) {
 
 #ifdef DEBUG_RESTRICTED_SHELL
 				{EUID_ROOT();
-				FILE *fp = fopen("/firelog", "w");
+				FILE *fp = fopen("/firelog", "we");
 				if (fp) {
 					int i;
 					fprintf(fp, "argc %d: ", argc);
@@ -1164,7 +1164,7 @@ int main(int argc, char **argv, char **envp) {
 						    strncmp(argv[2], "scp ", 4) == 0) {
 #ifdef DEBUG_RESTRICTED_SHELL
 							{EUID_ROOT();
-							FILE *fp = fopen("/firelog", "a");
+							FILE *fp = fopen("/firelog", "ae");
 							if (fp) {
 								fprintf(fp, "run without a sandbox\n");
 								fclose(fp);
@@ -1197,7 +1197,7 @@ int main(int argc, char **argv, char **envp) {
 
 #ifdef DEBUG_RESTRICTED_SHELL
 			{EUID_ROOT();
-			FILE *fp = fopen("/firelog", "a");
+			FILE *fp = fopen("/firelog", "ae");
 			if (fp) {
 				fprintf(fp, "fullargc %d: ",  fullargc);
 				int i;
@@ -1219,7 +1219,7 @@ int main(int argc, char **argv, char **envp) {
 
 #ifdef DEBUG_RESTRICTED_SHELL
 			{EUID_ROOT();
-			FILE *fp = fopen("/firelog", "a");
+			FILE *fp = fopen("/firelog", "ae");
 			if (fp) {
 				fprintf(fp, "argc %d: ", argc);
 				int i;
@@ -2852,7 +2852,7 @@ int main(int argc, char **argv, char **envp) {
 	// check and assign an IP address - for macvlan it will be done again in the sandbox!
 	if (any_bridge_configured()) {
 		EUID_ROOT();
-		lockfd_network = open(RUN_NETWORK_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+		lockfd_network = open(RUN_NETWORK_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
 		if (lockfd_network != -1) {
 			int rv = fchown(lockfd_network, 0, 0);
 			(void) rv;
@@ -2892,7 +2892,7 @@ int main(int argc, char **argv, char **envp) {
 
 	// set name and x11 run files
 	EUID_ROOT();
-	lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+	lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
 	if (lockfd_directory != -1) {
 		int rv = fchown(lockfd_directory, 0, 0);
 		(void) rv;

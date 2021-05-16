@@ -130,7 +130,7 @@ static int store_xauthority(void) {
 		}
 
 		// create an empty file as root, and change ownership to user
-		FILE *fp = fopen(dest, "w");
+		FILE *fp = fopen(dest, "we");
 		if (fp) {
 			fprintf(fp, "\n");
 			SET_PERMS_STREAM(fp, getuid(), getgid(), 0600);
@@ -178,7 +178,7 @@ static int store_asoundrc(void) {
 		}
 
 		// create an empty file as root, and change ownership to user
-		FILE *fp = fopen(dest, "w");
+		FILE *fp = fopen(dest, "we");
 		if (fp) {
 			fprintf(fp, "\n");
 			SET_PERMS_STREAM(fp, getuid(), getgid(), 0644);

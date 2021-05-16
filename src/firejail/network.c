@@ -217,7 +217,7 @@ int net_add_route(uint32_t ip, uint32_t mask, uint32_t gw) {
 
 #define BUFSIZE 1024
 uint32_t network_get_defaultgw(void) {
-	FILE *fp = fopen("/proc/self/net/route", "r");
+	FILE *fp = fopen("/proc/self/net/route", "re");
 	if (!fp)
 		errExit("fopen");
 

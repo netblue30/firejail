@@ -154,6 +154,7 @@ static char *usage_str =
 	"    --nodvd - disable DVD and audio CD devices.\n"
 	"    --noexec=filename - remount the file or directory noexec nosuid and nodev.\n"
 	"    --nogroups - disable supplementary groups.\n"
+	"    --noinput - disable input devices.\n"
 	"    --nonewprivs - sets the NO_NEW_PRIVS prctl.\n"
 	"    --noprofile - do not use a security profile.\n"
 #ifdef HAVE_USERNS

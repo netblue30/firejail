@@ -116,6 +116,7 @@ _firejail_args=(
     '--nodvd[disable DVD and audio CD devices]'
     '*--noexec=-[remount the file or directory noexec nosuid and nodev]: :_files'
     '--nogroups[disable supplementary groups]'
+    '--noinput[disable input devices]'
     '--nonewprivs[sets the NO_NEW_PRIVS prctl]'
     '--nosound[disable sound system]'
     '--nou2f[disable U2F devices]'

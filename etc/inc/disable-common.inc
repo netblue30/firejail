@@ -343,6 +343,7 @@ read-only ${HOME}/bin
 read-only ${HOME}/.bin
 read-only ${HOME}/.local/bin
 read-only ${HOME}/.cargo/bin
+read-only ${HOME}/.rustup
 
 # Write-protection for desktop entries
 read-only ${HOME}/.config/menus
@@ -367,6 +368,7 @@ blacklist ${HOME}/*.key
 blacklist ${HOME}/.Private
 blacklist ${HOME}/.caff
 blacklist ${HOME}/.cargo/credentials
+blacklist ${HOME}/.cargo/credentials.toml
 blacklist ${HOME}/.cert
 blacklist ${HOME}/.config/keybase
 blacklist ${HOME}/.davfs2/secrets

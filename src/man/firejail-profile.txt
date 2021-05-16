@@ -271,6 +271,10 @@ Mount-bind file1 on top of file2. This option is only available when running as 
 \fBdisable-mnt
 Disable /mnt, /media, /run/mount and /run/media access.
 .TP
+\fBkeep-config-pulse
+Disable automatic ~/.config/pulse init, for complex setups such as remote
+pulse servers or non-standard socket paths.
+.TP
 \fBkeep-dev-shm
 /dev/shm directory is untouched (even with private-dev).
 .TP
@@ -718,9 +722,8 @@ name browser
 \fBno3d
 Disable 3D hardware acceleration.
 .TP
-\fBnoautopulse
-Disable automatic ~/.config/pulse init, for complex setups such as remote
-pulse servers or non-standard socket paths.
+\fBnoautopulse \fR(deprecated)
+See keep-config-pulse.
 .TP
 \fBnodvd
 Disable DVD and audio CD devices.

@@ -3171,7 +3171,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___mindirect_branch_thunk" >&5
 $as_echo "$ax_cv_check_cflags___mindirect_branch_thunk" >&6; }
 if test "x$ax_cv_check_cflags___mindirect_branch_thunk" = xyes; then :
-  HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -mindirect-branch=thunk"
+  HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -mindirect-branch=thunk"
 
 else
   :
@@ -3207,7 +3207,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___mretpoline" >&5
 $as_echo "$ax_cv_check_cflags___mretpoline" >&6; }
 if test "x$ax_cv_check_cflags___mretpoline" = xyes; then :
-  HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -mretpoline"
+  HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -mretpoline"
 
 else
   :
@@ -3243,7 +3243,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___fstack_clash_protection" >&5
 $as_echo "$ax_cv_check_cflags___fstack_clash_protection" >&6; }
 if test "x$ax_cv_check_cflags___fstack_clash_protection" = xyes; then :
-  HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -fstack-clash-protection"
+  HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-clash-protection"
 
 else
   :
@@ -3279,7 +3279,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___fstack_protector_strong" >&5
 $as_echo "$ax_cv_check_cflags___fstack_protector_strong" >&6; }
 if test "x$ax_cv_check_cflags___fstack_protector_strong" = xyes; then :
-  HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -fstack-protector-strong"
+  HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-protector-strong"
 
 else
   :
@@ -3293,7 +3293,7 @@ fi
 
 if test "x$enable_analyzer" = "xyes"; then :
 
-	EXTRA_CFLAGS+=" -fanalyzer"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -fanalyzer"
 
 fi
 
@@ -3515,7 +3515,7 @@ else
 	AA_LIBS=$pkg_cv_AA_LIBS
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-	EXTRA_CFLAGS+=" $AA_CFLAGS" && EXTRA_LDFLAGS+=" $AA_LIBS"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS $AA_CFLAGS" && EXTRA_LDFLAGS="$EXTRA_LDFLAGS $AA_LIBS"
 fi
 
 
@@ -3530,7 +3530,7 @@ fi
 if test "x$enable_selinux" = "xyes"; then :
 
 	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS+=" -lselinux "
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux "
 
 
 fi
@@ -3810,7 +3810,7 @@ fi
 if test "x$enable_gcov" = "xyes"; then :
 
 	HAVE_GCOV="--coverage -DHAVE_GCOV "
-	EXTRA_LDFLAGS+=" -lgcov --coverage "
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage "
 
 
 fi

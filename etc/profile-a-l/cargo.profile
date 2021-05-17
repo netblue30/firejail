@@ -19,16 +19,6 @@ noblacklist ${HOME}/.cargo/credentials.toml
 # Allows files commonly used by IDEs
 include allow-common-devel.inc
 
-# Allow lua (blacklisted by disable-interpreters.inc)
-#include allow-lua.inc
-
-# Allow perl (blacklisted by disable-interpreters.inc)
-#include allow-perl.inc
-
-# Allow python (blacklisted by disable-interpreters.inc)
-#include allow-python2.inc
-#include allow-python3.inc
-
 # Allow ssh (blacklisted by disable-common.inc)
 #include allow-ssh.inc
 
@@ -72,9 +62,11 @@ disable-mnt
 #private-bin cargo,rustc
 private-cache
 private-dev
+private-etc alternatives,ca-certificates,crypto-policies,group,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,magic,magic.mgc,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl
 private-tmp
 
 dbus-user none
 dbus-system none
 
+memory-deny-write-execute
 read-write ${HOME}/.cargo/bin

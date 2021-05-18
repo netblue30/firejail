@@ -73,7 +73,7 @@ static void sanitize_home(void) {
 	if (arg_debug)
 		printf("Cleaning /home directory\n");
 	// open user home directory in order to keep it around
-	int fd = safe_fd(cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	int fd = safer_openat(-1, cfg.homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
 		goto errout;
 	if (fstat(fd, &s) == -1) { // FUSE

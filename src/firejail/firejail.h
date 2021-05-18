@@ -122,26 +122,22 @@ typedef struct interface_t {
 	uint8_t configured;
 } Interface;
 
+typedef struct topdir_t {
+	char *path;
+	int fd;
+} TopDir;
+
 typedef struct profile_entry_t {
 	struct profile_entry_t *next;
 	char *data;	// command
 
 	// whitelist command parameters
-	char *link;	// link name - set if the file is a link
-	enum {
-		WLDIR_HOME = 1,	// whitelist in home directory
-		WLDIR_TMP,	// whitelist in /tmp directory
-		WLDIR_MEDIA,	// whitelist in /media directory
-		WLDIR_MNT,	// whitelist in /mnt directory
-		WLDIR_VAR,	// whitelist in /var directory
-		WLDIR_DEV,	// whitelist in /dev directory
-		WLDIR_OPT,	// whitelist in /opt directory
-		WLDIR_SRV,	// whitelist in /srv directory
-		WLDIR_ETC,	// whitelist in /etc directory
-		WLDIR_SHARE,	// whitelist in /usr/share directory
-		WLDIR_MODULE,	// whitelist in /sys/module directory
-		WLDIR_RUN	// whitelist in /run/user/$uid directory
-	} wldir;
+	struct wparam_t {
+		char *file;		// resolved file path
+		char *link;		// link path
+		TopDir *top;	// top level directory
+	} *wparam;
+
 } ProfileEntry;
 
 typedef struct config_t {
@@ -529,7 +525,7 @@ void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid);
 unsigned extract_timeout(const char *str);
 void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
-int safe_fd(const char *path, int flags);
+int safer_openat(int dirfd, const char *path, int flags);
 int has_handler(pid_t pid, int signal);
 void enter_network_namespace(pid_t pid);
 int read_pid(const char *name, pid_t *pid);
@@ -794,6 +790,7 @@ extern char *xvfb_extra_params;
 extern char *netfilter_default;
 extern unsigned long join_timeout;
 extern char *config_seccomp_error_action_str;
+extern char **whitelist_reject_topdirs;
 
 int checkcfg(int val);
 void print_compiletime_support(void);

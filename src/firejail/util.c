@@ -544,11 +544,13 @@ char *split_comma(char *str) {
 }
 
 
-// remove consecutive and trailing slashes
-// and return allocated memory
-// e.g. /home//user/ -> /home/user
+// simplify absolute path by removing
+// 1) consecutive and trailing slashes, and
+// 2) segments with a single dot
+// for example /foo//./bar/ -> /foo/bar
 char *clean_pathname(const char *path) {
-	assert(path);
+	assert(path && path[0] == '/');
+
 	size_t len = strlen(path);
 	char *rv = malloc(len + 1);
 	if (!rv)
@@ -557,15 +559,23 @@ char *clean_pathname(const char *path) {
 	size_t i = 0;
 	size_t j = 0;
 	while (path[i]) {
-		while (path[i] == '/' && path[i+1] == '/')
-			i++;
+		if (path[i] == '/') {
+			while (path[i+1] == '/' ||
+			      (path[i+1] == '.' && path[i+2] == '/'))
+				i++;
+		}
+
 		rv[j++] = path[i++];
 	}
 	rv[j] = '\0';
 
+	// remove a trailing dot
+	if (j > 1 && rv[j - 1] == '.' && rv[j - 2] == '/')
+		rv[--j] = '\0';
+
 	// remove a trailing slash
 	if (j > 1 && rv[j - 1] == '/')
-		rv[j - 1] = '\0';
+		rv[--j] = '\0';
 
 	return rv;
 }
@@ -905,9 +915,9 @@ int remove_overlay_directory(void) {
 			errExit("fork");
 		if (child == 0) {
 			// open ~/.firejail, fails if there is any symlink
-			int fd = safe_fd(path, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+			int fd = safer_openat(-1, path, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 			if (fd == -1)
-				errExit("safe_fd");
+				errExit("safer_openat");
 			// chdir to ~/.firejail
 			if (fchdir(fd) == -1)
 				errExit("fchdir");
@@ -1125,13 +1135,13 @@ void disable_file_path(const char *path, const char *file) {
 }
 
 // open an existing file without following any symbolic link
-int safe_fd(const char *path, int flags) {
+// relative paths are interpreted relative to dirfd
+// ignore dirfd if path is absolute
+// https://web.archive.org/web/20180419120236/https://blogs.gnome.org/jamesh/2018/04/19/secure-mounts
+int safer_openat(int dirfd, const char *path, int flags) {
+	assert(path && path[0]);
 	flags |= O_NOFOLLOW;
-	assert(path);
-	if (*path != '/' || strstr(path, "..")) {
-		fprintf(stderr, "Error: invalid path %s\n", path);
-		exit(1);
-	}
+
 	int fd = -1;
 
 #ifdef __NR_openat2 // kernel 5.6 or better
@@ -1139,7 +1149,7 @@ int safe_fd(const char *path, int flags) {
 	memset(&oh, 0, sizeof(oh));
 	oh.flags = flags;
 	oh.resolve = RESOLVE_NO_SYMLINKS;
-	fd = syscall(__NR_openat2, -1, path, &oh, sizeof(struct open_how));
+	fd = syscall(__NR_openat2, dirfd, path, &oh, sizeof(struct open_how));
 	if (fd != -1 || errno != ENOSYS)
 		return fd;
 #endif
@@ -1150,18 +1160,23 @@ int safe_fd(const char *path, int flags) {
 	if (!dup)
 		errExit("strdup");
 	char *tok = strtok(dup, "/");
-	if (!tok) { // root directory
+	if (!tok) { // nothing to do, path is the root directory
 		free(dup);
-		return open("/", flags);
+		return openat(dirfd, path, flags);
 	}
 	char *last_tok = EMPTY_STRING;
-	int parentfd = open("/", O_PATH|O_CLOEXEC);
-	if (parentfd == -1)
-		errExit("open");
 
-	while(1) {
+	int parentfd;
+	if (path[0] == '/')
+		parentfd = open("/", O_PATH|O_CLOEXEC);
+	else
+		parentfd = fcntl(dirfd, F_DUPFD_CLOEXEC, 0);
+	if (parentfd == -1)
+		errExit("open/fcntl");
+
+	while (1) {
 		// open path component, assuming it is a directory; this fails with ENOTDIR if it is a symbolic link
-		// if token is a single dot, the previous directory is reopened
+		// if token is a single dot, the directory referred to by parentfd is reopened
 		fd = openat(parentfd, tok, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 		if (fd == -1) {
 			// if the following token is NULL, the current token is the final path component
@@ -1292,13 +1307,11 @@ pid_t require_pid(const char *name) {
 // return 1 if there is a link somewhere in path of directory
 static int has_link(const char *dir) {
 	assert(dir);
-	int fd = safe_fd(dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1) {
-		if ((errno == ELOOP || errno == ENOTDIR) && is_dir(dir))
-			return 1;
-	}
-	else
+	int fd = safer_openat(-1, dir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (fd != -1)
 		close(fd);
+	else if (errno == ELOOP || (errno == ENOTDIR && is_dir(dir)))
+		return 1;
 	return 0;
 }
 

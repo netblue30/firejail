@@ -84,18 +84,6 @@
 #define RUN_DEVLOG_FILE			RUN_MNT_DIR "/devlog"
 
 #define RUN_WHITELIST_X11_DIR		RUN_MNT_DIR "/orig-x11"
-#define RUN_WHITELIST_HOME_USER_DIR	RUN_MNT_DIR "/orig-home-user"		// home directory whitelisting
-#define RUN_WHITELIST_RUN_USER_DIR	RUN_MNT_DIR "/orig-run-user"		// run directory whitelisting
-#define RUN_WHITELIST_TMP_DIR		RUN_MNT_DIR "/orig-tmp"
-#define RUN_WHITELIST_MEDIA_DIR		RUN_MNT_DIR "/orig-media"
-#define RUN_WHITELIST_MNT_DIR		RUN_MNT_DIR "/orig-mnt"
-#define RUN_WHITELIST_VAR_DIR		RUN_MNT_DIR "/orig-var"
-#define RUN_WHITELIST_DEV_DIR		RUN_MNT_DIR "/orig-dev"
-#define RUN_WHITELIST_OPT_DIR		RUN_MNT_DIR "/orig-opt"
-#define RUN_WHITELIST_SRV_DIR   	RUN_MNT_DIR "/orig-srv"
-#define RUN_WHITELIST_ETC_DIR   	RUN_MNT_DIR "/orig-etc"
-#define RUN_WHITELIST_SHARE_DIR		RUN_MNT_DIR "/orig-share"
-#define RUN_WHITELIST_MODULE_DIR	RUN_MNT_DIR "/orig-module"
 
 #define RUN_XAUTHORITY_FILE		RUN_MNT_DIR "/.Xauthority"		// private options
 #define RUN_XAUTH_FILE			RUN_MNT_DIR "/xauth"			// x11=xorg

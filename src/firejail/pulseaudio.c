@@ -131,7 +131,7 @@ void pulseaudio_init(void) {
 
 	// if ~/.config/pulse exists and there are no symbolic links, mount the new directory
 	// else set environment variable
-	int fd = safe_fd(homeusercfg, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	int fd = safer_openat(-1, homeusercfg, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1) {
 		pulseaudio_fallback(pulsecfg);
 		goto out;

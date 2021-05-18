@@ -5,13 +5,14 @@ firejail (0.9.65) baseline; urgency=low
   * --protocol now accumulates
   * Jolla/SailfishOS patches
   * private-lib rework
+  * whitelist rework
   * jailtest utility for testing running sandboxes
   * removed --audit options, relpaced by jailtest
   * capabilities list update
   * faccessat2 syscall support
   * --private-dev keeps /dev/input
   * added --noinput to disable /dev/input
-  * Add support for subdirs in --private-etc
+  * add support for subdirs in --private-etc
   * compile time: --enable-force-nonewprivs
   * compile time: --disable-output
   * compile time: --enable-lts
@@ -27,7 +28,8 @@ firejail (0.9.65) baseline; urgency=low
   * alienarena, alienarena-wrapper, ballbuster, ballbuster-wrapper,
   * colorful, colorful-wrapper, gl-117, gl-117-wrapper, glaxium,
   * glaxium-wrapper, pinball, pinball-wrapper, etr-wrapper, firedragon
-  * neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper, neochat
+  * neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper, neochat,
+  * cargo
  -- netblue30 <netblue30@yahoo.com>  Tue, 9 Feb 2021 09:00:00 -0500
 
 firejail (0.9.64.4) baseline; urgency=low

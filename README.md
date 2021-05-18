@@ -22,8 +22,8 @@ implemented directly in Linux kernel and available on any Linux computer.
 <table><tr>
 
 <td>
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=7RMz7tePA98
-" target="_blank"><img src="http://img.youtube.com/vi/7RMz7tePA98/0.jpg"
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=8jfXL0ePV7U
+" target="_blank"><img src="http://img.youtube.com/vi/8jfXL0ePV7U/0.jpg"
 alt="Firejail Introduction" width="240" height="180" border="10" /><br/>Firejail Intro</a>
 </td>
 
@@ -300,31 +300,30 @@ A small tool to print profile statistics. Compile as usual and run in /etc/profi
 $ sudo cp src/profstats/profstats /etc/firejail/.
 $ cd /etc/firejail
 $ ./profstats *.profile
-Warning: multiple caps in transmission-daemon.profile
-
 Stats:
-    profiles			1077
-    include local profile	1077   (include profile-name.local)
-    include globals		1077   (include globals.local)
-    blacklist ~/.ssh		971   (include disable-common.inc)
-    seccomp			988
-    capabilities		1076
-    noexec			960   (include disable-exec.inc)
-    memory-deny-write-execute	231
-    apparmor			621
-    private-bin			571
-    private-dev			949
-    private-etc			470
-    private-tmp			835
-    whitelist home directory	508
-    whitelist var		758   (include whitelist-var-common.inc)
-    whitelist run/user		539   (include whitelist-runuser-common.inc
+    profiles			1135
+    include local profile	1135   (include profile-name.local)
+    include globals		1106   (include globals.local)
+    blacklist ~/.ssh		1009   (include disable-common.inc)
+    seccomp			1035
+    capabilities		1130
+    noexec			1011   (include disable-exec.inc)
+    noroot			944
+    memory-deny-write-execute	242
+    apparmor			667
+    private-bin			635
+    private-dev			992
+    private-etc			508
+    private-tmp			866
+    whitelist home directory	542
+    whitelist var		799   (include whitelist-var-common.inc)
+    whitelist run/user		597   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		526   (include whitelist-usr-share-common.inc
-    net none			354
-    dbus-user none 		573
-    dbus-user filter 		86
-    dbus-system none 		706
+    whitelist usr/share		569   (include whitelist-usr-share-common.inc
+    net none			389
+    dbus-user none 		619
+    dbus-user filter 		105
+    dbus-system none 		770
     dbus-system filter 		7
 ```
 
@@ -336,4 +335,4 @@ pcsxr, PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2, bcompare, b2sum, c
 sha256sum, sha384sum, sha512sum, sum, librewold-nightly, Quodlibet, tmux, sway, alienarena, alienarena-wrapper,
 ballbuster, ballbuster-wrapper, colorful, colorful-wrapper, gl-117, gl-117-wrapper, glaxium, glaxium-wrapper,
 pinball, pinball-wrapper, etr-wrapper, neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper, firedragon
-neochat, node, nvm
+neochat, node, nvm, cargo

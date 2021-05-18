@@ -982,6 +982,14 @@ int main(int argc, char **argv, char **envp) {
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
 	char **ptr;
 
+#ifndef HAVE_SUID
+	if (geteuid() != 0) {
+		fprintf(stderr, "Error: Firejail needs to be SUID.\n");
+		fprintf(stderr, "Assuming firejail is installed in /usr/bin, execute the following command as root:\n");
+		fprintf(stderr, "  chmod u+s /usr/bin/firejail\n");
+	}
+#endif
+
 	// sanitize the umask
 	orig_umask = umask(022);
 

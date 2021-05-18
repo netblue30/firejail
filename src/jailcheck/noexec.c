@@ -17,7 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include "jailtest.h"
+#include "jailcheck.h"
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -67,7 +67,7 @@ void noexec_test(const char *path) {
 		return;
 
 	char *fname;
-	if (asprintf(&fname, "%s/jailtest-noexec-%d", path, getpid()) == -1)
+	if (asprintf(&fname, "%s/jailcheck-noexec-%d", path, getpid()) == -1)
 		errExit("asprintf");
 
 	pid_t child = fork();

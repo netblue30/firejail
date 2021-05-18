@@ -307,7 +307,7 @@ AC_OUTPUT(Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Ma
 src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile \
 src/ftee/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile \
 src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile \
-src/jailtest/Makefile)
+src/jailcheck/Makefile)
 
 echo
 echo "Configuration options:"

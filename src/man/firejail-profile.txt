@@ -986,7 +986,7 @@ Homepage: https://firejail.wordpress.com
 .BR firecfg (1),
 .BR firejail-login (5),
 .BR firejail-users (5),
-.BR jailtest (1)
+.BR jailcheck (1)
 
 .UR https://github.com/netblue30/firejail/wiki/Creating-Profiles
 .UE

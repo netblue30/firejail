@@ -1,5 +1,5 @@
 .PHONY: all
-all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-profile.man firemon.man jailtest.man
+all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-profile.man firemon.man jailcheck.man
 
 include ../common.mk
 

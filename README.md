@@ -198,32 +198,32 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 Milestone page: https://github.com/netblue30/firejail/milestone/1
 Release discussion: https://github.com/netblue30/firejail/issues/3696
 
-### jailtest
+### jailcheck
 `````
-JAILTEST(1)                    JAILTEST man page                   JAILTEST(1)
+JAILCHECK(1)                  JAILCHECK man page                  JAILCHECK(1)
 
 NAME
-       jailtest - Simple utility program to test running sandboxes
+       jailcheck - Simple utility program to test running sandboxes
 
 SYNOPSIS
-       sudo jailtest [OPTIONS] [directory]
+       sudo jailcheck [OPTIONS] [directory]
 
 DESCRIPTION
-       WORK IN PROGRESS!  jailtest attaches itself to all sandboxes started by
-       the user and performs some basic tests on the sandbox filesystem:
+       jailcheck attaches itself to all sandboxes started by the user and per‐
+       forms some basic tests on the sandbox filesystem:
 
        1. Virtual directories
-              jailtest extracts a list with the main virtual  directories  in‐
+              jailcheck extracts a list with the main virtual directories  in‐
               stalled by the sandbox.  These directories are build by firejail
               at startup using --private* and --whitelist commands.
 
        2. Noexec test
-              jailtest inserts executable programs  in  /home/username,  /tmp,
-              and  /var/tmp  directories and tries to run them form inside the
+              jailcheck inserts executable programs in  /home/username,  /tmp,
+              and  /var/tmp  directories and tries to run them from inside the
               sandbox, thus testing if the directory is executable or not.
 
        3. Read access test
-              jailtest creates test files in the directories specified by  the
+              jailcheck creates test files in the directories specified by the
               user and tries to read them from inside the sandbox.
 
        4. AppArmor test
@@ -234,10 +234,10 @@ DESCRIPTION
 
 OPTIONS
        --debug
-              Print debug messages
+              Print debug messages.
 
        -?, --help
-              Print options end exit.
+              Print options and exit.
 
        --version
               Print program version and exit.
@@ -255,7 +255,7 @@ OUTPUT
        rectories and various warnings.
 
 EXAMPLE
-       $ sudo jailtest
+       $ sudo jailcheck
        2014:netblue::firejail /usr/bin/gimp
           Virtual dirs: /tmp, /var/tmp, /dev, /usr/share,
           Warning: I can run programs in /home/netblue
@@ -290,7 +290,7 @@ SEE ALSO
        firejail(1),  firemon(1), firecfg(1), firejail-profile(5), firejail-lo‐
        gin(5), firejail-users(5),
 
-0.9.65                             Feb 2021                        JAILTEST(1)
+0.9.65                             May 2021                       JAILCHECK(1)
 `````
 
 ### Profile Statistics

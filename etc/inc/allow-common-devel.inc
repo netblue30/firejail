@@ -30,8 +30,10 @@ noblacklist ${HOME}/.pythonhist
 # Rust
 noblacklist ${HOME}/.cargo/advisory-db
 noblacklist ${HOME}/.cargo/config
+noblacklist ${HOME}/.cargo/config.toml
 noblacklist ${HOME}/.cargo/git
 noblacklist ${HOME}/.cargo/registry
+noblacklist ${HOME}/.cargo/.crates
 noblacklist ${HOME}/.cargo/.crates.toml
 noblacklist ${HOME}/.cargo/.crates2.json
 noblacklist ${HOME}/.cargo/.package-cache

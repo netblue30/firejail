@@ -22,6 +22,8 @@ noblacklist ${HOME}/.config/vivaldi
 noblacklist ${HOME}/.local/share/torbrowser
 noblacklist ${HOME}/.mozilla
 
+blacklist /usr/libexec
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

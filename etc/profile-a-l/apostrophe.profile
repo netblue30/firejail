@@ -31,6 +31,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+whitelist /usr/libexec/webkit2gtk-4.0
 whitelist /usr/share/apostrophe
 whitelist /usr/share/texlive
 whitelist /usr/share/texmf

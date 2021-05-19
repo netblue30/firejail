@@ -7,6 +7,7 @@ include gapplication.local
 include globals.local
 
 blacklist ${RUNUSER}/wayland-*
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

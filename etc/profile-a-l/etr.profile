@@ -8,6 +8,8 @@ include globals.local
 
 noblacklist ${HOME}/.etr
 
+blacklist /usr/libexec
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

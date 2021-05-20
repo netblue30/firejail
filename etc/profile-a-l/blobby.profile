@@ -1,12 +1,10 @@
-# Firejail profile for etr
-# Description: High speed arctic racing game
-# This file is overwritten after every install/update
+# Firejail profile for blobby
 # Persistent local customizations
-include etr.local
+include blobby.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.etr
+noblacklist ${HOME}/.blobby
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,19 +15,17 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.etr
-whitelist ${HOME}/.etr
-whitelist /usr/share/etr
-# Debian version
-whitelist /usr/share/games/etr
+mkdir ${HOME}/.blobby
+whitelist ${HOME}/.blobby
 include whitelist-common.inc
-include whitelist-runuser-common.inc
+whitelist /usr/share/blobby
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-net none
+ipc-namespace
+netfilter
 nodvd
 nogroups
 noinput
@@ -38,18 +34,19 @@ noroot
 notv
 nou2f
 novideo
-protocol unix,netlink
+protocol unix,inet,netlink,
+netfilter
 seccomp
-seccomp.block-secondary
 shell none
 tracelog
 
 disable-mnt
-private-bin etr
-private-cache
+private-bin blobby,
+private-lib
 private-dev
-# private-etc alternatives,drirc,machine-id,openal,passwd
+private-etc hosts,group,asound.conf,alsa,machine-id,pulse,drirc,login.defs,passwd,
 private-tmp
 
 dbus-user none
 dbus-system none
+memory-deny-write-execute

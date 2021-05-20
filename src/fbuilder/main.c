@@ -39,7 +39,7 @@ printf("\n");
 	int i;
 	int prog_index = 0;
 	FILE *fp = stdout;
-	int prof_file = 0;
+	char *prof_file = NULL;
 
 	// parse arguments and extract program index
 	for (i = 1; i < argc; i++) {
@@ -70,8 +70,7 @@ printf("\n");
 				fprintf(stderr, "Error: cannot open profile file.\n");
 				exit(1);
 			}
-			prof_file = 1;
-			// do nothing, this is passed down from firejail
+			prof_file = argv[i] + 8;
 		}
 		else {
 			if (*argv[i] == '-') {
@@ -87,8 +86,11 @@ printf("\n");
 	if (prog_index == 0) {
 		fprintf(stderr, "Error : program and arguments required\n");
 		usage();
-		if (prof_file)
+		if (prof_file) {
 			fclose(fp);
+			int rv = unlink(prof_file);
+			(void) rv;
+		}
 		exit(1);
 	}
 

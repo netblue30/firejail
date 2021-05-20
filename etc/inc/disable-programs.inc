@@ -57,6 +57,7 @@ blacklist ${HOME}/.balsa
 blacklist ${HOME}/.bcast5
 blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.bitcoin
+blacklist ${HOME}/.blobby
 blacklist ${HOME}/.bogofilter
 blacklist ${HOME}/.bzf
 blacklist ${HOME}/.cargo/advisory-db
@@ -109,6 +110,7 @@ blacklist ${HOME}/.config/Jitsi Meet
 blacklist ${HOME}/.config/KDE/neochat
 blacklist ${HOME}/.config/Kid3
 blacklist ${HOME}/.config/Kingsoft
+blacklist ${HOME}/.config/LibreCAD
 blacklist ${HOME}/.config/Loop_Hero
 blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/LyX
@@ -494,6 +496,7 @@ blacklist ${HOME}/.freecol
 blacklist ${HOME}/.freemind
 blacklist ${HOME}/.frogatto
 blacklist ${HOME}/.frozen-bubble
+blacklist ${HOME}/.funnyboat
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.gist
 blacklist ${HOME}/.gitconfig
@@ -606,6 +609,7 @@ blacklist ${HOME}/.local/share/Flavio Tordini
 blacklist ${HOME}/.local/share/JetBrains
 blacklist ${HOME}/.local/share/KDE/neochat
 blacklist ${HOME}/.local/share/Kingsoft
+blacklist ${HOME}/.local/share/LibreCAD
 blacklist ${HOME}/.local/share/Mendeley Ltd.
 blacklist ${HOME}/.local/share/Mumble
 blacklist ${HOME}/.local/share/Nextcloud

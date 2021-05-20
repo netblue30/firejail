@@ -1,55 +1,57 @@
-# Firejail profile for etr
-# Description: High speed arctic racing game
+# Firejail profile for default
 # This file is overwritten after every install/update
 # Persistent local customizations
-include etr.local
+include funnyboat.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.etr
+noblacklist ${HOME}/.funnyboat
 
 include disable-common.inc
 include disable-devel.inc
+ignore noexec /dev/shm
 include disable-exec.inc
+include allow-python2.inc
+include allow-python3.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-shell.inc
+# include disable-shell.inc
+include disable-write-mnt.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.etr
-whitelist ${HOME}/.etr
-whitelist /usr/share/etr
-# Debian version
-whitelist /usr/share/games/etr
+mkdir ${HOME}/.funnyboat
+whitelist ${HOME}/.funnyboat
 include whitelist-common.inc
 include whitelist-runuser-common.inc
+whitelist /usr/share/funnyboat
+# Debian:
+whitelist /usr/share/games/funnyboat
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-net none
+ipc-namespace
+netfilter
 nodvd
 nogroups
 noinput
 nonewprivs
 noroot
 notv
-nou2f
 novideo
-protocol unix,netlink
+protocol unix,inet,inet6
 seccomp
-seccomp.block-secondary
 shell none
-tracelog
+# tracelog
 
 disable-mnt
-private-bin etr
 private-cache
 private-dev
-# private-etc alternatives,drirc,machine-id,openal,passwd
 private-tmp
 
 dbus-user none
 dbus-system none
+
+memory-deny-write-execute

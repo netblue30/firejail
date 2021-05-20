@@ -34,19 +34,20 @@ noroot
 notv
 nou2f
 novideo
-protocol unix,inet,netlink,
+protocol unix,inet,inet6,netlink
 netfilter
 seccomp
 shell none
 tracelog
 
 disable-mnt
-private-bin blobby,
-private-lib
+private-bin blobby
 private-dev
-private-etc hosts,group,asound.conf,alsa,machine-id,pulse,drirc,login.defs,passwd,
+private-etc alsa,alternatives,asound.conf,drirc,group,hosts,login.defs,machine-id,passwd,pulse
+private-lib
 private-tmp
 
 dbus-user none
 dbus-system none
+
 memory-deny-write-execute

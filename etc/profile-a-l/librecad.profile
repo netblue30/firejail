@@ -32,19 +32,20 @@ noroot
 notv
 #nou2f
 novideo
-protocol unix,inet,inet6,
+protocol unix,inet,inet6
 netfilter
 seccomp
 shell none
 #tracelog
 
 #disable-mnt
-private-bin librecad,
-#private-lib
+private-bin librecad
 private-dev
-# private-etc cups,drirc,fonts,xdg,passwd,
+# private-etc cups,drirc,fonts,passwd,xdg
+#private-lib
 private-tmp
 
 dbus-user none
 dbus-system none
+
 memory-deny-write-execute

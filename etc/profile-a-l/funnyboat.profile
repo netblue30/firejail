@@ -18,7 +18,6 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 # include disable-shell.inc
-include disable-write-mnt.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.funnyboat

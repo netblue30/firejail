@@ -1,4 +1,4 @@
-# Firejail profile for default
+# Firejail profile for funnyboat
 # This file is overwritten after every install/update
 # Persistent local customizations
 include funnyboat.local
@@ -7,17 +7,17 @@ include globals.local
 
 noblacklist ${HOME}/.funnyboat
 
-include disable-common.inc
-include disable-devel.inc
 ignore noexec /dev/shm
-include disable-exec.inc
 include allow-python2.inc
 include allow-python3.inc
+
+include disable-common.inc
+include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 # include disable-shell.inc
-include disable-write-mnt.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.funnyboat

@@ -59,15 +59,7 @@ blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.bitcoin
 blacklist ${HOME}/.bogofilter
 blacklist ${HOME}/.bzf
-blacklist ${HOME}/.cargo/advisory-db
-blacklist ${HOME}/.cargo/config
-blacklist ${HOME}/.cargo/config.toml
-blacklist ${HOME}/.cargo/git
-blacklist ${HOME}/.cargo/registry
-blacklist ${HOME}/.cargo/.crates
-blacklist ${HOME}/.cargo/.crates.toml
-blacklist ${HOME}/.cargo/.crates2.json
-blacklist ${HOME}/.cargo/.package-cache
+blacklist ${HOME}/.cargo/*
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.cliqz
 blacklist ${HOME}/.clonk

@@ -1714,13 +1714,17 @@ void profile_read(const char *fname) {
 	int lineno = 0;
 	while (fgets(buf, MAX_READ, fp)) {
 		++lineno;
+
+		// remove comments
+		char *ptr = strchr(buf, '#');
+		if (ptr)
+			*ptr = '\0';
+
 		// remove empty space - ptr in allocated memory
-		char *ptr = line_remove_spaces(buf);
+		ptr = line_remove_spaces(buf);
 		if (ptr == NULL)
 			continue;
-
-		// comments
-		if (*ptr == '#' || *ptr == '\0') {
+		if (*ptr == '\0') {
 			free(ptr);
 			continue;
 		}

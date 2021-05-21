@@ -18,6 +18,7 @@ firejail (0.9.65) baseline; urgency=low
   * compile time: --enable-lts
   * subdirs support in private-etc
   * input devices support in private-dev, --no-input
+  * support trailing comments on profile lines
   * new profiles: vmware-view, display-im6.q16, ipcalc, ipcalc-ng
   * ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop,
   * avidemux, calligragemini, vmware-player, vmware-workstation

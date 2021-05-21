@@ -1,0 +1,52 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2021 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "rm -fr /tmp/firejailtest*\r"
+send -- "rm -fr /tmp/firejail-strace*\r"
+send -- "rm -fr /tmp/firejail-trace*\r"
+sleep 1
+
+send -- "firejail --profile=comment.profile /usr/bin/true\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Parent is shutting down"
+}
+sleep 2
+
+send -- "firejail --build=/tmp/firejailtest.profile /usr/bin/true\r"
+sleep 1
+
+send -- "cat /tmp/firejailtest.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"seccomp"
+}
+after 100
+
+send -- "firejail --profile=/tmp/firejailtest.profile /usr/bin/true\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Parent is shutting down"
+}
+after 100
+
+send -- "rm -fr /tmp/firejailtest*\r"
+send -- "rm -fr /tmp/firejail-strace*\r"
+send -- "rm -fr /tmp/firejail-trace*\r"
+after 100
+
+puts "\nall done\n"

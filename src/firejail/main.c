@@ -1949,61 +1949,77 @@ int main(int argc, char **argv, char **envp) {
 			arg_keep_dev_shm = 1;
 		}
 		else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
-			if (arg_writable_etc) {
-				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
-				exit(1);
-			}
+			if (checkcfg(CFG_PRIVATE_ETC)) {
+				if (arg_writable_etc) {
+					fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+					exit(1);
+				}
 
-			// extract private etc list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-etc option\n");
-				exit(1);
+				// extract private etc list
+				if (*(argv[i] + 14) == '\0') {
+					fprintf(stderr, "Error: invalid private-etc option\n");
+					exit(1);
+				}
+				if (cfg.etc_private_keep) {
+					if ( asprintf(&cfg.etc_private_keep, "%s,%s", cfg.etc_private_keep, argv[i] + 14) < 0 )
+						errExit("asprintf");
+				} else
+					cfg.etc_private_keep = argv[i] + 14;
+				arg_private_etc = 1;
 			}
-			if (cfg.etc_private_keep) {
-				if ( asprintf(&cfg.etc_private_keep, "%s,%s", cfg.etc_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.etc_private_keep = argv[i] + 14;
-			arg_private_etc = 1;
+			else
+				exit_err_feature("private-etc");
 		}
 		else if (strncmp(argv[i], "--private-opt=", 14) == 0) {
-			// extract private opt list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-opt option\n");
-				exit(1);
+			if (checkcfg(CFG_PRIVATE_OPT)) {
+				// extract private opt list
+				if (*(argv[i] + 14) == '\0') {
+					fprintf(stderr, "Error: invalid private-opt option\n");
+					exit(1);
+				}
+				if (cfg.opt_private_keep) {
+					if ( asprintf(&cfg.opt_private_keep, "%s,%s", cfg.opt_private_keep, argv[i] + 14) < 0 )
+						errExit("asprintf");
+				} else
+					cfg.opt_private_keep = argv[i] + 14;
+				arg_private_opt = 1;
 			}
-			if (cfg.opt_private_keep) {
-				if ( asprintf(&cfg.opt_private_keep, "%s,%s", cfg.opt_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.opt_private_keep = argv[i] + 14;
-			arg_private_opt = 1;
+			else
+				exit_err_feature("private-opt");
 		}
 		else if (strncmp(argv[i], "--private-srv=", 14) == 0) {
-			// extract private srv list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-srv option\n");
-				exit(1);
+			if (checkcfg(CFG_PRIVATE_SRV)) {
+				// extract private srv list
+				if (*(argv[i] + 14) == '\0') {
+					fprintf(stderr, "Error: invalid private-srv option\n");
+					exit(1);
+				}
+				if (cfg.srv_private_keep) {
+					if ( asprintf(&cfg.srv_private_keep, "%s,%s", cfg.srv_private_keep, argv[i] + 14) < 0 )
+						errExit("asprintf");
+				} else
+					cfg.srv_private_keep = argv[i] + 14;
+				arg_private_srv = 1;
 			}
-			if (cfg.srv_private_keep) {
-				if ( asprintf(&cfg.srv_private_keep, "%s,%s", cfg.srv_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.srv_private_keep = argv[i] + 14;
-			arg_private_srv = 1;
+			else
+				exit_err_feature("private-srv");
 		}
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
-			// extract private bin list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-bin option\n");
-				exit(1);
+			if (checkcfg(CFG_PRIVATE_BIN)) {
+				// extract private bin list
+				if (*(argv[i] + 14) == '\0') {
+					fprintf(stderr, "Error: invalid private-bin option\n");
+					exit(1);
+				}
+				if (cfg.bin_private_keep) {
+					if ( asprintf(&cfg.bin_private_keep, "%s,%s", cfg.bin_private_keep, argv[i] + 14) < 0 )
+						errExit("asprintf");
+				} else
+					cfg.bin_private_keep = argv[i] + 14;
+				arg_private_bin = 1;
 			}
-			if (cfg.bin_private_keep) {
-				if ( asprintf(&cfg.bin_private_keep, "%s,%s", cfg.bin_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.bin_private_keep = argv[i] + 14;
-			arg_private_bin = 1;
+			else
+				exit_err_feature("private-bin");
 		}
 		else if (strncmp(argv[i], "--private-lib", 13) == 0) {
 			if (checkcfg(CFG_PRIVATE_LIB)) {

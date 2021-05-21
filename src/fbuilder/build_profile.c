@@ -24,21 +24,6 @@
 #define TRACE_OUTPUT "/tmp/firejail-trace.XXXXXX"
 #define STRACE_OUTPUT "/tmp/firejail-strace.XXXXXX"
 
-/* static char *cmdlist[] = { */
-/* 	"/usr/bin/firejail", */
-/* 	"--quiet", */
-/* 	"--output=" TRACE_OUTPUT, */
-/* 	"--noprofile", */
-/* 	"--caps.drop=all", */
-/* 	"--nonewprivs", */
-/* 	"--trace", */
-/* 	"--shell=none", */
-/* 	"/usr/bin/strace", // also used as a marker in build_profile() */
-/* 	"-c", */
-/* 	"-f", */
-/* 	"-o" STRACE_OUTPUT, */
-/* }; */
-
 void build_profile(int argc, char **argv, int index, FILE *fp) {
 	// next index is the application name
 	if (index >= argc) {
@@ -158,14 +143,14 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "### Enable as many of them as you can! A very important one is\n");
 		fprintf(fp, "### \"disable-exec.inc\". This will make among other things your home\n");
 		fprintf(fp, "### and /tmp directories non-executable.\n");
-		fprintf(fp, "include disable-common.inc\n");
-		fprintf(fp, "#include disable-devel.inc\n");
-		fprintf(fp, "#include disable-exec.inc\n");
-		fprintf(fp, "#include disable-interpreters.inc\n");
-		fprintf(fp, "include disable-passwdmgr.inc\n");
-		fprintf(fp, "include disable-programs.inc\n");
-		fprintf(fp, "#include disable-shell.inc\n");
-		fprintf(fp, "#include disable-xdg.inc\n");
+		fprintf(fp, "include disable-common.inc\t# dangerous directories like ~/.ssh and ~/.gnupg\n");
+		fprintf(fp, "#include disable-devel.inc\t# development tools such as gcc and gdb\n");
+		fprintf(fp, "#include disable-exec.inc\t# non-executable directories such as /var, /tmp, and /home\n");
+		fprintf(fp, "#include disable-interpreters.inc\t# perl, python, lua etc.\n");
+		fprintf(fp, "include disable-passwdmgr.inc\t# password managers\n");
+		fprintf(fp, "include disable-programs.inc\t# user configuration for programs such as firefox, vlc etc.\n");
+		fprintf(fp, "#include disable-shell.inc\t# sh, bash, zsh etc.\n");
+		fprintf(fp, "#include disable-xdg.inc\t# standard user directories: Documents, Pictures, Videos, Music\n");
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### Home Directory Whitelisting ###\n");
@@ -180,18 +165,19 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		build_var(trace_output, fp);
 		fprintf(fp, "\n");
 
-		fprintf(fp, "#apparmor\n");
+		fprintf(fp, "#apparmor\t# if you have AppArmor running, try this one!\n");
 		fprintf(fp, "caps.drop all\n");
 		fprintf(fp, "ipc-namespace\n");
 		fprintf(fp, "netfilter\n");
-		fprintf(fp, "#nodvd\n");
-		fprintf(fp, "#nogroups\n");
-		fprintf(fp, "#noinput\n");
+		fprintf(fp, "#no3d\t# disable 3D acceleration\n");
+		fprintf(fp, "#nodvd\t# disable DVD and CD devices\n");
+		fprintf(fp, "#nogroups\t# disable supplementary user groups\n");
+		fprintf(fp, "#noinput\t# disable input devices\n");
 		fprintf(fp, "nonewprivs\n");
 		fprintf(fp, "noroot\n");
-		fprintf(fp, "#notv\n");
-		fprintf(fp, "#nou2f\n");
-		fprintf(fp, "#novideo\n");
+		fprintf(fp, "#notv\t# disable DVB TV devices\n");
+		fprintf(fp, "#nou2f\t# disable U2F devices\n");
+		fprintf(fp, "#novideo\t# disable video capture devices\n");
 		build_protocol(trace_output, fp);
 		fprintf(fp, "seccomp\n");
 		if (!have_strace) {
@@ -203,19 +189,21 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		else
 			build_seccomp(strace_output, fp);
 		fprintf(fp, "shell none\n");
-		fprintf(fp, "#tracelog\n");
+		fprintf(fp, "tracelog\n");
 		fprintf(fp, "\n");
 
-		fprintf(fp, "#disable-mnt\n");
+		fprintf(fp, "#disable-mnt\t# no access to /mnt, /media, /run/mount and /run/media\n");
 		build_bin(trace_output, fp);
-		fprintf(fp, "#private-lib\n");
+		fprintf(fp, "#private-cache\t# run with an empty ~/.cache directory\n");
 		build_dev(trace_output, fp);
 		build_etc(trace_output, fp);
+		fprintf(fp, "#private-lib\n");
 		build_tmp(trace_output, fp);
 		fprintf(fp, "\n");
 
 		fprintf(fp, "#dbus-user none\n");
 		fprintf(fp, "#dbus-system none\n");
+		fprintf(fp, "\n");
 		fprintf(fp, "#memory-deny-write-execute\n");
 
 		if (!arg_debug) {

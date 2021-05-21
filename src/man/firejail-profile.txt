@@ -160,6 +160,11 @@ Example: "blacklist ~/My Virtual Machines"
 
 .TP
 \fB# this is a comment
+Example:
+
+# disable networking
+.br
+net none # this command creates an empty network namespace
 
 .TP
 \fB?CONDITIONAL: profile line
@@ -731,6 +736,9 @@ Disable DVD and audio CD devices.
 \fBnogroups
 Disable supplementary user groups
 .TP
+\fBnoinput
+Disable input devices.
+.TP
 \fBnosound
 Disable sound system.
 .TP
@@ -742,9 +750,6 @@ Disable U2F devices.
 .TP
 \fBnovideo
 Disable video capture devices.
-.TP
-\fBnoinput
-Disable input devices.
 .TP
 \fBshell none
 Run the program directly, without a shell.

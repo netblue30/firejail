@@ -82,11 +82,12 @@ void build_seccomp(const char *fname, FILE *fp) {
 //***************************************
 // protocol
 //***************************************
-int unix_s = 0;
-int inet = 0;
-int inet6 = 0;
-int netlink = 0;
-int packet = 0;
+static int unix_s = 0;
+static int inet = 0;
+static int inet6 = 0;
+static int netlink = 0;
+static int packet = 0;
+static int bluetooth = 0;
 static void process_protocol(const char *fname) {
 	assert(fname);
 
@@ -135,6 +136,8 @@ static void process_protocol(const char *fname) {
 			netlink = 1;
 		else if (strncmp(ptr, "AF_PACKET ", 10) == 0)
 			packet = 1;
+		else if (strncmp(ptr, "AF_BLUETOOTH ", 13) == 0)
+			bluetooth = 1;
 	}
 
 	fclose(fp);
@@ -161,22 +164,22 @@ void build_protocol(const char *fname, FILE *fp) {
 	}
 
 	int net = 0;
-	if (unix_s || inet || inet6 || netlink || packet) {
+	if (unix_s || inet || inet6 || netlink || packet || bluetooth) {
 		fprintf(fp, "protocol ");
 		if (unix_s)
 			fprintf(fp, "unix,");
-		if (inet) {
-			fprintf(fp, "inet,");
-			net = 1;
-		}
-		if (inet6) {
-			fprintf(fp, "inet6,");
+		if (inet || inet6) {
+			fprintf(fp, "inet,inet6,");
 			net = 1;
 		}
 		if (netlink)
 			fprintf(fp, "netlink,");
 		if (packet) {
-			fprintf(fp, "packet");
+			fprintf(fp, "packet,");
+			net = 1;
+		}
+		if (bluetooth) {
+			fprintf(fp, "bluetooth");
 			net = 1;
 		}
 		fprintf(fp, "\n");

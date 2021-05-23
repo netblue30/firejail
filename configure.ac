@@ -40,9 +40,9 @@ AX_CHECK_COMPILE_FLAG(
 )
 
 AC_ARG_ENABLE([analyzer],
-    AS_HELP_STRING([--enable-analyzer], [enable GCC 10 static analyzer]))
+    AS_HELP_STRING([--enable-analyzer], [enable GCC static analyzer]))
 AS_IF([test "x$enable_analyzer" = "xyes"], [
-	EXTRA_CFLAGS="$EXTRA_CFLAGS -fanalyzer"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -fanalyzer -Wno-analyzer-malloc-leak"
 ])
 
 HAVE_APPARMOR=""

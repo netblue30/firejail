@@ -24,9 +24,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: install dependencies
-      run: sudo apt-get install gcc-10 libapparmor-dev libselinux1-dev expect xzdec
+      run: sudo apt-get install gcc-11 libapparmor-dev libselinux1-dev expect xzdec
     - name: configure
-      run: CC=gcc-10 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux --prefix=/usr
+      run: CC=gcc-11 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux --prefix=/usr
     - name: make
       run: make
     - name: make install

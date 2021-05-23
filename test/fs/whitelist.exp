@@ -16,10 +16,7 @@ send -- "rm ~/fjtest-file\r"
 after 200
 send -- "rm ~/fjtest-file-lnk\r"
 after 200
-send -- "rm /tmp/fjtest-file\r"
-after 200
-send -- "rm -fr /tmp/fjtest-dir\r"
-after 200
+
 
 
 # simple files and directories
@@ -149,63 +146,7 @@ expect {
 send -- "exit\r"
 sleep 1
 
-# symlinks outside home to a file we don't own
-send -- "rm ~/fjtest-file-lnk\r"
-after 200
-send -- "ln -s /etc/passwd ~/fjtest-file-lnk\r"
-after 200
-send -- "firejail --whitelist=~/fjtest-file-lnk --whitelist=~/fjtest-dir-lnk\r"
-expect {
-	timeout {puts "TESTING ERROR 30\n";exit}
-	"invalid whitelist path"
-}
-expect {
-	timeout {puts "TESTING ERROR 31\n";exit}
-	"cannot sync with peer"
-}
-sleep 1
 
-# symlinks outside home to a file we own
-send -- "rm -fr ~/fjtest-dir-lnk\r"
-after 200
-send -- "rm ~/fjtest-file-lnk\r"
-after 200
-send -- "echo 123 > /tmp/fjtest-file\r"
-after 200
-send -- "mkdir /tmp/fjtest-dir\r"
-after 200
-send -- "echo 123 > /tmp/fjtest-dir/fjtest-file\r"
-after 200
-send -- "ln -s /tmp/fjtest-file ~/fjtest-file-lnk\r"
-after 200
-send -- "ln -s /tmp/fjtest-dir ~/fjtest-dir-lnk\r"
-after 200
-send -- "firejail --whitelist=~/fjtest-file-lnk --whitelist=~/fjtest-dir-lnk\r"
-expect {
-	timeout {puts "TESTING ERROR 40\n";exit}
-	"Child process initialized"
-}
-sleep 1
-
-send -- "ls -l ~/ | grep -v total | wc -l\r"
-expect {
-	timeout {puts "TESTING ERROR 41\n";exit}
-	"2"
-}
-
-send -- "cat ~/fjtest-file-lnk\r"
-expect {
-	timeout {puts "TESTING ERROR 42\n";exit}
-	"123"
-}
-
-send -- "cat ~/fjtest-dir-lnk/fjtest-file\r"
-expect {
-	timeout {puts "TESTING ERROR 43\n";exit}
-	"123"
-}
-send -- "exit\r"
-sleep 1
 
 # cleanup
 send -- "rm -fr ~/fjtest-dir\r"
@@ -216,10 +157,5 @@ send -- "rm ~/fjtest-file\r"
 after 200
 send -- "rm ~/fjtest-file-lnk\r"
 after 200
-send -- "rm /tmp/fjtest-file\r"
-after 200
-send -- "rm -fr /tmp/fjtest-dir\r"
-after 200
-
 
 puts "\nall done\n"

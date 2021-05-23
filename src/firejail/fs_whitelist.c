@@ -104,21 +104,19 @@ static int whitelist_mkpath(const char* path, mode_t mode) {
 	return fd;
 }
 
-static void whitelist_file(int dirfd, const char *topdir, const char *relpath, const char *path) {
-	assert(topdir && relpath && path);
-
-	if (arg_debug || arg_debug_whitelists)
-		printf("Debug %d: dirfd: %d; topdir: %s; relpath: %s; path: %s\n", __LINE__, dirfd, topdir, relpath, path);
+static void whitelist_file(int dirfd, const char *relpath, const char *path) {
+	assert(relpath && path);
 
 	// open mount source, using a file descriptor that refers to the
 	// top level directory
 	// as the top level directory was opened before mounting the tmpfs
 	// we still have full access to all directory contents
-	// take care to not follow symbolic links
+	// take care to not follow symbolic links (dirfd was obtained without
+	// following a link, too)
 	int fd = safer_openat(dirfd, relpath, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1) {
 		if (arg_debug || arg_debug_whitelists)
-			printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
+			printf("Debug %d: skip whitelist %s\n", __LINE__, path);
 		return;
 	}
 	struct stat s;
@@ -126,14 +124,15 @@ static void whitelist_file(int dirfd, const char *topdir, const char *relpath, c
 		errExit("fstat");
 	if (S_ISLNK(s.st_mode)) {
 		if (arg_debug || arg_debug_whitelists)
-			printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
+			printf("Debug %d: skip whitelist %s\n", __LINE__, path);
 		close(fd);
 		return;
 	}
 
 	// create mount target as root, except if inside home or run/user/$UID directory
 	int userprivs = 0;
-	if (strcmp(topdir, cfg.homedir) == 0 || strcmp(topdir, runuser) == 0) {
+	if ((strncmp(path, cfg.homedir, homedir_len) == 0 && path[homedir_len] == '/') ||
+	    (strncmp(path, runuser, runuser_len) == 0 && path[runuser_len] == '/')) {
 		EUID_USER();
 		userprivs = 1;
 	}
@@ -145,7 +144,7 @@ static void whitelist_file(int dirfd, const char *topdir, const char *relpath, c
 		// if there is a symlink somewhere in the path of the mount target,
 		// assume the file is whitelisted already
 		if (arg_debug || arg_debug_whitelists)
-			printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
+			printf("Debug %d: skip whitelist %s\n", __LINE__, path);
 		close(fd);
 		if (userprivs)
 			EUID_ROOT();
@@ -163,7 +162,7 @@ static void whitelist_file(int dirfd, const char *topdir, const char *relpath, c
 		if (mkdirat(fd2, file, 0755) == -1 && errno != EEXIST) {
 			if (arg_debug || arg_debug_whitelists) {
 				perror("mkdir");
-				printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
+				printf("Debug %d: skip whitelist %s\n", __LINE__, path);
 			}
 			close(fd);
 			close(fd2);
@@ -181,7 +180,7 @@ static void whitelist_file(int dirfd, const char *topdir, const char *relpath, c
 	if (fd3 == -1) {
 		if (errno != EEXIST && (arg_debug || arg_debug_whitelists)) {
 			perror("open");
-			printf("Debug %d: skip whitelisting of %s\n", __LINE__, path);
+			printf("Debug %d: skip whitelist %s\n", __LINE__, path);
 		}
 		close(fd);
 		close(fd2);
@@ -229,15 +228,13 @@ static void whitelist_file(int dirfd, const char *topdir, const char *relpath, c
 	fs_logger2("whitelist", path);
 }
 
-static void whitelist_symlink(const char *topdir, const char *link, const char *target) {
-	assert(topdir && link && target);
-
-	if (arg_debug || arg_debug_whitelists)
-		printf("Debug %d: topdir: %s; link: %s; target: %s\n", __LINE__, topdir, link, target);
+static void whitelist_symlink(const char *link, const char *target) {
+	assert(link && target);
 
 	// create files as root, except if inside home or run/user/$UID directory
 	int userprivs = 0;
-	if (strcmp(topdir, cfg.homedir) == 0 || strcmp(topdir, runuser) == 0) {
+	if ((strncmp(link, cfg.homedir, homedir_len) == 0 && link[homedir_len] == '/') ||
+	    (strncmp(link, runuser, runuser_len) == 0 && link[runuser_len] == '/')) {
 		EUID_USER();
 		userprivs = 1;
 	}
@@ -307,13 +304,17 @@ static void globbing(const char *pattern) {
 }
 
 // mount tmpfs on all top level directories
+// home directories *inside* /run/user/$UID are not fully supported
 static void tmpfs_topdirs(const TopDir *topdirs) {
 	int tmpfs_home = 0;
 	int tmpfs_runuser = 0;
 
 	int i;
 	for (i = 0; i < TOP_MAX && topdirs[i].path; i++) {
-		// do user home and /run/user/$UID last
+		// do nested top level directories last
+		// this way '--whitelist=nested_top_level_dir'
+		// yields the full, unmodified directory
+		// instead of the tmpfs
 		if (strcmp(topdirs[i].path, cfg.homedir) == 0) {
 			tmpfs_home = 1;
 			continue;
@@ -352,7 +353,7 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 			// restore /run/user/$UID directory
 			// get path relative to /run
 			const char *rel = runuser + 5;
-			whitelist_file(topdirs[i].fd, topdirs[i].path, rel, runuser);
+			whitelist_file(topdirs[i].fd, rel, runuser);
 		}
 		else if (strcmp(topdirs[i].path, "/tmp") == 0) {
 			// fix pam-tmpdir (#2685)
@@ -376,11 +377,12 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 
 		// restore user home directory if it is masked by the tmpfs
 		// creates path owned by root
+		// does nothing if user home directory doesn't exist
 		size_t topdir_len = strlen(topdirs[i].path);
 		if (strncmp(topdirs[i].path, cfg.homedir, topdir_len) == 0 && cfg.homedir[topdir_len] == '/') {
 			// get path relative to top level directory
 			const char *rel = cfg.homedir + topdir_len + 1;
-			whitelist_file(topdirs[i].fd, topdirs[i].path, rel, cfg.homedir);
+			whitelist_file(topdirs[i].fd, rel, cfg.homedir);
 		}
 
 		selinux_relabel_path(topdirs[i].path, topdirs[i].path);
@@ -388,7 +390,8 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 
 	// user home directory
 	if (tmpfs_home)
-		fs_private(); // checks owner if outside /home
+		// checks owner if outside /home
+		fs_private();
 
 	// /run/user/$UID directory
 	if (tmpfs_runuser) {
@@ -437,8 +440,7 @@ static TopDir *add_topdir(const char *dir, TopDir *topdirs, const char *path) {
 	}
 	// do nothing if directory is disabled by administrator
 	if (reject_topdir(dir)) {
-		fwarning("skipping whitelist %s because\n"
-			"whitelist top level directory is disabled in Firejail configuration file\n", path);
+		fmessage("Whitelist top level directory %s is disabled in Firejail configuration file\n", dir);
 		return NULL;
 	}
 
@@ -453,15 +455,14 @@ static TopDir *add_topdir(const char *dir, TopDir *topdirs, const char *path) {
 	TopDir *rv = topdirs + cnt;
 	cnt++;
 
-	char *dup = strdup(dir);
-	if (!dup)
+	rv->path = strdup(dir);
+	if (!rv->path)
 		errExit("strdup");
-	rv->path = dup;
 
 	// open the directory, don't follow symbolic links
-	rv->fd = safer_openat(-1, dup, O_PATH|O_NOFOLLOW|O_DIRECTORY|O_CLOEXEC);
+	rv->fd = safer_openat(-1, rv->path, O_PATH|O_NOFOLLOW|O_DIRECTORY|O_CLOEXEC);
 	if (rv->fd == -1) {
-		fprintf(stderr, "Error: cannot open %s\n", dup);
+		fprintf(stderr, "Error: cannot open %s\n", rv->path);
 		exit(1);
 	}
 
@@ -592,6 +593,10 @@ void fs_whitelist(void) {
 		if (strstr(new_name, ".."))
 			whitelist_error(new_name);
 
+		// /run/firejail is not allowed
+		if (strncmp(new_name, RUN_FIREJAIL_DIR, strlen(RUN_FIREJAIL_DIR)) == 0)
+			whitelist_error(new_name);
+
 		TopDir *current_top = NULL;
 		if (!nowhitelist_flag) {
 			// extract whitelist top level directory
@@ -648,6 +653,10 @@ void fs_whitelist(void) {
 			free(new_name);
 			continue;
 		}
+
+		// /run/firejail is not allowed
+		if (strncmp(fname, RUN_FIREJAIL_DIR, strlen(RUN_FIREJAIL_DIR)) == 0)
+			whitelist_error(fname);
 
 		if (nowhitelist_flag) {
 			// store the path in nowhitelist array
@@ -727,12 +736,15 @@ void fs_whitelist(void) {
 			if (strncmp(file, topdir, topdir_len) == 0 && file[topdir_len] == '/') {
 				// get path relative to top level directory
 				const char *rel = file + topdir_len + 1;
-				whitelist_file(dirfd, topdir, rel, file);
+
+				if (arg_debug || arg_debug_whitelists)
+					printf("Debug %d: file: %s; dirfd: %d; topdir: %s; rel: %s\n", __LINE__, file, dirfd, topdir, rel);
+				whitelist_file(dirfd, rel, file);
 			}
 
 			// create the link if any
 			if (link)
-				whitelist_symlink(topdir, link, file);
+				whitelist_symlink(link, file);
 
 			free(link);
 			free(file);

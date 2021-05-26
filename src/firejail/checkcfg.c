@@ -103,7 +103,6 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_USERNS, "userns")
 			PARSE_YESNO(CFG_CHROOT, "chroot")
 			PARSE_YESNO(CFG_FIREJAIL_PROMPT, "firejail-prompt")
-			PARSE_YESNO(CFG_FOLLOW_SYMLINK_AS_USER, "follow-symlink-as-user")
 			PARSE_YESNO(CFG_FORCE_NONEWPRIVS, "force-nonewprivs")
 			PARSE_YESNO(CFG_SECCOMP, "seccomp")
 			PARSE_YESNO(CFG_WHITELIST, "whitelist")

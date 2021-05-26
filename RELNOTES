@@ -1,4 +1,6 @@
 firejail (0.9.65) baseline; urgency=low
+  * deprecated --audit options, relpaced by jailtest
+  * deprecated follow-symlink-as-user from firejail.config
   * filtering environment variables
   * zsh completion
   * command line: --mkdir, --mkfile
@@ -7,7 +9,6 @@ firejail (0.9.65) baseline; urgency=low
   * private-lib rework
   * whitelist rework
   * jailtest utility for testing running sandboxes
-  * removed --audit options, relpaced by jailtest
   * capabilities list update
   * faccessat2 syscall support
   * --private-dev keeps /dev/input

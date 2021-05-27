@@ -8,7 +8,5 @@ include gtk-youtube-viewer.local
 
 ignore quiet
 
-include whitelist-runuser-common.inc
-
 # Redirect
 include youtube-viewer.profile

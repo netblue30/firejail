@@ -8,7 +8,5 @@ include gtk-straw-viewer.local
 
 ignore quiet
 
-include whitelist-runuser-common.inc
-
 # Redirect
 include straw-viewer.profile

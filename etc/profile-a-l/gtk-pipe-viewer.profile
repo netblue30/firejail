@@ -8,7 +8,5 @@ include gtk-pipe-viewer.local
 
 ignore quiet
 
-include whitelist-runuser-common.inc
-
 # Redirect
 include pipe-viewer.profile

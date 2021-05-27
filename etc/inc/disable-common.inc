@@ -34,6 +34,7 @@ blacklist ${HOME}/.config/autostart
 blacklist ${HOME}/.config/autostart-scripts
 blacklist ${HOME}/.config/awesome
 blacklist ${HOME}/.config/i3
+blacklist ${HOME}/.config/sway
 blacklist ${HOME}/.config/lxsession/LXDE/autostart
 blacklist ${HOME}/.config/openbox
 blacklist ${HOME}/.config/plasma-workspace
@@ -337,10 +338,12 @@ read-only ${HOME}/dotfiles
 read-only ${HOME}/.gem
 read-only ${HOME}/.luarocks
 read-only ${HOME}/.npm-packages
+read-only ${HOME}/.nvm
 read-only ${HOME}/bin
 read-only ${HOME}/.bin
 read-only ${HOME}/.local/bin
 read-only ${HOME}/.cargo/bin
+read-only ${HOME}/.rustup
 
 # Write-protection for desktop entries
 read-only ${HOME}/.config/menus
@@ -365,6 +368,7 @@ blacklist ${HOME}/*.key
 blacklist ${HOME}/.Private
 blacklist ${HOME}/.caff
 blacklist ${HOME}/.cargo/credentials
+blacklist ${HOME}/.cargo/credentials.toml
 blacklist ${HOME}/.cert
 blacklist ${HOME}/.config/keybase
 blacklist ${HOME}/.davfs2/secrets

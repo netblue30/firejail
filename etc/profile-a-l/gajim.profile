@@ -21,7 +21,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-# Comment the following line if you need to whitelist folders other than ~/Downloads
+# Add 'ignore include disable-xdg.inc' to your gajim.local if you need to whitelist folders other than ~/Downloads.
 include disable-xdg.inc
 
 mkdir ${HOME}/.gnupg
@@ -46,6 +46,7 @@ caps.drop all
 netfilter
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 notv
@@ -73,7 +74,7 @@ dbus-user.talk org.kde.kwalletd5
 dbus-user.talk org.mpris.MediaPlayer2.*
 dbus-system filter
 dbus-system.talk org.freedesktop.login1
-# Uncomment for location plugin support
+# Add the next line to your gajim.local to enable location plugin support.
 #dbus-system.talk org.freedesktop.GeoClue2
 
 join-or-start gajim

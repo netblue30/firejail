@@ -35,6 +35,7 @@ char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
 unsigned long join_timeout = 5000000; // microseconds
 char *config_seccomp_error_action_str = "EPERM";
+char **whitelist_reject_topdirs = NULL;
 
 int checkcfg(int val) {
 	assert(val < CFG_MAX);
@@ -59,7 +60,7 @@ int checkcfg(int val) {
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
-		fp = fopen(fname, "r");
+		fp = fopen(fname, "re");
 		if (!fp) {
 #ifdef HAVE_GLOBALCFG
 			fprintf(stderr, "Error: Firejail configuration file %s not found\n", fname);
@@ -102,7 +103,6 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_USERNS, "userns")
 			PARSE_YESNO(CFG_CHROOT, "chroot")
 			PARSE_YESNO(CFG_FIREJAIL_PROMPT, "firejail-prompt")
-			PARSE_YESNO(CFG_FOLLOW_SYMLINK_AS_USER, "follow-symlink-as-user")
 			PARSE_YESNO(CFG_FORCE_NONEWPRIVS, "force-nonewprivs")
 			PARSE_YESNO(CFG_SECCOMP, "seccomp")
 			PARSE_YESNO(CFG_WHITELIST, "whitelist")
@@ -236,6 +236,31 @@ int checkcfg(int val) {
 				config_seccomp_error_action_str = strdup(ptr + 21);
 				if (!config_seccomp_error_action_str)
 					errExit("strdup");
+			}
+
+			else if (strncmp(ptr, "whitelist-disable-topdir ", 25) == 0) {
+				char *str = strdup(ptr + 25);
+				if (!str)
+					errExit("strdup");
+
+				size_t cnt = 0;
+				size_t sz = 4;
+				whitelist_reject_topdirs = malloc(sz * sizeof(char *));
+				if (!whitelist_reject_topdirs)
+					errExit("malloc");
+
+				char *tok = strtok(str, ",");
+				while (tok) {
+					whitelist_reject_topdirs[cnt++] = tok;
+					if (cnt >= sz) {
+						sz *= 2;
+						whitelist_reject_topdirs = realloc(whitelist_reject_topdirs, sz * sizeof(char *));
+						if (!whitelist_reject_topdirs)
+							errExit("realloc");
+					}
+					tok = strtok(NULL, ",");
+				}
+				whitelist_reject_topdirs[cnt] = NULL;
 			}
 
 			else

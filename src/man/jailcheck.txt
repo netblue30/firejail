@@ -1,23 +1,22 @@
-.TH JAILTEST 1 "MONTH YEAR" "VERSION" "JAILTEST man page"
+.TH JAILCHECK 1 "MONTH YEAR" "VERSION" "JAILCHECK man page"
 .SH NAME
-jailtest \- Simple utility program to test running sandboxes
+jailcheck \- Simple utility program to test running sandboxes
 .SH SYNOPSIS
-sudo jailtest [OPTIONS] [directory]
+sudo jailcheck [OPTIONS] [directory]
 .SH DESCRIPTION
-WORK IN PROGRESS!
-jailtest attaches itself to all sandboxes started by the user and performs some basic tests
+jailcheck attaches itself to all sandboxes started by the user and performs some basic tests
 on the sandbox filesystem:
 .TP
 \fB1. Virtual directories
-jailtest extracts a list with the main virtual directories installed by the sandbox.
+jailcheck extracts a list with the main virtual directories installed by the sandbox.
 These directories are build by firejail at startup using --private* and --whitelist commands.
 .TP
 \fB2. Noexec test
-jailtest inserts executable programs in /home/username, /tmp, and /var/tmp directories
+jailcheck inserts executable programs in /home/username, /tmp, and /var/tmp directories
 and tries to run them from inside the sandbox, thus testing if the directory is executable or not.
 .TP
 \fB3. Read access test
-jailtest creates test files in the directories specified by the user and tries to read
+jailcheck creates test files in the directories specified by the user and tries to read
 them from inside the sandbox.
 .TP
 \fB4. AppArmor test
@@ -49,7 +48,7 @@ It is followed by relevant sandbox information, such as the virtual directories 
 
 .SH EXAMPLE
 
-$ sudo jailtest
+$ sudo jailcheck
 .br
 2014:netblue::firejail /usr/bin/gimp
 .br

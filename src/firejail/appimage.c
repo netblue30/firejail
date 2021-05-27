@@ -67,7 +67,7 @@ void appimage_set(const char *appimage) {
 
 	// find or allocate a free loop device to use
 	EUID_ROOT();
-	int cfd = open("/dev/loop-control", O_RDWR);
+	int cfd = open("/dev/loop-control", O_RDWR|O_CLOEXEC);
 	if (cfd == -1)
 		err_loop();
 	int devnr = ioctl(cfd, LOOP_CTL_GET_FREE);
@@ -78,7 +78,7 @@ void appimage_set(const char *appimage) {
 		errExit("asprintf");
 
 	// associate loop device with appimage
-	int lfd = open(devloop, O_RDONLY);
+	int lfd = open(devloop, O_RDONLY|O_CLOEXEC);
 	if (lfd == -1)
 		err_loop();
 	if (ioctl(lfd, LOOP_SET_FD, ffd) == -1)
@@ -146,7 +146,7 @@ void appimage_mount(void) {
 void appimage_clear(void) {
 	EUID_ROOT();
 	if (devloop) {
-		int lfd = open(devloop, O_RDONLY);
+		int lfd = open(devloop, O_RDONLY|O_CLOEXEC);
 		if (lfd != -1) {
 			if (ioctl(lfd, LOOP_CLR_FD, 0) != -1)
 				fmessage("AppImage detached\n");

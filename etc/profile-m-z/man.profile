@@ -10,6 +10,7 @@ include globals.local
 blacklist ${RUNUSER}
 
 noblacklist ${HOME}/.local/share/man
+noblacklist ${HOME}/.rustup
 
 include disable-common.inc
 include disable-devel.inc
@@ -41,6 +42,7 @@ net none
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

@@ -21,6 +21,7 @@ caps.drop all
 netfilter
 no3d
 nogroups
+noinput
 nonewprivs
 # nosound - disabled for knotify
 noroot

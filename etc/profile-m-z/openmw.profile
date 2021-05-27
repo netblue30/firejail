@@ -22,8 +22,8 @@ include disable-xdg.inc
 mkdir ${HOME}/.config/openmw
 mkdir ${HOME}/.local/share/openmw
 whitelist ${HOME}/.config/openmw
-# Copy Morrowind data files into the following directory or load it from /mnt
-# or whitelist it in a openmw.local
+# Copy Morrowind data files into ${HOME}/.local/share/openmw or load them from /mnt.
+# Alternatively you can whitelist custom paths in your openmw.local.
 whitelist ${HOME}/.local/share/openmw
 whitelist /usr/share/openmw
 include whitelist-common.inc
@@ -36,9 +36,10 @@ caps.drop all
 ipc-namespace
 net none
 netfilter
-# Uncomment the following line if installing from disc
+# Add 'ignore nodvd' to your openmw.local when installing from disc.
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 notv

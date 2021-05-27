@@ -31,6 +31,7 @@ apparmor
 caps.drop all
 netfilter
 nodvd
+noinput
 nonewprivs
 noroot
 notv

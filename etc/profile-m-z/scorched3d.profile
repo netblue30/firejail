@@ -29,6 +29,7 @@ ipc-namespace
 netfilter
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 notv
@@ -40,7 +41,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin scorched3d,scorched3d-wrapper,scorched3dc,scorched3ds
+private-bin scorched3d,scorched3dc,scorched3ds
 private-cache
 private-dev
 private-tmp

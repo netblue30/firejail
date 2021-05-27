@@ -292,7 +292,7 @@ void net_dns_print(pid_t pid) {
 			errExit("chdir");
 
 		// access /etc/resolv.conf
-		FILE *fp = fopen("/etc/resolv.conf", "r");
+		FILE *fp = fopen("/etc/resolv.conf", "re");
 		if (!fp) {
 			fprintf(stderr, "Error: cannot access /etc/resolv.conf\n");
 			exit(1);

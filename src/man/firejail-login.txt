@@ -39,4 +39,4 @@ Homepage: https://firejail.wordpress.com
 .BR firecfg (1),
 .BR firejail-profile (5),
 .BR firejail-users (5),
-.BR jailtest (1)
+.BR jailcheck (1)

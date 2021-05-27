@@ -15,16 +15,15 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 
-# This profile disables network access
-# In order to enable network access,
-# uncomment the following or put it in your feh.local:
-# include feh-network.profile
+# Add the next line to your feh.local to enable network access.
+#include feh-network.inc.profile
 
 caps.drop all
 net none
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

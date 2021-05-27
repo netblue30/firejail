@@ -59,12 +59,7 @@ void env_ibus_load(void) {
 	if (asprintf(&dirname, "%s/.config/ibus/bus", cfg.homedir) == -1)
 		errExit("asprintf");
 
-	struct stat s;
-	if (stat(dirname, &s) == -1)
-		return;
-
 	// find the file
-	/* coverity[toctou] */
 	DIR *dir = opendir(dirname);
 	if (!dir) {
 		free(dirname);
@@ -84,7 +79,7 @@ void env_ibus_load(void) {
 		char *fname;
 		if (asprintf(&fname, "%s/%s", dirname, entry->d_name) == -1)
 			errExit("asprintf");
-		FILE *fp = fopen(fname, "r");
+		FILE *fp = fopen(fname, "re");
 		free(fname);
 		if (!fp)
 			continue;

@@ -12,6 +12,10 @@ include chromium-common.local
 noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.local/share/pki
 
+# Add the next line to your chromium-common.local if you want Google Chrome/Chromium browser
+# to have access to Gnome extensions (extensions.gnome.org) via browser connector
+#include allow-python3.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -30,12 +34,10 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-# Uncomment the next line (or add it to your chromium-common.local)
-# if your kernel allows unprivileged userns clone.
-#include chromium-common-hardened.profile
+# Add the next line to your chromium-common.local if your kernel allows unprivileged userns clone.
+#include chromium-common-hardened.inc.profile
 
-# Uncomment or put in your chromium-common.local to allow screen sharing under
-# wayland.
+# Add the next line to your chromium-common.local to allow screen sharing under wayland.
 #whitelist ${RUNUSER}/pipewire-0
 
 apparmor
@@ -43,6 +45,7 @@ caps.keep sys_admin,sys_chroot
 netfilter
 nodvd
 nogroups
+noinput
 notv
 ?BROWSER_DISABLE_U2F: nou2f
 shell none
@@ -50,12 +53,10 @@ shell none
 disable-mnt
 private-cache
 ?BROWSER_DISABLE_U2F: private-dev
-# problems with multiple browser sessions
-#private-tmp
+#private-tmp - issues when using multiple browser sessions
 
-# prevents access to passwords saved in GNOME Keyring and KWallet, also breaks Gnome connector
-# dbus-user none
+#dbus-user none - prevents access to passwords saved in GNOME Keyring and KWallet, also breaks Gnome connector.
 dbus-system none
 
-# the file dialog needs to work without d-bus
+# The file dialog needs to work without d-bus.
 ?HAS_NODBUS: env NO_CHROME_KDE_FILE_DIALOG=1

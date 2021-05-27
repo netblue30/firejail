@@ -14,6 +14,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/supertux2
@@ -29,6 +30,7 @@ caps.drop all
 net none
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 notv
@@ -42,6 +44,8 @@ tracelog
 
 disable-mnt
 # private-bin supertux2
+private-cache
+private-etc machine-id
 private-dev
 private-tmp
 

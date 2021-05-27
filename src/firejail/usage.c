@@ -114,7 +114,8 @@ static char *usage_str =
 	"    --join-network=name|pid - join the network namespace.\n"
 #endif
 	"    --join-or-start=name|pid - join the sandbox or start a new one.\n"
-        "    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
+	"    --keep-config-pulse - disable automatic ~/.config/pulse init.\n"
+	"    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
 	"    --list - list all sandboxes.\n"
 #ifdef HAVE_FILE_TRANSFER
@@ -154,6 +155,7 @@ static char *usage_str =
 	"    --nodvd - disable DVD and audio CD devices.\n"
 	"    --noexec=filename - remount the file or directory noexec nosuid and nodev.\n"
 	"    --nogroups - disable supplementary groups.\n"
+	"    --noinput - disable input devices.\n"
 	"    --nonewprivs - sets the NO_NEW_PRIVS prctl.\n"
 	"    --noprofile - do not use a security profile.\n"
 #ifdef HAVE_USERNS

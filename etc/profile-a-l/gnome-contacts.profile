@@ -24,6 +24,7 @@ caps.drop all
 netfilter
 #no3d - breaks on Arch
 nodvd
+noinput
 nonewprivs
 noroot
 nosound

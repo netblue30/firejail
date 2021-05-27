@@ -37,6 +37,7 @@ netfilter
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -54,9 +55,15 @@ private-bin flameshot
 private-cache
 private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.conf,machine-id,pki,resolv.conf,ssl
 private-dev
-private-tmp
+#private-tmp
 
 dbus-user filter
 dbus-user.own org.dharkael.Flameshot
 dbus-user.own org.flameshot.Flameshot
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.portal.Desktop
+dbus-user.talk org.gnome.Shell
+dbus-user.talk org.kde.KWin
+dbus-user.talk org.kde.StatusNotifierWatcher
+dbus-user.own org.kde.*
 dbus-system none

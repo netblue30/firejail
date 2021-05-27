@@ -15,8 +15,15 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-# help menu functionality (yelp) - comment or add this block prepended with 'ignore'
-# to your sysprof.local if you don't need the help functionality
+# Add the next lines to your sysprof.local if you don't need (yelp) help menu functionality.
+#ignore noblacklist ${HOME}/.config/yelp
+#ignore mkdir ${HOME}/.config/yelp
+#nowhitelist ${HOME}/.config/yelp
+#nowhitelist /usr/share/help/C/sysprof
+#nowhitelist /usr/share/yelp
+#nowhitelist /usr/share/yelp-tools
+#nowhitelist /usr/share/yelp-xsl
+
 noblacklist ${HOME}/.config/yelp
 mkdir ${HOME}/.config/yelp
 whitelist ${HOME}/.config/yelp
@@ -39,8 +46,10 @@ net none
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
-# Ubuntu 16.04 version needs root privileges - comment or put 'ignore noroot' in sysprof.local if you run Xenial
+# Some older Debian/Ubuntu sysprof versions need root privileges.
+# Add 'ignore noroot' to your sysprof.local if you run one of these.
 noroot
 nosound
 notv
@@ -56,7 +65,7 @@ disable-mnt
 private-cache
 private-dev
 private-etc alternatives,fonts,ld.so.cache,machine-id,ssl
-# private-lib breaks help menu
+# private-lib - breaks help menu
 #private-lib gdk-pixbuf-2.*,gio,gtk3,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*,libsysprof-2.so,libsysprof-ui-2.so
 private-tmp
 

@@ -14,26 +14,39 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.neverball
 whitelist ${HOME}/.neverball
+whitelist /usr/share/neverball
 include whitelist-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
-netfilter
+net none
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 notv
 nou2f
 novideo
-protocol unix,netlink
+protocol unix
 seccomp
+seccomp.block-secondary
 shell none
+tracelog
 
 disable-mnt
 private-bin neverball
+private-cache
 private-dev
+private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,machine-id
 private-tmp
 
+dbus-user none
+dbus-system none

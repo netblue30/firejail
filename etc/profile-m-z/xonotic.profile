@@ -8,12 +8,16 @@ include globals.local
 
 noblacklist ${HOME}/.xonotic
 
+include allow-bin-sh.inc
+include allow-opengl-game.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.xonotic
@@ -29,6 +33,7 @@ caps.drop all
 netfilter
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 notv
@@ -41,7 +46,7 @@ tracelog
 
 disable-mnt
 private-cache
-private-bin basename,bash,blind-id,cut,darkplaces-glx,darkplaces-sdl,dirname,glxinfo,grep,head,ldd,netstat,ps,readlink,sed,sh,uname,xonotic,xonotic-glx,xonotic-linux32-dedicated,xonotic-linux32-glx,xonotic-linux32-sdl,xonotic-linux64-dedicated,xonotic-linux64-glx,xonotic-linux64-sdl,xonotic-sdl,xonotic-sdl-wrapper,zenity
+private-bin blind-id,darkplaces-glx,darkplaces-sdl,dirname,ldd,netstat,ps,readlink,sh,uname,xonotic*
 private-dev
 private-etc alternatives,asound.conf,ca-certificates,crypto-policies,drirc,fonts,group,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,machine-id,nsswitch.conf,passwd,pki,pulse,resolv.conf,ssl
 private-tmp

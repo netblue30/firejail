@@ -6,7 +6,7 @@ include ppsspp.local
 # Persistent global definitions
 include globals.local
 
-# Note: you must whitelist your games folder in a ppsspp.local
+# Note: you must whitelist your games folder in your ppsspp.local.
 
 noblacklist ${HOME}/.config/ppsspp
 
@@ -42,7 +42,7 @@ seccomp
 shell none
 
 private-bin ppsspp,PPSSPP,PPSSPPQt,PPSSPPSDL
-# uncomment the following line if you do not need controller support
+# Add the next line to your ppsspp.local if you do not need controller support.
 #private-dev
 private-etc alternatives,asound.conf,ca-certificates,crypto-policies,drirc,fonts,group,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,machine-id,nsswitch.conf,passwd,pki,pulse,resolv.conf,ssl
 private-opt ppsspp

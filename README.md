@@ -22,8 +22,8 @@ implemented directly in Linux kernel and available on any Linux computer.
 <table><tr>
 
 <td>
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=7RMz7tePA98
-" target="_blank"><img src="http://img.youtube.com/vi/7RMz7tePA98/0.jpg"
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=8jfXL0ePV7U
+" target="_blank"><img src="http://img.youtube.com/vi/8jfXL0ePV7U/0.jpg"
 alt="Firejail Introduction" width="240" height="180" border="10" /><br/>Firejail Intro</a>
 </td>
 
@@ -84,7 +84,7 @@ Backup Video Channel: https://www.bitchute.com/profile/JSBsA1aoQVfW/
 We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@protonmail.com
 
 `````
-Security Adivsory - Feb 8, 2021
+Security Advisory - Feb 8, 2021
 
 Summary: A vulnerability resulting in root privilege escalation was discovered in
 Firejail's OverlayFS code,
@@ -198,32 +198,32 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 Milestone page: https://github.com/netblue30/firejail/milestone/1
 Release discussion: https://github.com/netblue30/firejail/issues/3696
 
-### jailtest
+### jailcheck
 `````
-JAILTEST(1)                    JAILTEST man page                   JAILTEST(1)
+JAILCHECK(1)                  JAILCHECK man page                  JAILCHECK(1)
 
 NAME
-       jailtest - Simple utility program to test running sandboxes
+       jailcheck - Simple utility program to test running sandboxes
 
 SYNOPSIS
-       sudo jailtest [OPTIONS] [directory]
+       sudo jailcheck [OPTIONS] [directory]
 
 DESCRIPTION
-       WORK IN PROGRESS!  jailtest attaches itself to all sandboxes started by
-       the user and performs some basic tests on the sandbox filesystem:
+       jailcheck attaches itself to all sandboxes started by the user and per‐
+       forms some basic tests on the sandbox filesystem:
 
        1. Virtual directories
-              jailtest extracts a list with the main virtual  directories  in‐
+              jailcheck extracts a list with the main virtual directories  in‐
               stalled by the sandbox.  These directories are build by firejail
               at startup using --private* and --whitelist commands.
 
        2. Noexec test
-              jailtest inserts executable programs  in  /home/username,  /tmp,
-              and  /var/tmp  directories and tries to run them form inside the
+              jailcheck inserts executable programs in  /home/username,  /tmp,
+              and  /var/tmp  directories and tries to run them from inside the
               sandbox, thus testing if the directory is executable or not.
 
        3. Read access test
-              jailtest creates test files in the directories specified by  the
+              jailcheck creates test files in the directories specified by the
               user and tries to read them from inside the sandbox.
 
        4. AppArmor test
@@ -234,10 +234,10 @@ DESCRIPTION
 
 OPTIONS
        --debug
-              Print debug messages
+              Print debug messages.
 
        -?, --help
-              Print options end exit.
+              Print options and exit.
 
        --version
               Print program version and exit.
@@ -255,7 +255,7 @@ OUTPUT
        rectories and various warnings.
 
 EXAMPLE
-       $ sudo jailtest
+       $ sudo jailcheck
        2014:netblue::firejail /usr/bin/gimp
           Virtual dirs: /tmp, /var/tmp, /dev, /usr/share,
           Warning: I can run programs in /home/netblue
@@ -290,7 +290,7 @@ SEE ALSO
        firejail(1),  firemon(1), firecfg(1), firejail-profile(5), firejail-lo‐
        gin(5), firejail-users(5),
 
-0.9.65                             Feb 2021                        JAILTEST(1)
+0.9.65                             May 2021                       JAILCHECK(1)
 `````
 
 ### Profile Statistics
@@ -300,31 +300,30 @@ A small tool to print profile statistics. Compile as usual and run in /etc/profi
 $ sudo cp src/profstats/profstats /etc/firejail/.
 $ cd /etc/firejail
 $ ./profstats *.profile
-Warning: multiple caps in transmission-daemon.profile
-
 Stats:
-    profiles			1077
-    include local profile	1077   (include profile-name.local)
-    include globals		1077   (include globals.local)
-    blacklist ~/.ssh		971   (include disable-common.inc)
-    seccomp			988
-    capabilities		1076
-    noexec			960   (include disable-exec.inc)
-    memory-deny-write-execute	231
-    apparmor			621
-    private-bin			571
-    private-dev			949
-    private-etc			470
-    private-tmp			835
-    whitelist home directory	508
-    whitelist var		758   (include whitelist-var-common.inc)
-    whitelist run/user		539   (include whitelist-runuser-common.inc
+    profiles			1135
+    include local profile	1135   (include profile-name.local)
+    include globals		1106   (include globals.local)
+    blacklist ~/.ssh		1009   (include disable-common.inc)
+    seccomp			1035
+    capabilities		1130
+    noexec			1011   (include disable-exec.inc)
+    noroot			944
+    memory-deny-write-execute	242
+    apparmor			667
+    private-bin			635
+    private-dev			992
+    private-etc			508
+    private-tmp			866
+    whitelist home directory	542
+    whitelist var		799   (include whitelist-var-common.inc)
+    whitelist run/user		597   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		526   (include whitelist-usr-share-common.inc
-    net none			354
-    dbus-user none 		573
-    dbus-user filter 		86
-    dbus-system none 		706
+    whitelist usr/share		569   (include whitelist-usr-share-common.inc
+    net none			389
+    dbus-user none 		619
+    dbus-user filter 		105
+    dbus-system none 		770
     dbus-system filter 		7
 ```
 
@@ -333,4 +332,7 @@ Stats:
 vmware-view, display-im6.q16, ipcalc, ipcalc-ng, ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop,
 avidemux, calligragemini, vmware-player, vmware-workstation, gget, com.github.phase1geo.minder, nextcloud-desktop,
 pcsxr, PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2, bcompare, b2sum, cksum, md5sum, sha1sum, sha224sum,
-sha256sum, sha384sum, sha512sum, sum
+sha256sum, sha384sum, sha512sum, sum, librewold-nightly, Quodlibet, tmux, sway, alienarena, alienarena-wrapper,
+ballbuster, ballbuster-wrapper, colorful, colorful-wrapper, gl-117, gl-117-wrapper, glaxium, glaxium-wrapper,
+pinball, pinball-wrapper, etr-wrapper, neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper, firedragon
+neochat, node, nvm, cargo, LibreCAD, blobby, funnyboat

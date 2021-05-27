@@ -9,6 +9,9 @@ noblacklist ${HOME}/.config/autostart
 noblacklist ${HOME}/.dropbox
 noblacklist ${HOME}/.dropbox-dist
 
+# Allow python3 (blacklisted by disable-interpreters.inc)
+include allow-python3.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
@@ -30,6 +33,7 @@ netfilter
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

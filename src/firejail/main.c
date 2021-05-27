@@ -116,7 +116,6 @@ int arg_private_cwd = 0;			// private working directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist command
 int arg_nosound = 0;				// disable sound
-int arg_noautopulse = 0;			// disable automatic ~/.config/pulse init
 int arg_novideo = 0;			//disable video devices in /dev
 int arg_no3d;					// disable 3d hardware acceleration
 int arg_quiet = 0;				// no output for scripting
@@ -125,6 +124,7 @@ int arg_join_filesystem = 0;			// join only the mount namespace
 int arg_nice = 0;				// nice value configured
 int arg_ipc = 0;					// enable ipc namespace
 int arg_writable_etc = 0;			// writable etc
+int arg_keep_config_pulse = 0;			// disable automatic ~/.config/pulse init
 int arg_writable_var = 0;			// writable var
 int arg_keep_var_tmp = 0;                       // don't overwrite /var/tmp
 int arg_writable_run_user = 0;			// writable /run/user
@@ -143,6 +143,7 @@ int arg_memory_deny_write_execute = 0;		// block writable and executable memory
 int arg_notv = 0;	// --notv
 int arg_nodvd = 0; // --nodvd
 int arg_nou2f = 0; // --nou2f
+int arg_noinput = 0; // --noinput
 int arg_deterministic_exit_code = 0;	// always exit with first child's exit status
 DbusPolicy arg_dbus_user = DBUS_POLICY_ALLOW;	// --dbus-user
 DbusPolicy arg_dbus_system = DBUS_POLICY_ALLOW;	// --dbus-system
@@ -534,7 +535,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		char *fname;
 		if (asprintf(&fname, RUN_FIREJAIL_PROFILE_DIR "/%d", pid) == -1)
 			errExit("asprintf");
-		FILE *fp = fopen(fname, "r");
+		FILE *fp = fopen(fname, "re");
 		if (!fp) {
 			fprintf(stderr, "Error: sandbox %s not found\n", argv[i] + 16);
 			exit(1);
@@ -981,6 +982,14 @@ int main(int argc, char **argv, char **envp) {
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
 	char **ptr;
 
+#ifndef HAVE_SUID
+	if (geteuid() != 0) {
+		fprintf(stderr, "Error: Firejail needs to be SUID.\n");
+		fprintf(stderr, "Assuming firejail is installed in /usr/bin, execute the following command as root:\n");
+		fprintf(stderr, "  chmod u+s /usr/bin/firejail\n");
+	}
+#endif
+
 	// sanitize the umask
 	orig_umask = umask(022);
 
@@ -1042,7 +1051,7 @@ int main(int argc, char **argv, char **envp) {
 	preproc_build_firejail_dir();
 	const char *container_name = env_get("container");
 	if (!container_name || strcmp(container_name, "firejail")) {
-		lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+		lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
 		if (lockfd_directory != -1) {
 			int rv = fchown(lockfd_directory, 0, 0);
 			(void) rv;
@@ -1144,7 +1153,7 @@ int main(int argc, char **argv, char **envp) {
 
 #ifdef DEBUG_RESTRICTED_SHELL
 				{EUID_ROOT();
-				FILE *fp = fopen("/firelog", "w");
+				FILE *fp = fopen("/firelog", "we");
 				if (fp) {
 					int i;
 					fprintf(fp, "argc %d: ", argc);
@@ -1163,7 +1172,7 @@ int main(int argc, char **argv, char **envp) {
 						    strncmp(argv[2], "scp ", 4) == 0) {
 #ifdef DEBUG_RESTRICTED_SHELL
 							{EUID_ROOT();
-							FILE *fp = fopen("/firelog", "a");
+							FILE *fp = fopen("/firelog", "ae");
 							if (fp) {
 								fprintf(fp, "run without a sandbox\n");
 								fclose(fp);
@@ -1196,7 +1205,7 @@ int main(int argc, char **argv, char **envp) {
 
 #ifdef DEBUG_RESTRICTED_SHELL
 			{EUID_ROOT();
-			FILE *fp = fopen("/firelog", "a");
+			FILE *fp = fopen("/firelog", "ae");
 			if (fp) {
 				fprintf(fp, "fullargc %d: ",  fullargc);
 				int i;
@@ -1218,7 +1227,7 @@ int main(int argc, char **argv, char **envp) {
 
 #ifdef DEBUG_RESTRICTED_SHELL
 			{EUID_ROOT();
-			FILE *fp = fopen("/firelog", "a");
+			FILE *fp = fopen("/firelog", "ae");
 			if (fp) {
 				fprintf(fp, "argc %d: ", argc);
 				int i;
@@ -1823,6 +1832,8 @@ int main(int argc, char **argv, char **envp) {
 				exit(1);
 			}
 			arg_noprofile = 1;
+			// force keep-config-pulse in order to keep ~/.config/pulse as is
+			arg_keep_config_pulse = 1;
 		}
 		else if (strncmp(argv[i], "--ignore=", 9) == 0) {
 			if (custom_profile) {
@@ -1873,6 +1884,9 @@ int main(int argc, char **argv, char **envp) {
 			}
 			arg_writable_etc = 1;
 		}
+		else if (strcmp(argv[i], "--keep-config-pulse") == 0) {
+			arg_keep_config_pulse = 1;
+		}
 		else if (strcmp(argv[i], "--writable-var") == 0) {
 			arg_writable_var = 1;
 		}
@@ -1890,6 +1904,8 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strcmp(argv[i], "--private") == 0) {
 			arg_private = 1;
+			// disable whitelisting in home directory
+			profile_add("whitelist ~/*");
 		}
 		else if (strncmp(argv[i], "--private=", 10) == 0) {
 			if (cfg.home_private_keep) {
@@ -1911,6 +1927,8 @@ int main(int argc, char **argv, char **envp) {
 				cfg.home_private = NULL;
 			}
 			arg_private = 1;
+			// disable whitelisting in home directory
+			profile_add("whitelist ~/*");
 		}
 #ifdef HAVE_PRIVATE_HOME
 		else if (strncmp(argv[i], "--private-home=", 15) == 0) {
@@ -2075,7 +2093,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--nosound") == 0)
 			arg_nosound = 1;
 		else if (strcmp(argv[i], "--noautopulse") == 0)
-			arg_noautopulse = 1;
+			arg_keep_config_pulse = 1;
 		else if (strcmp(argv[i], "--novideo") == 0)
 			arg_novideo = 1;
 		else if (strcmp(argv[i], "--no3d") == 0)
@@ -2086,6 +2104,8 @@ int main(int argc, char **argv, char **envp) {
 			arg_nodvd = 1;
 		else if (strcmp(argv[i], "--nou2f") == 0)
 			arg_nou2f = 1;
+		else if (strcmp(argv[i], "--noinput") == 0)
+			arg_noinput = 1;
 		else if (strcmp(argv[i], "--nodbus") == 0) {
 			arg_dbus_user = DBUS_POLICY_BLOCK;
 			arg_dbus_system = DBUS_POLICY_BLOCK;
@@ -2847,7 +2867,7 @@ int main(int argc, char **argv, char **envp) {
 	// check and assign an IP address - for macvlan it will be done again in the sandbox!
 	if (any_bridge_configured()) {
 		EUID_ROOT();
-		lockfd_network = open(RUN_NETWORK_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+		lockfd_network = open(RUN_NETWORK_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
 		if (lockfd_network != -1) {
 			int rv = fchown(lockfd_network, 0, 0);
 			(void) rv;
@@ -2869,12 +2889,6 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
- 	// create the parent-child communication pipe
- 	if (pipe(parent_to_child_fds) < 0)
- 		errExit("pipe");
- 	if (pipe(child_to_parent_fds) < 0)
-		errExit("pipe");
-
 	if (arg_noroot && arg_overlay) {
 		fwarning("--overlay and --noroot are mutually exclusive, noroot disabled\n");
 		arg_noroot = 0;
@@ -2887,7 +2901,7 @@ int main(int argc, char **argv, char **envp) {
 
 	// set name and x11 run files
 	EUID_ROOT();
-	lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+	lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
 	if (lockfd_directory != -1) {
 		int rv = fchown(lockfd_directory, 0, 0);
 		(void) rv;
@@ -2915,6 +2929,12 @@ int main(int argc, char **argv, char **envp) {
 		}
 	}
 #endif
+
+	// create the parent-child communication pipe
+	if (pipe2(parent_to_child_fds, O_CLOEXEC) < 0)
+		errExit("pipe");
+	if (pipe2(child_to_parent_fds, O_CLOEXEC) < 0)
+		errExit("pipe");
 
 	// clone environment
 	int flags = CLONE_NEWNS | CLONE_NEWPID | CLONE_NEWUTS | SIGCHLD;

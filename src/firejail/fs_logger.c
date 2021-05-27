@@ -92,7 +92,7 @@ void fs_logger_print(void) {
 	if (!head)
 		return;
 
-	FILE *fp = fopen(RUN_FSLOGGER_FILE, "a");
+	FILE *fp = fopen(RUN_FSLOGGER_FILE, "ae");
 	if (!fp) {
 		perror("fopen");
 		return;
@@ -123,15 +123,8 @@ void fs_logger_print_log(pid_t pid) {
 	// in case the pid is that of a firejail process, use the pid of the first child process
 	pid = switch_to_child(pid);
 
-	// check privileges for non-root users
-	uid_t uid = getuid();
-	if (uid != 0) {
-		uid_t sandbox_uid = pid_get_uid(pid);
-		if (uid != sandbox_uid) {
-			fprintf(stderr, "Error: permission denied\n");
-			exit(1);
-		}
-	}
+	// exit if no permission to join the sandbox
+	check_join_permission(pid);
 
 	// print RUN_FSLOGGER_FILE
 	char *fname;
@@ -139,24 +132,16 @@ void fs_logger_print_log(pid_t pid) {
 		errExit("asprintf");
 
 	EUID_ROOT();
-	struct stat s;
-	if (stat(fname, &s) == -1 || s.st_uid != 0) {
-		fprintf(stderr, "Error: Cannot access filesystem log\n");
-		exit(1);
-	}
-
-	/* coverity[toctou] */
-	FILE *fp = fopen(fname, "r");
+	FILE *fp = fopen(fname, "re");
+	free(fname);
 	if (!fp) {
 		fprintf(stderr, "Error: Cannot open filesystem log\n");
 		exit(1);
 	}
-
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp))
 		printf("%s", buf);
 	fclose(fp);
-	free(fname);
 
 	exit(0);
 }

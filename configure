@@ -1369,7 +1369,7 @@ Optional Features:
   --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
-  --enable-analyzer       enable GCC 10 static analyzer
+  --enable-analyzer       enable GCC static analyzer
   --enable-apparmor       enable apparmor
   --enable-selinux        SELinux labeling support
   --disable-dbusproxy     disable dbus proxy
@@ -3171,7 +3171,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___mindirect_branch_thunk" >&5
 $as_echo "$ax_cv_check_cflags___mindirect_branch_thunk" >&6; }
 if test "x$ax_cv_check_cflags___mindirect_branch_thunk" = xyes; then :
-  HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -mindirect-branch=thunk"
+  HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -mindirect-branch=thunk"
 
 else
   :
@@ -3207,7 +3207,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___mretpoline" >&5
 $as_echo "$ax_cv_check_cflags___mretpoline" >&6; }
 if test "x$ax_cv_check_cflags___mretpoline" = xyes; then :
-  HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -mretpoline"
+  HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -mretpoline"
 
 else
   :
@@ -3243,7 +3243,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___fstack_clash_protection" >&5
 $as_echo "$ax_cv_check_cflags___fstack_clash_protection" >&6; }
 if test "x$ax_cv_check_cflags___fstack_clash_protection" = xyes; then :
-  HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -fstack-clash-protection"
+  HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-clash-protection"
 
 else
   :
@@ -3279,7 +3279,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___fstack_protector_strong" >&5
 $as_echo "$ax_cv_check_cflags___fstack_protector_strong" >&6; }
 if test "x$ax_cv_check_cflags___fstack_protector_strong" = xyes; then :
-  HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -fstack-protector-strong"
+  HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-protector-strong"
 
 else
   :
@@ -3293,7 +3293,7 @@ fi
 
 if test "x$enable_analyzer" = "xyes"; then :
 
-	EXTRA_CFLAGS+=" -fanalyzer"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -fanalyzer -Wno-analyzer-malloc-leak"
 
 fi
 
@@ -3515,7 +3515,7 @@ else
 	AA_LIBS=$pkg_cv_AA_LIBS
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-	EXTRA_CFLAGS+=" $AA_CFLAGS" && EXTRA_LDFLAGS+=" $AA_LIBS"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS $AA_CFLAGS" && EXTRA_LDFLAGS="$EXTRA_LDFLAGS $AA_LIBS"
 fi
 
 
@@ -3530,7 +3530,7 @@ fi
 if test "x$enable_selinux" = "xyes"; then :
 
 	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS+=" -lselinux "
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux "
 
 
 fi
@@ -3810,7 +3810,7 @@ fi
 if test "x$enable_gcov" = "xyes"; then :
 
 	HAVE_GCOV="--coverage -DHAVE_GCOV "
-	EXTRA_LDFLAGS+=" -lgcov --coverage "
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage "
 
 
 fi
@@ -4366,7 +4366,7 @@ fi
 
 ac_config_files="$ac_config_files mkdeb.sh"
 
-ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile src/ftee/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile src/jailtest/Makefile"
+ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile src/ftee/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile src/jailcheck/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -5099,7 +5099,7 @@ do
     "src/zsh_completion/Makefile") CONFIG_FILES="$CONFIG_FILES src/zsh_completion/Makefile" ;;
     "src/bash_completion/Makefile") CONFIG_FILES="$CONFIG_FILES src/bash_completion/Makefile" ;;
     "test/Makefile") CONFIG_FILES="$CONFIG_FILES test/Makefile" ;;
-    "src/jailtest/Makefile") CONFIG_FILES="$CONFIG_FILES src/jailtest/Makefile" ;;
+    "src/jailcheck/Makefile") CONFIG_FILES="$CONFIG_FILES src/jailcheck/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

@@ -6,8 +6,8 @@ include evince.local
 # Persistent global definitions
 include globals.local
 
-# Uncomment this line and the bottom ones to use bookmarks
-# NOTE: This possibly exposes information, including file history from other programs.
+# WARNING: using bookmarks possibly exposes information, including file history from other programs.
+# Add the next line to your evince.local if you need bookmarks support. This also needs additional dbus-user filtering (see below).
 #noblacklist ${HOME}/.local/share/gvfs-metadata
 
 noblacklist ${HOME}/.config/evince
@@ -37,6 +37,7 @@ netfilter
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -57,9 +58,9 @@ private-etc alternatives,fonts,group,ld.so.cache,machine-id,passwd
 private-lib evince,gcc/*/*/libgcc_s.so.*,gcc/*/*/libstdc++.so.*,gconv,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libdjvulibre.so.*,libgconf-2.so.*,libgraphite2.so.*,libpoppler-glib.so.*,librsvg-2.so.*,libspectre.so.*
 private-tmp
 
-# might break two-page-view on some systems
+# dbus-user filtering might break two-page-view on some systems
 dbus-user filter
-# Also uncomment these two lines if you want to use bookmarks
+# Add the next two lines to your evince.local if you need bookmarks support.
 #dbus-user.talk org.gtk.vfs.Daemon
 #dbus-user.talk org.gtk.vfs.Metadata
 dbus-system none

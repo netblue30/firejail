@@ -423,7 +423,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "noautopulse") == 0) {
-		arg_noautopulse = 1;
+		arg_keep_config_pulse = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "notv") == 0) {
@@ -440,6 +440,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 	else if (strcmp(ptr, "no3d") == 0) {
 		arg_no3d = 1;
+		return 0;
+	}
+	else if (strcmp(ptr, "noinput") == 0) {
+		arg_noinput = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "nodbus") == 0) {
@@ -1139,6 +1143,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_machineid = 1;
 		return 0;
 	}
+
+	if (strcmp(ptr, "keep-config-pulse") == 0) {
+		arg_keep_config_pulse = 1;
+		return 0;
+	}
+
 	// writable-var
 	if (strcmp(ptr, "writable-var") == 0) {
 		arg_writable_var = 1;
@@ -1687,7 +1697,7 @@ void profile_read(const char *fname) {
 	}
 
 	// open profile file:
-	FILE *fp = fopen(fname, "r");
+	FILE *fp = fopen(fname, "re");
 	if (fp == NULL) {
 		fprintf(stderr, "Error: cannot open profile file %s\n", fname);
 		exit(1);
@@ -1704,13 +1714,17 @@ void profile_read(const char *fname) {
 	int lineno = 0;
 	while (fgets(buf, MAX_READ, fp)) {
 		++lineno;
+
+		// remove comments
+		char *ptr = strchr(buf, '#');
+		if (ptr)
+			*ptr = '\0';
+
 		// remove empty space - ptr in allocated memory
-		char *ptr = line_remove_spaces(buf);
+		ptr = line_remove_spaces(buf);
 		if (ptr == NULL)
 			continue;
-
-		// comments
-		if (*ptr == '#' || *ptr == '\0') {
+		if (*ptr == '\0') {
 			free(ptr);
 			continue;
 		}

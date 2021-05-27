@@ -10,6 +10,7 @@ noblacklist ${HOME}/*.kdb
 noblacklist ${HOME}/*.kdbx
 noblacklist ${HOME}/.cache/keepassxc
 noblacklist ${HOME}/.config/keepassxc
+noblacklist ${HOME}/.config/KeePassXCrc
 noblacklist ${HOME}/.keepassxc
 noblacklist ${DOCUMENTS}
 
@@ -30,11 +31,11 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-# You can enable whitelisting for keepassxc by uncommenting (or adding to you keepassxc.local) the following lines.
-# If you do so, you MUST store your database under ${HOME}/Documents/KeePassXC/foo.kdbx
+# You can enable whitelisting for keepassxc by adding the below to your keepassxc.local.
+# If you do, you MUST store your database under ${HOME}/Documents/KeePassXC/foo.kdbx.
 #mkdir ${HOME}/Documents/KeePassXC
 #whitelist ${HOME}/Documents/KeePassXC
-# Needed for KeePassXC-Browser
+# Needed for KeePassXC-Browser.
 #mkfile ${HOME}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
 #mkfile ${HOME}/.config/chromium/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
@@ -51,6 +52,7 @@ include disable-xdg.inc
 #mkdir ${HOME}/.config/keepassxc
 #whitelist ${HOME}/.cache/keepassxc
 #whitelist ${HOME}/.config/keepassxc
+#whitelist ${HOME}/.config/KeePassXCrc
 #include whitelist-common.inc
 
 whitelist /usr/share/keepassxc
@@ -63,6 +65,7 @@ net none
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -89,12 +92,12 @@ dbus-user.talk org.freedesktop.login1.Session
 dbus-user.talk org.gnome.ScreenSaver
 dbus-user.talk org.gnome.SessionManager
 dbus-user.talk org.gnome.SessionManager.Presence
-# Uncomment or add to your keepassxc.local to allow Notifications.
+# Add the next line to your keepassxc.local to allow notifications.
 #dbus-user.talk org.freedesktop.Notifications
-# Uncomment or add to your keepassxc.local to allow Tray.
+# Add the next line to your keepassxc.local to allow the tray menu.
 #dbus-user.talk org.kde.StatusNotifierWatcher
 #dbus-user.own org.kde.*
 dbus-system none
 
-# Mutex is stored in /tmp by default, which is broken by private-tmp
+# Mutex is stored in /tmp by default, which is broken by private-tmp.
 join-or-start keepassxc

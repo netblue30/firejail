@@ -248,7 +248,9 @@ int sbox_run(unsigned filtermask, int num, ...) {
 	va_start(valist, num);
 
 	// build argument list
-	char **arg = malloc((num + 1) * sizeof(char *));
+	char **arg = calloc(num + 1, sizeof(char *));
+	if (!arg)
+		errExit("calloc");
 	int i;
 	for (i = 0; i < num; i++)
 		arg[i] = va_arg(valist, char *);

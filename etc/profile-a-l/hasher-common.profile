@@ -6,24 +6,23 @@ include hasher-common.local
 
 blacklist ${RUNUSER}
 
-# WARNING:
-# Users can (un)restrict file access for **all** hashers by commenting/uncommenting the needed
-# include file(s) here or by putting those into hasher-common.local.
-# Another option is to do this **per hasher** in the relevant <hasher>.local.
-# Just beware that things tend to break when overtightening profiles. For example, because you only
-# need to hash/check files in ${DOWNLOADS}, other applications may need access to ${HOME}/.local/share.
+# Comment/uncomment the relevant include file(s) in your hasher-common.local
+# to (un)restrict file access for **all** hashers. Another option is to do this **per hasher**
+# in the relevant <hasher>.local. Beware that things tend to break when overtightening
+# profiles. For example, because you only need to hash/check files in ${DOWNLOADS},
+# other applications may need access to ${HOME}/.local/share.
 
-# Uncomment the next line (or put it into your hasher-common.local) if you don't need to hash files in disable-common.inc.
+# Add the next line to your hasher-common.local if you don't need to hash files in disable-common.inc.
 #include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
-# Uncomment the next line (or put it into your hasher-common.local) if you don't need to hash files in disable-programs.inc.
+# Add the next line to your hasher-common.local if you don't need to hash files in disable-programs.inc.
 #include disable-programs.inc
 include disable-shell.inc
 include disable-write-mnt.inc
-# Uncomment the next line (or put it into your hasher-common.local) if you don't need to hash files in disable-xdg.inc.
+# Add the next line to your hasher-common.local if you don't need to hash files in disable-xdg.inc.
 #include disable-xdg.inc
 
 apparmor
@@ -34,6 +33,7 @@ net none
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -47,10 +47,10 @@ shell none
 tracelog
 x11 none
 
-# Uncomment the next line (or put it into your hasher-common.local) if you don't need to hash files in /tmp.
+# Add the next line to your hasher-common.local if you don't need to hash files in ~/.cache.
 #private-cache
 private-dev
-# Uncomment the next line (or put it into your hasher-common.local) if you don't need to hash files in /tmp.
+# Add the next line to your hasher-common.local if you don't need to hash files in /tmp.
 #private-tmp
 
 dbus-user none

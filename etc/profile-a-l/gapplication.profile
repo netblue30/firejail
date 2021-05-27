@@ -30,6 +30,7 @@ net none
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -51,8 +52,8 @@ private-dev
 private-etc none
 private-tmp
 
-# Uncomment (or add to your gapplcation.local) the next line to filter D-Bus names.
-# You might need to add additional dbus-user.talk rules. see 'gapplication list-apps'.
+# Add the next line to your gapplication.local to filter D-Bus names.
+# You might need to add additional dbus-user.talk rules (see 'gapplication list-apps').
 #dbus-user filter
 dbus-user.talk org.gnome.Boxes
 dbus-user.talk org.gnome.Builder

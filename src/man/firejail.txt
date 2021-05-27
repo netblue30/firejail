@@ -350,7 +350,7 @@ Specify the location for the DBus log file.
 
 .br
 The log file contains events for both the system and session buses if both of
-the --dbus-sysem.log and --dbus-user.log options are specified. If no log file
+the --dbus-system.log and --dbus-user.log options are specified. If no log file
 path is given, logs are written to the standard output instead.
 .br
 
@@ -1052,6 +1052,17 @@ Same as "firejail --join=name" if sandbox with specified name exists, otherwise 
 Note that in contrary to other join options there is respective profile option.
 
 .TP
+\fB\-\-keep-config-pulse
+Disable automatic ~/.config/pulse init, for complex setups such as remote
+pulse servers or non-standard socket paths.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-keep-config-pulse firefox
+
+.TP
 \fB\-\-keep-dev-shm
 /dev/shm directory is untouched (even with --private-dev)
 .br
@@ -1460,15 +1471,8 @@ Example:
 $ firejail --no3d firefox
 
 .TP
-\fB\-\-noautopulse
-Disable automatic ~/.config/pulse init, for complex setups such as remote
-pulse servers or non-standard socket paths.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-noautopulse firefox
+\fB\-\-noautopulse \fR(deprecated)
+See --keep-config-pulse.
 
 .TP
 \fB\-\-noblacklist=dirname_or_filename
@@ -1514,6 +1518,15 @@ Disable DVD and audio CD devices.
 Example:
 .br
 $ firejail \-\-nodvd
+.TP
+\fB\-\-noinput
+Disable input devices.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-noinput
 .TP
 \fB\-\-noexec=dirname_or_filename
 Remount directory or file noexec, nodev and nosuid. File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
@@ -1883,7 +1896,7 @@ $
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
-the /etc directory.
+the /etc directory (e.g., /etc/foo must be expressed as foo).
 If no listed file is found, /etc directory will be empty.
 All modifications are discarded when the sandbox is closed.
 .br
@@ -1893,7 +1906,7 @@ Example:
 .br
 $ firejail --private-etc=group,hostname,localtime, \\
 .br
-nsswitch.conf,passwd,resolv.conf,default/motd-news
+nsswitch.conf,passwd,resolv.conf
 #ifdef HAVE_PRIVATE_HOME
 .TP
 \fB\-\-private-home=file,directory
@@ -1968,7 +1981,9 @@ $
 Build a new /opt in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
-the /opt directory.
+the /opt directory, and must not contain the / character
+(e.g., /opt/foo must be expressed as foo, but /opt/foo/bar --
+expressed as foo/bar -- is disallowed).
 If no listed file is found, /opt directory will be empty.
 All modifications are discarded when the sandbox is closed.
 .br
@@ -1983,7 +1998,9 @@ $ firejail --private-opt=firefox /opt/firefox/firefox
 Build a new /srv in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
-the /srv directory.
+the /srv directory, and must not contain the / character
+(e.g., /srv/foo must be expressed as foo, but /srv/foo/bar --
+expressed as srv/bar -- is disallowed).
 If no listed file is found, /srv directory will be empty.
 All modifications are discarded when the sandbox is closed.
 .br
@@ -3350,7 +3367,7 @@ Homepage: https://firejail.wordpress.com
 .BR firejail-profile (5),
 .BR firejail-login (5),
 .BR firejail-users (5),
-.BR jailtest (1)
+.BR jailcheck (1)
 
 .UR https://github.com/netblue30/firejail/wiki
 .UE ,

@@ -4,3 +4,7 @@ include allow-nodejs.local
 
 noblacklist ${PATH}/node
 noblacklist /usr/include/node
+
+# Allow python for node-gyp (blacklisted by disable-interpreters.inc)
+include allow-python2.inc
+include allow-python3.inc

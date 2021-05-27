@@ -33,8 +33,7 @@ void fs_trace_preload(void) {
 	if (stat("/etc/ld.so.preload", &s)) {
 		if (arg_debug)
 			printf("Creating an empty /etc/ld.so.preload file\n");
-		/* coverity[toctou] */
-		FILE *fp = fopen("/etc/ld.so.preload", "w");
+		FILE *fp = fopen("/etc/ld.so.preload", "wxe");
 		if (!fp)
 			errExit("fopen");
 		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
@@ -64,11 +63,11 @@ void fs_tracefile(void) {
 	if (ftruncate(fd, 0) == -1)
 		errExit("ftruncate");
 	EUID_ROOT();
-	FILE *fp = fopen(RUN_TRACE_FILE, "w");
+	FILE *fp = fopen(RUN_TRACE_FILE, "we");
 	if (!fp)
 		errExit("fopen " RUN_TRACE_FILE);
 	fclose(fp);
-	fs_logger2("touch ", arg_tracefile);
+	fs_logger2("touch", arg_tracefile);
 	// mount using the symbolic link in /proc/self/fd
 	if (arg_debug)
 		printf("Bind mount %s to %s\n", arg_tracefile, RUN_TRACE_FILE);
@@ -88,7 +87,7 @@ void fs_trace(void) {
 	if (arg_debug)
 		printf("Create the new ld.so.preload file\n");
 
-	FILE *fp = fopen(RUN_LDPRELOAD_FILE, "w");
+	FILE *fp = fopen(RUN_LDPRELOAD_FILE, "we");
 	if (!fp)
 		errExit("fopen");
 	const char *prefix = RUN_FIREJAIL_LIB_DIR;

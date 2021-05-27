@@ -6,7 +6,7 @@ include pcsxr.local
 # Persistent global definitions
 include globals.local
 
-# Note: you must whitelist your games folder in a pcsxr.local
+# Note: you must whitelist your games folder in your pcsxr.local
 
 noblacklist ${HOME}/.pcsxr
 
@@ -32,7 +32,7 @@ caps.drop all
 ipc-namespace
 net none
 netfilter
-# Uncomment the following line if not loading games from disc
+# Add the next line to your pcsxr.local when not loading games from disc.
 #nodvd
 nogroups
 nonewprivs
@@ -47,7 +47,7 @@ tracelog
 
 private-bin pcsxr
 private-cache
-# uncomment the following line if you do not need controller support
+# Add the next line to your pcsxr.local if you do not need controller support.
 #private-dev
 private-etc alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,nvidia,pango,pki,protocols,pulse,resolv.conf,rpc,services,ssl,X11,xdg
 private-opt none

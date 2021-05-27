@@ -35,6 +35,7 @@ netfilter
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -52,7 +53,7 @@ private-bin dbus-send
 private-cache
 private-dev
 private-etc alternatives,dbus-1
-private-lib libpcre2-8.so.0
+private-lib libpcre*
 private-tmp
 
 memory-deny-write-execute

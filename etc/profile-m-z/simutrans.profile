@@ -25,6 +25,7 @@ caps.drop all
 net none
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 notv

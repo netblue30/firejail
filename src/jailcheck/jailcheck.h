@@ -17,8 +17,8 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#ifndef JAILTEST_H
-#define JAILTEST_H
+#ifndef JAILCHECK_H
+#define JAILCHECK_H
 
 #include "../include/common.h"
 

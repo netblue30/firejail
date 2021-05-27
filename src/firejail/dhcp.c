@@ -93,7 +93,7 @@ static pid_t dhcp_read_pidfile(const Dhclient *client) {
 	while (found == 0 && tries < 10) {
 		if (tries >= 1)
 			usleep(100000);
-		FILE *pidfile = fopen(client->pid_file, "r");
+		FILE *pidfile = fopen(client->pid_file, "re");
 		if (pidfile) {
 			long pid;
 			if (fscanf(pidfile, "%ld", &pid) == 1)

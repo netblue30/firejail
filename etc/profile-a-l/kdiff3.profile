@@ -9,8 +9,8 @@ include globals.local
 noblacklist ${HOME}/.config/kdiff3fileitemactionrc
 noblacklist ${HOME}/.config/kdiff3rc
 
-# Uncomment the next line (or put it into your kdiff3.local) if you don't need to compare files in disable-common.inc.
-# by default we deny access only to .ssh and .gnupg
+# Add the next line to your kdiff3.local if you don't need to compare files in disable-common.inc.
+# By default we deny access only to .ssh and .gnupg.
 #include disable-common.inc
 blacklist ${HOME}/.ssh
 blacklist ${HOME}/.gnupg
@@ -19,15 +19,15 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
-# Uncomment the next line (or put it into your kdiff3.local) if you don't need to compare files in disable-programs.inc.
+# Add the next line to your kdiff3.local if you don't need to compare files in disable-programs.inc.
 #include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
 include whitelist-runuser-common.inc
-# Uncomment the next lines (or put it into your kdiff3.local) if you don't need to compare files in /usr/share.
+# Add the next line to your kdiff3.local if you don't need to compare files in /usr/share.
 #include whitelist-usr-share-common.inc
-# Uncomment the next line (or put it into your kdiff3.local) if you don't need to compare files in /var.
+# Add the next line to your kdiff3.local if you don't need to compare files in /var.
 #include whitelist-var-common.inc
 
 apparmor
@@ -36,6 +36,7 @@ machine-id
 net none
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

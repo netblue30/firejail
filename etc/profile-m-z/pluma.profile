@@ -29,6 +29,7 @@ machine-id
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -48,7 +49,5 @@ private-tmp
 # makes settings immutable
 # dbus-user none
 # dbus-system none
-
-memory-deny-write-execute
 
 join-or-start pluma

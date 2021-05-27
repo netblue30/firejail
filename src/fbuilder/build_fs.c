@@ -146,31 +146,49 @@ void build_etc(const char *fname, FILE *fp) {
 //*******************************************
 // var directory
 //*******************************************
+#if 0
+// todo: load the list from whitelist-var-common.inc
+static char *var_skip[] = {
+	"/var/lib/ca-certificates",
+	"/var/lib/dbus",
+	"/var/lib/menu-xdg",
+	"/var/lib/uim",
+	"/var/cache/fontconfig",
+	"/var/tmp",
+	"/var/run",
+	"/var/lock",
+	NULL
+};
+#endif
 static FileDB *var_out = NULL;
+static FileDB *var_skip = NULL;
 static void var_callback(char *ptr) {
-	if (strcmp(ptr, "/var/lib") == 0)
-		;
-	else if (strcmp(ptr, "/var/cache") == 0)
-		;
-	else if (strncmp(ptr, "/var/lib/menu-xdg", 17) == 0)
-		var_out = filedb_add(var_out, "/var/lib/menu-xdg");
-	else if (strncmp(ptr, "/var/cache/fontconfig", 21) == 0)
-		var_out = filedb_add(var_out, "/var/cache/fontconfig");
-	else
-		var_out = filedb_add(var_out, ptr);
+	// extract the directory:
+	assert(strncmp(ptr, "/var", 4) == 0);
+	char *p1 = ptr + 4;
+	if (*p1 != '/')
+		return;
+	p1++;
+
+	if (*p1 == '/')	// double '/'
+		p1++;
+	if (*p1 == '\0')
+		return;
+
+	if (!filedb_find(var_skip, p1))
+		var_out = filedb_add(var_out, p1);
 }
 
 void build_var(const char *fname, FILE *fp) {
 	assert(fname);
 
+	var_skip = filedb_load_whitelist(var_skip, "whitelist-var-common.inc", "whitelist /var/");
 	process_files(fname, "/var", var_callback);
 
-	if (var_out == NULL) {
-		fprintf(fp, "blacklist /var\n");
-	} else {
-		filedb_print(var_out, "whitelist ", fp);
-		fprintf(fp, "include whitelist-var-common.inc\n");
-	}
+	// always whitelist /var
+	if (var_out)
+		filedb_print(var_out, "whitelist /var/", fp);
+	fprintf(fp, "include whitelist-var-common.inc\n");
 }
 
 
@@ -178,6 +196,7 @@ void build_var(const char *fname, FILE *fp) {
 // usr/share directory
 //*******************************************
 static FileDB *share_out = NULL;
+static FileDB *share_skip = NULL;
 static void share_callback(char *ptr) {
 	// extract the directory:
 	assert(strncmp(ptr, "/usr/share", 10) == 0);
@@ -195,21 +214,21 @@ static void share_callback(char *ptr) {
 	if (p2)
 		*p2 = '\0';
 
-	// store the file
-	share_out = filedb_add(share_out, ptr);
+
+	if (!filedb_find(share_skip, p1))
+		share_out = filedb_add(share_out, p1);
 }
 
 void build_share(const char *fname, FILE *fp) {
 	assert(fname);
 
+	share_skip = filedb_load_whitelist(share_skip, "whitelist-usr-share-common.inc", "whitelist /usr/share/");
 	process_files(fname, "/usr/share", share_callback);
 
-	if (share_out == NULL) {
-		fprintf(fp, "blacklist /usr/share\n");
-	} else {
-		filedb_print(share_out, "whitelist ", fp);
-		fprintf(fp, "include whitelist-usr-share-common.inc\n");
-	}
+	// always whitelist /usr/share
+	if (share_out)
+		filedb_print(share_out, "whitelist /usr/share/", fp);
+	fprintf(fp, "include whitelist-usr-share-common.inc\n");
 }
 
 //*******************************************
@@ -219,6 +238,10 @@ static FileDB *tmp_out = NULL;
 static void tmp_callback(char *ptr) {
 	// skip strace file
 	if (strncmp(ptr, "/tmp/firejail-strace", 20) == 0)
+		return;
+	if (strncmp(ptr, "/tmp/runtime-", 13) == 0)
+		return;
+	if (strcmp(ptr, "/tmp") == 0)
 		return;
 
 	tmp_out = filedb_add(tmp_out, ptr);
@@ -232,8 +255,7 @@ void build_tmp(const char *fname, FILE *fp) {
 	if (tmp_out == NULL)
 		fprintf(fp, "private-tmp\n");
 	else {
-		fprintf(fp, "\n");
-		fprintf(fp, "# private-tmp\n");
+		fprintf(fp, "#private-tmp\n");
 		fprintf(fp, "# File accessed in /tmp directory:\n");
 		fprintf(fp, "# ");
 		FileDB *ptr = tmp_out;
@@ -249,40 +271,37 @@ void build_tmp(const char *fname, FILE *fp) {
 // dev directory
 //*******************************************
 static char *dev_skip[] = {
+	"/dev/stdin",
+	"/dev/stdout",
+	"/dev/stderr",
 	"/dev/zero",
 	"/dev/null",
 	"/dev/full",
 	"/dev/random",
+	"/dev/srandom",
 	"/dev/urandom",
+	"/dev/sr0",
+	"/dev/cdrom",
+	"/dev/cdrw",
+	"/dev/dvd",
+	"/dev/dvdrw",
+	"/dev/fd",
+	"/dev/pts",
+	"/dev/ptmx",
+	"/dev/log",
+
+	"/dev/aload",	// old ALSA devices, not covered in private-dev
+	"/dev/dsp",		// old OSS device, deprecated
+
 	"/dev/tty",
 	"/dev/snd",
 	"/dev/dri",
-	"/dev/pts",
-	"/dev/nvidia0",
-	"/dev/nvidia1",
-	"/dev/nvidia2",
-	"/dev/nvidia3",
-	"/dev/nvidia4",
-	"/dev/nvidia5",
-	"/dev/nvidia6",
-	"/dev/nvidia7",
-	"/dev/nvidia8",
-	"/dev/nvidia9",
-	"/dev/nvidiactl",
-	"/dev/nvidia-modeset",
-	"/dev/nvidia-uvm",
-	"/dev/video0",
-	"/dev/video1",
-	"/dev/video2",
-	"/dev/video3",
-	"/dev/video4",
-	"/dev/video5",
-	"/dev/video6",
-	"/dev/video7",
-	"/dev/video8",
-	"/dev/video9",
+	"/dev/nvidia",
+	"/dev/video",
 	"/dev/dvb",
-	"/dev/sr0",
+	"/dev/hidraw",
+	"/dev/usb",
+	"/dev/input",
 	NULL
 };
 
@@ -292,7 +311,7 @@ static void dev_callback(char *ptr) {
 	int i = 0;
 	int found = 0;
 	while (dev_skip[i]) {
-		if (strcmp(ptr, dev_skip[i]) == 0) {
+		if (strncmp(ptr, dev_skip[i], strlen(dev_skip[i])) == 0) {
 			found = 1;
 			break;
 		}
@@ -310,9 +329,8 @@ void build_dev(const char *fname, FILE *fp) {
 	if (dev_out == NULL)
 		fprintf(fp, "private-dev\n");
 	else {
-		fprintf(fp, "\n");
-		fprintf(fp, "# private-dev\n");
-		fprintf(fp, "# This is the list of devices accessed (on top of regular private-dev devices:\n");
+		fprintf(fp, "#private-dev\n");
+		fprintf(fp, "# This is the list of devices accessed on top of regular private-dev devices:\n");
 		fprintf(fp, "# ");
 		FileDB *ptr = dev_out;
 		while (ptr) {

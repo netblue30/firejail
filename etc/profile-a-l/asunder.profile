@@ -28,6 +28,7 @@ caps.drop all
 netfilter
 no3d
 # nogroups
+noinput
 nonewprivs
 noroot
 nou2f

@@ -9,8 +9,8 @@ include globals.local
 noblacklist /usr/local/sbin
 noblacklist ${HOME}/.config/libreoffice
 
-# libreoffice uses java for some certain operations
-# comment if you don't care about java functionality
+# libreoffice uses java for some functionality.
+# Add 'ignore include allow-java.inc' to your libreoffice.local if you don't need that functionality.
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
 
@@ -22,25 +22,28 @@ include disable-programs.inc
 
 include whitelist-var-common.inc
 
-# ubuntu 18.04 comes with its own apparmor profile, but it is not in enforce mode.
-# comment the next line to use the ubuntu profile instead of firejail's apparmor profile
+# Debian 10/Ubuntu 18.04 come with their own apparmor profile, but it is not in enforce mode.
+# Add the next lines to your libreoffice.local to use the Ubuntu profile instead of firejail's apparmor profile.
+#ignore apparmor
+#ignore nonewprivs
+#ignore protocol
+#ignore seccomp
+#ignore tracelog
+
 apparmor
 caps.drop all
 netfilter
 nodvd
 nogroups
-# comment nonewprivs when using the ubuntu 18.04/debian 10 apparmor profile
+noinput
 nonewprivs
 noroot
 notv
 nou2f
 novideo
-# comment the protocol line when using the ubuntu 18.04/debian 10 apparmor profile
 protocol unix,inet,inet6
-# comment seccomp when using the ubuntu 18.04/debian 10 apparmor profile
 seccomp
 shell none
-# comment tracelog when using the ubuntu 18.04/debian 10 apparmor profile
 tracelog
 
 #private-bin libreoffice,sh,uname,dirname,grep,sed,basename,ls

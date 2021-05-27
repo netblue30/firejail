@@ -278,6 +278,7 @@ David Thole (https://github.com/TheDarkTrumpet)
 Davide Beatrici (https://github.com/davidebeatrici)
 	- steam.profile: correctly blacklist unneeded directories in user's home
 	- minetest fixes
+	- map /dev/input with "--private-dev", add "--no-input" option to disable it
 David Hyrule (https://github.com/Svaag)
 	- remove nou2f in ssh profile
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)
@@ -553,6 +554,7 @@ Kishore96in (https://github.com/Kishore96in)
 	- okular profile fixes
 	-  jitsi-meet-desktop profile
 	- konversatin profile fix
+	- added Neochat profile
 KOLANICH (https://github.com/KOLANICH)
 	- added symlink fixer fix_private-bin.py in contrib section
 	- update fix_private-bin.py
@@ -619,6 +621,8 @@ Melvin Vermeeren (https://github.com/melvinvermeeren)
 	- added --noautopulse command line option
 Michael Haas (https://github.com/mhaas)
 	- bugfixes
+Michael Hoffmann (https://github.com/brisad)
+	- added support for subdirs in private-etc
 Mike Frysinger (vapier@gentoo.org)
 	- Gentoo compile patch
 mirabellette (https://github.com/mirabellette)
@@ -740,6 +744,7 @@ Rahul Golam (https://github.com/technoLord)
 	- strings profile
 RandomVoid (https://github.com/RandomVoid)
 	- fix building C# projects in Godot
+	- fix Lutris profile
 Raphaël Droz (https://github.com/drzraf)
 	- zoom profile fixes
 realaltffour (https://github.com/realaltffour)
@@ -827,7 +832,7 @@ soredake (https://github.com/soredake)
 	- fix handling of STEAM_RUNTIME_PREFER_HOST_LIBRARIES in steam profile
 	- fix keepassxc.profile
 	- fix qtox.profile
-	- add ocaltime to private-etc to make qtox show correct time
+	- add localtime to private-etc to make qtox show correct time
 	- fixes for the keepassxc 2.2.5 version
 SkewedZeppelin (https://github.com/SkewedZeppelin)
 	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5 profiles

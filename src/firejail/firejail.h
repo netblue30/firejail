@@ -122,26 +122,22 @@ typedef struct interface_t {
 	uint8_t configured;
 } Interface;
 
+typedef struct topdir_t {
+	char *path;
+	int fd;
+} TopDir;
+
 typedef struct profile_entry_t {
 	struct profile_entry_t *next;
 	char *data;	// command
 
 	// whitelist command parameters
-	char *link;	// link name - set if the file is a link
-	enum {
-		WLDIR_HOME = 1,	// whitelist in home directory
-		WLDIR_TMP,	// whitelist in /tmp directory
-		WLDIR_MEDIA,	// whitelist in /media directory
-		WLDIR_MNT,	// whitelist in /mnt directory
-		WLDIR_VAR,	// whitelist in /var directory
-		WLDIR_DEV,	// whitelist in /dev directory
-		WLDIR_OPT,	// whitelist in /opt directory
-		WLDIR_SRV,	// whitelist in /srv directory
-		WLDIR_ETC,	// whitelist in /etc directory
-		WLDIR_SHARE,	// whitelist in /usr/share directory
-		WLDIR_MODULE,	// whitelist in /sys/module directory
-		WLDIR_RUN	// whitelist in /run/user/$uid directory
-	} wldir;
+	struct wparam_t {
+		char *file;		// resolved file path
+		char *link;		// link path
+		TopDir *top;	// top level directory
+	} *wparam;
+
 } ProfileEntry;
 
 typedef struct config_t {
@@ -314,7 +310,6 @@ extern int arg_private_cwd;	// private working directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist command
 extern int arg_nosound;	// disable sound
-extern int arg_noautopulse; // disable automatic ~/.config/pulse init
 extern int arg_novideo; //disable video devices in /dev
 extern int arg_no3d;		// disable 3d hardware acceleration
 extern int arg_quiet;		// no output for scripting
@@ -323,6 +318,7 @@ extern int arg_join_filesystem;	// join only the mount namespace
 extern int arg_nice;		// nice value configured
 extern int arg_ipc;		// enable ipc namespace
 extern int arg_writable_etc;	// writable etc
+extern int arg_keep_config_pulse;	// disable automatic ~/.config/pulse init
 extern int arg_writable_var;	// writable var
 extern int arg_keep_var_tmp; // don't overwrite /var/tmp
 extern int arg_writable_run_user;	// writable /run/user
@@ -339,7 +335,8 @@ extern int arg_noprofile;	// use default.profile if none other found/specified
 extern int arg_memory_deny_write_execute;	// block writable and executable memory
 extern int arg_notv;	// --notv
 extern int arg_nodvd;	// --nodvd
-extern int arg_nou2f;   // --nou2f
+extern int arg_nou2f;	// --nou2f
+extern int arg_noinput;	// --noinput
 extern int arg_deterministic_exit_code;	// always exit with first child's exit status
 
 typedef enum {
@@ -528,7 +525,7 @@ void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid);
 unsigned extract_timeout(const char *str);
 void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
-int safe_fd(const char *path, int flags);
+int safer_openat(int dirfd, const char *path, int flags);
 int has_handler(pid_t pid, int signal);
 void enter_network_namespace(pid_t pid);
 int read_pid(const char *name, pid_t *pid);
@@ -569,6 +566,7 @@ void fs_dev_disable_video(void);
 void fs_dev_disable_tv(void);
 void fs_dev_disable_dvd(void);
 void fs_dev_disable_u2f(void);
+void fs_dev_disable_input(void);
 
 // fs_home.c
 // private mode (--private)
@@ -767,7 +765,6 @@ enum {
 	CFG_PRIVATE_HOME,
 	CFG_PRIVATE_BIN_NO_LOCAL,
 	CFG_FIREJAIL_PROMPT,
-	CFG_FOLLOW_SYMLINK_AS_USER,
 	CFG_DISABLE_MNT,
 	CFG_JOIN,
 	CFG_ARP_PROBES,
@@ -792,6 +789,7 @@ extern char *xvfb_extra_params;
 extern char *netfilter_default;
 extern unsigned long join_timeout;
 extern char *config_seccomp_error_action_str;
+extern char **whitelist_reject_topdirs;
 
 int checkcfg(int val);
 void print_compiletime_support(void);

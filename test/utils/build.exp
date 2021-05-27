@@ -21,35 +21,35 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"blacklist /usr/share"
+	"include whitelist-usr-share-common.inc"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"blacklist /var"
+	"include whitelist-var-common.inc"
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"private-bin cat,"
-}
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"private-dev"
-}
-expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	"private-etc"
-}
-expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	"private-tmp"
-}
-expect {
-	timeout {puts "TESTING ERROR 8\n";exit}
 	"caps.drop all"
 }
 expect {
-	timeout {puts "TESTING ERROR 9\n";exit}
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"ipc-namespace"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"netfilter"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
 	"nonewprivs"
+}
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"noroot"
+}
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"net none"
 }
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
@@ -57,11 +57,23 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
-	"net none"
+	"shell none"
+}
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"private-bin cat,"
 }
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}
-	"shell none"
+	"private-dev"
+}
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"private-etc none"
+}
+expect {
+	timeout {puts "TESTING ERROR 14\n";exit}
+	"private-tmp"
 }
 after 100
 

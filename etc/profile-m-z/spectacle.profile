@@ -6,7 +6,7 @@ include spectacle.local
 # Persistent global definitions
 include globals.local
 
-# Uncomment the following lines to use sharing services.
+# Add the next lines to your spectacle.local to use sharing services.
 #netfilter
 #ignore net none
 #private-etc ca-certificates,crypto-policies,pki,resolv.conf,ssl
@@ -26,6 +26,8 @@ include disable-xdg.inc
 mkfile  ${HOME}/.config/spectaclerc
 whitelist ${HOME}/.config/spectaclerc
 whitelist ${PICTURES}
+whitelist /usr/share/kconf_update/spectacle_newConfig.upd
+whitelist /usr/share/kconf_update/spectacle_shortcuts.upd
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -38,6 +40,7 @@ net none
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -59,6 +62,7 @@ private-tmp
 
 dbus-user filter
 dbus-user.own org.kde.spectacle
+dbus-user.own org.kde.Spectacle
 dbus-user.talk org.freedesktop.FileManager1
 #dbus-user.talk org.kde.JobViewServer
 #dbus-user.talk org.kde.kglobalaccel

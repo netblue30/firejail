@@ -6,14 +6,21 @@ include apostrophe.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.texlive20*
 noblacklist ${DOCUMENTS}
 noblacklist ${PICTURES}
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
+# Allow perl (blacklisted by disable-interpreters.inc)
+include allow-perl.inc
+
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
+
+# Allow /bin/sh (blacklisted by disable-shell.inc)
+include allow-bin-sh.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -25,7 +32,10 @@ include disable-shell.inc
 include disable-xdg.inc
 
 whitelist /usr/share/apostrophe
+whitelist /usr/share/texlive
+whitelist /usr/share/texmf
 whitelist /usr/share/pandoc-*
+whitelist /usr/share/perl5
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -37,6 +47,7 @@ net none
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -49,10 +60,10 @@ shell none
 tracelog
 
 disable-mnt
-private-bin apostrophe,pandoc,python3*
+private-bin apostrophe,fmtutil,kpsewhich,mktexfmt,pandoc,pdftex,perl,python3*,sh,xdvipdfmx,xelatex,xetex
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,pango,X11
+private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,pango,texlive,X11
 private-tmp
 
 dbus-user filter

@@ -24,25 +24,25 @@ AC_PROG_RANLIB
 HAVE_SPECTRE="no"
 AX_CHECK_COMPILE_FLAG(
     [-mindirect-branch=thunk],
-    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -mindirect-branch=thunk"]
+    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -mindirect-branch=thunk"]
 )
 AX_CHECK_COMPILE_FLAG(
     [-mretpoline],
-    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -mretpoline"]
+    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -mretpoline"]
 )
 AX_CHECK_COMPILE_FLAG(
     [-fstack-clash-protection],
-    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -fstack-clash-protection"]
+    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-clash-protection"]
 )
 AX_CHECK_COMPILE_FLAG(
     [-fstack-protector-strong],
-    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS+=" -fstack-protector-strong"]
+    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-protector-strong"]
 )
 
 AC_ARG_ENABLE([analyzer],
-    AS_HELP_STRING([--enable-analyzer], [enable GCC 10 static analyzer]))
+    AS_HELP_STRING([--enable-analyzer], [enable GCC static analyzer]))
 AS_IF([test "x$enable_analyzer" = "xyes"], [
-	EXTRA_CFLAGS+=" -fanalyzer"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -fanalyzer -Wno-analyzer-malloc-leak"
 ])
 
 HAVE_APPARMOR=""
@@ -50,7 +50,8 @@ AC_ARG_ENABLE([apparmor],
     AS_HELP_STRING([--enable-apparmor], [enable apparmor]))
 AS_IF([test "x$enable_apparmor" = "xyes"], [
 	HAVE_APPARMOR="-DHAVE_APPARMOR"
-	PKG_CHECK_MODULES([AA], libapparmor, [EXTRA_CFLAGS+=" $AA_CFLAGS" && EXTRA_LDFLAGS+=" $AA_LIBS"])
+	PKG_CHECK_MODULES([AA], libapparmor,
+	    [EXTRA_CFLAGS="$EXTRA_CFLAGS $AA_CFLAGS" && EXTRA_LDFLAGS="$EXTRA_LDFLAGS $AA_LIBS"])
 	AC_SUBST(HAVE_APPARMOR)
 ])
 
@@ -59,7 +60,7 @@ AC_ARG_ENABLE([selinux],
     AS_HELP_STRING([--enable-selinux], [SELinux labeling support]))
 AS_IF([test "x$enable_selinux" = "xyes"], [
 	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS+=" -lselinux "
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux "
 	AC_SUBST(HAVE_SELINUX)
 ])
 
@@ -215,7 +216,7 @@ AC_ARG_ENABLE([gcov],
     AS_HELP_STRING([--enable-gcov], [Gcov instrumentation]))
 AS_IF([test "x$enable_gcov" = "xyes"], [
 	HAVE_GCOV="--coverage -DHAVE_GCOV "
-	EXTRA_LDFLAGS+=" -lgcov --coverage "
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage "
 	AC_SUBST(HAVE_GCOV)
 ])
 
@@ -307,7 +308,7 @@ AC_OUTPUT(Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Ma
 src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile \
 src/ftee/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile \
 src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile \
-src/jailtest/Makefile)
+src/jailcheck/Makefile)
 
 echo
 echo "Configuration options:"

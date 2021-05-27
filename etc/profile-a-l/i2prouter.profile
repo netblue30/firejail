@@ -9,16 +9,16 @@ include globals.local
 # Notice: default browser will most likely not be able to automatically open, due to sandbox.
 # Auto-opening default browser can be disabled in the I2P router console.
 # This profile will not currently work with any Arch User Repository I2P packages,
-# use the distro-independent official I2P java installer instead
+# use the distro-independent official I2P java installer instead.
 
-# Only needed if i2prouter binary is in home directory, official I2P java installer does this
+# Only needed when i2prouter binary resides in home directory (official I2P java installer does so).
 ignore noexec ${HOME}
 
 noblacklist ${HOME}/.config/i2p
 noblacklist ${HOME}/.i2p
 noblacklist ${HOME}/.local/share/i2p
 noblacklist ${HOME}/i2p
-# Only needed if wrapper is placed in /usr/sbin/, ubuntu official I2P ppa package does this
+# Only needed when wrapper resides in /usr/sbin/ (Ubuntu official I2P PPA package does so).
 noblacklist /usr/sbin
 
 # Allow java (blacklisted by disable-devel.inc)
@@ -40,13 +40,14 @@ whitelist ${HOME}/.config/i2p
 whitelist ${HOME}/.i2p
 whitelist ${HOME}/.local/share/i2p
 whitelist ${HOME}/i2p
-# Only needed if wrapper is placed in /usr/sbin/, ubuntu official I2P ppa package does this
+# Only needed when wrapper resides in /usr/sbin/ (Ubuntu official I2P PPA package does so).
 whitelist /usr/sbin/wrapper*
 
 include whitelist-common.inc
 
-# May break I2P if wrapper is placed in the home directory; official I2P java installer does this
-# If using ubuntu official I2P ppa, this should be fine to uncomment, as it puts wrapper in /usr/sbin/
+# May break I2P if wrapper resides in the home directory (official I2P java installer does so).
+# When using the Ubuntu official I2P PPA it should be fine to add 'apparmor' to your i2prouter.local,
+# as it places the wrapper in /usr/sbin/
 #apparmor
 caps.drop all
 ipc-namespace
@@ -55,6 +56,7 @@ netfilter
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 nosound
 notv

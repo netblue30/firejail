@@ -64,7 +64,7 @@ include globals.local
 #blacklist /tmp/.X11-unix
 # Disable Wayland
 #blacklist ${RUNUSER}/wayland-*
-# Disable RUNUSER (cli only)
+# Disable RUNUSER (cli only; supersedes Disable Wayland)
 #blacklist ${RUNUSER}
 
 # It is common practice to add files/dirs containing program-specific configuration
@@ -80,6 +80,9 @@ include globals.local
 #  - look what has changed and use that information to populate blacklist and whitelist sections
 #      `ls -aR`
 #noblacklist PATH
+
+# Allow /bin/sh (blacklisted by disable-shell.inc)
+#include allow-bin-sh.inc
 
 # Allows files commonly used by IDEs
 #include allow-common-devel.inc
@@ -106,6 +109,8 @@ include globals.local
 # Allow ssh (blacklisted by disable-common.inc)
 #include allow-ssh.inc
 
+# disable-*.inc includes
+# remove disable-write-mnt.inc if you set disable-mnt
 #include disable-common.inc
 #include disable-devel.inc
 #include disable-exec.inc
@@ -145,6 +150,7 @@ include globals.local
 ##nodbus (deprecated, use 'dbus-user none' and 'dbus-system none', see below)
 #nodvd
 #nogroups
+#noinput
 #nonewprivs
 #noroot
 #nosound
@@ -216,3 +222,4 @@ include globals.local
 #memory-deny-write-execute
 ##noexec PATH
 ##read-only ${HOME}
+##read-write ${HOME}

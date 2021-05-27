@@ -4,6 +4,7 @@ include whitelist-var-common.local
 
 # common /var whitelist for all profiles
 
+whitelist /var/lib/aspell
 whitelist /var/lib/ca-certificates
 whitelist /var/lib/dbus
 whitelist /var/lib/menu-xdg

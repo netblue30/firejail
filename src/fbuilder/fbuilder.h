@@ -66,5 +66,6 @@ typedef struct filedb_t {
 FileDB *filedb_add(FileDB *head, const char *fname);
 FileDB *filedb_find(FileDB *head, const char *fname);
 void filedb_print(FileDB *head, const char *prefix, FILE *fp);
+FileDB *filedb_load_whitelist(FileDB *head, const char *fname, const char *prefix);
 
 #endif

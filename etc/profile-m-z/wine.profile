@@ -24,14 +24,14 @@ include disable-programs.inc
 # include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-# some applications don't need allow-debuggers, comment the next line
-# if it is not necessary (or put 'ignore allow-debuggers' in your wine.local)
+# Some applications don't need allow-debuggers. Add 'ignore allow-debuggers' to your wine.local if you want to override this.
 allow-debuggers
 caps.drop all
 # net none
 netfilter
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 # nosound

@@ -17,7 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include "jailtest.h"
+#include "jailcheck.h"
 #include "../include/firejail_user.h"
 #include "../include/pid.h"
 #include <sys/wait.h>
@@ -30,7 +30,7 @@ char *user_run_dir = NULL;
 int arg_debug = 0;
 
 static char *usage_str =
-	"Usage: jailtest [options] directory [directory]\n\n"
+	"Usage: jailcheck [options] directory [directory]\n\n"
 	"Options:\n"
 	"   --debug - print debug messages.\n"
 	"   --help, -? - this help screen.\n"

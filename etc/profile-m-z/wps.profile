@@ -23,12 +23,13 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 machine-id
-# Uncomment the next line (or add to wps.local) if you don't use network features.
+# Add the next line to your wps.local if you don't use network features.
 #net none
 netfilter
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -36,7 +37,7 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6
-# seccomp cause some minor issues, if you can live with them enable it.
+# seccomp causes some minor issues. Add the next line to your wps.local if you can live with those.
 #seccomp
 shell none
 tracelog

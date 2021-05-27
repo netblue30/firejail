@@ -52,8 +52,9 @@ static int valid_full_path(const char *full_path) {
 
 	int i = 0;
 	while (masked_lib_dirs[i]) {
-		if (strncmp(full_path, masked_lib_dirs[i], strlen(masked_lib_dirs[i])) == 0 &&
-		    full_path[strlen(masked_lib_dirs[i])] == '/')
+		size_t len = strlen(masked_lib_dirs[i]);
+		if (strncmp(full_path, masked_lib_dirs[i], len) == 0 &&
+		    full_path[len] == '/')
 			return 1;
 		i++;
 	}
@@ -120,7 +121,8 @@ static char *build_dest_name(const char *full_path) {
 	char *fname = strrchr(full_path, '/');
 	assert(fname);
 	fname++;
-	assert(*fname != '\0');
+	// no trailing slash or dot
+	assert(fname[0] != '\0' && (fname[0] != '.' || fname[1] != '\0'));
 
 	char *dest;
 	if (asprintf(&dest, "%s/%s", build_dest_dir(full_path), fname) == -1)
@@ -174,7 +176,8 @@ void fslib_mount(const char *full_path) {
 	assert(full_path);
 	struct stat s;
 
-	if (!valid_full_path(full_path) ||
+	if (*full_path == '\0' ||
+	    !valid_full_path(full_path) ||
 	    access(full_path, F_OK) != 0 ||
 	    stat(full_path, &s) != 0 ||
 	    s.st_uid != 0)
@@ -218,7 +221,7 @@ void fslib_mount_libs(const char *full_path, unsigned user) {
 	sbox_run(mask | SBOX_SECCOMP | SBOX_CAPS_NONE, 3, PATH_FLDD, full_path, RUN_LIB_FILE);
 
 	// open the list of libraries and install them on by one
-	FILE *fp = fopen(RUN_LIB_FILE, "r");
+	FILE *fp = fopen(RUN_LIB_FILE, "re");
 	if (!fp)
 		errExit("fopen");
 
@@ -229,13 +232,14 @@ void fslib_mount_libs(const char *full_path, unsigned user) {
 		if (ptr)
 			*ptr = '\0';
 
+		trim_trailing_slash_or_dot(buf);
 		fslib_mount(buf);
 	}
 	fclose(fp);
 	unlink(RUN_LIB_FILE);
 }
 
-// fname should be a valid full path at this point
+// fname should be a full path at this point
 static void load_library(const char *fname) {
 	assert(fname);
 	assert(*fname == '/');
@@ -293,6 +297,11 @@ static void install_list_entry(const char *lib) {
 			assert(globbuf.gl_pathv[j]);
 //printf("glob %s\n", globbuf.gl_pathv[j]);
 			// GLOB_NOCHECK - no pattern matched returns the original pattern; try to load it anyway
+
+			// foobar/* includes foobar/. and foobar/..
+			const char *base = gnu_basename(globbuf.gl_pathv[j]);
+			if (strcmp(base, ".") == 0 || strcmp(base, "..") == 0)
+				continue;
 			load_library(globbuf.gl_pathv[j]);
 		}
 
@@ -321,10 +330,13 @@ void fslib_install_list(const char *lib_list) {
 		fprintf(stderr, "Error: invalid private-lib argument\n");
 		exit(1);
 	}
+	trim_trailing_slash_or_dot(ptr);
 	install_list_entry(ptr);
 
-	while ((ptr = strtok(NULL, ",")) != NULL)
+	while ((ptr = strtok(NULL, ",")) != NULL) {
+		trim_trailing_slash_or_dot(ptr);
 		install_list_entry(ptr);
+	}
 	free(dlist);
 	fs_logger_print();
 }

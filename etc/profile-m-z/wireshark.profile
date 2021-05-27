@@ -31,6 +31,7 @@ caps.keep dac_override,net_admin,net_raw
 netfilter
 no3d
 # nogroups - breaks network traffic capture for unprivileged users
+noinput
 # nonewprivs - breaks network traffic capture for unprivileged users
 # noroot
 nodvd
@@ -39,11 +40,15 @@ notv
 nou2f
 novideo
 # protocol unix,inet,inet6,netlink,packet,bluetooth - commented out in case they bring in new protocols
-seccomp
+#seccomp
 shell none
 tracelog
 
 # private-bin wireshark
+private-cache
 private-dev
 # private-etc alternatives,ca-certificates,crypto-policies,fonts,group,hosts,machine-id,passwd,pki,ssl
 private-tmp
+
+dbus-user none
+dbus-system none

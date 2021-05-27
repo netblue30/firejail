@@ -27,6 +27,7 @@ machine-id
 netfilter
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -42,6 +43,6 @@ private-cache
 private-dev
 private-tmp
 
-# Breaks tray icon, uncomment or add to clipgrab.local if you don't need it
+# 'dbus-user none' breaks tray menu - add 'dbus-user none' to your clipgrab.local if you don't need it.
 # dbus-user none
 # dbus-system none

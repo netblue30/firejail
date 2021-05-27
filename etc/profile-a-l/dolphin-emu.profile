@@ -6,7 +6,7 @@ include dolphin-emu.local
 # Persistent global definitions
 include globals.local
 
-# Note: you must whitelist your games folder in a dolphin-emu.local
+# Note: you must whitelist your games folder in your dolphin-emu.local.
 
 noblacklist ${HOME}/.cache/dolphin-emu
 noblacklist ${HOME}/.config/dolphin-emu
@@ -36,10 +36,10 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 ipc-namespace
-# uncomment the following line if you do not need NetPlay support
+# Add the next line to your dolphin-emu.local if you do not need NetPlay support.
 # net none
 netfilter
-# uncomment the following line if you do not need disc support
+# Add the next line to your dolphin-emu.local if you do not need disc support.
 #nodvd
 nogroups
 nonewprivs
@@ -54,7 +54,7 @@ tracelog
 
 private-bin bash,dolphin-emu,dolphin-emu-x11,sh
 private-cache
-# uncomment the following line if you do not need controller support
+# Add the next line to your dolphin-emu.local if you do not need controller support.
 #private-dev
 private-etc alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,kde4rc,kde5rc,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,nvidia,pango,pki,protocols,pulse,resolv.conf,rpc,services,ssl,Trolltech.conf,X11,xdg
 private-opt none

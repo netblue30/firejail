@@ -27,6 +27,7 @@ include whitelist-var-common.inc
 caps.drop all
 netfilter
 nodvd
+noinput
 nonewprivs
 noroot
 nosound

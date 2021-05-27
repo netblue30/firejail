@@ -20,6 +20,7 @@ include whitelist-var-common.inc
 caps.drop all
 netfilter
 nogroups
+noinput
 nonewprivs
 noroot
 notv
@@ -33,3 +34,15 @@ shell none
 private-dev
 # private-etc alternatives,asound.conf,ca-certificates,crypto-policies,machine-id,pki,pulse,ssl
 private-tmp
+
+dbus-user filter
+dbus-user.own org.kde.amarok
+dbus-user.own org.mpris.amarok
+dbus-user.own org.mpris.MediaPlayer2.amarok
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.kde.StatusNotifierWatcher
+# If you're not on kde-plasma add the next lines to your amarok.local.
+#dbus-user.own org.kde.kded
+#dbus-user.own org.kde.klauncher
+#dbus-user.talk org.kde.knotify
+dbus-system none

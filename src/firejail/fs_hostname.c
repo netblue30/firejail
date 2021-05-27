@@ -47,11 +47,11 @@ void fs_hostname(const char *hostname) {
 			printf("Creating a new /etc/hosts file\n");
 		// copy /etc/host into our new file, and modify it on the fly
 		/* coverity[toctou] */
-		FILE *fp1 = fopen("/etc/hosts", "r");
+		FILE *fp1 = fopen("/etc/hosts", "re");
 		if (!fp1)
 			goto errexit;
 
-		FILE *fp2 = fopen(RUN_HOSTS_FILE, "w");
+		FILE *fp2 = fopen(RUN_HOSTS_FILE, "we");
 		if (!fp2) {
 			fclose(fp1);
 			goto errexit;
@@ -165,7 +165,7 @@ void fs_resolvconf(void) {
 
 	if (arg_debug)
 		printf("Creating a new /etc/resolv.conf file\n");
-	FILE *fp = fopen("/etc/resolv.conf", "w");
+	FILE *fp = fopen("/etc/resolv.conf", "wxe");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot create /etc/resolv.conf file\n");
 		exit(1);

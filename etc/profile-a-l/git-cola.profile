@@ -14,8 +14,8 @@ noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.subversion
 noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.config/git-cola
-# Put your editor,diff viewer config path below and uncomment to load settings
-# noblacklist ${HOME}/
+# Add your editor/diff viewer config paths and the next line to your git-cola.local to load settings.
+#noblacklist ${HOME}/
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -34,7 +34,7 @@ include disable-xdg.inc
 
 whitelist ${RUNUSER}/gnupg
 whitelist ${RUNUSER}/keyring
-# Whitelist your editor, diff viewer, gnupg path below in /usr/share/
+# Add additional whitelist paths below /usr/share to your git-cola.local to support your editor/diff viewer.
 whitelist /usr/share/git
 whitelist /usr/share/git-cola
 whitelist /usr/share/git-core
@@ -54,6 +54,7 @@ netfilter
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -65,8 +66,8 @@ seccomp
 shell none
 tracelog
 
-# Add your own diff viewer,editor,pinentry program
-# pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg
+# Add your own diff viewer,editor,pinentry program to private-bin in your git-cola.local.
+#private-bin pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg
 private-bin basename,bash,cola,envsubst,gettext,git,git-cola,git-dag,git-gui,gitk,gpg,gpg-agent,nano,ps,python*,sh,ssh,ssh-agent,tclsh,tr,wc,which,xed
 private-cache
 private-dev
@@ -74,13 +75,14 @@ private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,gitc
 private-tmp
 writable-run-user
 
-# Breaks meld as diff viewer
-# dbus-user filter
-# Uncomment if you need keyring access
-# dbus-user.talk org.freedesktop.secrets
+# dbus-user filtering breaks meld as diff viewer
+# Add the next line to your git-cola.local if you don't use meld.
+#dbus-user filter
+# Add the next line to your git-cola.local if you need keyring access
+#dbus-user.talk org.freedesktop.secrets
 dbus-system none
 
 read-only ${HOME}/.git-credentials
 
-# Comment if you need to allow hosts
+# Add 'ignore read-only ${HOME}/.ssh' to your git-cola.local if you need to allow hosts.
 read-only ${HOME}/.ssh

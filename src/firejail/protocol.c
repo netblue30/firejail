@@ -23,7 +23,7 @@
 
 void protocol_filter_save(void) {
 	// save protocol filter configuration in PROTOCOL_CFG
-	FILE *fp = fopen(RUN_PROTOCOL_CFG, "w");
+	FILE *fp = fopen(RUN_PROTOCOL_CFG, "wxe");
 	if (!fp)
 		errExit("fopen");
 	fprintf(fp, "%s\n", cfg.protocol);
@@ -35,7 +35,7 @@ void protocol_filter_load(const char *fname) {
 	assert(fname);
 
 	// read protocol filter configuration from PROTOCOL_CFG
-	FILE *fp = fopen(fname, "r");
+	FILE *fp = fopen(fname, "re");
 	if (!fp)
 		return;
 

@@ -1,24 +1,37 @@
 firejail (0.9.65) baseline; urgency=low
+  * deprecated --audit options, relpaced by jailtest
+  * deprecated follow-symlink-as-user from firejail.config
   * filtering environment variables
   * zsh completion
   * command line: --mkdir, --mkfile
   * --protocol now accumulates
   * Jolla/SailfishOS patches
   * private-lib rework
+  * whitelist rework
   * jailtest utility for testing running sandboxes
-  * removed --audit options, relpaced by jailtest
   * capabilities list update
   * faccessat2 syscall support
+  * --private-dev keeps /dev/input
+  * added --noinput to disable /dev/input
+  * add support for subdirs in --private-etc
   * compile time: --enable-force-nonewprivs
   * compile time: --disable-output
   * compile time: --enable-lts
+  * subdirs support in private-etc
+  * input devices support in private-dev, --no-input
+  * support trailing comments on profile lines
   * new profiles: vmware-view, display-im6.q16, ipcalc, ipcalc-ng
   * ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop,
   * avidemux, calligragemini, vmware-player, vmware-workstation
   * gget, com.github.phase1geo.minder, nextcloud-desktop, pcsxr
   * PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2, sum
   * bcompare, b2sum, cksum, md5sum, sha1sum, sha224sum, sha256sum
-  * sha384sum, sha512sum
+  * sha384sum, sha512sum, librewold-nightly, Quodlibet, tmux, sway
+  * alienarena, alienarena-wrapper, ballbuster, ballbuster-wrapper,
+  * colorful, colorful-wrapper, gl-117, gl-117-wrapper, glaxium,
+  * glaxium-wrapper, pinball, pinball-wrapper, etr-wrapper, firedragon
+  * neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper, neochat,
+  * cargo, LibreCAD, blobby, funnyboat
  -- netblue30 <netblue30@yahoo.com>  Tue, 9 Feb 2021 09:00:00 -0500
 
 firejail (0.9.64.4) baseline; urgency=low

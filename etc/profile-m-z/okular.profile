@@ -28,10 +28,16 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/share/config.kcfg
+whitelist /usr/share/config.kcfg/gssettings.kcfg
+whitelist /usr/share/config.kcfg/pdfsettings.kcfg
+whitelist /usr/share/config.kcfg/okular.kcfg
+whitelist /usr/share/config.kcfg/okular_core.kcfg
+whitelist /usr/share/ghostscript
+whitelist /usr/share/kconf_update/okular.upd
 whitelist /usr/share/kxmlgui5/okular
 whitelist /usr/share/okular
 whitelist /usr/share/poppler
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -42,6 +48,7 @@ machine-id
 netfilter
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

@@ -39,7 +39,7 @@ printf("\n");
 	int i;
 	int prog_index = 0;
 	FILE *fp = stdout;
-	int prof_file = 0;
+	char *prof_file = NULL;
 
 	// parse arguments and extract program index
 	for (i = 1; i < argc; i++) {
@@ -58,18 +58,23 @@ printf("\n");
 				exit(1);
 			}
 
+			// don't run if the file exists
+			if (access(argv[i] + 8, F_OK) == 0) {
+				fprintf(stderr, "Error: the profile file already exists. Please use a different file name.\n");
+				exit(1);
+			}
+
 			// check file access
 			fp = fopen(argv[i] + 8, "w");
 			if (!fp) {
-				fprintf(stderr, "Error fbuild: cannot open profile file.\n");
+				fprintf(stderr, "Error: cannot open profile file.\n");
 				exit(1);
 			}
-			prof_file = 1;
-			// do nothing, this is passed down from firejail
+			prof_file = argv[i] + 8;
 		}
 		else {
 			if (*argv[i] == '-') {
-				fprintf(stderr, "Error fbuilder: invalid program\n");
+				fprintf(stderr, "Error: invalid program\n");
 				usage();
 				exit(1);
 			}
@@ -79,10 +84,13 @@ printf("\n");
 	}
 
 	if (prog_index == 0) {
-		fprintf(stderr, "Error fbuilder: program and arguments required\n");
+		fprintf(stderr, "Error : program and arguments required\n");
 		usage();
-		if (prof_file)
+		if (prof_file) {
 			fclose(fp);
+			int rv = unlink(prof_file);
+			(void) rv;
+		}
 		exit(1);
 	}
 

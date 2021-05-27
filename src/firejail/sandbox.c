@@ -67,7 +67,7 @@ static void sandbox_handler(int sig){
 		if (asprintf(&monfile, "/proc/%d/cmdline", monitored_pid) == -1)
 			errExit("asprintf");
 		while (monsec) {
-			FILE *fp = fopen(monfile, "r");
+			FILE *fp = fopen(monfile, "re");
 			if (!fp)
 				break;
 
@@ -162,7 +162,7 @@ static void save_nogroups(void) {
 	if (arg_nogroups == 0)
 		return;
 
-	FILE *fp = fopen(RUN_GROUPS_CFG, "w");
+	FILE *fp = fopen(RUN_GROUPS_CFG, "wxe");
 	if (fp) {
 		fprintf(fp, "\n");
 		SET_PERMS_STREAM(fp, 0, 0, 0644); // assume mode 0644
@@ -227,7 +227,7 @@ static void sandbox_if_up(Bridge *br) {
 	if (br->arg_ip_none == 1);	// do nothing
 	else if (br->arg_ip_none == 0 && br->macvlan == 0) {
 		if (br->ipsandbox == br->ip) {
-			fprintf(stderr, "Error: %d.%d.%d.%d is interface %s address.\n", PRINT_IP(br->ipsandbox), br->dev);
+			fprintf(stderr, "Error: %d.%d.%d.%d is interface %s address, exiting...\n", PRINT_IP(br->ipsandbox), br->dev);
 			exit(1);
 		}
 
@@ -245,13 +245,17 @@ static void sandbox_if_up(Bridge *br) {
 			br->ipsandbox = arp_assign(dev, br); //br->ip, br->mask);
 		else {
 			if (br->ipsandbox == br->ip) {
-				fprintf(stderr, "Error: %d.%d.%d.%d is interface %s address.\n", PRINT_IP(br->ipsandbox), br->dev);
+				fprintf(stderr, "Error: %d.%d.%d.%d is interface %s address, exiting...\n", PRINT_IP(br->ipsandbox), br->dev);
+				exit(1);
+			}
+			if (br->ipsandbox == cfg.defaultgw) {
+				fprintf(stderr, "Error: %d.%d.%d.%d is the default gateway, exiting...\n", PRINT_IP(br->ipsandbox));
 				exit(1);
 			}
 
 			uint32_t rv = arp_check(dev, br->ipsandbox);
 			if (rv) {
-				fprintf(stderr, "Error: the address %d.%d.%d.%d is already in use.\n", PRINT_IP(br->ipsandbox));
+				fprintf(stderr, "Error: the address %d.%d.%d.%d is already in use, exiting...\n", PRINT_IP(br->ipsandbox));
 				exit(1);
 			}
 		}
@@ -1015,7 +1019,7 @@ int sandbox(void* sandbox_arg) {
 		// disable /dev/snd
 		fs_dev_disable_sound();
 	}
-	else if (!arg_noautopulse)
+	else if (!arg_keep_config_pulse)
 		pulseaudio_init();
 
 	if (arg_no3d)
@@ -1032,6 +1036,9 @@ int sandbox(void* sandbox_arg) {
 
 	if (arg_novideo)
 		fs_dev_disable_video();
+
+	if (arg_noinput)
+		fs_dev_disable_input();
 
 	//****************************
 	// set dns

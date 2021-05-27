@@ -19,6 +19,7 @@ include disable-programs.inc
 caps.drop all
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

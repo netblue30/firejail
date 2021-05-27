@@ -9,7 +9,7 @@ include globals.local
 noblacklist ${HOME}/Nextcloud
 noblacklist ${HOME}/.config/Nextcloud
 noblacklist ${HOME}/.local/share/Nextcloud
-# Uncomment or put in your nextcloud.local to allow sync with more directories.
+# Add the next lines to your nextcloud.local to allow sync in more directories.
 #noblacklist ${DOCUMENTS}
 #noblacklist ${MUSIC}
 #noblacklist ${PICTURES}
@@ -30,7 +30,7 @@ mkdir ${HOME}/.local/share/Nextcloud
 whitelist ${HOME}/Nextcloud
 whitelist ${HOME}/.config/Nextcloud
 whitelist ${HOME}/.local/share/Nextcloud
-# Uncomment or put in your nextcloud.local to allow sync with more directories.
+# Add the next lines to your nextcloud.local to allow sync in more directories.
 #whitelist ${DOCUMENTS}
 #whitelist ${MUSIC}
 #whitelist ${PICTURES}
@@ -47,6 +47,7 @@ netfilter
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound

@@ -30,6 +30,7 @@ net none
 no3d
 nodvd
 nogroups
+noinput
 nonewprivs
 noroot
 nosound
@@ -42,8 +43,9 @@ shell none
 tracelog
 x11 none
 
-# To support exiftool in private-bin on Arch Linux (and derivatives), symlink /usr/bin/vendor_perl/exiftool to /usr/bin/exiftool and uncomment the below.
-# Users on non-Arch Linux distributions can safely uncomment (or put in exiftool.local) the line below to enable extra hardening.
+# To support exiftool in private-bin on Arch Linux (and derivatives), symlink /usr/bin/vendor_perl/exiftool
+# to /usr/bin/exiftool and add the below to your exiftool.local.
+# Non-Arch Linux users can safely add the below to their exiftool.local for extra hardening.
 #private-bin exiftool,perl
 private-cache
 private-dev

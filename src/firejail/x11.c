@@ -84,7 +84,7 @@ int x11_display(void) {
 static int x11_abstract_sockets_present(void) {
 
 	EUID_ROOT();				  // grsecurity fix
-	FILE *fp = fopen("/proc/net/unix", "r");
+	FILE *fp = fopen("/proc/net/unix", "re");
 	if (!fp)
 		errExit("fopen");
 	EUID_USER();
@@ -1239,9 +1239,9 @@ void x11_xorg(void) {
 		}
 	}
 	// get a file descriptor for ~/.Xauthority
-	int dst = safe_fd(dest, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	int dst = safer_openat(-1, dest, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (dst == -1)
-		errExit("safe_fd");
+		errExit("safer_openat");
 	// check if the actual mount destination is a user owned regular file
 	if (fstat(dst, &s) == -1)
 		errExit("fstat");
@@ -1263,9 +1263,9 @@ void x11_xorg(void) {
 	fs_remount(RUN_XAUTHORITY_SEC_DIR, MOUNT_NOEXEC, 0);
 
 	// get a file descriptor for the new Xauthority file
-	int src = safe_fd(tmpfname, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	int src = safer_openat(-1, tmpfname, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (src == -1)
-		errExit("safe_fd");
+		errExit("safer_openat");
 	if (fstat(src, &s) == -1)
 		errExit("fstat");
 	if (!S_ISREG(s.st_mode)) {
@@ -1363,7 +1363,7 @@ void fs_x11(void) {
 	fs_logger("tmpfs /tmp/.X11-unix");
 
 	// create an empty root-owned file which will have the desired socket bind-mounted over it
-	int fd = open(x11file, O_RDONLY|O_CREAT|O_EXCL, S_IRUSR | S_IWUSR);
+	int fd = open(x11file, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWUSR);
 	if (fd < 0)
 		errExit(x11file);
 	close(fd);
@@ -1373,7 +1373,7 @@ void fs_x11(void) {
 	char *wx11file;
 	if (asprintf(&wx11file, "%s/X%d", RUN_WHITELIST_X11_DIR, display) == -1)
 		errExit("asprintf");
-	fd = safe_fd(wx11file, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	fd = safer_openat(-1, wx11file, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1)
 		errExit("opening X11 socket");
 	// confirm once more we are mounting a socket

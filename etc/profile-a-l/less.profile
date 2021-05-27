@@ -23,6 +23,7 @@ machine-id
 net none
 no3d
 nodvd
+noinput
 nonewprivs
 #noroot
 nosound

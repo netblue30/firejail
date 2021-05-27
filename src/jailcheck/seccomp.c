@@ -17,24 +17,31 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include "jailtest.h"
+#include "jailcheck.h"
+#define MAXBUF 4096
 
-#ifdef HAVE_APPARMOR
-#include <sys/apparmor.h>
+void seccomp_test(pid_t pid) {
+	char *file;
+	if (asprintf(&file, "/proc/%d/status", pid) == -1)
+		errExit("asprintf");
 
-void apparmor_test(pid_t pid) {
-	char *label = NULL;
-	char *mode = NULL;
-	int rv = aa_gettaskcon(pid, &label, &mode);
-	if (rv == -1 || mode == NULL)
-		printf("   Warning: AppArmor not enabled\n");
+	FILE *fp = fopen(file, "r");
+	if (!fp) {
+		printf("  Error: cannot open %s\n", file);
+		free(file);
+		return;
+	}
+
+	char buf[MAXBUF];
+	while (fgets(buf, MAXBUF, fp)) {
+		if (strncmp(buf, "Seccomp:", 8) == 0) {
+			int val = -1;
+			int rv = sscanf(buf + 8, "\t%d", &val);
+			if (rv != 1 || val == 0)
+				printf("   Warning: seccomp not enabled\n");
+			break;
+		}
+	}
+	fclose(fp);
+	free(file);
 }
-
-
-#else
-void apparmor_test(pid_t pid) {
-	(void) pid;
-	return;
-}
-#endif
-

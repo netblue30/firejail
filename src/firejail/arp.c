@@ -277,7 +277,7 @@ static uint32_t arp_random(const char *dev, Bridge *br) {
 	int i = 0;
 	for (i = 0; i < 10; i++) {
 		dest = start + ((uint32_t) rand()) % range;
-		if (dest == ifip)	// do not allow the interface address
+		if (dest == ifip || dest == cfg.defaultgw)	// do not allow the interface address or the default gateway
 			continue;		// try again
 
 		// if we've made it up to here, we have a valid address
@@ -325,7 +325,7 @@ static uint32_t arp_sequential(const char *dev, Bridge *br) {
 
 	// loop through addresses and stop as soon as you find an unused one
 	while (dest <= last) {
-		if (dest == ifip) {
+		if (dest == ifip || dest == cfg.defaultgw) {
 			dest++;
 			continue;
 		}

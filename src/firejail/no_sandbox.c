@@ -204,7 +204,7 @@ void run_no_sandbox(int argc, char **argv) {
 		// force --shell=none in order to not break firecfg symbolic links
 		arg_shell_none = 1;
 
-		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
+		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index, true);
 	}
 
 	fwarning("an existing sandbox was detected. "

@@ -803,8 +803,8 @@ void appimage_clear(void);
 long unsigned int appimage2_size(int fd);
 
 // cmdline.c
-void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
-void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
+void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, bool want_extra_quotes);
+void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, bool want_extra_quotes);
 
 // sbox.c
 // programs

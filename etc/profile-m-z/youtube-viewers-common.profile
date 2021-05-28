@@ -30,6 +30,7 @@ include disable-xdg.inc
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
 include whitelist-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

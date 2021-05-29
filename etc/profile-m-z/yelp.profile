@@ -19,6 +19,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/yelp
 whitelist ${HOME}/.config/yelp
+whitelist /usr/libexec/webkit2gtk-4.0
 whitelist /usr/share/doc
 whitelist /usr/share/groff
 whitelist /usr/share/help

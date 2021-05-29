@@ -18,6 +18,8 @@ noblacklist ${HOME}/.local/share/maps-places.json
 # Allow gjs (blacklisted by disable-interpreters.inc)
 include allow-gjs.inc
 
+blacklist /usr/libexec
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

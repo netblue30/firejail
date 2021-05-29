@@ -14,6 +14,8 @@ include allow-bin-sh.inc
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
+blacklist /usr/libexec
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

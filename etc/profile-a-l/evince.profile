@@ -13,6 +13,8 @@ include globals.local
 noblacklist ${HOME}/.config/evince
 noblacklist ${DOCUMENTS}
 
+blacklist /usr/libexec
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

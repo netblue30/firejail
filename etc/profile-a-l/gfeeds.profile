@@ -31,6 +31,7 @@ whitelist ${HOME}/.cache/gfeeds
 whitelist ${HOME}/.cache/org.gabmus.gfeeds
 whitelist ${HOME}/.config/org.gabmus.gfeeds.json
 whitelist ${HOME}/.config/org.gabmus.gfeeds.saved_articles
+whitelist /usr/libexec/webkit2gtk-4.0
 whitelist /usr/share/gfeeds
 include whitelist-common.inc
 include whitelist-runuser-common.inc

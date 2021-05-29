@@ -10,6 +10,8 @@ noblacklist ${HOME}/.cache/0ad
 noblacklist ${HOME}/.config/0ad
 noblacklist ${HOME}/.local/share/0ad
 
+blacklist /usr/libexec
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

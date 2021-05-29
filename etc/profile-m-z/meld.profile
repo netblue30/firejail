@@ -29,6 +29,8 @@ include allow-python3.inc
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc
 
+blacklist /usr/libexec
+
 # Add the next line to your meld.local if you don't need to compare files in disable-common.inc.
 #include disable-common.inc
 include disable-devel.inc

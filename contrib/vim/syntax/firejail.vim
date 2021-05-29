@@ -33,6 +33,7 @@ syn match fjSyscallErrno /\v(:(E2BIG|EACCES|EADDRINUSE|EADDRNOTAVAIL|EADV|EAFNOS
 syn match fjSyscallList /,/ nextgroup=fjSyscall contained
 
 syn keyword fjX11Sandbox none xephyr xorg xpra xvfb contained
+syn keyword fjSeccompAction kill log ERRNO contained
 
 syn match fjEnvVar "[A-Za-z0-9_]\+=" contained
 syn match fjRmenvVar "[A-Za-z0-9_]\+" contained
@@ -61,6 +62,7 @@ syn match fjCommand /rmenv / nextgroup=fjRmenvVar skipwhite contained
 syn match fjCommand /shell / nextgroup=fjNone skipwhite contained
 syn match fjCommand /net / nextgroup=fjNone,fjLo skipwhite contained
 syn match fjCommand /ip / nextgroup=fjNone skipwhite contained
+syn match fjCommand /seccomp-error-action / nextgroup=fjSeccompAction skipwhite contained
 " Commands that can't be inside a ?CONDITIONAL: statement
 syn match fjCommandNoCond /include / skipwhite contained
 syn match fjCommandNoCond /quiet$/ contained
@@ -88,6 +90,7 @@ hi def link fjRmenvVar Type
 hi def link fjAll Type
 hi def link fjNone Type
 hi def link fjLo Type
+hi def link fjSeccompAction Constant
 
 
 let b:current_syntax = "firejail"

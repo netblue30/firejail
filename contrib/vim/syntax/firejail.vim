@@ -41,6 +41,7 @@ syn match fjRmenvVar "[A-Za-z0-9_]\+" contained
 syn keyword fjAll all contained
 syn keyword fjNone none contained
 syn keyword fjLo lo contained
+syn keyword fjFilter filter contained
 
 " Variable names grabbed from: src/firejail/macros.c
 " Generate list with: rg -o '\$\{([^}]+)\}' -r '$1' src/firejail/macros.c | sort -u | tr $'\n' '|'
@@ -48,14 +49,14 @@ syn match fjVar /\v\$\{(CFG|DESKTOP|DOCUMENTS|DOWNLOADS|HOME|MUSIC|PATH|PICTURES
 
 " Commands grabbed from: src/firejail/profile.c
 " Generate list with: { rg -o 'strn?cmp\(ptr, "([^"]+) "' -r '$1' src/firejail/profile.c; echo private-lib; } | grep -vEx '(include|ignore|caps\.drop|caps\.keep|protocol|seccomp|seccomp\.drop|seccomp\.keep|env|rmenv|net|ip)' | sort -u | tr $'\n' '|' # private-lib is special-cased in the code and doesn't match the regex; grep-ed patterns are handled later with 'syn match nextgroup=' directives (except for include which is special-cased as a fjCommandNoCond keyword)
-syn match fjCommand /\v(bind|blacklist|blacklist-nolog|cgroup|cpu|defaultgw|dns|hostname|hosts-file|ip6|iprange|join-or-start|mac|mkdir|mkfile|mtu|name|netfilter|netfilter6|netmask|nice|noblacklist|noexec|nowhitelist|overlay-named|private|private-bin|private-etc|private-home|private-lib|private-opt|private-srv|read-only|read-write|rlimit-as|rlimit-cpu|rlimit-fsize|rlimit-nofile|rlimit-nproc|rlimit-sigpending|timeout|tmpfs|veth-name|whitelist|xephyr-screen) / skipwhite contained
+syn match fjCommand /\v(bind|blacklist|blacklist-nolog|cgroup|cpu|defaultgw|dns|hostname|hosts-file|ip6|iprange|join-or-start|mac|mkdir|mkfile|mtu|name|netfilter|netfilter6|netmask|nice|noblacklist|noexec|nowhitelist|overlay-named|private|private-bin|private-cwd|private-etc|private-home|private-lib|private-opt|private-srv|read-only|read-write|rlimit-as|rlimit-cpu|rlimit-fsize|rlimit-nofile|rlimit-nproc|rlimit-sigpending|timeout|tmpfs|veth-name|whitelist|xephyr-screen) / skipwhite contained
 " Generate list with: rg -o 'strn?cmp\(ptr, "([^ "]*[^ ])"' -r '$1' src/firejail/profile.c | grep -vEx '(include|rlimit|quiet)' | sed -e 's/\./\\./' | sort -u | tr $'\n' '|' # include/rlimit are false positives, quiet is special-cased below
-syn match fjCommand /\v(allusers|apparmor|caps|disable-mnt|ipc-namespace|keep-config-pulse|keep-dev-shm|keep-var-tmp|machine-id|memory-deny-write-execute|netfilter|no3d|noautopulse|nodbus|nodvd|nogroups|noinput|nonewprivs|noroot|nosound|notv|nou2f|novideo|overlay|overlay-tmpfs|private|private-cache|private-dev|private-lib|private-tmp|seccomp|seccomp\.block-secondary|tracelog|writable-etc|writable-run-user|writable-var|writable-var-log|x11)$/ contained
+syn match fjCommand /\v(allow-debuggers|allusers|apparmor|caps|disable-mnt|ipc-namespace|keep-config-pulse|keep-dev-shm|keep-var-tmp|machine-id|memory-deny-write-execute|netfilter|no3d|noautopulse|nodbus|nodvd|nogroups|noinput|nonewprivs|noroot|nosound|notv|nou2f|novideo|overlay|overlay-tmpfs|private|private-cache|private-cwd|private-dev|private-lib|private-tmp|seccomp|seccomp.32|seccomp\.block-secondary|tracelog|writable-etc|writable-run-user|writable-var|writable-var-log|x11)$/ contained
 syn match fjCommand /ignore / nextgroup=fjCommand,fjCommandNoCond skipwhite contained
 syn match fjCommand /caps\.drop / nextgroup=fjCapability,fjAll skipwhite contained
 syn match fjCommand /caps\.keep / nextgroup=fjCapability skipwhite contained
 syn match fjCommand /protocol / nextgroup=fjProtocol skipwhite contained
-syn match fjCommand /\vseccomp(\.drop|\.keep)? / nextgroup=fjSyscall skipwhite contained
+syn match fjCommand /\vseccomp(.32)?(\.drop|\.keep)? / nextgroup=fjSyscall skipwhite contained
 syn match fjCommand /x11 / nextgroup=fjX11Sandbox skipwhite contained
 syn match fjCommand /env / nextgroup=fjEnvVar skipwhite contained
 syn match fjCommand /rmenv / nextgroup=fjRmenvVar skipwhite contained
@@ -63,6 +64,8 @@ syn match fjCommand /shell / nextgroup=fjNone skipwhite contained
 syn match fjCommand /net / nextgroup=fjNone,fjLo skipwhite contained
 syn match fjCommand /ip / nextgroup=fjNone skipwhite contained
 syn match fjCommand /seccomp-error-action / nextgroup=fjSeccompAction skipwhite contained
+syn match fjCommand /\vdbus-(user|system) / nextgroup=fjFilter,fjNone skipwhite contained
+syn match fjCommand /\vdbus-(user|system)\.(broadcast|call|own|see|talk) / skipwhite contained
 " Commands that can't be inside a ?CONDITIONAL: statement
 syn match fjCommandNoCond /include / skipwhite contained
 syn match fjCommandNoCond /quiet$/ contained
@@ -90,6 +93,7 @@ hi def link fjRmenvVar Type
 hi def link fjAll Type
 hi def link fjNone Type
 hi def link fjLo Type
+hi def link fjFilter Type
 hi def link fjSeccompAction Constant
 
 

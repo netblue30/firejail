@@ -94,7 +94,7 @@ hi def link fjAll Type
 hi def link fjNone Type
 hi def link fjLo Type
 hi def link fjFilter Type
-hi def link fjSeccompAction Constant
+hi def link fjSeccompAction Type
 
 
 let b:current_syntax = "firejail"

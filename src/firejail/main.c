@@ -1904,8 +1904,6 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strcmp(argv[i], "--private") == 0) {
 			arg_private = 1;
-			// disable whitelisting in home directory
-			profile_add("whitelist ~/*");
 		}
 		else if (strncmp(argv[i], "--private=", 10) == 0) {
 			if (cfg.home_private_keep) {
@@ -1927,8 +1925,6 @@ int main(int argc, char **argv, char **envp) {
 				cfg.home_private = NULL;
 			}
 			arg_private = 1;
-			// disable whitelisting in home directory
-			profile_add("whitelist ~/*");
 		}
 #ifdef HAVE_PRIVATE_HOME
 		else if (strncmp(argv[i], "--private-home=", 15) == 0) {

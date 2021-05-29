@@ -423,6 +423,13 @@ static TopDir *add_topdir(const char *dir, TopDir *topdirs, const char *path) {
 	    strcmp(dir, "/sys") == 0)
 		whitelist_error(path);
 
+	// whitelisting home directory is disabled if --private option is present
+	if (arg_private && strcmp(dir, cfg.homedir) == 0) {
+		if (arg_debug || arg_debug_whitelists)
+			printf("Debug %d: skip %s - a private home dir is configured!\n", __LINE__, path);
+		return NULL;
+	}
+
 	// do nothing if directory doesn't exist
 	struct stat s;
 	if (lstat(dir, &s) != 0) {

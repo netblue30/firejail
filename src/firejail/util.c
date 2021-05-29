@@ -647,9 +647,11 @@ int find_child(pid_t parent, pid_t *child) {
 				if (parent == atoi(ptr)) {
 					// we don't want /usr/bin/xdg-dbus-proxy!
 					char *cmdline = pid_proc_cmdline(pid);
-					if (strncmp(cmdline, XDG_DBUS_PROXY_PATH, strlen(XDG_DBUS_PROXY_PATH)) != 0)
-						*child = pid;
-					free(cmdline);
+					if (cmdline) {
+						if (strncmp(cmdline, XDG_DBUS_PROXY_PATH, strlen(XDG_DBUS_PROXY_PATH)) != 0)
+							*child = pid;
+						free(cmdline);
+					}
 				}
 				break;		  // stop reading the file
 			}

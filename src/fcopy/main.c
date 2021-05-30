@@ -340,7 +340,7 @@ static char *check(const char *src) {
 
 errexit:
 	free(rsrc);
-	fprintf(stderr, "Error fcopy: invalid file %s\n", src);
+	fprintf(stderr, "Error fcopy: invalid ownership for file %s\n", src);
 	exit(1);
 }
 

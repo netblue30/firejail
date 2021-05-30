@@ -1734,7 +1734,7 @@ void profile_read(const char *fname) {
 		if (strcmp(ptr, "quiet") == 0) {
 			if (is_in_ignore_list(ptr))
 				arg_quiet = 0;
-			else
+			else if (!arg_debug)
 				arg_quiet = 1;
 			free(ptr);
 			continue;

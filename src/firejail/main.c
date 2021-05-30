@@ -1256,8 +1256,10 @@ int main(int argc, char **argv, char **envp) {
 	for (i = 1; i < argc; i++) {
 		run_cmd_and_exit(i, argc, argv); // will exit if the command is recognized
 
-		if (strcmp(argv[i], "--debug") == 0)
+		if (strcmp(argv[i], "--debug") == 0) {
 			arg_debug = 1;
+			arg_quiet = 0;
+		}
 		else if (strcmp(argv[i], "--debug-blacklists") == 0)
 			arg_debug_blacklists = 1;
 		else if (strcmp(argv[i], "--debug-whitelists") == 0)
@@ -1265,8 +1267,8 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--debug-private-lib") == 0)
 			arg_debug_private_lib = 1;
 		else if (strcmp(argv[i], "--quiet") == 0) {
-			arg_quiet = 1;
-			arg_debug = 0;
+			if (!arg_debug)
+				arg_quiet = 1;
 		}
 		else if (strcmp(argv[i], "--allow-debuggers") == 0) {
 			// already handled

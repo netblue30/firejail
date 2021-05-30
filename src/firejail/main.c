@@ -1256,7 +1256,7 @@ int main(int argc, char **argv, char **envp) {
 	for (i = 1; i < argc; i++) {
 		run_cmd_and_exit(i, argc, argv); // will exit if the command is recognized
 
-		if (strcmp(argv[i], "--debug") == 0 && !arg_quiet)
+		if (strcmp(argv[i], "--debug") == 0)
 			arg_debug = 1;
 		else if (strcmp(argv[i], "--debug-blacklists") == 0)
 			arg_debug_blacklists = 1;

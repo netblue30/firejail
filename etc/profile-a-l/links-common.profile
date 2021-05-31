@@ -19,6 +19,7 @@ include disable-xdg.inc
 
 whitelist ${DOWNLOADS}
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
@@ -55,5 +56,8 @@ private-etc alternatives,ca-certificates,crypto-policies,nsswitch.conf,pki,resol
 # Add the next line to your links-common.local to allow external media players.
 # private-etc alsa,asound.conf,machine-id,openal,pulse
 private-tmp
+
+dbus-user none
+dbus-system none
 
 memory-deny-write-execute

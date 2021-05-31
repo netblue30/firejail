@@ -8,7 +8,6 @@ include xlinks.local
 #include globals.local
 
 noblacklist /tmp/.X11-unix
-noblacklist ${RUNUSER}/wayland-*
 
 include whitelist-common.inc
 

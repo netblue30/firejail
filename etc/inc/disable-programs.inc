@@ -897,7 +897,6 @@ blacklist ${HOME}/.wireshark
 blacklist ${HOME}/.wordwarvi
 blacklist ${HOME}/.wormux
 blacklist ${HOME}/.xiphos
-blacklist ${HOME}/.xlinks
 blacklist ${HOME}/.xmind
 blacklist ${HOME}/.xmms
 blacklist ${HOME}/.xmr-stak

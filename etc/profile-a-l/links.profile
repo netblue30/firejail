@@ -15,4 +15,4 @@ whitelist ${HOME}/.links
 private-bin links
 
 # Redirect
-include links-common.local
+include links-common.profile

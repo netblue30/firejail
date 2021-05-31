@@ -1,21 +1,18 @@
 # Firejail profile for xlinks
 # Description: Text WWW browser (X11)
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include xlinks.local
 # Persistent global definitions
-# added by included profile
-#include globals.local
+include globals.local
 
-noblacklist /tmp/.X11-unix
-noblacklist ${HOME}/.links
+noblacklist ${HOME}/.xlinks
 
-include whitelist-common.inc
+mkdir ${HOME}/.xlinks
+whitelist ${HOME}/.xlinks
 
-# if you want to use user-configured programs add 'private-bin PROGRAM1,PROGRAM2'
-# to your xlinks.local or append 'PROGRAM1,PROGRAM2' to this private-bin line
 private-bin xlinks
-private-etc fonts
 
 # Redirect
-include links.profile
+include links-common.profile

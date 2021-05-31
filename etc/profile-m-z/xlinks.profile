@@ -7,8 +7,6 @@ include xlinks.local
 # added by included profile
 #include globals.local
 
-noblacklist /tmp/.X11-unix
-
 include whitelist-common.inc
 
 # if you want to use user-configured programs add 'private-bin PROGRAM1,PROGRAM2'

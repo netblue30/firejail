@@ -12,7 +12,7 @@
 #
 
 AC_PREREQ([2.68])
-AC_INIT([firejail],[0.9.65],[netblue30@protonmail.com],[],[https://firejail.wordpress.com])
+AC_INIT([firejail],[0.9.66rc1],[netblue30@protonmail.com],[],[https://firejail.wordpress.com])
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 
 AC_CONFIG_MACRO_DIR([m4])

@@ -294,7 +294,7 @@ errout:
 
 void print_compiletime_support(void) {
 	printf("Compile time support:\n");
-	printf("\t- Always force nonewprivs support is %s\n",
+	printf("\t- always force nonewprivs support is %s\n",
 #ifdef HAVE_FORCE_NONEWPRIVS
 		"enabled"
 #else

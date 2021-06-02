@@ -109,6 +109,7 @@ Amin Vakil (https://github.com/aminvakil)
 	- whois profile fix
 	- added profile for strawberry
 	- w3m profile fix
+	- disable seccomp in wireshark profile
 Andreas Hunkeler (https://github.com/Karneades)
 	- Add profile for offical Linux Teams application
 Andrey Alekseenko (https://github.com/al42and)
@@ -203,6 +204,7 @@ Bundy01 (https://github.com/Bundy01)
 	- fixup geary
 	- add gradio profile
 	- update virtualbox.profile
+	- Quodlibet profile
 BytesTuner (https://github.com/BytesTuner)
 	- provided keepassxc profile
 caoliver (https://github.com/caoliver)
@@ -435,6 +437,8 @@ hamzadis (https://github.com/hamzadis)
 	- added --overlay-named=name and --overlay-path=path
 Hans-Christoph Steiner (https://github.com/eighthave)
 	- added xournal profile
+Harald Kubota (https://github.com/haraldkubota)
+	- zsh completion
 hawkey116477 (https://github.com/hawkeye116477)
 	- added Waterfox profile
 	- updated Cyberfox profile
@@ -520,6 +524,7 @@ Jose Riha (https://github.com/jose1711)
 	- Add davfs2 secrets file to blacklist
 	- Add profile for udiskie
 	- fix udiskie.profile
+	- improve hints for allowing browser access to Gnome extensions connector
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile
@@ -555,6 +560,7 @@ Kishore96in (https://github.com/Kishore96in)
 	-  jitsi-meet-desktop profile
 	- konversatin profile fix
 	- added Neochat profile
+	- added whitelist-1793-workaround.inc
 KOLANICH (https://github.com/KOLANICH)
 	- added symlink fixer fix_private-bin.py in contrib section
 	- update fix_private-bin.py
@@ -610,6 +616,8 @@ Mattias Wadman (https://github.com/wader)
 	- seccomp errno filter support
 Matthew Gyurgyik (https://github.com/pyther)
 	- rpm spec and several fixes
+Matthew Cline (https://github.com/matthew-cline)
+	- steam profile and dropbox profile fixes
 matu3ba (https://github.com/matu3ba)
 	- evince hardening, dbus removed
 	- fix dia profile
@@ -649,12 +657,20 @@ Nick Fox (https://github.com/njfox)
 	- fix wire-desktop.profile on arch
 NickMolloy (https://github.com/NickMolloy)
 	- ARP address length fix
+Nico (https://github.com/dr460nf1r3)
+	- added FireDragon profile
+Nicola Davide Mannarelli (https://github.com/nidamanx)
+	- fix "Could not create AF_NETLINK socket"
+	- added nextcloud profiles
+	- Firefox, KeepassXC, Telegram fixes
 Niklas Haas (https://github.com/haasn)
 	- blacklisting for keybase.io's client
 Niklas Goerke (https://github.com/Niklas974)
 	- update QOwnNotes profile
 Nikos Chantziaras (https://github.com/realnc)
 	- fix audio support for Discord
+nolanl (https://github.com/nolanl)
+	- added localtime to signal-desktop's profile
 nyancat18 (https://github.com/nyancat18)
 	- added ardour4, dooble, karbon, krita profiles
 Ondra Nekola (https://github.com/satai)
@@ -702,6 +718,8 @@ Petter Reinholdtsen (pere@hungry.com)
 PharmaceuticalCobweb (https://github.com/PharmaceuticalCobweb)
 	- fix quiterss profile
 	- added profile for gnome-ring
+pholodniak (https://github.com/pholodniak)
+	- profstats fixes
 pianoslum (https://github.com/pianoslum)
 	- nodbus breaking evince two-page-view warning
 pirate486743186 (https://github.com/pirate486743186)
@@ -709,6 +727,17 @@ pirate486743186 (https://github.com/pirate486743186)
 	- mpsyt profile
 	- fix youtube-dl and mpv
 	- fix gnome-mpv profile
+	- fix gunzip profile
+	- reorganizing youtube-viewers
+	- fix pluma profile
+	- whitelist /var/lib/aspell
+	- mcomix fixes
+	- fixing engrampa profile
+	- adding qcomicbook and pipe-viewer in disable-programs
+	- newsboat/newsbeuter profiles
+	- fix atril profile
+	- rtv profile
+	- reorganizing links browsers
 Pixel Fairy (https://github.com/xahare)
 	- added fjclip.py, fjdisplay.py and fjresize.py in contrib section
 PizzaDude (https://github.com/pizzadude)
@@ -745,6 +774,7 @@ Rahul Golam (https://github.com/technoLord)
 RandomVoid (https://github.com/RandomVoid)
 	- fix building C# projects in Godot
 	- fix Lutris profile
+	- fix running games with enabled Feral GameMode in Lutris
 Raphaël Droz (https://github.com/drzraf)
 	- zoom profile fixes
 realaltffour (https://github.com/realaltffour)
@@ -786,6 +816,8 @@ rusty-snake (https://github.com/rusty-snake)
 	- some typo fixes
 	- added profile templates
 	- added sort.py to contrib
+sak96 (https://github.com/sak96)
+	- discord profile fixes
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)
@@ -814,6 +846,8 @@ sinkuu (https://github.com/sinkuu)
 	- fix symlink invocation for programs placing symlinks in $PATH
 Simo Piiroinen (https://github.com/spiiroin)
 	- Jolla/SailfishOS patches
+slowpeek (https://github.com/slowpeek)
+	- refine appimage example in docs
 smitsohu (https://github.com/smitsohu)
 	- read-only kde4 services directory
 	- enhanced mediathekview profile
@@ -939,6 +973,10 @@ Topi Miettinen (https://github.com/topimiettinen)
 	- improve loading of seccomp filter and memory-deny-write-execute feature
 	- private-lib feature
 	- make --nodbus block also system D-Bus socket
+Ted Robertson  (https://github.com/tredondo)
+	- webstorm profile fixes
+	- added bcompare profile
+	- various documentation fixes
 user1024 (user1024@tut.by)
 	- electron profile whitelisting
 	- fixed Rocket.Chat profile
@@ -1003,6 +1041,9 @@ Vladimir Schowalter (https://github.com/VladimirSchowalter20)
 	- apparmor profile enhancements
 	- various KDE profile enhancements
 	read-only kde5 services directory
+Vladislav Nepogodin (https://github.com/vnepogodin)
+	- added Librewolf profiles
+	- added Sway profile
 xee5ch (https://github.com/xee5ch)
 	- skypeforlinux profile
 Ypnose (https://github.com/Ypnose)

@@ -59,14 +59,6 @@ include globals.local
 ##ignore noexec ${HOME}
 ##ignore noexec /tmp
 
-##blacklist PATH
-# Disable X11 (CLI only), see also 'x11 none' below
-#blacklist /tmp/.X11-unix
-# Disable Wayland
-#blacklist ${RUNUSER}/wayland-*
-# Disable RUNUSER (cli only; supersedes Disable Wayland)
-#blacklist ${RUNUSER}
-
 # It is common practice to add files/dirs containing program-specific configuration
 # (often ${HOME}/PROGRAMNAME or ${HOME}/.config/PROGRAMNAME) into disable-programs.inc
 # (keep list sorted) and then disable blacklisting below.
@@ -108,6 +100,17 @@ include globals.local
 
 # Allow ssh (blacklisted by disable-common.inc)
 #include allow-ssh.inc
+
+##blacklist PATH
+# Disable X11 (CLI only), see also 'x11 none' below
+#blacklist /tmp/.X11-unix
+# Disable Wayland
+#blacklist ${RUNUSER}/wayland-*
+# Disable RUNUSER (cli only; supersedes Disable Wayland)
+#blacklist ${RUNUSER}
+# Remove the next blacklist if you system has no /usr/libexec dir,
+# otherwise try to add it.
+#blacklist /usr/libexec
 
 # disable-*.inc includes
 # remove disable-write-mnt.inc if you set disable-mnt

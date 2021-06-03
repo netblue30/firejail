@@ -20,6 +20,7 @@ include disable-xdg.inc
 mkdir ${HOME}/.local/share/supertux2
 whitelist ${HOME}/.local/share/supertux2
 whitelist /usr/share/supertux2
+whitelist /usr/share/games/supertux2	# Debian version
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

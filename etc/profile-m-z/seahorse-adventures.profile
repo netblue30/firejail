@@ -16,10 +16,11 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
-include disable-shell.inc
+#include disable-shell.inc - breaks on Debian 10
 include disable-xdg.inc
 
 whitelist /usr/share/seahorse-adventures
+whitelist /usr/share/games/seahorse-adventures	# Debian version
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -42,7 +43,7 @@ tracelog
 
 disable-mnt
 private
-private-bin python*,seahorse-adventures
+private-bin python*,seahorse-adventures,bash,dash,sh
 private-cache
 private-dev
 private-etc machine-id

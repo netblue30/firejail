@@ -28,6 +28,7 @@ whitelist ${HOME}/.config/supertuxkart
 whitelist ${HOME}/.cache/supertuxkart
 whitelist ${HOME}/.local/share/supertuxkart
 whitelist /usr/share/supertuxkart
+whitelist /usr/share/games/supertuxkart	# Debian version
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

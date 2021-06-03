@@ -44,6 +44,10 @@
 #define O_PATH 010000000
 #endif
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 #ifdef __ia64__
 /* clone(2) has a different interface on ia64, as it needs to know
    the size of the stack */

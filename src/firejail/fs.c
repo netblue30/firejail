@@ -33,6 +33,10 @@
 #define O_PATH 010000000
 #endif
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 #define MAX_BUF 4096
 #define EMPTY_STRING ("")
 // check noblacklist statements not matched by a proper blacklist in disable-*.inc files

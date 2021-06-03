@@ -31,6 +31,10 @@
 //#include <stdio.h>
 //#include <stdlib.h>
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 // uid/gid cache
 static uid_t c_uid = 0;
 static char *c_uid_name = NULL;

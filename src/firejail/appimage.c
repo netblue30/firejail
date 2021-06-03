@@ -28,6 +28,10 @@
 #include <linux/loop.h>
 #include <errno.h>
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 static char *devloop = NULL;	// device file
 static long unsigned size = 0;	// offset into appimage file
 #define MAXBUF 4096

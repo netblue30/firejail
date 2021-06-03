@@ -428,8 +428,9 @@ Blacklist violations logged to syslog.
 \fBwhitelist file_or_directory
 Whitelist directory or file. A temporary file system is mounted on the top directory, and the
 whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
-everything else is discarded when the sandbox is closed. The top directory could be
-user home, /dev, /etc, /media, /mnt, /opt, /srv, /sys/module, /usr/share, /var, and /tmp.
+everything else is discarded when the sandbox is closed. The top directory can be
+all directories in / (except /proc and /sys), /sys/module, /run/user/$UID, $HOME and
+all directories in /usr.
 .br
 
 .br

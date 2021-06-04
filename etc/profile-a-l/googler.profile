@@ -1,5 +1,5 @@
 # Firejail profile for googler
-# Description:  Search Google from your terminal
+# Description: Search Google from your terminal
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

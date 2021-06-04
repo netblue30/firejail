@@ -1,5 +1,5 @@
 # Firejail profile for ddgr
-# Description:  Search DuckDuckGo from your terminal
+# Description: Search DuckDuckGo from your terminal
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

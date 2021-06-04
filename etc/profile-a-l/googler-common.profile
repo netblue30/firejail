@@ -8,11 +8,12 @@ include googler-common.local
 #include globals.local
 
 blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}
 
 noblacklist ${HOME}/.w3m
 
 # Allow python (blacklisted by disable-interpreters.inc)
+include allow-bin-sh.inc
 include allow-python3.inc
 
 include disable-common.inc
@@ -21,13 +22,16 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
 include disable-xdg.inc
 
 whitelist ${HOME}/.w3m
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
 caps.drop all
+ipc-namespace
 machine-id
 netfilter
 no3d
@@ -41,7 +45,7 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6
-seccomp
+seccomp.block-secondary
 shell none
 tracelog
 

@@ -10,7 +10,6 @@ include googler-common.local
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
-noblacklist ${DOWNLOADS}
 noblacklist ${HOME}/.w3m
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)

@@ -192,7 +192,7 @@ include globals.local
 #  GUI: fonts,pango,X11
 #  GTK: dconf,gconf,gtk-2.0,gtk-3.0
 #  KDE: kde4rc,kde5rc
-#  Networking: ca-certificates,crypto-policies,host.conf,hostname,hosts,nsswitch.conf,pki,protocols,resolv.conf,services,rpc,ssl
+#  Networking: ca-certificates,crypto-policies,host.conf,hostname,hosts,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
 #    Extra: gai.conf,proxychains.conf
 #  Qt: Trolltech.conf
 ##private-lib LIBS

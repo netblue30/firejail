@@ -12,7 +12,7 @@ blacklist ${RUNUSER}
 
 noblacklist ${HOME}/.w3m
 
-# Allow python (blacklisted by disable-interpreters.inc)
+# Allow python and shell (blacklisted by disable-interpreters.inc)
 include allow-bin-sh.inc
 include allow-python3.inc
 

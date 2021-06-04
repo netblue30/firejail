@@ -49,7 +49,7 @@ disable-mnt
 private-bin env,python3*,sh,w3m
 private-cache
 private-dev
-private-etc ssl,hosts,inputrc,terminfo,
+private-etc hosts,inputrc,ssl,terminfo
 private-tmp
 
 dbus-user none

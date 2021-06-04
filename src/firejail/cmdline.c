@@ -26,7 +26,7 @@
 #include <assert.h>
 #include <errno.h>
 
-static int cmdline_length(int argc, char **argv, int index) {
+static int cmdline_length(int argc, char **argv, int index, bool want_extra_quotes) {
 	assert(index != -1);
 
 	unsigned i,j;
@@ -46,10 +46,11 @@ static int cmdline_length(int argc, char **argv, int index) {
 					len += 3;
 				in_quotes = false;
 			} else {
-				if (!in_quotes)
+				if (!in_quotes && want_extra_quotes)
 					len++;
 				len++;
-				in_quotes = true;
+				if (want_extra_quotes)
+					in_quotes = true;
 			}
 		}
 		if (in_quotes) {
@@ -64,7 +65,7 @@ static int cmdline_length(int argc, char **argv, int index) {
 	return len;
 }
 
-static void quote_cmdline(char *command_line, char *window_title, int len, int argc, char **argv, int index) {
+static void quote_cmdline(char *command_line, char *window_title, int len, int argc, char **argv, int index, bool want_extra_quotes) {
 	assert(index != -1);
 
 	unsigned i,j;
@@ -103,14 +104,15 @@ static void quote_cmdline(char *command_line, char *window_title, int len, int a
 			// anything other
 			else
 			{
-				if (!in_quotes) {
+				if (!in_quotes && want_extra_quotes) {
 					// open quotes
 					ptr1[0] = '\'';
 					ptr1++;
 				}
 				ptr1[0] = argv[i + index][j];
 				ptr1++;
-				in_quotes = true;
+				if (want_extra_quotes)
+					in_quotes = true;
 			}
 		}
 		// close quotes
@@ -134,12 +136,12 @@ static void quote_cmdline(char *command_line, char *window_title, int len, int a
 	assert((unsigned) len == strlen(command_line));
 }
 
-void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index) {
+void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, bool want_extra_quotes) {
 	// index == -1 could happen if we have --shell=none and no program was specified
 	// the program should exit with an error before entering this function
 	assert(index != -1);
 
-	int len = cmdline_length(argc, argv, index);
+	int len = cmdline_length(argc, argv, index, want_extra_quotes);
 	if (len > ARG_MAX) {
 		errno = E2BIG;
 		errExit("cmdline_length");
@@ -152,7 +154,7 @@ void build_cmdline(char **command_line, char **window_title, int argc, char **ar
 	if (!*window_title)
 			errExit("malloc");
 
-	quote_cmdline(*command_line, *window_title, len, argc, argv, index);
+	quote_cmdline(*command_line, *window_title, len, argc, argv, index, want_extra_quotes);
 
 	if (arg_debug)
 		printf("Building quoted command line: %s\n", *command_line);
@@ -161,17 +163,17 @@ void build_cmdline(char **command_line, char **window_title, int argc, char **ar
 	assert(*window_title);
 }
 
-void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index) {
+void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, bool want_extra_quotes) {
 	// index == -1 could happen if we have --shell=none and no program was specified
 	// the program should exit with an error before entering this function
 	assert(index != -1);
 
 	char *apprun_path = RUN_FIREJAIL_APPIMAGE_DIR "/AppRun";
 
-	int len1 = cmdline_length(argc, argv, index);  // length of argv w/o changes
-	int len2 = cmdline_length(1, &argv[index], 0); // apptest.AppImage
-	int len3 = cmdline_length(1, &apprun_path, 0); // /run/firejail/appimage/AppRun
-	int len4 = (len1 - len2 + len3) + 1;           // apptest.AppImage is replaced by /path/to/AppRun
+	int len1 = cmdline_length(argc, argv, index, want_extra_quotes);  // length of argv w/o changes
+	int len2 = cmdline_length(1, &argv[index], 0, want_extra_quotes); // apptest.AppImage
+	int len3 = cmdline_length(1, &apprun_path, 0, want_extra_quotes); // /run/firejail/appimage/AppRun
+	int len4 = (len1 - len2 + len3) + 1;                              // apptest.AppImage is replaced by /path/to/AppRun
 
 	if (len4 > ARG_MAX) {
 		errno = E2BIG;
@@ -187,7 +189,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 			errExit("malloc");
 
 	// run default quote_cmdline
-	quote_cmdline(command_line_tmp, *window_title, len1, argc, argv, index);
+	quote_cmdline(command_line_tmp, *window_title, len1, argc, argv, index, want_extra_quotes);
 
 	assert(command_line_tmp);
 	assert(*window_title);

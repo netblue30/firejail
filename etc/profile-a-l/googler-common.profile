@@ -10,6 +10,7 @@ include googler-common.local
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
+noblacklist ${DOWNLOADS}
 noblacklist ${HOME}/.w3m
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
@@ -54,7 +55,7 @@ disable-mnt
 private-bin env,python3*,sh,w3m
 private-cache
 private-dev
-private-etc hosts,inputrc,ssl,terminfo
+private-etc ca-certificates,crypto-policies,host.conf,hostname,hosts,nsswitch.conf,pki,protocols,resolv.conf,services,rpc,ssl
 private-tmp
 
 dbus-user none

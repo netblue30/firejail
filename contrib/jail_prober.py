@@ -164,8 +164,12 @@ def run_firejail(program, all_args):
 
 
 def main():
-    profile_path = sys.argv[1]
-    program = sys.argv[2]
+    try:
+        profile_path = sys.argv[1]
+        program = sys.argv[2]
+    except IndexError:
+        print('USAGE: jail_prober.py <PROFILE-PATH> <PROGRAM>')
+        sys.exit()
     # Quick error check and extract arguments
     check_params(profile_path)
     profile = get_args(profile_path)

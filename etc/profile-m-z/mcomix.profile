@@ -14,7 +14,7 @@ noblacklist ${DOCUMENTS}
 include allow-bin-sh.inc
 
 # Allow python (blacklisted by disable-interpreters.inc)
-#mcomix =< 1.2
+# mcomix <= 1.2 uses python2
 include allow-python2.inc
 include allow-python3.inc
 
@@ -25,8 +25,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
-include disable-xdg.inc
 include disable-write-mnt.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.config/mcomix
 mkdir ${HOME}/.local/share/mcomix
@@ -49,15 +49,16 @@ notv
 nou2f
 novideo
 protocol unix
+seccomp
 seccomp.block-secondary
 shell none
 tracelog
 
-#mcomix =< 1.2 python2
+# mcomix <= 1.2 uses python2
 private-bin 7z,lha,mcomix,mutool,python*,rar,sh,unrar,unzip
 private-cache
 private-dev
-#1.2 gtk-2.0
+# mcomix <= 1.2 uses gtk-2.0
 private-etc alternatives,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,X11,xdg
 private-tmp
 
@@ -69,5 +70,5 @@ read-write ${HOME}/.config/mcomix
 read-write ${HOME}/.local/share/mcomix
 #to allow ${HOME}/.local/share/recently-used.xbel
 read-write ${HOME}/.local/share
-#mcomix =< 1.2 tip, make a symbolic link to .cache/thumbnails
+# used by mcomix <= 1.2, tip, make a symbolic link to .cache/thumbnails
 read-write ${HOME}/.thumbnails

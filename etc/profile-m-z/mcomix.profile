@@ -14,7 +14,7 @@ noblacklist ${DOCUMENTS}
 include allow-bin-sh.inc
 
 # Allow python (blacklisted by disable-interpreters.inc)
-#1.2
+#mcomix =< 1.2
 include allow-python2.inc
 include allow-python3.inc
 
@@ -26,12 +26,14 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
+include disable-write-mnt.inc
 
 mkdir ${HOME}/.config/mcomix
 mkdir ${HOME}/.local/share/mcomix
 whitelist /usr/share/mcomix
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
+include whitelist-runuser-common.inc
 
 apparmor
 caps.drop all
@@ -47,11 +49,11 @@ notv
 nou2f
 novideo
 protocol unix
-seccomp
+seccomp.block-secondary
 shell none
 tracelog
 
-#1.2 python2
+#mcomix =< 1.2 python2
 private-bin 7z,lha,mcomix,mutool,python*,rar,sh,unrar,unzip
 private-cache
 private-dev
@@ -67,5 +69,5 @@ read-write ${HOME}/.config/mcomix
 read-write ${HOME}/.local/share/mcomix
 #to allow ${HOME}/.local/share/recently-used.xbel
 read-write ${HOME}/.local/share
-#1.2 tip, make a symbolic link to .cache/thumbnails
+#mcomix =< 1.2 tip, make a symbolic link to .cache/thumbnails
 read-write ${HOME}/.thumbnails

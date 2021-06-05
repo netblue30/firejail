@@ -24,9 +24,9 @@ mkdir ${HOME}/.config/zathura
 mkdir ${HOME}/.local/share/zathura
 whitelist /usr/share/doc
 whitelist /usr/share/zathura
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
-include whitelist-runuser-common.inc
 
 apparmor
 caps.drop all

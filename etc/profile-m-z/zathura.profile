@@ -17,6 +17,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-write-mnt.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/zathura
@@ -25,6 +26,7 @@ whitelist /usr/share/doc
 whitelist /usr/share/zathura
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
+include whitelist-runuser-common.inc
 
 apparmor
 caps.drop all
@@ -41,6 +43,7 @@ nou2f
 novideo
 protocol unix
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 

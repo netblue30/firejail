@@ -33,7 +33,7 @@ firejail (0.9.65) baseline; urgency=low
   * glaxium-wrapper, pinball, pinball-wrapper, etr-wrapper, firedragon
   * neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper, neochat,
   * cargo, LibreCAD, blobby, funnyboat, pipe-viewer, gtk-pipe-viewer
-  * links2, xlinks2
+  * links2, xlinks2, googler, ddgr
  -- netblue30 <netblue30@yahoo.com>  Wed, 2 Jun 2021 09:00:00 -0500
 
 firejail (0.9.64.4) baseline; urgency=low

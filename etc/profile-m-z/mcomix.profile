@@ -1,5 +1,5 @@
 # Firejail profile for mcomix
-# Description: A comic book and manga viewer 
+# Description: A comic book and manga viewer in python
 # This file is overwritten after every install/update
 # Persistent local customizations
 include mcomix.local

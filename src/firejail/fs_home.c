@@ -234,6 +234,7 @@ static void copy_asoundrc(void) {
 	}
 
 	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR); // regular user
+	selinux_relabel_path(dest, src);
 	fs_logger2("clone", dest);
 	free(dest);
 

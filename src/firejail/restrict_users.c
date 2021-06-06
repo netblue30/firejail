@@ -246,6 +246,11 @@ static void sanitize_passwd(void) {
 	// mount-bind tne new password file
 	if (mount(RUN_PASSWD_FILE, "/etc/passwd", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
+
+	// blacklist RUN_PASSWD_FILE
+	if (mount(RUN_RO_FILE, RUN_PASSWD_FILE, "none", MS_BIND, "mode=400,gid=0") < 0)
+		errExit("mount");
+
 	fs_logger("create /etc/passwd");
 
 	return;
@@ -376,6 +381,11 @@ static void sanitize_group(void) {
 	// mount-bind tne new group file
 	if (mount(RUN_GROUP_FILE, "/etc/group", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
+
+	// blacklist RUN_GROUP_FILE
+	if (mount(RUN_RO_FILE, RUN_GROUP_FILE, "none", MS_BIND, "mode=400,gid=0") < 0)
+		errExit("mount");
+
 	fs_logger("create /etc/group");
 
 	return;

@@ -447,8 +447,10 @@ int is_link(const char *fname) {
 	if (*fname == '\0')
 		return 0;
 
-	// remove trailing slashes
-	char *tmp = clean_pathname(fname);
+	char *tmp = strdup(fname);
+	if (!tmp)
+		errExit("strdup");
+	trim_trailing_slash_or_dot(tmp);
 
 	char c;
 	ssize_t rv = readlink(tmp, &c, 1);

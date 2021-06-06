@@ -447,15 +447,13 @@ int is_link(const char *fname) {
 	if (*fname == '\0')
 		return 0;
 
-	char *dup = strdup(fname);
-	if (!dup)
-		errExit("strdup");
-	trim_trailing_slash_or_dot(dup);
+	// remove trailing slashes
+	char *tmp = clean_pathname(fname);
 
 	char c;
-	ssize_t rv = readlink(dup, &c, 1);
+	ssize_t rv = readlink(tmp, &c, 1);
+	free(tmp);
 
-	free(dup);
 	return (rv != -1);
 }
 
@@ -1319,14 +1317,14 @@ static int has_link(const char *dir) {
 	return 0;
 }
 
-void check_homedir(void) {
-	assert(cfg.homedir);
-	if (cfg.homedir[0] != '/') {
+void check_homedir(const char *dir) {
+	assert(dir);
+	if (dir[0] != '/') {
 		fprintf(stderr, "Error: invalid user directory \"%s\"\n", cfg.homedir);
 		exit(1);
 	}
 	// symlinks are rejected in many places
-	if (has_link(cfg.homedir)) {
+	if (has_link(dir)) {
 		fprintf(stderr, "No full support for symbolic links in path of user directory.\n"
 			"Please provide resolved path in password database (/etc/passwd).\n\n");
 	}

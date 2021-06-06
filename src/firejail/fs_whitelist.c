@@ -304,7 +304,6 @@ static void globbing(const char *pattern) {
 }
 
 // mount tmpfs on all top level directories
-// home directories *inside* /run/user/$UID are not fully supported
 static void tmpfs_topdirs(const TopDir *topdirs) {
 	int tmpfs_home = 0;
 	int tmpfs_runuser = 0;
@@ -335,6 +334,7 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 
 		// mount tmpfs
 		fs_tmpfs(topdirs[i].path, 0);
+		selinux_relabel_path(topdirs[i].path, topdirs[i].path);
 
 		// init tmpfs
 		if (strcmp(topdirs[i].path, "/run") == 0) {
@@ -384,8 +384,6 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 			const char *rel = cfg.homedir + topdir_len + 1;
 			whitelist_file(topdirs[i].fd, rel, cfg.homedir);
 		}
-
-		selinux_relabel_path(topdirs[i].path, topdirs[i].path);
 	}
 
 	// user home directory
@@ -467,9 +465,9 @@ static TopDir *add_topdir(const char *dir, TopDir *topdirs, const char *path) {
 		errExit("strdup");
 
 	// open the directory, don't follow symbolic links
-	rv->fd = safer_openat(-1, rv->path, O_PATH|O_NOFOLLOW|O_DIRECTORY|O_CLOEXEC);
+	rv->fd = safer_openat(-1, dir, O_PATH|O_NOFOLLOW|O_DIRECTORY|O_CLOEXEC);
 	if (rv->fd == -1) {
-		fprintf(stderr, "Error: cannot open %s\n", rv->path);
+		fprintf(stderr, "Error: cannot open %s\n", dir);
 		exit(1);
 	}
 
@@ -750,10 +748,11 @@ void fs_whitelist(void) {
 			}
 
 			// create the link if any
-			if (link)
+			if (link) {
 				whitelist_symlink(link, file);
+				free(link);
+			}
 
-			free(link);
 			free(file);
 			free(entry->wparam);
 			entry->wparam = NULL;

@@ -259,8 +259,8 @@ static void init_cfg(int argc, char **argv) {
 		fprintf(stderr, "Error: user %s doesn't have a user directory assigned\n", cfg.username);
 		exit(1);
 	}
+	check_homedir(pw->pw_dir);
 	cfg.homedir = clean_pathname(pw->pw_dir);
-	check_homedir();
 
 	// initialize random number generator
 	sandbox_pid = getpid();

@@ -17,18 +17,33 @@ noblacklist ${HOME}/.w3m
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
+include allow-bin-sh.inc
+
+# Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
+include disable-shell.inc
+include disable-write-mnt.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.w3m
+whitelist /usr/share/w3m
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.w3m
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
+ipc-namespace
+machine-id
 netfilter
 no3d
 nodvd
@@ -45,8 +60,14 @@ seccomp
 shell none
 tracelog
 
-# private-bin w3m
+disable-mnt
+private-bin perl,sh,w3m
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,mailcap,nsswitch.conf,pki,resolv.conf,ssl
 private-tmp
+
+dbus-user none
+dbus-system none
+
+memory-deny-write-execute

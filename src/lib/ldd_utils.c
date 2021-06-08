@@ -50,7 +50,7 @@ int is_lib_64(const char *exe) {
 	unsigned char buf[EI_NIDENT];
 	ssize_t len = 0;
 	while (len < EI_NIDENT) {
-		ssize_t sz = read(fd, buf, EI_NIDENT);
+		ssize_t sz = read(fd, buf + len, EI_NIDENT - len);
 		if (sz <= 0)
 			goto doexit;
 		len += sz;

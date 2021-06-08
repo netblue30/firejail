@@ -204,7 +204,6 @@ static int random_display_number(void) {
 void x11_start_xvfb(int argc, char **argv) {
 	EUID_ASSERT();
 	int i;
-	struct stat s;
 	pid_t jail = 0;
 	pid_t server = 0;
 
@@ -348,7 +347,7 @@ void x11_start_xvfb(int argc, char **argv) {
 	// wait for x11 server to start
 	while (++n < 10) {
 		sleep(1);
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			break;
 	};
 
@@ -427,7 +426,6 @@ static char *extract_setting(int argc, char **argv, const char *argument) {
 void x11_start_xephyr(int argc, char **argv) {
 	EUID_ASSERT();
 	int i;
-	struct stat s;
 	pid_t jail = 0;
 	pid_t server = 0;
 
@@ -586,7 +584,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	// wait for x11 server to start
 	while (++n < 10) {
 		sleep(1);
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			break;
 	};
 
@@ -701,7 +699,6 @@ static char * get_title_arg_str() {
 static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 	EUID_ASSERT();
 	int i;
-	struct stat s;
 	pid_t client = 0;
 	pid_t server = 0;
 
@@ -818,7 +815,7 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 	// wait for x11 server to start
 	while (++n < 10) {
 		sleep(1);
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			break;
 	}
 
@@ -1231,9 +1228,9 @@ void x11_xorg(void) {
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
-	if (lstat(dest, &s) == -1) {
+	if (access(dest, F_OK) == -1) {
 		touch_file_as_user(dest, 0600);
-		if (stat(dest, &s) == -1) {
+		if (access(dest, F_OK) == -1) {
 			fprintf(stderr, "Error: cannot create %s\n", dest);
 			exit(1);
 		}
@@ -1276,12 +1273,7 @@ void x11_xorg(void) {
 	// mount via the link in /proc/self/fd
 	if (arg_debug)
 		printf("Mounting %s on %s\n", tmpfname, dest);
-	char *proc_src, *proc_dst;
-	if (asprintf(&proc_src, "/proc/self/fd/%d", src) == -1)
-		errExit("asprintf");
-	if (asprintf(&proc_dst, "/proc/self/fd/%d", dst) == -1)
-		errExit("asprintf");
-	if (mount(proc_src, proc_dst, NULL, MS_BIND, NULL) == -1) {
+	if (bind_mount_by_fd(src, dst)) {
 		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
 		exit(1);
 	}
@@ -1289,8 +1281,6 @@ void x11_xorg(void) {
 	MountData *mptr = get_last_mount();
 	if (strcmp(mptr->dir, dest) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
 		errLogExit("invalid .Xauthority mount");
-	free(proc_src);
-	free(proc_dst);
 	close(src);
 	close(dst);
 
@@ -1299,7 +1289,7 @@ void x11_xorg(void) {
 	// blacklist user .Xauthority file if it is not masked already
 	const char *envar = env_get("XAUTHORITY");
 	if (envar) {
-		char *rp = realpath(envar, NULL);
+		char *rp = realpath_as_user(envar);
 		if (rp) {
 			if (strcmp(rp, dest) != 0)
 				disable_file_or_dir(rp);
@@ -1336,6 +1326,8 @@ void fs_x11(void) {
 		return;
 	}
 
+	// the mount source is under control of the user, so be careful and
+	// mount without following symbolic links, using a file descriptor
 	char *x11file;
 	if (asprintf(&x11file, "/tmp/.X11-unix/X%d", display) == -1)
 		errExit("asprintf");
@@ -1344,10 +1336,10 @@ void fs_x11(void) {
 		free(x11file);
 		return;
 	}
-	struct stat x11stat;
-	if (fstat(src, &x11stat) < 0)
+	struct stat s3;
+	if (fstat(src, &s3) < 0)
 		errExit("fstat");
-	if (!S_ISSOCK(x11stat.st_mode)) {
+	if (!S_ISSOCK(s3.st_mode)) {
 		close(src);
 		free(x11file);
 		return;
@@ -1367,14 +1359,8 @@ void fs_x11(void) {
 	if (dst < 0)
 		errExit("open");
 
-	char *proc_src, *proc_dst;
-	if (asprintf(&proc_src, "/proc/self/fd/%d", src) == -1 ||
-	    asprintf(&proc_dst, "/proc/self/fd/%d", dst) == -1)
-		errExit("asprintf");
-	if (mount(proc_src, proc_dst, NULL, MS_BIND | MS_REC, NULL) < 0)
+	if (bind_mount_by_fd(src, dst))
 		errExit("mount bind");
-	free(proc_src);
-	free(proc_dst);
 	close(src);
 	close(dst);
 	fs_logger2("whitelist", x11file);

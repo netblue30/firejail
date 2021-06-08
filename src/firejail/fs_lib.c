@@ -178,8 +178,7 @@ void fslib_mount(const char *full_path) {
 
 	if (*full_path == '\0' ||
 	    !valid_full_path(full_path) ||
-	    access(full_path, F_OK) != 0 ||
-	    stat(full_path, &s) != 0 ||
+	    stat_as_user(full_path, &s) != 0 ||
 	    s.st_uid != 0)
 		return;
 
@@ -203,7 +202,7 @@ void fslib_mount_libs(const char *full_path, unsigned user) {
 	}
 
 	if (arg_debug || arg_debug_private_lib)
-		printf("    fslib_mount_libs %s (parse as %s)\n", full_path, user ? "user" : "root");
+		printf("    fslib_mount_libs %s\n", full_path);
 	// create an empty RUN_LIB_FILE and allow the user to write to it
 	unlink(RUN_LIB_FILE);			  // in case is there
 	create_empty_file_as_root(RUN_LIB_FILE, 0644);
@@ -212,7 +211,7 @@ void fslib_mount_libs(const char *full_path, unsigned user) {
 
 	// run fldd to extract the list of files
 	if (arg_debug || arg_debug_private_lib)
-		printf("    running fldd %s\n", full_path);
+		printf("    running fldd %s as %s\n", full_path, user ? "user" : "root");
 	unsigned mask;
 	if (user)
 		mask = SBOX_USER;
@@ -246,7 +245,7 @@ static void load_library(const char *fname) {
 
 	// existing file owned by root
 	struct stat s;
-	if (!access(fname, F_OK) && stat(fname, &s) == 0 && s.st_uid == 0) {
+	if (stat_as_user(fname, &s) == 0 && s.st_uid == 0) {
 		// load directories, regular 64 bit libraries, and 64 bit executables
 		if (S_ISDIR(s.st_mode))
 			fslib_mount(fname);
@@ -286,19 +285,21 @@ static void install_list_entry(const char *lib) {
 #define DO_GLOBBING
 #ifdef DO_GLOBBING
 		// globbing
+		EUID_USER();
 		glob_t globbuf;
 		int globerr = glob(fname, GLOB_NOCHECK | GLOB_NOSORT | GLOB_PERIOD, NULL, &globbuf);
 		if (globerr) {
 			fprintf(stderr, "Error: failed to glob private-lib pattern %s\n", fname);
 			exit(1);
 		}
+		EUID_ROOT();
 		size_t j;
 		for (j = 0; j < globbuf.gl_pathc; j++) {
 			assert(globbuf.gl_pathv[j]);
 //printf("glob %s\n", globbuf.gl_pathv[j]);
 			// GLOB_NOCHECK - no pattern matched returns the original pattern; try to load it anyway
 
-			// foobar/* includes foobar/. and foobar/..
+			// foobar/* expands to foobar/. and foobar/..
 			const char *base = gnu_basename(globbuf.gl_pathv[j]);
 			if (strcmp(base, ".") == 0 || strcmp(base, "..") == 0)
 				continue;

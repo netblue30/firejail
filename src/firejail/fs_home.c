@@ -42,15 +42,14 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		// copy skel files
 		if (asprintf(&fname, "%s/.zshrc", homedir) == -1)
 			errExit("asprintf");
-		struct stat s;
 		// don't copy it if we already have the file
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			return;
-		if (is_link(fname)) { // stat on dangling symlinks fails, try again using lstat
+		if (is_link(fname)) { // access(3) on dangling symlinks fails, try again using lstat
 			fprintf(stderr, "Error: invalid %s file\n", fname);
 			exit(1);
 		}
-		if (stat("/etc/skel/.zshrc", &s) == 0) {
+		if (access("/etc/skel/.zshrc", R_OK) == 0) {
 			copy_file_as_user("/etc/skel/.zshrc", fname, u, g, 0644); // regular user
 			fs_logger("clone /etc/skel/.zshrc");
 			fs_logger2("clone", fname);
@@ -67,16 +66,14 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		// copy skel files
 		if (asprintf(&fname, "%s/.cshrc", homedir) == -1)
 			errExit("asprintf");
-		struct stat s;
-
 		// don't copy it if we already have the file
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			return;
-		if (is_link(fname)) { // stat on dangling symlinks fails, try again using lstat
+		if (is_link(fname)) { // access(3) on dangling symlinks fails, try again using lstat
 			fprintf(stderr, "Error: invalid %s file\n", fname);
 			exit(1);
 		}
-		if (stat("/etc/skel/.cshrc", &s) == 0) {
+		if (access("/etc/skel/.cshrc", R_OK) == 0) {
 			copy_file_as_user("/etc/skel/.cshrc", fname, u, g, 0644); // regular user
 			fs_logger("clone /etc/skel/.cshrc");
 			fs_logger2("clone", fname);
@@ -93,15 +90,14 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 		// copy skel files
 		if (asprintf(&fname, "%s/.bashrc", homedir) == -1)
 			errExit("asprintf");
-		struct stat s;
 		// don't copy it if we already have the file
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			return;
-		if (is_link(fname)) { // stat on dangling symlinks fails, try again using lstat
+		if (is_link(fname)) { // access(3) on dangling symlinks fails, try again using lstat
 			fprintf(stderr, "Error: invalid %s file\n", fname);
 			exit(1);
 		}
-		if (stat("/etc/skel/.bashrc", &s) == 0) {
+		if (access("/etc/skel/.bashrc", R_OK) == 0) {
 			copy_file_as_user("/etc/skel/.bashrc", fname, u, g, 0644); // regular user
 			fs_logger("clone /etc/skel/.bashrc");
 			fs_logger2("clone", fname);
@@ -122,8 +118,8 @@ static int store_xauthority(void) {
 		errExit("asprintf");
 
 	struct stat s;
-	if (stat(src, &s) == 0) {
-		if (is_link(src)) {
+	if (lstat_as_user(src, &s) == 0) {
+		if (S_ISLNK(s.st_mode)) {
 			fwarning("invalid .Xauthority file\n");
 			free(src);
 			return 0;
@@ -161,11 +157,11 @@ static int store_asoundrc(void) {
 		errExit("asprintf");
 
 	struct stat s;
-	if (stat(src, &s) == 0) {
-		if (is_link(src)) {
+	if (lstat_as_user(src, &s) == 0) {
+		if (S_ISLNK(s.st_mode)) {
 			// make sure the real path of the file is inside the home directory
 			/* coverity[toctou] */
-			char* rp = realpath(src, NULL);
+			char *rp = realpath_as_user(src);
 			if (!rp) {
 				fprintf(stderr, "Error: Cannot access %s\n", src);
 				exit(1);
@@ -234,6 +230,7 @@ static void copy_asoundrc(void) {
 	}
 
 	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR); // regular user
+	selinux_relabel_path(dest, src);
 	fs_logger2("clone", dest);
 	free(dest);
 
@@ -262,6 +259,7 @@ void fs_private_homedir(void) {
 	if (arg_debug)
 		printf("Mount-bind %s on top of %s\n", private_homedir, homedir);
 	// get file descriptors for homedir and private_homedir, fails if there is any symlink
+	EUID_USER();
 	int src = safer_openat(-1, private_homedir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (src == -1)
 		errExit("opening private directory");
@@ -286,17 +284,10 @@ void fs_private_homedir(void) {
 		exit(1);
 	}
 	// mount via the links in /proc/self/fd
-	char *proc_src, *proc_dst;
-	if (asprintf(&proc_src, "/proc/self/fd/%d", src) == -1)
-		errExit("asprintf");
-	if (asprintf(&proc_dst, "/proc/self/fd/%d", dst) == -1)
-		errExit("asprintf");
-	if (mount(proc_src, proc_dst, NULL, MS_NOSUID | MS_NODEV | MS_BIND | MS_REC, NULL) < 0)
+	EUID_ROOT();
+	if (bind_mount_by_fd(src, dst))
 		errExit("mount bind");
-	free(proc_src);
-	free(proc_dst);
-	close(src);
-	close(dst);
+
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
 	size_t len = strlen(homedir);
@@ -304,6 +295,8 @@ void fs_private_homedir(void) {
 	   (*(mptr->dir + len) != '\0' && *(mptr->dir + len) != '/'))
 		errLogExit("invalid private mount");
 
+	close(src);
+	close(dst);
 	fs_logger3("mount-bind", private_homedir, homedir);
 	fs_logger2("whitelist", homedir);
 // preserve mode and ownership
@@ -438,6 +431,7 @@ void fs_check_private_cwd(const char *dir) {
 // --private-home
 //***********************************************************************************
 static char *check_dir_or_file(const char *name) {
+	EUID_ASSERT();
 	assert(name);
 
 	// basic checks
@@ -498,6 +492,7 @@ errexit:
 }
 
 static void duplicate(char *name) {
+	EUID_ASSERT();
 	char *fname = check_dir_or_file(name);
 
 	if (arg_debug)
@@ -553,10 +548,10 @@ void fs_private_home_list(void) {
 	selinux_relabel_path(RUN_HOME_DIR, homedir);
 	fs_logger_print();	// save the current log
 
+	// copy the list of files in the new home directory
+	EUID_USER();
 	if (arg_debug)
 		printf("Copying files in the new home:\n");
-
-	// copy the list of files in the new home directory
 	char *dlist = strdup(cfg.home_private_keep);
 	if (!dlist)
 		errExit("strdup");
@@ -589,13 +584,11 @@ void fs_private_home_list(void) {
 		exit(1);
 	}
 	// mount using the file descriptor
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount(RUN_HOME_DIR, proc, NULL, MS_BIND|MS_REC, NULL) < 0)
+	EUID_ROOT();
+	if (bind_mount_path_to_fd(RUN_HOME_DIR, fd))
 		errExit("mount bind");
-	free(proc);
 	close(fd);
+
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
 	if (strcmp(mptr->dir, homedir) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)

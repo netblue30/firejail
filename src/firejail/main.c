@@ -862,12 +862,11 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 char *guess_shell(void) {
 	const char *shell;
 	char *retval;
-	struct stat s;
 
 	shell = env_get("SHELL");
 	if (shell) {
 		invalid_filename(shell, 0); // no globbing
-		if (!is_dir(shell) && strstr(shell, "..") == NULL && stat(shell, &s) == 0 && access(shell, X_OK) == 0 &&
+		if (access(shell, X_OK) == 0 && !is_dir(shell) && strstr(shell, "..") == NULL &&
 		    strcmp(shell, PATH_FIREJAIL) != 0)
 			goto found;
 	}
@@ -878,12 +877,15 @@ char *guess_shell(void) {
 	int i = 0;
 	while (shells[i] != NULL) {
 		// access call checks as real UID/GID, not as effective UID/GID
-		if (stat(shells[i], &s) == 0 && access(shells[i], X_OK) == 0) {
+		if (access(shells[i], X_OK) == 0) {
 			shell = shells[i];
-			break;
+			goto found;
 		}
 		i++;
 	}
+
+	return NULL;
+
  found:
 	retval = strdup(shell);
 	if (!retval)

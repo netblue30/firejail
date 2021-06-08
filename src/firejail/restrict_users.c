@@ -104,12 +104,8 @@ static void sanitize_home(void) {
 	selinux_relabel_path(cfg.homedir, cfg.homedir);
 
 	// bring back real user home directory
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount(proc, cfg.homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (bind_mount_fd_to_path(fd, cfg.homedir))
 		errExit("mount bind");
-	free(proc);
 	close(fd);
 
 	if (!arg_private)
@@ -154,12 +150,8 @@ static void sanitize_run(void) {
 	selinux_relabel_path(runuser, runuser);
 
 	// bring back real run/user/$UID directory
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount(proc, runuser, NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (bind_mount_fd_to_path(fd, runuser))
 		errExit("mount bind");
-	free(proc);
 	close(fd);
 
 	fs_logger2("whitelist", runuser);
@@ -246,6 +238,11 @@ static void sanitize_passwd(void) {
 	// mount-bind tne new password file
 	if (mount(RUN_PASSWD_FILE, "/etc/passwd", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
+
+	// blacklist RUN_PASSWD_FILE
+	if (mount(RUN_RO_FILE, RUN_PASSWD_FILE, "none", MS_BIND, "mode=400,gid=0") < 0)
+		errExit("mount");
+
 	fs_logger("create /etc/passwd");
 
 	return;
@@ -376,6 +373,11 @@ static void sanitize_group(void) {
 	// mount-bind tne new group file
 	if (mount(RUN_GROUP_FILE, "/etc/group", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
+
+	// blacklist RUN_GROUP_FILE
+	if (mount(RUN_RO_FILE, RUN_GROUP_FILE, "none", MS_BIND, "mode=400,gid=0") < 0)
+		errExit("mount");
+
 	fs_logger("create /etc/group");
 
 	return;

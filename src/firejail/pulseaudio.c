@@ -158,17 +158,13 @@ void pulseaudio_init(void) {
 	// mount via the link in /proc/self/fd
 	if (arg_debug)
 		printf("Mounting %s on %s\n", RUN_PULSE_DIR, homeusercfg);
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount(RUN_PULSE_DIR, proc, "none", MS_BIND, NULL) < 0)
+	if (bind_mount_path_to_fd(RUN_PULSE_DIR, fd))
 		errExit("mount pulseaudio");
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
 	if (strcmp(mptr->dir, homeusercfg) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
 		errLogExit("invalid pulseaudio mount");
 	fs_logger2("tmpfs", homeusercfg);
-	free(proc);
 	close(fd);
 
 	char *p;

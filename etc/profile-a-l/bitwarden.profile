@@ -6,11 +6,8 @@ include bitwarden.local
 # Persistent global definitions
 include globals.local
 
-ignore include whitelist-runuser-common.inc
+# Disabled until someone reported positive feedback
 ignore include whitelist-usr-share-common.inc
-ignore disable-mnt
-ignore dbus-user none
-ignore dbus-system none
 
 ignore noexec /tmp
 

@@ -39,6 +39,8 @@ blacklist ${HOME}/.WebStorm*
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.ZAP
 blacklist ${HOME}/.abook
+blacklist ${HOME}/.addressbook
+blacklist ${HOME}/.alpine-smime
 blacklist ${HOME}/.aMule
 blacklist ${HOME}/.android
 blacklist ${HOME}/.anydesk
@@ -830,6 +832,14 @@ blacklist ${HOME}/.paradoxinteractive
 blacklist ${HOME}/.parallelrealities/blobwars
 blacklist ${HOME}/.pcsxr
 blacklist ${HOME}/.penguin-command
+blacklist ${HOME}/.pine-crash
+blacklist ${HOME}/.pine-debug1
+blacklist ${HOME}/.pine-debug2
+blacklist ${HOME}/.pine-debug3
+blacklist ${HOME}/.pine-debug4
+blacklist ${HOME}/.pine-interrupted-mail
+blacklist ${HOME}/.pinerc
+blacklist ${HOME}/.pinercex
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.pioneer
 blacklist ${HOME}/.purple

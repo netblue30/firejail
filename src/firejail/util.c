@@ -31,6 +31,9 @@
 #include <sys/wait.h>
 #include <limits.h>
 
+#include <string.h>
+#include <ctype.h>
+
 #include <fcntl.h>
 #ifndef O_PATH
 #define O_PATH 010000000
@@ -45,6 +48,27 @@
 #define MAXBUF 4098
 #define EMPTY_STRING ("")
 
+
+long long unsigned parse_arg_size (char * str) {
+	long long unsigned result = 0;
+	int len = strlen(str);
+	sscanf(str,"%llu",&result);
+
+	char suffix = *(str + len - 1);
+	if (!isdigit(suffix)) {
+		if ( suffix == 'k' ) { 
+			result *= 1024;
+		} else if ( suffix == 'm' ) { 
+			result *= 1024*1024;
+		} else if ( suffix == 'g' ) { 
+			result *= 1024*1024*1024;
+		} else {
+			return 0;
+		}
+	}
+
+	return result;
+}
 
 // send the error to /var/log/auth.log and exit after a small delay
 void errLogExit(char* fmt, ...) {

@@ -486,6 +486,7 @@ int macro_id(const char *name);
 
 
 // util.c
+long long unsigned parse_arg_size(char * str);
 void errLogExit(char* fmt, ...) __attribute__((noreturn));
 void fwarning(char* fmt, ...);
 void fmessage(char* fmt, ...);

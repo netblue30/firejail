@@ -1488,8 +1488,11 @@ int main(int argc, char **argv, char **envp) {
 			arg_rlimit_nproc = 1;
 		}
 		else if (strncmp(argv[i], "--rlimit-fsize=", 15) == 0) {
-			check_unsigned(argv[i] + 15, "Error: invalid rlimit");
-			sscanf(argv[i] + 15, "%llu", &cfg.rlimit_fsize);
+			cfg.rlimit_fsize = parse_arg_size(argv[i] + 15);
+			if ( cfg.rlimit_fsize == 0 ) {
+				perror("Error: given rlimit-size is invalid. use only non-negative numbers and k,m,g suffix for size");
+				exit(1);
+			}
 			arg_rlimit_fsize = 1;
 		}
 		else if (strncmp(argv[i], "--rlimit-sigpending=", 20) == 0) {
@@ -1498,8 +1501,11 @@ int main(int argc, char **argv, char **envp) {
 			arg_rlimit_sigpending = 1;
 		}
 		else if (strncmp(argv[i], "--rlimit-as=", 12) == 0) {
-			check_unsigned(argv[i] + 12, "Error: invalid rlimit");
-			sscanf(argv[i] + 12, "%llu", &cfg.rlimit_as);
+			cfg.rlimit_as = parse_arg_size(argv[i] + 12);
+			if ( cfg.rlimit_as == 0 ) {
+				perror("Error: given rlimit-as is invalid. use only non-negative numbers and k,m,g suffix for size");
+				exit(1);
+			}
 			arg_rlimit_as = 1;
 		}
 		else if (strncmp(argv[i], "--ipc-namespace", 15) == 0)

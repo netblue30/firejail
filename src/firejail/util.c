@@ -394,11 +394,11 @@ void touch_file_as_user(const char *fname, mode_t mode) {
 		// drop privileges
 		drop_privs(0);
 
-		FILE *fp = fopen(fname, "wx");
-		if (fp) {
-			fprintf(fp, "\n");
-			SET_PERMS_STREAM(fp, -1, -1, mode);
-			fclose(fp);
+		int fd = open(fname, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWUSR);
+		if (fd > -1) {
+			int err = fchmod(fd, mode);
+			(void) err;
+			close(fd);
 		}
 		else
 			fwarning("cannot create %s\n", fname);
@@ -899,27 +899,29 @@ int remove_overlay_directory(void) {
 		errExit("asprintf");
 
 	if (lstat(path, &s) == 0) {
-		// deal with obvious problems such as symlinks and root ownership
-		if (!S_ISDIR(s.st_mode)) {
-			if (S_ISLNK(s.st_mode))
-				fprintf(stderr, "Error: %s is a symbolic link\n", path);
-			else
-				fprintf(stderr, "Error: %s is not a directory\n", path);
-			exit(1);
-		}
-		if (s.st_uid != getuid()) {
-			fprintf(stderr, "Error: %s is not owned by the current user\n", path);
-			exit(1);
-		}
-
 		pid_t child = fork();
 		if (child < 0)
 			errExit("fork");
 		if (child == 0) {
-			// open ~/.firejail, fails if there is any symlink
-			int fd = safer_openat(-1, path, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-			if (fd == -1)
-				errExit("safer_openat");
+			// open ~/.firejail
+			int fd = safer_openat(-1, path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+			if (fd == -1) {
+				fprintf(stderr, "Error: cannot open %s\n", path);
+				_exit(1);
+			}
+			if (fstat(fd, &s) == -1)
+				errExit("fstat");
+			if (!S_ISDIR(s.st_mode)) {
+				if (S_ISLNK(s.st_mode))
+					fprintf(stderr, "Error: %s is a symbolic link\n", path);
+				else
+					fprintf(stderr, "Error: %s is not a directory\n", path);
+				_exit(1);
+			}
+			if (s.st_uid != getuid()) {
+				fprintf(stderr, "Error: %s is not owned by the current user\n", path);
+				_exit(1);
+			}
 			// chdir to ~/.firejail
 			if (fchdir(fd) == -1)
 				errExit("fchdir");
@@ -988,8 +990,8 @@ int create_empty_dir_as_user(const char *dir, mode_t mode) {
 			drop_privs(0);
 
 			if (mkdir(dir, mode) == 0) {
-				if (chmod(dir, mode) == -1)
-					{;} // do nothing
+				int err = chmod(dir, mode);
+				(void) err;
 			}
 			else if (arg_debug)
 				printf("Directory %s not created: %s\n", dir, strerror(errno));
@@ -1110,20 +1112,32 @@ unsigned extract_timeout(const char *str) {
 }
 
 void disable_file_or_dir(const char *fname) {
+	assert(fname);
+
+	int fd = open(fname, O_PATH|O_CLOEXEC);
+	if (fd < 0)
+		return;
+
 	struct stat s;
-	if (stat(fname, &s) != -1) {
-		if (arg_debug)
-			printf("blacklist %s\n", fname);
-		if (is_dir(fname)) {
-			if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
-				errExit("disable directory");
-		}
-		else {
-			if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
-				errExit("disable file");
-		}
-		fs_logger2("blacklist", fname);
+	if (fstat(fd, &s) < 0) { // FUSE
+		if (errno != EACCES)
+			errExit("fstat");
+		close(fd);
+		return;
 	}
+
+	if (arg_debug)
+		printf("blacklist %s\n", fname);
+	if (S_ISDIR(s.st_mode)) {
+		if (bind_mount_path_to_fd(RUN_RO_DIR, fd) < 0)
+				errExit("disable directory");
+	}
+	else {
+		if (bind_mount_path_to_fd(RUN_RO_FILE, fd) < 0)
+			errExit("disable file");
+	}
+	close(fd);
+	fs_logger2("blacklist", fname);
 }
 
 void disable_file_path(const char *path, const char *file) {
@@ -1208,6 +1222,60 @@ int safer_openat(int dirfd, const char *path, int flags) {
 	close(parentfd);
 	free(dup);
 	return fd;
+}
+
+int remount_by_fd(int dst, unsigned long mountflags) {
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", dst) < 0)
+		errExit("asprintf");
+
+	int rv = mount(NULL, proc, NULL, mountflags|MS_BIND|MS_REMOUNT, NULL);
+	if (rv < 0 && arg_debug)
+		printf("Failed mount: %s\n", strerror(errno));
+
+	free(proc);
+	return rv;
+}
+
+int bind_mount_by_fd(int src, int dst) {
+	char *proc_src, *proc_dst;
+	if (asprintf(&proc_src, "/proc/self/fd/%d", src) < 0 ||
+	    asprintf(&proc_dst, "/proc/self/fd/%d", dst) < 0)
+		errExit("asprintf");
+
+	int rv = mount(proc_src, proc_dst, NULL, MS_BIND|MS_REC, NULL);
+	if (rv < 0 && arg_debug)
+		printf("Failed mount: %s\n", strerror(errno));
+
+	free(proc_src);
+	free(proc_dst);
+	return rv;
+}
+
+int bind_mount_fd_to_path(int src, const char *destname) {
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", src) < 0)
+		errExit("asprintf");
+
+	int rv = mount(proc, destname, NULL, MS_BIND|MS_REC, NULL);
+	if (rv < 0 && arg_debug)
+		printf("Failed mount: %s\n", strerror(errno));
+
+	free(proc);
+	return rv;
+}
+
+int bind_mount_path_to_fd(const char *srcname, int dst) {
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", dst) < 0)
+		errExit("asprintf");
+
+	int rv = mount(srcname, proc, NULL, MS_BIND|MS_REC, NULL);
+	if (rv < 0 && arg_debug)
+		printf("Failed mount: %s\n", strerror(errno));
+
+	free(proc);
+	return rv;
 }
 
 int has_handler(pid_t pid, int signal) {

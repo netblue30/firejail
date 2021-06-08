@@ -104,12 +104,8 @@ static void sanitize_home(void) {
 	selinux_relabel_path(cfg.homedir, cfg.homedir);
 
 	// bring back real user home directory
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount(proc, cfg.homedir, NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (bind_mount_fd_to_path(fd, cfg.homedir))
 		errExit("mount bind");
-	free(proc);
 	close(fd);
 
 	if (!arg_private)
@@ -154,12 +150,8 @@ static void sanitize_run(void) {
 	selinux_relabel_path(runuser, runuser);
 
 	// bring back real run/user/$UID directory
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount(proc, runuser, NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (bind_mount_fd_to_path(fd, runuser))
 		errExit("mount bind");
-	free(proc);
 	close(fd);
 
 	fs_logger2("whitelist", runuser);

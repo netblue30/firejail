@@ -195,15 +195,7 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 
 	if (arg_debug || arg_debug_whitelists)
 		printf("Whitelisting %s\n", path);
-
-	// in order to make this mount resilient against symlink attacks, use
-	// magic links in /proc/self/fd instead of mounting the paths directly
-	char *proc_src, *proc_dst;
-	if (asprintf(&proc_src, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (asprintf(&proc_dst, "/proc/self/fd/%d", fd3) == -1)
-		errExit("asprintf");
-	if (mount(proc_src, proc_dst, NULL, MS_BIND | MS_REC, NULL) < 0)
+	if (bind_mount_by_fd(fd, fd3))
 		errExit("mount bind");
 	// check the last mount operation
 	MountData *mptr = get_last_mount(); // will do exit(1) if the mount cannot be found
@@ -221,8 +213,6 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 	//  - there should be more than one '/' char in dest string
 	if (mptr->dir == strrchr(mptr->dir, '/'))
 		errLogExit("invalid whitelist mount");
-	free(proc_src);
-	free(proc_dst);
 	close(fd);
 	close(fd3);
 	fs_logger2("whitelist", path);
@@ -341,12 +331,8 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 			// restore /run/firejail directory
 			if (mkdir(RUN_FIREJAIL_DIR, 0755) == -1)
 				errExit("mkdir");
-			char *proc;
-			if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-				errExit("asprintf");
-			if (mount(proc, RUN_FIREJAIL_DIR, NULL, MS_BIND | MS_REC, NULL) < 0)
+			if (bind_mount_fd_to_path(fd, RUN_FIREJAIL_DIR))
 				errExit("mount bind");
-			free(proc);
 			close(fd);
 			fs_logger2("whitelist", RUN_FIREJAIL_DIR);
 

@@ -1276,12 +1276,7 @@ void x11_xorg(void) {
 	// mount via the link in /proc/self/fd
 	if (arg_debug)
 		printf("Mounting %s on %s\n", tmpfname, dest);
-	char *proc_src, *proc_dst;
-	if (asprintf(&proc_src, "/proc/self/fd/%d", src) == -1)
-		errExit("asprintf");
-	if (asprintf(&proc_dst, "/proc/self/fd/%d", dst) == -1)
-		errExit("asprintf");
-	if (mount(proc_src, proc_dst, NULL, MS_BIND, NULL) == -1) {
+	if (bind_mount_by_fd(src, dst)) {
 		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
 		exit(1);
 	}
@@ -1289,8 +1284,6 @@ void x11_xorg(void) {
 	MountData *mptr = get_last_mount();
 	if (strcmp(mptr->dir, dest) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
 		errLogExit("invalid .Xauthority mount");
-	free(proc_src);
-	free(proc_dst);
 	close(src);
 	close(dst);
 
@@ -1336,6 +1329,8 @@ void fs_x11(void) {
 		return;
 	}
 
+	// the mount source is under control of the user, so be careful and
+	// mount without following symbolic links, using a file descriptor
 	char *x11file;
 	if (asprintf(&x11file, "/tmp/.X11-unix/X%d", display) == -1)
 		errExit("asprintf");
@@ -1344,10 +1339,10 @@ void fs_x11(void) {
 		free(x11file);
 		return;
 	}
-	struct stat x11stat;
-	if (fstat(src, &x11stat) < 0)
+	struct stat s3;
+	if (fstat(src, &s3) < 0)
 		errExit("fstat");
-	if (!S_ISSOCK(x11stat.st_mode)) {
+	if (!S_ISSOCK(s3.st_mode)) {
 		close(src);
 		free(x11file);
 		return;
@@ -1367,14 +1362,8 @@ void fs_x11(void) {
 	if (dst < 0)
 		errExit("open");
 
-	char *proc_src, *proc_dst;
-	if (asprintf(&proc_src, "/proc/self/fd/%d", src) == -1 ||
-	    asprintf(&proc_dst, "/proc/self/fd/%d", dst) == -1)
-		errExit("asprintf");
-	if (mount(proc_src, proc_dst, NULL, MS_BIND | MS_REC, NULL) < 0)
+	if (bind_mount_by_fd(src, dst))
 		errExit("mount bind");
-	free(proc_src);
-	free(proc_dst);
 	close(src);
 	close(dst);
 	fs_logger2("whitelist", x11file);

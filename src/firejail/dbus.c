@@ -258,12 +258,8 @@ static char *find_user_socket_by_format(char *format) {
 	if (asprintf(&dbus_user_socket, format, (int) getuid()) == -1)
 		errExit("asprintf");
 	struct stat s;
-	if (stat(dbus_user_socket, &s) == -1) {
-		if (errno == ENOENT)
-			goto fail;
-		return NULL;
-		errExit("stat");
-	}
+	if (lstat(dbus_user_socket, &s) == -1)
+		goto fail;
 	if (!S_ISSOCK(s.st_mode))
 		goto fail;
 	return dbus_user_socket;
@@ -426,12 +422,8 @@ static void socket_overlay(char *socket_path, char *proxy_path) {
 		errno = ENOTSOCK;
 		errExit("mounting DBus proxy socket");
 	}
-	char *proxy_fd_path;
-	if (asprintf(&proxy_fd_path, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount(proxy_path, socket_path, NULL, MS_BIND | MS_REC, NULL) == -1)
+	if (bind_mount_fd_to_path(fd, socket_path))
 		errExit("mount bind");
-	free(proxy_fd_path);
 	close(fd);
 }
 

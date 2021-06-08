@@ -287,17 +287,9 @@ void fs_private_homedir(void) {
 		exit(1);
 	}
 	// mount via the links in /proc/self/fd
-	char *proc_src, *proc_dst;
-	if (asprintf(&proc_src, "/proc/self/fd/%d", src) == -1)
-		errExit("asprintf");
-	if (asprintf(&proc_dst, "/proc/self/fd/%d", dst) == -1)
-		errExit("asprintf");
-	if (mount(proc_src, proc_dst, NULL, MS_NOSUID | MS_NODEV | MS_BIND | MS_REC, NULL) < 0)
+	if (bind_mount_by_fd(src, dst))
 		errExit("mount bind");
-	free(proc_src);
-	free(proc_dst);
-	close(src);
-	close(dst);
+
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
 	size_t len = strlen(homedir);
@@ -305,6 +297,8 @@ void fs_private_homedir(void) {
 	   (*(mptr->dir + len) != '\0' && *(mptr->dir + len) != '/'))
 		errLogExit("invalid private mount");
 
+	close(src);
+	close(dst);
 	fs_logger3("mount-bind", private_homedir, homedir);
 	fs_logger2("whitelist", homedir);
 // preserve mode and ownership
@@ -590,13 +584,10 @@ void fs_private_home_list(void) {
 		exit(1);
 	}
 	// mount using the file descriptor
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount(RUN_HOME_DIR, proc, NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (bind_mount_path_to_fd(RUN_HOME_DIR, fd))
 		errExit("mount bind");
-	free(proc);
 	close(fd);
+
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
 	if (strcmp(mptr->dir, homedir) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)

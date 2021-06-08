@@ -203,7 +203,7 @@ void fslib_mount_libs(const char *full_path, unsigned user) {
 	}
 
 	if (arg_debug || arg_debug_private_lib)
-		printf("    fslib_mount_libs %s (parse as %s)\n", full_path, user ? "user" : "root");
+		printf("    fslib_mount_libs %s\n", full_path);
 	// create an empty RUN_LIB_FILE and allow the user to write to it
 	unlink(RUN_LIB_FILE);			  // in case is there
 	create_empty_file_as_root(RUN_LIB_FILE, 0644);
@@ -212,7 +212,7 @@ void fslib_mount_libs(const char *full_path, unsigned user) {
 
 	// run fldd to extract the list of files
 	if (arg_debug || arg_debug_private_lib)
-		printf("    running fldd %s\n", full_path);
+		printf("    running fldd %s as %s\n", full_path, user ? "user" : "root");
 	unsigned mask;
 	if (user)
 		mask = SBOX_USER;
@@ -298,7 +298,7 @@ static void install_list_entry(const char *lib) {
 //printf("glob %s\n", globbuf.gl_pathv[j]);
 			// GLOB_NOCHECK - no pattern matched returns the original pattern; try to load it anyway
 
-			// foobar/* includes foobar/. and foobar/..
+			// foobar/* expands to foobar/. and foobar/..
 			const char *base = gnu_basename(globbuf.gl_pathv[j]);
 			if (strcmp(base, ".") == 0 || strcmp(base, "..") == 0)
 				continue;

@@ -11,6 +11,7 @@ noblacklist ${HOME}/.weechat
 include disable-common.inc
 include disable-programs.inc
 
+whitelist /usr/share/weechat
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

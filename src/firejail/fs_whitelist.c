@@ -257,6 +257,7 @@ static void whitelist_symlink(const char *link, const char *target) {
 }
 
 static void globbing(const char *pattern) {
+	EUID_ASSERT();
 	assert(pattern);
 
 	// globbing

@@ -417,6 +417,13 @@ int is_dir(const char *fname) {
 	if (*fname == '\0')
 		return 0;
 
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root)
+		EUID_USER();
+
 	// if fname doesn't end in '/', add one
 	int rv;
 	struct stat s;
@@ -431,6 +438,9 @@ int is_dir(const char *fname) {
 		rv = stat(tmp, &s);
 		free(tmp);
 	}
+
+	if (called_as_root)
+		EUID_ROOT();
 
 	if (rv == -1)
 		return 0;
@@ -447,6 +457,14 @@ int is_link(const char *fname) {
 	if (*fname == '\0')
 		return 0;
 
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root)
+		EUID_USER();
+
+	// remove trailing '/' if any
 	char *tmp = strdup(fname);
 	if (!tmp)
 		errExit("strdup");
@@ -456,7 +474,64 @@ int is_link(const char *fname) {
 	ssize_t rv = readlink(tmp, &c, 1);
 	free(tmp);
 
+	if (called_as_root)
+		EUID_ROOT();
+
 	return (rv != -1);
+}
+
+char *realpath_as_user(const char *fname) {
+	assert(fname);
+
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root)
+		EUID_USER();
+
+	char *rv = realpath(fname, NULL);
+
+	if (called_as_root)
+		EUID_ROOT();
+
+	return rv;
+}
+
+int stat_as_user(const char *fname, struct stat *s) {
+	assert(fname);
+
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root)
+		EUID_USER();
+
+	int rv = stat(fname, s);
+
+	if (called_as_root)
+		EUID_ROOT();
+
+	return rv;
+}
+
+int lstat_as_user(const char *fname, struct stat *s) {
+	assert(fname);
+
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root)
+		EUID_USER();
+
+	int rv = lstat(fname, s);
+
+	if (called_as_root)
+		EUID_ROOT();
+
+	return rv;
 }
 
 // remove all slashes and single dots from the end of a path
@@ -891,14 +966,13 @@ static int remove_callback(const char *fpath, const struct stat *sb, int typefla
 
 int remove_overlay_directory(void) {
 	EUID_ASSERT();
-	struct stat s;
 	sleep(1);
 
 	char *path;
 	if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
 		errExit("asprintf");
 
-	if (lstat(path, &s) == 0) {
+	if (access(path, F_OK) == 0) {
 		pid_t child = fork();
 		if (child < 0)
 			errExit("fork");
@@ -909,6 +983,7 @@ int remove_overlay_directory(void) {
 				fprintf(stderr, "Error: cannot open %s\n", path);
 				_exit(1);
 			}
+			struct stat s;
 			if (fstat(fd, &s) == -1)
 				errExit("fstat");
 			if (!S_ISDIR(s.st_mode)) {
@@ -944,7 +1019,7 @@ int remove_overlay_directory(void) {
 		// wait for the child to finish
 		waitpid(child, NULL, 0);
 		// check if ~/.firejail was deleted
-		if (stat(path, &s) == 0)
+		if (access(path, F_OK) == 0)
 			return 1;
 	}
 	return 0;
@@ -977,9 +1052,8 @@ void flush_stdin(void) {
 int create_empty_dir_as_user(const char *dir, mode_t mode) {
 	assert(dir);
 	mode &= 07777;
-	struct stat s;
 
-	if (stat(dir, &s)) {
+	if (access(dir, F_OK) != 0) {
 		if (arg_debug)
 			printf("Creating empty %s directory\n", dir);
 		pid_t child = fork();
@@ -1001,7 +1075,7 @@ int create_empty_dir_as_user(const char *dir, mode_t mode) {
 			_exit(0);
 		}
 		waitpid(child, NULL, 0);
-		if (stat(dir, &s) == 0)
+		if (access(dir, F_OK) == 0)
 			return 1;
 	}
 	return 0;
@@ -1113,8 +1187,11 @@ unsigned extract_timeout(const char *str) {
 
 void disable_file_or_dir(const char *fname) {
 	assert(fname);
+	assert(geteuid() == 0);
 
+	EUID_USER();
 	int fd = open(fname, O_PATH|O_CLOEXEC);
+	EUID_ROOT();
 	if (fd < 0)
 		return;
 

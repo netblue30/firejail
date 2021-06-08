@@ -265,7 +265,6 @@ int sbox_run(unsigned filtermask, int num, ...) {
 }
 
 int sbox_run_v(unsigned filtermask, char * const arg[]) {
-	EUID_ROOT();
 	assert(arg);
 
 	if (arg_debug) {
@@ -285,6 +284,7 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 	if (child < 0)
 		errExit("fork");
 	if (child == 0) {
+		EUID_ROOT();
 		sbox_do_exec_v(filtermask, arg);
 	}
 

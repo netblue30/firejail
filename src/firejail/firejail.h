@@ -503,6 +503,9 @@ void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_
 void touch_file_as_user(const char *fname, mode_t mode);
 int is_dir(const char *fname);
 int is_link(const char *fname);
+char *realpath_as_user(const char *fname);
+int stat_as_user(const char *fname, struct stat *s);
+int lstat_as_user(const char *fname, struct stat *s);
 void trim_trailing_slash_or_dot(char *path);
 char *line_remove_spaces(const char *buf);
 char *split_comma(char *str);

@@ -134,8 +134,7 @@ int checkcfg(int val) {
 					*end = '\0';
 
 				// is the file present?
-				struct stat s;
-				if (stat(fname, &s) == -1) {
+				if (access(fname, F_OK) == -1) {
 					fprintf(stderr, "Error: netfilter-default file %s not available\n", fname);
 					exit(1);
 				}

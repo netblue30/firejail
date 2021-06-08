@@ -149,6 +149,7 @@ static char *resolve_xdg(const char *var) {
 
 // returns mallocated memory
 static char *resolve_hardcoded(char *entries[]) {
+	EUID_ASSERT();
 	char *fname;
 	struct stat s;
 

@@ -204,7 +204,6 @@ static int random_display_number(void) {
 void x11_start_xvfb(int argc, char **argv) {
 	EUID_ASSERT();
 	int i;
-	struct stat s;
 	pid_t jail = 0;
 	pid_t server = 0;
 
@@ -348,7 +347,7 @@ void x11_start_xvfb(int argc, char **argv) {
 	// wait for x11 server to start
 	while (++n < 10) {
 		sleep(1);
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			break;
 	};
 
@@ -427,7 +426,6 @@ static char *extract_setting(int argc, char **argv, const char *argument) {
 void x11_start_xephyr(int argc, char **argv) {
 	EUID_ASSERT();
 	int i;
-	struct stat s;
 	pid_t jail = 0;
 	pid_t server = 0;
 
@@ -586,7 +584,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	// wait for x11 server to start
 	while (++n < 10) {
 		sleep(1);
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			break;
 	};
 
@@ -701,7 +699,6 @@ static char * get_title_arg_str() {
 static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 	EUID_ASSERT();
 	int i;
-	struct stat s;
 	pid_t client = 0;
 	pid_t server = 0;
 
@@ -818,7 +815,7 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 	// wait for x11 server to start
 	while (++n < 10) {
 		sleep(1);
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			break;
 	}
 
@@ -1231,9 +1228,9 @@ void x11_xorg(void) {
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
-	if (lstat(dest, &s) == -1) {
+	if (access(dest, F_OK) == -1) {
 		touch_file_as_user(dest, 0600);
-		if (stat(dest, &s) == -1) {
+		if (access(dest, F_OK) == -1) {
 			fprintf(stderr, "Error: cannot create %s\n", dest);
 			exit(1);
 		}
@@ -1292,7 +1289,7 @@ void x11_xorg(void) {
 	// blacklist user .Xauthority file if it is not masked already
 	const char *envar = env_get("XAUTHORITY");
 	if (envar) {
-		char *rp = realpath(envar, NULL);
+		char *rp = realpath_as_user(envar);
 		if (rp) {
 			if (strcmp(rp, dest) != 0)
 				disable_file_or_dir(rp);

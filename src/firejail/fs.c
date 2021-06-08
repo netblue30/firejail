@@ -57,6 +57,7 @@ static char *opstr[] = {
 static void disable_file(OPERATION op, const char *filename) {
 	assert(filename);
 	assert(op <OPERATION_MAX);
+	EUID_ASSERT();
 
 	// Resolve all symlinks
 	char* fname = realpath(filename, NULL);
@@ -74,9 +75,11 @@ static void disable_file(OPERATION op, const char *filename) {
 			return;
 		}
 
+		EUID_ROOT();
 		int err = bind_mount_path_to_fd(RUN_RO_DIR, fd);
 		if (err < 0)
 			err = bind_mount_path_to_fd(RUN_RO_FILE, fd);
+		EUID_USER();
 		close(fd);
 
 		if (err == 0) {
@@ -142,6 +145,7 @@ static void disable_file(OPERATION op, const char *filename) {
 				free(fname);
 				return;
 			}
+			EUID_ROOT();
 			if (S_ISDIR(s.st_mode)) {
 				if (bind_mount_path_to_fd(RUN_RO_DIR, fd) < 0)
 					errExit("disable file");
@@ -150,6 +154,7 @@ static void disable_file(OPERATION op, const char *filename) {
 				if (bind_mount_path_to_fd(RUN_RO_FILE, fd) < 0)
 					errExit("disable file");
 			}
+			EUID_USER();
 			close(fd);
 
 			if (op == BLACKLIST_FILE)
@@ -170,8 +175,10 @@ static void disable_file(OPERATION op, const char *filename) {
 					exit(1);
 				}
 			}
+			// fs_tmpfs returns with EUID 0
 			fs_tmpfs(fname, getuid());
 			selinux_relabel_path(fname, fname);
+			EUID_USER();
 		}
 		else
 			fwarning("%s is not a directory; cannot mount a tmpfs on top of it.\n", fname);
@@ -191,6 +198,7 @@ static int *nbcheck = NULL;
 // Treat pattern as a shell glob pattern and blacklist matching files
 static void globbing(OPERATION op, const char *pattern, const char *noblacklist[], size_t noblacklist_len) {
 	assert(pattern);
+	EUID_ASSERT();
 
 #ifdef TEST_NO_BLACKLIST_MATCHING
 	if (nbcheck_start == 0) {
@@ -264,6 +272,7 @@ void fs_blacklist(void) {
 	if (noblacklist == NULL)
 		errExit("failed allocating memory for noblacklist entries");
 
+	EUID_USER();
 	while (entry) {
 		OPERATION op = OPERATION_MAX;
 		char *ptr;
@@ -294,11 +303,13 @@ void fs_blacklist(void) {
 			if (arg_debug)
 				printf("Mount-bind %s on top of %s\n", dname1, dname2);
 			// preserve dname2 mode and ownership
+			// EUID_ROOT(); - option not accessible to non-root users
 			if (mount(dname1, dname2, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
 			/* coverity[toctou] */
 			if (set_perms(dname2,  s.st_uid, s.st_gid,s.st_mode))
 				errExit("set_perms");
+			// EUID_USER();
 
 			entry = entry->next;
 			continue;
@@ -376,16 +387,12 @@ void fs_blacklist(void) {
 			op = MOUNT_TMPFS;
 		}
 		else if (strncmp(entry->data, "mkdir ", 6) == 0) {
-			EUID_USER();
 			fs_mkdir(entry->data + 6);
-			EUID_ROOT();
 			entry = entry->next;
 			continue;
 		}
 		else if (strncmp(entry->data, "mkfile ", 7) == 0) {
-			EUID_USER();
 			fs_mkfile(entry->data + 7);
-			EUID_ROOT();
 			entry = entry->next;
 			continue;
 		}
@@ -441,6 +448,8 @@ void fs_blacklist(void) {
 	for (i = 0; i < noblacklist_c; i++)
 		free(noblacklist[i]);
 	free(noblacklist);
+
+	EUID_ROOT();
 }
 
 //***********************************************
@@ -449,6 +458,7 @@ void fs_blacklist(void) {
 
 // mount a writable tmpfs on directory; requires a resolved path
 void fs_tmpfs(const char *dir, unsigned check_owner) {
+	EUID_USER();
 	assert(dir);
 	if (arg_debug)
 		printf("Mounting tmpfs on %s, check owner: %s\n", dir, (check_owner)? "yes": "no");
@@ -473,6 +483,7 @@ void fs_tmpfs(const char *dir, unsigned check_owner) {
 		errExit("fstatvfs");
 	unsigned long flags = buf.f_flag & ~(MS_RDONLY|MS_BIND);
 	// mount via the symbolic link in /proc/self/fd
+	EUID_ROOT();
 	char *proc;
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
 		errExit("asprintf");
@@ -490,6 +501,7 @@ void fs_tmpfs(const char *dir, unsigned check_owner) {
 
 // remount path, preserving other mount flags; requires a resolved path
 static void fs_remount_simple(const char *path, OPERATION op) {
+	EUID_ASSERT();
 	assert(path);
 
 	// open path without following symbolic links
@@ -555,7 +567,9 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 
 	// make path a mount point:
 	// mount --bind path path
+	EUID_ROOT();
 	int err = bind_mount_by_fd(fd, fd);
+	EUID_USER();
 	if (err) {
 		close(fd);
 		goto out;
@@ -575,7 +589,9 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 	if (s.st_dev != s2.st_dev || s.st_ino != s2.st_ino)
 		errLogExit("invalid %s mount", opstr[op]);
 
+	EUID_ROOT();
 	err = remount_by_fd(fd2, flags);
+	EUID_USER();
 	close(fd2);
 	if (err)
 		goto out;
@@ -599,7 +615,9 @@ out:
 
 // remount recursively; requires a resolved path
 static void fs_remount_rec(const char *dir, OPERATION op) {
+	EUID_ASSERT();
 	assert(dir);
+
 	struct stat s;
 	if (stat(dir, &s) != 0)
 		return;
@@ -637,6 +655,9 @@ static void fs_remount_rec(const char *dir, OPERATION op) {
 // resolve a path and remount it
 void fs_remount(const char *path, OPERATION op, int rec) {
 	assert(path);
+	assert(geteuid() == 0);
+	EUID_USER();
+
 	char *rpath = realpath(path, NULL);
 	if (rpath) {
 		if (rec)
@@ -645,10 +666,12 @@ void fs_remount(const char *path, OPERATION op, int rec) {
 			fs_remount_simple(rpath, op);
 		free(rpath);
 	}
+	EUID_ROOT();
 }
 
 // Disable /mnt, /media, /run/mount and /run/media access
 void fs_mnt(const int enforce) {
+	EUID_USER();
 	if (enforce) {
 		// disable-mnt set in firejail.config
 		// overriding with noblacklist is not possible in this case
@@ -658,13 +681,12 @@ void fs_mnt(const int enforce) {
 		disable_file(BLACKLIST_FILE, "/run/media");
 	}
 	else {
-		EUID_USER();
 		profile_add("blacklist /mnt");
 		profile_add("blacklist /media");
 		profile_add("blacklist /run/mount");
 		profile_add("blacklist /run/media");
-		EUID_ROOT();
 	}
+	EUID_ROOT();
 }
 
 
@@ -678,7 +700,6 @@ void fs_proc_sys_dev_boot(void) {
 	    mount(NULL, "/proc/sys", NULL, MS_BIND | MS_REMOUNT | MS_RDONLY | MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
 		errExit("mounting /proc/sys");
 	fs_logger("read-only /proc/sys");
-
 
 	/* Mount a version of /sys that describes the network namespace */
 	if (arg_debug)
@@ -694,13 +715,13 @@ void fs_proc_sys_dev_boot(void) {
 	else
 		fs_logger("remount /sys");
 
+	EUID_USER();
+
 	disable_file(BLACKLIST_FILE, "/sys/firmware");
 	disable_file(BLACKLIST_FILE, "/sys/hypervisor");
 	{ // allow user access to some directories in /sys/ by specifying 'noblacklist' option
-		EUID_USER();
 		profile_add("blacklist /sys/fs");
 		profile_add("blacklist /sys/module");
-		EUID_ROOT();
 	}
 	disable_file(BLACKLIST_FILE, "/sys/power");
 	disable_file(BLACKLIST_FILE, "/sys/kernel/debug");
@@ -744,8 +765,6 @@ void fs_proc_sys_dev_boot(void) {
 	// disable /dev/port
 	disable_file(BLACKLIST_FILE, "/dev/port");
 
-
-
 	// disable various ipc sockets in /run/user
 	if (!arg_writable_run_user) {
 		char *fname;
@@ -778,10 +797,13 @@ void fs_proc_sys_dev_boot(void) {
 		disable_file(BLACKLIST_FILE, "/dev/kmsg");
 		disable_file(BLACKLIST_FILE, "/proc/kmsg");
 	}
+
+	EUID_ROOT();
 }
 
 // disable firejail configuration in ~/.config/firejail
 void disable_config(void) {
+	EUID_USER();
 	char *fname;
 	if (asprintf(&fname, "%s/.config/firejail", cfg.homedir) == -1)
 		errExit("asprintf");
@@ -794,6 +816,7 @@ void disable_config(void) {
 	disable_file(BLACKLIST_FILE, RUN_FIREJAIL_NAME_DIR);
 	disable_file(BLACKLIST_FILE, RUN_FIREJAIL_PROFILE_DIR);
 	disable_file(BLACKLIST_FILE, RUN_FIREJAIL_X11_DIR);
+	EUID_ROOT();
 }
 
 
@@ -855,6 +878,7 @@ void fs_basic_fs(void) {
 #ifdef HAVE_OVERLAYFS
 char *fs_check_overlay_dir(const char *subdirname, int allow_reuse) {
 	assert(subdirname);
+	EUID_ASSERT();
 	struct stat s;
 	char *dirname;
 
@@ -1214,6 +1238,7 @@ void fs_overlayfs(void) {
 
 // this function is called from sandbox.c before blacklist/whitelist functions
 void fs_private_tmp(void) {
+	EUID_ASSERT();
 	if (arg_debug)
 		printf("Generate private-tmp whitelist commands\n");
 

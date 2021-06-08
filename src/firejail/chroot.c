@@ -219,7 +219,7 @@ void fs_chroot(const char *rootdir) {
 			exit(1);
 		}
 		if (bind_mount_by_fd(src, dst))
-			errExit("mounting pulseaudio")
+			errExit("mounting pulseaudio");
 		close(src);
 		close(dst);
 		free(pulse);

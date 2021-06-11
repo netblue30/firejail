@@ -49,22 +49,28 @@
 #define EMPTY_STRING ("")
 
 
-long long unsigned parse_arg_size (char * str) {
+long long unsigned parse_arg_size(char *str) {
 	long long unsigned result = 0;
 	int len = strlen(str);
-	sscanf(str,"%llu",&result);
+	sscanf(str, "%llu", &result);
 
 	char suffix = *(str + len - 1);
-	if (!isdigit(suffix)) {
-		if ( suffix == 'k' ) { 
-			result *= 1024;
-		} else if ( suffix == 'm' ) { 
-			result *= 1024*1024;
-		} else if ( suffix == 'g' ) { 
-			result *= 1024*1024*1024;
-		} else {
-			return 0;
-		}
+	if (isdigit(suffix))
+		return result;
+
+	switch (result) {
+	case 'k':
+		result *= 1024;
+		break;
+	case 'm':
+		result *= 1024 * 1024;
+		break;
+	case 'g':
+		result *= 1024 * 1024 * 1024;
+		break;
+	default:
+		result = 0;
+		break;
 	}
 
 	return result;

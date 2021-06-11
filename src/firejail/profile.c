@@ -1493,8 +1493,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		else if (strncmp(ptr, "rlimit-fsize ", 13) == 0) {
 			cfg.rlimit_fsize = parse_arg_size(ptr + 13);
-			if ( cfg.rlimit_fsize == 0 ) {
-				perror("Error: invalid rlimit-fsize in profile file. use only non-negative numbers and k,m,g suffix for size");
+			if (cfg.rlimit_fsize == 0) {
+				perror("Error: invalid rlimit-fsize in profile file. only use positive numbers and k, m or g suffix.");
 				exit(1);
 			}
 			arg_rlimit_fsize = 1;
@@ -1506,8 +1506,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		else if (strncmp(ptr, "rlimit-as ", 10) == 0) {
 			cfg.rlimit_as = parse_arg_size(ptr + 10);
-			if ( cfg.rlimit_as == 0 ){
-				perror("Error: invalid rlimit-as size in profile file. use only non-negative numbers and k,m,g suffix for size");
+			if (cfg.rlimit_as == 0) {
+				perror("Error: invalid rlimit-as in profile file. only use positive numbers and k, m or g suffix.");
 				exit(1);
 			}
 			arg_rlimit_as = 1;

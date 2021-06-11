@@ -11,7 +11,7 @@ match_max 100000
 send -- "firejail --profile=rlimit-bad1.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"invalid rlimit"
+	"invalid rlimit-fsize in profile file. only use positive numbers and k, m or g suffix."
 }
 after 100
 

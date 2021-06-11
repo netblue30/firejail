@@ -55,10 +55,22 @@ long long unsigned parse_arg_size(char *str) {
 	sscanf(str, "%llu", &result);
 
 	char suffix = *(str + len - 1);
+	if (!isdigit(suffix) && ( suffix == 'k' || suffix == 'm' || suffix == 'g')) {
+		len -= 1;
+	}
+
+	/* checks for is value valid positive number */
+	for ( int i = 0; i < len; i++) {
+		if (!isdigit(*(str+i))) {
+			return 0;
+		}
+	}
+
 	if (isdigit(suffix))
 		return result;
 
-	switch (result) {
+
+	switch (suffix) {
 	case 'k':
 		result *= 1024;
 		break;

@@ -10,7 +10,7 @@ match_max 100000
 send -- "firejail --rlimit-fsize=-1024\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"invalid rlimit"
+	"invalid rlimit-fsize. only use positive numbers and k, m or g suffix."
 }
 after 100
 

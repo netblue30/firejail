@@ -1204,14 +1204,13 @@ void x11_xorg(void) {
 	fmessage("Generating a new .Xauthority file\n");
 	mkdir_attr(RUN_XAUTHORITY_SEC_DIR, 0700, getuid(), getgid());
 	// create new Xauthority file in RUN_XAUTHORITY_SEC_DIR
+	EUID_USER();
 	char tmpfname[] = RUN_XAUTHORITY_SEC_DIR "/.Xauth-XXXXXX";
 	int fd = mkstemp(tmpfname);
 	if (fd == -1) {
 		fprintf(stderr, "Error: cannot create .Xauthority file\n");
 		exit(1);
 	}
-	if (fchown(fd, getuid(), getgid()) == -1)
-		errExit("chown");
 	close(fd);
 
 	// run xauth
@@ -1221,8 +1220,6 @@ void x11_xorg(void) {
 	else
 		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 7, RUN_XAUTH_FILE, "-f", tmpfname,
 			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted");
-	// remove xauth copy
-	unlink(RUN_XAUTH_FILE);
 
 	// ensure there is already a file ~/.Xauthority, so that bind-mount below will work.
 	char *dest;
@@ -1273,10 +1270,12 @@ void x11_xorg(void) {
 	// mount via the link in /proc/self/fd
 	if (arg_debug)
 		printf("Mounting %s on %s\n", tmpfname, dest);
+	EUID_ROOT();
 	if (bind_mount_by_fd(src, dst)) {
 		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
 		exit(1);
 	}
+	EUID_USER();
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
 	if (strcmp(mptr->dir, dest) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
@@ -1289,9 +1288,10 @@ void x11_xorg(void) {
 	// blacklist user .Xauthority file if it is not masked already
 	const char *envar = env_get("XAUTHORITY");
 	if (envar) {
-		char *rp = realpath_as_user(envar);
+		char *rp = realpath(envar, NULL);
 		if (rp) {
 			if (strcmp(rp, dest) != 0)
+				// disable_file_or_dir returns with EUID 0
 				disable_file_or_dir(rp);
 			free(rp);
 		}
@@ -1301,9 +1301,13 @@ void x11_xorg(void) {
 	free(dest);
 
 	// mask RUN_XAUTHORITY_SEC_DIR
+	EUID_ROOT();
 	if (mount("tmpfs", RUN_XAUTHORITY_SEC_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 		errExit("mounting tmpfs");
 	fs_logger2("tmpfs", RUN_XAUTHORITY_SEC_DIR);
+
+	// cleanup
+	unlink(RUN_XAUTH_FILE);
 #endif
 }
 
@@ -1352,6 +1356,7 @@ void fs_x11(void) {
 		MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,
 		"mode=1777,uid=0,gid=0") < 0)
 		errExit("mounting tmpfs on /tmp/.X11-unix");
+	selinux_relabel_path("/tmp/.X11-unix", "/tmp/.X11-unix");
 	fs_logger("tmpfs /tmp/.X11-unix");
 
 	// create an empty root-owned file which will have the desired socket bind-mounted over it

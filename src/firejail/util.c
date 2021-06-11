@@ -981,7 +981,7 @@ int remove_overlay_directory(void) {
 			int fd = safer_openat(-1, path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 			if (fd == -1) {
 				fprintf(stderr, "Error: cannot open %s\n", path);
-				_exit(1);
+				exit(1);
 			}
 			struct stat s;
 			if (fstat(fd, &s) == -1)
@@ -991,11 +991,11 @@ int remove_overlay_directory(void) {
 					fprintf(stderr, "Error: %s is a symbolic link\n", path);
 				else
 					fprintf(stderr, "Error: %s is not a directory\n", path);
-				_exit(1);
+				exit(1);
 			}
 			if (s.st_uid != getuid()) {
 				fprintf(stderr, "Error: %s is not owned by the current user\n", path);
-				_exit(1);
+				exit(1);
 			}
 			// chdir to ~/.firejail
 			if (fchdir(fd) == -1)
@@ -1187,7 +1187,6 @@ unsigned extract_timeout(const char *str) {
 
 void disable_file_or_dir(const char *fname) {
 	assert(fname);
-	assert(geteuid() == 0);
 
 	EUID_USER();
 	int fd = open(fname, O_PATH|O_CLOEXEC);
@@ -1207,7 +1206,7 @@ void disable_file_or_dir(const char *fname) {
 		printf("blacklist %s\n", fname);
 	if (S_ISDIR(s.st_mode)) {
 		if (bind_mount_path_to_fd(RUN_RO_DIR, fd) < 0)
-				errExit("disable directory");
+			errExit("disable directory");
 	}
 	else {
 		if (bind_mount_path_to_fd(RUN_RO_FILE, fd) < 0)

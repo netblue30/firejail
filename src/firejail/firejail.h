@@ -45,6 +45,15 @@
 		assert(s.st_gid == gid);\
 		assert((s.st_mode & 07777) == (mode));\
 	} while (0)
+#define ASSERT_PERMS_AS_USER(file, uid, gid, mode) \
+	do { \
+		assert(file);\
+		struct stat s;\
+		if (stat_as_user(file, &s) == -1) errExit("stat");\
+		assert(s.st_uid == uid);\
+		assert(s.st_gid == gid);\
+		assert((s.st_mode & 07777) == (mode));\
+	} while (0)
 #define ASSERT_PERMS_FD(fd, uid, gid, mode) \
 	do { \
 		struct stat s;\

@@ -77,7 +77,7 @@ static void disable_file(OPERATION op, const char *filename) {
 
 		EUID_ROOT();
 		int err = bind_mount_path_to_fd(RUN_RO_DIR, fd);
-		if (err < 0)
+		if (err != 0)
 			err = bind_mount_path_to_fd(RUN_RO_FILE, fd);
 		EUID_USER();
 		close(fd);
@@ -655,8 +655,13 @@ static void fs_remount_rec(const char *dir, OPERATION op) {
 // resolve a path and remount it
 void fs_remount(const char *path, OPERATION op, int rec) {
 	assert(path);
-	assert(geteuid() == 0);
-	EUID_USER();
+
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root)
+		EUID_USER();
 
 	char *rpath = realpath(path, NULL);
 	if (rpath) {
@@ -666,7 +671,9 @@ void fs_remount(const char *path, OPERATION op, int rec) {
 			fs_remount_simple(rpath, op);
 		free(rpath);
 	}
-	EUID_ROOT();
+
+	if (called_as_root)
+		EUID_ROOT();
 }
 
 // Disable /mnt, /media, /run/mount and /run/media access
@@ -821,7 +828,6 @@ void disable_config(void) {
 
 
 // build a basic read-only filesystem
-// top level directories could be links, run no after-mount checks
 void fs_basic_fs(void) {
 	uid_t uid = getuid();
 
@@ -831,6 +837,7 @@ void fs_basic_fs(void) {
 	if (mount("proc", "/proc", "proc", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
 		errExit("mounting /proc");
 
+	EUID_USER();
 	if (arg_debug)
 		printf("Basic read-only filesystem:\n");
 	if (!arg_writable_etc) {
@@ -850,6 +857,7 @@ void fs_basic_fs(void) {
 	fs_remount("/lib64", MOUNT_READONLY, 1);
 	fs_remount("/lib32", MOUNT_READONLY, 1);
 	fs_remount("/libx32", MOUNT_READONLY, 1);
+	EUID_ROOT();
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
 	fs_var_lock();

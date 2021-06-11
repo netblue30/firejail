@@ -8,7 +8,7 @@ include alpine.local
 include globals.local
 
 # Workaround for bug https://github.com/netblue30/firejail/issues/2747
-# firejail --ignore="shell none" --private-bin=bash --noblacklist=/bin/bash --profile=alpine bash -c '(alpine)'
+# firejail --private-bin=sh --include='${CFG}/allow-bin-sh.inc' --profile=alpine sh -c '(alpine)'
 
 noblacklist /var/mail
 noblacklist /var/spool/mail

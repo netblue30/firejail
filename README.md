@@ -126,18 +126,18 @@ $ cd firejail
 $ ./configure && make && sudo make install-strip
 `````
 On Debian/Ubuntu you will need to install git and gcc compiler. AppArmor
-development libraries and pkg-config are required when using --apparmor
+development libraries and pkg-config are required when using `--apparmor`
 ./configure option:
 `````
 $ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 `````
-For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
+For `--selinux` option, add libselinux1-dev (libselinux-devel for Fedora).
 
 Detailed information on using firejail from git is available on the [wiki](https://github.com/netblue30/firejail/wiki/Using-firejail-from-git).
 
 ## Running the sandbox
 
-To start the sandbox, prefix your command with “firejail”:
+To start the sandbox, prefix your command with `firejail`:
 
 `````
 $ firejail firefox            # starting Mozilla Firefox
@@ -145,7 +145,7 @@ $ firejail transmission-gtk   # starting Transmission BitTorrent
 $ firejail vlc                # starting VideoLAN Client
 $ sudo firejail /etc/init.d/nginx start
 `````
-Run "firejail --list" in a terminal to list all active sandboxes. Example:
+Run `firejail --list` in a terminal to list all active sandboxes. Example:
 `````
 $ firejail --list
 1617:netblue:/usr/bin/firejail /usr/bin/firefox-esr
@@ -188,9 +188,7 @@ Use this issue to request new profiles: [#1139](https://github.com/netblue30/fir
 You can also use this tool to get a list of syscalls needed by a program: [contrib/syscalls.sh](contrib/syscalls.sh).
 
 We also keep a list of profile fixes for previous released versions in [etc-fixes](https://github.com/netblue30/firejail/tree/master/etc-fixes) directory.
-`````
 
-`````
 ## Latest released version: 0.9.64
 
 ## Current development version: 0.9.65

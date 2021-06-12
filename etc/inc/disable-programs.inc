@@ -810,6 +810,7 @@ blacklist ${HOME}/.netactview
 blacklist ${HOME}/.neverball
 blacklist ${HOME}/.newsbeuter
 blacklist ${HOME}/.newsboat
+blacklist ${HOME}/.newsrc
 blacklist ${HOME}/.nicotine
 blacklist ${HOME}/.node-gyp
 blacklist ${HOME}/.npm
@@ -867,6 +868,7 @@ blacklist ${HOME}/.teeworlds
 blacklist ${HOME}/.texlive20*
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.tilp
+blacklist ${HOME}/.tin
 blacklist ${HOME}/.tooling
 blacklist ${HOME}/.tor-browser*
 blacklist ${HOME}/.torcs

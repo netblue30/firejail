@@ -332,5 +332,6 @@ avidemux, calligragemini, vmware-player, vmware-workstation, gget, com.github.ph
 pcsxr, PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2, bcompare, b2sum, cksum, md5sum, sha1sum, sha224sum,
 sha256sum, sha384sum, sha512sum, sum, librewold-nightly, Quodlibet, tmux, sway, alienarena, alienarena-wrapper,
 ballbuster, ballbuster-wrapper, colorful, colorful-wrapper, gl-117, gl-117-wrapper, glaxium, glaxium-wrapper,
-pinball, pinball-wrapper, etr-wrapper, neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper, firedragon
-neochat, node, nvm, cargo, LibreCAD, blobby, funnyboat, pipe-viewer, gtk-pipe-viewer, links2, xlinks2, googler, ddgr
+pinball, pinball-wrapper, etr-wrapper, neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper, firedragon,
+neochat, node, nvm, cargo, LibreCAD, blobby, funnyboat, pipe-viewer, gtk-pipe-viewer, links2, xlinks2, googler, ddgr,
+tin

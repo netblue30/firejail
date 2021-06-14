@@ -42,8 +42,6 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-#mkdir ${HOME}/mail
-#mkdir ${HOME}/.alpine-smime
 #whitelist ${DOCUMENTS}
 #whitelist ${DOWNLOADS}
 #whitelist ${HOME}/.addressbook

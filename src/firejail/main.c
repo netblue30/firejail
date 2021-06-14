@@ -2819,6 +2819,11 @@ int main(int argc, char **argv, char **envp) {
 	// build the sandbox command
 	if (prog_index == -1 && cfg.shell) {
 		assert(cfg.command_line == NULL); // runs cfg.shell
+		if (arg_appimage) {
+			fprintf(stderr, "Error: no appimage archive specified\n");
+			exit(1);
+		}
+
 		cfg.window_title = cfg.shell;
 		cfg.command_name = cfg.shell;
 	}
@@ -2844,7 +2849,13 @@ int main(int argc, char **argv, char **envp) {
 
 	// load the profile
 	if (!arg_noprofile && !custom_profile) {
-		custom_profile = profile_find_firejail(cfg.command_name, 1);
+		if (arg_appimage) {
+			custom_profile = appimage_find_profile(cfg.command_name);
+			// disable shell=* for appimages
+			arg_shell_none = 0;
+		}
+		else
+			custom_profile = profile_find_firejail(cfg.command_name, 1);
 	}
 
 	// use default.profile as the default
@@ -2858,7 +2869,7 @@ int main(int argc, char **argv, char **envp) {
 		custom_profile = profile_find_firejail(profile_name, 1);
 
 		if (!custom_profile) {
-			fprintf(stderr, "Error: no default.profile installed\n");
+			fprintf(stderr, "Error: no %s installed\n", profile_name);
 			exit(1);
 		}
 

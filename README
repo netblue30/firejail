@@ -500,6 +500,7 @@ Jean-Philippe Eisenbarth (https://github.com/jpeisenbarth)
 	- fixed spotify.profile
 Jeff Squyres (https://github.com/jsquyres)
 	- various manpage fixes
+	- cmdline.c: optionally quote the resulting command line
 Jericho (https://github.com/attritionorg)
 	- spelling
 Jesse Smith (https://github.com/slicer69)

@@ -22,7 +22,7 @@
 #include <sys/resource.h>
 
 #ifdef HAVE_GCOV
-#include <gcov.h>
+#include "../include/gcov_wrapper.h"
 #endif
 
 void set_rlimits(void) {

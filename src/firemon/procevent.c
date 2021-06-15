@@ -31,7 +31,7 @@
 #include <sys/uio.h>
 
 #ifdef HAVE_GCOV
-#include <gcov.h>
+#include "../include/gcov_wrapper.h"
 #endif
 
 #define PIDS_BUFLEN 4096

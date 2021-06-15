@@ -32,7 +32,7 @@
 //#include <stdlib.h>
 
 #ifdef HAVE_GCOV
-#include <gcov.h>
+#include "../include/gcov_wrapper.h"
 #endif
 
 // uid/gid cache

@@ -26,7 +26,7 @@
 #include <string.h>
 
 #ifdef HAVE_GCOV
-#include <gcov.h>
+#include "../include/gcov_wrapper.h"
 #endif
 
 static void check(const char *fname) {

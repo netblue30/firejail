@@ -29,7 +29,7 @@
 #include <errno.h>
 
 #ifdef HAVE_GCOV
-#include <gcov.h>
+#include "../include/gcov_wrapper.h"
 #endif
 
 static char *devloop = NULL;	// device file

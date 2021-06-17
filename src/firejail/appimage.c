@@ -57,9 +57,13 @@ int appimage_find_profile(const char *archive) {
 		char *ptr = strchr(buf, '\n');
 		if (ptr)
 			*ptr = '\0';
-		if (strcasestr(archive, buf))
+		if (strcasestr(archive, buf)) {
+			fclose(fp);
 			return profile_find_firejail(buf, 1);
+		}
 	}
+
+	fclose(fp);
 	return 0;
 
 }

@@ -23,6 +23,8 @@ them from inside the sandbox.
 .TP
 \fB5. Seccomp test
 .TP
+\fB6. Networking test
+.TP
 The program is started as root using sudo.
 
 .SH OPTIONS
@@ -56,6 +58,8 @@ $ sudo jailcheck
 .br
    Warning: I can run programs in /home/netblue
 .br
+   Networking: disabled
+.br
 
 .br
 2055:netblue::firejail /usr/bin/ssh -X netblue@x.y.z.net
@@ -64,11 +68,15 @@ $ sudo jailcheck
 .br
    Warning: I can read ~/.ssh
 .br
+   Networking: enabled
+.br
 
 .br
 2186:netblue:libreoffice:firejail --appimage /opt/LibreOffice-fresh.appimage
 .br
    Virtual dirs: /tmp, /var/tmp, /dev,
+.br
+   Networking: enabled
 .br
 
 .br
@@ -77,6 +85,8 @@ $ sudo jailcheck
    Virtual dirs: /home/netblue, /tmp, /var/tmp, /dev, /etc, /usr/share,
 .br
                  /run/user/1000,
+.br
+   Networking: enabled
 .br
 
 .br
@@ -89,6 +99,8 @@ $ sudo jailcheck
                  /usr/share, /run/user/1000,
 .br
    Warning: I can run programs in /home/netblue
+.br
+   Networking: enabled
 .br
 
 

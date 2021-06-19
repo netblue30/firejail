@@ -82,3 +82,7 @@ whitelist ${HOME}/.kde4/share/config/ksslcablacklist
 whitelist ${HOME}/.kde4/share/config/oxygenrc
 whitelist ${HOME}/.kde4/share/icons
 whitelist ${HOME}/.local/share/qt5ct
+
+# sndio
+whitelist ${HOME}/.sndio/cookie
+whitelist /tmp/sndio/

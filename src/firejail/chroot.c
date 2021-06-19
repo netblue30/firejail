@@ -29,6 +29,9 @@
 #define O_PATH 010000000
 #endif
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
 
 // exit if error
 void fs_check_chroot_dir(void) {

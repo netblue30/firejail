@@ -41,6 +41,10 @@
 #include <linux/openat2.h>
 #endif
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 #define MAX_GROUPS 1024
 #define MAXBUF 4098
 #define EMPTY_STRING ("")

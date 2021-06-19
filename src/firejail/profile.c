@@ -22,6 +22,11 @@
 #include "../include/syscall.h"
 #include <dirent.h>
 #include <sys/stat.h>
+
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 extern char *xephyr_screen;
 
 #define MAX_READ 8192				  // line buffer for profile files

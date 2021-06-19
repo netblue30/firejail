@@ -33,6 +33,10 @@
 //#include <net/route.h>
 //#include <linux/if_bridge.h>
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 // print IP addresses for all interfaces
 static void net_ifprint(void) {
 	uint32_t ip;

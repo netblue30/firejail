@@ -21,6 +21,10 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 void set_rlimits(void) {
 	EUID_ASSERT();
 	// resource limits

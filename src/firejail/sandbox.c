@@ -49,6 +49,9 @@
 #include <sys/apparmor.h>
 #endif
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
 
 static int force_nonewprivs = 0;
 

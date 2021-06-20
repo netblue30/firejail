@@ -961,7 +961,7 @@ void filter_add_blacklist_override(int fd, int syscall, int arg, void *ptrarg, b
 static int check_postexec(const char *list) {
 	char *prelist, *postlist;
 
-	if (list) {
+	if (list && list[0]) {
 		syscalls_in_list(list, "@default-keep", -1, &prelist, &postlist, true);
 		if (postlist)
 			return 1;
@@ -2854,6 +2854,15 @@ int main(int argc, char **argv, char **envp) {
 
 	// check network configuration options - it will exit if anything went wrong
 	net_check_cfg();
+
+	// customization of default seccomp filter
+	if (config_seccomp_filter_add) {
+		if (arg_seccomp && !cfg.seccomp_list_keep && !cfg.seccomp_list_drop)
+			profile_list_augment(&cfg.seccomp_list, config_seccomp_filter_add);
+
+		if (arg_seccomp32 && !cfg.seccomp_list_keep32 && !cfg.seccomp_list_drop32)
+			profile_list_augment(&cfg.seccomp_list32, config_seccomp_filter_add);
+	}
 
 	if (arg_seccomp)
 		arg_seccomp_postexec = check_postexec(cfg.seccomp_list) || check_postexec(cfg.seccomp_list_drop);

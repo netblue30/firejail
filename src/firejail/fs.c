@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <sys/statvfs.h>
@@ -31,10 +32,6 @@
 #include <fcntl.h>
 #ifndef O_PATH
 #define O_PATH 010000000
-#endif
-
-#ifdef HAVE_GCOV
-#include "../include/gcov_wrapper.h"
 #endif
 
 #define MAX_BUF 4096
@@ -1206,9 +1203,8 @@ void fs_overlayfs(void) {
 	fs_logger("whitelist /tmp");
 
 	// chroot in the new filesystem
-#ifdef HAVE_GCOV
 	__gcov_flush();
-#endif
+
 	if (chroot(oroot) == -1)
 		errExit("chroot");
 

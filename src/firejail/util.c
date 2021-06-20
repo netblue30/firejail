@@ -19,6 +19,7 @@
  */
 #define _XOPEN_SOURCE 500
 #include "firejail.h"
+#include "../include/gcov_wrapper.h"
 #include <ftw.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
@@ -39,10 +40,6 @@
 #include <sys/syscall.h>
 #ifdef __NR_openat2
 #include <linux/openat2.h>
-#endif
-
-#ifdef HAVE_GCOV
-#include "../include/gcov_wrapper.h"
 #endif
 
 #define MAX_GROUPS 1024
@@ -341,9 +338,9 @@ void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid
 		int rv = copy_file(srcname, destname, uid, gid, mode); // already a regular user
 		if (rv)
 			fwarning("cannot copy %s\n", srcname);
-#ifdef HAVE_GCOV
+
 		__gcov_flush();
-#endif
+
 		_exit(0);
 	}
 	// wait for the child to finish
@@ -375,9 +372,9 @@ void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_
 			close(src);
 		}
 		close(dst);
-#ifdef HAVE_GCOV
+
 		__gcov_flush();
-#endif
+
 		_exit(0);
 	}
 	// wait for the child to finish
@@ -406,9 +403,9 @@ void touch_file_as_user(const char *fname, mode_t mode) {
 		}
 		else
 			fwarning("cannot create %s\n", fname);
-#ifdef HAVE_GCOV
+
 		__gcov_flush();
-#endif
+
 		_exit(0);
 	}
 	// wait for the child to finish
@@ -1015,9 +1012,9 @@ int remove_overlay_directory(void) {
 			// remove ~/.firejail
 			if (rmdir(path) == -1)
 				errExit("rmdir");
-#ifdef HAVE_GCOV
+
 			__gcov_flush();
-#endif
+
 			_exit(0);
 		}
 		// wait for the child to finish
@@ -1073,9 +1070,9 @@ int create_empty_dir_as_user(const char *dir, mode_t mode) {
 			}
 			else if (arg_debug)
 				printf("Directory %s not created: %s\n", dir, strerror(errno));
-#ifdef HAVE_GCOV
+
 			__gcov_flush();
-#endif
+
 			_exit(0);
 		}
 		waitpid(child, NULL, 0);

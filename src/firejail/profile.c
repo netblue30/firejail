@@ -18,14 +18,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include "../include/gcov_wrapper.h"
 #include "../include/seccomp.h"
 #include "../include/syscall.h"
 #include <dirent.h>
 #include <sys/stat.h>
-
-#ifdef HAVE_GCOV
-#include "../include/gcov_wrapper.h"
-#endif
 
 extern char *xephyr_screen;
 
@@ -1799,9 +1796,8 @@ void profile_read(const char *fname) {
 //		else {
 //			free(ptr);
 //		}
-#ifdef HAVE_GCOV
+
 		__gcov_flush();
-#endif
 	}
 	fclose(fp);
 }

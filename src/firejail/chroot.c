@@ -20,6 +20,7 @@
 
 #ifdef HAVE_CHROOT
 #include "firejail.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/mount.h>
 #include <sys/sendfile.h>
 #include <errno.h>
@@ -27,10 +28,6 @@
 #include <fcntl.h>
 #ifndef O_PATH
 #define O_PATH 010000000
-#endif
-
-#ifdef HAVE_GCOV
-#include "../include/gcov_wrapper.h"
 #endif
 
 // exit if error
@@ -263,9 +260,8 @@ void fs_chroot(const char *rootdir) {
 	// update chroot resolv.conf
 	update_file(parentfd, "etc/resolv.conf");
 
-#ifdef HAVE_GCOV
 	__gcov_flush();
-#endif
+
 	// create /run/firejail/mnt/oroot
 	char *oroot = RUN_OVERLAY_ROOT;
 	if (mkdir(oroot, 0755) == -1)

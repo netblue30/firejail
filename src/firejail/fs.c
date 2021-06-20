@@ -171,21 +171,28 @@ static void disable_file(OPERATION op, const char *filename) {
 		fs_remount_rec(fname, op);
 	}
 	else if (op == MOUNT_TMPFS) {
-		if (S_ISDIR(s.st_mode)) {
-			if (getuid()) {
-				if (strncmp(cfg.homedir, fname, strlen(cfg.homedir)) != 0 ||
-				    fname[strlen(cfg.homedir)] != '/') {
-					fprintf(stderr, "Error: tmpfs outside $HOME is only available for root\n");
-					exit(1);
-				}
-			}
-			// fs_tmpfs returns with EUID 0
-			fs_tmpfs(fname, getuid());
-			selinux_relabel_path(fname, fname);
-			EUID_USER();
-		}
-		else
+		if (!S_ISDIR(s.st_mode)) {
 			fwarning("%s is not a directory; cannot mount a tmpfs on top of it.\n", fname);
+			free(fname);
+			return;
+		}
+
+		uid_t uid = getuid();
+		if (uid != 0) {
+			// only user owned directories in user home
+			if (s.st_uid != uid ||
+			    strncmp(cfg.homedir, fname, strlen(cfg.homedir)) != 0 ||
+			    fname[strlen(cfg.homedir)] != '/') {
+				fwarning("you are not allowed to mount a tmpfs on %s\n", fname);
+				free(fname);
+				return;
+			}
+		}
+
+		fs_tmpfs(fname, uid);
+		EUID_USER(); // fs_tmpfs returns with EUID 0
+
+		selinux_relabel_path(fname, fname);
 	}
 	else
 		assert(0);

@@ -420,7 +420,7 @@ Make directory or file read-only.
 Make directory or file read-write.
 .TP
 \fBtmpfs directory
-Mount an empty tmpfs filesystem on top of directory. This option is available only when running the sandbox as root.
+Mount an empty tmpfs filesystem on top of directory. Directories outside user home or not owned by the user are not allowed. Sandboxes running as root are exempt from these restrictions.
 .TP
 \fBtracelog
 Blacklist violations logged to syslog.

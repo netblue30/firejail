@@ -470,7 +470,7 @@ void dbus_apply_policy(void) {
 	create_empty_dir_as_root(RUN_DBUS_DIR, 0755);
 
 	if (arg_dbus_user != DBUS_POLICY_ALLOW) {
-		create_empty_file_as_root(RUN_DBUS_USER_SOCKET, 0700);
+		create_empty_file_as_root(RUN_DBUS_USER_SOCKET, 0600);
 
 		if (arg_dbus_user == DBUS_POLICY_FILTER) {
 			assert(dbus_user_proxy_socket != NULL);
@@ -509,7 +509,7 @@ void dbus_apply_policy(void) {
 	}
 
 	if (arg_dbus_system != DBUS_POLICY_ALLOW) {
-		create_empty_file_as_root(RUN_DBUS_SYSTEM_SOCKET, 0700);
+		create_empty_file_as_root(RUN_DBUS_SYSTEM_SOCKET, 0600);
 
 		if (arg_dbus_system == DBUS_POLICY_FILTER) {
 			assert(dbus_system_proxy_socket != NULL);

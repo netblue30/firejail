@@ -160,9 +160,6 @@ void dhcp_start(void) {
 		exit(1);
 	}
 
-	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", dhclient_path, RUN_MNT_DIR);
-	dhclient_path = RUN_MNT_DIR "/dhclient";
-
 	EUID_ROOT();
 	if (mkdir(RUN_DHCLIENT_DIR, 0700))
 		errExit("mkdir");

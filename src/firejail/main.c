@@ -1490,7 +1490,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--rlimit-fsize=", 15) == 0) {
 			cfg.rlimit_fsize = parse_arg_size(argv[i] + 15);
 			if (cfg.rlimit_fsize == 0) {
-				perror("Error: invalid rlimit-fsize. only use positive numbers and k, m or g suffix.");
+				perror("Error: invalid rlimit-fsize. Only use positive numbers and k, m or g suffix.");
 				exit(1);
 			}
 			arg_rlimit_fsize = 1;
@@ -1503,7 +1503,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--rlimit-as=", 12) == 0) {
 			cfg.rlimit_as = parse_arg_size(argv[i] + 12);
 			if (cfg.rlimit_as == 0) {
-				perror("Error: invalid rlimit-as. only use positive numbers and k, m or g suffix.");
+				perror("Error: invalid rlimit-as. Only use positive numbers and k, m or g suffix.");
 				exit(1);
 			}
 			arg_rlimit_as = 1;

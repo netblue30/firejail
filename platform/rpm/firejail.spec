@@ -45,8 +45,8 @@ rm -rf %{buildroot}
 %{_mandir}/man1/__NAME__.1.gz
 %{_mandir}/man1/firecfg.1.gz
 %{_mandir}/man1/firemon.1.gz
+%{_mandir}/man1/jailcheck.1.gz
 %{_mandir}/man5/__NAME__-login.5.gz
 %{_mandir}/man5/__NAME__-profile.5.gz
 %{_mandir}/man5/__NAME__-users.5.gz
-%{_mandir}/man5/jailcheck.5.gz
 %config(noreplace) %{_sysconfdir}/__NAME__

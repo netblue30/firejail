@@ -195,15 +195,7 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 
 	if (arg_debug || arg_debug_whitelists)
 		printf("Whitelisting %s\n", path);
-
-	// in order to make this mount resilient against symlink attacks, use
-	// magic links in /proc/self/fd instead of mounting the paths directly
-	char *proc_src, *proc_dst;
-	if (asprintf(&proc_src, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (asprintf(&proc_dst, "/proc/self/fd/%d", fd3) == -1)
-		errExit("asprintf");
-	if (mount(proc_src, proc_dst, NULL, MS_BIND | MS_REC, NULL) < 0)
+	if (bind_mount_by_fd(fd, fd3))
 		errExit("mount bind");
 	// check the last mount operation
 	MountData *mptr = get_last_mount(); // will do exit(1) if the mount cannot be found
@@ -221,8 +213,6 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 	//  - there should be more than one '/' char in dest string
 	if (mptr->dir == strrchr(mptr->dir, '/'))
 		errLogExit("invalid whitelist mount");
-	free(proc_src);
-	free(proc_dst);
 	close(fd);
 	close(fd3);
 	fs_logger2("whitelist", path);
@@ -267,6 +257,7 @@ static void whitelist_symlink(const char *link, const char *target) {
 }
 
 static void globbing(const char *pattern) {
+	EUID_ASSERT();
 	assert(pattern);
 
 	// globbing
@@ -304,7 +295,6 @@ static void globbing(const char *pattern) {
 }
 
 // mount tmpfs on all top level directories
-// home directories *inside* /run/user/$UID are not fully supported
 static void tmpfs_topdirs(const TopDir *topdirs) {
 	int tmpfs_home = 0;
 	int tmpfs_runuser = 0;
@@ -335,18 +325,15 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 
 		// mount tmpfs
 		fs_tmpfs(topdirs[i].path, 0);
+		selinux_relabel_path(topdirs[i].path, topdirs[i].path);
 
 		// init tmpfs
 		if (strcmp(topdirs[i].path, "/run") == 0) {
 			// restore /run/firejail directory
 			if (mkdir(RUN_FIREJAIL_DIR, 0755) == -1)
 				errExit("mkdir");
-			char *proc;
-			if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-				errExit("asprintf");
-			if (mount(proc, RUN_FIREJAIL_DIR, NULL, MS_BIND | MS_REC, NULL) < 0)
+			if (bind_mount_fd_to_path(fd, RUN_FIREJAIL_DIR))
 				errExit("mount bind");
-			free(proc);
 			close(fd);
 			fs_logger2("whitelist", RUN_FIREJAIL_DIR);
 
@@ -384,8 +371,6 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 			const char *rel = cfg.homedir + topdir_len + 1;
 			whitelist_file(topdirs[i].fd, rel, cfg.homedir);
 		}
-
-		selinux_relabel_path(topdirs[i].path, topdirs[i].path);
 	}
 
 	// user home directory
@@ -422,6 +407,13 @@ static TopDir *add_topdir(const char *dir, TopDir *topdirs, const char *path) {
 	    strcmp(dir, "/proc") == 0 ||
 	    strcmp(dir, "/sys") == 0)
 		whitelist_error(path);
+
+	// whitelisting home directory is disabled if --private option is present
+	if (arg_private && strcmp(dir, cfg.homedir) == 0) {
+		if (arg_debug || arg_debug_whitelists)
+			printf("Debug %d: skip %s - a private home dir is configured!\n", __LINE__, path);
+		return NULL;
+	}
 
 	// do nothing if directory doesn't exist
 	struct stat s;
@@ -460,9 +452,9 @@ static TopDir *add_topdir(const char *dir, TopDir *topdirs, const char *path) {
 		errExit("strdup");
 
 	// open the directory, don't follow symbolic links
-	rv->fd = safer_openat(-1, rv->path, O_PATH|O_NOFOLLOW|O_DIRECTORY|O_CLOEXEC);
+	rv->fd = safer_openat(-1, dir, O_PATH|O_NOFOLLOW|O_DIRECTORY|O_CLOEXEC);
 	if (rv->fd == -1) {
-		fprintf(stderr, "Error: cannot open %s\n", rv->path);
+		fprintf(stderr, "Error: cannot open %s\n", dir);
 		exit(1);
 	}
 
@@ -743,10 +735,11 @@ void fs_whitelist(void) {
 			}
 
 			// create the link if any
-			if (link)
+			if (link) {
 				whitelist_symlink(link, file);
+				free(link);
+			}
 
-			free(link);
 			free(file);
 			free(entry->wparam);
 			entry->wparam = NULL;

@@ -28,8 +28,13 @@
 #include <linux/loop.h>
 #include <errno.h>
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 static char *devloop = NULL;	// device file
 static long unsigned size = 0;	// offset into appimage file
+#define MAXBUF 4096
 
 #ifdef LOOP_CTL_GET_FREE	// test for older kernels; this definition is found in /usr/include/linux/loop.h
 static void err_loop(void) {
@@ -37,6 +42,36 @@ static void err_loop(void) {
 	exit(1);
 }
 #endif
+
+// return 1 if found
+int appimage_find_profile(const char *archive) {
+	assert(archive);
+	assert(strlen(archive));
+
+	// try to match the name of the archive with the list of programs in /usr/lib/firejail/firecfg.config
+	FILE *fp = fopen(LIBDIR "/firejail/firecfg.config", "r");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot find %s, firejail is not correctly installed\n", LIBDIR "/firejail/firecfg.config");
+		exit(1);
+	}
+	char buf[MAXBUF];
+	while (fgets(buf, MAXBUF, fp)) {
+		if (*buf == '#')
+			continue;
+		char *ptr = strchr(buf, '\n');
+		if (ptr)
+			*ptr = '\0';
+		if (strcasestr(archive, buf)) {
+			fclose(fp);
+			return profile_find_firejail(buf, 1);
+		}
+	}
+
+	fclose(fp);
+	return 0;
+
+}
+
 
 void appimage_set(const char *appimage) {
 	assert(appimage);

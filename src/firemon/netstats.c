@@ -24,6 +24,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 #define MAXBUF 4096
 
 // ip -s link: device stats

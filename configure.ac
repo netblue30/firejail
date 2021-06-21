@@ -12,7 +12,7 @@
 #
 
 AC_PREREQ([2.68])
-AC_INIT(firejail, 0.9.65, netblue30@protonmail.com, , https://firejail.wordpress.com)
+AC_INIT([firejail],[0.9.66rc1],[netblue30@protonmail.com],[],[https://firejail.wordpress.com])
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 
 AC_CONFIG_MACRO_DIR([m4])
@@ -304,53 +304,56 @@ if test "$prefix" = /usr; then
 fi
 
 AC_CONFIG_FILES([mkdeb.sh], [chmod +x mkdeb.sh])
-AC_OUTPUT(Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile \
+AC_CONFIG_FILES([Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile \
 src/firemon/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/firecfg/Makefile src/fbuilder/Makefile src/fsec-print/Makefile \
 src/ftee/Makefile src/fseccomp/Makefile src/fldd/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile \
 src/profstats/Makefile src/man/Makefile src/zsh_completion/Makefile src/bash_completion/Makefile test/Makefile \
-src/jailcheck/Makefile)
+src/jailcheck/Makefile])
+AC_OUTPUT
 
-echo
-echo "Configuration options:"
-echo "   prefix: $prefix"
-echo "   sysconfdir: $sysconfdir"
-echo "   apparmor: $HAVE_APPARMOR"
-echo "   SELinux labeling support: $HAVE_SELINUX"
-echo "   global config: $HAVE_GLOBALCFG"
-echo "   chroot: $HAVE_CHROOT"
-echo "   network: $HAVE_NETWORK"
-echo "   user namespace: $HAVE_USERNS"
-echo "   X11 sandboxing support: $HAVE_X11"
-echo "   whitelisting: $HAVE_WHITELIST"
-echo "   private home support: $HAVE_PRIVATE_HOME"
-echo "   file transfer support: $HAVE_FILE_TRANSFER"
-echo "   overlayfs support: $HAVE_OVERLAYFS"
-echo "   DBUS proxy support: $HAVE_DBUSPROXY"
-echo "   allow tmpfs as regular user: $HAVE_USERTMPFS"
-echo "   enable --ouput logging: $HAVE_OUTPUT"
-echo "   Manpage support: $HAVE_MAN"
-echo "   firetunnel support: $HAVE_FIRETUNNEL"
-echo "   busybox workaround: $BUSYBOX_WORKAROUND"
-echo "   Spectre compiler patch: $HAVE_SPECTRE"
-echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"
-echo "   EXTRA_CFLAGS: $EXTRA_CFLAGS"
-echo "   fatal warnings: $HAVE_FATAL_WARNINGS"
-echo "   Gcov instrumentation: $HAVE_GCOV"
-echo "   Install contrib scripts: $HAVE_CONTRIB_INSTALL"
-echo "   Install as a SUID executable: $HAVE_SUID"
-echo "   LTS: $HAVE_LTS"
-echo "   Always enforce filters: $HAVE_FORCE_NONEWPRIVS"
-echo
+cat <<EOF
 
+Configuration options:
+   prefix: $prefix
+   sysconfdir: $sysconfdir
+   apparmor: $HAVE_APPARMOR
+   SELinux labeling support: $HAVE_SELINUX
+   global config: $HAVE_GLOBALCFG
+   chroot: $HAVE_CHROOT
+   network: $HAVE_NETWORK
+   user namespace: $HAVE_USERNS
+   X11 sandboxing support: $HAVE_X11
+   whitelisting: $HAVE_WHITELIST
+   private home support: $HAVE_PRIVATE_HOME
+   file transfer support: $HAVE_FILE_TRANSFER
+   overlayfs support: $HAVE_OVERLAYFS
+   DBUS proxy support: $HAVE_DBUSPROXY
+   allow tmpfs as regular user: $HAVE_USERTMPFS
+   enable --ouput logging: $HAVE_OUTPUT
+   Manpage support: $HAVE_MAN
+   firetunnel support: $HAVE_FIRETUNNEL
+   busybox workaround: $BUSYBOX_WORKAROUND
+   Spectre compiler patch: $HAVE_SPECTRE
+   EXTRA_LDFLAGS: $EXTRA_LDFLAGS
+   EXTRA_CFLAGS: $EXTRA_CFLAGS
+   fatal warnings: $HAVE_FATAL_WARNINGS
+   Gcov instrumentation: $HAVE_GCOV
+   Install contrib scripts: $HAVE_CONTRIB_INSTALL
+   Install as a SUID executable: $HAVE_SUID
+   LTS: $HAVE_LTS
+   Always enforce filters: $HAVE_FORCE_NONEWPRIVS
+
+EOF
 
 if test "$HAVE_LTS" = -DHAVE_LTS; then
-	echo
-	echo
-	echo "*********************************************************"
-	echo "*    Warning: Long-term support (LTS) was enabled!      *"
-	echo "*    Most compile-time options have bean rewritten!     *"
-	echo "*********************************************************"
-	echo
-	echo
-fi
+	cat <<\EOF
 
+
+*********************************************************
+*    Warning: Long-term support (LTS) was enabled!      *
+*    Most compile-time options have bean rewritten!     *
+*********************************************************
+
+
+EOF
+fi

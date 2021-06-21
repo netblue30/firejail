@@ -110,10 +110,14 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_RESTRICTED_NETWORK, "restricted-network")
 			PARSE_YESNO(CFG_XEPHYR_WINDOW_TITLE, "xephyr-window-title")
 			PARSE_YESNO(CFG_OVERLAYFS, "overlayfs")
-			PARSE_YESNO(CFG_PRIVATE_HOME, "private-home")
-			PARSE_YESNO(CFG_PRIVATE_CACHE, "private-cache")
-			PARSE_YESNO(CFG_PRIVATE_LIB, "private-lib")
+			PARSE_YESNO(CFG_PRIVATE_BIN, "private-bin")
 			PARSE_YESNO(CFG_PRIVATE_BIN_NO_LOCAL, "private-bin-no-local")
+			PARSE_YESNO(CFG_PRIVATE_CACHE, "private-cache")
+			PARSE_YESNO(CFG_PRIVATE_ETC, "private-etc")
+			PARSE_YESNO(CFG_PRIVATE_HOME, "private-home")
+			PARSE_YESNO(CFG_PRIVATE_LIB, "private-lib")
+			PARSE_YESNO(CFG_PRIVATE_OPT, "private-opt")
+			PARSE_YESNO(CFG_PRIVATE_SRV, "private-srv")
 			PARSE_YESNO(CFG_DISABLE_MNT, "disable-mnt")
 			PARSE_YESNO(CFG_XPRA_ATTACH, "xpra-attach")
 			PARSE_YESNO(CFG_BROWSER_DISABLE_U2F, "browser-disable-u2f")
@@ -130,8 +134,7 @@ int checkcfg(int val) {
 					*end = '\0';
 
 				// is the file present?
-				struct stat s;
-				if (stat(fname, &s) == -1) {
+				if (access(fname, F_OK) == -1) {
 					fprintf(stderr, "Error: netfilter-default file %s not available\n", fname);
 					exit(1);
 				}
@@ -294,7 +297,7 @@ errout:
 
 void print_compiletime_support(void) {
 	printf("Compile time support:\n");
-	printf("\t- Always force nonewprivs support is %s\n",
+	printf("\t- always force nonewprivs support is %s\n",
 #ifdef HAVE_FORCE_NONEWPRIVS
 		"enabled"
 #else

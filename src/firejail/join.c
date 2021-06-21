@@ -147,7 +147,7 @@ static void extract_command(int argc, char **argv, int index) {
 	}
 
 	// build command
-	build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, index);
+	build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, index, true);
 }
 
 static void extract_nogroups(pid_t pid) {

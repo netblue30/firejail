@@ -22,7 +22,7 @@
 
 #include <fcntl.h>
 #ifndef O_PATH
-# define O_PATH 010000000
+#define O_PATH 010000000
 #endif
 
 #define MAX_BUF 4096
@@ -153,6 +153,7 @@ MountData *get_last_mount(void) {
 
 // Extract the mount id from /proc/self/fdinfo and return it.
 int get_mount_id(const char *path) {
+	EUID_ASSERT();
 	assert(path);
 
 	int fd = open(path, O_PATH|O_CLOEXEC);
@@ -162,7 +163,9 @@ int get_mount_id(const char *path) {
 	char *fdinfo;
 	if (asprintf(&fdinfo, "/proc/self/fdinfo/%d", fd) == -1)
 		errExit("asprintf");
+	EUID_ROOT();
 	FILE *fp = fopen(fdinfo, "re");
+	EUID_USER();
 	free(fdinfo);
 	if (!fp)
 		goto errexit;

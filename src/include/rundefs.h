@@ -79,12 +79,8 @@
 #define PATH_SECCOMP_MDWX_32 		LIBDIR "/firejail/seccomp.mdwx.32"
 #define PATH_SECCOMP_BLOCK_SECONDARY 	LIBDIR "/firejail/seccomp.block_secondary"	// secondary arch blocking filter built during make
 
-
 #define RUN_DEV_DIR			RUN_MNT_DIR "/dev"
 #define RUN_DEVLOG_FILE			RUN_MNT_DIR "/devlog"
-
-#define RUN_WHITELIST_X11_DIR		RUN_MNT_DIR "/orig-x11"
-
 #define RUN_XAUTHORITY_FILE		RUN_MNT_DIR "/.Xauthority"		// private options
 #define RUN_XAUTH_FILE			RUN_MNT_DIR "/xauth"			// x11=xorg
 #define RUN_XAUTHORITY_SEC_DIR		RUN_MNT_DIR "/.sec.Xauthority"		// x11=xorg

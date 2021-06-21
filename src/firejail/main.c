@@ -44,6 +44,10 @@
 #define O_PATH 010000000
 #endif
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 #ifdef __ia64__
 /* clone(2) has a different interface on ia64, as it needs to know
    the size of the stack */
@@ -259,8 +263,8 @@ static void init_cfg(int argc, char **argv) {
 		fprintf(stderr, "Error: user %s doesn't have a user directory assigned\n", cfg.username);
 		exit(1);
 	}
+	check_homedir(pw->pw_dir);
 	cfg.homedir = clean_pathname(pw->pw_dir);
-	check_homedir();
 
 	// initialize random number generator
 	sandbox_pid = getpid();
@@ -862,12 +866,11 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 char *guess_shell(void) {
 	const char *shell;
 	char *retval;
-	struct stat s;
 
 	shell = env_get("SHELL");
 	if (shell) {
 		invalid_filename(shell, 0); // no globbing
-		if (!is_dir(shell) && strstr(shell, "..") == NULL && stat(shell, &s) == 0 && access(shell, X_OK) == 0 &&
+		if (access(shell, X_OK) == 0 && !is_dir(shell) && strstr(shell, "..") == NULL &&
 		    strcmp(shell, PATH_FIREJAIL) != 0)
 			goto found;
 	}
@@ -878,12 +881,15 @@ char *guess_shell(void) {
 	int i = 0;
 	while (shells[i] != NULL) {
 		// access call checks as real UID/GID, not as effective UID/GID
-		if (stat(shells[i], &s) == 0 && access(shells[i], X_OK) == 0) {
+		if (access(shells[i], X_OK) == 0) {
 			shell = shells[i];
-			break;
+			goto found;
 		}
 		i++;
 	}
+
+	return NULL;
+
  found:
 	retval = strdup(shell);
 	if (!retval)
@@ -1256,8 +1262,10 @@ int main(int argc, char **argv, char **envp) {
 	for (i = 1; i < argc; i++) {
 		run_cmd_and_exit(i, argc, argv); // will exit if the command is recognized
 
-		if (strcmp(argv[i], "--debug") == 0 && !arg_quiet)
+		if (strcmp(argv[i], "--debug") == 0) {
 			arg_debug = 1;
+			arg_quiet = 0;
+		}
 		else if (strcmp(argv[i], "--debug-blacklists") == 0)
 			arg_debug_blacklists = 1;
 		else if (strcmp(argv[i], "--debug-whitelists") == 0)
@@ -1265,8 +1273,8 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--debug-private-lib") == 0)
 			arg_debug_private_lib = 1;
 		else if (strcmp(argv[i], "--quiet") == 0) {
-			arg_quiet = 1;
-			arg_debug = 0;
+			if (!arg_debug)
+				arg_quiet = 1;
 		}
 		else if (strcmp(argv[i], "--allow-debuggers") == 0) {
 			// already handled
@@ -1910,8 +1918,6 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strcmp(argv[i], "--private") == 0) {
 			arg_private = 1;
-			// disable whitelisting in home directory
-			profile_add("whitelist ~/*");
 		}
 		else if (strncmp(argv[i], "--private=", 10) == 0) {
 			if (cfg.home_private_keep) {
@@ -1933,8 +1939,6 @@ int main(int argc, char **argv, char **envp) {
 				cfg.home_private = NULL;
 			}
 			arg_private = 1;
-			// disable whitelisting in home directory
-			profile_add("whitelist ~/*");
 		}
 #ifdef HAVE_PRIVATE_HOME
 		else if (strncmp(argv[i], "--private-home=", 15) == 0) {
@@ -1967,61 +1971,77 @@ int main(int argc, char **argv, char **envp) {
 			arg_keep_dev_shm = 1;
 		}
 		else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
-			if (arg_writable_etc) {
-				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
-				exit(1);
-			}
+			if (checkcfg(CFG_PRIVATE_ETC)) {
+				if (arg_writable_etc) {
+					fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+					exit(1);
+				}
 
-			// extract private etc list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-etc option\n");
-				exit(1);
+				// extract private etc list
+				if (*(argv[i] + 14) == '\0') {
+					fprintf(stderr, "Error: invalid private-etc option\n");
+					exit(1);
+				}
+				if (cfg.etc_private_keep) {
+					if ( asprintf(&cfg.etc_private_keep, "%s,%s", cfg.etc_private_keep, argv[i] + 14) < 0 )
+						errExit("asprintf");
+				} else
+					cfg.etc_private_keep = argv[i] + 14;
+				arg_private_etc = 1;
 			}
-			if (cfg.etc_private_keep) {
-				if ( asprintf(&cfg.etc_private_keep, "%s,%s", cfg.etc_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.etc_private_keep = argv[i] + 14;
-			arg_private_etc = 1;
+			else
+				exit_err_feature("private-etc");
 		}
 		else if (strncmp(argv[i], "--private-opt=", 14) == 0) {
-			// extract private opt list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-opt option\n");
-				exit(1);
+			if (checkcfg(CFG_PRIVATE_OPT)) {
+				// extract private opt list
+				if (*(argv[i] + 14) == '\0') {
+					fprintf(stderr, "Error: invalid private-opt option\n");
+					exit(1);
+				}
+				if (cfg.opt_private_keep) {
+					if ( asprintf(&cfg.opt_private_keep, "%s,%s", cfg.opt_private_keep, argv[i] + 14) < 0 )
+						errExit("asprintf");
+				} else
+					cfg.opt_private_keep = argv[i] + 14;
+				arg_private_opt = 1;
 			}
-			if (cfg.opt_private_keep) {
-				if ( asprintf(&cfg.opt_private_keep, "%s,%s", cfg.opt_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.opt_private_keep = argv[i] + 14;
-			arg_private_opt = 1;
+			else
+				exit_err_feature("private-opt");
 		}
 		else if (strncmp(argv[i], "--private-srv=", 14) == 0) {
-			// extract private srv list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-srv option\n");
-				exit(1);
+			if (checkcfg(CFG_PRIVATE_SRV)) {
+				// extract private srv list
+				if (*(argv[i] + 14) == '\0') {
+					fprintf(stderr, "Error: invalid private-srv option\n");
+					exit(1);
+				}
+				if (cfg.srv_private_keep) {
+					if ( asprintf(&cfg.srv_private_keep, "%s,%s", cfg.srv_private_keep, argv[i] + 14) < 0 )
+						errExit("asprintf");
+				} else
+					cfg.srv_private_keep = argv[i] + 14;
+				arg_private_srv = 1;
 			}
-			if (cfg.srv_private_keep) {
-				if ( asprintf(&cfg.srv_private_keep, "%s,%s", cfg.srv_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.srv_private_keep = argv[i] + 14;
-			arg_private_srv = 1;
+			else
+				exit_err_feature("private-srv");
 		}
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
-			// extract private bin list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-bin option\n");
-				exit(1);
+			if (checkcfg(CFG_PRIVATE_BIN)) {
+				// extract private bin list
+				if (*(argv[i] + 14) == '\0') {
+					fprintf(stderr, "Error: invalid private-bin option\n");
+					exit(1);
+				}
+				if (cfg.bin_private_keep) {
+					if ( asprintf(&cfg.bin_private_keep, "%s,%s", cfg.bin_private_keep, argv[i] + 14) < 0 )
+						errExit("asprintf");
+				} else
+					cfg.bin_private_keep = argv[i] + 14;
+				arg_private_bin = 1;
 			}
-			if (cfg.bin_private_keep) {
-				if ( asprintf(&cfg.bin_private_keep, "%s,%s", cfg.bin_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.bin_private_keep = argv[i] + 14;
-			arg_private_bin = 1;
+			else
+				exit_err_feature("private-bin");
 		}
 		else if (strncmp(argv[i], "--private-lib", 13) == 0) {
 			if (checkcfg(CFG_PRIVATE_LIB)) {
@@ -2809,6 +2829,11 @@ int main(int argc, char **argv, char **envp) {
 	// build the sandbox command
 	if (prog_index == -1 && cfg.shell) {
 		assert(cfg.command_line == NULL); // runs cfg.shell
+		if (arg_appimage) {
+			fprintf(stderr, "Error: no appimage archive specified\n");
+			exit(1);
+		}
+
 		cfg.window_title = cfg.shell;
 		cfg.command_name = cfg.shell;
 	}
@@ -2816,10 +2841,11 @@ int main(int argc, char **argv, char **envp) {
 		if (arg_debug)
 			printf("Configuring appimage environment\n");
 		appimage_set(cfg.command_name);
-		build_appimage_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
+		build_appimage_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index, true);
 	}
 	else {
-		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index);
+		// Only add extra quotes if we were not launched by sshd.
+		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index, !parent_sshd);
 	}
 /*	else {
 		fprintf(stderr, "Error: command must be specified when --shell=none used.\n");
@@ -2833,7 +2859,13 @@ int main(int argc, char **argv, char **envp) {
 
 	// load the profile
 	if (!arg_noprofile && !custom_profile) {
-		custom_profile = profile_find_firejail(cfg.command_name, 1);
+		if (arg_appimage) {
+			custom_profile = appimage_find_profile(cfg.command_name);
+			// disable shell=* for appimages
+			arg_shell_none = 0;
+		}
+		else
+			custom_profile = profile_find_firejail(cfg.command_name, 1);
 	}
 
 	// use default.profile as the default
@@ -2847,7 +2879,7 @@ int main(int argc, char **argv, char **envp) {
 		custom_profile = profile_find_firejail(profile_name, 1);
 
 		if (!custom_profile) {
-			fprintf(stderr, "Error: no default.profile installed\n");
+			fprintf(stderr, "Error: no %s installed\n", profile_name);
 			exit(1);
 		}
 

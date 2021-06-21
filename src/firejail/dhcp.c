@@ -153,18 +153,12 @@ void dhcp_start(void) {
 	if (!any_dhcp())
 		return;
 
-	char *dhclient_path = RUN_MNT_DIR "/dhclient";;
+	char *dhclient_path = RUN_MNT_DIR "/dhclient";
 	struct stat s;
 	if (stat(dhclient_path, &s) == -1) {
-		dhclient_path = "/usr/sbin/dhclient";
-		if (stat(dhclient_path, &s) == -1) {
-			fprintf(stderr, "Error: dhclient was not found.\n");
-			exit(1);
-		}
+		fprintf(stderr, "Error: %s was not found.\n", dhclient_path);
+		exit(1);
 	}
-
-	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", dhclient_path, RUN_MNT_DIR);
-	dhclient_path = RUN_MNT_DIR "/dhclient";
 
 	EUID_ROOT();
 	if (mkdir(RUN_DHCLIENT_DIR, 0700))

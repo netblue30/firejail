@@ -11,6 +11,8 @@ noblacklist ${HOME}/.local/share/Trash
 noblacklist ${HOME}/.Steam
 noblacklist ${HOME}/.steam
 
+blacklist /usr/libexec
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

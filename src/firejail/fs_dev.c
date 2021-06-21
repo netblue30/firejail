@@ -187,8 +187,10 @@ static void mount_dev_shm(void) {
 static void process_dev_shm(void) {
 	// Jack audio keeps an Unix socket under (/dev/shm/jack_default_1000_0 or /dev/shm/jack/...)
 	// looking for jack socket
+	EUID_USER();
 	glob_t globbuf;
 	int globerr = glob(RUN_DEV_DIR "/shm/jack*", GLOB_NOSORT, NULL, &globbuf);
+	EUID_ROOT();
 	if (globerr && !arg_keep_dev_shm) {
 		empty_dev_shm();
 		return;

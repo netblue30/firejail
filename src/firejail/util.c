@@ -44,6 +44,10 @@
 #include <linux/openat2.h>
 #endif
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 #define MAX_GROUPS 1024
 #define MAXBUF 4098
 #define EMPTY_STRING ("")
@@ -435,11 +439,11 @@ void touch_file_as_user(const char *fname, mode_t mode) {
 		// drop privileges
 		drop_privs(0);
 
-		FILE *fp = fopen(fname, "wx");
-		if (fp) {
-			fprintf(fp, "\n");
-			SET_PERMS_STREAM(fp, -1, -1, mode);
-			fclose(fp);
+		int fd = open(fname, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWUSR);
+		if (fd > -1) {
+			int err = fchmod(fd, mode);
+			(void) err;
+			close(fd);
 		}
 		else
 			fwarning("cannot create %s\n", fname);
@@ -458,6 +462,13 @@ int is_dir(const char *fname) {
 	if (*fname == '\0')
 		return 0;
 
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root)
+		EUID_USER();
+
 	// if fname doesn't end in '/', add one
 	int rv;
 	struct stat s;
@@ -472,6 +483,9 @@ int is_dir(const char *fname) {
 		rv = stat(tmp, &s);
 		free(tmp);
 	}
+
+	if (called_as_root)
+		EUID_ROOT();
 
 	if (rv == -1)
 		return 0;
@@ -488,16 +502,81 @@ int is_link(const char *fname) {
 	if (*fname == '\0')
 		return 0;
 
-	char *dup = strdup(fname);
-	if (!dup)
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root)
+		EUID_USER();
+
+	// remove trailing '/' if any
+	char *tmp = strdup(fname);
+	if (!tmp)
 		errExit("strdup");
-	trim_trailing_slash_or_dot(dup);
+	trim_trailing_slash_or_dot(tmp);
 
 	char c;
-	ssize_t rv = readlink(dup, &c, 1);
+	ssize_t rv = readlink(tmp, &c, 1);
+	free(tmp);
 
-	free(dup);
+	if (called_as_root)
+		EUID_ROOT();
+
 	return (rv != -1);
+}
+
+char *realpath_as_user(const char *fname) {
+	assert(fname);
+
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root)
+		EUID_USER();
+
+	char *rv = realpath(fname, NULL);
+
+	if (called_as_root)
+		EUID_ROOT();
+
+	return rv;
+}
+
+int stat_as_user(const char *fname, struct stat *s) {
+	assert(fname);
+
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root)
+		EUID_USER();
+
+	int rv = stat(fname, s);
+
+	if (called_as_root)
+		EUID_ROOT();
+
+	return rv;
+}
+
+int lstat_as_user(const char *fname, struct stat *s) {
+	assert(fname);
+
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root)
+		EUID_USER();
+
+	int rv = lstat(fname, s);
+
+	if (called_as_root)
+		EUID_ROOT();
+
+	return rv;
 }
 
 // remove all slashes and single dots from the end of a path
@@ -688,9 +767,11 @@ int find_child(pid_t parent, pid_t *child) {
 				if (parent == atoi(ptr)) {
 					// we don't want /usr/bin/xdg-dbus-proxy!
 					char *cmdline = pid_proc_cmdline(pid);
-					if (strncmp(cmdline, XDG_DBUS_PROXY_PATH, strlen(XDG_DBUS_PROXY_PATH)) != 0)
-						*child = pid;
-					free(cmdline);
+					if (cmdline) {
+						if (strncmp(cmdline, XDG_DBUS_PROXY_PATH, strlen(XDG_DBUS_PROXY_PATH)) != 0)
+							*child = pid;
+						free(cmdline);
+					}
 				}
 				break;		  // stop reading the file
 			}
@@ -930,35 +1011,37 @@ static int remove_callback(const char *fpath, const struct stat *sb, int typefla
 
 int remove_overlay_directory(void) {
 	EUID_ASSERT();
-	struct stat s;
 	sleep(1);
 
 	char *path;
 	if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
 		errExit("asprintf");
 
-	if (lstat(path, &s) == 0) {
-		// deal with obvious problems such as symlinks and root ownership
-		if (!S_ISDIR(s.st_mode)) {
-			if (S_ISLNK(s.st_mode))
-				fprintf(stderr, "Error: %s is a symbolic link\n", path);
-			else
-				fprintf(stderr, "Error: %s is not a directory\n", path);
-			exit(1);
-		}
-		if (s.st_uid != getuid()) {
-			fprintf(stderr, "Error: %s is not owned by the current user\n", path);
-			exit(1);
-		}
-
+	if (access(path, F_OK) == 0) {
 		pid_t child = fork();
 		if (child < 0)
 			errExit("fork");
 		if (child == 0) {
-			// open ~/.firejail, fails if there is any symlink
-			int fd = safer_openat(-1, path, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
-			if (fd == -1)
-				errExit("safer_openat");
+			// open ~/.firejail
+			int fd = safer_openat(-1, path, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+			if (fd == -1) {
+				fprintf(stderr, "Error: cannot open %s\n", path);
+				exit(1);
+			}
+			struct stat s;
+			if (fstat(fd, &s) == -1)
+				errExit("fstat");
+			if (!S_ISDIR(s.st_mode)) {
+				if (S_ISLNK(s.st_mode))
+					fprintf(stderr, "Error: %s is a symbolic link\n", path);
+				else
+					fprintf(stderr, "Error: %s is not a directory\n", path);
+				exit(1);
+			}
+			if (s.st_uid != getuid()) {
+				fprintf(stderr, "Error: %s is not owned by the current user\n", path);
+				exit(1);
+			}
 			// chdir to ~/.firejail
 			if (fchdir(fd) == -1)
 				errExit("fchdir");
@@ -981,7 +1064,7 @@ int remove_overlay_directory(void) {
 		// wait for the child to finish
 		waitpid(child, NULL, 0);
 		// check if ~/.firejail was deleted
-		if (stat(path, &s) == 0)
+		if (access(path, F_OK) == 0)
 			return 1;
 	}
 	return 0;
@@ -1014,9 +1097,8 @@ void flush_stdin(void) {
 int create_empty_dir_as_user(const char *dir, mode_t mode) {
 	assert(dir);
 	mode &= 07777;
-	struct stat s;
 
-	if (stat(dir, &s)) {
+	if (access(dir, F_OK) != 0) {
 		if (arg_debug)
 			printf("Creating empty %s directory\n", dir);
 		pid_t child = fork();
@@ -1027,8 +1109,8 @@ int create_empty_dir_as_user(const char *dir, mode_t mode) {
 			drop_privs(0);
 
 			if (mkdir(dir, mode) == 0) {
-				if (chmod(dir, mode) == -1)
-					{;} // do nothing
+				int err = chmod(dir, mode);
+				(void) err;
 			}
 			else if (arg_debug)
 				printf("Directory %s not created: %s\n", dir, strerror(errno));
@@ -1038,7 +1120,7 @@ int create_empty_dir_as_user(const char *dir, mode_t mode) {
 			_exit(0);
 		}
 		waitpid(child, NULL, 0);
-		if (stat(dir, &s) == 0)
+		if (access(dir, F_OK) == 0)
 			return 1;
 	}
 	return 0;
@@ -1149,20 +1231,34 @@ unsigned extract_timeout(const char *str) {
 }
 
 void disable_file_or_dir(const char *fname) {
+	assert(fname);
+
+	EUID_USER();
+	int fd = open(fname, O_PATH|O_CLOEXEC);
+	EUID_ROOT();
+	if (fd < 0)
+		return;
+
 	struct stat s;
-	if (stat(fname, &s) != -1) {
-		if (arg_debug)
-			printf("blacklist %s\n", fname);
-		if (is_dir(fname)) {
-			if (mount(RUN_RO_DIR, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
-				errExit("disable directory");
-		}
-		else {
-			if (mount(RUN_RO_FILE, fname, "none", MS_BIND, "mode=400,gid=0") < 0)
-				errExit("disable file");
-		}
-		fs_logger2("blacklist", fname);
+	if (fstat(fd, &s) < 0) { // FUSE
+		if (errno != EACCES)
+			errExit("fstat");
+		close(fd);
+		return;
 	}
+
+	if (arg_debug)
+		printf("blacklist %s\n", fname);
+	if (S_ISDIR(s.st_mode)) {
+		if (bind_mount_path_to_fd(RUN_RO_DIR, fd) < 0)
+			errExit("disable directory");
+	}
+	else {
+		if (bind_mount_path_to_fd(RUN_RO_FILE, fd) < 0)
+			errExit("disable file");
+	}
+	close(fd);
+	fs_logger2("blacklist", fname);
 }
 
 void disable_file_path(const char *path, const char *file) {
@@ -1247,6 +1343,60 @@ int safer_openat(int dirfd, const char *path, int flags) {
 	close(parentfd);
 	free(dup);
 	return fd;
+}
+
+int remount_by_fd(int dst, unsigned long mountflags) {
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", dst) < 0)
+		errExit("asprintf");
+
+	int rv = mount(NULL, proc, NULL, mountflags|MS_BIND|MS_REMOUNT, NULL);
+	if (rv < 0 && arg_debug)
+		printf("Failed mount: %s\n", strerror(errno));
+
+	free(proc);
+	return rv;
+}
+
+int bind_mount_by_fd(int src, int dst) {
+	char *proc_src, *proc_dst;
+	if (asprintf(&proc_src, "/proc/self/fd/%d", src) < 0 ||
+	    asprintf(&proc_dst, "/proc/self/fd/%d", dst) < 0)
+		errExit("asprintf");
+
+	int rv = mount(proc_src, proc_dst, NULL, MS_BIND|MS_REC, NULL);
+	if (rv < 0 && arg_debug)
+		printf("Failed mount: %s\n", strerror(errno));
+
+	free(proc_src);
+	free(proc_dst);
+	return rv;
+}
+
+int bind_mount_fd_to_path(int src, const char *destname) {
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", src) < 0)
+		errExit("asprintf");
+
+	int rv = mount(proc, destname, NULL, MS_BIND|MS_REC, NULL);
+	if (rv < 0 && arg_debug)
+		printf("Failed mount: %s\n", strerror(errno));
+
+	free(proc);
+	return rv;
+}
+
+int bind_mount_path_to_fd(const char *srcname, int dst) {
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", dst) < 0)
+		errExit("asprintf");
+
+	int rv = mount(srcname, proc, NULL, MS_BIND|MS_REC, NULL);
+	if (rv < 0 && arg_debug)
+		printf("Failed mount: %s\n", strerror(errno));
+
+	free(proc);
+	return rv;
 }
 
 int has_handler(pid_t pid, int signal) {
@@ -1358,14 +1508,14 @@ static int has_link(const char *dir) {
 	return 0;
 }
 
-void check_homedir(void) {
-	assert(cfg.homedir);
-	if (cfg.homedir[0] != '/') {
+void check_homedir(const char *dir) {
+	assert(dir);
+	if (dir[0] != '/') {
 		fprintf(stderr, "Error: invalid user directory \"%s\"\n", cfg.homedir);
 		exit(1);
 	}
 	// symlinks are rejected in many places
-	if (has_link(cfg.homedir)) {
+	if (has_link(dir)) {
 		fprintf(stderr, "No full support for symbolic links in path of user directory.\n"
 			"Please provide resolved path in password database (/etc/passwd).\n\n");
 	}

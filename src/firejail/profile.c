@@ -22,6 +22,11 @@
 #include "../include/syscall.h"
 #include <dirent.h>
 #include <sys/stat.h>
+
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 extern char *xephyr_screen;
 
 #define MAX_READ 8192				  // line buffer for profile files
@@ -1275,56 +1280,69 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// private /etc list of files and directories
 	if (strncmp(ptr, "private-etc ", 12) == 0) {
-		if (arg_writable_etc) {
-			fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
-			exit(1);
+		if (checkcfg(CFG_PRIVATE_ETC)) {
+			if (arg_writable_etc) {
+				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+				exit(1);
+			}
+			if (cfg.etc_private_keep) {
+				if ( asprintf(&cfg.etc_private_keep, "%s,%s", cfg.etc_private_keep, ptr + 12) < 0 )
+					errExit("asprintf");
+			} else {
+				cfg.etc_private_keep = ptr + 12;
+			}
+			arg_private_etc = 1;
 		}
-		if (cfg.etc_private_keep) {
-			if ( asprintf(&cfg.etc_private_keep, "%s,%s", cfg.etc_private_keep, ptr + 12) < 0 )
-				errExit("asprintf");
-		} else {
-			cfg.etc_private_keep = ptr + 12;
-		}
-		arg_private_etc = 1;
-
+		else
+			warning_feature_disabled("private-etc");
 		return 0;
 	}
 
 	// private /opt list of files and directories
 	if (strncmp(ptr, "private-opt ", 12) == 0) {
-		if (cfg.opt_private_keep) {
-			if ( asprintf(&cfg.opt_private_keep, "%s,%s", cfg.opt_private_keep, ptr + 12) < 0 )
-				errExit("asprintf");
-		} else {
-			cfg.opt_private_keep = ptr + 12;
+		if (checkcfg(CFG_PRIVATE_OPT)) {
+			if (cfg.opt_private_keep) {
+				if ( asprintf(&cfg.opt_private_keep, "%s,%s", cfg.opt_private_keep, ptr + 12) < 0 )
+					errExit("asprintf");
+			} else {
+				cfg.opt_private_keep = ptr + 12;
+			}
+			arg_private_opt = 1;
 		}
-		arg_private_opt = 1;
-
+		else
+			warning_feature_disabled("private-opt");
 		return 0;
 	}
 
 	// private /srv list of files and directories
 	if (strncmp(ptr, "private-srv ", 12) == 0) {
-		if (cfg.srv_private_keep) {
-			if ( asprintf(&cfg.srv_private_keep, "%s,%s", cfg.srv_private_keep, ptr + 12) < 0 )
-				errExit("asprintf");
-		} else {
-			cfg.srv_private_keep = ptr + 12;
+		if (checkcfg(CFG_PRIVATE_SRV)) {
+			if (cfg.srv_private_keep) {
+				if ( asprintf(&cfg.srv_private_keep, "%s,%s", cfg.srv_private_keep, ptr + 12) < 0 )
+					errExit("asprintf");
+			} else {
+				cfg.srv_private_keep = ptr + 12;
+			}
+			arg_private_srv = 1;
 		}
-		arg_private_srv = 1;
-
+		else
+			warning_feature_disabled("private-srv");
 		return 0;
 	}
 
 	// private /bin list of files
 	if (strncmp(ptr, "private-bin ", 12) == 0) {
-		if (cfg.bin_private_keep) {
-			if ( asprintf(&cfg.bin_private_keep, "%s,%s", cfg.bin_private_keep, ptr + 12) < 0 )
-				errExit("asprintf");
-		} else {
-			cfg.bin_private_keep = ptr + 12;
+		if (checkcfg(CFG_PRIVATE_BIN)) {
+			if (cfg.bin_private_keep) {
+				if ( asprintf(&cfg.bin_private_keep, "%s,%s", cfg.bin_private_keep, ptr + 12) < 0 )
+					errExit("asprintf");
+			} else {
+				cfg.bin_private_keep = ptr + 12;
+			}
+			arg_private_bin = 1;
 		}
-		arg_private_bin = 1;
+		else
+			warning_feature_disabled("private-bin");
 		return 0;
 	}
 
@@ -1740,7 +1758,7 @@ void profile_read(const char *fname) {
 		if (strcmp(ptr, "quiet") == 0) {
 			if (is_in_ignore_list(ptr))
 				arg_quiet = 0;
-			else
+			else if (!arg_debug)
 				arg_quiet = 1;
 			free(ptr);
 			continue;

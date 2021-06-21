@@ -6,6 +6,9 @@ include tuxguitar.local
 # Persistent global definitions
 include globals.local
 
+# tuxguitar fails to launch
+ignore noexec ${HOME}
+
 noblacklist ${HOME}/.tuxguitar*
 noblacklist ${DOCUMENTS}
 noblacklist ${MUSIC}
@@ -41,6 +44,3 @@ tracelog
 
 private-dev
 private-tmp
-
-# noexec ${HOME} - tuxguitar may fail to launch
-noexec /tmp

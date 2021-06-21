@@ -5,7 +5,7 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; eithe r version 2 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -41,6 +41,15 @@
 		assert(file);\
 		struct stat s;\
 		if (stat(file, &s) == -1) errExit("stat");\
+		assert(s.st_uid == uid);\
+		assert(s.st_gid == gid);\
+		assert((s.st_mode & 07777) == (mode));\
+	} while (0)
+#define ASSERT_PERMS_AS_USER(file, uid, gid, mode) \
+	do { \
+		assert(file);\
+		struct stat s;\
+		if (stat_as_user(file, &s) == -1) errExit("stat");\
 		assert(s.st_uid == uid);\
 		assert(s.st_gid == gid);\
 		assert((s.st_mode & 07777) == (mode));\
@@ -504,6 +513,9 @@ void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_
 void touch_file_as_user(const char *fname, mode_t mode);
 int is_dir(const char *fname);
 int is_link(const char *fname);
+char *realpath_as_user(const char *fname);
+int stat_as_user(const char *fname, struct stat *s);
+int lstat_as_user(const char *fname, struct stat *s);
 void trim_trailing_slash_or_dot(char *path);
 char *line_remove_spaces(const char *buf);
 char *split_comma(char *str);
@@ -527,11 +539,15 @@ unsigned extract_timeout(const char *str);
 void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
 int safer_openat(int dirfd, const char *path, int flags);
+int remount_by_fd(int dst, unsigned long mountflags);
+int bind_mount_by_fd(int src, int dst);
+int bind_mount_path_to_fd(const char *srcname, int dst);
+int bind_mount_fd_to_path(int src, const char *destname);
 int has_handler(pid_t pid, int signal);
 void enter_network_namespace(pid_t pid);
 int read_pid(const char *name, pid_t *pid);
 pid_t require_pid(const char *name);
-void check_homedir(void);
+void check_homedir(const char *dir);
 
 // Get info regarding the last kernel mount operation from /proc/self/mountinfo
 // The return value points to a static area, and will be overwritten by subsequent calls.
@@ -763,8 +779,14 @@ enum {
 	CFG_WHITELIST,
 	CFG_XEPHYR_WINDOW_TITLE,
 	CFG_OVERLAYFS,
-	CFG_PRIVATE_HOME,
+	CFG_PRIVATE_BIN,
 	CFG_PRIVATE_BIN_NO_LOCAL,
+	CFG_PRIVATE_CACHE,
+	CFG_PRIVATE_ETC,
+	CFG_PRIVATE_HOME,
+	CFG_PRIVATE_LIB,
+	CFG_PRIVATE_OPT,
+	CFG_PRIVATE_SRV,
 	CFG_FIREJAIL_PROMPT,
 	CFG_DISABLE_MNT,
 	CFG_JOIN,
@@ -772,10 +794,8 @@ enum {
 	CFG_XPRA_ATTACH,
 	CFG_BROWSER_DISABLE_U2F,
 	CFG_BROWSER_ALLOW_DRM,
-	CFG_PRIVATE_LIB,
 	CFG_APPARMOR,
 	CFG_DBUS,
-	CFG_PRIVATE_CACHE,
 	CFG_CGROUP,
 	CFG_NAME_CHANGE,
 	CFG_SECCOMP_ERROR_ACTION,
@@ -796,6 +816,7 @@ int checkcfg(int val);
 void print_compiletime_support(void);
 
 // appimage.c
+int appimage_find_profile(const char *archive);
 void appimage_set(const char *appimage_path);
 void appimage_mount(void);
 void appimage_clear(void);
@@ -804,8 +825,8 @@ void appimage_clear(void);
 long unsigned int appimage2_size(int fd);
 
 // cmdline.c
-void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
-void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index);
+void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, bool want_extra_quotes);
+void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, bool want_extra_quotes);
 
 // sbox.c
 // programs

@@ -2568,14 +2568,13 @@ Kill the sandbox automatically after the time has elapsed. The time is specified
 $ firejail \-\-timeout=01:30:00 firefox
 .TP
 \fB\-\-tmpfs=dirname
-Mount a writable tmpfs filesystem on directory dirname. This option is available only when running the sandbox as root.
-File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
+Mount a writable tmpfs filesystem on directory dirname. Directories outside user home or not owned by the user are not allowed. Sandboxes running as root are exempt from these restrictions. File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br
 
 .br
 Example:
 .br
-# firejail \-\-tmpfs=/var
+$ firejail \-\-tmpfs=~/.local/share
 .TP
 \fB\-\-top
 Monitor the most CPU-intensive sandboxes, see \fBMONITORING\fR section for more details.
@@ -2725,8 +2724,9 @@ $ firejail \-\-net=br0 --veth-name=if0
 \fB\-\-whitelist=dirname_or_filename
 Whitelist directory or file. A temporary file system is mounted on the top directory, and the
 whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
-everything else is discarded when the sandbox is closed. The top directory could be
-user home, /dev, /etc, /media, /mnt, /opt, /run/user/$UID, /srv, /sys/module, /tmp, /usr/share and /var.
+everything else is discarded when the sandbox is closed. The top directory can be
+all directories in / (except /proc and /sys), /sys/module, /run/user/$UID, $HOME and
+all directories in /usr.
 .br
 
 .br

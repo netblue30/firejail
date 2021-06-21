@@ -19,10 +19,13 @@
 */
 #if HAVE_SELINUX
 #include "firejail.h"
-
 #include <sys/types.h>
 #include <sys/stat.h>
+
 #include <fcntl.h>
+#ifndef O_PATH
+#define O_PATH 010000000
+#endif
 
 #include <selinux/context.h>
 #include <selinux/label.h>
@@ -52,8 +55,9 @@ void selinux_relabel_path(const char *path, const char *inside_path)
 	if (!label_hnd)
 		errExit("selabel_open");
 
-	/* Open the file as O_PATH, to pin it while we determine and adjust the label */
-	fd = open(path, O_NOFOLLOW|O_CLOEXEC|O_PATH);
+	/* Open the file as O_PATH, to pin it while we determine and adjust the label
+	 * Defeat symlink races by not allowing symbolic links */
+	fd = safer_openat(-1, path, O_NOFOLLOW|O_CLOEXEC|O_PATH);
 	if (fd < 0)
 		return;
 	if (fstat(fd, &st) < 0)

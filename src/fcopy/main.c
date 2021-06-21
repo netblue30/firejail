@@ -19,10 +19,14 @@
  */
 
 #include "../include/common.h"
-#include <fcntl.h>
 #include <ftw.h>
 #include <errno.h>
 #include <pwd.h>
+
+#include <fcntl.h>
+#ifndef O_PATH
+#define O_PATH 010000000
+#endif
 
 #if HAVE_SELINUX
 #include <sys/stat.h>
@@ -55,7 +59,7 @@ static void selinux_relabel_path(const char *path, const char *inside_path) {
 	assert(path);
 	assert(inside_path);
 #if HAVE_SELINUX
-        char procfs_path[64];
+	char procfs_path[64];
 	char *fcon = NULL;
 	int fd;
 	struct stat st;
@@ -69,20 +73,23 @@ static void selinux_relabel_path(const char *path, const char *inside_path) {
 	if (!label_hnd)
 		label_hnd = selabel_open(SELABEL_CTX_FILE, NULL, 0);
 
+	if (!label_hnd)
+		errExit("selabel_open");
+
 	/* Open the file as O_PATH, to pin it while we determine and adjust the label */
-        fd = open(path, O_NOFOLLOW|O_CLOEXEC|O_PATH);
+	fd = open(path, O_NOFOLLOW|O_CLOEXEC|O_PATH);
 	if (fd < 0)
 		return;
 	if (fstat(fd, &st) < 0)
 		goto close;
 
-        if (selabel_lookup_raw(label_hnd, &fcon, inside_path, st.st_mode)  == 0) {
+	if (selabel_lookup_raw(label_hnd, &fcon, inside_path, st.st_mode)  == 0) {
 		sprintf(procfs_path, "/proc/self/fd/%i", fd);
 		if (arg_debug)
 			printf("Relabeling %s as %s (%s)\n", path, inside_path, fcon);
 
 		setfilecon_raw(procfs_path, fcon);
-        }
+	}
 	freecon(fcon);
  close:
 	close(fd);
@@ -340,7 +347,7 @@ static char *check(const char *src) {
 
 errexit:
 	free(rsrc);
-	fprintf(stderr, "Error fcopy: invalid file %s\n", src);
+	fprintf(stderr, "Error fcopy: invalid ownership for file %s\n", src);
 	exit(1);
 }
 

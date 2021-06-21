@@ -13,6 +13,8 @@ noblacklist ${HOME}/*.kdbx
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
+blacklist /usr/libexec
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

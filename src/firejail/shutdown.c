@@ -36,8 +36,10 @@ void shut(pid_t pid) {
 		}
 		free(comm);
 	}
-	else
-		errExit("/proc/PID/comm");
+	else {
+		fprintf(stderr, "Error: cannot find process %d\n", pid);
+		exit(1);
+	}
 
 	// check privileges for non-root users
 	uid_t uid = getuid();

@@ -204,7 +204,6 @@ static int random_display_number(void) {
 void x11_start_xvfb(int argc, char **argv) {
 	EUID_ASSERT();
 	int i;
-	struct stat s;
 	pid_t jail = 0;
 	pid_t server = 0;
 
@@ -348,7 +347,7 @@ void x11_start_xvfb(int argc, char **argv) {
 	// wait for x11 server to start
 	while (++n < 10) {
 		sleep(1);
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			break;
 	};
 
@@ -427,7 +426,6 @@ static char *extract_setting(int argc, char **argv, const char *argument) {
 void x11_start_xephyr(int argc, char **argv) {
 	EUID_ASSERT();
 	int i;
-	struct stat s;
 	pid_t jail = 0;
 	pid_t server = 0;
 
@@ -586,7 +584,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	// wait for x11 server to start
 	while (++n < 10) {
 		sleep(1);
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			break;
 	};
 
@@ -701,7 +699,6 @@ static char * get_title_arg_str() {
 static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, int display, char *display_str) {
 	EUID_ASSERT();
 	int i;
-	struct stat s;
 	pid_t client = 0;
 	pid_t server = 0;
 
@@ -818,7 +815,7 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 	// wait for x11 server to start
 	while (++n < 10) {
 		sleep(1);
-		if (stat(fname, &s) == 0)
+		if (access(fname, F_OK) == 0)
 			break;
 	}
 
@@ -1207,14 +1204,13 @@ void x11_xorg(void) {
 	fmessage("Generating a new .Xauthority file\n");
 	mkdir_attr(RUN_XAUTHORITY_SEC_DIR, 0700, getuid(), getgid());
 	// create new Xauthority file in RUN_XAUTHORITY_SEC_DIR
+	EUID_USER();
 	char tmpfname[] = RUN_XAUTHORITY_SEC_DIR "/.Xauth-XXXXXX";
 	int fd = mkstemp(tmpfname);
 	if (fd == -1) {
 		fprintf(stderr, "Error: cannot create .Xauthority file\n");
 		exit(1);
 	}
-	if (fchown(fd, getuid(), getgid()) == -1)
-		errExit("chown");
 	close(fd);
 
 	// run xauth
@@ -1224,16 +1220,14 @@ void x11_xorg(void) {
 	else
 		sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 7, RUN_XAUTH_FILE, "-f", tmpfname,
 			"generate", display, "MIT-MAGIC-COOKIE-1", "untrusted");
-	// remove xauth copy
-	unlink(RUN_XAUTH_FILE);
 
 	// ensure there is already a file ~/.Xauthority, so that bind-mount below will work.
 	char *dest;
 	if (asprintf(&dest, "%s/.Xauthority", cfg.homedir) == -1)
 		errExit("asprintf");
-	if (lstat(dest, &s) == -1) {
+	if (access(dest, F_OK) == -1) {
 		touch_file_as_user(dest, 0600);
-		if (stat(dest, &s) == -1) {
+		if (access(dest, F_OK) == -1) {
 			fprintf(stderr, "Error: cannot create %s\n", dest);
 			exit(1);
 		}
@@ -1276,21 +1270,16 @@ void x11_xorg(void) {
 	// mount via the link in /proc/self/fd
 	if (arg_debug)
 		printf("Mounting %s on %s\n", tmpfname, dest);
-	char *proc_src, *proc_dst;
-	if (asprintf(&proc_src, "/proc/self/fd/%d", src) == -1)
-		errExit("asprintf");
-	if (asprintf(&proc_dst, "/proc/self/fd/%d", dst) == -1)
-		errExit("asprintf");
-	if (mount(proc_src, proc_dst, NULL, MS_BIND, NULL) == -1) {
+	EUID_ROOT();
+	if (bind_mount_by_fd(src, dst)) {
 		fprintf(stderr, "Error: cannot mount the new .Xauthority file\n");
 		exit(1);
 	}
+	EUID_USER();
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
 	if (strcmp(mptr->dir, dest) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
 		errLogExit("invalid .Xauthority mount");
-	free(proc_src);
-	free(proc_dst);
 	close(src);
 	close(dst);
 
@@ -1302,6 +1291,7 @@ void x11_xorg(void) {
 		char *rp = realpath(envar, NULL);
 		if (rp) {
 			if (strcmp(rp, dest) != 0)
+				// disable_file_or_dir returns with EUID 0
 				disable_file_or_dir(rp);
 			free(rp);
 		}
@@ -1311,9 +1301,13 @@ void x11_xorg(void) {
 	free(dest);
 
 	// mask RUN_XAUTHORITY_SEC_DIR
+	EUID_ROOT();
 	if (mount("tmpfs", RUN_XAUTHORITY_SEC_DIR, "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 		errExit("mounting tmpfs");
 	fs_logger2("tmpfs", RUN_XAUTHORITY_SEC_DIR);
+
+	// cleanup
+	unlink(RUN_XAUTH_FILE);
 #endif
 }
 
@@ -1327,7 +1321,7 @@ void fs_x11(void) {
 	struct stat s1, s2;
 	if (stat("/tmp", &s1) != 0 || lstat("/tmp/.X11-unix", &s2) != 0)
 		return;
-	if ((s1.st_mode & S_ISVTX) == 0) {
+	if ((s1.st_mode & S_ISVTX) != S_ISVTX) {
 		fwarning("cannot mask X11 sockets: sticky bit not set on /tmp directory\n");
 		return;
 	}
@@ -1335,68 +1329,46 @@ void fs_x11(void) {
 		fwarning("cannot mask X11 sockets: /tmp/.X11-unix not owned by root user\n");
 		return;
 	}
+
+	// the mount source is under control of the user, so be careful and
+	// mount without following symbolic links, using a file descriptor
 	char *x11file;
 	if (asprintf(&x11file, "/tmp/.X11-unix/X%d", display) == -1)
 		errExit("asprintf");
-	struct stat x11stat;
-	if (lstat(x11file, &x11stat) != 0 || !S_ISSOCK(x11stat.st_mode)) {
+	int src = open(x11file, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	if (src < 0) {
+		free(x11file);
+		return;
+	}
+	struct stat s3;
+	if (fstat(src, &s3) < 0)
+		errExit("fstat");
+	if (!S_ISSOCK(s3.st_mode)) {
+		close(src);
 		free(x11file);
 		return;
 	}
 
 	if (arg_debug || arg_debug_whitelists)
 		fprintf(stderr, "Masking all X11 sockets except %s\n", x11file);
-
-	// Move the real /tmp/.X11-unix to a scratch location
-	// so we can still access x11file after we mount a
-	// tmpfs over /tmp/.X11-unix.
-	if (mkdir(RUN_WHITELIST_X11_DIR, 0700) == -1)
-		errExit("mkdir");
-	if (mount("/tmp/.X11-unix", RUN_WHITELIST_X11_DIR, 0, MS_BIND|MS_REC, 0) < 0)
-		errExit("mount bind");
-
 	// This directory must be mode 1777
 	if (mount("tmpfs", "/tmp/.X11-unix", "tmpfs",
 		MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME,
 		"mode=1777,uid=0,gid=0") < 0)
 		errExit("mounting tmpfs on /tmp/.X11-unix");
+	selinux_relabel_path("/tmp/.X11-unix", "/tmp/.X11-unix");
 	fs_logger("tmpfs /tmp/.X11-unix");
 
 	// create an empty root-owned file which will have the desired socket bind-mounted over it
-	int fd = open(x11file, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWUSR);
-	if (fd < 0)
-		errExit(x11file);
-	close(fd);
+	int dst = open(x11file, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWUSR);
+	if (dst < 0)
+		errExit("open");
 
-	// the mount source is under control of the user, so be careful and
-	// mount without following symbolic links, using a file descriptor
-	char *wx11file;
-	if (asprintf(&wx11file, "%s/X%d", RUN_WHITELIST_X11_DIR, display) == -1)
-		errExit("asprintf");
-	fd = safer_openat(-1, wx11file, O_PATH|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1)
-		errExit("opening X11 socket");
-	// confirm once more we are mounting a socket
-	if (fstat(fd, &x11stat) == -1)
-		errExit("fstat");
-	if (!S_ISSOCK(x11stat.st_mode)) {
-		errno = ENOTSOCK;
-		errExit("mounting X11 socket");
-	}
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount(proc, x11file, NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (bind_mount_by_fd(src, dst))
 		errExit("mount bind");
+	close(src);
+	close(dst);
 	fs_logger2("whitelist", x11file);
-	close(fd);
-	free(proc);
-
-	// block access to RUN_WHITELIST_X11_DIR
-	if (mount(RUN_RO_DIR, RUN_WHITELIST_X11_DIR, 0, MS_BIND, 0) < 0)
-		errExit("mount");
-	fs_logger2("blacklist", RUN_WHITELIST_X11_DIR);
-	free(wx11file);
 	free(x11file);
 #endif
 }

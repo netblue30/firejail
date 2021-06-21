@@ -18,6 +18,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.frogatto
 whitelist ${HOME}/.frogatto
+whitelist /usr/libexec/frogatto
 whitelist /usr/share/frogatto
 include whitelist-common.inc
 include whitelist-runuser-common.inc

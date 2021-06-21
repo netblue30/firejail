@@ -1,6 +1,7 @@
 firejail (0.9.65) baseline; urgency=low
-  * deprecated --audit options, relpaced by jailtest
+  * deprecated --audit options, relpaced by jailcheck utility
   * deprecated follow-symlink-as-user from firejail.config
+  * rename --noautopulse to keep-config-pulse
   * filtering environment variables
   * zsh completion
   * command line: --mkdir, --mkfile
@@ -31,8 +32,9 @@ firejail (0.9.65) baseline; urgency=low
   * colorful, colorful-wrapper, gl-117, gl-117-wrapper, glaxium,
   * glaxium-wrapper, pinball, pinball-wrapper, etr-wrapper, firedragon
   * neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper, neochat,
-  * cargo, LibreCAD, blobby, funnyboat
- -- netblue30 <netblue30@yahoo.com>  Tue, 9 Feb 2021 09:00:00 -0500
+  * cargo, LibreCAD, blobby, funnyboat, pipe-viewer, gtk-pipe-viewer
+  * links2, xlinks2, googler, ddgr, tin
+ -- netblue30 <netblue30@yahoo.com>  Wed, 2 Jun 2021 09:00:00 -0500
 
 firejail (0.9.64.4) baseline; urgency=low
   * disabled overlayfs, pending multiple fixes (CVE-2021-26910)

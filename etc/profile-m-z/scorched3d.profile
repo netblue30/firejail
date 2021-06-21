@@ -19,6 +19,7 @@ include disable-xdg.inc
 mkdir ${HOME}/.scorched3d
 whitelist ${HOME}/.scorched3d
 whitelist /usr/share/scorched3d
+whitelist /usr/share/games/scorched3d
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

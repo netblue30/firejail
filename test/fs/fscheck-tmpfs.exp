@@ -41,7 +41,7 @@ after 500
 send -- "firejail --noprofile --tmpfs=/tmp/fjtest-dir\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"Error"
+	"Warning: you are not allowed to mount a tmpfs"
 }
 after 500
 

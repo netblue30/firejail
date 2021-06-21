@@ -20,6 +20,7 @@ include disable-xdg.inc
 mkdir ${HOME}/.megaglest
 whitelist ${HOME}/.megaglest
 whitelist /usr/share/megaglest
+whitelist /usr/share/games/megaglest	# Debian version
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

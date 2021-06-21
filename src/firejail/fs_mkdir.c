@@ -25,6 +25,9 @@
 #include <sys/wait.h>
 #include <string.h>
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
 
 static void check(const char *fname) {
 	// manufacture /run/user directory

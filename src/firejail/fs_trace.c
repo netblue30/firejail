@@ -71,12 +71,8 @@ void fs_tracefile(void) {
 	// mount using the symbolic link in /proc/self/fd
 	if (arg_debug)
 		printf("Bind mount %s to %s\n", arg_tracefile, RUN_TRACE_FILE);
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount(proc, RUN_TRACE_FILE, NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (bind_mount_fd_to_path(fd, RUN_TRACE_FILE))
 		errExit("mount bind " RUN_TRACE_FILE);
-	free(proc);
 	close(fd);
 	// now that RUN_TRACE_FILE is user-writable, mount it noexec
 	fs_remount(RUN_TRACE_FILE, MOUNT_NOEXEC, 0);

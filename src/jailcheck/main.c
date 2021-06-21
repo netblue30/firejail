@@ -157,6 +157,7 @@ int main(int argc, char **argv) {
 			seccomp_test(pid);
 			fflush(0);
 
+			// filesystem tests
 			pid_t child = fork();
 			if (child == -1)
 				errExit("fork");
@@ -184,6 +185,28 @@ int main(int argc, char **argv) {
 				return 0;
 			}
 			int status;
+			wait(&status);
+
+			// network test
+			child = fork();
+			if (child == -1)
+				errExit("fork");
+			if (child == 0) {
+				int rv = join_namespace(pid, "net");
+				if (rv == 0)
+					network_test();
+				else {
+					printf("   Error: I cannot join the process network stack\n");
+					exit(1);
+				}
+
+				// drop privileges in order not to trigger cleanup()
+				if (setgid(user_gid) != 0)
+					errExit("setgid");
+				if (setuid(user_uid) != 0)
+					errExit("setuid");
+				return 0;
+			}
 			wait(&status);
 		}
 	}

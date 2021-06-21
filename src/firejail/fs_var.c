@@ -323,4 +323,8 @@ void fs_var_utmp(void) {
 	if (mount(RUN_UTMP_FILE, UTMP_FILE, NULL, MS_BIND|MS_NOSUID|MS_NOEXEC | MS_NODEV | MS_REC, NULL) < 0)
 		errExit("mount bind utmp");
 	fs_logger2("create", UTMP_FILE);
+
+	// blacklist RUN_UTMP_FILE
+	if (mount(RUN_RO_FILE, RUN_UTMP_FILE, NULL, MS_BIND, "mode=400,gid=0") < 0)
+		errExit("mount bind");
 }

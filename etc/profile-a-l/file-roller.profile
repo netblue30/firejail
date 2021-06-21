@@ -13,6 +13,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
+whitelist /usr/libexec/file-roller
 whitelist /usr/share/file-roller
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

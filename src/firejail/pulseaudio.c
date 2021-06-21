@@ -75,31 +75,34 @@ void pulseaudio_disable(void) {
 	closedir(dir);
 }
 
-static void pulseaudio_fallback(const char *path) {
-	assert(path);
-
-	fmessage("Cannot mount tmpfs on %s/.config/pulse\n", cfg.homedir);
-	env_store_name_val("PULSE_CLIENTCONFIG", path, SETENV);
-}
-
 // disable shm in pulseaudio (issue #69)
 void pulseaudio_init(void) {
-	struct stat s;
-
 	// do we have pulseaudio in the system?
-	if (stat(PULSE_CLIENT_SYSCONF, &s) == -1) {
+	if (access(PULSE_CLIENT_SYSCONF, R_OK)) {
 		if (arg_debug)
-			printf("%s not found\n", PULSE_CLIENT_SYSCONF);
+			printf("Cannot read %s\n", PULSE_CLIENT_SYSCONF);
 		return;
 	}
 
+	// create ~/.config/pulse directory if not present
+	char *homeusercfg = NULL;
+	if (asprintf(&homeusercfg, "%s/.config", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (create_empty_dir_as_user(homeusercfg, 0700))
+		fs_logger2("create", homeusercfg);
+
+	free(homeusercfg);
+	if (asprintf(&homeusercfg, "%s/.config/pulse", cfg.homedir) == -1)
+		errExit("asprintf");
+	if (create_empty_dir_as_user(homeusercfg, 0700))
+		fs_logger2("create", homeusercfg);
+
 	// create the new user pulseaudio directory
+	// that will be mounted over ~/.config/pulse
 	if (mkdir(RUN_PULSE_DIR, 0700) == -1)
 		errExit("mkdir");
-	selinux_relabel_path(RUN_PULSE_DIR, RUN_PULSE_DIR);
-	// mount it nosuid, noexec, nodev
+	selinux_relabel_path(RUN_PULSE_DIR, homeusercfg);
 	fs_remount(RUN_PULSE_DIR, MOUNT_NOEXEC, 0);
-
 	// create the new client.conf file
 	char *pulsecfg = NULL;
 	if (asprintf(&pulsecfg, "%s/client.conf", RUN_PULSE_DIR) == -1)
@@ -116,37 +119,14 @@ void pulseaudio_init(void) {
 	if (set_perms(RUN_PULSE_DIR, getuid(), getgid(), 0700))
 		errExit("set_perms");
 
-	// create ~/.config/pulse directory if not present
-	char *homeusercfg = NULL;
-	if (asprintf(&homeusercfg, "%s/.config", cfg.homedir) == -1)
-		errExit("asprintf");
-	if (create_empty_dir_as_user(homeusercfg, 0700))
-		fs_logger2("create", homeusercfg);
-
-	free(homeusercfg);
-	if (asprintf(&homeusercfg, "%s/.config/pulse", cfg.homedir) == -1)
-		errExit("asprintf");
-	if (create_empty_dir_as_user(homeusercfg, 0700))
-		fs_logger2("create", homeusercfg);
-
 	// if ~/.config/pulse exists and there are no symbolic links, mount the new directory
 	// else set environment variable
+	EUID_USER();
 	int fd = safer_openat(-1, homeusercfg, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	EUID_ROOT();
 	if (fd == -1) {
-		pulseaudio_fallback(pulsecfg);
-		goto out;
-	}
-	// confirm the actual mount destination is owned by the user
-	if (fstat(fd, &s) == -1) { // FUSE
-		if (errno != EACCES)
-			errExit("fstat");
-		close(fd);
-		pulseaudio_fallback(pulsecfg);
-		goto out;
-	}
-	if (s.st_uid != getuid()) {
-		close(fd);
-		pulseaudio_fallback(pulsecfg);
+		fwarning("not mounting tmpfs on %s\n", homeusercfg);
+		env_store_name_val("PULSE_CLIENTCONFIG", pulsecfg, SETENV);
 		goto out;
 	}
 	// preserve a read-only mount
@@ -158,17 +138,13 @@ void pulseaudio_init(void) {
 	// mount via the link in /proc/self/fd
 	if (arg_debug)
 		printf("Mounting %s on %s\n", RUN_PULSE_DIR, homeusercfg);
-	char *proc;
-	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
-		errExit("asprintf");
-	if (mount(RUN_PULSE_DIR, proc, "none", MS_BIND, NULL) < 0)
+	if (bind_mount_path_to_fd(RUN_PULSE_DIR, fd))
 		errExit("mount pulseaudio");
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();
 	if (strcmp(mptr->dir, homeusercfg) != 0 || strcmp(mptr->fstype, "tmpfs") != 0)
 		errLogExit("invalid pulseaudio mount");
 	fs_logger2("tmpfs", homeusercfg);
-	free(proc);
 	close(fd);
 
 	char *p;

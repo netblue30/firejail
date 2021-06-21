@@ -8,6 +8,10 @@ include globals.local
 
 # noexec ${HOME} breaks plugins
 ignore noexec ${HOME}
+# Add the following to your kodi.local if you use a CEC Adapter.
+#ignore nogroups
+#ignore noroot
+#ignore private-dev
 
 noblacklist ${HOME}/.kodi
 noblacklist ${MUSIC}

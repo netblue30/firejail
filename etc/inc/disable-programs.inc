@@ -39,6 +39,8 @@ blacklist ${HOME}/.WebStorm*
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.ZAP
 blacklist ${HOME}/.abook
+blacklist ${HOME}/.addressbook
+blacklist ${HOME}/.alpine-smime
 blacklist ${HOME}/.aMule
 blacklist ${HOME}/.android
 blacklist ${HOME}/.anydesk
@@ -589,6 +591,7 @@ blacklist ${HOME}/.kodi
 blacklist ${HOME}/.librewolf
 blacklist ${HOME}/.lincity-ng
 blacklist ${HOME}/.links
+blacklist ${HOME}/.links2
 blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
 blacklist ${HOME}/.lmmsrc.xml
@@ -809,6 +812,7 @@ blacklist ${HOME}/.netactview
 blacklist ${HOME}/.neverball
 blacklist ${HOME}/.newsbeuter
 blacklist ${HOME}/.newsboat
+blacklist ${HOME}/.newsrc
 blacklist ${HOME}/.nicotine
 blacklist ${HOME}/.node-gyp
 blacklist ${HOME}/.npm
@@ -829,6 +833,14 @@ blacklist ${HOME}/.paradoxinteractive
 blacklist ${HOME}/.parallelrealities/blobwars
 blacklist ${HOME}/.pcsxr
 blacklist ${HOME}/.penguin-command
+blacklist ${HOME}/.pine-crash
+blacklist ${HOME}/.pine-debug1
+blacklist ${HOME}/.pine-debug2
+blacklist ${HOME}/.pine-debug3
+blacklist ${HOME}/.pine-debug4
+blacklist ${HOME}/.pine-interrupted-mail
+blacklist ${HOME}/.pinerc
+blacklist ${HOME}/.pinercex
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.pioneer
 blacklist ${HOME}/.purple
@@ -866,6 +878,7 @@ blacklist ${HOME}/.teeworlds
 blacklist ${HOME}/.texlive20*
 blacklist ${HOME}/.thunderbird
 blacklist ${HOME}/.tilp
+blacklist ${HOME}/.tin
 blacklist ${HOME}/.tooling
 blacklist ${HOME}/.tor-browser*
 blacklist ${HOME}/.torcs

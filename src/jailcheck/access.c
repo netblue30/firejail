@@ -36,7 +36,7 @@ void access_setup(const char *directory) {
 	assert(user_home_dir);
 
 	if (files_cnt >= MAX_TEST_FILES) {
-		fprintf(stderr, "Error: maximum number of test directories exceded\n");
+		fprintf(stderr, "Error: maximum number of test directories exceeded\n");
 		exit(1);
 	}
 

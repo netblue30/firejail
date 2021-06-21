@@ -7,5 +7,7 @@ include gunzip.local
 # added by included profile
 #include globals.local
 
+include allow-bin-sh.inc
+
 # Redirect
 include gzip.profile

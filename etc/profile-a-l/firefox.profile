@@ -17,6 +17,8 @@ include globals.local
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
 
+blacklist /usr/libexec
+
 mkdir ${HOME}/.cache/mozilla/firefox
 mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/firefox

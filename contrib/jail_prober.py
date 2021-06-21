@@ -70,6 +70,19 @@ def get_args(profile_path):
     return profile
 
 
+def absolute_include(word):
+    home = os.environ['HOME']
+    path = home + '/.config/firejail/'
+
+    option, filename = word.split('=')
+    absolute_filename = path + filename
+
+    if not os.path.isfile(absolute_filename):
+        absolute_filename = '${CFG}/' + filename
+
+    return option + '=' + absolute_filename
+
+
 def arg_converter(arg_list, style):
     """
     Convert between firejail command-line arguments (--example=something) and
@@ -94,9 +107,12 @@ def arg_converter(arg_list, style):
     if style == 'to_profile':
         new_args = [word[2:] for word in new_args]
 
-    # Remove invalid '--include' args if converting to command-line form
     elif style == 'to_commandline':
-        new_args = [word for word in new_args if 'include' not in word]
+        new_args = [
+            absolute_include(word) if word.startswith('--include')
+            else word
+            for word in new_args
+        ]
 
     return new_args
 
@@ -148,8 +164,12 @@ def run_firejail(program, all_args):
 
 
 def main():
-    profile_path = sys.argv[1]
-    program = sys.argv[2]
+    try:
+        profile_path = sys.argv[1]
+        program = sys.argv[2]
+    except IndexError:
+        print('USAGE: jail_prober.py <PROFILE-PATH> <PROGRAM>')
+        sys.exit()
     # Quick error check and extract arguments
     check_params(profile_path)
     profile = get_args(profile_path)

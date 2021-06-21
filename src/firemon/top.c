@@ -24,6 +24,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#ifdef HAVE_GCOV
+#include <gcov.h>
+#endif
+
 static unsigned pgs_rss = 0;
 static unsigned pgs_shared = 0;
 static unsigned clocktick = 0;

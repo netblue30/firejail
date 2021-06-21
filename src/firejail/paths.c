@@ -136,7 +136,7 @@ int program_in_path(const char *program) {
 			// ('x' permission means something different for directories).
 			// exec follows symlinks, so use stat, not lstat.
 			struct stat st;
-			if (stat(scratch, &st)) {
+			if (stat_as_user(scratch, &st)) {
 				perror(scratch);
 				exit(1);
 			}

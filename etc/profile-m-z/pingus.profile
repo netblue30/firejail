@@ -11,6 +11,8 @@ noblacklist ${HOME}/.pingus
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
 
+blacklist /usr/libexec
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

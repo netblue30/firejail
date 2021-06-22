@@ -9,7 +9,6 @@ include rtv-addons.local
 
 ignore nosound
 ignore private-bin
-#private-bin w3m,mpv,youtube-dl
 ignore dbus-user none
 
 noblacklist ${HOME}/.config/mpv
@@ -22,6 +21,8 @@ whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.mailcap
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/.w3m
+
+#private-bin w3m,mpv,youtube-dl
 
 # tells rtv, which browser to use
 #env RTV_BROWSER=w3m

@@ -44,8 +44,9 @@ dbus-user filter
 #dbus-user.own org.mpris.MediaPlayer2.plasma-browser-integration
 #dbus-user.talk org.kde.JobViewServer
 #dbus-user.talk org.kde.kuiserver
-# Add the next lines to your librewolf.local to allow screensharing under Wayland.
+# Add the next three lines to your librewolf.local to allow screensharing under Wayland.
 #whitelist ${RUNUSER}/pipewire-0
+#whitelist /usr/share/pipewire/client.conf
 #dbus-user.talk org.freedesktop.portal.*
 # Also add the next line to your librewolf.local if screensharing does not work with
 # the above lines (depends on the portal implementation).

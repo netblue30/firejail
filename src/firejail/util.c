@@ -370,7 +370,7 @@ int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, m
 }
 
 // return -1 if error, 0 if no error
-void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode) {
+void copy_file_as_user(const char *srcname, const char *destname, mode_t mode) {
 	pid_t child = fork();
 	if (child < 0)
 		errExit("fork");
@@ -378,8 +378,8 @@ void copy_file_as_user(const char *srcname, const char *destname, uid_t uid, gid
 		// drop privileges
 		drop_privs(0);
 
-		// copy, set permissions and ownership
-		int rv = copy_file(srcname, destname, uid, gid, mode); // already a regular user
+		// copy, set permissions
+		int rv = copy_file(srcname, destname, -1, -1, mode); // already a regular user
 		if (rv)
 			fwarning("cannot copy %s\n", srcname);
 #ifdef HAVE_GCOV

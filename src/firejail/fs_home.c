@@ -34,7 +34,7 @@
 #define O_PATH 010000000
 #endif
 
-static void skel(const char *homedir, uid_t u, gid_t g) {
+static void skel(const char *homedir) {
 	char *fname;
 
 	// zsh
@@ -50,7 +50,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			exit(1);
 		}
 		if (access("/etc/skel/.zshrc", R_OK) == 0) {
-			copy_file_as_user("/etc/skel/.zshrc", fname, u, g, 0644); // regular user
+			copy_file_as_user("/etc/skel/.zshrc", fname, 0644); // regular user
 			fs_logger("clone /etc/skel/.zshrc");
 			fs_logger2("clone", fname);
 		}
@@ -74,7 +74,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			exit(1);
 		}
 		if (access("/etc/skel/.cshrc", R_OK) == 0) {
-			copy_file_as_user("/etc/skel/.cshrc", fname, u, g, 0644); // regular user
+			copy_file_as_user("/etc/skel/.cshrc", fname, 0644); // regular user
 			fs_logger("clone /etc/skel/.cshrc");
 			fs_logger2("clone", fname);
 		}
@@ -98,7 +98,7 @@ static void skel(const char *homedir, uid_t u, gid_t g) {
 			exit(1);
 		}
 		if (access("/etc/skel/.bashrc", R_OK) == 0) {
-			copy_file_as_user("/etc/skel/.bashrc", fname, u, g, 0644); // regular user
+			copy_file_as_user("/etc/skel/.bashrc", fname, 0644); // regular user
 			fs_logger("clone /etc/skel/.bashrc");
 			fs_logger2("clone", fname);
 		}
@@ -135,7 +135,7 @@ static int store_xauthority(void) {
 		else
 			errExit("fopen");
 
-		copy_file_as_user(src, dest, getuid(), getgid(), 0600); // regular user
+		copy_file_as_user(src, dest, 0600); // regular user
 		fs_logger2("clone", dest);
 		selinux_relabel_path(dest, src);
 		free(src);
@@ -183,7 +183,7 @@ static int store_asoundrc(void) {
 		else
 			errExit("fopen");
 
-		copy_file_as_user(src, dest, getuid(), getgid(), 0644); // regular user
+		copy_file_as_user(src, dest, 0644); // regular user
 		selinux_relabel_path(dest, src);
 		fs_logger2("clone", dest);
 		free(src);
@@ -207,7 +207,7 @@ static void copy_xauthority(void) {
 		exit(1);
 	}
 
-	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR); // regular user
+	copy_file_as_user(src, dest, S_IRUSR | S_IWUSR); // regular user
 	selinux_relabel_path(dest, src);
 	fs_logger2("clone", dest);
 	free(dest);
@@ -229,7 +229,7 @@ static void copy_asoundrc(void) {
 		exit(1);
 	}
 
-	copy_file_as_user(src, dest, getuid(), getgid(), S_IRUSR | S_IWUSR); // regular user
+	copy_file_as_user(src, dest, S_IRUSR | S_IWUSR); // regular user
 	selinux_relabel_path(dest, src);
 	fs_logger2("clone", dest);
 	free(dest);
@@ -253,7 +253,7 @@ void fs_private_homedir(void) {
 	int aflag = store_asoundrc();
 
 	uid_t u = getuid();
-	gid_t g = getgid();
+	// gid_t g = getgid();
 
 	// mount bind private_homedir on top of homedir
 	if (arg_debug)
@@ -324,7 +324,7 @@ void fs_private_homedir(void) {
 		fs_logger("tmpfs /home");
 	}
 
-	skel(homedir, u, g);
+	skel(homedir);
 	if (xflag)
 		copy_xauthority();
 	if (aflag)
@@ -339,6 +339,7 @@ void fs_private_homedir(void) {
 void fs_private(void) {
 	char *homedir = cfg.homedir;
 	assert(homedir);
+
 	uid_t u = getuid();
 	gid_t g = getgid();
 
@@ -388,7 +389,7 @@ void fs_private(void) {
 		selinux_relabel_path(homedir, homedir);
 	}
 
-	skel(homedir, u, g);
+	skel(homedir);
 	if (xflag)
 		copy_xauthority();
 	if (aflag)
@@ -619,7 +620,7 @@ void fs_private_home_list(void) {
 		fs_logger("tmpfs /home");
 	}
 
-	skel(homedir, uid, gid);
+	skel(homedir);
 	if (xflag)
 		copy_xauthority();
 	if (aflag)

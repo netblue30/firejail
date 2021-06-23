@@ -34,6 +34,7 @@ include disable-xdg.inc
 #whitelist ${HOME}/.cargo
 #whitelist ${HOME}/.rustup
 #include whitelist-common.inc
+whitelist /usr/share/pkgconfig
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

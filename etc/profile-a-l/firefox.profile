@@ -56,8 +56,9 @@ dbus-user.own org.mpris.MediaPlayer2.firefox.*
 #dbus-user.own org.mpris.MediaPlayer2.plasma-browser-integration
 #dbus-user.talk org.kde.JobViewServer
 #dbus-user.talk org.kde.kuiserver
-# Add the next two lines to your firefox.local to allow screen sharing under wayland.
+# Add the next three lines to your firefox.local to allow screen sharing under wayland.
 #whitelist ${RUNUSER}/pipewire-0
+#whitelist /usr/share/pipewire/client.conf
 #dbus-user.talk org.freedesktop.portal.*
 # Add the next line to your firefox.local if screen sharing sharing still does not work
 # with the above lines (might depend on the portal implementation).

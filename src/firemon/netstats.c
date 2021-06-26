@@ -247,7 +247,7 @@ void netstats(void) {
 			}
 		}
 #ifdef HAVE_GCOV
-			__gcov_flush();
+		__gcov_flush();
 #endif
 	}
 }

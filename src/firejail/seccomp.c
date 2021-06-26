@@ -208,7 +208,8 @@ int seccomp_filter_drop(bool native) {
 	//	- seccomp
 	if (cfg.seccomp_list_drop == NULL) {
 		// default seccomp if error action is not changed
-		if (cfg.seccomp_list == NULL && arg_seccomp_error_action == DEFAULT_SECCOMP_ERROR_ACTION) {
+		if ((cfg.seccomp_list == NULL || cfg.seccomp_list[0] == '\0')
+		    && arg_seccomp_error_action == DEFAULT_SECCOMP_ERROR_ACTION) {
 			if (arg_seccomp_block_secondary)
 				seccomp_filter_block_secondary();
 			else {
@@ -261,7 +262,7 @@ int seccomp_filter_drop(bool native) {
 			}
 
 			// build the seccomp filter as a regular user
-			if (list)
+			if (list && list[0])
 				if (arg_allow_debuggers)
 					rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 7,
 						      PATH_FSECCOMP, command, "drop", filter, postexec_filter, list, "allow-debuggers");

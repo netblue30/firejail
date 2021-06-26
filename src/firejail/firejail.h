@@ -810,6 +810,7 @@ extern char *xvfb_extra_params;
 extern char *netfilter_default;
 extern unsigned long join_timeout;
 extern char *config_seccomp_error_action_str;
+extern char *config_seccomp_filter_add;
 extern char **whitelist_reject_topdirs;
 
 int checkcfg(int val);

@@ -35,6 +35,7 @@ char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
 unsigned long join_timeout = 5000000; // microseconds
 char *config_seccomp_error_action_str = "EPERM";
+char *config_seccomp_filter_add = NULL;
 char **whitelist_reject_topdirs = NULL;
 
 int checkcfg(int val) {
@@ -224,6 +225,10 @@ int checkcfg(int val) {
 			// timeout for join option
 			else if (strncmp(ptr, "join-timeout ", 13) == 0)
 				join_timeout = strtoul(ptr + 13, NULL, 10) * 1000000; // seconds to microseconds
+
+			// add rules to default seccomp filter
+			else if (strncmp(ptr, "seccomp-filter-add ", 19) == 0)
+				config_seccomp_filter_add = seccomp_check_list(ptr + 19);
 
 			// seccomp error action
 			else if (strncmp(ptr, "seccomp-error-action ", 21) == 0) {

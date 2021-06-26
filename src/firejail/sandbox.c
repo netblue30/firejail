@@ -840,6 +840,7 @@ int sandbox(void* sandbox_arg) {
 	// private mode
 	//****************************
 	if (arg_private) {
+		EUID_USER();
 		if (cfg.home_private) {	// --private=
 			if (cfg.chrootdir)
 				fwarning("private=directory feature is disabled in chroot\n");
@@ -858,6 +859,7 @@ int sandbox(void* sandbox_arg) {
 		}
 		else // --private
 			fs_private();
+		EUID_ROOT();
 	}
 
 	if (arg_private_dev)

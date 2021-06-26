@@ -610,8 +610,8 @@ void fs_private_home_list(void) {
 	EUID_ROOT();
 	if (bind_mount_path_to_fd(RUN_HOME_DIR, fd))
 		errExit("mount bind");
-	close(fd);
 	EUID_USER();
+	close(fd);
 
 	// check /proc/self/mountinfo to confirm the mount is ok
 	MountData *mptr = get_last_mount();

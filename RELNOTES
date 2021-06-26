@@ -1,6 +1,10 @@
 firejail (0.9.65) baseline; urgency=low
   * deprecated --audit options, relpaced by jailcheck utility
   * deprecated follow-symlink-as-user from firejail.config
+  * new firejail.config settings: private-bin, private-etc
+  * new firejail.config settings: private-opt, private-srv
+  * new firejail.config settings: whitelist-disable-topdir
+  * new firejail.config settings: seccomp-filter-add
   * rename --noautopulse to keep-config-pulse
   * filtering environment variables
   * zsh completion

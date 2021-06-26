@@ -2176,7 +2176,7 @@ $ firejail \-\-net=eth0 \-\-scan
 .TP
 \fB\-\-seccomp
 Enable seccomp filter and blacklist the syscalls in the default list,
-which is  @default-nodebuggers unless allow-debuggers is specified,
+which is  @default-nodebuggers unless \-\-allow-debuggers is specified,
 then it is @default.
 
 .br
@@ -2187,18 +2187,13 @@ system call groups are defined: @aio, @basic-io, @chown, @clock,
 @network-io, @obsolete, @privileged, @process, @raw-io, @reboot,
 @resources, @setuid, @swap, @sync, @system-service and @timer.
 More information about groups can be found in /usr/share/doc/firejail/syscalls.txt
-
-In addition, a system call can be specified by its number instead of
-name with prefix $, so for example $165 would be equal to mount on i386.
-Exceptions can be allowed with prefix !.
+.br
 
 .br
 System architecture is strictly imposed only if flag
 \-\-seccomp.block-secondary is used. The filter is applied at run time
 only if the correct architecture was detected. For the case of I386
-and AMD64 both 32-bit and 64-bit filters are installed. On a 64 bit
-architecture, an additional filter for 32 bit system calls can be
-installed with \-\-seccomp.32.
+and AMD64 both 32-bit and 64-bit filters are installed.
 .br
 
 .br
@@ -2217,9 +2212,10 @@ also globally in /etc/firejail/firejail.config file.
 
 .TP
 \fB\-\-seccomp=syscall,@group,!syscall2
-Enable seccomp filter, whitelist "syscall2", but blacklist the default
-list and the syscalls or syscall groups specified by the
-command.
+Enable seccomp filter, blacklist the default list and the syscalls or syscall groups
+specified by the command, but don't blacklist "syscall2". On a 64 bit
+architecture, an additional filter for 32 bit system calls can be
+installed with \-\-seccomp.32.
 .br
 
 .br
@@ -2228,6 +2224,13 @@ Example:
 $ firejail \-\-seccomp=utime,utimensat,utimes firefox
 .br
 $ firejail \-\-seccomp=@clock,mkdir,unlinkat transmission-gtk
+.br
+$ firejail '\-\-seccomp=@ipc,!pipe,!pipe2' audacious
+.br
+
+.br
+Syscalls can be specified by their number if prefix $ is added,
+so for example $165 would be equal to mount on i386.
 .br
 
 .br
@@ -2241,6 +2244,7 @@ by using \fBsyscall:kill\fR syntax, or the attempt may be logged with
 
 .br
 Example:
+.br
 $ firejail \-\-seccomp=unlinkat:ENOENT,utimensat,utimes
 .br
 Parent pid 10662, child pid 10663
@@ -2249,9 +2253,13 @@ Child process initialized
 .br
 $ touch testfile
 .br
+$ ls testfile
+.br
+testfile
+.br
 $ rm testfile
 .br
-rm: cannot remove `testfile': Operation not permitted
+rm: cannot remove `testfile': No such file or directory
 .br
 
 .br
@@ -2264,7 +2272,7 @@ filters.
 .br
 Example:
 .br
-$ firejail \-\-noprofile \-\-shell=none \-\-seccomp=execve bash
+$ firejail \-\-noprofile \-\-shell=none \-\-seccomp=execve sh
 .br
 Parent pid 32751, child pid 32752
 .br
@@ -2276,8 +2284,7 @@ Child process initialized in 46.44 ms
 .br
 $ ls
 .br
-Bad system call
-.br
+Operation not permitted
 
 .TP
 \fB\-\-seccomp.block-secondary
@@ -2321,14 +2328,14 @@ Child process initialized
 .br
 $ touch testfile
 .br
+$ ls testfile
+.br
+testfile
+.br
 $ rm testfile
 .br
-rm: cannot remove `testfile': Operation not permitted
+rm: cannot remove `testfile': No such file or directory
 .br
-
-
-
-
 
 .TP
 \fB\-\-seccomp.keep=syscall,@group,!syscall2

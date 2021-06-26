@@ -253,9 +253,6 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_fanotify_init
 	  "fanotify_init,"
 #endif
-#ifdef SYS_kcmp
-	  "kcmp,"
-#endif
 #ifdef SYS_add_key
 	  "add_key,"
 #endif

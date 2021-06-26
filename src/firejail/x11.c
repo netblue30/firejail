@@ -1290,9 +1290,11 @@ void x11_xorg(void) {
 	if (envar) {
 		char *rp = realpath(envar, NULL);
 		if (rp) {
-			if (strcmp(rp, dest) != 0)
-				// disable_file_or_dir returns with EUID 0
+			if (strcmp(rp, dest) != 0) {
+				EUID_ROOT();
 				disable_file_or_dir(rp);
+				EUID_USER();
+			}
 			free(rp);
 		}
 	}

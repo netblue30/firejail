@@ -374,9 +374,12 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 	}
 
 	// user home directory
-	if (tmpfs_home)
+	if (tmpfs_home) {
 		// checks owner if outside /home
+		EUID_USER();
 		fs_private();
+		EUID_ROOT();
+	}
 
 	// /run/user/$UID directory
 	if (tmpfs_runuser) {

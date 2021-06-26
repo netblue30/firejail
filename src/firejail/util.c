@@ -1231,6 +1231,7 @@ unsigned extract_timeout(const char *str) {
 }
 
 void disable_file_or_dir(const char *fname) {
+	assert(geteuid() == 0);
 	assert(fname);
 
 	EUID_USER();

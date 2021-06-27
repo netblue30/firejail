@@ -5,6 +5,7 @@ firejail (0.9.65) baseline; urgency=low
   * new firejail.config settings: private-opt, private-srv
   * new firejail.config settings: whitelist-disable-topdir
   * new firejail.config settings: seccomp-filter-add
+  * removed kcmp syscall from seccomp default filter
   * rename --noautopulse to keep-config-pulse
   * filtering environment variables
   * zsh completion

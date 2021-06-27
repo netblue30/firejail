@@ -45,7 +45,7 @@
 #endif
 
 #ifdef HAVE_GCOV
-#include <gcov.h>
+#include "../include/gcov_wrapper.h"
 #endif
 
 #ifdef __ia64__

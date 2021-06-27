@@ -24,7 +24,7 @@
 #include <sys/stat.h>
 
 #ifdef HAVE_GCOV
-#include <gcov.h>
+#include "../include/gcov_wrapper.h"
 #endif
 
 extern char *xephyr_screen;

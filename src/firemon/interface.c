@@ -34,7 +34,7 @@
 //#include <linux/if_bridge.h>
 
 #ifdef HAVE_GCOV
-#include <gcov.h>
+#include "../include/gcov_wrapper.h"
 #endif
 
 // print IP addresses for all interfaces

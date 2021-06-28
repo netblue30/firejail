@@ -18,15 +18,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firemon.h"
+#include "../include/gcov_wrapper.h"
 #include <termios.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
-#ifdef HAVE_GCOV
-#include "../include/gcov_wrapper.h"
-#endif
 
 #define MAXBUF 4096
 
@@ -246,8 +243,7 @@ void netstats(void) {
 				print_proc(i, itv, col);
 			}
 		}
-#ifdef HAVE_GCOV
-			__gcov_flush();
-#endif
+
+		__gcov_flush();
 	}
 }

@@ -19,6 +19,7 @@
 */
 
 #include "firejail.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -30,10 +31,6 @@
 //#include <dirent.h>
 //#include <stdio.h>
 //#include <stdlib.h>
-
-#ifdef HAVE_GCOV
-#include "../include/gcov_wrapper.h"
-#endif
 
 // uid/gid cache
 static uid_t c_uid = 0;
@@ -353,9 +350,8 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			ls(fname1);
 		else
 			cat(fname1);
-#ifdef HAVE_GCOV
+
 		__gcov_flush();
-#endif
 	}
 	// get file from host and store it in the sandbox
 	else if (op == SANDBOX_FS_PUT && path2) {
@@ -387,9 +383,9 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			// copy the file
 			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600)) // already a regular user
 				_exit(1);
-#ifdef HAVE_GCOV
+
 			__gcov_flush();
-#endif
+
 			_exit(0);
 		}
 
@@ -419,9 +415,9 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			// copy the file
 			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600)) // already a regular user
 				_exit(1);
-#ifdef HAVE_GCOV
+
 			__gcov_flush();
-#endif
+
 			_exit(0);
 		}
 

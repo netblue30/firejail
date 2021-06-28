@@ -21,16 +21,13 @@
 // sudo mount -o loop krita-3.0-x86_64.appimage mnt
 
 #include "firejail.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
 #include <fcntl.h>
 #include <linux/loop.h>
 #include <errno.h>
-
-#ifdef HAVE_GCOV
-#include "../include/gcov_wrapper.h"
-#endif
 
 static char *devloop = NULL;	// device file
 static long unsigned size = 0;	// offset into appimage file
@@ -144,9 +141,8 @@ void appimage_set(const char *appimage) {
 
 	if (cfg.cwd)
 		env_store_name_val("OWD", cfg.cwd, SETENV);
-#ifdef HAVE_GCOV
+
 	__gcov_flush();
-#endif
 #else
 	fprintf(stderr, "Error: /dev/loop-control interface is not supported by your kernel\n");
 	exit(1);

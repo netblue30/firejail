@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firemon.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/socket.h>
 #include <linux/connector.h>
 #include <linux/netlink.h>
@@ -29,10 +30,6 @@
 #include <time.h>
 #include <fcntl.h>
 #include <sys/uio.h>
-
-#ifdef HAVE_GCOV
-#include "../include/gcov_wrapper.h"
-#endif
 
 #define PIDS_BUFLEN 4096
 #define SERVER_PORT 889	// 889-899 is left unassigned by IANA
@@ -234,9 +231,7 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 	tv.tv_usec = 0;
 
 	while (1) {
-#ifdef HAVE_GCOV
 		__gcov_flush();
-#endif
 
 #define BUFFSIZE 4096
 		char __attribute__ ((aligned(NLMSG_ALIGNTO)))buf[BUFFSIZE];

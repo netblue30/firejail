@@ -20,6 +20,7 @@
 #include "firejail.h"
 #include "../include/pid.h"
 #include "../include/firejail_user.h"
+#include "../include/gcov_wrapper.h"
 #include "../include/syscall.h"
 #include "../include/seccomp.h"
 #define _GNU_SOURCE
@@ -42,10 +43,6 @@
 #include <fcntl.h>
 #ifndef O_PATH
 #define O_PATH 010000000
-#endif
-
-#ifdef HAVE_GCOV
-#include "../include/gcov_wrapper.h"
 #endif
 
 #ifdef __ia64__
@@ -3039,9 +3036,9 @@ int main(int argc, char **argv, char **envp) {
 			network_main(child);
 			if (arg_debug)
 				printf("Host network configured\n");
-#ifdef HAVE_GCOV
+
 			__gcov_flush();
-#endif
+
 			_exit(0);
 		}
 

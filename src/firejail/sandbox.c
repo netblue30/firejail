@@ -19,6 +19,7 @@
 */
 
 #include "firejail.h"
+#include "../include/gcov_wrapper.h"
 #include "../include/seccomp.h"
 #include <sys/mman.h>
 #include <sys/mount.h>
@@ -47,10 +48,6 @@
 
 #ifdef HAVE_APPARMOR
 #include <sys/apparmor.h>
-#endif
-
-#ifdef HAVE_GCOV
-#include "../include/gcov_wrapper.h"
 #endif
 
 static int force_nonewprivs = 0;
@@ -507,9 +504,8 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 			exit(1);
 		}
 
-#ifdef HAVE_GCOV
 		__gcov_dump();
-#endif
+
 		seccomp_install_filters();
 
 		if (set_sandbox_status)
@@ -563,9 +559,8 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 		if (!arg_command && !arg_quiet)
 			print_time();
 
-#ifdef HAVE_GCOV
 		__gcov_dump();
-#endif
+
 		seccomp_install_filters();
 
 		if (set_sandbox_status)

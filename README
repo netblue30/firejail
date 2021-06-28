@@ -330,6 +330,7 @@ Florian Begusch (https://github.com/florianbegusch)
 	- (la)tex profiles
 	- fixed transmission-common.profile
 	- fixed standardnotes-desktop.profile
+	- fix jailprober.py
 floxo (https://github.com/floxo)
 	- fixed qml disk cache issue
 Franco (nextime) Lanza (https://github.com/nextime)

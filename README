@@ -80,6 +80,8 @@ Akhil Hans Maulloo (https://github.com/kouul)
 Albin Kauffmann (https://github.com/albinou)
 	- Firefox and Chromium profile fixes
 	- info to allow screen sharing in profiles
+Alex Leahu (https://github.com/alxjsn)
+	- fix screen sharing configuration on Wayland
 Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)
 	- src/lib/libnetlink.c extracted from iproute2 software package
 Aleksey Manevich (https://github.com/manevich)
@@ -471,6 +473,8 @@ irregulator (https://github.com/irregulator)
 Irvine (https://github.com/Irvinehimself)
 	- added conky profile
 	- added ping, bsdtar, makepkg (Arch), archaudit-report, cower (Arch) profiles
+Ivan (https://github.com/ordinary-dev)
+	- fix telegram profile
 Ivan Kozik (https://github.com/ivan)
 	- speed up sandbox exit
 Jaykishan Mutkawoa (https://github.com/jmutkawoa)
@@ -573,6 +577,8 @@ Kristóf Marussy (https://github.com/kris7t)
 	- dns support
 kuesji koesnu (https://github.com/kuesji)
 	- unit suffixes for rlimit-fsize and rlimit-as
+	- util.c and firejail.h fixes
+	- better parser for size strings
 Kunal Mehta (https://github.com/legoktm)
 	- converted all links to https in manpages
 laniakea64 (https://github.com/laniakea64)
@@ -654,6 +660,8 @@ Neo00001 (https://github.com/Neo00001)
 	- update telegram profile
 	- add spectacle profile
 	- add kdiff3 profile
+NetSysFire (https://github.com/NetSysFire)
+	- update weechat profile
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory
@@ -739,8 +747,9 @@ pirate486743186 (https://github.com/pirate486743186)
 	- adding qcomicbook and pipe-viewer in disable-programs
 	- newsboat/newsbeuter profiles
 	- fix atril profile
-	- rtv profile
 	- reorganizing links browsers
+	- added rtv, alpine, mcomix, qcomicbook, googler, ddgr profiles
+	- w3m, zahura, profile.template fixes
 Pixel Fairy (https://github.com/xahare)
 	- added fjclip.py, fjdisplay.py and fjresize.py in contrib section
 PizzaDude (https://github.com/pizzadude)

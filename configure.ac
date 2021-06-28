@@ -321,8 +321,8 @@ AC_OUTPUT
 cat <<EOF
 
 Compile options:
-   EXTRA_LDFLAGS: $EXTRA_LDFLAGS
    EXTRA_CFLAGS: $EXTRA_CFLAGS
+   EXTRA_LDFLAGS: $EXTRA_LDFLAGS
    fatal warnings: $HAVE_FATAL_WARNINGS
    gcov instrumentation: $HAVE_GCOV
    install as a SUID executable: $HAVE_SUID

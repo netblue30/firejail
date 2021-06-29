@@ -46,7 +46,7 @@ private
 private-bin gnome-calendar
 private-cache
 private-dev
-private-etc ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,nsswitch.conf,pki,resolv.conf,ssl
+private-etc ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,localtime,nsswitch.conf,pki,resolv.conf,ssl
 private-tmp
 
 dbus-user filter

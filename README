@@ -603,6 +603,8 @@ Lukáš Krejčí (https://github.com/lskrejci)
         - fixed parsing of --keep-var-tmp
 luzpaz (https://github.com/luzpaz)
 	- code spelling fixes
+lxeiqr (https://github.com/lxeiqr)
+	- fix sndio support
 Mace Muilman (https://github.com/mace015)
 	- google-chrome{,beta,unstable} flags
 maces (https://github.com/maces)

@@ -1277,6 +1277,9 @@ void fs_private_tmp(void) {
 	// read-only x11 directory
 	profile_add("read-only /tmp/.X11-unix");
 
+	// whitelist sndio directory
+	profile_add("whitelist /tmp/sndio");
+
 	// whitelist any pulse* file in /tmp directory
 	// some distros use PulseAudio sockets under /tmp instead of the socket in /urn/user
 	DIR *dir;

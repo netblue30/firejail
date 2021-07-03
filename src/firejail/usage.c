@@ -80,9 +80,7 @@ static char *usage_str =
 	"    --debug-protocols - print all recognized protocols.\n"
 	"    --debug-syscalls - print all recognized system calls.\n"
 	"    --debug-syscalls32 - print all recognized 32 bit system calls.\n"
-#ifdef HAVE_WHITELIST
 	"    --debug-whitelists - debug whitelisting.\n"
-#endif
 #ifdef HAVE_NETWORK
 	"    --defaultgw=address - configure default gateway.\n"
 #endif
@@ -252,9 +250,7 @@ static char *usage_str =
 #ifdef HAVE_NETWORK
 	"    --veth-name=name - use this name for the interface connected to the bridge.\n"
 #endif
-#ifdef HAVE_WHITELIST
 	"    --whitelist=filename - whitelist directory or file.\n"
-#endif
 	"    --writable-etc - /etc directory is mounted read-write.\n"
 	"    --writable-run-user - allow access to /run/user/$UID/systemd and\n"
 	"\t/run/user/$UID/gnupg.\n"

@@ -1581,8 +1581,6 @@ int main(int argc, char **argv, char **envp) {
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
 			profile_add(line);
 		}
-
-#ifdef HAVE_WHITELIST
 		else if (strncmp(argv[i], "--whitelist=", 12) == 0) {
 			if (checkcfg(CFG_WHITELIST)) {
 				char *line;
@@ -1603,7 +1601,6 @@ int main(int argc, char **argv, char **envp) {
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
 			profile_add(line);
 		}
-#endif
 		else if (strncmp(argv[i], "--mkdir=", 8) == 0) {
 			char *line;
 			if (asprintf(&line, "mkdir %s", argv[i] + 8) == -1)

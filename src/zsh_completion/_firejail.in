@@ -251,10 +251,8 @@ _firejail_args=(
     '*--tmpfs=-[mount a tmpfs filesystem on directory dirname]: :_files -/'
 #endif
 
-#ifdef HAVE_WHITELIST
     '*--nowhitelist=-[disable whitelist for file or directory]: :_files'
     '*--whitelist=-[whitelist directory or file]: :_files'
-#endif
 
 #ifdef HAVE_X11
     '--x11[enable X11 sandboxing. The software checks first if Xpra is installed, then it checks if Xephyr is installed. If all fails, it will attempt to use X11 security extension]'

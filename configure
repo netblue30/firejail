@@ -634,7 +634,6 @@ HAVE_GCOV
 BUSYBOX_WORKAROUND
 HAVE_FATAL_WARNINGS
 HAVE_SUID
-HAVE_WHITELIST
 HAVE_FILE_TRANSFER
 HAVE_X11
 HAVE_USERNS
@@ -726,7 +725,6 @@ enable_network
 enable_userns
 enable_x11
 enable_file_transfer
-enable_whitelist
 enable_suid
 enable_fatal_warnings
 enable_busybox_workaround
@@ -1385,7 +1383,6 @@ Optional Features:
   --disable-userns        disable user namespace
   --disable-x11           disable X11 sandboxing support
   --disable-file-transfer disable file transfer
-  --disable-whitelist     disable whitelist
   --disable-suid          install as a non-SUID executable
   --enable-fatal-warnings -W -Wall -Werror
   --enable-busybox-workaround
@@ -3747,19 +3744,6 @@ if test "x$enable_file_transfer" != "xno"; then :
 
 fi
 
-HAVE_WHITELIST=""
-# Check whether --enable-whitelist was given.
-if test "${enable_whitelist+set}" = set; then :
-  enableval=$enable_whitelist;
-fi
-
-if test "x$enable_whitelist" != "xno"; then :
-
-	HAVE_WHITELIST="-DHAVE_WHITELIST"
-
-
-fi
-
 HAVE_SUID=""
 # Check whether --enable-suid was given.
 if test "${enable_suid+set}" = set; then :
@@ -5572,7 +5556,6 @@ Configuration options:
    network: $HAVE_NETWORK
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11
-   whitelisting: $HAVE_WHITELIST
    private home support: $HAVE_PRIVATE_HOME
    file transfer support: $HAVE_FILE_TRANSFER
    overlayfs support: $HAVE_OVERLAYFS

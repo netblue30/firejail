@@ -1,3 +1,8 @@
+firejail (0.9.67) baseline; urgency=low
+  * work in progress
+  * deprecated --disable-whitelist at compile time
+ -- netblue30 <netblue30@yahoo.com>  Mon, 28 Jun 2021 09:00:00 -0500
+
 firejail (0.9.66) baseline; urgency=low
   * deprecated --audit options, relpaced by jailcheck utility
   * deprecated follow-symlink-as-user from firejail.config

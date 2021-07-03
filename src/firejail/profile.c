@@ -1589,7 +1589,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "noblacklist ", 12) == 0)
 		ptr += 12;
 	else if (strncmp(ptr, "whitelist ", 10) == 0) {
-#ifdef HAVE_WHITELIST
 		if (checkcfg(CFG_WHITELIST)) {
 			arg_whitelist = 1;
 			ptr += 10;
@@ -1602,9 +1601,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 			return 0;
 		}
-#else
-		return 0;
-#endif
 	}
 	else if (strncmp(ptr, "nowhitelist ", 12) == 0)
 		ptr += 12;

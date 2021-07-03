@@ -342,14 +342,6 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- file and directory whitelisting support is %s\n",
-#ifdef HAVE_WHITELIST
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
 	printf("\t- file transfer support is %s\n",
 #ifdef HAVE_FILE_TRANSFER
 		"enabled"

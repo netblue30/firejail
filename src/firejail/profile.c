@@ -1589,18 +1589,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "noblacklist ", 12) == 0)
 		ptr += 12;
 	else if (strncmp(ptr, "whitelist ", 10) == 0) {
-		if (checkcfg(CFG_WHITELIST)) {
-			arg_whitelist = 1;
-			ptr += 10;
-		}
-		else {
-			static int whitelist_warning_printed = 0;
-			if (!whitelist_warning_printed) {
-				warning_feature_disabled("whitelist");
-				whitelist_warning_printed = 1;
-			}
-			return 0;
-		}
+		arg_whitelist = 1;
+		ptr += 10;
 	}
 	else if (strncmp(ptr, "nowhitelist ", 12) == 0)
 		ptr += 12;

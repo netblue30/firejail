@@ -1602,28 +1602,20 @@ int main(int argc, char **argv, char **envp) {
 
 		// whitelist
 		else if (strncmp(argv[i], "--whitelist=", 12) == 0) {
-			if (checkcfg(CFG_WHITELIST)) {
-				char *line;
-				if (asprintf(&line, "whitelist %s", argv[i] + 12) == -1)
-					errExit("asprintf");
+			char *line;
+			if (asprintf(&line, "whitelist %s", argv[i] + 12) == -1)
+				errExit("asprintf");
 
-				profile_check_line(line, 0, NULL);	// will exit if something wrong
-				profile_add(line);
-			}
-			else
-				exit_err_feature("whitelist");
+			profile_check_line(line, 0, NULL);	// will exit if something wrong
+			profile_add(line);
 		}
 		else if (strncmp(argv[i], "--allow=", 8) == 0) {
-			if (checkcfg(CFG_WHITELIST)) {
-				char *line;
-				if (asprintf(&line, "whitelist %s", argv[i] + 8) == -1)
-					errExit("asprintf");
+			char *line;
+			if (asprintf(&line, "whitelist %s", argv[i] + 8) == -1)
+				errExit("asprintf");
 
-				profile_check_line(line, 0, NULL);	// will exit if something wrong
-				profile_add(line);
-			}
-			else
-				exit_err_feature("whitelist");
+			profile_check_line(line, 0, NULL);	// will exit if something wrong
+			profile_add(line);
 		}
 		else if (strncmp(argv[i], "--nowhitelist=", 14) == 0) {
 			char *line;

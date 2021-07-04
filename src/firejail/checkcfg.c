@@ -106,7 +106,6 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_FIREJAIL_PROMPT, "firejail-prompt")
 			PARSE_YESNO(CFG_FORCE_NONEWPRIVS, "force-nonewprivs")
 			PARSE_YESNO(CFG_SECCOMP, "seccomp")
-			PARSE_YESNO(CFG_WHITELIST, "whitelist")
 			PARSE_YESNO(CFG_NETWORK, "network")
 			PARSE_YESNO(CFG_RESTRICTED_NETWORK, "restricted-network")
 			PARSE_YESNO(CFG_XEPHYR_WINDOW_TITLE, "xephyr-window-title")

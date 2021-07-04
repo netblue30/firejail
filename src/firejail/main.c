@@ -1263,9 +1263,9 @@ int main(int argc, char **argv, char **envp) {
 			arg_debug = 1;
 			arg_quiet = 0;
 		}
-		else if (strcmp(argv[i], "--debug-blacklists") == 0)
+		else if (strcmp(argv[i], "--debug-deny") == 0)
 			arg_debug_blacklists = 1;
-		else if (strcmp(argv[i], "--debug-whitelists") == 0)
+		else if (strcmp(argv[i], "--debug-allow") == 0)
 			arg_debug_whitelists = 1;
 		else if (strcmp(argv[i], "--debug-private-lib") == 0)
 			arg_debug_private_lib = 1;

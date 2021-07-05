@@ -6,8 +6,8 @@ include anki.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${DOCUMENTS}
-noblacklist ${HOME}/.local/share/Anki2
+nodeny  ${DOCUMENTS}
+nodeny  ${HOME}/.local/share/Anki2
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -23,8 +23,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/Anki2
-whitelist ${DOCUMENTS}
-whitelist ${HOME}/.local/share/Anki2
+allow  ${DOCUMENTS}
+allow  ${HOME}/.local/share/Anki2
 include whitelist-common.inc
 include whitelist-var-common.inc
 

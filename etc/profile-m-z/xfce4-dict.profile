@@ -6,7 +6,7 @@ include xfce4-dict.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/xfce4-dict
+nodeny  ${HOME}/.config/xfce4-dict
 
 include disable-common.inc
 include disable-devel.inc

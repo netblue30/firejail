@@ -6,10 +6,10 @@ include tor-browser-tr.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.tor-browser-tr
+nodeny  ${HOME}/.tor-browser-tr
 
 mkdir ${HOME}/.tor-browser-tr
-whitelist ${HOME}/.tor-browser-tr
+allow  ${HOME}/.tor-browser-tr
 
 # Redirect
 include torbrowser-launcher.profile

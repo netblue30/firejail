@@ -6,8 +6,8 @@ include quaternion.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/Quotient/quaternion
-noblacklist ${HOME}/.config/Quotient
+nodeny  ${HOME}/.cache/Quotient/quaternion
+nodeny  ${HOME}/.config/Quotient
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,10 +20,10 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/Quotient/quaternion
 mkdir ${HOME}/.config/Quotient
-whitelist ${HOME}/.cache/Quotient/quaternion
-whitelist ${HOME}/.config/Quotient
-whitelist ${DOWNLOADS}
-whitelist /usr/share/Quotient/quaternion
+allow  ${HOME}/.cache/Quotient/quaternion
+allow  ${HOME}/.config/Quotient
+allow  ${DOWNLOADS}
+allow  /usr/share/Quotient/quaternion
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

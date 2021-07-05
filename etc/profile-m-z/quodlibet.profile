@@ -6,10 +6,10 @@ include quodlibet.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/quodlibet
-noblacklist ${HOME}/.config/quodlibet
-noblacklist ${HOME}/.quodlibet
-noblacklist ${MUSIC}
+nodeny  ${HOME}/.cache/quodlibet
+nodeny  ${HOME}/.config/quodlibet
+nodeny  ${HOME}/.quodlibet
+nodeny  ${MUSIC}
 
 include allow-bin-sh.inc
 
@@ -30,11 +30,11 @@ mkdir ${HOME}/.cache/quodlibet
 mkdir ${HOME}/.config/quodlibet
 mkdir ${HOME}/.quodlibet
 
-whitelist ${HOME}/.cache/quodlibet
-whitelist ${HOME}/.config/quodlibet
-whitelist ${HOME}/.quodlibet
-whitelist ${DOWNLOADS}
-whitelist ${MUSIC}
+allow  ${HOME}/.cache/quodlibet
+allow  ${HOME}/.config/quodlibet
+allow  ${HOME}/.quodlibet
+allow  ${DOWNLOADS}
+allow  ${MUSIC}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

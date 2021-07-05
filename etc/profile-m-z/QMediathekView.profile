@@ -6,18 +6,18 @@ include QMediathekView.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/QMediathekView
-noblacklist ${HOME}/.local/share/QMediathekView
+nodeny  ${HOME}/.config/QMediathekView
+nodeny  ${HOME}/.local/share/QMediathekView
 
-noblacklist ${HOME}/.config/mpv
-noblacklist ${HOME}/.config/smplayer
-noblacklist ${HOME}/.config/totem
-noblacklist ${HOME}/.config/vlc
-noblacklist ${HOME}/.config/xplayer
-noblacklist ${HOME}/.local/share/totem
-noblacklist ${HOME}/.local/share/xplayer
-noblacklist ${HOME}/.mplayer
-noblacklist ${VIDEOS}
+nodeny  ${HOME}/.config/mpv
+nodeny  ${HOME}/.config/smplayer
+nodeny  ${HOME}/.config/totem
+nodeny  ${HOME}/.config/vlc
+nodeny  ${HOME}/.config/xplayer
+nodeny  ${HOME}/.local/share/totem
+nodeny  ${HOME}/.local/share/xplayer
+nodeny  ${HOME}/.mplayer
+nodeny  ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -28,7 +28,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/share/qtchooser
+allow  /usr/share/qtchooser
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

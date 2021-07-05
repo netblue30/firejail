@@ -7,8 +7,8 @@ include transmission-common.local
 # added by caller profile
 #include globals.local
 
-noblacklist ${HOME}/.cache/transmission
-noblacklist ${HOME}/.config/transmission
+nodeny  ${HOME}/.cache/transmission
+nodeny  ${HOME}/.config/transmission
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,9 +19,9 @@ include disable-programs.inc
 
 mkdir ${HOME}/.cache/transmission
 mkdir ${HOME}/.config/transmission
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.cache/transmission
-whitelist ${HOME}/.config/transmission
+allow  ${DOWNLOADS}
+allow  ${HOME}/.cache/transmission
+allow  ${HOME}/.config/transmission
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

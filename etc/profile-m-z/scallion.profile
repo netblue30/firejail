@@ -6,10 +6,10 @@ include scallion.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${PATH}/llvm*
-noblacklist ${PATH}/openssl
-noblacklist ${PATH}/openssl-1.0
-noblacklist ${DOCUMENTS}
+nodeny  ${PATH}/llvm*
+nodeny  ${PATH}/openssl
+nodeny  ${PATH}/openssl-1.0
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-exec.inc

@@ -6,8 +6,8 @@ include ripperx.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.ripperXrc
-noblacklist ${MUSIC}
+nodeny  ${HOME}/.ripperXrc
+nodeny  ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

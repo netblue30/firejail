@@ -6,9 +6,9 @@ include wesnoth.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/wesnoth
-noblacklist ${HOME}/.config/wesnoth
-noblacklist ${HOME}/.local/share/wesnoth
+nodeny  ${HOME}/.cache/wesnoth
+nodeny  ${HOME}/.config/wesnoth
+nodeny  ${HOME}/.local/share/wesnoth
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,9 +19,9 @@ include disable-programs.inc
 mkdir ${HOME}/.cache/wesnoth
 mkdir ${HOME}/.config/wesnoth
 mkdir ${HOME}/.local/share/wesnoth
-whitelist ${HOME}/.cache/wesnoth
-whitelist ${HOME}/.config/wesnoth
-whitelist ${HOME}/.local/share/wesnoth
+allow  ${HOME}/.cache/wesnoth
+allow  ${HOME}/.config/wesnoth
+allow  ${HOME}/.local/share/wesnoth
 include whitelist-common.inc
 
 caps.drop all

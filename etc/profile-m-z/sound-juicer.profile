@@ -6,8 +6,8 @@ include sound-juicer.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/sound-juicer
-noblacklist ${MUSIC}
+nodeny  ${HOME}/.config/sound-juicer
+nodeny  ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

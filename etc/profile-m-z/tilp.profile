@@ -5,7 +5,7 @@ include tilp.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.tilp
+nodeny  ${HOME}/.tilp
 
 include disable-common.inc
 include disable-devel.inc

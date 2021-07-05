@@ -5,13 +5,13 @@ include basilisk.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/moonchild productions/basilisk
-noblacklist ${HOME}/.moonchild productions/basilisk
+nodeny  ${HOME}/.cache/moonchild productions/basilisk
+nodeny  ${HOME}/.moonchild productions/basilisk
 
 mkdir ${HOME}/.cache/moonchild productions/basilisk
 mkdir ${HOME}/.moonchild productions
-whitelist ${HOME}/.cache/moonchild productions/basilisk
-whitelist ${HOME}/.moonchild productions
+allow  ${HOME}/.cache/moonchild productions/basilisk
+allow  ${HOME}/.moonchild productions
 
 # Basilisk can use the full firejail seccomp filter (unlike firefox >= 60)
 seccomp

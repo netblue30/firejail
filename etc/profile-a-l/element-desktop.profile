@@ -9,11 +9,11 @@ include element-desktop.local
 
 ignore dbus-user none
 
-noblacklist ${HOME}/.config/Element
+nodeny  ${HOME}/.config/Element
 
 mkdir ${HOME}/.config/Element
-whitelist ${HOME}/.config/Element
-whitelist /opt/Element
+allow  ${HOME}/.config/Element
+allow  /opt/Element
 
 private-opt Element
 

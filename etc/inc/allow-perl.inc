@@ -2,11 +2,11 @@
 # Persistent customizations should go in a .local file.
 include allow-perl.local
 
-noblacklist ${PATH}/core_perl
-noblacklist ${PATH}/cpan*
-noblacklist ${PATH}/perl
-noblacklist ${PATH}/site_perl
-noblacklist ${PATH}/vendor_perl
-noblacklist /usr/lib/perl*
-noblacklist /usr/lib64/perl*
-noblacklist /usr/share/perl*
+nodeny  ${PATH}/core_perl
+nodeny  ${PATH}/cpan*
+nodeny  ${PATH}/perl
+nodeny  ${PATH}/site_perl
+nodeny  ${PATH}/vendor_perl
+nodeny  /usr/lib/perl*
+nodeny  /usr/lib64/perl*
+nodeny  /usr/share/perl*

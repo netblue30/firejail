@@ -5,12 +5,12 @@ include webstorm.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.WebStorm*
-noblacklist ${HOME}/.android
-noblacklist ${HOME}/.local/share/JetBrains
-noblacklist ${HOME}/.tooling
+nodeny  ${HOME}/.WebStorm*
+nodeny  ${HOME}/.android
+nodeny  ${HOME}/.local/share/JetBrains
+nodeny  ${HOME}/.tooling
 # Allow KDE file manager to open with log directories (blacklisted by disable-programs.inc)
-noblacklist ${HOME}/.config/dolphinrc
+nodeny  ${HOME}/.config/dolphinrc
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc
@@ -18,8 +18,8 @@ include allow-common-devel.inc
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc
 
-noblacklist ${PATH}/node
-noblacklist ${HOME}/.nvm
+nodeny  ${PATH}/node
+nodeny  ${HOME}/.nvm
 
 include disable-common.inc
 include disable-devel.inc

@@ -9,10 +9,10 @@ include globals.local
 # noexec ${HOME} may break krita, see issue #1953
 ignore noexec ${HOME}
 
-noblacklist ${HOME}/.config/kritarc
-noblacklist ${HOME}/.local/share/krita
-noblacklist ${DOCUMENTS}
-noblacklist ${PICTURES}
+nodeny  ${HOME}/.config/kritarc
+nodeny  ${HOME}/.local/share/krita
+nodeny  ${DOCUMENTS}
+nodeny  ${PICTURES}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

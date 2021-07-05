@@ -6,11 +6,11 @@ include konversation.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/konversationrc
-noblacklist ${HOME}/.config/konversation.notifyrc
-noblacklist ${HOME}/.kde/share/config/konversationrc
-noblacklist ${HOME}/.kde4/share/config/konversationrc
-noblacklist ${HOME}/.local/share/kxmlgui5/konversation
+nodeny  ${HOME}/.config/konversationrc
+nodeny  ${HOME}/.config/konversation.notifyrc
+nodeny  ${HOME}/.kde/share/config/konversationrc
+nodeny  ${HOME}/.kde4/share/config/konversationrc
+nodeny  ${HOME}/.local/share/kxmlgui5/konversation
 
 include disable-common.inc
 include disable-devel.inc

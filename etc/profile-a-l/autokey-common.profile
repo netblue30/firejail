@@ -7,8 +7,8 @@ include autokey-common.local
 # added by caller profile
 #include globals.local
 
-noblacklist ${HOME}/.config/autokey
-noblacklist ${HOME}/.local/share/autokey
+nodeny  ${HOME}/.config/autokey
+nodeny  ${HOME}/.local/share/autokey
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

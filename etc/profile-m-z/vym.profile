@@ -6,7 +6,7 @@ include vym.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/InSilmaril
+nodeny  ${HOME}/.config/InSilmaril
 
 include disable-common.inc
 include disable-devel.inc

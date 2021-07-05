@@ -6,12 +6,12 @@ include five-or-more.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/five-or-more
+nodeny  ${HOME}/.local/share/five-or-more
 
 mkdir ${HOME}/.local/share/five-or-more
-whitelist ${HOME}/.local/share/five-or-more
+allow  ${HOME}/.local/share/five-or-more
 
-whitelist /usr/share/five-or-more
+allow  /usr/share/five-or-more
 
 private-bin five-or-more
 

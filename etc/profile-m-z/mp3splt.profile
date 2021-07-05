@@ -6,9 +6,9 @@ include mp3splt.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
+deny  ${RUNUSER}/wayland-*
 
-noblacklist ${MUSIC}
+nodeny  ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

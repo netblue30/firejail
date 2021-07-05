@@ -5,63 +5,63 @@ include disable-common.local
 # The following block breaks trash functionality in file managers
 #read-only ${HOME}/.local
 #read-write ${HOME}/.local/share
-blacklist ${HOME}/.local/share/Trash
+deny  ${HOME}/.local/share/Trash
 
 # History files in $HOME and clipboard managers
-blacklist-nolog ${HOME}/.*_history
-blacklist-nolog ${HOME}/.adobe
-blacklist-nolog ${HOME}/.cache/greenclip*
-blacklist-nolog ${HOME}/.histfile
-blacklist-nolog ${HOME}/.history
-blacklist-nolog ${HOME}/.kde/share/apps/klipper
-blacklist-nolog ${HOME}/.kde4/share/apps/klipper
-blacklist-nolog ${HOME}/.local/share/fish/fish_history
-blacklist-nolog ${HOME}/.local/share/klipper
-blacklist-nolog ${HOME}/.macromedia
-blacklist-nolog ${HOME}/.mupdf.history
-blacklist-nolog ${HOME}/.python-history
-blacklist-nolog ${HOME}/.python_history
-blacklist-nolog ${HOME}/.pythonhist
-blacklist-nolog ${HOME}/.lesshst
-blacklist-nolog ${HOME}/.viminfo
-blacklist-nolog /tmp/clipmenu*
+deny-nolog  ${HOME}/.*_history
+deny-nolog  ${HOME}/.adobe
+deny-nolog  ${HOME}/.cache/greenclip*
+deny-nolog  ${HOME}/.histfile
+deny-nolog  ${HOME}/.history
+deny-nolog  ${HOME}/.kde/share/apps/klipper
+deny-nolog  ${HOME}/.kde4/share/apps/klipper
+deny-nolog  ${HOME}/.local/share/fish/fish_history
+deny-nolog  ${HOME}/.local/share/klipper
+deny-nolog  ${HOME}/.macromedia
+deny-nolog  ${HOME}/.mupdf.history
+deny-nolog  ${HOME}/.python-history
+deny-nolog  ${HOME}/.python_history
+deny-nolog  ${HOME}/.pythonhist
+deny-nolog  ${HOME}/.lesshst
+deny-nolog  ${HOME}/.viminfo
+deny-nolog  /tmp/clipmenu*
 
 # X11 session autostart
 # blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs
-blacklist ${HOME}/.Xsession
-blacklist ${HOME}/.blackbox
-blacklist ${HOME}/.config/autostart
-blacklist ${HOME}/.config/autostart-scripts
-blacklist ${HOME}/.config/awesome
-blacklist ${HOME}/.config/i3
-blacklist ${HOME}/.config/sway
-blacklist ${HOME}/.config/lxsession/LXDE/autostart
-blacklist ${HOME}/.config/openbox
-blacklist ${HOME}/.config/plasma-workspace
-blacklist ${HOME}/.config/startupconfig
-blacklist ${HOME}/.config/startupconfigkeys
-blacklist ${HOME}/.fluxbox
-blacklist ${HOME}/.gnomerc
-blacklist ${HOME}/.kde/Autostart
-blacklist ${HOME}/.kde/env
-blacklist ${HOME}/.kde/share/autostart
-blacklist ${HOME}/.kde/share/config/startupconfig
-blacklist ${HOME}/.kde/share/config/startupconfigkeys
-blacklist ${HOME}/.kde/shutdown
-blacklist ${HOME}/.kde4/env
-blacklist ${HOME}/.kde4/Autostart
-blacklist ${HOME}/.kde4/share/autostart
-blacklist ${HOME}/.kde4/shutdown
-blacklist ${HOME}/.kde4/share/config/startupconfig
-blacklist ${HOME}/.kde4/share/config/startupconfigkeys
-blacklist ${HOME}/.local/share/autostart
-blacklist ${HOME}/.xinitrc
-blacklist ${HOME}/.xprofile
-blacklist ${HOME}/.xserverrc
-blacklist ${HOME}/.xsession
-blacklist ${HOME}/.xsessionrc
-blacklist /etc/X11/Xsession.d
-blacklist /etc/xdg/autostart
+deny  ${HOME}/.Xsession
+deny  ${HOME}/.blackbox
+deny  ${HOME}/.config/autostart
+deny  ${HOME}/.config/autostart-scripts
+deny  ${HOME}/.config/awesome
+deny  ${HOME}/.config/i3
+deny  ${HOME}/.config/sway
+deny  ${HOME}/.config/lxsession/LXDE/autostart
+deny  ${HOME}/.config/openbox
+deny  ${HOME}/.config/plasma-workspace
+deny  ${HOME}/.config/startupconfig
+deny  ${HOME}/.config/startupconfigkeys
+deny  ${HOME}/.fluxbox
+deny  ${HOME}/.gnomerc
+deny  ${HOME}/.kde/Autostart
+deny  ${HOME}/.kde/env
+deny  ${HOME}/.kde/share/autostart
+deny  ${HOME}/.kde/share/config/startupconfig
+deny  ${HOME}/.kde/share/config/startupconfigkeys
+deny  ${HOME}/.kde/shutdown
+deny  ${HOME}/.kde4/env
+deny  ${HOME}/.kde4/Autostart
+deny  ${HOME}/.kde4/share/autostart
+deny  ${HOME}/.kde4/shutdown
+deny  ${HOME}/.kde4/share/config/startupconfig
+deny  ${HOME}/.kde4/share/config/startupconfigkeys
+deny  ${HOME}/.local/share/autostart
+deny  ${HOME}/.xinitrc
+deny  ${HOME}/.xprofile
+deny  ${HOME}/.xserverrc
+deny  ${HOME}/.xsession
+deny  ${HOME}/.xsessionrc
+deny  /etc/X11/Xsession.d
+deny  /etc/xdg/autostart
 read-only ${HOME}/.Xauthority
 
 # Session manager
@@ -70,46 +70,46 @@ read-only ${HOME}/.Xauthority
 #?HAS_X11: blacklist /tmp/.ICE-unix
 
 # KDE config
-blacklist ${HOME}/.cache/konsole
-blacklist ${HOME}/.config/khotkeysrc
-blacklist ${HOME}/.config/krunnerrc
-blacklist ${HOME}/.config/kscreenlockerrc
-blacklist ${HOME}/.config/ksslcertificatemanager
-blacklist ${HOME}/.config/kwalletrc
-blacklist ${HOME}/.config/kwinrc
-blacklist ${HOME}/.config/kwinrulesrc
-blacklist ${HOME}/.config/plasma-locale-settings.sh
-blacklist ${HOME}/.config/plasma-org.kde.plasma.desktop-appletsrc
-blacklist ${HOME}/.config/plasmashellrc
-blacklist ${HOME}/.config/plasmavaultrc
-blacklist ${HOME}/.kde/share/apps/kwin
-blacklist ${HOME}/.kde/share/apps/plasma
-blacklist ${HOME}/.kde/share/apps/solid
-blacklist ${HOME}/.kde/share/config/khotkeysrc
-blacklist ${HOME}/.kde/share/config/krunnerrc
-blacklist ${HOME}/.kde/share/config/kscreensaverrc
-blacklist ${HOME}/.kde/share/config/ksslcertificatemanager
-blacklist ${HOME}/.kde/share/config/kwalletrc
-blacklist ${HOME}/.kde/share/config/kwinrc
-blacklist ${HOME}/.kde/share/config/kwinrulesrc
-blacklist ${HOME}/.kde/share/config/plasma-desktop-appletsrc
-blacklist ${HOME}/.kde4/share/apps/kwin
-blacklist ${HOME}/.kde4/share/apps/plasma
-blacklist ${HOME}/.kde4/share/apps/solid
-blacklist ${HOME}/.kde4/share/config/khotkeysrc
-blacklist ${HOME}/.kde4/share/config/krunnerrc
-blacklist ${HOME}/.kde4/share/config/kscreensaverrc
-blacklist ${HOME}/.kde4/share/config/ksslcertificatemanager
-blacklist ${HOME}/.kde4/share/config/kwalletrc
-blacklist ${HOME}/.kde4/share/config/kwinrc
-blacklist ${HOME}/.kde4/share/config/kwinrulesrc
-blacklist ${HOME}/.kde4/share/config/plasma-desktop-appletsrc
-blacklist ${HOME}/.local/share/kglobalaccel
-blacklist ${HOME}/.local/share/kwin
-blacklist ${HOME}/.local/share/plasma
-blacklist ${HOME}/.local/share/plasmashell
-blacklist ${HOME}/.local/share/solid
-blacklist /tmp/konsole-*.history
+deny  ${HOME}/.cache/konsole
+deny  ${HOME}/.config/khotkeysrc
+deny  ${HOME}/.config/krunnerrc
+deny  ${HOME}/.config/kscreenlockerrc
+deny  ${HOME}/.config/ksslcertificatemanager
+deny  ${HOME}/.config/kwalletrc
+deny  ${HOME}/.config/kwinrc
+deny  ${HOME}/.config/kwinrulesrc
+deny  ${HOME}/.config/plasma-locale-settings.sh
+deny  ${HOME}/.config/plasma-org.kde.plasma.desktop-appletsrc
+deny  ${HOME}/.config/plasmashellrc
+deny  ${HOME}/.config/plasmavaultrc
+deny  ${HOME}/.kde/share/apps/kwin
+deny  ${HOME}/.kde/share/apps/plasma
+deny  ${HOME}/.kde/share/apps/solid
+deny  ${HOME}/.kde/share/config/khotkeysrc
+deny  ${HOME}/.kde/share/config/krunnerrc
+deny  ${HOME}/.kde/share/config/kscreensaverrc
+deny  ${HOME}/.kde/share/config/ksslcertificatemanager
+deny  ${HOME}/.kde/share/config/kwalletrc
+deny  ${HOME}/.kde/share/config/kwinrc
+deny  ${HOME}/.kde/share/config/kwinrulesrc
+deny  ${HOME}/.kde/share/config/plasma-desktop-appletsrc
+deny  ${HOME}/.kde4/share/apps/kwin
+deny  ${HOME}/.kde4/share/apps/plasma
+deny  ${HOME}/.kde4/share/apps/solid
+deny  ${HOME}/.kde4/share/config/khotkeysrc
+deny  ${HOME}/.kde4/share/config/krunnerrc
+deny  ${HOME}/.kde4/share/config/kscreensaverrc
+deny  ${HOME}/.kde4/share/config/ksslcertificatemanager
+deny  ${HOME}/.kde4/share/config/kwalletrc
+deny  ${HOME}/.kde4/share/config/kwinrc
+deny  ${HOME}/.kde4/share/config/kwinrulesrc
+deny  ${HOME}/.kde4/share/config/plasma-desktop-appletsrc
+deny  ${HOME}/.local/share/kglobalaccel
+deny  ${HOME}/.local/share/kwin
+deny  ${HOME}/.local/share/plasma
+deny  ${HOME}/.local/share/plasmashell
+deny  ${HOME}/.local/share/solid
+deny  /tmp/konsole-*.history
 read-only ${HOME}/.cache/ksycoca5_*
 read-only ${HOME}/.config/*notifyrc
 read-only ${HOME}/.config/kdeglobals
@@ -138,124 +138,124 @@ read-only ${HOME}/.local/share/kservices5
 read-only ${HOME}/.local/share/kssl
 
 # KDE sockets
-blacklist ${RUNUSER}/*.slave-socket
-blacklist ${RUNUSER}/kdeinit5__*
-blacklist ${RUNUSER}/kdesud_*
+deny  ${RUNUSER}/*.slave-socket
+deny  ${RUNUSER}/kdeinit5__*
+deny  ${RUNUSER}/kdesud_*
 # see #3358
 #?HAS_NODBUS: blacklist ${RUNUSER}/ksocket-*
 #?HAS_NODBUS: blacklist /tmp/ksocket-*
 
 # gnome
 # contains extensions, last used times of applications, and notifications
-blacklist ${HOME}/.local/share/gnome-shell
+deny  ${HOME}/.local/share/gnome-shell
 # contains recently used files and serials of static/removable storage
-blacklist ${HOME}/.local/share/gvfs-metadata
+deny  ${HOME}/.local/share/gvfs-metadata
 # no direct modification of dconf database
 read-only ${HOME}/.config/dconf
-blacklist ${RUNUSER}/gnome-session-leader-fifo
-blacklist ${RUNUSER}/gnome-shell
-blacklist ${RUNUSER}/gsconnect
+deny  ${RUNUSER}/gnome-session-leader-fifo
+deny  ${RUNUSER}/gnome-shell
+deny  ${RUNUSER}/gsconnect
 
 # systemd
-blacklist ${HOME}/.config/systemd
-blacklist ${HOME}/.local/share/systemd
-blacklist /var/lib/systemd
-blacklist ${PATH}/systemd-run
-blacklist ${RUNUSER}/systemd
+deny  ${HOME}/.config/systemd
+deny  ${HOME}/.local/share/systemd
+deny  /var/lib/systemd
+deny  ${PATH}/systemd-run
+deny  ${RUNUSER}/systemd
 # creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
 #blacklist /var/run/systemd
 
 # openrc
-blacklist /etc/runlevels/
-blacklist /etc/init.d/
-blacklist /etc/rc.conf
+deny  /etc/runlevels/
+deny  /etc/init.d/
+deny  /etc/rc.conf
 
 # VirtualBox
-blacklist ${HOME}/.VirtualBox
-blacklist ${HOME}/.config/VirtualBox
-blacklist ${HOME}/VirtualBox VMs
+deny  ${HOME}/.VirtualBox
+deny  ${HOME}/.config/VirtualBox
+deny  ${HOME}/VirtualBox VMs
 
 # GNOME Boxes
-blacklist ${HOME}/.config/gnome-boxes
-blacklist ${HOME}/.local/share/gnome-boxes
+deny  ${HOME}/.config/gnome-boxes
+deny  ${HOME}/.local/share/gnome-boxes
 
 # libvirt
-blacklist ${HOME}/.cache/libvirt
-blacklist ${HOME}/.config/libvirt
-blacklist ${RUNUSER}/libvirt
-blacklist /var/cache/libvirt
-blacklist /var/lib/libvirt
-blacklist /var/log/libvirt
+deny  ${HOME}/.cache/libvirt
+deny  ${HOME}/.config/libvirt
+deny  ${RUNUSER}/libvirt
+deny  /var/cache/libvirt
+deny  /var/lib/libvirt
+deny  /var/log/libvirt
 
 # OCI-Containers / Podman
-blacklist ${RUNUSER}/containers
-blacklist ${RUNUSER}/crun
-blacklist ${RUNUSER}/libpod
-blacklist ${RUNUSER}/runc
-blacklist ${RUNUSER}/toolbox
+deny  ${RUNUSER}/containers
+deny  ${RUNUSER}/crun
+deny  ${RUNUSER}/libpod
+deny  ${RUNUSER}/runc
+deny  ${RUNUSER}/toolbox
 
 # VeraCrypt
-blacklist ${HOME}/.VeraCrypt
-blacklist ${PATH}/veracrypt
-blacklist ${PATH}/veracrypt-uninstall.sh
-blacklist /usr/share/applications/veracrypt.*
-blacklist /usr/share/pixmaps/veracrypt.*
-blacklist /usr/share/veracrypt
+deny  ${HOME}/.VeraCrypt
+deny  ${PATH}/veracrypt
+deny  ${PATH}/veracrypt-uninstall.sh
+deny  /usr/share/applications/veracrypt.*
+deny  /usr/share/pixmaps/veracrypt.*
+deny  /usr/share/veracrypt
 
 # TrueCrypt
-blacklist ${HOME}/.TrueCrypt
-blacklist ${PATH}/truecrypt
-blacklist ${PATH}/truecrypt-uninstall.sh
-blacklist /usr/share/applications/truecrypt.*
-blacklist /usr/share/pixmaps/truecrypt.*
-blacklist /usr/share/truecrypt
+deny  ${HOME}/.TrueCrypt
+deny  ${PATH}/truecrypt
+deny  ${PATH}/truecrypt-uninstall.sh
+deny  /usr/share/applications/truecrypt.*
+deny  /usr/share/pixmaps/truecrypt.*
+deny  /usr/share/truecrypt
 
 # zuluCrypt
-blacklist ${HOME}/.zuluCrypt
-blacklist ${HOME}/.zuluCrypt-socket
-blacklist ${PATH}/zuluCrypt-cli
-blacklist ${PATH}/zuluMount-cli
+deny  ${HOME}/.zuluCrypt
+deny  ${HOME}/.zuluCrypt-socket
+deny  ${PATH}/zuluCrypt-cli
+deny  ${PATH}/zuluMount-cli
 
 # var
-blacklist /var/cache/apt
-blacklist /var/cache/pacman
-blacklist /var/lib/apt
-blacklist /var/lib/clamav
-blacklist /var/lib/dkms
-blacklist /var/lib/mysql/mysql.sock
-blacklist /var/lib/mysqld/mysql.sock
-blacklist /var/lib/pacman
-blacklist /var/lib/upower
+deny  /var/cache/apt
+deny  /var/cache/pacman
+deny  /var/lib/apt
+deny  /var/lib/clamav
+deny  /var/lib/dkms
+deny  /var/lib/mysql/mysql.sock
+deny  /var/lib/mysqld/mysql.sock
+deny  /var/lib/pacman
+deny  /var/lib/upower
 # blacklist /var/log - a virtual /var/log directory (mostly empty) is build up by default for
 # every sandbox, unless --writable-var-log switch is activated
-blacklist /var/mail
-blacklist /var/opt
-blacklist /var/run/acpid.socket
-blacklist /var/run/docker.sock
-blacklist /var/run/minissdpd.sock
-blacklist /var/run/mysql/mysqld.sock
-blacklist /var/run/mysqld/mysqld.sock
-blacklist /var/run/rpcbind.sock
-blacklist /var/run/screens
-blacklist /var/spool/anacron
-blacklist /var/spool/cron
-blacklist /var/spool/mail
+deny  /var/mail
+deny  /var/opt
+deny  /var/run/acpid.socket
+deny  /var/run/docker.sock
+deny  /var/run/minissdpd.sock
+deny  /var/run/mysql/mysqld.sock
+deny  /var/run/mysqld/mysqld.sock
+deny  /var/run/rpcbind.sock
+deny  /var/run/screens
+deny  /var/spool/anacron
+deny  /var/spool/cron
+deny  /var/spool/mail
 
 # etc
-blacklist /etc/anacrontab
-blacklist /etc/cron*
-blacklist /etc/profile.d
-blacklist /etc/rc.local
+deny  /etc/anacrontab
+deny  /etc/cron*
+deny  /etc/profile.d
+deny  /etc/rc.local
 # rc1.d, rc2.d, ...
-blacklist /etc/rc?.d
-blacklist /etc/kernel*
-blacklist /etc/grub*
-blacklist /etc/dkms
-blacklist /etc/apparmor*
-blacklist /etc/selinux
-blacklist /etc/modules*
-blacklist /etc/logrotate*
-blacklist /etc/adduser.conf
+deny  /etc/rc?.d
+deny  /etc/kernel*
+deny  /etc/grub*
+deny  /etc/dkms
+deny  /etc/apparmor*
+deny  /etc/selinux
+deny  /etc/modules*
+deny  /etc/logrotate*
+deny  /etc/adduser.conf
 
 # Startup files
 read-only ${HOME}/.antigen
@@ -292,13 +292,13 @@ read-only ${HOME}/.zshrc
 read-only ${HOME}/.zshrc.local
 
 # Remote access
-blacklist ${HOME}/.rhosts
-blacklist ${HOME}/.shosts
-blacklist ${HOME}/.ssh/authorized_keys
-blacklist ${HOME}/.ssh/authorized_keys2
-blacklist ${HOME}/.ssh/environment
-blacklist ${HOME}/.ssh/rc
-blacklist /etc/hosts.equiv
+deny  ${HOME}/.rhosts
+deny  ${HOME}/.shosts
+deny  ${HOME}/.ssh/authorized_keys
+deny  ${HOME}/.ssh/authorized_keys2
+deny  ${HOME}/.ssh/environment
+deny  ${HOME}/.ssh/rc
+deny  /etc/hosts.equiv
 read-only ${HOME}/.ssh/config
 read-only ${HOME}/.ssh/config.d
 
@@ -359,200 +359,200 @@ read-only ${HOME}/.local/share/mime
 read-only ${HOME}/.local/share/thumbnailers
 
 # prevent access to ssh-agent
-blacklist /tmp/ssh-*
+deny  /tmp/ssh-*
 
 # top secret
-blacklist ${HOME}/*.kdb
-blacklist ${HOME}/*.kdbx
-blacklist ${HOME}/*.key
-blacklist ${HOME}/.Private
-blacklist ${HOME}/.caff
-blacklist ${HOME}/.cargo/credentials
-blacklist ${HOME}/.cargo/credentials.toml
-blacklist ${HOME}/.cert
-blacklist ${HOME}/.config/keybase
-blacklist ${HOME}/.davfs2/secrets
-blacklist ${HOME}/.ecryptfs
-blacklist ${HOME}/.fetchmailrc
-blacklist ${HOME}/.fscrypt
-blacklist ${HOME}/.git-credential-cache
-blacklist ${HOME}/.git-credentials
-blacklist ${HOME}/.gnome2/keyrings
-blacklist ${HOME}/.gnupg
-blacklist ${HOME}/.config/hub
-blacklist ${HOME}/.kde/share/apps/kwallet
-blacklist ${HOME}/.kde4/share/apps/kwallet
-blacklist ${HOME}/.local/share/keyrings
-blacklist ${HOME}/.local/share/kwalletd
-blacklist ${HOME}/.local/share/plasma-vault
-blacklist ${HOME}/.msmtprc
-blacklist ${HOME}/.mutt
-blacklist ${HOME}/.muttrc
-blacklist ${HOME}/.netrc
-blacklist ${HOME}/.nyx
-blacklist ${HOME}/.pki
-blacklist ${HOME}/.local/share/pki
-blacklist ${HOME}/.smbcredentials
-blacklist ${HOME}/.ssh
-blacklist ${HOME}/.vaults
-blacklist /.fscrypt
-blacklist /etc/davfs2/secrets
-blacklist /etc/group+
-blacklist /etc/group-
-blacklist /etc/gshadow
-blacklist /etc/gshadow+
-blacklist /etc/gshadow-
-blacklist /etc/passwd+
-blacklist /etc/passwd-
-blacklist /etc/shadow
-blacklist /etc/shadow+
-blacklist /etc/shadow-
-blacklist /etc/ssh
-blacklist /etc/ssh/*
-blacklist /home/.ecryptfs
-blacklist /home/.fscrypt
-blacklist /var/backup
+deny  ${HOME}/*.kdb
+deny  ${HOME}/*.kdbx
+deny  ${HOME}/*.key
+deny  ${HOME}/.Private
+deny  ${HOME}/.caff
+deny  ${HOME}/.cargo/credentials
+deny  ${HOME}/.cargo/credentials.toml
+deny  ${HOME}/.cert
+deny  ${HOME}/.config/keybase
+deny  ${HOME}/.davfs2/secrets
+deny  ${HOME}/.ecryptfs
+deny  ${HOME}/.fetchmailrc
+deny  ${HOME}/.fscrypt
+deny  ${HOME}/.git-credential-cache
+deny  ${HOME}/.git-credentials
+deny  ${HOME}/.gnome2/keyrings
+deny  ${HOME}/.gnupg
+deny  ${HOME}/.config/hub
+deny  ${HOME}/.kde/share/apps/kwallet
+deny  ${HOME}/.kde4/share/apps/kwallet
+deny  ${HOME}/.local/share/keyrings
+deny  ${HOME}/.local/share/kwalletd
+deny  ${HOME}/.local/share/plasma-vault
+deny  ${HOME}/.msmtprc
+deny  ${HOME}/.mutt
+deny  ${HOME}/.muttrc
+deny  ${HOME}/.netrc
+deny  ${HOME}/.nyx
+deny  ${HOME}/.pki
+deny  ${HOME}/.local/share/pki
+deny  ${HOME}/.smbcredentials
+deny  ${HOME}/.ssh
+deny  ${HOME}/.vaults
+deny  /.fscrypt
+deny  /etc/davfs2/secrets
+deny  /etc/group+
+deny  /etc/group-
+deny  /etc/gshadow
+deny  /etc/gshadow+
+deny  /etc/gshadow-
+deny  /etc/passwd+
+deny  /etc/passwd-
+deny  /etc/shadow
+deny  /etc/shadow+
+deny  /etc/shadow-
+deny  /etc/ssh
+deny  /etc/ssh/*
+deny  /home/.ecryptfs
+deny  /home/.fscrypt
+deny  /var/backup
 
 # cloud provider configuration
-blacklist ${HOME}/.aws
-blacklist ${HOME}/.boto
-blacklist ${HOME}/.config/gcloud
-blacklist ${HOME}/.kube
-blacklist ${HOME}/.passwd-s3fs
-blacklist ${HOME}/.s3cmd
-blacklist /etc/boto.cfg
+deny  ${HOME}/.aws
+deny  ${HOME}/.boto
+deny  ${HOME}/.config/gcloud
+deny  ${HOME}/.kube
+deny  ${HOME}/.passwd-s3fs
+deny  ${HOME}/.s3cmd
+deny  /etc/boto.cfg
 
 # system directories
-blacklist /sbin
-blacklist /usr/local/sbin
-blacklist /usr/sbin
+deny  /sbin
+deny  /usr/local/sbin
+deny  /usr/sbin
 
 # system management
-blacklist ${PATH}/at
-blacklist ${PATH}/busybox
-blacklist ${PATH}/chage
-blacklist ${PATH}/chfn
-blacklist ${PATH}/chsh
-blacklist ${PATH}/crontab
-blacklist ${PATH}/evtest
-blacklist ${PATH}/expiry
-blacklist ${PATH}/fusermount
-blacklist ${PATH}/gksu
-blacklist ${PATH}/gksudo
-blacklist ${PATH}/gpasswd
-blacklist ${PATH}/kdesudo
-blacklist ${PATH}/ksu
-blacklist ${PATH}/mount
-blacklist ${PATH}/mount.ecryptfs_private
-blacklist ${PATH}/nc
-blacklist ${PATH}/ncat
-blacklist ${PATH}/nmap
-blacklist ${PATH}/newgidmap
-blacklist ${PATH}/newgrp
-blacklist ${PATH}/newuidmap
-blacklist ${PATH}/ntfs-3g
-blacklist ${PATH}/pkexec
-blacklist ${PATH}/procmail
-blacklist ${PATH}/sg
-blacklist ${PATH}/strace
-blacklist ${PATH}/su
-blacklist ${PATH}/sudo
-blacklist ${PATH}/tcpdump
-blacklist ${PATH}/umount
-blacklist ${PATH}/unix_chkpwd
-blacklist ${PATH}/xev
-blacklist ${PATH}/xinput
+deny  ${PATH}/at
+deny  ${PATH}/busybox
+deny  ${PATH}/chage
+deny  ${PATH}/chfn
+deny  ${PATH}/chsh
+deny  ${PATH}/crontab
+deny  ${PATH}/evtest
+deny  ${PATH}/expiry
+deny  ${PATH}/fusermount
+deny  ${PATH}/gksu
+deny  ${PATH}/gksudo
+deny  ${PATH}/gpasswd
+deny  ${PATH}/kdesudo
+deny  ${PATH}/ksu
+deny  ${PATH}/mount
+deny  ${PATH}/mount.ecryptfs_private
+deny  ${PATH}/nc
+deny  ${PATH}/ncat
+deny  ${PATH}/nmap
+deny  ${PATH}/newgidmap
+deny  ${PATH}/newgrp
+deny  ${PATH}/newuidmap
+deny  ${PATH}/ntfs-3g
+deny  ${PATH}/pkexec
+deny  ${PATH}/procmail
+deny  ${PATH}/sg
+deny  ${PATH}/strace
+deny  ${PATH}/su
+deny  ${PATH}/sudo
+deny  ${PATH}/tcpdump
+deny  ${PATH}/umount
+deny  ${PATH}/unix_chkpwd
+deny  ${PATH}/xev
+deny  ${PATH}/xinput
 
 # other SUID binaries
-blacklist /usr/lib/virtualbox
-blacklist /usr/lib64/virtualbox
+deny  /usr/lib/virtualbox
+deny  /usr/lib64/virtualbox
 
 # prevent lxterminal connecting to an existing lxterminal session
-blacklist /tmp/.lxterminal-socket*
+deny  /tmp/.lxterminal-socket*
 # prevent tmux connecting to an existing session
-blacklist /tmp/tmux-*
+deny  /tmp/tmux-*
 
 # disable terminals running as server resulting in sandbox escape
-blacklist ${PATH}/lxterminal
-blacklist ${PATH}/gnome-terminal
-blacklist ${PATH}/gnome-terminal.wrapper
-blacklist ${PATH}/lilyterm
-blacklist ${PATH}/mate-terminal
-blacklist ${PATH}/mate-terminal.wrapper
-blacklist ${PATH}/pantheon-terminal
-blacklist ${PATH}/roxterm
-blacklist ${PATH}/roxterm-config
-blacklist ${PATH}/terminix
-blacklist ${PATH}/tilix
-blacklist ${PATH}/urxvtc
-blacklist ${PATH}/urxvtcd
-blacklist ${PATH}/xfce4-terminal
-blacklist ${PATH}/xfce4-terminal.wrapper
+deny  ${PATH}/lxterminal
+deny  ${PATH}/gnome-terminal
+deny  ${PATH}/gnome-terminal.wrapper
+deny  ${PATH}/lilyterm
+deny  ${PATH}/mate-terminal
+deny  ${PATH}/mate-terminal.wrapper
+deny  ${PATH}/pantheon-terminal
+deny  ${PATH}/roxterm
+deny  ${PATH}/roxterm-config
+deny  ${PATH}/terminix
+deny  ${PATH}/tilix
+deny  ${PATH}/urxvtc
+deny  ${PATH}/urxvtcd
+deny  ${PATH}/xfce4-terminal
+deny  ${PATH}/xfce4-terminal.wrapper
 # blacklist ${PATH}/konsole
 # konsole doesn't seem to have this problem - last tested on Ubuntu 16.04
 
 # kernel files
-blacklist /initrd*
-blacklist /vmlinuz*
+deny  /initrd*
+deny  /vmlinuz*
 
 # snapshot files
-blacklist /.snapshots
+deny  /.snapshots
 
 # flatpak
-blacklist ${HOME}/.cache/flatpak
-blacklist ${HOME}/.config/flatpak
-noblacklist ${HOME}/.local/share/flatpak/exports
+deny  ${HOME}/.cache/flatpak
+deny  ${HOME}/.config/flatpak
+nodeny  ${HOME}/.local/share/flatpak/exports
 read-only ${HOME}/.local/share/flatpak/exports
-blacklist ${HOME}/.local/share/flatpak/*
-blacklist ${HOME}/.var
-blacklist ${RUNUSER}/app
-blacklist ${RUNUSER}/doc
-blacklist ${RUNUSER}/.dbus-proxy
-blacklist ${RUNUSER}/.flatpak
-blacklist ${RUNUSER}/.flatpak-cache
-blacklist ${RUNUSER}/.flatpak-helper
-blacklist /usr/share/flatpak
-noblacklist /var/lib/flatpak/exports
-blacklist /var/lib/flatpak/*
+deny  ${HOME}/.local/share/flatpak/*
+deny  ${HOME}/.var
+deny  ${RUNUSER}/app
+deny  ${RUNUSER}/doc
+deny  ${RUNUSER}/.dbus-proxy
+deny  ${RUNUSER}/.flatpak
+deny  ${RUNUSER}/.flatpak-cache
+deny  ${RUNUSER}/.flatpak-helper
+deny  /usr/share/flatpak
+nodeny  /var/lib/flatpak/exports
+deny  /var/lib/flatpak/*
 # most of the time bwrap is SUID binary
-blacklist ${PATH}/bwrap
+deny  ${PATH}/bwrap
 
 # snap
-blacklist ${RUNUSER}/snapd-session-agent.socket
+deny  ${RUNUSER}/snapd-session-agent.socket
 
 # mail directories used by mutt
-blacklist ${HOME}/.Mail
-blacklist ${HOME}/.mail
-blacklist ${HOME}/.signature
-blacklist ${HOME}/Mail
-blacklist ${HOME}/mail
-blacklist ${HOME}/postponed
-blacklist ${HOME}/sent
+deny  ${HOME}/.Mail
+deny  ${HOME}/.mail
+deny  ${HOME}/.signature
+deny  ${HOME}/Mail
+deny  ${HOME}/mail
+deny  ${HOME}/postponed
+deny  ${HOME}/sent
 
 # kernel configuration
-blacklist /proc/config.gz
+deny  /proc/config.gz
 
 # prevent DNS malware attempting to communicate with the server
 # using regular DNS tools
-blacklist ${PATH}/dig
-blacklist ${PATH}/dlint
-blacklist ${PATH}/dns2tcp
-blacklist ${PATH}/dnssec-*
-blacklist ${PATH}/dnswalk
-blacklist ${PATH}/drill
-blacklist ${PATH}/host
-blacklist ${PATH}/iodine
-blacklist ${PATH}/kdig
-blacklist ${PATH}/khost
-blacklist ${PATH}/knsupdate
-blacklist ${PATH}/ldns-*
-blacklist ${PATH}/ldnsd
-blacklist ${PATH}/nslookup
-blacklist ${PATH}/resolvectl
-blacklist ${PATH}/unbound-host
+deny  ${PATH}/dig
+deny  ${PATH}/dlint
+deny  ${PATH}/dns2tcp
+deny  ${PATH}/dnssec-*
+deny  ${PATH}/dnswalk
+deny  ${PATH}/drill
+deny  ${PATH}/host
+deny  ${PATH}/iodine
+deny  ${PATH}/kdig
+deny  ${PATH}/khost
+deny  ${PATH}/knsupdate
+deny  ${PATH}/ldns-*
+deny  ${PATH}/ldnsd
+deny  ${PATH}/nslookup
+deny  ${PATH}/resolvectl
+deny  ${PATH}/unbound-host
 
 # rest of ${RUNUSER}
-blacklist ${RUNUSER}/*.lock
-blacklist ${RUNUSER}/inaccessible
-blacklist ${RUNUSER}/pk-debconf-socket
-blacklist ${RUNUSER}/update-notifier.pid
+deny  ${RUNUSER}/*.lock
+deny  ${RUNUSER}/inaccessible
+deny  ${RUNUSER}/pk-debconf-socket
+deny  ${RUNUSER}/update-notifier.pid

@@ -6,10 +6,10 @@ include xiphos.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.sword
-noblacklist ${HOME}/.xiphos
+nodeny  ${HOME}/.sword
+nodeny  ${HOME}/.xiphos
 
-blacklist ${HOME}/.bashrc
+deny  ${HOME}/.bashrc
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,8 +21,8 @@ include disable-shell.inc
 
 mkdir ${HOME}/.sword
 mkdir ${HOME}/.xiphos
-whitelist ${HOME}/.sword
-whitelist ${HOME}/.xiphos
+allow  ${HOME}/.sword
+allow  ${HOME}/.xiphos
 include whitelist-common.inc
 include whitelist-var-common.inc
 

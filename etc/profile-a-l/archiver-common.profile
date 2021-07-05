@@ -4,7 +4,7 @@ include archiver-common.local
 
 # common profile for archiver/compression tools
 
-blacklist ${RUNUSER}
+deny  ${RUNUSER}
 
 # Comment/uncomment the relevant include file(s) in your archiver-common.local
 # to (un)restrict file access for **all** archivers. Another option is to do this **per archiver**

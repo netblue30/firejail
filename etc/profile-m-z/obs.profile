@@ -5,10 +5,10 @@ include obs.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/obs-studio
-noblacklist ${MUSIC}
-noblacklist ${PICTURES}
-noblacklist ${VIDEOS}
+nodeny  ${HOME}/.config/obs-studio
+nodeny  ${MUSIC}
+nodeny  ${PICTURES}
+nodeny  ${VIDEOS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

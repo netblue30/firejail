@@ -6,16 +6,16 @@ include fossamail.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.cache/fossamail
-noblacklist ${HOME}/.fossamail
-noblacklist ${HOME}/.gnupg
+nodeny  ${HOME}/.cache/fossamail
+nodeny  ${HOME}/.fossamail
+nodeny  ${HOME}/.gnupg
 
 mkdir ${HOME}/.cache/fossamail
 mkdir ${HOME}/.fossamail
 mkdir ${HOME}/.gnupg
-whitelist ${HOME}/.cache/fossamail
-whitelist ${HOME}/.fossamail
-whitelist ${HOME}/.gnupg
+allow  ${HOME}/.cache/fossamail
+allow  ${HOME}/.fossamail
+allow  ${HOME}/.gnupg
 include whitelist-common.inc
 
 # allow browsers

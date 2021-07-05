@@ -6,8 +6,8 @@ include klavaro.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/klavaro
-noblacklist ${HOME}/.local/share/klavaro
+nodeny  ${HOME}/.config/klavaro
+nodeny  ${HOME}/.local/share/klavaro
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,8 +19,8 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/klavaro
 mkdir ${HOME}/.config/klavaro
-whitelist ${HOME}/.local/share/klavaro
-whitelist ${HOME}/.config/klavaro
+allow  ${HOME}/.local/share/klavaro
+allow  ${HOME}/.config/klavaro
 include whitelist-common.inc
 include whitelist-var-common.inc
 

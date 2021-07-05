@@ -6,14 +6,14 @@ include smtube.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/smplayer
-noblacklist ${HOME}/.config/smtube
-noblacklist ${HOME}/.config/mpv
-noblacklist ${HOME}/.mplayer
-noblacklist ${HOME}/.config/vlc
-noblacklist ${HOME}/.local/share/vlc
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
+nodeny  ${HOME}/.config/smplayer
+nodeny  ${HOME}/.config/smtube
+nodeny  ${HOME}/.config/mpv
+nodeny  ${HOME}/.mplayer
+nodeny  ${HOME}/.config/vlc
+nodeny  ${HOME}/.local/share/vlc
+nodeny  ${MUSIC}
+nodeny  ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -23,8 +23,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist /usr/share/smplayer
-whitelist /usr/share/smtube
+allow  /usr/share/smplayer
+allow  /usr/share/smtube
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

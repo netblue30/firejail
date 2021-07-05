@@ -21,7 +21,7 @@ ignore dbus-system none
 ignore apparmor
 ignore noexec /tmp
 
-noblacklist ${HOME}/.config/skypeforlinux
+nodeny  ${HOME}/.config/skypeforlinux
 
 # private-dev - needs /dev/disk
 

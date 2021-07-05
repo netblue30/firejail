@@ -6,9 +6,9 @@ include musictube.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/Flavio Tordini
-noblacklist ${HOME}/.config/Flavio Tordini
-noblacklist ${HOME}/.local/share/Flavio Tordini
+nodeny  ${HOME}/.cache/Flavio Tordini
+nodeny  ${HOME}/.config/Flavio Tordini
+nodeny  ${HOME}/.local/share/Flavio Tordini
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,10 +22,10 @@ include disable-xdg.inc
 mkdir ${HOME}/.cache/Flavio Tordini
 mkdir ${HOME}/.config/Flavio Tordini
 mkdir ${HOME}/.local/share/Flavio Tordini
-whitelist ${HOME}/.cache/Flavio Tordini
-whitelist ${HOME}/.config/Flavio Tordini
-whitelist ${HOME}/.local/share/Flavio Tordini
-whitelist /usr/share/musictube
+allow  ${HOME}/.cache/Flavio Tordini
+allow  ${HOME}/.config/Flavio Tordini
+allow  ${HOME}/.local/share/Flavio Tordini
+allow  /usr/share/musictube
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

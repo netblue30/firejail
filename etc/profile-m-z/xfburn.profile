@@ -6,7 +6,7 @@ include xfburn.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/xfburn
+nodeny  ${HOME}/.config/xfburn
 
 include disable-common.inc
 include disable-devel.inc

@@ -5,13 +5,13 @@ include waterfox.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/waterfox
-noblacklist ${HOME}/.waterfox
+nodeny  ${HOME}/.cache/waterfox
+nodeny  ${HOME}/.waterfox
 
 mkdir ${HOME}/.cache/waterfox
 mkdir ${HOME}/.waterfox
-whitelist ${HOME}/.cache/waterfox
-whitelist ${HOME}/.waterfox
+allow  ${HOME}/.cache/waterfox
+allow  ${HOME}/.waterfox
 
 # Add the next lines to your watefox.local if you want to use the migration wizard.
 #noblacklist ${HOME}/.mozilla

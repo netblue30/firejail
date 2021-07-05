@@ -6,7 +6,7 @@ include transgui.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/transgui
+nodeny  ${HOME}/.config/transgui
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/transgui
-whitelist ${HOME}/.config/transgui
-whitelist ${DOWNLOADS}
+allow  ${HOME}/.config/transgui
+allow  ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

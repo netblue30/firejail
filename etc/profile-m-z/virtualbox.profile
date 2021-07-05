@@ -6,12 +6,12 @@ include virtualbox.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.VirtualBox
-noblacklist ${HOME}/.config/VirtualBox
-noblacklist ${HOME}/VirtualBox VMs
+nodeny  ${HOME}/.VirtualBox
+nodeny  ${HOME}/.config/VirtualBox
+nodeny  ${HOME}/VirtualBox VMs
 # noblacklist /usr/bin/virtualbox
-noblacklist /usr/lib/virtualbox
-noblacklist /usr/lib64/virtualbox
+nodeny  /usr/lib/virtualbox
+nodeny  /usr/lib64/virtualbox
 
 include disable-common.inc
 include disable-devel.inc
@@ -23,10 +23,10 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/VirtualBox
 mkdir ${HOME}/VirtualBox VMs
-whitelist ${HOME}/.config/VirtualBox
-whitelist ${HOME}/VirtualBox VMs
-whitelist ${DOWNLOADS}
-whitelist /usr/share/virtualbox
+allow  ${HOME}/.config/VirtualBox
+allow  ${HOME}/VirtualBox VMs
+allow  ${DOWNLOADS}
+allow  /usr/share/virtualbox
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

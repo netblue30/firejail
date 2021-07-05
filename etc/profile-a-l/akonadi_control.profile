@@ -4,22 +4,22 @@ include akonadi_control.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/akonadi*
-noblacklist ${HOME}/.config/akonadi*
-noblacklist ${HOME}/.config/baloorc
-noblacklist ${HOME}/.config/emaildefaults
-noblacklist ${HOME}/.config/emailidentities
-noblacklist ${HOME}/.config/kmail2rc
-noblacklist ${HOME}/.config/mailtransports
-noblacklist ${HOME}/.config/specialmailcollectionsrc
-noblacklist ${HOME}/.local/share/akonadi*
-noblacklist ${HOME}/.local/share/apps/korganizer
-noblacklist ${HOME}/.local/share/contacts
-noblacklist ${HOME}/.local/share/local-mail
-noblacklist ${HOME}/.local/share/notes
-noblacklist /sbin
-noblacklist /tmp/akonadi-*
-noblacklist /usr/sbin
+nodeny  ${HOME}/.cache/akonadi*
+nodeny  ${HOME}/.config/akonadi*
+nodeny  ${HOME}/.config/baloorc
+nodeny  ${HOME}/.config/emaildefaults
+nodeny  ${HOME}/.config/emailidentities
+nodeny  ${HOME}/.config/kmail2rc
+nodeny  ${HOME}/.config/mailtransports
+nodeny  ${HOME}/.config/specialmailcollectionsrc
+nodeny  ${HOME}/.local/share/akonadi*
+nodeny  ${HOME}/.local/share/apps/korganizer
+nodeny  ${HOME}/.local/share/contacts
+nodeny  ${HOME}/.local/share/local-mail
+nodeny  ${HOME}/.local/share/notes
+nodeny  /sbin
+nodeny  /tmp/akonadi-*
+nodeny  /usr/sbin
 
 include disable-common.inc
 include disable-devel.inc

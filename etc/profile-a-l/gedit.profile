@@ -6,8 +6,8 @@ include gedit.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/enchant
-noblacklist ${HOME}/.config/gedit
+nodeny  ${HOME}/.config/enchant
+nodeny  ${HOME}/.config/gedit
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc

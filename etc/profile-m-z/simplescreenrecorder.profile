@@ -6,8 +6,8 @@ include simplescreenrecorder.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${VIDEOS}
-noblacklist ${HOME}/.ssr
+nodeny  ${VIDEOS}
+nodeny  ${HOME}/.ssr
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,7 +17,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist /usr/share/simplescreenrecorder
+allow  /usr/share/simplescreenrecorder
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

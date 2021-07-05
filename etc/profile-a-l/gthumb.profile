@@ -6,9 +6,9 @@ include gthumb.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/gthumb
-noblacklist ${HOME}/.Steam
-noblacklist ${HOME}/.steam
+nodeny  ${HOME}/.config/gthumb
+nodeny  ${HOME}/.Steam
+nodeny  ${HOME}/.steam
 
 include disable-common.inc
 include disable-devel.inc

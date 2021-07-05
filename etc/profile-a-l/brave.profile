@@ -14,24 +14,24 @@ ignore noexec /tmp
 # Alternatively you can add 'ignore apparmor' to your brave.local.
 ignore noexec ${HOME}
 
-noblacklist ${HOME}/.cache/BraveSoftware
-noblacklist ${HOME}/.config/BraveSoftware
-noblacklist ${HOME}/.config/brave
-noblacklist ${HOME}/.config/brave-flags.conf
+nodeny  ${HOME}/.cache/BraveSoftware
+nodeny  ${HOME}/.config/BraveSoftware
+nodeny  ${HOME}/.config/brave
+nodeny  ${HOME}/.config/brave-flags.conf
 # brave uses gpg for built-in password manager
-noblacklist ${HOME}/.gnupg
+nodeny  ${HOME}/.gnupg
 
 mkdir ${HOME}/.cache/BraveSoftware
 mkdir ${HOME}/.config/BraveSoftware
 mkdir ${HOME}/.config/brave
-whitelist ${HOME}/.cache/BraveSoftware
-whitelist ${HOME}/.config/BraveSoftware
-whitelist ${HOME}/.config/brave
-whitelist ${HOME}/.config/brave-flags.conf
-whitelist ${HOME}/.gnupg
+allow  ${HOME}/.cache/BraveSoftware
+allow  ${HOME}/.config/BraveSoftware
+allow  ${HOME}/.config/brave
+allow  ${HOME}/.config/brave-flags.conf
+allow  ${HOME}/.gnupg
 
 # Brave sandbox needs read access to /proc/config.gz
-noblacklist /proc/config.gz
+nodeny  /proc/config.gz
 
 # Redirect
 include chromium-common.profile

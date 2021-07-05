@@ -6,15 +6,15 @@ include evolution.local
 # Persistent global definitions
 include globals.local
 
-noblacklist /var/mail
-noblacklist /var/spool/mail
-noblacklist ${HOME}/.bogofilter
-noblacklist ${HOME}/.cache/evolution
-noblacklist ${HOME}/.config/evolution
-noblacklist ${HOME}/.gnupg
-noblacklist ${HOME}/.local/share/evolution
-noblacklist ${HOME}/.pki
-noblacklist ${HOME}/.local/share/pki
+nodeny  /var/mail
+nodeny  /var/spool/mail
+nodeny  ${HOME}/.bogofilter
+nodeny  ${HOME}/.cache/evolution
+nodeny  ${HOME}/.config/evolution
+nodeny  ${HOME}/.gnupg
+nodeny  ${HOME}/.local/share/evolution
+nodeny  ${HOME}/.pki
+nodeny  ${HOME}/.local/share/pki
 
 include disable-common.inc
 include disable-devel.inc

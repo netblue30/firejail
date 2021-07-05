@@ -5,8 +5,8 @@ include macrofusion.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/mfusion
-noblacklist ${PICTURES}
+nodeny  ${HOME}/.config/mfusion
+nodeny  ${PICTURES}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

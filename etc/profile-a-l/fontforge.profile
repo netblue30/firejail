@@ -6,8 +6,8 @@ include fontforge.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.FontForge
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.FontForge
+nodeny  ${DOCUMENTS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

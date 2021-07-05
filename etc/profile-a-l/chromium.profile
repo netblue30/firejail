@@ -6,17 +6,17 @@ include chromium.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/chromium
-noblacklist ${HOME}/.config/chromium
-noblacklist ${HOME}/.config/chromium-flags.conf
+nodeny  ${HOME}/.cache/chromium
+nodeny  ${HOME}/.config/chromium
+nodeny  ${HOME}/.config/chromium-flags.conf
 
 mkdir ${HOME}/.cache/chromium
 mkdir ${HOME}/.config/chromium
-whitelist ${HOME}/.cache/chromium
-whitelist ${HOME}/.config/chromium
-whitelist ${HOME}/.config/chromium-flags.conf
-whitelist /usr/share/chromium
-whitelist /usr/share/mozilla/extensions
+allow  ${HOME}/.cache/chromium
+allow  ${HOME}/.config/chromium
+allow  ${HOME}/.config/chromium-flags.conf
+allow  /usr/share/chromium
+allow  /usr/share/mozilla/extensions
 
 # private-bin chromium,chromium-browser,chromedriver
 

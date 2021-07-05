@@ -8,8 +8,8 @@ include gtk2-youtube-viewer.local
 
 ignore quiet
 
-noblacklist /tmp/.X11-unix
-noblacklist ${RUNUSER}
+nodeny  /tmp/.X11-unix
+nodeny  ${RUNUSER}
 
 include whitelist-runuser-common.inc
 

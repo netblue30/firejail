@@ -9,9 +9,9 @@ include globals.local
 # Note: Epiphany use bwrap since 3.34 and can not be firejailed any more.
 # See https://github.com/netblue30/firejail/issues/2995
 
-noblacklist ${HOME}/.cache/epiphany
-noblacklist ${HOME}/.config/epiphany
-noblacklist ${HOME}/.local/share/epiphany
+nodeny  ${HOME}/.cache/epiphany
+nodeny  ${HOME}/.config/epiphany
+nodeny  ${HOME}/.local/share/epiphany
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,10 +21,10 @@ include disable-programs.inc
 mkdir ${HOME}/.cache/epiphany
 mkdir ${HOME}/.config/epiphany
 mkdir ${HOME}/.local/share/epiphany
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.cache/epiphany
-whitelist ${HOME}/.config/epiphany
-whitelist ${HOME}/.local/share/epiphany
+allow  ${DOWNLOADS}
+allow  ${HOME}/.cache/epiphany
+allow  ${HOME}/.config/epiphany
+allow  ${HOME}/.local/share/epiphany
 include whitelist-common.inc
 
 caps.drop all

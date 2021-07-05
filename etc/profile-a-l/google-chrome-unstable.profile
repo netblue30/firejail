@@ -10,19 +10,19 @@ ignore whitelist /usr/share/chromium
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 
-noblacklist ${HOME}/.cache/google-chrome-unstable
-noblacklist ${HOME}/.config/google-chrome-unstable
+nodeny  ${HOME}/.cache/google-chrome-unstable
+nodeny  ${HOME}/.config/google-chrome-unstable
 
-noblacklist ${HOME}/.config/chrome-unstable-flags.conf
-noblacklist ${HOME}/.config/chrome-unstable-flags.config
+nodeny  ${HOME}/.config/chrome-unstable-flags.conf
+nodeny  ${HOME}/.config/chrome-unstable-flags.config
 
 mkdir ${HOME}/.cache/google-chrome-unstable
 mkdir ${HOME}/.config/google-chrome-unstable
-whitelist ${HOME}/.cache/google-chrome-unstable
-whitelist ${HOME}/.config/google-chrome-unstable
+allow  ${HOME}/.cache/google-chrome-unstable
+allow  ${HOME}/.config/google-chrome-unstable
 
-whitelist ${HOME}/.config/chrome-unstable-flags.conf
-whitelist ${HOME}/.config/chrome-unstable-flags.config
+allow  ${HOME}/.config/chrome-unstable-flags.conf
+allow  ${HOME}/.config/chrome-unstable-flags.config
 
 # Redirect
 include chromium-common.profile

@@ -7,10 +7,10 @@ include man.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}
+deny  ${RUNUSER}
 
-noblacklist ${HOME}/.local/share/man
-noblacklist ${HOME}/.rustup
+nodeny  ${HOME}/.local/share/man
+nodeny  ${HOME}/.rustup
 
 include disable-common.inc
 include disable-devel.inc
@@ -23,12 +23,12 @@ include disable-xdg.inc
 #mkdir ${HOME}/.local/share/man
 #whitelist ${HOME}/.local/share/man
 #whitelist ${HOME}/.manpath
-whitelist /usr/share/groff
-whitelist /usr/share/info
-whitelist /usr/share/lintian
-whitelist /usr/share/locale
-whitelist /usr/share/man
-whitelist /var/cache/man
+allow  /usr/share/groff
+allow  /usr/share/info
+allow  /usr/share/lintian
+allow  /usr/share/locale
+allow  /usr/share/man
+allow  /var/cache/man
 #include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

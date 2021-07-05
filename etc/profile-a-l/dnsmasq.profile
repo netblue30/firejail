@@ -7,11 +7,11 @@ include dnsmasq.local
 # Persistent global definitions
 include globals.local
 
-noblacklist /sbin
-noblacklist /usr/sbin
+nodeny  /sbin
+nodeny  /usr/sbin
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

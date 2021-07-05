@@ -5,12 +5,12 @@ include ardour5.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/ardour4
-noblacklist ${HOME}/.config/ardour5
-noblacklist ${HOME}/.lv2
-noblacklist ${HOME}/.vst
-noblacklist ${DOCUMENTS}
-noblacklist ${MUSIC}
+nodeny  ${HOME}/.config/ardour4
+nodeny  ${HOME}/.config/ardour5
+nodeny  ${HOME}/.lv2
+nodeny  ${HOME}/.vst
+nodeny  ${DOCUMENTS}
+nodeny  ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

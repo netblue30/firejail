@@ -5,13 +5,13 @@ include aosp.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.android
-noblacklist ${HOME}/.bash_history
-noblacklist ${HOME}/.jack-server
-noblacklist ${HOME}/.jack-settings
-noblacklist ${HOME}/.repo_.gitconfig.json
-noblacklist ${HOME}/.repoconfig
-noblacklist ${HOME}/.tooling
+nodeny  ${HOME}/.android
+nodeny  ${HOME}/.bash_history
+nodeny  ${HOME}/.jack-server
+nodeny  ${HOME}/.jack-settings
+nodeny  ${HOME}/.repo_.gitconfig.json
+nodeny  ${HOME}/.repoconfig
+nodeny  ${HOME}/.tooling
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc

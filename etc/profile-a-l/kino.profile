@@ -6,8 +6,8 @@ include kino.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.kino-history
-noblacklist ${HOME}/.kinorc
+nodeny  ${HOME}/.kino-history
+nodeny  ${HOME}/.kinorc
 
 include disable-common.inc
 include disable-devel.inc

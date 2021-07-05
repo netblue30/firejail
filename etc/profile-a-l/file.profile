@@ -7,7 +7,7 @@ include file.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}
+deny  ${RUNUSER}
 
 include disable-common.inc
 include disable-exec.inc

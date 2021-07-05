@@ -6,8 +6,8 @@ include fbreader.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.FBReader
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.FBReader
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

@@ -18,13 +18,13 @@ include globals.local
 # If you are not using external plugins, you can add 'noexec ${HOME}' to your gimp.local.
 ignore noexec ${HOME}
 
-noblacklist ${HOME}/.cache/babl
-noblacklist ${HOME}/.cache/gegl-0.4
-noblacklist ${HOME}/.cache/gimp
-noblacklist ${HOME}/.config/GIMP
-noblacklist ${HOME}/.gimp*
-noblacklist ${DOCUMENTS}
-noblacklist ${PICTURES}
+nodeny  ${HOME}/.cache/babl
+nodeny  ${HOME}/.cache/gegl-0.4
+nodeny  ${HOME}/.cache/gimp
+nodeny  ${HOME}/.config/GIMP
+nodeny  ${HOME}/.gimp*
+nodeny  ${DOCUMENTS}
+nodeny  ${PICTURES}
 
 include disable-common.inc
 include disable-exec.inc
@@ -33,10 +33,10 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist /usr/share/gegl-0.4
-whitelist /usr/share/gimp
-whitelist /usr/share/mypaint-data
-whitelist /usr/share/lensfun
+allow  /usr/share/gegl-0.4
+allow  /usr/share/gimp
+allow  /usr/share/mypaint-data
+allow  /usr/share/lensfun
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

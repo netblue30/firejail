@@ -6,9 +6,9 @@ include handbrake.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/ghb
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
+nodeny  ${HOME}/.config/ghb
+nodeny  ${MUSIC}
+nodeny  ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc

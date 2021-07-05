@@ -6,11 +6,11 @@ include keepassx.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/*.kdb
-noblacklist ${HOME}/*.kdbx
-noblacklist ${HOME}/.config/keepassx
-noblacklist ${HOME}/.keepassx
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/*.kdb
+nodeny  ${HOME}/*.kdbx
+nodeny  ${HOME}/.config/keepassx
+nodeny  ${HOME}/.keepassx
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

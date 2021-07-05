@@ -6,8 +6,8 @@ include masterpdfeditor.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/Code Industry
-noblacklist ${HOME}/.masterpdfeditor
+nodeny  ${HOME}/.config/Code Industry
+nodeny  ${HOME}/.masterpdfeditor
 
 include disable-common.inc
 include disable-devel.inc

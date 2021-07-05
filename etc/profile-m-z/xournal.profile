@@ -6,7 +6,7 @@ include xournal.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${DOCUMENTS}
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,8 +17,8 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/share/xournal
-whitelist /usr/share/poppler
+allow  /usr/share/xournal
+allow  /usr/share/poppler
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

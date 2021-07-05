@@ -6,7 +6,7 @@ include gpicview.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/gpicview
+nodeny  ${HOME}/.config/gpicview
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,7 +16,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 
-whitelist /usr/share/gpicview
+allow  /usr/share/gpicview
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

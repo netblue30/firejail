@@ -7,13 +7,13 @@ include straw-viewer.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/straw-viewer
-noblacklist ${HOME}/.config/straw-viewer
+nodeny  ${HOME}/.cache/straw-viewer
+nodeny  ${HOME}/.config/straw-viewer
 
 mkdir ${HOME}/.config/straw-viewer
 mkdir ${HOME}/.cache/straw-viewer
-whitelist ${HOME}/.cache/straw-viewer
-whitelist ${HOME}/.config/straw-viewer
+allow  ${HOME}/.cache/straw-viewer
+allow  ${HOME}/.config/straw-viewer
 
 private-bin gtk-straw-viewer,straw-viewer
 

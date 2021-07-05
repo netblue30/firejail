@@ -6,7 +6,7 @@ include jerry.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/dkl
+nodeny  ${HOME}/.config/dkl
 
 include disable-common.inc
 include disable-devel.inc

@@ -6,10 +6,10 @@ include mirage.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/mirage
-noblacklist ${HOME}/.config/mirage
-noblacklist ${HOME}/.local/share/mirage
-noblacklist /sbin
+nodeny  ${HOME}/.cache/mirage
+nodeny  ${HOME}/.config/mirage
+nodeny  ${HOME}/.local/share/mirage
+nodeny  /sbin
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -27,10 +27,10 @@ include disable-xdg.inc
 mkdir ${HOME}/.cache/mirage
 mkdir ${HOME}/.config/mirage
 mkdir ${HOME}/.local/share/mirage
-whitelist ${HOME}/.cache/mirage
-whitelist ${HOME}/.config/mirage
-whitelist ${HOME}/.local/share/mirage
-whitelist ${DOWNLOADS}
+allow  ${HOME}/.cache/mirage
+allow  ${HOME}/.config/mirage
+allow  ${HOME}/.local/share/mirage
+allow  ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

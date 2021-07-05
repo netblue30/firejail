@@ -6,13 +6,13 @@ include mendeleydesktop.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${DOCUMENTS}
-noblacklist ${HOME}/.cache/Mendeley Ltd.
-noblacklist ${HOME}/.config/Mendeley Ltd.
-noblacklist ${HOME}/.local/share/Mendeley Ltd.
-noblacklist ${HOME}/.local/share/data/Mendeley Ltd.
-noblacklist ${HOME}/.pki
-noblacklist ${HOME}/.local/share/pki
+nodeny  ${DOCUMENTS}
+nodeny  ${HOME}/.cache/Mendeley Ltd.
+nodeny  ${HOME}/.config/Mendeley Ltd.
+nodeny  ${HOME}/.local/share/Mendeley Ltd.
+nodeny  ${HOME}/.local/share/data/Mendeley Ltd.
+nodeny  ${HOME}/.pki
+nodeny  ${HOME}/.local/share/pki
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

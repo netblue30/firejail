@@ -6,8 +6,8 @@ include simple-scan.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/simple-scan
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.cache/simple-scan
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,8 +16,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist /usr/share/hplip
-whitelist /usr/share/simple-scan
+allow  /usr/share/hplip
+allow  /usr/share/simple-scan
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

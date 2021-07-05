@@ -11,14 +11,14 @@ include globals.local
 
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
-noblacklist ${HOME}/.cache/champlain
-noblacklist ${HOME}/.cache/org.gnome.Maps
-noblacklist ${HOME}/.local/share/maps-places.json
+nodeny  ${HOME}/.cache/champlain
+nodeny  ${HOME}/.cache/org.gnome.Maps
+nodeny  ${HOME}/.local/share/maps-places.json
 
 # Allow gjs (blacklisted by disable-interpreters.inc)
 include allow-gjs.inc
 
-blacklist /usr/libexec
+deny  /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -31,12 +31,12 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/champlain
 mkfile ${HOME}/.local/share/maps-places.json
-whitelist ${HOME}/.cache/champlain
-whitelist ${HOME}/.local/share/maps-places.json
-whitelist ${DOWNLOADS}
-whitelist ${PICTURES}
-whitelist /usr/share/gnome-maps
-whitelist /usr/share/libgweather
+allow  ${HOME}/.cache/champlain
+allow  ${HOME}/.local/share/maps-places.json
+allow  ${DOWNLOADS}
+allow  ${PICTURES}
+allow  /usr/share/gnome-maps
+allow  /usr/share/libgweather
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

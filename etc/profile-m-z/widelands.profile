@@ -6,7 +6,7 @@ include widelands.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.widelands
+nodeny  ${HOME}/.widelands
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +18,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.widelands
-whitelist ${HOME}/.widelands
+allow  ${HOME}/.widelands
 include whitelist-common.inc
 include whitelist-var-common.inc
 

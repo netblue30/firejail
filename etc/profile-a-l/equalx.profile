@@ -6,8 +6,8 @@ include equalx.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/equalx
-noblacklist ${HOME}/.equalx
+nodeny  ${HOME}/.config/equalx
+nodeny  ${HOME}/.equalx
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,13 +20,13 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/equalx
 mkdir ${HOME}/.equalx
-whitelist ${HOME}/.config/equalx
-whitelist ${HOME}/.equalx
-whitelist /usr/share/poppler
-whitelist /usr/share/ghostscript
-whitelist /usr/share/texlive
-whitelist /usr/share/equalx
-whitelist /var/lib/texmf
+allow  ${HOME}/.config/equalx
+allow  ${HOME}/.equalx
+allow  /usr/share/poppler
+allow  /usr/share/ghostscript
+allow  /usr/share/texlive
+allow  /usr/share/equalx
+allow  /var/lib/texmf
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

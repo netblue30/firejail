@@ -6,7 +6,7 @@ include firefox-esr.local
 # added by included profile
 #include globals.local
 
-whitelist /usr/share/firefox-esr
+allow  /usr/share/firefox-esr
 
 # Redirect
 include firefox.profile

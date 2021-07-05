@@ -6,7 +6,7 @@ include calligrastage.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.local/share/kxmlgui5/calligrastage
+nodeny  ${HOME}/.local/share/kxmlgui5/calligrastage
 
 # Redirect
 include calligra.profile

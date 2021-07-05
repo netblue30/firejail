@@ -8,8 +8,8 @@ include globals.local
 
 ignore noexec ${HOME}
 
-noblacklist ${HOME}/.cache/warsow-2.1
-noblacklist ${HOME}/.local/share/warsow-2.1
+nodeny  ${HOME}/.cache/warsow-2.1
+nodeny  ${HOME}/.local/share/warsow-2.1
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,9 +22,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/warsow-2.1
 mkdir ${HOME}/.local/share/warsow-2.1
-whitelist ${HOME}/.cache/warsow-2.1
-whitelist ${HOME}/.local/share/warsow-2.1
-whitelist /usr/share/warsow
+allow  ${HOME}/.cache/warsow-2.1
+allow  ${HOME}/.local/share/warsow-2.1
+allow  /usr/share/warsow
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

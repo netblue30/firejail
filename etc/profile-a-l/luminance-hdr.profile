@@ -6,8 +6,8 @@ include luminance-hdr.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/Luminance
-noblacklist ${PICTURES}
+nodeny  ${HOME}/.config/Luminance
+nodeny  ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc

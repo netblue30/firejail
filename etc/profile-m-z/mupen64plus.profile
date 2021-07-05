@@ -6,8 +6,8 @@ include mupen64plus.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/mupen64plus
-noblacklist ${HOME}/.local/share/mupen64plus
+nodeny  ${HOME}/.config/mupen64plus
+nodeny  ${HOME}/.local/share/mupen64plus
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-programs.inc
 # you'll need to manually whitelist ROM files
 mkdir ${HOME}/.config/mupen64plus
 mkdir ${HOME}/.local/share/mupen64plus
-whitelist ${HOME}/.config/mupen64plus
-whitelist ${HOME}/.local/share/mupen64plus
+allow  ${HOME}/.config/mupen64plus
+allow  ${HOME}/.local/share/mupen64plus
 include whitelist-common.inc
 
 caps.drop all

@@ -2,11 +2,11 @@
 # Persistent customizations should go in a .local file.
 include allow-lua.local
 
-noblacklist ${PATH}/lua*
-noblacklist /usr/include
-noblacklist /usr/lib/liblua*
-noblacklist /usr/lib/lua
-noblacklist /usr/lib64/liblua*
-noblacklist /usr/lib64/lua
-noblacklist /usr/share/lua
-noblacklist /usr/share/lua*
+nodeny  ${PATH}/lua*
+nodeny  /usr/include
+nodeny  /usr/lib/liblua*
+nodeny  /usr/lib/lua
+nodeny  /usr/lib64/liblua*
+nodeny  /usr/lib64/lua
+nodeny  /usr/share/lua
+nodeny  /usr/share/lua*

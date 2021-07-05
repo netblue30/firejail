@@ -6,7 +6,7 @@ include qnapi.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/qnapi.ini
+nodeny  ${HOME}/.config/qnapi.ini
 
 ignore noexec /tmp
 
@@ -20,8 +20,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkfile ${HOME}/.config/qnapi.ini
-whitelist ${HOME}/.config/qnapi.ini
-whitelist ${DOWNLOADS}
+allow  ${HOME}/.config/qnapi.ini
+allow  ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc

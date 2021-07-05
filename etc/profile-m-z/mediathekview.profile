@@ -6,16 +6,16 @@ include mediathekview.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/mpv
-noblacklist ${HOME}/.config/smplayer
-noblacklist ${HOME}/.config/totem
-noblacklist ${HOME}/.config/vlc
-noblacklist ${HOME}/.config/xplayer
-noblacklist ${HOME}/.local/share/totem
-noblacklist ${HOME}/.local/share/xplayer
-noblacklist ${HOME}/.mediathek3
-noblacklist ${HOME}/.mplayer
-noblacklist ${VIDEOS}
+nodeny  ${HOME}/.config/mpv
+nodeny  ${HOME}/.config/smplayer
+nodeny  ${HOME}/.config/totem
+nodeny  ${HOME}/.config/vlc
+nodeny  ${HOME}/.config/xplayer
+nodeny  ${HOME}/.local/share/totem
+nodeny  ${HOME}/.local/share/xplayer
+nodeny  ${HOME}/.mediathek3
+nodeny  ${HOME}/.mplayer
+nodeny  ${VIDEOS}
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc

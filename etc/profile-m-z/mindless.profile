@@ -15,7 +15,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/share/mindless
+allow  /usr/share/mindless
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

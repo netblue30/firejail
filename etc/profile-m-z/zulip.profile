@@ -8,7 +8,7 @@ include globals.local
 
 ignore noexec /tmp
 
-noblacklist ${HOME}/.config/Zulip
+nodeny  ${HOME}/.config/Zulip
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,8 +20,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/Zulip
-whitelist ${HOME}/.config/Zulip
-whitelist ${DOWNLOADS}
+allow  ${HOME}/.config/Zulip
+allow  ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-var-common.inc
 

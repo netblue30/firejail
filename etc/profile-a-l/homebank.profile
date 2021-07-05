@@ -6,7 +6,7 @@ include homebank.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/homebank
+nodeny  ${HOME}/.config/homebank
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,9 +18,9 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/homebank
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.config/homebank
-whitelist /usr/share/homebank
+allow  ${DOWNLOADS}
+allow  ${HOME}/.config/homebank
+allow  /usr/share/homebank
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

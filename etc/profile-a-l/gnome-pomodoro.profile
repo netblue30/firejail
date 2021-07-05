@@ -6,7 +6,7 @@ include gnome-pomodoro.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/gnome-pomodoro
+nodeny  ${HOME}/.local/share/gnome-pomodoro
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,8 +17,8 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/gnome-pomodoro
-whitelist ${HOME}/.local/share/gnome-pomodoro
-whitelist /usr/share/gnome-pomodoro
+allow  ${HOME}/.local/share/gnome-pomodoro
+allow  /usr/share/gnome-pomodoro
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc

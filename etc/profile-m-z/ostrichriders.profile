@@ -6,7 +6,7 @@ include ostrichriders.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.ostrichriders
+nodeny  ${HOME}/.ostrichriders
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.ostrichriders
-whitelist ${HOME}/.ostrichriders
-whitelist /usr/share/ostrichriders
+allow  ${HOME}/.ostrichriders
+allow  /usr/share/ostrichriders
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

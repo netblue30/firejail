@@ -6,7 +6,7 @@ include torcs.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.torcs
+nodeny  ${HOME}/.torcs
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,9 +17,9 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.torcs
-whitelist ${HOME}/.torcs
-whitelist /usr/share/games/torcs
-whitelist /var/games/torcs
+allow  ${HOME}/.torcs
+allow  /usr/share/games/torcs
+allow  /var/games/torcs
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

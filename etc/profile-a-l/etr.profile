@@ -6,9 +6,9 @@ include etr.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.etr
+nodeny  ${HOME}/.etr
 
-blacklist /usr/libexec
+deny  /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,10 +20,10 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.etr
-whitelist ${HOME}/.etr
-whitelist /usr/share/etr
+allow  ${HOME}/.etr
+allow  /usr/share/etr
 # Debian version
-whitelist /usr/share/games/etr
+allow  /usr/share/games/etr
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

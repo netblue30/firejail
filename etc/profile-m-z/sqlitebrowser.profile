@@ -6,8 +6,8 @@ include sqlitebrowser.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/sqlitebrowser
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.config/sqlitebrowser
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

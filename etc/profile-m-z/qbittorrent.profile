@@ -6,10 +6,10 @@ include qbittorrent.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/qBittorrent
-noblacklist ${HOME}/.config/qBittorrent
-noblacklist ${HOME}/.config/qBittorrentrc
-noblacklist ${HOME}/.local/share/data/qBittorrent
+nodeny  ${HOME}/.cache/qBittorrent
+nodeny  ${HOME}/.config/qBittorrent
+nodeny  ${HOME}/.config/qBittorrentrc
+nodeny  ${HOME}/.local/share/data/qBittorrent
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -27,11 +27,11 @@ mkdir ${HOME}/.cache/qBittorrent
 mkdir ${HOME}/.config/qBittorrent
 mkfile ${HOME}/.config/qBittorrentrc
 mkdir ${HOME}/.local/share/data/qBittorrent
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.cache/qBittorrent
-whitelist ${HOME}/.config/qBittorrent
-whitelist ${HOME}/.config/qBittorrentrc
-whitelist ${HOME}/.local/share/data/qBittorrent
+allow  ${DOWNLOADS}
+allow  ${HOME}/.cache/qBittorrent
+allow  ${HOME}/.config/qBittorrent
+allow  ${HOME}/.config/qBittorrentrc
+allow  ${HOME}/.local/share/data/qBittorrent
 include whitelist-common.inc
 include whitelist-var-common.inc
 

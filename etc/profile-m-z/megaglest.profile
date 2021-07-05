@@ -6,7 +6,7 @@ include megaglest.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.megaglest
+nodeny  ${HOME}/.megaglest
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,9 +18,9 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.megaglest
-whitelist ${HOME}/.megaglest
-whitelist /usr/share/megaglest
-whitelist /usr/share/games/megaglest	# Debian version
+allow  ${HOME}/.megaglest
+allow  /usr/share/megaglest
+allow  /usr/share/games/megaglest	# Debian version
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

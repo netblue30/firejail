@@ -5,13 +5,13 @@ include cyberfox.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.8pecxstudios
-noblacklist ${HOME}/.cache/8pecxstudios
+nodeny  ${HOME}/.8pecxstudios
+nodeny  ${HOME}/.cache/8pecxstudios
 
 mkdir ${HOME}/.8pecxstudios
 mkdir ${HOME}/.cache/8pecxstudios
-whitelist ${HOME}/.8pecxstudios
-whitelist ${HOME}/.cache/8pecxstudios
+allow  ${HOME}/.8pecxstudios
+allow  ${HOME}/.cache/8pecxstudios
 
 # private-bin cyberfox,dbus-launch,dbus-send,env,sh,which
 # private-etc must first be enabled in firefox-common.profile

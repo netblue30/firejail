@@ -5,7 +5,7 @@ include musixmatch.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${MUSIC}
+nodeny  ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

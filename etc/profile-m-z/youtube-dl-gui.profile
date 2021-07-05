@@ -8,7 +8,7 @@ include globals.local
 include allow-python2.inc
 include allow-python3.inc
 
-noblacklist ${HOME}/.config/youtube-dlg
+nodeny  ${HOME}/.config/youtube-dlg
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,8 +20,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/youtube-dlg
-whitelist ${HOME}/.config/youtube-dlg
-whitelist ${DOWNLOADS}
+allow  ${HOME}/.config/youtube-dlg
+allow  ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

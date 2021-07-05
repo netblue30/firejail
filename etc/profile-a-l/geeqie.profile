@@ -6,9 +6,9 @@ include geeqie.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/geeqie
-noblacklist ${HOME}/.config/geeqie
-noblacklist ${HOME}/.local/share/geeqie
+nodeny  ${HOME}/.cache/geeqie
+nodeny  ${HOME}/.config/geeqie
+nodeny  ${HOME}/.local/share/geeqie
 
 include disable-common.inc
 include disable-devel.inc

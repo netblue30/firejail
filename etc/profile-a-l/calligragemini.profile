@@ -6,7 +6,7 @@ include calligragemini.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.local/share/calligragemini
+nodeny  ${HOME}/.local/share/calligragemini
 
 # Redirect
 include calligra.profile

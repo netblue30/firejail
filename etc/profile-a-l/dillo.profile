@@ -6,7 +6,7 @@ include dillo.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.dillo
+nodeny  ${HOME}/.dillo
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,9 +16,9 @@ include disable-programs.inc
 
 mkdir ${HOME}/.dillo
 mkdir ${HOME}/.fltk
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.dillo
-whitelist ${HOME}/.fltk
+allow  ${DOWNLOADS}
+allow  ${HOME}/.dillo
+allow  ${HOME}/.fltk
 include whitelist-common.inc
 include whitelist-var-common.inc
 

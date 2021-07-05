@@ -6,10 +6,10 @@ include freecol.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.freecol
-noblacklist ${HOME}/.cache/freecol
-noblacklist ${HOME}/.config/freecol
-noblacklist ${HOME}/.local/share/freecol
+nodeny  ${HOME}/.freecol
+nodeny  ${HOME}/.cache/freecol
+nodeny  ${HOME}/.config/freecol
+nodeny  ${HOME}/.local/share/freecol
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
@@ -26,11 +26,11 @@ mkdir ${HOME}/.java
 mkdir ${HOME}/.cache/freecol
 mkdir ${HOME}/.config/freecol
 mkdir ${HOME}/.local/share/freecol
-whitelist ${HOME}/.freecol
-whitelist ${HOME}/.java
-whitelist ${HOME}/.cache/freecol
-whitelist ${HOME}/.config/freecol
-whitelist ${HOME}/.local/share/freecol
+allow  ${HOME}/.freecol
+allow  ${HOME}/.java
+allow  ${HOME}/.cache/freecol
+allow  ${HOME}/.config/freecol
+allow  ${HOME}/.local/share/freecol
 include whitelist-common.inc
 include whitelist-var-common.inc
 

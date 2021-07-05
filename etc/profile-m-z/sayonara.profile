@@ -5,8 +5,8 @@ include sayonara.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.Sayonara
-noblacklist ${MUSIC}
+nodeny  ${HOME}/.Sayonara
+nodeny  ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

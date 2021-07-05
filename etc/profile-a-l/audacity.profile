@@ -6,9 +6,9 @@ include audacity.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.audacity-data
-noblacklist ${DOCUMENTS}
-noblacklist ${MUSIC}
+nodeny  ${HOME}/.audacity-data
+nodeny  ${DOCUMENTS}
+nodeny  ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

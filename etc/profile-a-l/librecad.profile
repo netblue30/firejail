@@ -4,8 +4,8 @@ include librecad.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/LibreCAD
-noblacklist ${HOME}/.local/share/LibreCAD
+nodeny  ${HOME}/.config/LibreCAD
+nodeny  ${HOME}/.local/share/LibreCAD
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,7 +16,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/share/librecad
+allow  /usr/share/librecad
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

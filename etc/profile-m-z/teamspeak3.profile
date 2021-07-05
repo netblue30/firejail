@@ -6,8 +6,8 @@ include teamspeak3.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.ts3client
-noblacklist ${PATH}/openssl
+nodeny  ${HOME}/.ts3client
+nodeny  ${PATH}/openssl
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,8 +17,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.ts3client
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.ts3client
+allow  ${DOWNLOADS}
+allow  ${HOME}/.ts3client
 include whitelist-common.inc
 
 caps.drop all

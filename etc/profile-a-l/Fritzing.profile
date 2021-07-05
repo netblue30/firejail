@@ -6,8 +6,8 @@ include Fritzing.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/Fritzing
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.config/Fritzing
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

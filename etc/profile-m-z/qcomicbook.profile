@@ -6,10 +6,10 @@ include qcomicbook.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/PawelStolowski
-noblacklist ${HOME}/.config/PawelStolowski
-noblacklist ${HOME}/.local/share/PawelStolowski
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.cache/PawelStolowski
+nodeny  ${HOME}/.config/PawelStolowski
+nodeny  ${HOME}/.local/share/PawelStolowski
+nodeny  ${DOCUMENTS}
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
@@ -27,7 +27,7 @@ include disable-xdg.inc
 mkdir ${HOME}/.cache/PawelStolowski
 mkdir ${HOME}/.config/PawelStolowski
 mkdir ${HOME}/.local/share/PawelStolowski
-whitelist /usr/share/qcomicbook
+allow  /usr/share/qcomicbook
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

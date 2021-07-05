@@ -10,10 +10,10 @@ include globals.local
 # Add the next line to your evince.local if you need bookmarks support. This also needs additional dbus-user filtering (see below).
 #noblacklist ${HOME}/.local/share/gvfs-metadata
 
-noblacklist ${HOME}/.config/evince
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.config/evince
+nodeny  ${DOCUMENTS}
 
-blacklist /usr/libexec
+deny  /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -24,10 +24,10 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/share/doc
-whitelist /usr/share/evince
-whitelist /usr/share/poppler
-whitelist /usr/share/tracker
+allow  /usr/share/doc
+allow  /usr/share/evince
+allow  /usr/share/poppler
+allow  /usr/share/tracker
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

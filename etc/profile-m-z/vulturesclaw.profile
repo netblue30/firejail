@@ -6,8 +6,8 @@ include vulturesclaw.local
 # added by included profile
 #include globals.local
 
-noblacklist /var/games/vulturesclaw
-whitelist /var/games/vulturesclaw
+nodeny  /var/games/vulturesclaw
+allow  /var/games/vulturesclaw
 
 # Redirect
 include nethack-vultures.profile

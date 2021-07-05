@@ -6,9 +6,9 @@ include picard.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/MusicBrainz
-noblacklist ${HOME}/.config/MusicBrainz
-noblacklist ${MUSIC}
+nodeny  ${HOME}/.cache/MusicBrainz
+nodeny  ${HOME}/.config/MusicBrainz
+nodeny  ${MUSIC}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

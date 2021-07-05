@@ -7,10 +7,10 @@ include googler-common.local
 # added by caller profile
 #include globals.local
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}
 
-noblacklist ${HOME}/.w3m
+nodeny  ${HOME}/.w3m
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
@@ -26,7 +26,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist ${HOME}/.w3m
+allow  ${HOME}/.w3m
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

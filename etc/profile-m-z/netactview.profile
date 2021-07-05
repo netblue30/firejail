@@ -6,7 +6,7 @@ include netactview.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.netactview
+nodeny  ${HOME}/.netactview
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkfile ${HOME}/.netactview
-whitelist ${HOME}/.netactview
-whitelist /usr/share/netactview
+allow  ${HOME}/.netactview
+allow  /usr/share/netactview
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

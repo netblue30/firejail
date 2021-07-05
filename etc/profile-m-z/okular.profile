@@ -6,18 +6,18 @@ include okular.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/okular
-noblacklist ${HOME}/.config/okularpartrc
-noblacklist ${HOME}/.config/okularrc
-noblacklist ${HOME}/.kde/share/apps/okular
-noblacklist ${HOME}/.kde/share/config/okularpartrc
-noblacklist ${HOME}/.kde/share/config/okularrc
-noblacklist ${HOME}/.kde4/share/apps/okular
-noblacklist ${HOME}/.kde4/share/config/okularpartrc
-noblacklist ${HOME}/.kde4/share/config/okularrc
-noblacklist ${HOME}/.local/share/kxmlgui5/okular
-noblacklist ${HOME}/.local/share/okular
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.cache/okular
+nodeny  ${HOME}/.config/okularpartrc
+nodeny  ${HOME}/.config/okularrc
+nodeny  ${HOME}/.kde/share/apps/okular
+nodeny  ${HOME}/.kde/share/config/okularpartrc
+nodeny  ${HOME}/.kde/share/config/okularrc
+nodeny  ${HOME}/.kde4/share/apps/okular
+nodeny  ${HOME}/.kde4/share/config/okularpartrc
+nodeny  ${HOME}/.kde4/share/config/okularrc
+nodeny  ${HOME}/.local/share/kxmlgui5/okular
+nodeny  ${HOME}/.local/share/okular
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -28,15 +28,15 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/share/config.kcfg/gssettings.kcfg
-whitelist /usr/share/config.kcfg/pdfsettings.kcfg
-whitelist /usr/share/config.kcfg/okular.kcfg
-whitelist /usr/share/config.kcfg/okular_core.kcfg
-whitelist /usr/share/ghostscript
-whitelist /usr/share/kconf_update/okular.upd
-whitelist /usr/share/kxmlgui5/okular
-whitelist /usr/share/okular
-whitelist /usr/share/poppler
+allow  /usr/share/config.kcfg/gssettings.kcfg
+allow  /usr/share/config.kcfg/pdfsettings.kcfg
+allow  /usr/share/config.kcfg/okular.kcfg
+allow  /usr/share/config.kcfg/okular_core.kcfg
+allow  /usr/share/ghostscript
+allow  /usr/share/kconf_update/okular.upd
+allow  /usr/share/kxmlgui5/okular
+allow  /usr/share/okular
+allow  /usr/share/poppler
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

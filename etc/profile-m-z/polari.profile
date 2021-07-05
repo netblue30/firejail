@@ -21,12 +21,12 @@ mkdir ${HOME}/.local/share/Empathy
 mkdir ${HOME}/.local/share/TpLogger
 mkdir ${HOME}/.local/share/telepathy
 mkdir ${HOME}/.purple
-whitelist ${HOME}/.cache/telepathy
-whitelist ${HOME}/.config/telepathy-account-widgets
-whitelist ${HOME}/.local/share/Empathy
-whitelist ${HOME}/.local/share/TpLogger
-whitelist ${HOME}/.local/share/telepathy
-whitelist ${HOME}/.purple
+allow  ${HOME}/.cache/telepathy
+allow  ${HOME}/.config/telepathy-account-widgets
+allow  ${HOME}/.local/share/Empathy
+allow  ${HOME}/.local/share/TpLogger
+allow  ${HOME}/.local/share/telepathy
+allow  ${HOME}/.purple
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 

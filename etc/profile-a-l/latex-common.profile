@@ -13,7 +13,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-whitelist /var/lib
+allow  /var/lib
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 

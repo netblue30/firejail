@@ -11,12 +11,12 @@ ignore include whitelist-usr-share-common.inc
 
 ignore noexec /tmp
 
-noblacklist ${HOME}/.config/Bitwarden
+nodeny  ${HOME}/.config/Bitwarden
 
 include disable-shell.inc
 
 mkdir ${HOME}/.config/Bitwarden
-whitelist ${HOME}/.config/Bitwarden
+allow  ${HOME}/.config/Bitwarden
 
 machine-id
 no3d

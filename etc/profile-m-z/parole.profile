@@ -6,8 +6,8 @@ include parole.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
+nodeny  ${MUSIC}
+nodeny  ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc

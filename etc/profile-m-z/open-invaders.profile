@@ -6,7 +6,7 @@ include open-invaders.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.openinvaders
+nodeny  ${HOME}/.openinvaders
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,7 +17,7 @@ include disable-programs.inc
 include disable-shell.inc
 
 mkdir ${HOME}/.openinvaders
-whitelist ${HOME}/.openinvaders
+allow  ${HOME}/.openinvaders
 include whitelist-common.inc
 include whitelist-var-common.inc
 

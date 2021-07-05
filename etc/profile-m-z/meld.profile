@@ -13,12 +13,12 @@ include globals.local
 # Calling it by its absolute path (example for git mergetool):
 # $ git config --global mergetool.meld.cmd /usr/bin/meld
 
-noblacklist ${HOME}/.config/meld
-noblacklist ${HOME}/.config/git
-noblacklist ${HOME}/.gitconfig
-noblacklist ${HOME}/.git-credentials
-noblacklist ${HOME}/.local/share/meld
-noblacklist ${HOME}/.subversion
+nodeny  ${HOME}/.config/meld
+nodeny  ${HOME}/.config/git
+nodeny  ${HOME}/.gitconfig
+nodeny  ${HOME}/.git-credentials
+nodeny  ${HOME}/.local/share/meld
+nodeny  ${HOME}/.subversion
 
 # Allow python (blacklisted by disable-interpreters.inc)
 # Python 2 is EOL (see #3164). Add the next line to your meld.local if you understand the risks
@@ -29,7 +29,7 @@ include allow-python3.inc
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc
 
-blacklist /usr/libexec
+deny  /usr/libexec
 
 # Add the next line to your meld.local if you don't need to compare files in disable-common.inc.
 #include disable-common.inc

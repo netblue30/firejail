@@ -6,10 +6,10 @@ include gitg.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/git
-noblacklist ${HOME}/.gitconfig
-noblacklist ${HOME}/.git-credentials
-noblacklist ${HOME}/.local/share/gitg
+nodeny  ${HOME}/.config/git
+nodeny  ${HOME}/.gitconfig
+nodeny  ${HOME}/.git-credentials
+nodeny  ${HOME}/.local/share/gitg
 
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc
@@ -29,7 +29,7 @@ include disable-programs.inc
 #whitelist ${HOME}/.ssh
 #include whitelist-common.inc
 
-whitelist /usr/share/gitg
+allow  /usr/share/gitg
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

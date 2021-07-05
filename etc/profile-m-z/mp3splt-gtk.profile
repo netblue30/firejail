@@ -6,7 +6,7 @@ include mp3splt-gtk.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.mp3splt-gtk
+nodeny  ${HOME}/.mp3splt-gtk
 
 include disable-common.inc
 include disable-devel.inc

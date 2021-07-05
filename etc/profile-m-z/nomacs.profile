@@ -6,10 +6,10 @@ include nomacs.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/nomacs
-noblacklist ${HOME}/.local/share/nomacs
-noblacklist ${HOME}/.local/share/data/nomacs
-noblacklist ${PICTURES}
+nodeny  ${HOME}/.config/nomacs
+nodeny  ${HOME}/.local/share/nomacs
+nodeny  ${HOME}/.local/share/data/nomacs
+nodeny  ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc

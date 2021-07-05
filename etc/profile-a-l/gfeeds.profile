@@ -6,10 +6,10 @@ include gfeeds.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/gfeeds
-noblacklist ${HOME}/.cache/org.gabmus.gfeeds
-noblacklist ${HOME}/.config/org.gabmus.gfeeds.json
-noblacklist ${HOME}/.config/org.gabmus.gfeeds.saved_articles
+nodeny  ${HOME}/.cache/gfeeds
+nodeny  ${HOME}/.cache/org.gabmus.gfeeds
+nodeny  ${HOME}/.config/org.gabmus.gfeeds.json
+nodeny  ${HOME}/.config/org.gabmus.gfeeds.saved_articles
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
@@ -27,12 +27,12 @@ mkdir ${HOME}/.cache/gfeeds
 mkdir ${HOME}/.cache/org.gabmus.gfeeds
 mkfile ${HOME}/.config/org.gabmus.gfeeds.json
 mkdir ${HOME}/.config/org.gabmus.gfeeds.saved_articles
-whitelist ${HOME}/.cache/gfeeds
-whitelist ${HOME}/.cache/org.gabmus.gfeeds
-whitelist ${HOME}/.config/org.gabmus.gfeeds.json
-whitelist ${HOME}/.config/org.gabmus.gfeeds.saved_articles
-whitelist /usr/libexec/webkit2gtk-4.0
-whitelist /usr/share/gfeeds
+allow  ${HOME}/.cache/gfeeds
+allow  ${HOME}/.cache/org.gabmus.gfeeds
+allow  ${HOME}/.config/org.gabmus.gfeeds.json
+allow  ${HOME}/.config/org.gabmus.gfeeds.saved_articles
+allow  /usr/libexec/webkit2gtk-4.0
+allow  /usr/share/gfeeds
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

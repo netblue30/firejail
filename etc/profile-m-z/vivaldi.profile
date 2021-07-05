@@ -8,26 +8,26 @@ include globals.local
 # Allow HTML5 Proprietary Media & DRM/EME (Widevine)
 ignore apparmor
 ignore noexec /var
-noblacklist /var/opt
-whitelist /var/opt/vivaldi
+nodeny  /var/opt
+allow  /var/opt/vivaldi
 writable-var
 
-noblacklist ${HOME}/.cache/vivaldi
-noblacklist ${HOME}/.cache/vivaldi-snapshot
-noblacklist ${HOME}/.config/vivaldi
-noblacklist ${HOME}/.config/vivaldi-snapshot
-noblacklist ${HOME}/.local/lib/vivaldi
+nodeny  ${HOME}/.cache/vivaldi
+nodeny  ${HOME}/.cache/vivaldi-snapshot
+nodeny  ${HOME}/.config/vivaldi
+nodeny  ${HOME}/.config/vivaldi-snapshot
+nodeny  ${HOME}/.local/lib/vivaldi
 
 mkdir ${HOME}/.cache/vivaldi
 mkdir ${HOME}/.cache/vivaldi-snapshot
 mkdir ${HOME}/.config/vivaldi
 mkdir ${HOME}/.config/vivaldi-snapshot
 mkdir ${HOME}/.local/lib/vivaldi
-whitelist ${HOME}/.cache/vivaldi
-whitelist ${HOME}/.cache/vivaldi-snapshot
-whitelist ${HOME}/.config/vivaldi
-whitelist ${HOME}/.config/vivaldi-snapshot
-whitelist ${HOME}/.local/lib/vivaldi
+allow  ${HOME}/.cache/vivaldi
+allow  ${HOME}/.cache/vivaldi-snapshot
+allow  ${HOME}/.config/vivaldi
+allow  ${HOME}/.config/vivaldi-snapshot
+allow  ${HOME}/.local/lib/vivaldi
 
 #private-bin bash,cat,dirname,readlink,rm,vivaldi,vivaldi-stable,vivaldi-snapshot
 

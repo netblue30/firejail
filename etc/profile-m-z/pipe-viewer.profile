@@ -7,13 +7,13 @@ include pipe-viewer.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/pipe-viewer
-noblacklist ${HOME}/.config/pipe-viewer
+nodeny  ${HOME}/.cache/pipe-viewer
+nodeny  ${HOME}/.config/pipe-viewer
 
 mkdir ${HOME}/.config/pipe-viewer
 mkdir ${HOME}/.cache/pipe-viewer
-whitelist ${HOME}/.cache/pipe-viewer
-whitelist ${HOME}/.config/pipe-viewer
+allow  ${HOME}/.cache/pipe-viewer
+allow  ${HOME}/.config/pipe-viewer
 
 private-bin gtk-pipe-viewer,pipe-viewer
 

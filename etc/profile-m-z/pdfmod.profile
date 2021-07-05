@@ -6,9 +6,9 @@ include pdfmod.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/pdfmod
-noblacklist ${HOME}/.config/pdfmod
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.cache/pdfmod
+nodeny  ${HOME}/.config/pdfmod
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

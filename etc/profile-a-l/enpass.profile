@@ -6,11 +6,11 @@ include enpass.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/Enpass
-noblacklist ${HOME}/.config/sinew.in
-noblacklist ${HOME}/.config/Sinew Software Systems
-noblacklist ${HOME}/.local/share/Enpass
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.cache/Enpass
+nodeny  ${HOME}/.config/sinew.in
+nodeny  ${HOME}/.config/Sinew Software Systems
+nodeny  ${HOME}/.local/share/Enpass
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -24,11 +24,11 @@ mkdir ${HOME}/.cache/Enpass
 mkfile ${HOME}/.config/sinew.in
 mkdir ${HOME}/.config/Sinew Software Systems
 mkdir ${HOME}/.local/share/Enpass
-whitelist ${HOME}/.cache/Enpass
-whitelist ${HOME}/.config/sinew.in
-whitelist ${HOME}/.config/Sinew Software Systems
-whitelist ${HOME}/.local/share/Enpass
-whitelist ${DOCUMENTS}
+allow  ${HOME}/.cache/Enpass
+allow  ${HOME}/.config/sinew.in
+allow  ${HOME}/.config/Sinew Software Systems
+allow  ${HOME}/.local/share/Enpass
+allow  ${DOCUMENTS}
 include whitelist-common.inc
 include whitelist-var-common.inc
 

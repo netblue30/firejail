@@ -8,15 +8,15 @@ include globals.local
 
 ignore noexec ${HOME}
 
-noblacklist ${HOME}/.config/torbrowser
-noblacklist ${HOME}/.local/share/torbrowser
+nodeny  ${HOME}/.config/torbrowser
+nodeny  ${HOME}/.local/share/torbrowser
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
 
-blacklist /opt
-blacklist /srv
+deny  /opt
+deny  /srv
 
 include disable-common.inc
 include disable-devel.inc
@@ -28,10 +28,10 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/torbrowser
 mkdir ${HOME}/.local/share/torbrowser
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.config/torbrowser
-whitelist ${HOME}/.local/share/torbrowser
-whitelist /usr/share/torbrowser-launcher
+allow  ${DOWNLOADS}
+allow  ${HOME}/.config/torbrowser
+allow  ${HOME}/.local/share/torbrowser
+allow  /usr/share/torbrowser-launcher
 include whitelist-common.inc
 include whitelist-var-common.inc
 include whitelist-runuser-common.inc

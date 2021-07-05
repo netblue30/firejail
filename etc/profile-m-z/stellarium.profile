@@ -6,8 +6,8 @@ include stellarium.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/stellarium
-noblacklist ${HOME}/.stellarium
+nodeny  ${HOME}/.config/stellarium
+nodeny  ${HOME}/.stellarium
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,8 +19,8 @@ include disable-shell.inc
 
 mkdir ${HOME}/.config/stellarium
 mkdir ${HOME}/.stellarium
-whitelist ${HOME}/.config/stellarium
-whitelist ${HOME}/.stellarium
+allow  ${HOME}/.config/stellarium
+allow  ${HOME}/.stellarium
 include whitelist-common.inc
 include whitelist-var-common.inc
 

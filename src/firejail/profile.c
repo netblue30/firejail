@@ -1751,6 +1751,13 @@ void profile_read(const char *fname) {
 			free(ptr);
 			ptr = tmp;
 		}
+		else if (strncmp(ptr, "deny-nolog ", 11) == 0) {
+			char *tmp;
+			if (asprintf(&tmp, "blacklist-nolog %s", ptr + 11) == -1)
+				errExit("asprintf");
+			free(ptr);
+			ptr = tmp;
+		}
 		// translate noallow/nodeny to nowhitelist/noblacklist
 		else if (strncmp(ptr, "noallow ", 8) == 0) {
 			char *tmp;

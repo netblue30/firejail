@@ -6,7 +6,7 @@ include mtpaint.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${PICTURES}
+nodeny  ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc

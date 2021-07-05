@@ -2,6 +2,6 @@
 # Persistent customizations should go in a .local file.
 include allow-php.local
 
-noblacklist ${PATH}/php*
-noblacklist /usr/lib/php*
-noblacklist /usr/share/php*
+nodeny  ${PATH}/php*
+nodeny  /usr/lib/php*
+nodeny  /usr/share/php*

@@ -6,7 +6,7 @@ include ms-outlook.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.cache/ms-outlook-online
+nodeny  ${HOME}/.cache/ms-outlook-online
 private-bin ms-outlook
 
 # Redirect

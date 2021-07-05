@@ -10,7 +10,7 @@ include softmaker-common.local
 # with an absolute Exec line. These files are NOT handelt by firecfg,
 # therefore you must manualy copy them in you home and remove '/usr/bin/'.
 
-noblacklist ${HOME}/SoftMaker
+nodeny  ${HOME}/SoftMaker
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,8 +19,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-whitelist /usr/share/office2018
-whitelist /usr/share/freeoffice2018
+allow  /usr/share/office2018
+allow  /usr/share/freeoffice2018
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

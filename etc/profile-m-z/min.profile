@@ -6,10 +6,10 @@ include min.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/Min
+nodeny  ${HOME}/.config/Min
 
 mkdir ${HOME}/.config/Min
-whitelist ${HOME}/.config/Min
+allow  ${HOME}/.config/Min
 
 # Redirect
 include chromium-common.profile

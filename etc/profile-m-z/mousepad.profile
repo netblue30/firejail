@@ -6,7 +6,7 @@ include mousepad.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/Mousepad
+nodeny  ${HOME}/.config/Mousepad
 
 include disable-common.inc
 include disable-devel.inc

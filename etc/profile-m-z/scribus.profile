@@ -7,24 +7,24 @@ include scribus.local
 include globals.local
 
 # Support for PDF readers comes with Scribus 1.5 and higher
-noblacklist ${HOME}/.cache/okular
-noblacklist ${HOME}/.config/GIMP
-noblacklist ${HOME}/.config/okularpartrc
-noblacklist ${HOME}/.config/okularrc
-noblacklist ${HOME}/.config/scribus
-noblacklist ${HOME}/.config/scribusrc
-noblacklist ${HOME}/.gimp*
-noblacklist ${HOME}/.kde/share/apps/okular
-noblacklist ${HOME}/.kde/share/config/okularpartrc
-noblacklist ${HOME}/.kde/share/config/okularrc
-noblacklist ${HOME}/.kde4/share/apps/okular
-noblacklist ${HOME}/.kde4/share/config/okularpartrc
-noblacklist ${HOME}/.kde4/share/config/okularrc
-noblacklist ${HOME}/.local/share/okular
-noblacklist ${HOME}/.local/share/scribus
-noblacklist ${HOME}/.scribus
-noblacklist ${DOCUMENTS}
-noblacklist ${PICTURES}
+nodeny  ${HOME}/.cache/okular
+nodeny  ${HOME}/.config/GIMP
+nodeny  ${HOME}/.config/okularpartrc
+nodeny  ${HOME}/.config/okularrc
+nodeny  ${HOME}/.config/scribus
+nodeny  ${HOME}/.config/scribusrc
+nodeny  ${HOME}/.gimp*
+nodeny  ${HOME}/.kde/share/apps/okular
+nodeny  ${HOME}/.kde/share/config/okularpartrc
+nodeny  ${HOME}/.kde/share/config/okularrc
+nodeny  ${HOME}/.kde4/share/apps/okular
+nodeny  ${HOME}/.kde4/share/config/okularpartrc
+nodeny  ${HOME}/.kde4/share/config/okularrc
+nodeny  ${HOME}/.local/share/okular
+nodeny  ${HOME}/.local/share/scribus
+nodeny  ${HOME}/.scribus
+nodeny  ${DOCUMENTS}
+nodeny  ${PICTURES}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

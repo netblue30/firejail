@@ -8,10 +8,10 @@ include globals.local
 
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
-noblacklist ${HOME}/.cache/libgweather
-noblacklist ${HOME}/.cache/org.gnome.Books
-noblacklist ${HOME}/.config/libreoffice
-noblacklist ${HOME}/.local/share/gnome-photos
+nodeny  ${HOME}/.cache/libgweather
+nodeny  ${HOME}/.cache/org.gnome.Books
+nodeny  ${HOME}/.config/libreoffice
+nodeny  ${HOME}/.local/share/gnome-photos
 
 # Allow gjs (blacklisted by disable-interpreters.inc)
 include allow-gjs.inc

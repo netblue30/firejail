@@ -6,8 +6,8 @@ include kalgebra.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/kalgebrarc
-noblacklist ${HOME}/.local/share/kalgebra
+nodeny  ${HOME}/.config/kalgebrarc
+nodeny  ${HOME}/.local/share/kalgebra
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,7 +17,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist /usr/share/kalgebramobile
+allow  /usr/share/kalgebramobile
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

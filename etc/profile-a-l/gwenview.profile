@@ -6,17 +6,17 @@ include gwenview.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/GIMP
-noblacklist ${HOME}/.config/gwenviewrc
-noblacklist ${HOME}/.config/org.kde.gwenviewrc
-noblacklist ${HOME}/.gimp*
-noblacklist ${HOME}/.kde/share/apps/gwenview
-noblacklist ${HOME}/.kde/share/config/gwenviewrc
-noblacklist ${HOME}/.kde4/share/apps/gwenview
-noblacklist ${HOME}/.kde4/share/config/gwenviewrc
-noblacklist ${HOME}/.local/share/gwenview
-noblacklist ${HOME}/.local/share/kxmlgui5/gwenview
-noblacklist ${HOME}/.local/share/org.kde.gwenview
+nodeny  ${HOME}/.config/GIMP
+nodeny  ${HOME}/.config/gwenviewrc
+nodeny  ${HOME}/.config/org.kde.gwenviewrc
+nodeny  ${HOME}/.gimp*
+nodeny  ${HOME}/.kde/share/apps/gwenview
+nodeny  ${HOME}/.kde/share/config/gwenviewrc
+nodeny  ${HOME}/.kde4/share/apps/gwenview
+nodeny  ${HOME}/.kde4/share/config/gwenviewrc
+nodeny  ${HOME}/.local/share/gwenview
+nodeny  ${HOME}/.local/share/kxmlgui5/gwenview
+nodeny  ${HOME}/.local/share/org.kde.gwenview
 
 include disable-common.inc
 include disable-devel.inc

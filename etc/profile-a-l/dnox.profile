@@ -10,13 +10,13 @@ ignore whitelist /usr/share/chromium
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 
-noblacklist ${HOME}/.cache/dnox
-noblacklist ${HOME}/.config/dnox
+nodeny  ${HOME}/.cache/dnox
+nodeny  ${HOME}/.config/dnox
 
 mkdir ${HOME}/.cache/dnox
 mkdir ${HOME}/.config/dnox
-whitelist ${HOME}/.cache/dnox
-whitelist ${HOME}/.config/dnox
+allow  ${HOME}/.cache/dnox
+allow  ${HOME}/.config/dnox
 
 # Redirect
 include chromium-common.profile

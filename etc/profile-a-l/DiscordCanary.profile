@@ -5,10 +5,10 @@ include DiscordCanary.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/discordcanary
+nodeny  ${HOME}/.config/discordcanary
 
 mkdir ${HOME}/.config/discordcanary
-whitelist ${HOME}/.config/discordcanary
+allow  ${HOME}/.config/discordcanary
 
 private-bin DiscordCanary
 private-opt DiscordCanary

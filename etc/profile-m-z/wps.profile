@@ -6,9 +6,9 @@ include wps.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.kingsoft
-noblacklist ${HOME}/.config/Kingsoft
-noblacklist ${HOME}/.local/share/Kingsoft
+nodeny  ${HOME}/.kingsoft
+nodeny  ${HOME}/.config/Kingsoft
+nodeny  ${HOME}/.local/share/Kingsoft
 
 include disable-common.inc
 include disable-devel.inc

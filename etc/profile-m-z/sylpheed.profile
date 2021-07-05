@@ -6,12 +6,12 @@ include sylpheed.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.sylpheed-2.0
+nodeny  ${HOME}/.sylpheed-2.0
 
 mkdir ${HOME}/.sylpheed-2.0
-whitelist ${HOME}/.sylpheed-2.0
+allow  ${HOME}/.sylpheed-2.0
 
-whitelist /usr/share/sylpheed
+allow  /usr/share/sylpheed
 
 # private-bin curl,gpg,gpg2,gpg-agent,gpgsm,pinentry,pinentry-gtk-2,sylpheed
 

@@ -6,7 +6,7 @@ include drawio.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/draw.io
+nodeny  ${HOME}/.config/draw.io
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/draw.io
-whitelist ${HOME}/.config/draw.io
-whitelist ${DOWNLOADS}
+allow  ${HOME}/.config/draw.io
+allow  ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -6,7 +6,7 @@ include aweather.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/aweather
+nodeny  ${HOME}/.config/aweather
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,7 +16,7 @@ include disable-programs.inc
 include disable-shell.inc
 
 mkdir ${HOME}/.config/aweather
-whitelist ${HOME}/.config/aweather
+allow  ${HOME}/.config/aweather
 include whitelist-common.inc
 include whitelist-var-common.inc
 

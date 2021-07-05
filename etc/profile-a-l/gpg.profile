@@ -7,10 +7,10 @@ include gpg.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.gnupg
+nodeny  ${HOME}/.gnupg
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,11 +18,11 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-whitelist ${RUNUSER}/gnupg
-whitelist ${RUNUSER}/keyring
-whitelist /usr/share/gnupg
-whitelist /usr/share/gnupg2
-whitelist /usr/share/pacman/keyrings
+allow  ${RUNUSER}/gnupg
+allow  ${RUNUSER}/keyring
+allow  /usr/share/gnupg
+allow  /usr/share/gnupg2
+allow  /usr/share/pacman/keyrings
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

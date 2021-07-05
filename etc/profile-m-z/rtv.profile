@@ -6,11 +6,11 @@ include rtv.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}/wayland-*
 
-noblacklist ${HOME}/.config/rtv
-noblacklist ${HOME}/.local/share/rtv
+nodeny  ${HOME}/.config/rtv
+nodeny  ${HOME}/.local/share/rtv
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
@@ -33,8 +33,8 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/rtv
 mkdir ${HOME}/.local/share/rtv
-whitelist ${HOME}/.config/rtv
-whitelist ${HOME}/.local/share/rtv
+allow  ${HOME}/.config/rtv
+allow  ${HOME}/.local/share/rtv
 include whitelist-var-common.inc
 
 apparmor

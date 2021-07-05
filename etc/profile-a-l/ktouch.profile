@@ -6,8 +6,8 @@ include ktouch.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/ktouch2rc
-noblacklist ${HOME}/.local/share/ktouch
+nodeny  ${HOME}/.config/ktouch2rc
+nodeny  ${HOME}/.local/share/ktouch
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,8 +20,8 @@ include disable-xdg.inc
 
 mkfile ${HOME}/.config/ktouch2rc
 mkdir ${HOME}/.local/share/ktouch
-whitelist ${HOME}/.config/ktouch2rc
-whitelist ${HOME}/.local/share/ktouch
+allow  ${HOME}/.config/ktouch2rc
+allow  ${HOME}/.local/share/ktouch
 include whitelist-common.inc
 include whitelist-var-common.inc
 

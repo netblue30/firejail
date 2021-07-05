@@ -9,17 +9,17 @@ include globals.local
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
-noblacklist ${HOME}/.cache/midori
-noblacklist ${HOME}/.config/midori
-noblacklist ${HOME}/.local/share/midori
+nodeny  ${HOME}/.cache/midori
+nodeny  ${HOME}/.config/midori
+nodeny  ${HOME}/.local/share/midori
 # noblacklist ${HOME}/.local/share/webkit
 # noblacklist ${HOME}/.local/share/webkitgtk
-noblacklist ${HOME}/.pki
-noblacklist ${HOME}/.local/share/pki
+nodeny  ${HOME}/.pki
+nodeny  ${HOME}/.local/share/pki
 
-noblacklist ${HOME}/.cache/gnome-mplayer
-noblacklist ${HOME}/.config/gnome-mplayer
-noblacklist ${HOME}/.lastpass
+nodeny  ${HOME}/.cache/gnome-mplayer
+nodeny  ${HOME}/.config/gnome-mplayer
+nodeny  ${HOME}/.lastpass
 
 include disable-common.inc
 include disable-devel.inc
@@ -36,17 +36,17 @@ mkdir ${HOME}/.local/share/webkit
 mkdir ${HOME}/.local/share/webkitgtk
 mkdir ${HOME}/.pki
 mkdir ${HOME}/.local/share/pki
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.cache/gnome-mplayer/plugin
-whitelist ${HOME}/.cache/midori
-whitelist ${HOME}/.config/gnome-mplayer
-whitelist ${HOME}/.config/midori
-whitelist ${HOME}/.lastpass
-whitelist ${HOME}/.local/share/midori
-whitelist ${HOME}/.local/share/webkit
-whitelist ${HOME}/.local/share/webkitgtk
-whitelist ${HOME}/.pki
-whitelist ${HOME}/.local/share/pki
+allow  ${DOWNLOADS}
+allow  ${HOME}/.cache/gnome-mplayer/plugin
+allow  ${HOME}/.cache/midori
+allow  ${HOME}/.config/gnome-mplayer
+allow  ${HOME}/.config/midori
+allow  ${HOME}/.lastpass
+allow  ${HOME}/.local/share/midori
+allow  ${HOME}/.local/share/webkit
+allow  ${HOME}/.local/share/webkitgtk
+allow  ${HOME}/.pki
+allow  ${HOME}/.local/share/pki
 include whitelist-common.inc
 include whitelist-var-common.inc
 

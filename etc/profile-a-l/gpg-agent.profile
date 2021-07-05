@@ -7,10 +7,10 @@ include gpg-agent.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.gnupg
+nodeny  ${HOME}/.gnupg
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,11 +20,11 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.gnupg
-whitelist ${HOME}/.gnupg
-whitelist ${RUNUSER}/gnupg
-whitelist ${RUNUSER}/keyring
-whitelist /usr/share/gnupg
-whitelist /usr/share/gnupg2
+allow  ${HOME}/.gnupg
+allow  ${RUNUSER}/gnupg
+allow  ${RUNUSER}/keyring
+allow  /usr/share/gnupg
+allow  /usr/share/gnupg2
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -6,9 +6,9 @@ include darktable.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/darktable
-noblacklist ${HOME}/.config/darktable
-noblacklist ${PICTURES}
+nodeny  ${HOME}/.cache/darktable
+nodeny  ${HOME}/.config/darktable
+nodeny  ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc

@@ -9,8 +9,8 @@ include globals.local
 # In order to save in-game screenshots to a persistent location edit ~/.minetest/minetest.conf:
 #   screenshot_path = /home/<USER>/.minetest/screenshots
 
-noblacklist ${HOME}/.cache/minetest
-noblacklist ${HOME}/.minetest
+nodeny  ${HOME}/.cache/minetest
+nodeny  ${HOME}/.minetest
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -26,10 +26,10 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/minetest
 mkdir ${HOME}/.minetest
-whitelist ${HOME}/.cache/minetest
-whitelist ${HOME}/.minetest
-whitelist /usr/share/games/minetest
-whitelist /usr/share/minetest
+allow  ${HOME}/.cache/minetest
+allow  ${HOME}/.minetest
+allow  /usr/share/games/minetest
+allow  /usr/share/minetest
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

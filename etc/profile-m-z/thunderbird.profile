@@ -22,14 +22,14 @@ writable-run-user
 #writable-var
 
 # These lines are needed to allow Firefox to load your profile when clicking a link in an email
-noblacklist ${HOME}/.mozilla
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
+nodeny  ${HOME}/.mozilla
+allow  ${HOME}/.mozilla/firefox/profiles.ini
 read-only ${HOME}/.mozilla/firefox/profiles.ini
 
-noblacklist ${HOME}/.cache/thunderbird
-noblacklist ${HOME}/.gnupg
+nodeny  ${HOME}/.cache/thunderbird
+nodeny  ${HOME}/.gnupg
 # noblacklist ${HOME}/.icedove
-noblacklist ${HOME}/.thunderbird
+nodeny  ${HOME}/.thunderbird
 
 include disable-passwdmgr.inc
 include disable-xdg.inc
@@ -42,15 +42,15 @@ mkdir ${HOME}/.cache/thunderbird
 mkdir ${HOME}/.gnupg
 # mkdir ${HOME}/.icedove
 mkdir ${HOME}/.thunderbird
-whitelist ${HOME}/.cache/thunderbird
-whitelist ${HOME}/.gnupg
+allow  ${HOME}/.cache/thunderbird
+allow  ${HOME}/.gnupg
 # whitelist ${HOME}/.icedove
-whitelist ${HOME}/.thunderbird
+allow  ${HOME}/.thunderbird
 
-whitelist /usr/share/gnupg
-whitelist /usr/share/mozilla
-whitelist /usr/share/thunderbird
-whitelist /usr/share/webext
+allow  /usr/share/gnupg
+allow  /usr/share/mozilla
+allow  /usr/share/thunderbird
+allow  /usr/share/webext
 include whitelist-usr-share-common.inc
 
 # machine-id breaks audio in browsers; enable or put it in your thunderbird.local when sound is not required

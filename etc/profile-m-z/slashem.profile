@@ -6,7 +6,7 @@ include slashem.local
 # Persistent global definitions
 include globals.local
 
-noblacklist /var/games/slashem
+nodeny  /var/games/slashem
 
 include disable-common.inc
 include disable-devel.inc
@@ -15,7 +15,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-whitelist /var/games/slashem
+allow  /var/games/slashem
 include whitelist-common.inc
 include whitelist-var-common.inc
 

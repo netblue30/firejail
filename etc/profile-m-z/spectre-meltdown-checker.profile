@@ -6,10 +6,10 @@ include spectre-meltdown-checker.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
+deny  ${RUNUSER}/wayland-*
 
-noblacklist ${PATH}/mount
-noblacklist ${PATH}/umount
+nodeny  ${PATH}/mount
+nodeny  ${PATH}/umount
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc

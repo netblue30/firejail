@@ -22,14 +22,14 @@ if [[ $1 == --help ]]; then
 	cat <<-EOM
 	USAGE:
 	  profcleaner.sh --help        Show this help message and exit
-	  profcleaner.sh --all         Clean all profiles in /etc/firejail
+	  profcleaner.sh --system      Clean all profiles in /etc/firejail
 	  profcleaner.sh --user        Clean all profiles in ~/.config/firejail
 	  profcleaner.sh /path/to/profile1 /path/to/profile2 ...
 	EOM
 	exit 0
 fi
 
-if [[ $1 == --all ]]; then
+if [[ $1 == --system ]]; then
 	profiles=(/etc/firejail/*.{inc,local,profile})
 elif [[ $1 == --user ]]; then
 	profiles=("$HOME"/.config/firejail/*.{inc,local,profile})

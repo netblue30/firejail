@@ -10,6 +10,7 @@ nodeny  ${HOME}/.gitconfig
 nodeny  ${HOME}/.git-credentials
 nodeny  ${HOME}/.java
 nodeny  ${HOME}/.local/share/JetBrains
+nodeny  ${HOME}/.tooling
 
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc

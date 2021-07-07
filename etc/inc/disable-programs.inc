@@ -2,18 +2,6 @@
 # Persistent customizations should go in a .local file.
 include disable-programs.local
 
-deny  ${HOME}/Arduino
-deny  ${HOME}/i2p
-deny  ${HOME}/Monero/wallets
-deny  ${HOME}/Nextcloud
-deny  ${HOME}/Nextcloud/Notes
-deny  ${HOME}/SoftMaker
-deny  ${HOME}/Standard Notes Backups
-deny  ${HOME}/TeamSpeak3-Client-linux_x86
-deny  ${HOME}/TeamSpeak3-Client-linux_amd64
-deny  ${HOME}/hyperrogue.ini
-deny  ${HOME}/mps
-deny  ${HOME}/wallet.dat
 deny  ${HOME}/.*coin
 deny  ${HOME}/.8pecxstudios
 deny  ${HOME}/.AndroidStudio*
@@ -38,10 +26,10 @@ deny  ${HOME}/.VirtualBox
 deny  ${HOME}/.WebStorm*
 deny  ${HOME}/.Wolfram Research
 deny  ${HOME}/.ZAP
+deny  ${HOME}/.aMule
 deny  ${HOME}/.abook
 deny  ${HOME}/.addressbook
 deny  ${HOME}/.alpine-smime
-deny  ${HOME}/.aMule
 deny  ${HOME}/.android
 deny  ${HOME}/.anydesk
 deny  ${HOME}/.arduino15
@@ -83,9 +71,9 @@ deny  ${HOME}/.config/Code Industry
 deny  ${HOME}/.config/Cryptocat
 deny  ${HOME}/.config/Debauchee/Barrier.conf
 deny  ${HOME}/.config/Dharkael
+deny  ${HOME}/.config/ENCOM
 deny  ${HOME}/.config/Element
 deny  ${HOME}/.config/Element (Riot)
-deny  ${HOME}/.config/ENCOM
 deny  ${HOME}/.config/Enox
 deny  ${HOME}/.config/Epic
 deny  ${HOME}/.config/Ferdi
@@ -113,6 +101,7 @@ deny  ${HOME}/.config/LyX
 deny  ${HOME}/.config/Mattermost
 deny  ${HOME}/.config/Meltytech
 deny  ${HOME}/.config/Mendeley Ltd.
+deny  ${HOME}/.config/Microsoft
 deny  ${HOME}/.config/Min
 deny  ${HOME}/.config/ModTheSpire
 deny  ${HOME}/.config/Mousepad
@@ -122,11 +111,13 @@ deny  ${HOME}/.config/MuseScore
 deny  ${HOME}/.config/MusicBrainz
 deny  ${HOME}/.config/Nathan Osman
 deny  ${HOME}/.config/Nextcloud
+deny  ${HOME}/.config/NitroShare
 deny  ${HOME}/.config/Nylas Mail
+deny  ${HOME}/.config/PBE
 deny  ${HOME}/.config/PacmanLogViewer
 deny  ${HOME}/.config/PawelStolowski
-deny  ${HOME}/.config/PBE
 deny  ${HOME}/.config/Philipp Schmieder
+deny  ${HOME}/.config/Pinta
 deny  ${HOME}/.config/QGIS
 deny  ${HOME}/.config/QMediathekView
 deny  ${HOME}/.config/Qlipper
@@ -147,10 +138,12 @@ deny  ${HOME}/.config/Thunar
 deny  ${HOME}/.config/Twitch
 deny  ${HOME}/.config/Unknown Organization
 deny  ${HOME}/.config/VirtualBox
+deny  ${HOME}/.config/Whalebird
 deny  ${HOME}/.config/Wire
 deny  ${HOME}/.config/Youtube
-deny  ${HOME}/.config/Zeal
 deny  ${HOME}/.config/ZeGrapher Project
+deny  ${HOME}/.config/Zeal
+deny  ${HOME}/.config/Zulip
 deny  ${HOME}/.config/aacs
 deny  ${HOME}/.config/abiword
 deny  ${HOME}/.config/agenda
@@ -203,6 +196,7 @@ deny  ${HOME}/.config/com.github.bleakgrey.tootle
 deny  ${HOME}/.config/corebird
 deny  ${HOME}/.config/cower
 deny  ${HOME}/.config/coyim
+deny  ${HOME}/.config/d-feet
 deny  ${HOME}/.config/darktable
 deny  ${HOME}/.config/deadbeef
 deny  ${HOME}/.config/deluge
@@ -217,7 +211,6 @@ deny  ${HOME}/.config/dolphin-emu
 deny  ${HOME}/.config/dolphinrc
 deny  ${HOME}/.config/dragonplayerrc
 deny  ${HOME}/.config/draw.io
-deny  ${HOME}/.config/d-feet
 deny  ${HOME}/.config/electron-mail
 deny  ${HOME}/.config/emaildefaults
 deny  ${HOME}/.config/emailidentities
@@ -300,8 +293,8 @@ deny  ${HOME}/.config/kmail2rc
 deny  ${HOME}/.config/kmailsearchindexingrc
 deny  ${HOME}/.config/kmplayerrc
 deny  ${HOME}/.config/knotesrc
-deny  ${HOME}/.config/konversationrc
 deny  ${HOME}/.config/konversation.notifyrc
+deny  ${HOME}/.config/konversationrc
 deny  ${HOME}/.config/kritarc
 deny  ${HOME}/.config/ktorrentrc
 deny  ${HOME}/.config/ktouch2rc
@@ -322,10 +315,9 @@ deny  ${HOME}/.config/mate/mate-dictionary
 deny  ${HOME}/.config/matrix-mirage
 deny  ${HOME}/.config/mcomix
 deny  ${HOME}/.config/meld
-deny  ${HOME}/.config/meteo-qt
 deny  ${HOME}/.config/menulibre.cfg
+deny  ${HOME}/.config/meteo-qt
 deny  ${HOME}/.config/mfusion
-deny  ${HOME}/.config/Microsoft
 deny  ${HOME}/.config/microsoft-edge-dev
 deny  ${HOME}/.config/midori
 deny  ${HOME}/.config/mirage
@@ -341,15 +333,14 @@ deny  ${HOME}/.config/mypaint
 deny  ${HOME}/.config/nano
 deny  ${HOME}/.config/nautilus
 deny  ${HOME}/.config/nemo
-deny  ${HOME}/.config/neochatrc
 deny  ${HOME}/.config/neochat.notifyrc
+deny  ${HOME}/.config/neochatrc
 deny  ${HOME}/.config/neomutt
 deny  ${HOME}/.config/netsurf
 deny  ${HOME}/.config/newsbeuter
 deny  ${HOME}/.config/newsboat
 deny  ${HOME}/.config/newsflash
 deny  ${HOME}/.config/nheko
-deny  ${HOME}/.config/NitroShare
 deny  ${HOME}/.config/nomacs
 deny  ${HOME}/.config/nuclear
 deny  ${HOME}/.config/obs-studio
@@ -370,7 +361,6 @@ deny  ${HOME}/.config/pavucontrol-qt
 deny  ${HOME}/.config/pavucontrol.ini
 deny  ${HOME}/.config/pcmanfm
 deny  ${HOME}/.config/pdfmod
-deny  ${HOME}/.config/Pinta
 deny  ${HOME}/.config/pipe-viewer
 deny  ${HOME}/.config/pitivi
 deny  ${HOME}/.config/pix
@@ -409,8 +399,8 @@ deny  ${HOME}/.config/spectaclerc
 deny  ${HOME}/.config/spotify
 deny  ${HOME}/.config/sqlitebrowser
 deny  ${HOME}/.config/stellarium
-deny  ${HOME}/.config/strawberry
 deny  ${HOME}/.config/straw-viewer
+deny  ${HOME}/.config/strawberry
 deny  ${HOME}/.config/supertuxkart
 deny  ${HOME}/.config/synfig
 deny  ${HOME}/.config/teams
@@ -433,17 +423,16 @@ deny  ${HOME}/.config/vivaldi
 deny  ${HOME}/.config/vivaldi-snapshot
 deny  ${HOME}/.config/vlc
 deny  ${HOME}/.config/wesnoth
-deny  ${HOME}/.config/wormux
-deny  ${HOME}/.config/Whalebird
 deny  ${HOME}/.config/wireshark
+deny  ${HOME}/.config/wormux
 deny  ${HOME}/.config/xchat
 deny  ${HOME}/.config/xed
 deny  ${HOME}/.config/xfburn
+deny  ${HOME}/.config/xfce4-dict
 deny  ${HOME}/.config/xfce4/xfce4-notes.gtkrc
 deny  ${HOME}/.config/xfce4/xfce4-notes.rc
 deny  ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
 deny  ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
-deny  ${HOME}/.config/xfce4-dict
 deny  ${HOME}/.config/xiaoyong
 deny  ${HOME}/.config/xmms2
 deny  ${HOME}/.config/xplayer
@@ -454,12 +443,11 @@ deny  ${HOME}/.config/yandex-browser-beta
 deny  ${HOME}/.config/yelp
 deny  ${HOME}/.config/youtube-dl
 deny  ${HOME}/.config/youtube-dlg
-deny  ${HOME}/.config/youtubemusic-nativefier-040164
 deny  ${HOME}/.config/youtube-music-desktop-app
 deny  ${HOME}/.config/youtube-viewer
+deny  ${HOME}/.config/youtubemusic-nativefier-040164
 deny  ${HOME}/.config/zathura
 deny  ${HOME}/.config/zoomus.conf
-deny  ${HOME}/.config/Zulip
 deny  ${HOME}/.conkeror.mozdev.org
 deny  ${HOME}/.crawl
 deny  ${HOME}/.cups
@@ -504,8 +492,8 @@ deny  ${HOME}/.gradle
 deny  ${HOME}/.gramps
 deny  ${HOME}/.guayadeque
 deny  ${HOME}/.hashcat
-deny  ${HOME}/.hex-a-hop
 deny  ${HOME}/.hedgewars
+deny  ${HOME}/.hex-a-hop
 deny  ${HOME}/.hugin
 deny  ${HOME}/.i2p
 deny  ${HOME}/.icedove
@@ -602,7 +590,9 @@ deny  ${HOME}/.local/share/Anki2
 deny  ${HOME}/.local/share/Dredmor
 deny  ${HOME}/.local/share/Empathy
 deny  ${HOME}/.local/share/Enpass
+deny  ${HOME}/.local/share/FasterThanLight
 deny  ${HOME}/.local/share/Flavio Tordini
+deny  ${HOME}/.local/share/IntoTheBreach
 deny  ${HOME}/.local/share/JetBrains
 deny  ${HOME}/.local/share/KDE/neochat
 deny  ${HOME}/.local/share/Kingsoft
@@ -611,6 +601,7 @@ deny  ${HOME}/.local/share/Mendeley Ltd.
 deny  ${HOME}/.local/share/Mumble
 deny  ${HOME}/.local/share/Nextcloud
 deny  ${HOME}/.local/share/PBE
+deny  ${HOME}/.local/share/Paradox Interactive
 deny  ${HOME}/.local/share/PawelStolowski
 deny  ${HOME}/.local/share/PillarsOfEternity
 deny  ${HOME}/.local/share/Psi
@@ -622,20 +613,20 @@ deny  ${HOME}/.local/share/RogueLegacy
 deny  ${HOME}/.local/share/RogueLegacyStorageContainer
 deny  ${HOME}/.local/share/Shortwave
 deny  ${HOME}/.local/share/Steam
-deny  ${HOME}/.local/share/SteamWorldDig
 deny  ${HOME}/.local/share/SteamWorld Dig 2
+deny  ${HOME}/.local/share/SteamWorldDig
 deny  ${HOME}/.local/share/SuperHexagon
 deny  ${HOME}/.local/share/TelegramDesktop
 deny  ${HOME}/.local/share/Terraria
 deny  ${HOME}/.local/share/TpLogger
 deny  ${HOME}/.local/share/Zeal
+deny  ${HOME}/.local/share/agenda
 deny  ${HOME}/.local/share/akonadi*
 deny  ${HOME}/.local/share/akregator
-deny  ${HOME}/.local/share/agenda
 deny  ${HOME}/.local/share/apps/korganizer
 deny  ${HOME}/.local/share/aspyr-media
-deny  ${HOME}/.local/share/autokey
 deny  ${HOME}/.local/share/authenticator-rs
+deny  ${HOME}/.local/share/autokey
 deny  ${HOME}/.local/share/backintime
 deny  ${HOME}/.local/share/baloo
 deny  ${HOME}/.local/share/barrier
@@ -662,7 +653,6 @@ deny  ${HOME}/.local/share/dolphin-emu
 deny  ${HOME}/.local/share/emailidentities
 deny  ${HOME}/.local/share/epiphany
 deny  ${HOME}/.local/share/evolution
-deny  ${HOME}/.local/share/FasterThanLight
 deny  ${HOME}/.local/share/feedreader
 deny  ${HOME}/.local/share/feral-interactive
 deny  ${HOME}/.local/share/five-or-more
@@ -692,7 +682,6 @@ deny  ${HOME}/.local/share/godot
 deny  ${HOME}/.local/share/gradio
 deny  ${HOME}/.local/share/gwenview
 deny  ${HOME}/.local/share/i2p
-deny  ${HOME}/.local/share/IntoTheBreach
 deny  ${HOME}/.local/share/jami
 deny  ${HOME}/.local/share/kaffeine
 deny  ${HOME}/.local/share/kalgebra
@@ -748,14 +737,13 @@ deny  ${HOME}/.local/share/onlyoffice
 deny  ${HOME}/.local/share/openmw
 deny  ${HOME}/.local/share/orage
 deny  ${HOME}/.local/share/org.kde.gwenview
-deny  ${HOME}/.local/share/Paradox Interactive
 deny  ${HOME}/.local/share/pix
 deny  ${HOME}/.local/share/plasma_notes
 deny  ${HOME}/.local/share/profanity
 deny  ${HOME}/.local/share/psi
 deny  ${HOME}/.local/share/psi+
-deny  ${HOME}/.local/share/quadrapassel
 deny  ${HOME}/.local/share/qpdfview
+deny  ${HOME}/.local/share/quadrapassel
 deny  ${HOME}/.local/share/qutebrowser
 deny  ${HOME}/.local/share/remmina
 deny  ${HOME}/.local/share/rhythmbox
@@ -920,8 +908,20 @@ deny  ${HOME}/.yarn-config
 deny  ${HOME}/.yarncache
 deny  ${HOME}/.yarnrc
 deny  ${HOME}/.zoom
-deny  /tmp/akonadi-*
+deny  ${HOME}/Arduino
+deny  ${HOME}/Monero/wallets
+deny  ${HOME}/Nextcloud
+deny  ${HOME}/Nextcloud/Notes
+deny  ${HOME}/SoftMaker
+deny  ${HOME}/Standard Notes Backups
+deny  ${HOME}/TeamSpeak3-Client-linux_amd64
+deny  ${HOME}/TeamSpeak3-Client-linux_x86
+deny  ${HOME}/hyperrogue.ini
+deny  ${HOME}/i2p
+deny  ${HOME}/mps
+deny  ${HOME}/wallet.dat
 deny  /tmp/.wine-*
+deny  /tmp/akonadi-*
 deny  /var/games/nethack
 deny  /var/games/slashem
 deny  /var/games/vulturesclaw
@@ -941,13 +941,15 @@ deny  ${HOME}/.cache/Ferdi
 deny  ${HOME}/.cache/Flavio Tordini
 deny  ${HOME}/.cache/Franz
 deny  ${HOME}/.cache/INRIA
+deny  ${HOME}/.cache/INRIA/Natron
+deny  ${HOME}/.cache/KDE/neochat
+deny  ${HOME}/.cache/Mendeley Ltd.
 deny  ${HOME}/.cache/MusicBrainz
 deny  ${HOME}/.cache/NewsFlashGTK
 deny  ${HOME}/.cache/Otter
 deny  ${HOME}/.cache/PawelStolowski
 deny  ${HOME}/.cache/Psi
 deny  ${HOME}/.cache/QuiteRss
-deny  ${HOME}/.cache/quodlibet
 deny  ${HOME}/.cache/Quotient/quaternion
 deny  ${HOME}/.cache/Shortwave
 deny  ${HOME}/.cache/Tox
@@ -986,8 +988,8 @@ deny  ${HOME}/.cache/fractal
 deny  ${HOME}/.cache/freecol
 deny  ${HOME}/.cache/gajim
 deny  ${HOME}/.cache/geary
-deny  ${HOME}/.cache/gegl-0.4
 deny  ${HOME}/.cache/geeqie
+deny  ${HOME}/.cache/gegl-0.4
 deny  ${HOME}/.cache/gfeeds
 deny  ${HOME}/.cache/gimp
 deny  ${HOME}/.cache/gnome-boxes
@@ -1004,12 +1006,10 @@ deny  ${HOME}/.cache/google-chrome-unstable
 deny  ${HOME}/.cache/gradio
 deny  ${HOME}/.cache/gummi
 deny  ${HOME}/.cache/icedove
-deny  ${HOME}/.cache/INRIA/Natron
 deny  ${HOME}/.cache/inkscape
 deny  ${HOME}/.cache/inox
 deny  ${HOME}/.cache/iridium
 deny  ${HOME}/.cache/kcmshell5
-deny  ${HOME}/.cache/KDE/neochat
 deny  ${HOME}/.cache/kdenlive
 deny  ${HOME}/.cache/keepassxc
 deny  ${HOME}/.cache/kfind
@@ -1026,7 +1026,6 @@ deny  ${HOME}/.cache/libgweather
 deny  ${HOME}/.cache/librewolf
 deny  ${HOME}/.cache/liferea
 deny  ${HOME}/.cache/lutris
-deny  ${HOME}/.cache/Mendeley Ltd.
 deny  ${HOME}/.cache/marker
 deny  ${HOME}/.cache/matrix-mirage
 deny  ${HOME}/.cache/microsoft-edge-dev
@@ -1045,8 +1044,8 @@ deny  ${HOME}/.cache/ms-skype-online
 deny  ${HOME}/.cache/ms-word-online
 deny  ${HOME}/.cache/mutt
 deny  ${HOME}/.cache/mypaint
-deny  ${HOME}/.cache/nheko
 deny  ${HOME}/.cache/netsurf
+deny  ${HOME}/.cache/nheko
 deny  ${HOME}/.cache/okular
 deny  ${HOME}/.cache/opera
 deny  ${HOME}/.cache/opera-beta
@@ -1061,6 +1060,7 @@ deny  ${HOME}/.cache/plasmashell
 deny  ${HOME}/.cache/plasmashellbookmarkrunnerfirefoxdbfile.sqlite*
 deny  ${HOME}/.cache/psi
 deny  ${HOME}/.cache/qBittorrent
+deny  ${HOME}/.cache/quodlibet
 deny  ${HOME}/.cache/qupzilla
 deny  ${HOME}/.cache/qutebrowser
 deny  ${HOME}/.cache/rhythmbox
@@ -1070,8 +1070,8 @@ deny  ${HOME}/.cache/slimjet
 deny  ${HOME}/.cache/smuxi
 deny  ${HOME}/.cache/snox
 deny  ${HOME}/.cache/spotify
-deny  ${HOME}/.cache/strawberry
 deny  ${HOME}/.cache/straw-viewer
+deny  ${HOME}/.cache/strawberry
 deny  ${HOME}/.cache/supertuxkart
 deny  ${HOME}/.cache/systemsettings
 deny  ${HOME}/.cache/telepathy

@@ -5,6 +5,7 @@ include clion.local
 # Persistent global definitions
 include globals.local
 
+nodeny  ${HOME}/.CLion*
 nodeny  ${HOME}/.config/git
 nodeny  ${HOME}/.gitconfig
 nodeny  ${HOME}/.git-credentials

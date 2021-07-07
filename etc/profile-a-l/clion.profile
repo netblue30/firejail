@@ -5,8 +5,6 @@ include clion.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/JetBrains/CLion*
-nodeny  ${HOME}/.cache/JetBrains/CLion*
 nodeny  ${HOME}/.config/git
 nodeny  ${HOME}/.gitconfig
 nodeny  ${HOME}/.git-credentials

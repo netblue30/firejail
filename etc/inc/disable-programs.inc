@@ -18,7 +18,6 @@ deny  ${HOME}/.*coin
 deny  ${HOME}/.8pecxstudios
 deny  ${HOME}/.AndroidStudio*
 deny  ${HOME}/.Atom
-deny  ${HOME}/.clion*
 deny  ${HOME}/.CLion*
 deny  ${HOME}/.FBReader
 deny  ${HOME}/.FontForge
@@ -66,6 +65,7 @@ deny  ${HOME}/.bzf
 deny  ${HOME}/.cargo/*
 deny  ${HOME}/.claws-mail
 deny  ${HOME}/.cliqz
+deny  ${HOME}/.clion*
 deny  ${HOME}/.clonk
 deny  ${HOME}/.config/0ad
 deny  ${HOME}/.config/2048-qt

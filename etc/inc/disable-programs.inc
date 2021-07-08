@@ -18,6 +18,7 @@ deny  ${HOME}/.*coin
 deny  ${HOME}/.8pecxstudios
 deny  ${HOME}/.AndroidStudio*
 deny  ${HOME}/.Atom
+deny  ${HOME}/.clion*
 deny  ${HOME}/.CLion*
 deny  ${HOME}/.FBReader
 deny  ${HOME}/.FontForge
@@ -103,6 +104,7 @@ deny  ${HOME}/.config/Gpredict
 deny  ${HOME}/.config/INRIA
 deny  ${HOME}/.config/InSilmaril
 deny  ${HOME}/.config/Jitsi Meet
+deny  ${HOME}/.config/JetBrains/CLion*
 deny  ${HOME}/.config/KDE/neochat
 deny  ${HOME}/.config/Kid3
 deny  ${HOME}/.config/Kingsoft
@@ -1008,6 +1010,7 @@ deny  ${HOME}/.cache/INRIA/Natron
 deny  ${HOME}/.cache/inkscape
 deny  ${HOME}/.cache/inox
 deny  ${HOME}/.cache/iridium
+deny  ${HOME}/.cache/JetBrains/CLion*
 deny  ${HOME}/.cache/kcmshell5
 deny  ${HOME}/.cache/KDE/neochat
 deny  ${HOME}/.cache/kdenlive

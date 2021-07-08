@@ -53,6 +53,7 @@ deny  ${HOME}/.bzf
 deny  ${HOME}/.cargo/*
 deny  ${HOME}/.claws-mail
 deny  ${HOME}/.cliqz
+deny  ${HOME}/.clion*
 deny  ${HOME}/.clonk
 deny  ${HOME}/.config/0ad
 deny  ${HOME}/.config/2048-qt
@@ -91,6 +92,7 @@ deny  ${HOME}/.config/Gpredict
 deny  ${HOME}/.config/INRIA
 deny  ${HOME}/.config/InSilmaril
 deny  ${HOME}/.config/Jitsi Meet
+deny  ${HOME}/.config/JetBrains/CLion*
 deny  ${HOME}/.config/KDE/neochat
 deny  ${HOME}/.config/Kid3
 deny  ${HOME}/.config/Kingsoft
@@ -1009,6 +1011,7 @@ deny  ${HOME}/.cache/icedove
 deny  ${HOME}/.cache/inkscape
 deny  ${HOME}/.cache/inox
 deny  ${HOME}/.cache/iridium
+deny  ${HOME}/.cache/JetBrains/CLion*
 deny  ${HOME}/.cache/kcmshell5
 deny  ${HOME}/.cache/kdenlive
 deny  ${HOME}/.cache/keepassxc

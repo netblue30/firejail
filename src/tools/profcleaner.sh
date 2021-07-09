@@ -37,9 +37,9 @@ else
 	profiles=("$@")
 fi
 
-sed -i \
-	-e "s/^blacklist/deny/" \
-	-e "s/^noblacklist/nodeny/" \
-	-e "s/^whitelist/allow/" \
-	-e "s/^nowhitelist/noallow/" \
+sed -i -E \
+	-e "s/^(# |#)?blacklist/\1deny/" \
+	-e "s/^(# |#)?noblacklist/\1nodeny/" \
+	-e "s/^(# |#)?whitelist/\1allow/" \
+	-e "s/^(# |#)?nowhitelist/\1noallow/" \
 	"${profiles[@]}"

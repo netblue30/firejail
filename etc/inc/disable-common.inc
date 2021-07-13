@@ -261,7 +261,7 @@ deny  /etc/logrotate*
 deny  /etc/adduser.conf
 
 # hide config for various intrusion detection systems
-deny  /etc/rkhunter.conf
+deny  /etc/rkhunter.*
 deny  /var/lib/rkhunter
 deny  /etc/chkrootkit.conf
 deny  /etc/lynis

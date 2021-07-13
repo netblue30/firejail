@@ -162,6 +162,9 @@ deny  ${HOME}/.local/share/systemd
 deny  /var/lib/systemd
 deny  ${PATH}/systemd-run
 deny  ${RUNUSER}/systemd
+deny  ${PATH}/systemctl
+deny  /etc/systemd/system
+deny  /etc/systemd/network
 # creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
 #blacklist /var/run/systemd
 
@@ -256,6 +259,18 @@ deny  /etc/selinux
 deny  /etc/modules*
 deny  /etc/logrotate*
 deny  /etc/adduser.conf
+
+# hide config for various intrusion detection systems
+deny  /etc/rkhunter.conf
+deny  /var/lib/rkhunter
+deny  /etc/chkrootkit.conf
+deny  /etc/lynis
+deny  /etc/aide
+deny  /etc/logcheck
+deny  /etc/tripwire
+deny  /etc/snort
+deny  /etc/fail2ban.conf
+deny  /etc/suricata
 
 # Startup files
 read-only ${HOME}/.antigen

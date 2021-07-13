@@ -249,6 +249,7 @@ deny  /etc/adduser.conf
 deny  /etc/anacrontab
 deny  /etc/apparmor*
 deny  /etc/cron*
+deny /etc/default
 deny  /etc/dkms
 deny  /etc/grub*
 deny  /etc/kernel*
@@ -259,6 +260,7 @@ deny  /etc/rc.local
 # rc1.d, rc2.d, ...
 deny  /etc/rc?.d
 deny  /etc/selinux
+deny /etc/sysconfig
 
 # hide config for various intrusion detection systems
 deny  /etc/aide

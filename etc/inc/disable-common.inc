@@ -159,23 +159,23 @@ deny  ${RUNUSER}/gsconnect
 # systemd
 deny  ${HOME}/.config/systemd
 deny  ${HOME}/.local/share/systemd
-deny  /var/lib/systemd
+deny  ${PATH}/systemctl
 deny  ${PATH}/systemd-run
 deny  ${RUNUSER}/systemd
-deny  ${PATH}/systemctl
-deny  /etc/systemd/system
 deny  /etc/systemd/network
+deny  /etc/systemd/system
+deny  /var/lib/systemd
 # creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
 #blacklist /var/run/systemd
 
 # openrc
-deny  /etc/runlevels/
 deny  /etc/init.d/
 deny  /etc/rc.conf
+deny  /etc/runlevels/
 
 # VirtualBox
-deny  ${HOME}/.VirtualBox
 deny  ${HOME}/.config/VirtualBox
+deny  ${HOME}/.VirtualBox
 deny  ${HOME}/VirtualBox VMs
 
 # GNOME Boxes
@@ -245,32 +245,34 @@ deny  /var/spool/cron
 deny  /var/spool/mail
 
 # etc
+deny  /etc/adduser.conf
 deny  /etc/anacrontab
+deny  /etc/apparmor*
 deny  /etc/cron*
+deny  /etc/dkms
+deny  /etc/grub*
+deny  /etc/kernel*
+deny  /etc/logrotate*
+deny  /etc/modules*
 deny  /etc/profile.d
 deny  /etc/rc.local
 # rc1.d, rc2.d, ...
 deny  /etc/rc?.d
-deny  /etc/kernel*
-deny  /etc/grub*
-deny  /etc/dkms
-deny  /etc/apparmor*
 deny  /etc/selinux
-deny  /etc/modules*
-deny  /etc/logrotate*
-deny  /etc/adduser.conf
 
 # hide config for various intrusion detection systems
-deny  /etc/rkhunter.*
-deny  /var/lib/rkhunter
-deny  /etc/chkrootkit.conf
-deny  /etc/lynis
 deny  /etc/aide
-deny  /etc/logcheck
-deny  /etc/tripwire
-deny  /etc/snort
+deny  /etc/aide.conf
+deny  /etc/chkrootkit.conf
 deny  /etc/fail2ban.conf
+deny  /etc/logcheck
+deny  /etc/lynis
+deny  /etc/rkhunter.*
+deny  /etc/snort
 deny  /etc/suricata
+deny /etc/sysconfig/rkhunter
+deny  /etc/tripwire
+deny  /var/lib/rkhunter
 
 # Startup files
 read-only ${HOME}/.antigen
@@ -350,15 +352,15 @@ read-only ${HOME}/_vimrc
 read-only ${HOME}/dotfiles
 
 # Make directories commonly found in $PATH read-only
+read-only ${HOME}/.bin
+read-only ${HOME}/.cargo/bin
 read-only ${HOME}/.gem
+read-only ${HOME}/.local/bin
 read-only ${HOME}/.luarocks
 read-only ${HOME}/.npm-packages
 read-only ${HOME}/.nvm
-read-only ${HOME}/bin
-read-only ${HOME}/.bin
-read-only ${HOME}/.local/bin
-read-only ${HOME}/.cargo/bin
 read-only ${HOME}/.rustup
+read-only ${HOME}/bin
 
 # Write-protection for desktop entries
 read-only ${HOME}/.config/menus
@@ -377,14 +379,15 @@ read-only ${HOME}/.local/share/thumbnailers
 deny  /tmp/ssh-*
 
 # top secret
+deny  /.fscrypt
 deny  ${HOME}/*.kdb
 deny  ${HOME}/*.kdbx
 deny  ${HOME}/*.key
-deny  ${HOME}/.Private
 deny  ${HOME}/.caff
 deny  ${HOME}/.cargo/credentials
 deny  ${HOME}/.cargo/credentials.toml
 deny  ${HOME}/.cert
+deny  ${HOME}/.config/hub
 deny  ${HOME}/.config/keybase
 deny  ${HOME}/.davfs2/secrets
 deny  ${HOME}/.ecryptfs
@@ -394,11 +397,11 @@ deny  ${HOME}/.git-credential-cache
 deny  ${HOME}/.git-credentials
 deny  ${HOME}/.gnome2/keyrings
 deny  ${HOME}/.gnupg
-deny  ${HOME}/.config/hub
 deny  ${HOME}/.kde/share/apps/kwallet
 deny  ${HOME}/.kde4/share/apps/kwallet
 deny  ${HOME}/.local/share/keyrings
 deny  ${HOME}/.local/share/kwalletd
+deny  ${HOME}/.local/share/pki
 deny  ${HOME}/.local/share/plasma-vault
 deny  ${HOME}/.msmtprc
 deny  ${HOME}/.mutt
@@ -406,11 +409,10 @@ deny  ${HOME}/.muttrc
 deny  ${HOME}/.netrc
 deny  ${HOME}/.nyx
 deny  ${HOME}/.pki
-deny  ${HOME}/.local/share/pki
+deny  ${HOME}/.Private
 deny  ${HOME}/.smbcredentials
 deny  ${HOME}/.ssh
 deny  ${HOME}/.vaults
-deny  /.fscrypt
 deny  /etc/davfs2/secrets
 deny  /etc/group+
 deny  /etc/group-
@@ -488,10 +490,10 @@ deny  /tmp/.lxterminal-socket*
 deny  /tmp/tmux-*
 
 # disable terminals running as server resulting in sandbox escape
-deny  ${PATH}/lxterminal
 deny  ${PATH}/gnome-terminal
 deny  ${PATH}/gnome-terminal.wrapper
 deny  ${PATH}/lilyterm
+deny  ${PATH}/lxterminal
 deny  ${PATH}/mate-terminal
 deny  ${PATH}/mate-terminal.wrapper
 deny  ${PATH}/pantheon-terminal
@@ -520,17 +522,17 @@ nodeny  ${HOME}/.local/share/flatpak/exports
 read-only ${HOME}/.local/share/flatpak/exports
 deny  ${HOME}/.local/share/flatpak/*
 deny  ${HOME}/.var
-deny  ${RUNUSER}/app
-deny  ${RUNUSER}/doc
+# most of the time bwrap is SUID binary
+deny  ${PATH}/bwrap
 deny  ${RUNUSER}/.dbus-proxy
 deny  ${RUNUSER}/.flatpak
 deny  ${RUNUSER}/.flatpak-cache
 deny  ${RUNUSER}/.flatpak-helper
+deny  ${RUNUSER}/app
+deny  ${RUNUSER}/doc
 deny  /usr/share/flatpak
 nodeny  /var/lib/flatpak/exports
 deny  /var/lib/flatpak/*
-# most of the time bwrap is SUID binary
-deny  ${PATH}/bwrap
 
 # snap
 deny  ${RUNUSER}/snapd-session-agent.socket

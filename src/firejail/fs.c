@@ -489,7 +489,7 @@ void fs_tmpfs(const char *dir, unsigned check_owner) {
 	struct statvfs buf;
 	if (fstatvfs(fd, &buf) == -1)
 		errExit("fstatvfs");
-	unsigned long flags = buf.f_flag & ~(MS_RDONLY|MS_BIND);
+	unsigned long flags = buf.f_flag & ~(MS_RDONLY|MS_BIND|MS_REMOUNT);
 	// mount via the symbolic link in /proc/self/fd
 	EUID_ROOT();
 	char *proc;

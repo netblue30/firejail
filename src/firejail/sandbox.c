@@ -1043,7 +1043,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// set dns
 	//****************************
-	fs_resolvconf();
+	fs_rebuild_etc();
 
 	//****************************
 	// start dhcp client

@@ -162,6 +162,19 @@ static void disable_file(OPERATION op, const char *filename) {
 				fs_logger2("blacklist", fname);
 			else
 				fs_logger2("blacklist-nolog", fname);
+
+			// files in /etc will be reprocessed during /etc rebuild
+			if (strncmp(fname, "/etc/", 5) == 0) {
+				ProfileEntry *prf = malloc(sizeof(ProfileEntry));
+				if (!prf)
+					errExit("malloc");
+				memset(prf, 0, sizeof(ProfileEntry));
+				prf->data = strdup(fname);
+				if (!prf->data)
+					errExit("strdup");
+				prf->next = cfg.profile_rebuild_etc;
+				cfg.profile_rebuild_etc = prf;
+			}
 		}
 	}
 	else if (op == MOUNT_READONLY || op == MOUNT_RDWR || op == MOUNT_NOEXEC) {

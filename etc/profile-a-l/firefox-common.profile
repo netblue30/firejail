@@ -26,6 +26,7 @@ mkdir ${HOME}/.local/share/pki
 allow  ${DOWNLOADS}
 allow  ${HOME}/.pki
 allow  ${HOME}/.local/share/pki
+whitelist ${RUNUSER}/*firefox*
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc

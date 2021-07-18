@@ -6,7 +6,7 @@ include brasero.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/brasero
+noblacklist ${HOME}/.config/brasero
 
 include disable-common.inc
 include disable-devel.inc

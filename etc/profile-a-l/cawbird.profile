@@ -6,7 +6,7 @@ include cawbird.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/cawbird
+noblacklist ${HOME}/.config/cawbird
 
 include disable-common.inc
 include disable-devel.inc

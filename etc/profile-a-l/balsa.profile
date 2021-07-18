@@ -6,13 +6,13 @@ include balsa.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.balsa
-nodeny  ${HOME}/.gnupg
-nodeny  ${HOME}/.mozilla
-nodeny  ${HOME}/.signature
-nodeny  ${HOME}/mail
-nodeny  /var/mail
-nodeny  /var/spool/mail
+noblacklist ${HOME}/.balsa
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.mozilla
+noblacklist ${HOME}/.signature
+noblacklist ${HOME}/mail
+noblacklist /var/mail
+noblacklist /var/spool/mail
 
 include disable-common.inc
 include disable-devel.inc
@@ -27,17 +27,17 @@ mkdir ${HOME}/.balsa
 mkdir ${HOME}/.gnupg
 mkfile ${HOME}/.signature
 mkdir ${HOME}/mail
-allow  ${HOME}/.balsa
-allow  ${HOME}/.gnupg
-allow  ${HOME}/.mozilla/firefox/profiles.ini
-allow  ${HOME}/.signature
-allow  ${HOME}/mail
-allow  ${RUNUSER}/gnupg
-allow  /usr/share/balsa
-allow  /usr/share/gnupg
-allow  /usr/share/gnupg2
-allow  /var/mail
-allow  /var/spool/mail
+whitelist ${HOME}/.balsa
+whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
+whitelist ${HOME}/.signature
+whitelist ${HOME}/mail
+whitelist ${RUNUSER}/gnupg
+whitelist /usr/share/balsa
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
+whitelist /var/mail
+whitelist /var/spool/mail
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -6,8 +6,8 @@ include subdownloader.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/SubDownloader
-nodeny  ${VIDEOS}
+noblacklist ${HOME}/.config/SubDownloader
+noblacklist ${VIDEOS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

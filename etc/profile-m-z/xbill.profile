@@ -15,8 +15,8 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  /usr/share/xbill
-allow  /var/games/xbill/scores
+whitelist /usr/share/xbill
+whitelist /var/games/xbill/scores
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

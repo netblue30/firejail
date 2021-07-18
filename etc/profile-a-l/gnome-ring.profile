@@ -5,7 +5,7 @@ include gnome-ring.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.local/share/gnome-ring
+noblacklist ${HOME}/.local/share/gnome-ring
 
 include disable-common.inc
 include disable-devel.inc

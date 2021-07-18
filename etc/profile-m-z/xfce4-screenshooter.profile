@@ -6,7 +6,7 @@ include xfce4-screenshooter.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${PICTURES}
+noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,7 +17,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  /usr/share/xfce4
+whitelist /usr/share/xfce4
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

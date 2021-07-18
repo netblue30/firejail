@@ -6,10 +6,10 @@ include mypaint.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/mypaint
-nodeny  ${HOME}/.config/mypaint
-nodeny  ${HOME}/.local/share/mypaint
-nodeny  ${PICTURES}
+noblacklist ${HOME}/.cache/mypaint
+noblacklist ${HOME}/.config/mypaint
+noblacklist ${HOME}/.local/share/mypaint
+noblacklist ${PICTURES}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

@@ -6,8 +6,8 @@ include fetchmail.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.fetchmailrc
-nodeny  ${HOME}/.netrc
+noblacklist ${HOME}/.fetchmailrc
+noblacklist ${HOME}/.netrc
 
 include disable-common.inc
 include disable-devel.inc

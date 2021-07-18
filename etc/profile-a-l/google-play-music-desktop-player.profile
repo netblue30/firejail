@@ -8,7 +8,7 @@ include globals.local
 # noexec /tmp breaks mpris support
 ignore noexec /tmp
 
-nodeny  ${HOME}/.config/Google Play Music Desktop Player
+noblacklist ${HOME}/.config/Google Play Music Desktop Player
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,7 +20,7 @@ include disable-programs.inc
 mkdir ${HOME}/.config/Google Play Music Desktop Player
 # whitelist ${HOME}/.config/pulse
 # whitelist ${HOME}/.pulse
-allow  ${HOME}/.config/Google Play Music Desktop Player
+whitelist ${HOME}/.config/Google Play Music Desktop Player
 include whitelist-common.inc
 
 caps.drop all

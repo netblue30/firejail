@@ -6,10 +6,10 @@ include minitube.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${PICTURES}
-nodeny  ${HOME}/.cache/Flavio Tordini
-nodeny  ${HOME}/.config/Flavio Tordini
-nodeny  ${HOME}/.local/share/Flavio Tordini
+noblacklist ${PICTURES}
+noblacklist ${HOME}/.cache/Flavio Tordini
+noblacklist ${HOME}/.config/Flavio Tordini
+noblacklist ${HOME}/.local/share/Flavio Tordini
 
 include allow-lua.inc
 
@@ -25,11 +25,11 @@ include disable-xdg.inc
 mkdir ${HOME}/.cache/Flavio Tordini
 mkdir ${HOME}/.config/Flavio Tordini
 mkdir ${HOME}/.local/share/Flavio Tordini
-allow  ${PICTURES}
-allow  ${HOME}/.cache/Flavio Tordini
-allow  ${HOME}/.config/Flavio Tordini
-allow  ${HOME}/.local/share/Flavio Tordini
-allow  /usr/share/minitube
+whitelist ${PICTURES}
+whitelist ${HOME}/.cache/Flavio Tordini
+whitelist ${HOME}/.config/Flavio Tordini
+whitelist ${HOME}/.local/share/Flavio Tordini
+whitelist /usr/share/minitube
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

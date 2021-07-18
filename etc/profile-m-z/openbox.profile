@@ -7,7 +7,7 @@ include openbox.local
 include globals.local
 
 # all applications started in openbox will run in this profile
-nodeny  ${HOME}/.config/openbox
+noblacklist ${HOME}/.config/openbox
 include disable-common.inc
 
 caps.drop all

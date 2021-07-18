@@ -8,7 +8,7 @@ include globals.local
 
 ignore noexec ${HOME}
 
-nodeny  ${HOME}/.config/Meltytech
+noblacklist ${HOME}/.config/Meltytech
 
 include disable-common.inc
 include disable-devel.inc

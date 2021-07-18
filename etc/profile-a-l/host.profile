@@ -7,8 +7,8 @@ include host.local
 # Persistent global definitions
 include globals.local
 
-deny  ${RUNUSER}
-nodeny  ${PATH}/host
+blacklist ${RUNUSER}
+noblacklist ${PATH}/host
 
 include disable-common.inc
 include disable-devel.inc

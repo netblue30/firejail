@@ -10,8 +10,8 @@ include globals.local
 ignore caps.drop all
 
 mkdir ${HOME}/.config/transmission-daemon
-allow  ${HOME}/.config/transmission-daemon
-allow  /var/lib/transmission
+whitelist ${HOME}/.config/transmission-daemon
+whitelist /var/lib/transmission
 
 caps.keep ipc_lock,net_bind_service,setgid,setuid,sys_chroot
 protocol packet

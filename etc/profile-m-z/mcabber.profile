@@ -6,8 +6,8 @@ include mcabber.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.mcabber
-nodeny  ${HOME}/.mcabberrc
+noblacklist ${HOME}/.mcabber
+noblacklist ${HOME}/.mcabberrc
 
 include disable-common.inc
 include disable-devel.inc

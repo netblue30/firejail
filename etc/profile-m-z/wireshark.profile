@@ -6,9 +6,9 @@ include wireshark.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/wireshark
-nodeny  ${HOME}/.wireshark
-nodeny  ${DOCUMENTS}
+noblacklist ${HOME}/.config/wireshark
+noblacklist ${HOME}/.wireshark
+noblacklist ${DOCUMENTS}
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -21,7 +21,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-allow  /usr/share/wireshark
+whitelist /usr/share/wireshark
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

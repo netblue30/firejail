@@ -6,7 +6,7 @@ include dconf.local
 # Persistent global definitions
 include globals.local
 
-deny  ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,7 +16,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-allow  ${HOME}/.local/share/glib-2.0
+whitelist ${HOME}/.local/share/glib-2.0
 # dconf paths are whitelisted by the following
 include whitelist-common.inc
 include whitelist-usr-share-common.inc

@@ -6,11 +6,11 @@ include gnome-builder.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.bash_history
+noblacklist ${HOME}/.bash_history
 
-nodeny  ${HOME}/.cache/gnome-builder
-nodeny  ${HOME}/.config/gnome-builder
-nodeny  ${HOME}/.local/share/gnome-builder
+noblacklist ${HOME}/.cache/gnome-builder
+noblacklist ${HOME}/.config/gnome-builder
+noblacklist ${HOME}/.local/share/gnome-builder
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc

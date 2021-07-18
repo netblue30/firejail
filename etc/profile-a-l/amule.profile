@@ -6,7 +6,7 @@ include amule.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.aMule
+noblacklist ${HOME}/.aMule
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,8 +16,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.aMule
-allow  ${DOWNLOADS}
-allow  ${HOME}/.aMule
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.aMule
 include whitelist-common.inc
 
 caps.drop all

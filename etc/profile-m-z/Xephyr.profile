@@ -15,7 +15,7 @@ include globals.local
 # or run "sudo firecfg"
 #
 
-allow  /var/lib/xkb
+whitelist /var/lib/xkb
 include whitelist-common.inc
 
 caps.drop all

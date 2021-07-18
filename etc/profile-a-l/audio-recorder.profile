@@ -7,7 +7,7 @@ include audio-recorder.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${MUSIC}
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,10 +17,10 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-allow  ${MUSIC}
-allow  ${DOWNLOADS}
-allow  /usr/share/audio-recorder
-allow  /usr/share/gstreamer-1.0
+whitelist ${MUSIC}
+whitelist ${DOWNLOADS}
+whitelist /usr/share/audio-recorder
+whitelist /usr/share/gstreamer-1.0
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

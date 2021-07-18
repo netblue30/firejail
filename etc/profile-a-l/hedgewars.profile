@@ -6,7 +6,7 @@ include hedgewars.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.hedgewars
+noblacklist ${HOME}/.hedgewars
 
 include allow-lua.inc
 
@@ -17,7 +17,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.hedgewars
-allow  ${HOME}/.hedgewars
+whitelist ${HOME}/.hedgewars
 include whitelist-common.inc
 
 caps.drop all

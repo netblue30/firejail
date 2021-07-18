@@ -6,7 +6,7 @@ include opencity.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.opencity
+noblacklist ${HOME}/.opencity
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +18,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.opencity
-allow  ${HOME}/.opencity
+whitelist ${HOME}/.opencity
 include whitelist-common.inc
 include whitelist-var-common.inc
 

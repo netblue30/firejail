@@ -6,7 +6,7 @@ include zaproxy.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.ZAP
+noblacklist ${HOME}/.ZAP
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
@@ -20,8 +20,8 @@ include disable-programs.inc
 
 mkdir ${HOME}/.java
 mkdir ${HOME}/.ZAP
-allow  ${HOME}/.java
-allow  ${HOME}/.ZAP
+whitelist ${HOME}/.java
+whitelist ${HOME}/.ZAP
 include whitelist-common.inc
 include whitelist-var-common.inc
 

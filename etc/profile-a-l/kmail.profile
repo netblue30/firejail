@@ -9,27 +9,27 @@ include globals.local
 # kmail has problems launching akonadi in debian and ubuntu.
 # one solution is to have akonadi already running when kmail is started
 
-nodeny  ${HOME}/.cache/akonadi*
-nodeny  ${HOME}/.cache/kmail2
-nodeny  ${HOME}/.config/akonadi*
-nodeny  ${HOME}/.config/baloorc
-nodeny  ${HOME}/.config/emaildefaults
-nodeny  ${HOME}/.config/emailidentities
-nodeny  ${HOME}/.config/kmail2rc
-nodeny  ${HOME}/.config/kmailsearchindexingrc
-nodeny  ${HOME}/.config/mailtransports
-nodeny  ${HOME}/.config/specialmailcollectionsrc
-nodeny  ${HOME}/.gnupg
-nodeny  ${HOME}/.local/share/akonadi*
-nodeny  ${HOME}/.local/share/apps/korganizer
-nodeny  ${HOME}/.local/share/contacts
-nodeny  ${HOME}/.local/share/emailidentities
-nodeny  ${HOME}/.local/share/kmail2
-nodeny  ${HOME}/.local/share/kxmlgui5/kmail
-nodeny  ${HOME}/.local/share/kxmlgui5/kmail2
-nodeny  ${HOME}/.local/share/local-mail
-nodeny  ${HOME}/.local/share/notes
-nodeny  /tmp/akonadi-*
+noblacklist ${HOME}/.cache/akonadi*
+noblacklist ${HOME}/.cache/kmail2
+noblacklist ${HOME}/.config/akonadi*
+noblacklist ${HOME}/.config/baloorc
+noblacklist ${HOME}/.config/emaildefaults
+noblacklist ${HOME}/.config/emailidentities
+noblacklist ${HOME}/.config/kmail2rc
+noblacklist ${HOME}/.config/kmailsearchindexingrc
+noblacklist ${HOME}/.config/mailtransports
+noblacklist ${HOME}/.config/specialmailcollectionsrc
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.local/share/akonadi*
+noblacklist ${HOME}/.local/share/apps/korganizer
+noblacklist ${HOME}/.local/share/contacts
+noblacklist ${HOME}/.local/share/emailidentities
+noblacklist ${HOME}/.local/share/kmail2
+noblacklist ${HOME}/.local/share/kxmlgui5/kmail
+noblacklist ${HOME}/.local/share/kxmlgui5/kmail2
+noblacklist ${HOME}/.local/share/local-mail
+noblacklist ${HOME}/.local/share/notes
+noblacklist /tmp/akonadi-*
 
 include disable-common.inc
 include disable-devel.inc

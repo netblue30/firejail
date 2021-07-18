@@ -7,10 +7,10 @@ include nano.local
 # Persistent global definitions
 include globals.local
 
-deny  ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}/wayland-*
 
-nodeny  ${HOME}/.config/nano
-nodeny  ${HOME}/.nanorc
+noblacklist ${HOME}/.config/nano
+noblacklist ${HOME}/.nanorc
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,7 +19,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-allow  /usr/share/nano
+whitelist /usr/share/nano
 include whitelist-usr-share-common.inc
 
 apparmor

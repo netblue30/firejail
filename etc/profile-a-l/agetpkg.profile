@@ -7,8 +7,8 @@ include agetpkg.local
 # Persistent global definitions
 include globals.local
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}/wayland-*
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 # Allow python (blacklisted by disable-interpreters.inc)
 #include allow-python2.inc
@@ -23,7 +23,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  ${DOWNLOADS}
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

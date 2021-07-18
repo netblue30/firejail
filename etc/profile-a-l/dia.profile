@@ -6,8 +6,8 @@ include dia.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.dia
-nodeny  ${DOCUMENTS}
+noblacklist ${HOME}/.dia
+noblacklist ${DOCUMENTS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -25,7 +25,7 @@ include disable-xdg.inc
 #whitelist ${HOME}/.dia
 #whitelist ${DOCUMENTS}
 #include whitelist-common.inc
-allow  /usr/share/dia
+whitelist /usr/share/dia
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

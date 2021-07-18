@@ -6,9 +6,9 @@ include enchant.local
 # Persistent global definitions
 include globals.local
 
-deny  ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}/wayland-*
 
-nodeny  ${HOME}/.config/enchant
+noblacklist ${HOME}/.config/enchant
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,7 +19,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/enchant
-allow  ${HOME}/.config/enchant
+whitelist ${HOME}/.config/enchant
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

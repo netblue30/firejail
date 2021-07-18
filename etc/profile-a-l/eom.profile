@@ -6,9 +6,9 @@ include eom.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/mate/eom
+noblacklist ${HOME}/.config/mate/eom
 
-allow  /usr/share/eom
+whitelist /usr/share/eom
 
 # private-bin, private-etc and private-lib break 'Open With' / 'Open in file manager'.
 # Add the next lines to your eom.local if you need that functionality.

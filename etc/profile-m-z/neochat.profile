@@ -6,12 +6,12 @@ include neochat.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/KDE/neochat
-nodeny  ${HOME}/.config/KDE
-nodeny  ${HOME}/.config/KDE/neochat
-nodeny  ${HOME}/.config/neochatrc
-nodeny  ${HOME}/.config/neochat.notifyrc
-nodeny  ${HOME}/.local/share/KDE/neochat
+noblacklist ${HOME}/.cache/KDE/neochat
+noblacklist ${HOME}/.config/KDE
+noblacklist ${HOME}/.config/KDE/neochat
+noblacklist ${HOME}/.config/neochatrc
+noblacklist ${HOME}/.config/neochat.notifyrc
+noblacklist ${HOME}/.local/share/KDE/neochat
 
 include disable-common.inc
 include disable-devel.inc
@@ -24,9 +24,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/KDE/neochat
 mkdir ${HOME}/.local/share/KDE/neochat
-allow  ${HOME}/.cache/KDE/neochat
-allow  ${HOME}/.local/share/KDE/neochat
-allow  ${DOWNLOADS}
+whitelist ${HOME}/.cache/KDE/neochat
+whitelist ${HOME}/.local/share/KDE/neochat
+whitelist ${DOWNLOADS}
 include whitelist-1793-workaround.inc
 include whitelist-common.inc
 include whitelist-runuser-common.inc

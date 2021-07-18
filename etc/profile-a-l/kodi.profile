@@ -13,10 +13,10 @@ ignore noexec ${HOME}
 #ignore noroot
 #ignore private-dev
 
-nodeny  ${HOME}/.kodi
-nodeny  ${MUSIC}
-nodeny  ${PICTURES}
-nodeny  ${VIDEOS}
+noblacklist ${HOME}/.kodi
+noblacklist ${MUSIC}
+noblacklist ${PICTURES}
+noblacklist ${VIDEOS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

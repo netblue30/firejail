@@ -9,7 +9,7 @@ include globals.local
 ignore machine-id
 ignore nosound
 
-allow  /usr/share/four-in-a-row
+whitelist /usr/share/four-in-a-row
 
 private-bin four-in-a-row
 

@@ -6,10 +6,10 @@ include vmware-view.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.vmware
+noblacklist ${HOME}/.vmware
 
-nodeny  /sbin
-nodeny  /usr/sbin
+noblacklist /sbin
+noblacklist /usr/sbin
 
 include allow-bin-sh.inc
 
@@ -23,7 +23,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.vmware
-allow  ${HOME}/.vmware
+whitelist ${HOME}/.vmware
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -7,10 +7,10 @@ include transmission-remote-gtk.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/transmission-remote-gtk
+noblacklist ${HOME}/.config/transmission-remote-gtk
 
 mkdir ${HOME}/.config/transmission-remote-gtk
-allow  ${HOME}/.config/transmission-remote-gtk
+whitelist ${HOME}/.config/transmission-remote-gtk
 
 private-etc fonts,hostname,hosts,resolv.conf
 # Problems with private-lib (see issue #2889)

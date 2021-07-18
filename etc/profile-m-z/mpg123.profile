@@ -7,7 +7,7 @@ include mpg123.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${MUSIC}
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

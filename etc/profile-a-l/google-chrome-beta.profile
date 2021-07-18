@@ -10,19 +10,19 @@ ignore whitelist /usr/share/chromium
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 
-nodeny  ${HOME}/.cache/google-chrome-beta
-nodeny  ${HOME}/.config/google-chrome-beta
+noblacklist ${HOME}/.cache/google-chrome-beta
+noblacklist ${HOME}/.config/google-chrome-beta
 
-nodeny  ${HOME}/.config/chrome-beta-flags.conf
-nodeny  ${HOME}/.config/chrome-beta-flags.config
+noblacklist ${HOME}/.config/chrome-beta-flags.conf
+noblacklist ${HOME}/.config/chrome-beta-flags.config
 
 mkdir ${HOME}/.cache/google-chrome-beta
 mkdir ${HOME}/.config/google-chrome-beta
-allow  ${HOME}/.cache/google-chrome-beta
-allow  ${HOME}/.config/google-chrome-beta
+whitelist ${HOME}/.cache/google-chrome-beta
+whitelist ${HOME}/.config/google-chrome-beta
 
-allow  ${HOME}/.config/chrome-beta-flags.conf
-allow  ${HOME}/.config/chrome-beta-flags.config
+whitelist ${HOME}/.config/chrome-beta-flags.conf
+whitelist ${HOME}/.config/chrome-beta-flags.config
 
 # Redirect
 include chromium-common.profile

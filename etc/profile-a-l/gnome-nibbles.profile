@@ -9,11 +9,11 @@ include globals.local
 ignore machine-id
 ignore nosound
 
-nodeny  ${HOME}/.local/share/gnome-nibbles
+noblacklist ${HOME}/.local/share/gnome-nibbles
 
 mkdir ${HOME}/.local/share/gnome-nibbles
-allow  ${HOME}/.local/share/gnome-nibbles
-allow  /usr/share/gnome-nibbles
+whitelist ${HOME}/.local/share/gnome-nibbles
+whitelist /usr/share/gnome-nibbles
 
 private-bin gnome-nibbles
 

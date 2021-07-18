@@ -6,9 +6,9 @@ include lxmusic.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/xmms2
-nodeny  ${HOME}/.config/xmms2
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.cache/xmms2
+noblacklist ${HOME}/.config/xmms2
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

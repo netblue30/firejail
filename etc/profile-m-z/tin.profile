@@ -6,12 +6,12 @@ include tin.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.newsrc
-nodeny  ${HOME}/.tin
+noblacklist ${HOME}/.newsrc
+noblacklist ${HOME}/.tin
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}
-deny  /usr/libexec
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

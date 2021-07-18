@@ -7,8 +7,8 @@ include mocp.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.moc
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.moc
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

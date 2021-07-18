@@ -6,8 +6,8 @@ include x2goclient.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.x2go
-nodeny  ${HOME}/.x2goclient
+noblacklist ${HOME}/.x2go
+noblacklist ${HOME}/.x2goclient
 
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc

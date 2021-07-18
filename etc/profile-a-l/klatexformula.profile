@@ -6,8 +6,8 @@ include klatexformula.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.kde/share/apps/klatexformula
-nodeny  ${HOME}/.klatexformula
+noblacklist ${HOME}/.kde/share/apps/klatexformula
+noblacklist ${HOME}/.klatexformula
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

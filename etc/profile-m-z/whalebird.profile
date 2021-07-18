@@ -13,10 +13,10 @@ ignore include whitelist-usr-share-common.inc
 ignore dbus-user none
 ignore dbus-system none
 
-nodeny  ${HOME}/.config/Whalebird
+noblacklist ${HOME}/.config/Whalebird
 
 mkdir ${HOME}/.config/Whalebird
-allow  ${HOME}/.config/Whalebird
+whitelist ${HOME}/.config/Whalebird
 
 no3d
 

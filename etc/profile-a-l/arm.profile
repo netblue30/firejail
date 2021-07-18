@@ -6,7 +6,7 @@ include arm.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.arm
+noblacklist ${HOME}/.arm
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -20,7 +20,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.arm
-allow  ${HOME}/.arm
+whitelist ${HOME}/.arm
 include whitelist-common.inc
 
 caps.drop all

@@ -7,7 +7,7 @@ include clamav.local
 # Persistent global definitions
 include globals.local
 
-deny  ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}/wayland-*
 
 include disable-exec.inc
 

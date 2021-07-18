@@ -8,7 +8,7 @@ include unzip.local
 include globals.local
 
 # GNOME Shell integration (chrome-gnome-shell)
-nodeny  ${HOME}/.local/share/gnome-shell
+noblacklist ${HOME}/.local/share/gnome-shell
 
 private-etc alternatives,group,localtime,passwd
 

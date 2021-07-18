@@ -6,7 +6,7 @@ include electron-mail.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/electron-mail
+noblacklist ${HOME}/.config/electron-mail
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/electron-mail
-allow  ${HOME}/.config/electron-mail
-allow  ${DOWNLOADS}
+whitelist ${HOME}/.config/electron-mail
+whitelist ${DOWNLOADS}
 
 include whitelist-common.inc
 include whitelist-runuser-common.inc

@@ -6,7 +6,7 @@ include d-feet.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/d-feet
+noblacklist ${HOME}/.config/d-feet
 
 # Allow python (disabled by disable-interpreters.inc)
 include allow-python2.inc
@@ -22,8 +22,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/d-feet
-allow  ${HOME}/.config/d-feet
-allow  /usr/share/d-feet
+whitelist ${HOME}/.config/d-feet
+whitelist /usr/share/d-feet
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

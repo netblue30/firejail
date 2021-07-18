@@ -7,8 +7,8 @@ include profanity.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/profanity
-nodeny  ${HOME}/.local/share/profanity
+noblacklist ${HOME}/.config/profanity
+noblacklist ${HOME}/.local/share/profanity
 
 # Allow Python
 include allow-python2.inc

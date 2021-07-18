@@ -6,9 +6,9 @@ include apostrophe.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.texlive20*
-nodeny  ${DOCUMENTS}
-nodeny  ${PICTURES}
+noblacklist ${HOME}/.texlive20*
+noblacklist ${DOCUMENTS}
+noblacklist ${PICTURES}
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -31,12 +31,12 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  /usr/libexec/webkit2gtk-4.0
-allow  /usr/share/apostrophe
-allow  /usr/share/texlive
-allow  /usr/share/texmf
-allow  /usr/share/pandoc-*
-allow  /usr/share/perl5
+whitelist /usr/libexec/webkit2gtk-4.0
+whitelist /usr/share/apostrophe
+whitelist /usr/share/texlive
+whitelist /usr/share/texmf
+whitelist /usr/share/pandoc-*
+whitelist /usr/share/perl5
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

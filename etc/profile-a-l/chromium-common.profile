@@ -9,8 +9,8 @@ include chromium-common.local
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
-nodeny  ${HOME}/.pki
-nodeny  ${HOME}/.local/share/pki
+noblacklist ${HOME}/.pki
+noblacklist ${HOME}/.local/share/pki
 
 # Add the next line to your chromium-common.local if you want Google Chrome/Chromium browser
 # to have access to Gnome extensions (extensions.gnome.org) via browser connector
@@ -26,9 +26,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.pki
 mkdir ${HOME}/.local/share/pki
-allow  ${DOWNLOADS}
-allow  ${HOME}/.pki
-allow  ${HOME}/.local/share/pki
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.pki
+whitelist ${HOME}/.local/share/pki
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

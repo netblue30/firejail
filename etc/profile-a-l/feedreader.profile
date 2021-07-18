@@ -6,8 +6,8 @@ include feedreader.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/feedreader
-nodeny  ${HOME}/.local/share/feedreader
+noblacklist ${HOME}/.cache/feedreader
+noblacklist ${HOME}/.local/share/feedreader
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,9 +20,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/feedreader
 mkdir ${HOME}/.local/share/feedreader
-allow  ${HOME}/.cache/feedreader
-allow  ${HOME}/.local/share/feedreader
-allow  /usr/share/feedreader
+whitelist ${HOME}/.cache/feedreader
+whitelist ${HOME}/.local/share/feedreader
+whitelist /usr/share/feedreader
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

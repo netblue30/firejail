@@ -8,8 +8,8 @@ include globals.local
 
 # Tracker is started by systemd on most systems. Therefore it is not firejailed by default
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}/wayland-*
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

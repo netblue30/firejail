@@ -11,16 +11,16 @@ ignore whitelist /usr/share/chromium
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 
-nodeny  ${HOME}/.cache/opera
-nodeny  ${HOME}/.config/opera
-nodeny  ${HOME}/.opera
+noblacklist ${HOME}/.cache/opera
+noblacklist ${HOME}/.config/opera
+noblacklist ${HOME}/.opera
 
 mkdir ${HOME}/.cache/opera
 mkdir ${HOME}/.config/opera
 mkdir ${HOME}/.opera
-allow  ${HOME}/.cache/opera
-allow  ${HOME}/.config/opera
-allow  ${HOME}/.opera
+whitelist ${HOME}/.cache/opera
+whitelist ${HOME}/.config/opera
+whitelist ${HOME}/.opera
 
 # Redirect
 include chromium-common.profile

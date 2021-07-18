@@ -11,7 +11,7 @@ include globals.local
 
 ignore noexec ${HOME}
 
-nodeny  ${HOME}/.minecraft
+noblacklist ${HOME}/.minecraft
 
 include allow-java.inc
 
@@ -25,7 +25,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.minecraft
-allow  ${HOME}/.minecraft
+whitelist ${HOME}/.minecraft
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

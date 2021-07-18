@@ -6,7 +6,7 @@ include mplayer.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.mplayer
+noblacklist ${HOME}/.mplayer
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,7 +17,7 @@ include disable-programs.inc
 
 read-only ${DESKTOP}
 mkdir ${HOME}/.mplayer
-allow  ${HOME}/.mplayer
+whitelist ${HOME}/.mplayer
 include whitelist-common.inc
 include whitelist-player-common.inc
 include whitelist-usr-share-common.inc

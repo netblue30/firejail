@@ -6,7 +6,7 @@ include clawsker.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.claws-mail
+noblacklist ${HOME}/.claws-mail
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
@@ -19,7 +19,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.claws-mail
-allow  ${HOME}/.claws-mail
+whitelist ${HOME}/.claws-mail
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

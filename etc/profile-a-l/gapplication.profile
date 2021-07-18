@@ -6,8 +6,8 @@ include gapplication.local
 # Persistent global definitions
 include globals.local
 
-deny  ${RUNUSER}/wayland-*
-deny  /usr/libexec
+blacklist ${RUNUSER}/wayland-*
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

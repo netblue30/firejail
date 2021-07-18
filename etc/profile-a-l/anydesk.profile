@@ -5,7 +5,7 @@ include anydesk.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.anydesk
+noblacklist ${HOME}/.anydesk
 
 include disable-common.inc
 include disable-devel.inc
@@ -15,7 +15,7 @@ include disable-programs.inc
 include disable-shell.inc
 
 mkdir ${HOME}/.anydesk
-allow  ${HOME}/.anydesk
+whitelist ${HOME}/.anydesk
 include whitelist-common.inc
 
 caps.drop all

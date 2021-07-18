@@ -6,9 +6,9 @@ include warmux.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/wormux
-nodeny  ${HOME}/.local/share/wormux
-nodeny  ${HOME}/.wormux
+noblacklist ${HOME}/.config/wormux
+noblacklist ${HOME}/.local/share/wormux
+noblacklist ${HOME}/.wormux
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,10 +22,10 @@ include disable-xdg.inc
 mkdir ${HOME}/.config/wormux
 mkdir ${HOME}/.local/share/wormux
 mkdir ${HOME}/.wormux
-allow  ${HOME}/.config/wormux
-allow  ${HOME}/.local/share/wormux
-allow  ${HOME}/.wormux
-allow  /usr/share/warmux
+whitelist ${HOME}/.config/wormux
+whitelist ${HOME}/.local/share/wormux
+whitelist ${HOME}/.wormux
+whitelist /usr/share/warmux
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -6,7 +6,7 @@ include blender.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/blender
+noblacklist ${HOME}/.config/blender
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -20,8 +20,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 # Allow usage of AMD GPU by OpenCL
-nodeny  /sys/module
-allow  /sys/module/amdgpu
+noblacklist /sys/module
+whitelist /sys/module/amdgpu
 read-only /sys/module/amdgpu
 
 caps.drop all

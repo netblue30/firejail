@@ -6,11 +6,11 @@ include viewnior.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.Steam
-nodeny  ${HOME}/.config/viewnior
-nodeny  ${HOME}/.steam
+noblacklist ${HOME}/.Steam
+noblacklist ${HOME}/.config/viewnior
+noblacklist ${HOME}/.steam
 
-deny  ${HOME}/.bashrc
+blacklist ${HOME}/.bashrc
 
 include disable-common.inc
 include disable-devel.inc

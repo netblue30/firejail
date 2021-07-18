@@ -25,7 +25,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-allow  /var/lib/xkb
+whitelist /var/lib/xkb
 # whitelisting home directory, or including whitelist-common.inc
 # will crash xpra on some platforms
 

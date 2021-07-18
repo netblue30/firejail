@@ -6,7 +6,7 @@ include photoflare.local
 # Persistent global definitions
 include photoflare.local
 
-nodeny  ${PICTURES}
+noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc

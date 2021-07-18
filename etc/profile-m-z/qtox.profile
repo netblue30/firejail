@@ -6,8 +6,8 @@ include qtox.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/Tox
-nodeny  ${HOME}/.config/tox
+noblacklist ${HOME}/.cache/Tox
+noblacklist ${HOME}/.config/tox
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,8 +19,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/tox
-allow  ${DOWNLOADS}
-allow  ${HOME}/.config/tox
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.config/tox
 include whitelist-common.inc
 include whitelist-var-common.inc
 

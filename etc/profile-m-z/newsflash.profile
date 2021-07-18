@@ -6,9 +6,9 @@ include newsflash.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/NewsFlashGTK
-nodeny  ${HOME}/.config/news-flash
-nodeny  ${HOME}/.local/share/news-flash
+noblacklist ${HOME}/.cache/NewsFlashGTK
+noblacklist ${HOME}/.config/news-flash
+noblacklist ${HOME}/.local/share/news-flash
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,9 +22,9 @@ include disable-xdg.inc
 mkdir ${HOME}/.cache/NewsFlashGTK
 mkdir ${HOME}/.config/news-flash
 mkdir ${HOME}/.local/share/news-flash
-allow  ${HOME}/.cache/NewsFlashGTK
-allow  ${HOME}/.config/news-flash
-allow  ${HOME}/.local/share/news-flash
+whitelist ${HOME}/.cache/NewsFlashGTK
+whitelist ${HOME}/.config/news-flash
+whitelist ${HOME}/.local/share/news-flash
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

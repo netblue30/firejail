@@ -7,9 +7,9 @@ include flameshot.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${PICTURES}
-nodeny  ${HOME}/.config/Dharkael
-nodeny  ${HOME}/.config/flameshot
+noblacklist ${PICTURES}
+noblacklist ${HOME}/.config/Dharkael
+noblacklist ${HOME}/.config/flameshot
 
 include disable-common.inc
 include disable-devel.inc
@@ -25,7 +25,7 @@ include disable-xdg.inc
 #whitelist ${PICTURES}
 #whitelist ${HOME}/.config/Dharkael
 #whitelist ${HOME}/.config/flameshot
-allow  /usr/share/flameshot
+whitelist /usr/share/flameshot
 #include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

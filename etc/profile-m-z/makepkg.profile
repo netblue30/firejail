@@ -6,8 +6,8 @@ include makepkg.local
 # Persistent global definitions
 include globals.local
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}/wayland-*
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 # Note: see this Arch forum discussion https://bbs.archlinux.org/viewtopic.php?pid=1743138
 # for potential issues and their solutions when Firejailing makepkg
@@ -17,18 +17,18 @@ deny  ${RUNUSER}/wayland-*
 # whitelist ${HOME}/.gnupg
 
 # Enable severely restricted access to ${HOME}/.gnupg
-nodeny  ${HOME}/.gnupg
+noblacklist ${HOME}/.gnupg
 read-only ${HOME}/.gnupg/gpg.conf
 read-only ${HOME}/.gnupg/trustdb.gpg
 read-only ${HOME}/.gnupg/pubring.kbx
-deny  ${HOME}/.gnupg/random_seed
-deny  ${HOME}/.gnupg/pubring.kbx~
-deny  ${HOME}/.gnupg/private-keys-v1.d
-deny  ${HOME}/.gnupg/crls.d
-deny  ${HOME}/.gnupg/openpgp-revocs.d
+blacklist ${HOME}/.gnupg/random_seed
+blacklist ${HOME}/.gnupg/pubring.kbx~
+blacklist ${HOME}/.gnupg/private-keys-v1.d
+blacklist ${HOME}/.gnupg/crls.d
+blacklist ${HOME}/.gnupg/openpgp-revocs.d
 
 # Arch Linux (based distributions) need access to /var/lib/pacman. As we drop all capabilities this is automatically read-only.
-nodeny  /var/lib/pacman
+noblacklist /var/lib/pacman
 
 include disable-common.inc
 include disable-exec.inc

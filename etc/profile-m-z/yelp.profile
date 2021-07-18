@@ -6,7 +6,7 @@ include yelp.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/yelp
+noblacklist ${HOME}/.config/yelp
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,15 +18,15 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/yelp
-allow  ${HOME}/.config/yelp
-allow  /usr/libexec/webkit2gtk-4.0
-allow  /usr/share/doc
-allow  /usr/share/groff
-allow  /usr/share/help
-allow  /usr/share/man
-allow  /usr/share/yelp
-allow  /usr/share/yelp-tools
-allow  /usr/share/yelp-xsl
+whitelist ${HOME}/.config/yelp
+whitelist /usr/libexec/webkit2gtk-4.0
+whitelist /usr/share/doc
+whitelist /usr/share/groff
+whitelist /usr/share/help
+whitelist /usr/share/man
+whitelist /usr/share/yelp
+whitelist /usr/share/yelp-tools
+whitelist /usr/share/yelp-xsl
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

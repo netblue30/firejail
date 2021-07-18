@@ -5,8 +5,8 @@ include ms-office.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/ms-office-online
-nodeny  ${HOME}/.jak
+noblacklist ${HOME}/.cache/ms-office-online
+noblacklist ${HOME}/.jak
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

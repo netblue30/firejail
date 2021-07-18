@@ -7,9 +7,9 @@ include sway.local
 include globals.local
 
 # all applications started in sway will run in this profile
-nodeny  ${HOME}/.config/sway
+noblacklist ${HOME}/.config/sway
 # sway uses ~/.config/i3 as fallback if there is no ~/.config/sway
-nodeny  ${HOME}/.config/i3
+noblacklist ${HOME}/.config/i3
 include disable-common.inc
 
 caps.drop all

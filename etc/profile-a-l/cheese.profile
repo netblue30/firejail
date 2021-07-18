@@ -6,8 +6,8 @@ include cheese.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${VIDEOS}
-nodeny  ${PICTURES}
+noblacklist ${VIDEOS}
+noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,9 +17,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-allow  ${VIDEOS}
-allow  ${PICTURES}
-allow  /usr/share/gnome-video-effects
+whitelist ${VIDEOS}
+whitelist ${PICTURES}
+whitelist /usr/share/gnome-video-effects
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

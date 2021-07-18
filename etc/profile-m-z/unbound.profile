@@ -6,11 +6,11 @@ include unbound.local
 # Persistent global definitions
 include globals.local
 
-nodeny  /sbin
-nodeny  /usr/sbin
+noblacklist /sbin
+noblacklist /usr/sbin
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}/wayland-*
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,8 +22,8 @@ include disable-xdg.inc
 
 include whitelist-usr-share-common.inc
 
-allow  /var/lib/unbound
-allow  /var/run
+whitelist /var/lib/unbound
+whitelist /var/run
 
 caps.keep net_admin,net_bind_service,setgid,setuid,sys_chroot,sys_resource
 ipc-namespace

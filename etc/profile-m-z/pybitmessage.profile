@@ -5,9 +5,9 @@ include pybitmessage.local
 # Persistent global definitions
 include globals.local
 
-nodeny  /sbin
-nodeny  /usr/local/sbin
-nodeny  /usr/sbin
+noblacklist /sbin
+noblacklist /usr/local/sbin
+noblacklist /usr/sbin
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

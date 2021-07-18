@@ -6,8 +6,8 @@ include 2048-qt.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/2048-qt
-nodeny  ${HOME}/.config/xiaoyong
+noblacklist ${HOME}/.config/2048-qt
+noblacklist ${HOME}/.config/xiaoyong
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-programs.inc
 
 mkdir ${HOME}/.config/2048-qt
 mkdir ${HOME}/.config/xiaoyong
-allow  ${HOME}/.config/2048-qt
-allow  ${HOME}/.config/xiaoyong
+whitelist ${HOME}/.config/2048-qt
+whitelist ${HOME}/.config/xiaoyong
 include whitelist-common.inc
 include whitelist-var-common.inc
 

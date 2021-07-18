@@ -7,7 +7,7 @@ include mupdf-gl.local
 # added by included profile
 #include globals.local
 
-nodeny  ${HOME}/.mupdf.history
+noblacklist ${HOME}/.mupdf.history
 
 # Redirect
 include mupdf.profile

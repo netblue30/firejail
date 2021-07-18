@@ -6,9 +6,9 @@ include audacious.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/Audaciousrc
-nodeny  ${HOME}/.config/audacious
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.config/Audaciousrc
+noblacklist ${HOME}/.config/audacious
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

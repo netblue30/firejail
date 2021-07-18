@@ -6,9 +6,9 @@ include smplayer.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/smplayer
-nodeny  ${HOME}/.config/youtube-dl
-nodeny  ${HOME}/.mplayer
+noblacklist ${HOME}/.config/smplayer
+noblacklist ${HOME}/.config/youtube-dl
+noblacklist ${HOME}/.mplayer
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -17,8 +17,8 @@ include allow-lua.inc
 include allow-python2.inc
 include allow-python3.inc
 
-nodeny  ${MUSIC}
-nodeny  ${VIDEOS}
+noblacklist ${MUSIC}
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -29,9 +29,9 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  /usr/share/lua*
-allow  /usr/share/smplayer
-allow  /usr/share/vulkan
+whitelist /usr/share/lua*
+whitelist /usr/share/smplayer
+whitelist /usr/share/vulkan
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

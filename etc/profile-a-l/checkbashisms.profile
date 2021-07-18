@@ -7,9 +7,9 @@ include checkbashisms.local
 # Persistent global definitions
 include globals.local
 
-deny  ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}/wayland-*
 
-nodeny  ${DOCUMENTS}
+noblacklist ${DOCUMENTS}
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc

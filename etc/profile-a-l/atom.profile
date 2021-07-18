@@ -18,8 +18,8 @@ ignore include whitelist-var-common.inc
 ignore apparmor
 ignore disable-mnt
 
-nodeny  ${HOME}/.atom
-nodeny  ${HOME}/.config/Atom
+noblacklist ${HOME}/.atom
+noblacklist ${HOME}/.config/Atom
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc

@@ -7,7 +7,7 @@ include fluxbox.local
 include globals.local
 
 # all applications started in fluxbox will run in this profile
-nodeny  ${HOME}/.fluxbox
+noblacklist ${HOME}/.fluxbox
 include disable-common.inc
 
 caps.drop all

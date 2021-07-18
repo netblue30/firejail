@@ -7,8 +7,8 @@ include globals.local
 
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
-nodeny  ${HOME}/.cache/org.gnome.Books
-nodeny  ${DOCUMENTS}
+noblacklist ${HOME}/.cache/org.gnome.Books
+noblacklist ${DOCUMENTS}
 
 # Allow gjs (blacklisted by disable-interpreters.inc)
 include allow-gjs.inc

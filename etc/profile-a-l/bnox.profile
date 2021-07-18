@@ -10,13 +10,13 @@ ignore whitelist /usr/share/chromium
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 
-nodeny  ${HOME}/.cache/bnox
-nodeny  ${HOME}/.config/bnox
+noblacklist ${HOME}/.cache/bnox
+noblacklist ${HOME}/.config/bnox
 
 mkdir ${HOME}/.cache/bnox
 mkdir ${HOME}/.config/bnox
-allow  ${HOME}/.cache/bnox
-allow  ${HOME}/.config/bnox
+whitelist ${HOME}/.cache/bnox
+whitelist ${HOME}/.config/bnox
 
 # Redirect
 include chromium-common.profile

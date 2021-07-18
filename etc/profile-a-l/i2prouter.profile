@@ -14,12 +14,12 @@ include globals.local
 # Only needed when i2prouter binary resides in home directory (official I2P java installer does so).
 ignore noexec ${HOME}
 
-nodeny  ${HOME}/.config/i2p
-nodeny  ${HOME}/.i2p
-nodeny  ${HOME}/.local/share/i2p
-nodeny  ${HOME}/i2p
+noblacklist ${HOME}/.config/i2p
+noblacklist ${HOME}/.i2p
+noblacklist ${HOME}/.local/share/i2p
+noblacklist ${HOME}/i2p
 # Only needed when wrapper resides in /usr/sbin/ (Ubuntu official I2P PPA package does so).
-nodeny  /usr/sbin
+noblacklist /usr/sbin
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
@@ -36,12 +36,12 @@ mkdir ${HOME}/.config/i2p
 mkdir ${HOME}/.i2p
 mkdir ${HOME}/.local/share/i2p
 mkdir ${HOME}/i2p
-allow  ${HOME}/.config/i2p
-allow  ${HOME}/.i2p
-allow  ${HOME}/.local/share/i2p
-allow  ${HOME}/i2p
+whitelist ${HOME}/.config/i2p
+whitelist ${HOME}/.i2p
+whitelist ${HOME}/.local/share/i2p
+whitelist ${HOME}/i2p
 # Only needed when wrapper resides in /usr/sbin/ (Ubuntu official I2P PPA package does so).
-allow  /usr/sbin/wrapper*
+whitelist /usr/sbin/wrapper*
 
 include whitelist-common.inc
 

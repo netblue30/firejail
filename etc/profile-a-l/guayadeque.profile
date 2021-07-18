@@ -5,8 +5,8 @@ include guayadeque.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.guayadeque
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.guayadeque
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

@@ -6,9 +6,9 @@ include viking.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.viking
-nodeny  ${HOME}/.viking-maps
-nodeny  ${DOCUMENTS}
+noblacklist ${HOME}/.viking
+noblacklist ${HOME}/.viking-maps
+noblacklist ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

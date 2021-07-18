@@ -9,7 +9,7 @@ include globals.local
 # We can't blacklist much since catfish
 # is for finding files/content
 
-nodeny  ${HOME}/.config/catfish
+noblacklist ${HOME}/.config/catfish
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -21,7 +21,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 # include disable-programs.inc
 
-allow  /var/lib/mlocate
+whitelist /var/lib/mlocate
 include whitelist-var-common.inc
 
 apparmor

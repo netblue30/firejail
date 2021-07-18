@@ -6,8 +6,8 @@ include deadbeef.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/deadbeef
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.config/deadbeef
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

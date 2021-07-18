@@ -6,9 +6,9 @@ include remmina.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.remmina
-nodeny  ${HOME}/.config/remmina
-nodeny  ${HOME}/.local/share/remmina
+noblacklist ${HOME}/.remmina
+noblacklist ${HOME}/.config/remmina
+noblacklist ${HOME}/.local/share/remmina
 
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc

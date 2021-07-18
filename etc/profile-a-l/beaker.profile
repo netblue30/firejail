@@ -19,10 +19,10 @@ ignore private-cache
 ignore private-dev
 ignore private-tmp
 
-nodeny  ${HOME}/.config/Beaker Browser
+noblacklist ${HOME}/.config/Beaker Browser
 
 mkdir ${HOME}/.config/Beaker Browser
-allow  ${HOME}/.config/Beaker Browser
+whitelist ${HOME}/.config/Beaker Browser
 
 # Redirect
 include electron.profile

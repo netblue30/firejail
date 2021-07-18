@@ -5,10 +5,10 @@ include img2txt.local
 # Persistent global definitions
 include globals.local
 
-deny  ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}/wayland-*
 
-nodeny  ${DOCUMENTS}
-nodeny  ${PICTURES}
+noblacklist ${DOCUMENTS}
+noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +18,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-allow  /usr/share/imlib2
+whitelist /usr/share/imlib2
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

@@ -20,10 +20,10 @@ ignore private-cache
 ignore dbus-user none
 ignore dbus-system none
 
-nodeny  ${HOME}/.config/Wire
+noblacklist ${HOME}/.config/Wire
 
 mkdir ${HOME}/.config/Wire
-allow  ${HOME}/.config/Wire
+whitelist ${HOME}/.config/Wire
 
 private-bin bash,electron,electron[0-9],electron[0-9][0-9],env,sh,wire-desktop
 private-etc alternatives,ca-certificates,crypto-policies,fonts,machine-id,pki,resolv.conf,ssl

@@ -5,7 +5,7 @@ include mdr.local
 # Persistent global definitions
 include globals.local
 
-deny  ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,7 +16,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  ${DOWNLOADS}
+whitelist ${DOWNLOADS}
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

@@ -10,12 +10,12 @@ include globals.local
 ignore nou2f
 ignore novideo
 
-nodeny  ${HOME}/.config/Twitch
+noblacklist ${HOME}/.config/Twitch
 
 include disable-shell.inc
 
 mkdir ${HOME}/.config/Twitch
-allow  ${HOME}/.config/Twitch
+whitelist ${HOME}/.config/Twitch
 
 private-bin twitch
 private-etc alsa,alternatives,asound.conf,ati,bumblebee,ca-certificates,crypto-policies,drirc,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,mime.types,nsswitch.conf,nvidia,pki,pulse,resolv.conf,selinux,ssl,X11,xdg

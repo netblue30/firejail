@@ -1096,3 +1096,4 @@ deny  ${HOME}/.cache/yandex-browser
 deny  ${HOME}/.cache/yandex-browser-beta
 deny  ${HOME}/.cache/youtube-dl
 deny  ${HOME}/.cache/youtube-viewer
+deny  ${RUNUSER}/*firefox*

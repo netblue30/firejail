@@ -449,6 +449,7 @@ deny  ${HOME}/.config/youtube-music-desktop-app
 deny  ${HOME}/.config/youtube-viewer
 deny  ${HOME}/.config/youtubemusic-nativefier-040164
 deny  ${HOME}/.config/zathura
+deny  ${HOME}/.config/zim
 deny  ${HOME}/.config/zoomus.conf
 deny  ${HOME}/.conkeror.mozdev.org
 deny  ${HOME}/.crawl
@@ -684,6 +685,7 @@ deny  ${HOME}/.local/share/godot
 deny  ${HOME}/.local/share/gradio
 deny  ${HOME}/.local/share/gwenview
 deny  ${HOME}/.local/share/i2p
+deny  ${HOME}/.local/share/io.github.lainsce.Notejot
 deny  ${HOME}/.local/share/jami
 deny  ${HOME}/.local/share/kaffeine
 deny  ${HOME}/.local/share/kalgebra
@@ -840,6 +842,7 @@ deny  ${HOME}/.qgis2
 deny  ${HOME}/.qmmp
 deny  ${HOME}/.quodlibet
 deny  ${HOME}/.redeclipse
+deny  ${HOME}/.rednotebook
 deny  ${HOME}/.remmina
 deny  ${HOME}/.repo_.gitconfig.json
 deny  ${HOME}/.repoconfig
@@ -1010,6 +1013,7 @@ deny  ${HOME}/.cache/gummi
 deny  ${HOME}/.cache/icedove
 deny  ${HOME}/.cache/inkscape
 deny  ${HOME}/.cache/inox
+deny  ${HOME}/.cache/io.github.lainsce.Notejot
 deny  ${HOME}/.cache/iridium
 deny  ${HOME}/.cache/JetBrains/CLion*
 deny  ${HOME}/.cache/kcmshell5
@@ -1066,6 +1070,7 @@ deny  ${HOME}/.cache/qBittorrent
 deny  ${HOME}/.cache/quodlibet
 deny  ${HOME}/.cache/qupzilla
 deny  ${HOME}/.cache/qutebrowser
+deny  ${HOME}/.cache/rednotebook
 deny  ${HOME}/.cache/rhythmbox
 deny  ${HOME}/.cache/shotwell
 deny  ${HOME}/.cache/simple-scan
@@ -1096,3 +1101,4 @@ deny  ${HOME}/.cache/yandex-browser
 deny  ${HOME}/.cache/yandex-browser-beta
 deny  ${HOME}/.cache/youtube-dl
 deny  ${HOME}/.cache/youtube-viewer
+deny  ${HOME}/.cache/zim

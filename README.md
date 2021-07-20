@@ -236,3 +236,5 @@ $ ./profstats *.profile
 ```
 
 ### New profiles:
+
+clion-eap, lifeograph, io.github.lainsce.Notejot, rednotebook, zim, microsoft-edge-beta

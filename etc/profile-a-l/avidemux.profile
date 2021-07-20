@@ -19,7 +19,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.avidemux6
-mkdir ${HOME}/.config/avidemux3_qt5rc
+mkfile ${HOME}/.config/avidemux3_qt5rc
 allow  ${HOME}/.avidemux6
 allow  ${HOME}/.config/avidemux3_qt5rc
 allow  ${VIDEOS}

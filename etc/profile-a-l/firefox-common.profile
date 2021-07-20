@@ -14,7 +14,6 @@ include firefox-common.local
 
 nodeny  ${HOME}/.pki
 nodeny  ${HOME}/.local/share/pki
-nodeny  ${RUNUSER}/*firefox* # location of profiles if profile-sync-daemon is used
 
 include disable-common.inc
 include disable-devel.inc
@@ -27,7 +26,6 @@ mkdir ${HOME}/.local/share/pki
 allow  ${DOWNLOADS}
 allow  ${HOME}/.pki
 allow  ${HOME}/.local/share/pki
-allow ${RUNUSER}/*firefox*
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc

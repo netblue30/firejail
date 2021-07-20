@@ -16,6 +16,7 @@ include globals.local
 
 nodeny  ${HOME}/.cache/mozilla
 nodeny  ${HOME}/.mozilla
+nodeny  ${RUNUSER}/*firefox* # location of profiles if profile-sync-daemon is used
 
 deny  /usr/libexec
 
@@ -35,6 +36,7 @@ allow  /usr/share/gnome-shell/search-providers/firefox-search-provider.ini
 allow  /usr/share/gtk-doc/html
 allow  /usr/share/mozilla
 allow  /usr/share/webext
+allow  ${RUNUSER}/*firefox*
 include whitelist-usr-share-common.inc
 
 # firefox requires a shell to launch on Arch - add the next line to your firefox.local to enable private-bin.

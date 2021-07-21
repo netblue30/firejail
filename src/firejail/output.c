@@ -50,12 +50,20 @@ void check_output(int argc, char **argv) {
 	if (!outindex)
 		return;
 
-
-	// check filename
 	drop_privs(0);
 	char *outfile = argv[outindex];
 	outfile += (enable_stderr)? 16:9;
+
+	// check filename
 	invalid_filename(outfile, 0); // no globbing
+
+	// expand user home directory
+	if (outfile[0] == '~') {
+		char *full;
+		if (asprintf(&full, "%s%s", cfg.homedir, outfile + 1) == -1)
+			errExit("asprintf");
+		outfile = full;
+	}
 
 	// do not accept directories, links, and files with ".."
 	if (strstr(outfile, "..") || is_link(outfile) || is_dir(outfile)) {

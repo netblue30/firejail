@@ -320,6 +320,7 @@ deny  ${HOME}/.config/meld
 deny  ${HOME}/.config/menulibre.cfg
 deny  ${HOME}/.config/meteo-qt
 deny  ${HOME}/.config/mfusion
+deny  ${HOME}/.config/microsoft-edge-beta
 deny  ${HOME}/.config/microsoft-edge-dev
 deny  ${HOME}/.config/midori
 deny  ${HOME}/.config/mirage
@@ -1035,6 +1036,7 @@ deny  ${HOME}/.cache/liferea
 deny  ${HOME}/.cache/lutris
 deny  ${HOME}/.cache/marker
 deny  ${HOME}/.cache/matrix-mirage
+deny  ${HOME}/.cache/microsoft-edge-beta
 deny  ${HOME}/.cache/microsoft-edge-dev
 deny  ${HOME}/.cache/midori
 deny  ${HOME}/.cache/minetest

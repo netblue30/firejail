@@ -988,23 +988,15 @@ int main(int argc, char **argv, char **envp) {
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
 	char **ptr;
 
-#ifndef HAVE_SUID
-	if (geteuid() != 0) {
-		fprintf(stderr, "Error: Firejail needs to be SUID.\n");
-		fprintf(stderr, "Assuming firejail is installed in /usr/bin, execute the following command as root:\n");
-		fprintf(stderr, "  chmod u+s /usr/bin/firejail\n");
-	}
-#endif
-
 	// sanitize the umask
 	orig_umask = umask(022);
-
-	// check standard streams before printing anything
-	fix_std_streams();
 
 	// drop permissions by default and rise them when required
 	EUID_INIT();
 	EUID_USER();
+
+	// check standard streams before opening any file
+	fix_std_streams();
 
 	// argument count should be larger than 0
 	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
@@ -1012,16 +1004,6 @@ int main(int argc, char **argv, char **envp) {
 		exit(1);
 	} else if (argc >= MAX_ARGS) {
 		fprintf(stderr, "Error: too many arguments\n");
-		exit(1);
-	}
-
-	// Stash environment variables
-	for (i = 0, ptr = envp; ptr && *ptr && i < MAX_ENVS; i++, ptr++)
-		env_store(*ptr, SETENV);
-
-	// sanity check for environment variables
-	if (i >= MAX_ENVS) {
-		fprintf(stderr, "Error: too many environment variables\n");
 		exit(1);
 	}
 
@@ -1037,82 +1019,29 @@ int main(int argc, char **argv, char **envp) {
 		}
 	}
 
+	// Stash environment variables
+	for (i = 0, ptr = envp; ptr && *ptr && i < MAX_ENVS; i++, ptr++)
+		env_store(*ptr, SETENV);
+
+	// sanity check for environment variables
+	if (i >= MAX_ENVS) {
+		fprintf(stderr, "Error: too many environment variables\n");
+		exit(1);
+	}
+
 	// Reapply a minimal set of environment variables
 	env_apply_whitelist();
 
-	// check if the user is allowed to use firejail
-	init_cfg(argc, argv);
-
-	// get starting timestamp, process --quiet
-	timetrace_start();
+	// process --quiet
 	const char *env_quiet = env_get("FIREJAIL_QUIET");
 	if (check_arg(argc, argv, "--quiet", 1) || (env_quiet && strcmp(env_quiet, "yes") == 0))
 		arg_quiet = 1;
 
-	// cleanup at exit
-	EUID_ROOT();
-	atexit(clear_atexit);
+	// check if the user is allowed to use firejail
+	init_cfg(argc, argv);
 
-	// build /run/firejail directory structure
-	preproc_build_firejail_dir();
-	const char *container_name = env_get("container");
-	if (!container_name || strcmp(container_name, "firejail")) {
-		lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
-		if (lockfd_directory != -1) {
-			int rv = fchown(lockfd_directory, 0, 0);
-			(void) rv;
-			flock(lockfd_directory, LOCK_EX);
-		}
-		preproc_clean_run();
-		flock(lockfd_directory, LOCK_UN);
-		close(lockfd_directory);
-	}
-	EUID_USER();
-
-	// --ip=dhcp - we need access to /sbin and /usr/sbin directories in order to run ISC DHCP client (dhclient)
-	// these paths are disabled in disable-common.inc
-	if ((i = check_arg(argc, argv, "--ip", 0)) != 0) {
-		if (strncmp(argv[i] + 4, "=dhcp", 5) == 0) {
-			profile_add("noblacklist /sbin");
-			profile_add("noblacklist /usr/sbin");
-		}
-	}
-
-	// for appimages we need to remove "include disable-shell.inc from the profile
-	// a --profile command can show up before --appimage
-	if (check_arg(argc, argv, "--appimage", 1))
-		arg_appimage = 1;
-
-	// process allow-debuggers
-	if (check_arg(argc, argv, "--allow-debuggers", 1)) {
-		// check kernel version
-		struct utsname u;
-		int rv = uname(&u);
-		if (rv != 0)
-			errExit("uname");
-		int major;
-		int minor;
-		if (2 != sscanf(u.release, "%d.%d", &major, &minor)) {
-			fprintf(stderr, "Error: cannot extract Linux kernel version: %s\n", u.version);
-			exit(1);
-		}
-		if (major < 4 || (major == 4 && minor < 8)) {
-			fprintf(stderr, "Error: --allow-debuggers is disabled on Linux kernels prior to 4.8. "
-				"A bug in ptrace call allows a full bypass of the seccomp filter. "
-				"Your current kernel version is %d.%d.\n", major, minor);
-			exit(1);
-		}
-
-		arg_allow_debuggers = 1;
-		char *cmd = strdup("noblacklist ${PATH}/strace");
-		if (!cmd)
-			errExit("strdup");
-		profile_add(cmd);
-	}
-
-	// profile builder
-	if (check_arg(argc, argv, "--build", 0)) // supports both --build and --build=filename
-		run_builder(argc, argv); // this function will not return
+	// get starting timestamp
+	timetrace_start();
 
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
@@ -1137,15 +1066,40 @@ int main(int argc, char **argv, char **envp) {
 			__builtin_unreachable();
 		}
 	}
-	EUID_ASSERT();
 
+	// profile builder
+	if (check_arg(argc, argv, "--build", 0)) // supports both --build and --build=filename
+		run_builder(argc, argv); // this function will not return
 
-	// check firejail directories
 	EUID_ROOT();
-	delete_run_files(sandbox_pid);
+#ifndef HAVE_SUID
+	if (geteuid() != 0) {
+		fprintf(stderr, "Error: Firejail needs to be SUID.\n");
+		fprintf(stderr, "Assuming firejail is installed in /usr/bin, execute the following command as root:\n");
+		fprintf(stderr, "  chmod u+s /usr/bin/firejail\n");
+	}
+#endif
+
+	// build /run/firejail directory structure
+	preproc_build_firejail_dir();
+	const char *container_name = env_get("container");
+	if (!container_name || strcmp(container_name, "firejail")) {
+		lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
+		if (lockfd_directory != -1) {
+			int rv = fchown(lockfd_directory, 0, 0);
+			(void) rv;
+			flock(lockfd_directory, LOCK_EX);
+		}
+		preproc_clean_run();
+		flock(lockfd_directory, LOCK_UN);
+		close(lockfd_directory);
+	}
+
+	delete_run_files(getpid());
+	atexit(clear_atexit);
 	EUID_USER();
 
-	//check if the parent is sshd daemon
+	// check if the parent is sshd daemon
 	int parent_sshd = 0;
 	{
 		pid_t ppid = getppid();
@@ -1202,7 +1156,8 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
-	// is this a login shell, or a command passed by sshd, insert command line options from /etc/firejail/login.users
+	// is this a login shell, or a command passed by sshd,
+	// insert command line options from /etc/firejail/login.users
 	if (*argv[0] == '-' || parent_sshd) {
 		if (argc == 1)
 			login_shell = 1;
@@ -1253,6 +1208,47 @@ int main(int argc, char **argv, char **envp) {
 	}
 #endif
 	EUID_ASSERT();
+
+	// --ip=dhcp - we need access to /sbin and /usr/sbin directories in order to run ISC DHCP client (dhclient)
+	// these paths are disabled in disable-common.inc
+	if ((i = check_arg(argc, argv, "--ip", 0)) != 0) {
+		if (strncmp(argv[i] + 4, "=dhcp", 5) == 0) {
+			profile_add("noblacklist /sbin");
+			profile_add("noblacklist /usr/sbin");
+		}
+	}
+
+	// process allow-debuggers
+	if (check_arg(argc, argv, "--allow-debuggers", 1)) {
+		// check kernel version
+		struct utsname u;
+		int rv = uname(&u);
+		if (rv != 0)
+			errExit("uname");
+		int major;
+		int minor;
+		if (2 != sscanf(u.release, "%d.%d", &major, &minor)) {
+			fprintf(stderr, "Error: cannot extract Linux kernel version: %s\n", u.version);
+			exit(1);
+		}
+		if (major < 4 || (major == 4 && minor < 8)) {
+			fprintf(stderr, "Error: --allow-debuggers is disabled on Linux kernels prior to 4.8. "
+				"A bug in ptrace call allows a full bypass of the seccomp filter. "
+				"Your current kernel version is %d.%d.\n", major, minor);
+			exit(1);
+		}
+
+		arg_allow_debuggers = 1;
+		char *cmd = strdup("noblacklist ${PATH}/strace");
+		if (!cmd)
+			errExit("strdup");
+		profile_add(cmd);
+	}
+
+	// for appimages we need to remove "include disable-shell.inc from the profile
+	// a --profile command can show up before --appimage
+	if (check_arg(argc, argv, "--appimage", 1))
+		arg_appimage = 1;
 
 	// check for force-nonewprivs in /etc/firejail/firejail.config file
 	if (checkcfg(CFG_FORCE_NONEWPRIVS))
@@ -2652,8 +2648,9 @@ int main(int argc, char **argv, char **envp) {
 		//*************************************
 		else if (strncmp(argv[i], "--timeout=", 10) == 0)
 			cfg.timeout = extract_timeout(argv[i] + 10);
-		else if (strcmp(argv[i], "--appimage") == 0)
-			arg_appimage = 1;
+		else if (strcmp(argv[i], "--appimage") == 0) {
+			// already handled
+		}
 		else if (strcmp(argv[i], "--shell=none") == 0) {
 			arg_shell_none = 1;
 			if (cfg.shell) {

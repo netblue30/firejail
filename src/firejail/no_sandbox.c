@@ -49,6 +49,7 @@ int check_namespace_virt(void) {
 	// check PID 1 container environment variable
 	EUID_ROOT();
 	FILE *fp = fopen("/proc/1/environ", "re");
+	EUID_USER();
 	if (fp) {
 		int c = 0;
 		while (c != EOF) {
@@ -69,7 +70,6 @@ int check_namespace_virt(void) {
 				// found it
 				if (is_container(buf + 10)) {
 					fclose(fp);
-					EUID_USER();
 					return 1;
 				}
 			}
@@ -79,7 +79,6 @@ int check_namespace_virt(void) {
 		fclose(fp);
 	}
 
-	EUID_USER();
 	return 0;
 }
 

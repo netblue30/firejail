@@ -12,7 +12,7 @@ ignore include disable-shell.inc
 
 # Arch Linux (based distributions) need access to /var/lib/pacman. As we drop
 # all capabilities this is automatically read-only.
-noblacklist /var/lib/pacman
+nodeny  /var/lib/pacman
 
 private-etc alternatives,group,localtime,login.defs,passwd
 #private-lib libfakeroot,liblzma.so.*,libreadline.so.*

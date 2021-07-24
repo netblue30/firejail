@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firemon.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <netdb.h>
@@ -32,10 +33,6 @@
 
 //#include <net/route.h>
 //#include <linux/if_bridge.h>
-
-#ifdef HAVE_GCOV
-#include <gcov.h>
-#endif
 
 // print IP addresses for all interfaces
 static void net_ifprint(void) {
@@ -149,9 +146,9 @@ static void print_sandbox(pid_t pid) {
 		if (rv)
 			return;
 		net_ifprint();
-#ifdef HAVE_GCOV
+
 		__gcov_flush();
-#endif
+
 		_exit(0);
 	}
 

@@ -7,7 +7,7 @@ include arch-audit.local
 # Persistent global definitions
 include globals.local
 
-noblacklist /var/lib/pacman
+nodeny  /var/lib/pacman
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +18,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/share/arch-audit
+allow  /usr/share/arch-audit
 include whitelist-usr-share-common.inc
 
 apparmor

@@ -2,8 +2,8 @@
 # Persistent customizations should go in a .local file.
 include allow-python2.local
 
-noblacklist ${PATH}/python2*
-noblacklist /usr/include/python2*
-noblacklist /usr/lib/python2*
-noblacklist /usr/local/lib/python2*
-noblacklist /usr/share/python2*
+nodeny  ${PATH}/python2*
+nodeny  /usr/include/python2*
+nodeny  /usr/lib/python2*
+nodeny  /usr/local/lib/python2*
+nodeny  /usr/share/python2*

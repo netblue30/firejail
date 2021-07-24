@@ -6,9 +6,9 @@ include mcomix.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/mcomix
-noblacklist ${HOME}/.local/share/mcomix
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.config/mcomix
+nodeny  ${HOME}/.local/share/mcomix
+nodeny  ${DOCUMENTS}
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
@@ -30,7 +30,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/mcomix
 mkdir ${HOME}/.local/share/mcomix
-whitelist /usr/share/mcomix
+allow  /usr/share/mcomix
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 include whitelist-runuser-common.inc

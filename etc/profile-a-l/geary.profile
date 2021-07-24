@@ -6,14 +6,14 @@ include geary.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/evolution
-noblacklist ${HOME}/.cache/folks
-noblacklist ${HOME}/.cache/geary
-noblacklist ${HOME}/.config/evolution
-noblacklist ${HOME}/.config/geary
-noblacklist ${HOME}/.local/share/evolution
-noblacklist ${HOME}/.local/share/geary
-noblacklist ${HOME}/.mozilla
+nodeny  ${HOME}/.cache/evolution
+nodeny  ${HOME}/.cache/folks
+nodeny  ${HOME}/.cache/geary
+nodeny  ${HOME}/.config/evolution
+nodeny  ${HOME}/.config/geary
+nodeny  ${HOME}/.local/share/evolution
+nodeny  ${HOME}/.local/share/geary
+nodeny  ${HOME}/.mozilla
 
 include disable-common.inc
 include disable-devel.inc
@@ -31,16 +31,16 @@ mkdir ${HOME}/.config/evolution
 mkdir ${HOME}/.config/geary
 mkdir ${HOME}/.local/share/evolution
 mkdir ${HOME}/.local/share/geary
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.cache/evolution
-whitelist ${HOME}/.cache/folks
-whitelist ${HOME}/.cache/geary
-whitelist ${HOME}/.config/evolution
-whitelist ${HOME}/.config/geary
-whitelist ${HOME}/.local/share/evolution
-whitelist ${HOME}/.local/share/geary
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
-whitelist /usr/share/geary
+allow  ${DOWNLOADS}
+allow  ${HOME}/.cache/evolution
+allow  ${HOME}/.cache/folks
+allow  ${HOME}/.cache/geary
+allow  ${HOME}/.config/evolution
+allow  ${HOME}/.config/geary
+allow  ${HOME}/.local/share/evolution
+allow  ${HOME}/.local/share/geary
+allow  ${HOME}/.mozilla/firefox/profiles.ini
+allow  /usr/share/geary
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

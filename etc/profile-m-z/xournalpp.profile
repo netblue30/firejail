@@ -7,13 +7,13 @@ include xournalpp.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.xournalpp
+nodeny  ${HOME}/.xournalpp
 
 include allow-lua.inc
 
-whitelist /usr/share/texlive
-whitelist /usr/share/xournalpp
-whitelist /var/lib/texmf
+allow  /usr/share/texlive
+allow  /usr/share/xournalpp
+allow  /var/lib/texmf
 include whitelist-runuser-common.inc
 
 #mkdir ${HOME}/.xournalpp

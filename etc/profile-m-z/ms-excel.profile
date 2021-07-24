@@ -6,7 +6,7 @@ include ms-excel.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.cache/ms-excel-online
+nodeny  ${HOME}/.cache/ms-excel-online
 private-bin ms-excel
 
 # Redirect

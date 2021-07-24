@@ -6,13 +6,13 @@ include firedragon.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/firedragon
-noblacklist ${HOME}/.firedragon
+nodeny  ${HOME}/.cache/firedragon
+nodeny  ${HOME}/.firedragon
 
 mkdir ${HOME}/.cache/firedragon
 mkdir ${HOME}/.firedragon
-whitelist ${HOME}/.cache/firedragon
-whitelist ${HOME}/.firedragon
+allow  ${HOME}/.cache/firedragon
+allow  ${HOME}/.firedragon
 
 # Add the next lines to your firedragon.local if you want to use the migration wizard.
 #noblacklist ${HOME}/.mozilla

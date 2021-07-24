@@ -6,7 +6,7 @@ include leafpad.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/leafpad
+nodeny  ${HOME}/.config/leafpad
 
 include disable-common.inc
 include disable-devel.inc

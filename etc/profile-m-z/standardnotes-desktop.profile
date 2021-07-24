@@ -5,8 +5,8 @@ include standardnotes-desktop.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/Standard Notes Backups
-noblacklist ${HOME}/.config/Standard Notes
+nodeny  ${HOME}/Standard Notes Backups
+nodeny  ${HOME}/.config/Standard Notes
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,8 +17,8 @@ include disable-programs.inc
 
 mkdir ${HOME}/Standard Notes Backups
 mkdir ${HOME}/.config/Standard Notes
-whitelist ${HOME}/Standard Notes Backups
-whitelist ${HOME}/.config/Standard Notes
+allow  ${HOME}/Standard Notes Backups
+allow  ${HOME}/.config/Standard Notes
 include whitelist-var-common.inc
 
 apparmor

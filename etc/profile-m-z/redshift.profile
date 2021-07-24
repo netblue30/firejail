@@ -7,8 +7,8 @@ include redshift.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/redshift
-noblacklist ${HOME}/.config/redshift.conf
+nodeny  ${HOME}/.config/redshift
+nodeny  ${HOME}/.config/redshift.conf
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,8 +19,8 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/redshift
-whitelist ${HOME}/.config/redshift
-whitelist ${HOME}/.config/redshift.conf
+allow  ${HOME}/.config/redshift
+allow  ${HOME}/.config/redshift.conf
 include whitelist-var-common.inc
 
 apparmor

@@ -8,8 +8,8 @@ include globals.local
 
 ignore noexec ${HOME}
 
-noblacklist /sbin
-noblacklist /usr/sbin
+nodeny  /sbin
+nodeny  /usr/sbin
 # noblacklist /var/log
 
 include disable-common.inc

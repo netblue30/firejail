@@ -12,8 +12,8 @@ include firefox-common.local
 # Add the next line to your firefox-common.local to allow access to common programs/addons/plugins.
 #include firefox-common-addons.profile
 
-noblacklist ${HOME}/.pki
-noblacklist ${HOME}/.local/share/pki
+nodeny  ${HOME}/.pki
+nodeny  ${HOME}/.local/share/pki
 
 include disable-common.inc
 include disable-devel.inc
@@ -23,9 +23,9 @@ include disable-programs.inc
 
 mkdir ${HOME}/.pki
 mkdir ${HOME}/.local/share/pki
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.pki
-whitelist ${HOME}/.local/share/pki
+allow  ${DOWNLOADS}
+allow  ${HOME}/.pki
+allow  ${HOME}/.local/share/pki
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc

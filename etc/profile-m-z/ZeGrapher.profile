@@ -6,7 +6,7 @@ include ZeGrapher.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/ZeGrapher Project
+nodeny  ${HOME}/.config/ZeGrapher Project
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,7 +16,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 
-whitelist /usr/share/ZeGrapher
+allow  /usr/share/ZeGrapher
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

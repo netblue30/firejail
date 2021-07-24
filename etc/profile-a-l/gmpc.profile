@@ -6,8 +6,8 @@ include gmpc.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/gmpc
-noblacklist ${MUSIC}
+nodeny  ${HOME}/.config/gmpc
+nodeny  ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,9 +18,9 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/gmpc
-whitelist ${HOME}/.config/gmpc
-whitelist ${MUSIC}
-whitelist /usr/share/gmpc
+allow  ${HOME}/.config/gmpc
+allow  ${MUSIC}
+allow  /usr/share/gmpc
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

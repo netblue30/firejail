@@ -7,7 +7,7 @@ include gtk-update-icon-cache.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
+deny  ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

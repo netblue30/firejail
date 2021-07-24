@@ -10,28 +10,28 @@ include globals.local
 # Workaround for bug https://github.com/netblue30/firejail/issues/2747
 # firejail --private-bin=sh --include='${CFG}/allow-bin-sh.inc' --profile=alpine sh -c '(alpine)'
 
-noblacklist /var/mail
-noblacklist /var/spool/mail
-noblacklist ${DOCUMENTS}
-noblacklist ${HOME}/.addressbook
-noblacklist ${HOME}/.alpine-smime
-noblacklist ${HOME}/.mailcap
-noblacklist ${HOME}/.mh_profile
-noblacklist ${HOME}/.mime.types
-noblacklist ${HOME}/.newsrc
-noblacklist ${HOME}/.pine-crash
-noblacklist ${HOME}/.pine-debug1
-noblacklist ${HOME}/.pine-debug2
-noblacklist ${HOME}/.pine-debug3
-noblacklist ${HOME}/.pine-debug4
-noblacklist ${HOME}/.pine-interrupted-mail
-noblacklist ${HOME}/.pinerc
-noblacklist ${HOME}/.pinercex
-noblacklist ${HOME}/.signature
-noblacklist ${HOME}/mail
+nodeny  /var/mail
+nodeny  /var/spool/mail
+nodeny  ${DOCUMENTS}
+nodeny  ${HOME}/.addressbook
+nodeny  ${HOME}/.alpine-smime
+nodeny  ${HOME}/.mailcap
+nodeny  ${HOME}/.mh_profile
+nodeny  ${HOME}/.mime.types
+nodeny  ${HOME}/.newsrc
+nodeny  ${HOME}/.pine-crash
+nodeny  ${HOME}/.pine-debug1
+nodeny  ${HOME}/.pine-debug2
+nodeny  ${HOME}/.pine-debug3
+nodeny  ${HOME}/.pine-debug4
+nodeny  ${HOME}/.pine-interrupted-mail
+nodeny  ${HOME}/.pinerc
+nodeny  ${HOME}/.pinercex
+nodeny  ${HOME}/.signature
+nodeny  ${HOME}/mail
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc
@@ -60,8 +60,8 @@ include disable-xdg.inc
 #whitelist ${HOME}/.pine-debug4
 #whitelist ${HOME}/.signature
 #whitelist ${HOME}/mail
-whitelist /var/mail
-whitelist /var/spool/mail
+allow  /var/mail
+allow  /var/spool/mail
 #include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -5,10 +5,10 @@ include xviewer.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.Steam
-noblacklist ${HOME}/.config/xviewer
-noblacklist ${HOME}/.local/share/Trash
-noblacklist ${HOME}/.steam
+nodeny  ${HOME}/.Steam
+nodeny  ${HOME}/.config/xviewer
+nodeny  ${HOME}/.local/share/Trash
+nodeny  ${HOME}/.steam
 
 include disable-common.inc
 include disable-devel.inc

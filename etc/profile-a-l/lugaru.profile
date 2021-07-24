@@ -8,8 +8,8 @@ include globals.local
 
 # note: crashes after entering
 
-noblacklist ${HOME}/.config/lugaru
-noblacklist ${HOME}/.local/share/lugaru
+nodeny  ${HOME}/.config/lugaru
+nodeny  ${HOME}/.local/share/lugaru
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,8 +22,8 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/lugaru
 mkdir ${HOME}/.local/share/lugaru
-whitelist ${HOME}/.config/lugaru
-whitelist ${HOME}/.local/share/lugaru
+allow  ${HOME}/.config/lugaru
+allow  ${HOME}/.local/share/lugaru
 include whitelist-common.inc
 include whitelist-var-common.inc
 

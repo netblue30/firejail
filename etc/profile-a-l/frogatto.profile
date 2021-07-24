@@ -6,7 +6,7 @@ include frogatto.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.frogatto
+nodeny  ${HOME}/.frogatto
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,9 +17,9 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.frogatto
-whitelist ${HOME}/.frogatto
-whitelist /usr/libexec/frogatto
-whitelist /usr/share/frogatto
+allow  ${HOME}/.frogatto
+allow  /usr/libexec/frogatto
+allow  /usr/share/frogatto
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

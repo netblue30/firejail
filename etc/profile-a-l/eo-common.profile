@@ -7,11 +7,11 @@ include eo-common.local
 # added by caller profile
 #include globals.local
 
-noblacklist ${HOME}/.local/share/Trash
-noblacklist ${HOME}/.Steam
-noblacklist ${HOME}/.steam
+nodeny  ${HOME}/.local/share/Trash
+nodeny  ${HOME}/.Steam
+nodeny  ${HOME}/.steam
 
-blacklist /usr/libexec
+deny  /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

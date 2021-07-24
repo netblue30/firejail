@@ -5,7 +5,7 @@ include jd-gui.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/jd-gui.cfg
+nodeny  ${HOME}/.config/jd-gui.cfg
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc

@@ -6,9 +6,9 @@ include xreader.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/xreader
-noblacklist ${HOME}/.config/xreader
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.cache/xreader
+nodeny  ${HOME}/.config/xreader
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

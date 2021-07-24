@@ -6,7 +6,7 @@ include lightsoff.local
 # Persistent global definitions
 include globals.local
 
-whitelist /usr/share/lightsoff
+allow  /usr/share/lightsoff
 
 private-bin lightsoff
 

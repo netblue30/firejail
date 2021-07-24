@@ -6,7 +6,7 @@ include pioneer.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.pioneer
+nodeny  ${HOME}/.pioneer
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +18,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.pioneer
-whitelist ${HOME}/.pioneer
+allow  ${HOME}/.pioneer
 include whitelist-common.inc
 include whitelist-var-common.inc
 

@@ -5,8 +5,8 @@ include telegram.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.TelegramDesktop
-noblacklist ${HOME}/.local/share/TelegramDesktop
+nodeny  ${HOME}/.TelegramDesktop
+nodeny  ${HOME}/.local/share/TelegramDesktop
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,9 +19,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.TelegramDesktop
 mkdir ${HOME}/.local/share/TelegramDesktop
-whitelist ${HOME}/.TelegramDesktop
-whitelist ${HOME}/.local/share/TelegramDesktop
-whitelist ${DOWNLOADS}
+allow  ${HOME}/.TelegramDesktop
+allow  ${HOME}/.local/share/TelegramDesktop
+allow  ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -39,7 +39,6 @@ protocol unix,inet,inet6,netlink
 seccomp
 seccomp.block-secondary
 shell none
-tracelog
 
 disable-mnt
 #private-bin telegram,Telegram,telegram-desktop

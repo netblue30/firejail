@@ -6,7 +6,7 @@ include lincity-ng.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.lincity-ng
+nodeny  ${HOME}/.lincity-ng
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +18,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.lincity-ng
-whitelist ${HOME}/.lincity-ng
+allow  ${HOME}/.lincity-ng
 include whitelist-common.inc
 include whitelist-var-common.inc
 

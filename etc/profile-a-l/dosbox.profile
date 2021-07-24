@@ -6,8 +6,8 @@ include dosbox.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.dosbox
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.dosbox
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

@@ -9,7 +9,7 @@ include globals.local
 ignore machine-id
 ignore nosound
 
-whitelist /usr/share/gnome-taquin
+allow  /usr/share/gnome-taquin
 
 private-bin gnome-taquin
 

@@ -7,10 +7,10 @@ include drill.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${PATH}/drill
+nodeny  ${PATH}/drill
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}
 
 include disable-common.inc
 # include disable-devel.inc

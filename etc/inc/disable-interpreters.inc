@@ -3,66 +3,66 @@
 include disable-interpreters.local
 
 # gjs
-blacklist ${PATH}/gjs
-blacklist ${PATH}/gjs-console
-blacklist /usr/lib/gjs
-blacklist /usr/lib/libgjs*
-blacklist /usr/lib64/gjs
-blacklist /usr/lib64/libgjs*
+deny  ${PATH}/gjs
+deny  ${PATH}/gjs-console
+deny  /usr/lib/gjs
+deny  /usr/lib/libgjs*
+deny  /usr/lib64/gjs
+deny  /usr/lib64/libgjs*
 
 # Lua
-blacklist ${PATH}/lua*
-blacklist /usr/include/lua*
-blacklist /usr/lib/liblua*
-blacklist /usr/lib/lua
-blacklist /usr/lib64/liblua*
-blacklist /usr/lib64/lua
-blacklist /usr/share/lua*
+deny  ${PATH}/lua*
+deny  /usr/include/lua*
+deny  /usr/lib/liblua*
+deny  /usr/lib/lua
+deny  /usr/lib64/liblua*
+deny  /usr/lib64/lua
+deny  /usr/share/lua*
 
 # mozjs
-blacklist /usr/lib/libmozjs-*
-blacklist /usr/lib64/libmozjs-*
+deny  /usr/lib/libmozjs-*
+deny  /usr/lib64/libmozjs-*
 
 # Node.js
-blacklist ${PATH}/node
-blacklist /usr/include/node
+deny  ${PATH}/node
+deny  /usr/include/node
 
 # nvm
-blacklist ${HOME}/.nvm
+deny  ${HOME}/.nvm
 
 # Perl
-blacklist ${PATH}/core_perl
-blacklist ${PATH}/cpan*
-blacklist ${PATH}/perl
-blacklist ${PATH}/site_perl
-blacklist ${PATH}/vendor_perl
-blacklist /usr/lib/perl*
-blacklist /usr/lib64/perl*
-blacklist /usr/share/perl*
+deny  ${PATH}/core_perl
+deny  ${PATH}/cpan*
+deny  ${PATH}/perl
+deny  ${PATH}/site_perl
+deny  ${PATH}/vendor_perl
+deny  /usr/lib/perl*
+deny  /usr/lib64/perl*
+deny  /usr/share/perl*
 
 # PHP
-blacklist ${PATH}/php*
-blacklist /usr/lib/php*
-blacklist /usr/share/php*
+deny  ${PATH}/php*
+deny  /usr/lib/php*
+deny  /usr/share/php*
 
 # Ruby
-blacklist ${PATH}/ruby
-blacklist /usr/lib/ruby
+deny  ${PATH}/ruby
+deny  /usr/lib/ruby
 
 # Programs using python: deluge, firefox addons, filezilla, cherrytree, xchat, hexchat, libreoffice, scribus
 # Python 2
-blacklist ${PATH}/python2*
-blacklist /usr/include/python2*
-blacklist /usr/lib/python2*
-blacklist /usr/local/lib/python2*
-blacklist /usr/share/python2*
+deny  ${PATH}/python2*
+deny  /usr/include/python2*
+deny  /usr/lib/python2*
+deny  /usr/local/lib/python2*
+deny  /usr/share/python2*
 
 # You will want to add noblacklist for python3 stuff in the firefox and/or chromium profiles if you use the Gnome connector (see Issue #2026)
 
 # Python 3
-blacklist ${PATH}/python3*
-blacklist /usr/include/python3*
-blacklist /usr/lib/python3*
-blacklist /usr/lib64/python3*
-blacklist /usr/local/lib/python3*
-blacklist /usr/share/python3*
+deny  ${PATH}/python3*
+deny  /usr/include/python3*
+deny  /usr/lib/python3*
+deny  /usr/lib64/python3*
+deny  /usr/local/lib/python3*
+deny  /usr/share/python3*

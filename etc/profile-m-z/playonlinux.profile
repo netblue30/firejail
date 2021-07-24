@@ -7,10 +7,10 @@ include playonlinux.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.PlayOnLinux
+nodeny  ${HOME}/.PlayOnLinux
 
 # nc is needed to run playonlinux
-noblacklist ${PATH}/nc
+nodeny  ${PATH}/nc
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc

@@ -6,7 +6,7 @@ include qlipper.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/Qlipper
+nodeny  ${HOME}/.config/Qlipper
 
 include disable-common.inc
 include disable-devel.inc

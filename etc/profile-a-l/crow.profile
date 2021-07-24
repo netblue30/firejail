@@ -8,8 +8,8 @@ include globals.local
 
 mkdir ${HOME}/.config/crow
 mkdir ${HOME}/.cache/gstreamer-1.0
-whitelist ${HOME}/.config/crow
-whitelist ${HOME}/.cache/gstreamer-1.0
+allow  ${HOME}/.config/crow
+allow  ${HOME}/.cache/gstreamer-1.0
 
 include disable-common.inc
 include disable-devel.inc

@@ -7,13 +7,13 @@ include youtube-viewer.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/youtube-viewer
-noblacklist ${HOME}/.config/youtube-viewer
+nodeny  ${HOME}/.cache/youtube-viewer
+nodeny  ${HOME}/.config/youtube-viewer
 
 mkdir ${HOME}/.cache/youtube-viewer
 mkdir ${HOME}/.config/youtube-viewer
-whitelist ${HOME}/.cache/youtube-viewer
-whitelist ${HOME}/.config/youtube-viewer
+allow  ${HOME}/.cache/youtube-viewer
+allow  ${HOME}/.config/youtube-viewer
 
 private-bin gtk-youtube-viewer,gtk2-youtube-viewer,gtk3-youtube-viewer,youtube-viewer
 

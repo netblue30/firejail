@@ -6,8 +6,8 @@ include xpdf.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.xpdfrc
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.xpdfrc
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

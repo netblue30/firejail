@@ -5,8 +5,8 @@ include xplayer.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/xplayer
-noblacklist ${HOME}/.local/share/xplayer
+nodeny  ${HOME}/.config/xplayer
+nodeny  ${HOME}/.local/share/xplayer
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -22,8 +22,8 @@ include disable-programs.inc
 read-only ${DESKTOP}
 mkdir ${HOME}/.config/xplayer
 mkdir ${HOME}/.local/share/xplayer
-whitelist ${HOME}/.config/xplayer
-whitelist ${HOME}/.local/share/xplayer
+allow  ${HOME}/.config/xplayer
+allow  ${HOME}/.local/share/xplayer
 include whitelist-common.inc
 include whitelist-player-common.inc
 include whitelist-var-common.inc

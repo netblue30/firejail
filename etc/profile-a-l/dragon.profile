@@ -6,9 +6,9 @@ include dragon.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/dragonplayerrc
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
+nodeny  ${HOME}/.config/dragonplayerrc
+nodeny  ${MUSIC}
+nodeny  ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,7 +19,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/share/dragonplayer
+allow  /usr/share/dragonplayer
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

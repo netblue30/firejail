@@ -5,7 +5,7 @@ include uget-gtk.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/uGet
+nodeny  ${HOME}/.config/uGet
 
 include disable-common.inc
 include disable-devel.inc
@@ -14,8 +14,8 @@ include disable-programs.inc
 include disable-shell.inc
 
 mkdir ${HOME}/.config/uGet
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.config/uGet
+allow  ${DOWNLOADS}
+allow  ${HOME}/.config/uGet
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

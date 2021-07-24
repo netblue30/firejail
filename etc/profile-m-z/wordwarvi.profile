@@ -6,7 +6,7 @@ include wordwarvi.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.wordwarvi
+nodeny  ${HOME}/.wordwarvi
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.wordwarvi
-whitelist ${HOME}/.wordwarvi
-whitelist /usr/share/wordwarvi
+allow  ${HOME}/.wordwarvi
+allow  /usr/share/wordwarvi
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

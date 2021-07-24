@@ -2,8 +2,8 @@
 # Persistent customizations should go in a .local file.
 include allow-java.local
 
-noblacklist ${HOME}/.java
-noblacklist ${PATH}/java
-noblacklist /etc/java
-noblacklist /usr/lib/java
-noblacklist /usr/share/java
+nodeny  ${HOME}/.java
+nodeny  ${PATH}/java
+nodeny  /etc/java
+nodeny  /usr/lib/java
+nodeny  /usr/share/java

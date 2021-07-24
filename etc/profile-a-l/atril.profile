@@ -6,9 +6,9 @@ include atril.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/atril
-noblacklist ${HOME}/.config/atril
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.cache/atril
+nodeny  ${HOME}/.config/atril
+nodeny  ${DOCUMENTS}
 
 #noblacklist ${HOME}/.local/share
 # it seems to use only ${HOME}/.local/share/webkitgtk

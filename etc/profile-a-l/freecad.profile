@@ -6,8 +6,8 @@ include freecad.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/FreeCAD
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.config/FreeCAD
+nodeny  ${DOCUMENTS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

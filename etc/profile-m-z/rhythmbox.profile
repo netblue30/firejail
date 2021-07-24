@@ -6,9 +6,9 @@ include rhythmbox.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${MUSIC}
-noblacklist ${HOME}/.cache/rhythmbox
-noblacklist ${HOME}/.local/share/rhythmbox
+nodeny  ${MUSIC}
+nodeny  ${HOME}/.cache/rhythmbox
+nodeny  ${HOME}/.local/share/rhythmbox
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -26,10 +26,10 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/share/rhythmbox
-whitelist /usr/share/lua
-whitelist /usr/share/libquvi-scripts
-whitelist /usr/share/tracker
+allow  /usr/share/rhythmbox
+allow  /usr/share/lua
+allow  /usr/share/libquvi-scripts
+allow  /usr/share/tracker
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -6,14 +6,14 @@ include inkscape.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/inkscape
-noblacklist ${HOME}/.config/inkscape
-noblacklist ${HOME}/.inkscape
-noblacklist ${DOCUMENTS}
-noblacklist ${PICTURES}
+nodeny  ${HOME}/.cache/inkscape
+nodeny  ${HOME}/.config/inkscape
+nodeny  ${HOME}/.inkscape
+nodeny  ${DOCUMENTS}
+nodeny  ${PICTURES}
 # Allow exporting .xcf files
-noblacklist ${HOME}/.config/GIMP
-noblacklist ${HOME}/.gimp*
+nodeny  ${HOME}/.config/GIMP
+nodeny  ${HOME}/.gimp*
 
 
 # Allow python (blacklisted by disable-interpreters.inc)
@@ -28,7 +28,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist /usr/share/inkscape
+allow  /usr/share/inkscape
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

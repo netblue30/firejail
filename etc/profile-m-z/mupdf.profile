@@ -6,7 +6,7 @@ include mupdf.local
 # Persistent global definitions
 #include globals.local
 
-noblacklist ${DOCUMENTS}
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

@@ -7,9 +7,9 @@ include gconf-editor.local
 # added by included profile
 #include globals.local
 
-blacklist /tmp/.X11-unix
+deny  /tmp/.X11-unix
 
-whitelist /usr/share/gconf-editor
+allow  /usr/share/gconf-editor
 
 ignore x11 none
 

@@ -18,12 +18,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/time.h>
 #include <sys/resource.h>
-
-#ifdef HAVE_GCOV
-#include <gcov.h>
-#endif
 
 void set_rlimits(void) {
 	EUID_ASSERT();
@@ -37,9 +34,9 @@ void set_rlimits(void) {
 		// set the new limit
 		rl.rlim_cur = (rlim_t) cfg.rlimit_cpu;
 		rl.rlim_max = (rlim_t) cfg.rlimit_cpu;
-#ifdef HAVE_GCOV
+
 		__gcov_dump();
-#endif
+
 		if (setrlimit(RLIMIT_CPU, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
@@ -54,9 +51,10 @@ void set_rlimits(void) {
 		// set the new limit
 		rl.rlim_cur = (rlim_t) cfg.rlimit_nofile;
 		rl.rlim_max = (rlim_t) cfg.rlimit_nofile;
-#ifdef HAVE_GCOV	// gcov-instrumented programs might crash at this point
+
+		// gcov-instrumented programs might crash at this point
 		__gcov_dump();
-#endif
+
 		if (setrlimit(RLIMIT_NOFILE, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
@@ -71,9 +69,9 @@ void set_rlimits(void) {
 		// set the new limit
 		rl.rlim_cur = (rlim_t) cfg.rlimit_nproc;
 		rl.rlim_max = (rlim_t) cfg.rlimit_nproc;
-#ifdef HAVE_GCOV
+
 		__gcov_dump();
-#endif
+
 		if (setrlimit(RLIMIT_NPROC, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
@@ -88,9 +86,9 @@ void set_rlimits(void) {
 		// set the new limit
 		rl.rlim_cur = (rlim_t) cfg.rlimit_fsize;
 		rl.rlim_max = (rlim_t) cfg.rlimit_fsize;
-#ifdef HAVE_GCOV
+
 		__gcov_dump();
-#endif
+
 		if (setrlimit(RLIMIT_FSIZE, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
@@ -105,9 +103,9 @@ void set_rlimits(void) {
 		// set the new limit
 		rl.rlim_cur = (rlim_t) cfg.rlimit_sigpending;
 		rl.rlim_max = (rlim_t) cfg.rlimit_sigpending;
-#ifdef HAVE_GCOV
+
 		__gcov_dump();
-#endif
+
 		if (setrlimit(RLIMIT_SIGPENDING, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)
@@ -122,9 +120,9 @@ void set_rlimits(void) {
 		// set the new limit
 		rl.rlim_cur = (rlim_t) cfg.rlimit_as;
 		rl.rlim_max = (rlim_t) cfg.rlimit_as;
-#ifdef HAVE_GCOV
+
 		__gcov_dump();
-#endif
+
 		if (setrlimit(RLIMIT_AS, &rl) == -1)
 			errExit("setrlimit");
 		if (arg_debug)

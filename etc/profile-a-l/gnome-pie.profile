@@ -6,7 +6,7 @@ include gnome-pie.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/gnome-pie
+nodeny  ${HOME}/.config/gnome-pie
 
 #include disable-common.inc
 include disable-devel.inc

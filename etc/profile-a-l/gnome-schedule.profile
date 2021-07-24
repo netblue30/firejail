@@ -6,17 +6,17 @@ include gnome-schedule.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.gnome/gnome-schedule
+nodeny  ${HOME}/.gnome/gnome-schedule
 
 # Needs at and crontab to read/write user cron
-noblacklist ${PATH}/at
-noblacklist ${PATH}/crontab
+nodeny  ${PATH}/at
+nodeny  ${PATH}/crontab
 
 # Needs access to these files/dirs
-noblacklist /etc/cron.allow
-noblacklist /etc/cron.deny
-noblacklist /etc/shadow
-noblacklist /var/spool/cron
+nodeny  /etc/cron.allow
+nodeny  /etc/cron.deny
+nodeny  /etc/shadow
+nodeny  /var/spool/cron
 
 # cron job testing needs a terminal, resulting in sandbox escape (see disable-common.inc)
 # add 'noblacklist ${PATH}/your-terminal' to gnome-schedule.local if you need that functionality
@@ -34,10 +34,10 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkfile ${HOME}/.gnome/gnome-schedule
-whitelist ${HOME}/.gnome/gnome-schedule
-whitelist /usr/share/gnome-schedule
-whitelist /var/spool/atd
-whitelist /var/spool/cron
+allow  ${HOME}/.gnome/gnome-schedule
+allow  /usr/share/gnome-schedule
+allow  /var/spool/atd
+allow  /var/spool/cron
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

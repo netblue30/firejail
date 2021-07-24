@@ -6,8 +6,8 @@ include gnome-screenshot.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${PICTURES}
-noblacklist ${HOME}/.cache/gnome-screenshot
+nodeny  ${PICTURES}
+nodeny  ${HOME}/.cache/gnome-screenshot
 
 include disable-common.inc
 include disable-devel.inc

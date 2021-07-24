@@ -10,7 +10,7 @@ include globals.local
 include allow-python2.inc
 include allow-python3.inc
 
-noblacklist ${MUSIC}
+nodeny  ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,9 +20,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist ${DOWNLOADS}
-whitelist ${MUSIC}
-whitelist /usr/share/soundconverter
+allow  ${DOWNLOADS}
+allow  ${MUSIC}
+allow  /usr/share/soundconverter
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

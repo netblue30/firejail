@@ -4,8 +4,8 @@ include whitelist-player-common.local
 
 # common whitelist for all media players
 
-whitelist ${DESKTOP}
-whitelist ${DOWNLOADS}
-whitelist ${MUSIC}
-whitelist ${PICTURES}
-whitelist ${VIDEOS}
+allow  ${DESKTOP}
+allow  ${DOWNLOADS}
+allow  ${MUSIC}
+allow  ${PICTURES}
+allow  ${VIDEOS}

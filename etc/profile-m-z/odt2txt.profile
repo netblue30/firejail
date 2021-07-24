@@ -6,9 +6,9 @@ include odt2txt.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
+deny  ${RUNUSER}/wayland-*
 
-noblacklist ${DOCUMENTS}
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

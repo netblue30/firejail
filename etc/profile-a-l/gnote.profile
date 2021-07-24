@@ -6,8 +6,8 @@ include gnote.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/gnote
-noblacklist ${HOME}/.local/share/gnote
+nodeny  ${HOME}/.config/gnote
+nodeny  ${HOME}/.local/share/gnote
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,9 +20,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/gnote
 mkdir ${HOME}/.local/share/gnote
-whitelist ${HOME}/.config/gnote
-whitelist ${HOME}/.local/share/gnote
-whitelist /usr/share/gnote
+allow  ${HOME}/.config/gnote
+allow  ${HOME}/.local/share/gnote
+allow  /usr/share/gnote
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

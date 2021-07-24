@@ -6,7 +6,7 @@ include bijiben.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/bijiben
+nodeny  ${HOME}/.local/share/bijiben
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,12 +18,12 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/bijiben
-whitelist ${HOME}/.local/share/bijiben
-whitelist ${HOME}/.cache/tracker
-whitelist /usr/libexec/webkit2gtk-4.0
-whitelist /usr/share/bijiben
-whitelist /usr/share/tracker
-whitelist /usr/share/tracker3
+allow  ${HOME}/.local/share/bijiben
+allow  ${HOME}/.cache/tracker
+allow  /usr/libexec/webkit2gtk-4.0
+allow  /usr/share/bijiben
+allow  /usr/share/tracker
+allow  /usr/share/tracker3
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

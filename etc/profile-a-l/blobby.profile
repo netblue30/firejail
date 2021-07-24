@@ -4,7 +4,7 @@ include blobby.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.blobby
+nodeny  ${HOME}/.blobby
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,9 +16,9 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.blobby
-whitelist ${HOME}/.blobby
+allow  ${HOME}/.blobby
 include whitelist-common.inc
-whitelist /usr/share/blobby
+allow  /usr/share/blobby
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

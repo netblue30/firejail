@@ -6,10 +6,10 @@ include shotwell.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/shotwell
-noblacklist ${HOME}/.local/share/shotwell
+nodeny  ${HOME}/.cache/shotwell
+nodeny  ${HOME}/.local/share/shotwell
 
-noblacklist ${PICTURES}
+nodeny  ${PICTURES}
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -21,9 +21,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/shotwell
 mkdir ${HOME}/.local/share/shotwell
-whitelist ${HOME}/.cache/shotwell
-whitelist ${HOME}/.local/share/shotwell
-whitelist ${PICTURES}
+allow  ${HOME}/.cache/shotwell
+allow  ${HOME}/.local/share/shotwell
+allow  ${PICTURES}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

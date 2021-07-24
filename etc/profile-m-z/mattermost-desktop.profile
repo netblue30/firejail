@@ -10,12 +10,12 @@ ignore apparmor
 ignore dbus-user none
 ignore dbus-system none
 
-noblacklist ${HOME}/.config/Mattermost
+nodeny  ${HOME}/.config/Mattermost
 
 include disable-shell.inc
 
 mkdir ${HOME}/.config/Mattermost
-whitelist ${HOME}/.config/Mattermost
+allow  ${HOME}/.config/Mattermost
 
 private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl
 

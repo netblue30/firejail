@@ -6,8 +6,8 @@ include meteo-qt.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/autostart
-noblacklist ${HOME}/.config/meteo-qt
+nodeny  ${HOME}/.config/autostart
+nodeny  ${HOME}/.config/meteo-qt
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
@@ -22,8 +22,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/meteo-qt
-whitelist ${HOME}/.config/autostart
-whitelist ${HOME}/.config/meteo-qt
+allow  ${HOME}/.config/autostart
+allow  ${HOME}/.config/meteo-qt
 include whitelist-common.inc
 include whitelist-var-common.inc
 

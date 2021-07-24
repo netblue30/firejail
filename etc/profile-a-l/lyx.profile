@@ -8,8 +8,8 @@ include globals.local
 
 ignore private-tmp
 
-noblacklist ${HOME}/.config/LyX
-noblacklist ${HOME}/.lyx
+nodeny  ${HOME}/.config/LyX
+nodeny  ${HOME}/.lyx
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -21,11 +21,11 @@ include allow-perl.inc
 include allow-python2.inc
 include allow-python3.inc
 
-whitelist /usr/share/lyx
-whitelist /usr/share/texinfo
-whitelist /usr/share/texlive
-whitelist /usr/share/texmf-dist
-whitelist /usr/share/tlpkg
+allow  /usr/share/lyx
+allow  /usr/share/texinfo
+allow  /usr/share/texlive
+allow  /usr/share/texmf-dist
+allow  /usr/share/tlpkg
 include whitelist-usr-share-common.inc
 
 apparmor

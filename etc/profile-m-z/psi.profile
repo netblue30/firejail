@@ -8,11 +8,11 @@ include globals.local
 
 # Add the next line to your psi.local to enable GPG support.
 #noblacklist ${HOME}/.gnupg
-noblacklist ${HOME}/.cache/psi
-noblacklist ${HOME}/.cache/Psi
-noblacklist ${HOME}/.config/psi
-noblacklist ${HOME}/.local/share/psi
-noblacklist ${HOME}/.local/share/Psi
+nodeny  ${HOME}/.cache/psi
+nodeny  ${HOME}/.cache/Psi
+nodeny  ${HOME}/.config/psi
+nodeny  ${HOME}/.local/share/psi
+nodeny  ${HOME}/.local/share/Psi
 
 include disable-common.inc
 include disable-devel.inc
@@ -32,16 +32,16 @@ mkdir ${HOME}/.local/share/psi
 mkdir ${HOME}/.local/share/Psi
 # Add the next line to your psi.local to enable GPG support.
 #whitelist ${HOME}/.gnupg
-whitelist ${HOME}/.cache/psi
-whitelist ${HOME}/.cache/Psi
-whitelist ${HOME}/.config/psi
-whitelist ${HOME}/.local/share/psi
-whitelist ${HOME}/.local/share/Psi
-whitelist ${DOWNLOADS}
+allow  ${HOME}/.cache/psi
+allow  ${HOME}/.cache/Psi
+allow  ${HOME}/.config/psi
+allow  ${HOME}/.local/share/psi
+allow  ${HOME}/.local/share/Psi
+allow  ${DOWNLOADS}
 # Add the next lines to your psi.local to enable GPG support.
 #whitelist /usr/share/gnupg
 #whitelist /usr/share/gnupg2
-whitelist /usr/share/psi
+allow  /usr/share/psi
 # Add the next lines to your psi.local to enable GPG support.
 #whitelist ${RUNUSER}/gnupg
 #whitelist ${RUNUSER}/keyring

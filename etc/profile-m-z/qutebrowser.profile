@@ -6,9 +6,9 @@ include qutebrowser.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/qutebrowser
-noblacklist ${HOME}/.config/qutebrowser
-noblacklist ${HOME}/.local/share/qutebrowser
+nodeny  ${HOME}/.cache/qutebrowser
+nodeny  ${HOME}/.config/qutebrowser
+nodeny  ${HOME}/.local/share/qutebrowser
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -22,10 +22,10 @@ include disable-programs.inc
 mkdir ${HOME}/.cache/qutebrowser
 mkdir ${HOME}/.config/qutebrowser
 mkdir ${HOME}/.local/share/qutebrowser
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.cache/qutebrowser
-whitelist ${HOME}/.config/qutebrowser
-whitelist ${HOME}/.local/share/qutebrowser
+allow  ${DOWNLOADS}
+allow  ${HOME}/.cache/qutebrowser
+allow  ${HOME}/.config/qutebrowser
+allow  ${HOME}/.local/share/qutebrowser
 include whitelist-common.inc
 
 caps.drop all

@@ -189,107 +189,18 @@ You can also use this tool to get a list of syscalls needed by a program: [contr
 
 We also keep a list of profile fixes for previous released versions in [etc-fixes](https://github.com/netblue30/firejail/tree/master/etc-fixes) directory.
 
-## Latest released version: 0.9.64
+## Latest released version: 0.9.66
 
-## Current development version: 0.9.65
+## Current development version: 0.9.67
 
 Milestone page: https://github.com/netblue30/firejail/milestone/1
 Release discussion: https://github.com/netblue30/firejail/issues/3696
 
-### jailcheck
-`````
-JAILCHECK(1)                  JAILCHECK man page                  JAILCHECK(1)
+Moving from whitelist/blacklist to allow/deny is under way! We are still open to other options, so it might change!
 
-NAME
-       jailcheck - Simple utility program to test running sandboxes
-
-SYNOPSIS
-       sudo jailcheck [OPTIONS] [directory]
-
-DESCRIPTION
-       jailcheck attaches itself to all sandboxes started by the user and per‐
-       forms some basic tests on the sandbox filesystem:
-
-       1. Virtual directories
-              jailcheck extracts a list with the main virtual directories  in‐
-              stalled by the sandbox.  These directories are build by firejail
-              at startup using --private* and --whitelist commands.
-
-       2. Noexec test
-              jailcheck inserts executable programs in  /home/username,  /tmp,
-              and  /var/tmp  directories and tries to run them from inside the
-              sandbox, thus testing if the directory is executable or not.
-
-       3. Read access test
-              jailcheck creates test files in the directories specified by the
-              user and tries to read them from inside the sandbox.
-
-       4. AppArmor test
-
-       5. Seccomp test
-
-       The program is started as root using sudo.
-
-OPTIONS
-       --debug
-              Print debug messages.
-
-       -?, --help
-              Print options and exit.
-
-       --version
-              Print program version and exit.
-
-       [directory]
-              One  or  more  directories in user home to test for read access.
-              ~/.ssh and ~/.gnupg are tested by default.
-
-OUTPUT
-       For each sandbox detected we print the following line:
-
-            PID:USER:Sandbox Name:Command
-
-       It is followed by relevant sandbox information, such as the virtual di‐
-       rectories and various warnings.
-
-EXAMPLE
-       $ sudo jailcheck
-       2014:netblue::firejail /usr/bin/gimp
-          Virtual dirs: /tmp, /var/tmp, /dev, /usr/share,
-          Warning: I can run programs in /home/netblue
-
-       2055:netblue::firejail /usr/bin/ssh -X netblue@x.y.z.net
-          Virtual dirs: /var/tmp, /dev, /usr/share, /run/user/1000,
-          Warning: I can read ~/.ssh
-
-       2186:netblue:libreoffice:firejail --appimage /opt/LibreOffice-fresh.ap‐
-       pimage
-          Virtual dirs: /tmp, /var/tmp, /dev,
-
-       26090:netblue::/usr/bin/firejail /opt/firefox/firefox
-          Virtual dirs: /home/netblue, /tmp, /var/tmp, /dev, /etc, /usr/share,
-                        /run/user/1000,
-
-       26160:netblue:tor:firejail --private=~/tor-browser_en-US ./start-tor
-          Warning: AppArmor not enabled
-          Virtual dirs: /home/netblue, /tmp, /var/tmp, /dev, /etc, /bin,
-                        /usr/share, /run/user/1000,
-          Warning: I can run programs in /home/netblue
-
-LICENSE
-       This program is free software; you can redistribute it and/or modify it
-       under  the  terms of the GNU General Public License as published by the
-       Free Software Foundation; either version 2 of the License, or (at  your
-       option) any later version.
-
-       Homepage: https://firejail.wordpress.com
-
-SEE ALSO
-       firejail(1),  firemon(1), firecfg(1), firejail-profile(5), firejail-lo‐
-       gin(5), firejail-users(5),
-
-0.9.65                             May 2021                       JAILCHECK(1)
-`````
+The old whitelist/blacklist will remain as aliasses for the next one or two releases
+in order to give users a chance to switch their local profiles.
+The latest discussion on this issue is here: https://github.com/netblue30/firejail/issues/4379
 
 ### Profile Statistics
 
@@ -298,40 +209,32 @@ A small tool to print profile statistics. Compile as usual and run in /etc/profi
 $ sudo cp src/profstats/profstats /etc/firejail/.
 $ cd /etc/firejail
 $ ./profstats *.profile
-Stats:
-    profiles			1135
-    include local profile	1135   (include profile-name.local)
-    include globals		1106   (include globals.local)
-    blacklist ~/.ssh		1009   (include disable-common.inc)
-    seccomp			1035
-    capabilities		1130
-    noexec			1011   (include disable-exec.inc)
-    noroot			944
-    memory-deny-write-execute	242
-    apparmor			667
-    private-bin			635
-    private-dev			992
-    private-etc			508
-    private-tmp			866
-    whitelist home directory	542
-    whitelist var		799   (include whitelist-var-common.inc)
-    whitelist run/user		597   (include whitelist-runuser-common.inc
+    profiles			1150
+    include local profile	1150   (include profile-name.local)
+    include globals		1120   (include globals.local)
+    blacklist ~/.ssh		1026   (include disable-common.inc)
+    seccomp			1050
+    capabilities		1146
+    noexec			1030   (include disable-exec.inc)
+    noroot			959
+    memory-deny-write-execute	253
+    apparmor			681
+    private-bin			667
+    private-dev			1009
+    private-etc			523
+    private-tmp			883
+    whitelist home directory	547
+    whitelist var		818   (include whitelist-var-common.inc)
+    whitelist run/user		616   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		569   (include whitelist-usr-share-common.inc
-    net none			389
-    dbus-user none 		619
+    whitelist usr/share		591   (include whitelist-usr-share-common.inc
+    net none			391
+    dbus-user none 		641
     dbus-user filter 		105
-    dbus-system none 		770
+    dbus-system none 		792
     dbus-system filter 		7
 ```
 
 ### New profiles:
 
-vmware-view, display-im6.q16, ipcalc, ipcalc-ng, ebook-convert, ebook-edit, ebook-meta, ebook-polish, lzop,
-avidemux, calligragemini, vmware-player, vmware-workstation, gget, com.github.phase1geo.minder, nextcloud-desktop,
-pcsxr, PPSSPPSDL, openmw, openmw-launcher, jami-gnome, PCSX2, bcompare, b2sum, cksum, md5sum, sha1sum, sha224sum,
-sha256sum, sha384sum, sha512sum, sum, librewold-nightly, Quodlibet, tmux, sway, alienarena, alienarena-wrapper,
-ballbuster, ballbuster-wrapper, colorful, colorful-wrapper, gl-117, gl-117-wrapper, glaxium, glaxium-wrapper,
-pinball, pinball-wrapper, etr-wrapper, neverball-wrapper, neverputt-wrapper, supertuxkart-wrapper, firedragon,
-neochat, node, nvm, cargo, LibreCAD, blobby, funnyboat, pipe-viewer, gtk-pipe-viewer, links2, xlinks2, googler, ddgr,
-tin
+clion-eap, lifeograph, io.github.lainsce.Notejot, rednotebook, zim, microsoft-edge-beta

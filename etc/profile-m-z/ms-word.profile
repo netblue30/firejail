@@ -6,7 +6,7 @@ include ms-word.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.cache/ms-word-online
+nodeny  ${HOME}/.cache/ms-word-online
 private-bin ms-word
 
 # Redirect

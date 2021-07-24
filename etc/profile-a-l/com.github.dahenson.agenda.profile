@@ -6,9 +6,9 @@ include com.github.dahenson.agenda.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/agenda
-noblacklist ${HOME}/.config/agenda
-noblacklist ${HOME}/.local/share/agenda
+nodeny  ${HOME}/.cache/agenda
+nodeny  ${HOME}/.config/agenda
+nodeny  ${HOME}/.local/share/agenda
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,9 +22,9 @@ include disable-xdg.inc
 mkdir ${HOME}/.cache/agenda
 mkdir ${HOME}/.config/agenda
 mkdir ${HOME}/.local/share/agenda
-whitelist ${HOME}/.cache/agenda
-whitelist ${HOME}/.config/agenda
-whitelist ${HOME}/.local/share/agenda
+allow  ${HOME}/.cache/agenda
+allow  ${HOME}/.config/agenda
+allow  ${HOME}/.local/share/agenda
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc

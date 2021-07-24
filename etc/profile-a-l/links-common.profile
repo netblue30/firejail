@@ -4,8 +4,8 @@ include links-common.local
 
 # common profile for links browsers
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,7 +17,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-whitelist ${DOWNLOADS}
+allow  ${DOWNLOADS}
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

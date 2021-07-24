@@ -1,5 +1,5 @@
 blacklist /sbin/iptables
-blacklist /etc/shadow
+blacklist /dev/console
 blacklist /bin/rmdir
 blacklist ${PATH}/umount
 blacklist ${PATH}/mount

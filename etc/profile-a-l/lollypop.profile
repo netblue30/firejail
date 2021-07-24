@@ -6,8 +6,8 @@ include lollypop.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/lollypop
-noblacklist ${MUSIC}
+nodeny  ${HOME}/.local/share/lollypop
+nodeny  ${MUSIC}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

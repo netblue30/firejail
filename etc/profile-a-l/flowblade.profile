@@ -6,8 +6,8 @@ include flowblade.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/flowblade
-noblacklist ${HOME}/.flowblade
+nodeny  ${HOME}/.config/flowblade
+nodeny  ${HOME}/.flowblade
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

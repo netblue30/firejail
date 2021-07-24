@@ -6,7 +6,7 @@ include karbon.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.local/share/kxmlgui5/karbon
+nodeny  ${HOME}/.local/share/kxmlgui5/karbon
 
 # Redirect
 include krita.profile

@@ -7,9 +7,9 @@ include less.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}
+deny  ${RUNUSER}
 
-noblacklist ${HOME}/.lesshst
+nodeny  ${HOME}/.lesshst
 
 include disable-devel.inc
 include disable-exec.inc

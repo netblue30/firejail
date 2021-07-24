@@ -7,7 +7,7 @@ include i3.local
 include globals.local
 
 # all applications started in i3 will run in this profile
-noblacklist ${HOME}/.config/i3
+nodeny  ${HOME}/.config/i3
 include disable-common.inc
 
 caps.drop all

@@ -6,7 +6,7 @@ include authenticator-rs.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/authenticator-rs
+nodeny  ${HOME}/.local/share/authenticator-rs
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,9 +18,9 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/authenticator-rs
-whitelist ${HOME}/.local/share/authenticator-rs
-whitelist ${DOWNLOADS}
-whitelist /usr/share/uk.co.grumlimited.authenticator-rs
+allow  ${HOME}/.local/share/authenticator-rs
+allow  ${DOWNLOADS}
+allow  /usr/share/uk.co.grumlimited.authenticator-rs
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

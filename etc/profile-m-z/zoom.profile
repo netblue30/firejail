@@ -16,17 +16,17 @@ ignore dbus-system none
 # If you use such a system, add 'ignore nogroups' to your zoom.local.
 #ignore nogroups
 
-noblacklist ${HOME}/.config/zoomus.conf
-noblacklist ${HOME}/.zoom
+nodeny  ${HOME}/.config/zoomus.conf
+nodeny  ${HOME}/.zoom
 
-nowhitelist ${DOWNLOADS}
+noallow  ${DOWNLOADS}
 
 mkdir ${HOME}/.cache/zoom
 mkfile ${HOME}/.config/zoomus.conf
 mkdir ${HOME}/.zoom
-whitelist ${HOME}/.cache/zoom
-whitelist ${HOME}/.config/zoomus.conf
-whitelist ${HOME}/.zoom
+allow  ${HOME}/.cache/zoom
+allow  ${HOME}/.config/zoomus.conf
+allow  ${HOME}/.zoom
 
 # Disable for now, see https://github.com/netblue30/firejail/issues/3726
 #private-etc alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl

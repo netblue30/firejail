@@ -6,7 +6,7 @@ include supertux2.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/supertux2
+nodeny  ${HOME}/.local/share/supertux2
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,9 +18,9 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/supertux2
-whitelist ${HOME}/.local/share/supertux2
-whitelist /usr/share/supertux2
-whitelist /usr/share/games/supertux2	# Debian version
+allow  ${HOME}/.local/share/supertux2
+allow  /usr/share/supertux2
+allow  /usr/share/games/supertux2	# Debian version
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

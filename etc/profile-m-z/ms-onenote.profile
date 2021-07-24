@@ -6,7 +6,7 @@ include ms-onenote.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.cache/ms-onenote-online
+nodeny  ${HOME}/.cache/ms-onenote-online
 private-bin ms-onenote
 
 # Redirect

@@ -8,7 +8,7 @@ include globals.local
 
 # Note: you must whitelist your games folder in your pcsxr.local
 
-noblacklist ${HOME}/.pcsxr
+nodeny  ${HOME}/.pcsxr
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,7 +21,7 @@ include disable-write-mnt.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.pcsxr
-whitelist ${HOME}/.pcsxr
+allow  ${HOME}/.pcsxr
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

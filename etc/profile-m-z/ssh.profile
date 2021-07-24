@@ -8,8 +8,8 @@ include ssh.local
 include globals.local
 
 # nc can be used as ProxyCommand, e.g. when using tor
-noblacklist ${PATH}/nc
-noblacklist ${PATH}/ncat
+nodeny  ${PATH}/nc
+nodeny  ${PATH}/ncat
 
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc
@@ -19,8 +19,8 @@ include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-whitelist ${RUNUSER}/gnupg/S.gpg-agent.ssh
-whitelist ${RUNUSER}/keyring/ssh
+allow  ${RUNUSER}/gnupg/S.gpg-agent.ssh
+allow  ${RUNUSER}/keyring/ssh
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
 

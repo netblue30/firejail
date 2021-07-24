@@ -6,8 +6,8 @@ include gnome-twitch.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/gnome-twitch
-noblacklist ${HOME}/.local/share/gnome-twitch
+nodeny  ${HOME}/.cache/gnome-twitch
+nodeny  ${HOME}/.local/share/gnome-twitch
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-programs.inc
 
 mkdir ${HOME}/.cache/gnome-twitch
 mkdir ${HOME}/.local/share/gnome-twitch
-whitelist ${HOME}/.cache/gnome-twitch
-whitelist ${HOME}/.local/share/gnome-twitch
+allow  ${HOME}/.cache/gnome-twitch
+allow  ${HOME}/.local/share/gnome-twitch
 include whitelist-common.inc
 
 caps.drop all

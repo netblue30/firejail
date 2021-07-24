@@ -6,8 +6,8 @@ include gnome-music.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/gnome-music
-noblacklist ${MUSIC}
+nodeny  ${HOME}/.local/share/gnome-music
+nodeny  ${MUSIC}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

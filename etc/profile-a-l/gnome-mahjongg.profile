@@ -6,7 +6,7 @@ include gnome-mahjongg.local
 # Persistent global definitions
 include globals.local
 
-whitelist /usr/share/gnome-mahjongg
+allow  /usr/share/gnome-mahjongg
 
 private-bin gnome-mahjongg
 

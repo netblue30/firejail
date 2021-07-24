@@ -7,10 +7,10 @@ include gist.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}/wayland-*
 
-noblacklist ${HOME}/.gist
+nodeny  ${HOME}/.gist
 
 # Allow ruby (blacklisted by disable-interpreters.inc)
 include allow-ruby.inc
@@ -24,8 +24,8 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.gist
-whitelist ${HOME}/.gist
-whitelist ${DOWNLOADS}
+allow  ${HOME}/.gist
+allow  ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -6,8 +6,8 @@ include cmus.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/cmus
-noblacklist ${MUSIC}
+nodeny  ${HOME}/.config/cmus
+nodeny  ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

@@ -6,8 +6,8 @@ include cherrytree.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/cherrytree
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.config/cherrytree
+nodeny  ${DOCUMENTS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

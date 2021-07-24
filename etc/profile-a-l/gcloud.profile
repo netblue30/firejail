@@ -8,9 +8,9 @@ include globals.local
 # noexec ${HOME} will break user-local installs of gcloud tooling
 ignore noexec ${HOME}
 
-noblacklist ${HOME}/.boto
-noblacklist ${HOME}/.config/gcloud
-noblacklist /var/run/docker.sock
+nodeny  ${HOME}/.boto
+nodeny  ${HOME}/.config/gcloud
+nodeny  /var/run/docker.sock
 
 include disable-common.inc
 include disable-devel.inc

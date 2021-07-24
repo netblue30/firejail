@@ -6,8 +6,8 @@ include synfigstudio.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/synfig
-noblacklist ${HOME}/.synfig
+nodeny  ${HOME}/.config/synfig
+nodeny  ${HOME}/.synfig
 
 include disable-common.inc
 include disable-devel.inc

@@ -6,7 +6,7 @@ include tremulous.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.tremulous
+nodeny  ${HOME}/.tremulous
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.tremulous
-whitelist ${HOME}/.tremulous
-whitelist /usr/share/tremulous
+allow  ${HOME}/.tremulous
+allow  /usr/share/tremulous
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

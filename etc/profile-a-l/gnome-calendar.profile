@@ -15,7 +15,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/share/libgweather
+allow  /usr/share/libgweather
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -46,7 +46,7 @@ private
 private-bin gnome-calendar
 private-cache
 private-dev
-private-etc ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,nsswitch.conf,pki,resolv.conf,ssl
+private-etc ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,localtime,nsswitch.conf,pki,resolv.conf,ssl
 private-tmp
 
 dbus-user filter

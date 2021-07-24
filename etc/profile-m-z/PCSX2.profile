@@ -8,7 +8,7 @@ include globals.local
 
 # Note: you must whitelist your games folder in your PCSX2.local.
 
-noblacklist ${HOME}/.config/PCSX2
+nodeny  ${HOME}/.config/PCSX2
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,7 +21,7 @@ include disable-write-mnt.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/PCSX2
-whitelist ${HOME}/.config/PCSX2
+allow  ${HOME}/.config/PCSX2
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

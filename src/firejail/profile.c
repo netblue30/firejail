@@ -18,14 +18,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include "../include/gcov_wrapper.h"
 #include "../include/seccomp.h"
 #include "../include/syscall.h"
 #include <dirent.h>
 #include <sys/stat.h>
-
-#ifdef HAVE_GCOV
-#include <gcov.h>
-#endif
 
 extern char *xephyr_screen;
 
@@ -1592,22 +1589,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "noblacklist ", 12) == 0)
 		ptr += 12;
 	else if (strncmp(ptr, "whitelist ", 10) == 0) {
-#ifdef HAVE_WHITELIST
-		if (checkcfg(CFG_WHITELIST)) {
-			arg_whitelist = 1;
-			ptr += 10;
-		}
-		else {
-			static int whitelist_warning_printed = 0;
-			if (!whitelist_warning_printed) {
-				warning_feature_disabled("whitelist");
-				whitelist_warning_printed = 1;
-			}
-			return 0;
-		}
-#else
-		return 0;
-#endif
+		arg_whitelist = 1;
+		ptr += 10;
 	}
 	else if (strncmp(ptr, "nowhitelist ", 12) == 0)
 		ptr += 12;
@@ -1753,6 +1736,44 @@ void profile_read(const char *fname) {
 			continue;
 		}
 
+		// translate allow/deny to whitelist/blacklist
+		if (strncmp(ptr, "allow ", 6) == 0) {
+			char *tmp;
+			if (asprintf(&tmp, "whitelist %s", ptr + 6) == -1)
+				errExit("asprintf");
+			free(ptr);
+			ptr = tmp;
+		}
+		else if (strncmp(ptr, "deny ", 5) == 0) {
+			char *tmp;
+			if (asprintf(&tmp, "blacklist %s", ptr + 5) == -1)
+				errExit("asprintf");
+			free(ptr);
+			ptr = tmp;
+		}
+		else if (strncmp(ptr, "deny-nolog ", 11) == 0) {
+			char *tmp;
+			if (asprintf(&tmp, "blacklist-nolog %s", ptr + 11) == -1)
+				errExit("asprintf");
+			free(ptr);
+			ptr = tmp;
+		}
+		// translate noallow/nodeny to nowhitelist/noblacklist
+		else if (strncmp(ptr, "noallow ", 8) == 0) {
+			char *tmp;
+			if (asprintf(&tmp, "nowhitelist %s", ptr + 8) == -1)
+				errExit("asprintf");
+			free(ptr);
+			ptr = tmp;
+		}
+		else if (strncmp(ptr, "nodeny ", 7) == 0) {
+			char *tmp;
+			if (asprintf(&tmp, "noblacklist %s", ptr + 7) == -1)
+				errExit("asprintf");
+			free(ptr);
+			ptr = tmp;
+		}
+
 		// process quiet
 		// todo: a quiet in the profile file cannot be disabled by --ignore on command line
 		if (strcmp(ptr, "quiet") == 0) {
@@ -1805,9 +1826,8 @@ void profile_read(const char *fname) {
 //		else {
 //			free(ptr);
 //		}
-#ifdef HAVE_GCOV
+
 		__gcov_flush();
-#endif
 	}
 	fclose(fp);
 }

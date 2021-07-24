@@ -6,7 +6,7 @@ include frozen-bubble.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.frozen-bubble
+nodeny  ${HOME}/.frozen-bubble
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
@@ -20,7 +20,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.frozen-bubble
-whitelist ${HOME}/.frozen-bubble
+allow  ${HOME}/.frozen-bubble
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

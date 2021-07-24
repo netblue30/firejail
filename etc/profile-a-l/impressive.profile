@@ -6,9 +6,9 @@ include impressive.local
 # Persistent global definitions
 #include globals.local
 
-noblacklist ${DOCUMENTS}
-noblacklist /sbin
-noblacklist /usr/sbin
+nodeny  ${DOCUMENTS}
+nodeny  /sbin
+nodeny  /usr/sbin
 
 # Allow python (blacklisted by disable-interpreters.inc)
 #include allow-python2.inc
@@ -23,8 +23,8 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.cache/mesa_shader_cache
-whitelist /usr/share/opengl-games-utils
-whitelist /usr/share/zenity
+allow  /usr/share/opengl-games-utils
+allow  /usr/share/zenity
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

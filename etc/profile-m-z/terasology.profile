@@ -7,7 +7,7 @@ include globals.local
 
 ignore noexec /tmp
 
-noblacklist ${HOME}/.local/share/terasology
+nodeny  ${HOME}/.local/share/terasology
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
@@ -21,8 +21,8 @@ include disable-programs.inc
 
 mkdir ${HOME}/.java
 mkdir ${HOME}/.local/share/terasology
-whitelist ${HOME}/.java
-whitelist ${HOME}/.local/share/terasology
+allow  ${HOME}/.java
+allow  ${HOME}/.local/share/terasology
 include whitelist-common.inc
 
 caps.drop all

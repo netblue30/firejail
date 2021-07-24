@@ -6,7 +6,7 @@ include onboard.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/onboard
+nodeny  ${HOME}/.config/onboard
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -22,8 +22,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/onboard
-whitelist ${HOME}/.config/onboard
-whitelist /usr/share/onboard
+allow  ${HOME}/.config/onboard
+allow  /usr/share/onboard
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc

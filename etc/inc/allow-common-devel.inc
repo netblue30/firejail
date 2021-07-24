@@ -3,29 +3,29 @@
 include allow-common-devel.local
 
 # Git
-noblacklist ${HOME}/.config/git
-noblacklist ${HOME}/.gitconfig
-noblacklist ${HOME}/.git-credentials
+nodeny  ${HOME}/.config/git
+nodeny  ${HOME}/.gitconfig
+nodeny  ${HOME}/.git-credentials
 
 # Java
-noblacklist ${HOME}/.gradle
-noblacklist ${HOME}/.java
+nodeny  ${HOME}/.gradle
+nodeny  ${HOME}/.java
 
 # Node.js
-noblacklist ${HOME}/.node-gyp
-noblacklist ${HOME}/.npm
-noblacklist ${HOME}/.npmrc
-noblacklist ${HOME}/.nvm
-noblacklist ${HOME}/.yarn
-noblacklist ${HOME}/.yarn-config
-noblacklist ${HOME}/.yarncache
-noblacklist ${HOME}/.yarnrc
+nodeny  ${HOME}/.node-gyp
+nodeny  ${HOME}/.npm
+nodeny  ${HOME}/.npmrc
+nodeny  ${HOME}/.nvm
+nodeny  ${HOME}/.yarn
+nodeny  ${HOME}/.yarn-config
+nodeny  ${HOME}/.yarncache
+nodeny  ${HOME}/.yarnrc
 
 # Python
-noblacklist ${HOME}/.pylint.d
-noblacklist ${HOME}/.python-history
-noblacklist ${HOME}/.python_history
-noblacklist ${HOME}/.pythonhist
+nodeny  ${HOME}/.pylint.d
+nodeny  ${HOME}/.python-history
+nodeny  ${HOME}/.python_history
+nodeny  ${HOME}/.pythonhist
 
 # Rust
-noblacklist ${HOME}/.cargo/*
+nodeny  ${HOME}/.cargo/*

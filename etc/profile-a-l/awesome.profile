@@ -7,7 +7,7 @@ include awesome.local
 include globals.local
 
 # all applications started in awesome will run in this profile
-noblacklist ${HOME}/.config/awesome
+nodeny  ${HOME}/.config/awesome
 include disable-common.inc
 
 caps.drop all

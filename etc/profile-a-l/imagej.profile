@@ -6,7 +6,7 @@ include imagej.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.imagej
+nodeny  ${HOME}/.imagej
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc

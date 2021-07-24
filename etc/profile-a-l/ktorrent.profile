@@ -6,13 +6,13 @@ include ktorrent.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/ktorrentrc
-noblacklist ${HOME}/.kde/share/apps/ktorrent
-noblacklist ${HOME}/.kde/share/config/ktorrentrc
-noblacklist ${HOME}/.kde4/share/apps/ktorrent
-noblacklist ${HOME}/.kde4/share/config/ktorrentrc
-noblacklist ${HOME}/.local/share/ktorrent
-noblacklist ${HOME}/.local/share/kxmlgui5/ktorrent
+nodeny  ${HOME}/.config/ktorrentrc
+nodeny  ${HOME}/.kde/share/apps/ktorrent
+nodeny  ${HOME}/.kde/share/config/ktorrentrc
+nodeny  ${HOME}/.kde4/share/apps/ktorrent
+nodeny  ${HOME}/.kde4/share/config/ktorrentrc
+nodeny  ${HOME}/.local/share/ktorrent
+nodeny  ${HOME}/.local/share/kxmlgui5/ktorrent
 
 include disable-common.inc
 include disable-devel.inc
@@ -29,14 +29,14 @@ mkdir ${HOME}/.local/share/kxmlgui5/ktorrent
 mkfile ${HOME}/.config/ktorrentrc
 mkfile ${HOME}/.kde/share/config/ktorrentrc
 mkfile ${HOME}/.kde4/share/config/ktorrentrc
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.config/ktorrentrc
-whitelist ${HOME}/.kde/share/apps/ktorrent
-whitelist ${HOME}/.kde/share/config/ktorrentrc
-whitelist ${HOME}/.kde4/share/apps/ktorrent
-whitelist ${HOME}/.kde4/share/config/ktorrentrc
-whitelist ${HOME}/.local/share/ktorrent
-whitelist ${HOME}/.local/share/kxmlgui5/ktorrent
+allow  ${DOWNLOADS}
+allow  ${HOME}/.config/ktorrentrc
+allow  ${HOME}/.kde/share/apps/ktorrent
+allow  ${HOME}/.kde/share/config/ktorrentrc
+allow  ${HOME}/.kde4/share/apps/ktorrent
+allow  ${HOME}/.kde4/share/config/ktorrentrc
+allow  ${HOME}/.local/share/ktorrent
+allow  ${HOME}/.local/share/kxmlgui5/ktorrent
 include whitelist-common.inc
 include whitelist-var-common.inc
 

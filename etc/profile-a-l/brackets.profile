@@ -5,7 +5,7 @@ include brackets.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/Brackets
+nodeny  ${HOME}/.config/Brackets
 #noblacklist /opt/brackets
 #noblacklist /opt/google
 

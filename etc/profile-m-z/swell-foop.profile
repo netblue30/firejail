@@ -6,12 +6,12 @@ include swell-foop.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/swell-foop
+nodeny  ${HOME}/.local/share/swell-foop
 
 mkdir ${HOME}/.local/share/swell-foop
-whitelist ${HOME}/.local/share/swell-foop
+allow  ${HOME}/.local/share/swell-foop
 
-whitelist /usr/share/swell-foop
+allow  /usr/share/swell-foop
 
 private-bin swell-foop
 

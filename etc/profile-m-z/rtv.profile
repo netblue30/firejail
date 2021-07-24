@@ -6,11 +6,14 @@ include rtv.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}/wayland-*
 
-noblacklist ${HOME}/.config/rtv
-noblacklist ${HOME}/.local/share/rtv
+nodeny  ${HOME}/.config/rtv
+nodeny  ${HOME}/.local/share/rtv
+
+# Allow /bin/sh (blacklisted by disable-shell.inc)
+include allow-bin-sh.inc
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -30,8 +33,8 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/rtv
 mkdir ${HOME}/.local/share/rtv
-whitelist ${HOME}/.config/rtv
-whitelist ${HOME}/.local/share/rtv
+allow  ${HOME}/.config/rtv
+allow  ${HOME}/.local/share/rtv
 include whitelist-var-common.inc
 
 apparmor
@@ -54,10 +57,10 @@ shell none
 tracelog
 
 disable-mnt
-private-bin python*,rtv,sh,xdg-settings
+private-bin less,python*,rtv,sh,xdg-settings
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl,terminfo,xdg
+private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mailcap,mime.types,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl,terminfo,xdg
 
 dbus-user none
 dbus-system none

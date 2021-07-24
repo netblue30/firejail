@@ -12,7 +12,7 @@
 #
 
 AC_PREREQ([2.68])
-AC_INIT([firejail],[0.9.66rc1],[netblue30@protonmail.com],[],[https://firejail.wordpress.com])
+AC_INIT([firejail],[0.9.67],[netblue30@protonmail.com],[],[https://firejail.wordpress.com])
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 
 AC_CONFIG_MACRO_DIR([m4])
@@ -177,14 +177,6 @@ AS_IF([test "x$enable_file_transfer" != "xno"], [
 	AC_SUBST(HAVE_FILE_TRANSFER)
 ])
 
-HAVE_WHITELIST=""
-AC_ARG_ENABLE([whitelist],
-    AS_HELP_STRING([--disable-whitelist], [disable whitelist]))
-AS_IF([test "x$enable_whitelist" != "xno"], [
-	HAVE_WHITELIST="-DHAVE_WHITELIST"
-	AC_SUBST(HAVE_WHITELIST)
-])
-
 HAVE_SUID=""
 AC_ARG_ENABLE([suid],
     AS_HELP_STRING([--disable-suid], [install as a non-SUID executable]))
@@ -323,7 +315,6 @@ Configuration options:
    network: $HAVE_NETWORK
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11
-   whitelisting: $HAVE_WHITELIST
    private home support: $HAVE_PRIVATE_HOME
    file transfer support: $HAVE_FILE_TRANSFER
    overlayfs support: $HAVE_OVERLAYFS

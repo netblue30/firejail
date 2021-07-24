@@ -6,12 +6,12 @@ include aria2c.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.aria2
-noblacklist ${HOME}/.config/aria2
-noblacklist ${HOME}/.netrc
+nodeny  ${HOME}/.aria2
+nodeny  ${HOME}/.config/aria2
+nodeny  ${HOME}/.netrc
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

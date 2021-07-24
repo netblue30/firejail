@@ -6,10 +6,10 @@ include QOwnNotes.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${DOCUMENTS}
-noblacklist ${HOME}/Nextcloud/Notes
-noblacklist ${HOME}/.config/PBE
-noblacklist ${HOME}/.local/share/PBE
+nodeny  ${DOCUMENTS}
+nodeny  ${HOME}/Nextcloud/Notes
+nodeny  ${HOME}/.config/PBE
+nodeny  ${HOME}/.local/share/PBE
 
 include disable-common.inc
 include disable-devel.inc
@@ -23,10 +23,10 @@ include disable-xdg.inc
 mkdir ${HOME}/Nextcloud/Notes
 mkdir ${HOME}/.config/PBE
 mkdir ${HOME}/.local/share/PBE
-whitelist ${DOCUMENTS}
-whitelist ${HOME}/Nextcloud/Notes
-whitelist ${HOME}/.config/PBE
-whitelist ${HOME}/.local/share/PBE
+allow  ${DOCUMENTS}
+allow  ${HOME}/Nextcloud/Notes
+allow  ${HOME}/.config/PBE
+allow  ${HOME}/.local/share/PBE
 include whitelist-common.inc
 include whitelist-var-common.inc
 

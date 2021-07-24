@@ -6,9 +6,9 @@ include liferea.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/liferea
-noblacklist ${HOME}/.config/liferea
-noblacklist ${HOME}/.local/share/liferea
+nodeny  ${HOME}/.cache/liferea
+nodeny  ${HOME}/.config/liferea
+nodeny  ${HOME}/.local/share/liferea
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -24,10 +24,10 @@ include disable-programs.inc
 mkdir ${HOME}/.cache/liferea
 mkdir ${HOME}/.config/liferea
 mkdir ${HOME}/.local/share/liferea
-whitelist ${HOME}/.cache/liferea
-whitelist ${HOME}/.config/liferea
-whitelist ${HOME}/.local/share/liferea
-whitelist /usr/share/liferea
+allow  ${HOME}/.cache/liferea
+allow  ${HOME}/.config/liferea
+allow  ${HOME}/.local/share/liferea
+allow  /usr/share/liferea
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

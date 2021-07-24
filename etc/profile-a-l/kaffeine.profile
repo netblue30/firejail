@@ -6,14 +6,14 @@ include kaffeine.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/kaffeinerc
-noblacklist ${HOME}/.kde/share/apps/kaffeine
-noblacklist ${HOME}/.kde/share/config/kaffeinerc
-noblacklist ${HOME}/.kde4/share/apps/kaffeine
-noblacklist ${HOME}/.kde4/share/config/kaffeinerc
-noblacklist ${HOME}/.local/share/kaffeine
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
+nodeny  ${HOME}/.config/kaffeinerc
+nodeny  ${HOME}/.kde/share/apps/kaffeine
+nodeny  ${HOME}/.kde/share/config/kaffeinerc
+nodeny  ${HOME}/.kde4/share/apps/kaffeine
+nodeny  ${HOME}/.kde4/share/config/kaffeinerc
+nodeny  ${HOME}/.local/share/kaffeine
+nodeny  ${MUSIC}
+nodeny  ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc

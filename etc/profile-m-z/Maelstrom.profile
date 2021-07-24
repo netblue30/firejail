@@ -6,7 +6,7 @@ include Maelstrom.local
 # Persistent global definitions
 include globals.local
 
-noblacklist /var/lib/games/Maelstrom-Scores
+nodeny  /var/lib/games/Maelstrom-Scores
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,7 +17,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /var/lib/games
+allow  /var/lib/games
 include whitelist-common.inc
 include whitelist-var-common.inc
 

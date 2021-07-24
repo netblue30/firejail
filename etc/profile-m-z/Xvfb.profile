@@ -18,7 +18,7 @@ include globals.local
 # some Linux distributions. Also, older versions of Xpra use Xvfb.
 #
 
-whitelist /var/lib/xkb
+allow  /var/lib/xkb
 include whitelist-common.inc
 
 caps.drop all

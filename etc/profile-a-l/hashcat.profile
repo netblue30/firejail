@@ -7,11 +7,11 @@ include hashcat.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
+deny  ${RUNUSER}/wayland-*
 
-noblacklist ${HOME}/.hashcat
-noblacklist /usr/include
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.hashcat
+nodeny  /usr/include
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

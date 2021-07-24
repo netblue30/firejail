@@ -6,7 +6,7 @@ include gl-117.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.gl-117
+nodeny  ${HOME}/.gl-117
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.gl-117
-whitelist ${HOME}/.gl-117
-whitelist /usr/share/gl-117
+allow  ${HOME}/.gl-117
+allow  /usr/share/gl-117
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -6,7 +6,7 @@ include surf.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.surf
+nodeny  ${HOME}/.surf
 
 include disable-common.inc
 include disable-devel.inc
@@ -15,8 +15,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.surf
-whitelist ${HOME}/.surf
-whitelist ${DOWNLOADS}
+allow  ${HOME}/.surf
+allow  ${DOWNLOADS}
 include whitelist-common.inc
 
 caps.drop all

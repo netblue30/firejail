@@ -6,7 +6,7 @@ include pavucontrol.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/pavucontrol.ini
+nodeny  ${HOME}/.config/pavucontrol.ini
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,8 +19,8 @@ include disable-xdg.inc
 # whitelisting in ${HOME} is broken, see #3112
 #mkfile ${HOME}/.config/pavucontrol.ini
 #whitelist ${HOME}/.config/pavucontrol.ini
-whitelist /usr/share/pavucontrol
-whitelist /usr/share/pavucontrol-qt
+allow  /usr/share/pavucontrol
+allow  /usr/share/pavucontrol-qt
 #include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

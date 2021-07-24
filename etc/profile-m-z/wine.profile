@@ -6,13 +6,13 @@ include wine.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/winetricks
-noblacklist ${HOME}/.Steam
-noblacklist ${HOME}/.local/share/Steam
-noblacklist ${HOME}/.local/share/steam
-noblacklist ${HOME}/.steam
-noblacklist ${HOME}/.wine
-noblacklist /tmp/.wine-*
+nodeny  ${HOME}/.cache/winetricks
+nodeny  ${HOME}/.Steam
+nodeny  ${HOME}/.local/share/Steam
+nodeny  ${HOME}/.local/share/steam
+nodeny  ${HOME}/.steam
+nodeny  ${HOME}/.wine
+nodeny  /tmp/.wine-*
 
 include disable-common.inc
 include disable-devel.inc

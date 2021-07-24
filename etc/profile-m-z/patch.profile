@@ -7,9 +7,9 @@ include patch.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}
+deny  ${RUNUSER}
 
-noblacklist ${DOCUMENTS}
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

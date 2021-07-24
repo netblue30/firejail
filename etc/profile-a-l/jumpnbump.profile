@@ -6,7 +6,7 @@ include jumpnbump.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.jumpnbump
+nodeny  ${HOME}/.jumpnbump
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,8 +17,8 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.jumpnbump
-whitelist ${HOME}/.jumpnbump
-whitelist /usr/share/jumpnbump
+allow  ${HOME}/.jumpnbump
+allow  /usr/share/jumpnbump
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -6,7 +6,7 @@ include ms-powerpoint.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.cache/ms-powerpoint-online
+nodeny  ${HOME}/.cache/ms-powerpoint-online
 private-bin ms-powerpoint
 
 # Redirect

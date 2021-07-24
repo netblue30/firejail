@@ -5,7 +5,7 @@ include xmr-stak.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.xmr-stak
+nodeny  ${HOME}/.xmr-stak
 
 include disable-common.inc
 include disable-devel.inc

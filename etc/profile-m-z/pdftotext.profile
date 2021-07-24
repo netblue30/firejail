@@ -6,9 +6,9 @@ include pdftotext.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}
+deny  ${RUNUSER}
 
-noblacklist ${DOCUMENTS}
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,9 +19,9 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist ${DOCUMENTS}
-whitelist ${DOWNLOADS}
-whitelist /usr/share/poppler
+allow  ${DOCUMENTS}
+allow  ${DOWNLOADS}
+allow  /usr/share/poppler
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

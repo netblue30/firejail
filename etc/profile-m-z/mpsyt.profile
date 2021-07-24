@@ -6,12 +6,12 @@ include mpsyt.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/mps-youtube
-noblacklist ${HOME}/.config/mpv
-noblacklist ${HOME}/.config/youtube-dl
-noblacklist ${HOME}/.mplayer
-noblacklist ${HOME}/.netrc
-noblacklist ${HOME}/mps
+nodeny  ${HOME}/.config/mps-youtube
+nodeny  ${HOME}/.config/mpv
+nodeny  ${HOME}/.config/youtube-dl
+nodeny  ${HOME}/.mplayer
+nodeny  ${HOME}/.netrc
+nodeny  ${HOME}/mps
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -20,8 +20,8 @@ include allow-lua.inc
 include allow-python2.inc
 include allow-python3.inc
 
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
+nodeny  ${MUSIC}
+nodeny  ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -37,12 +37,12 @@ mkdir ${HOME}/.config/mpv
 mkdir ${HOME}/.config/youtube-dl
 mkdir ${HOME}/.mplayer
 mkdir ${HOME}/mps
-whitelist ${HOME}/.config/mps-youtube
-whitelist ${HOME}/.config/mpv
-whitelist ${HOME}/.config/youtube-dl
-whitelist ${HOME}/.mplayer
-whitelist ${HOME}/.netrc
-whitelist ${HOME}/mps
+allow  ${HOME}/.config/mps-youtube
+allow  ${HOME}/.config/mpv
+allow  ${HOME}/.config/youtube-dl
+allow  ${HOME}/.mplayer
+allow  ${HOME}/.netrc
+allow  ${HOME}/mps
 include whitelist-common.inc
 include whitelist-player-common.inc
 include whitelist-var-common.inc

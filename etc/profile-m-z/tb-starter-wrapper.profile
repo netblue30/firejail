@@ -8,10 +8,10 @@ include tb-starter-wrapper.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.tb
+nodeny  ${HOME}/.tb
 
 mkdir ${HOME}/.tb
-whitelist ${HOME}/.tb
+allow  ${HOME}/.tb
 
 private-bin tb-starter-wrapper
 

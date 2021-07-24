@@ -6,9 +6,9 @@ include zathura.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/zathura
-noblacklist ${HOME}/.local/share/zathura
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.config/zathura
+nodeny  ${HOME}/.local/share/zathura
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,8 +22,8 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/zathura
 mkdir ${HOME}/.local/share/zathura
-whitelist /usr/share/doc
-whitelist /usr/share/zathura
+allow  /usr/share/doc
+allow  /usr/share/zathura
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

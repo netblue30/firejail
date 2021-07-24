@@ -6,11 +6,11 @@ include kmplayer.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/kmplayerrc
-noblacklist ${HOME}/.kde/share/config/kmplayerrc
-noblacklist ${HOME}/.local/share/kmplayer
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
+nodeny  ${HOME}/.config/kmplayerrc
+nodeny  ${HOME}/.kde/share/config/kmplayerrc
+nodeny  ${HOME}/.local/share/kmplayer
+nodeny  ${MUSIC}
+nodeny  ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc

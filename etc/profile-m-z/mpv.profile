@@ -24,9 +24,9 @@ include globals.local
 #include allow-bin-sh.inc
 #private-bin sh
 
-noblacklist ${HOME}/.config/mpv
-noblacklist ${HOME}/.config/youtube-dl
-noblacklist ${HOME}/.netrc
+nodeny  ${HOME}/.config/mpv
+nodeny  ${HOME}/.config/youtube-dl
+nodeny  ${HOME}/.netrc
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -35,7 +35,7 @@ include allow-lua.inc
 include allow-python2.inc
 include allow-python3.inc
 
-blacklist /usr/libexec
+deny  /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -49,14 +49,14 @@ read-only ${DESKTOP}
 mkdir ${HOME}/.config/mpv
 mkdir ${HOME}/.config/youtube-dl
 mkfile ${HOME}/.netrc
-whitelist ${HOME}/.config/mpv
-whitelist ${HOME}/.config/youtube-dl
-whitelist ${HOME}/.netrc
+allow  ${HOME}/.config/mpv
+allow  ${HOME}/.config/youtube-dl
+allow  ${HOME}/.netrc
 include whitelist-common.inc
 include whitelist-player-common.inc
-whitelist /usr/share/lua
-whitelist /usr/share/lua*
-whitelist /usr/share/vulkan
+allow  /usr/share/lua
+allow  /usr/share/lua*
+allow  /usr/share/vulkan
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

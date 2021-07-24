@@ -156,6 +156,8 @@ typedef struct config_t {
 
 	// filesystem
 	ProfileEntry *profile;
+	ProfileEntry *profile_rebuild_etc;	// blacklist files in /etc directory used by fs_rebuild_etc()
+
 #define MAX_PROFILE_IGNORE 32
 	char *profile_ignore[MAX_PROFILE_IGNORE];
 	char *chrootdir;	// chroot directory
@@ -625,7 +627,6 @@ void fs_trace(void);
 
 // fs_hostname.c
 void fs_hostname(const char *hostname);
-void fs_resolvconf(void);
 char *fs_check_hosts_file(const char *fname);
 void fs_store_hosts_file(void);
 void fs_mount_hosts_file(void);
@@ -668,6 +669,7 @@ void fs_machineid(void);
 void fs_private_dir_copy(const char *private_dir, const char *private_run_dir, const char *private_list);
 void fs_private_dir_mount(const char *private_dir, const char *private_run_dir);
 void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list);
+void fs_rebuild_etc(void);
 
 // no_sandbox.c
 int check_namespace_virt(void);
@@ -776,7 +778,6 @@ enum {
 	CFG_NETWORK,
 	CFG_RESTRICTED_NETWORK,
 	CFG_FORCE_NONEWPRIVS,
-	CFG_WHITELIST,
 	CFG_XEPHYR_WINDOW_TITLE,
 	CFG_OVERLAYFS,
 	CFG_PRIVATE_BIN,

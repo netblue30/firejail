@@ -8,10 +8,10 @@ include globals.local
 
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
-noblacklist ${HOME}/.cache/Otter
-noblacklist ${HOME}/.config/otter
-noblacklist ${HOME}/.pki
-noblacklist ${HOME}/.local/share/pki
+nodeny  ${HOME}/.cache/Otter
+nodeny  ${HOME}/.config/otter
+nodeny  ${HOME}/.pki
+nodeny  ${HOME}/.local/share/pki
 
 include disable-common.inc
 include disable-devel.inc
@@ -25,12 +25,12 @@ mkdir ${HOME}/.cache/Otter
 mkdir ${HOME}/.config/otter
 mkdir ${HOME}/.pki
 mkdir ${HOME}/.local/share/pki
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.cache/Otter
-whitelist ${HOME}/.config/otter
-whitelist ${HOME}/.pki
-whitelist ${HOME}/.local/share/pki
-whitelist /usr/share/otter-browser
+allow  ${DOWNLOADS}
+allow  ${HOME}/.cache/Otter
+allow  ${HOME}/.config/otter
+allow  ${HOME}/.pki
+allow  ${HOME}/.local/share/pki
+allow  /usr/share/otter-browser
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

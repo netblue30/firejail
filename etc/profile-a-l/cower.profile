@@ -7,8 +7,8 @@ include cower.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/cower
-noblacklist /var/lib/pacman
+nodeny  ${HOME}/.config/cower
+nodeny  /var/lib/pacman
 
 include disable-common.inc
 include disable-devel.inc

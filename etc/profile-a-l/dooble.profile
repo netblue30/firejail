@@ -7,7 +7,7 @@ include dooble-qt4.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.dooble
+nodeny  ${HOME}/.dooble
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,8 +17,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.dooble
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.dooble
+allow  ${DOWNLOADS}
+allow  ${HOME}/.dooble
 include whitelist-common.inc
 
 caps.drop all

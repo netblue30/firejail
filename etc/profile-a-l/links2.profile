@@ -7,10 +7,10 @@ include links2.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.links2
+nodeny  ${HOME}/.links2
 
 mkdir ${HOME}/.links2
-whitelist ${HOME}/.links2
+allow  ${HOME}/.links2
 
 private-bin links2
 

@@ -6,9 +6,9 @@ include ristretto.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/ristretto
-noblacklist ${HOME}/.Steam
-noblacklist ${HOME}/.steam
+nodeny  ${HOME}/.config/ristretto
+nodeny  ${HOME}/.Steam
+nodeny  ${HOME}/.steam
 
 include disable-common.inc
 include disable-devel.inc

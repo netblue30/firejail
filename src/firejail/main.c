@@ -20,6 +20,7 @@
 #include "firejail.h"
 #include "../include/pid.h"
 #include "../include/firejail_user.h"
+#include "../include/gcov_wrapper.h"
 #include "../include/syscall.h"
 #include "../include/seccomp.h"
 #define _GNU_SOURCE
@@ -42,10 +43,6 @@
 #include <fcntl.h>
 #ifndef O_PATH
 #define O_PATH 010000000
-#endif
-
-#ifdef HAVE_GCOV
-#include <gcov.h>
 #endif
 
 #ifdef __ia64__
@@ -1262,9 +1259,9 @@ int main(int argc, char **argv, char **envp) {
 			arg_debug = 1;
 			arg_quiet = 0;
 		}
-		else if (strcmp(argv[i], "--debug-blacklists") == 0)
+		else if (strcmp(argv[i], "--debug-deny") == 0)
 			arg_debug_blacklists = 1;
-		else if (strcmp(argv[i], "--debug-whitelists") == 0)
+		else if (strcmp(argv[i], "--debug-allow") == 0)
 			arg_debug_whitelists = 1;
 		else if (strcmp(argv[i], "--debug-private-lib") == 0)
 			arg_debug_private_lib = 1;
@@ -1564,9 +1561,19 @@ int main(int argc, char **argv, char **envp) {
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
 			profile_add(line);
 		}
+
+		// blacklist/deny
 		else if (strncmp(argv[i], "--blacklist=", 12) == 0) {
 			char *line;
 			if (asprintf(&line, "blacklist %s", argv[i] + 12) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL);	// will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--deny=", 7) == 0) {
+			char *line;
+			if (asprintf(&line, "blacklist %s", argv[i] + 7) == -1)
 				errExit("asprintf");
 
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
@@ -1580,19 +1587,31 @@ int main(int argc, char **argv, char **envp) {
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
 			profile_add(line);
 		}
+		else if (strncmp(argv[i], "--nodeny=", 9) == 0) {
+			char *line;
+			if (asprintf(&line, "noblacklist %s", argv[i] + 9) == -1)
+				errExit("asprintf");
 
-#ifdef HAVE_WHITELIST
+			profile_check_line(line, 0, NULL);	// will exit if something wrong
+			profile_add(line);
+		}
+
+		// whitelist
 		else if (strncmp(argv[i], "--whitelist=", 12) == 0) {
-			if (checkcfg(CFG_WHITELIST)) {
-				char *line;
-				if (asprintf(&line, "whitelist %s", argv[i] + 12) == -1)
-					errExit("asprintf");
+			char *line;
+			if (asprintf(&line, "whitelist %s", argv[i] + 12) == -1)
+				errExit("asprintf");
 
-				profile_check_line(line, 0, NULL);	// will exit if something wrong
-				profile_add(line);
-			}
-			else
-				exit_err_feature("whitelist");
+			profile_check_line(line, 0, NULL);	// will exit if something wrong
+			profile_add(line);
+		}
+		else if (strncmp(argv[i], "--allow=", 8) == 0) {
+			char *line;
+			if (asprintf(&line, "whitelist %s", argv[i] + 8) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL);	// will exit if something wrong
+			profile_add(line);
 		}
 		else if (strncmp(argv[i], "--nowhitelist=", 14) == 0) {
 			char *line;
@@ -1602,7 +1621,16 @@ int main(int argc, char **argv, char **envp) {
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
 			profile_add(line);
 		}
-#endif
+		else if (strncmp(argv[i], "--noallow=", 10) == 0) {
+			char *line;
+			if (asprintf(&line, "nowhitelist %s", argv[i] + 10) == -1)
+				errExit("asprintf");
+
+			profile_check_line(line, 0, NULL);	// will exit if something wrong
+			profile_add(line);
+		}
+
+
 		else if (strncmp(argv[i], "--mkdir=", 8) == 0) {
 			char *line;
 			if (asprintf(&line, "mkdir %s", argv[i] + 8) == -1)
@@ -3036,9 +3064,9 @@ int main(int argc, char **argv, char **envp) {
 			network_main(child);
 			if (arg_debug)
 				printf("Host network configured\n");
-#ifdef HAVE_GCOV
+
 			__gcov_flush();
-#endif
+
 			_exit(0);
 		}
 

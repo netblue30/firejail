@@ -10,7 +10,7 @@ include globals.local
 include allow-python2.inc
 include allow-python3.inc
 
-noblacklist ${HOME}/.nyx
+nodeny  ${HOME}/.nyx
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,7 +22,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.nyx
-whitelist ${HOME}/.nyx
+allow  ${HOME}/.nyx
 include whitelist-common.inc
 include whitelist-var-common.inc
 

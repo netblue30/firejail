@@ -6,7 +6,7 @@ include teeworlds.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.teeworlds
+nodeny  ${HOME}/.teeworlds
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +18,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.teeworlds
-whitelist ${HOME}/.teeworlds
+allow  ${HOME}/.teeworlds
 include whitelist-common.inc
 include whitelist-var-common.inc
 

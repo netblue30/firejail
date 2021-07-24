@@ -6,8 +6,8 @@ include ark.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/arkrc
-noblacklist ${HOME}/.local/share/kxmlgui5/ark
+nodeny  ${HOME}/.config/arkrc
+nodeny  ${HOME}/.local/share/kxmlgui5/ark
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,7 +16,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-whitelist /usr/share/ark
+allow  /usr/share/ark
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

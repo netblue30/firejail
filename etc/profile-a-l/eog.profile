@@ -6,9 +6,9 @@ include eog.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/eog
+nodeny  ${HOME}/.config/eog
 
-whitelist /usr/share/eog
+allow  /usr/share/eog
 
 # private-bin, private-etc and private-lib break 'Open With' / 'Open in file manager'.
 # Add the next lines to your eog.local if you need that functionality.

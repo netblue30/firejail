@@ -6,9 +6,9 @@ include qpdfview.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/qpdfview
-noblacklist ${HOME}/.local/share/qpdfview
-noblacklist ${DOCUMENTS}
+nodeny  ${HOME}/.config/qpdfview
+nodeny  ${HOME}/.local/share/qpdfview
+nodeny  ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

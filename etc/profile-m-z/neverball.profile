@@ -6,7 +6,7 @@ include neverball.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.neverball
+nodeny  ${HOME}/.neverball
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.neverball
-whitelist ${HOME}/.neverball
-whitelist /usr/share/neverball
+allow  ${HOME}/.neverball
+allow  /usr/share/neverball
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

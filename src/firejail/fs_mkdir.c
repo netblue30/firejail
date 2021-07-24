@@ -18,16 +18,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 #include "firejail.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <grp.h>
 #include <sys/wait.h>
 #include <string.h>
-
-#ifdef HAVE_GCOV
-#include <gcov.h>
-#endif
 
 static void check(const char *fname) {
 	// manufacture /run/user directory
@@ -98,9 +95,9 @@ void fs_mkdir(const char *name) {
 
 		// create directory
 		mkdir_recursive(expanded);
-#ifdef HAVE_GCOV
+
 		__gcov_flush();
-#endif
+
 		_exit(0);
 	}
 	// wait for the child to finish

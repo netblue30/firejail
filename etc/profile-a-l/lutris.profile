@@ -6,18 +6,18 @@ include lutris.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${PATH}/llvm*
-noblacklist ${HOME}/Games
-noblacklist ${HOME}/.cache/lutris
-noblacklist ${HOME}/.cache/winetricks
-noblacklist ${HOME}/.config/lutris
-noblacklist ${HOME}/.local/share/lutris
+nodeny  ${PATH}/llvm*
+nodeny  ${HOME}/Games
+nodeny  ${HOME}/.cache/lutris
+nodeny  ${HOME}/.cache/winetricks
+nodeny  ${HOME}/.config/lutris
+nodeny  ${HOME}/.local/share/lutris
 # noblacklist ${HOME}/.wine
-noblacklist /tmp/.wine-*
+nodeny  /tmp/.wine-*
 # Don't block access to /sbin and /usr/sbin to allow using ldconfig. Otherwise
 # Lutris won't even start.
-noblacklist /sbin
-noblacklist /usr/sbin
+nodeny  /sbin
+nodeny  /usr/sbin
 
 ignore noexec ${HOME}
 
@@ -39,15 +39,15 @@ mkdir ${HOME}/.cache/winetricks
 mkdir ${HOME}/.config/lutris
 mkdir ${HOME}/.local/share/lutris
 # mkdir ${HOME}/.wine
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/Games
-whitelist ${HOME}/.cache/lutris
-whitelist ${HOME}/.cache/winetricks
-whitelist ${HOME}/.config/lutris
-whitelist ${HOME}/.local/share/lutris
+allow  ${DOWNLOADS}
+allow  ${HOME}/Games
+allow  ${HOME}/.cache/lutris
+allow  ${HOME}/.cache/winetricks
+allow  ${HOME}/.config/lutris
+allow  ${HOME}/.local/share/lutris
 # whitelist ${HOME}/.wine
-whitelist /usr/share/lutris
-whitelist /usr/share/wine
+allow  /usr/share/lutris
+allow  /usr/share/wine
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc

@@ -6,7 +6,7 @@ include glaxium.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.glaxiumrc
+nodeny  ${HOME}/.glaxiumrc
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkfile ${HOME}/.glaxiumrc
-whitelist ${HOME}/.glaxiumrc
-whitelist /usr/share/glaxium
+allow  ${HOME}/.glaxiumrc
+allow  /usr/share/glaxium
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

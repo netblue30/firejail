@@ -4,13 +4,13 @@ include whitelist-runuser-common.local
 
 # common ${RUNUSER} (=/run/user/$UID) whitelist for all profiles
 
-whitelist ${RUNUSER}/bus
-whitelist ${RUNUSER}/dconf
-whitelist ${RUNUSER}/gdm/Xauthority
-whitelist ${RUNUSER}/ICEauthority
-whitelist ${RUNUSER}/.mutter-Xwaylandauth.*
-whitelist ${RUNUSER}/pulse/native
-whitelist ${RUNUSER}/wayland-0
-whitelist ${RUNUSER}/wayland-1
-whitelist ${RUNUSER}/xauth_*
-whitelist ${RUNUSER}/[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]
+allow  ${RUNUSER}/bus
+allow  ${RUNUSER}/dconf
+allow  ${RUNUSER}/gdm/Xauthority
+allow  ${RUNUSER}/ICEauthority
+allow  ${RUNUSER}/.mutter-Xwaylandauth.*
+allow  ${RUNUSER}/pulse/native
+allow  ${RUNUSER}/wayland-0
+allow  ${RUNUSER}/wayland-1
+allow  ${RUNUSER}/xauth_*
+allow  ${RUNUSER}/[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]

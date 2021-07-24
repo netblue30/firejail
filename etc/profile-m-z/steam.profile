@@ -6,40 +6,40 @@ include steam.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/Epic
-noblacklist ${HOME}/.config/Loop_Hero
-noblacklist ${HOME}/.config/ModTheSpire
-noblacklist ${HOME}/.config/RogueLegacy
-noblacklist ${HOME}/.config/RogueLegacyStorageContainer
-noblacklist ${HOME}/.killingfloor
-noblacklist ${HOME}/.klei
-noblacklist ${HOME}/.local/share/3909/PapersPlease
-noblacklist ${HOME}/.local/share/aspyr-media
-noblacklist ${HOME}/.local/share/bohemiainteractive
-noblacklist ${HOME}/.local/share/cdprojektred
-noblacklist ${HOME}/.local/share/Dredmor
-noblacklist ${HOME}/.local/share/FasterThanLight
-noblacklist ${HOME}/.local/share/feral-interactive
-noblacklist ${HOME}/.local/share/IntoTheBreach
-noblacklist ${HOME}/.local/share/Paradox Interactive
-noblacklist ${HOME}/.local/share/PillarsOfEternity
-noblacklist ${HOME}/.local/share/RogueLegacy
-noblacklist ${HOME}/.local/share/RogueLegacyStorageContainer
-noblacklist ${HOME}/.local/share/Steam
-noblacklist ${HOME}/.local/share/SteamWorldDig
-noblacklist ${HOME}/.local/share/SteamWorld Dig 2
-noblacklist ${HOME}/.local/share/SuperHexagon
-noblacklist ${HOME}/.local/share/Terraria
-noblacklist ${HOME}/.local/share/vpltd
-noblacklist ${HOME}/.local/share/vulkan
-noblacklist ${HOME}/.mbwarband
-noblacklist ${HOME}/.paradoxinteractive
-noblacklist ${HOME}/.steam
-noblacklist ${HOME}/.steampath
-noblacklist ${HOME}/.steampid
+nodeny  ${HOME}/.config/Epic
+nodeny  ${HOME}/.config/Loop_Hero
+nodeny  ${HOME}/.config/ModTheSpire
+nodeny  ${HOME}/.config/RogueLegacy
+nodeny  ${HOME}/.config/RogueLegacyStorageContainer
+nodeny  ${HOME}/.killingfloor
+nodeny  ${HOME}/.klei
+nodeny  ${HOME}/.local/share/3909/PapersPlease
+nodeny  ${HOME}/.local/share/aspyr-media
+nodeny  ${HOME}/.local/share/bohemiainteractive
+nodeny  ${HOME}/.local/share/cdprojektred
+nodeny  ${HOME}/.local/share/Dredmor
+nodeny  ${HOME}/.local/share/FasterThanLight
+nodeny  ${HOME}/.local/share/feral-interactive
+nodeny  ${HOME}/.local/share/IntoTheBreach
+nodeny  ${HOME}/.local/share/Paradox Interactive
+nodeny  ${HOME}/.local/share/PillarsOfEternity
+nodeny  ${HOME}/.local/share/RogueLegacy
+nodeny  ${HOME}/.local/share/RogueLegacyStorageContainer
+nodeny  ${HOME}/.local/share/Steam
+nodeny  ${HOME}/.local/share/SteamWorldDig
+nodeny  ${HOME}/.local/share/SteamWorld Dig 2
+nodeny  ${HOME}/.local/share/SuperHexagon
+nodeny  ${HOME}/.local/share/Terraria
+nodeny  ${HOME}/.local/share/vpltd
+nodeny  ${HOME}/.local/share/vulkan
+nodeny  ${HOME}/.mbwarband
+nodeny  ${HOME}/.paradoxinteractive
+nodeny  ${HOME}/.steam
+nodeny  ${HOME}/.steampath
+nodeny  ${HOME}/.steampid
 # needed for STEAM_RUNTIME_PREFER_HOST_LIBRARIES=1 to work
-noblacklist /sbin
-noblacklist /usr/sbin
+nodeny  /sbin
+nodeny  /usr/sbin
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
@@ -84,38 +84,38 @@ mkdir ${HOME}/.paradoxinteractive
 mkdir ${HOME}/.steam
 mkfile ${HOME}/.steampath
 mkfile ${HOME}/.steampid
-whitelist ${HOME}/.config/Epic
-whitelist ${HOME}/.config/Loop_Hero
-whitelist ${HOME}/.config/ModTheSpire
-whitelist ${HOME}/.config/RogueLegacy
-whitelist ${HOME}/.config/RogueLegacyStorageContainer
-whitelist ${HOME}/.config/unity3d
-whitelist ${HOME}/.killingfloor
-whitelist ${HOME}/.klei
-whitelist ${HOME}/.local/share/3909/PapersPlease
-whitelist ${HOME}/.local/share/aspyr-media
-whitelist ${HOME}/.local/share/bohemiainteractive
-whitelist ${HOME}/.local/share/cdprojektred
-whitelist ${HOME}/.local/share/Dredmor
-whitelist ${HOME}/.local/share/FasterThanLight
-whitelist ${HOME}/.local/share/feral-interactive
-whitelist ${HOME}/.local/share/IntoTheBreach
-whitelist ${HOME}/.local/share/Paradox Interactive
-whitelist ${HOME}/.local/share/PillarsOfEternity
-whitelist ${HOME}/.local/share/RogueLegacy
-whitelist ${HOME}/.local/share/RogueLegacyStorageContainer
-whitelist ${HOME}/.local/share/Steam
-whitelist ${HOME}/.local/share/SteamWorldDig
-whitelist ${HOME}/.local/share/SteamWorld Dig 2
-whitelist ${HOME}/.local/share/SuperHexagon
-whitelist ${HOME}/.local/share/Terraria
-whitelist ${HOME}/.local/share/vpltd
-whitelist ${HOME}/.local/share/vulkan
-whitelist ${HOME}/.mbwarband
-whitelist ${HOME}/.paradoxinteractive
-whitelist ${HOME}/.steam
-whitelist ${HOME}/.steampath
-whitelist ${HOME}/.steampid
+allow  ${HOME}/.config/Epic
+allow  ${HOME}/.config/Loop_Hero
+allow  ${HOME}/.config/ModTheSpire
+allow  ${HOME}/.config/RogueLegacy
+allow  ${HOME}/.config/RogueLegacyStorageContainer
+allow  ${HOME}/.config/unity3d
+allow  ${HOME}/.killingfloor
+allow  ${HOME}/.klei
+allow  ${HOME}/.local/share/3909/PapersPlease
+allow  ${HOME}/.local/share/aspyr-media
+allow  ${HOME}/.local/share/bohemiainteractive
+allow  ${HOME}/.local/share/cdprojektred
+allow  ${HOME}/.local/share/Dredmor
+allow  ${HOME}/.local/share/FasterThanLight
+allow  ${HOME}/.local/share/feral-interactive
+allow  ${HOME}/.local/share/IntoTheBreach
+allow  ${HOME}/.local/share/Paradox Interactive
+allow  ${HOME}/.local/share/PillarsOfEternity
+allow  ${HOME}/.local/share/RogueLegacy
+allow  ${HOME}/.local/share/RogueLegacyStorageContainer
+allow  ${HOME}/.local/share/Steam
+allow  ${HOME}/.local/share/SteamWorldDig
+allow  ${HOME}/.local/share/SteamWorld Dig 2
+allow  ${HOME}/.local/share/SuperHexagon
+allow  ${HOME}/.local/share/Terraria
+allow  ${HOME}/.local/share/vpltd
+allow  ${HOME}/.local/share/vulkan
+allow  ${HOME}/.mbwarband
+allow  ${HOME}/.paradoxinteractive
+allow  ${HOME}/.steam
+allow  ${HOME}/.steampath
+allow  ${HOME}/.steampid
 include whitelist-common.inc
 include whitelist-var-common.inc
 

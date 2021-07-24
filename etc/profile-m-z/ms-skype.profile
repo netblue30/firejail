@@ -8,7 +8,7 @@ include ms-skype.local
 
 ignore novideo
 
-noblacklist ${HOME}/.cache/ms-skype-online
+nodeny  ${HOME}/.cache/ms-skype-online
 
 private-bin ms-skype
 

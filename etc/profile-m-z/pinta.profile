@@ -6,9 +6,9 @@ include pinta.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/Pinta
-noblacklist ${DOCUMENTS}
-noblacklist ${PICTURES}
+nodeny  ${HOME}/.config/Pinta
+nodeny  ${DOCUMENTS}
+nodeny  ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc

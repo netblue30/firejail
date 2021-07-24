@@ -6,8 +6,8 @@ include qmmp.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.qmmp
-noblacklist ${MUSIC}
+nodeny  ${HOME}/.qmmp
+nodeny  ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

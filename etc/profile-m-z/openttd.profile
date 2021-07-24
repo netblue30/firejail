@@ -6,7 +6,7 @@ include openttd.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.openttd
+nodeny  ${HOME}/.openttd
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +18,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.openttd
-whitelist ${HOME}/.openttd
+allow  ${HOME}/.openttd
 include whitelist-common.inc
 include whitelist-var-common.inc
 

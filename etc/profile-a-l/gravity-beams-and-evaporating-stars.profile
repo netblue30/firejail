@@ -15,7 +15,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/share/gravity-beams-and-evaporating-stars
+allow  /usr/share/gravity-beams-and-evaporating-stars
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

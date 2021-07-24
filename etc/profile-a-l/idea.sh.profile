@@ -5,12 +5,12 @@ include idea.sh.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.IdeaIC*
-noblacklist ${HOME}/.android
-noblacklist ${HOME}/.jack-server
-noblacklist ${HOME}/.jack-settings
-noblacklist ${HOME}/.local/share/JetBrains
-noblacklist ${HOME}/.tooling
+nodeny  ${HOME}/.IdeaIC*
+nodeny  ${HOME}/.android
+nodeny  ${HOME}/.jack-server
+nodeny  ${HOME}/.jack-settings
+nodeny  ${HOME}/.local/share/JetBrains
+nodeny  ${HOME}/.tooling
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc

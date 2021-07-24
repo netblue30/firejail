@@ -7,10 +7,10 @@ include bcompare.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/bcompare
+nodeny  ${HOME}/.config/bcompare
 # In case the user decides to include disable-programs.inc, still allow
 # KDE's Gwenview to view images via right click -> Open With -> Associated Application
-noblacklist ${HOME}/.config/gwenviewrc
+nodeny  ${HOME}/.config/gwenviewrc
 
 # Add the next line to your bcompare.local if you don't need to compare files in disable-common.inc.
 #include disable-common.inc

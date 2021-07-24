@@ -21,10 +21,10 @@ ignore private-cache
 ignore private-dev
 ignore private-tmp
 
-noblacklist ${HOME}/.config/Rocket.Chat
+nodeny  ${HOME}/.config/Rocket.Chat
 
 mkdir ${HOME}/.config/Rocket.Chat
-whitelist ${HOME}/.config/Rocket.Chat
+allow  ${HOME}/.config/Rocket.Chat
 
 # Redirect
 include electron.profile

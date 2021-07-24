@@ -6,8 +6,8 @@ include tvbrowser.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/tvbrowser
-noblacklist ${HOME}/.tvbrowser
+nodeny  ${HOME}/.config/tvbrowser
+nodeny  ${HOME}/.tvbrowser
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
@@ -22,9 +22,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/tvbrowser
 mkdir ${HOME}/.tvbrowser
-whitelist ${HOME}/.config/tvbrowser
-whitelist ${HOME}/.tvbrowser
-whitelist /usr/share/tvbrowser
+allow  ${HOME}/.config/tvbrowser
+allow  ${HOME}/.tvbrowser
+allow  /usr/share/tvbrowser
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

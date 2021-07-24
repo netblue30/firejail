@@ -6,10 +6,10 @@ include tor-browser_ga-IE.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.tor-browser_ga-IE
+nodeny  ${HOME}/.tor-browser_ga-IE
 
 mkdir ${HOME}/.tor-browser_ga-IE
-whitelist ${HOME}/.tor-browser_ga-IE
+allow  ${HOME}/.tor-browser_ga-IE
 
 # Redirect
 include torbrowser-launcher.profile

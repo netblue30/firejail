@@ -6,7 +6,7 @@ include dino.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/dino
+nodeny  ${HOME}/.local/share/dino
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,8 +17,8 @@ include disable-programs.inc
 include disable-shell.inc
 
 mkdir ${HOME}/.local/share/dino
-whitelist ${HOME}/.local/share/dino
-whitelist ${DOWNLOADS}
+allow  ${HOME}/.local/share/dino
+allow  ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

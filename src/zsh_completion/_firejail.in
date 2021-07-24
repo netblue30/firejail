@@ -48,8 +48,8 @@ _firejail_args=(
     '*::arguments:_normal'
 
     '--appimage[sandbox an AppImage application]'
-    '--build[build a whitelisted profile for the application and print it on stdout]'
-    '--build=-[build a whitelisted profile for the application and save it]: :_files'
+    '--build[build a profile for the application and print it on stdout]'
+    '--build=-[build a profile for the application and save it]: :_files'
     # Ignore that you can do -? too as it's the only short option
     '--help[this help screen]'
     '--join=-[join the sandbox name|pid]: :_all_firejails'
@@ -63,14 +63,14 @@ _firejail_args=(
     '--version[print program version and exit]'
 
     '--debug[print sandbox debug messages]'
-    '--debug-blacklists[debug blacklisting]'
+    '--debug-allow[debug file system access]'
     '--debug-caps[print all recognized capabilities]'
+    '--debug-deny[debug file system access]'
     '--debug-errnos[print all recognized error numbers]'
     '--debug-private-lib[debug for --private-lib option]'
     '--debug-protocols[print all recognized protocols]'
     '--debug-syscalls[print all recognized system calls]'
     '--debug-syscalls32[print all recognized 32 bit system calls]'
-    '--debug-whitelists[debug whitelisting]'
 
     '--caps.print=-[print the caps filter name|pid]:firejail:_all_firejails'
     '--cpu.print=-[print the cpus in use name|pid]: :_all_firejails'
@@ -83,13 +83,13 @@ _firejail_args=(
     '--allusers[all user home directories are visible inside the sandbox]'
     # Should be _files, a comma and files or files -/
     '*--bind=-[mount-bind dirname1/filename1 on top of dirname2/filename2]: :(file1,file2 dir1,dir2)'
-    '*--blacklist=-[blacklist directory or file]: :_files'
     '--caps[enable default Linux capabilities filter]'
     '--caps.drop=all[drop all capabilities]'
     '*--caps.drop=-[drop capabilities: all|cap1,cap2,...]: :_caps'
     '*--caps.keep=-[keep capabilities: cap1,cap2,...]: :_caps'
     '--cgroup=-[place the sandbox in the specified control group]: :'
     '--cpu=-[set cpu affinity]: :->cpus'
+    '*--deny=-[deny access to directory or file]: :_files'
     "--deterministic-exit-code[always exit with first child's status code]"
     '*--dns=-[set DNS server]: :'
     '*--env=-[set environment variable]: :'
@@ -112,7 +112,7 @@ _firejail_args=(
     '--nice=-[set nice value]: :(1 10 15 20)'
     '--no3d[disable 3D hardware acceleration]'
     '--noautopulse[disable automatic ~/.config/pulse init]'
-    '--noblacklist=-[disable blacklist for file or directory]: :_files'
+    '--nodeny=-[disable deny command for file or directory]: :_files'
     '--nodbus[disable D-Bus access]'
     '--nodvd[disable DVD and audio CD devices]'
     '*--noexec=-[remount the file or directory noexec nosuid and nodev]: :_files'
@@ -143,13 +143,13 @@ _firejail_args=(
     '--rlimit-nproc=-[set the maximum number of processes that can be created for the real user ID of the calling process]: :'
     '--rlimit-sigpending=-[set the maximum number of pending signals for a process]: :'
     '*--rmenv=-[remove environment variable in the new sandbox]: :_values environment-variables $(env | cut -d= -f1)'
-    '--seccomp[enable seccomp filter and apply the default blacklist]: :'
-    '--seccomp=-[enable seccomp filter, blacklist the default syscall list and the syscalls specified by the command]: :->seccomp'
+    '--seccomp[enable seccomp filter and drop the default syscalls]: :'
+    '--seccomp=-[enable seccomp filter, drop the default syscall list and the syscalls specified by the command]: :->seccomp'
     '--seccomp.block-secondary[build only the native architecture filters]'
-    '*--seccomp.drop=-[enable seccomp filter, and blacklist the syscalls specified by the command]: :->seccomp'
-    '*--seccomp.keep=-[enable seccomp filter, and whitelist the syscalls specified by the command]: :->seccomp'
-    '*--seccomp.32.drop=-[enable seccomp filter, and blacklist the 32 bit syscalls specified by the command]: :'
-    '*--seccomp.32.keep=-[enable seccomp filter, and whitelist the 32 bit syscalls specified by the command]: :'
+    '*--seccomp.drop=-[enable seccomp filter, and drop the syscalls specified by the command]: :->seccomp'
+    '*--seccomp.keep=-[enable seccomp filter, and allow the syscalls specified by the command]: :->seccomp'
+    '*--seccomp.32.drop=-[enable seccomp filter, and drop the 32 bit syscalls specified by the command]: :'
+    '*--seccomp.32.keep=-[enable seccomp filter, and drop the 32 bit syscalls specified by the command]: :'
     # FIXME: Add errnos
     '--seccomp-error-action=-[change error code, kill process or log the attempt]: :(kill log)'
     '--shell=none[run the program directly without a user shell]'
@@ -157,7 +157,7 @@ _firejail_args=(
     '--timeout=-[kill the sandbox automatically after the time has elapsed]: :'
     #'(--tracelog)--trace[trace open, access and connect system calls]'
     '(--tracelog)--trace=-[trace open, access and connect system calls]: :_files'
-    '(--trace)--tracelog[add a syslog message for every access to files or directories blacklisted by the security profile]'
+    '(--trace)--tracelog[add a syslog message for every access to files or directories dropped by the security profile]'
     '(--private-etc)--writable-etc[/etc directory is mounted read-write]'
     '--writable-run-user[allow access to /run/user/$UID/systemd and /run/user/$UID/gnupg]'
     '--writable-var[/var directory is mounted read-write]'
@@ -251,10 +251,8 @@ _firejail_args=(
     '*--tmpfs=-[mount a tmpfs filesystem on directory dirname]: :_files -/'
 #endif
 
-#ifdef HAVE_WHITELIST
-    '*--nowhitelist=-[disable whitelist for file or directory]: :_files'
-    '*--whitelist=-[whitelist directory or file]: :_files'
-#endif
+    '*--noallow=-[disable allow command for file or directory]: :_files'
+    '*--allow=-[allow file system access]: :_files'
 
 #ifdef HAVE_X11
     '--x11[enable X11 sandboxing. The software checks first if Xpra is installed, then it checks if Xephyr is installed. If all fails, it will attempt to use X11 security extension]'

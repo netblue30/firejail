@@ -6,7 +6,7 @@ include deluge.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/deluge
+nodeny  ${HOME}/.config/deluge
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -20,8 +20,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.config/deluge
-whitelist ${DOWNLOADS}
-whitelist ${HOME}/.config/deluge
+allow  ${DOWNLOADS}
+allow  ${HOME}/.config/deluge
 include whitelist-common.inc
 include whitelist-var-common.inc
 

@@ -6,8 +6,8 @@ include filezilla.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/filezilla
-noblacklist ${HOME}/.filezilla
+nodeny  ${HOME}/.config/filezilla
+nodeny  ${HOME}/.filezilla
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

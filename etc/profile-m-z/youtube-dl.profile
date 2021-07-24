@@ -10,18 +10,18 @@ include globals.local
 # breaks when installed under ${HOME} via `pip install --user` (see #2833)
 ignore noexec ${HOME}
 
-noblacklist ${HOME}/.cache/youtube-dl
-noblacklist ${HOME}/.config/youtube-dl
-noblacklist ${HOME}/.netrc
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
+nodeny  ${HOME}/.cache/youtube-dl
+nodeny  ${HOME}/.config/youtube-dl
+nodeny  ${HOME}/.netrc
+nodeny  ${MUSIC}
+nodeny  ${VIDEOS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

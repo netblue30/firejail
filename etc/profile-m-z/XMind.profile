@@ -5,7 +5,7 @@ include XMind.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.xmind
+nodeny  ${HOME}/.xmind
 
 include disable-common.inc
 include disable-devel.inc
@@ -15,8 +15,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.xmind
-whitelist ${HOME}/.xmind
-whitelist ${DOWNLOADS}
+allow  ${HOME}/.xmind
+allow  ${DOWNLOADS}
 include whitelist-common.inc
 
 caps.drop all

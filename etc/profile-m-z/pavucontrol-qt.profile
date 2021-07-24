@@ -7,10 +7,10 @@ include pavucontrol-qt.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.config/pavucontrol-qt
+nodeny  ${HOME}/.config/pavucontrol-qt
 
 mkdir ${HOME}/.config/pavucontrol-qt
-whitelist ${HOME}/.config/pavucontrol-qt
+allow  ${HOME}/.config/pavucontrol-qt
 
 private-bin pavucontrol-qt
 ignore private-lib

@@ -7,12 +7,12 @@ include wget.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.netrc
-noblacklist ${HOME}/.wget-hsts
-noblacklist ${HOME}/.wgetrc
+nodeny  ${HOME}/.netrc
+nodeny  ${HOME}/.wget-hsts
+nodeny  ${HOME}/.wgetrc
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

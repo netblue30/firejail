@@ -6,9 +6,9 @@ include com.github.phase1geo.minder.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/minder
-noblacklist ${DOCUMENTS}
-noblacklist ${PICTURES}
+nodeny  ${HOME}/.local/share/minder
+nodeny  ${DOCUMENTS}
+nodeny  ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,10 +20,10 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/minder
-whitelist ${HOME}/.local/share/minder
-whitelist ${DOCUMENTS}
-whitelist ${DOWNLOADS}
-whitelist ${PICTURES}
+allow  ${HOME}/.local/share/minder
+allow  ${DOCUMENTS}
+allow  ${DOWNLOADS}
+allow  ${PICTURES}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

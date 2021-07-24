@@ -6,8 +6,8 @@ include gnome-chess.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/gnome-chess
-noblacklist ${HOME}/.local/share/gnome-chess
+nodeny  ${HOME}/.config/gnome-chess
+nodeny  ${HOME}/.local/share/gnome-chess
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,8 +22,8 @@ include disable-xdg.inc
 #whitelist ${HOME}/.local/share/gnome-chess
 #include whitelist-common.inc
 
-whitelist /usr/share/gnuchess
-whitelist /usr/share/gnome-chess
+allow  /usr/share/gnuchess
+allow  /usr/share/gnome-chess
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

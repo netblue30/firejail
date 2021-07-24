@@ -6,8 +6,8 @@ include authenticator.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/Authenticator
-noblacklist ${HOME}/.config/Authenticator
+nodeny  ${HOME}/.cache/Authenticator
+nodeny  ${HOME}/.config/Authenticator
 
 # Allow python (blacklisted by disable-interpreters.inc)
 #include allow-python2.inc

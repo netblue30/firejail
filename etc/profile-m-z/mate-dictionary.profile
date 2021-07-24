@@ -5,7 +5,7 @@ include mate-dictionary.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/mate/mate-dictionary
+nodeny  ${HOME}/.config/mate/mate-dictionary
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,7 +16,7 @@ include disable-programs.inc
 include disable-shell.inc
 
 mkdir ${HOME}/.config/mate/mate-dictionary
-whitelist ${HOME}/.config/mate/mate-dictionary
+allow  ${HOME}/.config/mate/mate-dictionary
 include whitelist-common.inc
 
 apparmor

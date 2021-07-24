@@ -6,10 +6,10 @@ include vlc.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/vlc
-noblacklist ${HOME}/.config/vlc
-noblacklist ${HOME}/.config/aacs
-noblacklist ${HOME}/.local/share/vlc
+nodeny  ${HOME}/.cache/vlc
+nodeny  ${HOME}/.config/vlc
+nodeny  ${HOME}/.config/aacs
+nodeny  ${HOME}/.local/share/vlc
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,10 +22,10 @@ read-only ${DESKTOP}
 mkdir ${HOME}/.cache/vlc
 mkdir ${HOME}/.config/vlc
 mkdir ${HOME}/.local/share/vlc
-whitelist ${HOME}/.cache/vlc
-whitelist ${HOME}/.config/vlc
-whitelist ${HOME}/.config/aacs
-whitelist ${HOME}/.local/share/vlc
+allow  ${HOME}/.cache/vlc
+allow  ${HOME}/.config/vlc
+allow  ${HOME}/.config/aacs
+allow  ${HOME}/.local/share/vlc
 include whitelist-common.inc
 include whitelist-player-common.inc
 include whitelist-var-common.inc

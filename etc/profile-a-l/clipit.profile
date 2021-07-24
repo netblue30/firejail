@@ -6,8 +6,8 @@ include clipit.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/clipit
-noblacklist ${HOME}/.local/share/clipit
+nodeny  ${HOME}/.config/clipit
+nodeny  ${HOME}/.local/share/clipit
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,8 +19,8 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/clipit
 mkdir ${HOME}/.local/share/clipit
-whitelist ${HOME}/.config/clipit
-whitelist ${HOME}/.local/share/clipit
+allow  ${HOME}/.config/clipit
+allow  ${HOME}/.local/share/clipit
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

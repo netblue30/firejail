@@ -7,8 +7,8 @@ include gget.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,7 +19,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist ${DOWNLOADS}
+allow  ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

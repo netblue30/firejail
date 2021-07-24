@@ -6,9 +6,9 @@ include devilspie.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
+deny  ${RUNUSER}/wayland-*
 
-noblacklist ${HOME}/.devilspie
+nodeny  ${HOME}/.devilspie
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,7 +19,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.devilspie
-whitelist ${HOME}/.devilspie
+allow  ${HOME}/.devilspie
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

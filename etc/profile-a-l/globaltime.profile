@@ -5,7 +5,7 @@ include globaltime.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/globaltime
+nodeny  ${HOME}/.config/globaltime
 
 include disable-common.inc
 include disable-devel.inc

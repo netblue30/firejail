@@ -6,7 +6,7 @@ include alienarena.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/cor-games
+nodeny  ${HOME}/.local/share/cor-games
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/cor-games
-whitelist ${HOME}/.local/share/cor-games
-whitelist /usr/share/alienarena
+allow  ${HOME}/.local/share/cor-games
+allow  /usr/share/alienarena
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

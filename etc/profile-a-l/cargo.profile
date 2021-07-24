@@ -10,11 +10,11 @@ include globals.local
 ignore noexec ${HOME}
 ignore noexec /tmp
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}
+deny  /tmp/.X11-unix
+deny  ${RUNUSER}
 
-noblacklist ${HOME}/.cargo/credentials
-noblacklist ${HOME}/.cargo/credentials.toml
+nodeny  ${HOME}/.cargo/credentials
+nodeny  ${HOME}/.cargo/credentials.toml
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc
@@ -34,7 +34,7 @@ include disable-xdg.inc
 #whitelist ${HOME}/.cargo
 #whitelist ${HOME}/.rustup
 #include whitelist-common.inc
-whitelist /usr/share/pkgconfig
+allow  /usr/share/pkgconfig
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

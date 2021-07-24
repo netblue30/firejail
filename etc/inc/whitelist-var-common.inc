@@ -4,12 +4,12 @@ include whitelist-var-common.local
 
 # common /var whitelist for all profiles
 
-whitelist /var/lib/aspell
-whitelist /var/lib/ca-certificates
-whitelist /var/lib/dbus
-whitelist /var/lib/menu-xdg
-whitelist /var/lib/uim
-whitelist /var/cache/fontconfig
-whitelist /var/tmp
-whitelist /var/run
-whitelist /var/lock
+allow  /var/lib/aspell
+allow  /var/lib/ca-certificates
+allow  /var/lib/dbus
+allow  /var/lib/menu-xdg
+allow  /var/lib/uim
+allow  /var/cache/fontconfig
+allow  /var/tmp
+allow  /var/run
+allow  /var/lock

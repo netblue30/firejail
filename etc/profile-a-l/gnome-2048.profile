@@ -6,10 +6,10 @@ include gnome-2048.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.local/share/gnome-2048
+nodeny  ${HOME}/.local/share/gnome-2048
 
 mkdir ${HOME}/.local/share/gnome-2048
-whitelist ${HOME}/.local/share/gnome-2048
+allow  ${HOME}/.local/share/gnome-2048
 
 private-bin gnome-2048
 

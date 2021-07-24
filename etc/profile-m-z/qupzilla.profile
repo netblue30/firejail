@@ -6,8 +6,8 @@ include qupzilla.local
 # added by included profile
 #include globals.local
 
-noblacklist ${HOME}/.cache/qupzilla
-noblacklist ${HOME}/.config/qupzilla
+nodeny  ${HOME}/.cache/qupzilla
+nodeny  ${HOME}/.config/qupzilla
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-programs.inc
 
 mkdir ${HOME}/.cache/qupzilla
 mkdir ${HOME}/.config/qupzilla
-whitelist ${HOME}/.cache/qupzilla
-whitelist ${HOME}/.config/qupzilla
+allow  ${HOME}/.cache/qupzilla
+allow  ${HOME}/.config/qupzilla
 
 # Redirect
 include falkon.profile

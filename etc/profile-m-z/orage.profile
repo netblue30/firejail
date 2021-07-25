@@ -6,8 +6,8 @@ include orage.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/orage
-nodeny  ${HOME}/.local/share/orage
+noblacklist ${HOME}/.config/orage
+noblacklist ${HOME}/.local/share/orage
 
 include disable-common.inc
 include disable-devel.inc

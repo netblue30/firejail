@@ -6,9 +6,9 @@ include lmms.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.lmmsrc.xml
-nodeny  ${DOCUMENTS}
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.lmmsrc.xml
+noblacklist ${DOCUMENTS}
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

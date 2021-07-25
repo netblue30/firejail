@@ -6,7 +6,7 @@ include sysprof.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${DOCUMENTS}
+noblacklist ${DOCUMENTS}
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -24,15 +24,15 @@ include disable-xdg.inc
 #nowhitelist /usr/share/yelp-tools
 #nowhitelist /usr/share/yelp-xsl
 
-nodeny  ${HOME}/.config/yelp
+noblacklist ${HOME}/.config/yelp
 mkdir ${HOME}/.config/yelp
-allow  ${HOME}/.config/yelp
-allow  /usr/share/help/C/sysprof
-allow  /usr/share/yelp
-allow  /usr/share/yelp-tools
-allow  /usr/share/yelp-xsl
+whitelist ${HOME}/.config/yelp
+whitelist /usr/share/help/C/sysprof
+whitelist /usr/share/yelp
+whitelist /usr/share/yelp-tools
+whitelist /usr/share/yelp-xsl
 
-allow  ${DOCUMENTS}
+whitelist ${DOCUMENTS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

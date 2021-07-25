@@ -10,19 +10,19 @@ ignore whitelist /usr/share/chromium
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 
-nodeny  ${HOME}/.cache/yandex-browser
-nodeny  ${HOME}/.cache/yandex-browser-beta
-nodeny  ${HOME}/.config/yandex-browser
-nodeny  ${HOME}/.config/yandex-browser-beta
+noblacklist ${HOME}/.cache/yandex-browser
+noblacklist ${HOME}/.cache/yandex-browser-beta
+noblacklist ${HOME}/.config/yandex-browser
+noblacklist ${HOME}/.config/yandex-browser-beta
 
 mkdir ${HOME}/.cache/yandex-browser
 mkdir ${HOME}/.cache/yandex-browser-beta
 mkdir ${HOME}/.config/yandex-browser
 mkdir ${HOME}/.config/yandex-browser-beta
-allow  ${HOME}/.cache/yandex-browser
-allow  ${HOME}/.cache/yandex-browser-beta
-allow  ${HOME}/.config/yandex-browser
-allow  ${HOME}/.config/yandex-browser-beta
+whitelist ${HOME}/.cache/yandex-browser
+whitelist ${HOME}/.cache/yandex-browser-beta
+whitelist ${HOME}/.config/yandex-browser
+whitelist ${HOME}/.config/yandex-browser-beta
 
 # Redirect
 include chromium-common.profile

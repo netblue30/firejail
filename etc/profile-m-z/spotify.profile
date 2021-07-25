@@ -5,11 +5,11 @@ include spotify.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/spotify
-nodeny  ${HOME}/.config/spotify
-nodeny  ${HOME}/.local/share/spotify
+noblacklist ${HOME}/.cache/spotify
+noblacklist ${HOME}/.config/spotify
+noblacklist ${HOME}/.local/share/spotify
 
-deny  ${HOME}/.bashrc
+blacklist ${HOME}/.bashrc
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,9 +21,9 @@ include disable-programs.inc
 mkdir ${HOME}/.cache/spotify
 mkdir ${HOME}/.config/spotify
 mkdir ${HOME}/.local/share/spotify
-allow  ${HOME}/.cache/spotify
-allow  ${HOME}/.config/spotify
-allow  ${HOME}/.local/share/spotify
+whitelist ${HOME}/.cache/spotify
+whitelist ${HOME}/.config/spotify
+whitelist ${HOME}/.local/share/spotify
 include whitelist-common.inc
 include whitelist-var-common.inc
 

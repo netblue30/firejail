@@ -10,15 +10,15 @@ ignore whitelist /usr/share/chromium
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 
-nodeny  ${HOME}/.cache/Enox
-nodeny  ${HOME}/.config/Enox
+noblacklist ${HOME}/.cache/Enox
+noblacklist ${HOME}/.config/Enox
 
 #mkdir ${HOME}/.cache/dnox
 #mkdir ${HOME}/.config/dnox
 mkdir ${HOME}/.cache/Enox
 mkdir ${HOME}/.config/Enox
-allow  ${HOME}/.cache/Enox
-allow  ${HOME}/.config/Enox
+whitelist ${HOME}/.cache/Enox
+whitelist ${HOME}/.config/Enox
 
 # Redirect
 include chromium-common.profile

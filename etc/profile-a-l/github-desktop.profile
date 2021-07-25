@@ -22,10 +22,10 @@ ignore apparmor
 ignore dbus-user none
 ignore dbus-system none
 
-nodeny  ${HOME}/.config/GitHub Desktop
-nodeny  ${HOME}/.config/git
-nodeny  ${HOME}/.gitconfig
-nodeny  ${HOME}/.git-credentials
+noblacklist ${HOME}/.config/GitHub Desktop
+noblacklist ${HOME}/.config/git
+noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credentials
 
 # no3d
 nosound

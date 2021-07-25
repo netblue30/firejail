@@ -6,8 +6,8 @@ include openmw.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/openmw
-nodeny  ${HOME}/.local/share/openmw
+noblacklist ${HOME}/.config/openmw
+noblacklist ${HOME}/.local/share/openmw
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,11 +21,11 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/openmw
 mkdir ${HOME}/.local/share/openmw
-allow  ${HOME}/.config/openmw
+whitelist ${HOME}/.config/openmw
 # Copy Morrowind data files into ${HOME}/.local/share/openmw or load them from /mnt.
 # Alternatively you can whitelist custom paths in your openmw.local.
-allow  ${HOME}/.local/share/openmw
-allow  /usr/share/openmw
+whitelist ${HOME}/.local/share/openmw
+whitelist /usr/share/openmw
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -6,7 +6,7 @@ include archaudit-report.local
 # Persistent global definitions
 include globals.local
 
-nodeny  /var/lib/pacman
+noblacklist /var/lib/pacman
 
 include disable-common.inc
 include disable-devel.inc

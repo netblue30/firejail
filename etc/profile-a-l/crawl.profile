@@ -6,7 +6,7 @@ include crawl-tiles.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.crawl
+noblacklist ${HOME}/.crawl
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,7 +17,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.crawl
-allow  ${HOME}/.crawl
+whitelist ${HOME}/.crawl
 include whitelist-common.inc
 include whitelist-var-common.inc
 

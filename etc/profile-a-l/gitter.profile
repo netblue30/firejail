@@ -5,8 +5,8 @@ include gitter.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/autostart
-nodeny  ${HOME}/.config/Gitter
+noblacklist ${HOME}/.config/autostart
+noblacklist ${HOME}/.config/Gitter
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,9 +16,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.config/Gitter
-allow  ${DOWNLOADS}
-allow  ${HOME}/.config/autostart
-allow  ${HOME}/.config/Gitter
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.config/autostart
+whitelist ${HOME}/.config/Gitter
 include whitelist-var-common.inc
 
 caps.drop all

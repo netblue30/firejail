@@ -7,8 +7,8 @@ include ffmpeg.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${MUSIC}
-nodeny  ${VIDEOS}
+noblacklist ${MUSIC}
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,9 +19,9 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  /usr/share/devedeng
-allow  /usr/share/ffmpeg
-allow  /usr/share/qtchooser
+whitelist /usr/share/devedeng
+whitelist /usr/share/ffmpeg
+whitelist /usr/share/qtchooser
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

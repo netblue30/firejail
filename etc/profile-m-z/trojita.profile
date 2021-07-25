@@ -6,10 +6,10 @@ include trojita.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.abook
-nodeny  ${HOME}/.mozilla
-nodeny  ${HOME}/.cache/flaska.net/trojita
-nodeny  ${HOME}/.config/flaska.net
+noblacklist ${HOME}/.abook
+noblacklist ${HOME}/.mozilla
+noblacklist ${HOME}/.cache/flaska.net/trojita
+noblacklist ${HOME}/.config/flaska.net
 
 include disable-common.inc
 include disable-devel.inc
@@ -23,10 +23,10 @@ include disable-xdg.inc
 mkdir ${HOME}/.abook
 mkdir ${HOME}/.cache/flaska.net/trojita
 mkdir ${HOME}/.config/flaska.net
-allow  ${HOME}/.abook
-allow  ${HOME}/.mozilla/firefox/profiles.ini
-allow  ${HOME}/.cache/flaska.net/trojita
-allow  ${HOME}/.config/flaska.net
+whitelist ${HOME}/.abook
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
+whitelist ${HOME}/.cache/flaska.net/trojita
+whitelist ${HOME}/.config/flaska.net
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

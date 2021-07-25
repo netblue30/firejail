@@ -2,10 +2,10 @@
 # Persistent customizations should go in a .local file.
 include disable-xdg.local
 
-deny  ${DOCUMENTS}
-deny  ${MUSIC}
-deny  ${PICTURES}
-deny  ${VIDEOS}
+blacklist ${DOCUMENTS}
+blacklist ${MUSIC}
+blacklist ${PICTURES}
+blacklist ${VIDEOS}
 
 # The following should be considered catch-all directories
 #blacklist ${DESKTOP}

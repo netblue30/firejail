@@ -6,8 +6,8 @@ include openshot.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.openshot
-nodeny  ${HOME}/.openshot_qt
+noblacklist ${HOME}/.openshot
+noblacklist ${HOME}/.openshot_qt
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
@@ -19,8 +19,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-allow  /usr/share/blender
-allow  /usr/share/inkscape
+whitelist /usr/share/blender
+whitelist /usr/share/inkscape
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

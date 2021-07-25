@@ -6,7 +6,7 @@ include electrum.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.electrum
+noblacklist ${HOME}/.electrum
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -22,7 +22,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.electrum
-allow  ${HOME}/.electrum
+whitelist ${HOME}/.electrum
 include whitelist-common.inc
 include whitelist-var-common.inc
 

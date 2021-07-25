@@ -7,10 +7,10 @@ include elinks.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.elinks
+noblacklist ${HOME}/.elinks
 
 mkdir ${HOME}/.elinks
-allow  ${HOME}/.elinks
+whitelist ${HOME}/.elinks
 
 private-bin elinks
 

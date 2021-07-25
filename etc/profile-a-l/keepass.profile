@@ -6,14 +6,14 @@ include keepass.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/*.kdb
-nodeny  ${HOME}/*.kdbx
-nodeny  ${HOME}/.config/KeePass
-nodeny  ${HOME}/.config/keepass
-nodeny  ${HOME}/.keepass
-nodeny  ${HOME}/.local/share/KeePass
-nodeny  ${HOME}/.local/share/keepass
-nodeny  ${DOCUMENTS}
+noblacklist ${HOME}/*.kdb
+noblacklist ${HOME}/*.kdbx
+noblacklist ${HOME}/.config/KeePass
+noblacklist ${HOME}/.config/keepass
+noblacklist ${HOME}/.keepass
+noblacklist ${HOME}/.local/share/KeePass
+noblacklist ${HOME}/.local/share/keepass
+noblacklist ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

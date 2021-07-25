@@ -6,15 +6,15 @@ include kwrite.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/katepartrc
-nodeny  ${HOME}/.config/katerc
-nodeny  ${HOME}/.config/kateschemarc
-nodeny  ${HOME}/.config/katesyntaxhighlightingrc
-nodeny  ${HOME}/.config/katevirc
-nodeny  ${HOME}/.config/kwriterc
-nodeny  ${HOME}/.local/share/kwrite
-nodeny  ${HOME}/.local/share/kxmlgui5/kwrite
-nodeny  ${DOCUMENTS}
+noblacklist ${HOME}/.config/katepartrc
+noblacklist ${HOME}/.config/katerc
+noblacklist ${HOME}/.config/kateschemarc
+noblacklist ${HOME}/.config/katesyntaxhighlightingrc
+noblacklist ${HOME}/.config/katevirc
+noblacklist ${HOME}/.config/kwriterc
+noblacklist ${HOME}/.local/share/kwrite
+noblacklist ${HOME}/.local/share/kxmlgui5/kwrite
+noblacklist ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

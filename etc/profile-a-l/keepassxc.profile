@@ -6,23 +6,23 @@ include keepassxc.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/*.kdb
-nodeny  ${HOME}/*.kdbx
-nodeny  ${HOME}/.cache/keepassxc
-nodeny  ${HOME}/.config/keepassxc
-nodeny  ${HOME}/.config/KeePassXCrc
-nodeny  ${HOME}/.keepassxc
-nodeny  ${DOCUMENTS}
+noblacklist ${HOME}/*.kdb
+noblacklist ${HOME}/*.kdbx
+noblacklist ${HOME}/.cache/keepassxc
+noblacklist ${HOME}/.config/keepassxc
+noblacklist ${HOME}/.config/KeePassXCrc
+noblacklist ${HOME}/.keepassxc
+noblacklist ${DOCUMENTS}
 
 # Allow browser profiles, required for browser integration.
-nodeny  ${HOME}/.config/BraveSoftware
-nodeny  ${HOME}/.config/chromium
-nodeny  ${HOME}/.config/google-chrome
-nodeny  ${HOME}/.config/vivaldi
-nodeny  ${HOME}/.local/share/torbrowser
-nodeny  ${HOME}/.mozilla
+noblacklist ${HOME}/.config/BraveSoftware
+noblacklist ${HOME}/.config/chromium
+noblacklist ${HOME}/.config/google-chrome
+noblacklist ${HOME}/.config/vivaldi
+noblacklist ${HOME}/.local/share/torbrowser
+noblacklist ${HOME}/.mozilla
 
-deny  /usr/libexec
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -57,7 +57,7 @@ include disable-xdg.inc
 #whitelist ${HOME}/.config/KeePassXCrc
 #include whitelist-common.inc
 
-allow  /usr/share/keepassxc
+whitelist /usr/share/keepassxc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

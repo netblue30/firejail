@@ -6,7 +6,7 @@ include galculator.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/galculator
+noblacklist ${HOME}/.config/galculator
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +18,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/galculator
-allow  ${HOME}/.config/galculator
+whitelist ${HOME}/.config/galculator
 include whitelist-common.inc
 include whitelist-var-common.inc
 

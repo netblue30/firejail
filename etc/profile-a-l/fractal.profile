@@ -6,7 +6,7 @@ include fractal.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/fractal
+noblacklist ${HOME}/.cache/fractal
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -22,8 +22,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.cache/fractal
-allow  ${HOME}/.cache/fractal
-allow  ${DOWNLOADS}
+whitelist ${HOME}/.cache/fractal
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

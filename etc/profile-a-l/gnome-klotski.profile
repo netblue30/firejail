@@ -6,10 +6,10 @@ include gnome-klotski.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.local/share/gnome-klotski
+noblacklist ${HOME}/.local/share/gnome-klotski
 
 mkdir ${HOME}/.local/share/gnome-klotski
-allow  ${HOME}/.local/share/gnome-klotski
+whitelist ${HOME}/.local/share/gnome-klotski
 
 private-bin gnome-klotski
 

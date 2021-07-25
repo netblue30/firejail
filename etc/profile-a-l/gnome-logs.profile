@@ -15,7 +15,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  /var/log/journal
+whitelist /var/log/journal
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

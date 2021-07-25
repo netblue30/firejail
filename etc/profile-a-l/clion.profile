@@ -5,16 +5,16 @@ include clion.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/JetBrains/CLion*
-nodeny  ${HOME}/.cache/JetBrains/CLion*
-nodeny  ${HOME}/.clion*
-nodeny  ${HOME}/.CLion*
-nodeny  ${HOME}/.config/git
-nodeny  ${HOME}/.gitconfig
-nodeny  ${HOME}/.git-credentials
-nodeny  ${HOME}/.java
-nodeny  ${HOME}/.local/share/JetBrains
-nodeny  ${HOME}/.tooling
+noblacklist ${HOME}/.config/JetBrains/CLion*
+noblacklist ${HOME}/.cache/JetBrains/CLion*
+noblacklist ${HOME}/.clion*
+noblacklist ${HOME}/.CLion*
+noblacklist ${HOME}/.config/git
+noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credentials
+noblacklist ${HOME}/.java
+noblacklist ${HOME}/.local/share/JetBrains
+noblacklist ${HOME}/.tooling
 
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc

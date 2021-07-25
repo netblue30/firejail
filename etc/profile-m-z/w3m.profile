@@ -12,10 +12,10 @@ include globals.local
 #ignore private-dev
 #ignore private-etc
 
-nodeny  ${HOME}/.w3m
+noblacklist ${HOME}/.w3m
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}/wayland-*
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
@@ -33,9 +33,9 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.w3m
-allow  /usr/share/w3m
-allow  ${DOWNLOADS}
-allow  ${HOME}/.w3m
+whitelist /usr/share/w3m
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.w3m
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -18,13 +18,13 @@ ignore apparmor
 ignore dbus-user none
 ignore dbus-system none
 
-nodeny  ${HOME}/.config/teams
-nodeny  ${HOME}/.config/Microsoft
+noblacklist ${HOME}/.config/teams
+noblacklist ${HOME}/.config/Microsoft
 
 mkdir ${HOME}/.config/teams
 mkdir ${HOME}/.config/Microsoft
-allow  ${HOME}/.config/teams
-allow  ${HOME}/.config/Microsoft
+whitelist ${HOME}/.config/teams
+whitelist ${HOME}/.config/Microsoft
 
 # Redirect
 include electron.profile

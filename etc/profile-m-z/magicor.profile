@@ -6,7 +6,7 @@ include magicor.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.magicor
+noblacklist ${HOME}/.magicor
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -21,8 +21,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.magicor
-allow  ${HOME}/.magicor
-allow  /usr/share/magicor
+whitelist ${HOME}/.magicor
+whitelist /usr/share/magicor
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

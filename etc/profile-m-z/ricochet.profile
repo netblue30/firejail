@@ -5,7 +5,7 @@ include ricochet.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.local/share/Ricochet
+noblacklist ${HOME}/.local/share/Ricochet
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,8 +16,8 @@ include disable-programs.inc
 include disable-shell.inc
 
 mkdir ${HOME}/.local/share/Ricochet
-allow  ${DOWNLOADS}
-allow  ${HOME}/.local/share/Ricochet
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.local/share/Ricochet
 include whitelist-common.inc
 
 caps.drop all

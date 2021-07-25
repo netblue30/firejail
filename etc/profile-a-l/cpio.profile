@@ -7,8 +7,8 @@ include cpio.local
 # Persistent global definitions
 include globals.local
 
-nodeny  /sbin
-nodeny  /usr/sbin
+noblacklist /sbin
+noblacklist /usr/sbin
 
 # Redirect
 include archiver-common.profile

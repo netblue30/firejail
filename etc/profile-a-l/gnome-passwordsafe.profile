@@ -6,14 +6,14 @@ include gnome-passwordsafe.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${DOCUMENTS}
-nodeny  ${HOME}/*.kdb
-nodeny  ${HOME}/*.kdbx
+noblacklist ${DOCUMENTS}
+noblacklist ${HOME}/*.kdb
+noblacklist ${HOME}/*.kdbx
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
-deny  /usr/libexec
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -24,8 +24,8 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  /usr/share/cracklib
-allow  /usr/share/passwordsafe
+whitelist /usr/share/cracklib
+whitelist /usr/share/passwordsafe
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

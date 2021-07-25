@@ -5,8 +5,8 @@ include google-earth.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/Google
-nodeny  ${HOME}/.googleearth
+noblacklist ${HOME}/.config/Google
+noblacklist ${HOME}/.googleearth
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,8 +17,8 @@ include disable-programs.inc
 
 mkdir ${HOME}/.config/Google
 mkdir ${HOME}/.googleearth
-allow  ${HOME}/.config/Google
-allow  ${HOME}/.googleearth
+whitelist ${HOME}/.config/Google
+whitelist ${HOME}/.googleearth
 include whitelist-common.inc
 
 caps.drop all

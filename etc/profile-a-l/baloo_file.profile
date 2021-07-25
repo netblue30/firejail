@@ -12,12 +12,12 @@ include globals.local
 # read-write ${HOME}/.local/share/baloo
 # ignore read-write
 
-nodeny  ${HOME}/.config/baloofilerc
-nodeny  ${HOME}/.kde/share/config/baloofilerc
-nodeny  ${HOME}/.kde/share/config/baloorc
-nodeny  ${HOME}/.kde4/share/config/baloofilerc
-nodeny  ${HOME}/.kde4/share/config/baloorc
-nodeny  ${HOME}/.local/share/baloo
+noblacklist ${HOME}/.config/baloofilerc
+noblacklist ${HOME}/.kde/share/config/baloofilerc
+noblacklist ${HOME}/.kde/share/config/baloorc
+noblacklist ${HOME}/.kde4/share/config/baloofilerc
+noblacklist ${HOME}/.kde4/share/config/baloorc
+noblacklist ${HOME}/.local/share/baloo
 
 include disable-common.inc
 include disable-devel.inc

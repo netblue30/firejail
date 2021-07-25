@@ -13,9 +13,9 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-allow  /usr/libexec/file-roller
-allow  /usr/libexec/p7zip
-allow  /usr/share/file-roller
+whitelist /usr/libexec/file-roller
+whitelist /usr/libexec/p7zip
+whitelist /usr/share/file-roller
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

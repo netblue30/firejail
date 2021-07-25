@@ -6,9 +6,9 @@ include ocenaudio.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.local/share/ocenaudio
-nodeny  ${DOCUMENTS}
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.local/share/ocenaudio
+noblacklist ${DOCUMENTS}
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

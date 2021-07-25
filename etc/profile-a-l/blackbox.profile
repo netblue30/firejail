@@ -7,7 +7,7 @@ include blackbox.local
 include globals.local
 
 # all applications started in blackbox will run in this profile
-nodeny  ${HOME}/.blackbox
+noblacklist ${HOME}/.blackbox
 include disable-common.inc
 
 caps.drop all

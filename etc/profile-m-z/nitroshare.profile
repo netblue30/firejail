@@ -6,8 +6,8 @@ include nitroshare.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/Nathan Osman
-nodeny  ${HOME}/.config/NitroShare
+noblacklist ${HOME}/.config/Nathan Osman
+noblacklist ${HOME}/.config/NitroShare
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

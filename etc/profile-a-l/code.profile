@@ -5,10 +5,10 @@ include code.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/Code
-nodeny  ${HOME}/.config/Code - OSS
-nodeny  ${HOME}/.vscode
-nodeny  ${HOME}/.vscode-oss
+noblacklist ${HOME}/.config/Code
+noblacklist ${HOME}/.config/Code - OSS
+noblacklist ${HOME}/.vscode
+noblacklist ${HOME}/.vscode-oss
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc

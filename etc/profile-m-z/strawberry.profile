@@ -6,10 +6,10 @@ include strawberry.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/strawberry
-nodeny  ${HOME}/.config/strawberry
-nodeny  ${HOME}/.local/share/strawberry
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.cache/strawberry
+noblacklist ${HOME}/.config/strawberry
+noblacklist ${HOME}/.local/share/strawberry
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

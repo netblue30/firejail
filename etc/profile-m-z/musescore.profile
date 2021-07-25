@@ -6,12 +6,12 @@ include musescore.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/MusE
-nodeny  ${HOME}/.config/MuseScore
-nodeny  ${HOME}/.local/share/data/MusE
-nodeny  ${HOME}/.local/share/data/MuseScore
-nodeny  ${DOCUMENTS}
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.config/MusE
+noblacklist ${HOME}/.config/MuseScore
+noblacklist ${HOME}/.local/share/data/MusE
+noblacklist ${HOME}/.local/share/data/MuseScore
+noblacklist ${DOCUMENTS}
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

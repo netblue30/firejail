@@ -6,7 +6,7 @@ include unknown-horizons.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.unknown-horizons
+noblacklist ${HOME}/.unknown-horizons
 
 include disable-common.inc
 include disable-exec.inc
@@ -14,10 +14,10 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.unknown-horizons
-allow  ${HOME}/.unknown-horizons
+whitelist ${HOME}/.unknown-horizons
 include whitelist-common.inc
 include whitelist-runuser-common.inc
-allow  /usr/share/unknown-horizons
+whitelist /usr/share/unknown-horizons
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

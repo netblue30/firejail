@@ -6,8 +6,8 @@ include spectral.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/ENCOM/Spectral
-nodeny  ${HOME}/.config/ENCOM
+noblacklist ${HOME}/.cache/ENCOM/Spectral
+noblacklist ${HOME}/.config/ENCOM
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,9 +20,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/ENCOM/Spectral
 mkdir ${HOME}/.config/ENCOM
-allow  ${HOME}/.cache/ENCOM/Spectral
-allow  ${HOME}/.config/ENCOM
-allow  ${DOWNLOADS}
+whitelist ${HOME}/.cache/ENCOM/Spectral
+whitelist ${HOME}/.config/ENCOM
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -6,11 +6,11 @@ include quadrapassel.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.local/share/quadrapassel
+noblacklist ${HOME}/.local/share/quadrapassel
 
 mkdir ${HOME}/.local/share/quadrapassel
-allow  ${HOME}/.local/share/quadrapassel
-allow  /usr/share/quadrapassel
+whitelist ${HOME}/.local/share/quadrapassel
+whitelist /usr/share/quadrapassel
 
 private-bin quadrapassel
 

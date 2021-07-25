@@ -7,8 +7,8 @@ include whois.local
 # Persistent global definitions
 include globals.local
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

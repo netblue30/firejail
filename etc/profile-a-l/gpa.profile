@@ -6,7 +6,7 @@ include gpa.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.gnupg
+noblacklist ${HOME}/.gnupg
 
 include disable-common.inc
 include disable-devel.inc

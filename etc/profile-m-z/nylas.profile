@@ -5,8 +5,8 @@ include nylas.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/Nylas Mail
-nodeny  ${HOME}/.nylas-mail
+noblacklist ${HOME}/.config/Nylas Mail
+noblacklist ${HOME}/.nylas-mail
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,9 +16,9 @@ include disable-programs.inc
 
 mkdir ${HOME}/.config/Nylas Mail
 mkdir ${HOME}/.nylas-mail
-allow  ${DOWNLOADS}
-allow  ${HOME}/.config/Nylas Mail
-allow  ${HOME}/.nylas-mail
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.config/Nylas Mail
+whitelist ${HOME}/.nylas-mail
 include whitelist-common.inc
 
 caps.drop all

@@ -10,13 +10,13 @@ ignore whitelist /usr/share/chromium
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 
-nodeny  ${HOME}/.cache/slimjet
-nodeny  ${HOME}/.config/slimjet
+noblacklist ${HOME}/.cache/slimjet
+noblacklist ${HOME}/.config/slimjet
 
 mkdir ${HOME}/.cache/slimjet
 mkdir ${HOME}/.config/slimjet
-allow  ${HOME}/.cache/slimjet
-allow  ${HOME}/.config/slimjet
+whitelist ${HOME}/.cache/slimjet
+whitelist ${HOME}/.config/slimjet
 
 # Redirect
 include chromium-common.profile

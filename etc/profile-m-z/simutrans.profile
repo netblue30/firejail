@@ -6,7 +6,7 @@ include simutrans.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.simutrans
+noblacklist ${HOME}/.simutrans
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,7 +16,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.simutrans
-allow  ${HOME}/.simutrans
+whitelist ${HOME}/.simutrans
 include whitelist-common.inc
 include whitelist-var-common.inc
 

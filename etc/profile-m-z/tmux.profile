@@ -7,10 +7,10 @@ include tmux.local
 # Persistent global definitions
 include globals.local
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}
 
-nodeny  /tmp/tmux-*
+noblacklist /tmp/tmux-*
 
 # include disable-common.inc
 # include disable-devel.inc

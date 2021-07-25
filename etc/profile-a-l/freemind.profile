@@ -6,8 +6,8 @@ include freemind.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${DOCUMENTS}
-nodeny  ${HOME}/.freemind
+noblacklist ${DOCUMENTS}
+noblacklist ${HOME}/.freemind
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc

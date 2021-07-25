@@ -6,7 +6,7 @@ include xfce4-mixer.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
+noblacklist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,10 +18,10 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkfile ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
-allow  ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
-allow  /usr/share/gstreamer-*
-allow  /usr/share/xfce4
-allow  /usr/share/xfce4-mixer
+whitelist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
+whitelist /usr/share/gstreamer-*
+whitelist /usr/share/xfce4
+whitelist /usr/share/xfce4-mixer
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

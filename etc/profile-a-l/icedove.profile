@@ -9,16 +9,16 @@ include icedove.local
 # Users have icedove set to open a browser by clicking a link in an email
 # We are not allowed to blacklist browser-specific directories
 
-nodeny  ${HOME}/.cache/icedove
-nodeny  ${HOME}/.gnupg
-nodeny  ${HOME}/.icedove
+noblacklist ${HOME}/.cache/icedove
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.icedove
 
 mkdir ${HOME}/.cache/icedove
 mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.icedove
-allow  ${HOME}/.cache/icedove
-allow  ${HOME}/.gnupg
-allow  ${HOME}/.icedove
+whitelist ${HOME}/.cache/icedove
+whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.icedove
 include whitelist-common.inc
 
 ignore private-tmp

@@ -5,8 +5,8 @@ include truecraft.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/mono
-nodeny  ${HOME}/.config/truecraft
+noblacklist ${HOME}/.config/mono
+noblacklist ${HOME}/.config/truecraft
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,8 +17,8 @@ include disable-programs.inc
 
 mkdir ${HOME}/.config/mono
 mkdir ${HOME}/.config/truecraft
-allow  ${HOME}/.config/mono
-allow  ${HOME}/.config/truecraft
+whitelist ${HOME}/.config/mono
+whitelist ${HOME}/.config/truecraft
 include whitelist-common.inc
 
 caps.drop all

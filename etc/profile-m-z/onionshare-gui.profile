@@ -5,7 +5,7 @@ include onionshare-gui.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/onionshare
+noblacklist ${HOME}/.config/onionshare
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc

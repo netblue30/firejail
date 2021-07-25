@@ -6,7 +6,7 @@ include blobwars.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.parallelrealities/blobwars
+noblacklist ${HOME}/.parallelrealities/blobwars
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.parallelrealities/blobwars
-allow  ${HOME}/.parallelrealities/blobwars
-allow  /usr/share/blobwars
+whitelist ${HOME}/.parallelrealities/blobwars
+whitelist /usr/share/blobwars
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

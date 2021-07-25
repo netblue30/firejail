@@ -6,8 +6,8 @@ include emacs.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.emacs
-nodeny  ${HOME}/.emacs.d
+noblacklist ${HOME}/.emacs
+noblacklist ${HOME}/.emacs.d
 # Add the next line to your emacs.local if you need gpg support.
 #noblacklist ${HOME}/.gnupg
 

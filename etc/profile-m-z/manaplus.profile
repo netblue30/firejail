@@ -6,8 +6,8 @@ include manaplus.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/mana
-nodeny  ${HOME}/.local/share/mana
+noblacklist ${HOME}/.config/mana
+noblacklist ${HOME}/.local/share/mana
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,8 +21,8 @@ include disable-xdg.inc
 mkdir ${HOME}/.config/mana
 mkdir ${HOME}/.config/mana/mana
 mkdir ${HOME}/.local/share/mana
-allow  ${HOME}/.config/mana
-allow  ${HOME}/.local/share/mana
+whitelist ${HOME}/.config/mana
+whitelist ${HOME}/.local/share/mana
 include whitelist-common.inc
 include whitelist-var-common.inc
 

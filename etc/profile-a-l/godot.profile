@@ -6,9 +6,9 @@ include godot.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/godot
-nodeny  ${HOME}/.config/godot
-nodeny  ${HOME}/.local/share/godot
+noblacklist ${HOME}/.cache/godot
+noblacklist ${HOME}/.config/godot
+noblacklist ${HOME}/.local/share/godot
 
 include disable-common.inc
 include disable-devel.inc

@@ -6,10 +6,10 @@ include quiterss.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/QuiteRss
-nodeny  ${HOME}/.config/QuiteRss
-nodeny  ${HOME}/.config/QuiteRssrc
-nodeny  ${HOME}/.local/share/QuiteRss
+noblacklist ${HOME}/.cache/QuiteRss
+noblacklist ${HOME}/.config/QuiteRss
+noblacklist ${HOME}/.config/QuiteRssrc
+noblacklist ${HOME}/.local/share/QuiteRss
 
 include disable-common.inc
 include disable-devel.inc
@@ -25,12 +25,12 @@ mkdir ${HOME}/.local/share/data
 mkdir ${HOME}/.local/share/data/QuiteRss
 mkdir ${HOME}/.local/share/QuiteRss
 mkfile ${HOME}/quiterssfeeds.opml
-allow  ${HOME}/.cache/QuiteRss
-allow  ${HOME}/.config/QuiteRss
-allow  ${HOME}/.config/QuiteRssrc
-allow  ${HOME}/.local/share/data/QuiteRss
-allow  ${HOME}/.local/share/QuiteRss
-allow  ${HOME}/quiterssfeeds.opml
+whitelist ${HOME}/.cache/QuiteRss
+whitelist ${HOME}/.config/QuiteRss
+whitelist ${HOME}/.config/QuiteRssrc
+whitelist ${HOME}/.local/share/data/QuiteRss
+whitelist ${HOME}/.local/share/QuiteRss
+whitelist ${HOME}/quiterssfeeds.opml
 include whitelist-common.inc
 
 caps.drop all

@@ -8,20 +8,20 @@ include globals.local
 
 ignore noexec ${HOME}
 
-nodeny  ${HOME}/.config/katemetainfos
-nodeny  ${HOME}/.config/katepartrc
-nodeny  ${HOME}/.config/katerc
-nodeny  ${HOME}/.config/kateschemarc
-nodeny  ${HOME}/.config/katesyntaxhighlightingrc
-nodeny  ${HOME}/.config/katevirc
-nodeny  ${HOME}/.local/share/kate
-nodeny  ${HOME}/.local/share/kxmlgui5/kate
-nodeny  ${HOME}/.local/share/kxmlgui5/katefiletree
-nodeny  ${HOME}/.local/share/kxmlgui5/katekonsole
-nodeny  ${HOME}/.local/share/kxmlgui5/kateopenheaderplugin
-nodeny  ${HOME}/.local/share/kxmlgui5/katepart
-nodeny  ${HOME}/.local/share/kxmlgui5/kateproject
-nodeny  ${HOME}/.local/share/kxmlgui5/katesearch
+noblacklist ${HOME}/.config/katemetainfos
+noblacklist ${HOME}/.config/katepartrc
+noblacklist ${HOME}/.config/katerc
+noblacklist ${HOME}/.config/kateschemarc
+noblacklist ${HOME}/.config/katesyntaxhighlightingrc
+noblacklist ${HOME}/.config/katevirc
+noblacklist ${HOME}/.local/share/kate
+noblacklist ${HOME}/.local/share/kxmlgui5/kate
+noblacklist ${HOME}/.local/share/kxmlgui5/katefiletree
+noblacklist ${HOME}/.local/share/kxmlgui5/katekonsole
+noblacklist ${HOME}/.local/share/kxmlgui5/kateopenheaderplugin
+noblacklist ${HOME}/.local/share/kxmlgui5/katepart
+noblacklist ${HOME}/.local/share/kxmlgui5/kateproject
+noblacklist ${HOME}/.local/share/kxmlgui5/katesearch
 
 include disable-common.inc
 # include disable-devel.inc

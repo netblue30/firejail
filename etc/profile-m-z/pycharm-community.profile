@@ -5,7 +5,7 @@ include pycharm-community.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.PyCharmCE*
+noblacklist ${HOME}/.PyCharmCE*
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc

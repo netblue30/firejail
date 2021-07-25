@@ -9,7 +9,7 @@ include globals.local
 
 # Arch Linux (based distributions) need access to /var/lib/pacman. As we drop
 # all capabilities this is automatically read-only.
-nodeny  /var/lib/pacman
+noblacklist /var/lib/pacman
 
 # Redirect
 include archiver-common.profile

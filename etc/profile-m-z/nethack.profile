@@ -6,7 +6,7 @@ include nethack.local
 # Persistent global definitions
 include globals.local
 
-nodeny  /var/games/nethack
+noblacklist /var/games/nethack
 
 include disable-common.inc
 include disable-devel.inc
@@ -15,7 +15,7 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-allow  /var/games/nethack
+whitelist /var/games/nethack
 include whitelist-common.inc
 include whitelist-var-common.inc
 

@@ -6,8 +6,8 @@ include falkon.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/falkon
-nodeny  ${HOME}/.config/falkon
+noblacklist ${HOME}/.cache/falkon
+noblacklist ${HOME}/.config/falkon
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,10 +19,10 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/falkon
 mkdir ${HOME}/.config/falkon
-allow  ${DOWNLOADS}
-allow  ${HOME}/.cache/falkon
-allow  ${HOME}/.config/falkon
-allow  /usr/share/falkon
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.cache/falkon
+whitelist ${HOME}/.config/falkon
+whitelist /usr/share/falkon
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

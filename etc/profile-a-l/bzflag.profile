@@ -6,7 +6,7 @@ include bzflag.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.bzf
+noblacklist ${HOME}/.bzf
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +18,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.bzf
-allow  ${HOME}/.bzf
+whitelist ${HOME}/.bzf
 include whitelist-common.inc
 include whitelist-var-common.inc
 

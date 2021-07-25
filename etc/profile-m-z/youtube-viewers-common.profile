@@ -7,7 +7,7 @@ include youtube-viewers-common.local
 # added by caller profile
 #include globals.local
 
-nodeny  ${HOME}/.cache/youtube-dl
+noblacklist ${HOME}/.cache/youtube-dl
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -27,8 +27,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-allow  ${DOWNLOADS}
-allow  ${HOME}/.cache/youtube-dl/youtube-sigfuncs
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

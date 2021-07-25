@@ -6,9 +6,9 @@ include arduino.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.arduino15
-nodeny  ${HOME}/Arduino
-nodeny  ${DOCUMENTS}
+noblacklist ${HOME}/.arduino15
+noblacklist ${HOME}/Arduino
+noblacklist ${DOCUMENTS}
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc

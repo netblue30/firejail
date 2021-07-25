@@ -6,7 +6,7 @@ include gpredict.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/Gpredict
+noblacklist ${HOME}/.config/Gpredict
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,7 +17,7 @@ include disable-programs.inc
 include disable-shell.inc
 
 mkdir ${HOME}/.config/Gpredict
-allow  ${HOME}/.config/Gpredict
+whitelist ${HOME}/.config/Gpredict
 include whitelist-common.inc
 
 caps.drop all

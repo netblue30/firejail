@@ -6,8 +6,8 @@ include gnome-sound-recorder.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${MUSIC}
-nodeny  ${HOME}/.local/share/Trash
+noblacklist ${MUSIC}
+noblacklist ${HOME}/.local/share/Trash
 
 # Allow gjs (blacklisted by disable-interpreters.inc)
 include allow-gjs.inc

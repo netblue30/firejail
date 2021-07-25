@@ -8,7 +8,7 @@ include globals.local
 
 # Note: you must whitelist your games folder in your ppsspp.local.
 
-nodeny  ${HOME}/.config/ppsspp
+noblacklist ${HOME}/.config/ppsspp
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,8 +20,8 @@ include disable-write-mnt.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/ppsspp
-allow  ${HOME}/.config/ppsspp
-allow  /usr/share/ppsspp
+whitelist ${HOME}/.config/ppsspp
+whitelist /usr/share/ppsspp
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

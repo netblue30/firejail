@@ -6,8 +6,8 @@ include pragha.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/pragha
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.config/pragha
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

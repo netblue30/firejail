@@ -9,9 +9,9 @@ include globals.local
 # tuxguitar fails to launch
 ignore noexec ${HOME}
 
-nodeny  ${HOME}/.tuxguitar*
-nodeny  ${DOCUMENTS}
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.tuxguitar*
+noblacklist ${DOCUMENTS}
+noblacklist ${MUSIC}
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc

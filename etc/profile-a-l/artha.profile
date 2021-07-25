@@ -6,12 +6,12 @@ include artha.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/artha.conf
-nodeny  ${HOME}/.config/artha.log
-nodeny  ${HOME}/.config/enchant
+noblacklist ${HOME}/.config/artha.conf
+noblacklist ${HOME}/.config/artha.log
+noblacklist ${HOME}/.config/enchant
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}/wayland-*
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc
@@ -28,8 +28,8 @@ include disable-xdg.inc
 #whitelist ${HOME}/.config/artha.conf
 #whitelist ${HOME}/.config/artha.log
 #whitelist ${HOME}/.config/enchant
-allow  /usr/share/artha
-allow  /usr/share/wordnet
+whitelist /usr/share/artha
+whitelist /usr/share/wordnet
 #include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

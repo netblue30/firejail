@@ -6,8 +6,8 @@ include pluma.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/enchant
-nodeny  ${HOME}/.config/pluma
+noblacklist ${HOME}/.config/enchant
+noblacklist ${HOME}/.config/pluma
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc

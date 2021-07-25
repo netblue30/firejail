@@ -6,9 +6,9 @@ include gconf.local
 # Persistent global definitions
 include globals.local
 
-deny  ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}/wayland-*
 
-nodeny  ${HOME}/.config/gconf
+noblacklist ${HOME}/.config/gconf
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -23,9 +23,9 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/gconf
-allow  ${HOME}/.config/gconf
-allow  /usr/share/GConf
-allow  /usr/share/gconf
+whitelist ${HOME}/.config/gconf
+whitelist /usr/share/GConf
+whitelist /usr/share/gconf
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

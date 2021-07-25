@@ -5,8 +5,8 @@ include Viber.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.ViberPC
-nodeny  ${PATH}/dig
+noblacklist ${HOME}/.ViberPC
+noblacklist ${PATH}/dig
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,8 +16,8 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.ViberPC
-allow  ${DOWNLOADS}
-allow  ${HOME}/.ViberPC
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.ViberPC
 include whitelist-common.inc
 
 caps.drop all

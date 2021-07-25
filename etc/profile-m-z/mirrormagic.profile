@@ -6,7 +6,7 @@ include mirrormagic.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.mirrormagic
+noblacklist ${HOME}/.mirrormagic
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.mirrormagic
-allow  ${HOME}/.mirrormagic
-allow  /usr/share/mirrormagic
+whitelist ${HOME}/.mirrormagic
+whitelist /usr/share/mirrormagic
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

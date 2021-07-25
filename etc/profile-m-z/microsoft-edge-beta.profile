@@ -6,13 +6,13 @@ include microsoft-edge-beta.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/microsoft-edge-beta
-nodeny  ${HOME}/.config/microsoft-edge-beta
+noblacklist ${HOME}/.cache/microsoft-edge-beta
+noblacklist ${HOME}/.config/microsoft-edge-beta
 
 mkdir ${HOME}/.cache/microsoft-edge-beta
 mkdir ${HOME}/.config/microsoft-edge-beta
-allow  ${HOME}/.cache/microsoft-edge-beta
-allow  ${HOME}/.config/microsoft-edge-beta
+whitelist ${HOME}/.cache/microsoft-edge-beta
+whitelist ${HOME}/.config/microsoft-edge-beta
 
 private-opt microsoft
 

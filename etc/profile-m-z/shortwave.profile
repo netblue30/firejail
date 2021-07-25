@@ -6,8 +6,8 @@ include shortwave.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/Shortwave
-nodeny  ${HOME}/.local/share/Shortwave
+noblacklist ${HOME}/.cache/Shortwave
+noblacklist ${HOME}/.local/share/Shortwave
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,9 +19,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/Shortwave
 mkdir ${HOME}/.local/share/Shortwave
-allow  ${HOME}/.cache/Shortwave
-allow  ${HOME}/.local/share/Shortwave
-allow  /usr/share/shortwave
+whitelist ${HOME}/.cache/Shortwave
+whitelist ${HOME}/.local/share/Shortwave
+whitelist /usr/share/shortwave
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

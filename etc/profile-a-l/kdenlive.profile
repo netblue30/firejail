@@ -8,10 +8,10 @@ include globals.local
 
 ignore noexec ${HOME}
 
-nodeny  ${HOME}/.cache/kdenlive
-nodeny  ${HOME}/.config/kdenliverc
-nodeny  ${HOME}/.local/share/kdenlive
-nodeny  ${HOME}/.local/share/kxmlgui5/kdenlive
+noblacklist ${HOME}/.cache/kdenlive
+noblacklist ${HOME}/.config/kdenliverc
+noblacklist ${HOME}/.local/share/kdenlive
+noblacklist ${HOME}/.local/share/kxmlgui5/kdenlive
 
 include disable-common.inc
 include disable-devel.inc

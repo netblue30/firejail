@@ -6,9 +6,9 @@ include nextcloud.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/Nextcloud
-nodeny  ${HOME}/.config/Nextcloud
-nodeny  ${HOME}/.local/share/Nextcloud
+noblacklist ${HOME}/Nextcloud
+noblacklist ${HOME}/.config/Nextcloud
+noblacklist ${HOME}/.local/share/Nextcloud
 # Add the next lines to your nextcloud.local to allow sync in more directories.
 #noblacklist ${DOCUMENTS}
 #noblacklist ${MUSIC}
@@ -27,9 +27,9 @@ include disable-xdg.inc
 mkdir ${HOME}/Nextcloud
 mkdir ${HOME}/.config/Nextcloud
 mkdir ${HOME}/.local/share/Nextcloud
-allow  ${HOME}/Nextcloud
-allow  ${HOME}/.config/Nextcloud
-allow  ${HOME}/.local/share/Nextcloud
+whitelist ${HOME}/Nextcloud
+whitelist ${HOME}/.config/Nextcloud
+whitelist ${HOME}/.local/share/Nextcloud
 # Add the next lines to your nextcloud.local to allow sync in more directories.
 #whitelist ${DOCUMENTS}
 #whitelist ${MUSIC}

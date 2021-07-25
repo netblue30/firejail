@@ -6,7 +6,7 @@ include hexchat.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/hexchat
+noblacklist ${HOME}/.config/hexchat
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
@@ -28,7 +28,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/hexchat
-allow  ${HOME}/.config/hexchat
+whitelist ${HOME}/.config/hexchat
 include whitelist-common.inc
 include whitelist-var-common.inc
 

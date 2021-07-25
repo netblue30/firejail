@@ -6,7 +6,7 @@ include coyim.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/coyim
+noblacklist ${HOME}/.config/coyim
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +18,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/coyim
-allow  ${HOME}/.config/coyim
+whitelist ${HOME}/.config/coyim
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc

@@ -6,7 +6,7 @@ include nicotine.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.nicotine
+noblacklist ${HOME}/.nicotine
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -21,9 +21,9 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.nicotine
-allow  ${DOWNLOADS}
-allow  ${HOME}/.nicotine
-allow  /usr/share/GeoIP
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.nicotine
+whitelist /usr/share/GeoIP
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

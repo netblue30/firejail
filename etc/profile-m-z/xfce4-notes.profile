@@ -6,9 +6,9 @@ include xfce4-notes.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/xfce4/xfce4-notes.gtkrc
-nodeny  ${HOME}/.config/xfce4/xfce4-notes.rc
-nodeny  ${HOME}/.local/share/notes
+noblacklist ${HOME}/.config/xfce4/xfce4-notes.gtkrc
+noblacklist ${HOME}/.config/xfce4/xfce4-notes.rc
+noblacklist ${HOME}/.local/share/notes
 
 include disable-common.inc
 include disable-devel.inc

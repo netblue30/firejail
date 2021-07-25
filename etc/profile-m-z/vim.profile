@@ -6,9 +6,9 @@ include vim.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.vim
-nodeny  ${HOME}/.viminfo
-nodeny  ${HOME}/.vimrc
+noblacklist ${HOME}/.vim
+noblacklist ${HOME}/.viminfo
+noblacklist ${HOME}/.vimrc
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc

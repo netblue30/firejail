@@ -6,7 +6,7 @@ include pyucharm-professional.local
 # added by included profile
 #include globals.local
 
-nodeny  ${HOME}/.PyCharm*
+noblacklist ${HOME}/.PyCharm*
 
 # Redirect
 include pycharm-community.profile

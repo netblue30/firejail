@@ -7,8 +7,8 @@ include gnome-recipes.local
 include globals.local
 
 
-nodeny  ${HOME}/.cache/gnome-recipes
-nodeny  ${HOME}/.local/share/gnome-recipes
+noblacklist ${HOME}/.cache/gnome-recipes
+noblacklist ${HOME}/.local/share/gnome-recipes
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,9 +20,9 @@ include disable-shell.inc
 
 mkdir ${HOME}/.cache/gnome-recipes
 mkdir ${HOME}/.local/share/gnome-recipes
-allow  ${HOME}/.cache/gnome-recipes
-allow  ${HOME}/.local/share/gnome-recipes
-allow  /usr/share/gnome-recipes
+whitelist ${HOME}/.cache/gnome-recipes
+whitelist ${HOME}/.local/share/gnome-recipes
+whitelist /usr/share/gnome-recipes
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

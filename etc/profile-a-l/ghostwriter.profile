@@ -6,10 +6,10 @@ include ghostwriter.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/ghostwriter
-nodeny  ${HOME}/.local/share/ghostwriter
-nodeny  ${DOCUMENTS}
-nodeny  ${PICTURES}
+noblacklist ${HOME}/.config/ghostwriter
+noblacklist ${HOME}/.local/share/ghostwriter
+noblacklist ${DOCUMENTS}
+noblacklist ${PICTURES}
 
 include allow-lua.inc
 
@@ -22,10 +22,10 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  /usr/share/ghostwriter
-allow  /usr/share/mozilla-dicts
-allow  /usr/share/texlive
-allow  /usr/share/pandoc*
+whitelist /usr/share/ghostwriter
+whitelist /usr/share/mozilla-dicts
+whitelist /usr/share/texlive
+whitelist /usr/share/pandoc*
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

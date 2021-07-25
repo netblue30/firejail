@@ -6,8 +6,8 @@ include gnome-latex.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/gnome-latex
-nodeny  ${HOME}/.local/share/gnome-latex
+noblacklist ${HOME}/.config/gnome-latex
+noblacklist ${HOME}/.local/share/gnome-latex
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
@@ -19,8 +19,8 @@ include disable-interpreters.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-allow  /usr/share/gnome-latex
-allow  /usr/share/texlive
+whitelist /usr/share/gnome-latex
+whitelist /usr/share/texlive
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 # May cause issues.

@@ -12,8 +12,8 @@ include globals.local
 #private-etc ca-certificates,crypto-policies,pki,resolv.conf,ssl
 #protocol unix,inet,inet6
 
-nodeny  ${HOME}/.config/spectaclerc
-nodeny  ${PICTURES}
+noblacklist ${HOME}/.config/spectaclerc
+noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc
@@ -24,10 +24,10 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkfile  ${HOME}/.config/spectaclerc
-allow  ${HOME}/.config/spectaclerc
-allow  ${PICTURES}
-allow  /usr/share/kconf_update/spectacle_newConfig.upd
-allow  /usr/share/kconf_update/spectacle_shortcuts.upd
+whitelist ${HOME}/.config/spectaclerc
+whitelist ${PICTURES}
+whitelist /usr/share/kconf_update/spectacle_newConfig.upd
+whitelist /usr/share/kconf_update/spectacle_shortcuts.upd
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

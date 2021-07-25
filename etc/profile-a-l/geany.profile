@@ -6,7 +6,7 @@ include geany.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/geany
+noblacklist ${HOME}/.config/geany
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc

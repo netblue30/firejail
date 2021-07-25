@@ -6,12 +6,12 @@ include weechat.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.weechat
+noblacklist ${HOME}/.weechat
 
 include disable-common.inc
 include disable-programs.inc
 
-allow  /usr/share/weechat
+whitelist /usr/share/weechat
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

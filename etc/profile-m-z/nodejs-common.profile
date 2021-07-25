@@ -7,22 +7,22 @@ include nodejs-common.local
 # added by caller profile
 #include globals.local
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}
 
 ignore read-only ${HOME}/.npm-packages
 ignore read-only ${HOME}/.npmrc
 ignore read-only ${HOME}/.nvm
 ignore read-only ${HOME}/.yarnrc
 
-nodeny  ${HOME}/.node-gyp
-nodeny  ${HOME}/.npm
-nodeny  ${HOME}/.npmrc
-nodeny  ${HOME}/.nvm
-nodeny  ${HOME}/.yarn
-nodeny  ${HOME}/.yarn-config
-nodeny  ${HOME}/.yarncache
-nodeny  ${HOME}/.yarnrc
+noblacklist ${HOME}/.node-gyp
+noblacklist ${HOME}/.npm
+noblacklist ${HOME}/.npmrc
+noblacklist ${HOME}/.nvm
+noblacklist ${HOME}/.yarn
+noblacklist ${HOME}/.yarn-config
+noblacklist ${HOME}/.yarncache
+noblacklist ${HOME}/.yarnrc
 
 ignore noexec ${HOME}
 
@@ -58,9 +58,9 @@ include disable-xdg.inc
 #whitelist ${HOME}/Projects
 #include whitelist-common.inc
 
-allow  /usr/share/doc/node
-allow  /usr/share/nvm
-allow  /usr/share/systemtap/tapset/node.stp
+whitelist /usr/share/doc/node
+whitelist /usr/share/nvm
+whitelist /usr/share/systemtap/tapset/node.stp
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

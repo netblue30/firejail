@@ -6,9 +6,9 @@ include desktopeditors.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/onlyoffice
-nodeny  ${HOME}/.local/share/onlyoffice
-nodeny  ${HOME}/.pki
+noblacklist ${HOME}/.config/onlyoffice
+noblacklist ${HOME}/.local/share/onlyoffice
+noblacklist ${HOME}/.pki
 
 include disable-common.inc
 include disable-devel.inc

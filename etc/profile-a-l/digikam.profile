@@ -6,12 +6,12 @@ include digikam.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/digikam
-nodeny  ${HOME}/.config/digikamrc
-nodeny  ${HOME}/.kde/share/apps/digikam
-nodeny  ${HOME}/.kde4/share/apps/digikam
-nodeny  ${HOME}/.local/share/kxmlgui5/digikam
-nodeny  ${PICTURES}
+noblacklist ${HOME}/.config/digikam
+noblacklist ${HOME}/.config/digikamrc
+noblacklist ${HOME}/.kde/share/apps/digikam
+noblacklist ${HOME}/.kde4/share/apps/digikam
+noblacklist ${HOME}/.local/share/kxmlgui5/digikam
+noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc

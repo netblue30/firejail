@@ -6,9 +6,9 @@ include calibre.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/calibre
-nodeny  ${HOME}/.config/calibre
-nodeny  ${DOCUMENTS}
+noblacklist ${HOME}/.cache/calibre
+noblacklist ${HOME}/.config/calibre
+noblacklist ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

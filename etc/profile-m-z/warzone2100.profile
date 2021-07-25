@@ -6,7 +6,7 @@ include warzone2100.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.warzone2100-3.*
+noblacklist ${HOME}/.warzone2100-3.*
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,9 +18,9 @@ include disable-shell.inc
 
 mkdir ${HOME}/.warzone2100-3.1
 mkdir ${HOME}/.warzone2100-3.2
-allow  ${HOME}/.warzone2100-3.1
-allow  ${HOME}/.warzone2100-3.2
-allow  /usr/share/games
+whitelist ${HOME}/.warzone2100-3.1
+whitelist ${HOME}/.warzone2100-3.2
+whitelist /usr/share/games
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

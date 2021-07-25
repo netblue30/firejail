@@ -4,7 +4,7 @@ include hasher-common.local
 
 # common profile for hasher/checksum tools
 
-deny  ${RUNUSER}
+blacklist ${RUNUSER}
 
 # Comment/uncomment the relevant include file(s) in your hasher-common.local
 # to (un)restrict file access for **all** hashers. Another option is to do this **per hasher**

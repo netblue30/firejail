@@ -6,10 +6,10 @@ include qgis.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/QGIS
-nodeny  ${HOME}/.local/share/QGIS
-nodeny  ${HOME}/.qgis2
-nodeny  ${DOCUMENTS}
+noblacklist ${HOME}/.config/QGIS
+noblacklist ${HOME}/.local/share/QGIS
+noblacklist ${HOME}/.qgis2
+noblacklist ${DOCUMENTS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
@@ -25,10 +25,10 @@ include disable-xdg.inc
 mkdir ${HOME}/.local/share/QGIS
 mkdir ${HOME}/.qgis2
 mkdir ${HOME}/.config/QGIS
-allow  ${HOME}/.local/share/QGIS
-allow  ${HOME}/.qgis2
-allow  ${HOME}/.config/QGIS
-allow  ${DOCUMENTS}
+whitelist ${HOME}/.local/share/QGIS
+whitelist ${HOME}/.qgis2
+whitelist ${HOME}/.config/QGIS
+whitelist ${DOCUMENTS}
 include whitelist-common.inc
 include whitelist-var-common.inc
 

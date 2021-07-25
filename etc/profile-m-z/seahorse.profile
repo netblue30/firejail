@@ -6,9 +6,9 @@ include seahorse.local
 # Persistent global definitions
 include globals.local
 
-deny  /tmp/.X11-unix
+blacklist /tmp/.X11-unix
 
-nodeny  ${HOME}/.gnupg
+noblacklist ${HOME}/.gnupg
 
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc
@@ -27,13 +27,13 @@ include disable-xdg.inc
 #mkdir ${HOME}/.ssh
 #whitelist ${HOME}/.gnupg
 #whitelist ${HOME}/.ssh
-allow  /tmp/ssh-*
-allow  /usr/share/gnupg
-allow  /usr/share/gnupg2
-allow  /usr/share/seahorse
-allow  /usr/share/seahorse-nautilus
-allow  ${RUNUSER}/gnupg
-allow  ${RUNUSER}/keyring
+whitelist /tmp/ssh-*
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
+whitelist /usr/share/seahorse
+whitelist /usr/share/seahorse-nautilus
+whitelist ${RUNUSER}/gnupg
+whitelist ${RUNUSER}/keyring
 #include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -6,7 +6,7 @@ include conky.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${PICTURES}
+noblacklist ${PICTURES}
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc

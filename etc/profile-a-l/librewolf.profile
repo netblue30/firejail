@@ -6,13 +6,13 @@ include librewolf.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/librewolf
-nodeny  ${HOME}/.librewolf
+noblacklist ${HOME}/.cache/librewolf
+noblacklist ${HOME}/.librewolf
 
 mkdir ${HOME}/.cache/librewolf
 mkdir ${HOME}/.librewolf
-allow  ${HOME}/.cache/librewolf
-allow  ${HOME}/.librewolf
+whitelist ${HOME}/.cache/librewolf
+whitelist ${HOME}/.librewolf
 
 # Add the next lines to your librewolf.local if you want to use the migration wizard.
 #noblacklist ${HOME}/.mozilla
@@ -23,10 +23,10 @@ allow  ${HOME}/.librewolf
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 
-allow  /usr/share/doc
-allow  /usr/share/gtk-doc/html
-allow  /usr/share/mozilla
-allow  /usr/share/webext
+whitelist /usr/share/doc
+whitelist /usr/share/gtk-doc/html
+whitelist /usr/share/mozilla
+whitelist /usr/share/webext
 include whitelist-usr-share-common.inc
 
 # Add the next line to your librewolf.local to enable private-bin (Arch Linux).

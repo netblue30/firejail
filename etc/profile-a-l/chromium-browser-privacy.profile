@@ -3,15 +3,15 @@
 # Persistent local customizations
 include chromium-browser-privacy.local
 
-nodeny  ${HOME}/.cache/ungoogled-chromium
-nodeny  ${HOME}/.config/ungoogled-chromium
+noblacklist ${HOME}/.cache/ungoogled-chromium
+noblacklist ${HOME}/.config/ungoogled-chromium
 
-deny  /usr/libexec
+blacklist /usr/libexec
 
 mkdir ${HOME}/.cache/ungoogled-chromium
 mkdir ${HOME}/.config/ungoogled-chromium
-allow  ${HOME}/.cache/ungoogled-chromium
-allow  ${HOME}/.config/ungoogled-chromium
+whitelist ${HOME}/.cache/ungoogled-chromium
+whitelist ${HOME}/.config/ungoogled-chromium
 
 # private-bin basename,bash,cat,chromium-browser-privacy,dirname,mkdir,readlink,sed,touch,which,xdg-settings
 

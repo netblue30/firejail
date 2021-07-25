@@ -8,9 +8,9 @@ include globals.local
 
 # Note: you must whitelist your games folder in your dolphin-emu.local.
 
-nodeny  ${HOME}/.cache/dolphin-emu
-nodeny  ${HOME}/.config/dolphin-emu
-nodeny  ${HOME}/.local/share/dolphin-emu
+noblacklist ${HOME}/.cache/dolphin-emu
+noblacklist ${HOME}/.config/dolphin-emu
+noblacklist ${HOME}/.local/share/dolphin-emu
 
 include disable-common.inc
 include disable-devel.inc
@@ -24,10 +24,10 @@ include disable-xdg.inc
 mkdir ${HOME}/.cache/dolphin-emu
 mkdir ${HOME}/.config/dolphin-emu
 mkdir ${HOME}/.local/share/dolphin-emu
-allow  ${HOME}/.cache/dolphin-emu
-allow  ${HOME}/.config/dolphin-emu
-allow  ${HOME}/.local/share/dolphin-emu
-allow  /usr/share/dolphin-emu
+whitelist ${HOME}/.cache/dolphin-emu
+whitelist ${HOME}/.config/dolphin-emu
+whitelist ${HOME}/.local/share/dolphin-emu
+whitelist /usr/share/dolphin-emu
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

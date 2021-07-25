@@ -5,65 +5,65 @@ include disable-devel.local
 # development tools
 
 # clang/llvm
-deny  ${PATH}/clang*
-deny  ${PATH}/lldb*
-deny  ${PATH}/llvm*
+blacklist ${PATH}/clang*
+blacklist ${PATH}/lldb*
+blacklist ${PATH}/llvm*
 # see issue #2106 - it disables hardware acceleration in Firefox on Radeon GPU
 # blacklist /usr/lib/llvm*
 
 # GCC
-deny  ${PATH}/as
-deny  ${PATH}/cc
-deny  ${PATH}/c++*
-deny  ${PATH}/c8*
-deny  ${PATH}/c9*
-deny  ${PATH}/cpp*
-deny  ${PATH}/g++*
-deny  ${PATH}/gcc*
-deny  ${PATH}/gdb
-deny  ${PATH}/ld
-deny  ${PATH}/*-gcc*
-deny  ${PATH}/*-g++*
-deny  ${PATH}/*-gcc*
-deny  ${PATH}/*-g++*
+blacklist ${PATH}/as
+blacklist ${PATH}/cc
+blacklist ${PATH}/c++*
+blacklist ${PATH}/c8*
+blacklist ${PATH}/c9*
+blacklist ${PATH}/cpp*
+blacklist ${PATH}/g++*
+blacklist ${PATH}/gcc*
+blacklist ${PATH}/gdb
+blacklist ${PATH}/ld
+blacklist ${PATH}/*-gcc*
+blacklist ${PATH}/*-g++*
+blacklist ${PATH}/*-gcc*
+blacklist ${PATH}/*-g++*
 # seems to create problems on Gentoo
 #blacklist /usr/lib/gcc
 
 #Go
-deny  ${PATH}/gccgo
-deny  ${PATH}/go
-deny  ${PATH}/gofmt
+blacklist ${PATH}/gccgo
+blacklist ${PATH}/go
+blacklist ${PATH}/gofmt
 
 # Java
-deny  ${PATH}/java
-deny  ${PATH}/javac
-deny  /etc/java
-deny  /usr/lib/java
-deny  /usr/share/java
+blacklist ${PATH}/java
+blacklist ${PATH}/javac
+blacklist /etc/java
+blacklist /usr/lib/java
+blacklist /usr/share/java
 
 #OpenSSL
-deny  ${PATH}/openssl
-deny  ${PATH}/openssl-1.0
+blacklist ${PATH}/openssl
+blacklist ${PATH}/openssl-1.0
 
 #Rust
-deny  ${PATH}/rust-gdb
-deny  ${PATH}/rust-lldb
-deny  ${PATH}/rustc
-deny  ${HOME}/.rustup
+blacklist ${PATH}/rust-gdb
+blacklist ${PATH}/rust-lldb
+blacklist ${PATH}/rustc
+blacklist ${HOME}/.rustup
 
 # tcc - Tiny C Compiler
-deny  ${PATH}/tcc
-deny  ${PATH}/x86_64-tcc
-deny  /usr/lib/tcc
+blacklist ${PATH}/tcc
+blacklist ${PATH}/x86_64-tcc
+blacklist /usr/lib/tcc
 
 # Valgrind
-deny  ${PATH}/valgrind*
-deny  /usr/lib/valgrind
+blacklist ${PATH}/valgrind*
+blacklist /usr/lib/valgrind
 
 
 # Source-Code
 
-deny  /usr/src
-deny  /usr/local/src
-deny  /usr/include
-deny  /usr/local/include
+blacklist /usr/src
+blacklist /usr/local/src
+blacklist /usr/include
+blacklist /usr/local/include

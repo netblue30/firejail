@@ -5,10 +5,10 @@ include Discord.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/discord
+noblacklist ${HOME}/.config/discord
 
 mkdir ${HOME}/.config/discord
-allow  ${HOME}/.config/discord
+whitelist ${HOME}/.config/discord
 
 private-bin Discord
 private-opt Discord

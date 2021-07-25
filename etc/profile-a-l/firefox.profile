@@ -14,27 +14,27 @@ include globals.local
 # https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions#how-do-i-run-two-instances-of-firefox
 # https://github.com/netblue30/firejail/issues/4206#issuecomment-824806968
 
-nodeny  ${HOME}/.cache/mozilla
-nodeny  ${HOME}/.mozilla
+noblacklist ${HOME}/.cache/mozilla
+noblacklist ${HOME}/.mozilla
 
-deny  /usr/libexec
+blacklist /usr/libexec
 
 mkdir ${HOME}/.cache/mozilla/firefox
 mkdir ${HOME}/.mozilla
-allow  ${HOME}/.cache/mozilla/firefox
-allow  ${HOME}/.mozilla
+whitelist ${HOME}/.cache/mozilla/firefox
+whitelist ${HOME}/.mozilla
 
 # Add one of the following whitelist options to your firefox.local to enable KeePassXC Plugin support.
 # NOTE: start KeePassXC before Firefox and keep it open to allow communication between them.
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 
-allow  /usr/share/doc
-allow  /usr/share/firefox
-allow  /usr/share/gnome-shell/search-providers/firefox-search-provider.ini
-allow  /usr/share/gtk-doc/html
-allow  /usr/share/mozilla
-allow  /usr/share/webext
+whitelist /usr/share/doc
+whitelist /usr/share/firefox
+whitelist /usr/share/gnome-shell/search-providers/firefox-search-provider.ini
+whitelist /usr/share/gtk-doc/html
+whitelist /usr/share/mozilla
+whitelist /usr/share/webext
 include whitelist-usr-share-common.inc
 
 # firefox requires a shell to launch on Arch - add the next line to your firefox.local to enable private-bin.

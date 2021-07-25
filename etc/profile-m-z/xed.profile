@@ -5,10 +5,10 @@ include xed.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/xed
-nodeny  ${HOME}/.python-history
-nodeny  ${HOME}/.python_history
-nodeny  ${HOME}/.pythonhist
+noblacklist ${HOME}/.config/xed
+noblacklist ${HOME}/.python-history
+noblacklist ${HOME}/.python_history
+noblacklist ${HOME}/.pythonhist
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

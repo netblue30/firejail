@@ -5,10 +5,10 @@ include pix.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/pix
-nodeny  ${HOME}/.local/share/pix
-nodeny  ${HOME}/.Steam
-nodeny  ${HOME}/.steam
+noblacklist ${HOME}/.config/pix
+noblacklist ${HOME}/.local/share/pix
+noblacklist ${HOME}/.Steam
+noblacklist ${HOME}/.steam
 
 include disable-common.inc
 include disable-devel.inc

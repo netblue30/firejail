@@ -5,8 +5,8 @@ include telegram.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.TelegramDesktop
-nodeny  ${HOME}/.local/share/TelegramDesktop
+noblacklist ${HOME}/.TelegramDesktop
+noblacklist ${HOME}/.local/share/TelegramDesktop
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,9 +19,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.TelegramDesktop
 mkdir ${HOME}/.local/share/TelegramDesktop
-allow  ${HOME}/.TelegramDesktop
-allow  ${HOME}/.local/share/TelegramDesktop
-allow  ${DOWNLOADS}
+whitelist ${HOME}/.TelegramDesktop
+whitelist ${HOME}/.local/share/TelegramDesktop
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

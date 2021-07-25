@@ -9,11 +9,11 @@ include ts3client_runscript.sh.local
 
 ignore noexec ${HOME}
 
-nodeny  ${HOME}/TeamSpeak3-Client-linux_x86
-nodeny  ${HOME}/TeamSpeak3-Client-linux_amd64
+noblacklist ${HOME}/TeamSpeak3-Client-linux_x86
+noblacklist ${HOME}/TeamSpeak3-Client-linux_amd64
 
-allow  ${HOME}/TeamSpeak3-Client-linux_x86
-allow  ${HOME}/TeamSpeak3-Client-linux_amd64
+whitelist ${HOME}/TeamSpeak3-Client-linux_x86
+whitelist ${HOME}/TeamSpeak3-Client-linux_amd64
 
 # Redirect
 include teamspeak3.profile

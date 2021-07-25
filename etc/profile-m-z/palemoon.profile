@@ -5,13 +5,13 @@ include palemoon.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/moonchild productions/pale moon
-nodeny  ${HOME}/.moonchild productions/pale moon
+noblacklist ${HOME}/.cache/moonchild productions/pale moon
+noblacklist ${HOME}/.moonchild productions/pale moon
 
 mkdir ${HOME}/.cache/moonchild productions/pale moon
 mkdir ${HOME}/.moonchild productions
-allow  ${HOME}/.cache/moonchild productions/pale moon
-allow  ${HOME}/.moonchild productions
+whitelist ${HOME}/.cache/moonchild productions/pale moon
+whitelist ${HOME}/.moonchild productions
 
 # Palemoon can use the full firejail seccomp filter (unlike firefox >= 60)
 seccomp

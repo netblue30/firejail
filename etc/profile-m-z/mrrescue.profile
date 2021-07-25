@@ -6,7 +6,7 @@ include mrrescue.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.local/share/love
+noblacklist ${HOME}/.local/share/love
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
@@ -14,7 +14,7 @@ include allow-bin-sh.inc
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
-deny  /usr/libexec
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -26,8 +26,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/love
-allow  ${HOME}/.local/share/love
-allow  /usr/share/mrrescue
+whitelist ${HOME}/.local/share/love
+whitelist /usr/share/mrrescue
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -6,9 +6,9 @@ include zeal.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/Zeal
-nodeny  ${HOME}/.cache/Zeal
-nodeny  ${HOME}/.local/share/Zeal
+noblacklist ${HOME}/.config/Zeal
+noblacklist ${HOME}/.cache/Zeal
+noblacklist ${HOME}/.local/share/Zeal
 
 include disable-common.inc
 include disable-devel.inc
@@ -23,9 +23,9 @@ mkdir ${HOME}/.cache/Zeal
 mkdir ${HOME}/.config/qt5ct
 mkdir ${HOME}/.config/Zeal
 mkdir ${HOME}/.local/share/Zeal
-allow  ${HOME}/.cache/Zeal
-allow  ${HOME}/.config/Zeal
-allow  ${HOME}/.local/share/Zeal
+whitelist ${HOME}/.cache/Zeal
+whitelist ${HOME}/.config/Zeal
+whitelist ${HOME}/.local/share/Zeal
 include whitelist-common.inc
 include whitelist-var-common.inc
 

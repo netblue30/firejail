@@ -6,7 +6,7 @@ include colorful.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.suve/colorful
+noblacklist ${HOME}/.suve/colorful
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.suve/colorful
-allow  ${HOME}/.suve/colorful
-allow  /usr/share/suve
+whitelist ${HOME}/.suve/colorful
+whitelist /usr/share/suve
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

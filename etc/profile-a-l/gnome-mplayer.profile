@@ -6,9 +6,9 @@ include gnome-mplayer.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/gnome-mplayer
-nodeny  ${MUSIC}
-nodeny  ${VIDEOS}
+noblacklist ${HOME}/.config/gnome-mplayer
+noblacklist ${MUSIC}
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc

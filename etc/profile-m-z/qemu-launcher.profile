@@ -5,7 +5,7 @@ include qemu-launcher.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.qemu-launcher
+noblacklist ${HOME}/.qemu-launcher
 
 include disable-common.inc
 include disable-passwdmgr.inc

@@ -1,13 +1,14 @@
-# Firejail profile for Avidemux
-# Description: Avidemux is a free video editor designed for simple cutting, filtering and encoding tasks.
+# Firejail profile for lifeograph
+# Description: Lifeograph is a diary program to take personal notes
+# This file is overwritten after every install/update
 # Persistent local customizations
-include avidemux.local
+include lifeograph.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.avidemux6
-noblacklist ${HOME}/.config/avidemux3_qt5rc
-noblacklist ${VIDEOS}
+nodeny ${DOCUMENTS}
+
+deny /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,12 +19,8 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.avidemux6
-mkdir ${HOME}/.config/avidemux3_qt5rc
-whitelist ${HOME}/.avidemux6
-whitelist ${HOME}/.config/avidemux3_qt5rc
-whitelist ${VIDEOS}
-
+allow ${DOCUMENTS}
+allow /usr/share/lifeograph
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -31,12 +28,15 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
+machine-id
 net none
+no3d
 nodvd
 nogroups
 noinput
 nonewprivs
 noroot
+nosound
 notv
 nou2f
 novideo
@@ -46,10 +46,13 @@ seccomp.block-secondary
 shell none
 tracelog
 
-private-bin avidemux3_cli,avidemux3_jobs_qt5,avidemux3_qt5
+disable-mnt
+private-bin lifeograph
 private-cache
 private-dev
+private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,pango,X11
 private-tmp
 
-dbus-user none
+dbus-user filter
+dbus-user.talk ca.desrt.dconf
 dbus-system none

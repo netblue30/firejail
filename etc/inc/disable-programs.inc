@@ -320,6 +320,7 @@ blacklist ${HOME}/.config/meld
 blacklist ${HOME}/.config/menulibre.cfg
 blacklist ${HOME}/.config/meteo-qt
 blacklist ${HOME}/.config/mfusion
+blacklist ${HOME}/.config/microsoft-edge-beta
 blacklist ${HOME}/.config/microsoft-edge-dev
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mirage
@@ -449,6 +450,7 @@ blacklist ${HOME}/.config/youtube-music-desktop-app
 blacklist ${HOME}/.config/youtube-viewer
 blacklist ${HOME}/.config/youtubemusic-nativefier-040164
 blacklist ${HOME}/.config/zathura
+blacklist ${HOME}/.config/zim
 blacklist ${HOME}/.config/zoomus.conf
 blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.crawl
@@ -684,6 +686,7 @@ blacklist ${HOME}/.local/share/godot
 blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
 blacklist ${HOME}/.local/share/i2p
+blacklist ${HOME}/.local/share/io.github.lainsce.Notejot
 blacklist ${HOME}/.local/share/jami
 blacklist ${HOME}/.local/share/kaffeine
 blacklist ${HOME}/.local/share/kalgebra
@@ -840,6 +843,7 @@ blacklist ${HOME}/.qgis2
 blacklist ${HOME}/.qmmp
 blacklist ${HOME}/.quodlibet
 blacklist ${HOME}/.redeclipse
+blacklist ${HOME}/.rednotebook
 blacklist ${HOME}/.remmina
 blacklist ${HOME}/.repo_.gitconfig.json
 blacklist ${HOME}/.repoconfig
@@ -1010,6 +1014,7 @@ blacklist ${HOME}/.cache/gummi
 blacklist ${HOME}/.cache/icedove
 blacklist ${HOME}/.cache/inkscape
 blacklist ${HOME}/.cache/inox
+blacklist ${HOME}/.cache/io.github.lainsce.Notejot
 blacklist ${HOME}/.cache/iridium
 blacklist ${HOME}/.cache/JetBrains/CLion*
 blacklist ${HOME}/.cache/kcmshell5
@@ -1031,6 +1036,7 @@ blacklist ${HOME}/.cache/liferea
 blacklist ${HOME}/.cache/lutris
 blacklist ${HOME}/.cache/marker
 blacklist ${HOME}/.cache/matrix-mirage
+blacklist ${HOME}/.cache/microsoft-edge-beta
 blacklist ${HOME}/.cache/microsoft-edge-dev
 blacklist ${HOME}/.cache/midori
 blacklist ${HOME}/.cache/minetest
@@ -1066,6 +1072,7 @@ blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/quodlibet
 blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/qutebrowser
+blacklist ${HOME}/.cache/rednotebook
 blacklist ${HOME}/.cache/rhythmbox
 blacklist ${HOME}/.cache/shotwell
 blacklist ${HOME}/.cache/simple-scan
@@ -1096,3 +1103,4 @@ blacklist ${HOME}/.cache/yandex-browser
 blacklist ${HOME}/.cache/yandex-browser-beta
 blacklist ${HOME}/.cache/youtube-dl
 blacklist ${HOME}/.cache/youtube-viewer
+blacklist ${HOME}/.cache/zim

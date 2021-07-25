@@ -1513,8 +1513,7 @@ void check_homedir(const char *dir) {
 		exit(1);
 	}
 	// symlinks are rejected in many places
-	if (has_link(dir)) {
-		fprintf(stderr, "No full support for symbolic links in path of user directory.\n"
+	if (has_link(dir))
+		fmessage("No full support for symbolic links in path of user directory.\n"
 			"Please provide resolved path in password database (/etc/passwd).\n\n");
-	}
 }

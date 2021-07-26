@@ -169,9 +169,9 @@ blacklist /var/lib/systemd
 #blacklist /var/run/systemd
 
 # openrc
-blacklist /etc/init.d/
+blacklist /etc/init.d
 blacklist /etc/rc.conf
-blacklist /etc/runlevels/
+blacklist /etc/runlevels
 
 # VirtualBox
 blacklist ${HOME}/.config/VirtualBox

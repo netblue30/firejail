@@ -159,23 +159,23 @@ blacklist ${RUNUSER}/gsconnect
 # systemd
 blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd
-blacklist /var/lib/systemd
+blacklist ${PATH}/systemctl
 blacklist ${PATH}/systemd-run
 blacklist ${RUNUSER}/systemd
-blacklist ${PATH}/systemctl
-blacklist /etc/systemd/system
 blacklist /etc/systemd/network
+blacklist /etc/systemd/system
+blacklist /var/lib/systemd
 # creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
 #blacklist /var/run/systemd
 
 # openrc
-blacklist /etc/runlevels/
 blacklist /etc/init.d/
 blacklist /etc/rc.conf
+blacklist /etc/runlevels/
 
 # VirtualBox
-blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/.config/VirtualBox
+blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/VirtualBox VMs
 
 # GNOME Boxes
@@ -245,32 +245,34 @@ blacklist /var/spool/cron
 blacklist /var/spool/mail
 
 # etc
+blacklist /etc/adduser.conf
 blacklist /etc/anacrontab
+blacklist /etc/apparmor*
 blacklist /etc/cron*
+blacklist /etc/default
+blacklist /etc/dkms
+blacklist /etc/grub*
+blacklist /etc/kernel*
+blacklist /etc/logrotate*
+blacklist /etc/modules*
 blacklist /etc/profile.d
 blacklist /etc/rc.local
 # rc1.d, rc2.d, ...
 blacklist /etc/rc?.d
-blacklist /etc/kernel*
-blacklist /etc/grub*
-blacklist /etc/dkms
-blacklist /etc/apparmor*
-blacklist /etc/selinux
-blacklist /etc/modules*
-blacklist /etc/logrotate*
-blacklist /etc/adduser.conf
+blacklist /etc/sysconfig
 
 # hide config for various intrusion detection systems
-blacklist /etc/rkhunter.conf
-blacklist /var/lib/rkhunter
-blacklist /etc/chkrootkit.conf
-blacklist /etc/lynis
 blacklist /etc/aide
-blacklist /etc/logcheck
-blacklist /etc/tripwire
-blacklist /etc/snort
+blacklist /etc/aide.conf
+blacklist /etc/chkrootkit.conf
 blacklist /etc/fail2ban.conf
+blacklist /etc/logcheck
+blacklist /etc/lynis
+blacklist /etc/rkhunter.*
+blacklist /etc/snort
 blacklist /etc/suricata
+blacklist /etc/tripwire
+blacklist /var/lib/rkhunter
 
 # Startup files
 read-only ${HOME}/.antigen
@@ -350,15 +352,15 @@ read-only ${HOME}/_vimrc
 read-only ${HOME}/dotfiles
 
 # Make directories commonly found in $PATH read-only
+read-only ${HOME}/.bin
+read-only ${HOME}/.cargo/bin
 read-only ${HOME}/.gem
+read-only ${HOME}/.local/bin
 read-only ${HOME}/.luarocks
 read-only ${HOME}/.npm-packages
 read-only ${HOME}/.nvm
-read-only ${HOME}/bin
-read-only ${HOME}/.bin
-read-only ${HOME}/.local/bin
-read-only ${HOME}/.cargo/bin
 read-only ${HOME}/.rustup
+read-only ${HOME}/bin
 
 # Write-protection for desktop entries
 read-only ${HOME}/.config/menus
@@ -377,39 +379,6 @@ read-only ${HOME}/.local/share/thumbnailers
 blacklist /tmp/ssh-*
 
 # top secret
-blacklist ${HOME}/*.kdb
-blacklist ${HOME}/*.kdbx
-blacklist ${HOME}/*.key
-blacklist ${HOME}/.Private
-blacklist ${HOME}/.caff
-blacklist ${HOME}/.cargo/credentials
-blacklist ${HOME}/.cargo/credentials.toml
-blacklist ${HOME}/.cert
-blacklist ${HOME}/.config/keybase
-blacklist ${HOME}/.davfs2/secrets
-blacklist ${HOME}/.ecryptfs
-blacklist ${HOME}/.fetchmailrc
-blacklist ${HOME}/.fscrypt
-blacklist ${HOME}/.git-credential-cache
-blacklist ${HOME}/.git-credentials
-blacklist ${HOME}/.gnome2/keyrings
-blacklist ${HOME}/.gnupg
-blacklist ${HOME}/.config/hub
-blacklist ${HOME}/.kde/share/apps/kwallet
-blacklist ${HOME}/.kde4/share/apps/kwallet
-blacklist ${HOME}/.local/share/keyrings
-blacklist ${HOME}/.local/share/kwalletd
-blacklist ${HOME}/.local/share/plasma-vault
-blacklist ${HOME}/.msmtprc
-blacklist ${HOME}/.mutt
-blacklist ${HOME}/.muttrc
-blacklist ${HOME}/.netrc
-blacklist ${HOME}/.nyx
-blacklist ${HOME}/.pki
-blacklist ${HOME}/.local/share/pki
-blacklist ${HOME}/.smbcredentials
-blacklist ${HOME}/.ssh
-blacklist ${HOME}/.vaults
 blacklist /.fscrypt
 blacklist /etc/davfs2/secrets
 blacklist /etc/group+
@@ -426,6 +395,39 @@ blacklist /etc/ssh
 blacklist /etc/ssh/*
 blacklist /home/.ecryptfs
 blacklist /home/.fscrypt
+blacklist ${HOME}/*.kdb
+blacklist ${HOME}/*.kdbx
+blacklist ${HOME}/*.key
+blacklist ${HOME}/.Private
+blacklist ${HOME}/.caff
+blacklist ${HOME}/.cargo/credentials
+blacklist ${HOME}/.cargo/credentials.toml
+blacklist ${HOME}/.cert
+blacklist ${HOME}/.config/hub
+blacklist ${HOME}/.config/keybase
+blacklist ${HOME}/.davfs2/secrets
+blacklist ${HOME}/.ecryptfs
+blacklist ${HOME}/.fetchmailrc
+blacklist ${HOME}/.fscrypt
+blacklist ${HOME}/.git-credential-cache
+blacklist ${HOME}/.git-credentials
+blacklist ${HOME}/.gnome2/keyrings
+blacklist ${HOME}/.gnupg
+blacklist ${HOME}/.kde/share/apps/kwallet
+blacklist ${HOME}/.kde4/share/apps/kwallet
+blacklist ${HOME}/.local/share/keyrings
+blacklist ${HOME}/.local/share/kwalletd
+blacklist ${HOME}/.local/share/pki
+blacklist ${HOME}/.local/share/plasma-vault
+blacklist ${HOME}/.msmtprc
+blacklist ${HOME}/.mutt
+blacklist ${HOME}/.muttrc
+blacklist ${HOME}/.netrc
+blacklist ${HOME}/.nyx
+blacklist ${HOME}/.pki
+blacklist ${HOME}/.smbcredentials
+blacklist ${HOME}/.ssh
+blacklist ${HOME}/.vaults
 blacklist /var/backup
 
 # cloud provider configuration
@@ -488,10 +490,12 @@ blacklist /tmp/.lxterminal-socket*
 blacklist /tmp/tmux-*
 
 # disable terminals running as server resulting in sandbox escape
-blacklist ${PATH}/lxterminal
 blacklist ${PATH}/gnome-terminal
 blacklist ${PATH}/gnome-terminal.wrapper
+# blacklist ${PATH}/konsole
+# konsole doesn't seem to have this problem - last tested on Ubuntu 16.04
 blacklist ${PATH}/lilyterm
+blacklist ${PATH}/lxterminal
 blacklist ${PATH}/mate-terminal
 blacklist ${PATH}/mate-terminal.wrapper
 blacklist ${PATH}/pantheon-terminal
@@ -503,8 +507,6 @@ blacklist ${PATH}/urxvtc
 blacklist ${PATH}/urxvtcd
 blacklist ${PATH}/xfce4-terminal
 blacklist ${PATH}/xfce4-terminal.wrapper
-# blacklist ${PATH}/konsole
-# konsole doesn't seem to have this problem - last tested on Ubuntu 16.04
 
 # kernel files
 blacklist /initrd*
@@ -520,17 +522,17 @@ noblacklist ${HOME}/.local/share/flatpak/exports
 read-only ${HOME}/.local/share/flatpak/exports
 blacklist ${HOME}/.local/share/flatpak/*
 blacklist ${HOME}/.var
-blacklist ${RUNUSER}/app
-blacklist ${RUNUSER}/doc
+# most of the time bwrap is SUID binary
+blacklist ${PATH}/bwrap
 blacklist ${RUNUSER}/.dbus-proxy
 blacklist ${RUNUSER}/.flatpak
 blacklist ${RUNUSER}/.flatpak-cache
 blacklist ${RUNUSER}/.flatpak-helper
+blacklist ${RUNUSER}/app
+blacklist ${RUNUSER}/doc
 blacklist /usr/share/flatpak
 noblacklist /var/lib/flatpak/exports
 blacklist /var/lib/flatpak/*
-# most of the time bwrap is SUID binary
-blacklist ${PATH}/bwrap
 
 # snap
 blacklist ${RUNUSER}/snapd-session-agent.socket

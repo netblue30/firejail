@@ -229,7 +229,7 @@ Warning: modified /home/netblue/.bashrc
 The program will print the files that have been modified since the database was created, or the files with different access permissions.
 New files and deleted files are also flagged.
 
-Currently while scanning the file system symbolic links are not followed, and files the user doesn't have read access are silently dropped.
+Currently while scanning the file system symbolic links are not followed, and files the user doesn't have read access to are silently dropped.
 The program can also be run as root (sudo firejail --ids-init/--ids-check).
 
 ### Profile Statistics

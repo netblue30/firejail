@@ -835,7 +835,6 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define PATH_FNET_MAIN (LIBDIR "/firejail/fnet")		// when called from main thread
 #define PATH_FNET (RUN_FIREJAIL_LIB_DIR "/fnet")	// when called from sandbox thread
 
-//#define PATH_FNETFILTER (LIBDIR "/firejail/fnetfilter")
 #define PATH_FNETFILTER (RUN_FIREJAIL_LIB_DIR "/fnetfilter")
 
 #define PATH_FIREMON (PREFIX "/bin/firemon")
@@ -848,16 +847,15 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 // it is also run from inside the sandbox by --debug; in this case we do an access(filename, X_OK) test first
 #define PATH_FSEC_PRINT (LIBDIR "/firejail/fsec-print")
 
-//#define PATH_FSEC_OPTIMIZE (LIBDIR "/firejail/fsec-optimize")
 #define PATH_FSEC_OPTIMIZE (RUN_FIREJAIL_LIB_DIR "/fsec-optimize")
 
-//#define PATH_FCOPY (LIBDIR "/firejail/fcopy")
 #define PATH_FCOPY (RUN_FIREJAIL_LIB_DIR "/fcopy")
 
 #define SBOX_STDIN_FILE "/run/firejail/mnt/sbox_stdin"
 
-//#define PATH_FLDD (LIBDIR "/firejail/fldd")
 #define PATH_FLDD (RUN_FIREJAIL_LIB_DIR "/fldd")
+
+#define PATH_FIDS (LIBDIR "/firejail/fids")
 
 // bitmapped filters for sbox_run
 #define SBOX_ROOT (1 << 0)			// run the sandbox as root
@@ -902,5 +900,8 @@ void dhcp_start(void);
 
 // selinux.c
 void selinux_relabel_path(const char *path, const char *inside_path);
+
+// ids.c
+void run_ids(int argc, char **argv);
 
 #endif

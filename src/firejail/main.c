@@ -1068,6 +1068,10 @@ int main(int argc, char **argv, char **envp) {
 	if (check_arg(argc, argv, "--build", 0)) // supports both --build and --build=filename
 		run_builder(argc, argv); // this function will not return
 
+	// intrusion detection system
+	if (check_arg(argc, argv, "--ids-", 0)) // supports both --ids-init and --ids-check
+		run_ids(argc, argv); // this function will not return
+
 	EUID_ROOT();
 #ifndef HAVE_SUID
 	if (geteuid() != 0) {

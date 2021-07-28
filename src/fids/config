@@ -1,0 +1,16 @@
+/bin
+/sbin
+/usr/bin
+/usr/sbin
+/usr/games
+/opt
+/usr/share/ca-certificates
+
+
+/home/netblue/.bashrc
+/home/netblue/.config/firejail
+/home/netblue/.config/autostart
+/home/netblue/Desktop/*.desktop
+/home/netblue/.ssh
+/home/netblue/.gnupg
+

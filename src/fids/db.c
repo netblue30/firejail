@@ -32,11 +32,10 @@ static DB *database[HASH_MAX] = {NULL};
 
 // djb2 hash function by Dan Bernstein
 static unsigned hash(const char *str) {
-	const unsigned char *s = (unsigned char *) str;
 	unsigned long hash = 5381;
 	int c;
 
-	while (c = *s++)
+	while ((c = *str++) != '\0')
 		hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
 
 	return hash & (HASH_MAX - 1);

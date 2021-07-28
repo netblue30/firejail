@@ -47,9 +47,10 @@ static inline int is_dir(const char *fname) {
 	assert(fname);
 
 	struct stat s;
-	int rv = stat(fname, &s);
-	if (S_ISDIR(s.st_mode))
-		return 1;
+	if (stat(fname, &s) == 0) {
+		if (S_ISDIR(s.st_mode))
+			return 1;
+	}
 	return 0;
 }
 
@@ -116,7 +117,7 @@ static void file_checksum(const char *fname) {
 
 	// calculate blake2 checksum
 	char str_checksum[(KEY_SIZE / 8) * 2 + 1];
-	int i;
+	int long unsigned i;
 	char *ptr = str_checksum;
 	for (i = 0; i < sizeof(checksum); i++, ptr += 2)
 		sprintf(ptr, "%02x", (unsigned char ) checksum[i]);
@@ -190,7 +191,7 @@ void globbing(const char *fname) {
 		exit(1);
 	}
 
-	int i;
+	long unsigned i;
 	for (i = 0; i < globbuf.gl_pathc; i++) {
 		char *path = globbuf.gl_pathv[i];
 		assert(path);

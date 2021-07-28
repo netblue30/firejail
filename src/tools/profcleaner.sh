@@ -38,8 +38,8 @@ else
 fi
 
 sed -i -E \
-	-e "s/^(# |#)?blacklist/\1deny/" \
-	-e "s/^(# |#)?noblacklist/\1nodeny/" \
-	-e "s/^(# |#)?whitelist/\1allow/" \
-	-e "s/^(# |#)?nowhitelist/\1noallow/" \
+	-e "s/^(# |#)?(ignore )?blacklist/\1\2deny/" \
+	-e "s/^(# |#)?(ignore )?noblacklist/\1\2nodeny/" \
+	-e "s/^(# |#)?(ignore )?whitelist/\1\2allow/" \
+	-e "s/^(# |#)?(ignore )?nowhitelist/\1\2noallow/" \
 	"${profiles[@]}"

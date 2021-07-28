@@ -47,7 +47,7 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6,netlink
-seccomp !kcmp
+seccomp
 shell none
 tracelog
 

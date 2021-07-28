@@ -36,7 +36,7 @@ whitelist /usr/share/gnome-shell/search-providers/firefox-search-provider.ini
 whitelist /usr/share/gtk-doc/html
 whitelist /usr/share/mozilla
 whitelist /usr/share/webext
-whitelist  ${RUNUSER}/*firefox*
+whitelist ${RUNUSER}/*firefox*
 include whitelist-usr-share-common.inc
 
 # firefox requires a shell to launch on Arch - add the next line to your firefox.local to enable private-bin.

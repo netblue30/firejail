@@ -926,6 +926,7 @@ blacklist ${HOME}/hyperrogue.ini
 blacklist ${HOME}/i2p
 blacklist ${HOME}/mps
 blacklist ${HOME}/wallet.dat
+blacklist ${RUNUSER}/*firefox*
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*
 blacklist /var/games/nethack
@@ -1103,5 +1104,4 @@ blacklist ${HOME}/.cache/yandex-browser
 blacklist ${HOME}/.cache/yandex-browser-beta
 blacklist ${HOME}/.cache/youtube-dl
 blacklist ${HOME}/.cache/youtube-viewer
-blacklist ${RUNUSER}/*firefox*
 blacklist ${HOME}/.cache/zim

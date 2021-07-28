@@ -12,6 +12,12 @@ ignore noexec ${HOME}
 #ignore nogroups
 #ignore noroot
 #ignore private-dev
+# Add the following to your kodi.local if you use the Lutris Kodi Addon
+#noblacklist /sbin
+#noblacklist /usr/sbin
+#noblacklist ${HOME}/.cache/lutris
+#noblacklist ${HOME}/.config/lutris
+#noblacklist ${HOME}/.local/share/lutris
 
 noblacklist ${HOME}/.kodi
 noblacklist ${MUSIC}

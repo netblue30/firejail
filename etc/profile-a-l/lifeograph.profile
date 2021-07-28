@@ -6,9 +6,9 @@ include lifeograph.local
 # Persistent global definitions
 include globals.local
 
-nodeny ${DOCUMENTS}
+noblacklist ${DOCUMENTS}
 
-deny /usr/libexec
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,8 +19,8 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow ${DOCUMENTS}
-allow /usr/share/lifeograph
+whitelist ${DOCUMENTS}
+whitelist /usr/share/lifeograph
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

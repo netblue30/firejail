@@ -6,11 +6,11 @@ include rednotebook.local
 # Persistent global definitions
 include globals.local
 
-nodeny ${HOME}/.cache/rednotebook
-nodeny ${HOME}/.rednotebook
+noblacklist ${HOME}/.cache/rednotebook
+noblacklist ${HOME}/.rednotebook
 
-# Allow python (blacklisted by disable-interpreters.inc)
-include allow-python3.inc
+# whitelist python (blacklisted by disable-interpreters.inc)
+include whitelist-python3.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,15 +22,15 @@ include disable-shell.inc
 
 mkdir ${HOME}/.cache/rednotebook
 mkdir ${HOME}/.rednotebook
-allow ${HOME}/.cache/rednotebook
-allow ${HOME}/.rednotebook
-allow ${DESKTOP}
-allow ${DOCUMENTS}
-allow ${DOWNLOADS}
-allow ${MUSIC}
-allow ${PICTURES}
-allow ${VIDEOS}
-allow /usr/libexec/webkit2gtk-4.0
+whitelist ${HOME}/.cache/rednotebook
+whitelist ${HOME}/.rednotebook
+whitelist ${DESKTOP}
+whitelist ${DOCUMENTS}
+whitelist ${DOWNLOADS}
+whitelist ${MUSIC}
+whitelist ${PICTURES}
+whitelist ${VIDEOS}
+whitelist /usr/libexec/webkit2gtk-4.0
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

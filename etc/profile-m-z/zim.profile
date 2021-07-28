@@ -6,14 +6,14 @@ include zim.local
 # Persistent global definitions
 include globals.local
 
-nodeny ${HOME}/.cache/zim
-nodeny ${HOME}/.config/zim
+noblacklist ${HOME}/.cache/zim
+noblacklist ${HOME}/.config/zim
 
-# Allow python (blacklisted by disable-interpreters.inc)
-include allow-python2.inc
-include allow-python3.inc
+# whitelist python (blacklisted by disable-interpreters.inc)
+include whitelist-python2.inc
+include whitelist-python3.inc
 
-deny /usr/libexec
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -26,16 +26,16 @@ include disable-shell.inc
 mkdir ${HOME}/.cache/zim
 mkdir ${HOME}/.config/zim
 mkdir ${HOME}/Notebooks
-allow ${HOME}/.cache/zim
-allow ${HOME}/.config/zim
-allow ${HOME}/Notebooks
-allow ${DESKTOP}
-allow ${DOCUMENTS}
-allow ${DOWNLOADS}
-allow ${MUSIC}
-allow ${PICTURES}
-allow ${VIDEOS}
-allow /usr/share/zim
+whitelist ${HOME}/.cache/zim
+whitelist ${HOME}/.config/zim
+whitelist ${HOME}/Notebooks
+whitelist ${DESKTOP}
+whitelist ${DOCUMENTS}
+whitelist ${DOWNLOADS}
+whitelist ${MUSIC}
+whitelist ${PICTURES}
+whitelist ${VIDEOS}
+whitelist /usr/share/zim
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -6,8 +6,8 @@ include io.github.lainsce.Notejot.local
 # Persistent global definitions
 include globals.local
 
-nodeny ${HOME}/.cache/io.github.lainsce.Notejot
-nodeny ${HOME}/.local/share/io.github.lainsce.Notejot
+noblacklist ${HOME}/.cache/io.github.lainsce.Notejot
+noblacklist ${HOME}/.local/share/io.github.lainsce.Notejot
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,9 +20,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/io.github.lainsce.Notejot
 mkdir ${HOME}/.local/share/io.github.lainsce.Notejot
-allow ${HOME}/.cache/io.github.lainsce.Notejot
-allow ${HOME}/.local/share/io.github.lainsce.Notejot
-allow /usr/libexec/webkit2gtk-4.0
+whitelist ${HOME}/.cache/io.github.lainsce.Notejot
+whitelist ${HOME}/.local/share/io.github.lainsce.Notejot
+whitelist /usr/libexec/webkit2gtk-4.0
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

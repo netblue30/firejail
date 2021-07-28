@@ -1103,4 +1103,5 @@ blacklist ${HOME}/.cache/yandex-browser
 blacklist ${HOME}/.cache/yandex-browser-beta
 blacklist ${HOME}/.cache/youtube-dl
 blacklist ${HOME}/.cache/youtube-viewer
+blacklist ${RUNUSER}/*firefox*
 blacklist ${HOME}/.cache/zim

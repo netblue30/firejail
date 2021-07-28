@@ -2,6 +2,6 @@
 # Persistent customizations should go in a .local file.
 include allow-bin-sh.local
 
-nodeny  ${PATH}/bash
-nodeny  ${PATH}/dash
-nodeny  ${PATH}/sh
+noblacklist ${PATH}/bash
+noblacklist ${PATH}/dash
+noblacklist ${PATH}/sh

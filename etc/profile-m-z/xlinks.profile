@@ -7,7 +7,7 @@ include xlinks.local
 # added by included profile
 #include globals.local
 
-nodeny  /tmp/.X11-unix
+noblacklist /tmp/.X11-unix
 
 include whitelist-common.inc
 

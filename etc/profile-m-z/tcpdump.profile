@@ -6,9 +6,9 @@ include tcpdump.local
 # Persistent global definitions
 include globals.local
 
-nodeny  /sbin
-nodeny  /usr/sbin
-nodeny  ${PATH}/tcpdump
+noblacklist /sbin
+noblacklist /usr/sbin
+noblacklist ${PATH}/tcpdump
 
 include disable-common.inc
 include disable-devel.inc

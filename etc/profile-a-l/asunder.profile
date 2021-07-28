@@ -6,11 +6,11 @@ include asunder.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/asunder
-nodeny  ${HOME}/.asunder_album_genre
-nodeny  ${HOME}/.asunder_album_title
-nodeny  ${HOME}/.asunder_album_artist
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.config/asunder
+noblacklist ${HOME}/.asunder_album_genre
+noblacklist ${HOME}/.asunder_album_title
+noblacklist ${HOME}/.asunder_album_artist
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

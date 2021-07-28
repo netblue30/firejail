@@ -6,8 +6,8 @@ include vmware.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/vmware
-nodeny  ${HOME}/.vmware
+noblacklist ${HOME}/.cache/vmware
+noblacklist ${HOME}/.vmware
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,8 +19,8 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/vmware
 mkdir ${HOME}/.vmware
-allow  ${HOME}/.cache/vmware
-allow  ${HOME}/.vmware
+whitelist ${HOME}/.cache/vmware
+whitelist ${HOME}/.vmware
 # Add the next lines to your vmware.local if you need to use "shared VM".
 #whitelist /var/lib/vmware
 #writable-var

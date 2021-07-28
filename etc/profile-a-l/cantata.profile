@@ -6,10 +6,10 @@ include cantata.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/cantata
-nodeny  ${HOME}/.config/cantata
-nodeny  ${HOME}/.local/share/cantata
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.cache/cantata
+noblacklist ${HOME}/.config/cantata
+noblacklist ${HOME}/.local/share/cantata
+noblacklist ${MUSIC}
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc

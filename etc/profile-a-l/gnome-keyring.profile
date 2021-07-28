@@ -7,7 +7,7 @@ include gnome-keyring.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.gnupg
+noblacklist ${HOME}/.gnupg
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,12 +18,12 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.gnupg
-allow  ${HOME}/.gnupg
-allow  ${DOWNLOADS}
-allow  ${RUNUSER}/gnupg
-allow  ${RUNUSER}/keyring
-allow  /usr/share/gnupg
-allow  /usr/share/gnupg2
+whitelist ${HOME}/.gnupg
+whitelist ${DOWNLOADS}
+whitelist ${RUNUSER}/gnupg
+whitelist ${RUNUSER}/keyring
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

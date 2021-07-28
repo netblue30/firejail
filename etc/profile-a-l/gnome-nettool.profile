@@ -14,7 +14,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-allow  /usr/share/gnome-nettool
+whitelist /usr/share/gnome-nettool
 #include whitelist-common.inc -- see #903
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

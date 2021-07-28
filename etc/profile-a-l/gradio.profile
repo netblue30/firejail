@@ -5,8 +5,8 @@ include gradio.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/gradio
-nodeny  ${HOME}/.local/share/gradio
+noblacklist ${HOME}/.cache/gradio
+noblacklist ${HOME}/.local/share/gradio
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/gradio
 mkdir ${HOME}/.local/share/gradio
-allow  ${HOME}/.cache/gradio
-allow  ${HOME}/.local/share/gradio
+whitelist ${HOME}/.cache/gradio
+whitelist ${HOME}/.local/share/gradio
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

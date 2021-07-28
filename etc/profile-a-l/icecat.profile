@@ -5,13 +5,13 @@ include icecat.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/mozilla
-nodeny  ${HOME}/.mozilla
+noblacklist ${HOME}/.cache/mozilla
+noblacklist ${HOME}/.mozilla
 
 mkdir ${HOME}/.cache/mozilla/icecat
 mkdir ${HOME}/.mozilla
-allow  ${HOME}/.cache/mozilla/icecat
-allow  ${HOME}/.mozilla
+whitelist ${HOME}/.cache/mozilla/icecat
+whitelist ${HOME}/.mozilla
 
 # private-etc must first be enabled in firefox-common.profile
 #private-etc icecat

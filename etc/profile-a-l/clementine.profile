@@ -6,9 +6,9 @@ include clementine.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/Clementine
-nodeny  ${HOME}/.config/Clementine
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.cache/Clementine
+noblacklist ${HOME}/.config/Clementine
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

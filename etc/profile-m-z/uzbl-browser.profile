@@ -5,9 +5,9 @@ include uzbl-browser.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/uzbl
-nodeny  ${HOME}/.gnupg
-nodeny  ${HOME}/.local/share/uzbl
+noblacklist ${HOME}/.config/uzbl
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.local/share/uzbl
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -22,11 +22,11 @@ mkdir ${HOME}/.config/uzbl
 mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.local/share/uzbl
 mkdir ${HOME}/.password-store
-allow  ${DOWNLOADS}
-allow  ${HOME}/.config/uzbl
-allow  ${HOME}/.gnupg
-allow  ${HOME}/.local/share/uzbl
-allow  ${HOME}/.password-store
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.config/uzbl
+whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.local/share/uzbl
+whitelist ${HOME}/.password-store
 include whitelist-common.inc
 
 caps.drop all

@@ -11,8 +11,8 @@ include globals.local
 # not as a daemon (rsync --daemon) nor to create backups.
 # Usage: firejail --profile=rsync-download_only rsync
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

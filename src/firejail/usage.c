@@ -98,6 +98,8 @@ static char *usage_str =
 	"    --help, -? - this help screen.\n"
 	"    --hostname=name - set sandbox hostname.\n"
 	"    --hosts-file=file - use file as /etc/hosts.\n"
+	"    --ids-check - verify file system.\n"
+	"    --ids-init - initialize IDS database.\n"
 	"    --ignore=command - ignore command in profile files.\n"
 #ifdef HAVE_NETWORK
 	"    --interface=name - move interface in sandbox.\n"

@@ -6,10 +6,10 @@ include gajim.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.gnupg
-nodeny  ${HOME}/.cache/gajim
-nodeny  ${HOME}/.config/gajim
-nodeny  ${HOME}/.local/share/gajim
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.cache/gajim
+noblacklist ${HOME}/.config/gajim
+noblacklist ${HOME}/.local/share/gajim
 
 # Allow python (blacklisted by disable-interpreters.inc)
 #include allow-python2.inc
@@ -28,14 +28,14 @@ mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.cache/gajim
 mkdir ${HOME}/.config/gajim
 mkdir ${HOME}/.local/share/gajim
-allow  ${HOME}/.gnupg
-allow  ${HOME}/.cache/gajim
-allow  ${HOME}/.config/gajim
-allow  ${HOME}/.local/share/gajim
-allow  ${DOWNLOADS}
-allow  ${RUNUSER}/gnupg
-allow  /usr/share/gnupg
-allow  /usr/share/gnupg2
+whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.cache/gajim
+whitelist ${HOME}/.config/gajim
+whitelist ${HOME}/.local/share/gajim
+whitelist ${DOWNLOADS}
+whitelist ${RUNUSER}/gnupg
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -6,7 +6,7 @@ include pinball.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/emilia
+noblacklist ${HOME}/.config/emilia
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,11 +18,11 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/emilia
-allow  ${HOME}/.config/emilia
+whitelist ${HOME}/.config/emilia
 
-allow  /usr/share/pinball
+whitelist /usr/share/pinball
 # on debian games are stored under /usr/share/games
-allow  /usr/share/games/pinball
+whitelist /usr/share/games/pinball
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

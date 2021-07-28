@@ -7,10 +7,10 @@ include nslookup.local
 # Persistent global definitions
 include globals.local
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}
 
-nodeny  ${PATH}/nslookup
+noblacklist ${PATH}/nslookup
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,7 +20,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-allow  ${HOME}/.nslookuprc
+whitelist ${HOME}/.nslookuprc
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

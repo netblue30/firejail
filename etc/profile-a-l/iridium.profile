@@ -10,13 +10,13 @@ ignore whitelist /usr/share/chromium
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 
-nodeny  ${HOME}/.cache/iridium
-nodeny  ${HOME}/.config/iridium
+noblacklist ${HOME}/.cache/iridium
+noblacklist ${HOME}/.config/iridium
 
 mkdir ${HOME}/.cache/iridium
 mkdir ${HOME}/.config/iridium
-allow  ${HOME}/.cache/iridium
-allow  ${HOME}/.config/iridium
+whitelist ${HOME}/.cache/iridium
+whitelist ${HOME}/.config/iridium
 
 # Redirect
 include chromium-common.profile

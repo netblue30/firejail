@@ -6,8 +6,8 @@ include bitcoin-qt.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.bitcoin
-nodeny  ${HOME}/.config/Bitcoin
+noblacklist ${HOME}/.bitcoin
+noblacklist ${HOME}/.config/Bitcoin
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,8 +19,8 @@ include disable-shell.inc
 
 mkdir ${HOME}/.bitcoin
 mkdir ${HOME}/.config/Bitcoin
-allow  ${HOME}/.bitcoin
-allow  ${HOME}/.config/Bitcoin
+whitelist ${HOME}/.bitcoin
+whitelist ${HOME}/.config/Bitcoin
 include whitelist-common.inc
 include whitelist-var-common.inc
 

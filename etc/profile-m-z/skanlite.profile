@@ -6,7 +6,7 @@ include skanlite.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${DOCUMENTS}
+noblacklist ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc

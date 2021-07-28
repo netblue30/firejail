@@ -5,7 +5,7 @@ include Cryptocat.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/Cryptocat
+noblacklist ${HOME}/.config/Cryptocat
 
 include disable-common.inc
 include disable-devel.inc

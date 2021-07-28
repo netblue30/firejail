@@ -6,7 +6,7 @@ include abiword.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/abiword
+noblacklist ${HOME}/.config/abiword
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,7 +16,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 
-allow  /usr/share/abiword-3.0
+whitelist /usr/share/abiword-3.0
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc

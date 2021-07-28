@@ -6,9 +6,9 @@ include celluloid.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/celluloid
-nodeny  ${HOME}/.config/gnome-mpv
-nodeny  ${HOME}/.config/youtube-dl
+noblacklist ${HOME}/.config/celluloid
+noblacklist ${HOME}/.config/gnome-mpv
+noblacklist ${HOME}/.config/youtube-dl
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -17,7 +17,7 @@ include allow-lua.inc
 include allow-python2.inc
 include allow-python3.inc
 
-deny  /usr/libexec
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -30,9 +30,9 @@ read-only ${DESKTOP}
 mkdir ${HOME}/.config/celluloid
 mkdir ${HOME}/.config/gnome-mpv
 mkdir ${HOME}/.config/youtube-dl
-allow  ${HOME}/.config/celluloid
-allow  ${HOME}/.config/gnome-mpv
-allow  ${HOME}/.config/youtube-dl
+whitelist ${HOME}/.config/celluloid
+whitelist ${HOME}/.config/gnome-mpv
+whitelist ${HOME}/.config/youtube-dl
 include whitelist-common.inc
 include whitelist-player-common.inc
 include whitelist-runuser-common.inc

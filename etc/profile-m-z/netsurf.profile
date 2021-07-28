@@ -6,8 +6,8 @@ include netsurf.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/netsurf
-nodeny  ${HOME}/.config/netsurf
+noblacklist ${HOME}/.cache/netsurf
+noblacklist ${HOME}/.config/netsurf
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,9 +16,9 @@ include disable-programs.inc
 
 mkdir ${HOME}/.cache/netsurf
 mkdir ${HOME}/.config/netsurf
-allow  ${DOWNLOADS}
-allow  ${HOME}/.cache/netsurf
-allow  ${HOME}/.config/netsurf
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.cache/netsurf
+whitelist ${HOME}/.config/netsurf
 include whitelist-common.inc
 
 caps.drop all

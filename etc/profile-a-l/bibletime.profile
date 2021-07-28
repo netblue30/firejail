@@ -6,11 +6,11 @@ include bibletime.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.bibletime
-nodeny  ${HOME}/.sword
-nodeny  ${HOME}/.local/share/bibletime
+noblacklist ${HOME}/.bibletime
+noblacklist ${HOME}/.sword
+noblacklist ${HOME}/.local/share/bibletime
 
-deny  ${HOME}/.bashrc
+blacklist ${HOME}/.bashrc
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,12 +22,12 @@ include disable-programs.inc
 mkdir ${HOME}/.bibletime
 mkdir ${HOME}/.sword
 mkdir ${HOME}/.local/share/bibletime
-allow  ${HOME}/.bibletime
-allow  ${HOME}/.sword
-allow  ${HOME}/.local/share/bibletime
-allow  /usr/share/bibletime
-allow  /usr/share/doc/bibletime
-allow  /usr/share/sword
+whitelist ${HOME}/.bibletime
+whitelist ${HOME}/.sword
+whitelist ${HOME}/.local/share/bibletime
+whitelist /usr/share/bibletime
+whitelist /usr/share/doc/bibletime
+whitelist /usr/share/sword
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

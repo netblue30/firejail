@@ -6,7 +6,7 @@ include calligrawords.local
 # added by included profile
 #include globals.local
 
-nodeny  ${HOME}/.local/share/kxmlgui5/calligrawords
+noblacklist ${HOME}/.local/share/kxmlgui5/calligrawords
 
 # Redirect
 include calligra.profile

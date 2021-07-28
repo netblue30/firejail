@@ -8,11 +8,11 @@ include globals.local
 
 ignore noexec /tmp
 
-nodeny  ${HOME}/.config/Riot
+noblacklist ${HOME}/.config/Riot
 
 mkdir ${HOME}/.config/Riot
-allow  ${HOME}/.config/Riot
-allow  /usr/share/webapps/element
+whitelist ${HOME}/.config/Riot
+whitelist /usr/share/webapps/element
 
 # Redirect
 include electron.profile

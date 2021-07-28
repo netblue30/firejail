@@ -6,7 +6,7 @@ include xonotic.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.xonotic
+noblacklist ${HOME}/.xonotic
 
 include allow-bin-sh.inc
 include allow-opengl-game.inc
@@ -21,8 +21,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.xonotic
-allow  ${HOME}/.xonotic
-allow  /usr/share/xonotic
+whitelist ${HOME}/.xonotic
+whitelist /usr/share/xonotic
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

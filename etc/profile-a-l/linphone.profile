@@ -6,10 +6,10 @@ include linphone.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/linphone
-nodeny  ${HOME}/.linphone-history.db
-nodeny  ${HOME}/.linphonerc
-nodeny  ${HOME}/.local/share/linphone
+noblacklist ${HOME}/.config/linphone
+noblacklist ${HOME}/.linphone-history.db
+noblacklist ${HOME}/.linphonerc
+noblacklist ${HOME}/.local/share/linphone
 
 include disable-common.inc
 include disable-devel.inc
@@ -23,11 +23,11 @@ include disable-programs.inc
 # ${HOME}/.linphone-history.db and ${HOME}/.linphonerc but no longer mkfile.
 mkdir ${HOME}/.config/linphone
 mkdir ${HOME}/.local/share/linphone
-allow  ${HOME}/.config/linphone
-allow  ${HOME}/.linphone-history.db
-allow  ${HOME}/.linphonerc
-allow  ${HOME}/.local/share/linphone
-allow  ${DOWNLOADS}
+whitelist ${HOME}/.config/linphone
+whitelist ${HOME}/.linphone-history.db
+whitelist ${HOME}/.linphonerc
+whitelist ${HOME}/.local/share/linphone
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 
 caps.drop all

@@ -89,18 +89,24 @@ Inheritance of groups
 What to do if seccomp breaks a program
 --------------------------------------
 
-```
-$ journalctl --grep=syscall --follow
-<...> audit[…]: SECCOMP <...> syscall=161 <...>
-$ firejail --debug-syscalls | grep 161
-161 - chroot
-```
-Profile: `seccomp -> seccomp !chroot`
-
-Start `journalctl --grep=syscall --follow` in a terminal, then start the broken
-program. Now you see one or more long lines containing `syscall=NUMBER` somewhere.
-Stop journalctl (^C) and execute `firejail --debug-syscalls | grep NUMBER`. You
-will see something like `NUMBER  - NAME`, because you now know the name of the
-syscall, you can add an exception to seccomp by putting `!NAME` to seccomp.
+Start `journalctl --grep=SECCOMP --follow` in a terminal and run
+`firejail --seccomp-error-action=log /path/to/program` in a second terminal.
+Now switch back to the first terminal (where `journalctl` is running) and look
+for the numbers of the blocked syscall(s) (`syscall=<NUMBER>`). As soon as you
+have found them, you can stop `journalctl` (^C) and execute
+`firejail --debug-syscalls | grep NUMBER` to get the name of the syscall.
+In the particular case that it is a 32bit syscall on a 64bit system, use `ausyscall i386 NUMBER`.
+Now you can add a seccomp exception using `seccomp !NAME`.
 
 If the blocked syscall is ptrace, consider to add allow-debuggers to the profile.
+
+```
+term1$ journalctl --grep=SECCOMP --follow
+term2$ firejail --seccomp-error-action=log /usr/bin/signal-desktop
+term1$ (journalctl --grep=SECCOMP --follow)
+audit[1234]: SECCOMP ... comm="signal-desktop" exe="/usr/bin/signal-desktop" sig=31 arch=c000003e syscall=161 ...
+^C
+term1$ firejail --debug-syscalls | grep "^161[[:space:]]"
+161     - chroot
+```
+Profile: `seccomp -> seccomp !chroot`

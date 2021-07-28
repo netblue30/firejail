@@ -7,11 +7,11 @@ include dig.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.digrc
-nodeny  ${PATH}/dig
+noblacklist ${HOME}/.digrc
+noblacklist ${PATH}/dig
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}
 
 include disable-common.inc
 # include disable-devel.inc
@@ -22,7 +22,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 #mkfile ${HOME}/.digrc - see #903
-allow  ${HOME}/.digrc
+whitelist ${HOME}/.digrc
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

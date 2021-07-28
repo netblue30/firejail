@@ -6,11 +6,11 @@ include supertuxkart.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/supertuxkart
-nodeny  ${HOME}/.cache/supertuxkart
-nodeny  ${HOME}/.local/share/supertuxkart
+noblacklist ${HOME}/.config/supertuxkart
+noblacklist ${HOME}/.cache/supertuxkart
+noblacklist ${HOME}/.local/share/supertuxkart
 
-deny  /usr/libexec
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -24,11 +24,11 @@ include disable-xdg.inc
 mkdir ${HOME}/.config/supertuxkart
 mkdir ${HOME}/.cache/supertuxkart
 mkdir ${HOME}/.local/share/supertuxkart
-allow  ${HOME}/.config/supertuxkart
-allow  ${HOME}/.cache/supertuxkart
-allow  ${HOME}/.local/share/supertuxkart
-allow  /usr/share/supertuxkart
-allow  /usr/share/games/supertuxkart	# Debian version
+whitelist ${HOME}/.config/supertuxkart
+whitelist ${HOME}/.cache/supertuxkart
+whitelist ${HOME}/.local/share/supertuxkart
+whitelist /usr/share/supertuxkart
+whitelist /usr/share/games/supertuxkart	# Debian version
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

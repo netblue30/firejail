@@ -22,12 +22,13 @@ firejail-users.5
 firejail.1
 firemon.1
 firecfg.1
-jailcheck.5
+jailcheck.1
 mkdeb.sh
 src/firejail/firejail
 src/firemon/firemon
 src/firecfg/firecfg
 src/ftee/ftee
+src/fids/fids
 src/tags
 src/faudit/faudit
 src/fnet/fnet

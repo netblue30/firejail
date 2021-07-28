@@ -6,11 +6,11 @@ include 0ad.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/0ad
-nodeny  ${HOME}/.config/0ad
-nodeny  ${HOME}/.local/share/0ad
+noblacklist ${HOME}/.cache/0ad
+noblacklist ${HOME}/.config/0ad
+noblacklist ${HOME}/.local/share/0ad
 
-deny  /usr/libexec
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
@@ -23,11 +23,11 @@ include disable-xdg.inc
 mkdir ${HOME}/.cache/0ad
 mkdir ${HOME}/.config/0ad
 mkdir ${HOME}/.local/share/0ad
-allow  ${HOME}/.cache/0ad
-allow  ${HOME}/.config/0ad
-allow  ${HOME}/.local/share/0ad
-allow  /usr/share/0ad
-allow  /usr/share/games
+whitelist ${HOME}/.cache/0ad
+whitelist ${HOME}/.config/0ad
+whitelist ${HOME}/.local/share/0ad
+whitelist /usr/share/0ad
+whitelist /usr/share/games
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

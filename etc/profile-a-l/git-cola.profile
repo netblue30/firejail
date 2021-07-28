@@ -8,12 +8,12 @@ include globals.local
 
 ignore noexec ${HOME}
 
-nodeny  ${HOME}/.gitconfig
-nodeny  ${HOME}/.git-credentials
-nodeny  ${HOME}/.gnupg
-nodeny  ${HOME}/.subversion
-nodeny  ${HOME}/.config/git
-nodeny  ${HOME}/.config/git-cola
+noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credentials
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.subversion
+noblacklist ${HOME}/.config/git
+noblacklist ${HOME}/.config/git-cola
 # Add your editor/diff viewer config paths and the next line to your git-cola.local to load settings.
 #noblacklist ${HOME}/
 
@@ -32,17 +32,17 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-allow  ${RUNUSER}/gnupg
-allow  ${RUNUSER}/keyring
+whitelist ${RUNUSER}/gnupg
+whitelist ${RUNUSER}/keyring
 # Add additional whitelist paths below /usr/share to your git-cola.local to support your editor/diff viewer.
-allow  /usr/share/git
-allow  /usr/share/git-cola
-allow  /usr/share/git-core
-allow  /usr/share/git-gui
-allow  /usr/share/gitk
-allow  /usr/share/gitweb
-allow  /usr/share/gnupg
-allow  /usr/share/gnupg2
+whitelist /usr/share/git
+whitelist /usr/share/git-cola
+whitelist /usr/share/git-core
+whitelist /usr/share/git-gui
+whitelist /usr/share/gitk
+whitelist /usr/share/gitweb
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

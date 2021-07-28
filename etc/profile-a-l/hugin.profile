@@ -6,9 +6,9 @@ include hugin.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.hugin
-nodeny  ${DOCUMENTS}
-nodeny  ${PICTURES}
+noblacklist ${HOME}/.hugin
+noblacklist ${DOCUMENTS}
+noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc

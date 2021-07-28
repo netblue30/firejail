@@ -7,9 +7,9 @@ include pngquant.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${PICTURES}
+noblacklist ${PICTURES}
 
-deny  ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

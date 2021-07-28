@@ -6,11 +6,11 @@ include k3b.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/k3brc
-nodeny  ${HOME}/.kde/share/config/k3brc
-nodeny  ${HOME}/.kde4/share/config/k3brc
-nodeny  ${HOME}/.local/share/kxmlgui5/k3b
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.config/k3brc
+noblacklist ${HOME}/.kde/share/config/k3brc
+noblacklist ${HOME}/.kde4/share/config/k3brc
+noblacklist ${HOME}/.local/share/kxmlgui5/k3b
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

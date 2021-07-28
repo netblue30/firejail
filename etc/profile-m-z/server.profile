@@ -32,12 +32,12 @@ include globals.local
 # it allows /sbin and /usr/sbin directories - this is where servers are installed
 # depending on your usage, you can enable some of the commands below:
 
-nodeny  /sbin
-nodeny  /usr/sbin
+noblacklist /sbin
+noblacklist /usr/sbin
 # noblacklist /var/opt
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}/wayland-*
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 # include disable-devel.inc

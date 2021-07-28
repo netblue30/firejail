@@ -6,17 +6,17 @@ include devilspie2.local
 # Persistent global definitions
 #include globals.local
 
-deny  ${HOME}/.devilspie
+blacklist ${HOME}/.devilspie
 
-deny  ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}/wayland-*
 
-nodeny  ${HOME}/.config/devilspie2
+noblacklist ${HOME}/.config/devilspie2
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
 mkdir ${HOME}/.config/devilspie2
-allow  ${HOME}/.config/devilspie2
+whitelist ${HOME}/.config/devilspie2
 
 private-bin devilspie2
 

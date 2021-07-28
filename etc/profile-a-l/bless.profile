@@ -6,7 +6,7 @@ include bless.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/bless
+noblacklist ${HOME}/.config/bless
 
 include disable-common.inc
 include disable-devel.inc

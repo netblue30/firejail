@@ -11,8 +11,8 @@ include globals.local
 #protocol unix,inet,inet6
 #private-etc ca-certificates,ssl,pki,crypto-policies,nsswitch.conf,resolv.conf
 
-nodeny  ${HOME}/.cache/marker
-nodeny  ${DOCUMENTS}
+noblacklist ${HOME}/.cache/marker
+noblacklist ${DOCUMENTS}
 
 include allow-python3.inc
 
@@ -25,8 +25,8 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  /usr/libexec/webkit2gtk-4.0
-allow  /usr/share/com.github.fabiocolacio.marker
+whitelist /usr/libexec/webkit2gtk-4.0
+whitelist /usr/share/com.github.fabiocolacio.marker
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -6,7 +6,7 @@ include ballbuster.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.ballbuster.hs
+noblacklist ${HOME}/.ballbuster.hs
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkfile ${HOME}/.ballbuster.hs
-allow  ${HOME}/.ballbuster.hs
-allow  /usr/share/ballbuster
+whitelist ${HOME}/.ballbuster.hs
+whitelist /usr/share/ballbuster
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -8,12 +8,12 @@ include globals.local
 
 ignore dbus-user
 
-nodeny  ${HOME}/.config/nuclear
+noblacklist ${HOME}/.config/nuclear
 
 include disable-shell.inc
 
 mkdir ${HOME}/.config/nuclear
-allow  ${HOME}/.config/nuclear
+whitelist ${HOME}/.config/nuclear
 
 no3d
 

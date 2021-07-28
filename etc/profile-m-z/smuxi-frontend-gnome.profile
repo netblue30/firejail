@@ -6,9 +6,9 @@ include smuxi-frontend-gnome.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/smuxi
-nodeny  ${HOME}/.config/smuxi
-nodeny  ${HOME}/.local/share/smuxi
+noblacklist ${HOME}/.cache/smuxi
+noblacklist ${HOME}/.config/smuxi
+noblacklist ${HOME}/.local/share/smuxi
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,10 +21,10 @@ include disable-xdg.inc
 mkdir ${HOME}/.cache/smuxi
 mkdir ${HOME}/.config/smuxi
 mkdir ${HOME}/.local/share/smuxi
-allow  ${HOME}/.cache/smuxi
-allow  ${HOME}/.config/smuxi
-allow  ${HOME}/.local/share/smuxi
-allow  ${DOWNLOADS}
+whitelist ${HOME}/.cache/smuxi
+whitelist ${HOME}/.config/smuxi
+whitelist ${HOME}/.local/share/smuxi
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

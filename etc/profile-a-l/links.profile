@@ -7,10 +7,10 @@ include links.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.links
+noblacklist ${HOME}/.links
 
 mkdir ${HOME}/.links
-allow  ${HOME}/.links
+whitelist ${HOME}/.links
 
 private-bin links
 

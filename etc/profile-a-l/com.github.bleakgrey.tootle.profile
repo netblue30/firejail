@@ -6,7 +6,7 @@ include com.github.bleakgrey.tootle.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/com.github.bleakgrey.tootle
+noblacklist ${HOME}/.config/com.github.bleakgrey.tootle
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/com.github.bleakgrey.tootle
-allow  ${DOWNLOADS}
-allow  ${HOME}/.config/com.github.bleakgrey.tootle
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.config/com.github.bleakgrey.tootle
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -5,7 +5,7 @@ include cin.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.bcast5
+noblacklist ${HOME}/.bcast5
 
 include disable-common.inc
 include disable-devel.inc

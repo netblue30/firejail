@@ -6,7 +6,7 @@ include pitivi.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/pitivi
+noblacklist ${HOME}/.config/pitivi
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

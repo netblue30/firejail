@@ -12,11 +12,17 @@ ignore noexec ${HOME}
 #ignore nogroups
 #ignore noroot
 #ignore private-dev
+# Add the following to your kodi.local if you use the Lutris Kodi Addon
+#noblacklist /sbin
+#noblacklist /usr/sbin
+#noblacklist ${HOME}/.cache/lutris
+#noblacklist ${HOME}/.config/lutris
+#noblacklist ${HOME}/.local/share/lutris
 
-nodeny  ${HOME}/.kodi
-nodeny  ${MUSIC}
-nodeny  ${PICTURES}
-nodeny  ${VIDEOS}
+noblacklist ${HOME}/.kodi
+noblacklist ${MUSIC}
+noblacklist ${PICTURES}
+noblacklist ${VIDEOS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

@@ -6,13 +6,13 @@ include kube.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.gnupg
-nodeny  ${HOME}/.mozilla
-nodeny  ${HOME}/.cache/kube
-nodeny  ${HOME}/.config/kube
-nodeny  ${HOME}/.config/sink
-nodeny  ${HOME}/.local/share/kube
-nodeny  ${HOME}/.local/share/sink
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.mozilla
+noblacklist ${HOME}/.cache/kube
+noblacklist ${HOME}/.config/kube
+noblacklist ${HOME}/.config/sink
+noblacklist ${HOME}/.local/share/kube
+noblacklist ${HOME}/.local/share/sink
 
 include disable-common.inc
 include disable-devel.inc
@@ -29,17 +29,17 @@ mkdir ${HOME}/.config/kube
 mkdir ${HOME}/.config/sink
 mkdir ${HOME}/.local/share/kube
 mkdir ${HOME}/.local/share/sink
-allow  ${HOME}/.gnupg
-allow  ${HOME}/.mozilla/firefox/profiles.ini
-allow  ${HOME}/.cache/kube
-allow  ${HOME}/.config/kube
-allow  ${HOME}/.config/sink
-allow  ${HOME}/.local/share/kube
-allow  ${HOME}/.local/share/sink
-allow  ${RUNUSER}/gnupg
-allow  /usr/share/kube
-allow  /usr/share/gnupg
-allow  /usr/share/gnupg2
+whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
+whitelist ${HOME}/.cache/kube
+whitelist ${HOME}/.config/kube
+whitelist ${HOME}/.config/sink
+whitelist ${HOME}/.local/share/kube
+whitelist ${HOME}/.local/share/sink
+whitelist ${RUNUSER}/gnupg
+whitelist /usr/share/kube
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

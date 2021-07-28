@@ -17,9 +17,9 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-allow  /var/log/apt/history.log
-allow  /var/log/dnf.rpm.log
-allow  /var/log/pacman.log
+whitelist /var/log/apt/history.log
+whitelist /var/log/dnf.rpm.log
+whitelist /var/log/pacman.log
 
 apparmor
 caps.drop all

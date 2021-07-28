@@ -6,7 +6,7 @@ include gramps.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.gramps
+noblacklist ${HOME}/.gramps
 
 # Allow python (blacklisted by disable-interpreters.inc)
 #include allow-python2.inc
@@ -21,7 +21,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.gramps
-allow  ${HOME}/.gramps
+whitelist ${HOME}/.gramps
 include whitelist-common.inc
 include whitelist-var-common.inc
 

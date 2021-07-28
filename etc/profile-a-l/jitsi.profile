@@ -5,7 +5,7 @@ include jitsi.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.jitsi
+noblacklist ${HOME}/.jitsi
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc

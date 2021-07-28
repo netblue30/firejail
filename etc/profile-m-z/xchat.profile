@@ -6,7 +6,7 @@ include xchat.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/xchat
+noblacklist ${HOME}/.config/xchat
 
 include disable-common.inc
 include disable-devel.inc

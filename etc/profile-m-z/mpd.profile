@@ -6,10 +6,10 @@ include mpd.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/mpd
-nodeny  ${HOME}/.mpd
-nodeny  ${HOME}/.mpdconf
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.config/mpd
+noblacklist ${HOME}/.mpd
+noblacklist ${HOME}/.mpdconf
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

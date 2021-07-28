@@ -10,15 +10,15 @@ ignore whitelist /usr/share/chromium
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 
-nodeny  ${HOME}/.cache/snox
-nodeny  ${HOME}/.config/snox
+noblacklist ${HOME}/.cache/snox
+noblacklist ${HOME}/.config/snox
 
 #mkdir ${HOME}/.cache/dnox
 #mkdir ${HOME}/.config/dnox
 mkdir ${HOME}/.cache/snox
 mkdir ${HOME}/.config/snox
-allow  ${HOME}/.cache/snox
-allow  ${HOME}/.config/snox
+whitelist ${HOME}/.cache/snox
+whitelist ${HOME}/.config/snox
 
 # Redirect
 include chromium-common.profile

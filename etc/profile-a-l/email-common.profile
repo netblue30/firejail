@@ -7,14 +7,14 @@ include email-common.local
 # added by caller profile
 #include globals.local
 
-nodeny  ${HOME}/.gnupg
-nodeny  ${HOME}/.mozilla
-nodeny  ${HOME}/.signature
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.mozilla
+noblacklist ${HOME}/.signature
 # when storing mail outside the default ${HOME}/Mail path, 'noblacklist' the custom path in your email-common.local
 # and 'blacklist' it in your disable-common.local too so it is  kept hidden from other applications
-nodeny  ${HOME}/Mail
+noblacklist ${HOME}/Mail
 
-nodeny  ${DOCUMENTS}
+noblacklist ${DOCUMENTS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -27,17 +27,17 @@ include disable-xdg.inc
 mkdir ${HOME}/.gnupg
 mkfile ${HOME}/.config/mimeapps.list
 mkfile ${HOME}/.signature
-allow  ${HOME}/.config/mimeapps.list
-allow  ${HOME}/.mozilla/firefox/profiles.ini
-allow  ${HOME}/.gnupg
-allow  ${HOME}/.signature
-allow  ${DOCUMENTS}
-allow  ${DOWNLOADS}
+whitelist ${HOME}/.config/mimeapps.list
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
+whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.signature
+whitelist ${DOCUMENTS}
+whitelist ${DOWNLOADS}
 # when storing mail outside the default ${HOME}/Mail path, 'whitelist' the custom path in your email-common.local
-allow  ${HOME}/Mail
-allow  ${RUNUSER}/gnupg
-allow  /usr/share/gnupg
-allow  /usr/share/gnupg2
+whitelist ${HOME}/Mail
+whitelist ${RUNUSER}/gnupg
+whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

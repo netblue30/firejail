@@ -6,12 +6,12 @@ include newsboat.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/newsbeuter
-nodeny  ${HOME}/.config/newsboat
-nodeny  ${HOME}/.local/share/newsbeuter
-nodeny  ${HOME}/.local/share/newsboat
-nodeny  ${HOME}/.newsbeuter
-nodeny  ${HOME}/.newsboat
+noblacklist ${HOME}/.config/newsbeuter
+noblacklist ${HOME}/.config/newsboat
+noblacklist ${HOME}/.local/share/newsbeuter
+noblacklist ${HOME}/.local/share/newsboat
+noblacklist ${HOME}/.newsbeuter
+noblacklist ${HOME}/.newsboat
 
 include disable-common.inc
 include disable-devel.inc
@@ -24,12 +24,12 @@ include disable-xdg.inc
 mkdir ${HOME}/.config/newsboat
 mkdir ${HOME}/.local/share/newsboat
 mkdir ${HOME}/.newsboat
-allow  ${HOME}/.config/newsbeuter
-allow  ${HOME}/.config/newsboat
-allow  ${HOME}/.local/share/newsbeuter
-allow  ${HOME}/.local/share/newsboat
-allow  ${HOME}/.newsbeuter
-allow  ${HOME}/.newsboat
+whitelist ${HOME}/.config/newsbeuter
+whitelist ${HOME}/.config/newsboat
+whitelist ${HOME}/.local/share/newsbeuter
+whitelist ${HOME}/.local/share/newsboat
+whitelist ${HOME}/.newsbeuter
+whitelist ${HOME}/.newsboat
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc

@@ -5,9 +5,9 @@ include multimc5.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.local/share/multimc
-nodeny  ${HOME}/.local/share/multimc5
-nodeny  ${HOME}/.multimc5
+noblacklist ${HOME}/.local/share/multimc
+noblacklist ${HOME}/.local/share/multimc5
+noblacklist ${HOME}/.multimc5
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
@@ -22,9 +22,9 @@ include disable-programs.inc
 mkdir ${HOME}/.local/share/multimc
 mkdir ${HOME}/.local/share/multimc5
 mkdir ${HOME}/.multimc5
-allow  ${HOME}/.local/share/multimc
-allow  ${HOME}/.local/share/multimc5
-allow  ${HOME}/.multimc5
+whitelist ${HOME}/.local/share/multimc
+whitelist ${HOME}/.local/share/multimc5
+whitelist ${HOME}/.multimc5
 include whitelist-common.inc
 
 caps.drop all

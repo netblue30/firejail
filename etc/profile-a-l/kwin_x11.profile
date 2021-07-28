@@ -8,10 +8,10 @@ include globals.local
 # fix automatical kwin_x11 sandboxing:
 # echo KDEWM=kwin_x11 >> ~/.pam_environment
 
-nodeny  ${HOME}/.cache/kwin
-nodeny  ${HOME}/.config/kwinrc
-nodeny  ${HOME}/.config/kwinrulesrc
-nodeny  ${HOME}/.local/share/kwin
+noblacklist ${HOME}/.cache/kwin
+noblacklist ${HOME}/.config/kwinrc
+noblacklist ${HOME}/.config/kwinrulesrc
+noblacklist ${HOME}/.local/share/kwin
 
 include disable-common.inc
 include disable-devel.inc

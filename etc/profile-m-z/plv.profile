@@ -6,7 +6,7 @@ include plv.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/PacmanLogViewer
+noblacklist ${HOME}/.config/PacmanLogViewer
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,8 +17,8 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/PacmanLogViewer
-allow  ${HOME}/.config/PacmanLogViewer
-allow  /var/log/pacman.log
+whitelist ${HOME}/.config/PacmanLogViewer
+whitelist /var/log/pacman.log
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc

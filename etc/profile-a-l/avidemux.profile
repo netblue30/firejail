@@ -5,9 +5,9 @@ include avidemux.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.avidemux6
-nodeny  ${HOME}/.config/avidemux3_qt5rc
-nodeny  ${VIDEOS}
+noblacklist ${HOME}/.avidemux6
+noblacklist ${HOME}/.config/avidemux3_qt5rc
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,9 +20,10 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.avidemux6
 mkdir ${HOME}/.config/avidemux3_qt5rc
-allow  ${HOME}/.avidemux6
-allow  ${HOME}/.config/avidemux3_qt5rc
-allow  ${VIDEOS}
+whitelist ${HOME}/.avidemux6
+whitelist ${HOME}/.config/avidemux3_qt5rc
+whitelist ${VIDEOS}
+
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

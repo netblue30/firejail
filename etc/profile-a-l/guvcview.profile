@@ -6,10 +6,10 @@ include guvcview.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/guvcview2
+noblacklist ${HOME}/.config/guvcview2
 
-nodeny  ${PICTURES}
-nodeny  ${VIDEOS}
+noblacklist ${PICTURES}
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,9 +21,9 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/guvcview2
-allow  ${HOME}/.config/guvcview2
-allow  ${PICTURES}
-allow  ${VIDEOS}
+whitelist ${HOME}/.config/guvcview2
+whitelist ${PICTURES}
+whitelist ${VIDEOS}
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

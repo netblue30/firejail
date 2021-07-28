@@ -5,7 +5,7 @@ include JDownloader.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.jd
+noblacklist ${HOME}/.jd
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
@@ -19,8 +19,8 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.jd
-allow  ${HOME}/.jd
-allow  ${DOWNLOADS}
+whitelist ${HOME}/.jd
+whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-var-common.inc
 

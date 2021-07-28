@@ -6,7 +6,7 @@ include lximage-qt.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/lximage-qt
+noblacklist ${HOME}/.config/lximage-qt
 
 include disable-common.inc
 include disable-devel.inc

@@ -8,8 +8,8 @@ include globals.local
 
 # when gjs apps are started via gnome-shell, firejail is not applied because systemd will start them
 
-nodeny  ${HOME}/.config/libreoffice
-nodeny  ${DOCUMENTS}
+noblacklist ${HOME}/.config/libreoffice
+noblacklist ${DOCUMENTS}
 
 # Allow gjs (blacklisted by disable-interpreters.inc)
 include allow-gjs.inc

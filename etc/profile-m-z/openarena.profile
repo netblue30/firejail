@@ -6,7 +6,7 @@ include openarena.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.openarena
+noblacklist ${HOME}/.openarena
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,8 +17,8 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.openarena
-allow  ${HOME}/.openarena
-allow  /usr/share/openarena
+whitelist ${HOME}/.openarena
+whitelist /usr/share/openarena
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

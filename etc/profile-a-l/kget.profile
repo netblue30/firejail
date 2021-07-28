@@ -6,13 +6,13 @@ include kget.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/kgetrc
-nodeny  ${HOME}/.kde/share/apps/kget
-nodeny  ${HOME}/.kde/share/config/kgetrc
-nodeny  ${HOME}/.kde4/share/apps/kget
-nodeny  ${HOME}/.kde4/share/config/kgetrc
-nodeny  ${HOME}/.local/share/kget
-nodeny  ${HOME}/.local/share/kxmlgui5/kget
+noblacklist ${HOME}/.config/kgetrc
+noblacklist ${HOME}/.kde/share/apps/kget
+noblacklist ${HOME}/.kde/share/config/kgetrc
+noblacklist ${HOME}/.kde4/share/apps/kget
+noblacklist ${HOME}/.kde4/share/config/kgetrc
+noblacklist ${HOME}/.local/share/kget
+noblacklist ${HOME}/.local/share/kxmlgui5/kget
 
 include disable-common.inc
 include disable-devel.inc

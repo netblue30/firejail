@@ -6,7 +6,7 @@ include pdfsam.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${DOCUMENTS}
+noblacklist ${DOCUMENTS}
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc

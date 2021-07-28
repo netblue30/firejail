@@ -6,7 +6,7 @@ include openclonk.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.clonk
+noblacklist ${HOME}/.clonk
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,7 +18,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.clonk
-allow  ${HOME}/.clonk
+whitelist ${HOME}/.clonk
 include whitelist-common.inc
 include whitelist-var-common.inc
 

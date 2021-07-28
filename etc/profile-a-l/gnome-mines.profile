@@ -6,11 +6,11 @@ include gnome-mines.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.local/share/gnome-mines
+noblacklist ${HOME}/.local/share/gnome-mines
 
 mkdir ${HOME}/.local/share/gnome-mines
-allow  ${HOME}/.local/share/gnome-mines
-allow  /usr/share/gnome-mines
+whitelist ${HOME}/.local/share/gnome-mines
+whitelist /usr/share/gnome-mines
 
 private-bin gnome-mines
 

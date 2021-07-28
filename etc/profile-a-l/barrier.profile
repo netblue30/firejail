@@ -6,9 +6,9 @@ include barrier.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/Debauchee/Barrier.conf
-nodeny  ${HOME}/.local/share/barrier
-nodeny  ${PATH}/openssl
+noblacklist ${HOME}/.config/Debauchee/Barrier.conf
+noblacklist ${HOME}/.local/share/barrier
+noblacklist ${PATH}/openssl
 
 include disable-common.inc
 include disable-devel.inc

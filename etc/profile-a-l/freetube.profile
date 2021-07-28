@@ -6,12 +6,12 @@ include freetube.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/FreeTube
+noblacklist ${HOME}/.config/FreeTube
 
 include disable-shell.inc
 
 mkdir ${HOME}/.config/FreeTube
-allow  ${HOME}/.config/FreeTube
+whitelist ${HOME}/.config/FreeTube
 
 private-bin freetube
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,mime.types,nsswitch.conf,pki,pulse,resolv.conf,ssl,X11,xdg

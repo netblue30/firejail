@@ -6,8 +6,8 @@ include psi-plus.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/psi+
-nodeny  ${HOME}/.local/share/psi+
+noblacklist ${HOME}/.config/psi+
+noblacklist ${HOME}/.local/share/psi+
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,10 +19,10 @@ include disable-programs.inc
 mkdir ${HOME}/.cache/psi+
 mkdir ${HOME}/.config/psi+
 mkdir ${HOME}/.local/share/psi+
-allow  ${DOWNLOADS}
-allow  ${HOME}/.cache/psi+
-allow  ${HOME}/.config/psi+
-allow  ${HOME}/.local/share/psi+
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.cache/psi+
+whitelist ${HOME}/.config/psi+
+whitelist ${HOME}/.local/share/psi+
 include whitelist-common.inc
 
 caps.drop all

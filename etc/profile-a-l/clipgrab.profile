@@ -6,9 +6,9 @@ include clipgrab.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/Philipp Schmieder
-nodeny  ${HOME}/.pki
-nodeny  ${VIDEOS}
+noblacklist ${HOME}/.config/Philipp Schmieder
+noblacklist ${HOME}/.pki
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc

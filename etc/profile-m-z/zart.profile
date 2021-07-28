@@ -6,8 +6,8 @@ include zart.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${DOCUMENTS}
-nodeny  ${PICTURES}
+noblacklist ${DOCUMENTS}
+noblacklist ${PICTURES}
 
 include disable-common.inc
 include disable-devel.inc

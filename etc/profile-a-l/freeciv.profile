@@ -6,7 +6,7 @@ include freeciv.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.freeciv
+noblacklist ${HOME}/.freeciv
 
 include disable-common.inc
 include disable-devel.inc
@@ -17,7 +17,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.freeciv
-allow  ${HOME}/.freeciv
+whitelist ${HOME}/.freeciv
 include whitelist-common.inc
 include whitelist-var-common.inc
 

@@ -7,10 +7,10 @@ include globals.local
 
 ignore noexec /tmp
 
-nodeny  ${HOME}/.cache/Ferdi
-nodeny  ${HOME}/.config/Ferdi
-nodeny  ${HOME}/.pki
-nodeny  ${HOME}/.local/share/pki
+noblacklist ${HOME}/.cache/Ferdi
+noblacklist ${HOME}/.config/Ferdi
+noblacklist ${HOME}/.pki
+noblacklist ${HOME}/.local/share/pki
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,11 +22,11 @@ mkdir ${HOME}/.cache/Ferdi
 mkdir ${HOME}/.config/Ferdi
 mkdir ${HOME}/.pki
 mkdir ${HOME}/.local/share/pki
-allow  ${DOWNLOADS}
-allow  ${HOME}/.cache/Ferdi
-allow  ${HOME}/.config/Ferdi
-allow  ${HOME}/.pki
-allow  ${HOME}/.local/share/pki
+whitelist ${DOWNLOADS}
+whitelist ${HOME}/.cache/Ferdi
+whitelist ${HOME}/.config/Ferdi
+whitelist ${HOME}/.pki
+whitelist ${HOME}/.local/share/pki
 include whitelist-common.inc
 
 caps.drop all

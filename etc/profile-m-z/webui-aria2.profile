@@ -6,7 +6,7 @@ include webui-aria2.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${PATH}/node
+noblacklist ${PATH}/node
 
 include disable-common.inc
 include disable-devel.inc

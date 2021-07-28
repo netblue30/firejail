@@ -9,7 +9,7 @@ include globals.local
 ignore machine-id
 ignore nosound
 
-allow  /usr/share/gnome-robots
+whitelist /usr/share/gnome-robots
 
 private-bin gnome-robots
 

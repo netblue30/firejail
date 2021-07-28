@@ -9,7 +9,7 @@ include zgrep.local
 
 # Allow running kernel config check
 ignore include disable-shell.inc
-nodeny  /proc/config.gz
+noblacklist /proc/config.gz
 
 # Redirect
 include gzip.profile

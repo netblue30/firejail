@@ -6,7 +6,7 @@ include hyperrogue.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/hyperrogue.ini
+noblacklist ${HOME}/hyperrogue.ini
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkfile ${HOME}/hyperrogue.ini
-allow  ${HOME}/hyperrogue.ini
-allow  /usr/share/hyperrogue
+whitelist ${HOME}/hyperrogue.ini
+whitelist /usr/share/hyperrogue
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

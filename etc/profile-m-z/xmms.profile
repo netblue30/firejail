@@ -5,8 +5,8 @@ include xmms.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.xmms
-nodeny  ${MUSIC}
+noblacklist ${HOME}/.xmms
+noblacklist ${MUSIC}
 
 include disable-common.inc
 include disable-devel.inc

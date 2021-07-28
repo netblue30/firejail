@@ -22,8 +22,8 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  /usr/share/seahorse-adventures
-allow  /usr/share/games/seahorse-adventures
+whitelist /usr/share/seahorse-adventures
+whitelist /usr/share/games/seahorse-adventures
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

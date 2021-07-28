@@ -2,5 +2,5 @@
 # Persistent customizations should go in a .local file.
 include allow-ruby.local
 
-nodeny  ${PATH}/ruby
-nodeny  /usr/lib/ruby
+noblacklist ${PATH}/ruby
+noblacklist /usr/lib/ruby

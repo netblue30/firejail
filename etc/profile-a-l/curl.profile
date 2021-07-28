@@ -12,11 +12,11 @@ include globals.local
 # Technically this file can be anywhere but let's assume users have it in ${HOME}/.curl-hsts.
 # If your setup diverts, add 'blacklist /path/to/curl/hsts/file' to your disable-programs.local
 # and 'noblacklist /path/to/curl/hsts/file' to curl.local to keep the sandbox logic intact.
-nodeny  ${HOME}/.curl-hsts
-nodeny  ${HOME}/.curlrc
+noblacklist ${HOME}/.curl-hsts
+noblacklist ${HOME}/.curlrc
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-exec.inc

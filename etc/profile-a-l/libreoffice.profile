@@ -6,15 +6,15 @@ include libreoffice.local
 # Persistent global definitions
 include globals.local
 
-nodeny  /usr/local/sbin
-nodeny  ${HOME}/.config/libreoffice
+noblacklist /usr/local/sbin
+noblacklist ${HOME}/.config/libreoffice
 
 # libreoffice uses java for some functionality.
 # Add 'ignore include allow-java.inc' to your libreoffice.local if you don't need that functionality.
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
 
-deny  /usr/libexec
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

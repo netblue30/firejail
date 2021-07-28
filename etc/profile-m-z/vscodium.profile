@@ -6,7 +6,7 @@ include vscodium.local
 # added by included profile
 #include globals.local
 
-nodeny  ${HOME}/.VSCodium
+noblacklist ${HOME}/.VSCodium
 
 # Redirect
 include code.profile

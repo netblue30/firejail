@@ -19,13 +19,13 @@ include disable-passwdmgr.inc
 include disable-xdg.inc
 
 # Whitelist your system icon directory,varies by distro
-allow  /usr/share/app-info
-allow  /usr/share/desktop-directories
-allow  /usr/share/icons
-allow  /usr/share/menulibre
-allow  /var/lib/app-info/icons
-allow  /var/lib/flatpak/exports/share/applications
-allow  /var/lib/flatpak/exports/share/icons
+whitelist /usr/share/app-info
+whitelist /usr/share/desktop-directories
+whitelist /usr/share/icons
+whitelist /usr/share/menulibre
+whitelist /var/lib/app-info/icons
+whitelist /var/lib/flatpak/exports/share/applications
+whitelist /var/lib/flatpak/exports/share/icons
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

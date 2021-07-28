@@ -8,9 +8,9 @@ include globals.local
 
 ignore noexec ${HOME}
 
-nodeny  ${PICTURES}
-nodeny  ${VIDEOS}
-nodeny  ${HOME}/.config/kazam
+noblacklist ${PICTURES}
+noblacklist ${VIDEOS}
+noblacklist ${HOME}/.config/kazam
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -25,7 +25,7 @@ include disable-passwdmgr.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-allow  /usr/share/kazam
+whitelist /usr/share/kazam
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

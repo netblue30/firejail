@@ -5,9 +5,9 @@ include peek.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.cache/peek
-nodeny  ${PICTURES}
-nodeny  ${VIDEOS}
+noblacklist ${HOME}/.cache/peek
+noblacklist ${PICTURES}
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc

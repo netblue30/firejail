@@ -13,8 +13,8 @@ include allow-lua.inc
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
-nodeny  ${HOME}/.config/totem
-nodeny  ${HOME}/.local/share/totem
+noblacklist ${HOME}/.config/totem
+noblacklist ${HOME}/.local/share/totem
 
 include disable-common.inc
 include disable-devel.inc
@@ -27,9 +27,9 @@ include disable-shell.inc
 read-only ${DESKTOP}
 mkdir ${HOME}/.config/totem
 mkdir ${HOME}/.local/share/totem
-allow  ${HOME}/.config/totem
-allow  ${HOME}/.local/share/totem
-allow  /usr/share/totem
+whitelist ${HOME}/.config/totem
+whitelist ${HOME}/.local/share/totem
+whitelist /usr/share/totem
 include whitelist-common.inc
 include whitelist-player-common.inc
 include whitelist-runuser-common.inc

@@ -6,7 +6,7 @@ include penguin-command.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.penguin-command
+noblacklist ${HOME}/.penguin-command
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,7 +16,7 @@ include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 
-allow  ${HOME}/.penguin-command
+whitelist ${HOME}/.penguin-command
 include whitelist-common.inc
 include whitelist-var-common.inc
 

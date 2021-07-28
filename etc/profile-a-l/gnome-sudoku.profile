@@ -6,10 +6,10 @@ include gnome-sudoku.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.local/share/gnome-sudoku
+noblacklist ${HOME}/.local/share/gnome-sudoku
 
 mkdir ${HOME}/.local/share/gnome-sudoku
-allow  ${HOME}/.local/share/gnome-sudoku
+whitelist ${HOME}/.local/share/gnome-sudoku
 
 private-bin gnome-sudoku
 

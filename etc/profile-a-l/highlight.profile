@@ -6,7 +6,7 @@ include highlight.local
 # Persistent global definitions
 include globals.local
 
-deny  ${RUNUSER}
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

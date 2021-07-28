@@ -14,10 +14,10 @@ ignore include whitelist-usr-share-common.inc
 ignore dbus-user none
 ignore dbus-system none
 
-nodeny  ${HOME}/.config/teams-for-linux
+noblacklist ${HOME}/.config/teams-for-linux
 
 mkdir ${HOME}/.config/teams-for-linux
-allow  ${HOME}/.config/teams-for-linux
+whitelist ${HOME}/.config/teams-for-linux
 
 private-bin bash,cut,echo,egrep,grep,head,sed,sh,teams-for-linux,tr,xdg-mime,xdg-open,zsh
 private-etc ca-certificates,crypto-policies,fonts,ld.so.cache,localtime,machine-id,pki,resolv.conf,ssl

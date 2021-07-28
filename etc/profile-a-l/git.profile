@@ -7,33 +7,33 @@ include git.local
 # Persistent global definitions
 include globals.local
 
-nodeny  ${HOME}/.config/git
-nodeny  ${HOME}/.config/nano
-nodeny  ${HOME}/.emacs
-nodeny  ${HOME}/.emacs.d
-nodeny  ${HOME}/.gitconfig
-nodeny  ${HOME}/.git-credentials
-nodeny  ${HOME}/.gnupg
-nodeny  ${HOME}/.nanorc
-nodeny  ${HOME}/.vim
-nodeny  ${HOME}/.viminfo
+noblacklist ${HOME}/.config/git
+noblacklist ${HOME}/.config/nano
+noblacklist ${HOME}/.emacs
+noblacklist ${HOME}/.emacs.d
+noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credentials
+noblacklist ${HOME}/.gnupg
+noblacklist ${HOME}/.nanorc
+noblacklist ${HOME}/.vim
+noblacklist ${HOME}/.viminfo
 
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc
 
-deny  /tmp/.X11-unix
-deny  ${RUNUSER}/wayland-*
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-exec.inc
 include disable-passwdmgr.inc
 include disable-programs.inc
 
-allow  /usr/share/git
-allow  /usr/share/git-core
-allow  /usr/share/gitgui
-allow  /usr/share/gitweb
-allow  /usr/share/nano
+whitelist /usr/share/git
+whitelist /usr/share/git-core
+whitelist /usr/share/gitgui
+whitelist /usr/share/gitweb
+whitelist /usr/share/nano
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

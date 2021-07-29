@@ -15,8 +15,8 @@ export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 
 echo "TESTING: build (test/utils/build.exp)"
 ./build.exp
-rm -f ~/firejail-test-file-7699
-rm -f firejail-test-file-4388
+rm -f ~/_firejail-test-file
+rm -f _firejail-test-file
 
 echo "TESTING: name (test/utils/name.exp)"
 ./name.exp

@@ -7,13 +7,13 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "echo testing > ~/firejail-test-file-7699\r"
+send -- "echo testing > ~/_firejail-test-file\r"
 after 100
 
-send -- "firejail --build cat ~/firejail-test-file-7699\r"
+send -- "firejail --build cat ~/_firejail-test-file\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"whitelist $\{HOME\}/firejail-test-file-7699"
+	"allow $\{HOME\}/_firejail-test-file"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
@@ -77,7 +77,8 @@ expect {
 }
 after 100
 
-
+send -- "rm -f ~/_firejail-test-file\r"
+after 100
 
 send -- "firejail --build cat /etc/passwd\r"
 expect {

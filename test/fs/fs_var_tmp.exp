@@ -16,13 +16,13 @@ expect {
 after 100
 send -- "stty -echo\r"
 
-send -- "echo mytest > /var/tmp/ttt;echo done\r"
+send -- "echo mytest > /var/tmp/_firejail_test_file;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"done"
 }
 
-send -- "cat /var/tmp/ttt;echo done\r"
+send -- "cat /var/tmp/_firejail_test_file;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"mytest"
@@ -32,13 +32,13 @@ expect {
 	"done"
 }
 
-send -- "rm /var/tmp/ttt;echo done\r"
+send -- "rm /var/tmp/_firejail_test_file;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"done"
 }
 
-send -- "cat /var/tmp/ttt;echo done\r"
+send -- "cat /var/tmp/_firejail_test_file;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"mytest" {puts "TESTING ERROR 6\n";exit}
@@ -58,13 +58,13 @@ expect {
 after 100
 send -- "stty -echo\r"
 
-send -- "echo mytest > /var/tmp/ttt;echo done\r"
+send -- "echo mytest > /var/tmp/_firejail_test_file;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
 	"done"
 }
 
-send -- "cat /var/tmp/ttt;echo done\r"
+send -- "cat /var/tmp/_firejail_test_file;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
 	"mytest"
@@ -74,13 +74,13 @@ expect {
 	"done"
 }
 
-send -- "rm /var/tmp/ttt;echo done\r"
+send -- "rm /var/tmp/_firejail_test_file;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
 	"done"
 }
 
-send -- "cat /var/tmp/ttt;echo done\r"
+send -- "cat /var/tmp/_firejail_test_file;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}
 	"mytest" {puts "TESTING ERROR 13\n";exit}

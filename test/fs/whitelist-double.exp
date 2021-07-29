@@ -7,17 +7,17 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "echo 123 > /tmp/firejal-deleteme\r"
+send -- "echo 123 > /tmp/_firejail_test_file\r"
 sleep 1
 
-send -- "firejail --whitelist=/tmp/firejal-deleteme --whitelist=/tmp/firejal-deleteme\r"
+send -- "firejail --whitelist=/tmp/_firejail_test_file --whitelist=/tmp/_firejail_test_file\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
 }
 sleep 1
 
-send -- "cat /tmp/firejal-deleteme\r"
+send -- "cat /tmp/_firejail_test_file\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"123"
@@ -26,13 +26,13 @@ expect {
 send -- "exit\r"
 sleep 1
 
-send -- "cat /tmp/firejal-deleteme\r"
+send -- "cat /tmp/_firejail_test_file\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"123"
 }
 
-send -- "rm -v /tmp/firejal-deleteme\r"
+send -- "rm -v /tmp/_firejail_test_file\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"removed"

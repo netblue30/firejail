@@ -1,6 +1,6 @@
-mkdir ~/.firejail_test/a/b/c
-mkfile ~/.firejail_test/a/b/c/d.txt
-mkdir /tmp/.firejail_test/a/b/c
-mkfile /tmp/.firejail_test/a/b/c/d.txt
-mkdir ${RUNUSER}/.firejail_test/a/b/c
-mkfile ${RUNUSER}/.firejail_test/a/b/c/d.txt
+mkdir ~/_firejail_test_dir
+mkfile ~/_firejail_test_dir/_firejail_test_file
+mkdir /tmp/_firejail_test_dir
+mkfile /tmp/_firejail_test_dir/_firejail_test_file
+mkdir ${RUNUSER}/_firejail_test_dir
+mkfile ${RUNUSER}/_firejail_test_dir/_firejail_test_file

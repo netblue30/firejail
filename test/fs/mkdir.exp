@@ -7,34 +7,34 @@ set timeout 3
 spawn $env(SHELL)
 match_max 100000
 
-send -- "rm -fr ~/.firejail_test\r"
+send -- "rm -fr ~/_firejail_test_dir\r"
 after 100
 
-send -- "firejail --profile=mkdir.profile find ~/.firejail_test\r"
+send -- "firejail --profile=mkdir.profile find ~/_firejail_test_dir\r"
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
-	".firejail_test/a/b/c/d.txt"
+	"_firejail_test_dir/_firejail_test_file"
 }
-send -- "rm -rf ~/.firejail_test\r"
+send -- "rm -rf ~/_firejail_test_dir\r"
 after 100
 
-send -- "firejail --profile=mkdir.profile find /tmp/.firejail_test\r"
+send -- "firejail --profile=mkdir.profile find /tmp/_firejail_test_dir\r"
 expect {
 	timeout {puts "TESTING ERROR 2.1\n";exit}
-	"/tmp/.firejail_test/a/b/c/d.txt"
+	"_firejail_test_dir/_firejail_test_file"
 }
-send -- "rm -rf /tmp/.firejail_test\r"
+send -- "rm -rf /tmp/_firejail_test_dir\r"
 after 100
 
 set UID [exec id -u]
 set fexist [file exist /run/user/$UID]
 if { $fexist } {
-	send -- "firejail --profile=mkdir.profile find /run/user/$UID/.firejail_test\r"
+	send -- "firejail --profile=mkdir.profile find /run/user/$UID/_firejail_test_dir\r"
 	expect {
 		timeout {puts "TESTING ERROR 3.1\n";exit}
-		"/run/user/$UID/.firejail_test/a/b/c/d.txt"
+		"_firejail_test_dir/_firejail_test_file"
 	}
-	send -- "rm -rf /run/user/$UID/.firejail_test\r"
+	send -- "rm -rf /run/user/$UID/_firejail_test_dir\r"
 	after 100
 
 

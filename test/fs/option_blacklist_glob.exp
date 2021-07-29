@@ -7,26 +7,41 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --blacklist=testdir1/*\r"
+send -- "mkdir ~/_firejail_test_dir\r"
+after 100
+send -- "touch ~/_firejail_test_dir/a\r"
+after 100
+send -- "mkdir ~/_firejail_test_dir/test1\r"
+after 100
+send -- "touch ~/_firejail_test_dir/test1/b\r"
+after 100
+
+send -- "firejail --blacklist=~/_firejail_test_dir/*\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
 }
 sleep 1
-send -- "cd testdir1\r"
+send -- "cd ~/_firejail_test_dir\r"
 sleep 1
 
-send -- "cat .file\r"
+send -- "cat a\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Permission denied"
 }
 
-send -- "ls .directory\r"
+send -- "ls test1\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"Permission denied"
 }
 after 100
 
-puts "\n"
+send -- "exit\r"
+sleep 1
+
+send -- "rm -fr ~/_firejail_test_dir\r"
+after 100
+
+puts "\nall done\n"

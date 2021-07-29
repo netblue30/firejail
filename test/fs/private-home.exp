@@ -95,8 +95,19 @@ expect {
 	"broken symbolic link"
 }
 send -- "exit\r"
+sleep 1
 
-send -- "rm -f ~/_firejail_test*\r"
+send -- "echo cleanup\r"
+after 100
+send -- "rm -f ~/_firejail_test_file1\r"
+after 100
+send -- "rm -f ~/_firejail_test_file2\r"
+after 100
+send -- "rm -fr ~/_firejail_test_dir1\r"
+after 100
+send -- "rm -f ~/_firejail_test_link1\r"
+after 100
+send -- "rm -f ~/_firejail_test_link2\r"
 after 100
 
 puts "\nall done\n"

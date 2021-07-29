@@ -7,6 +7,14 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
+send -- "mkdir ~/_firejail_test_dir\r"
+after 100
+send -- "touch ~/_firejail_test_dir/a\r"
+after 100
+send -- "mkdir ~/_firejail_test_dir/test1\r"
+after 100
+send -- "touch ~/_firejail_test_dir/test1/b\r"
+after 100
 
 send -- "firejail --noprofile --whitelist=~/_firejail_test_dir --read-only=~\r"
 expect {
@@ -25,4 +33,6 @@ after 100
 send -- "exit\r"
 sleep 1
 
+send -- "rm -fr ~/_firejail_test_dir\r"
+after 100
 puts "\nall done\n"

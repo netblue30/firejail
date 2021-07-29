@@ -21,13 +21,13 @@ if {[file exists ~/.Xauthority]} {
 	send -- "touch ~/.Xauthority\r"
 }
 after 100
-send -- "rm -fr ~/_firejail_test_dir_\r"
+send -- "rm -fr ~/_firejail_test_dir1_\r"
 after 100
-send -- "mkdir ~/_firejail_test_dir_\r"
+send -- "mkdir ~/_firejail_test_dir1_\r"
 sleep 1
 
 # testing profile and private
-send -- "firejail --private=~/_firejail_test_dir_\r"
+send -- "firejail --private=~/_firejail_test_dir1_\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -67,12 +67,12 @@ expect {
 	"private directory is not owned by the current user"
 }
 sleep 1
-send -- "mkdir ~/_firejail_test_dir_/test_dir_2\r"
+send -- "mkdir ~/_firejail_test_dir1_/test_dir_2\r"
 after 100
-send -- "touch ~/_firejail_test_dir_/test_dir_2/testfile\r"
+send -- "touch ~/_firejail_test_dir1_/test_dir_2/testfile\r"
 sleep 1
 
-send -- "firejail --debug --noprofile --blacklist=~/test_dir_2 --private=~/_firejail_test_dir_\r"
+send -- "firejail --debug --noprofile --blacklist=~/test_dir_2 --private=~/_firejail_test_dir1_\r"
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
 	"Disable"
@@ -98,7 +98,8 @@ after 100
 send "exit\r"
 sleep 1
 
-send -- "rm -fr ~/_firejail_test_dir_\r"
+send -- "rm -fr ~/_firejail_test_dir1\r"
 after 100
+
 
 puts "\nall done\n"

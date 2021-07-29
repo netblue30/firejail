@@ -32,23 +32,13 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	}
 
 	char trace_output[] = "/tmp/firejail-trace.XXXXXX";
-	char strace_output[] = "/tmp/firejail-strace.XXXXXX";
-
 	int tfile = mkstemp(trace_output);
-	int stfile = mkstemp(strace_output);
-	if(tfile == -1 || stfile == -1)
+	if(tfile == -1)
 		errExit("mkstemp");
-
-	// close the files, firejail/strace will overwrite them!
 	close(tfile);
-	close(stfile);
-
 
 	char *output;
-	char *stroutput;
 	if(asprintf(&output,"--trace=%s",trace_output) == -1)
-		errExit("asprintf");
-	if(asprintf(&stroutput,"-o%s",strace_output) == -1)
 		errExit("asprintf");
 
 	char *cmdlist[] = {
@@ -56,28 +46,10 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	  "--quiet",
 	  "--noprofile",
 	  "--caps.drop=all",
-	  "--nonewprivs",
+	  "--seccomp",
 	  output,
 	  "--shell=none",
-	  "/usr/bin/strace", // also used as a marker in build_profile()
-	  "-c",
-	  "-f",
-	  stroutput,
 	};
-
-	// detect strace and check if Yama LSM allows us to use it
-	int have_strace = 0;
-	int have_yama_permission = 1;
-	if (access("/usr/bin/strace", X_OK) == 0) {
-		have_strace = 1;
-		FILE *ps = fopen("/proc/sys/kernel/yama/ptrace_scope", "r");
-		if (ps) {
-			unsigned val;
-			if (fscanf(ps, "%u", &val) == 1)
-				have_yama_permission = (val < 2);
-			fclose(ps);
-		}
-	}
 
 	// calculate command length
 	unsigned len = (int) sizeof(cmdlist) / sizeof(char*) + argc - index + 1;
@@ -87,14 +59,9 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	cmd[0] = cmdlist[0];	// explicit assignment to clean scan-build error
 
 	// build command
-	// skip strace if not installed, or no permission to use it
-	int skip_strace = !(have_strace && have_yama_permission);
 	unsigned i = 0;
-	for (i = 0; i < (int) sizeof(cmdlist) / sizeof(char*); i++) {
-		if (skip_strace && strcmp(cmdlist[i], "/usr/bin/strace") == 0)
-			break;
+	for (i = 0; i < (int) sizeof(cmdlist) / sizeof(char*); i++)
 		cmd[i] = cmdlist[i];
-	}
 
 	int i2 = index;
 	for (; i < (len - 1); i++, i2++)
@@ -180,14 +147,6 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "#novideo\t# disable video capture devices\n");
 		build_protocol(trace_output, fp);
 		fprintf(fp, "seccomp\n");
-		if (!have_strace) {
-			fprintf(fp, "### If you install strace on your system, Firejail will also create a\n");
-			fprintf(fp, "### whitelisted seccomp filter.\n");
-		}
-		else if (!have_yama_permission)
-			fprintf(fp, "### Yama security module prevents creation of a whitelisted seccomp filter\n");
-		else
-			build_seccomp(strace_output, fp);
 		fprintf(fp, "shell none\n");
 		fprintf(fp, "tracelog\n");
 		fprintf(fp, "\n");
@@ -206,10 +165,8 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "\n");
 		fprintf(fp, "#memory-deny-write-execute\n");
 
-		if (!arg_debug) {
+		if (!arg_debug)
 			unlink(trace_output);
-			unlink(strace_output);
-		}
 	}
 	else {
 		fprintf(stderr, "Error: cannot run the sandbox\n");

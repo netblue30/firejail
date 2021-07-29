@@ -68,6 +68,8 @@ void process_home(const char *fname, char *home, int home_len) {
 			ptr += 7;
 		else if (strncmp(ptr, "open /home", 10) == 0)
 			ptr += 5;
+		else if (strncmp(ptr, "opendir /home", 13) == 0)
+			ptr += 8;
 		else
 			continue;
 

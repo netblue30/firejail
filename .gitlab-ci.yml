@@ -67,6 +67,8 @@ debian_ci:
         - cd $CI_PROJECT_DIR/.. && (apt-get source --download-only -t experimental firejail || apt-get source --download-only firejail)
         - cd $CI_PROJECT_DIR && tar xf ../firejail_*.debian.tar.*
         - rm -rf debian/patches/
+        # next line is a temporary fix for dh_missing failure; remove it after next release
+        - echo "etc/firejail/*.config" >> debian/firejail.install
         - VERSION=$(grep ^PACKAGE_VERSION= configure | cut -d"'" -f2) && dch -v ${VERSION}-0.1~ci "Non-maintainer upload." && git archive -o ../firejail_${VERSION}.orig.tar.gz HEAD && pristine-tar commit ../firejail_${VERSION}.orig.tar.gz ci_build && git branch -m pristine-tar origin/pristine-tar
         - git add debian && git commit -m "add debian/"
         - export CI_COMMIT_SHA=$(git rev-parse HEAD)

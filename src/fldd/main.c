@@ -261,12 +261,21 @@ static void walk_directory(const char *dirname) {
 
 			// check directory
 			// entry->d_type field is supported  in glibc since version 2.19 (Feb 2014)
-			// we'll use stat to check for directories
+			// we'll use stat to check for directories using the real path
+			// (sometimes the path is a double symlink to a real file and stat would fail)
+			char *rpath = realpath(path, NULL);
+			if (!rpath) {
+				free(path);
+				continue;
+			}
+			free(path);
+
 			struct stat s;
-			if (stat(path, &s) == -1)
+			if (stat(rpath, &s) == -1)
 				errExit("stat");
 			if (S_ISDIR(s.st_mode))
-				walk_directory(path);
+				walk_directory(rpath);
+			free(rpath);
 		}
 		closedir(dir);
 	}

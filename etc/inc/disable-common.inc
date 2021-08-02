@@ -398,6 +398,7 @@ blacklist /home/.fscrypt
 blacklist ${HOME}/*.kdb
 blacklist ${HOME}/*.kdbx
 blacklist ${HOME}/*.key
+blacklist ${HOME}/Private
 blacklist ${HOME}/.Private
 blacklist ${HOME}/.caff
 blacklist ${HOME}/.cargo/credentials

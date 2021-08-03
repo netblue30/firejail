@@ -1,6 +1,7 @@
 # Firejail profile for ncdu
 # Description: Ncurses disk usage viewer
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include ncdu.local
 # Persistent global definitions

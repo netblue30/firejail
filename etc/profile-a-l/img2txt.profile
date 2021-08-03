@@ -1,5 +1,6 @@
 # Firejail profile for img2txt
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include img2txt.local
 # Persistent global definitions

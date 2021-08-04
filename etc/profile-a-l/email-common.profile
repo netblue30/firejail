@@ -7,6 +7,7 @@ include email-common.local
 # added by caller profile
 #include globals.local
 
+noblacklist ${HOME}/.bogofilter
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.signature

@@ -17,3 +17,11 @@ blacklist ${HOME}/.lastpass
 blacklist ${HOME}/.local/share/KeePass
 blacklist ${HOME}/.local/share/keepass
 blacklist ${HOME}/.password-store
+
+# Remove environment variables with auth tokens.
+# Note however that the sandbox might still have access to the
+# files where these variables are set.
+rmenv GH_TOKEN
+rmenv GITHUB_TOKEN
+rmenv GH_ENTERPRISE_TOKEN
+rmenv GITHUB_ENTERPRISE_TOKEN

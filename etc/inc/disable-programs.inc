@@ -438,6 +438,7 @@ blacklist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/thunar.xml
 blacklist ${HOME}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-mixer.xml
 blacklist ${HOME}/.config/xiaoyong
 blacklist ${HOME}/.config/xmms2
+blacklist ${HOME}/.config/xournalpp
 blacklist ${HOME}/.config/xplayer
 blacklist ${HOME}/.config/xreader
 blacklist ${HOME}/.config/xviewer
@@ -1099,6 +1100,7 @@ blacklist ${HOME}/.cache/waterfox
 blacklist ${HOME}/.cache/wesnoth
 blacklist ${HOME}/.cache/winetricks
 blacklist ${HOME}/.cache/xmms2
+blacklist ${HOME}/.cache/xournalpp
 blacklist ${HOME}/.cache/xreader
 blacklist ${HOME}/.cache/yandex-browser
 blacklist ${HOME}/.cache/yandex-browser-beta

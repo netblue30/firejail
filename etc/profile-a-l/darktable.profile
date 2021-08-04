@@ -10,6 +10,8 @@ noblacklist ${HOME}/.cache/darktable
 noblacklist ${HOME}/.config/darktable
 noblacklist ${PICTURES}
 
+include allow-lua.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

@@ -95,7 +95,7 @@ Now switch back to the first terminal (where `journalctl` is running) and look
 for the numbers of the blocked syscall(s) (`syscall=<NUMBER>`). As soon as you
 have found them, you can stop `journalctl` (^C) and execute
 `firejail --debug-syscalls | grep NUMBER` to get the name of the syscall.
-In the particular case that it is a 32bit syscall on a 64bit system, use `ausyscall i386 NUMBER`.
+In the particular case that it is a 32bit syscall on a 64bit system, use `firejail --debug-syscalls32 | grep NUMBER`.
 Now you can add a seccomp exception using `seccomp !NAME`.
 
 If the blocked syscall is ptrace, consider to add allow-debuggers to the profile.

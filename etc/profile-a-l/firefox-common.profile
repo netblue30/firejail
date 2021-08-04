@@ -27,6 +27,7 @@ whitelist ${DOWNLOADS}
 whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
 include whitelist-common.inc
+include whitelist-run-common.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 

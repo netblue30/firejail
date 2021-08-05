@@ -180,7 +180,7 @@ static void dbus_check_bus_profile(char const *prefix, DbusPolicy *policy) {
 		}
 	}
 
-	if (num_matches > 0) {
+	if (num_matches > 0 && !arg_quiet) {
 		assert(first_match != NULL);
 		if (num_matches == 1) {
 			fprintf(stderr, "Ignoring \"%s\".\n", first_match);

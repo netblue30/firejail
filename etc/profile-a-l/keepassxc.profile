@@ -86,14 +86,10 @@ private-etc alternatives,fonts,ld.so.cache,machine-id
 private-tmp
 
 dbus-user filter
-#dbus-user.own org.keepassxc.KeePassXC
+dbus-user.own org.keepassxc.KeePassXC.*
 dbus-user.talk com.canonical.Unity.Session
 dbus-user.talk org.freedesktop.ScreenSaver
-dbus-user.talk org.freedesktop.login1.Manager
-dbus-user.talk org.freedesktop.login1.Session
 dbus-user.talk org.gnome.ScreenSaver
-dbus-user.talk org.gnome.SessionManager
-dbus-user.talk org.gnome.SessionManager.Presence
 # Add the next line to your keepassxc.local to allow notifications.
 #dbus-user.talk org.freedesktop.Notifications
 # Add the next line to your keepassxc.local to allow the tray menu.

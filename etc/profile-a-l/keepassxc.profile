@@ -58,6 +58,7 @@ include disable-xdg.inc
 #include whitelist-common.inc
 
 whitelist /usr/share/keepassxc
+include whitelist-run-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -74,7 +75,7 @@ nosound
 notv
 nou2f
 novideo
-protocol unix,netlink
+protocol unix
 seccomp !name_to_handle_at
 seccomp.block-secondary
 shell none
@@ -87,15 +88,18 @@ private-tmp
 
 dbus-user filter
 dbus-user.own org.keepassxc.KeePassXC.*
-dbus-user.talk com.canonical.Unity.Session
+dbus-user.talk com.canonical.Unity
 dbus-user.talk org.freedesktop.ScreenSaver
 dbus-user.talk org.gnome.ScreenSaver
+dbus-user.talk org.gnome.SessionManager
+dbus-user.talk org.xfce.ScreenSaver
 # Add the next line to your keepassxc.local to allow notifications.
 #dbus-user.talk org.freedesktop.Notifications
 # Add the next line to your keepassxc.local to allow the tray menu.
 #dbus-user.talk org.kde.StatusNotifierWatcher
 #dbus-user.own org.kde.*
-dbus-system none
+dbus-system filter
+dbus-system.talk org.freedesktop.login1
 
 # Mutex is stored in /tmp by default, which is broken by private-tmp.
 join-or-start keepassxc

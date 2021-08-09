@@ -752,6 +752,9 @@ Disable U2F devices.
 \fBnovideo
 Disable video capture devices.
 .TP
+\fBmachine-id
+Spoof id number in /etc/machine-id file - a new random id is generated inside the sandbox.
+.TP
 \fBshell none
 Run the program directly, without a shell.
 
@@ -887,10 +890,6 @@ iprange 192.168.1.150,192.168.1.160
 .TP
 \fBmac address
 Assign MAC addresses to the last network interface defined by a net command.
-
-.TP
-\fBmachine-id
-Spoof id number in /etc/machine-id file - a new random id is generated inside the sandbox.
 
 .TP
 \fBmtu number

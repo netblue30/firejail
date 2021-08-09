@@ -9,8 +9,8 @@ include globals.local
 noblacklist ${HOME}/.cache/rednotebook
 noblacklist ${HOME}/.rednotebook
 
-# whitelist python (blacklisted by disable-interpreters.inc)
-include whitelist-python3.inc
+# Allow python (blacklisted by disable-interpreters.inc)
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc

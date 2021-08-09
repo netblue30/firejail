@@ -9,9 +9,9 @@ include globals.local
 noblacklist ${HOME}/.cache/zim
 noblacklist ${HOME}/.config/zim
 
-# whitelist python (blacklisted by disable-interpreters.inc)
-include whitelist-python2.inc
-include whitelist-python3.inc
+# Allow python (blacklisted by disable-interpreters.inc)
+include allow-python2.inc
+include allow-python3.inc
 
 blacklist /usr/libexec
 

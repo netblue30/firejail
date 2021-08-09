@@ -17,7 +17,6 @@ blacklist ${RUNUSER}
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
-include disable-passwdmgr.inc
 # Add the next line to your archiver-common.local if you don't need to compress files in disable-programs.inc.
 #include disable-programs.inc
 include disable-shell.inc

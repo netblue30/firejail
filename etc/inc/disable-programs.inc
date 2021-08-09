@@ -94,6 +94,8 @@ blacklist ${HOME}/.config/InSilmaril
 blacklist ${HOME}/.config/Jitsi Meet
 blacklist ${HOME}/.config/JetBrains/CLion*
 blacklist ${HOME}/.config/KDE/neochat
+blacklist ${HOME}/.config/KeePass
+blacklist ${HOME}/.config/KeePassXCrc
 blacklist ${HOME}/.config/Kid3
 blacklist ${HOME}/.config/Kingsoft
 blacklist ${HOME}/.config/LibreCAD
@@ -286,6 +288,9 @@ blacklist ${HOME}/.config/kdeconnect
 blacklist ${HOME}/.config/kdenliverc
 blacklist ${HOME}/.config/kdiff3fileitemactionrc
 blacklist ${HOME}/.config/kdiff3rc
+blacklist ${HOME}/.config/keepass
+blacklist ${HOME}/.config/keepassx
+blacklist ${HOME}/.config/keepassxc
 blacklist ${HOME}/.config/kfindrc
 blacklist ${HOME}/.config/kgetrc
 blacklist ${HOME}/.config/kid3rc
@@ -480,6 +485,7 @@ blacklist ${HOME}/.firedragon
 blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.fltk
 blacklist ${HOME}/.fossamail
+blacklist ${HOME}/.fpm
 blacklist ${HOME}/.freeciv
 blacklist ${HOME}/.freecol
 blacklist ${HOME}/.freemind
@@ -574,6 +580,9 @@ blacklist ${HOME}/.kde4/share/config/kopeterc
 blacklist ${HOME}/.kde4/share/config/ktorrentrc
 blacklist ${HOME}/.kde4/share/config/okularpartrc
 blacklist ${HOME}/.kde4/share/config/okularrc
+blacklist ${HOME}/.keepass
+blacklist ${HOME}/.keepassx
+blacklist ${HOME}/.keepassxc
 blacklist ${HOME}/.killingfloor
 blacklist ${HOME}/.kingsoft
 blacklist ${HOME}/.kino-history
@@ -581,6 +590,7 @@ blacklist ${HOME}/.kinorc
 blacklist ${HOME}/.klatexformula
 blacklist ${HOME}/.klei
 blacklist ${HOME}/.kodi
+blacklist ${HOME}/.lastpass
 blacklist ${HOME}/.librewolf
 blacklist ${HOME}/.lincity-ng
 blacklist ${HOME}/.links
@@ -600,6 +610,7 @@ blacklist ${HOME}/.local/share/Flavio Tordini
 blacklist ${HOME}/.local/share/IntoTheBreach
 blacklist ${HOME}/.local/share/JetBrains
 blacklist ${HOME}/.local/share/KDE/neochat
+blacklist ${HOME}/.local/share/KeePass
 blacklist ${HOME}/.local/share/Kingsoft
 blacklist ${HOME}/.local/share/LibreCAD
 blacklist ${HOME}/.local/share/Mendeley Ltd.
@@ -693,6 +704,7 @@ blacklist ${HOME}/.local/share/kaffeine
 blacklist ${HOME}/.local/share/kalgebra
 blacklist ${HOME}/.local/share/kate
 blacklist ${HOME}/.local/share/kdenlive
+blacklist ${HOME}/.local/share/keepass
 blacklist ${HOME}/.local/share/kget
 blacklist ${HOME}/.local/share/kiwix
 blacklist ${HOME}/.local/share/kiwix-desktop
@@ -825,6 +837,7 @@ blacklist ${HOME}/.opera-beta
 blacklist ${HOME}/.ostrichriders
 blacklist ${HOME}/.paradoxinteractive
 blacklist ${HOME}/.parallelrealities/blobwars
+blacklist ${HOME}/.password-store
 blacklist ${HOME}/.pcsxr
 blacklist ${HOME}/.penguin-command
 blacklist ${HOME}/.pine-crash

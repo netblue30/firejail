@@ -31,7 +31,6 @@ noblacklist ${HOME}/.gnupg
 # noblacklist ${HOME}/.icedove
 noblacklist ${HOME}/.thunderbird
 
-include disable-passwdmgr.inc
 include disable-xdg.inc
 
 # If you have setup Thunderbird to archive emails to a local folder,

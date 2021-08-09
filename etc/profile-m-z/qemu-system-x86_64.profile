@@ -7,7 +7,6 @@ include qemu-system-x86_64.local
 include globals.local
 
 include disable-common.inc
-include disable-passwdmgr.inc
 include disable-programs.inc
 
 caps.drop all

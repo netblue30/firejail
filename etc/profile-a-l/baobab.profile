@@ -10,7 +10,6 @@ include globals.local
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
-include disable-passwdmgr.inc
 # include disable-programs.inc
 include disable-shell.inc
 # include disable-xdg.inc

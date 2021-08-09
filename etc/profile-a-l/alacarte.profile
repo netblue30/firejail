@@ -15,7 +15,6 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
-include disable-passwdmgr.inc
 include disable-xdg.inc
 
 # Whitelist your system icon directory,varies by distro

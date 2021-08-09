@@ -11,8 +11,6 @@ noblacklist ${HOME}/.local/share/mupen64plus
 
 include disable-common.inc
 include disable-devel.inc
-include disable-passwdmgr.inc
-include disable-passwdmgr.inc
 include disable-programs.inc
 
 # you'll need to manually whitelist ROM files

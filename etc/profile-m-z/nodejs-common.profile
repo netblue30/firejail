@@ -30,7 +30,6 @@ include allow-bin-sh.inc
 
 include disable-common.inc
 include disable-exec.inc
-include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc

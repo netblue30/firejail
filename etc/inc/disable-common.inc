@@ -431,6 +431,18 @@ blacklist ${HOME}/.ssh
 blacklist ${HOME}/.vaults
 blacklist /var/backup
 
+# Remove environment variables with auth tokens.
+# Note however that the sandbox might still have access to the
+# files where these variables are set.
+rmenv GH_TOKEN
+rmenv GITHUB_TOKEN
+rmenv GH_ENTERPRISE_TOKEN
+rmenv GITHUB_ENTERPRISE_TOKEN
+rmenv CARGO_REGISTRY_TOKEN
+rmenv RESTIC_KEY_HINT
+rmenv RESTIC_PASSWORD_COMMAND
+rmenv RESTIC_PASSWORD_FILE
+
 # cloud provider configuration
 blacklist ${HOME}/.aws
 blacklist ${HOME}/.boto

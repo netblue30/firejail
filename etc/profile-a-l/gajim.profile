@@ -19,7 +19,6 @@ include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
-include disable-passwdmgr.inc
 include disable-programs.inc
 # Add 'ignore include disable-xdg.inc' to your gajim.local if you need to whitelist folders other than ~/Downloads.
 include disable-xdg.inc

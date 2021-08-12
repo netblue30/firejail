@@ -32,7 +32,6 @@ noblacklist /var/lib/pacman
 
 include disable-common.inc
 include disable-exec.inc
-include disable-passwdmgr.inc
 include disable-programs.inc
 
 caps.drop all

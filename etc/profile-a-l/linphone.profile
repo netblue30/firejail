@@ -15,7 +15,6 @@ include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
-include disable-passwdmgr.inc
 include disable-programs.inc
 
 # linphone 4.0 (released 2017-06-26) moved config and database files to respect

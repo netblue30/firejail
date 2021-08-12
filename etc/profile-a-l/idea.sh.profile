@@ -19,7 +19,6 @@ include allow-common-devel.inc
 include allow-ssh.inc
 
 include disable-common.inc
-include disable-passwdmgr.inc
 include disable-programs.inc
 
 caps.drop all

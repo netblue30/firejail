@@ -8,7 +8,6 @@ include globals.local
 noblacklist ${HOME}/.qemu-launcher
 
 include disable-common.inc
-include disable-passwdmgr.inc
 include disable-programs.inc
 
 caps.drop all

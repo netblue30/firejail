@@ -16,7 +16,6 @@ noblacklist ${HOME}/.local/share/gnome-builder
 include allow-common-devel.inc
 
 include disable-common.inc
-include disable-passwdmgr.inc
 include disable-programs.inc
 
 include whitelist-runuser-common.inc

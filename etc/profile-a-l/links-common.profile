@@ -11,7 +11,6 @@ include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
-include disable-passwdmgr.inc
 # Additional noblacklist files/directories (blacklisted in disable-programs.inc)
 # used as associated programs can be added in your links-common.local.
 include disable-programs.inc

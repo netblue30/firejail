@@ -114,7 +114,6 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "#include disable-devel.inc\t# development tools such as gcc and gdb\n");
 		fprintf(fp, "#include disable-exec.inc\t# non-executable directories such as /var, /tmp, and /home\n");
 		fprintf(fp, "#include disable-interpreters.inc\t# perl, python, lua etc.\n");
-		fprintf(fp, "include disable-passwdmgr.inc\t# password managers\n");
 		fprintf(fp, "include disable-programs.inc\t# user configuration for programs such as firefox, vlc etc.\n");
 		fprintf(fp, "#include disable-shell.inc\t# sh, bash, zsh etc.\n");
 		fprintf(fp, "#include disable-xdg.inc\t# standard user directories: Documents, Pictures, Videos, Music\n");

@@ -22,7 +22,6 @@ noblacklist ${HOME}/.kde4/share/config/krunnerrc
 include disable-common.inc
 # include disable-devel.inc
 # include disable-interpreters.inc
-# include disable-passwdmgr.inc
 # include disable-programs.inc
 
 include whitelist-var-common.inc

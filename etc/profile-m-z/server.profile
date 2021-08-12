@@ -7,7 +7,6 @@
 #       [sudo] password for netblue:
 #       Reading profile /etc/firejail/server.profile
 #       Reading profile /etc/firejail/disable-common.inc
-#       Reading profile /etc/firejail/disable-passwdmgr.inc
 #       Reading profile /etc/firejail/disable-programs.inc
 #
 #       ** Note: you can use --noprofile to disable server.profile **

@@ -936,8 +936,8 @@ static void run_builder(int argc, char **argv) {
 	assert(getenv("LD_PRELOAD") == NULL);
 	umask(orig_umask);
 
-	// restore some environment variables
-	env_apply_whitelist_sbox();
+	// restore original environment variables
+	env_apply_all();
 
 	argv[0] = LIBDIR "/firejail/fbuilder";
 	execvp(argv[0], argv);

@@ -25,7 +25,6 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
-read-only ${DESKTOP}
 mkdir ${HOME}/.config/celluloid
 mkdir ${HOME}/.config/gnome-mpv
 mkdir ${HOME}/.config/youtube-dl
@@ -60,6 +59,7 @@ private-tmp
 
 dbus-user filter
 dbus-user.own io.github.celluloid_player.Celluloid
+dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.gnome.SettingsDaemon.MediaKeys
 dbus-system none
 

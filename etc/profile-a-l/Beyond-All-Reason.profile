@@ -20,6 +20,7 @@ mkdir ${HOME}/Beyond All Reason
 whitelist ${HOME}/Beyond All Reason
 whitelist ${DOWNLOADS}
 #include whitelist-common.inc # causes program to look in $HOME/Documents instead of $HOME
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

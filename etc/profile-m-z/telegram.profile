@@ -21,6 +21,7 @@ mkdir ${HOME}/.local/share/TelegramDesktop
 whitelist ${HOME}/.TelegramDesktop
 whitelist ${HOME}/.local/share/TelegramDesktop
 whitelist ${DOWNLOADS}
+whitelist /usr/share/TelegramDesktop
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

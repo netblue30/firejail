@@ -20,6 +20,7 @@
 #include "firejail.h"
 #include <sys/socket.h>
 #include <sys/ioctl.h>
+#include <sys/time.h>
 #include <linux/if_ether.h>			  //TCP/IP Protocol Suite for Linux
 #include <net/if.h>
 #include <netinet/in.h>
@@ -188,9 +189,14 @@ int arp_check(const char *dev, uint32_t destaddr) {
 	FD_SET(sock, &fds);
 	int maxfd = sock;
 	struct timeval ts;
-	ts.tv_sec = 0; // 0.5 seconds wait time
-	ts.tv_usec = 500000;
+	gettimeofday(&ts, NULL);
+	double timerend = ts.tv_sec + ts.tv_usec / 1000000.0 + 0.5;
 	while (1) {
+		gettimeofday(&ts, NULL);
+		double now = ts.tv_sec + ts.tv_usec / 1000000.0;
+		double timeout = timerend - now;
+		ts.tv_sec = timeout;
+		ts.tv_usec = (timeout - ts.tv_sec) * 1000000;
 		int nready = select(maxfd + 1,  &fds, (fd_set *) 0, (fd_set *) 0, &ts);
 		if (nready < 0)
 			errExit("select");
@@ -201,8 +207,8 @@ int arp_check(const char *dev, uint32_t destaddr) {
 			}
 			if (sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr)) <= 0)
 				errExit("send");
-			ts.tv_sec = 0; // 0.5 seconds wait time
-			ts.tv_usec = 500000;
+			gettimeofday(&ts, NULL);
+			timerend = ts.tv_sec + ts.tv_usec / 1000000.0 + 0.5;
 			fflush(0);
 		}
 		else {

@@ -47,6 +47,8 @@ Other context about the problem like related errors to understand the problem.
 - [ ] I'm aware of `browser-allow-drm yes`/`browser-disable-u2f no` in `firejail.config` to allow DRM/U2F in browsers.
 - [ ] This is not a question. Questions should be asked in https://github.com/netblue30/firejail/discussions.
 
+### Log
+
 <details>
 <summary>debug output</summary>
 <p>

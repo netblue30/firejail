@@ -234,6 +234,7 @@ blacklist ${HOME}/.config/font-manager
 blacklist ${HOME}/.config/freecol
 blacklist ${HOME}/.config/gajim
 blacklist ${HOME}/.config/galculator
+blacklist ${HOME}/.config/gallery-dl
 blacklist ${HOME}/.config/gconf
 blacklist ${HOME}/.config/geany
 blacklist ${HOME}/.config/geary
@@ -492,6 +493,7 @@ blacklist ${HOME}/.freemind
 blacklist ${HOME}/.frogatto
 blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.funnyboat
+blacklist ${HOME}/.gallery-dl.conf
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.gist
 blacklist ${HOME}/.gitconfig

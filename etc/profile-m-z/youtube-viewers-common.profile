@@ -50,7 +50,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin bash,ffmpeg,ffprobe,firefox,mpv,perl,python*,sh,smplayer,stty,wget,which,xterm,youtube-dl
+private-bin bash,ffmpeg,ffprobe,firefox,mpv,perl,python*,sh,smplayer,stty,wget,which,xterm,youtube-dl,yt-dlp
 private-cache
 private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,machine-id,mime.types,nsswitch.conf,passwd,pki,pulse,resolv.conf,ssl,X11,xdg

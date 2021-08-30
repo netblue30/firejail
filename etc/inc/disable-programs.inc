@@ -456,6 +456,7 @@ blacklist ${HOME}/.config/youtube-dlg
 blacklist ${HOME}/.config/youtube-music-desktop-app
 blacklist ${HOME}/.config/youtube-viewer
 blacklist ${HOME}/.config/youtubemusic-nativefier-040164
+blacklist ${HOME}/.config/yt-dlp
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zim
 blacklist ${HOME}/.config/zoomus.conf
@@ -942,6 +943,7 @@ blacklist ${HOME}/hyperrogue.ini
 blacklist ${HOME}/i2p
 blacklist ${HOME}/mps
 blacklist ${HOME}/wallet.dat
+blacklist ${HOME}/yt-dlp.conf
 blacklist ${RUNUSER}/*firefox*
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*
@@ -1121,4 +1123,5 @@ blacklist ${HOME}/.cache/yandex-browser
 blacklist ${HOME}/.cache/yandex-browser-beta
 blacklist ${HOME}/.cache/youtube-dl
 blacklist ${HOME}/.cache/youtube-viewer
+blacklist ${HOME}/.cache/yt-dlp
 blacklist ${HOME}/.cache/zim

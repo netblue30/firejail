@@ -45,6 +45,7 @@ Committers
 - Kelvin M. Klann (https://github.com/kmk3)
 - Kristóf Marussy (https://github.com/kris7t)
 - Neo00001 (https://github.com/Neo00001)
+- pirate486743186 (https://github.com/pirate486743186)
 - Reiner Herrmann (https://github.com/reinerh - Debian/Ubuntu maintainer)
 - rusty-snake (https://github.com/rusty-snake)
 - smitsohu (https://github.com/smitsohu)
@@ -170,6 +171,8 @@ Bandie (https://github.com/Bandie)
 	- fixed riot-desktop
 Barış Ekin Yıldırım (https://github.com/circuitshaker)
 	- removing net none from code.profile
+Bart Bakker (https://github.com/bjpbakker)
+	- multimc5: fix exec of LWJGL libraries
 bbhtt (https://github.com/bbhtt)
 	- improvements to balsa,fractal,gajim,trojita profiles
 	- improvements to nheko, spectral, feh, links, lynx, smplayer profiles
@@ -184,6 +187,7 @@ bitfreak25 (https://github.com/bitfreak25)
 	- added PlayOnLinux profile
 	- minetest profile fix
 	- added sylpheed profile
+
 bn0785ac (https://github.com/bn0785ac)
 	- fixed bnox, dnox profiles
 	- support all tor-browser langpacks
@@ -283,6 +287,7 @@ Davide Beatrici (https://github.com/davidebeatrici)
 	- steam.profile: correctly blacklist unneeded directories in user's home
 	- minetest fixes
 	- map /dev/input with "--private-dev", add "--no-input" option to disable it
+	- whitelist /usr/share/TelegramDesktop in telegram.profile
 David Hyrule (https://github.com/Svaag)
 	- remove nou2f in ssh profile
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)
@@ -645,6 +650,8 @@ Michael Hoffmann (https://github.com/brisad)
 	- added support for subdirs in private-etc
 Mike Frysinger (vapier@gentoo.org)
 	- Gentoo compile patch
+minus7 (https://github.com/minus7)
+	- fix hanging arp_check
 mirabellette (https://github.com/mirabellette)
 	- add comment to thunderbird.profile to allow Firefox to load profiles
 mjudtmann (https://github.com/mjudtmann)

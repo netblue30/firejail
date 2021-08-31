@@ -1,13 +1,13 @@
-Firejail  is  a  SUID sandbox program that reduces the risk of security
-breaches by restricting the running environment of  untrusted  applications
+Firejail is a SUID sandbox program that reduces the risk of security
+breaches by restricting the running environment of untrusted applications
 using Linux namespaces and seccomp-bpf. It includes sandbox profiles for
 Iceweasel/Mozilla Firefox, Chromium, Midori, Opera, Evince, Transmission,
 VLC, Audacious, Clementine, Rhythmbox, Totem, Deluge, qBittorrent.
 DeaDBeeF, Dropbox, Empathy, FileZilla, IceCat, Thunderbird/Icedove,
 Pidgin, Quassel, and XChat.
 
-Firejail also expands the restricted shell facility found  in  bash  by adding
-Linux  namespace support. It supports sandboxing specific users upon login.
+Firejail also expands the restricted shell facility found in bash by adding
+Linux namespace support. It supports sandboxing specific users upon login.
 
 Download: https://sourceforge.net/projects/firejail/files/
 Build and install: ./configure && make && sudo make install
@@ -460,7 +460,7 @@ hawkey116477 (https://github.com/hawkeye116477)
 Helmut Grohne (https://github.com/helmutg)
 	-  compiler support in the build system - Debian bug #869707
 hhzek0014 (https://github.com/hhzek0014)
-	- updated  bibletime.profile
+	- updated bibletime.profile
 hlein (https://github.com/hlein)
 	- strip out \r's from jail prober
 Holger Heinz (https://github.com/hheinz)
@@ -579,7 +579,7 @@ Kishore96in (https://github.com/Kishore96in)
 	- added falkon profile
 	- kxmlgui fixes
 	- okular profile fixes
-	-  jitsi-meet-desktop profile
+	- jitsi-meet-desktop profile
 	- konversatin profile fix
 	- added Neochat profile
 	- added whitelist-1793-workaround.inc
@@ -715,7 +715,7 @@ Ondra Nekola (https://github.com/satai)
 OndrejMalek (https://github.com/OndrejMalek)
 	- various manpage fixes
 Ondřej Nový (https://github.com/onovy)
-	-  allow video for Signal profile
+	- allow video for Signal profile
 	- added Mattermost desktop profile
 	- hardened Zoom profile
 	- hardened Signal desktop profile
@@ -732,7 +732,7 @@ Patrick Toomey (https://sourceforge.net/u/ptoomey/profile/)
 Paul Moore <pmoore@redhat.com>
 	-src/fsec-print/print.c extracted from libseccomp software package
 Paupiah Yash (https://github.com/CaffeinatedStud)
-	- gzip  profile
+	- gzip profile
 Pawel (https://github.com/grimskies)
 	- make --join return exit code of the invoked program
 Peter Millerchip (https://github.com/pmillerchip)
@@ -960,7 +960,7 @@ SYN-cook (https://github.com/SYN-cook)
 	- gnome-calculator changes
 startx2017 (https://github.com/startx2017)
 	- syscall list update
-	- updated default seccomp filters - added  bpf, clock_settime, personality, process_vm_writev, query_module,
+	- updated default seccomp filters - added bpf, clock_settime, personality, process_vm_writev, query_module,
 	              settimeofday, stime, umount, userfaultfd, ustat, vm86, and vm86old
 	- enable/disable join support in /etc/firejail/firejail.config
 	- firecfg fix: create ~/.local/share/applications directory if it doesn't exist
@@ -1011,7 +1011,7 @@ Topi Miettinen (https://github.com/topimiettinen)
 	- improve loading of seccomp filter and memory-deny-write-execute feature
 	- private-lib feature
 	- make --nodbus block also system D-Bus socket
-Ted Robertson  (https://github.com/tredondo)
+Ted Robertson (https://github.com/tredondo)
 	- webstorm profile fixes
 	- added bcompare profile
 	- various documentation fixes
@@ -1071,7 +1071,7 @@ vismir2 (https://github.com/vismir2)
 	- feh, ranger, 7z, keepass, keepassx and zathura profiles
 	- claws-mail, mutt, git, emacs, vim profiles
 	- lots of profile fixes
-	-  support for truecrypt and zuluCrypt
+	- support for truecrypt and zuluCrypt
 viq (https://github.com/viq)
 	- discord-canary profile
 Vladimir Gorelov (https://github.com/larkvirtual)

@@ -26,6 +26,6 @@ gcov_init() {
 rm -fr gcov-dir
 gcov_init
 lcov -q --capture -d src/firejail -d src/firemon -d src/faudit -d src/fbuilder \
-	-d  src/fcopy -d  src/fnetfilter -d src/fsec-print -d src/fsec-optimize -d src/fseccomp \
-	-d src/fnet -d src/ftee -d src/lib -d src/firecfg -d src/fldd  --output-file gcov-file
+	-d src/fcopy -d src/fnetfilter -d src/fsec-print -d src/fsec-optimize -d src/fseccomp \
+	-d src/fnet -d src/ftee -d src/lib -d src/firecfg -d src/fldd --output-file gcov-file
 genhtml -q gcov-file --output-directory gcov-dir

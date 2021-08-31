@@ -45,7 +45,7 @@ firejail {\-? | \-\-debug-caps | \-\-debug-errnos | \-\-debug-syscalls | \-\-deb
 #ifdef HAVE_LTS
 This is Firejail long-term support (LTS), an enterprise focused version of the software,
 LTS is usually supported for two or three years.
-During this time  only bugs and the occasional documentation problems are fixed.
+During this time only bugs and the occasional documentation problems are fixed.
 The attack surface of the SUID executable was greatly reduced by removing some of the features.
 .br
 
@@ -109,7 +109,7 @@ ptrace system call allows a full bypass of the seccomp filter.
 .br
 Example:
 .br
-$ firejail  --allow-debuggers --profile=/etc/firejail/firefox.profile strace -f firefox
+$ firejail --allow-debuggers --profile=/etc/firejail/firefox.profile strace -f firefox
 .TP
 \fB\-\-allusers
 All directories under /home are visible inside the sandbox. By default, only current user home directory is visible.
@@ -947,7 +947,7 @@ $ firejail \-\-net=eth0 \-\-\iprange=192.168.1.100,192.168.1.150
 
 .TP
 \fB\-\-ipc-namespace
-Enable  a new IPC namespace if the sandbox was started as a regular user. IPC namespace is enabled by default
+Enable a new IPC namespace if the sandbox was started as a regular user. IPC namespace is enabled by default
 for sandboxes started as root.
 .br
 
@@ -1014,7 +1014,7 @@ $ sudo firejail --join-network=browser /sbin/iptables -vL
 .br
 
 .br
-# verify  IP addresses
+# verify IP addresses
 .br
 $ sudo firejail --join-network=browser ip addr
 .br
@@ -2134,7 +2134,7 @@ Use k(ilobyte), m(egabyte) or g(igabyte) for size suffix (base 1024).
 .TP
 \fB\-\-rlimit-cpu=number
 Set the maximum limit, in seconds, for the amount of CPU time each
-sandboxed process  can consume. When the limit is reached, the processes are killed.
+sandboxed process can consume. When the limit is reached, the processes are killed.
 
 The CPU limit is a limit on CPU seconds rather than elapsed time. CPU seconds is basically how many seconds
 the CPU has been in use and does not necessarily directly relate to the elapsed time. Linux kernel keeps
@@ -2178,7 +2178,7 @@ $ firejail \-\-net=eth0 \-\-scan
 .TP
 \fB\-\-seccomp
 Enable seccomp filter and blacklist the syscalls in the default list,
-which is  @default-nodebuggers unless \-\-allow-debuggers is specified,
+which is @default-nodebuggers unless \-\-allow-debuggers is specified,
 then it is @default.
 
 .br
@@ -2865,7 +2865,7 @@ and it is installed by default on most Linux distributions. It provides support 
 connection model. Untrusted clients are restricted in certain ways to prevent them from reading window
 contents of other clients, stealing input events, etc.
 
-The untrusted mode has several limitations. A lot of regular programs  assume they are a trusted X11 clients
+The untrusted mode has several limitations. A lot of regular programs assume they are a trusted X11 clients
 and will crash or lock up when run in untrusted mode. Chromium browser and xterm are two examples.
 Firefox and transmission-gtk seem to be working fine.
 A network namespace is not required for this option.
@@ -3256,7 +3256,7 @@ The owner of the sandbox.
 .SH RESTRICTED SHELL
 To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in
 /etc/passwd file for each user that needs to be restricted. Alternatively,
-you can specify /usr/bin/firejail  in adduser command:
+you can specify /usr/bin/firejail in adduser command:
 
 adduser \-\-shell /usr/bin/firejail username
 
@@ -3266,7 +3266,7 @@ Additional arguments passed to firejail executable upon login are declared in /e
 Several command line options can be passed to the program using
 profile files. Firejail chooses the profile file as follows:
 
-1. If a profile file is provided by the user with --profile=FILE option, the profile FILE is loaded. If a profile name is given, it is searched for first in the ~/.config/firejail directory and if not found then in  /etc/firejail directory. Profile names do not include the .profile suffix. If there is a file with the same name as the given profile name, it will be used instead of doing the profile search. To force a profile search, prefix the profile name with a colon (:), eg. --profile=:PROFILE_NAME.
+1. If a profile file is provided by the user with --profile=FILE option, the profile FILE is loaded. If a profile name is given, it is searched for first in the ~/.config/firejail directory and if not found then in /etc/firejail directory. Profile names do not include the .profile suffix. If there is a file with the same name as the given profile name, it will be used instead of doing the profile search. To force a profile search, prefix the profile name with a colon (:), eg. --profile=:PROFILE_NAME.
 Example:
 .PP
 .RS

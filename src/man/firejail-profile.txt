@@ -78,7 +78,7 @@ in your desktop environment copy the profile file in ~/.config/firejail director
 Several command line options can be passed to the program using
 profile files. Firejail chooses the profile file as follows:
 
-\fB1.\fR If a profile file is provided by the user with \-\-profile option, the profile file is loaded. If a profile name is given, it is searched for first in the ~/.config/firejail directory and if not found then in  /etc/firejail directory. Profile names do not include the .profile suffix.
+\fB1.\fR If a profile file is provided by the user with \-\-profile option, the profile file is loaded. If a profile name is given, it is searched for first in the ~/.config/firejail directory and if not found then in /etc/firejail directory. Profile names do not include the .profile suffix.
 Example:
 .PP
 .RS
@@ -324,16 +324,16 @@ Remount the file or the directory noexec, nodev and nosuid.
 #ifdef HAVE_OVERLAYFS
 .TP
 \fBoverlay
-Mount  a  filesystem  overlay  on top of the current filesystem.
-The overlay is stored in $HOME/.firejail/<PID>  directory.
+Mount a filesystem overlay on top of the current filesystem.
+The overlay is stored in $HOME/.firejail/<PID> directory.
 .TP
 \fBoverlay-named name
-Mount  a  filesystem  overlay  on top of the current filesystem.
-The overlay is stored in $HOME/.firejail/name  directory.
+Mount a filesystem overlay on top of the current filesystem.
+The overlay is stored in $HOME/.firejail/name directory.
 .TP
 \fBoverlay-tmpfs
-Mount  a  filesystem  overlay  on top of the current filesystem.
-All filesystem  modifications are discarded when the sandbox is closed.
+Mount a filesystem overlay on top of the current filesystem.
+All filesystem modifications are discarded when the sandbox is closed.
 #endif
 .TP
 \fBprivate
@@ -487,12 +487,12 @@ does not result in an increase of privilege.
 #ifdef HAVE_USERNS
 .TP
 \fBnoroot
-Use this command  to enable an user namespace. The namespace has only one user, the current user.
+Use this command to enable an user namespace. The namespace has only one user, the current user.
 There is no root account (uid 0) defined in the namespace.
 #endif
 .TP
 \fBprotocol protocol1,protocol2,protocol3
-Enable protocol filter. The filter is based on seccomp and  checks the
+Enable protocol filter. The filter is based on seccomp and checks the
 first argument to socket system call. Recognized values: \fBunix\fR,
 \fBinet\fR, \fBinet6\fR, \fBnetlink\fR, \fBpacket\fR and \fBbluetooth\fR.
 .TP
@@ -873,8 +873,8 @@ a DHCP client and releasing the lease manually.
 
 .TP
 \fBiprange address,address
-Assign  an  IP address in the provided range to the last network
-interface defined by  a  net command.  A  default  gateway  is assigned by default.
+Assign an IP address in the provided range to the last network
+interface defined by a net command.  A default gateway is assigned by default.
 .br
 
 .br

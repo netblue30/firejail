@@ -56,7 +56,7 @@ Print route table for each sandbox.
 Print seccomp configuration for each sandbox.
 .TP
 \fB\-\-top
-Monitor the most CPU-intensive sandboxes. This command  is similar to
+Monitor the most CPU-intensive sandboxes. This command is similar to
 the regular UNIX top command, however it applies only to sandboxes.
 .TP
 \fB\-\-tree

@@ -1,4 +1,3 @@
-
 If your PR isn't about profiles or you have no idea how to do one of these, skip the following and go ahead with this PR.
 
 If you submit a PR for new profiles or changing profiles, please do the following:

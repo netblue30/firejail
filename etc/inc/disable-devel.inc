@@ -60,9 +60,7 @@ blacklist /usr/lib/tcc
 blacklist ${PATH}/valgrind*
 blacklist /usr/lib/valgrind
 
-
 # Source-Code
-
 blacklist /usr/src
 blacklist /usr/local/src
 blacklist /usr/include

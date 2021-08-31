@@ -1,5 +1,5 @@
 # Firejail profile for Sway
-# Description: i3-compatible Wayland compositor 
+# Description: i3-compatible Wayland compositor
 # This file is overwritten after every install/update
 # Persistent local customizations
 include sway.local

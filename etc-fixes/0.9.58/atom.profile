@@ -1,4 +1,3 @@
-
 # Firejail profile for atom
 # Description: A hackable text editor for the 21st Century
 # This file is overwritten after every install/update

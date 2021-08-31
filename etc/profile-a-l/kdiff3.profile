@@ -48,7 +48,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin  kdiff3
+private-bin kdiff3
 private-cache
 private-dev
 

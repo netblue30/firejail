@@ -156,7 +156,7 @@ Scripting commands:
 \fBFile and directory names
 File and directory names containing spaces are supported. The space character ' ' should not be escaped.
 
-Example: "deny ~/My Virtual Machines"
+Example: "blacklist ~/My Virtual Machines"
 
 .TP
 \fB# this is a comment
@@ -170,9 +170,9 @@ net none # this command creates an empty network namespace
 \fB?CONDITIONAL: profile line
 Conditionally add profile line.
 
-Example: "?HAS_APPIMAGE: allow ${HOME}/special/appimage/dir"
+Example: "?HAS_APPIMAGE: whitelist ${HOME}/special/appimage/dir"
 
-This example will load the profile line only if the \-\-appimage option has been specified on the command line.
+This example will load the whitelist profile line only if the \-\-appimage option has been specified on the command line.
 
 Currently the only conditionals supported this way are HAS_APPIMAGE, HAS_NET, HAS_NODBUS, HAS_NOSOUND, HAS_PRIVATE and HAS_X11. The conditionals BROWSER_DISABLE_U2F and BROWSER_ALLOW_DRM
 can be enabled or disabled globally in Firejail's configuration file.
@@ -205,16 +205,16 @@ storing modifications to the persistent configuration. Persistent .local files
 are included at the start of regular profile files.
 
 .TP
-\fBnoallow file_name
-If the file name matches file_name, the file will not be allowed in any allow commands that follow.
+\fBnoblacklist file_name
+If the file name matches file_name, the file will not be blacklisted in any blacklist commands that follow.
 
-Example: "nowhitelist ~/.config"
+Example: "noblacklist ${HOME}/.mozilla"
 
 .TP
-\fBnodeny file_name
-If the file name matches file_name, the file will not be denied any deny commands that follow.
+\fBnowhitelist file_name
+If the file name matches file_name, the file will not be whitelisted in any whitelist commands that follow.
 
-Example: "nodeny ${HOME}/.mozilla"
+Example: "nowhitelist ~/.config"
 
 .TP
 \fBignore
@@ -242,17 +242,19 @@ HOME directories are searched, see the \fBfirejail\f(1) \fBFILE GLOBBING\fR sect
 for more details.
 Examples:
 .TP
-\fBallow file_or_directory
-Allow directory or file. A temporary file system is mounted on the top directory, and the
-allowed files are mount-binded inside. Modifications to allowd files are persistent,
-everything else is discarded when the sandbox is closed. The top directory can be
-all directories in / (except /proc and /sys), /sys/module, /run/user/$UID, $HOME and
-all directories in /usr.
+\fBblacklist file_or_directory
+Blacklist directory or file. Examples:
 .br
 
 .br
-Symbolic link handling: with the exception of user home, both the link and the real file should be in
-the same top directory. For user home, both the link and the real file should be owned by the user.
+blacklist /usr/bin
+.br
+blacklist /usr/bin/gcc*
+.br
+blacklist ${PATH}/ifconfig
+.br
+blacklist ${HOME}/.ssh
+
 .TP
 \fBblacklist-nolog file_or_directory
 When --tracelog flag is set, blacklisting generates syslog messages if the sandbox tries to access the file or directory.
@@ -270,20 +272,6 @@ Mount-bind directory1 on top of directory2. This option is only available when r
 .TP
 \fBbind file1,file2
 Mount-bind file1 on top of file2. This option is only available when running as root.
-.TP
-\fBdeny file_or_directory
-Deny access to directory or file. Examples:
-.br
-
-.br
-deny /usr/bin
-.br
-deny /usr/bin/gcc*
-.br
-deny ${PATH}/ifconfig
-.br
-deny ${HOME}/.ssh
-
 .TP
 \fBdisable-mnt
 Disable /mnt, /media, /run/mount and /run/media access.
@@ -304,7 +292,7 @@ The directory is created if it doesn't already exist.
 .br
 
 .br
-Use this command for allowed directories you need to preserve
+Use this command for whitelisted directories you need to preserve
 when the sandbox is closed. Without it, the application will create the directory, and the directory
 will be deleted when the sandbox is closed. Subdirectories are recursively created. Example from
 firefox profile:
@@ -317,7 +305,7 @@ whitelist ~/.mozilla
 .br
 mkdir ~/.cache/mozilla/firefox
 .br
-allow ~/.cache/mozilla/firefox
+whitelist ~/.cache/mozilla/firefox
 .br
 
 .br
@@ -423,7 +411,7 @@ expressed as foo/bar -- is disallowed).
 All modifications are discarded when the sandbox is closed.
 .TP
 \fBprivate-tmp
-Mount an empty temporary filesystem on top of /tmp directory allowing /tmp/.X11-unix.
+Mount an empty temporary filesystem on top of /tmp directory whitelisting /tmp/.X11-unix.
 .TP
 \fBread-only file_or_directory
 Make directory or file read-only.
@@ -435,13 +423,25 @@ Make directory or file read-write.
 Mount an empty tmpfs filesystem on top of directory. Directories outside user home or not owned by the user are not allowed. Sandboxes running as root are exempt from these restrictions.
 .TP
 \fBtracelog
-File system deny violations logged to syslog.
+Blacklist violations logged to syslog.
+.TP
+\fBwhitelist file_or_directory
+Whitelist directory or file. A temporary file system is mounted on the top directory, and the
+whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
+everything else is discarded when the sandbox is closed. The top directory can be
+all directories in / (except /proc and /sys), /sys/module, /run/user/$UID, $HOME and
+all directories in /usr.
+.br
+
+.br
+Symbolic link handling: with the exception of user home, both the link and the real file should be in
+the same top directory. For user home, both the link and the real file should be owned by the user.
 .TP
 \fBwritable-etc
 Mount /etc directory read-write.
 .TP
 \fBwritable-run-user
-Disable the default denying of run/user/$UID/systemd and /run/user/$UID/gnupg.
+Disable the default blacklisting of run/user/$UID/systemd and /run/user/$UID/gnupg.
 .TP
 \fBwritable-var
 Mount /var directory read-write.
@@ -455,7 +455,7 @@ The following security filters are currently implemented:
 
 .TP
 \fBallow-debuggers
-Allow tools such as strace and gdb inside the sandbox by allowing system calls ptrace and process_vm_readv.
+Allow tools such as strace and gdb inside the sandbox by whitelisting system calls ptrace and process_vm_readv.
 #ifdef HAVE_APPARMOR
 .TP
 \fBapparmor
@@ -466,13 +466,13 @@ Enable AppArmor confinement.
 Enable default Linux capabilities filter.
 .TP
 \fBcaps.drop capability,capability,capability
-Deny given Linux capabilities.
+Blacklist given Linux capabilities.
 .TP
 \fBcaps.drop all
-Deny all Linux capabilities.
+Blacklist all Linux capabilities.
 .TP
 \fBcaps.keep capability,capability,capability
-Allow given Linux capabilities.
+Whitelist given Linux capabilities.
 .TP
 \fBmemory-deny-write-execute
 Install a seccomp filter to block attempts to create memory mappings
@@ -497,32 +497,32 @@ first argument to socket system call. Recognized values: \fBunix\fR,
 \fBinet\fR, \fBinet6\fR, \fBnetlink\fR, \fBpacket\fR and \fBbluetooth\fR.
 .TP
 \fBseccomp
-Enable seccomp filter and deny the syscalls in the default list. See man 1 firejail for more details.
+Enable seccomp filter and blacklist the syscalls in the default list. See man 1 firejail for more details.
 .TP
 \fBseccomp.32
-Enable seccomp filter and deny the syscalls in the default list for 32 bit system calls on a 64 bit architecture system.
+Enable seccomp filter and blacklist the syscalls in the default list for 32 bit system calls on a 64 bit architecture system.
 .TP
 \fBseccomp syscall,syscall,syscall
-Enable seccomp filter and deny the system calls in the list on top of default seccomp filter.
+Enable seccomp filter and blacklist the system calls in the list on top of default seccomp filter.
 .TP
 \fBseccomp.32 syscall,syscall,syscall
-Enable seccomp filter and deny the system calls in the list on top of default seccomp filter for 32 bit system calls on a 64 bit architecture system.
+Enable seccomp filter and blacklist the system calls in the list on top of default seccomp filter for 32 bit system calls on a 64 bit architecture system.
 .TP
 \fBseccomp.block-secondary
 Enable seccomp filter and filter system call architectures
 so that only the native architecture is allowed.
 .TP
 \fBseccomp.drop syscall,syscall,syscall
-Enable seccomp filter and deny the system calls in the list.
+Enable seccomp filter and blacklist the system calls in the list.
 .TP
 \fBseccomp.32.drop syscall,syscall,syscall
-Enable seccomp filter and deny the system calls in the list for 32 bit system calls on a 64 bit architecture system.
+Enable seccomp filter and blacklist the system calls in the list for 32 bit system calls on a 64 bit architecture system.
 .TP
 \fBseccomp.keep syscall,syscall,syscall
-Enable seccomp filter and allow the system calls in the list.
+Enable seccomp filter and whitelist the system calls in the list.
 .TP
 \fBseccomp.32.keep syscall,syscall,syscall
-Enable seccomp filter and allow the system calls in the list for 32 bit system calls on a 64 bit architecture system.
+Enable seccomp filter and whitelist the system calls in the list for 32 bit system calls on a 64 bit architecture system.
 .TP
 \fBseccomp-error-action kill | log | ERRNO
 Return a different error instead of EPERM to the process, kill it when
@@ -534,7 +534,7 @@ attempt.
 Enable X11 sandboxing.
 .TP
 \fBx11 none
-Deny access to /tmp/.X11-unix directory, ${HOME}/.Xauthority and file specified in ${XAUTHORITY} environment variable.
+Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and file specified in ${XAUTHORITY} environment variable.
 Remove DISPLAY and XAUTHORITY environment variables.
 Stop with error message if X11 abstract socket will be accessible in jail.
 .TP

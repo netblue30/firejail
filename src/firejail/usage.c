@@ -146,7 +146,7 @@ static char *usage_str =
 	"    --netfilter6=filename - enable IPv6 firewall.\n"
 	"    --netfilter6.print=name|pid - print the IPv6 firewall.\n"
 	"    --netmask=address - define a network mask when dealing with unconfigured\n"
-	"\tparrent interfaces.\n"
+	"\tparent interfaces.\n"
 	"    --netns=name - Run the program in a named, persistent network namespace.\n"
 	"    --netstats - monitor network statistics.\n"
 #endif

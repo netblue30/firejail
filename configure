@@ -3549,7 +3549,7 @@ if test "x$enable_dbusproxy" != "xno"; then :
 
 fi
 
-# overlayfs features temporarely disabled pending fixes
+# overlayfs features temporarily disabled pending fixes
 HAVE_OVERLAYFS=""
 
 #

@@ -18,7 +18,7 @@ whitelist /usr/share/eog
 
 private-bin eog
 
-# broken on Debian 10 (buster) running LXDE got the folowing error:
+# broken on Debian 10 (buster) running LXDE got the following error:
 # Failed to register: GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown: org.freedesktop.DBus.Error.ServiceUnknown
 #dbus-user filter
 #dbus-user.own org.gnome.eog

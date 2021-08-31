@@ -108,7 +108,7 @@ static void disable_file(OPERATION op, const char *filename) {
 	}
 
 	// check for firejail executable
-	// we migth have a file found in ${PATH} pointing to /usr/bin/firejail
+	// we might have a file found in ${PATH} pointing to /usr/bin/firejail
 	// blacklisting it here will end up breaking situations like user clicks on a link in Thunderbird
 	//     and expects Firefox to open in the same sandbox
 	if (strcmp(BINDIR "/firejail", fname) == 0) {

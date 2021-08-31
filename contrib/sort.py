@@ -34,7 +34,7 @@ def sort_alphabetical(raw_items):
 
 
 def sort_protocol(protocols):
-    """sort the given protocole into this scheme: unix,inet,inet6,netlink,packet,bluetooth"""
+    """sort the given protocols into this scheme: unix,inet,inet6,netlink,packet,bluetooth"""
 
     # shortcut for common protocol lines
     if protocols in ("unix", "unix,inet,inet6"):

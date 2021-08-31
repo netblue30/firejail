@@ -164,7 +164,7 @@ def printHelp():
 
 
 def main() -> None:
-    """The main function. Parses the commandline args, shows messages and calles the function actually doing the work."""
+    """The main function. Parses the commandline args, shows messages and calls the function actually doing the work."""
     if len(sys.argv) > 2 or (len(sys.argv) == 2 and
                              (sys.argv[1] == "-h" or sys.argv[1] == "--help")):
         printHelp()

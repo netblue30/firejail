@@ -24,7 +24,7 @@ Exit-Codes:
 
 # Requirements:
 #  python >= 3.6
-from sys import argv
+from sys import argv, exit as sys_exit
 
 
 def sort_alphabetical(raw_items):
@@ -105,4 +105,4 @@ def main(args):
 
 
 if __name__ == "__main__":
-    exit(main(argv[1:]))
+    sys_exit(main(argv[1:]))

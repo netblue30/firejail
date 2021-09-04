@@ -37,16 +37,22 @@ include disable-xdg.inc
 #mkdir ${HOME}/Documents/KeePassXC
 #whitelist ${HOME}/Documents/KeePassXC
 # Needed for KeePassXC-Browser.
+#mkdir ${HOME}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts
 #mkfile ${HOME}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+#mkdir ${HOME}/.config/chromium/NativeMessagingHosts
 #mkfile ${HOME}/.config/chromium/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.config/chromium/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+#mkdir ${HOME}/.config/google-chrome/NativeMessagingHosts
 #mkfile ${HOME}/.config/google-chrome/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.config/google-chrome/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+#mkdir ${HOME}/.config/vivaldi/NativeMessagingHosts
 #mkfile ${HOME}/.config/vivaldi/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.config/vivaldi/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+#mkdir ${HOME}/.local/share/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts
 #mkfile ${HOME}/.local/share/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.local/share/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
+#mkdir ${HOME}/.mozilla/native-messaging-hosts
 #mkfile ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #mkdir ${HOME}/.cache/keepassxc

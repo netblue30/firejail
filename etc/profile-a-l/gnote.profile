@@ -21,6 +21,7 @@ mkdir ${HOME}/.config/gnote
 mkdir ${HOME}/.local/share/gnote
 whitelist ${HOME}/.config/gnote
 whitelist ${HOME}/.local/share/gnote
+whitelist /usr/libexec/webkit2gtk-4.0
 whitelist /usr/share/gnote
 include whitelist-common.inc
 include whitelist-runuser-common.inc

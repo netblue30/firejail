@@ -38,9 +38,8 @@ nosound
 notv
 nou2f
 novideo
-# protocol can be empty, but this is not yet supported see #639
-protocol inet
-seccomp
+# block the socket syscall to simulate an be empty protocol line, see #639
+seccomp socket
 shell none
 tracelog
 x11 none

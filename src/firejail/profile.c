@@ -175,6 +175,10 @@ static int check_allow_drm(void) {
 	return checkcfg(CFG_BROWSER_ALLOW_DRM) != 0;
 }
 
+static int check_allow_tray(void) {
+	return checkcfg(CFG_ALLOW_TRAY) != 0;
+}
+
 Cond conditionals[] = {
 	{"HAS_APPIMAGE", check_appimage},
 	{"HAS_NET", check_netoptions},
@@ -184,6 +188,7 @@ Cond conditionals[] = {
 	{"HAS_X11", check_x11},
 	{"BROWSER_DISABLE_U2F", check_disable_u2f},
 	{"BROWSER_ALLOW_DRM", check_allow_drm},
+	{"ALLOW_TRAY", check_allow_tray},
 	{ NULL, NULL }
 };
 

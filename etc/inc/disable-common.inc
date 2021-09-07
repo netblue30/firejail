@@ -420,6 +420,7 @@ blacklist ${HOME}/.local/share/keyrings
 blacklist ${HOME}/.local/share/kwalletd
 blacklist ${HOME}/.local/share/pki
 blacklist ${HOME}/.local/share/plasma-vault
+blacklist ${HOME}/.minisign
 blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.mutt
 blacklist ${HOME}/.muttrc

@@ -37,10 +37,6 @@ include whitelist-var-common.inc
 # Add the next line to your chromium-common.local if your kernel allows unprivileged userns clone.
 #include chromium-common-hardened.inc.profile
 
-# Add the next two lines to your chromium-common.local to allow screen sharing under wayland.
-#whitelist ${RUNUSER}/pipewire-0
-#whitelist /usr/share/pipewire/client.conf
-
 apparmor
 caps.keep sys_admin,sys_chroot
 netfilter

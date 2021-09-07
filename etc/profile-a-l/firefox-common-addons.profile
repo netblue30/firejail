@@ -2,6 +2,7 @@
 # Persistent customizations should go in a .local file.
 include firefox-common-addons.local
 
+ignore whitelist ${RUNUSER}/*firefox*
 ignore include whitelist-runuser-common.inc
 ignore private-cache
 

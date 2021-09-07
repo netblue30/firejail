@@ -10,7 +10,7 @@ whitelist ${RUNUSER}/gdm/Xauthority
 whitelist ${RUNUSER}/ICEauthority
 whitelist ${RUNUSER}/.mutter-Xwaylandauth.*
 whitelist ${RUNUSER}/pulse/native
-whitelist ${RUNUSER}/wayland-0
-whitelist ${RUNUSER}/wayland-1
+whitelist ${RUNUSER}/pipewire-?
+whitelist ${RUNUSER}/wayland-?
 whitelist ${RUNUSER}/xauth_*
 whitelist ${RUNUSER}/[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]

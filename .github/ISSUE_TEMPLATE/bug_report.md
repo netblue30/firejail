@@ -7,54 +7,71 @@ assignees: ''
 
 ---
 
-Write clear, concise and in textual form.
+### Description
 
-### Bug and expected behavior
+_Describe the bug_
 
-- Describe the bug.
-- What did you expect to happen?
+### Steps to Reproduce
 
-### No profile and disabling firejail
+_Steps to reproduce the behavior_
 
-- What changed calling `firejail --noprofile /path/to/program` in a terminal?
-- What changed calling the program by path (e.g. `/usr/bin/vlc`)?
+1. Run in bash `LANG=C firejail PROGRAM` (`LANG=C` to get english messages that can be understood by everybody)
+2. Click on '....'
+3. Scroll down to '....'
+4. See error `ERROR`
 
-### Reproduce
+### Expected behavior
 
-Steps to reproduce the behavior:
+_What you expected to happen_
 
-1. Run in bash `firejail PROGRAM`
-2. See error `ERROR`
-3. Click on '....'
-4. Scroll down to '....'
+### Actual behavior
 
-### Environment
+_What actually happened_
 
-- Linux distribution and version (ie output of `lsb_release -a`, `screenfetch` or `cat /etc/os-release`)
-- Firejail version (output of `firejail --version`) exclusive or used git commit (`git rev-parse HEAD`)
+### Behavior without a profile
+
+_What changed calling `firejail --noprofile /path/to/program` in a terminal?_
 
 ### Additional context
 
-Other context about the problem like related errors to understand the problem.
+_Any other context you have to understand the problem_
+
+### Environment
+
+- Linux distribution and version (e.g. "Ubuntu 20.04" or "Arch Linux")
+- Firejail version (`firejail --version`).
+  If you use a development version also the commit from which firejail was compiled (`git rev-parse HEAD`).
 
 ### Checklist
 
-- [ ] The profile (and redirect profile if exists) hasn't already been fixed [upstream](https://github.com/netblue30/firejail/tree/master/etc).
+- [ ] The issues is caused by firejail (i.e running the program by path (e.g. `/usr/bin/vlc`) "fixes" it).
+- [ ] I can reproduce the issue without custom modifications (e.g. globals.local).
 - [ ] The program has a profile. (If not, request one in `https://github.com/netblue30/firejail/issues/1139`)
+- [ ] The profile (and redirect profile if exists) hasn't already been fixed [upstream](https://github.com/netblue30/firejail/tree/master/etc).
 - [ ] I have performed a short search for similar issues (to avoid opening a duplicate).
-- [ ] If it is a AppImage, `--profile=PROFILENAME` is used to set the right profile.
-- [ ] Used `LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 PROGRAM` to get english error-messages.
-- [ ] I'm aware of `browser-allow-drm yes`/`browser-disable-u2f no` in `firejail.config` to allow DRM/U2F in browsers.
-- [ ] This is not a question. Questions should be asked in https://github.com/netblue30/firejail/discussions.
+  - [ ] I'm aware of `browser-allow-drm yes`/`browser-disable-u2f no` in `firejail.config` to allow DRM/U2F in browsers.
+- [ ] I used `--profile=PROFILENAME` to set the right profile. (Only relevant for AppImages)
 
 ### Log
 
+
 <details>
-<summary>debug output</summary>
+<summary>Output of <code>firejail /path/to/program</code></summary>
 <p>
 
 ```
-OUTPUT OF `firejail --debug PROGRAM`
+output goes here
+```
+
+</p>
+</details>
+
+<details>
+<summary>Output of <code>firejail --debug /path/to/program</code></summary>
+<p>
+
+```
+output goes here
 ```
 
 </p>

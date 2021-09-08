@@ -102,8 +102,6 @@ include globals.local
 #include allow-ssh.inc
 
 ##blacklist PATH
-# Disable X11 (CLI only), see also 'x11 none' below
-#blacklist /tmp/.X11-unix
 # Disable Wayland
 #blacklist ${RUNUSER}/wayland-*
 # Disable RUNUSER (cli only; supersedes Disable Wayland)
@@ -174,7 +172,7 @@ include globals.local
 ##seccomp-error-action log (only for debugging seccomp issues)
 #shell none
 #tracelog
-# Prefer 'x11 none' instead of 'blacklist /tmp/.X11-unix' if 'net none' is set
+# Prefer 'x11 none' instead of 'disable-X11.inc' if 'net none' is set
 ##x11 none
 
 #disable-mnt

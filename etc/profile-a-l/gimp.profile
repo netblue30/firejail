@@ -13,7 +13,6 @@ include globals.local
 #ignore net
 #protocol unix,inet,inet6
 
-
 # gimp plugins are installed by the user in ${HOME}/.gimp-2.8/plug-ins/ directory
 # If you are not using external plugins, you can add 'noexec ${HOME}' to your gimp.local.
 ignore noexec ${HOME}
@@ -25,6 +24,10 @@ noblacklist ${HOME}/.config/GIMP
 noblacklist ${HOME}/.gimp*
 noblacklist ${DOCUMENTS}
 noblacklist ${PICTURES}
+
+# See issue #4367, gimp 2.10.22-3: gegl:introspect broken
+noblacklist /sbin
+noblacklist /usr/sbin
 
 include disable-common.inc
 include disable-exec.inc

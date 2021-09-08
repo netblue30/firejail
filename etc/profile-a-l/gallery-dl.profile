@@ -5,7 +5,8 @@ quiet
 # Persistent local customizations
 include gallery-dl.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 noblacklist ${HOME}/.config/gallery-dl
 noblacklist ${HOME}/.gallery-dl.conf

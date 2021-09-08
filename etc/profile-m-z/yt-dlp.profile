@@ -5,7 +5,8 @@ quiet
 # Persistent local customizations
 include yt-dlp.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 noblacklist ${HOME}/.cache/yt-dlp
 noblacklist ${HOME}/.config/yt-dlp

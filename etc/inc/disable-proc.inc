@@ -15,11 +15,11 @@ blacklist /proc/crypto
 blacklist /proc/devices
 blacklist /proc/diskstats
 blacklist /proc/dma
-blacklist /proc/driver
+#blacklist /proc/driver
 blacklist /proc/dynamic_debug
 blacklist /proc/execdomains
 blacklist /proc/fb
-blacklist /proc/filesystems
+#blacklist /proc/filesystems
 blacklist /proc/fs
 blacklist /proc/i8k
 blacklist /proc/interrupts
@@ -35,12 +35,12 @@ blacklist /proc/kpagecgroup
 blacklist /proc/kpagecount
 blacklist /proc/kpageflags
 blacklist /proc/latency_stats
-blacklist /proc/loadavg
+#blacklist /proc/loadavg
 blacklist /proc/locks
 blacklist /proc/mdstat
 #blacklist /proc/meminfo
 blacklist /proc/misc
-blacklist /proc/modules
+#blacklist /proc/modules
 #blacklist /proc/mounts
 blacklist /proc/mtrr
 #blacklist /proc/net
@@ -53,7 +53,7 @@ blacklist /proc/scsi
 blacklist /proc/slabinfo
 blacklist /proc/softirqs
 blacklist /proc/spl
-blacklist /proc/stat
+#blacklist /proc/stat
 blacklist /proc/swaps
 #blacklist /proc/sys
 blacklist /proc/sysrq-trigger
@@ -61,12 +61,12 @@ blacklist /proc/sysvipc
 #blacklist /proc/thread-self
 blacklist /proc/timer_list
 blacklist /proc/tty
-blacklist /proc/uptime
-blacklist /proc/version
+#blacklist /proc/uptime
+#blacklist /proc/version
 blacklist /proc/version_signature
 blacklist /proc/vmallocinfo
-blacklist /proc/vmstat
-blacklist /proc/zoneinfo
+#blacklist /proc/vmstat
+#blacklist /proc/zoneinfo
 
 blacklist /proc/sys/abi
 blacklist /proc/sys/crypto

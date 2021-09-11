@@ -12,7 +12,7 @@ ignore read-only ${HOME}/.local/lib
 # Allow python3 (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
-whitelist ${HOME}/.local/lib/python*
+#whitelist ${HOME}/.local/lib/python*
 
 private-bin pip,pip[0-9].[0-9],pip[0-9].[0-9],python3*
 

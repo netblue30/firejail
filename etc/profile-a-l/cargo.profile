@@ -12,9 +12,8 @@ ignore read-only ${HOME}/.cargo/bin
 noblacklist ${HOME}/.cargo/credentials
 noblacklist ${HOME}/.cargo/credentials.toml
 
-mkdir ${HOME}/.cargo
-whitelist ${HOME}/.cargo
-whitelist ${HOME}/.rustup
+#whitelist ${HOME}/.cargo
+#whitelist ${HOME}/.rustup
 
 #private-bin cargo,rustc
 private-etc alternatives,ca-certificates,crypto-policies,group,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,magic,magic.mgc,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl

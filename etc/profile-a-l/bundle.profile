@@ -12,8 +12,9 @@ noblacklist ${HOME}/.bundle
 # Allow ruby (blacklisted by disable-interpreters.inc)
 include allow-ruby.inc
 
-mkdir ${HOME}/.bundle
-whitelist ${HOME}/.bundle
+#whitelist ${HOME}/.bundle
+#whitelist ${HOME}/.gem
+#whitelist ${HOME}/.local/share/gem
 whitelist /usr/share/gems
 whitelist /usr/share/ruby
 whitelist /usr/share/rubygems

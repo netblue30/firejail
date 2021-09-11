@@ -7,8 +7,6 @@ include cargo.local
 # Persistent global definitions
 include globals.local
 
-private-bin cmake
-
 memory-deny-write-execute
 
 # Redirect

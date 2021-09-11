@@ -10,7 +10,5 @@ include globals.local
 # Allow python3 (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
-private-bin meson,python3*
-
 # Redirect
 include build-systems-common.profile

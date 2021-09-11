@@ -14,7 +14,5 @@ include allow-python3.inc
 
 #whitelist ${HOME}/.local/lib/python*
 
-private-bin pip,pip[0-9].[0-9],pip[0-9].[0-9],python3*
-
 # Redirect
 include build-systems-common.profile

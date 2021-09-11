@@ -19,7 +19,5 @@ whitelist /usr/share/gems
 whitelist /usr/share/ruby
 whitelist /usr/share/rubygems
 
-private-bin bundle,bundler,ruby,ruby-mri
-
 # Redirect
 include build-systems-common.profile

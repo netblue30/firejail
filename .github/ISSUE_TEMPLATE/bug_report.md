@@ -54,7 +54,6 @@ _Any other context you have to understand the problem_
 
 ### Log
 
-
 <details>
 <summary>Output of <code>firejail /path/to/program</code></summary>
 <p>

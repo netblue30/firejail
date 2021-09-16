@@ -15,7 +15,7 @@ _Describe the bug_
 
 _Steps to reproduce the behavior_
 
-1. Run in bash `LANG=C firejail PROGRAM` (`LANG=C` to get english messages that can be understood by everybody)
+1. Run in bash `LANG=C firejail PROGRAM` (`LANG=C` to get English messages that can be understood by everybody)
 2. Click on '....'
 3. Scroll down to '....'
 4. See error `ERROR`
@@ -40,11 +40,11 @@ _Any other context you have to understand the problem_
 
 - Linux distribution and version (e.g. "Ubuntu 20.04" or "Arch Linux")
 - Firejail version (`firejail --version`).
-  If you use a development version also the commit from which firejail was compiled (`git rev-parse HEAD`).
+- If you use a development version of firejail, also the commit from which it was compiled (`git rev-parse HEAD`).
 
 ### Checklist
 
-- [ ] The issues is caused by firejail (i.e running the program by path (e.g. `/usr/bin/vlc`) "fixes" it).
+- [ ] The issues is caused by firejail (i.e. running the program by path (e.g. `/usr/bin/vlc`) "fixes" it).
 - [ ] I can reproduce the issue without custom modifications (e.g. globals.local).
 - [ ] The program has a profile. (If not, request one in `https://github.com/netblue30/firejail/issues/1139`)
 - [ ] The profile (and redirect profile if exists) hasn't already been fixed [upstream](https://github.com/netblue30/firejail/tree/master/etc).

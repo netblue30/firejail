@@ -30,7 +30,7 @@ _What actually happened_
 
 ### Behavior without a profile
 
-_What changed calling `firejail --noprofile /path/to/program` in a terminal?_
+_What changed calling `LC_ALL=C firejail --noprofile /path/to/program` in a terminal?_
 
 ### Additional context
 
@@ -55,7 +55,7 @@ _Any other detail that may help to understand/debug the problem_
 ### Log
 
 <details>
-<summary>Output of <code>firejail /path/to/program</code></summary>
+<summary>Output of <code>LC_ALL=C firejail /path/to/program</code></summary>
 <p>
 
 ```
@@ -66,7 +66,7 @@ output goes here
 </details>
 
 <details>
-<summary>Output of <code>firejail --debug /path/to/program</code></summary>
+<summary>Output of <code>LC_ALL=C firejail --debug /path/to/program</code></summary>
 <p>
 
 ```

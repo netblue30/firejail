@@ -34,7 +34,7 @@ _What changed calling `firejail --noprofile /path/to/program` in a terminal?_
 
 ### Additional context
 
-_Any other context you have to understand the problem_
+_Any other detail that may help to understand/debug the problem_
 
 ### Environment
 

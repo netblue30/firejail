@@ -53,7 +53,7 @@ disable-mnt
 private-bin love,mrrescue,sh
 private-cache
 private-dev
-private-etc machine-id
+private-etc ld.so.preload,machine-id
 private-tmp
 
 dbus-user none

@@ -52,7 +52,7 @@ disable-mnt
 private-bin com.github.dahenson.agenda
 private-cache
 private-dev
-private-etc dconf,fonts,gtk-3.0
+private-etc dconf,fonts,gtk-3.0,ld.so.preload
 private-tmp
 
 dbus-user filter

@@ -63,7 +63,7 @@ disable-mnt
 #private-bin sysprof - breaks help menu
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,machine-id,ssl
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id,ssl
 # private-lib - breaks help menu
 #private-lib gdk-pixbuf-2.*,gio,gtk3,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*,libsysprof-2.so,libsysprof-ui-2.so
 private-tmp

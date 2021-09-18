@@ -41,7 +41,7 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-etc dconf,fonts,gconf,gtk-2.0,gtk-3.0,machine-id,pango,passwd,X11
+private-etc dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.preload,machine-id,pango,passwd,X11
 private-tmp
 
 dbus-user filter

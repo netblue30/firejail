@@ -50,7 +50,7 @@ tracelog
 private-bin agetpkg,python3
 private-cache
 private-dev
-private-etc ca-certificates,crypto-policies,pki,resolv.conf,ssl
+private-etc ca-certificates,crypto-policies,ld.so.preload,pki,resolv.conf,ssl
 private-tmp
 
 dbus-user none

@@ -47,7 +47,7 @@ private
 private-bin bash,sh,whois
 private-cache
 private-dev
-private-etc alternatives,hosts,jwhois.conf,resolv.conf,services,whois.conf
+private-etc alternatives,hosts,jwhois.conf,ld.so.preload,resolv.conf,services,whois.conf
 private-lib gconv
 private-tmp
 

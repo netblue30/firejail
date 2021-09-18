@@ -35,7 +35,7 @@ shell none
 # private-bin bash,bless,mono,sh
 private-cache
 private-dev
-private-etc alternatives,fonts,mono
+private-etc alternatives,fonts,ld.so.preload,mono
 private-tmp
 
 dbus-user none

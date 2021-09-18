@@ -47,7 +47,7 @@ shell none
 disable-mnt
 private-bin gnome-recipes,tar
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.preload,pki,ssl
 private-lib gdk-pixbuf-2.0,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,libgnutls.so.*,libjpeg.so.*,libp11-kit.so.*,libproxy.so.*,librsvg-2.so.*
 private-tmp
 

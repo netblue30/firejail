@@ -88,7 +88,7 @@ tracelog
 
 private-bin keepassxc,keepassxc-cli,keepassxc-proxy
 private-dev
-private-etc alternatives,fonts,ld.so.cache,machine-id
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
 private-tmp
 
 dbus-user filter

@@ -45,7 +45,7 @@ disable-mnt
 private-bin nyx,python*
 private-cache
 private-dev
-private-etc alternatives,fonts,passwd,tor
+private-etc alternatives,fonts,ld.so.preload,passwd,tor
 private-opt none
 private-srv none
 private-tmp

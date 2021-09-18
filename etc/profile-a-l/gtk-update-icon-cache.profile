@@ -46,7 +46,7 @@ disable-mnt
 private-bin gtk-update-icon-cache
 private-cache
 private-dev
-private-etc none
+private-etc ld.so.preload,none
 private-lib
 private-tmp
 

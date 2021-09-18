@@ -39,7 +39,7 @@ shell none
 disable-mnt
 private-bin crow
 private-dev
-private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,machine-id,nsswitch.conf,pki,pulse,resolv.conf,ssl
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,ld.so.preload,machine-id,nsswitch.conf,pki,pulse,resolv.conf,ssl
 private-opt none
 private-tmp
 private-srv none

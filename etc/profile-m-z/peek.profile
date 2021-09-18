@@ -48,7 +48,7 @@ tracelog
 disable-mnt
 private-bin bash,convert,ffmpeg,firejail,fish,peek,sh,which,zsh
 private-dev
-private-etc dconf,firejail,fonts,gtk-3.0,login.defs,pango,passwd,X11
+private-etc dconf,firejail,fonts,gtk-3.0,ld.so.preload,login.defs,pango,passwd,X11
 private-tmp
 
 dbus-user filter

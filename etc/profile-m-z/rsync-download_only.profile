@@ -49,7 +49,7 @@ disable-mnt
 private-bin rsync
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
+private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.preload,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
 private-tmp
 
 dbus-user none

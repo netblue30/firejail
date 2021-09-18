@@ -43,7 +43,7 @@ disable-mnt
 private-bin bash,cut,glxinfo,grep,head,openarena,openarena_ded,quake3,zenity
 private-cache
 private-dev
-private-etc drirc,machine-id,openal,passwd,selinux,udev,xdg
+private-etc drirc,ld.so.preload,machine-id,openal,passwd,selinux,udev,xdg
 private-tmp
 
 dbus-user none

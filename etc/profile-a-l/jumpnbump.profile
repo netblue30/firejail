@@ -42,7 +42,7 @@ disable-mnt
 private-bin jumpnbump
 private-cache
 private-dev
-private-etc none
+private-etc ld.so.preload,none
 private-tmp
 
 dbus-user none

@@ -53,7 +53,7 @@ disable-mnt
 private-bin gnome-passwordsafe,python3*
 private-cache
 private-dev
-private-etc dconf,fonts,gtk-3.0,passwd
+private-etc dconf,fonts,gtk-3.0,ld.so.preload,passwd
 private-tmp
 
 dbus-user filter

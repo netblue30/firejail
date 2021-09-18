@@ -47,7 +47,7 @@ x11 none
 private-bin pngquant
 private-cache
 private-dev
-private-etc alternatives
+private-etc alternatives,ld.so.preload
 private-tmp
 
 dbus-user none

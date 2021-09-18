@@ -49,7 +49,7 @@ private-dev
 # Add the next lines to your nano.local if you want to edit files in /etc directly.
 #ignore private-etc
 #writable-etc
-private-etc alternatives,nanorc
+private-etc alternatives,ld.so.preload,nanorc
 # Add the next line to your nano.local if you want to edit files in /var directly.
 #writable-var
 

@@ -42,6 +42,6 @@ tracelog
 # private-bin calls a file manager - whatever is installed!
 #private-bin env,gio-launch-desktop,gnome-music,python*,yelp
 private-dev
-private-etc alternatives,asound.conf,dconf,fonts,fonts,gtk-3.0,machine-id,pulse,selinux,xdg
+private-etc alternatives,asound.conf,dconf,fonts,fonts,gtk-3.0,ld.so.preload,machine-id,pulse,selinux,xdg
 private-tmp
 

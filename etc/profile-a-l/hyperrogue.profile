@@ -44,7 +44,7 @@ private-bin hyperrogue
 private-cache
 private-cwd ${HOME}
 private-dev
-private-etc fonts,machine-id
+private-etc fonts,ld.so.preload,machine-id
 private-tmp
 
 dbus-user none

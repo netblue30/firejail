@@ -42,7 +42,7 @@ disable-mnt
 private-bin kalgebra,kalgebramobile
 private-cache
 private-dev
-private-etc fonts,machine-id
+private-etc fonts,ld.so.preload,machine-id
 private-tmp
 
 dbus-user none

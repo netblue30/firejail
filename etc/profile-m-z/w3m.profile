@@ -62,7 +62,7 @@ disable-mnt
 private-bin perl,sh,w3m
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,mailcap,nsswitch.conf,pki,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,ld.so.preload,mailcap,nsswitch.conf,pki,resolv.conf,ssl
 private-tmp
 
 dbus-user none

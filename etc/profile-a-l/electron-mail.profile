@@ -45,7 +45,7 @@ shell none
 private-bin electron-mail
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,nsswitch.conf,pki,resolv.conf,selinux,ssl,xdg
+private-etc alternatives,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,ld.so.preload,nsswitch.conf,pki,resolv.conf,selinux,ssl,xdg
 private-opt ElectronMail
 private-tmp
 

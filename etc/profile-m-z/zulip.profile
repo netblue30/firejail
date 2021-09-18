@@ -44,5 +44,5 @@ disable-mnt
 private-bin locale,zulip
 private-cache
 private-dev
-private-etc asound.conf,fonts,machine-id
+private-etc asound.conf,fonts,ld.so.preload,machine-id
 private-tmp

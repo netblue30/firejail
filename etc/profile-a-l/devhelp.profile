@@ -42,7 +42,7 @@ disable-mnt
 private-bin devhelp
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,ld.so.cache,machine-id,ssl
+private-etc alternatives,dconf,fonts,ld.so.cache,ld.so.preload,machine-id,ssl
 private-tmp
 
 # makes settings immutable

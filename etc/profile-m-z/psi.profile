@@ -71,7 +71,7 @@ disable-mnt
 private-bin getopt,psi
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,drirc,fonts,gcrypt,group,hostname,hosts,ld.so.cache,ld.so.conf,machine-id,passwd,pki,pulse,resolv.conf,selinux,ssl,xdg
+private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,drirc,fonts,gcrypt,group,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.preload,machine-id,passwd,pki,pulse,resolv.conf,selinux,ssl,xdg
 private-tmp
 
 dbus-user none

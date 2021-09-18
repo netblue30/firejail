@@ -52,7 +52,7 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives
+private-etc alternatives,ld.so.preload
 private-tmp
 
 dbus-user none

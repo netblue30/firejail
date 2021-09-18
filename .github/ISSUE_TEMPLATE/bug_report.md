@@ -44,6 +44,12 @@ _Any other detail that may help to understand/debug the problem_
 
 ### Checklist
 
+<!--
+Note: Items are checked with an "x", like so:
+
+- [x] This is a checked item.
+-->
+
 - [ ] The issues is caused by firejail (i.e. running the program by path (e.g. `/usr/bin/vlc`) "fixes" it).
 - [ ] I can reproduce the issue without custom modifications (e.g. globals.local).
 - [ ] The program has a profile. (If not, request one in `https://github.com/netblue30/firejail/issues/1139`)

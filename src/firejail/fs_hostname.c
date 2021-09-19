@@ -154,9 +154,6 @@ void fs_mount_hosts_file(void) {
 	struct stat s;
 	if (stat("/etc/hosts", &s) == -1)
 		goto errexit;
-	// not a link
-	if (is_link("/etc/hosts"))
-		goto errexit;
 	// owned by root
 	if (s.st_uid != 0)
 		goto errexit;

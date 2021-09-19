@@ -132,10 +132,6 @@ char *fs_check_hosts_file(const char *fname) {
 	invalid_filename(fname);
 	char *rv = expand_home(fname, cfg.homedir);
 
-	// no a link
-	if (is_link(rv))
-		goto errexit;
-
 	// the user has read access to the file
 	if (access(rv, R_OK))
 		goto errexit;

@@ -77,6 +77,7 @@ blacklist ${HOME}/.config/Element
 blacklist ${HOME}/.config/Element (Riot)
 blacklist ${HOME}/.config/Enox
 blacklist ${HOME}/.config/Epic
+blacklist ${HOME}/.config/Exodus
 blacklist ${HOME}/.config/Ferdi
 blacklist ${HOME}/.config/Flavio Tordini
 blacklist ${HOME}/.config/Franz

@@ -218,7 +218,7 @@ _firejail_args=(
     '--netfilter.print=-[print the firewall name|pid]: :_all_firejails'
     '--netfilter6=-[enable IPv6 firewall]: :'
     '--netfilter6.print=-[print the IPv6 firewall name|pid]: :_all_firejails'
-    '--netmask=-[define a network mask when dealing with unconfigured parrent interfaces]: :'
+    '--netmask=-[define a network mask when dealing with unconfigured parent interfaces]: :'
     '--netns=-[Run the program in a named, persistent network namespace]: :'
     '--netstats[monitor network statistics]'
     '--interface=-[move interface in sandbox]: :'

@@ -99,40 +99,6 @@ $ firejail [OPTIONS] firefox        # starting Mozilla Firefox
 \fB\-\-
 Signal the end of options and disables further option processing.
 .TP
-\fB\-\-allow=dirname_or_filename
-Allow access to a directory or file. A temporary file system is mounted on the top directory, and the
-allowed files are mount-binded inside. Modifications to allowed files are persistent,
-everything else is discarded when the sandbox is closed. The top directory can be
-all directories in / (except /proc and /sys), /sys/module, /run/user/$UID, $HOME and
-all directories in /usr.
-.br
-
-.br
-Symbolic link handling: with the exception of user home, both the link and the real file should be in
-the same top directory. For user home, both the link and the real file should be owned by the user.
-.br
-
-.br
-File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-noprofile \-\-allow=~/.mozilla
-.br
-$ firejail \-\-allow=/tmp/.X11-unix --allow=/dev/null
-.br
-$ firejail "\-\-allow=/home/username/My Virtual Machines"
-.br
-$ firejail \-\-allow=~/work* \-\-allow=/var/backups*
-
-
-
-
-
-
-.TP
 \fB\-\-allow-debuggers
 Allow tools such as strace and gdb inside the sandbox by whitelisting
 system calls ptrace and process_vm_readv. This option is only
@@ -203,6 +169,21 @@ Example:
 .br
 # firejail \-\-bind=/config/etc/passwd,/etc/passwd
 .TP
+\fB\-\-blacklist=dirname_or_filename
+Blacklist directory or file. File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-blacklist=/sbin \-\-blacklist=/usr/sbin
+.br
+$ firejail \-\-blacklist=~/.mozilla
+.br
+$ firejail "\-\-blacklist=/home/username/My Virtual Machines"
+.br
+$ firejail \-\-blacklist=/home/username/My\\ Virtual\\ Machines
+.TP
 \fB\-\-build
 The command builds a whitelisted profile. The profile is printed on the screen. If /usr/bin/strace is installed on the system, it also
 builds a whitelisted seccomp profile. The program is run in a very relaxed sandbox,
@@ -262,7 +243,7 @@ $ firejail \-\-caps.drop=all warzone2100
 
 .TP
 \fB\-\-caps.drop=capability,capability,capability
-Define a custom Linux capabilities filter.
+Define a custom blacklist Linux capabilities filter.
 .br
 
 .br
@@ -643,14 +624,14 @@ Example:
 $ firejail \-\-debug firefox
 
 .TP
-\fB\-\-debug-allow\fR
-Debug file system access.
+\fB\-\-debug-blacklists\fR
+Debug blacklisting.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-debug-allow firefox
+$ firejail \-\-debug-blacklists firefox
 
 .TP
 \fB\-\-debug-caps
@@ -661,16 +642,6 @@ Print all recognized capabilities in the current Firejail software build and exi
 Example:
 .br
 $ firejail \-\-debug-caps
-
-.TP
-\fB\-\-debug-deny\fR
-Debug file access.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-debug-deny firefox
 
 .TP
 \fB\-\-debug-errnos
@@ -706,7 +677,15 @@ $ firejail \-\-debug-syscalls
 \fB\-\-debug-syscalls32
 Print all recognized 32 bit system calls in the current Firejail software build and exit.
 .br
+.TP
+\fB\-\-debug-whitelists\fR
+Debug whitelisting.
+.br
 
+.br
+Example:
+.br
+$ firejail \-\-debug-whitelists firefox
 #ifdef HAVE_NETWORK
 .TP
 \fB\-\-defaultgw=address
@@ -718,32 +697,13 @@ Example:
 .br
 $ firejail \-\-net=eth0 \-\-defaultgw=10.10.20.1 firefox
 #endif
-
-.TP
-\fB\-\-deny=dirname_or_filename
-Deny access to directory or file. File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-deny=/sbin \-\-deny=/usr/sbin
-.br
-$ firejail \-\-deny=~/.mozilla
-.br
-$ firejail "\-\-deny=/home/username/My Virtual Machines"
-.br
-$ firejail \-\-deny=/home/username/My\\ Virtual\\ Machines
-
-
-
 .TP
 \fB\-\-deterministic-exit-code
 Always exit firejail with the first child's exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
 .br
 .TP
 \fB\-\-disable-mnt
-Deny access to /mnt, /media, /run/mount and /run/media.
+Blacklist /mnt, /media, /run/mount and /run/media access.
 .br
 
 .br
@@ -1511,16 +1471,12 @@ Example:
 $ firejail --no3d firefox
 
 .TP
-\fB\-\-noallow=dirname_or_filename
-Disable \-\-allow for this directory or file.
-
-.TP
 \fB\-\-noautopulse \fR(deprecated)
 See --keep-config-pulse.
 
 .TP
-\fB\-\-nodeny=dirname_or_filename
-Disable \-\-deny for this directory or file.
+\fB\-\-noblacklist=dirname_or_filename
+Disable blacklist for this directory or file.
 .br
 
 .br
@@ -1536,7 +1492,7 @@ $ exit
 .br
 
 .br
-$ firejail --nodeny=/bin/nc
+$ firejail --noblacklist=/bin/nc
 .br
 $ nc dict.org 2628
 .br
@@ -1709,6 +1665,10 @@ $ firejail \-\-nou2f
 \fB\-\-novideo
 Disable video devices.
 .br
+
+.TP
+\fB\-\-nowhitelist=dirname_or_filename
+Disable whitelist for this directory or file.
 
 #ifdef HAVE_OUTPUT
 .TP
@@ -2773,6 +2733,34 @@ Example:
 .br
 $ firejail \-\-net=br0 --veth-name=if0
 #endif
+.TP
+\fB\-\-whitelist=dirname_or_filename
+Whitelist directory or file. A temporary file system is mounted on the top directory, and the
+whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
+everything else is discarded when the sandbox is closed. The top directory can be
+all directories in / (except /proc and /sys), /sys/module, /run/user/$UID, $HOME and
+all directories in /usr.
+.br
+
+.br
+Symbolic link handling: with the exception of user home, both the link and the real file should be in
+the same top directory. For user home, both the link and the real file should be owned by the user.
+.br
+
+.br
+File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-noprofile \-\-whitelist=~/.mozilla
+.br
+$ firejail \-\-whitelist=/tmp/.X11-unix --whitelist=/dev/null
+.br
+$ firejail "\-\-whitelist=/home/username/My Virtual Machines"
+.br
+$ firejail \-\-whitelist=~/work* \-\-whitelist=/var/backups*
 
 .TP
 \fB\-\-writable-etc

@@ -87,9 +87,9 @@ static void sandbox_handler(int sig){
 
 	// broadcast a SIGKILL
 	kill(-1, SIGKILL);
-	flush_stdin();
 
-	exit(sig);
+	flush_stdin();
+	exit(128 + sig);
 }
 
 static void install_handler(void) {
@@ -1243,7 +1243,6 @@ int sandbox(void* sandbox_arg) {
 
 	if (app_pid == 0) {
 #ifdef HAVE_APPARMOR
-		// add apparmor confinement after the execve
 		set_apparmor();
 #endif
 
@@ -1258,13 +1257,17 @@ int sandbox(void* sandbox_arg) {
 	munmap(set_sandbox_status, 1);
 
 	int status = monitor_application(app_pid);	// monitor application
-	flush_stdin();
 
 	if (WIFEXITED(status)) {
 		// if we had a proper exit, return that exit status
-		return WEXITSTATUS(status);
+		status = WEXITSTATUS(status);
+	} else if (WIFSIGNALED(status)) {
+		// distinguish fatal signals by adding 128
+		status = 128 + WTERMSIG(status);
 	} else {
-		// something else went wrong!
-		return -1;
+		status = -1;
 	}
+
+	flush_stdin();
+	return status;
 }

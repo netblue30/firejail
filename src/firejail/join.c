@@ -45,7 +45,7 @@ static unsigned display = 0;
 static void signal_handler(int sig){
 	flush_stdin();
 
-	exit(sig);
+	exit(128 + sig);
 }
 
 static void install_handler(void) {
@@ -536,7 +536,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
 
 #ifdef HAVE_APPARMOR
-		// add apparmor confinement after the execve
 		set_apparmor();
 #endif
 
@@ -596,15 +595,17 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 	// end of signal-safe code
 	//*****************************
-	flush_stdin();
 
 	if (WIFEXITED(status)) {
+		// if we had a proper exit, return that exit status
 		status = WEXITSTATUS(status);
 	} else if (WIFSIGNALED(status)) {
-		status = WTERMSIG(status);
+		// distinguish fatal signals by adding 128
+		status = 128 + WTERMSIG(status);
 	} else {
-		status = 0;
+		status = -1;
 	}
 
+	flush_stdin();
 	exit(status);
 }

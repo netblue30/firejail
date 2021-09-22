@@ -189,13 +189,15 @@ static void my_handler(int s) {
 	logsignal(s);
 
 	if (waitpid(child, NULL, WNOHANG) == 0) {
-		if (has_handler(child, s)) // signals are not delivered if there is no handler yet
+		// child is pid 1 of a pid namespace:
+		// signals are not delivered if there is no handler yet
+		if (has_handler(child, s))
 			kill(child, s);
 		else
 			kill(child, SIGKILL);
 		waitpid(child, NULL, 0);
 	}
-	myexit(s);
+	myexit(128 + s);
 }
 
 static void install_handler(void) {
@@ -3216,10 +3218,11 @@ printf("link #%s#\n", prf->link);
 	if (WIFEXITED(status)){
 		myexit(WEXITSTATUS(status));
 	} else if (WIFSIGNALED(status)) {
-		myexit(WTERMSIG(status));
+		// distinguish fatal signals by adding 128
+		myexit(128 + WTERMSIG(status));
 	} else {
-		myexit(0);
+		myexit(1);
 	}
 
-	return 0;
+	return 1;
 }

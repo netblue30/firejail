@@ -262,7 +262,7 @@ static const char * const env_whitelist[] = {
 	"LANG",
 	"LANGUAGE",
 	"LC_MESSAGES",
-	"PATH",
+	// "PATH",
 	"DISPLAY"	// required by X11
 };
 
@@ -311,6 +311,10 @@ void env_apply_whitelist(void) {
 		errExit("clearenv");
 
 	env_apply_list(env_whitelist, ARRAY_SIZE(env_whitelist));
+
+	// hardcoding PATH
+	if (setenv("PATH", "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin", 1) < 0)
+		errExit("setenv");
 }
 
 // Filter env variables for a sbox app

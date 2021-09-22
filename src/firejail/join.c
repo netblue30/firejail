@@ -551,10 +551,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		if (cfg.cpus)	// not available for uid 0
 			set_cpu_affinity();
 
-		// set nice value
-		if (arg_nice)
-			set_nice(cfg.nice);
-
 		// add x11 display
 		if (display) {
 			char *display_str;
@@ -572,6 +568,11 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		if (stat(RUN_DBUS_SYSTEM_SOCKET, &s) == 0)
 			dbus_set_system_bus_env();
 #endif
+
+		// set nice and rlimits
+		if (arg_nice)
+			set_nice(cfg.nice);
+		set_rlimits();
 
 		start_application(0, shfd, NULL);
 

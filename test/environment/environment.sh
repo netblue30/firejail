@@ -112,14 +112,17 @@ echo "TESTING: rlimit (test/environment/rlimit.exp)"
 echo "TESTING: rlimit profile (test/environment/rlimit-profile.exp)"
 ./rlimit-profile.exp
 
+echo "TESTING: rlimit join (test/environment/rlimit-join.exp)"
+./rlimit-join.exp
+
 echo "TESTING: rlimit errors (test/environment/rlimit-bad.exp)"
 ./rlimit-bad.exp
 
 echo "TESTING: rlimit errors profile (test/environment/rlimit-bad-profile.exp)"
 ./rlimit-bad-profile.exp
 
-echo "TESTING: deterministic exit code (test/environment/deterministic-exit-code.exp"
+echo "TESTING: deterministic exit code (test/environment/deterministic-exit-code.exp)"
 ./deterministic-exit-code.exp
 
-echo "TESTING: retain umask (test/environment/umask.exp"
+echo "TESTING: retain umask (test/environment/umask.exp)"
 (umask 123 && ./umask.exp)

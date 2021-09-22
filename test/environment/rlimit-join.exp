@@ -1,0 +1,36 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2021 Firejail Authors
+# License GPL v2
+
+set timeout 10
+cd /home
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --noprofile --name=\"rlimit testing\"\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+sleep 1
+
+spawn $env(SHELL)
+send --  "firejail --rlimit-nofile=1234 --join=\"rlimit testing\"\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Switching to pid"
+}
+sleep 1
+
+send -- "cat /proc/self/limits\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Max open files            1234                 1234"
+}
+after 100
+
+send -- "exit\r"
+after 100
+
+puts "\nall done\n"

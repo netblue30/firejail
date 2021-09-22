@@ -76,7 +76,7 @@ AS_IF([test "x$enable_dbusproxy" != "xno"], [
 	AC_SUBST(HAVE_DBUSPROXY)
 ])
 
-# overlayfs features temporarely disabled pending fixes
+# overlayfs features temporarily disabled pending fixes
 HAVE_OVERLAYFS=""
 AC_SUBST(HAVE_OVERLAYFS)
 #

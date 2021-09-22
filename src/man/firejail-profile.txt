@@ -606,7 +606,7 @@ Allow the application to see but not talk to the name org.freedesktop.Notificati
 Allow the application to call methods of the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
 .TP
 \fBdbus-system.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
-Allow the application to receive broadcast signals from the the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
+Allow the application to receive broadcast signals from the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
 .TP
 \fBdbus-user filter
 Enable filtered access to the session DBus. Filters can be specified with the dbus-user.talk and dbus-user.own commands.

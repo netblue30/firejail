@@ -204,7 +204,7 @@ include globals.local
 
 # Since 0.9.63 also a more granular control of dbus is supported.
 # To get the dbus-addresses an application needs access to you can
-# check with flatpak (when the application is distriputed that way):
+# check with flatpak (when the application is distributed that way):
 #    flatpak remote-info --show-metadata flathub <APP-ID>
 # Notes:
 #  - flatpak implicitly allows an app to own <APP-ID> on the session bus

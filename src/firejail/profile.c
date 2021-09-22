@@ -1938,7 +1938,7 @@ char *profile_list_compress(char *list)
 			/* Include non-empty item */
 			if (!*item)
 				in[i] = 0;
-			/* Remove all allready included items */
+			/* Remove all already included items */
 			for (k = 0; k < i; ++k)
 				in[k] = 0;
 			break;

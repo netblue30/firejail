@@ -11,7 +11,7 @@ include globals.local
 # edit ~/.config/mpv/foobar.conf:
 #    screenshot-directory=~/Pictures
 
-# Mpv has a powerfull lua-API, some off these lua-scripts interact
+# Mpv has a powerful lua-API, some off these lua-scripts interact
 # with external resources which are blocked by firejail. In such cases
 # you need to allow these resources by
 #  - adding additional binaries to private-bin

@@ -502,6 +502,7 @@ blacklist ${HOME}/.gitconfig
 blacklist ${HOME}/.gl-117
 blacklist ${HOME}/.glaxiumrc
 blacklist ${HOME}/.gnome/gnome-schedule
+blacklist ${HOME}/.goldendict
 blacklist ${HOME}/.googleearth
 blacklist ${HOME}/.gradle
 blacklist ${HOME}/.gramps
@@ -967,6 +968,7 @@ blacklist ${HOME}/.cache/Enpass
 blacklist ${HOME}/.cache/Ferdi
 blacklist ${HOME}/.cache/Flavio Tordini
 blacklist ${HOME}/.cache/Franz
+blacklist ${HOME}/.cache/GoldenDict
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/INRIA/Natron
 blacklist ${HOME}/.cache/KDE/neochat

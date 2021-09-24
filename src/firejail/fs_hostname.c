@@ -93,10 +93,6 @@ char *fs_check_hosts_file(const char *fname) {
 	invalid_filename(fname, 0); // no globbing
 	char *rv = expand_macros(fname);
 
-	// no a link
-	if (is_link(rv))
-		goto errexit;
-
 	// the user has read access to the file
 	if (access(rv, R_OK))
 		goto errexit;
@@ -118,9 +114,6 @@ void fs_mount_hosts_file(void) {
 	// check /etc/hosts file
 	struct stat s;
 	if (stat("/etc/hosts", &s) == -1)
-		goto errexit;
-	// not a link
-	if (is_link("/etc/hosts"))
 		goto errexit;
 	// owned by root
 	if (s.st_uid != 0)

@@ -41,7 +41,7 @@ seccomp.block-secondary
 shell none
 
 disable-mnt
-#private-bin telegram,Telegram,telegram-desktop
+private-bin telegram,Telegram,telegram-desktop
 private-cache
 private-dev
 private-etc alsa,alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.preload,localtime,machine-id,os-release,passwd,pki,pulse,resolv.conf,ssl,xdg

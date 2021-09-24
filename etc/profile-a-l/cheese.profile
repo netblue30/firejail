@@ -42,7 +42,7 @@ tracelog
 disable-mnt
 private-bin cheese
 private-cache
-private-etc alternatives,clutter-1.0,dconf,drirc,fonts,gtk-3.0
+private-etc alternatives,clutter-1.0,dconf,drirc,fonts,gtk-3.0,ld.so.preload
 private-tmp
 
 dbus-user filter

@@ -33,7 +33,7 @@ shell none
 
 disable-mnt
 private-bin mate-color-select
-private-etc alternatives,fonts
+private-etc alternatives,fonts,ld.so.preload
 private-dev
 private-lib
 private-tmp

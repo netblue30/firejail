@@ -36,7 +36,7 @@ shell none
 private-bin feh,jpegexiforient,jpegtran
 private-cache
 private-dev
-private-etc alternatives,feh
+private-etc alternatives,feh,ld.so.preload
 private-tmp
 
 dbus-user none

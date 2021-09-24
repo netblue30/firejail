@@ -43,7 +43,7 @@ disable-mnt
 private-bin regextester
 private-cache
 private-dev
-private-etc alternatives,fonts
+private-etc alternatives,fonts,ld.so.preload
 private-lib libgranite.so.*
 private-tmp
 

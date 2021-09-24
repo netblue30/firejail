@@ -46,7 +46,7 @@ disable-mnt
 private-bin plv
 private-cache
 private-dev
-private-etc alternatives,fonts
+private-etc alternatives,fonts,ld.so.preload
 private-opt none
 private-tmp
 writable-var-log

@@ -51,7 +51,7 @@ private
 private-bin dbus-send
 private-cache
 private-dev
-private-etc alternatives,dbus-1
+private-etc alternatives,dbus-1,ld.so.preload
 private-lib libpcre*
 private-tmp
 

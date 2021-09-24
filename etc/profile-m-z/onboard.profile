@@ -50,7 +50,7 @@ disable-mnt
 private-cache
 private-bin onboard,python*,tput
 private-dev
-private-etc alternatives,dbus-1,dconf,fonts,gtk-2.0,gtk-3.0,locale,locale.alias,locale.conf,mime.types,selinux,X11,xdg
+private-etc alternatives,dbus-1,dconf,fonts,gtk-2.0,gtk-3.0,ld.so.preload,locale,locale.alias,locale.conf,mime.types,selinux,X11,xdg
 private-tmp
 
 dbus-system none

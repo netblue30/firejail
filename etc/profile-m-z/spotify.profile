@@ -44,7 +44,7 @@ disable-mnt
 private-bin bash,cat,dirname,find,grep,head,rm,sh,spotify,tclsh,touch,zenity
 private-dev
 # If you want to see album covers or want to use the radio, add 'ignore private-etc' to your spotify.local.
-private-etc alternatives,ca-certificates,crypto-policies,fonts,group,host.conf,hosts,ld.so.cache,machine-id,nsswitch.conf,pki,pulse,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,fonts,group,host.conf,hosts,ld.so.cache,ld.so.preload,machine-id,nsswitch.conf,pki,pulse,resolv.conf,ssl
 private-opt spotify
 private-srv none
 private-tmp

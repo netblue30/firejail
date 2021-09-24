@@ -34,7 +34,7 @@ shell none
 
 private-bin pdfchain,pdftk,sh
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,xdg
+private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.preload,xdg
 private-tmp
 
 dbus-user none

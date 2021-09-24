@@ -49,7 +49,7 @@ disable-mnt
 private-bin warmux
 private-cache
 private-dev
-private-etc ca-certificates,crypto-policies,host.conf,hostname,hosts,machine-id,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
+private-etc ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.preload,machine-id,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
 private-tmp
 
 dbus-user none

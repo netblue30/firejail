@@ -44,7 +44,7 @@ private
 private-bin pkglog,python*
 private-cache
 private-dev
-private-etc alternatives
+private-etc alternatives,ld.so.preload
 private-opt none
 private-tmp
 writable-var-log

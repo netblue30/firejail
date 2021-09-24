@@ -45,7 +45,7 @@ tracelog
 private-bin ocenaudio
 private-cache
 private-dev
-private-etc alternatives,asound.conf,fonts,ld.so.cache,pulse
+private-etc alternatives,asound.conf,fonts,ld.so.cache,ld.so.preload,pulse
 private-tmp
 
 # breaks preferences

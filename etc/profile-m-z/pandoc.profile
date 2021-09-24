@@ -47,7 +47,7 @@ disable-mnt
 private-bin context,latex,mktexfmt,pandoc,pdflatex,pdfroff,prince,weasyprint,wkhtmltopdf
 private-cache
 private-dev
-private-etc alternatives,texlive,texmf
+private-etc alternatives,ld.so.preload,texlive,texmf
 private-tmp
 
 dbus-user none

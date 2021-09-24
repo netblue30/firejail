@@ -42,7 +42,7 @@ disable-mnt
 private-bin bash,geekbenc*,sh
 private-cache
 private-dev
-private-etc alternatives,group,lsb-release,passwd
+private-etc alternatives,group,ld.so.preload,lsb-release,passwd
 private-lib gcc/*/*/libstdc++.so.*
 private-opt none
 private-tmp

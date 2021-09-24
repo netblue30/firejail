@@ -40,5 +40,5 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-etc alsa,asound.conf,dconf,fonts,gtk-2.0,gtk-3.0,machine-id,openal,pango,pulse,xdg
+private-etc alsa,asound.conf,dconf,fonts,gtk-2.0,gtk-3.0,ld.so.preload,machine-id,openal,pango,pulse,xdg
 private-tmp

@@ -43,7 +43,7 @@ private
 private-bin gnubik
 private-cache
 private-dev
-private-etc drirc,fonts,gtk-2.0
+private-etc drirc,fonts,gtk-2.0,ld.so.preload
 private-tmp
 
 dbus-user none

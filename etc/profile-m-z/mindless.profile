@@ -42,7 +42,7 @@ private
 private-bin mindless
 private-cache
 private-dev
-private-etc fonts
+private-etc fonts,ld.so.preload
 private-tmp
 
 dbus-user none

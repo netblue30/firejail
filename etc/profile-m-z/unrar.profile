@@ -8,7 +8,7 @@ include unrar.local
 include globals.local
 
 private-bin unrar
-private-etc alternatives,group,localtime,passwd
+private-etc alternatives,group,ld.so.preload,localtime,passwd
 private-tmp
 
 # Redirect

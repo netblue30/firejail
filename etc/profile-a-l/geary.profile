@@ -70,7 +70,7 @@ tracelog
 private-bin geary
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,hostname,hosts,pki,resolv.conf,ssl,xdg
+private-etc alternatives,ca-certificates,crypto-policies,fonts,hostname,hosts,ld.so.preload,pki,resolv.conf,ssl,xdg
 private-tmp
 
 dbus-user filter

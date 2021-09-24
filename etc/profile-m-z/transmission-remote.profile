@@ -8,7 +8,7 @@ include transmission-remote.local
 include globals.local
 
 private-bin transmission-remote
-private-etc alternatives,hosts,nsswitch.conf
+private-etc alternatives,hosts,ld.so.preload,nsswitch.conf
 
 # Redirect
 include transmission-common.profile

@@ -40,7 +40,7 @@ shell none
 private-bin display,python*
 private-dev
 # On Debian-based systems, display is a symlink in /etc/alternatives
-private-etc alternatives
+private-etc alternatives,ld.so.preload
 private-tmp
 
 dbus-user none

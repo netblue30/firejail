@@ -49,7 +49,7 @@ disable-mnt
 private-bin gget
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,ld.so.preload,pki,resolv.conf,ssl
 private-lib
 private-tmp
 

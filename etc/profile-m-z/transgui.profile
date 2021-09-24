@@ -45,7 +45,7 @@ tracelog
 private-bin geoiplookup,geoiplookup6,transgui
 private-cache
 private-dev
-private-etc alternatives,fonts
+private-etc alternatives,fonts,ld.so.preload
 private-lib libgdk_pixbuf-2.0.so.*,libGeoIP.so*,libgthread-2.0.so.*,libgtk-x11-2.0.so.*,libX11.so.*
 private-tmp
 

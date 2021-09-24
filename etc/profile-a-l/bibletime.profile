@@ -52,7 +52,7 @@ disable-mnt
 # private-bin bibletime,qt5ct
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,login.defs,machine-id,passwd,pki,resolv.conf,ssl,sword,sword.conf
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.preload,login.defs,machine-id,passwd,pki,resolv.conf,ssl,sword,sword.conf
 private-tmp
 
 dbus-user none

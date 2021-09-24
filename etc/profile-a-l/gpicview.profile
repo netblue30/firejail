@@ -41,7 +41,7 @@ tracelog
 private-bin gpicview
 private-cache
 private-dev
-private-etc alternatives,fonts,group,passwd
+private-etc alternatives,fonts,group,ld.so.preload,passwd
 private-lib
 private-tmp
 

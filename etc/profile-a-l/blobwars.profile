@@ -43,7 +43,7 @@ disable-mnt
 private-bin blobwars
 private-cache
 private-dev
-private-etc machine-id
+private-etc ld.so.preload,machine-id
 private-tmp
 
 dbus-user none

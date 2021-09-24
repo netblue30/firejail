@@ -61,7 +61,7 @@ tracelog
 disable-mnt
 private-bin nextcloud,nextcloud-desktop
 private-cache
-private-etc alternatives,ca-certificates,crypto-policies,drirc,fonts,gcrypt,host.conf,hosts,ld.so.cache,machine-id,Nextcloud,nsswitch.conf,os-release,passwd,pki,pulse,resolv.conf,selinux,ssl,xdg
+private-etc alternatives,ca-certificates,crypto-policies,drirc,fonts,gcrypt,host.conf,hosts,ld.so.cache,ld.so.preload,machine-id,Nextcloud,nsswitch.conf,os-release,passwd,pki,pulse,resolv.conf,selinux,ssl,xdg
 private-dev
 private-tmp
 

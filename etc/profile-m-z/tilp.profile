@@ -30,6 +30,6 @@ tracelog
 disable-mnt
 private-bin tilp
 private-cache
-private-etc alternatives,fonts
+private-etc alternatives,fonts,ld.so.preload
 private-tmp
 

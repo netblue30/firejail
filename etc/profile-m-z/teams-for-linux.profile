@@ -20,7 +20,7 @@ mkdir ${HOME}/.config/teams-for-linux
 whitelist ${HOME}/.config/teams-for-linux
 
 private-bin bash,cut,echo,egrep,electron,electron[0-9],electron[0-9][0-9],grep,head,sed,sh,teams-for-linux,tr,xdg-mime,xdg-open,zsh
-private-etc ca-certificates,crypto-policies,fonts,ld.so.cache,localtime,machine-id,pki,resolv.conf,ssl
+private-etc ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,localtime,machine-id,pki,resolv.conf,ssl
 
 # Redirect
 include electron.profile

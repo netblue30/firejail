@@ -8,7 +8,7 @@ include seahorse-tool.local
 #include globals.local
 
 # private-etc workaround for: #2877
-private-etc firejail,login.defs,passwd
+private-etc firejail,ld.so.preload,login.defs,passwd
 private-tmp
 
 # Redirect

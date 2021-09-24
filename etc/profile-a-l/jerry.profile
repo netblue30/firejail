@@ -34,7 +34,7 @@ tracelog
 
 private-bin bash,jerry,sh,stockfish
 private-dev
-private-etc fonts,gtk-2.0,gtk-3.0
+private-etc fonts,gtk-2.0,gtk-3.0,ld.so.preload
 private-tmp
 
 dbus-user none

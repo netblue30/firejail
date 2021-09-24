@@ -43,7 +43,7 @@ tracelog
 
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0
+private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.preload
 private-tmp
 
 dbus-user none

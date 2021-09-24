@@ -49,7 +49,7 @@ private
 private-bin notify-send
 private-cache
 private-dev
-private-etc none
+private-etc ld.so.preload,none
 private-tmp
 
 dbus-user filter

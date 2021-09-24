@@ -68,6 +68,8 @@ Firejail Authors (alphabetical order)
 	- fix flameshot raw screenshots
 1dnrr (https://github.com/1dnrr)
 	- add pybitmessage profile
+a1346054 (https://github.com/a1346054)
+	- add missing final newlines in various files
 Ádler Jonas Gross (https://github.com/adgross)
 	- AppArmor fix
 Adrian L. Shaw (https://github.com/adrianlshaw)
@@ -526,6 +528,7 @@ John Mullee (https://github.com/jmullee)
 Jonas Heinrich (https://github.com/onny)
 	- added signal-desktop profile
 	- fixed franz profile
+	- remove /etc/hosts is_link check for NixOS
 Jose Riha (https://github.com/jose1711)
 	- added meteo-qt profile
 	- created qgis, links, xlinks profiles
@@ -595,6 +598,8 @@ Laurent Declercq (https://github.com/nuxwin)
 	- fixed test for shell interpreter in chroots
 LaurentGH (https://github.com/LaurentGH)
 	- allow private-bin parameters to be absolute paths
+lecso7 (https://github.com/lecso7)
+	- added goldendict profile
 Loïc Damien (https://github.com/dzamlo)
 	- small fixes
 Liorst4 (https://github.com/Liorst4)

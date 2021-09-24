@@ -223,6 +223,8 @@ Carlo Abelli (https://github.com/carloabelli)
 	- fixed simple-scan
 Cat (https://github.com/ecat3)
 	- prevent tmux connecting to an existing session
+cayday (https://github.com/caydey)
+	- added ~/Private blacklist in disable-common.inc
 Christian Pinedo (https://github.com/chrpinedo)
 	- added nicotine profile
 	- allow python3 in totem profile
@@ -248,6 +250,8 @@ crass (https://github.com/crass)
 	- extract_command_name fixes
 	- update appimage size calculation to newest code from libappimage
 	- firejail should look for processes with names exactly named
+croket (https://github.com/crocket)
+	- fix librewolf profile
 curiosity-seeker (https://github.com/curiosity-seeker - old)
 curiosityseeker (https://github.com/curiosityseeker - new)
 	- tightening unbound and dnscrypt-proxy profiles
@@ -492,6 +496,10 @@ James Elford (https://github.com/jelford)
 	- removed shell none from ssh-agent configuration, fixing the infinite loop
 	- added gcloud profile
 	- blacklist sensitive cloud provider files in disable-common
+Jan-Niclas (https://github.com/0x6a61)
+	- moved rules from firefox-common.profile to firefox.profile
+	- blacklist /*firefox* except for firefox itself
+	- fix Firefox 'Profile not found' - whitelist /run/user/xxx/firefox
 Jean Lucas (https://github.com/flacks)
 	- fix Discord profile
 	- add AnyDesk profile
@@ -600,6 +608,7 @@ LaurentGH (https://github.com/LaurentGH)
 	- allow private-bin parameters to be absolute paths
 lecso7 (https://github.com/lecso7)
 	- added goldendict profile
+	- allow evince to read .cbz file format
 Loïc Damien (https://github.com/dzamlo)
 	- small fixes
 Liorst4 (https://github.com/Liorst4)
@@ -632,6 +641,8 @@ Martin Carpenter (https://github.com/mcarpenter)
 Martin Dosch (spam-debian@mdosch.de)
 	- support for gnome-shell integration addon in Firefox
 	  (Bug-Debian: https://bugs.debian.org/872720)
+Martynas Janonis (https://github.com/mjanonis)
+	- update wrc for Arch Linux
 Matt Parnell (https://github.com/ilikenwf)
 	- whitelisting for core firefox related functionality
 Mattias Wadman (https://github.com/wader)
@@ -1004,6 +1015,7 @@ Ted Robertson  (https://github.com/tredondo)
 	- webstorm profile fixes
 	- added bcompare profile
 	- various documentation fixes
+	- blacklist Exodus wallet
 user1024 (user1024@tut.by)
 	- electron profile whitelisting
 	- fixed Rocket.Chat profile
@@ -1067,11 +1079,12 @@ Vladimir Gorelov (https://github.com/larkvirtual)
 Vladimir Schowalter (https://github.com/VladimirSchowalter20)
 	- apparmor profile enhancements
 	- various KDE profile enhancements
-	read-only kde5 services directory
+	- read-only kde5 services directory
 Vladislav Nepogodin (https://github.com/vnepogodin)
 	- added Librewolf profiles
 	- added Sway profile
 	- fix CLion profile
+	- fixes for disable-programs.inc
 xee5ch (https://github.com/xee5ch)
 	- skypeforlinux profile
 Ypnose (https://github.com/Ypnose)

@@ -195,6 +195,11 @@ void fslib_mount_libs(const char *full_path, unsigned user) {
 	assert(full_path);
 	// if library/executable does not exist or the user does not have read access to it
 	// print a warning and exit the function.
+	if (access(full_path, F_OK)) {
+		if (arg_debug || arg_debug_private_lib)
+			printf("Cannot find %s, skipping...\n", full_path);
+		return;
+	}
 	if (user && access(full_path, R_OK)) {
 		if (arg_debug || arg_debug_private_lib)
 			printf("Cannot read %s, skipping...\n", full_path);

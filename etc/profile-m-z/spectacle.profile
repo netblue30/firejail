@@ -22,7 +22,7 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-mkfile  ${HOME}/.config/spectaclerc
+mkfile ${HOME}/.config/spectaclerc
 whitelist ${HOME}/.config/spectaclerc
 whitelist ${PICTURES}
 whitelist /usr/share/kconf_update/spectacle_newConfig.upd

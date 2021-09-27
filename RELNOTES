@@ -59,7 +59,7 @@ firejail (0.9.64.4) baseline; urgency=low
 
 firejail (0.9.64.2) baseline; urgency=low
   * allow --tmpfs inside $HOME for unprivileged users
-  * --disable-usertmpfs  compile time option
+  * --disable-usertmpfs compile time option
   * allow AF_BLUETOOTH via --protocol=bluetooth
   * Setup guide for new users: contrib/firejail-welcome.sh
   * implement netns in profiles
@@ -566,7 +566,7 @@ firejail (0.9.44) baseline; urgency=low
   * feature: disable 3D hardware acceleration (--no3d)
   * feature: x11 xpra, x11 xephyr, x11 block, allusers, no3d profile commands
   * feature: move files in sandbox (--put)
-  * feature: accept wildcard patterns in user  name field of restricted
+  * feature: accept wildcard patterns in user name field of restricted
     shell login feature
   * new profiles: qpdfview, mupdf, Luminance HDR, Synfig Studio, Gimp, Inkscape
   * new profiles: feh, ranger, zathura, 7z, keepass, keepassx,
@@ -608,7 +608,7 @@ firejail (0.9.42) baseline; urgency=low
   * compile time: disable whitelisting (--disable-whitelist)
   * compile time: disable global config (--disable-globalcfg)
   * run time: enable/disable overlayfs (overlayfs yes/no)
-  * run time: enable/disable  quiet as default (quiet-by-default yes/no)
+  * run time: enable/disable quiet as default (quiet-by-default yes/no)
   * run time: user-defined network filter (netfilter-default)
   * run time: enable/disable whitelisting (whitelist yes/no)
   * run time: enable/disable remounting of /proc and /sys
@@ -706,7 +706,7 @@ firejail (0.9.38) baseline; urgency=low
  -- netblue30 <netblue30@yahoo.com>  Tue, 2 Feb 2016 10:00:00 -0500
 
 firejail (0.9.36) baseline; urgency=low
-  * added  unbound, dnscrypt-proxy, BitlBee, HexChat, WeeChat,
+  * added unbound, dnscrypt-proxy, BitlBee, HexChat, WeeChat,
      parole and rtorrent profiles
   * Google Chrome profile rework
   * added google-chrome-stable profile

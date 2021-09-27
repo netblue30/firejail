@@ -47,7 +47,7 @@ shell none
 tracelog
 
 disable-mnt
-# Add  'private-bin PROGRAM1,PROGRAM2' to your links-common.local  if you want to use user-configured programs.
+# Add 'private-bin PROGRAM1,PROGRAM2' to your links-common.local if you want to use user-configured programs.
 private-bin sh
 private-cache
 private-dev

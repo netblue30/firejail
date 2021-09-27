@@ -12,7 +12,7 @@ noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.signature
 # when storing mail outside the default ${HOME}/Mail path, 'noblacklist' the custom path in your email-common.local
-# and 'blacklist' it in your disable-common.local too so it is  kept hidden from other applications
+# and 'blacklist' it in your disable-common.local too so it is kept hidden from other applications
 noblacklist ${HOME}/Mail
 
 noblacklist ${DOCUMENTS}

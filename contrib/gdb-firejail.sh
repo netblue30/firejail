@@ -21,4 +21,4 @@ else
 fi
 
 bash -c "kill -STOP \$\$; exec \"\$0\" \"\$@\"" "$@" &
-sudo gdb -e  "$FIREJAIL" -p "$!"
+sudo gdb -e "$FIREJAIL" -p "$!"

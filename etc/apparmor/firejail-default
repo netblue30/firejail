@@ -129,7 +129,7 @@ signal (receive),
 ##########
 # The list of recognized capabilities varies from one apparmor version to another.
 # For example on Debian 10 (apparmor 2.13.2) checkpoint_restore, perfmon, bpf are not available
-# We allow all caps by default and remove the  ones we don't like:
+# We allow all caps by default and remove the ones we don't like:
 capability,
 deny capability audit_write,
 deny capability audit_control,

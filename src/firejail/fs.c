@@ -23,7 +23,6 @@
 #include <sys/stat.h>
 #include <sys/statvfs.h>
 #include <sys/wait.h>
-#include <linux/limits.h>
 #include <fnmatch.h>
 #include <glob.h>
 #include <dirent.h>

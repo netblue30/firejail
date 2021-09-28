@@ -32,7 +32,6 @@
 #include <dirent.h>
 #include <pwd.h>
 #include <errno.h>
-//#include <limits.h>
 #include <sys/file.h>
 #include <sys/prctl.h>
 #include <signal.h>

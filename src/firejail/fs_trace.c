@@ -26,19 +26,26 @@
 #include <fcntl.h>
 #include <pwd.h>
 
-void fs_trace_preload(void) {
+// create an empty /etc/ld.so.preload
+void fs_trace_touch_preload(void) {
+	create_empty_file_as_root("/etc/ld.so.preload", S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+}
+
+void fs_trace_touch_or_store_preload(void) {
 	struct stat s;
 
-	// create an empty /etc/ld.so.preload
-	if (stat("/etc/ld.so.preload", &s)) {
-		if (arg_debug)
-			printf("Creating an empty /etc/ld.so.preload file\n");
-		FILE *fp = fopen("/etc/ld.so.preload", "wxe");
-		if (!fp)
-			errExit("fopen");
-		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
-		fclose(fp);
-		fs_logger("touch /etc/ld.so.preload");
+	if (stat("/etc/ld.so.preload", &s) != 0) {
+		fs_trace_touch_preload();
+		return;
+	}
+
+	if (s.st_size == 0)
+		return;
+
+	// create a copy of /etc/ld.so.preload
+	if (copy_file("/etc/ld.so.preload", RUN_LDPRELOAD_FILE, 0, 0, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) {
+		fprintf(stderr, "Error: cannot copy /etc/ld.so.preload file\n");
+		exit(1);
 	}
 }
 
@@ -83,7 +90,7 @@ void fs_trace(void) {
 	if (arg_debug)
 		printf("Create the new ld.so.preload file\n");
 
-	FILE *fp = fopen(RUN_LDPRELOAD_FILE, "we");
+	FILE *fp = fopen(RUN_LDPRELOAD_FILE, "ae");
 	if (!fp)
 		errExit("fopen");
 	const char *prefix = RUN_FIREJAIL_LIB_DIR;

@@ -6,6 +6,10 @@ include geekbench.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.geekbench5
+noblacklist /sbin
+noblacklist /usr/sbin
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -13,6 +17,8 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.geekbench5
+whitelist ${HOME}/.geekbench5
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -39,16 +45,14 @@ shell none
 tracelog
 
 disable-mnt
-private-bin bash,geekbenc*,sh
+#private-bin bash,geekbench*,sh -- #4576
 private-cache
 private-dev
 private-etc alternatives,group,ld.so.preload,lsb-release,passwd
-private-lib gcc/*/*/libstdc++.so.*
-private-opt none
 private-tmp
 
 dbus-user none
 dbus-system none
 
-#memory-deny-write-execute - breaks on Arch (see issue #1803)
 read-only ${HOME}
+read-write ${HOME}/.geekbench5

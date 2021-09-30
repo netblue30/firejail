@@ -496,6 +496,7 @@ blacklist ${HOME}/.frogatto
 blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.funnyboat
 blacklist ${HOME}/.gallery-dl.conf
+blacklist ${HOME}/.geekbench5
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.gist
 blacklist ${HOME}/.gitconfig

@@ -36,7 +36,7 @@ void fs_trace_preload(void) {
 		FILE *fp = fopen("/etc/ld.so.preload", "wxe");
 		if (!fp)
 			errExit("fopen");
-		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		fclose(fp);
 		fs_logger("touch /etc/ld.so.preload");
 	}
@@ -47,7 +47,7 @@ void fs_tracefile(void) {
 	if (arg_debug)
 		printf("Creating an empty trace log file: %s\n", arg_tracefile);
 	EUID_USER();
-	int fd = open(arg_tracefile, O_CREAT|O_WRONLY|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+	int fd = open(arg_tracefile, O_CREAT|O_WRONLY|O_CLOEXEC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd == -1) {
 		perror("open");
 		fprintf(stderr, "Error: cannot open trace log file %s for writing\n", arg_tracefile);
@@ -100,7 +100,7 @@ void fs_trace(void) {
 		fmessage("Post-exec seccomp protector enabled\n");
 	}
 
-	SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+	SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	fclose(fp);
 
 	// mount the new preload file

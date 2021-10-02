@@ -129,7 +129,7 @@ void fs_var_log(void) {
 		/* coverity[toctou] */
 		FILE *fp = fopen("/var/log/wtmp", "wxe");
 		if (fp) {
-			SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH);
+			SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 			fclose(fp);
 		}
 		fs_logger("touch /var/log/wtmp");
@@ -137,7 +137,7 @@ void fs_var_log(void) {
 		// create an empty /var/log/btmp file
 		fp = fopen("/var/log/btmp", "wxe");
 		if (fp) {
-			SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP);
+			SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
 			fclose(fp);
 		}
 		fs_logger("touch /var/log/btmp");
@@ -314,7 +314,7 @@ void fs_var_utmp(void) {
 	// save new utmp file
 	int rv = fwrite(&u_boot, sizeof(u_boot), 1, fp);
 	(void) rv;
-	SET_PERMS_STREAM(fp, 0, utmp_group, S_IRUSR | S_IWRITE | S_IRGRP | S_IWGRP | S_IROTH);
+	SET_PERMS_STREAM(fp, 0, utmp_group, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	fclose(fp);
 
 	// mount the new utmp file

@@ -86,7 +86,7 @@ static void update_file(int parentfd, const char *relpath) {
 	if (arg_debug)
 		printf("Updating chroot /%s\n", relpath);
 	unlinkat(parentfd, relpath, 0);
-	int out = openat(parentfd, relpath, O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+	int out = openat(parentfd, relpath, O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (out == -1) {
 		close(in);
 		goto errout;

@@ -204,7 +204,7 @@ static void save_umask(void) {
 }
 
 static char *create_join_file(void) {
-	int fd = open(RUN_JOIN_FILE, O_RDWR|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+	int fd = open(RUN_JOIN_FILE, O_RDWR|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd == -1)
 		errExit("open");
 	if (ftruncate(fd, 1) == -1)

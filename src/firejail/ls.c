@@ -305,7 +305,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		}
 		// create destination file if necessary
 		EUID_ASSERT();
-		int fd = open(dest_fname, O_WRONLY|O_CREAT|O_CLOEXEC, S_IRUSR | S_IWRITE);
+		int fd = open(dest_fname, O_WRONLY|O_CREAT|O_CLOEXEC, S_IRUSR | S_IWUSR);
 		if (fd == -1) {
 			fprintf(stderr, "Error: cannot open %s for writing\n", dest_fname);
 			exit(1);

@@ -88,7 +88,8 @@ static void selinux_relabel_path(const char *path, const char *inside_path) {
 		if (arg_debug)
 			printf("Relabeling %s as %s (%s)\n", path, inside_path, fcon);
 
-		setfilecon_raw(procfs_path, fcon);
+		if (setfilecon_raw(procfs_path, fcon) != 0 && arg_debug)
+			printf("Cannot relabel %s: %s\n", path, strerror(errno));
 	}
 	freecon(fcon);
  close:

@@ -1004,10 +1004,12 @@ int sandbox(void* sandbox_arg) {
 	// apply the profile file
 	//****************************
 	// apply all whitelist commands ...
+	EUID_USER();
 	fs_whitelist();
 
 	// ... followed by blacklist commands
 	fs_blacklist(); // mkdir and mkfile are processed all over again
+	EUID_ROOT();
 
 	//****************************
 	// nosound/no3d/notv/novideo and fix for pulseaudio 7.0

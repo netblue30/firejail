@@ -330,8 +330,10 @@ void fs_dev_disable_sound(void) {
 	}
 
 	// disable all jack sockets in /dev/shm
+	EUID_USER();
 	glob_t globbuf;
 	int globerr = glob("/dev/shm/jack*", GLOB_NOSORT, NULL, &globbuf);
+	EUID_ROOT();
 	if (globerr)
 		return;
 

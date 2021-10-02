@@ -200,8 +200,6 @@ static void disable_file(OPERATION op, const char *filename) {
 		}
 
 		fs_tmpfs(fname, uid);
-		EUID_USER(); // fs_tmpfs returns with EUID 0
-
 		selinux_relabel_path(fname, fname);
 	}
 	else
@@ -282,6 +280,8 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 
 // blacklist files or directories by mounting empty files on top of them
 void fs_blacklist(void) {
+	EUID_ASSERT();
+
 	ProfileEntry *entry = cfg.profile;
 	if (!entry)
 		return;
@@ -293,7 +293,6 @@ void fs_blacklist(void) {
 	if (noblacklist == NULL)
 		errExit("failed allocating memory for noblacklist entries");
 
-	EUID_USER();
 	while (entry) {
 		OPERATION op = OPERATION_MAX;
 		char *ptr;
@@ -469,8 +468,6 @@ void fs_blacklist(void) {
 	for (i = 0; i < noblacklist_c; i++)
 		free(noblacklist[i]);
 	free(noblacklist);
-
-	EUID_ROOT();
 }
 
 //***********************************************
@@ -479,7 +476,7 @@ void fs_blacklist(void) {
 
 // mount a writable tmpfs on directory; requires a resolved path
 void fs_tmpfs(const char *dir, unsigned check_owner) {
-	EUID_USER();
+	EUID_ASSERT();
 	assert(dir);
 	if (arg_debug)
 		printf("Mounting tmpfs on %s, check owner: %s\n", dir, (check_owner)? "yes": "no");
@@ -504,12 +501,13 @@ void fs_tmpfs(const char *dir, unsigned check_owner) {
 		errExit("fstatvfs");
 	unsigned long flags = buf.f_flag & ~(MS_RDONLY|MS_BIND|MS_REMOUNT);
 	// mount via the symbolic link in /proc/self/fd
-	EUID_ROOT();
 	char *proc;
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
 		errExit("asprintf");
+	EUID_ROOT();
 	if (mount("tmpfs", proc, "tmpfs", flags|MS_NOSUID|MS_NODEV, options) < 0)
 		errExit("mounting tmpfs");
+	EUID_USER();
 	// check the last mount operation
 	MountData *mdata = get_last_mount();
 	if (strcmp(mdata->fstype, "tmpfs") != 0 || strcmp(mdata->dir, dir) != 0)

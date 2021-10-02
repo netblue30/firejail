@@ -459,30 +459,20 @@ int is_dir(const char *fname) {
 	if (*fname == '\0')
 		return 0;
 
-	int called_as_root = 0;
-	if (geteuid() == 0)
-		called_as_root = 1;
-
-	if (called_as_root)
-		EUID_USER();
-
 	// if fname doesn't end in '/', add one
 	int rv;
 	struct stat s;
 	if (fname[strlen(fname) - 1] == '/')
-		rv = stat(fname, &s);
+		rv = stat_as_user(fname, &s);
 	else {
 		char *tmp;
 		if (asprintf(&tmp, "%s/", fname) == -1) {
 			fprintf(stderr, "Error: cannot allocate memory, %s:%d\n", __FILE__, __LINE__);
 			errExit("asprintf");
 		}
-		rv = stat(tmp, &s);
+		rv = stat_as_user(tmp, &s);
 		free(tmp);
 	}
-
-	if (called_as_root)
-		EUID_ROOT();
 
 	if (rv == -1)
 		return 0;

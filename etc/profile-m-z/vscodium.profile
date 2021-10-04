@@ -1,4 +1,4 @@
-# Firejail profile alias for Visual Studio Code
+# Firejail profile alias for VSCodium
 # This file is overwritten after every install/update
 # Persistent local customizations
 include vscodium.local

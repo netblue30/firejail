@@ -140,7 +140,7 @@ void build_home(const char *fname, FILE *fp) {
 	assert(fname);
 
 	// load whitelist common
-	db_skip = filedb_load_whitelist(db_skip, "whitelist-common.inc", "allow ${HOME}/");
+	db_skip = filedb_load_whitelist(db_skip, "whitelist-common.inc", "whitelist ${HOME}/");
 
 	// find user home directory
 	struct passwd *pw = getpwuid(getuid());
@@ -168,7 +168,7 @@ void build_home(const char *fname, FILE *fp) {
 
 	// print the out list if any
 	if (db_out) {
-		filedb_print(db_out, "allow ${HOME}/", fp);
+		filedb_print(db_out, "whitelist ${HOME}/", fp);
 		fprintf(fp, "include whitelist-common.inc\n");
 	}
 	else

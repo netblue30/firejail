@@ -182,12 +182,12 @@ static void var_callback(char *ptr) {
 void build_var(const char *fname, FILE *fp) {
 	assert(fname);
 
-	var_skip = filedb_load_whitelist(var_skip, "whitelist-var-common.inc", "allow /var/");
+	var_skip = filedb_load_whitelist(var_skip, "whitelist-var-common.inc", "whitelist /var/");
 	process_files(fname, "/var", var_callback);
 
 	// always whitelist /var
 	if (var_out)
-		filedb_print(var_out, "allow /var/", fp);
+		filedb_print(var_out, "whitelist /var/", fp);
 	fprintf(fp, "include whitelist-var-common.inc\n");
 }
 
@@ -222,12 +222,12 @@ static void share_callback(char *ptr) {
 void build_share(const char *fname, FILE *fp) {
 	assert(fname);
 
-	share_skip = filedb_load_whitelist(share_skip, "whitelist-usr-share-common.inc", "allow /usr/share/");
+	share_skip = filedb_load_whitelist(share_skip, "whitelist-usr-share-common.inc", "whitelist /usr/share/");
 	process_files(fname, "/usr/share", share_callback);
 
 	// always whitelist /usr/share
 	if (share_out)
-		filedb_print(share_out, "allow /usr/share/", fp);
+		filedb_print(share_out, "whitelist /usr/share/", fp);
 	fprintf(fp, "include whitelist-usr-share-common.inc\n");
 }
 

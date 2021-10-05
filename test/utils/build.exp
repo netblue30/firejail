@@ -13,7 +13,7 @@ after 100
 send -- "firejail --build cat ~/_firejail-test-file\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"allow $\{HOME\}/_firejail-test-file"
+	"whitelist $\{HOME\}/_firejail-test-file"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

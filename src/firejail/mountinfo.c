@@ -19,6 +19,7 @@
 */
 
 #include "firejail.h"
+#include <errno.h>
 
 #include <fcntl.h>
 #ifndef O_PATH
@@ -151,8 +152,35 @@ MountData *get_last_mount(void) {
 	return &mdata;
 }
 
-// Needs kernel 3.15 or better
-int get_mount_id(int fd) {
+// Returns mount id, or -1 if fd refers to a procfs or sysfs file
+static int get_mount_id_from_handle(int fd) {
+	EUID_ASSERT();
+
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	struct file_handle *fh = malloc(sizeof *fh);
+	if (!fh)
+		errExit("malloc");
+	fh->handle_bytes = 0;
+
+	int rv = -1;
+	int tmp;
+	if (name_to_handle_at(-1, proc, fh, &tmp, AT_SYMLINK_FOLLOW) != -1) {
+		fprintf(stderr, "Error: unexpected result from name_to_handle_at\n");
+		exit(1);
+	}
+	if (errno == EOVERFLOW && fh->handle_bytes)
+		rv = tmp;
+
+	free(proc);
+	free(fh);
+	return rv;
+}
+
+// Returns mount id, or -1 on kernels < 3.15
+static int get_mount_id_from_fdinfo(int fd) {
+	EUID_ASSERT();
 	int rv = -1;
 
 	char *proc;
@@ -180,6 +208,13 @@ int get_mount_id(int fd) {
 errexit:
 	fprintf(stderr, "Error: cannot read proc file\n");
 	exit(1);
+}
+
+int get_mount_id(int fd) {
+	int rv = get_mount_id_from_fdinfo(fd);
+	if (rv < 0)
+		rv = get_mount_id_from_handle(fd);
+	return rv;
 }
 
 // Check /proc/self/mountinfo if path contains any mounts points.

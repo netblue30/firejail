@@ -633,34 +633,30 @@ out:
 }
 
 // remount recursively; requires a resolved path
-static void fs_remount_rec(const char *dir, OPERATION op) {
+static void fs_remount_rec(const char *path, OPERATION op) {
 	EUID_ASSERT();
-	assert(dir);
+	assert(op < OPERATION_MAX);
+	assert(path);
 
-	struct stat s;
-	if (stat(dir, &s) != 0)
-		return;
-	if (!S_ISDIR(s.st_mode)) {
-		// no need to search in /proc/self/mountinfo for submounts if not a directory
-		fs_remount_simple(dir, op);
+	// no need to search /proc/self/mountinfo for submounts if not a directory
+	int fd = open(path, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (fd < 0) {
+		fs_remount_simple(path, op);
 		return;
 	}
-	// get mount point of the directory
-	int mountid = get_mount_id(dir);
-	if (mountid == -1)
-		return;
-	if (mountid == -2) {
-		// falling back to a simple remount on old kernels
-		static int mount_warning = 0;
-		if (!mount_warning) {
-			fwarning("read-only, read-write and noexec options are not applied recursively\n");
-			mount_warning = 1;
-		}
-		fs_remount_simple(dir, op);
+
+	// get mount id of the directory
+	int mountid = get_mount_id(fd);
+	close(fd);
+	if (mountid < 0) {
+		// falling back to a simple remount
+		fwarning("%s %s not applied recursively\n", opstr[op], path);
+		fs_remount_simple(path, op);
 		return;
 	}
+
 	// build array with all mount points that need to get remounted
-	char **arr = build_mount_array(mountid, dir);
+	char **arr = build_mount_array(mountid, path);
 	assert(arr);
 	// remount
 	char **tmp = arr;

@@ -563,7 +563,7 @@ typedef struct {
 
 // mountinfo.c
 MountData *get_last_mount(void);
-int get_mount_id(const char *path);
+int get_mount_id(int fd);
 char **build_mount_array(const int mount_id, const char *path);
 
 // fs_var.c

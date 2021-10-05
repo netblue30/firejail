@@ -151,47 +151,31 @@ MountData *get_last_mount(void) {
 	return &mdata;
 }
 
-// Extract the mount id from /proc/self/fdinfo and return it.
-int get_mount_id(const char *path) {
-	EUID_ASSERT();
-	assert(path);
+// Needs kernel 3.15 or better
+int get_mount_id(int fd) {
+	int rv = -1;
 
-	int fd = open(path, O_PATH|O_CLOEXEC);
-	if (fd == -1)
-		return -1;
-
-	char *fdinfo;
-	if (asprintf(&fdinfo, "/proc/self/fdinfo/%d", fd) == -1)
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fdinfo/%d", fd) == -1)
 		errExit("asprintf");
 	EUID_ROOT();
-	FILE *fp = fopen(fdinfo, "re");
+	FILE *fp = fopen(proc, "re");
 	EUID_USER();
-	free(fdinfo);
 	if (!fp)
 		goto errexit;
 
-	// read the file
 	char buf[MAX_BUF];
-	if (fgets(buf, MAX_BUF, fp) == NULL)
-		goto errexit;
-	do {
+	while (fgets(buf, MAX_BUF, fp)) {
 		if (strncmp(buf, "mnt_id:", 7) == 0) {
-			char *ptr = buf + 7;
-			while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
-				ptr++;
-			}
-			if (*ptr == '\0')
+			if (sscanf(buf + 7, "%d", &rv) != 1)
 				goto errexit;
-			fclose(fp);
-			close(fd);
-			return atoi(ptr);
+			break;
 		}
-	} while (fgets(buf, MAX_BUF, fp));
+	}
 
-	// fallback, kernels older than 3.15 don't expose the mount id in this place
+	free(proc);
 	fclose(fp);
-	close(fd);
-	return -2;
+	return rv;
 
 errexit:
 	fprintf(stderr, "Error: cannot read proc file\n");

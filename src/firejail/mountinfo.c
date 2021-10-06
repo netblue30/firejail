@@ -19,6 +19,7 @@
 */
 
 #include "firejail.h"
+#include <errno.h>
 
 #include <fcntl.h>
 #ifndef O_PATH
@@ -151,51 +152,69 @@ MountData *get_last_mount(void) {
 	return &mdata;
 }
 
-// Extract the mount id from /proc/self/fdinfo and return it.
-int get_mount_id(const char *path) {
+// Returns mount id, or -1 if fd refers to a procfs or sysfs file
+static int get_mount_id_from_handle(int fd) {
 	EUID_ASSERT();
-	assert(path);
 
-	int fd = open(path, O_PATH|O_CLOEXEC);
-	if (fd == -1)
-		return -1;
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
+		errExit("asprintf");
+	struct file_handle *fh = malloc(sizeof *fh);
+	if (!fh)
+		errExit("malloc");
+	fh->handle_bytes = 0;
 
-	char *fdinfo;
-	if (asprintf(&fdinfo, "/proc/self/fdinfo/%d", fd) == -1)
+	int rv = -1;
+	int tmp;
+	if (name_to_handle_at(-1, proc, fh, &tmp, AT_SYMLINK_FOLLOW) != -1) {
+		fprintf(stderr, "Error: unexpected result from name_to_handle_at\n");
+		exit(1);
+	}
+	if (errno == EOVERFLOW && fh->handle_bytes)
+		rv = tmp;
+
+	free(proc);
+	free(fh);
+	return rv;
+}
+
+// Returns mount id, or -1 on kernels < 3.15
+static int get_mount_id_from_fdinfo(int fd) {
+	EUID_ASSERT();
+	int rv = -1;
+
+	char *proc;
+	if (asprintf(&proc, "/proc/self/fdinfo/%d", fd) == -1)
 		errExit("asprintf");
 	EUID_ROOT();
-	FILE *fp = fopen(fdinfo, "re");
+	FILE *fp = fopen(proc, "re");
 	EUID_USER();
-	free(fdinfo);
 	if (!fp)
 		goto errexit;
 
-	// read the file
 	char buf[MAX_BUF];
-	if (fgets(buf, MAX_BUF, fp) == NULL)
-		goto errexit;
-	do {
+	while (fgets(buf, MAX_BUF, fp)) {
 		if (strncmp(buf, "mnt_id:", 7) == 0) {
-			char *ptr = buf + 7;
-			while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
-				ptr++;
-			}
-			if (*ptr == '\0')
+			if (sscanf(buf + 7, "%d", &rv) != 1)
 				goto errexit;
-			fclose(fp);
-			close(fd);
-			return atoi(ptr);
+			break;
 		}
-	} while (fgets(buf, MAX_BUF, fp));
+	}
 
-	// fallback, kernels older than 3.15 don't expose the mount id in this place
+	free(proc);
 	fclose(fp);
-	close(fd);
-	return -2;
+	return rv;
 
 errexit:
 	fprintf(stderr, "Error: cannot read proc file\n");
 	exit(1);
+}
+
+int get_mount_id(int fd) {
+	int rv = get_mount_id_from_fdinfo(fd);
+	if (rv < 0)
+		rv = get_mount_id_from_handle(fd);
+	return rv;
 }
 
 // Check /proc/self/mountinfo if path contains any mounts points.

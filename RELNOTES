@@ -1,5 +1,6 @@
 firejail (0.9.67) baseline; urgency=low
   * work in progress
+  * exit code: distinguish fatal signals by adding 128
   * deprecated --disable-whitelist at compile time
   * deprecated whitelist=yes/no in /etc/firejail/firejail.config
   * remove (some) environment variables with auth-tokens

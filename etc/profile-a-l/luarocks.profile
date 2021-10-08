@@ -7,9 +7,10 @@ include luarocks.local
 # Persistent global definitions
 include globals.local
 
-# disable blacklist for lua interpreter paths
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
+
+blacklist ${RUNUSER}
 
 include disable-common.inc
 # luarocks can invoke compilers
@@ -20,6 +21,7 @@ include disable-programs.inc
 # luarocks is hacky and needs shell access
 #include disable-shell.inc
 include disable-xdg.inc
+include disable-X11.inc
 
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/.config/pkcs11
@@ -30,10 +32,8 @@ whitelist ${HOME}/.nix-profile/bin
 whitelist ${HOME}/.luarocks
 whitelist ${HOME}/.config/luarocks
 
-whitelist /usr/share/ca-certificates
-whitelist /usr/share/p11-kit
-whitelist /usr/share/terminfo
 whitelist /usr/share/lua
+include whitelist-usr-share-common.inc
 
 # apparmor
 caps.drop all

@@ -19,7 +19,6 @@ include disable-interpreters.inc
 include disable-programs.inc
 # luarocks is hacky and needs shell access
 #include disable-shell.inc
-include disable-write-mnt.inc
 include disable-xdg.inc
 
 allow ${HOME}/.netrc

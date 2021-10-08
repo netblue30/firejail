@@ -21,19 +21,19 @@ include disable-programs.inc
 #include disable-shell.inc
 include disable-xdg.inc
 
-allow ${HOME}/.netrc
-allow ${HOME}/.config/pkcs11
-allow ${HOME}/.wget-hsts
-allow ${HOME}/.cache/luarocks
-allow ${HOME}/luarocks/cmd/external
-allow ${HOME}/.nix-profile/bin
-allow ${HOME}/.luarocks
-allow ${HOME}/.config/luarocks
+whitelist ${HOME}/.netrc
+whitelist ${HOME}/.config/pkcs11
+whitelist ${HOME}/.wget-hsts
+whitelist ${HOME}/.cache/luarocks
+whitelist ${HOME}/luarocks/cmd/external
+whitelist ${HOME}/.nix-profile/bin
+whitelist ${HOME}/.luarocks
+whitelist ${HOME}/.config/luarocks
 
-allow /usr/share/ca-certificates
-allow /usr/share/p11-kit
-allow /usr/share/terminfo
-allow /usr/share/lua
+whitelist /usr/share/ca-certificates
+whitelist /usr/share/p11-kit
+whitelist /usr/share/terminfo
+whitelist /usr/share/lua
 
 # apparmor
 caps.drop all
@@ -56,7 +56,6 @@ shell none
 tracelog
 
 disable-mnt
-#private-bin md5sum,chmod,unzip,wget,gcc,bash,lua,luarocks
 private-cache
 private-dev
 #private-etc alternatives,ca-certificates,crypto-policies,luarocks,pki,ssl

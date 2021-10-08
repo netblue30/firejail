@@ -8,13 +8,8 @@ include luarocks.local
 include globals.local
 
 # disable blacklist for lua interpreter paths
-noblacklist ${PATH}/lua*
-noblacklist /usr/include/lua*
-noblacklist /usr/lib/liblua*
-noblacklist /usr/lib/lua
-noblacklist /usr/lib64/liblua*
-noblacklist /usr/lib64/lua
-noblacklist /usr/share/lua*
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
 
 include disable-common.inc
 # luarocks can invoke compilers

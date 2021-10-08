@@ -22,8 +22,8 @@ include disable-interpreters.inc
 include disable-programs.inc
 # luarocks is hacky and needs shell access
 #include disable-shell.inc
-include disable-xdg.inc
 include disable-X11.inc
+include disable-xdg.inc
 
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/.config/pkcs11

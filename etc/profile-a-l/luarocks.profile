@@ -35,7 +35,9 @@ whitelist ${HOME}/.luarocks
 whitelist ${HOME}/.config/luarocks
 
 whitelist /usr/share/lua
+include whitelist-run-common.inc
 include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 # apparmor
 caps.drop all

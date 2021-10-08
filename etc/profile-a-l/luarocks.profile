@@ -7,6 +7,8 @@ include luarocks.local
 # Persistent global definitions
 include globals.local
 
+# Disallow blocking access to Lua header files.
+noblacklist /usr/include/lua*
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 

@@ -17,7 +17,6 @@ blacklist /usr/lib/liblua*
 blacklist /usr/lib/lua
 blacklist /usr/lib64/liblua*
 blacklist /usr/lib64/lua
-blacklist /usr/share/lua
 blacklist /usr/share/lua*
 
 # mozjs

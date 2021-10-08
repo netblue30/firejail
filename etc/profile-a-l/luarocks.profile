@@ -59,7 +59,7 @@ disable-mnt
 #private-bin md5sum,chmod,unzip,wget,gcc,bash,lua,luarocks
 private-cache
 private-dev
-#private-etc ssl,ca-certificates,pkcs11,wgetrc,login.defs,luarocks,
+#private-etc alternatives,ca-certificates,crypto-policies,luarocks,pki,ssl
 private-tmp
 
 dbus-user none

@@ -32,7 +32,7 @@ void fs_hostname(const char *hostname) {
 		if (arg_debug)
 			printf("Creating a new /etc/hostname file\n");
 
-		create_empty_file_as_root(RUN_HOSTNAME_FILE, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+		create_empty_file_as_root(RUN_HOSTNAME_FILE, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 
 		// bind-mount the file on top of /etc/hostname
 		if (mount(RUN_HOSTNAME_FILE, "/etc/hostname", NULL, MS_BIND|MS_REC, NULL) < 0)
@@ -74,7 +74,7 @@ void fs_hostname(const char *hostname) {
 		}
 		fclose(fp1);
 		// mode and owner
-		SET_PERMS_STREAM(fp2, 0, 0, S_IRUSR | S_IWRITE | S_IRGRP | S_IROTH);
+		SET_PERMS_STREAM(fp2, 0, 0, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		fclose(fp2);
 
 		// bind-mount the file on top of /etc/hostname

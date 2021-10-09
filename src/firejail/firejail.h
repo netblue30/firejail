@@ -22,6 +22,7 @@
 #include "../include/common.h"
 #include "../include/euid_common.h"
 #include "../include/rundefs.h"
+#include <linux/limits.h> // Note: Plain limits.h may break ARG_MAX (see #4583)
 #include <stdarg.h>
 #include <sys/stat.h>
 

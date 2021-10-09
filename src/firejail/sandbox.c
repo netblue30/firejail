@@ -798,7 +798,7 @@ int sandbox(void* sandbox_arg) {
 
 	// trace pre-install
 	if (need_preload)
-		fs_trace_preload();
+		fs_trace_touch_or_store_preload();
 
 	// store hosts file
 	if (cfg.hosts_file)
@@ -814,8 +814,11 @@ int sandbox(void* sandbox_arg) {
 		//****************************
 		// trace pre-install, this time inside chroot
 		//****************************
-		if (need_preload)
-			fs_trace_preload();
+		if (need_preload) {
+			int rv = unlink(RUN_LDPRELOAD_FILE);
+			(void) rv;
+			fs_trace_touch_or_store_preload();
+		}
 	}
 	else
 #endif
@@ -992,7 +995,7 @@ int sandbox(void* sandbox_arg) {
 
 			// create /etc/ld.so.preload file again
 			if (need_preload)
-				fs_trace_preload();
+				fs_trace_touch_preload();
 
 			// openSUSE configuration is split between /etc and /usr/etc
 			// process private-etc a second time

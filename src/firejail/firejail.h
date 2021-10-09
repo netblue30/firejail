@@ -621,7 +621,8 @@ void caps_print_filter(pid_t pid) __attribute__((noreturn));
 void caps_drop_dac_override(void);
 
 // fs_trace.c
-void fs_trace_preload(void);
+void fs_trace_touch_preload(void);
+void fs_trace_touch_or_store_preload(void);
 void fs_tracefile(void);
 void fs_trace(void);
 

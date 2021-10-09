@@ -21,7 +21,6 @@
 #include "../include/firejail_user.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
-#include <linux/limits.h>
 #include <fnmatch.h>
 #include <glob.h>
 #include <dirent.h>

@@ -267,4 +267,5 @@ $ ./profstats *.profile
 
 ### New profiles:
 
-clion-eap, lifeograph, io.github.lainsce.Notejot, rednotebook, zim, microsoft-edge-beta, ncdu2, gallery-dl, yt-dlp
+clion-eap, lifeograph, io.github.lainsce.Notejot, rednotebook, zim, microsoft-edge-beta, ncdu2, gallery-dl, yt-dlp, goldendict, bundle,
+cmake, make, meson, pip, codium

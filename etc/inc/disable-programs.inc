@@ -49,8 +49,9 @@ blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.bitcoin
 blacklist ${HOME}/.blobby
 blacklist ${HOME}/.bogofilter
+blacklist ${HOME}/.bundle
 blacklist ${HOME}/.bzf
-blacklist ${HOME}/.cargo/*
+blacklist ${HOME}/.cargo
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.cliqz
 blacklist ${HOME}/.clion*
@@ -142,6 +143,7 @@ blacklist ${HOME}/.config/SubDownloader
 blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/Twitch
 blacklist ${HOME}/.config/Unknown Organization
+blacklist ${HOME}/.config/VSCodium
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Whalebird
 blacklist ${HOME}/.config/Wire

@@ -27,5 +27,8 @@ noblacklist ${HOME}/.python-history
 noblacklist ${HOME}/.python_history
 noblacklist ${HOME}/.pythonhist
 
+# Ruby
+noblacklist ${HOME}/.bundle
+
 # Rust
-noblacklist ${HOME}/.cargo/*
+noblacklist ${HOME}/.cargo

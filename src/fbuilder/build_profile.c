@@ -92,7 +92,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0) {
 		if (fp == stdout)
-			printf("--- Built profile beings after this line ---\n");
+			printf("--- Built profile begins after this line ---\n");
 		fprintf(fp, "# Save this file as \"application.profile\" (change \"application\" with the\n");
 		fprintf(fp, "# program name) in ~/.config/firejail directory. Firejail will find it\n");
 		fprintf(fp, "# automatically every time you sandbox your application.\n#\n");

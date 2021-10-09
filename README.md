@@ -22,43 +22,23 @@ implemented directly in Linux kernel and available on any Linux computer.
 <table><tr>
 
 <td>
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=8jfXL0ePV7U
-" target="_blank"><img src="http://img.youtube.com/vi/8jfXL0ePV7U/0.jpg"
-alt="Firejail Introduction" width="240" height="180" border="10" /><br/>Firejail Intro</a>
+<a href="https://www.brighteon.com/1928415c-2bce-40b2-a81f-7861a3734913" target="_blank">
+<img src="https://www.brighteon.com/thumbnail/1928415c-2bce-40b2-a81f-7861a3734913"
+alt="Introduction" width="240" height="180" border="10" /><br/>Introduction</a>
 </td>
 
 <td>
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=J1ZsXrpAgBU
-" target="_blank"><img src="http://img.youtube.com/vi/J1ZsXrpAgBU/0.jpg"
-alt="Firejail Demo" width="240" height="180" border="10" /><br/>Firejail Demo</a>
+<a href="https://www.brighteon.com/c20c32ac-1953-438f-8640-a414dcb318d6" target="_blank">
+<img src="https://www.brighteon.com/thumbnail/c20c32ac-1953-438f-8640-a414dcb318d6"
+alt="Technology" width="240" height="180" border="10" /><br/>Technology</a>
 </td>
 
 <td>
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=EyEz65RYfw4
-" target="_blank"><img src="http://img.youtube.com/vi/EyEz65RYfw4/0.jpg"
-alt="Debian Install" width="240" height="180" border="10" /><br/>Debian Install</a>
+<a href="https://www.brighteon.com/94ae1731-2352-4cda-bb48-7cc7a6ad32f8" target="_blank">
+<img src="https://www.brighteon.com/thumbnail/94ae1731-2352-4cda-bb48-7cc7a6ad32f8"
+alt="Deep Dive" width="240" height="180" border="10" /><br/>Deep Dive</a>
 </td>
 
-
-</tr><tr>
-<td>
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=Uy2ZTHc4s0w
-" target="_blank"><img src="http://img.youtube.com/vi/Uy2ZTHc4s0w/0.jpg"
-alt="Arch Linux Install" width="240" height="180" border="10" /><br/>Arch Linux Install</a>
-
-</td>
-<td>
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=xuMxRx0zSfQ
-" target="_blank"><img src="http://img.youtube.com/vi/xuMxRx0zSfQ/0.jpg"
-alt="Disable Network Access" width="240" height="180" border="10" /><br/>Disable Network Access</a>
-
-</td>
-<td>
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=N-Mso2bSr3o
-" target="_blank"><img src="http://img.youtube.com/vi/N-Mso2bSr3o/0.jpg"
-alt="Firejail Security Deep Dive" width="240" height="180" border="10" /><br/>Firejail Security Deep Dive</a>
-
-</td>
 </tr></table>
 
 Project webpage: https://firejail.wordpress.com/
@@ -239,30 +219,30 @@ A small tool to print profile statistics. Compile as usual and run in /etc/profi
 $ sudo cp src/profstats/profstats /etc/firejail/.
 $ cd /etc/firejail
 $ ./profstats *.profile
-    profiles			1150
-    include local profile	1150   (include profile-name.local)
-    include globals		1120   (include globals.local)
-    blacklist ~/.ssh		1026   (include disable-common.inc)
-    seccomp			1050
-    capabilities		1146
-    noexec			1030   (include disable-exec.inc)
-    noroot			959
-    memory-deny-write-execute	253
-    apparmor			681
-    private-bin			667
-    private-dev			1009
-    private-etc			523
-    private-tmp			883
-    whitelist home directory	547
-    whitelist var		818   (include whitelist-var-common.inc)
-    whitelist run/user		616   (include whitelist-runuser-common.inc
+    profiles			1167
+    include local profile	1167   (include profile-name.local)
+    include globals		1136   (include globals.local)
+    blacklist ~/.ssh		1042   (include disable-common.inc)
+    seccomp			1062
+    capabilities		1163
+    noexec			1049   (include disable-exec.inc)
+    noroot			971
+    memory-deny-write-execute	256
+    apparmor			693
+    private-bin			677
+    private-dev			1027
+    private-etc			532
+    private-tmp			897
+    whitelist home directory	557
+    whitelist var		836   (include whitelist-var-common.inc)
+    whitelist run/user		1137   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		591   (include whitelist-usr-share-common.inc
-    net none			391
-    dbus-user none 		641
-    dbus-user filter 		105
-    dbus-system none 		792
-    dbus-system filter 		7
+    whitelist usr/share		609   (include whitelist-usr-share-common.inc
+    net none			396
+    dbus-user none 		656
+    dbus-user filter 		108
+    dbus-system none 		808
+    dbus-system filter 		10
 ```
 
 ### New profiles:

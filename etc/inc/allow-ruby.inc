@@ -4,3 +4,4 @@ include allow-ruby.local
 
 noblacklist ${PATH}/ruby
 noblacklist /usr/lib/ruby
+noblacklist /usr/lib64/ruby

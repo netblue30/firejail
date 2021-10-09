@@ -175,6 +175,10 @@ static int check_allow_drm(void) {
 	return checkcfg(CFG_BROWSER_ALLOW_DRM) != 0;
 }
 
+static int check_allow_tray(void) {
+	return checkcfg(CFG_ALLOW_TRAY) != 0;
+}
+
 Cond conditionals[] = {
 	{"HAS_APPIMAGE", check_appimage},
 	{"HAS_NET", check_netoptions},
@@ -184,6 +188,7 @@ Cond conditionals[] = {
 	{"HAS_X11", check_x11},
 	{"BROWSER_DISABLE_U2F", check_disable_u2f},
 	{"BROWSER_ALLOW_DRM", check_allow_drm},
+	{"ALLOW_TRAY", check_allow_tray},
 	{ NULL, NULL }
 };
 
@@ -630,7 +635,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
-	else if (strncmp(ptr, "netns  ", 6) == 0) {
+	else if (strncmp(ptr, "netns ", 6) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
 			arg_netns = ptr + 6;
@@ -981,10 +986,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			warning_feature_disabled("seccomp");
 		return 0;
 	}
-	if (strncmp(ptr, "seccomp.32.drop ", 13) == 0) {
+	if (strncmp(ptr, "seccomp.32.drop ", 16) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp32 = 1;
-			cfg.seccomp_list_drop32 = seccomp_check_list(ptr + 13);
+			cfg.seccomp_list_drop32 = seccomp_check_list(ptr + 16);
 		}
 		else
 			warning_feature_disabled("seccomp");
@@ -1001,10 +1006,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			warning_feature_disabled("seccomp");
 		return 0;
 	}
-	if (strncmp(ptr, "seccomp.32.keep ", 13) == 0) {
+	if (strncmp(ptr, "seccomp.32.keep ", 16) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			arg_seccomp32 = 1;
-			cfg.seccomp_list_keep32 = seccomp_check_list(ptr + 13);
+			cfg.seccomp_list_keep32 = seccomp_check_list(ptr + 16);
 		}
 		else
 			warning_feature_disabled("seccomp");

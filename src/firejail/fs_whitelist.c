@@ -105,6 +105,7 @@ static int whitelist_mkpath(const char* path, mode_t mode) {
 }
 
 static void whitelist_file(int dirfd, const char *relpath, const char *path) {
+	EUID_ASSERT();
 	assert(relpath && path);
 
 	// open mount source, using a file descriptor that refers to the
@@ -130,12 +131,9 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 	}
 
 	// create mount target as root, except if inside home or run/user/$UID directory
-	int userprivs = 0;
-	if ((strncmp(path, cfg.homedir, homedir_len) == 0 && path[homedir_len] == '/') ||
-	    (strncmp(path, runuser, runuser_len) == 0 && path[runuser_len] == '/')) {
-		EUID_USER();
-		userprivs = 1;
-	}
+	if ((strncmp(path, cfg.homedir, homedir_len) != 0 || path[homedir_len] != '/') &&
+	    (strncmp(path, runuser, runuser_len) != 0 || path[runuser_len] != '/'))
+		EUID_ROOT();
 
 	// create path of the mount target
 	int fd2 = whitelist_mkpath(path, 0755);
@@ -146,8 +144,7 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 		if (arg_debug || arg_debug_whitelists)
 			printf("Debug %d: skip whitelist %s\n", __LINE__, path);
 		close(fd);
-		if (userprivs)
-			EUID_ROOT();
+		EUID_USER();
 		return;
 	}
 
@@ -166,8 +163,7 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 			}
 			close(fd);
 			close(fd2);
-			if (userprivs)
-				EUID_ROOT();
+			EUID_USER();
 			return;
 		}
 		fd3 = openat(fd2, file, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
@@ -184,19 +180,17 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 		}
 		close(fd);
 		close(fd2);
-		if (userprivs)
-			EUID_ROOT();
+		EUID_USER();
 		return;
 	}
-
 	close(fd2);
-	if (userprivs)
-		EUID_ROOT();
 
 	if (arg_debug || arg_debug_whitelists)
 		printf("Whitelisting %s\n", path);
+	EUID_ROOT();
 	if (bind_mount_by_fd(fd, fd3))
 		errExit("mount bind");
+	EUID_USER();
 	// check the last mount operation
 	MountData *mptr = get_last_mount(); // will do exit(1) if the mount cannot be found
 #ifdef TEST_MOUNTINFO
@@ -219,22 +213,19 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 }
 
 static void whitelist_symlink(const char *link, const char *target) {
+	EUID_ASSERT();
 	assert(link && target);
 
 	// create files as root, except if inside home or run/user/$UID directory
-	int userprivs = 0;
-	if ((strncmp(link, cfg.homedir, homedir_len) == 0 && link[homedir_len] == '/') ||
-	    (strncmp(link, runuser, runuser_len) == 0 && link[runuser_len] == '/')) {
-		EUID_USER();
-		userprivs = 1;
-	}
+	if ((strncmp(link, cfg.homedir, homedir_len) != 0 || link[homedir_len] != '/') &&
+	    (strncmp(link, runuser, runuser_len) != 0 || link[runuser_len] != '/'))
+		EUID_ROOT();
 
 	int fd = whitelist_mkpath(link, 0755);
 	if (fd == -1) {
 		if (arg_debug || arg_debug_whitelists)
 			printf("Debug %d: cannot create symbolic link %s\n", __LINE__, link);
-		if (userprivs)
-			EUID_ROOT();
+		EUID_USER();
 		return;
 	}
 
@@ -252,8 +243,7 @@ static void whitelist_symlink(const char *link, const char *target) {
 		printf("Created symbolic link %s -> %s\n", link, target);
 
 	close(fd);
-	if (userprivs)
-		EUID_ROOT();
+	EUID_USER();
 }
 
 static void globbing(const char *pattern) {
@@ -330,10 +320,11 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 		// init tmpfs
 		if (strcmp(topdirs[i].path, "/run") == 0) {
 			// restore /run/firejail directory
-			if (mkdir(RUN_FIREJAIL_DIR, 0755) == -1)
-				errExit("mkdir");
+			EUID_ROOT();
+			mkdir_attr(RUN_FIREJAIL_DIR, 0755, 0, 0);
 			if (bind_mount_fd_to_path(fd, RUN_FIREJAIL_DIR))
 				errExit("mount bind");
+			EUID_USER();
 			close(fd);
 			fs_logger2("whitelist", RUN_FIREJAIL_DIR);
 
@@ -351,12 +342,14 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 					errExit("asprintf");
 				if (strcmp(env, pamtmpdir) == 0) {
 					// create empty user-owned /tmp/user/$UID directory
+					EUID_ROOT();
 					mkdir_attr("/tmp/user", 0711, 0, 0);
 					selinux_relabel_path("/tmp/user", "/tmp/user");
 					fs_logger("mkdir /tmp/user");
 					mkdir_attr(pamtmpdir, 0700, getuid(), 0);
 					selinux_relabel_path(pamtmpdir, pamtmpdir);
 					fs_logger2("mkdir", pamtmpdir);
+					EUID_USER();
 				}
 				free(pamtmpdir);
 			}
@@ -374,11 +367,8 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 	}
 
 	// user home directory
-	if (tmpfs_home) {
-		EUID_USER();
+	if (tmpfs_home)
 		fs_private(); // checks owner if outside /home
-		EUID_ROOT();
-	}
 
 	// /run/user/$UID directory
 	if (tmpfs_runuser) {
@@ -402,6 +392,7 @@ static int reject_topdir(const char *dir) {
 // keep track of whitelist top level directories by adding them to an array
 // open each directory
 static TopDir *add_topdir(const char *dir, TopDir *topdirs, const char *path) {
+	EUID_ASSERT();
 	assert(dir && path);
 
 	// /proc and /sys are not allowed
@@ -516,6 +507,8 @@ static char *extract_topdir(const char *path) {
 }
 
 void fs_whitelist(void) {
+	EUID_ASSERT();
+
 	ProfileEntry *entry = cfg.profile;
 	if (!entry)
 		return;
@@ -536,7 +529,6 @@ void fs_whitelist(void) {
 		errExit("calloc");
 
 	// verify whitelist files, extract symbolic links, etc.
-	EUID_USER();
 	while (entry) {
 		int nowhitelist_flag = 0;
 
@@ -630,7 +622,7 @@ void fs_whitelist(void) {
 		if (!fname) {
 			if (arg_debug || arg_debug_whitelists) {
 				printf("Removed path: %s\n", entry->data);
-				printf("\texpanded: %s\n", new_name);
+				printf("\tnew_name: %s\n", new_name);
 				printf("\trealpath: (null)\n");
 				printf("\t%s\n", strerror(errno));
 			}
@@ -712,7 +704,6 @@ void fs_whitelist(void) {
 	free(nowhitelist);
 
 	// mount tmpfs on all top level directories
-	EUID_ROOT();
 	tmpfs_topdirs(topdirs);
 
 	// go through profile rules again, and interpret whitelist commands

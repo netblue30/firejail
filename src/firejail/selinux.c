@@ -21,6 +21,7 @@
 #include "firejail.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <errno.h>
 
 #include <fcntl.h>
 #ifndef O_PATH
@@ -57,7 +58,17 @@ void selinux_relabel_path(const char *path, const char *inside_path)
 
 	/* Open the file as O_PATH, to pin it while we determine and adjust the label
 	 * Defeat symlink races by not allowing symbolic links */
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+	if (called_as_root)
+		EUID_USER();
+
 	fd = safer_openat(-1, path, O_NOFOLLOW|O_CLOEXEC|O_PATH);
+
+	if (called_as_root)
+		EUID_ROOT();
+
 	if (fd < 0)
 		return;
 	if (fstat(fd, &st) < 0)
@@ -68,8 +79,16 @@ void selinux_relabel_path(const char *path, const char *inside_path)
 		if (arg_debug)
 			printf("Relabeling %s as %s (%s)\n", path, inside_path, fcon);
 
-		setfilecon_raw(procfs_path, fcon);
+		if (!called_as_root)
+			EUID_ROOT();
+
+		if (setfilecon_raw(procfs_path, fcon) != 0 && arg_debug)
+			printf("Cannot relabel %s: %s\n", path, strerror(errno));
+
+		if (!called_as_root)
+			EUID_USER();
 	}
+
 	freecon(fcon);
  close:
 	close(fd);

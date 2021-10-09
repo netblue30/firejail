@@ -564,7 +564,7 @@ typedef struct {
 
 // mountinfo.c
 MountData *get_last_mount(void);
-int get_mount_id(const char *path);
+int get_mount_id(int fd);
 char **build_mount_array(const int mount_id, const char *path);
 
 // fs_var.c
@@ -622,7 +622,8 @@ void caps_print_filter(pid_t pid) __attribute__((noreturn));
 void caps_drop_dac_override(void);
 
 // fs_trace.c
-void fs_trace_preload(void);
+void fs_trace_touch_preload(void);
+void fs_trace_touch_or_store_preload(void);
 void fs_tracefile(void);
 void fs_trace(void);
 
@@ -802,6 +803,7 @@ enum {
 	CFG_NAME_CHANGE,
 	CFG_SECCOMP_ERROR_ACTION,
 	// CFG_FILE_COPY_LIMIT - file copy limit handled using setenv/getenv
+	CFG_ALLOW_TRAY,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

@@ -32,6 +32,7 @@ nosound
 notv
 nou2f
 novideo
+# Add netlink protocol to use UPnP
 protocol unix,inet,inet6
 seccomp
 shell none

@@ -48,6 +48,7 @@ blacklist /usr/share/php*
 # Ruby
 blacklist ${PATH}/ruby
 blacklist /usr/lib/ruby
+blacklist /usr/lib64/ruby
 
 # Programs using python: deluge, firefox addons, filezilla, cherrytree, xchat, hexchat, libreoffice, scribus
 # Python 2

@@ -394,14 +394,16 @@ void fs_private(void) {
 			}
 			if (chown(homedir, u, g) < 0)
 				errExit("chown");
-
 			fs_logger2("mkdir", homedir);
 			fs_logger2("tmpfs", homedir);
 		}
-		else
+		else {
 			// mask user home directory
 			// the directory should be owned by the current user
+			EUID_USER();
 			fs_tmpfs(homedir, 1);
+			EUID_ROOT();
+		}
 
 		selinux_relabel_path(homedir, homedir);
 	}
@@ -563,12 +565,13 @@ void fs_private_home_list(void) {
 	int xflag = store_xauthority();
 	int aflag = store_asoundrc();
 
-	// create /run/firejail/mnt/home directory
 	EUID_ROOT();
+	// create /run/firejail/mnt/home directory
 	mkdir_attr(RUN_HOME_DIR, 0755, uid, gid);
 	selinux_relabel_path(RUN_HOME_DIR, homedir);
 
-	fs_logger_print();	// save the current log
+	// save the current log
+	fs_logger_print();
 	EUID_USER();
 
 	// copy the list of files in the new home directory

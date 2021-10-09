@@ -49,8 +49,9 @@ blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.bitcoin
 blacklist ${HOME}/.blobby
 blacklist ${HOME}/.bogofilter
+blacklist ${HOME}/.bundle
 blacklist ${HOME}/.bzf
-blacklist ${HOME}/.cargo/*
+blacklist ${HOME}/.cargo
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.cliqz
 blacklist ${HOME}/.clion*

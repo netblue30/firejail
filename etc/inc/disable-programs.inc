@@ -143,6 +143,7 @@ blacklist ${HOME}/.config/SubDownloader
 blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/Twitch
 blacklist ${HOME}/.config/Unknown Organization
+blacklist ${HOME}/.config/VSCodium
 blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Whalebird
 blacklist ${HOME}/.config/Wire

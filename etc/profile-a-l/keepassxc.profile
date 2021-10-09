@@ -98,11 +98,10 @@ dbus-user.talk org.freedesktop.ScreenSaver
 dbus-user.talk org.gnome.ScreenSaver
 dbus-user.talk org.gnome.SessionManager
 dbus-user.talk org.xfce.ScreenSaver
+?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
+?ALLOW_TRAY: dbus-user.own org.kde.*
 # Add the next line to your keepassxc.local to allow notifications.
 #dbus-user.talk org.freedesktop.Notifications
-# Add the next line to your keepassxc.local to allow the tray menu.
-#dbus-user.talk org.kde.StatusNotifierWatcher
-#dbus-user.own org.kde.*
 dbus-system filter
 dbus-system.talk org.freedesktop.login1
 

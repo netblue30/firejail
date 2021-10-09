@@ -63,6 +63,6 @@ dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.portal.Desktop
 dbus-user.talk org.gnome.Shell
 dbus-user.talk org.kde.KWin
-dbus-user.talk org.kde.StatusNotifierWatcher
-dbus-user.own org.kde.*
+?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
+?ALLOW_TRAY: dbus-user.own org.kde.*
 dbus-system none

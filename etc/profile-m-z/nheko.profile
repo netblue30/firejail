@@ -53,8 +53,7 @@ private-tmp
 
 dbus-user filter
 dbus-user.talk org.freedesktop.secrets
+?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 # Add the next line to your nheko.local to enable notification support.
 #dbus-user.talk org.freedesktop.Notifications
-# Add the next line to your nheko.local to enable tray icon support.
-#dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-system none

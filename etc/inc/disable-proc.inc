@@ -71,9 +71,12 @@ blacklist /proc/vmallocinfo
 blacklist /proc/sys/abi
 blacklist /proc/sys/crypto
 blacklist /proc/sys/debug
-#blacklist /proc/sys/dev
-#blacklist /proc/sys/fs
-#blacklist /proc/sys/kernel
-#blacklist /proc/sys/net
+blacklist /proc/sys/dev
+blacklist /proc/sys/fs
+blacklist /proc/sys/net
 blacklist /proc/sys/user
-#blacklist /proc/sys/vm
+blacklist /proc/sys/vm
+
+noblacklist /proc/sys/kernel/osrelease
+noblacklist /proc/sys/kernel/yama
+blacklist /proc/sys/*/*

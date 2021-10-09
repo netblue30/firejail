@@ -24,19 +24,19 @@ implemented directly in Linux kernel and available on any Linux computer.
 <td>
 <a href="https://www.brighteon.com/1928415c-2bce-40b2-a81f-7861a3734913" target="_blank">
 <img src="https://www.brighteon.com/thumbnail/1928415c-2bce-40b2-a81f-7861a3734913"
-alt="Introduction" width="240" height="180" border="10" /><br/>Introduction</a>
+alt="Introduction" border="10" /><br/>Introduction</a>
 </td>
 
 <td>
 <a href="https://www.brighteon.com/c20c32ac-1953-438f-8640-a414dcb318d6" target="_blank">
 <img src="https://www.brighteon.com/thumbnail/c20c32ac-1953-438f-8640-a414dcb318d6"
-alt="Technology" width="240" height="180" border="10" /><br/>Technology</a>
+alt="Technology" border="10" /><br/>Technology</a>
 </td>
 
 <td>
 <a href="https://www.brighteon.com/94ae1731-2352-4cda-bb48-7cc7a6ad32f8" target="_blank">
 <img src="https://www.brighteon.com/thumbnail/94ae1731-2352-4cda-bb48-7cc7a6ad32f8"
-alt="Deep Dive" width="240" height="180" border="10" /><br/>Deep Dive</a>
+alt="Deep Dive" border="10" /><br/>Deep Dive</a>
 </td>
 
 </tr></table>

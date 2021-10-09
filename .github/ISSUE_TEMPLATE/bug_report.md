@@ -7,6 +7,13 @@ assignees: ''
 
 ---
 
+<!--
+See the following links for help with formatting:
+
+https://guides.github.com/features/mastering-markdown/
+https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
+-->
+
 ### Description
 
 _Describe the bug_
@@ -15,7 +22,7 @@ _Describe the bug_
 
 _Steps to reproduce the behavior_
 
-1. Run in bash `LANG=C firejail PROGRAM` (`LANG=C` to get English messages that can be understood by everybody)
+1. Run in bash `LC_ALL=C firejail PROGRAM` (`LC_ALL=C` to get a consistent output in English that can be understood by everybody)
 2. Click on '....'
 3. Scroll down to '....'
 4. See error `ERROR`
@@ -30,7 +37,7 @@ _What actually happened_
 
 ### Behavior without a profile
 
-_What changed calling `firejail --noprofile /path/to/program` in a terminal?_
+_What changed calling `LC_ALL=C firejail --noprofile /path/to/program` in a terminal?_
 
 ### Additional context
 
@@ -44,6 +51,12 @@ _Any other detail that may help to understand/debug the problem_
 
 ### Checklist
 
+<!--
+Note: Items are checked with an "x", like so:
+
+- [x] This is a checked item.
+-->
+
 - [ ] The issues is caused by firejail (i.e. running the program by path (e.g. `/usr/bin/vlc`) "fixes" it).
 - [ ] I can reproduce the issue without custom modifications (e.g. globals.local).
 - [ ] The program has a profile. (If not, request one in `https://github.com/netblue30/firejail/issues/1139`)
@@ -55,7 +68,7 @@ _Any other detail that may help to understand/debug the problem_
 ### Log
 
 <details>
-<summary>Output of <code>firejail /path/to/program</code></summary>
+<summary>Output of <code>LC_ALL=C firejail /path/to/program</code></summary>
 <p>
 
 ```
@@ -66,7 +79,7 @@ output goes here
 </details>
 
 <details>
-<summary>Output of <code>firejail --debug /path/to/program</code></summary>
+<summary>Output of <code>LC_ALL=C firejail --debug /path/to/program</code></summary>
 <p>
 
 ```

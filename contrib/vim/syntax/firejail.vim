@@ -72,7 +72,7 @@ syn match fjCommandNoCond /quiet$/ contained
 
 " Conditionals grabbed from: src/firejail/profile.c
 " Generate list with: awk -- 'BEGIN {process=0;} /^Cond conditionals\[\] = \{$/ {process=1;} /\t*\{"[^"]+".*/ { if (process) {print gensub(/^\t*\{"([^"]+)".*$/, "\\1", 1);} } /^\t\{ NULL, NULL \}$/ {process=0;}' src/firejail/profile.c | sort -u | tr $'\n' '|'
-syn match fjConditional /\v\?(BROWSER_ALLOW_DRM|BROWSER_DISABLE_U2F|HAS_APPIMAGE|HAS_NET|HAS_NODBUS|HAS_NOSOUND|HAS_X11) ?:/ nextgroup=fjCommand skipwhite contained
+syn match fjConditional /\v\?(ALLOW_TRAY|BROWSER_ALLOW_DRM|BROWSER_DISABLE_U2F|HAS_APPIMAGE|HAS_NET|HAS_NODBUS|HAS_NOSOUND|HAS_X11) ?:/ nextgroup=fjCommand skipwhite contained
 
 " A line is either a command, a conditional or a comment
 syn match fjStatement /^/ nextgroup=fjCommand,fjCommandNoCond,fjConditional,fjComment

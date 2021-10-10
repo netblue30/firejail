@@ -50,7 +50,7 @@ private-tmp
 dbus-user filter
 dbus-user.own org.telegram.desktop.*
 dbus-user.talk org.freedesktop.Notifications
-dbus-user.talk org.kde.StatusNotifierWatcher
+?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-user.talk org.gnome.Mutter.IdleMonitor
 dbus-user.talk org.freedesktop.ScreenSaver
 dbus-system none

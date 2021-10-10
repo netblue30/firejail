@@ -60,6 +60,6 @@ private-tmp
 dbus-user filter
 dbus-user.own org.kde.neochat
 dbus-user.talk org.freedesktop.Notifications
-dbus-user.talk org.kde.StatusNotifierWatcher
+?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-user.talk org.kde.kwalletd5
 dbus-system none

@@ -67,6 +67,5 @@ private-tmp
 
 dbus-user filter
 dbus-user.talk org.freedesktop.secrets
-# Add the next line to your nextcloud.local for tray icon support
-#dbus-user.talk org.kde.StatusNotifierWatcher
+?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-system none

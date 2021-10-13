@@ -434,12 +434,14 @@ void fs_proc_sys_dev_boot(void);
 void disable_config(void);
 // build a basic read-only filesystem
 void fs_basic_fs(void);
-// mount overlayfs on top of / directory
-char *fs_check_overlay_dir(const char *subdirname, int allow_reuse);
-void fs_overlayfs(void);
 void fs_private_tmp(void);
 void fs_private_cache(void);
 void fs_mnt(const int enforce);
+
+// fs_overlayfs.c
+char *fs_check_overlay_dir(const char *subdirname, int allow_reuse);
+void fs_overlayfs(void);
+int remove_overlay_directory(void);
 
 // chroot.c
 // chroot into an existing directory; mount existing /dev and update /etc/resolv.conf
@@ -531,7 +533,6 @@ void wait_for_other(int fd);
 void notify_other(int fd);
 uid_t pid_get_uid(pid_t pid);
 uid_t get_group_id(const char *group);
-int remove_overlay_directory(void);
 void flush_stdin(void);
 int create_empty_dir_as_user(const char *dir, mode_t mode);
 void create_empty_dir_as_root(const char *dir, mode_t mode);

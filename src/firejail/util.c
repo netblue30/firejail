@@ -959,9 +959,9 @@ uid_t pid_get_uid(pid_t pid) {
 }
 
 
-gid_t get_group_id(const char *group) {
+gid_t get_group_id(const char *groupname) {
 	gid_t gid = 0;
-	struct group *g = getgrnam(group);
+	struct group *g = getgrnam(groupname);
 	if (g)
 		gid = g->gr_gid;
 

@@ -960,7 +960,6 @@ uid_t pid_get_uid(pid_t pid) {
 
 
 uid_t get_group_id(const char *group) {
-	// find tty group id
 	gid_t gid = 0;
 	struct group *g = getgrnam(group);
 	if (g)

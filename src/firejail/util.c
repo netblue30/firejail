@@ -142,14 +142,11 @@ static void clean_supplementary_groups(gid_t gid) {
 		goto clean_all;
 
 	// clean supplementary group list
-	// allow only firejail, tty, audio, video, games
 	gid_t new_groups[MAX_GROUPS];
 	int new_ngroups = 0;
 	char *allowed[] = {
 		"firejail",
 		"tty",
-		"audio",
-		"video",
 		"games",
 		NULL
 	};
@@ -159,6 +156,16 @@ static void clean_supplementary_groups(gid_t gid) {
 		copy_group_ifcont(allowed[i], groups, ngroups,
 		                  new_groups, &new_ngroups, MAX_GROUPS);
 		i++;
+	}
+
+	if (!arg_nosound) {
+		copy_group_ifcont("audio", groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
+	}
+
+	if (!arg_novideo) {
+		copy_group_ifcont("video", groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
 	}
 
 	if (new_ngroups) {

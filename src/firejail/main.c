@@ -3144,17 +3144,21 @@ int main(int argc, char **argv, char **envp) {
 			}
 
 			// add audio group
-			g = get_group_id("audio");
-			if (g) {
-				sprintf(ptr, "%d %d 1\n", g, g);
-				ptr += strlen(ptr);
+			if (!arg_nosound) {
+				g = get_group_id("audio");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
 			}
 
 			// add video group
-			g = get_group_id("video");
-			if (g) {
-				sprintf(ptr, "%d %d 1\n", g, g);
-				ptr += strlen(ptr);
+			if (!arg_novideo) {
+				g = get_group_id("video");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
 			}
 
 			// add games group

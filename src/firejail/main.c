@@ -1529,15 +1529,16 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--cgroup=", 9) == 0) {
 			if (checkcfg(CFG_CGROUP)) {
 				if (option_cgroup) {
-					fprintf(stderr, "Error: only a cgroup can be defined\n");
+					fprintf(stderr, "Error: only one cgroup can be defined\n");
 					exit(1);
 				}
-
-				option_cgroup = 1;
 				cfg.cgroup = strdup(argv[i] + 9);
 				if (!cfg.cgroup)
 					errExit("strdup");
-				set_cgroup(cfg.cgroup);
+
+				check_cgroup_file(cfg.cgroup);
+				set_cgroup(cfg.cgroup, getpid());
+				option_cgroup = 1;
 			}
 			else
 				exit_err_feature("cgroup");

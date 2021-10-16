@@ -18,7 +18,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
-#include <sys/stat.h>
+#include <sys/wait.h>
+#include <errno.h>
 
 #define MAXBUF 4096
 
@@ -68,52 +69,60 @@ errout:
 		fclose(fp);
 }
 
-
-void set_cgroup(const char *path) {
-	EUID_ASSERT();
-
-	invalid_filename(path, 0); // no globbing
-
+static int is_cgroup_path(const char *fname) {
 	// path starts with /sys/fs/cgroup
-	if (strncmp(path, "/sys/fs/cgroup", 14) != 0)
-		goto errout;
-
-	// path ends in tasks
-	char *ptr = strstr(path, "tasks");
-	if (!ptr)
-		goto errout;
-	if (*(ptr + 5) != '\0')
-		goto errout;
+	if (strncmp(fname, "/sys/fs/cgroup", 14) != 0)
+		return 0;
 
 	// no .. traversal
-	ptr = strstr(path, "..");
+	char *ptr = strstr(fname, "..");
 	if (ptr)
+		return 0;
+
+	return 1;
+}
+
+void check_cgroup_file(const char *fname) {
+	assert(fname);
+	invalid_filename(fname, 0); // no globbing
+
+	if (!is_cgroup_path(fname))
 		goto errout;
 
-	// tasks file exists
-	FILE *fp = fopen(path, "ae");
-	if (!fp)
+	const char *base = gnu_basename(fname);
+	if (strcmp(base, "tasks") != 0 &&  // cgroup v1
+	    strcmp(base, "cgroup.procs") != 0)
 		goto errout;
-	// task file belongs to the user running the sandbox
-	int fd = fileno(fp);
-	if (fd == -1)
-		errExit("fileno");
-	struct stat s;
-	if (fstat(fd, &s) == -1)
-		errExit("fstat");
-	if (s.st_uid != getuid() && s.st_gid != getgid())
-		goto errout2;
-	// add the task to cgroup
-	pid_t pid = getpid();
-	int rv = fprintf(fp, "%d\n", pid);
-	(void) rv;
-	fclose(fp);
-	return;
+
+	if (access(fname, W_OK) == 0)
+		return;
 
 errout:
 	fprintf(stderr, "Error: invalid cgroup\n");
 	exit(1);
-errout2:
-	fprintf(stderr, "Error: you don't have permissions to use this control group\n");
-	exit(1);
+}
+
+static void do_set_cgroup(const char *fname, pid_t pid) {
+	FILE *fp = fopen(fname, "ae");
+	if (!fp) {
+		fwarning("cannot open %s for writing: %s\n", fname, strerror(errno));
+		return;
+	}
+
+	int rv = fprintf(fp, "%d\n", pid);
+	(void) rv;
+	fclose(fp);
+}
+
+void set_cgroup(const char *fname, pid_t pid) {
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		drop_privs(0);
+
+		do_set_cgroup(fname, pid);
+		_exit(0);
+	}
+	waitpid(child, NULL, 0);
 }

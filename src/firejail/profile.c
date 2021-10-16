@@ -1129,8 +1129,14 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// cgroup
 	if (strncmp(ptr, "cgroup ", 7) == 0) {
-		if (checkcfg(CFG_CGROUP))
-			set_cgroup(ptr + 7);
+		if (checkcfg(CFG_CGROUP)) {
+			cfg.cgroup = strdup(ptr + 7);
+			if (!cfg.cgroup)
+				errExit("strdup");
+
+			check_cgroup_file(cfg.cgroup);
+			set_cgroup(cfg.cgroup, getpid());
+		}
 		else
 			warning_feature_disabled("cgroup");
 		return 0;

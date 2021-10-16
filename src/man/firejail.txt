@@ -290,8 +290,8 @@ $ firejail \-\-caps.print=3272
 Print content of file from sandbox container, see FILE TRANSFER section for more details.
 #endif
 .TP
-\fB\-\-cgroup=tasks-file
-Place the sandbox in the specified control group. tasks-file is the full path of cgroup tasks file.
+\fB\-\-cgroup=file
+Place the sandbox in the specified control group. file is the full path of a tasks or cgroup.procs file.
 .br
 
 .br

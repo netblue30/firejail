@@ -431,7 +431,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 	// set cgroup
 	if (cfg.cgroup)	// not available for uid 0
-		set_cgroup(cfg.cgroup);
+		set_cgroup(cfg.cgroup, getpid());
 
 	// join namespaces
 	if (arg_join_network) {

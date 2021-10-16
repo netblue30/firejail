@@ -19,6 +19,7 @@ include disable-xdg.inc
 mkdir ${HOME}/.parallelrealities/blobwars
 whitelist ${HOME}/.parallelrealities/blobwars
 whitelist /usr/share/blobwars
+whitelist /usr/share/games/blobwars
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

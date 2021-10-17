@@ -18,12 +18,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #define _GNU_SOURCE
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <dlfcn.h>
 #include <sys/types.h>
-#include <limits.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -706,10 +706,14 @@ __attribute__((constructor))
 static void log_exec(int argc, char** argv) {
 	(void) argc;
 	(void) argv;
-	static char buf[PATH_MAX + 1];
-	int rv = readlink("/proc/self/exe", buf, PATH_MAX);
-	if (rv != -1) {
-		buf[rv] = '\0';	// readlink does not add a '\0' at the end
+	char *buf = realpath("/proc/self/exe", NULL);
+	if (buf == NULL) {
+		if (errno == ENOMEM) {
+			tprintf(ftty, "realpath: %s\n", strerror(errno));
+			exit(1);
+		}
+	} else {
 		tprintf(ftty, "%u:%s:exec %s:0\n", mypid, myname, buf);
+		free(buf);
 	}
 }

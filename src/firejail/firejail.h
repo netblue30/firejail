@@ -532,7 +532,7 @@ void update_map(char *mapping, char *map_file);
 void wait_for_other(int fd);
 void notify_other(int fd);
 uid_t pid_get_uid(pid_t pid);
-uid_t get_group_id(const char *group);
+gid_t get_group_id(const char *groupname);
 void flush_stdin(void);
 int create_empty_dir_as_user(const char *dir, mode_t mode);
 void create_empty_dir_as_root(const char *dir, mode_t mode);

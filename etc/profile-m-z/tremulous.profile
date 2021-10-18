@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.tremulous
 
+include allow-bin-sh.inc
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -41,7 +42,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin tremded,tremulous,tremulous-wrapper
+private-bin tremded,tremulous,tremulous-wrapper,env,sh
 private-cache
 private-dev
 private-tmp

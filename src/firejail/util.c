@@ -484,13 +484,6 @@ int is_link(const char *fname) {
 	if (*fname == '\0')
 		return 0;
 
-	int called_as_root = 0;
-	if (geteuid() == 0)
-		called_as_root = 1;
-
-	if (called_as_root)
-		EUID_USER();
-
 	// remove trailing '/' if any
 	char *tmp = strdup(fname);
 	if (!tmp)
@@ -498,11 +491,8 @@ int is_link(const char *fname) {
 	trim_trailing_slash_or_dot(tmp);
 
 	char c;
-	ssize_t rv = readlink(tmp, &c, 1);
+	ssize_t rv = readlink_as_user(tmp, &c, 1);
 	free(tmp);
-
-	if (called_as_root)
-		EUID_ROOT();
 
 	return (rv != -1);
 }
@@ -518,6 +508,24 @@ char *realpath_as_user(const char *fname) {
 		EUID_USER();
 
 	char *rv = realpath(fname, NULL);
+
+	if (called_as_root)
+		EUID_ROOT();
+
+	return rv;
+}
+
+ssize_t readlink_as_user(const char *fname, char *buf, size_t sz) {
+	assert(fname && buf && sz);
+
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root)
+		EUID_USER();
+
+	ssize_t rv = readlink(fname, buf, sz);
 
 	if (called_as_root)
 		EUID_ROOT();
@@ -997,31 +1005,33 @@ int create_empty_dir_as_user(const char *dir, mode_t mode) {
 	assert(dir);
 	mode &= 07777;
 
-	if (access(dir, F_OK) != 0) {
+	if (access(dir, F_OK) == 0)
+		return 0;
+
+	pid_t child = fork();
+	if (child < 0)
+		errExit("fork");
+	if (child == 0) {
+		// drop privileges
+		drop_privs(0);
+
 		if (arg_debug)
 			printf("Creating empty %s directory\n", dir);
-		pid_t child = fork();
-		if (child < 0)
-			errExit("fork");
-		if (child == 0) {
-			// drop privileges
-			drop_privs(0);
-
-			if (mkdir(dir, mode) == 0) {
-				int err = chmod(dir, mode);
-				(void) err;
-			}
-			else if (arg_debug)
-				printf("Directory %s not created: %s\n", dir, strerror(errno));
-
-			__gcov_flush();
-
-			_exit(0);
+		if (mkdir(dir, mode) == 0) {
+			int err = chmod(dir, mode);
+			(void) err;
 		}
-		waitpid(child, NULL, 0);
-		if (access(dir, F_OK) == 0)
-			return 1;
+		else if (arg_debug)
+			printf("Directory %s not created: %s\n", dir, strerror(errno));
+
+		__gcov_flush();
+
+		_exit(0);
 	}
+	waitpid(child, NULL, 0);
+
+	if (access(dir, F_OK) == 0)
+			return 1;
 	return 0;
 }
 

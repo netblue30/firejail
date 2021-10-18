@@ -519,6 +519,7 @@ void touch_file_as_user(const char *fname, mode_t mode);
 int is_dir(const char *fname);
 int is_link(const char *fname);
 char *realpath_as_user(const char *fname);
+ssize_t readlink_as_user(const char *fname, char *buf, size_t sz);
 int stat_as_user(const char *fname, struct stat *s);
 int lstat_as_user(const char *fname, struct stat *s);
 void trim_trailing_slash_or_dot(char *path);

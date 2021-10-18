@@ -1411,7 +1411,7 @@ static int has_link(const char *dir) {
 void check_homedir(const char *dir) {
 	assert(dir);
 	if (dir[0] != '/') {
-		fprintf(stderr, "Error: invalid user directory \"%s\"\n", cfg.homedir);
+		fprintf(stderr, "Error: invalid user directory \"%s\"\n", dir);
 		exit(1);
 	}
 	// symlinks are rejected in many places

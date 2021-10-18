@@ -236,9 +236,6 @@ void build_share(const char *fname, FILE *fp) {
 //*******************************************
 static FileDB *tmp_out = NULL;
 static void tmp_callback(char *ptr) {
-	// skip strace file
-	if (strncmp(ptr, "/tmp/firejail-strace", 20) == 0)
-		return;
 	if (strncmp(ptr, "/tmp/runtime-", 13) == 0)
 		return;
 	if (strcmp(ptr, "/tmp") == 0)

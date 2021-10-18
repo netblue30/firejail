@@ -567,7 +567,7 @@ typedef struct {
 // mountinfo.c
 MountData *get_last_mount(void);
 int get_mount_id(int fd);
-char **build_mount_array(const int mount_id, const char *path);
+char **build_mount_array(const int mountid, const char *path);
 
 // fs_var.c
 void fs_var_log(void);	// mounting /var/log

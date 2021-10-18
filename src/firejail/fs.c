@@ -654,12 +654,13 @@ static void fs_remount_rec(const char *path, OPERATION op) {
 
 	// build array with all mount points that need to get remounted
 	char **arr = build_mount_array(mountid, path);
-	assert(arr);
+	if (!arr)
+		return;
 	// remount
-	char **tmp = arr;
-	while (*tmp) {
-		fs_remount_simple(*tmp, op);
-		free(*tmp++);
+	int i;
+	for (i = 0; arr[i]; i++) {
+		fs_remount_simple(arr[i], op);
+		free(arr[i]);
 	}
 	free(arr);
 }

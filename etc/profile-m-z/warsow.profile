@@ -11,6 +11,7 @@ ignore noexec ${HOME}
 noblacklist ${HOME}/.cache/warsow-2.1
 noblacklist ${HOME}/.local/share/warsow-2.1
 
+include allow-bin-sh.inc
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -40,13 +41,13 @@ noroot
 notv
 nou2f
 novideo
-protocol unix,inet,inet6
+protocol netlink,unix,inet,inet6
 seccomp
 shell none
 tracelog
 
 disable-mnt
-private-bin warsow
+private-bin basename,bash,dirname,sed,sh,uname,warsow
 private-cache
 private-dev
 private-tmp

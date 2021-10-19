@@ -11,6 +11,7 @@ ignore noexec ${HOME}
 noblacklist ${HOME}/.cache/warsow-2.1
 noblacklist ${HOME}/.local/share/warsow-2.1
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
 
 include disable-common.inc

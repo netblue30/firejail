@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.tremulous
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
 
 include disable-common.inc

@@ -12,6 +12,7 @@ noblacklist ${HOME}/.cache/warsow-2.1
 noblacklist ${HOME}/.local/share/warsow-2.1
 
 include allow-bin-sh.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

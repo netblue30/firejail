@@ -1,0 +1,26 @@
+#########################################
+# Firejail base abstraction drop-in
+#########################################
+
+# Adds basic Firejail support to AppArmor profiles.
+# Please note: Firejail's nonewprivs and seccomp options
+# are not compatible with AppArmor profile transitions.
+
+# Discovery of process names
+owner /{,run/firejail/mnt/oroot/}proc/@{pid}/comm r,
+
+##########
+# Following paths only exist inside a Firejail sandbox
+##########
+
+# Library preloading
+/{,run/firejail/mnt/oroot/}{,var/}run/firejail/lib/*.so mr,
+
+# Supporting seccomp
+owner /{,run/firejail/mnt/oroot/}{,var/}run/firejail/mnt/seccomp/seccomp.postexec r,
+
+# Supporting trace
+owner /{,run/firejail/mnt/oroot/}{,var/}run/firejail/mnt/trace w,
+
+# Supporting tracelog
+/{,run/firejail/mnt/oroot/}{,var/}run/firejail/mnt/fslogger r,

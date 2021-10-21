@@ -2156,6 +2156,10 @@ int main(int argc, char **argv, char **envp) {
 			arg_novideo = 1;
 		else if (strcmp(argv[i], "--no3d") == 0)
 			arg_no3d = 1;
+		else if (strcmp(argv[i], "--noprinter") == 0) {
+			profile_add("blacklist /dev/lp*");
+			profile_add("blacklist /run/cups/cups.sock");
+		}
 		else if (strcmp(argv[i], "--notv") == 0)
 			arg_notv = 1;
 		else if (strcmp(argv[i], "--nodvd") == 0)

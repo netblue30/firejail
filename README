@@ -75,6 +75,7 @@ a1346054 (https://github.com/a1346054)
 Adrian L. Shaw (https://github.com/adrianlshaw)
 	- add profanity profile
 	- add barrirer profile
+	- add profile for Beyond All Reason
 Aidan Gauland (https://github.com/aidalgol)
 	- added electron, riot-web and npm profiles
 	- whitelist Bohemia Interactive config dir for Steam
@@ -252,6 +253,7 @@ crass (https://github.com/crass)
 	- firejail should look for processes with names exactly named
 croket (https://github.com/crocket)
 	- fix librewolf profile
+	- added profiles for imv, retroarch, and torbrowser
 curiosity-seeker (https://github.com/curiosity-seeker - old)
 curiosityseeker (https://github.com/curiosityseeker - new)
 	- tightening unbound and dnscrypt-proxy profiles
@@ -549,6 +551,8 @@ Jose Riha (https://github.com/jose1711)
 	- Add profile for udiskie
 	- fix udiskie.profile
 	- improve hints for allowing browser access to Gnome extensions connector
+	- fix warshow, jumpnbump, tremulous, blobwars profile fixes
+	- drop noinput for games with gampad/joystick support
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile

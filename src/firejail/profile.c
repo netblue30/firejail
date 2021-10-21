@@ -449,7 +449,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_no3d = 1;
 		return 0;
 	}
-	else if (strcmp(ptr, "noprinter") == 0) {
+	else if (strcmp(ptr, "noprinters") == 0) {
 		profile_add("blacklist /dev/lp*");
 		profile_add("blacklist /run/cups/cups.sock");
 		return 0;

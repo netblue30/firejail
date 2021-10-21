@@ -120,6 +120,7 @@ int arg_whitelist = 0;				// whitelist command
 int arg_nosound = 0;				// disable sound
 int arg_novideo = 0;			//disable video devices in /dev
 int arg_no3d;					// disable 3d hardware acceleration
+int arg_noprinters = 0;				// disable printers
 int arg_quiet = 0;				// no output for scripting
 int arg_join_network = 0;			// join only the network namespace
 int arg_join_filesystem = 0;			// join only the mount namespace
@@ -2160,6 +2161,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--no3d") == 0)
 			arg_no3d = 1;
 		else if (strcmp(argv[i], "--noprinters") == 0) {
+			arg_noprinters = 1;
 			profile_add("blacklist /dev/lp*");
 			profile_add("blacklist /run/cups/cups.sock");
 		}
@@ -3147,6 +3149,47 @@ int main(int argc, char **argv, char **envp) {
 		// add video group
 		if (!arg_novideo) {
 			g = get_group_id("video");
+			if (g) {
+				sprintf(ptr, "%d %d 1\n", g, g);
+				ptr += strlen(ptr);
+			}
+		}
+
+		// add render group
+		if (!arg_no3d) {
+			g = get_group_id("render");
+			if (g) {
+				sprintf(ptr, "%d %d 1\n", g, g);
+				ptr += strlen(ptr);
+			}
+		}
+
+		// add lp group
+		if (!arg_noprinters) {
+			g = get_group_id("lp");
+			if (g) {
+				sprintf(ptr, "%d %d 1\n", g, g);
+				ptr += strlen(ptr);
+			}
+		}
+
+		// add cdrom/optical groups
+		if (!arg_nodvd) {
+			g = get_group_id("cdrom");
+			if (g) {
+				sprintf(ptr, "%d %d 1\n", g, g);
+				ptr += strlen(ptr);
+			}
+			g = get_group_id("optical");
+			if (g) {
+				sprintf(ptr, "%d %d 1\n", g, g);
+				ptr += strlen(ptr);
+			}
+		}
+
+		// add input group
+		if (!arg_noinput) {
+			g = get_group_id("input");
 			if (g) {
 				sprintf(ptr, "%d %d 1\n", g, g);
 				ptr += strlen(ptr);

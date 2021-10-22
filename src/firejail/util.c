@@ -103,6 +103,30 @@ void errLogExit(char* fmt, ...) {
 	exit(1);
 }
 
+static int find_group(gid_t group, const gid_t *groups, int ngroups) {
+	int i;
+	for (i = 0; i < ngroups; i++) {
+		if (group == groups[i])
+			return i;
+	}
+
+	return -1;
+}
+
+// Gets group from "groupname" and adds it to "new_groups" if it exists on
+// "groups".  Always returns the current value of new_ngroups.
+static int copy_group_ifcont(const char *groupname,
+                             const gid_t *groups, int ngroups,
+                             gid_t *new_groups, int *new_ngroups) {
+	gid_t g = get_group_id(groupname);
+	if (g && find_group(g, groups, ngroups) >= 0) {
+		new_groups[*new_ngroups] = g;
+		(*new_ngroups)++;
+	}
+
+	return *new_ngroups;
+}
+
 static void clean_supplementary_groups(gid_t gid) {
 	assert(cfg.username);
 	gid_t groups[MAX_GROUPS];
@@ -126,17 +150,8 @@ static void clean_supplementary_groups(gid_t gid) {
 
 	int i = 0;
 	while (allowed[i]) {
-		gid_t g = get_group_id(allowed[i]);
-	 	if (g) {
-			int j;
-			for (j = 0; j < ngroups; j++) {
-				if (g == groups[j]) {
-					new_groups[new_ngroups] = g;
-					new_ngroups++;
-					break;
-				}
-			}
-		}
+		copy_group_ifcont(allowed[i], groups, ngroups,
+		                  new_groups, &new_ngroups);
 		i++;
 	}
 

@@ -43,7 +43,6 @@ static char *paths[] = {
 static char *check_dir_or_file(const char *name) {
 	assert(name);
 	struct stat s;
-	char *fname = NULL;
 
 	int i = 0;
 	while (paths[i]) {
@@ -54,45 +53,28 @@ static char *check_dir_or_file(const char *name) {
 		}
 
 		// check file
+		char *fname;
 		if (asprintf(&fname, "%s/%s", paths[i], name) == -1)
 			errExit("asprintf");
 		if (arg_debug)
 			printf("Checking %s/%s\n", paths[i], name);
-		if (stat(fname, &s) == 0 && !S_ISDIR(s.st_mode)) { // do not allow directories
-			// check symlink to firejail executable in /usr/local/bin
-			if (strcmp(paths[i], "/usr/local/bin") == 0 && is_link(fname)) {
-				/* coverity[toctou] */
-				char *actual_path = realpath(fname, NULL);
-				if (actual_path) {
-					char *ptr = strstr(actual_path, "/firejail");
-					if (ptr && strlen(ptr) == strlen("/firejail")) {
-						if (arg_debug)
-							printf("firejail exec symlink detected\n");
-						free(actual_path);
-						free(fname);
-						fname = NULL;
-						i++;
-						continue;
-					}
-					free(actual_path);
-				}
-
-			}
-			break; // file found
+		if (stat(fname, &s) == 0 &&
+		    !S_ISDIR(s.st_mode) &&	// do not allow directories
+		    !is_firejail_link(fname)) {	// skip symlinks to firejail executable, as created by firecfg
+				free(fname);
+				break; // file found
 		}
 
 		free(fname);
-		fname = NULL;
 		i++;
 	}
 
-	if (!fname) {
+	if (!paths[i]) {
 		if (arg_debug)
 			fwarning("file %s not found\n", name);
 		return NULL;
 	}
 
-	free(fname);
 	return paths[i];
 }
 
@@ -255,6 +237,9 @@ static void globbing(char *fname) {
 			assert(globbuf.gl_pathv[j]);
 			// testing for GLOB_NOCHECK - no pattern matched returns the original pattern
 			if (strcmp(globbuf.gl_pathv[j], pattern) == 0)
+				continue;
+			// skip symlinks to firejail executable, as created by firecfg
+			if (is_firejail_link(globbuf.gl_pathv[j]))
 				continue;
 
 			duplicate(globbuf.gl_pathv[j]);

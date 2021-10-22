@@ -22,7 +22,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-extern char *find_in_path(const char *program);
 
 void run_symlink(int argc, char **argv, int run_as_is) {
 	EUID_ASSERT();

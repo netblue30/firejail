@@ -709,6 +709,8 @@ void pulseaudio_disable(void);
 void fs_private_bin_list(void);
 
 // fs_lib.c
+int is_firejail_link(const char *fname);
+char *find_in_path(const char *program);
 void fs_private_lib(void);
 
 // protocol.c

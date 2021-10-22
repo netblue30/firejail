@@ -68,7 +68,6 @@ int is_firejail_link(const char *fname) {
 	if (!is_link(fname))
 		return 0;
 
-	// char *rp = realpath_as_user(fname, NULL);
 	char *rp = realpath(fname, NULL);
 	if (!rp)
 		return 0;

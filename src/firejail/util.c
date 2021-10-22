@@ -1031,7 +1031,7 @@ int create_empty_dir_as_user(const char *dir, mode_t mode) {
 	waitpid(child, NULL, 0);
 
 	if (access(dir, F_OK) == 0)
-			return 1;
+		return 1;
 	return 0;
 }
 

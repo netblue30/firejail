@@ -62,8 +62,8 @@ static char *check_dir_or_file(const char *name) {
 		if (stat(fname, &s) == 0 &&
 		    !S_ISDIR(s.st_mode) &&	// do not allow directories
 		    !is_firejail_link(fname)) {	// skip symlinks to firejail executable, as created by firecfg
-				free(fname);
-				break; // file found
+			free(fname);
+			break; // file found
 		}
 
 		free(fname);

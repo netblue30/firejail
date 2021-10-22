@@ -890,16 +890,16 @@ int sandbox(void* sandbox_arg) {
 		else if (arg_overlay)
 			fwarning("private-bin feature is disabled in overlay\n");
 		else {
+			EUID_USER();
 			// for --x11=xorg we need to add xauth command
 			if (arg_x11_xorg) {
-				EUID_USER();
 				char *tmp;
 				if (asprintf(&tmp, "%s,xauth", cfg.bin_private_keep) == -1)
 					errExit("asprintf");
 				cfg.bin_private_keep = tmp;
-				EUID_ROOT();
 			}
 			fs_private_bin_list();
+			EUID_ROOT();
 		}
 	}
 

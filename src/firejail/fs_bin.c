@@ -41,6 +41,7 @@ static char *paths[] = {
 
 // return 1 if found, 0 if not found
 static char *check_dir_or_file(const char *name) {
+	EUID_ASSERT();
 	assert(name);
 	struct stat s;
 
@@ -80,6 +81,7 @@ static char *check_dir_or_file(const char *name) {
 
 // return 1 if the file is in paths[]
 static int valid_full_path_file(const char *name) {
+	EUID_ASSERT();
 	assert(name);
 
 	if (*name != '/')
@@ -131,6 +133,7 @@ static void report_duplication(const char *fname) {
 }
 
 static void duplicate(char *fname) {
+	EUID_ASSERT();
 	assert(fname);
 
 	if (*fname == '~' || strstr(fname, "..")) {
@@ -202,6 +205,7 @@ static void duplicate(char *fname) {
 }
 
 static void globbing(char *fname) {
+	EUID_ASSERT();
 	assert(fname);
 
 	// go directly to duplicate() if no globbing char is present - see man 7 glob
@@ -252,6 +256,7 @@ static void globbing(char *fname) {
 }
 
 void fs_private_bin_list(void) {
+	EUID_ASSERT();
 	char *private_list = cfg.bin_private_keep;
 	assert(private_list);
 
@@ -259,7 +264,9 @@ void fs_private_bin_list(void) {
 	timetrace_start();
 
 	// create /run/firejail/mnt/bin directory
+	EUID_ROOT();
 	mkdir_attr(RUN_BIN_DIR, 0755, 0, 0);
+	EUID_USER();
 
 	if (arg_debug)
 		printf("Copying files in the new bin directory\n");
@@ -287,8 +294,10 @@ void fs_private_bin_list(void) {
 		if (stat(paths[i], &s) == 0) {
 			if (arg_debug)
 				printf("Mount-bind %s on top of %s\n", RUN_BIN_DIR, paths[i]);
+			EUID_ROOT();
 			if (mount(RUN_BIN_DIR, paths[i], NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
+			EUID_USER();
 			fs_logger2("tmpfs", paths[i]);
 			fs_logger2("mount", paths[i]);
 		}

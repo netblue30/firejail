@@ -117,13 +117,19 @@ static int find_group(gid_t group, const gid_t *groups, int ngroups) {
 // "groups".  Always returns the current value of new_ngroups.
 static int copy_group_ifcont(const char *groupname,
                              const gid_t *groups, int ngroups,
-                             gid_t *new_groups, int *new_ngroups) {
+                             gid_t *new_groups, int *new_ngroups, int new_sz) {
+	if (*new_ngroups >= new_sz) {
+		errno = ERANGE;
+		goto out;
+	}
+
 	gid_t g = get_group_id(groupname);
 	if (g && find_group(g, groups, ngroups) >= 0) {
 		new_groups[*new_ngroups] = g;
 		(*new_ngroups)++;
 	}
 
+out:
 	return *new_ngroups;
 }
 
@@ -151,7 +157,7 @@ static void clean_supplementary_groups(gid_t gid) {
 	int i = 0;
 	while (allowed[i]) {
 		copy_group_ifcont(allowed[i], groups, ngroups,
-		                  new_groups, &new_ngroups);
+		                  new_groups, &new_ngroups, MAX_GROUPS);
 		i++;
 	}
 

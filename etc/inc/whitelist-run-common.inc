@@ -8,6 +8,8 @@ whitelist /run/dbus/system_bus_socket
 whitelist /run/media
 whitelist /run/resolvconf/resolv.conf
 whitelist /run/shm
+whitelist /run/systemd/journal/dev-log
+whitelist /run/systemd/journal/socket
 whitelist /run/systemd/resolve/resolv.conf
 whitelist /run/systemd/resolve/stub-resolv.conf
 whitelist /run/udev/data

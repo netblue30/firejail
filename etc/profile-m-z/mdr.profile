@@ -45,7 +45,7 @@ disable-mnt
 private-bin mdr
 private-cache
 private-dev
-private-etc ld.so.preload,none
+private-etc ld.so.preload
 private-lib
 private-tmp
 

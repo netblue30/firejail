@@ -36,6 +36,7 @@ whitelist /usr/share/kconf_update/okular.upd
 whitelist /usr/share/kxmlgui5/okular
 whitelist /usr/share/okular
 whitelist /usr/share/poppler
+include whitelist-run-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

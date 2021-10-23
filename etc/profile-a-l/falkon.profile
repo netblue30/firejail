@@ -23,6 +23,7 @@ whitelist ${HOME}/.cache/falkon
 whitelist ${HOME}/.config/falkon
 whitelist /usr/share/falkon
 include whitelist-common.inc
+include whitelist-run-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -37,6 +37,7 @@ whitelist ${HOME}/.kde4/share/config/ktorrentrc
 whitelist ${HOME}/.local/share/ktorrent
 whitelist ${HOME}/.local/share/kxmlgui5/ktorrent
 include whitelist-common.inc
+include whitelist-run-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

@@ -16,6 +16,7 @@ include disable-interpreters.inc
 include disable-programs.inc
 
 whitelist /usr/share/ark
+include whitelist-run-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

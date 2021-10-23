@@ -27,6 +27,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
+include whitelist-run-common.inc
 include whitelist-var-common.inc
 
 # disabled options below are not compatible with the apparmor profile for mysqld-akonadi.

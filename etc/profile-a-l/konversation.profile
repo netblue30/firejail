@@ -20,6 +20,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+include whitelist-run-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

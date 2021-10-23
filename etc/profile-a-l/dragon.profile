@@ -19,6 +19,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 whitelist /usr/share/dragonplayer
+include whitelist-run-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

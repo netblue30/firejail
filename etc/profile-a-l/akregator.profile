@@ -25,6 +25,7 @@ whitelist ${HOME}/.local/share/akregator
 whitelist ${HOME}/.local/share/kssl
 whitelist ${HOME}/.local/share/kxmlgui5/akregator
 include whitelist-common.inc
+include whitelist-run-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

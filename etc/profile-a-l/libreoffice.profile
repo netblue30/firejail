@@ -21,6 +21,7 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-programs.inc
 
+include whitelist-run-common.inc
 include whitelist-var-common.inc
 
 # Debian 10/Ubuntu 18.04 come with their own apparmor profile, but it is not in enforce mode.

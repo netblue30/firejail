@@ -10,3 +10,4 @@ whitelist /run/resolvconf/resolv.conf
 whitelist /run/shm
 whitelist /run/systemd/resolve/resolv.conf
 whitelist /run/systemd/resolve/stub-resolv.conf
+whitelist /run/udev/data

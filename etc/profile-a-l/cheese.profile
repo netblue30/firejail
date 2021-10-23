@@ -21,7 +21,6 @@ include disable-xdg.inc
 
 whitelist ${VIDEOS}
 whitelist ${PICTURES}
-whitelist /run/udev/data
 whitelist /usr/libexec/gstreamer-1.0/gst-plugin-scanner
 whitelist /usr/share/gnome-video-effects
 whitelist /usr/share/gstreamer-1.0

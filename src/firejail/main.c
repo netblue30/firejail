@@ -147,6 +147,7 @@ int arg_nodvd = 0; // --nodvd
 int arg_nou2f = 0; // --nou2f
 int arg_noinput = 0; // --noinput
 int arg_deterministic_exit_code = 0;	// always exit with first child's exit status
+int arg_deterministic_shutdown = 0; 	// shut down the sandbox if first child dies
 DbusPolicy arg_dbus_user = DBUS_POLICY_ALLOW;	// --dbus-user
 DbusPolicy arg_dbus_system = DBUS_POLICY_ALLOW;	// --dbus-system
 const char *arg_dbus_log_file = NULL;
@@ -2764,6 +2765,9 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strcmp(argv[i], "--deterministic-exit-code") == 0) {
 			arg_deterministic_exit_code = 1;
+		}
+		else if (strcmp(argv[i], "--deterministic-shutdown") == 0) {
+			arg_deterministic_shutdown = 1;
 		}
 		else {
 			// double dash - positional params to follow

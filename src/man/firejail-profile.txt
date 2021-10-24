@@ -954,10 +954,15 @@ be created and configured using "ip netns".
 Use this name for the interface connected to the bridge for --net=bridge_interface commands,
 instead of the default one.
 #endif
+
 .SH Other
 .TP
 \fBdeterministic-exit-code
 Always exit firejail with the first child's exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
+
+.TP
+\fBdeterministic-shutdown
+Always shut down the sandbox after the first child has terminated. The default behavior is to keep the sandbox alive as long as it contains running processes.
 
 .TP
 \fBjoin-or-start sandboxname

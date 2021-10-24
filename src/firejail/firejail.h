@@ -350,6 +350,7 @@ extern int arg_nodvd;	// --nodvd
 extern int arg_nou2f;	// --nou2f
 extern int arg_noinput;	// --noinput
 extern int arg_deterministic_exit_code;	// always exit with first child's exit status
+extern int arg_deterministic_shutdown;	// shut down the sandbox if first child dies
 
 typedef enum {
 	DBUS_POLICY_ALLOW,	// Allow unrestricted access to the bus

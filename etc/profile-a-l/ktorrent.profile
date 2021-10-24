@@ -62,4 +62,5 @@ private-dev
 # private-lib - problems on Arch
 private-tmp
 
+deterministic-shutdown
 # memory-deny-write-execute

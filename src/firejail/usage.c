@@ -87,6 +87,7 @@ static char *usage_str =
 	"    --defaultgw=address - configure default gateway.\n"
 #endif
 	"    --deterministic-exit-code - always exit with first child's status code.\n"
+	"    --deterministic-shutdown - terminate orphan processes.\n"
 	"    --dns=address - set DNS server.\n"
 	"    --dns.print=name|pid - print DNS configuration.\n"
 	"    --env=name=value - set environment variable.\n"

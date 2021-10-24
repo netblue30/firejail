@@ -49,3 +49,4 @@ private-bin akregator,akregatorstorageexporter,dbus-launch,kdeinit4,kdeinit4_shu
 private-dev
 private-tmp
 
+deterministic-shutdown

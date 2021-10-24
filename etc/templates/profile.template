@@ -220,6 +220,7 @@ include globals.local
 #dbus-user.talk org.freedesktop.Notifications
 #dbus-system none
 
+##deterministic-shutdown
 ##env VAR=VALUE
 ##join-or-start NAME
 #memory-deny-write-execute

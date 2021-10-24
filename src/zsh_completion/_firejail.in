@@ -94,6 +94,7 @@ _firejail_args=(
     '--cpu=-[set cpu affinity]: :->cpus'
     '*--deny=-[deny access to directory or file]: :_files'
     "--deterministic-exit-code[always exit with first child's status code]"
+    '--deterministic-shutdown[terminate orphan processes]'
     '*--dns=-[set DNS server]: :'
     '*--env=-[set environment variable]: :'
     '--hostname=-[set sandbox hostname]: :'

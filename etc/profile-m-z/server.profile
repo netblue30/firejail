@@ -83,6 +83,7 @@ private-tmp
 dbus-user none
 # dbus-system none
 
+# deterministic-shutdown
 # memory-deny-write-execute
 # read-only ${HOME}
 # writable-run-user

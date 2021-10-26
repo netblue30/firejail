@@ -44,7 +44,7 @@ shell none
 private-bin profanity
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.preload,localtime,mime.types,nsswitch.conf,pki,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,localtime,mime.types,nsswitch.conf,pki,resolv.conf,ssl
 private-tmp
 
 dbus-user none

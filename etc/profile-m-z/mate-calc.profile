@@ -42,7 +42,7 @@ shell none
 
 disable-mnt
 private-bin mate-calc,mate-calculator
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.preload
+private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload
 private-dev
 private-opt none
 private-tmp

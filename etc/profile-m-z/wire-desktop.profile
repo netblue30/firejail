@@ -26,7 +26,7 @@ mkdir ${HOME}/.config/Wire
 whitelist ${HOME}/.config/Wire
 
 private-bin bash,electron,electron[0-9],electron[0-9][0-9],env,sh,wire-desktop
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.preload,machine-id,pki,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,machine-id,pki,resolv.conf,ssl
 
 # Redirect
 include electron.profile

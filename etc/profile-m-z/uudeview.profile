@@ -41,7 +41,7 @@ x11 none
 private-bin uudeview
 private-cache
 private-dev
-private-etc alternatives,ld.so.preload
+private-etc alternatives,ld.so.cache,ld.so.preload
 
 dbus-user none
 dbus-system none

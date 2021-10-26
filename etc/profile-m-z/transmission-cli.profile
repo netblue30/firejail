@@ -8,7 +8,7 @@ include transmission-cli.local
 include globals.local
 
 private-bin transmission-cli
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
 
 # Redirect
 include transmission-common.profile

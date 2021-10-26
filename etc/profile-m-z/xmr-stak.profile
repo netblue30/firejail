@@ -38,7 +38,7 @@ disable-mnt
 private ${HOME}/.xmr-stak
 private-bin xmr-stak
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
 #private-lib libxmrstak_opencl_backend,libxmrstak_cuda_backend
 private-opt cuda
 private-tmp

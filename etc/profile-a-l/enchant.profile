@@ -48,7 +48,7 @@ x11 none
 private-bin enchant,enchant-*
 private-cache
 private-dev
-private-etc alternatives,ld.so.preload
+private-etc alternatives,ld.so.cache,ld.so.preload
 private-lib
 private-tmp
 

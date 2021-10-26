@@ -45,7 +45,7 @@ disable-mnt
 private-bin netactview,netactview_polkit
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.preload
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload
 private-lib
 private-tmp
 

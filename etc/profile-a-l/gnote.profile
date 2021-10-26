@@ -51,7 +51,7 @@ disable-mnt
 private-bin gnote
 private-cache
 private-dev
-private-etc dconf,fonts,gtk-3.0,ld.so.preload,pango,X11
+private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload,pango,X11
 private-tmp
 
 dbus-user filter

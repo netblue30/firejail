@@ -49,7 +49,7 @@ shell none
 private-bin mpDris2,notify-send,python*
 private-cache
 private-dev
-private-etc alternatives,hosts,ld.so.preload,nsswitch.conf
+private-etc alternatives,hosts,ld.so.cache,ld.so.preload,nsswitch.conf
 private-lib libdbus-1.so.*,libdbus-glib-1.so.*,libgirepository-1.0.so.*,libnotify.so.*,libpython*,python2*,python3*
 private-tmp
 

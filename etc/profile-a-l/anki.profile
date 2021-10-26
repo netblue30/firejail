@@ -50,7 +50,7 @@ disable-mnt
 private-bin anki,python*
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,fonts,gtk-2.0,hostname,hosts,ld.so.preload,machine-id,pki,resolv.conf,ssl,Trolltech.conf
+private-etc alternatives,ca-certificates,fonts,gtk-2.0,hostname,hosts,ld.so.cache,ld.so.preload,machine-id,pki,resolv.conf,ssl,Trolltech.conf
 private-tmp
 
 dbus-user none

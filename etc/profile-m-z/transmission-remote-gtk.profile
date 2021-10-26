@@ -12,7 +12,7 @@ noblacklist ${HOME}/.config/transmission-remote-gtk
 mkdir ${HOME}/.config/transmission-remote-gtk
 whitelist ${HOME}/.config/transmission-remote-gtk
 
-private-etc fonts,hostname,hosts,ld.so.preload,resolv.conf
+private-etc alternatives,fonts,hostname,hosts,ld.so.cache,ld.so.preload,resolv.conf
 # Problems with private-lib (see issue #2889)
 ignore private-lib
 

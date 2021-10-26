@@ -47,7 +47,7 @@ disable-mnt
 private-bin qrencode
 private-cache
 private-dev
-private-etc ld.so.preload
+private-etc alternatives,ld.so.cache,ld.so.preload
 private-lib libpcre*
 private-tmp
 

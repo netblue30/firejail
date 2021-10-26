@@ -43,7 +43,7 @@ tracelog
 private-bin xournal
 private-cache
 private-dev
-private-etc alternatives,fonts,group,ld.so.preload,machine-id,passwd
+private-etc alternatives,fonts,group,ld.so.cache,ld.so.preload,machine-id,passwd
 # TODO should use private-lib
 private-tmp
 

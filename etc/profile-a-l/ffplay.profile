@@ -14,7 +14,7 @@ ignore nogroups
 ignore nosound
 
 private-bin ffplay
-private-etc alsa,asound.conf,group,ld.so.preload
+private-etc alsa,alternatives,asound.conf,group,ld.so.cache,ld.so.preload
 
 # Redirect
 include ffmpeg.profile

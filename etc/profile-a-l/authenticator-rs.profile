@@ -47,7 +47,7 @@ disable-mnt
 private-bin authenticator-rs
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-2.0,gtk-3.0,ld.so.preload,pki,resolv.conf,ssl,xdg
+private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,pki,resolv.conf,ssl,xdg
 private-tmp
 
 dbus-user filter

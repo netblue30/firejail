@@ -380,12 +380,14 @@ void fs_private(void) {
 		selinux_relabel_path("/home", "/home");
 		fs_logger("tmpfs /home");
 	}
+	EUID_USER();
 
 	if (u != 0) {
 		if (!arg_allusers && strncmp(homedir, "/home/", 6) == 0) {
 			// create new empty /home/user directory
 			if (arg_debug)
 				printf("Create a new user directory\n");
+			EUID_ROOT();
 			if (mkdir(homedir, S_IRWXU) == -1) {
 				if (mkpath_as_root(homedir) == -1)
 					errExit("mkpath");
@@ -394,20 +396,17 @@ void fs_private(void) {
 			}
 			if (chown(homedir, u, g) < 0)
 				errExit("chown");
+			EUID_USER();
 			fs_logger2("mkdir", homedir);
 			fs_logger2("tmpfs", homedir);
 		}
-		else {
+		else
 			// mask user home directory
 			// the directory should be owned by the current user
-			EUID_USER();
 			fs_tmpfs(homedir, 1);
-			EUID_ROOT();
-		}
 
 		selinux_relabel_path(homedir, homedir);
 	}
-	EUID_USER();
 
 	skel(homedir);
 	if (xflag)

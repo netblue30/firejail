@@ -285,24 +285,25 @@ void fs_private_bin_list(void) {
 	while ((ptr = strtok(NULL, ",")) != NULL)
 		globbing(ptr);
 	free(dlist);
-	fs_logger_print();
 
 	// mount-bind
+	EUID_ROOT();
 	int i = 0;
 	while (paths[i]) {
 		struct stat s;
 		if (stat(paths[i], &s) == 0) {
 			if (arg_debug)
 				printf("Mount-bind %s on top of %s\n", RUN_BIN_DIR, paths[i]);
-			EUID_ROOT();
 			if (mount(RUN_BIN_DIR, paths[i], NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
-			EUID_USER();
 			fs_logger2("tmpfs", paths[i]);
 			fs_logger2("mount", paths[i]);
 		}
 		i++;
 	}
+	fs_logger_print();
+	EUID_USER();
+
 	selinux_relabel_path(RUN_BIN_DIR, "/bin");
 	fmessage("%d %s installed in %0.2f ms\n", prog_cnt, (prog_cnt == 1)? "program": "programs", timetrace_end());
 }

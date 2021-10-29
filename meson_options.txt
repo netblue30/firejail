@@ -1,0 +1,50 @@
+option('analyzer', type: 'boolean', value: false,
+       description: 'Enable gcc\'s Static Analyzer')
+option('sanitizer', type: 'combo', choices: ['none', 'address', 'memory', 'undefined'],
+       description: 'Enable a compiler-based sanitizer (debug)')
+option('gcov', type: 'boolean', value: true,
+       description: 'Gcov instrumentation')
+
+option('lts', type: 'boolean', value: false,
+       description: 'LTS')
+
+option('busybox', type: 'boolean', value: false,
+       description: 'busybox workaround')
+option('contrib', type: 'boolean', value: true,
+       description: 'Install contrib files')
+option('suid', type: 'boolean', value: true,
+       description: 'Install firejail as SUID executable')
+
+#option('globalcfg', type: 'boolean', value: truefalse,
+#       description: '')
+
+option('apparmor', type: 'boolean', value: false,
+       description: 'AppArmor support')
+option('selinux', type: 'boolean', value: false,
+       description: 'SELinux labeling support')
+option('dbusproxy', type: 'boolean', value: true,
+       description: 'D-Bus proxy support')
+option('man', type: 'boolean', value: true,
+       description: 'Manpages')
+
+option('output', type: 'boolean', value: true,
+       description: '--output logging')
+option('usertmpfs', type: 'boolean', value: true,
+       description: 'tmpfs as regular user')
+option('firetunnel', type: 'boolean', value: true,
+       description: 'firetunnel')
+option('private-home', type: 'boolean', value: true,
+       description: 'private home feature')
+option('chroot', type: 'boolean', value: true,
+       description: 'chroot')
+option('network', type: 'boolean', value: true,
+       description: 'network')
+option('userns', type: 'boolean', value: true,
+       description: 'user namespace')
+option('x11', type: 'boolean', value: true,
+       description: 'X11 sandboxing support')
+option('file-transfer', type: 'boolean', value: true,
+       description: 'file transfer')
+
+option('force-nonewprivs', type: 'boolean', value: true,
+       description: 'force nonewprivs')

@@ -5,4 +5,5 @@ ftee_sources = [
 executable('ftee', ftee_sources,
   install: true,
   install_dir: get_option('libdir') / meson.project_name(),
+  install_mode: 'rwxr-xr-x',
 )

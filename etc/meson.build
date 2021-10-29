@@ -15,4 +15,15 @@ install_subdir('templates',
   strip_directory: true,
 )
 
-# TODO: apparmor
+install_data('apparmor/firejail-default',
+  install_dir: get_option('sysconfdir') / 'apparmor.d',
+)
+install_data('apparmor/firejail-local',
+  install_dir: get_option('sysconfdir') / 'apparmor.d' / 'local',
+  rename: 'firejail-default',
+)
+install_data('apparmor/firejail-base',
+  install_dir: get_option('sysconfdir') / 'apparmor.d' / 'abstractions' / 'base.d',
+)
+
+# TODO: get_option('busybox') >> edit disable-common.inc

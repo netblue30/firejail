@@ -42,7 +42,7 @@ tracelog
 private-bin abiword
 private-cache
 private-dev
-private-etc fonts,gtk-3.0,ld.so.preload,passwd
+private-etc alternatives,fonts,gtk-3.0,ld.so.cache,ld.so.preload,passwd
 private-tmp
 
 # dbus-user none

@@ -42,6 +42,6 @@ disable-mnt
 private-bin gnome-clocks,gsound-play
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,hosts,ld.so.preload,localtime,machine-id,pkcs11,pki,ssl
+private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,hosts,ld.so.cache,ld.so.preload,localtime,machine-id,pkcs11,pki,ssl
 private-tmp
 

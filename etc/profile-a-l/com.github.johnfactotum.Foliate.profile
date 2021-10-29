@@ -55,7 +55,7 @@ disable-mnt
 private-bin com.github.johnfactotum.Foliate,gjs
 private-cache
 private-dev
-private-etc dconf,fonts,gconf,gtk-3.0,ld.so.preload
+private-etc alternatives,dconf,fonts,gconf,gtk-3.0,ld.so.cache,ld.so.preload
 private-tmp
 
 read-only ${HOME}

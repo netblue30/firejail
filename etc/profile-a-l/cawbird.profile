@@ -39,7 +39,7 @@ disable-mnt
 private-bin cawbird
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.preload,mime.types,nsswitch.conf,pki,resolv.conf,ssl,X11,xdg
+private-etc alternatives,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,mime.types,nsswitch.conf,pki,resolv.conf,ssl,X11,xdg
 private-tmp
 
 # dbus-user none

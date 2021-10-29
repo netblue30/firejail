@@ -54,7 +54,7 @@ tracelog
 private-bin trojita
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,hostname,hosts,ld.so.preload,pki,resolv.conf,selinux,ssl,xdg
+private-etc alternatives,ca-certificates,crypto-policies,fonts,hostname,hosts,ld.so.cache,ld.so.preload,pki,resolv.conf,selinux,ssl,xdg
 private-tmp
 
 dbus-user filter

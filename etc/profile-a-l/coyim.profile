@@ -40,7 +40,7 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.preload,machine-id,pki,ssl
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,machine-id,pki,ssl
 private-tmp
 
 dbus-user none

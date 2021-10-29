@@ -12,7 +12,7 @@ noblacklist ${HOME}/.config/gallery-dl
 noblacklist ${HOME}/.gallery-dl.conf
 
 private-bin gallery-dl
-private-etc gallery-dl.conf,ld.so.preload
+private-etc alternatives,gallery-dl.conf,ld.so.cache,ld.so.preload
 
 # Redirect
 include youtube-dl.profile

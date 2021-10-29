@@ -43,7 +43,7 @@ disable-mnt
 private-bin gnome-system-log
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.preload,localtime,machine-id
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload,localtime,machine-id
 private-lib
 private-tmp
 writable-var-log

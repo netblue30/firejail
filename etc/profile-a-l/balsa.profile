@@ -66,7 +66,7 @@ tracelog
 private-bin balsa,balsa-ab,gpg,gpg-agent,gpg2,gpgsm
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,groups,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.preload,mailname,passwd,pki,resolv.conf,selinux,ssl,xdg
+private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,groups,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.preload,mailname,passwd,pki,resolv.conf,selinux,ssl,xdg
 private-tmp
 writable-run-user
 writable-var

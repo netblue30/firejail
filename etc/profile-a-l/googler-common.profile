@@ -54,7 +54,7 @@ disable-mnt
 private-bin env,python3*,sh,w3m
 private-cache
 private-dev
-private-etc ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.preload,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
+private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
 private-tmp
 
 dbus-user none

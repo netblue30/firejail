@@ -44,7 +44,7 @@ tracelog
 disable-mnt
 # private-bin supertux2
 private-cache
-private-etc ld.so.preload,machine-id
+private-etc alternatives,ld.so.cache,ld.so.preload,machine-id
 private-dev
 private-tmp
 

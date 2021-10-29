@@ -1,0 +1,31 @@
+name: Profile Checks
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'etc/**'
+      - 'ci/check/profiles/**'
+      - 'src/firecfg/firecfg.config'
+      - 'contrib/sort.py'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - 'etc/**'
+      - 'ci/check/profiles/**'
+      - 'src/firecfg/firecfg.config'
+      - 'contrib/sort.py'
+
+jobs:
+  profile-checks:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: sort.py
+      run: ./ci/check/profiles/sort.py etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
+    - name: private-etc-always-required.sh
+      run: ./ci/check/profiles/private-etc-always-required.sh etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
+    - name: sort-disable-programs.sh
+      run: ./ci/check/profiles/sort-disable-programs.sh etc/inc/disable-programs.inc
+    - name: sort-firecfg.config.sh
+      run: ./ci/check/profiles/sort-firecfg.config.sh src/firecfg/firecfg.config

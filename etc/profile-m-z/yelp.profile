@@ -56,7 +56,7 @@ disable-mnt
 private-bin groff,man,tbl,troff,yelp
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,crypto-policies,cups,dconf,drirc,fonts,gcrypt,groff,gtk-3.0,ld.so.preload,machine-id,man_db.conf,openal,os-release,pulse,sgml,xml
+private-etc alsa,alternatives,asound.conf,crypto-policies,cups,dconf,drirc,fonts,gcrypt,groff,gtk-3.0,ld.so.cache,ld.so.preload,machine-id,man_db.conf,openal,os-release,pulse,sgml,xml
 private-tmp
 
 dbus-user filter

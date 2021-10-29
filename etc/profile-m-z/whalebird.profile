@@ -21,7 +21,7 @@ whitelist ${HOME}/.config/Whalebird
 no3d
 
 private-bin electron,electron[0-9],electron[0-9][0-9],whalebird
-private-etc fonts,ld.so.preload,machine-id
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
 
 # Redirect
 include electron.profile

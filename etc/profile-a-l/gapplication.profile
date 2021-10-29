@@ -49,7 +49,7 @@ private
 private-bin gapplication
 private-cache
 private-dev
-private-etc ld.so.preload
+private-etc alternatives,ld.so.cache,ld.so.preload
 private-tmp
 
 # Add the next line to your gapplication.local to filter D-Bus names.

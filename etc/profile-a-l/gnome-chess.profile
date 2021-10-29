@@ -50,5 +50,5 @@ disable-mnt
 private-bin fairymax,gnome-chess,gnuchess,hoichess
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gnome-chess,gtk-3.0,ld.so.preload
+private-etc alternatives,dconf,fonts,gnome-chess,gtk-3.0,ld.so.cache,ld.so.preload
 private-tmp

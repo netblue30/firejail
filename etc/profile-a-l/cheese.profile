@@ -52,7 +52,7 @@ disable-mnt
 private-bin cheese
 private-cache
 private-dev
-private-etc alternatives,clutter-1.0,dconf,drirc,fonts,gtk-3.0,ld.so.preload
+private-etc alternatives,clutter-1.0,dconf,drirc,fonts,gtk-3.0,ld.so.cache,ld.so.preload
 private-tmp
 
 dbus-user filter

@@ -42,7 +42,7 @@ x11 none
 private-bin mediainfo
 private-cache
 private-dev
-private-etc alternatives,ld.so.preload
+private-etc alternatives,ld.so.cache,ld.so.preload
 private-tmp
 
 dbus-user none

@@ -51,7 +51,7 @@ disable-mnt
 private-bin sh
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
 # Add the next line to your links-common.local to allow external media players.
 # private-etc alsa,asound.conf,machine-id,openal,pulse
 private-tmp

@@ -51,7 +51,7 @@ disable-mnt
 private-bin bijiben
 # private-cache -- access to .cache/tracker is required
 private-dev
-private-etc dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
+private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
 private-tmp
 
 dbus-user filter

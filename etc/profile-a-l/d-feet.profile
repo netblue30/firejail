@@ -50,7 +50,7 @@ disable-mnt
 private-bin d-feet,python*
 private-cache
 private-dev
-private-etc alternatives,dbus-1,fonts,ld.so.preload,machine-id
+private-etc alternatives,dbus-1,fonts,ld.so.cache,ld.so.preload,machine-id
 private-tmp
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)

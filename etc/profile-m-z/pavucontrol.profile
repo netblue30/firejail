@@ -45,7 +45,7 @@ disable-mnt
 private-bin pavucontrol
 private-cache
 private-dev
-private-etc alternatives,asound.conf,avahi,fonts,ld.so.preload,machine-id,pulse
+private-etc alternatives,asound.conf,avahi,fonts,ld.so.cache,ld.so.preload,machine-id,pulse
 private-lib
 private-tmp
 

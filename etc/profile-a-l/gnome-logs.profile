@@ -40,7 +40,7 @@ disable-mnt
 private-bin gnome-logs
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.preload,localtime,machine-id
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload,localtime,machine-id
 private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
 writable-var-log

@@ -53,7 +53,7 @@ disable-mnt
 # private-bin alacarte,bash,python*,sh
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.preload,locale.alias,locale.conf,login.defs,mime.types,nsswitch.conf,passwd,pki,X11,xdg
+private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload,locale.alias,locale.conf,login.defs,mime.types,nsswitch.conf,passwd,pki,X11,xdg
 private-tmp
 
 dbus-user none

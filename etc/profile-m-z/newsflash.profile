@@ -51,7 +51,7 @@ disable-mnt
 private-bin com.gitlab.newsflash,newsflash
 private-cache
 private-dev
-private-etc ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,nsswitch.conf,pango,pki,resolv.conf,ssl,X11
+private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,nsswitch.conf,pango,pki,resolv.conf,ssl,X11
 private-tmp
 
 dbus-user none

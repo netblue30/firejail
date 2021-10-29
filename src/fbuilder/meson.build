@@ -11,8 +11,7 @@ fbuilder_sources = [
 
 executable('fbuilder', fbuilder_sources,
   install: true,
-  install_dir: get_option('libdir') / meson.project_name(),
-  install_mode: 'rwxr-xr-x',
+  install_dir: libdir_firejail,
 
   c_args: [
     c_args_constants,

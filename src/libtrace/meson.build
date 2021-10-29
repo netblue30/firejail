@@ -1,6 +1,6 @@
 shared_library('trace', 'libtrace.c',
   install: true,
-  install_dir: get_option('libdir') / meson.project_name(),
+  install_dir: libdir_firejail,
 
   c_args: [
   ],

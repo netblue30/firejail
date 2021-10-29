@@ -13,7 +13,6 @@ executable('firecfg', firecfg_sources,
   c_args: [
     c_args_constants    
   ],
-
 )
 
 install_data('firecfg.config', install_dir: get_option('libdir') / meson.project_name())

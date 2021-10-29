@@ -25,11 +25,14 @@ jobs:
     - uses: actions/checkout@v2
     - name: install dependencies
       run: sudo apt-get install gcc-11 libapparmor-dev libselinux1-dev expect xzdec
-    - name: configure
-      run: CC=gcc-11 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux --prefix=/usr
-    - name: make
-      run: make
-    - name: make install
-      run: sudo make install
-    - name: run tests
-      run: SHELL=/bin/bash make test-github
+    - name: meson setup
+      #TODO: --enable-analyzer --enable-apparmor --enable-selinux
+      run: CC=gcc-11 meson setup _builddir --werror --prefix=/usr
+    - name: meson compile
+      run: meson compile -C _builddir
+    - name: meson install
+      run: sudo meson install -C _builddir
+    # TODO: Why do we run this for profile changes?
+    # TODO: meson test
+    #- name: meson test
+    #  run: SHELL=/bin/bash meson test

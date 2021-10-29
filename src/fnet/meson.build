@@ -10,7 +10,7 @@ fnet_sources = [
 
 executable('fnet', fnet_sources,
   install: true,                             
-  install_dir: get_option('libdir') / meson.project_name(),
-  install_mode: 'rwx--x--x',
+  install_dir: libdir_firejail,
+  install_mode: sbox_apps_non_dumpable_perms,
 )
 

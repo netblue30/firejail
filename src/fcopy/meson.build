@@ -6,7 +6,6 @@ fcopy_sources = [
 
 executable('fcopy', fcopy_sources,
   install: true,
-  install_dir: get_option('libdir') / meson.project_name(),
-  # TODO: Maybe use something like 'install_mode: SBOX_APPS_NON_DUMPABLE_PERMS'
-  install_mode: 'rwx--x--x',
+  install_dir: libdir_firejail,
+  install_mode: sbox_apps_non_dumpable_perms,
 )

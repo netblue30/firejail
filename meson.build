@@ -12,6 +12,8 @@ project('firejail', 'c',
 # -mretpoline
 # -fstack-clash-protection
 # -fstack-protector-strong
+# -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -Wformat -Wformat-security
+# -pie -fPIE -Wl,-z,relro -Wl,-z,now -lpthread
 
 cc = meson.get_compiler('c')
 if get_option('analyzer') and cc.get_id() == 'gcc' and cc.version().version_compare('>=10')
@@ -37,6 +39,7 @@ option_flag = {
   'network': '-DHAVE_NETWORK',
   'output': '-DHAVE_OUTPUT',
   'private-home': '-DHAVE_PRIVATE_HOME',
+  #not suid -DHAVE_NOSUID
   'userns': '-DHAVE_USERNS',
   'usertmpfs': '-DHAVE_USERTMPFS',
   'x11': '-DHAVE_X11',
@@ -61,5 +64,6 @@ subdir('src')
 subdir('test')
 
 install_data(['COPYING', 'README', 'RELNOTES'],
+  # docdir ?
   install_dir: get_option('datadir') / 'doc' / meson.project_name(),
 )

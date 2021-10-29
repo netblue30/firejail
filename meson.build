@@ -99,3 +99,39 @@ executable('firejail', firejail_sources,
     c_args_constants
   ],
 )
+
+# # # # # # # #
+
+fseccomp_sources = [
+  'src/fseccomp/main.c',
+  'src/fseccomp/protocol.c',
+  'src/fseccomp/seccomp.c',
+  'src/fseccomp/seccomp_file.c',
+  'src/fseccomp/seccomp_secondary.c',
+
+  'src/lib/common.c',
+  'src/lib/errno.c',
+  'src/lib/syscall.c',
+]
+fseccomp = executable('fseccomp', fseccomp_sources,
+  install: true,
+  install_dir: get_option('libdir') / meson.project_name(),
+)
+
+# TODO: fsec-optimize OUTPUT
+custom_target('seccomp',
+  build_by_default: true,
+  command: [fseccomp, 'default', '@OUTPUT@'],
+  install: true,
+  install_dir: get_option('libdir') / meson.project_name(),
+  output: 'seccomp',
+)
+
+# TODO: fsec-optimize OUTPUT
+custom_target('seccomp.32',
+  build_by_default: true,
+  command: [fseccomp, 'secondary', '32', '@OUTPUT@'],
+  install: true,
+  install_dir: get_option('libdir') / meson.project_name(),
+  output: 'seccomp.32',
+)

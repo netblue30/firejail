@@ -42,7 +42,9 @@ subdir('libpostexecseccomp')
 #subdir('libtrace')
 #subdir('libtracelog')
  
-#subdir('man')
+if get_option('man') and false
+  subdir('man')
+endif
  
 #subdir('bash_completion')
 #subdir('zsh_completion')

@@ -1,0 +1,24 @@
+contrib_scripts = [
+  'firejail-welcome.sh',
+  'fix_private-bin.py',
+  'fjclip.py',
+  'fjdisplay.py',
+  'fj-mkdeb.py',
+  'fjresize.py',
+  'gdb-firejail.sh',
+  'jail_prober.py',
+  'sort.py',
+  'syscalls.sh',
+  'update_deb.sh',
+]
+install_data(contrib_scripts,
+  install_dir: get_option('libdir') / meson.project_name(),
+  install_mode: 'rwxr-xr-x',
+)
+
+install_data('vim/ftdetect/firejail.vim',
+  install_dir: get_option('datadir') / 'vim' / 'vimfiles' / 'ftdetect',
+)
+install_data('vim/syntax/firejail.vim',
+  install_dir: get_option('datadir') / 'vim' / 'vimfiles' / 'syntax',
+)

@@ -38,6 +38,7 @@ on:
 permissions:  # added using https://github.com/step-security/secure-workflows
   contents: read
 
+# TODO: Add jobs for minimal (0.49.2) and maximal (latest release(-candidate)) meson version
 jobs:
   build-clang:
     runs-on: ubuntu-22.04
@@ -61,15 +62,26 @@ jobs:
         libapparmor-dev libselinux1-dev
     - name: print env
       run: ./ci/printenv.sh
-    - name: configure
-      run: >
-        ./configure CC=clang-14
-        --prefix=/usr --enable-fatal-warnings
-        --enable-apparmor --enable-selinux
-        || (cat config.log; exit 1)
-    - name: make
-      run: make
-    - name: make install
-      run: sudo make install
-    - name: print version
-      run: make print-version
+    - uses: actions/checkout@v2
+    - name: meson setup
+      run: CC=clang-11 meson setup _builddir --werror
+    - name: meson compile
+      run: meson compile -C _builddir
+  scan-build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: install clang-tools-11
+      run: sudo apt-get install clang-tools-11
+    - name: meson setup
+      run: CC=clang-11 meson setup _builddir --werror
+    - name: scan-build
+      run: ninja -C builddir scan-build
+  cppcheck:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: install cppcheck
+      run: sudo apt-get install cppcheck
+    - name: cppcheck
+      run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .

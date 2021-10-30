@@ -1,4 +1,4 @@
-.TH FIREJAIL-LOGIN 5 "MONTH YEAR" "VERSION" "login.users man page"
+.TH FIREJAIL-LOGIN 5 "@MONTH@ @YEAR@" "@VERSION@" "login.users man page"
 .SH NAME
 login.users \- Login file syntax for Firejail
 

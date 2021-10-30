@@ -1,4 +1,4 @@
-.TH FIRECFG 1 "MONTH YEAR" "VERSION" "firecfg man page"
+.TH FIRECFG 1 "@MONTH@ @YEAR@" "@VERSION@" "firecfg man page"
 .SH NAME
 Firecfg \- Desktop integration utility for Firejail software.
 .SH SYNOPSIS

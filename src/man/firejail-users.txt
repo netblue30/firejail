@@ -1,4 +1,4 @@
-.TH FIREJAIL-USERS 5 "MONTH YEAR" "VERSION" "firejail.users man page"
+.TH FIREJAIL-USERS 5 "@MONTH@ @YEAR@" "@VERSION@" "firejail.users man page"
 .SH NAME
 firejail.users \- Firejail user access database
 

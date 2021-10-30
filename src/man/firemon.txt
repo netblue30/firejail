@@ -1,4 +1,4 @@
-.TH FIREMON 1 "MONTH YEAR" "VERSION" "firemon man page"
+.TH FIREMON 1 "@MONTH@ @YEAR@" "@VERSION@" "firemon man page"
 .SH NAME
 Firemon \- Monitoring program for processes started in a Firejail sandbox.
 .SH SYNOPSIS

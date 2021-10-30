@@ -1,4 +1,4 @@
-.TH FIREJAIL 1 "MONTH YEAR" "VERSION" "firejail man page"
+.TH FIREJAIL 1 "@MONTH@ @YEAR@" "@VERSION@" "firejail man page"
 .SH NAME
 Firejail \- Linux namespaces sandbox program
 .SH SYNOPSIS

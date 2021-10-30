@@ -1,4 +1,4 @@
-.TH FIREJAIL-PROFILE 5 "MONTH YEAR" "VERSION" "firejail profiles man page"
+.TH FIREJAIL-PROFILE 5 "@MONTH@ @YEAR@" "@VERSION@" "firejail profiles man page"
 .SH NAME
 profile \- Security profile file syntax, and information about building new application profiles.
 

@@ -67,6 +67,8 @@ executable('firejail', firejail_sources,
   install: true,
   install_mode: [firejail_perms, 0, 0],
 
+  dependencies: [libapparmor, libselinux],
+
   c_args: [
     c_args, constants, facilities,
   ],

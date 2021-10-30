@@ -1,5 +1,4 @@
-install_data(
-  sources: ['firejail.config', 'ids.config', 'login.users'],
+install_data('firejail.config', 'ids.config', 'login.users',
   install_dir: sysconfdir / project_name,
 )
 
@@ -11,7 +10,7 @@ foreach dir : ['inc', 'net', 'profile-a-l', 'profile-m-z']
   )
 endforeach
 
-if get_option('busybox')
+if get_option('busybox-workaround')
   #TODO: meson.add_install_script()
 else
   install_data('inc/disable-common.inc',

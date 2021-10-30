@@ -18,22 +18,37 @@ project('firejail', 'c',
 c_compiler = meson.get_compiler('c')
 cc = find_program(c_compiler.cmd_array()[0])
 sh = find_program('sh')
+gawk = find_program('gawk')
 
 project_name = meson.project_name()
 prefix = get_option('prefix')
 bindir = get_option('bindir')
 datadir = get_option('datadir')
+bashcompletiondir = datadir / 'bash-completion' / 'completions'
 docdir = datadir / 'doc' / project_name
+zshcompletiondir = datadir / 'zsh' / 'site-functions'
 sysconfdir = get_option('sysconfdir')
 libdir = get_option('libdir')
 libdir_firejail = libdir / project_name
 firejail_perms = get_option('suid') ? 'rwsr-xr-x' : 'rwxr-xr-x'
 sbox_apps_non_dumpable_perms = 'rwx--x--x'
 
+noopdep = dependency('', required: false)
+libapparmor = get_option('apparmor') ? dependency('libapparmor') : noopdep
+libselinux = get_option('selinux') ? dependency('libselinux') : noopdep
+
 # # # # # # # # # #
 
 # TODO:
 # -Wl,-z,relro -Wl,-z,now -lpthread
+
+# TODO: lts
+# -DHAVE_LTS
+# suid = true
+# man = true
+# busybox-workaround = false
+# contrib = false
+# dbuxproxy = output = usertmpfs = firetunnel = private-home = chroot = globalcfg = userns = x11 = file-transfer = false
 
 
 # Enable static analysis if wanted and supported.
@@ -102,14 +117,14 @@ subdir('etc')
 subdir('src')
 subdir('test')
 
-install_data(
-  sources: ['COPYING', 'README', 'RELNOTES'],
+install_data('COPYING', 'README', 'RELNOTES',
   install_dir: docdir,
 )
 
 # # # # # # # # # #
 
-if meson.version().version_compare('>=0.53.0')
+show_summary = true
+if show_summary and meson.version().version_compare('>=0.53.0')
   summary('prefix', prefix, section: 'Directories')
   summary('bindir', bindir, section: 'Directories')
   summary('datadir', datadir, section: 'Directories')

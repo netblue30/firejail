@@ -37,13 +37,13 @@ subdir('libtrace')
 subdir('libtracelog')
 
 # MANPAGES
-if get_option('manpage') and false
+if get_option('manpage')
   subdir('man')
 endif
 
 # COMPLETIONDIRS
-#subdir('bash_completion')
-#subdir('zsh_completion')
+subdir('bash_completion')
+subdir('zsh_completion')
 
 # # # # # # # # # #
 

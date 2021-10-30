@@ -3,7 +3,6 @@ option('analyzer', type: 'boolean', value: false,
 # sanitizer: Use -Db_sanitize=<none|address|thread|undefined|memory|address,undefined>
 # gcov: TODO
 
-# TODO
 option('apparmor', type: 'boolean', value: false,
        description: 'AppArmor support')
 option('chroot', type: 'boolean', value: true,
@@ -24,7 +23,6 @@ option('output', type: 'boolean', value: true,
        description: '--output logging')
 option('private-home', type: 'boolean', value: true,
        description: 'private home feature')
-# TODO
 option('selinux', type: 'boolean', value: false,
        description: 'SELinux labeling support')
 option('suid', type: 'boolean', value: true,

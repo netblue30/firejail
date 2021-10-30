@@ -11,8 +11,8 @@ executable('firecfg', firecfg_sources,
   install: true,                             
 
   c_args: [
-    c_args_constants    
+    c_args, constants, facilities
   ],
 )
 
-install_data('firecfg.config', install_dir: get_option('libdir') / meson.project_name())
+install_data('firecfg.config', install_dir: libdir_firejail)

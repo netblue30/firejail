@@ -60,17 +60,11 @@ firejail_sources = [
   '../lib/syscall.c',    
 ]
 
-if get_option('suid')
-  firejail_perms = 'rwsr-xr-x'
-else
-  firejail_perms = 'rwxr-xr-x'
-endif
-
 executable('firejail', firejail_sources,
   install: true,
   install_mode: [firejail_perms, 0, 0],
 
   c_args: [
-    c_args_constants    
+    c_args, constants, facilities,
   ],
 )

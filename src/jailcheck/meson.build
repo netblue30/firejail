@@ -17,6 +17,6 @@ executable('jailcheck', jailcheck_sources,
   install: true,
   
   c_args: [  
-    c_args_constants    
+    c_args, constants, facilities,
   ],
 ) 

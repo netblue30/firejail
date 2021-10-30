@@ -1,5 +1,8 @@
 project('firejail', 'c',
   license: 'GPL-2.0-or-later',
+  default_options: [
+    'b_pie=true',
+  ],
   # https://packages.debian.org/oldstable/meson
   meson_version: '>=0.49.2',
   version: '0.9.67',
@@ -7,51 +10,80 @@ project('firejail', 'c',
 
 # # # # # # # # # #
 
-# TODO:
-# -mindirect-branch=thunk
-# -mretpoline
-# -fstack-clash-protection
-# -fstack-protector-strong
-# -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIE -Wformat -Wformat-security
-# -pie -fPIE -Wl,-z,relro -Wl,-z,now -lpthread
+c_compiler = meson.get_compiler('c')
+cc = find_program(c_compiler.cmd_array()[0])
+sh = find_program('sh')
 
-cc = meson.get_compiler('c')
-if get_option('analyzer') and cc.get_id() == 'gcc' and cc.version().version_compare('>=10')
+project_name = meson.project_name()
+prefix = get_option('prefix')
+bindir = get_option('bindir')
+datadir = get_option('datadir')
+docdir = datadir / 'doc' / project_name
+sysconfdir = get_option('sysconfdir')
+libdir = get_option('libdir')
+libdir_firejail = libdir / project_name
+firejail_perms = get_option('suid') ? 'rwsr-xr-x' : 'rwxr-xr-x'
+sbox_apps_non_dumpable_perms = 'rwx--x--x'
+
+# # # # # # # # # #
+
+# TODO:
+# -Wl,-z,relro -Wl,-z,now -lpthread
+
+
+# Enable static analysis if wanted and supported.
+if get_option('analyzer') and c_compiler.has_argument('-fanalyzer')
   add_project_arguments('-fanalyzer', language: 'c')
   add_project_arguments('-Wno-analyzer-malloc-leak', language: 'c')
 endif
 
-if get_option('sanitizer') != 'none'
-  # TODO: MSAN is not supported by gcc (i.e. requires clang)
-  # TODO: -fno-common? https://github.com/google/sanitizers/wiki/AddressSanitizer#faq
-  add_project_arguments('-fsanitize=' + get_option('sanitizer'), language: 'c')
-  add_project_arguments('-fno-omit-frame-pointer', language: 'c')
-  #add_project_link_arguments()
+# Default compiler flags
+c_args = c_compiler.get_supported_arguments([
+  '-mindirect-branch=thunk',
+  '-mretpoline',
+  '-fstack-protector-strong',
+  '-fstack-clash-protection',
+  '-D_FORTIFY_SOURCE=2',
+])
+if get_option('warning_level').to_int() > 0
+  c_args += ['-Wformat', '-Wformat-security']
 endif
 
-option_flag = {
-  'chroot': '-DHAVE_CHROOT',
-  'dbusproxy': '-DHAVE_DBUSPROXY',
-  'file-transfer': '-DHAVE_FILE_TRANSFER',
-  'firetunnel': '-DHAVE_FIRETUNNEL',
-  'force-nonewprivs': '-DHAVE_FORCE_NONEWPRIVS',
-  #'globalcfg': '-DHAVE_GLOBALCFG'
-  'network': '-DHAVE_NETWORK',
-  'output': '-DHAVE_OUTPUT',
-  'private-home': '-DHAVE_PRIVATE_HOME',
-  #not suid -DHAVE_NOSUID
-  'userns': '-DHAVE_USERNS',
-  'usertmpfs': '-DHAVE_USERTMPFS',
-  'x11': '-DHAVE_X11',
-}
 
-manflags = []
-foreach option, flag : option_flag
+facilities = []
+foreach option, flag : {
+    'chroot': '-DHAVE_CHROOT',
+    'dbusproxy': '-DHAVE_DBUSPROXY',
+    'file-transfer': '-DHAVE_FILE_TRANSFER',
+    'firetunnel': '-DHAVE_FIRETUNNEL',
+    'force-nonewprivs': '-DHAVE_FORCE_NONEWPRIVS',
+    'globalcfg': '-DHAVE_GLOBALCFG',
+    'network': '-DHAVE_NETWORK',
+    'output': '-DHAVE_OUTPUT',
+    'private-home': '-DHAVE_PRIVATE_HOME',
+    'suid': '-DHAVE_SUID',
+    'userns': '-DHAVE_USERNS',
+    'usertmpfs': '-DHAVE_USERTMPFS',
+    'x11': '-DHAVE_X11',
+  }
+
   if get_option(option)
-    manflags += flag
-  else
+    facilities += flag
   endif
-  #set_variable(name, value)
+endforeach
+
+
+constants = []
+foreach name, value : {
+  'PREFIX': prefix,
+  'BINDIR': prefix / bindir,
+  'SYSCONFDIR': prefix / sysconfdir / project_name,
+  'LIBDIR': prefix / libdir,
+  'VARDIR': '/var/lib' / project_name,
+  'VERSION': meson.project_version(),
+  }
+
+  constants += '-D@0@="@1@"'.format(name, value)
 endforeach
 
 # # # # # # # # # #
@@ -64,6 +96,9 @@ subdir('src')
 subdir('test')
 
 install_data(['COPYING', 'README', 'RELNOTES'],
-  # docdir ?
-  install_dir: get_option('datadir') / 'doc' / meson.project_name(),
+  install_dir: docdir,
 )
+
+# # # # # # # # # #
+
+# TODO: summary()

@@ -12,13 +12,13 @@ contrib_scripts = [
   'update_deb.sh',
 ]
 install_data(contrib_scripts,
-  install_dir: get_option('libdir') / meson.project_name(),
+  install_dir: libdir_firejail,
   install_mode: 'rwxr-xr-x',
 )
 
 install_data('vim/ftdetect/firejail.vim',
-  install_dir: get_option('datadir') / 'vim' / 'vimfiles' / 'ftdetect',
+  install_dir: datadir / 'vim' / 'vimfiles' / 'ftdetect',
 )
 install_data('vim/syntax/firejail.vim',
-  install_dir: get_option('datadir') / 'vim' / 'vimfiles' / 'syntax',
+  install_dir: datadir / 'vim' / 'vimfiles' / 'syntax',
 )

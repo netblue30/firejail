@@ -11,6 +11,6 @@ executable('fldd', fldd_source,
   install_mode: sbox_apps_non_dumpable_perms,
                             
   c_args: [                 
-    c_args_constants,       
+    c_args, constants, facilities,
   ],                        
 )

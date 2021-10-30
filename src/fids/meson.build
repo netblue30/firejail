@@ -10,6 +10,6 @@ executable('fids', fids_sources,
   install_dir: libdir_firejail,
 
   c_args: [
-    c_args_constants,
+    c_args, constants, facilities,
   ],
 )

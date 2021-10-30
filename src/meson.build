@@ -1,28 +1,13 @@
-PREFIX = get_option('prefix')
-BINDIR = PREFIX / get_option('bindir')
-SYSCONFDIR = PREFIX / get_option('sysconfdir')
-LIBDIR = PREFIX / get_option('libdir')
-
-constants = {
-  'PREFIX': PREFIX,
-  'BINDIR': BINDIR,
-  # WTF
-  'SYSCONFDIR': SYSCONFDIR / meson.project_name(),
-  'LIBDIR': LIBDIR,
-
-  'VERSION': meson.project_version(),
-  'VARDIR': '/var/lib/firejail',
-}
-
-c_args_constants = []
-foreach name, value : constants
-  c_args_constants += '-D@0@="@1@"'.format(name, value)
-endforeach
+# libtrace/libtracelog do not compile with shared_library(), instead we
+# directly call the compiler. Therefore we need additional flags which
+# are set otherwise by meson.
+c_args_libtrace = ['-Wall', '-O2', '-shared', '-fPIC', '-Wl,-z,relro']
+#c_args_libtrace += ['-O' + get_option('optimization')]
+if get_option('werror')
+  c_args_libtrace += ['-Werror']
+endif
 
 # # # # # # # # # #
-
-libdir_firejail = get_option('libdir') / meson.project_name()
-sbox_apps_non_dumpable_perms = 'rwx--x--x'
 
 # APPS
 subdir('firecfg')
@@ -48,11 +33,11 @@ subdir('fshaper')
 
 # MYLIBS
 subdir('libpostexecseccomp')
-#subdir('libtrace')
-#subdir('libtracelog')
+subdir('libtrace')
+subdir('libtracelog')
 
 # MANPAGES
-if get_option('man') and false
+if get_option('manpage') and false
   subdir('man')
 endif
 

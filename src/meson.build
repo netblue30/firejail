@@ -47,53 +47,17 @@ endif
 
 # # # # # # # # # #
 
-# TODO: fsec-optimize OUTPUT (add_install_script ?)
-custom_target('seccomp',
+custom_target('seccomp filters',
   build_by_default: true,
-  command: [fseccomp, 'default', '@OUTPUT@'],
+  command: ['build-make-compile-seccomp-filters.sh', fseccomp, fsec_optimize, '@OUTDIR@'],
   install: true,
   install_dir: libdir_firejail,
-  output: 'seccomp',
-)
-
-# TODO: fsec-optimize OUTPUT
-custom_target('seccomp.debug',
-  build_by_default: true,
-  command: [fseccomp, 'default', '@OUTPUT@', 'allow-debuggers'],
-  install: true,
-  install_dir: libdir_firejail,
-  output: 'seccomp.debug',
-)
-
-# TODO: fsec-optimize OUTPUT
-custom_target('seccomp.32',
-  build_by_default: true,
-  command: [fseccomp, 'secondary', '32', '@OUTPUT@'],
-  install: true,
-  install_dir: libdir_firejail,
-  output: 'seccomp.32',
-)
-
-custom_target('seccomp.block_secondary',
-  build_by_default: true,
-  command: [fseccomp, 'secondary', 'block', '@OUTPUT@'],
-  install: true,
-  install_dir: libdir_firejail,
-  output: 'seccomp.block_secondary',
-)
-
-custom_target('seccomp.mdwx',
-  build_by_default: true,
-  command: [fseccomp, 'memory-deny-write-execute', '@OUTPUT@'],
-  install: true,
-  install_dir: libdir_firejail,
-  output: 'seccomp.mdwx',
-)
-
-custom_target('seccomp.mdwx.32',
-  build_by_default: true,
-  command: [fseccomp, 'memory-deny-write-execute.32', '@OUTPUT@'],
-  install: true,
-  install_dir: libdir_firejail,
-  output: 'seccomp.mdwx.32',
+  output: [
+    'seccomp',
+    'seccomp.debug',
+    'seccomp.32',
+    'seccomp.block_secondary',
+    'seccomp.mdwx',
+    'seccomp.mdwx.32',
+  ],
 )

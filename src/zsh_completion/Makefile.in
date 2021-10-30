@@ -5,7 +5,7 @@ include ../common.mk
 
 _firejail: _firejail.in
 	gawk -f ../man/preproc.awk -- $(MANFLAGS) < $< > $@.tmp
-	sed "s|_SYSCONFDIR_|$(sysconfdir)|" < $@.tmp > $@
+	sed "s|@SYSCONFDIR@|$(sysconfdir)|" < $@.tmp > $@
 	rm $@.tmp
 
 .PHONY: clean

@@ -1,11 +1,11 @@
 fseccomp_sources = [
   'main.c',
   'protocol.c',
-  'seccomp.c',  
+  'seccomp.c',
   'seccomp_file.c',
   'seccomp_secondary.c',
-                          
-  '../lib/common.c',       
+
+  '../lib/common.c',
   '../lib/errno.c',
   '../lib/syscall.c',
 ]

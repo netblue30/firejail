@@ -48,8 +48,8 @@ firejail_sources = [
   'run_files.c',
   'run_symlink.c',
   'sandbox.c',
-  'sbox.c',  
-  'seccomp.c', 
+  'sbox.c',
+  'seccomp.c',
   'selinux.c',
   'shutdown.c',
   'usage.c',
@@ -60,7 +60,7 @@ firejail_sources = [
   '../lib/errno.c',
   '../lib/firejail_user.c',
   '../lib/ldd_utils.c',
-  '../lib/syscall.c',    
+  '../lib/syscall.c',
 ]
 
 executable('firejail', firejail_sources,

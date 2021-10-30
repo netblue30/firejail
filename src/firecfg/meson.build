@@ -5,10 +5,10 @@ firecfg_sources = [
   'util.c',
 
   '../lib/firejail_user.c',
-] 
+]
 
-executable('firecfg', firecfg_sources,           
-  install: true,                             
+executable('firecfg', firecfg_sources,
+  install: true,
 
   c_args: [
     c_args, constants, facilities

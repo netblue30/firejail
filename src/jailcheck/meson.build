@@ -11,12 +11,12 @@ jailcheck_sources = [
 
   '../lib/common.c',
   '../lib/pid.c',
-] 
+]
 
 executable('jailcheck', jailcheck_sources,
   install: true,
-  
-  c_args: [  
+
+  c_args: [
     c_args, constants, facilities,
   ],
-) 
+)

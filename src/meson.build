@@ -27,7 +27,7 @@ subdir('fldd')
 subdir('fnet')
 subdir('fnetfilter')
 subdir('fseccomp')
-subdir('fsec-optimize')   
+subdir('fsec-optimize')
 subdir('fsec-print')
 subdir('fshaper')
 

@@ -15,7 +15,7 @@ _profiles() {
     fi
 }
 _all_profiles() {
-    local sys_profiles=$(_profiles _SYSCONFDIR_/firejail)
+    local sys_profiles=$(_profiles @SYSCONFDIR@/firejail)
     local user_profiles=$(_profiles $HOME/.config/firejail)
     COMPREPLY=($(compgen -W "${sys_profiles} ${user_profiles}" -- "$cur"))
 }

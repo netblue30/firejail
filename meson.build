@@ -1,6 +1,11 @@
 project('firejail', 'c',
   license: 'GPL-2.0-or-later',
   default_options: [
+    # -D_FORTIFY_SOURCE=2 requires optimization
+    # TODO: Decide between buildtype=debugoptimized,
+    # buildtype=release and optimization=g|1|2
+    'buildtype=debugoptimized',
+    # TODO: 'strip=true',
     'b_pie=true',
   ],
   # https://packages.debian.org/oldstable/meson
@@ -52,6 +57,7 @@ endif
 
 facilities = []
 foreach option, flag : {
+    'apparmor': '-DHAVE_APPARMOR',
     'chroot': '-DHAVE_CHROOT',
     'dbusproxy': '-DHAVE_DBUSPROXY',
     'file-transfer': '-DHAVE_FILE_TRANSFER',
@@ -61,6 +67,7 @@ foreach option, flag : {
     'network': '-DHAVE_NETWORK',
     'output': '-DHAVE_OUTPUT',
     'private-home': '-DHAVE_PRIVATE_HOME',
+    'selinux': '-DHAVE_SELINUX',
     'suid': '-DHAVE_SUID',
     'userns': '-DHAVE_USERNS',
     'usertmpfs': '-DHAVE_USERTMPFS',
@@ -95,10 +102,41 @@ subdir('etc')
 subdir('src')
 subdir('test')
 
-install_data(['COPYING', 'README', 'RELNOTES'],
+install_data(
+  sources: ['COPYING', 'README', 'RELNOTES'],
   install_dir: docdir,
 )
 
 # # # # # # # # # #
 
-# TODO: summary()
+if meson.version().version_compare('>=0.53.0')
+  summary('prefix', prefix, section: 'Directories')
+  summary('bindir', bindir, section: 'Directories')
+  summary('datadir', datadir, section: 'Directories')
+  summary('docdir', docdir, section: 'Directories')
+  summary('sysconfdir', sysconfdir, section: 'Directories')
+  summary('libdir', libdir, section: 'Directories')
+  summary('libdir_firejail', libdir_firejail, section: 'Directories')
+
+  summary('apparmor', get_option('apparmor'), section: 'Facilities')
+  summary('chroot', get_option('chroot'), section: 'Facilities')
+  summary('dbusproxy', get_option('dbusproxy'), section: 'Facilities')
+  summary('file-transfer', get_option('file-transfer'), section: 'Facilities')
+  summary('firetunnel', get_option('firetunnel'), section: 'Facilities')
+  summary('force-nonewprivs', get_option('force-nonewprivs'), section: 'Facilities')
+  summary('globalcfg', get_option('globalcfg'), section: 'Facilities')
+  summary('network', get_option('network'), section: 'Facilities')
+  summary('output', get_option('output'), section: 'Facilities')
+  summary('private-home', get_option('private-home'), section: 'Facilities')
+  summary('selinux', get_option('selinux'), section: 'Facilities')
+  summary('suid', get_option('suid'), section: 'Facilities')
+  summary('userns', get_option('userns'), section: 'Facilities')
+  summary('usertmpfs', get_option('usertmpfs'), section: 'Facilities')
+  summary('x11', get_option('x11'), section: 'Facilities')
+
+  summary('lts', get_option('lts'), section: 'LTS')
+
+  summary('busybox-workaround', get_option('busybox-workaround'), section: 'Misc')
+  summary('contrib', get_option('contrib'), section: 'Misc')
+  summary('manpage', get_option('manpage'), section: 'Misc')
+endif

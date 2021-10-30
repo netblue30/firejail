@@ -4,24 +4,8 @@ option('analyzer', type: 'boolean', value: false,
 # gcov: TODO
 
 # TODO
-option('busybox', type: 'boolean', value: false,
-       description: 'busybox workaround')
-option('contrib', type: 'boolean', value: true,
-       description: 'Install contrib files')
-option('manpage', type: 'boolean', value: true,
-       description: 'Manpages')
-option('suid', type: 'boolean', value: true,
-       description: 'Install firejail as SUID executable')
-
-
-# TODO
 option('apparmor', type: 'boolean', value: false,
        description: 'AppArmor support')
-# TODO
-option('selinux', type: 'boolean', value: false,
-       description: 'SELinux labeling support')
-
-
 option('chroot', type: 'boolean', value: true,
        description: 'chroot')
 option('dbusproxy', type: 'boolean', value: true,
@@ -40,6 +24,11 @@ option('output', type: 'boolean', value: true,
        description: '--output logging')
 option('private-home', type: 'boolean', value: true,
        description: 'private home feature')
+# TODO
+option('selinux', type: 'boolean', value: false,
+       description: 'SELinux labeling support')
+option('suid', type: 'boolean', value: true,
+       description: 'Install firejail as SUID executable')
 option('userns', type: 'boolean', value: true,
        description: 'user namespace')
 option('usertmpfs', type: 'boolean', value: true,
@@ -50,3 +39,11 @@ option('x11', type: 'boolean', value: true,
 # TODO
 option('lts', type: 'boolean', value: false,
        description: 'LTS')
+
+option('busybox-workaround', type: 'boolean', value: false,
+       description: 'busybox workaround')
+option('contrib', type: 'boolean', value: true,
+       description: 'Install contrib files')
+option('manpage', type: 'boolean', value: true,
+       description: 'Manpages')
+

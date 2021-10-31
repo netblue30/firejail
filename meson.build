@@ -2,10 +2,8 @@ project('firejail', 'c',
   license: 'GPL-2.0-or-later',
   default_options: [
     # -D_FORTIFY_SOURCE=2 requires optimization
-    # TODO: Decide between buildtype=debugoptimized,
-    # buildtype=release and optimization=g|1|2
     'buildtype=debugoptimized',
-    # TODO: 'strip=true',
+    'strip=true',
     'b_pie=true',
   ],
   # https://packages.debian.org/oldstable/meson
@@ -39,16 +37,11 @@ libselinux = get_option('selinux') ? dependency('libselinux') : noopdep
 
 # # # # # # # # # #
 
-# TODO:
-# -Wl,-z,relro -Wl,-z,now -lpthread
-
-# TODO: lts
-# -DHAVE_LTS
-# suid = true
-# man = true
-# busybox-workaround = false
-# contrib = false
-# dbuxproxy = output = usertmpfs = firetunnel = private-home = chroot = globalcfg = userns = x11 = file-transfer = false
+if get_option('lts')
+  foreach option : ['chroot', 'dbuxproxy', 'file-transfer', 'firetunnel', 'globalcfg',
+                    'output', 'private-home', 'userns', 'usertmpfs', 'x11']
+  assert(get_option(option) == false, 'get_option(\'@0@\') == false'.foramt(option))
+endif
 
 
 # Enable static analysis if wanted and supported.
@@ -60,10 +53,6 @@ endif
 c_args = []
 if get_option('buildtype') != 'plain'
   c_args += c_compiler.get_supported_arguments([
-    # Breaks CI with 'error: ‘-mindirect-branch’ and ‘-fcf-protection’ are not compatible'. TODO WHY?!
-    # How set -fcf-protection? This does work localy for me even with meson 0.49.2
-    # (Fedora 34 / gcc 11.2.1 20210728 (Red Hat 11.2.1-1))
-    #'-mindirect-branch=thunk',
     '-mretpoline',
     '-fstack-protector-strong',
     '-fstack-clash-protection',
@@ -84,6 +73,7 @@ foreach option, flag : {
     'firetunnel': '-DHAVE_FIRETUNNEL',
     'force-nonewprivs': '-DHAVE_FORCE_NONEWPRIVS',
     'globalcfg': '-DHAVE_GLOBALCFG',
+    'lts': '-DHAVE_LTS',
     'network': '-DHAVE_NETWORK',
     'output': '-DHAVE_OUTPUT',
     'private-home': '-DHAVE_PRIVATE_HOME',

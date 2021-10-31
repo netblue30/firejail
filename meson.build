@@ -38,9 +38,11 @@ libselinux = get_option('selinux') ? dependency('libselinux') : noopdep
 # # # # # # # # # #
 
 if get_option('lts')
-  foreach option : ['chroot', 'dbuxproxy', 'file-transfer', 'firetunnel', 'globalcfg',
+  # meson _builddir_lts --prefix=/usr -Dlts=true -Dchroot=false -Ddbusproxy=false -Dfile-transfer=false -Dfiretunnel=false -Dglobalcfg=false -Doutput=false -Dprivate-home=false -Duserns=false -Dusertmpfs=false -Dx11=false
+  foreach option : ['chroot', 'dbusproxy', 'file-transfer', 'firetunnel', 'globalcfg',
                     'output', 'private-home', 'userns', 'usertmpfs', 'x11']
-  assert(get_option(option) == false, 'get_option(\'@0@\') == false'.foramt(option))
+    assert(get_option(option) == false, 'get_option(\'@0@\') == false'.format(option))
+  endforeach
 endif
 
 

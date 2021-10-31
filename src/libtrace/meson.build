@@ -6,4 +6,3 @@ custom_target('libtrace.so',
   install_dir: libdir_firejail,
   output: 'libtrace.so',
 )
-

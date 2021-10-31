@@ -23,6 +23,8 @@ firemon_sources = [
 executable('firemon', firemon_sources,
   install: true,
 
+  dependencies: libapparmor,
+
   c_args: [
     c_args, constants, facilities,
   ],

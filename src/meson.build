@@ -2,10 +2,13 @@
 # directly call the compiler. Therefore we need additional flags which
 # are set otherwise by meson.
 c_args_libtrace = ['-Wall', '-O2', '-shared', '-fPIC', '-Wl,-z,relro']
-#c_args_libtrace += ['-O' + get_option('optimization')]
 if get_option('werror')
   c_args_libtrace += ['-Werror']
 endif
+
+preproc_awk_cmd = [
+  gawk, '-f', files('man/preproc.awk'),  '--', facilities, '@INPUT@',
+]
 
 # # # # # # # # # #
 

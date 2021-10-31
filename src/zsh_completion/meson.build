@@ -3,7 +3,7 @@ firejail_zsh_completion = configure_file(
   input: '_firejail.in',
   output: 'firejail.zsh_completion',
 )
-custom_target(manpage,
+custom_target('firejail.zsh_completion',
   build_by_default: true,
   capture: true,
   # BIG FAT FIXME: This will fail if -Dmanpage=false

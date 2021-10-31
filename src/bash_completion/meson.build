@@ -3,7 +3,7 @@ firejail_bash_completion = configure_file(
   input: 'firejail.bash_completion.in',
   output: '@BASENAME@',
 )
-custom_target(manpage,
+custom_target('firejail.bash_completion',
   build_by_default: true,
   capture: true,
   # BIG FAT FIXME: This will fail if -Dmanpage=false

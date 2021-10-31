@@ -82,7 +82,7 @@ jobs:
     - name: meson setup
       run: CC=gcc-11 meson setup _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
     - name: meson compile
-      run: meson compile -C _builddir
+      run: ninja -C _builddir
     - name: meson install
       run: sudo meson install -C _builddir
     # TODO: Why do we run this for profile changes?

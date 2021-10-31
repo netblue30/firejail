@@ -34,7 +34,6 @@ option('usertmpfs', type: 'boolean', value: true,
 option('x11', type: 'boolean', value: true,
        description: 'X11 sandboxing support')
 
-# TODO
 option('lts', type: 'boolean', value: false,
        description: 'LTS')
 

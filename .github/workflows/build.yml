@@ -77,6 +77,8 @@ jobs:
         gcc-12 libapparmor-dev libselinux1-dev expect xzdec
     - name: print env
       run: ./ci/printenv.sh
+    - name: Install meson
+      run: pip install meson
     - name: meson setup
       run: CC=gcc-11 meson setup _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
     - name: meson compile

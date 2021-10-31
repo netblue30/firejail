@@ -78,8 +78,7 @@ jobs:
     - name: print env
       run: ./ci/printenv.sh
     - name: meson setup
-      #TODO: --enable-analyzer --enable-apparmor --enable-selinux
-      run: CC=gcc-11 meson setup _builddir --werror --prefix=/usr
+      run: CC=gcc-11 meson setup _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
     - name: meson compile
       run: meson compile -C _builddir
     - name: meson install

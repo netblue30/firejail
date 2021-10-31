@@ -57,16 +57,21 @@ if get_option('analyzer') and c_compiler.has_argument('-fanalyzer')
   add_project_arguments('-Wno-analyzer-malloc-leak', language: 'c')
 endif
 
-# Default compiler flags
-c_args = c_compiler.get_supported_arguments([
-  '-mindirect-branch=thunk',
-  '-mretpoline',
-  '-fstack-protector-strong',
-  '-fstack-clash-protection',
-  '-D_FORTIFY_SOURCE=2',
-])
-if get_option('warning_level').to_int() > 0
-  c_args += ['-Wformat', '-Wformat-security']
+c_args = []
+if get_option('buildtype') != 'plain'
+  c_args += c_compiler.get_supported_arguments([
+    # Breaks CI with 'error: ‘-mindirect-branch’ and ‘-fcf-protection’ are not compatible'. TODO WHY?!
+    # How set -fcf-protection? This does work localy for me even with meson 0.49.2
+    # (Fedora 34 / gcc 11.2.1 20210728 (Red Hat 11.2.1-1))
+    #'-mindirect-branch=thunk',
+    '-mretpoline',
+    '-fstack-protector-strong',
+    '-fstack-clash-protection',
+    '-D_FORTIFY_SOURCE=2',
+  ])
+  if get_option('warning_level').to_int() > 0
+    c_args += ['-Wformat', '-Wformat-security']
+  endif
 endif
 
 

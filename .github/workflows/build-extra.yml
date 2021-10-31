@@ -50,7 +50,7 @@ jobs:
     - name: meson setup
       run: CC=clang-11 meson setup _builddir --werror
     - name: scan-build
-      run: ninja -C builddir scan-build
+      run: ninja -C _builddir scan-build
   cppcheck:
     runs-on: ubuntu-20.04
     steps:

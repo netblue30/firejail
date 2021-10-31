@@ -25,7 +25,7 @@ foreach manpage, section : manpages
     input: manpage + '.txt',
     output: '@PLAINNAME@',
   )
-  custom_target(manpage,
+  custom_target(manpage + '.' + section,
     build_by_default: true,
     capture: true,
     command: [gawk, '-f', preproc_awk,  '--', facilities, '@INPUT@'],

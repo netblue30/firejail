@@ -32,7 +32,7 @@ jobs:
     - name: meson compile
       run: ninja -C _builddir
     - name: meson install
-      run: sudo ninja -C _builddir install
+      run: sudo -E ninja -C _builddir install
     # TODO: Why do we run this for profile changes?
     # TODO: meson test
     #- name: meson test

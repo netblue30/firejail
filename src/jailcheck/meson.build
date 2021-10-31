@@ -16,6 +16,8 @@ jailcheck_sources = [
 executable('jailcheck', jailcheck_sources,
   install: true,
 
+  dependencies: libapparmor,
+
   c_args: [
     c_args, constants, facilities,
   ],

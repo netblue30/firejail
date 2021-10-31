@@ -47,9 +47,10 @@ subdir('zsh_completion')
 
 # # # # # # # # # #
 
+build_make_compile_seccmop_filters_sh = files('build-make-compile-seccomp-filters.sh')
 custom_target('seccomp filters',
   build_by_default: true,
-  command: ['build-make-compile-seccomp-filters.sh', fseccomp, fsec_optimize, '@OUTDIR@'],
+  command: [build_make_compile_seccmop_filters_sh, fseccomp, fsec_optimize, '@OUTDIR@'],
   install: true,
   install_dir: libdir_firejail,
   output: [

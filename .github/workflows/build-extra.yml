@@ -36,9 +36,9 @@ jobs:
     - name: Install meson
       run: pip install --pre meson
     - name: meson setup
-      run: CC=clang-11 meson setup _builddir --werror
+      run: CC=clang-11 meson _builddir --werror
     - name: meson compile
-      run: meson compile -C _builddir
+      run: ninja -C _builddir
   scan-build:
     runs-on: ubuntu-20.04
     steps:
@@ -48,7 +48,7 @@ jobs:
     - name: Install meson
       run: pip install --pre meson
     - name: meson setup
-      run: CC=clang-11 meson setup _builddir --werror
+      run: CC=clang-11 meson _builddir --werror
     - name: scan-build
       run: ninja -C _builddir scan-build
   cppcheck:

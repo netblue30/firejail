@@ -28,11 +28,11 @@ jobs:
     - name: Install meson
       run: pip install meson==0.49.2
     - name: meson setup
-      run: CC=gcc-11 meson setup _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
+      run: CC=gcc-11 meson _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
     - name: meson compile
       run: ninja -C _builddir
     - name: meson install
-      run: sudo -E "$(which meson)" install -C _builddir --no-rebuild
+      run: sudo ninja -C _builddir install
     # TODO: Why do we run this for profile changes?
     # TODO: meson test
     #- name: meson test

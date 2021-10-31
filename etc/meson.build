@@ -11,7 +11,25 @@ foreach dir : ['inc', 'net', 'profile-a-l', 'profile-m-z']
 endforeach
 
 if get_option('busybox-workaround')
-  #TODO: meson.add_install_script()
+  meson.add_install_script(sh.path(), '-e', '-c',
+'''
+disable_common_inc="$MESON_INSTALL_DESTDIR_PREFIX/$1/firejail/disable-common.inc"
+cat >"$disable_common_inc" <<\EOF
+# Workaround for systems where common UNIX utilities are symlinks to busybox.
+# If this is not your case you can remove -Dbusybox-workaround=true from
+# meson setup options, for added security.
+noblacklist ${PATH}/busybox
+noblacklist ${PATH}/crontab
+noblacklist ${PATH}/mount
+noblacklist ${PATH}/nc
+noblacklist ${PATH}/su
+noblacklist ${PATH}/sudo
+noblacklist ${PATH}/umount
+
+EOF
+cat >>"$disable_common_inc" <"$2"
+''', '--', sysconfdir, meson.current_source_dir() / 'inc/disable-common.inc',
+  )
 else
   install_data('inc/disable-common.inc',
     install_dir: sysconfdir / project_name,

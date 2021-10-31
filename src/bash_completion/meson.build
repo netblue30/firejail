@@ -6,8 +6,7 @@ firejail_bash_completion = configure_file(
 custom_target('firejail.bash_completion',
   build_by_default: true,
   capture: true,
-  # BIG FAT FIXME: This will fail if -Dmanpage=false
-  command: [gawk, '-f', preproc_awk,  '--', facilities, '@INPUT@'],
+  command: preproc_awk_cmd,
   input: firejail_bash_completion,
   install: true,
   install_dir: bashcompletiondir,

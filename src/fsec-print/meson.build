@@ -7,7 +7,7 @@ fsec_print_sources = [
   '../lib/syscall.c',
 ]
 
-executable('fsec_print', fsec_print_sources,
+executable('fsec-print', fsec_print_sources,
   install: true,
   install_dir: libdir_firejail,
   install_mode: sbox_apps_non_dumpable_perms,

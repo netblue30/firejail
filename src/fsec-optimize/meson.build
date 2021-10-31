@@ -1,4 +1,4 @@
-fsec_optimize_seources = [
+fsec_optimize_sources = [
   'main.c',
   'optimizer.c',
 
@@ -6,7 +6,7 @@ fsec_optimize_seources = [
   '../lib/errno.c',
 ]
 
-fsec_optimize = executable('fsec-optimize', fsec_optimize_seources,
+fsec_optimize = executable('fsec-optimize', fsec_optimize_sources,
   install: true,
   install_dir: libdir_firejail,
   install_mode: sbox_apps_non_dumpable_perms,

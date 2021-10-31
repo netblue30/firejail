@@ -1,8 +1,8 @@
 preproc_awk = files('preproc.awk')
 
 # The kwarg env: of run_command is only supported by meson>=0.50
-month = run_command(sh, '-c', 'LC_ALL=C date -u +%b', check: true).stdout()
-year = run_command(sh, '-c', 'LC_ALL=C date -u +%Y', check: true).stdout()
+month = run_command(sh, '-c', 'LC_ALL=C date -u +%b', check: true).stdout().strip()
+year = run_command(sh, '-c', 'LC_ALL=C date -u +%Y', check: true).stdout().strip()
 
 manconf = configuration_data()
 manconf.set('VERSION', meson.project_version())

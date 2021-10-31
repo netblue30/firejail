@@ -57,7 +57,6 @@ if get_option('analyzer') and c_compiler.has_argument('-fanalyzer')
   add_project_arguments('-Wno-analyzer-malloc-leak', language: 'c')
 endif
 
-# Default compiler flags
 c_args = c_compiler.get_supported_arguments([
   '-mindirect-branch=thunk',
   '-mretpoline',

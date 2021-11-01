@@ -3757,10 +3757,9 @@ if test "${enable_suid+set}" = set; then :
   enableval=$enable_suid;
 fi
 
-if test "x$enable_suid" = "xno"; then :
-  HAVE_SUID="no"
-else
-  HAVE_SUID="yes"
+if test "x$enable_suid" != "xno"; then :
+
+	HAVE_SUID="-DHAVE_SUID"
 
 fi
 
@@ -3854,7 +3853,7 @@ if test "x$enable_lts" = "xyes"; then :
 	HAVE_USERNS=""
 	HAVE_X11=""
 	HAVE_FILE_TRANSFER=""
-	HAVE_SUID="yes"
+	HAVE_SUID="-DHAVE_SUID"
 	BUSYBOX_WORKAROUND="no"
 	HAVE_CONTRIB_INSTALL="no",
 

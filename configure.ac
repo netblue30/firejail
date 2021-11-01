@@ -191,10 +191,9 @@ HAVE_SUID=""
 AC_SUBST([HAVE_SUID])
 AC_ARG_ENABLE([suid],
     [AS_HELP_STRING([--disable-suid], [install as a non-SUID executable])])
-AS_IF([test "x$enable_suid" = "xno"],
-	[HAVE_SUID="no"],
-	[HAVE_SUID="yes"]
-)
+AS_IF([test "x$enable_suid" != "xno"], [
+	HAVE_SUID="-DHAVE_SUID"
+])
 
 HAVE_FATAL_WARNINGS=""
 AC_SUBST([HAVE_FATAL_WARNINGS])
@@ -257,7 +256,7 @@ AS_IF([test "x$enable_lts" = "xyes"], [
 	HAVE_USERNS=""
 	HAVE_X11=""
 	HAVE_FILE_TRANSFER=""
-	HAVE_SUID="yes"
+	HAVE_SUID="-DHAVE_SUID"
 	BUSYBOX_WORKAROUND="no"
 	HAVE_CONTRIB_INSTALL="no",
 ])

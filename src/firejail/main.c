@@ -871,7 +871,7 @@ char *guess_shell(void) {
 	if (shell) {
 		invalid_filename(shell, 0); // no globbing
 		if (access(shell, X_OK) == 0 && !is_dir(shell) && strstr(shell, "..") == NULL &&
-		    strcmp(shell, PATH_FIREJAIL) != 0)
+		    strcmp(gnu_basename(shell), "firejail") != 0)
 			goto found;
 	}
 

@@ -120,6 +120,17 @@ install_data('COPYING', 'README', 'RELNOTES',
 
 # # # # # # # # # #
 
+cppcheck = find_program('cppcheck', required: false)
+if cppcheck.found()
+  run_target('cppcheck',
+    command: [
+      cppcheck, '--force', '--error-exitcode=1', '--enable=warning,performance', meson.source_root(),
+    ],
+  )
+endif
+
+# # # # # # # # # #
+
 show_summary = true
 if show_summary and meson.version().version_compare('>=0.53.0')
   summary('prefix', prefix, section: 'Directories')

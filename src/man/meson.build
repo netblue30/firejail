@@ -1,5 +1,6 @@
 # The kwarg env: of run_command is only supported by meson>=0.50
-date = run_command(sh, '-c', 'LC_ALL=C date -u +%Y-%b',
+date = run_command(sh, '-c',
+  'LC_ALL=C date --utc --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y-%b',
   check: true,
 ).stdout().strip().split('-')
 

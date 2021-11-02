@@ -43,4 +43,3 @@ option('contrib', type: 'boolean', value: true,
        description: 'Install contrib files')
 option('manpage', type: 'boolean', value: true,
        description: 'Manpages')
-

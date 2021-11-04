@@ -458,7 +458,7 @@ blacklist /sbin
 blacklist /usr/local/sbin
 blacklist /usr/sbin
 
-# system management
+# system management and various SUID executables
 blacklist ${PATH}/at
 blacklist ${PATH}/busybox
 blacklist ${PATH}/chage
@@ -493,6 +493,12 @@ blacklist ${PATH}/umount
 blacklist ${PATH}/unix_chkpwd
 blacklist ${PATH}/xev
 blacklist ${PATH}/xinput
+blacklist /usr/lib/openssh/ssh-keysign
+blacklist ${PATH}/passwd
+blacklist /usr/lib/xorg/Xorg.wrap
+blacklist /usr/lib/policykit-1/polkit-agent-helper-1
+blacklist /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+blacklist /usr/lib/eject/dmcrypt-get-device
 
 # other SUID binaries
 blacklist /usr/lib/virtualbox

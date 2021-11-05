@@ -4,7 +4,7 @@
 # License GPL v2
 
 gcov_init() {
-	USER=`whoami`
+	USER="$(whoami)"
 	firejail --help > /dev/null
 	firemon --help > /dev/null
 	/usr/lib/firejail/fnet --help > /dev/null
@@ -20,7 +20,7 @@ gcov_init() {
 	/usr/lib/firejail/faudit --help > /dev/null
 	/usr/lib/firejail/fbuilder --help > /dev/null
 
-	sudo chown $USER:$USER `find .`
+	find . -exec sudo chown "$USER:$USER" '{}' +
 }
 
 generate() {
@@ -28,7 +28,7 @@ generate() {
 	lcov --add-tracefile gcov-file-old --add-tracefile gcov-file-new --output-file gcov-file
 	rm -fr gcov-dir
 	genhtml -q gcov-file --output-directory gcov-dir
-	sudo rm `find . -name *.gcda`
+	find . -name '*.gcda' -exec sudo rm '{}' +
 	cp gcov-file gcov-file-old
 	gcov_init
 }

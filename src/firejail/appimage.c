@@ -45,10 +45,10 @@ int appimage_find_profile(const char *archive) {
 	assert(archive);
 	assert(strlen(archive));
 
-	// try to match the name of the archive with the list of programs in /usr/lib/firejail/firecfg.config
-	FILE *fp = fopen(LIBDIR "/firejail/firecfg.config", "r");
+	// try to match the name of the archive with the list of programs in /etc/firejail/firecfg.config
+	FILE *fp = fopen(SYSCONFDIR "/firecfg.config", "r");
 	if (!fp) {
-		fprintf(stderr, "Error: cannot find %s, firejail is not correctly installed\n", LIBDIR "/firejail/firecfg.config");
+		fprintf(stderr, "Error: cannot find %s, firejail is not correctly installed\n", SYSCONFDIR "/firecfg.config");
 		exit(1);
 	}
 	char buf[MAXBUF];

@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.cache/vmware
 noblacklist ${HOME}/.vmware
+noblacklist /usr/lib/vmware
 
 include disable-common.inc
 include disable-devel.inc

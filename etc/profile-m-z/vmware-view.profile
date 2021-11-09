@@ -7,6 +7,7 @@ include vmware-view.local
 include globals.local
 
 noblacklist ${HOME}/.vmware
+noblacklist /usr/lib/vmware
 
 noblacklist /sbin
 noblacklist /usr/sbin

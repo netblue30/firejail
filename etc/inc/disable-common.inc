@@ -503,6 +503,14 @@ blacklist /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 blacklist /usr/lib/eject/dmcrypt-get-device
 blacklist /usr/lib/chromium/chrome-sandbox
 blacklist /usr/lib/vmware
+blacklist ${PATH}/suexec
+blacklist /usr/lib/squid/basic_pam_auth
+blacklist ${PATH}/sloc
+blacklist ${PATH}/physloc
+blacklist ${PATH}/schroot
+blacklist ${PATH}/wshowkeys
+blacklist ${PATH}/pmount
+blacklist ${PATH}/pumount
 
 # other SUID binaries
 blacklist /usr/lib/virtualbox

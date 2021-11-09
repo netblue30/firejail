@@ -501,6 +501,7 @@ blacklist /usr/lib/xorg/Xorg.wrap
 blacklist /usr/lib/policykit-1/polkit-agent-helper-1
 blacklist /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 blacklist /usr/lib/eject/dmcrypt-get-device
+blacklist /usr/lib/chromium/chrome-sandbox
 
 # other SUID binaries
 blacklist /usr/lib/virtualbox

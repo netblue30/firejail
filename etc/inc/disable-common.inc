@@ -493,6 +493,8 @@ blacklist ${PATH}/umount
 blacklist ${PATH}/unix_chkpwd
 blacklist ${PATH}/xev
 blacklist ${PATH}/xinput
+# from 0.9.67
+blacklist ${PATH}/ssh
 blacklist /usr/lib/openssh/ssh-keysign
 blacklist ${PATH}/passwd
 blacklist /usr/lib/xorg/Xorg.wrap
@@ -593,3 +595,4 @@ blacklist ${RUNUSER}/*.lock
 blacklist ${RUNUSER}/inaccessible
 blacklist ${RUNUSER}/pk-debconf-socket
 blacklist ${RUNUSER}/update-notifier.pid
+

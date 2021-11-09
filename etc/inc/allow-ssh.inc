@@ -6,3 +6,4 @@ noblacklist ${HOME}/.ssh
 noblacklist /etc/ssh
 noblacklist /etc/ssh/ssh_config
 noblacklist /tmp/ssh-*
+noblacklist ${PATH}/ssh

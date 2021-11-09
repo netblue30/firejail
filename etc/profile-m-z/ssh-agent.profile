@@ -11,7 +11,6 @@ include allow-ssh.inc
 
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
-noblacklist /usr/lib/openssh/ssh-keysign
 
 include disable-common.inc
 include disable-programs.inc

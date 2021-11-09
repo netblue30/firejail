@@ -7,3 +7,4 @@ noblacklist /etc/ssh
 noblacklist /etc/ssh/ssh_config
 noblacklist /tmp/ssh-*
 noblacklist ${PATH}/ssh
+noblacklist /usr/lib/openssh/ssh-keysign

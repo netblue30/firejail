@@ -5,6 +5,9 @@ include allow-ssh.local
 noblacklist ${HOME}/.ssh
 noblacklist /etc/ssh
 noblacklist /etc/ssh/ssh_config
-noblacklist /tmp/ssh-*
 noblacklist ${PATH}/ssh
-noblacklist /usr/lib/openssh/ssh-keysign
+noblacklist /tmp/ssh-*
+# Debian/Ubuntu and derivatives
+noblacklist /usr/lib/openssh
+# Arch Linux and derivatives
+noblacklist /usr/lib/ssh

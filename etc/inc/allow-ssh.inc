@@ -7,7 +7,9 @@ noblacklist /etc/ssh
 noblacklist /etc/ssh/ssh_config
 noblacklist ${PATH}/ssh
 noblacklist /tmp/ssh-*
-# Debian/Ubuntu and derivatives
-noblacklist /usr/lib/openssh
 # Arch Linux and derivatives
 noblacklist /usr/lib/ssh
+# Debian/Ubuntu and derivatives
+noblacklist /usr/lib/openssh
+# Fedora and derivatives
+noblacklist /usr/libexec/openssh

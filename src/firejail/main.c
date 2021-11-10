@@ -935,6 +935,8 @@ static void run_builder(int argc, char **argv) {
 	if (setresuid(-1, getuid(), getuid()) != 0)
 		errExit("setresuid");
 
+	if (env_get("LD_PRELOAD") != NULL)
+		fprintf(stderr, "run_builder: LD_PRELOAD is: '%s'\n", env_get("LD_PRELOAD"));
 	assert(env_get("LD_PRELOAD") == NULL);
 	assert(getenv("LD_PRELOAD") == NULL);
 	umask(orig_umask);
@@ -1003,18 +1005,18 @@ int main(int argc, char **argv, char **envp) {
 		fprintf(stderr, "Error: argv is invalid\n");
 		exit(1);
 	} else if (argc >= MAX_ARGS) {
-		fprintf(stderr, "Error: too many arguments\n");
+		fprintf(stderr, "Error: too many arguments: argc (%d) >= MAX_ARGS (%d)\n", argc, MAX_ARGS);
 		exit(1);
 	}
 
 	// sanity check for arguments
 	for (i = 0; i < argc; i++) {
 		if (*argv[i] == 0) {
-			fprintf(stderr, "Error: too short arguments\n");
+			fprintf(stderr, "Error: too short arguments: argv[%d] is empty\n", i);
 			exit(1);
 		}
 		if (strlen(argv[i]) >= MAX_ARG_LEN) {
-			fprintf(stderr, "Error: too long arguments\n");
+			fprintf(stderr, "Error: too long arguments: argv[%d] len (%zu) >= MAX_ARG_LEN (%d)\n", i, strlen(argv[i]), MAX_ARG_LEN);
 			exit(1);
 		}
 	}
@@ -1025,7 +1027,7 @@ int main(int argc, char **argv, char **envp) {
 
 	// sanity check for environment variables
 	if (i >= MAX_ENVS) {
-		fprintf(stderr, "Error: too many environment variables\n");
+		fprintf(stderr, "Error: too many environment variables: >= MAX_ENVS (%d)\n", MAX_ENVS);
 		exit(1);
 	}
 

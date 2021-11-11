@@ -171,17 +171,17 @@ static void set_file(const char *name, const char *firejail_exec) {
 	free(fname);
 }
 
-// parse /usr/lib/firejail/firecfg.cfg file
+// parse /etc/firejail/firecfg.config file
 static void set_links_firecfg(void) {
 	char *cfgfile;
-	if (asprintf(&cfgfile, "%s/firejail/firecfg.config", LIBDIR) == -1)
+	if (asprintf(&cfgfile, "%s/firecfg.config", SYSCONFDIR) == -1)
 		errExit("asprintf");
 
 	char *firejail_exec;
 	if (asprintf(&firejail_exec, "%s/bin/firejail", PREFIX) == -1)
 		errExit("asprintf");
 
-	// parse /usr/lib/firejail/firecfg.cfg file
+	// parse /etc/firejail/firecfg.config file
 	FILE *fp = fopen(cfgfile, "r");
 	if (!fp) {
 		perror("fopen");
@@ -440,7 +440,7 @@ int main(int argc, char **argv) {
 	// clear all symlinks
 	clean();
 
-	// set new symlinks based on /usr/lib/firejail/firecfg.cfg
+	// set new symlinks based on /etc/firejail/firecfg.config
 	set_links_firecfg();
 
 	if (getuid() == 0) {

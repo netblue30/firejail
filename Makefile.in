@@ -116,7 +116,7 @@ endif
 	install -m 0755 src/jailcheck/jailcheck $(DESTDIR)$(bindir)
 	# libraries and plugins
 	install -m 0755 -d $(DESTDIR)$(libdir)/firejail
-	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS) src/firecfg/firecfg.config
+	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS)
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS)
 	# plugins w/o read permission (non-dumpable)
 	install -m 0711 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
@@ -135,6 +135,7 @@ endif
 	install -m 0644 -t $(DESTDIR)$(DOCDIR) COPYING README RELNOTES etc/templates/*
 	# profiles and settings
 	install -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail
+	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config etc/ids.config
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 ifeq ($(BUSYBOX_WORKAROUND),yes)

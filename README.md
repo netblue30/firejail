@@ -150,7 +150,7 @@ PulseAudio changes.
 Start your programs the way you are used to: desktop manager menus, file manager, desktop launchers.
 The integration applies to any program supported by default by Firejail. There are about 250 default applications
 in current Firejail version, and the number goes up with every new release.
-We keep the application list in [/usr/lib/firejail/firecfg.config](https://github.com/netblue30/firejail/blob/master/src/firecfg/firecfg.config) file.
+We keep the application list in [/etc/firejail/firecfg.config](https://github.com/netblue30/firejail/blob/master/src/firecfg/firecfg.config) file.
 
 ## Security profiles
 

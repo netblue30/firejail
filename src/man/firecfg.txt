@@ -27,7 +27,7 @@ desktop managers are supported in this moment
 To set it up, run "sudo firecfg" after installing Firejail software.
 The same command should also be run after
 installing new programs. If the program is supported by Firejail, the symbolic link in /usr/local/bin
-will be created. For a full list of programs supported by default run "cat /usr/lib/firejail/firecfg.config".
+will be created. For a full list of programs supported by default run "cat /etc/firejail/firecfg.config".
 
 For user-driven manual integration, see \fBDESKTOP INTEGRATION\fR section in \fBman 1 firejail\fR.
 .SH DEFAULT ACTIONS

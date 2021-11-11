@@ -467,6 +467,8 @@ hhzek0014 (https://github.com/hhzek0014)
 	- updated bibletime.profile
 hlein (https://github.com/hlein)
 	- strip out \r's from jail prober
+	- make env/arg sanity check failure messages more useful
+	- relocate firecfg.config to /etc/firejail/
 Holger Heinz (https://github.com/hheinz)
 	- manpage work
 Haowei Yu (https://github.com/sfc-gh-hyu)

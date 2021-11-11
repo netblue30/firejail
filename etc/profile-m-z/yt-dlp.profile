@@ -12,7 +12,7 @@ noblacklist ${HOME}/.cache/yt-dlp
 noblacklist ${HOME}/.config/yt-dlp
 noblacklist ${HOME}/yt-dlp.conf
 
-private-bin yt-dlp
+private-bin ffprobe,yt-dlp
 private-etc alternatives,ld.so.cache,ld.so.preload,yt-dlp.conf
 
 # Redirect

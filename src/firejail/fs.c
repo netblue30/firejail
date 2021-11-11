@@ -94,22 +94,31 @@ static void disable_file(OPERATION op, const char *filename) {
 		return;
 	}
 
-	// if the file is not present, do nothing
 	assert(fname);
-	struct stat s;
-	if (stat(fname, &s) < 0) {
-		if (arg_debug)
-			printf("Warning (blacklisting): cannot access %s: %s\n", fname, strerror(errno));
-		free(fname);
-		return;
-	}
-
 	// check for firejail executable
 	// we might have a file found in ${PATH} pointing to /usr/bin/firejail
 	// blacklisting it here will end up breaking situations like user clicks on a link in Thunderbird
 	//     and expects Firefox to open in the same sandbox
 	if (strcmp(BINDIR "/firejail", fname) == 0) {
 		free(fname);
+		return;
+	}
+
+	// if the file is not present, do nothing
+	int fd = open(fname, O_PATH|O_CLOEXEC);
+	if (fd < 0) {
+		if (arg_debug)
+			printf("Warning (blacklisting): cannot open %s: %s\n", fname, strerror(errno));
+		free(fname);
+		return;
+	}
+
+	struct stat s;
+	if (fstat(fd, &s) < 0) {
+		if (arg_debug)
+			printf("Warning (blacklisting): cannot stat %s: %s\n", fname, strerror(errno));
+		free(fname);
+		close(fd);
 		return;
 	}
 
@@ -136,13 +145,6 @@ static void disable_file(OPERATION op, const char *filename) {
 					printf(" - no logging\n");
 			}
 
-			int fd = open(fname, O_PATH|O_CLOEXEC);
-			if (fd < 0) {
-				if (arg_debug)
-					printf("Warning (blacklisting): cannot open %s: %s\n", fname, strerror(errno));
-				free(fname);
-				return;
-			}
 			EUID_ROOT();
 			if (S_ISDIR(s.st_mode)) {
 				if (bind_mount_path_to_fd(RUN_RO_DIR, fd) < 0)
@@ -153,7 +155,6 @@ static void disable_file(OPERATION op, const char *filename) {
 					errExit("disable file");
 			}
 			EUID_USER();
-			close(fd);
 
 			if (op == BLACKLIST_FILE)
 				fs_logger2("blacklist", fname);
@@ -180,8 +181,7 @@ static void disable_file(OPERATION op, const char *filename) {
 	else if (op == MOUNT_TMPFS) {
 		if (!S_ISDIR(s.st_mode)) {
 			fwarning("%s is not a directory; cannot mount a tmpfs on top of it.\n", fname);
-			free(fname);
-			return;
+			goto out;
 		}
 
 		uid_t uid = getuid();
@@ -191,8 +191,7 @@ static void disable_file(OPERATION op, const char *filename) {
 			    strncmp(cfg.homedir, fname, strlen(cfg.homedir)) != 0 ||
 			    fname[strlen(cfg.homedir)] != '/') {
 				fwarning("you are not allowed to mount a tmpfs on %s\n", fname);
-				free(fname);
-				return;
+				goto out;
 			}
 		}
 
@@ -202,6 +201,8 @@ static void disable_file(OPERATION op, const char *filename) {
 	else
 		assert(0);
 
+out:
+	close(fd);
 	free(fname);
 }
 

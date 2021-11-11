@@ -210,22 +210,29 @@ static void process_config(const char *fname) {
 		exit(1);
 	}
 
-	// make sure the file is owned by root
-	struct stat s;
-	if (stat(fname, &s)) {
+	fprintf(stderr, "Opening config file %s\n", fname);
+	int fd = open(fname, O_RDONLY|O_CLOEXEC);
+	if (fd < 0) {
 		if (include_level == 1) {
-			fprintf(stderr, "Error ids: config file not found\n");
+			fprintf(stderr, "Error ids: cannot open config file %s\n", fname);
 			exit(1);
 		}
 		return;
+	}
+
+	// make sure the file is owned by root
+	struct stat s;
+	if (fstat(fd, &s)) {
+		fprintf(stderr, "Error ids: cannot stat config file %s\n", fname);
+		exit(1);
 	}
 	if (s.st_uid || s.st_gid) {
 		fprintf(stderr, "Error ids: config file not owned by root\n");
 		exit(1);
 	}
 
-	fprintf(stderr, "Loading %s config file\n", fname);
-	FILE *fp = fopen(fname, "r");
+	fprintf(stderr, "Loading config file %s\n", fname);
+	FILE *fp = fdopen(fd, "r");
 	if (!fp) {
 		fprintf(stderr, "Error fids: cannot open config file %s\n", fname);
 		exit(1);

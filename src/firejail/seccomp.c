@@ -435,11 +435,11 @@ void seccomp_print_filter(pid_t pid) {
 	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_SECCOMP_LIST) == -1)
 		errExit("asprintf");
 
-	struct stat s;
-	if (stat(fname, &s) == -1)
+	int fd = open(fname, O_RDONLY|O_CLOEXEC);
+	if (fd < 0)
 		goto errexit;
 
-	FILE *fp = fopen(fname, "re");
+	FILE *fp = fdopen(fd, "r");
 	if (!fp)
 		goto errexit;
 	free(fname);

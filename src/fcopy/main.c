@@ -445,24 +445,20 @@ int main(int argc, char **argv) {
 	if (debug && strcmp(debug, "yes") == 0)
 		arg_debug = 1;
 
-	char *src;
-	char *dest;
-
-	if (argc == 3) {
-		src = argv[1];
-		dest = argv[2];
-		arg_follow_link = 0;
-	}
-	else if (argc == 4 && !strcmp(argv[1], "--follow-link")) {
-		src = argv[2];
-		dest = argv[3];
-		arg_follow_link = 1;
-	}
-	else {
+	if (argc < 3) {
 		fprintf(stderr, "Error: arguments missing\n");
 		usage();
 		exit(1);
 	}
+
+	// parse arguments, excluding positional ones
+	for (int i = 1; i < argc - 2; ++i) {
+		if (strcmp(argv[i], "--follow-link") == 0)
+			arg_follow_link = 1;
+	}
+
+	char *src = argv[argc - 2];
+	char *dest = argv[argc - 1];
 
 	warn_dumpable();
 

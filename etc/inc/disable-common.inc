@@ -495,7 +495,9 @@ blacklist ${PATH}/xev
 blacklist ${PATH}/xinput
 # from 0.9.67
 blacklist ${PATH}/ssh
-blacklist /usr/lib/openssh/ssh-keysign
+blacklist /usr/lib/openssh
+blacklist /usr/lib/ssh
+blacklist /usr/libexec/openssh
 blacklist ${PATH}/passwd
 blacklist /usr/lib/xorg/Xorg.wrap
 blacklist /usr/lib/policykit-1/polkit-agent-helper-1

@@ -494,7 +494,6 @@ blacklist ${PATH}/unix_chkpwd
 blacklist ${PATH}/xev
 blacklist ${PATH}/xinput
 # from 0.9.67
-blacklist ${PATH}/ssh
 blacklist /usr/lib/openssh
 blacklist /usr/lib/ssh
 blacklist /usr/libexec/openssh
@@ -583,8 +582,7 @@ blacklist ${HOME}/sent
 # kernel configuration
 blacklist /proc/config.gz
 
-# prevent DNS malware attempting to communicate with the server
-# using regular DNS tools
+# prevent DNS malware attempting to communicate with the server using regular DNS tools
 blacklist ${PATH}/dig
 blacklist ${PATH}/dlint
 blacklist ${PATH}/dns2tcp
@@ -601,6 +599,11 @@ blacklist ${PATH}/ldnsd
 blacklist ${PATH}/nslookup
 blacklist ${PATH}/resolvectl
 blacklist ${PATH}/unbound-host
+
+# prevent an intruder to guess passwords using regular network tools
+blacklist ${PATH}/ftp
+blacklist ${PATH}/ssh
+blacklist ${PATH}/telnet
 
 # rest of ${RUNUSER}
 blacklist ${RUNUSER}/*.lock

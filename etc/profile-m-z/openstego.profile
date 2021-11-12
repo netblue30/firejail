@@ -15,8 +15,8 @@ include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
+include disable-proc.inc
 include disable-programs.inc
-include disable-passwdmgr.inc
 
 mkfile ${HOME}/openstego.ini
 whitelist ${HOME}/openstego.ini
@@ -24,20 +24,14 @@ whitelist ${HOME}/.java
 whitelist ${PICTURES}
 whitelist ${DOCUMENTS}
 whitelist ${DESKTOP}
-include whitelist-common.inc
-
 whitelist /usr/share/java
+include whitelist-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-# AppArmor breaks Java interpreter
-ignore apparmor
-
 caps.drop all
-
-# Makes fonts look grainy
-#ipc-namespace
-
 machine-id
 net none
 no3d
@@ -50,6 +44,7 @@ notv
 nou2f
 novideo
 seccomp
+seccomp.block-secondary
 shell none
 tracelog
 

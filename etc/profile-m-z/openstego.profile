@@ -54,7 +54,7 @@ shell none
 tracelog
 
 disable-mnt
-private-bin openstego,readlink,dirname,bash,sh
+private-bin bash,dirname,openstego,readlink,sh
 private-cache
 private-dev
 private-tmp

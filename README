@@ -506,6 +506,8 @@ Jan-Niclas (https://github.com/0x6a61)
 	- moved rules from firefox-common.profile to firefox.profile
 	- blacklist /*firefox* except for firefox itself
 	- fix Firefox 'Profile not found' - whitelist /run/user/xxx/firefox
+Jan Sonntag (https://github.com/jmetrius)
+	- added OpenStego profile
 Jean Lucas (https://github.com/flacks)
 	- fix Discord profile
 	- add AnyDesk profile

@@ -212,6 +212,19 @@ New files and deleted files are also flagged.
 Currently while scanning the file system symbolic links are not followed, and files the user doesn't have read access to are silently dropped.
 The program can also be run as root (sudo firejail --ids-init/--ids-check).
 
+### Deteministic Shutdown
+`````
+      --deterministic-exit-code
+              Always exit firejail with the first child's exit status. The de‐
+              fault  behavior  is to use the exit status of the final child to
+              exit, which can be nondeterministic.
+
+       --deterministic-shutdown
+              Always shut down the sandbox after the first  child  has  termi‐
+              nated. The default behavior is to keep the sandbox alive as long
+              as it contains running processes.
+`````
+
 ### Profile Statistics
 
 A small tool to print profile statistics. Compile as usual and run in /etc/profiles:

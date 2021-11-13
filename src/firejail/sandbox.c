@@ -356,6 +356,15 @@ static int monitor_application(pid_t app_pid) {
 		if (arg_debug)
 			printf("Sandbox monitor: waitpid %d retval %d status %d\n", monitored_pid, rv, status);
 
+		if (arg_deterministic_shutdown) {
+			if (arg_debug)
+				printf("Sandbox monitor: monitored process died, shut down the sandbox\n");
+			kill(-1, SIGTERM);
+			usleep(100000);
+			kill(-1, SIGKILL);
+			break;
+		}
+
 		DIR *dir;
 		if (!(dir = opendir("/proc"))) {
 			// sleep 2 seconds and try again
@@ -376,18 +385,6 @@ static int monitor_application(pid_t app_pid) {
 				continue;
 			if ((pid_t) pid == dhclient4_pid || (pid_t) pid == dhclient6_pid)
 				continue;
-
-			// todo: make this generic
-			// Dillo browser leaves a dpid process running, we need to shut it down
-			int found = 0;
-			if (strcmp(cfg.command_name, "dillo") == 0) {
-				char *pidname = pid_proc_comm(pid);
-				if (pidname && strcmp(pidname, "dpid") == 0)
-					found = 1;
-				free(pidname);
-			}
-			if (found)
-				break;
 
 			monitored_pid = pid;
 			break;

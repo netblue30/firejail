@@ -706,6 +706,12 @@ $ firejail \-\-net=eth0 \-\-defaultgw=10.10.20.1 firefox
 \fB\-\-deterministic-exit-code
 Always exit firejail with the first child's exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
 .br
+
+.TP
+\fB\-\-deterministic-shutdown
+Always shut down the sandbox after the first child has terminated. The default behavior is to keep the sandbox alive as long as it contains running processes.
+.br
+
 .TP
 \fB\-\-disable-mnt
 Blacklist /mnt, /media, /run/mount and /run/media access.

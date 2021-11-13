@@ -35,3 +35,5 @@ tracelog
 
 private-dev
 private-tmp
+
+deterministic-shutdown

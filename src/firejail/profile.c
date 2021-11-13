@@ -1597,6 +1597,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "deterministic-shutdown") == 0) {
+		arg_deterministic_shutdown = 1;
+		return 0;
+	}
+
 	// rest of filesystem
 	if (strncmp(ptr, "blacklist ", 10) == 0)
 		ptr += 10;

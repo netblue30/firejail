@@ -506,8 +506,8 @@ blacklist /usr/lib/chromium/chrome-sandbox
 blacklist /usr/lib/vmware
 blacklist ${PATH}/suexec
 blacklist /usr/lib/squid/basic_pam_auth
-blacklist ${PATH}/sloc
-blacklist ${PATH}/physloc
+blacklist ${PATH}/slock
+blacklist ${PATH}/physlock
 blacklist ${PATH}/schroot
 blacklist ${PATH}/wshowkeys
 blacklist ${PATH}/pmount

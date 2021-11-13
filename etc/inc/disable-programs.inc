@@ -1120,6 +1120,7 @@ blacklist ${HOME}/TeamSpeak3-Client-linux_x86
 blacklist ${HOME}/hyperrogue.ini
 blacklist ${HOME}/i2p
 blacklist ${HOME}/mps
+blacklist ${HOME}/openstego.ini
 blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/yt-dlp.conf
 blacklist ${RUNUSER}/*firefox*

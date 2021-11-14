@@ -32,7 +32,7 @@ noroot
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,inet
 seccomp
 shell none
 tracelog

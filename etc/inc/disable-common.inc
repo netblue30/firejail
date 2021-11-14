@@ -16,6 +16,7 @@ blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.kde/share/apps/klipper
 blacklist-nolog ${HOME}/.kde4/share/apps/klipper
 blacklist-nolog ${HOME}/.local/share/fish/fish_history
+blacklist-nolog ${HOME}/.local/share/ibus-typing-booster
 blacklist-nolog ${HOME}/.local/share/klipper
 blacklist-nolog ${HOME}/.macromedia
 blacklist-nolog ${HOME}/.mupdf.history
@@ -430,6 +431,7 @@ blacklist ${HOME}/.pki
 blacklist ${HOME}/.smbcredentials
 blacklist ${HOME}/.ssh
 blacklist ${HOME}/.vaults
+blacklist /run/timeshift
 blacklist /var/backup
 
 # Remove environment variables with auth tokens.

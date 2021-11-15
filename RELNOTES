@@ -4,6 +4,7 @@ firejail (0.9.67) baseline; urgency=low
   * intrusion detection system (--ids-init, --ids-check)
   * deterministic shutdown (--deterministic-exit-code,
      --deterministic-shutdown)
+  * build: firecfg.config is now installed to /etc/firejail/ (#4669)
   * deprecated --disable-whitelist at compile time
   * deprecated whitelist=yes/no in /etc/firejail/firejail.config
   * new condition: ALLOW_TRAY

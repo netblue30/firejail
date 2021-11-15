@@ -127,7 +127,7 @@ static char *usage_str =
 #ifdef HAVE_NETWORK
 	"    --mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n"
 #endif
-	"    --machine-id - preserve /etc/machine-id\n"
+	"    --machine-id - spoof /etc/machine-id with a random id\n"
 	"    --memory-deny-write-execute - seccomp filter to block attempts to create\n"
 	"\tmemory mappings that are both writable and executable.\n"
 	"    --mkdir=dirname - create a directory.\n"

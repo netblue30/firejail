@@ -3842,51 +3842,21 @@ fi
 if test "x$enable_lts" = "xyes"; then :
 
 	HAVE_LTS="-DHAVE_LTS"
-
 	HAVE_DBUSPROXY=""
-
-
 	HAVE_OVERLAYFS=""
-
-
 	HAVE_OUTPUT=""
-
-
 	HAVE_USERTMPFS=""
-
-
 	HAVE_MAN="-DHAVE_MAN"
-
-
 	HAVE_FIRETUNNEL=""
-
-
 	HAVE_PRIVATEHOME=""
-
-
 	HAVE_CHROOT=""
-
-
 	HAVE_GLOBALCFG=""
-
-
 	HAVE_USERNS=""
-
-
 	HAVE_X11=""
-
-
 	HAVE_FILE_TRANSFER=""
-
-
 	HAVE_SUID="yes"
-
-
 	BUSYBOX_WORKAROUND="no"
-
-
 	HAVE_CONTRIB_INSTALL="no",
-
 
 fi
 

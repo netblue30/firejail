@@ -291,12 +291,6 @@ AS_IF([test "x$enable_lts" = "xyes"], [
 	AC_SUBST(HAVE_CONTRIB_INSTALL)
 ])
 
-
-
-
-# checking pthread library
-AC_CHECK_LIB([pthread], [main], [], AC_MSG_ERROR([*** POSIX thread support not installed ***]))
-AC_CHECK_HEADER(pthread.h,,AC_MSG_ERROR([*** POSIX thread support not installed ***]))
 AC_CHECK_HEADER([linux/seccomp.h],,AC_MSG_ERROR([*** SECCOMP support is not installed (/usr/include/linux/seccomp.h missing) ***]))
 
 # set sysconfdir

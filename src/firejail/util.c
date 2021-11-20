@@ -103,6 +103,36 @@ void errLogExit(char* fmt, ...) {
 	exit(1);
 }
 
+static int find_group(gid_t group, const gid_t *groups, int ngroups) {
+	int i;
+	for (i = 0; i < ngroups; i++) {
+		if (group == groups[i])
+			return i;
+	}
+
+	return -1;
+}
+
+// Gets group from "groupname" and adds it to "new_groups" if it exists on
+// "groups".  Always returns the current value of new_ngroups.
+static int copy_group_ifcont(const char *groupname,
+                             const gid_t *groups, int ngroups,
+                             gid_t *new_groups, int *new_ngroups, int new_sz) {
+	if (*new_ngroups >= new_sz) {
+		errno = ERANGE;
+		goto out;
+	}
+
+	gid_t g = get_group_id(groupname);
+	if (g && find_group(g, groups, ngroups) >= 0) {
+		new_groups[*new_ngroups] = g;
+		(*new_ngroups)++;
+	}
+
+out:
+	return *new_ngroups;
+}
+
 static void clean_supplementary_groups(gid_t gid) {
 	assert(cfg.username);
 	gid_t groups[MAX_GROUPS];
@@ -112,32 +142,30 @@ static void clean_supplementary_groups(gid_t gid) {
 		goto clean_all;
 
 	// clean supplementary group list
-	// allow only firejail, tty, audio, video, games
 	gid_t new_groups[MAX_GROUPS];
 	int new_ngroups = 0;
 	char *allowed[] = {
 		"firejail",
 		"tty",
-		"audio",
-		"video",
 		"games",
 		NULL
 	};
 
 	int i = 0;
 	while (allowed[i]) {
-		gid_t g = get_group_id(allowed[i]);
-	 	if (g) {
-			int j;
-			for (j = 0; j < ngroups; j++) {
-				if (g == groups[j]) {
-					new_groups[new_ngroups] = g;
-					new_ngroups++;
-					break;
-				}
-			}
-		}
+		copy_group_ifcont(allowed[i], groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
 		i++;
+	}
+
+	if (!arg_nosound) {
+		copy_group_ifcont("audio", groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
+	}
+
+	if (!arg_novideo) {
+		copy_group_ifcont("video", groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
 	}
 
 	if (new_ngroups) {

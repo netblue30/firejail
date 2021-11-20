@@ -3094,94 +3094,98 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
- 	// close each end of the unused pipes
- 	close(parent_to_child_fds[0]);
- 	close(child_to_parent_fds[1]);
+	// close each end of the unused pipes
+	close(parent_to_child_fds[0]);
+	close(child_to_parent_fds[1]);
 
 	// notify child that base setup is complete
- 	notify_other(parent_to_child_fds[1]);
+	notify_other(parent_to_child_fds[1]);
 
- 	// wait for child to create new user namespace with CLONE_NEWUSER
- 	wait_for_other(child_to_parent_fds[0]);
- 	close(child_to_parent_fds[0]);
+	// wait for child to create new user namespace with CLONE_NEWUSER
+	wait_for_other(child_to_parent_fds[0]);
+	close(child_to_parent_fds[0]);
 
- 	if (arg_noroot) {
-	 	// update the UID and GID maps in the new child user namespace
+	if (arg_noroot) {
+		// update the UID and GID maps in the new child user namespace
 		// uid
-	 	char *map_path;
-	 	if (asprintf(&map_path, "/proc/%d/uid_map", child) == -1)
-	 		errExit("asprintf");
+		char *map_path;
+		if (asprintf(&map_path, "/proc/%d/uid_map", child) == -1)
+			errExit("asprintf");
 
-	 	char *map;
-	 	uid_t uid = getuid();
-	 	if (asprintf(&map, "%d %d 1", uid, uid) == -1)
-	 		errExit("asprintf");
- 		EUID_ROOT();
-	 	update_map(map, map_path);
-	 	EUID_USER();
-	 	free(map);
-	 	free(map_path);
+		char *map;
+		uid_t uid = getuid();
+		if (asprintf(&map, "%d %d 1", uid, uid) == -1)
+			errExit("asprintf");
+		EUID_ROOT();
+		update_map(map, map_path);
+		EUID_USER();
+		free(map);
+		free(map_path);
 
-	 	// gid file
+		// gid file
 		if (asprintf(&map_path, "/proc/%d/gid_map", child) == -1)
 			errExit("asprintf");
-	 	char gidmap[1024];
-	 	char *ptr = gidmap;
-	 	*ptr = '\0';
+		char gidmap[1024];
+		char *ptr = gidmap;
+		*ptr = '\0';
 
-	 	// add user group
-	 	gid_t gid = getgid();
-	 	sprintf(ptr, "%d %d 1\n", gid, gid);
-	 	ptr += strlen(ptr);
+		// add user group
+		gid_t gid = getgid();
+		sprintf(ptr, "%d %d 1\n", gid, gid);
+		ptr += strlen(ptr);
 
-	 	if (!arg_nogroups) {
-		 	//  add firejail group
-		 	gid_t g = get_group_id("firejail");
-		 	if (g) {
-		 		sprintf(ptr, "%d %d 1\n", g, g);
-		 		ptr += strlen(ptr);
-		 	}
+		if (!arg_nogroups) {
+			// add firejail group
+			gid_t g = get_group_id("firejail");
+			if (g) {
+				sprintf(ptr, "%d %d 1\n", g, g);
+				ptr += strlen(ptr);
+			}
 
-		 	//  add tty group
-		 	g = get_group_id("tty");
-		 	if (g) {
-		 		sprintf(ptr, "%d %d 1\n", g, g);
-		 		ptr += strlen(ptr);
-		 	}
+			// add tty group
+			g = get_group_id("tty");
+			if (g) {
+				sprintf(ptr, "%d %d 1\n", g, g);
+				ptr += strlen(ptr);
+			}
 
-		 	//  add audio group
-		 	g = get_group_id("audio");
-		 	if (g) {
-		 		sprintf(ptr, "%d %d 1\n", g, g);
-		 		ptr += strlen(ptr);
-		 	}
+			// add audio group
+			if (!arg_nosound) {
+				g = get_group_id("audio");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
+			}
 
-		 	//  add video group
-		 	g = get_group_id("video");
-		 	if (g) {
-		 		sprintf(ptr, "%d %d 1\n", g, g);
-		 		ptr += strlen(ptr);
-		 	}
+			// add video group
+			if (!arg_novideo) {
+				g = get_group_id("video");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
+			}
 
-		 	//  add games group
-		 	g = get_group_id("games");
-		 	if (g) {
-		 		sprintf(ptr, "%d %d 1\n", g, g);
-		 	}
-		 }
+			// add games group
+			g = get_group_id("games");
+			if (g) {
+				sprintf(ptr, "%d %d 1\n", g, g);
+			}
+		}
 
- 		EUID_ROOT();
-	 	update_map(gidmap, map_path);
-	 	EUID_USER();
-	 	free(map_path);
- 	}
+		EUID_ROOT();
+		update_map(gidmap, map_path);
+		EUID_USER();
+		free(map_path);
+	}
 	EUID_ASSERT();
 
- 	// notify child that UID/GID mapping is complete
- 	notify_other(parent_to_child_fds[1]);
- 	close(parent_to_child_fds[1]);
+	// notify child that UID/GID mapping is complete
+	notify_other(parent_to_child_fds[1]);
+	close(parent_to_child_fds[1]);
 
- 	EUID_ROOT();
+	EUID_ROOT();
 	if (lockfd_network != -1) {
 		flock(lockfd_network, LOCK_UN);
 		close(lockfd_network);

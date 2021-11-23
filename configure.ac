@@ -225,10 +225,9 @@ HAVE_CONTRIB_INSTALL="yes"
 AC_SUBST([HAVE_CONTRIB_INSTALL])
 AC_ARG_ENABLE([contrib-install],
     [AS_HELP_STRING([--enable-contrib-install], [install contrib scripts])])
-AS_IF([test "x$enable_contrib_install" = "xno"],
-	[HAVE_CONTRIB_INSTALL="no"],
-	[HAVE_CONTRIB_INSTALL="yes"]
-)
+AS_IF([test "x$enable_contrib_install" = "xno"], [
+       HAVE_CONTRIB_INSTALL="no"
+])
 
 HAVE_FORCE_NONEWPRIVS=""
 AC_SUBST([HAVE_FORCE_NONEWPRIVS])

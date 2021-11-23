@@ -3812,9 +3812,8 @@ if test "${enable_contrib_install+set}" = set; then :
 fi
 
 if test "x$enable_contrib_install" = "xno"; then :
-  HAVE_CONTRIB_INSTALL="no"
-else
-  HAVE_CONTRIB_INSTALL="yes"
+
+       HAVE_CONTRIB_INSTALL="no"
 
 fi
 

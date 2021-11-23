@@ -1,6 +1,7 @@
 # Firejail profile for weechat
 # Description: Fast, light and extensible chat client
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include weechat.local
 # Persistent global definitions

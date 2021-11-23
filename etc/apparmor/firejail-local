@@ -8,6 +8,9 @@
 #owner @HOME/bin/** ix
 #owner @HOME/.local/bin/** ix
 
+# Uncomment to opt-in to apparmor for brave + ipfs
+#owner @{HOME}/.config/BraveSoftware/Brave-Browser/oecghfpdmkjlhnfpmmjegjacfimiafjp/*/** ix,
+
 # Uncomment to opt-in to apparmor for brave + tor
 #owner @{HOME}/.config/BraveSoftware/Brave-Browser/biahpgbdmdkfgndcmfiipgcebobojjkp/*/** ix,
 

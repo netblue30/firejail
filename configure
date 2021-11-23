@@ -3643,7 +3643,7 @@ fi
 
 
 	if test "x$HAVE_GAWK" != "xyes"; then :
-  as_fn_error $? "\"*** gawk not found ***\"" "$LINENO" 5
+  as_fn_error $? "*** gawk not found ***" "$LINENO" 5
 fi
 
 fi

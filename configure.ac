@@ -120,7 +120,7 @@ AS_IF([test "x$enable_man" != "xno"], [
 	HAVE_MAN="-DHAVE_MAN"
 	AC_SUBST(HAVE_MAN)
 	AC_CHECK_PROG([HAVE_GAWK], [gawk], [yes], [no])
-	AS_IF([test "x$HAVE_GAWK" != "xyes"], [AC_MSG_ERROR("*** gawk not found ***")])
+	AS_IF([test "x$HAVE_GAWK" != "xyes"], [AC_MSG_ERROR([*** gawk not found ***])])
 ])
 
 HAVE_FIRETUNNEL=""

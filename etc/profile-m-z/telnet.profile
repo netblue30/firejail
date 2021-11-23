@@ -1,5 +1,5 @@
-# Firejail profile for ftp
-# Description: standard File Access Protocol utility
+# Firejail profile for telnet
+# Description: standard telnet client
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

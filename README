@@ -226,6 +226,7 @@ Cat (https://github.com/ecat3)
 	- prevent tmux connecting to an existing session
 cayday (https://github.com/caydey)
 	- added ~/Private blacklist in disable-common.inc
+	- added quiet to some CLI profiles
 Christian Pinedo (https://github.com/chrpinedo)
 	- added nicotine profile
 	- allow python3 in totem profile

@@ -22,15 +22,15 @@ implemented directly in Linux kernel and available on any Linux computer.
 <table><tr>
 
 <td>
-<a href="https://www.brighteon.com/1928415c-2bce-40b2-a81f-7861a3734913" target="_blank">
-<img src="https://video.brighteon.com/file/Brighteon-staging/thumbnail/682ae17c-3fd8-4813-9c4e-6917c7cd2a5c.0000001.jpg"
-alt="Introduction" width="240" height="142" border="10" /><br/>Introduction</a>
+<a href="https://www.brighteon.com/6ebef4a5-20fe-4071-9d03-e6172c806ff7" target="_blank">
+<img src="https://photos.brighteon.com/thumbnail/092dccab-9974-4775-93d2-35e31b2ebf61"
+alt="Advanced Browser Security" width="240" height="142" border="10" /><br/>Advanced Browser Security</a>
 </td>
 
 <td>
-<a href="https://www.brighteon.com/c20c32ac-1953-438f-8640-a414dcb318d6" target="_blank">
-<img src="https://photos.brighteon.com/thumbnail/ecd8b0ca-7564-4993-a676-bbe4aa21cffc"
-alt="Technology" width="240" height="142" border="10" /><br/>Technology</a>
+<a href="https://www.brighteon.com/f09f693a-9847-4d9e-aaaf-60f756cc3833" target="_blank">
+<img src="https://photos.brighteon.com/thumbnail/ab951131-81c7-4a6b-b483-924a342fea11"
+alt="How To Disable Network Access" width="240" height="142" border="10" /><br/>How To Disable Network Access</a>
 </td>
 
 <td>

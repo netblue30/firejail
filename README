@@ -214,6 +214,7 @@ Bundy01 (https://github.com/Bundy01)
 	- add gradio profile
 	- update virtualbox.profile
 	- Quodlibet profile
+	- update apparmor firejail-local for Brave + ipfs
 BytesTuner (https://github.com/BytesTuner)
 	- provided keepassxc profile
 caoliver (https://github.com/caoliver)

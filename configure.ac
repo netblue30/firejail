@@ -70,7 +70,7 @@ AC_ARG_ENABLE([selinux],
     AS_HELP_STRING([--enable-selinux], [SELinux labeling support]))
 AS_IF([test "x$enable_selinux" = "xyes"], [
 	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux "
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux"
 	AC_SUBST(HAVE_SELINUX)
 ])
 
@@ -217,8 +217,8 @@ HAVE_GCOV=""
 AC_ARG_ENABLE([gcov],
     AS_HELP_STRING([--enable-gcov], [Gcov instrumentation]))
 AS_IF([test "x$enable_gcov" = "xyes"], [
-	HAVE_GCOV="--coverage -DHAVE_GCOV "
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage "
+	HAVE_GCOV="--coverage -DHAVE_GCOV"
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage"
 	AC_SUBST(HAVE_GCOV)
 ])
 

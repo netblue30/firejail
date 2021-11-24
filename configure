@@ -3535,7 +3535,7 @@ fi
 if test "x$enable_selinux" = "xyes"; then :
 
 	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux "
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux"
 
 
 fi
@@ -3801,8 +3801,8 @@ fi
 
 if test "x$enable_gcov" = "xyes"; then :
 
-	HAVE_GCOV="--coverage -DHAVE_GCOV "
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage "
+	HAVE_GCOV="--coverage -DHAVE_GCOV"
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage"
 
 
 fi

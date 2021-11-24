@@ -514,6 +514,23 @@ blacklist ${PATH}/schroot
 blacklist ${PATH}/wshowkeys
 blacklist ${PATH}/pmount
 blacklist ${PATH}/pumount
+blacklist ${PATH}/bmon
+blacklist ${PATH}/fping
+blacklist ${PATH}/fping6
+blacklist ${PATH}/hostname
+blacklist ${PATH}/ip
+blacklist ${PATH}/mtr
+blacklist ${PATH}/mtr-packet
+blacklist ${PATH}/netstat
+blacklist ${PATH}/nm-online
+blacklist ${PATH}/nmcli
+blacklist ${PATH}/nmtui
+blacklist ${PATH}/nmtui-connect
+blacklist ${PATH}/nmtui-edit
+blacklist ${PATH}/nmtui-hostname
+blacklist ${PATH}/networkctl
+blacklist ${PATH}/ss
+blacklist ${PATH}/traceroute
 
 # other SUID binaries
 blacklist /usr/lib/virtualbox

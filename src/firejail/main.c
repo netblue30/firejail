@@ -3134,9 +3134,28 @@ int main(int argc, char **argv, char **envp) {
 		sprintf(ptr, "%d %d 1\n", gid, gid);
 		ptr += strlen(ptr);
 
+		gid_t g;
+		// add audio group
+		if (!arg_nosound) {
+			g = get_group_id("audio");
+			if (g) {
+				sprintf(ptr, "%d %d 1\n", g, g);
+				ptr += strlen(ptr);
+			}
+		}
+
+		// add video group
+		if (!arg_novideo) {
+			g = get_group_id("video");
+			if (g) {
+				sprintf(ptr, "%d %d 1\n", g, g);
+				ptr += strlen(ptr);
+			}
+		}
+
 		if (!arg_nogroups) {
 			// add firejail group
-			gid_t g = get_group_id("firejail");
+			g = get_group_id("firejail");
 			if (g) {
 				sprintf(ptr, "%d %d 1\n", g, g);
 				ptr += strlen(ptr);
@@ -3147,24 +3166,6 @@ int main(int argc, char **argv, char **envp) {
 			if (g) {
 				sprintf(ptr, "%d %d 1\n", g, g);
 				ptr += strlen(ptr);
-			}
-
-			// add audio group
-			if (!arg_nosound) {
-				g = get_group_id("audio");
-				if (g) {
-					sprintf(ptr, "%d %d 1\n", g, g);
-					ptr += strlen(ptr);
-				}
-			}
-
-			// add video group
-			if (!arg_novideo) {
-				g = get_group_id("video");
-				if (g) {
-					sprintf(ptr, "%d %d 1\n", g, g);
-					ptr += strlen(ptr);
-				}
 			}
 
 			// add games group

@@ -50,7 +50,6 @@ apparmor
 caps.drop all
 netfilter
 nodvd
-# Seems to cause issues with Nvidia drivers sometimes
 nogroups
 noinput
 nonewprivs

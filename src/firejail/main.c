@@ -2661,6 +2661,15 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_NETWORK)) {
 				arg_netfilter = 1;
 				arg_netfilter_file = argv[i] + 12;
+
+				// expand tilde
+				if (*arg_netfilter_file == '~') {
+					char *tmp;
+					if (asprintf(&tmp, "%s%s", cfg.homedir, arg_netfilter_file + 1) == -1)
+						errExit("asprintf");
+					arg_netfilter_file = tmp;
+				}
+
 				check_netfilter_file(arg_netfilter_file);
 			}
 			else
@@ -2671,6 +2680,15 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_NETWORK)) {
 				arg_netfilter6 = 1;
 				arg_netfilter6_file = argv[i] + 13;
+
+				// expand tilde
+				if (*arg_netfilter6_file == '~') {
+					char *tmp;
+					if (asprintf(&tmp, "%s%s", cfg.homedir, arg_netfilter6_file + 1) == -1)
+						errExit("asprintf");
+					arg_netfilter6_file = tmp;
+				}
+
 				check_netfilter_file(arg_netfilter6_file);
 			}
 			else

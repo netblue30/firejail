@@ -33,13 +33,35 @@
 #define O_PATH 010000000
 #endif
 
+static void disable_tab_completion(const char *homedir) {
+	char *fname;
+
+	if (asprintf(&fname, "%s/.inputrc", homedir) == -1)
+		errExit("asprintf");
+
+	// don't create a new one if we already have it
+	if (access(fname, F_OK)) {
+		FILE *fp = fopen(fname, "w");
+		if (!fp)
+			errExit("fopen");
+		fprintf(fp, "set disable-completion on\n");
+		fclose(fp);
+		if (chmod(fname, 0644))
+			errExit("chmod");
+	}
+	free(fname);
+}
+
+
 static void skel(const char *homedir) {
 	EUID_ASSERT();
+	char *fname;
+
+	disable_tab_completion(homedir);
 
 	// zsh
 	if (!arg_shell_none && (strcmp(cfg.shell,"/usr/bin/zsh") == 0 || strcmp(cfg.shell,"/bin/zsh") == 0)) {
 		// copy skel files
-		char *fname;
 		if (asprintf(&fname, "%s/.zshrc", homedir) == -1)
 			errExit("asprintf");
 		// don't copy it if we already have the file
@@ -64,7 +86,6 @@ static void skel(const char *homedir) {
 	// csh
 	else if (!arg_shell_none && strcmp(cfg.shell,"/bin/csh") == 0) {
 		// copy skel files
-		char *fname;
 		if (asprintf(&fname, "%s/.cshrc", homedir) == -1)
 			errExit("asprintf");
 		// don't copy it if we already have the file
@@ -89,7 +110,6 @@ static void skel(const char *homedir) {
 	// bash etc.
 	else {
 		// copy skel files
-		char *fname;
 		if (asprintf(&fname, "%s/.bashrc", homedir) == -1)
 			errExit("asprintf");
 		// don't copy it if we already have the file

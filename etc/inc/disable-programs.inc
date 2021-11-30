@@ -505,6 +505,7 @@ blacklist ${HOME}/.config/microsoft-edge-beta
 blacklist ${HOME}/.config/microsoft-edge-dev
 blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mirage
+blacklist ${HOME}/.config/monero-project
 blacklist ${HOME}/.config/mono
 blacklist ${HOME}/.config/mpDris2
 blacklist ${HOME}/.config/mpd

@@ -67,10 +67,10 @@ static int arg_dbus_system_none = 0;
 static int arg_dbus_user_none = 0;
 static int arg_whitelisthome = 0;
 static int arg_noroot = 0;
-
+static int arg_print_blacklist = 0;
+static int arg_print_whitelist = 0;
 
 static char *profile = NULL;
-
 
 static void usage(void) {
 	printf("proftool - print profile statistics\n");
@@ -87,6 +87,8 @@ static void usage(void) {
 	printf("   --private-dev - print profiles without private-dev\n");
 	printf("   --private-etc - print profiles without private-etc\n");
 	printf("   --private-tmp - print profiles without private-tmp\n");
+	printf("   --print-blacklist - print all blacklists for a profile\n");
+	printf("   --print-whitelist - print all whitelists for a profile\n");
 	printf("   --seccomp - print profiles without seccomp\n");
 	printf("   --memory-deny-write-execute - profile without \"memory-deny-write-execute\"\n");
 	printf("   --whitelist-home - print profiles whitelisting home directory\n");
@@ -124,6 +126,17 @@ void process_file(const char *fname) {
 			ptr++;
 		if (*ptr == '\n' || *ptr == '#')
 			continue;
+
+		if (arg_print_blacklist) {
+			if (strncmp(ptr, "blacklist", 9) == 0 ||
+			    strncmp(ptr, "noblacklist", 11) == 0)
+				printf("%s: %s\n", fname, ptr);
+		}
+		else if (arg_print_whitelist) {
+			if (strncmp(ptr, "whitelist", 9) == 0 ||
+			    strncmp(ptr, "nowhitelist", 11) == 0)
+				printf("%s: %s\n", fname, ptr);
+		}
 
 		if (strncmp(ptr, "seccomp", 7) == 0)
 			cnt_seccomp++;
@@ -227,6 +240,10 @@ int main(int argc, char **argv) {
 			arg_privatetmp = 1;
 		else if (strcmp(argv[i], "--private-etc") == 0)
 			arg_privateetc = 1;
+		else if (strcmp(argv[i], "--print-blacklist") == 0)
+			arg_print_blacklist = 1;
+		else if (strcmp(argv[i], "--print-whitelist") == 0)
+			arg_print_whitelist = 1;
 		else if (strcmp(argv[i], "--whitelist-home") == 0)
 			arg_whitelisthome = 1;
 		else if (strcmp(argv[i], "--whitelist-var") == 0)
@@ -346,6 +363,9 @@ int main(int argc, char **argv) {
 
 		assert(level == 0);
 	}
+
+	if (arg_print_blacklist || arg_print_whitelist)
+		return 0;
 
 	printf("\n");
 	printf("Stats:\n");

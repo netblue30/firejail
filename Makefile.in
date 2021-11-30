@@ -138,6 +138,8 @@ endif
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config etc/ids.config
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
+	# program used track profile statistics during development - no manpage, this is not a user program
+	install -m 755 -t $(DESTDIR)$(sysconfdir)/firejail src/profstats/profstats
 ifeq ($(BUSYBOX_WORKAROUND),yes)
 	./mketc.sh $(DESTDIR)$(sysconfdir)/firejail/disable-common.inc
 endif

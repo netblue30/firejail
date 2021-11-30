@@ -20,6 +20,7 @@ mkdir ${HOME}/.goldendict
 mkdir ${HOME}/.cache/GoldenDict
 whitelist ${HOME}/.goldendict
 whitelist ${HOME}/.cache/GoldenDict
+whitelist /usr/share/goldendict
 # The default path of dictionaries
 whitelist /usr/share/stardict/dic
 include whitelist-common.inc

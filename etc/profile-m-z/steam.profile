@@ -132,7 +132,6 @@ netfilter
 nodvd
 nogroups
 nonewprivs
-# If you use nVidia you might need to add 'ignore noroot' to your steam.local.
 noroot
 notv
 nou2f

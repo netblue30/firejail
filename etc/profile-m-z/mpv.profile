@@ -62,7 +62,6 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-# nogroups seems to cause issues with Nvidia drivers sometimes
 nogroups
 noinput
 nonewprivs

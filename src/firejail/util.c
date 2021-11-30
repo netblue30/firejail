@@ -168,6 +168,28 @@ static void clean_supplementary_groups(gid_t gid) {
 		                  new_groups, &new_ngroups, MAX_GROUPS);
 	}
 
+	if (!arg_no3d) {
+		copy_group_ifcont("render", groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
+	}
+
+	if (!arg_noprinters) {
+		copy_group_ifcont("lp", groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
+	}
+
+	if (!arg_nodvd) {
+		copy_group_ifcont("cdrom", groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
+		copy_group_ifcont("optical", groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
+	}
+
+	if (!arg_noinput) {
+		copy_group_ifcont("input", groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
+	}
+
 	if (new_ngroups) {
 		rv = setgroups(new_ngroups, new_groups);
 		if (rv)

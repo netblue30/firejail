@@ -324,6 +324,7 @@ extern int arg_whitelist;	// whitelist command
 extern int arg_nosound;	// disable sound
 extern int arg_novideo; //disable video devices in /dev
 extern int arg_no3d;		// disable 3d hardware acceleration
+extern int arg_noprinters;	// disable printers
 extern int arg_quiet;		// no output for scripting
 extern int arg_join_network;	// join only the network namespace
 extern int arg_join_filesystem;	// join only the mount namespace

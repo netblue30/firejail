@@ -651,12 +651,12 @@ HAVE_DBUSPROXY
 EXTRA_LDFLAGS
 EXTRA_CFLAGS
 HAVE_SELINUX
-HAVE_APPARMOR
 AA_LIBS
 AA_CFLAGS
 PKG_CONFIG_LIBDIR
 PKG_CONFIG_PATH
 PKG_CONFIG
+HAVE_APPARMOR
 RANLIB
 INSTALL_DATA
 INSTALL_SCRIPT
@@ -3303,6 +3303,7 @@ fi
 fi
 
 HAVE_APPARMOR=""
+
 # Check whether --enable-apparmor was given.
 if test "${enable_apparmor+set}" = set; then :
   enableval=$enable_apparmor;
@@ -3523,10 +3524,10 @@ $as_echo "yes" >&6; }
 	EXTRA_CFLAGS="$EXTRA_CFLAGS $AA_CFLAGS" && EXTRA_LDFLAGS="$EXTRA_LDFLAGS $AA_LIBS"
 fi
 
-
 fi
 
 HAVE_SELINUX=""
+
 # Check whether --enable-selinux was given.
 if test "${enable_selinux+set}" = set; then :
   enableval=$enable_selinux;
@@ -3535,8 +3536,7 @@ fi
 if test "x$enable_selinux" = "xyes"; then :
 
 	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux "
-
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux"
 
 fi
 
@@ -3545,6 +3545,7 @@ fi
 
 
 HAVE_DBUSPROXY=""
+
 # Check whether --enable-dbusproxy was given.
 if test "${enable_dbusproxy+set}" = set; then :
   enableval=$enable_dbusproxy;
@@ -3554,21 +3555,19 @@ if test "x$enable_dbusproxy" != "xno"; then :
 
 	HAVE_DBUSPROXY="-DHAVE_DBUSPROXY"
 
-
 fi
 
 # overlayfs features temporarily disabled pending fixes
 HAVE_OVERLAYFS=""
 
-#
 #AC_ARG_ENABLE([overlayfs],
-#    AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
+#    [AS_HELP_STRING([--disable-overlayfs], [disable overlayfs])])
 #AS_IF([test "x$enable_overlayfs" != "xno"], [
 #	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
-#	AC_SUBST(HAVE_OVERLAYFS)
 #])
 
 HAVE_OUTPUT=""
+
 # Check whether --enable-output was given.
 if test "${enable_output+set}" = set; then :
   enableval=$enable_output;
@@ -3578,10 +3577,10 @@ if test "x$enable_output" != "xno"; then :
 
 	HAVE_OUTPUT="-DHAVE_OUTPUT"
 
-
 fi
 
 HAVE_USERTMPFS=""
+
 # Check whether --enable-usertmpfs was given.
 if test "${enable_usertmpfs+set}" = set; then :
   enableval=$enable_usertmpfs;
@@ -3591,10 +3590,10 @@ if test "x$enable_usertmpfs" != "xno"; then :
 
 	HAVE_USERTMPFS="-DHAVE_USERTMPFS"
 
-
 fi
 
 HAVE_MAN="no"
+
 # Check whether --enable-man was given.
 if test "${enable_man+set}" = set; then :
   enableval=$enable_man;
@@ -3603,7 +3602,6 @@ fi
 if test "x$enable_man" != "xno"; then :
 
 	HAVE_MAN="-DHAVE_MAN"
-
 	# Extract the first word of "gawk", so it can be a program name with args.
 set dummy gawk; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -3643,12 +3641,13 @@ fi
 
 
 	if test "x$HAVE_GAWK" != "xyes"; then :
-  as_fn_error $? "\"*** gawk not found ***\"" "$LINENO" 5
+  as_fn_error $? "*** gawk not found ***" "$LINENO" 5
 fi
 
 fi
 
 HAVE_FIRETUNNEL=""
+
 # Check whether --enable-firetunnel was given.
 if test "${enable_firetunnel+set}" = set; then :
   enableval=$enable_firetunnel;
@@ -3658,10 +3657,10 @@ if test "x$enable_firetunnel" != "xno"; then :
 
 	HAVE_FIRETUNNEL="-DHAVE_FIRETUNNEL"
 
-
 fi
 
 HAVE_PRIVATEHOME=""
+
 # Check whether --enable-private-home was given.
 if test "${enable_private_home+set}" = set; then :
   enableval=$enable_private_home;
@@ -3671,10 +3670,10 @@ if test "x$enable_private_home" != "xno"; then :
 
 	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
 
-
 fi
 
 HAVE_CHROOT=""
+
 # Check whether --enable-chroot was given.
 if test "${enable_chroot+set}" = set; then :
   enableval=$enable_chroot;
@@ -3684,10 +3683,10 @@ if test "x$enable_chroot" != "xno"; then :
 
 	HAVE_CHROOT="-DHAVE_CHROOT"
 
-
 fi
 
 HAVE_GLOBALCFG=""
+
 # Check whether --enable-globalcfg was given.
 if test "${enable_globalcfg+set}" = set; then :
   enableval=$enable_globalcfg;
@@ -3697,10 +3696,10 @@ if test "x$enable_globalcfg" != "xno"; then :
 
 	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
 
-
 fi
 
 HAVE_NETWORK=""
+
 # Check whether --enable-network was given.
 if test "${enable_network+set}" = set; then :
   enableval=$enable_network;
@@ -3710,10 +3709,10 @@ if test "x$enable_network" != "xno"; then :
 
 	HAVE_NETWORK="-DHAVE_NETWORK"
 
-
 fi
 
 HAVE_USERNS=""
+
 # Check whether --enable-userns was given.
 if test "${enable_userns+set}" = set; then :
   enableval=$enable_userns;
@@ -3723,10 +3722,10 @@ if test "x$enable_userns" != "xno"; then :
 
 	HAVE_USERNS="-DHAVE_USERNS"
 
-
 fi
 
 HAVE_X11=""
+
 # Check whether --enable-x11 was given.
 if test "${enable_x11+set}" = set; then :
   enableval=$enable_x11;
@@ -3736,10 +3735,10 @@ if test "x$enable_x11" != "xno"; then :
 
 	HAVE_X11="-DHAVE_X11"
 
-
 fi
 
 HAVE_FILE_TRANSFER=""
+
 # Check whether --enable-file-transfer was given.
 if test "${enable_file_transfer+set}" = set; then :
   enableval=$enable_file_transfer;
@@ -3749,24 +3748,23 @@ if test "x$enable_file_transfer" != "xno"; then :
 
 	HAVE_FILE_TRANSFER="-DHAVE_FILE_TRANSFER"
 
-
 fi
 
 HAVE_SUID=""
+
 # Check whether --enable-suid was given.
 if test "${enable_suid+set}" = set; then :
   enableval=$enable_suid;
 fi
 
-if test "x$enable_suid" = "xno"; then :
-  HAVE_SUID="no"
-else
-  HAVE_SUID="yes"
+if test "x$enable_suid" != "xno"; then :
+
+	HAVE_SUID="-DHAVE_SUID"
 
 fi
 
-
 HAVE_FATAL_WARNINGS=""
+
 # Check whether --enable-fatal_warnings was given.
 if test "${enable_fatal_warnings+set}" = set; then :
   enableval=$enable_fatal_warnings;
@@ -3776,10 +3774,10 @@ if test "x$enable_fatal_warnings" = "xyes"; then :
 
 	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
 
-
 fi
 
 BUSYBOX_WORKAROUND="no"
+
 # Check whether --enable-busybox-workaround was given.
 if test "${enable_busybox_workaround+set}" = set; then :
   enableval=$enable_busybox_workaround;
@@ -3789,11 +3787,11 @@ if test "x$enable_busybox_workaround" = "xyes"; then :
 
 	BUSYBOX_WORKAROUND="yes"
 
-
 fi
 
 
 HAVE_GCOV=""
+
 # Check whether --enable-gcov was given.
 if test "${enable_gcov+set}" = set; then :
   enableval=$enable_gcov;
@@ -3801,27 +3799,26 @@ fi
 
 if test "x$enable_gcov" = "xyes"; then :
 
-	HAVE_GCOV="--coverage -DHAVE_GCOV "
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage "
-
+	HAVE_GCOV="--coverage -DHAVE_GCOV"
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage"
 
 fi
 
 HAVE_CONTRIB_INSTALL="yes"
+
 # Check whether --enable-contrib-install was given.
 if test "${enable_contrib_install+set}" = set; then :
   enableval=$enable_contrib_install;
 fi
 
 if test "x$enable_contrib_install" = "xno"; then :
-  HAVE_CONTRIB_INSTALL="no"
-else
-  HAVE_CONTRIB_INSTALL="yes"
+
+       HAVE_CONTRIB_INSTALL="no"
 
 fi
 
-
 HAVE_FORCE_NONEWPRIVS=""
+
 # Check whether --enable-force-nonewprivs was given.
 if test "${enable_force_nonewprivs+set}" = set; then :
   enableval=$enable_force_nonewprivs;
@@ -3831,10 +3828,10 @@ if test "x$enable_force_nonewprivs" = "xyes"; then :
 
 	HAVE_FORCE_NONEWPRIVS="-DHAVE_FORCE_NONEWPRIVS"
 
-
 fi
 
 HAVE_LTS=""
+
 # Check whether --enable-lts was given.
 if test "${enable_lts+set}" = set; then :
   enableval=$enable_lts;
@@ -3843,52 +3840,21 @@ fi
 if test "x$enable_lts" = "xyes"; then :
 
 	HAVE_LTS="-DHAVE_LTS"
-
-
 	HAVE_DBUSPROXY=""
-
-
 	HAVE_OVERLAYFS=""
-
-
 	HAVE_OUTPUT=""
-
-
 	HAVE_USERTMPFS=""
-
-
 	HAVE_MAN="-DHAVE_MAN"
-
-
 	HAVE_FIRETUNNEL=""
-
-
 	HAVE_PRIVATEHOME=""
-
-
 	HAVE_CHROOT=""
-
-
 	HAVE_GLOBALCFG=""
-
-
 	HAVE_USERNS=""
-
-
 	HAVE_X11=""
-
-
 	HAVE_FILE_TRANSFER=""
-
-
-	HAVE_SUID="yes"
-
-
+	HAVE_SUID="-DHAVE_SUID"
 	BUSYBOX_WORKAROUND="no"
-
-
 	HAVE_CONTRIB_INSTALL="no",
-
 
 fi
 

@@ -105,7 +105,7 @@ realinstall:
 	# firejail executable
 	install -m 0755 -d $(DESTDIR)$(bindir)
 	install -m 0755 src/firejail/firejail $(DESTDIR)$(bindir)
-ifeq ($(HAVE_SUID),yes)
+ifeq ($(HAVE_SUID),-DHAVE_SUID)
 	chmod u+s $(DESTDIR)$(bindir)/firejail
 endif
 	# firemon executable

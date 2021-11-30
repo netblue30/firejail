@@ -3155,62 +3155,64 @@ int main(int argc, char **argv, char **envp) {
 		ptr += strlen(ptr);
 
 		gid_t g;
-		// add audio group
-		if (!arg_nosound) {
-			g = get_group_id("audio");
-			if (g) {
-				sprintf(ptr, "%d %d 1\n", g, g);
-				ptr += strlen(ptr);
+		if (!arg_nogroups || !check_can_drop_all_groups()) {
+			// add audio group
+			if (!arg_nosound) {
+				g = get_group_id("audio");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
 			}
-		}
 
-		// add video group
-		if (!arg_novideo) {
-			g = get_group_id("video");
-			if (g) {
-				sprintf(ptr, "%d %d 1\n", g, g);
-				ptr += strlen(ptr);
+			// add video group
+			if (!arg_novideo) {
+				g = get_group_id("video");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
 			}
-		}
 
-		// add render group
-		if (!arg_no3d) {
-			g = get_group_id("render");
-			if (g) {
-				sprintf(ptr, "%d %d 1\n", g, g);
-				ptr += strlen(ptr);
+			// add render group
+			if (!arg_no3d) {
+				g = get_group_id("render");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
 			}
-		}
 
-		// add lp group
-		if (!arg_noprinters) {
-			g = get_group_id("lp");
-			if (g) {
-				sprintf(ptr, "%d %d 1\n", g, g);
-				ptr += strlen(ptr);
+			// add lp group
+			if (!arg_noprinters) {
+				g = get_group_id("lp");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
 			}
-		}
 
-		// add cdrom/optical groups
-		if (!arg_nodvd) {
-			g = get_group_id("cdrom");
-			if (g) {
-				sprintf(ptr, "%d %d 1\n", g, g);
-				ptr += strlen(ptr);
+			// add cdrom/optical groups
+			if (!arg_nodvd) {
+				g = get_group_id("cdrom");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
+				g = get_group_id("optical");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
 			}
-			g = get_group_id("optical");
-			if (g) {
-				sprintf(ptr, "%d %d 1\n", g, g);
-				ptr += strlen(ptr);
-			}
-		}
 
-		// add input group
-		if (!arg_noinput) {
-			g = get_group_id("input");
-			if (g) {
-				sprintf(ptr, "%d %d 1\n", g, g);
-				ptr += strlen(ptr);
+			// add input group
+			if (!arg_noinput) {
+				g = get_group_id("input");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
 			}
 		}
 

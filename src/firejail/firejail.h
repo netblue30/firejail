@@ -506,6 +506,7 @@ void errLogExit(char* fmt, ...) __attribute__((noreturn));
 void fwarning(char* fmt, ...);
 void fmessage(char* fmt, ...);
 long long unsigned parse_arg_size(char *str);
+int check_can_drop_all_groups();
 void drop_privs(int force_nogroups);
 int mkpath_as_root(const char* path);
 void extract_command_name(int index, char **argv);

@@ -1225,7 +1225,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************************
 	// drop privileges
 	//****************************************
-	drop_privs(arg_nogroups);
+	drop_privs(0);
 
 	// kill the sandbox in case the parent died
 	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);

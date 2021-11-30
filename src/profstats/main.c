@@ -87,8 +87,8 @@ static void usage(void) {
 	printf("   --private-dev - print profiles without private-dev\n");
 	printf("   --private-etc - print profiles without private-etc\n");
 	printf("   --private-tmp - print profiles without private-tmp\n");
-	printf("   --print-blacklist - print all blacklists for a profile\n");
-	printf("   --print-whitelist - print all whitelists for a profile\n");
+	printf("   --print-blacklist - print all --blacklists for a profile\n");
+	printf("   --print-whitelist - print all --private and --whitelist for a profile\n");
 	printf("   --seccomp - print profiles without seccomp\n");
 	printf("   --memory-deny-write-execute - profile without \"memory-deny-write-execute\"\n");
 	printf("   --whitelist-home - print profiles whitelisting home directory\n");
@@ -134,7 +134,8 @@ void process_file(const char *fname) {
 		}
 		else if (arg_print_whitelist) {
 			if (strncmp(ptr, "whitelist", 9) == 0 ||
-			    strncmp(ptr, "nowhitelist", 11) == 0)
+			    strncmp(ptr, "nowhitelist", 11) == 0 ||
+			    strncmp(ptr, "private", 7) == 0)
 				printf("%s: %s\n", fname, ptr);
 		}
 

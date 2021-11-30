@@ -55,7 +55,7 @@ Wiki: https://github.com/netblue30/firejail/wiki
 
 GitLab-CI status: https://gitlab.com/Firejail/firejail_ci/pipelines/
 
-Video Channel: https://www.youtube.com/channel/UCi5u-syndQYyOeV4NZ04hNA
+Video Channel: https://www.brighteon.com/channels/netblue30
 
 Backup Video Channel: https://www.bitchute.com/profile/JSBsA1aoQVfW/
 

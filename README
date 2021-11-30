@@ -1028,6 +1028,7 @@ Ted Robertson (https://github.com/tredondo)
 	- added bcompare profile
 	- various documentation fixes
 	- blacklist Exodus wallet
+	- blacklist monero-project directory
 user1024 (user1024@tut.by)
 	- electron profile whitelisting
 	- fixed Rocket.Chat profile

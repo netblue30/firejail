@@ -4,6 +4,8 @@
 # Persistent local customizations
 include electron.local
 
+whitelist ${HOME}/.config/electron-flag*.conf
+whitelist ${HOME}/.config/Electron
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

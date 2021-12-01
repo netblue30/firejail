@@ -2642,7 +2642,7 @@ int main(int argc, char **argv, char **envp) {
 			else if (cfg.dns4 == NULL)
 				cfg.dns4 = dns;
 			else {
-				fwarning("Warning: up to 4 DNS servers can be specified, %s ignored\n", dns);
+				fwarning("up to 4 DNS servers can be specified, %s ignored\n", dns);
 				free(dns);
 			}
 		}

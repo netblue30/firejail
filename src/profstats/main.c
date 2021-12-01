@@ -10,7 +10,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License along
@@ -73,13 +73,13 @@ static int arg_print_whitelist = 0;
 static char *profile = NULL;
 
 static void usage(void) {
-	printf("proftool - print profile statistics\n");
-	printf("Usage: proftool [options] file[s]\n");
+	printf("profstats - print profile statistics\n");
+	printf("Usage: profstats [options] file[s]\n");
 	printf("Options:\n");
 	printf("   --apparmor - print profiles without apparmor\n");
 	printf("   --caps - print profiles without caps\n");
-	printf("   --dbus-system-none - profiles without  \"dbus-system none\"\n");
-	printf("   --dbus-user-none - profiles without  \"dbus-user none\"\n");
+	printf("   --dbus-system-none - print profiles without \"dbus-system none\"\n");
+	printf("   --dbus-user-none - print profiles without \"dbus-user none\"\n");
 	printf("   --ssh - print profiles without \"include disable-common.inc\"\n");
 	printf("   --noexec - print profiles without \"include disable-exec.inc\"\n");
 	printf("   --noroot - print profiles without \"noroot\"\n");
@@ -87,10 +87,10 @@ static void usage(void) {
 	printf("   --private-dev - print profiles without private-dev\n");
 	printf("   --private-etc - print profiles without private-etc\n");
 	printf("   --private-tmp - print profiles without private-tmp\n");
-	printf("   --print-blacklist - print all --blacklists for a profile\n");
+	printf("   --print-blacklist - print all --blacklist for a profile\n");
 	printf("   --print-whitelist - print all --private and --whitelist for a profile\n");
 	printf("   --seccomp - print profiles without seccomp\n");
-	printf("   --memory-deny-write-execute - profile without \"memory-deny-write-execute\"\n");
+	printf("   --memory-deny-write-execute - print profiles without \"memory-deny-write-execute\"\n");
 	printf("   --whitelist-home - print profiles whitelisting home directory\n");
 	printf("   --whitelist-var - print profiles without \"include whitelist-var-common.inc\"\n");
 	printf("   --whitelist-runuser - print profiles without \"include whitelist-runuser-common.inc\" or \"blacklist ${RUNUSER}\"\n");

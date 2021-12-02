@@ -19,7 +19,6 @@ blacklist ${HOME}/.Sayonara
 blacklist ${HOME}/.Steam
 blacklist ${HOME}/.Steampath
 blacklist ${HOME}/.Steampid
-blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.VSCodium
 blacklist ${HOME}/.ViberPC
 blacklist ${HOME}/.VirtualBox

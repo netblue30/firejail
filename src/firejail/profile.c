@@ -1789,6 +1789,17 @@ void profile_read(const char *fname) {
 			free(ptr);
 			ptr = tmp;
 		}
+		else if (strncmp(ptr, "whitelist-ro ", 13) == 0) {
+			char *whitelist, *readonly;
+			if (asprintf(&whitelist, "whitelist %s", ptr + 13) == -1)
+				errExit("asprintf");
+			profile_add(whitelist);
+			if (asprintf(&readonly, "read-only %s", ptr + 13) == -1)
+				errExit("asprintf");
+			profile_add(readonly);
+			free(ptr);
+			continue;
+		}
 
 		// process quiet
 		// todo: a quiet in the profile file cannot be disabled by --ignore on command line

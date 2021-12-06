@@ -23,6 +23,9 @@ ignore noexec /tmp
 
 noblacklist ${HOME}/.config/skypeforlinux
 
+mkdir ${HOME}/.config/skypeforlinux
+whitelist ${HOME}/.config/skypeforlinux
+
 # private-dev - needs /dev/disk
 
 # Redirect

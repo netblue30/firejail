@@ -36,6 +36,7 @@ include whitelist-usr-share-common.inc
 #private-etc cachy-browser
 
 dbus-user filter
+dbus-user.own org.mozilla.cachybrowser.*
 # Add the next line to your cachy-browser.local to enable native notifications.
 #dbus-user.talk org.freedesktop.Notifications
 # Add the next line to your cachy-browser.local to allow inhibiting screensavers.
@@ -44,10 +45,8 @@ dbus-user filter
 #dbus-user.own org.mpris.MediaPlayer2.plasma-browser-integration
 #dbus-user.talk org.kde.JobViewServer
 #dbus-user.talk org.kde.kuiserver
-# Add the next three lines to your cachy-browser.local to allow screensharing under Wayland.
-#whitelist ${RUNUSER}/pipewire-0
-#whitelist /usr/share/pipewire/client.conf
-#dbus-user.talk org.freedesktop.portal.*
+# Add the next line to your cachy-browser.local to allow screensharing under Wayland.
+#dbus-user.talk org.freedesktop.portal.Desktop
 # Also add the next line to your cachy-browser.local if screensharing does not work with
 # the above lines (depends on the portal implementation).
 #ignore noroot

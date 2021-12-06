@@ -85,6 +85,7 @@ blacklist ${HOME}/.cache/attic
 blacklist ${HOME}/.cache/babl
 blacklist ${HOME}/.cache/bnox
 blacklist ${HOME}/.cache/borg
+blacklist ${HOME}/.cache/cachy
 blacklist ${HOME}/.cache/calibre
 blacklist ${HOME}/.cache/cantata
 blacklist ${HOME}/.cache/champlain
@@ -223,6 +224,7 @@ blacklist ${HOME}/.cache/youtube-dl
 blacklist ${HOME}/.cache/youtube-viewer
 blacklist ${HOME}/.cache/yt-dlp
 blacklist ${HOME}/.cache/zim
+blacklist ${HOME}/.cachy
 blacklist ${HOME}/.cargo
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.clion*

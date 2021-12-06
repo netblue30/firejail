@@ -14,8 +14,8 @@ ignore include whitelist-var-common.inc
 ignore nou2f
 ignore novideo
 ignore private-dev
+
 ignore dbus-user none
-ignore dbus-system none
 
 # breaks Skype
 ignore apparmor
@@ -27,6 +27,12 @@ mkdir ${HOME}/.config/skypeforlinux
 whitelist ${HOME}/.config/skypeforlinux
 
 # private-dev - needs /dev/disk
+
+dbus-user filter
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
+# Note: Skype will log out the current session on start-up without this:
+dbus-user.talk org.kde.StatusNotifierWatcher
 
 # Redirect
 include electron.profile

@@ -94,9 +94,49 @@ https://unparalleled.eu/blog/2021/20210208-rigged-race-against-firejail-for-loca
 
 ## Installing
 
-Try installing Firejail from your system packages first. Firejail is included in Alpine, ALT Linux, Arch, Artix, Chakra, Debian, Deepin, Devuan, Fedora, Gentoo, Manjaro, Mint, NixOS, Parabola, Parrot, PCLinuxOS, ROSA, Solus, Slackware/SlackBuilds, Trisquel, Ubuntu, Void and possibly others.
+### Debian
 
-The firejail 0.9.52-LTS version is deprecated. On Ubuntu 18.04 LTS users are advised to use the [PPA](https://launchpad.net/~deki/+archive/ubuntu/firejail). On Debian stable (bullseye) we recommend to use the [backports](https://packages.debian.org/bullseye-backports/firejail) package.
+Debian stable (bullseye): We recommend to use the [backports](https://packages.debian.org/bullseye-backports/firejail) package.
+
+### Ubuntu
+
+For Ubuntu 18.04+ and derivatives (such as Linux Mint), users are **strongly advised** to use the [PPA](https://launchpad.net/~deki/+archive/ubuntu/firejail).
+
+How to add and install from the PPA:
+
+```sh
+sudo add-apt-repository ppa:deki/firejail
+sudo apt-get update
+sudo apt-get install firejail firejail-profiles
+```
+
+Reason: The firejail package for Ubuntu 20.04 has been left vulnerable to CVE-2021-26910 for months after a patch for it was posted on Launchpad:
+
+* [firejail version in Ubuntu 20.04 LTS is vulnerable to CVE-2021-26910](https://bugs.launchpad.net/ubuntu/+source/firejail/+bug/1916767)
+
+See also <https://wiki.ubuntu.com/SecurityTeam/FAQ>:
+
+> What software is supported by the Ubuntu Security team?
+>
+> Ubuntu is currently divided into four components: main, restricted, universe
+> and multiverse. All binary packages in main and restricted are supported by
+> the Ubuntu Security team for the life of an Ubuntu release, while binary
+> packages in universe and multiverse are supported by the Ubuntu community.
+
+Additionally, the PPA version is likely to be more recent and to contain more profile fixes.
+
+See the following discussions for details:
+
+* [Should I keep using the version of firejail available in my distro repos?](https://github.com/netblue30/firejail/discussions/4666)
+* [How to install the latest version on Ubuntu and derivatives](https://github.com/netblue30/firejail/discussions/4663)
+
+### Other
+
+Try installing Firejail from your distribution.
+
+Firejail is included in Alpine, ALT Linux, Arch, Artix, Chakra, Debian, Deepin, Devuan, Fedora, Gentoo, Manjaro, Mint, NixOS, Parabola, Parrot, PCLinuxOS, ROSA, Solus, Slackware/SlackBuilds, Trisquel, Ubuntu, Void and possibly others.
+
+Note: The firejail 0.9.52-LTS version is deprecated.
 
 You can also install one of the [released packages](http://sourceforge.net/projects/firejail/files/firejail), or clone Firejail’s source code from our Git repository and compile manually:
 

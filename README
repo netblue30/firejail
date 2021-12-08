@@ -256,6 +256,7 @@ crass (https://github.com/crass)
 croket (https://github.com/crocket)
 	- fix librewolf profile
 	- added profiles for imv, retroarch, and torbrowser
+	- fix dino profile
 curiosity-seeker (https://github.com/curiosity-seeker - old)
 curiosityseeker (https://github.com/curiosityseeker - new)
 	- tightening unbound and dnscrypt-proxy profiles
@@ -471,6 +472,7 @@ hlein (https://github.com/hlein)
 	- strip out \r's from jail prober
 	- make env/arg sanity check failure messages more useful
 	- relocate firecfg.config to /etc/firejail/
+	- fix display profile for Gentoo distribution
 Holger Heinz (https://github.com/hheinz)
 	- manpage work
 Haowei Yu (https://github.com/sfc-gh-hyu)
@@ -559,6 +561,7 @@ Jose Riha (https://github.com/jose1711)
 	- improve hints for allowing browser access to Gnome extensions connector
 	- fix warshow, jumpnbump, tremulous, blobwars profile fixes
 	- drop noinput for games with gampad/joystick support
+	- goldendict profile fix
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile
@@ -1098,6 +1101,9 @@ Vladislav Nepogodin (https://github.com/vnepogodin)
 	- added Sway profile
 	- fix CLion profile
 	- fixes for disable-programs.inc
+	- CachyBrowser profile
+Hugo Osvaldo Barrera (https://github.com/WhyNotHugo)
+	- Skype profile tweaks
 xee5ch (https://github.com/xee5ch)
 	- skypeforlinux profile
 Ypnose (https://github.com/Ypnose)

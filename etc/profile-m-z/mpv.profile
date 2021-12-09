@@ -26,7 +26,11 @@ include globals.local
 
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/youtube-dl
+noblacklist ${HOME}/.config/yt-dlp
+noblacklist ${HOME}/.config/yt-dlp.conf
 noblacklist ${HOME}/.netrc
+noblacklist ${HOME}/yt-dlp.conf
+noblacklist ${HOME}/yt-dlp.conf.txt
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -49,7 +53,11 @@ mkdir ${HOME}/.config/mpv
 mkfile ${HOME}/.netrc
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/youtube-dl
+whitelist ${HOME}/.config/yt-dlp
+whitelist ${HOME}/.config/yt-dlp.conf
 whitelist ${HOME}/.netrc
+whitelist ${HOME}/yt-dlp.conf
+whitelist ${HOME}/yt-dlp.conf.txt
 whitelist /usr/share/lua
 whitelist /usr/share/lua*
 whitelist /usr/share/vulkan

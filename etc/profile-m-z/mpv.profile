@@ -46,7 +46,6 @@ include disable-shell.inc
 
 read-only ${DESKTOP}
 mkdir ${HOME}/.config/mpv
-mkdir ${HOME}/.config/youtube-dl
 mkfile ${HOME}/.netrc
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/youtube-dl

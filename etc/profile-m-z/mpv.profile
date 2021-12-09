@@ -50,11 +50,11 @@ mkfile ${HOME}/.netrc
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.netrc
-include whitelist-common.inc
-include whitelist-player-common.inc
 whitelist /usr/share/lua
 whitelist /usr/share/lua*
 whitelist /usr/share/vulkan
+include whitelist-common.inc
+include whitelist-player-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

@@ -27,7 +27,7 @@ COMPLETIONDIRS = src/zsh_completion src/bash_completion
 all: all_items mydirs $(MAN_TARGET) filters
 APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailcheck/jailcheck
 SBOX_APPS = src/fbuilder/fbuilder src/ftee/ftee src/fids/fids
-SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter
+SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter src/profstats/profstats
 MYDIRS = src/lib $(MAN_SRC) $(COMPLETIONDIRS)
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 COMPLETIONS = src/zsh_completion/_firejail src/bash_completion/firejail.bash_completion
@@ -138,8 +138,6 @@ endif
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config etc/ids.config
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
-	# program used track profile statistics during development - no manpage, this is not a user program
-	install -m 755 -t $(DESTDIR)$(sysconfdir)/firejail src/profstats/profstats
 ifeq ($(BUSYBOX_WORKAROUND),yes)
 	./mketc.sh $(DESTDIR)$(sysconfdir)/firejail/disable-common.inc
 endif

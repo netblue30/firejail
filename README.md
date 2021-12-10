@@ -298,34 +298,37 @@ INTRUSION DETECTION SYSTEM (IDS)
 
 ### Profile Statistics
 
-A small tool to print profile statistics. Compile as usual and run in /etc/profiles:
+A small tool to print profile statistics. Compile and install as usual. The tool is installed in /usr/lib/firejail directory.
+Run it over the profiles in /etc/profiles:
 ```
-$ sudo cp src/profstats/profstats /etc/firejail/.
-$ cd /etc/firejail
-$ ./profstats *.profile
-    profiles			1167
-    include local profile	1167   (include profile-name.local)
-    include globals		1136   (include globals.local)
-    blacklist ~/.ssh		1042   (include disable-common.inc)
-    seccomp			1062
-    capabilities		1163
-    noexec			1049   (include disable-exec.inc)
-    noroot			971
-    memory-deny-write-execute	256
-    apparmor			693
-    private-bin			677
-    private-dev			1027
-    private-etc			532
-    private-tmp			897
-    whitelist home directory	557
-    whitelist var		836   (include whitelist-var-common.inc)
-    whitelist run/user		1137   (include whitelist-runuser-common.inc
+$ /usr/lib/firejail/profstats /etc/firejail/*.profile
+No include .local found in /etc/firejail/noprofile.profile
+Warning: multiple caps in /etc/firejail/transmission-daemon.profile
+
+Stats:
+    profiles			1176
+    include local profile	1175   (include profile-name.local)
+    include globals		1144   (include globals.local)
+    blacklist ~/.ssh		1050   (include disable-common.inc)
+    seccomp			1070
+    capabilities		1171
+    noexec			1057   (include disable-exec.inc)
+    noroot			979
+    memory-deny-write-execute	258
+    apparmor			700
+    private-bin			681
+    private-dev			1033
+    private-etc			533
+    private-tmp			905
+    whitelist home directory	562
+    whitelist var		842   (include whitelist-var-common.inc)
+    whitelist run/user		1145   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		609   (include whitelist-usr-share-common.inc
-    net none			396
-    dbus-user none 		656
-    dbus-user filter 		108
-    dbus-system none 		808
+    whitelist usr/share		614   (include whitelist-usr-share-common.inc
+    net none			399
+    dbus-user none 		662
+    dbus-user filter 		113
+    dbus-system none 		816
     dbus-system filter 		10
 ```
 

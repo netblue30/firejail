@@ -9,9 +9,9 @@ firejail (0.9.67) baseline; urgency=low
   * deprecated --disable-whitelist at compile time
   * deprecated whitelist=yes/no in /etc/firejail/firejail.config
   * new condition: ALLOW_TRAY (#4510 #4599)
-  * remove (some) environment variables with auth-tokens
-  * new includes: whitelist-run-common.inc, disable-X11.inc
-  * removed includes: disable-passwordmgr.inc
+  * remove (some) environment variables with auth-tokens (#4157)
+  * new includes: whitelist-run-common.inc (#4288), disable-X11.inc (#4462)
+  * removed includes: disable-passwordmgr.inc (#4461)
   * new profiles: microsoft-edge-beta, clion-eap, lifeograph, zim
   * new profiles: io.github.lainsce.Notejot, rednotebook, gallery-dl
   * new profiles: yt-dlp, goldendict, goldendict, bundle, cmake

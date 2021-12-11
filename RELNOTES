@@ -6,8 +6,8 @@ firejail (0.9.67) baseline; urgency=low
      --deterministic-shutdown) (#4635)
   * noprinters command (#4607)
   * build: firecfg.config is now installed to /etc/firejail/ (#4669)
-  * deprecated --disable-whitelist at compile time
-  * deprecated whitelist=yes/no in /etc/firejail/firejail.config
+  * removed --disable-whitelist at compile time
+  * removed whitelist=yes/no in /etc/firejail/firejail.config
   * new condition: ALLOW_TRAY (#4510 #4599)
   * remove (some) environment variables with auth-tokens (#4157)
   * new includes: whitelist-run-common.inc (#4288), disable-X11.inc (#4462)

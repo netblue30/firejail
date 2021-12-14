@@ -10,6 +10,7 @@ include globals.local
 ignore include disable-xdg.inc
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
+ignore noinput
 
 ignore dbus-user none
 ignore dbus-system none

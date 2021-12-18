@@ -29,6 +29,7 @@ mkdir ${HOME}/.local/share/Nextcloud
 whitelist ${HOME}/Nextcloud
 whitelist ${HOME}/.config/Nextcloud
 whitelist ${HOME}/.local/share/Nextcloud
+whitelist /usr/share/nextcloud
 # Add the next lines to your nextcloud.local to allow sync in more directories.
 #whitelist ${DOCUMENTS}
 #whitelist ${MUSIC}

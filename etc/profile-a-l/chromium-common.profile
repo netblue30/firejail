@@ -53,6 +53,9 @@ private-cache
 ?BROWSER_DISABLE_U2F: private-dev
 #private-tmp - issues when using multiple browser sessions
 
+blacklist ${PATH}/curl
+blacklist ${PATH}/wget
+
 #dbus-user none - prevents access to passwords saved in GNOME Keyring and KWallet, also breaks Gnome connector.
 dbus-system none
 

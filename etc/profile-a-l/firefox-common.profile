@@ -59,6 +59,9 @@ disable-mnt
 #private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,group,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,machine-id,mailcap,mime.types,nsswitch.conf,pango,passwd,pki,pulse,resolv.conf,selinux,ssl,X11,xdg
 private-tmp
 
+blacklist ${PATH}/curl
+blacklist ${PATH}/wget
+
 # 'dbus-user none' breaks various desktop integration features like global menus, native notifications,
 # Gnome connector, KDE connect and power management on KDE Plasma.
 dbus-user none

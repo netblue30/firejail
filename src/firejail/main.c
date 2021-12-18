@@ -1574,18 +1574,9 @@ int main(int argc, char **argv, char **envp) {
 			profile_add(line);
 		}
 
-		// blacklist/deny
 		else if (strncmp(argv[i], "--blacklist=", 12) == 0) {
 			char *line;
 			if (asprintf(&line, "blacklist %s", argv[i] + 12) == -1)
-				errExit("asprintf");
-
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--deny=", 7) == 0) {
-			char *line;
-			if (asprintf(&line, "blacklist %s", argv[i] + 7) == -1)
 				errExit("asprintf");
 
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
@@ -1599,27 +1590,9 @@ int main(int argc, char **argv, char **envp) {
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
 			profile_add(line);
 		}
-		else if (strncmp(argv[i], "--nodeny=", 9) == 0) {
-			char *line;
-			if (asprintf(&line, "noblacklist %s", argv[i] + 9) == -1)
-				errExit("asprintf");
-
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
-		}
-
-		// whitelist
 		else if (strncmp(argv[i], "--whitelist=", 12) == 0) {
 			char *line;
 			if (asprintf(&line, "whitelist %s", argv[i] + 12) == -1)
-				errExit("asprintf");
-
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
-		}
-		else if (strncmp(argv[i], "--allow=", 8) == 0) {
-			char *line;
-			if (asprintf(&line, "whitelist %s", argv[i] + 8) == -1)
 				errExit("asprintf");
 
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
@@ -1633,15 +1606,6 @@ int main(int argc, char **argv, char **envp) {
 			profile_check_line(line, 0, NULL);	// will exit if something wrong
 			profile_add(line);
 		}
-		else if (strncmp(argv[i], "--noallow=", 10) == 0) {
-			char *line;
-			if (asprintf(&line, "nowhitelist %s", argv[i] + 10) == -1)
-				errExit("asprintf");
-
-			profile_check_line(line, 0, NULL);	// will exit if something wrong
-			profile_add(line);
-		}
-
 
 		else if (strncmp(argv[i], "--mkdir=", 8) == 0) {
 			char *line;

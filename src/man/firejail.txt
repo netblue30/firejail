@@ -1863,7 +1863,6 @@ $ firejail \-\-private-cache openbox
 .TP
 \fB\-\-private-cwd
 Set working directory inside jail to the home directory, and failing that, the root directory.
-.br
 Does not impact working directory of profile include paths.
 .br
 
@@ -1884,7 +1883,7 @@ $ pwd
 .TP
 \fB\-\-private-cwd=directory
 Set working directory inside the jail.
-.br
+Full directory path is required. Symbolic links are not allowed.
 Does not impact working directory of profile include paths.
 .br
 

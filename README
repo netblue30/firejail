@@ -344,6 +344,7 @@ Felipe Barriga Richards (https://github.com/fbarriga)
 	- --private-etc fix
 fenuks (https://github.com/fenuks)
 	- fix sound in games using FMOD
+	- allow /opt/tor-browser for Tor Browser profile
 Florian Begusch (https://github.com/florianbegusch)
 	- (la)tex profiles
 	- fixed transmission-common.profile

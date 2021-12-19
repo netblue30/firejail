@@ -8,6 +8,9 @@ include globals.local
 noblacklist ${HOME}/.TelegramDesktop
 noblacklist ${HOME}/.local/share/TelegramDesktop
 
+# Allow opening hyperlinks
+include allow-bin-sh.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -41,7 +44,7 @@ seccomp.block-secondary
 shell none
 
 disable-mnt
-private-bin telegram,Telegram,telegram-desktop
+private-bin bash,sh,telegram,Telegram,telegram-desktop,xdg-open
 private-cache
 private-dev
 private-etc alsa,alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.preload,localtime,machine-id,os-release,passwd,pki,pulse,resolv.conf,ssl,xdg

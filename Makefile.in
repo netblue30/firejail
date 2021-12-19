@@ -83,6 +83,7 @@ clean:
 	rm -f $(SECCOMP_FILTERS)
 	rm -f test/utils/index.html*
 	rm -f test/utils/wget-log
+	rm -f test/utils/firejail-test-file*
 	rm -f test/utils/lstesting
 	rm -f test/environment/index.html*
 	rm -f test/environment/wget-log*

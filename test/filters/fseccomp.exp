@@ -111,7 +111,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 9.3\n";exit}
-	"ret KILL"
+	"ret ERRNO"
 }
 
 

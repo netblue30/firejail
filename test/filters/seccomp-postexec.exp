@@ -14,20 +14,17 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"data.architecture"
-}
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
 	"monitoring pid"
-}
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"Sandbox monitor: waitpid"
-}
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"Parent is shutting down"
 }
 sleep 1
 
+send -- "ls\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"not permitted"
+}
+
+
+send -- "exit\r"
+after 100
 puts "all done\n"

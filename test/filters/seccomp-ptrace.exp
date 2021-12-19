@@ -17,8 +17,7 @@ sleep 2
 send -- "strace ls\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Bad system call" {puts "version 1\n";}
-	" unexpected signal 31" {puts "version 2\n"}
+	"not permitted"
 }
 
 send -- "exit\r"

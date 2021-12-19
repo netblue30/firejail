@@ -456,15 +456,20 @@ void fs_check_private_dir(void) {
 void fs_check_private_cwd(const char *dir) {
 	EUID_ASSERT();
 	invalid_filename(dir, 0); // no globbing
+	if (strcmp(dir, ".") == 0 || *dir != '/')
+		goto errout;
 
 	// Expand the working directory
 	cfg.cwd = expand_macros(dir);
 
 	// realpath/is_dir not used because path may not exist outside of jail
-	if (strstr(cfg.cwd, "..")) {
-		fprintf(stderr, "Error: invalid private working directory\n");
-		exit(1);
-	}
+	if (strstr(cfg.cwd, ".."))
+		goto errout;
+
+	return;
+errout:
+	fprintf(stderr, "Error: invalid private working directory\n");
+	exit(1);
 }
 
 //***********************************************************************************

@@ -1058,6 +1058,11 @@ int sandbox(void* sandbox_arg) {
 	EUID_USER();
 	int cwd = 0;
 	if (cfg.cwd) {
+		if (is_link(cfg.cwd)) {
+			fprintf(stderr, "Error: unable to enter private working directory: %s\n", cfg.cwd);
+			exit(1);
+		}
+
 		if (chdir(cfg.cwd) == 0)
 			cwd = 1;
 		else if (arg_private_cwd) {

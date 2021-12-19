@@ -15,7 +15,7 @@ noblacklist ${HOME}/.local/share/torbrowser
 include allow-python2.inc
 include allow-python3.inc
 
-blacklist /opt
+whitelist /opt/tor-browser
 blacklist /srv
 
 include disable-common.inc

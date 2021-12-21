@@ -1013,10 +1013,10 @@ int main(int argc, char **argv, char **envp) {
 
 	// sanity check for arguments
 	for (i = 0; i < argc; i++) {
-		if (*argv[i] == 0) {
-			fprintf(stderr, "Error: too short arguments: argv[%d] is empty\n", i);
-			exit(1);
-		}
+//		if (*argv[i] == 0) { // see #4395 - bug reported by Debian
+//			fprintf(stderr, "Error: too short arguments: argv[%d] is empty\n", i);
+//			exit(1);
+//		}
 		if (strlen(argv[i]) >= MAX_ARG_LEN) {
 			fprintf(stderr, "Error: too long arguments: argv[%d] len (%zu) >= MAX_ARG_LEN (%d)\n", i, strlen(argv[i]), MAX_ARG_LEN);
 			exit(1);

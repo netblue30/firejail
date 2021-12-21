@@ -168,9 +168,9 @@ void fix_desktop_files(char *homedir) {
 
 		char *filename = entry->d_name;
 
-		// skip links
-		if (is_link(filename))
-			continue;
+		// skip links - Discord on Arch #4235 seems to be a symlink to /opt directory
+//		if (is_link(filename))
+//			continue;
 
 		// no profile in /etc/firejail, no desktop file fixing
 		if (!have_profile(filename, homedir))

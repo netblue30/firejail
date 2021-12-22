@@ -1256,7 +1256,7 @@ $ firejail \-\-net=br0 \-\-net=br1
 .TP
 \fB\-\-net=ethernet_interface|wireless_interface
 Enable a new network namespace and connect it
-to this ethernet interface using the standard Linux macvlan|ipvaln
+to this ethernet interface using the standard Linux macvlan|ipvlan
 driver. Unless specified with option \-\-ip and \-\-defaultgw, an
 IP address and a default gateway will be assigned automatically
 to the sandbox. The IP address is verified using ARP before

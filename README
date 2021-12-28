@@ -564,6 +564,7 @@ Jose Riha (https://github.com/jose1711)
 	- drop noinput for games with gampad/joystick support
 	- goldendict profile fix
 	- whitelist /usr/share/nextcloud to allow access to translation files
+	- fix clipgrab profile
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile
@@ -1108,6 +1109,7 @@ Vladislav Nepogodin (https://github.com/vnepogodin)
 	- CachyBrowser profile
 Hugo Osvaldo Barrera (https://github.com/WhyNotHugo)
 	- Skype profile tweaks
+	- whitelist-ro command
 xee5ch (https://github.com/xee5ch)
 	- skypeforlinux profile
 York Zhao (https://github.com/YorkZ)

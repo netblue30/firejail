@@ -436,6 +436,11 @@ all directories in /usr.
 .br
 Symbolic link handling: with the exception of user home, both the link and the real file should be in
 the same top directory. For user home, both the link and the real file should be owned by the user.
+
+.TP
+\fBwhitelist-ro file_or_directory
+Equivalent to "whitelist file_or_directory" followed by "read-only file_or_directory"
+
 .TP
 \fBwritable-etc
 Mount /etc directory read-write.

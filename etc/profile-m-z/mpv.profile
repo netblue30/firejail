@@ -26,7 +26,11 @@ include globals.local
 
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/youtube-dl
+noblacklist ${HOME}/.config/yt-dlp
+noblacklist ${HOME}/.config/yt-dlp.conf
 noblacklist ${HOME}/.netrc
+noblacklist ${HOME}/yt-dlp.conf
+noblacklist ${HOME}/yt-dlp.conf.txt
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -46,16 +50,19 @@ include disable-shell.inc
 
 read-only ${DESKTOP}
 mkdir ${HOME}/.config/mpv
-mkdir ${HOME}/.config/youtube-dl
 mkfile ${HOME}/.netrc
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/youtube-dl
+whitelist ${HOME}/.config/yt-dlp
+whitelist ${HOME}/.config/yt-dlp.conf
 whitelist ${HOME}/.netrc
-include whitelist-common.inc
-include whitelist-player-common.inc
+whitelist ${HOME}/yt-dlp.conf
+whitelist ${HOME}/yt-dlp.conf.txt
 whitelist /usr/share/lua
 whitelist /usr/share/lua*
 whitelist /usr/share/vulkan
+include whitelist-common.inc
+include whitelist-player-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

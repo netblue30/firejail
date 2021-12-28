@@ -241,6 +241,7 @@ blacklist ${HOME}/.config/Bitwarden
 blacklist ${HOME}/.config/Brackets
 blacklist ${HOME}/.config/BraveSoftware
 blacklist ${HOME}/.config/Clementine
+blacklist ${HOME}/.config/ClipGrab
 blacklist ${HOME}/.config/Code
 blacklist ${HOME}/.config/Code - OSS
 blacklist ${HOME}/.config/Code Industry

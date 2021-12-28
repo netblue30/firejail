@@ -296,6 +296,24 @@ INTRUSION DETECTION SYSTEM (IDS)
               as it contains running processes.
 `````
 
+### Network Monitor
+`````
+       --nettrace=name|pid
+              Monitor TCP and UDP traffic coming into the sandbox specified by
+              name or pid. Only networked sandboxes  created  with  --net  are
+              supported.
+
+              $ firejail --nettrace=browser
+              9.9.9.9:53              =>      192.168.1.60    UDP: 122 B/sec
+              72.21.91.29:80          =>      192.168.1.60    TCP: 257 B/sec
+              80.92.126.65:123        =>      192.168.1.60    UDP: 25 B/sec
+              69.30.241.50:443        =>      192.168.1.60    TCP: 88 KB/sec
+              140.82.112.4:443        =>      192.168.1.60    TCP: 1861 B/sec
+
+              (14 streams in the last one minute)
+
+`````
+
 ### Profile Statistics
 
 A small tool to print profile statistics. Compile and install as usual. The tool is installed in /usr/lib/firejail directory.

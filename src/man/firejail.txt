@@ -1479,6 +1479,29 @@ PID  User    RX(KB/s) TX(KB/s) Command
 1294 netblue 53.355   1.473    firejail \-\-net=eth0 firefox
 .br
 7383 netblue 9.045    0.112    firejail \-\-net=eth0 transmission
+.TP
+\fB\-\-nettrace=name|pid
+Monitor TCP and UDP traffic coming into the sandbox specified by name or pid. Only networked sandboxes
+created with \-\-net are supported.
+.br
+
+.br
+$ firejail --nettrace=browser
+.br
+9.9.9.9:53              =>      192.168.1.60    UDP: 122 B/sec
+.br
+72.21.91.29:80          =>      192.168.1.60    TCP: 257 B/sec
+.br
+80.92.126.65:123        =>      192.168.1.60    UDP: 25 B/sec
+.br
+69.30.241.50:443        =>      192.168.1.60    TCP: 88 KB/sec
+.br
+140.82.112.4:443        =>      192.168.1.60    TCP: 1861 B/sec
+.br
+
+.br
+(14 streams in the last one minute)
+
 #endif
 .TP
 \fB\-\-nice=value

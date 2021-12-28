@@ -5,6 +5,7 @@ firejail (0.9.67) baseline; urgency=low
   * deterministic shutdown (--deterministic-exit-code,
      --deterministic-shutdown) (#4635)
   * noprinters command (#4607)
+  * network monitor (--nettrace)
   * build: firecfg.config is now installed to /etc/firejail/ (#4669)
   * removed --disable-whitelist at compile time
   * removed whitelist=yes/no in /etc/firejail/firejail.config

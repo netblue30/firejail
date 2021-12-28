@@ -408,6 +408,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 #endif
 #ifdef HAVE_NETWORK
+	else if (strncmp(argv[i], "--nettrace=", 11) == 0) {
+		pid_t pid = require_pid(argv[i] + 11);
+		netfilter_trace(pid);
+	}
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
 		if (checkcfg(CFG_NETWORK)) {
 			logargs(argc, argv);
@@ -990,7 +994,9 @@ int main(int argc, char **argv, char **envp) {
 	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
+	int arg_netlock = 0;
 	char **ptr;
+
 
 	// sanitize the umask
 	orig_umask = umask(022);
@@ -2288,6 +2294,12 @@ int main(int argc, char **argv, char **envp) {
 		//*************************************
 		// network
 		//*************************************
+		else if (strcmp(argv[i], "--netlock") == 0)
+			arg_netlock = 1;
+		else if (strncmp(argv[i], "--netlock=", 10) == 0) {
+			pid_t pid = require_pid(argv[i] + 10);
+			netfilter_netlock(pid);
+		}
 		else if (strcmp(argv[i], "--net=none") == 0) {
 			arg_nonetwork  = 1;
 			cfg.bridge0.configured = 0;
@@ -3220,6 +3232,16 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_USER();
 
+	// lock netfilter firewall
+	if (arg_netlock) {
+		char *cmd;
+		if (asprintf(&cmd, "firejail --netlock=%d&", getpid()) == -1)
+			errExit("asprintf");
+		int rv = system(cmd);
+		(void) rv;
+		free(cmd);
+	}
+
 	int status = 0;
 	//*****************************
 	// following code is signal-safe
@@ -3237,26 +3259,6 @@ int main(int argc, char **argv, char **envp) {
 	// end of signal-safe code
 	//*****************************
 
-#if 0
-// at this point the sandbox was closed and we are on our way out
-// it would make sense to move this before waitpid above to free some memory
-// crash for now as of issue #3662 from dhcp code
-	// free globals
-	if (cfg.profile) {
-		ProfileEntry *prf = cfg.profile;
-		while (prf != NULL) {
-			ProfileEntry *next = prf->next;
-printf("data #%s#\n", prf->data);
-			if (prf->data)
-				free(prf->data);
-printf("link #%s#\n", prf->link);
-			if (prf->link)
-				free(prf->link);
-			free(prf);
-			prf = next;
-		}
-	}
-#endif
 
 
 	if (WIFEXITED(status)){

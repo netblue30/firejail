@@ -10,17 +10,15 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+
+#include "../include/common.h"
 
 #define MAXBUF 2048
 // stats
@@ -99,8 +97,9 @@ static void usage(void) {
 	printf("\n");
 }
 
-void process_file(const char *fname) {
+static void process_file(char *fname) {
 	assert(fname);
+	char *tmpfname = NULL;
 
 	if (arg_debug)
 		printf("processing #%s#\n", fname);
@@ -109,9 +108,19 @@ void process_file(const char *fname) {
 
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
-		fprintf(stderr, "Warning: cannot open %s, while processing %s\n", fname, profile);
-		level--;
-		return;
+		// the file was not found in the current directory
+		// look for it in /etc/firejail directory
+		if (asprintf(&tmpfname, "%s/%s", SYSCONFDIR, fname) == -1)
+			errExit("asprintf");
+
+		fp = fopen(tmpfname, "r");
+		if (!fp) {
+			fprintf(stderr, "Warning: cannot open %s or %s, while processing %s\n", fname, tmpfname, profile);
+			free(tmpfname);
+			level--;
+			return;
+		}
+		fname = tmpfname;
 	}
 
 	int have_include_local = 0;
@@ -204,6 +213,8 @@ void process_file(const char *fname) {
 	if (!have_include_local)
 		printf("No include .local found in %s\n", fname);
 	level--;
+	if (tmpfname)
+		free(tmpfname);
 }
 
 int main(int argc, char **argv) {

@@ -1,21 +1,23 @@
 firejail (0.9.67) baseline; urgency=low
   * work in progress
-  * exit code: distinguish fatal signals by adding 128
+  * exit code: distinguish fatal signals by adding 128 (#4533)
   * intrusion detection system (--ids-init, --ids-check)
   * deterministic shutdown (--deterministic-exit-code,
-     --deterministic-shutdown)
+     --deterministic-shutdown) (#4635)
+  * noprinters command (#4607)
+  * network monitor (--nettrace)
   * build: firecfg.config is now installed to /etc/firejail/ (#4669)
-  * deprecated --disable-whitelist at compile time
-  * deprecated whitelist=yes/no in /etc/firejail/firejail.config
-  * new condition: ALLOW_TRAY
-  * remove (some) environment variables with auth-tokens
-  * new includes: whitelist-run-common.inc, disable-X11.inc
-  * removed includes: disable-passwordmgr.inc
+  * removed --disable-whitelist at compile time
+  * removed whitelist=yes/no in /etc/firejail/firejail.config
+  * new condition: ALLOW_TRAY (#4510 #4599)
+  * remove (some) environment variables with auth-tokens (#4157)
+  * new includes: whitelist-run-common.inc (#4288), disable-X11.inc (#4462)
+  * removed includes: disable-passwordmgr.inc (#4461)
   * new profiles: microsoft-edge-beta, clion-eap, lifeograph, zim
   * new profiles: io.github.lainsce.Notejot, rednotebook, gallery-dl
   * new profiles: yt-dlp, goldendict, goldendict, bundle, cmake
   * new profiles: make, meson, pip, codium, telnet, ftp, OpenStego
-  * new profiles: imv, retroarch, torbrowser
+  * new profiles: imv, retroarch, torbrowser, CachyBrowser
  -- netblue30 <netblue30@yahoo.com>  Thu, 29 Jul 2021 09:00:00 -0500
 
 firejail (0.9.66) baseline; urgency=low

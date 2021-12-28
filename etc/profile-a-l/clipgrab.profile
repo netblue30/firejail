@@ -6,9 +6,13 @@ include clipgrab.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/ClipGrab
 noblacklist ${HOME}/.config/Philipp Schmieder
 noblacklist ${HOME}/.pki
 noblacklist ${VIDEOS}
+
+# Allow python (blacklisted by disable-interpreters.inc)
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc

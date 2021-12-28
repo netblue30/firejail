@@ -1,16 +1,16 @@
 .PHONY: all
-all: profstats
+all: fnettrace
 
 include ../common.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h
+%.o : %.c $(H_FILE_LIST)
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
-profstats: $(OBJS)
+fnettrace: $(OBJS)
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)
 
 .PHONY: clean
-clean:; rm -fr *.o profstats *.gcov *.gcda *.gcno *.plist
+clean:; rm -fr *.o fnettrace *.gcov *.gcda *.gcno *.plist
 
 .PHONY: distclean
 distclean: clean

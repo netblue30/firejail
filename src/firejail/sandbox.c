@@ -1058,6 +1058,11 @@ int sandbox(void* sandbox_arg) {
 	EUID_USER();
 	int cwd = 0;
 	if (cfg.cwd) {
+		if (is_link(cfg.cwd)) {
+			fprintf(stderr, "Error: unable to enter private working directory: %s\n", cfg.cwd);
+			exit(1);
+		}
+
 		if (chdir(cfg.cwd) == 0)
 			cwd = 1;
 		else if (arg_private_cwd) {
@@ -1225,7 +1230,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************************
 	// drop privileges
 	//****************************************
-	drop_privs(arg_nogroups);
+	drop_privs(0);
 
 	// kill the sandbox in case the parent died
 	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);

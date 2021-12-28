@@ -10,7 +10,9 @@ include yt-dlp.local
 
 noblacklist ${HOME}/.cache/yt-dlp
 noblacklist ${HOME}/.config/yt-dlp
+noblacklist ${HOME}/.config/yt-dlp.conf
 noblacklist ${HOME}/yt-dlp.conf
+noblacklist ${HOME}/yt-dlp.conf.txt
 
 private-bin ffprobe,yt-dlp
 private-etc alternatives,ld.so.cache,ld.so.preload,yt-dlp.conf

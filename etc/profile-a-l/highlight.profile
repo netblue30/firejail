@@ -8,6 +8,9 @@ include globals.local
 
 blacklist ${RUNUSER}
 
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc

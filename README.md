@@ -94,9 +94,49 @@ https://unparalleled.eu/blog/2021/20210208-rigged-race-against-firejail-for-loca
 
 ## Installing
 
-Try installing Firejail from your system packages first. Firejail is included in Alpine, ALT Linux, Arch, Artix, Chakra, Debian, Deepin, Devuan, Fedora, Gentoo, Manjaro, Mint, NixOS, Parabola, Parrot, PCLinuxOS, ROSA, Solus, Slackware/SlackBuilds, Trisquel, Ubuntu, Void and possibly others.
+### Debian
 
-The firejail 0.9.52-LTS version is deprecated. On Ubuntu 18.04 LTS users are advised to use the [PPA](https://launchpad.net/~deki/+archive/ubuntu/firejail). On Debian stable (bullseye) we recommend to use the [backports](https://packages.debian.org/bullseye-backports/firejail) package.
+Debian stable (bullseye): We recommend to use the [backports](https://packages.debian.org/bullseye-backports/firejail) package.
+
+### Ubuntu
+
+For Ubuntu 18.04+ and derivatives (such as Linux Mint), users are **strongly advised** to use the [PPA](https://launchpad.net/~deki/+archive/ubuntu/firejail).
+
+How to add and install from the PPA:
+
+```sh
+sudo add-apt-repository ppa:deki/firejail
+sudo apt-get update
+sudo apt-get install firejail firejail-profiles
+```
+
+Reason: The firejail package for Ubuntu 20.04 has been left vulnerable to CVE-2021-26910 for months after a patch for it was posted on Launchpad:
+
+* [firejail version in Ubuntu 20.04 LTS is vulnerable to CVE-2021-26910](https://bugs.launchpad.net/ubuntu/+source/firejail/+bug/1916767)
+
+See also <https://wiki.ubuntu.com/SecurityTeam/FAQ>:
+
+> What software is supported by the Ubuntu Security team?
+>
+> Ubuntu is currently divided into four components: main, restricted, universe
+> and multiverse. All binary packages in main and restricted are supported by
+> the Ubuntu Security team for the life of an Ubuntu release, while binary
+> packages in universe and multiverse are supported by the Ubuntu community.
+
+Additionally, the PPA version is likely to be more recent and to contain more profile fixes.
+
+See the following discussions for details:
+
+* [Should I keep using the version of firejail available in my distro repos?](https://github.com/netblue30/firejail/discussions/4666)
+* [How to install the latest version on Ubuntu and derivatives](https://github.com/netblue30/firejail/discussions/4663)
+
+### Other
+
+Try installing Firejail from your distribution.
+
+Firejail is included in Alpine, ALT Linux, Arch, Artix, Chakra, Debian, Deepin, Devuan, Fedora, Gentoo, Manjaro, Mint, NixOS, Parabola, Parrot, PCLinuxOS, ROSA, Solus, Slackware/SlackBuilds, Trisquel, Ubuntu, Void and possibly others.
+
+Note: The firejail 0.9.52-LTS version is deprecated.
 
 You can also install one of the [released packages](http://sourceforge.net/projects/firejail/files/firejail), or clone Firejail’s source code from our Git repository and compile manually:
 
@@ -256,40 +296,61 @@ INTRUSION DETECTION SYSTEM (IDS)
               as it contains running processes.
 `````
 
+### Network Monitor
+`````
+       --nettrace=name|pid
+              Monitor TCP and UDP traffic coming into the sandbox specified by
+              name or pid. Only networked sandboxes  created  with  --net  are
+              supported.
+
+              $ firejail --nettrace=browser
+              9.9.9.9:53              =>      192.168.1.60    UDP: 122 B/sec
+              72.21.91.29:80          =>      192.168.1.60    TCP: 257 B/sec
+              80.92.126.65:123        =>      192.168.1.60    UDP: 25 B/sec
+              69.30.241.50:443        =>      192.168.1.60    TCP: 88 KB/sec
+              140.82.112.4:443        =>      192.168.1.60    TCP: 1861 B/sec
+
+              (14 streams in the last one minute)
+
+`````
+
 ### Profile Statistics
 
-A small tool to print profile statistics. Compile as usual and run in /etc/profiles:
+A small tool to print profile statistics. Compile and install as usual. The tool is installed in /usr/lib/firejail directory.
+Run it over the profiles in /etc/profiles:
 ```
-$ sudo cp src/profstats/profstats /etc/firejail/.
-$ cd /etc/firejail
-$ ./profstats *.profile
-    profiles			1167
-    include local profile	1167   (include profile-name.local)
-    include globals		1136   (include globals.local)
-    blacklist ~/.ssh		1042   (include disable-common.inc)
-    seccomp			1062
-    capabilities		1163
-    noexec			1049   (include disable-exec.inc)
-    noroot			971
-    memory-deny-write-execute	256
-    apparmor			693
-    private-bin			677
-    private-dev			1027
-    private-etc			532
-    private-tmp			897
-    whitelist home directory	557
-    whitelist var		836   (include whitelist-var-common.inc)
-    whitelist run/user		1137   (include whitelist-runuser-common.inc
+$ /usr/lib/firejail/profstats /etc/firejail/*.profile
+No include .local found in /etc/firejail/noprofile.profile
+Warning: multiple caps in /etc/firejail/transmission-daemon.profile
+
+Stats:
+    profiles			1176
+    include local profile	1175   (include profile-name.local)
+    include globals		1144   (include globals.local)
+    blacklist ~/.ssh		1050   (include disable-common.inc)
+    seccomp			1070
+    capabilities		1171
+    noexec			1057   (include disable-exec.inc)
+    noroot			979
+    memory-deny-write-execute	258
+    apparmor			700
+    private-bin			681
+    private-dev			1033
+    private-etc			533
+    private-tmp			905
+    whitelist home directory	562
+    whitelist var		842   (include whitelist-var-common.inc)
+    whitelist run/user		1145   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		609   (include whitelist-usr-share-common.inc
-    net none			396
-    dbus-user none 		656
-    dbus-user filter 		108
-    dbus-system none 		808
+    whitelist usr/share		614   (include whitelist-usr-share-common.inc
+    net none			399
+    dbus-user none 		662
+    dbus-user filter 		113
+    dbus-system none 		816
     dbus-system filter 		10
 ```
 
 ### New profiles:
 
 clion-eap, lifeograph, io.github.lainsce.Notejot, rednotebook, zim, microsoft-edge-beta, ncdu2, gallery-dl, yt-dlp, goldendict, bundle,
-cmake, make, meson, pip, codium, telnet, ftp, OpenStego, imv, retroarch, torbrowser
+cmake, make, meson, pip, codium, telnet, ftp, OpenStego, imv, retroarch, torbrowser, CachyBrowser

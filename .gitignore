@@ -43,6 +43,7 @@ src/profstats/profstats
 src/bash_completion/firejail.bash_completion
 src/zsh_completion/_firejail
 src/jailcheck/jailcheck
+src/fnettrace/fnettrace
 uids.h
 seccomp
 seccomp.debug

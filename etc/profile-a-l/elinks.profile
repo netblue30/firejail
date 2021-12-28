@@ -9,6 +9,9 @@ include globals.local
 
 noblacklist ${HOME}/.elinks
 
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
+
 mkdir ${HOME}/.elinks
 whitelist ${HOME}/.elinks
 

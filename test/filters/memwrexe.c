@@ -42,6 +42,11 @@ int main(int argc, char **argv) {
 		}
 
 		void *p = mmap (0, size, PROT_WRITE|PROT_READ|PROT_EXEC, MAP_SHARED, fd, 0);
+		if (p == MAP_FAILED) {
+			printf("mmap failed\n");
+			return 0;
+		}
+
 		printf("mmap successful\n");
 
 		// wait for expect to timeout
@@ -70,7 +75,12 @@ int main(int argc, char **argv) {
 			return 1;
 		}
 
-		mprotect(p, size, PROT_READ|PROT_WRITE|PROT_EXEC);
+		int rv = mprotect(p, size, PROT_READ|PROT_WRITE|PROT_EXEC);
+		if (rv) {
+			printf("mprotect failed\n");
+			return 1;
+		}
+
 		printf("mprotect successful\n");
 
 		// wait for expect to timeout
@@ -82,7 +92,7 @@ int main(int argc, char **argv) {
 	else if (strcmp(argv[1], "memfd_create") == 0) {
 		int fd = syscall(SYS_memfd_create, "memfd_create", 0);
 		if (fd == -1) {
-			fprintf(stderr, "TESTING ERROR: cannot run memfd_create test\n");
+			printf("memfd_create failed\n");
 			return 1;
 		}
 		printf("memfd_create successful\n");

@@ -85,6 +85,7 @@ blacklist ${HOME}/.cache/attic
 blacklist ${HOME}/.cache/babl
 blacklist ${HOME}/.cache/bnox
 blacklist ${HOME}/.cache/borg
+blacklist ${HOME}/.cache/cachy
 blacklist ${HOME}/.cache/calibre
 blacklist ${HOME}/.cache/cantata
 blacklist ${HOME}/.cache/champlain
@@ -223,6 +224,7 @@ blacklist ${HOME}/.cache/youtube-dl
 blacklist ${HOME}/.cache/youtube-viewer
 blacklist ${HOME}/.cache/yt-dlp
 blacklist ${HOME}/.cache/zim
+blacklist ${HOME}/.cachy
 blacklist ${HOME}/.cargo
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.clion*
@@ -239,6 +241,7 @@ blacklist ${HOME}/.config/Bitwarden
 blacklist ${HOME}/.config/Brackets
 blacklist ${HOME}/.config/BraveSoftware
 blacklist ${HOME}/.config/Clementine
+blacklist ${HOME}/.config/ClipGrab
 blacklist ${HOME}/.config/Code
 blacklist ${HOME}/.config/Code - OSS
 blacklist ${HOME}/.config/Code Industry
@@ -635,6 +638,7 @@ blacklist ${HOME}/.config/youtube-music-desktop-app
 blacklist ${HOME}/.config/youtube-viewer
 blacklist ${HOME}/.config/youtubemusic-nativefier-040164
 blacklist ${HOME}/.config/yt-dlp
+blacklist ${HOME}/.config/yt-dlp.conf
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zim
 blacklist ${HOME}/.config/zoomus.conf
@@ -1126,6 +1130,7 @@ blacklist ${HOME}/mps
 blacklist ${HOME}/openstego.ini
 blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/yt-dlp.conf
+blacklist ${HOME}/yt-dlp.conf.txt
 blacklist ${RUNUSER}/*firefox*
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*

@@ -15,7 +15,6 @@ noblacklist ${HOME}/.local/share/torbrowser
 include allow-python2.inc
 include allow-python3.inc
 
-blacklist /opt
 blacklist /srv
 
 include disable-common.inc
@@ -30,6 +29,7 @@ mkdir ${HOME}/.local/share/torbrowser
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/torbrowser
 whitelist ${HOME}/.local/share/torbrowser
+whitelist /opt/tor-browser
 whitelist /usr/share/torbrowser-launcher
 include whitelist-common.inc
 include whitelist-var-common.inc

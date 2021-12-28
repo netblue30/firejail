@@ -103,6 +103,41 @@ void errLogExit(char* fmt, ...) {
 	exit(1);
 }
 
+// Returns whether all supplementary groups can be safely dropped
+int check_can_drop_all_groups() {
+	static int can_drop_all_groups = -1;
+
+	// Avoid needlessly checking (and printing) things twice
+	if (can_drop_all_groups != -1)
+		goto out;
+
+	// nvidia cards require video group; ignore nogroups
+	if (access("/dev/nvidiactl", R_OK) == 0 && arg_no3d == 0) {
+		fwarning("NVIDIA card detected, nogroups command ignored\n");
+		can_drop_all_groups = 0;
+		goto out;
+	}
+
+	/* When we are not sure that the system has working seat-based ACLs
+	 * (e.g.: probably yes on (e)udev + (e)logind, probably not on eudev +
+	 * seatd), supplementary groups (e.g.: audio and input) might be needed
+	 * to avoid breakage (e.g.: audio or gamepads not working).  See #4600
+	 * and #4603.
+	 */
+	if (access("/run/systemd/seats/", F_OK) != 0) {
+		fwarning("logind not detected, nogroups command ignored\n");
+		can_drop_all_groups = 0;
+		goto out;
+	}
+
+	if (arg_debug)
+		fprintf(stderr, "nogroups command not ignored\n");
+	can_drop_all_groups = 1;
+
+out:
+	return can_drop_all_groups;
+}
+
 static int find_group(gid_t group, const gid_t *groups, int ngroups) {
 	int i;
 	for (i = 0; i < ngroups; i++) {
@@ -139,6 +174,9 @@ static void clean_supplementary_groups(gid_t gid) {
 	int ngroups = MAX_GROUPS;
 	int rv = getgrouplist(cfg.username, gid, groups, &ngroups);
 	if (rv == -1)
+		goto clean_all;
+
+	if (arg_nogroups && check_can_drop_all_groups())
 		goto clean_all;
 
 	// clean supplementary group list
@@ -215,21 +253,22 @@ clean_all:
 
 
 // drop privileges
-// - for root group or if nogroups is set, supplementary groups are not configured
-void drop_privs(int nogroups) {
+// - for root group or if force_nogroups is set, supplementary groups are not configured
+void drop_privs(int force_nogroups) {
 	gid_t gid = getgid();
 	if (arg_debug)
-		printf("Drop privileges: pid %d, uid %d, gid %d, nogroups %d\n",  getpid(), getuid(), gid, nogroups);
+		printf("Drop privileges: pid %d, uid %d, gid %d, force_nogroups %d\n",
+		       getpid(), getuid(), gid, force_nogroups);
 
 	// configure supplementary groups
 	EUID_ROOT();
-	if (gid == 0 || nogroups) {
+	if (gid == 0 || force_nogroups) {
 		if (setgroups(0, NULL) < 0)
 			errExit("setgroups");
 		if (arg_debug)
 			printf("No supplementary groups\n");
 	}
-	else if (arg_noroot)
+	else if (arg_noroot || arg_nogroups)
 		clean_supplementary_groups(gid);
 
 	// set uid/gid

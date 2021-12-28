@@ -358,7 +358,7 @@ modifications are discarded when the sandbox is closed.
 Set working directory inside jail to the home directory, and failing that, the root directory.
 .TP
 \fBprivate-cwd directory
-Set working directory inside the jail.
+Set working directory inside the jail. Full directory path is required. Symbolic links are not allowed.
 .TP
 \fBprivate-dev
 Create a new /dev directory. Only disc, dri, dvb, hidraw, null, full, zero, tty, pts, ptmx,

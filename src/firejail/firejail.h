@@ -506,7 +506,8 @@ void errLogExit(char* fmt, ...) __attribute__((noreturn));
 void fwarning(char* fmt, ...);
 void fmessage(char* fmt, ...);
 long long unsigned parse_arg_size(char *str);
-void drop_privs(int nogroups);
+int check_can_drop_all_groups();
+void drop_privs(int force_nogroups);
 int mkpath_as_root(const char* path);
 void extract_command_name(int index, char **argv);
 void logsignal(int s);
@@ -657,6 +658,8 @@ void set_cgroup(const char *fname, pid_t pid);
 void check_output(int argc, char **argv);
 
 // netfilter.c
+void netfilter_netlock(pid_t pid);
+void netfilter_trace(pid_t pid);
 void check_netfilter_file(const char *fname);
 void netfilter(const char *fname);
 void netfilter6(const char *fname);

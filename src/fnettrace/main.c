@@ -75,7 +75,7 @@ static void hlist_add(uint32_t ip_src, uint32_t ip_dst, uint8_t protocol, uint16
 	}
 
 	ansi_clrline(1);
-	logprintf("  %u.%u.%u.%u\n", PRINT_IP(hnew->ip_src));
+	logprintf("  %d%d.%d.%d\n", PRINT_IP(hnew->ip_src));
 }
 
 // remove entries with a ttl <= 0
@@ -111,7 +111,6 @@ static void hlist_print() {
 		return;
 	if (arg_netfilter)
 		printf("\n\n");
-	static int clear_cnt = 0;
 
 	int i;
 	int cnt = 0;
@@ -122,9 +121,9 @@ static void hlist_print() {
 			if (ptr->bytes) {
 				cnt_printed++;
 				char ip_src[30];
-				sprintf(ip_src, "%u.%u.%u.%u:%u", PRINT_IP(ptr->ip_src), ptr->port_src);
+				sprintf(ip_src, "%d.%d.%d.%d:%u", PRINT_IP(ptr->ip_src), ptr->port_src);
 				char ip_dst[30];
-				sprintf(ip_dst, "%u.%u.%u.%u", PRINT_IP(ptr->ip_dst));
+				sprintf(ip_dst, "%d.%d.%d.%d", PRINT_IP(ptr->ip_dst));
 				printf("%-25s =>      %-25s\t%s:",
 					ip_src,
 					ip_dst,
@@ -168,7 +167,6 @@ static void run_trace(void) {
 	unsigned last_print_traces = 0;
 	unsigned last_print_remaining = 0;
 	unsigned char buf[MAX_BUF_SIZE];
-	int progress_cnt = 0;
 	while (1) {
 		unsigned end = time(NULL);
 		if (arg_netfilter && end - start >= NETLOCK_INTERVAL) {
@@ -201,11 +199,8 @@ static void run_trace(void) {
 		else if (rv == 0)
 			continue;
 
-
-
 		int sock = (FD_ISSET(s1, &rfds)) ? s1 : s2;
 
-		unsigned char buf[MAX_BUF_SIZE];
 		unsigned bytes = recvfrom(sock, buf, MAX_BUF_SIZE, 0, NULL, NULL);
 		if (bytes >= 20) { // size of IP header
 			// filter out loopback traffic
@@ -253,11 +248,11 @@ static int print_filter(FILE *fp) {
 		while (ptr) {
 			if (ptr->instance == 1) {
 				char *protocol = (ptr->protocol == 6)? "tcp": "udp";
-				fprintf(fp, "-A INPUT -s %u.%u.%u.%u -sport %u -p %s  -j ACCEPT\n",
+				fprintf(fp, "-A INPUT -s %d.%d.%d.%d -sport %u -p %s  -j ACCEPT\n",
 					PRINT_IP(ptr->ip_src),
 					ptr->port_src,
 					protocol);
-				fprintf(fp, "-A OUTPUT -d %u.%u.%u.%u -dport %u -p %s  -j ACCEPT\n",
+				fprintf(fp, "-A OUTPUT -d %d.%d.%d.%d -dport %u -p %s  -j ACCEPT\n",
 					PRINT_IP(ptr->ip_src),
 					ptr->port_src,
 					protocol);

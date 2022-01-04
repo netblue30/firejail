@@ -28,47 +28,22 @@
 #include <time.h>
 #include <stdarg.h>
 
-//#define NETLOCK_INTERVAL 60
+//#define NETLOCK_INTERVAL 15
 #define NETLOCK_INTERVAL 60
 #define DISPLAY_INTERVAL 3
 
 void logprintf(char* fmt, ...);
 
-static inline void ansi_topleft(int tolog) {
+static inline void ansi_topleft(void) {
 	char str[] = {0x1b, '[', '1', ';',  '1', 'H', '\0'};
-	if (tolog)
-		logprintf("%s", str);
-	else
-		printf("%s", str);
+	printf("%s", str);
 	fflush(0);
 }
 
-static inline void ansi_clrscr(int tolog) {
-	ansi_topleft(tolog);
+static inline void ansi_clrscr(void) {
+	ansi_topleft();
 	char str[] = {0x1b, '[', '0', 'J', '\0'};
-	if (tolog)
-		logprintf("%s", str);
-	else
-		printf("%s", str);
-	fflush(0);
-}
-
-static inline void ansi_linestart(int tolog) {
-	char str[] = {0x1b, '[', '0', 'G', '\0'};
-	if (tolog)
-		logprintf("%s", str);
-	else
-		printf("%s", str);
-	fflush(0);
-}
-
-static inline void ansi_clrline(int tolog) {
-	ansi_linestart(tolog);
-	char str[] = {0x1b, '[', '0', 'K', '\0'};
-	if (tolog)
-		logprintf("%s", str);
-	else
-		printf("%s", str);
+	printf("%s", str);
 	fflush(0);
 }
 

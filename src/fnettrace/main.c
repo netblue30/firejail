@@ -18,144 +18,176 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "fnettrace.h"
+//#define DEBUG 1
 #define MAX_BUF_SIZE (64 * 1024)
 
 static int arg_netfilter = 0;
 static char *arg_log = NULL;
 
 typedef struct hlist_t {
-	struct hlist_t *next;
+	struct hlist_t *hnext;	// used for hash table
+	struct hlist_t *dnext;	// used to display stremas on the screen
 	uint32_t ip_src;
 	uint32_t ip_dst;
+	uint64_t  bytes;	// number of bytes received in the last display interval
 	uint16_t port_src;
-	uint64_t  bytes;
-	int instance;
-#define MAX_TTL 20 // 20 * DISPLAY_INTERVAL = 1 minute
-	short ttl;
+	uint16_t ip_instance;
+		// the firewall is build based on source address, and in the linked list
+		// we have elements with the same address but different ports
 	uint8_t protocol;
 } HList;
 
+// hash table
 #define HMAX 256
 HList *htable[HMAX] = {NULL};
-static int htable_empty = 1;
+// display linked list
+HList *dlist = NULL;
 
 static void hlist_add(uint32_t ip_src, uint32_t ip_dst, uint8_t protocol, uint16_t port_src, uint64_t bytes) {
 	uint8_t h = hash(ip_src);
-	htable_empty = 0;
 
 	// find
-	int instance = 0;
+	int ip_instance = 0;
 	HList *ptr = htable[h];
 	while (ptr) {
 		if (ptr->ip_src == ip_src) {
-			instance++;
+			ip_instance++;
 			if (ptr->ip_dst == ip_dst && ptr->port_src == port_src && ptr->protocol == protocol) {
 				ptr->bytes += bytes;
-				ptr->ttl = MAX_TTL;
 				return;
 			}
 		}
-		ptr = ptr->next;
+		ptr = ptr->hnext;
 	}
 
+#ifdef DEBUG
+	printf("malloc %d.%d.%d.%d\n", PRINT_IP(ip_src));
+#endif
 	HList *hnew = malloc(sizeof(HList));
+	if (!hnew)
+		errExit("malloc");
 	hnew->ip_src = ip_src;
 	hnew->ip_dst = ip_dst;
 	hnew->port_src = port_src;
 	hnew->protocol = protocol;
-	hnew->next = NULL;
+	hnew->hnext = NULL;
 	hnew->bytes = bytes;
-	hnew->ttl = MAX_TTL;
-	hnew->instance = instance + 1;
+	hnew->ip_instance = ip_instance + 1;
 	if (htable[h] == NULL)
 		htable[h] = hnew;
 	else {
-		hnew->next = htable[h];
+		hnew->hnext = htable[h];
 		htable[h] = hnew;
 	}
 
-	ansi_clrline(1);
-	logprintf("  %d%d.%d.%d\n", PRINT_IP(hnew->ip_src));
-}
-
-// remove entries with a ttl <= 0
-static void hlist_clean_ttl() {
-	if (htable_empty)
-		return;
-
-	int i;
-	for (i = 0; i < HMAX; i++) {
-		HList *ptr = htable[i];
-		HList *parent = NULL;
-		while (ptr) {
-			if (--ptr->ttl <= 0) {
-				HList *tmp = ptr;
-				ptr = ptr->next;
-				if (parent)
-					parent->next = ptr;
-				else
-					htable[i] = ptr;
-				free(tmp);
-			}
-			else {
-				parent = ptr;
-				ptr = ptr->next;
-			}
-		}
+	// add to the end of list
+	hnew->dnext = NULL;
+	if (dlist == NULL)
+		dlist = hnew;
+	else {
+		ptr = dlist;
+		while (ptr->dnext != NULL)
+			ptr = ptr->dnext;
+		ptr->dnext = hnew;
 	}
-}
 
-static void hlist_print() {
-	ansi_clrscr(0);
-	if (htable_empty)
-		return;
 	if (arg_netfilter)
-		printf("\n\n");
+		logprintf(" %d.%d.%d.%d ", PRINT_IP(hnew->ip_src));
+}
 
+static void hlist_free(HList *elem) {
+	assert(elem);
+#ifdef DEBUG
+	printf("free %d.%d.%d.%d\n", PRINT_IP(elem->ip_src));
+#endif
+
+	uint8_t h = hash(elem->ip_src);
+	HList *ptr = htable[h];
+	assert(ptr);
+
+	HList *prev = NULL;
+	while (ptr != elem) {
+		prev = ptr;
+		ptr = ptr->hnext;
+	}
+	if (prev == NULL)
+		htable[h] = elem->hnext;
+	else
+		prev->hnext = elem->hnext;
+	free(elem);
+}
+
+#ifdef DEBUG
+static void debug_dlist(void) {
+	HList *ptr = dlist;
+	while (ptr) {
+		printf("dlist %d.%d.%d.%d:%d\n", PRINT_IP(ptr->ip_src), ptr->port_src);
+		ptr = ptr->dnext;
+	}
+}
+static void debug_hlist(void) {
 	int i;
-	int cnt = 0;
-	int cnt_printed = 0;
 	for (i = 0; i < HMAX; i++) {
 		HList *ptr = htable[i];
 		while (ptr) {
-			if (ptr->bytes) {
-				cnt_printed++;
-				char ip_src[30];
-				sprintf(ip_src, "%d.%d.%d.%d:%u", PRINT_IP(ptr->ip_src), ptr->port_src);
-				char ip_dst[30];
-				sprintf(ip_dst, "%d.%d.%d.%d", PRINT_IP(ptr->ip_dst));
-				printf("%-25s =>      %-25s\t%s:",
-					ip_src,
-					ip_dst,
-					(ptr->protocol == 6)? "TCP": "UDP");
-
-				if (ptr->bytes > (DISPLAY_INTERVAL * 1024 * 2)) // > 2 KB/second
-					printf(" %lu KB/sec\n",
-						ptr->bytes / (DISPLAY_INTERVAL * 1024));
-				else
-					printf(" %lu B/sec\n",
-						ptr->bytes / DISPLAY_INTERVAL);
-				ptr->bytes = 0;
-			}
-
-			ptr = ptr->next;
-			cnt++;
+			printf("hlist (%d) %d.%d.%d.%d:%d\n", i, PRINT_IP(ptr->ip_src), ptr->port_src);
+			ptr = ptr->hnext;
 		}
 	}
+}
+#endif
 
-	if (cnt_printed < 7) {
-		for (i = 0; i < 7 - cnt_printed; i++)
-			printf("\n");
-	}
+static void hlist_print(void) {
+	assert(!arg_netfilter);
+	ansi_clrscr();
 
-	if (!arg_netfilter) {
-		printf("(%d %s in the last one minute)\n", cnt, (cnt == 1)? "stream": "streams");
-		hlist_clean_ttl();
+#ifdef DEBUG
+	printf("*********************\n");
+	debug_dlist();
+	printf("-----------------------------\n");
+	debug_hlist();
+	printf("*********************\n");
+#endif
+
+	HList *ptr = dlist;
+	HList *prev = NULL;
+	while (ptr) {
+		HList *next = ptr->dnext;
+		if (ptr->bytes) {
+			char ip_src[30];
+			sprintf(ip_src, "%d.%d.%d.%d:%u", PRINT_IP(ptr->ip_src), ptr->port_src);
+			char ip_dst[30];
+			sprintf(ip_dst, "%d.%d.%d.%d", PRINT_IP(ptr->ip_dst));
+			printf("%-22s =>     %-15s     %s:",
+				ip_src,
+				ip_dst,
+				(ptr->protocol == 6)? "TCP": "UDP");
+
+			if (ptr->bytes > (DISPLAY_INTERVAL * 1024 * 2)) // > 2 KB/second
+				printf(" %lu KB/sec\n",
+					ptr->bytes / (DISPLAY_INTERVAL * 1024));
+			else
+				printf(" %lu B/sec\n",
+					ptr->bytes / DISPLAY_INTERVAL);
+			ptr->bytes = 0;
+			prev = ptr;
+		}
+		else {
+			// free the element
+			if (prev == NULL)
+				dlist = next;
+			else
+				prev->dnext = next;
+			hlist_free(ptr);
+		}
+
+		ptr = next;
 	}
 }
 
 static void run_trace(void) {
-	logprintf("accumulating traffic for %d seconds...\n", NETLOCK_INTERVAL);
+	if (arg_netfilter)
+		logprintf("accumulating traffic for %d seconds\n", NETLOCK_INTERVAL);
 
 	// trace only rx ipv4 tcp and upd
 	int s1 = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
@@ -169,18 +201,16 @@ static void run_trace(void) {
 	unsigned char buf[MAX_BUF_SIZE];
 	while (1) {
 		unsigned end = time(NULL);
-		if (arg_netfilter && end - start >= NETLOCK_INTERVAL) {
-			ansi_clrline(1);
+		if (arg_netfilter && end - start >= NETLOCK_INTERVAL)
 			break;
-		}
 		if (end % DISPLAY_INTERVAL == 1 && last_print_traces != end) { // first print after 1 second
-			hlist_print();
+			if (!arg_netfilter)
+				hlist_print();
 			last_print_traces = end;
 		}
 		if (arg_netfilter && last_print_remaining != end) {
-			ansi_clrline(1);
-			int secs = NETLOCK_INTERVAL - (end  - start);
-			logprintf("%d %s remaining   ", secs, (secs == 1)? "second": "seconds");
+			logprintf(".");
+			fflush(0);
 			last_print_remaining = end;
 		}
 
@@ -228,14 +258,14 @@ static void run_trace(void) {
 }
 
 static char *filter_start =
-"*filter\n"
-":INPUT DROP [0:0]\n"
-":FORWARD DROP [0:0]\n"
-":OUTPUT DROP [0:0]\n";
+	"*filter\n"
+	":INPUT DROP [0:0]\n"
+	":FORWARD DROP [0:0]\n"
+	":OUTPUT DROP [0:0]\n";
 
 // return 1 if error
 static int print_filter(FILE *fp) {
-	if (htable_empty)
+	if (dlist == NULL)
 		return 1;
 	fprintf(fp, "%s\n", filter_start);
 	fprintf(fp, "-A INPUT -s 127.0.0.0/8 -j ACCEPT\n");
@@ -246,19 +276,19 @@ static int print_filter(FILE *fp) {
 	for (i = 0; i < HMAX; i++) {
 		HList *ptr = htable[i];
 		while (ptr) {
-			if (ptr->instance == 1) {
+			// filter rules are targeting ip address, the port number is disregarded,
+			// so we look only at the first instance of an address
+			if (ptr->ip_instance == 1) {
 				char *protocol = (ptr->protocol == 6)? "tcp": "udp";
-				fprintf(fp, "-A INPUT -s %d.%d.%d.%d -sport %u -p %s  -j ACCEPT\n",
+				fprintf(fp, "-A INPUT -s %d.%d.%d.%d -p %s  -j ACCEPT\n",
 					PRINT_IP(ptr->ip_src),
-					ptr->port_src,
 					protocol);
-				fprintf(fp, "-A OUTPUT -d %d.%d.%d.%d -dport %u -p %s  -j ACCEPT\n",
+				fprintf(fp, "-A OUTPUT -d %d.%d.%d.%d -p %s  -j ACCEPT\n",
 					PRINT_IP(ptr->ip_src),
-					ptr->port_src,
 					protocol);
 				fprintf(fp, "\n");
 			}
-			ptr = ptr->next;
+			ptr = ptr->hnext;
 		}
 	}
 	fprintf(fp, "COMMIT\n");
@@ -268,33 +298,46 @@ static int print_filter(FILE *fp) {
 
 static char *flush_rules[] = {
 	"-P INPUT ACCEPT",
-	"-P FORWARD ACCEPT",
+//	"-P FORWARD DENY",
 	"-P OUTPUT ACCEPT",
 	"-F",
 	"-X",
-	"-t nat -F",
-	"-t nat -X",
-	"-t mangle -F",
-	"-t mangle -X",
-	"iptables -t raw -F",
-	"-t raw -X",
+//	"-t nat -F",
+//	"-t nat -X",
+//	"-t mangle -F",
+//	"-t mangle -X",
+//	"iptables -t raw -F",
+//	"-t raw -X",
 	NULL
 };
 
-static void flush_netfilter(void) {
+static void deploy_netfilter(void) {
+	int rv;
+	char *cmd;
+	int i;
+
+	if (dlist == NULL) {
+		logprintf("Sorry, no network traffic was detected. The firewall was not configured.\n");
+		return;
+	}
 	// find iptables command
-	struct stat s;
 	char *iptables = NULL;
-	if (stat("/sbin/iptables", &s) == 0)
+	char *iptables_restore = NULL;
+	if (access("/sbin/iptables", X_OK) == 0) {
 		iptables = "/sbin/iptables";
-	else if (stat("/usr/sbin/iptables", &s) == 0)
+		iptables_restore = "/sbin/iptables-restore";
+	}
+	else if (access("/usr/sbin/iptables", X_OK) == 0) {
 		iptables = "/usr/sbin/iptables";
-	if (iptables == NULL) {
+		iptables_restore = "/usr/sbin/iptables-restore";
+	}
+	if (iptables == NULL || iptables_restore == NULL) {
 		fprintf(stderr, "Error: iptables command not found, netfilter not configured\n");
 		exit(1);
 	}
 
-	int i = 0;
+	// flush all netfilter rules
+	i = 0;
 	while (flush_rules[i]) {
 		char *cmd;
 		if (asprintf(&cmd, "%s %s", iptables, flush_rules[i]) == -1)
@@ -304,11 +347,6 @@ static void flush_netfilter(void) {
 		free(cmd);
 		i++;
 	}
-}
-
-static void deploy_netfilter(void) {
-	int rv;
-	char *cmd;
 
 	// create temporary file
 	char fname[] = "/tmp/firejail-XXXXXX";
@@ -328,35 +366,20 @@ static void deploy_netfilter(void) {
 	print_filter(fp);
 	fclose(fp);
 
-	if (arg_log) {
-		logprintf("\n");
-		logprintf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
-		if (asprintf(&cmd, "cat %s >> %s", fname, arg_log) == -1)
-			errExit("asprintf");
-		rv = system(cmd);
-		(void) rv;
-		free(cmd);
-		logprintf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
-	}
+	logprintf("\n\n");
+	logprintf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+	if (asprintf(&cmd, "cat %s >> %s", fname, arg_log) == -1)
+		errExit("asprintf");
+	rv = system(cmd);
+	(void) rv;
+	free(cmd);
 
-	// find iptables command
-	struct stat s;
-	char *iptables = NULL;
-	char *iptables_restore = NULL;
-	if (stat("/sbin/iptables", &s) == 0) {
-		iptables = "/sbin/iptables";
-		iptables_restore = "/sbin/iptables-restore";
-	}
-	else if (stat("/usr/sbin/iptables", &s) == 0) {
-		iptables = "/usr/sbin/iptables";
-		iptables_restore = "/usr/sbin/iptables-restore";
-	}
-	if (iptables == NULL || iptables_restore == NULL) {
-		fprintf(stderr, "Error: iptables command not found, netfilter not configured\n");
-		rv = unlink(fname);
-		(void) rv;
-		exit(1);
-	}
+	if (asprintf(&cmd, "cat %s", fname) == -1)
+		errExit("asprintf");
+	rv = system(cmd);
+	(void) rv;
+	free(cmd);
+	logprintf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
 
 	// configuring
 	if (asprintf(&cmd, "%s %s", iptables_restore, fname) == -1)
@@ -365,17 +388,6 @@ static void deploy_netfilter(void) {
 	if (rv)
 		fprintf(stdout, "Warning: possible netfilter problem!");
 	free(cmd);
-
-	sleep(1);
-	if (asprintf(&cmd, "%s %s", iptables_restore, fname) == -1)
-		errExit("asprintf");
-	rv = system(cmd);
-	free(cmd);
-
-	printf("Current firewall configuration:\n\n");
-	if (asprintf(&cmd, "%s -vL -n", iptables) == -1)
-		errExit("asprintf");
-	rv = system(cmd);
 
 	rv = unlink(fname);
 	(void) rv;
@@ -394,6 +406,11 @@ void logprintf(char* fmt, ...) {
 		va_end(args);
 		fclose(fp);
 	}
+
+	va_list args;
+	va_start(args,fmt);
+	vfprintf(stdout, fmt, args);
+	va_end(args);
 }
 
 static void usage(void) {
@@ -429,12 +446,10 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	if (arg_netfilter) {
+	ansi_clrscr();
+	if (arg_netfilter)
 		logprintf("starting network lockdown\n");
-		flush_netfilter();
-	}
 
-	ansi_clrscr(0);
 	run_trace();
 	if (arg_netfilter) {
 		deploy_netfilter();

@@ -53,6 +53,9 @@ void netfilter_netlock(pid_t pid) {
 //	else if (access("/usr/bin/gnome-terminal", X_OK) == 0)
 //		terminal = "/usr/bin/gnome-terminal";
 
+	if (isatty(STDIN_FILENO))
+		terminal = NULL;
+
 	if (terminal) {
 		pid_t p = fork();
 		if (p == -1)

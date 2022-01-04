@@ -2294,12 +2294,6 @@ int main(int argc, char **argv, char **envp) {
 		//*************************************
 		// network
 		//*************************************
-		else if (strcmp(argv[i], "--netlock") == 0)
-			arg_netlock = 1;
-		else if (strncmp(argv[i], "--netlock=", 10) == 0) {
-			pid_t pid = require_pid(argv[i] + 10);
-			netfilter_netlock(pid);
-		}
 		else if (strcmp(argv[i], "--net=none") == 0) {
 			arg_nonetwork  = 1;
 			cfg.bridge0.configured = 0;
@@ -2313,6 +2307,12 @@ int main(int argc, char **argv, char **envp) {
 			continue;
 		}
 #ifdef HAVE_NETWORK
+		else if (strcmp(argv[i], "--netlock") == 0)
+			arg_netlock = 1;
+		else if (strncmp(argv[i], "--netlock=", 10) == 0) {
+			pid_t pid = require_pid(argv[i] + 10);
+			netfilter_netlock(pid);
+		}
 		else if (strncmp(argv[i], "--interface=", 12) == 0) {
 			if (checkcfg(CFG_NETWORK)) {
 				// checks

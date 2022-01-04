@@ -6,7 +6,6 @@ include skypeforlinux.local
 include globals.local
 
 # Disabled until someone reported positive feedback
-ignore whitelist ${DOWNLOADS}
 ignore include whitelist-common.inc
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc

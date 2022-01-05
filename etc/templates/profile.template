@@ -155,6 +155,7 @@ include globals.local
 #nogroups
 #noinput
 #nonewprivs
+#noprinters
 #noroot
 #nosound
 #notv

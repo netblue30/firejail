@@ -1634,6 +1634,10 @@ does not result in an increase of privilege. This option
 is enabled by default if seccomp filter is activated.
 
 .TP
+\fB\-\-noprinters
+Disable printers.
+
+.TP
 \fB\-\-noprofile
 Do not use a security profile.
 .br

@@ -294,6 +294,7 @@ blacklist ${HOME}/.config/MusicBrainz
 blacklist ${HOME}/.config/Nathan Osman
 blacklist ${HOME}/.config/Nextcloud
 blacklist ${HOME}/.config/NitroShare
+blacklist ${HOME}/.config/Notable
 blacklist ${HOME}/.config/Nylas Mail
 blacklist ${HOME}/.config/PBE
 blacklist ${HOME}/.config/PacmanLogViewer
@@ -1009,6 +1010,7 @@ blacklist ${HOME}/.newsboat
 blacklist ${HOME}/.newsrc
 blacklist ${HOME}/.nicotine
 blacklist ${HOME}/.node-gyp
+blacklist ${HOME}/.notable
 blacklist ${HOME}/.npm
 blacklist ${HOME}/.npmrc
 blacklist ${HOME}/.nv

@@ -16,7 +16,6 @@ whitelist ${HOME}/.cache/chromium
 whitelist ${HOME}/.config/chromium
 whitelist ${HOME}/.config/chromium-flags.conf
 whitelist /usr/share/chromium
-whitelist /usr/share/mozilla/extensions
 
 # private-bin chromium,chromium-browser,chromedriver
 

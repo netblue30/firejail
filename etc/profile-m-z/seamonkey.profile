@@ -8,8 +8,8 @@ include globals.local
 
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
-noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.local/share/pki
+noblacklist ${HOME}/.pki
 
 include disable-common.inc
 include disable-devel.inc
@@ -18,8 +18,8 @@ include disable-programs.inc
 
 mkdir ${HOME}/.cache/mozilla
 mkdir ${HOME}/.mozilla
-mkdir ${HOME}/.pki
 mkdir ${HOME}/.local/share/pki
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
 whitelist ${HOME}/.cache/mozilla
@@ -28,11 +28,11 @@ whitelist ${HOME}/.config/pipelight-silverlight5.1
 whitelist ${HOME}/.config/pipelight-widevine
 whitelist ${HOME}/.keysnail.js
 whitelist ${HOME}/.lastpass
+whitelist ${HOME}/.local/share/pki
 whitelist ${HOME}/.mozilla
 whitelist ${HOME}/.pentadactyl
 whitelist ${HOME}/.pentadactylrc
 whitelist ${HOME}/.pki
-whitelist ${HOME}/.local/share/pki
 whitelist ${HOME}/.vimperator
 whitelist ${HOME}/.vimperatorrc
 whitelist ${HOME}/.wine-pipelight

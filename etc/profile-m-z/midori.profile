@@ -12,10 +12,10 @@ include globals.local
 noblacklist ${HOME}/.cache/midori
 noblacklist ${HOME}/.config/midori
 noblacklist ${HOME}/.local/share/midori
+noblacklist ${HOME}/.local/share/pki
 # noblacklist ${HOME}/.local/share/webkit
 # noblacklist ${HOME}/.local/share/webkitgtk
 noblacklist ${HOME}/.pki
-noblacklist ${HOME}/.local/share/pki
 
 noblacklist ${HOME}/.cache/gnome-mplayer
 noblacklist ${HOME}/.config/gnome-mplayer
@@ -31,10 +31,10 @@ include disable-xdg.inc
 mkdir ${HOME}/.cache/midori
 mkdir ${HOME}/.config/midori
 mkdir ${HOME}/.local/share/midori
+mkdir ${HOME}/.local/share/pki
 mkdir ${HOME}/.local/share/webkit
 mkdir ${HOME}/.local/share/webkitgtk
 mkdir ${HOME}/.pki
-mkdir ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
 whitelist ${HOME}/.cache/midori
@@ -42,10 +42,10 @@ whitelist ${HOME}/.config/gnome-mplayer
 whitelist ${HOME}/.config/midori
 whitelist ${HOME}/.lastpass
 whitelist ${HOME}/.local/share/midori
+whitelist ${HOME}/.local/share/pki
 whitelist ${HOME}/.local/share/webkit
 whitelist ${HOME}/.local/share/webkitgtk
 whitelist ${HOME}/.pki
-whitelist ${HOME}/.local/share/pki
 include whitelist-common.inc
 include whitelist-var-common.inc
 

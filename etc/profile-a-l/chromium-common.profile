@@ -29,6 +29,8 @@ mkdir ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
+whitelist /usr/share/mozilla/extensions
+whitelist /usr/share/webext
 include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc

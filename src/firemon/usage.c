@@ -38,12 +38,12 @@ static char *help_str =
 	"\t--name=name - print information only about named sandbox.\n\n"
 	"\t--netstats - monitor network statistics for sandboxes creating a new\n"
 	"\t\tnetwork namespace.\n\n"
-	"\t--nowrap - enable line wrapping in terminals.\n\n"
 	"\t--route - print route table for each sandbox.\n\n"
 	"\t--seccomp - print seccomp configuration for each sandbox.\n\n"
 	"\t--tree - print a tree of all sandboxed processes.\n\n"
 	"\t--top - monitor the most CPU-intensive sandboxes.\n\n"
 	"\t--version - print program version and exit.\n\n"
+	"\t--wrap - enable line wrapping in terminals.\n\n"
 	"\t--x11 - print X11 display number.\n\n"
 
 	"Without any options, firemon monitors all fork, exec, id change, and exit\n"

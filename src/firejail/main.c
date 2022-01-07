@@ -3150,9 +3150,14 @@ int main(int argc, char **argv, char **envp) {
 				}
 			}
 
-			// add render group
+			// add render/vglusers group
 			if (!arg_no3d) {
 				g = get_group_id("render");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
+				g = get_group_id("vglusers");
 				if (g) {
 					sprintf(ptr, "%d %d 1\n", g, g);
 					ptr += strlen(ptr);

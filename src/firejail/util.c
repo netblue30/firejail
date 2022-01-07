@@ -209,6 +209,8 @@ static void clean_supplementary_groups(gid_t gid) {
 	if (!arg_no3d) {
 		copy_group_ifcont("render", groups, ngroups,
 		                  new_groups, &new_ngroups, MAX_GROUPS);
+		copy_group_ifcont("vglusers", groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
 	}
 
 	if (!arg_noprinters) {

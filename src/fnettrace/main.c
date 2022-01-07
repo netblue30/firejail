@@ -18,37 +18,42 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "fnettrace.h"
-//#define DEBUG 1
+#include "radix.h"
+#include <sys/ioctl.h>
 #define MAX_BUF_SIZE (64 * 1024)
 
 static int arg_netfilter = 0;
 static char *arg_log = NULL;
 
-typedef struct hlist_t {
-	struct hlist_t *hnext;	// used for hash table
-	struct hlist_t *dnext;	// used to display stremas on the screen
+typedef struct hnode_t {
+	struct hnode_t *hnext;	// used for hash table
+	struct hnode_t *dnext;	// used to display stremas on the screen
 	uint32_t ip_src;
 	uint32_t ip_dst;
-	uint64_t  bytes;	// number of bytes received in the last display interval
+	uint32_t  bytes;	// number of bytes received in the last display interval
 	uint16_t port_src;
-	uint16_t ip_instance;
-		// the firewall is build based on source address, and in the linked list
-		// we have elements with the same address but different ports
 	uint8_t protocol;
-} HList;
+	// the firewall is build based on source address, and in the linked list
+	// we have elements with the same address but different ports
+	uint8_t ip_instance;
+	char *hostname;
+	int ttl;
+} HNode;
 
 // hash table
 #define HMAX 256
-HList *htable[HMAX] = {NULL};
+HNode *htable[HMAX] = {NULL};
 // display linked list
-HList *dlist = NULL;
+HNode *dlist = NULL;
 
-static void hlist_add(uint32_t ip_src, uint32_t ip_dst, uint8_t protocol, uint16_t port_src, uint64_t bytes) {
+static unsigned bwmax = 0; // max bytes received in a display interval
+
+static void hnode_add(uint32_t ip_src, uint32_t ip_dst, uint8_t protocol, uint16_t port_src, uint32_t bytes) {
 	uint8_t h = hash(ip_src);
 
 	// find
 	int ip_instance = 0;
-	HList *ptr = htable[h];
+	HNode *ptr = htable[h];
 	while (ptr) {
 		if (ptr->ip_src == ip_src) {
 			ip_instance++;
@@ -63,9 +68,10 @@ static void hlist_add(uint32_t ip_src, uint32_t ip_dst, uint8_t protocol, uint16
 #ifdef DEBUG
 	printf("malloc %d.%d.%d.%d\n", PRINT_IP(ip_src));
 #endif
-	HList *hnew = malloc(sizeof(HList));
+	HNode *hnew = malloc(sizeof(HNode));
 	if (!hnew)
 		errExit("malloc");
+	hnew->hostname = NULL;
 	hnew->ip_src = ip_src;
 	hnew->ip_dst = ip_dst;
 	hnew->port_src = port_src;
@@ -73,6 +79,7 @@ static void hlist_add(uint32_t ip_src, uint32_t ip_dst, uint8_t protocol, uint16
 	hnew->hnext = NULL;
 	hnew->bytes = bytes;
 	hnew->ip_instance = ip_instance + 1;
+	hnew->ttl = DISPLAY_TTL;
 	if (htable[h] == NULL)
 		htable[h] = hnew;
 	else {
@@ -95,17 +102,17 @@ static void hlist_add(uint32_t ip_src, uint32_t ip_dst, uint8_t protocol, uint16
 		logprintf(" %d.%d.%d.%d ", PRINT_IP(hnew->ip_src));
 }
 
-static void hlist_free(HList *elem) {
+static void hnode_free(HNode *elem) {
 	assert(elem);
 #ifdef DEBUG
 	printf("free %d.%d.%d.%d\n", PRINT_IP(elem->ip_src));
 #endif
 
 	uint8_t h = hash(elem->ip_src);
-	HList *ptr = htable[h];
+	HNode *ptr = htable[h];
 	assert(ptr);
 
-	HList *prev = NULL;
+	HNode *prev = NULL;
 	while (ptr != elem) {
 		prev = ptr;
 		ptr = ptr->hnext;
@@ -119,25 +126,45 @@ static void hlist_free(HList *elem) {
 
 #ifdef DEBUG
 static void debug_dlist(void) {
-	HList *ptr = dlist;
+	HNode *ptr = dlist;
 	while (ptr) {
 		printf("dlist %d.%d.%d.%d:%d\n", PRINT_IP(ptr->ip_src), ptr->port_src);
 		ptr = ptr->dnext;
 	}
 }
-static void debug_hlist(void) {
+static void debug_hnode(void) {
 	int i;
 	for (i = 0; i < HMAX; i++) {
-		HList *ptr = htable[i];
+		HNode *ptr = htable[i];
 		while (ptr) {
-			printf("hlist (%d) %d.%d.%d.%d:%d\n", i, PRINT_IP(ptr->ip_src), ptr->port_src);
+			printf("hnode (%d) %d.%d.%d.%d:%d\n", i, PRINT_IP(ptr->ip_src), ptr->port_src);
 			ptr = ptr->hnext;
 		}
 	}
 }
 #endif
 
-static void hlist_print(void) {
+static char *bw_line[DISPLAY_BW_UNITS + 1] = { NULL };
+
+static char *print_bw(unsigned units) {
+	if (units > DISPLAY_BW_UNITS)
+		units = DISPLAY_BW_UNITS ;
+
+	if (bw_line[units] == NULL) {
+		char *ptr = malloc(DISPLAY_BW_UNITS + 1);
+		if (!ptr)
+			errExit("malloc");
+		bw_line[units] = ptr;
+
+		unsigned i;
+		for (i = 0; i < DISPLAY_BW_UNITS; i++, ptr++)
+			sprintf(ptr, "%s", (i < units)? "*": " ");
+	}
+
+	return bw_line[units];
+}
+
+static void hnode_print(void) {
 	assert(!arg_netfilter);
 	ansi_clrscr();
 
@@ -145,30 +172,66 @@ static void hlist_print(void) {
 	printf("*********************\n");
 	debug_dlist();
 	printf("-----------------------------\n");
-	debug_hlist();
+	debug_hnode();
 	printf("*********************\n");
 #endif
 
-	HList *ptr = dlist;
-	HList *prev = NULL;
-	while (ptr) {
-		HList *next = ptr->dnext;
-		if (ptr->bytes) {
-			char ip_src[30];
-			sprintf(ip_src, "%d.%d.%d.%d:%u", PRINT_IP(ptr->ip_src), ptr->port_src);
-			char ip_dst[30];
-			sprintf(ip_dst, "%d.%d.%d.%d", PRINT_IP(ptr->ip_dst));
-			printf("%-22s =>     %-15s     %s:",
-				ip_src,
-				ip_dst,
-				(ptr->protocol == 6)? "TCP": "UDP");
+	// get terminal size
+	struct winsize sz;
+	int col = 80;
+	if (isatty(STDIN_FILENO)) {
+		if (!ioctl(0, TIOCGWINSZ, &sz))
+			col  = sz.ws_col;
+	}
+#define LINE_MAX 200
+	char line[LINE_MAX + 1];
+	if (col > LINE_MAX)
+		col = LINE_MAX;
 
-			if (ptr->bytes > (DISPLAY_INTERVAL * 1024 * 2)) // > 2 KB/second
-				printf(" %lu KB/sec\n",
-					ptr->bytes / (DISPLAY_INTERVAL * 1024));
+	HNode *ptr = dlist;
+	HNode *prev = NULL;
+	while (ptr) {
+		HNode *next = ptr->dnext;
+		if (--ptr->ttl > 0) {
+			char bytes[11];
+			if (ptr->bytes > (DISPLAY_INTERVAL * 1024 * 1024 * 2)) // > 2 MB/second
+				sprintf(bytes, "%u MB/s",
+					(unsigned) (ptr->bytes / (DISPLAY_INTERVAL * 1024* 1024)));
+			else if (ptr->bytes > (DISPLAY_INTERVAL * 1024 * 2)) // > 2 KB/second
+				sprintf(bytes, "%u KB/s",
+					(unsigned) (ptr->bytes / (DISPLAY_INTERVAL * 1024)));
 			else
-				printf(" %lu B/sec\n",
-					ptr->bytes / DISPLAY_INTERVAL);
+				sprintf(bytes, "%u B/s", (unsigned) (ptr->bytes / DISPLAY_INTERVAL));
+
+			char *hostname = ptr->hostname;
+			if (!hostname)
+				hostname = radix_find_last(ptr->ip_src);
+
+			if (!hostname)
+				hostname = retrieve_hostname(ptr->ip_src);
+
+			if (!hostname)
+				hostname = " ";
+			else {
+				ptr->hostname = strdup(hostname);
+				if (!ptr->hostname)
+					errExit("strdup");
+			}
+
+			unsigned bwunit = bwmax / DISPLAY_BW_UNITS;
+			unsigned units = ptr->bytes / bwunit;
+			char *bwline = print_bw(units);
+
+			sprintf(line, "%10s %s %d.%d.%d.%d:%u %s\n", bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, hostname);
+			int len = strlen(line);
+			if (col > 4 && len > col) {
+				line[col] = '\0';
+				line[col - 1] = '\n';
+			}
+			printf("%s", line);
+
+			if (ptr->bytes)
+				ptr->ttl = DISPLAY_TTL;
 			ptr->bytes = 0;
 			prev = ptr;
 		}
@@ -178,7 +241,7 @@ static void hlist_print(void) {
 				dlist = next;
 			else
 				prev->dnext = next;
-			hlist_free(ptr);
+			hnode_free(ptr);
 		}
 
 		ptr = next;
@@ -199,14 +262,18 @@ static void run_trace(void) {
 	unsigned last_print_traces = 0;
 	unsigned last_print_remaining = 0;
 	unsigned char buf[MAX_BUF_SIZE];
+	unsigned bwcurrent = 0;
 	while (1) {
 		unsigned end = time(NULL);
 		if (arg_netfilter && end - start >= NETLOCK_INTERVAL)
 			break;
 		if (end % DISPLAY_INTERVAL == 1 && last_print_traces != end) { // first print after 1 second
+			if (bwcurrent > bwmax)
+				bwmax = bwcurrent;
 			if (!arg_netfilter)
-				hlist_print();
+				hnode_print();
 			last_print_traces = end;
+			bwcurrent = 0;
 		}
 		if (arg_netfilter && last_print_remaining != end) {
 			logprintf(".");
@@ -233,6 +300,7 @@ static void run_trace(void) {
 
 		unsigned bytes = recvfrom(sock, buf, MAX_BUF_SIZE, 0, NULL, NULL);
 		if (bytes >= 20) { // size of IP header
+			bwcurrent += bytes + 14; // assume a 14 byte Ethernet layer
 			// filter out loopback traffic
 			if (buf[12] != 127) {
 				uint32_t ip_src;
@@ -248,7 +316,7 @@ static void run_trace(void) {
 				memcpy(&port_src, buf + hlen, 2);
 				port_src = ntohs(port_src);
 
-				hlist_add(ip_src, ip_dst, buf[9], port_src, (uint64_t) bytes);
+				hnode_add(ip_src, ip_dst, buf[9], port_src, bytes + 14);
 			}
 		}
 	}
@@ -274,7 +342,7 @@ static int print_filter(FILE *fp) {
 
 	int i;
 	for (i = 0; i < HMAX; i++) {
-		HList *ptr = htable[i];
+		HNode *ptr = htable[i];
 		while (ptr) {
 			// filter rules are targeting ip address, the port number is disregarded,
 			// so we look only at the first instance of an address
@@ -416,6 +484,7 @@ void logprintf(char* fmt, ...) {
 static void usage(void) {
 	printf("Usage: fnetlock [OPTIONS]\n");
 	printf("Options:\n");
+	printf("   --build=filename - compact list of addresses\n");
 	printf("   --help, -? - this help screen\n");
 	printf("   --netfilter - build the firewall rules and commit them.\n");
 	printf("   --log=filename - logfile\n");
@@ -424,7 +493,26 @@ static void usage(void) {
 
 int main(int argc, char **argv) {
 	int i;
-	printf("\n\n");
+
+#ifdef DEBUG
+	// radix test
+	radix_add(0x09000000, 0xff000000, "IBM");
+	radix_add(0x09090909, 0xffffffff, "Quad9 DNS");
+	radix_add(0x09000000, 0xff000000, "IBM");
+	radix_print();
+	printf("This test should print \"IBM, Quad9 DNS, IBM\"\n");
+	char *name = radix_find_first(0x09090909);
+	printf("%s, ", name);
+	name = radix_find_last(0x09090909);
+	printf("%s, ", name);
+	name = radix_find_last(0x09322209);
+	printf("%s\n", name);
+#endif
+
+	if (argc == 2 && strncmp(argv[1], "--build=", 8) == 0) {
+		build_list(argv[1] + 8);
+		return 0;
+	}
 
 	if (getuid() != 0) {
 		fprintf(stderr, "Error: you need to be root to run this program\n");
@@ -449,6 +537,13 @@ int main(int argc, char **argv) {
 	ansi_clrscr();
 	if (arg_netfilter)
 		logprintf("starting network lockdown\n");
+	else  {
+		char *fname;
+		if (asprintf(&fname, "%s/hostnames", SYSCONFDIR) == -1)
+			errExit("asprintf");
+		load_hostnames(fname);
+		free(fname);
+	}
 
 	run_trace();
 	if (arg_netfilter) {

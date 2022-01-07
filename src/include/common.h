@@ -73,6 +73,25 @@ static inline int atoip(const char *str, uint32_t *ip) {
 	return 0;
 }
 
+// read an IPv4 address in CIDR format, for example 192.168.1.0/24
+static inline int atocidr(const char *str, uint32_t *ip, uint32_t *mask) {
+	unsigned a, b, c, d, e;
+
+	// extract ip
+	int rv = sscanf(str, "%u.%u.%u.%u/%u", &a, &b, &c, &d, &e);
+	if (rv != 5 || a > 255 || b > 255 || c > 255 || d > 255 || e > 32)
+		return 1;
+	*ip = a * 0x1000000 + b * 0x10000 + c * 0x100 + d;
+
+	// extract mask
+	uint32_t tmp;
+	unsigned i;
+	for (i = 0, *mask = 0, tmp = 0x80000000; i < e; i++, tmp >>= 1) {
+		*mask |= tmp;
+	}
+	return 0;
+}
+
 // verify an ip address is in the network range given by ifip and mask
 static inline char *in_netrange(uint32_t ip, uint32_t ifip, uint32_t ifmask) {
 	if ((ip & ifmask) != (ifip & ifmask))

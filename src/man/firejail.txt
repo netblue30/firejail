@@ -1488,20 +1488,21 @@ created with \-\-net are supported.
 .br
 $ firejail --nettrace=browser
 .br
-9.9.9.9:53              =>      192.168.1.60    UDP: 122 B/sec
+   86 KB/s *********           64.222.84.207:443 United States
 .br
-72.21.91.29:80          =>      192.168.1.60    TCP: 257 B/sec
+   76 KB/s ********            192.229.210.163:443 MCI
 .br
-80.92.126.65:123        =>      192.168.1.60    UDP: 25 B/sec
+  111 B/s                      9.9.9.9:53 Quad9 DNS
 .br
-69.30.241.50:443        =>      192.168.1.60    TCP: 88 KB/sec
-.br
-140.82.112.4:443        =>      192.168.1.60    TCP: 1861 B/sec
+   32 KB/s ***                 142.250.179.182:443 Google
 .br
 
 .br
-(14 streams in the last one minute)
-
+If /usr/bin/geoiplookup is installed (geoip-bin packet in Debian),
+the country the IP address originates from is added to the trace.
+We also use the static IP map in /etc/firejail/hostnames
+to print the domain names for some of the more common websites and cloud platforms.
+No external services are contacted for reverse IP lookup.
 #endif
 .TP
 \fB\-\-nice=value

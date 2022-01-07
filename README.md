@@ -298,19 +298,23 @@ INTRUSION DETECTION SYSTEM (IDS)
 
 ### Network Monitor
 `````
-       --nettrace=name|pid
+        --nettrace=name|pid
               Monitor TCP and UDP traffic coming into the sandbox specified by
               name or pid. Only networked sandboxes  created  with  --net  are
               supported.
 
               $ firejail --nettrace=browser
-              9.9.9.9:53              =>      192.168.1.60    UDP: 122 B/sec
-              72.21.91.29:80          =>      192.168.1.60    TCP: 257 B/sec
-              80.92.126.65:123        =>      192.168.1.60    UDP: 25 B/sec
-              69.30.241.50:443        =>      192.168.1.60    TCP: 88 KB/sec
-              140.82.112.4:443        =>      192.168.1.60    TCP: 1861 B/sec
+                 86 KB/s *********           64.222.84.207:443 United States
+                 76 KB/s ********            192.229.210.163:443 MCI
+                111 B/s                      9.9.9.9:53 Quad9 DNS
+                 32 KB/s ***                 142.250.179.182:443 Google
 
-              (14 streams in the last one minute)
+              If  /usr/bin/geoiplookup  is  installed (geoip-bin packet in De‐
+              bian), the country the IP address originates from  is  added  to
+              the trace.  We also use the static IP map in /etc/firejail/host‐
+              names to print the domain names for some of the more common web‐
+              sites  and  cloud platforms.  No external services are contacted
+              for reverse IP lookup.
 
 `````
 

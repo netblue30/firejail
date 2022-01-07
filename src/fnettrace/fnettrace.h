@@ -27,12 +27,14 @@
 #include <netinet/in.h>
 #include <time.h>
 #include <stdarg.h>
+//#define DEBUG 1
 
 //#define NETLOCK_INTERVAL 15
 #define NETLOCK_INTERVAL 60
-#define DISPLAY_INTERVAL 3
+#define DISPLAY_INTERVAL 2
+#define DISPLAY_TTL 4
+#define DISPLAY_BW_UNITS 20
 
-void logprintf(char* fmt, ...);
 
 static inline void ansi_topleft(void) {
 	char str[] = {0x1b, '[', '1', ';',  '1', 'H', '\0'};
@@ -53,6 +55,12 @@ static inline uint8_t hash(uint32_t ip) {
 	return *ptr ^ *(ptr + 1) ^ *(ptr + 2) ^ *(ptr + 3);
 }
 
+// main.c
+void logprintf(char* fmt, ...);
 
+// hostnames.c
+void load_hostnames(const char *fname);
+char* retrieve_hostname(uint32_t ip);
+void build_list(const char *fname);
 
 #endif

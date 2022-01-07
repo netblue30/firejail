@@ -9,3 +9,6 @@ include firefox-developer-edition.local
 
 # Redirect
 include firefox.profile
+
+dbus-user.own org.mozilla.FirefoxDeveloperEdition.*
+dbus-user.own org.mozilla.firefoxdeveloperedition.*

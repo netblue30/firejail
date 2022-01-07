@@ -25,6 +25,7 @@ whitelist ${HOME}/.librewolf
 
 whitelist /usr/share/doc
 whitelist /usr/share/gtk-doc/html
+whitelist /usr/share/librewolf
 whitelist /usr/share/mozilla
 whitelist /usr/share/webext
 include whitelist-usr-share-common.inc
@@ -50,6 +51,7 @@ dbus-user.own org.mozilla.librewolf.*
 # Also add the next line to your librewolf.local if screensharing does not work with
 # the above lines (depends on the portal implementation).
 #ignore noroot
+ignore apparmor
 ignore dbus-user none
 
 # Redirect

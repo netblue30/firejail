@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2021 Firejail Authors
+ * Copyright (C) 2020-2022 Firejail Authors
  *
  * This file is part of firejail project
  *

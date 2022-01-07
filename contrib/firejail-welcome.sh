@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This file is part of Firejail project
-# Copyright (C) 2020-2021 Firejail Authors
+# Copyright (C) 2020-2022 Firejail Authors
 # License GPL v2
 
 if ! command -v zenity >/dev/null; then

@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2021 Firejail Authors
+# Copyright (C) 2014-2022 Firejail Authors
 # License GPL v2
 #
 # Usage: ./platform/rpm/mkrpm.sh firejail <version> "<config options>"

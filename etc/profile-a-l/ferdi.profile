@@ -9,8 +9,8 @@ ignore noexec /tmp
 
 noblacklist ${HOME}/.cache/Ferdi
 noblacklist ${HOME}/.config/Ferdi
-noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.local/share/pki
+noblacklist ${HOME}/.pki
 
 include disable-common.inc
 include disable-devel.inc
@@ -20,13 +20,13 @@ include disable-programs.inc
 
 mkdir ${HOME}/.cache/Ferdi
 mkdir ${HOME}/.config/Ferdi
-mkdir ${HOME}/.pki
 mkdir ${HOME}/.local/share/pki
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/Ferdi
 whitelist ${HOME}/.config/Ferdi
-whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
+whitelist ${HOME}/.pki
 include whitelist-common.inc
 
 caps.drop all

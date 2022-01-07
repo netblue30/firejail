@@ -10,8 +10,8 @@ include globals.local
 
 noblacklist ${HOME}/.cache/Otter
 noblacklist ${HOME}/.config/otter
-noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.local/share/pki
+noblacklist ${HOME}/.pki
 
 include disable-common.inc
 include disable-devel.inc
@@ -22,13 +22,13 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/Otter
 mkdir ${HOME}/.config/otter
-mkdir ${HOME}/.pki
 mkdir ${HOME}/.local/share/pki
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/Otter
 whitelist ${HOME}/.config/otter
-whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
+whitelist ${HOME}/.pki
 whitelist /usr/share/otter-browser
 include whitelist-common.inc
 include whitelist-runuser-common.inc

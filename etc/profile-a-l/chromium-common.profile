@@ -9,8 +9,8 @@ include chromium-common.local
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
-noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.local/share/pki
+noblacklist ${HOME}/.pki
 noblacklist /usr/lib/chromium/chrome-sandbox
 
 # Add the next line to your chromium-common.local if you want Google Chrome/Chromium browser
@@ -24,11 +24,11 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.pki
 mkdir ${HOME}/.local/share/pki
+mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
-whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
+whitelist ${HOME}/.pki
 whitelist /usr/share/mozilla/extensions
 whitelist /usr/share/webext
 include whitelist-common.inc

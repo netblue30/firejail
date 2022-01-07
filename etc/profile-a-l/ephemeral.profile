@@ -9,8 +9,8 @@ include globals.local
 # enforce private-cache
 #noblacklist ${HOME}/.cache/ephemeral
 
-noblacklist ${HOME}/.pki
 noblacklist ${HOME}/.local/share/pki
+noblacklist ${HOME}/.pki
 
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
@@ -23,12 +23,12 @@ include disable-programs.inc
 
 # enforce private-cache
 #mkdir ${HOME}/.cache/ephemeral
-mkdir ${HOME}/.pki
 mkdir ${HOME}/.local/share/pki
+mkdir ${HOME}/.pki
 # enforce private-cache
 #whitelist ${HOME}/.cache/ephemeral
-whitelist ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
+whitelist ${HOME}/.pki
 whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-usr-share-common.inc

@@ -17,6 +17,8 @@ noblacklist ${HOME}/.mediathek3
 noblacklist ${HOME}/.mplayer
 noblacklist ${VIDEOS}
 
+ignore noexec /tmp
+
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
 
@@ -27,6 +29,7 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist ${HOME}/.mediathek3
 include whitelist-var-common.inc
 
 caps.drop all

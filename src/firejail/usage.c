@@ -161,6 +161,7 @@ static char *usage_str =
 	"    --nogroups - disable supplementary groups.\n"
 	"    --noinput - disable input devices.\n"
 	"    --nonewprivs - sets the NO_NEW_PRIVS prctl.\n"
+	"    --noprinters - disable printers.\n"
 	"    --noprofile - do not use a security profile.\n"
 #ifdef HAVE_USERNS
 	"    --noroot - install a user namespace with only the current user.\n"

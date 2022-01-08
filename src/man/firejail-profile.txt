@@ -489,6 +489,9 @@ Sets the NO_NEW_PRIVS prctl.  This ensures that child processes
 cannot acquire new privileges using execve(2);  in particular,
 this means that calling a suid binary (or one with file capabilities)
 does not result in an increase of privilege.
+.TP
+\fBnoprinters
+Disable printers.
 #ifdef HAVE_USERNS
 .TP
 \fBnoroot

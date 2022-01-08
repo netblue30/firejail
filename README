@@ -76,6 +76,7 @@ Adrian L. Shaw (https://github.com/adrianlshaw)
 	- add profanity profile
 	- add barrirer profile
 	- add profile for Beyond All Reason
+	- RPCS3 profile
 Aidan Gauland (https://github.com/aidalgol)
 	- added electron, riot-web and npm profiles
 	- whitelist Bohemia Interactive config dir for Steam
@@ -116,6 +117,8 @@ Amin Vakil (https://github.com/aminvakil)
 	- added profile for strawberry
 	- w3m profile fix
 	- disable seccomp in wireshark profile
+Ammon Smith (https://github.com/ammongit)
+	- Add DBus filter rules specific to firefox-developer-edition
 Andreas Hunkeler (https://github.com/Karneades)
 	- Add profile for offical Linux Teams application
 Andrey Alekseenko (https://github.com/al42and)
@@ -1088,6 +1091,8 @@ Vincent43 (https://github.com/Vincent43)
 	- apparmor enhancements
 Vincent Blillault (https://github.com/Feandil)
 	- fix mumble profile
+Vincent Lefèvre (https://github.com/vinc17fr)
+	- blacklist rxvt after the blacklist of Perl
 vismir2 (https://github.com/vismir2)
 	- feh, ranger, 7z, keepass, keepassx and zathura profiles
 	- claws-mail, mutt, git, emacs, vim profiles

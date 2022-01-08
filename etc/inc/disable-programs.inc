@@ -192,6 +192,7 @@ blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/qutebrowser
 blacklist ${HOME}/.cache/rednotebook
 blacklist ${HOME}/.cache/rhythmbox
+blacklist ${HOME}/.cache/rpcs3
 blacklist ${HOME}/.cache/shotwell
 blacklist ${HOME}/.cache/simple-scan
 blacklist ${HOME}/.cache/slimjet
@@ -573,6 +574,7 @@ blacklist ${HOME}/.config/redshift
 blacklist ${HOME}/.config/redshift.conf
 blacklist ${HOME}/.config/remmina
 blacklist ${HOME}/.config/ristretto
+blacklist ${HOME}/.config/rpcs3
 blacklist ${HOME}/.config/rtv
 blacklist ${HOME}/.config/scribus
 blacklist ${HOME}/.config/scribusrc

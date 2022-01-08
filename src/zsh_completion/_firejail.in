@@ -123,6 +123,7 @@ _firejail_args=(
     '--nogroups[disable supplementary groups]'
     '--noinput[disable input devices]'
     '--nonewprivs[sets the NO_NEW_PRIVS prctl]'
+    '--noprinters[disable printers]'
     '--nosound[disable sound system]'
     '--nou2f[disable U2F devices]'
     '--novideo[disable video devices]'

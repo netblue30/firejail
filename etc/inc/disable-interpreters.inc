@@ -40,6 +40,15 @@ blacklist /usr/lib/perl*
 blacklist /usr/lib64/perl*
 blacklist /usr/share/perl*
 
+# rxvt needs Perl modules, thus does not work. In particular, blacklisting
+# it is needed so that Firefox can run applications with Terminal=true in
+# their .desktop file (depending on what is installed). The reason is that
+# this is done via glib, which currently uses a hardcoded list of terminal
+# emulators:
+#   https://gitlab.gnome.org/GNOME/glib/-/issues/338
+# And in this list, rxvt comes before xterm.
+blacklist ${PATH}/rxvt
+
 # PHP
 blacklist ${PATH}/php*
 blacklist /usr/lib/php*

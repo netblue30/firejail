@@ -21,8 +21,14 @@
 #include "radix.h"
 #define MAXBUF 1024
 
+int geoip_calls = 0;
+static int geoip_not_found = 0;
 
 char *retrieve_hostname(uint32_t ip) {
+	if (geoip_not_found)
+		return NULL;
+	geoip_calls++;
+	
 	char *rv = NULL;
 	char *cmd;
 	if (asprintf(&cmd, "/usr/bin/geoiplookup %d.%d.%d.%d", PRINT_IP(ip)) == -1)
@@ -47,6 +53,10 @@ char *retrieve_hostname(uint32_t ip) {
 		fclose(fp);
 		return rv;
 	}
+	else
+		geoip_not_found = 1;
+	
+	free(cmd);
 
 	return NULL;
 }

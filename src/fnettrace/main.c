@@ -46,8 +46,6 @@ HNode *htable[HMAX] = {NULL};
 // display linked list
 HNode *dlist = NULL;
 
-static unsigned bwmax = 0; // max bytes received in a display interval
-
 static void hnode_add(uint32_t ip_src, uint32_t ip_dst, uint8_t protocol, uint16_t port_src, uint32_t bytes) {
 	uint8_t h = hash(ip_src);
 
@@ -151,7 +149,7 @@ static char *print_bw(unsigned units) {
 		units = DISPLAY_BW_UNITS ;
 
 	if (bw_line[units] == NULL) {
-		char *ptr = malloc(DISPLAY_BW_UNITS + 1);
+		char *ptr = malloc(DISPLAY_BW_UNITS + 2);
 		if (!ptr)
 			errExit("malloc");
 		bw_line[units] = ptr;
@@ -159,12 +157,44 @@ static char *print_bw(unsigned units) {
 		unsigned i;
 		for (i = 0; i < DISPLAY_BW_UNITS; i++, ptr++)
 			sprintf(ptr, "%s", (i < units)? "*": " ");
+		sprintf(ptr, "%s", " ");
 	}
 
 	return bw_line[units];
 }
 
-static void hnode_print(void) {
+#define LINE_MAX 200
+static inline void adjust_line(char *str, int len, int cols) {
+	if (len > LINE_MAX) // functions such as snprintf truncate the string, and return the length of the untruncated string
+		len = LINE_MAX;
+	if (cols > 4 && len > cols) {
+		str[cols] = '\0';
+		str[cols- 1] = '\n';
+	}
+}
+
+#define BWMAX_CNT 8
+static unsigned adjust_bandwidth(unsigned bw) {
+	static unsigned array[BWMAX_CNT] = {0};
+	static int instance = 0;
+
+	array[instance] = bw;
+	int i;
+	unsigned sum = 0;
+	unsigned max = 0;
+	for ( i = 0; i < BWMAX_CNT; i++) {
+		sum += array[i];
+		max = (max > array[i])? max: array[i];
+	}
+	sum /= BWMAX_CNT;
+
+	if (++instance >= BWMAX_CNT)
+		instance = 0;
+
+	return (max < (sum / 2))? sum: max;
+}
+
+static void hnode_print(unsigned bw) {
 	assert(!arg_netfilter);
 	ansi_clrscr();
 
@@ -178,38 +208,47 @@ static void hnode_print(void) {
 
 	// get terminal size
 	struct winsize sz;
-	int col = 80;
+	int cols = 80;
 	if (isatty(STDIN_FILENO)) {
 		if (!ioctl(0, TIOCGWINSZ, &sz))
-			col  = sz.ws_col;
+			cols  = sz.ws_col;
 	}
-#define LINE_MAX 200
+	if (cols > LINE_MAX)
+		cols = LINE_MAX;
 	char line[LINE_MAX + 1];
-	if (col > LINE_MAX)
-		col = LINE_MAX;
+
+	// print stats line
+	bw = adjust_bandwidth(bw);
+	char stats[31];
+	if (bw > (1024 * 1024 * DISPLAY_INTERVAL))
+		sprintf(stats, "%d MB/s ", bw / (1024 * 1024 * DISPLAY_INTERVAL));
+	else
+		sprintf(stats, "%d KB/s ", bw / (1024 * DISPLAY_INTERVAL));
+	int len = snprintf(line, LINE_MAX, "%32s geoip %d, IP database %d\n", stats, geoip_calls, radix_nodes);
+	adjust_line(line, len, cols);
+	printf("%s", line);
 
 	HNode *ptr = dlist;
 	HNode *prev = NULL;
+	int row = 0;
 	while (ptr) {
 		HNode *next = ptr->dnext;
 		if (--ptr->ttl > 0) {
 			char bytes[11];
 			if (ptr->bytes > (DISPLAY_INTERVAL * 1024 * 1024 * 2)) // > 2 MB/second
-				sprintf(bytes, "%u MB/s",
+				snprintf(bytes, 11, "%u MB/s",
 					(unsigned) (ptr->bytes / (DISPLAY_INTERVAL * 1024* 1024)));
 			else if (ptr->bytes > (DISPLAY_INTERVAL * 1024 * 2)) // > 2 KB/second
-				sprintf(bytes, "%u KB/s",
+				snprintf(bytes, 11, "%u KB/s",
 					(unsigned) (ptr->bytes / (DISPLAY_INTERVAL * 1024)));
 			else
-				sprintf(bytes, "%u B/s", (unsigned) (ptr->bytes / DISPLAY_INTERVAL));
+				snprintf(bytes, 11, "%u B/s", (unsigned) (ptr->bytes / DISPLAY_INTERVAL));
 
 			char *hostname = ptr->hostname;
 			if (!hostname)
 				hostname = radix_find_last(ptr->ip_src);
-
 			if (!hostname)
 				hostname = retrieve_hostname(ptr->ip_src);
-
 			if (!hostname)
 				hostname = " ";
 			else {
@@ -218,16 +257,30 @@ static void hnode_print(void) {
 					errExit("strdup");
 			}
 
-			unsigned bwunit = bwmax / DISPLAY_BW_UNITS;
-			unsigned units = ptr->bytes / bwunit;
-			char *bwline = print_bw(units);
+			unsigned bwunit = bw / DISPLAY_BW_UNITS;
+			char *bwline;
+			if (bwunit == 0)
+				bwline = print_bw(0);
+			else
+				bwline = print_bw(ptr->bytes / bwunit);
 
-			sprintf(line, "%10s %s %d.%d.%d.%d:%u %s\n", bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, hostname);
-			int len = strlen(line);
-			if (col > 4 && len > col) {
-				line[col] = '\0';
-				line[col - 1] = '\n';
-			}
+			char *protocol = "";
+			if (ptr->port_src == 80)
+				protocol = "(HTTP)";
+			else if (ptr->port_src == 853)
+				protocol = "(DoT)";
+			else if (ptr->protocol == 0x11)
+				protocol = "(UDP)";
+/*
+			else (ptr->port_src == 443)
+				protocol = "SSL";
+			else if (ptr->port_src == 53)
+				protocol = "DNS";
+*/
+
+			len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s\n",
+				bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, hostname);
+			adjust_line(line, len, cols);
 			printf("%s", line);
 
 			if (ptr->bytes)
@@ -246,6 +299,7 @@ static void hnode_print(void) {
 
 		ptr = next;
 	}
+
 }
 
 static void run_trace(void) {
@@ -262,18 +316,16 @@ static void run_trace(void) {
 	unsigned last_print_traces = 0;
 	unsigned last_print_remaining = 0;
 	unsigned char buf[MAX_BUF_SIZE];
-	unsigned bwcurrent = 0;
+	unsigned bw = 0; // bandwidth calculations
 	while (1) {
 		unsigned end = time(NULL);
 		if (arg_netfilter && end - start >= NETLOCK_INTERVAL)
 			break;
 		if (end % DISPLAY_INTERVAL == 1 && last_print_traces != end) { // first print after 1 second
-			if (bwcurrent > bwmax)
-				bwmax = bwcurrent;
 			if (!arg_netfilter)
-				hnode_print();
+				hnode_print(bw);
 			last_print_traces = end;
-			bwcurrent = 0;
+			bw = 0;
 		}
 		if (arg_netfilter && last_print_remaining != end) {
 			logprintf(".");
@@ -300,7 +352,7 @@ static void run_trace(void) {
 
 		unsigned bytes = recvfrom(sock, buf, MAX_BUF_SIZE, 0, NULL, NULL);
 		if (bytes >= 20) { // size of IP header
-			bwcurrent += bytes + 14; // assume a 14 byte Ethernet layer
+			bw += bytes + 14; // assume a 14 byte Ethernet layer
 			// filter out loopback traffic
 			if (buf[12] != 127) {
 				uint32_t ip_src;
@@ -486,8 +538,8 @@ static void usage(void) {
 	printf("Options:\n");
 	printf("   --build=filename - compact list of addresses\n");
 	printf("   --help, -? - this help screen\n");
+	printf("   --log=filename - netlocker logfile\n");
 	printf("   --netfilter - build the firewall rules and commit them.\n");
-	printf("   --log=filename - logfile\n");
 	printf("\n");
 }
 

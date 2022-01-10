@@ -26,6 +26,7 @@
 #include "fnettrace.h"
 
 RNode *head = 0;
+int radix_nodes = 0;
 
 static inline RNode *addOne(RNode *ptr, uint32_t ip, uint32_t mask, char *name) {
 	assert(ptr);
@@ -34,6 +35,7 @@ static inline RNode *addOne(RNode *ptr, uint32_t ip, uint32_t mask, char *name) 
 	RNode *node = malloc(sizeof(RNode));
 	if (!node)
 		errExit("malloc");
+	radix_nodes++;
 	memset(node, 0, sizeof(RNode));
 	node->ip = ip;
 	node->mask = mask;
@@ -42,7 +44,7 @@ static inline RNode *addOne(RNode *ptr, uint32_t ip, uint32_t mask, char *name) 
 		if (!node->name)
 			errExit("strdup");
 	}
-	
+
 	ptr->one = node;
 	return node;
 }
@@ -62,7 +64,7 @@ static inline RNode *addZero(RNode *ptr, uint32_t ip, uint32_t mask, char *name)
 		if (!node->name)
 			errExit("strdup");
 	}
-	
+
 	ptr->zero = node;
 	return node;
 }
@@ -146,13 +148,13 @@ char *radix_find_last(uint32_t ip) {
 		if (ptr->name)
 			rv = ptr;
 	}
-	
+
 	return (rv)? rv->name: NULL;
 }
 
 static void radix_print_node(RNode *ptr, int level) {
 	assert(ptr);
-	
+
 	int i;
 	for (i = 0; i < level; i++)
 		printf(" ");
@@ -173,7 +175,7 @@ void radix_print(void) {
 		printf("radix tree is empty\n");
 		return;
 	}
-	
+
 	printf("radix IPv4 tree\n");
 	radix_print_node(head, 0);
 }
@@ -187,14 +189,14 @@ static inline int mask2cidr(uint32_t mask) {
 		if (mask & m)
 			cnt++;
 	}
-	
+
 	return cnt;
 }
 
 static void radix_build_list_node(RNode *ptr) {
 	assert(ptr);
-	
-	
+
+
 	if (ptr->name) {
 		printf("%d.%d.%d.%d/%d %s\n", PRINT_IP(ptr->ip), mask2cidr(ptr->mask), ptr->name);
 		return;
@@ -213,6 +215,6 @@ void radix_build_list(void) {
 		return;
 	}
 
-	radix_build_list_node(head);	
+	radix_build_list_node(head);
 }
 

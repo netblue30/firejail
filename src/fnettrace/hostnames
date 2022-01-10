@@ -66,7 +66,7 @@
 9.9.9.0/24 Quad9 DNS
 45.90.28.0/22 NextDNS
 149.112.112.0/24 Quad9 DNS
-149.112.120.0/21 CIRA DNS Canada
+149.112.120.0/21 CIRA DNS Csnada
 176.103.128.0/19 Adguard DNS
 185.228.168.0/24 Cleanbrowsing DNS
 193.0.0.0/21 whois.ripe.net Netherlands
@@ -159,6 +159,21 @@
 108.45.0.0/16 MCI
 108.46.0.0/16 MCI
 192.229.128.0/17 MCI
+
+# Microsoft
+40.76.0.0/14 Microsoft
+40.96.0.0/12 Microsoft
+40.112.0.0/13 Microsoft
+40.124.0.0/16 Microsoft
+40.74.0.0/15 Microsoft
+40.80.0.0/12 Microsoft
+40.120.0.0/14 Microsoft
+40.125.0.0/17 Microsoft
+52.145.0.0/16 Microsoft
+52.148.0.0/14 Microsoft
+52.152.0.0/13 Microsoft
+52.146.0.0/15 Microsoft
+52.160.0.0/11 Microsoft
 
 # Yahoo
 63.250.192.0/19 Yahoo

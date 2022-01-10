@@ -59,6 +59,7 @@ static inline uint8_t hash(uint32_t ip) {
 void logprintf(char* fmt, ...);
 
 // hostnames.c
+extern int geoip_calls;
 void load_hostnames(const char *fname);
 char* retrieve_hostname(uint32_t ip);
 void build_list(const char *fname);

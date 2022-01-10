@@ -1,39 +1,46 @@
-# Firejail profile for neovim                                                                                                                                                                                           
+# Firejail profile for neovim
 # Description: Nvim is open source and freely distributable
-# This file is overwritten after every install/update                                                                                                                                                                
-# Persistent local customizations                                                                                                                                                                                    
-include nvim.local                                                                                                                                                                                                    
-# Persistent global definitions                                                                                                                                                                                      
-include globals.local 
+# Persistent local customizations
+include nvim.local
+# Persistent global definitions
+include globals.local
 
-noblacklist ${HOME}/.vim                                                                                                                                                                                             
-                                                                                                                                                                                                                     
-include disable-common.inc                                                                                                                                                                                           
-include disable-programs.inc                                                                                                                                                                                         
-include disable-devel.inc                                                                                                                                                                                            
-include disable-passwdmgr.inc                                                                                                                                                                                        
-include disable-xdg.inc                                                                                                                                                                                              
-include disable-write-mnt.inc                                                                                                                                                                                        
-include whitelist-runuser-common.inc                                                                                                                                                                                 
+noblacklist ${HOME}/.vim
+noblacklist ${HOME}/.cache/nvim
+noblacklist ${HOME}/.local/share/nvim
 
-# Allows files commonly used by IDEs                                                                                                                                                                                 
-include allow-common-devel.inc                                                                                                                                                                                       
-                                                                                                                                                                                                                     
-caps.drop all                                                                                                                                                                                                        
-netfilter                                                                                                                                                                                                            
-nodbus                                                                                                                                                                                                               
-nodvd                                                                                                                                                                                                                
-nogroups                                                                                                                                                                                                             
-noinput                                                                                                                                                                                                              
-nonewprivs                                                                                                                                                                                                           
-noroot                                                                                                                                                                                                               
-notv                                                                                                                                                                                                                 
-nou2f                                                                                                                                                                                                                
-novideo                                                                                                                                                                                                              
-protocol unix,inet,inet6                                                                                                                                                                                             
-seccomp                                                                                                                                                                                                              
-                                                                                                                                                                                                                     
-private-dev                                                                                                                                                                                                          
-                                                                                                                                                                                                                     
+include disable-common.inc
+include disable-devel.inc
+include disable-programs.inc
+include disable-xdg.inc
+
+blacklist ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}
+
+include whitelist-runuser-common.inc
+
+ipc-namespace
+machine-id
+net none
+netfilter
+no3d
+dbus-user none
+dbus-system none
+nodvd
+nogroups
+noinput
+nonewprivs
+noroot
+notv
+nou2f
+novideo
+protocol unix,inet,inet6
+seccomp.block-secondary
+shell none
+tracelog
+x11 none
+
+private-dev
+
 read-write ${HOME}/.vim
 read-only ${HOME}/.config

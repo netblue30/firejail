@@ -1,5 +1,6 @@
 # Firejail profile for neovim
 # Description: Nvim is open source and freely distributable
+# This file is overwritten after every install/update
 # Persistent local customizations
 include nvim.local
 # Persistent global definitions
@@ -14,7 +15,6 @@ include disable-devel.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-blacklist ${RUNUSER}/wayland-*
 blacklist ${RUNUSER}
 
 include whitelist-runuser-common.inc
@@ -22,10 +22,7 @@ include whitelist-runuser-common.inc
 ipc-namespace
 machine-id
 net none
-netfilter
 no3d
-dbus-user none
-dbus-system none
 nodvd
 nogroups
 noinput
@@ -35,12 +32,16 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6
+seccomp
 seccomp.block-secondary
 shell none
 tracelog
 x11 none
 
 private-dev
+
+dbus-user none
+dbus-system none
 
 read-write ${HOME}/.vim
 read-only ${HOME}/.config

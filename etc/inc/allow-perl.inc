@@ -10,3 +10,6 @@ noblacklist ${PATH}/vendor_perl
 noblacklist /usr/lib/perl*
 noblacklist /usr/lib64/perl*
 noblacklist /usr/share/perl*
+
+# rxvt is also blacklisted in disable-interpreters.inc
+noblacklist ${PATH}/rxvt

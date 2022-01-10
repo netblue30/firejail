@@ -23,6 +23,7 @@
 
 int geoip_calls = 0;
 static int geoip_not_found = 0;
+static char buf[MAXBUF];
 
 char *retrieve_hostname(uint32_t ip) {
 	if (geoip_not_found)
@@ -37,7 +38,6 @@ char *retrieve_hostname(uint32_t ip) {
 	FILE *fp = popen(cmd, "r");
 	if (fp) {
 		char *ptr;
-		char buf[MAXBUF];
 		 if (fgets(buf, MAXBUF, fp)) {
 			ptr = strchr(buf, '\n');
 			if (ptr)

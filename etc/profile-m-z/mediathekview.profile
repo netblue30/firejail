@@ -29,6 +29,7 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.mediathek3
 whitelist ${HOME}/.mediathek3
 include whitelist-var-common.inc
 

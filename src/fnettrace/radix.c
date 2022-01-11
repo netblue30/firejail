@@ -73,11 +73,6 @@ static inline RNode *addZero(RNode *ptr, uint32_t ip, uint32_t mask, char *name)
 // add to radix tree
 void radix_add(uint32_t ip, uint32_t mask, char *name) {
 	assert(name);
-	char *tmp =  strdup(name);
-	if (!tmp)
-		errExit("strdup");
-	name = tmp;
-
 	uint32_t m = 0x80000000;
 	uint32_t lastm = 0;
 	if (head == 0) {

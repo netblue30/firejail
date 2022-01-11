@@ -18,6 +18,7 @@ blacklist-nolog ${HOME}/.kde4/share/apps/klipper
 blacklist-nolog ${HOME}/.local/share/fish/fish_history
 blacklist-nolog ${HOME}/.local/share/ibus-typing-booster
 blacklist-nolog ${HOME}/.local/share/klipper
+blacklist-nolog ${HOME}/.local/share/nvim
 blacklist-nolog ${HOME}/.macromedia
 blacklist-nolog ${HOME}/.mupdf.history
 blacklist-nolog ${HOME}/.python-history
@@ -323,6 +324,7 @@ read-only ${HOME}/.ssh/config.d
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc
 read-only ${HOME}/.cargo/env
+read-only ${HOME}/.config/nvim
 read-only ${HOME}/.dotfiles
 read-only ${HOME}/.emacs
 read-only ${HOME}/.emacs.d
@@ -332,6 +334,7 @@ read-only ${HOME}/.homesick
 read-only ${HOME}/.iscreenrc
 read-only ${HOME}/.local/lib
 read-only ${HOME}/.local/share/cool-retro-term
+read-only ${HOME}/.local/share/nvim
 read-only ${HOME}/.mailcap
 read-only ${HOME}/.msmtprc
 read-only ${HOME}/.mutt/muttrc

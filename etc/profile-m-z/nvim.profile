@@ -7,7 +7,9 @@ include nvim.local
 include globals.local
 
 noblacklist ${HOME}/.vim
+noblacklist ${HOME}/.vimrc
 noblacklist ${HOME}/.cache/nvim
+noblacklist ${HOME}/.config/nvim
 noblacklist ${HOME}/.local/share/nvim
 
 include disable-common.inc
@@ -43,5 +45,8 @@ private-dev
 dbus-user none
 dbus-system none
 
-read-write ${HOME}/.vim
 read-only ${HOME}/.config
+read-write ${HOME}/.config/nvim
+read-write ${HOME}/.local/share/nvim
+read-write ${HOME}/.vim
+read-write ${HOME}/.vimrc

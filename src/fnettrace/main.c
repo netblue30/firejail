@@ -221,16 +221,15 @@ static void hnode_print(unsigned bw) {
 	bw = adjust_bandwidth(bw);
 	char stats[31];
 	if (bw > (1024 * 1024 * DISPLAY_INTERVAL))
-		sprintf(stats, "%d MB/s ", bw / (1024 * 1024 * DISPLAY_INTERVAL));
+		sprintf(stats, "%u MB/s ", bw / (1024 * 1024 * DISPLAY_INTERVAL));
 	else
-		sprintf(stats, "%d KB/s ", bw / (1024 * DISPLAY_INTERVAL));
+		sprintf(stats, "%u KB/s ", bw / (1024 * DISPLAY_INTERVAL));
 	int len = snprintf(line, LINE_MAX, "%32s geoip %d, IP database %d\n", stats, geoip_calls, radix_nodes);
 	adjust_line(line, len, cols);
 	printf("%s", line);
 
 	HNode *ptr = dlist;
 	HNode *prev = NULL;
-	int row = 0;
 	while (ptr) {
 		HNode *next = ptr->dnext;
 		if (--ptr->ttl > 0) {
@@ -242,7 +241,7 @@ static void hnode_print(unsigned bw) {
 				snprintf(bytes, 11, "%u KB/s",
 					(unsigned) (ptr->bytes / (DISPLAY_INTERVAL * 1024)));
 			else
-				snprintf(bytes, 11, "%u B/s", (unsigned) (ptr->bytes / DISPLAY_INTERVAL));
+				snprintf(bytes, 11, "%u B/s ", (unsigned) (ptr->bytes / DISPLAY_INTERVAL));
 
 			char *hostname = ptr->hostname;
 			if (!hostname)

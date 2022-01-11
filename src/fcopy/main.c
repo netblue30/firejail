@@ -200,7 +200,8 @@ static char *proc_pid_to_self(const char *target) {
 
 	// check where /proc/self points to
 	static const char proc_self[] = "/proc/self";
-	if (!(proc_pid = realpath(proc_self, NULL)))
+	proc_pid = realpath(proc_self, NULL);
+	if (proc_pid == NULL)
 		goto done;
 
 	// redirect /proc/PID/xxx -> /proc/self/XXX

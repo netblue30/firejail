@@ -1093,6 +1093,7 @@ Vincent Blillault (https://github.com/Feandil)
 	- fix mumble profile
 Vincent Lefèvre (https://github.com/vinc17fr)
 	- blacklist rxvt after the blacklist of Perl
+	- Noblacklist rxvt in allow-perl.inc
 vismir2 (https://github.com/vismir2)
 	- feh, ranger, 7z, keepass, keepassx and zathura profiles
 	- claws-mail, mutt, git, emacs, vim profiles

@@ -12,6 +12,12 @@ match_max 100000
 
 send -- "rm -fr dest/*\r"
 after 100
+send -- "cd src\r"
+after 100
+send -- "ln -s ../dircopy.exp dircopy.exp\r"
+after 100
+send -- "cd ..\r"
+after 100
 
 send -- "fcopy src/dircopy.exp dest\r"
 after 100
@@ -19,7 +25,7 @@ after 100
 send -- "find dest\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"dest/"
+	"dest"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
@@ -27,11 +33,11 @@ expect {
 }
 after 100
 
-
 send -- "ls -al dest\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"lrwxrwxrwx"
+	"rwxr-xr-x" { puts "umask 0022\n" }
+	"rwxrwxr-x" { puts "umask 0002\n" }
 }
 after 100
 send -- "stty -echo\r"
@@ -51,6 +57,8 @@ expect {
 }
 
 send -- "rm -fr dest/*\r"
+after 100
+send -- "rm -f src/dircopy.exp\r"
 after 100
 
 puts "\nall done\n"

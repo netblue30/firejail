@@ -297,11 +297,12 @@ void dbus_proxy_start(void) {
 	if (dbus_proxy_pid == -1)
 		errExit("fork");
 	if (dbus_proxy_pid == 0) {
-		int i;
-		for (i = STDERR_FILENO + 1; i < FIREJAIL_MAX_FD; i++) {
-			if (i != status_pipe[1] && i != args_pipe[0])
-				close(i); // close open files
-		}
+		// close open files
+		int keep_list[2];
+		keep_list[0] = status_pipe[1];
+		keep_list[1] = args_pipe[0];
+		close_all(keep_list, ARRAY_SIZE(keep_list));
+
 		if (arg_dbus_log_file != NULL) {
 			int output_fd = creat(arg_dbus_log_file, 0666);
 			if (output_fd < 0)

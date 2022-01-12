@@ -551,6 +551,7 @@ int remount_by_fd(int dst, unsigned long mountflags);
 int bind_mount_by_fd(int src, int dst);
 int bind_mount_path_to_fd(const char *srcname, int dst);
 int bind_mount_fd_to_path(int src, const char *destname);
+void close_all(int *keep_list, size_t sz);
 int has_handler(pid_t pid, int signal);
 void enter_network_namespace(pid_t pid);
 int read_pid(const char *name, pid_t *pid);
@@ -881,7 +882,6 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define SBOX_CAPS_HIDEPID (1 << 7)	// hidepid caps filter for running firemon
 #define SBOX_CAPS_NET_SERVICE (1 << 8) // caps filter for programs running network services
 #define SBOX_KEEP_FDS (1 << 9) // keep file descriptors open
-#define FIREJAIL_MAX_FD 20 // getdtablesize() is overkill for a firejail process
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);

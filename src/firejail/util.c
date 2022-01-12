@@ -1398,6 +1398,52 @@ int bind_mount_path_to_fd(const char *srcname, int dst) {
 	return rv;
 }
 
+void close_all(int *keep_list, size_t sz) {
+	DIR *dir;
+	if (!(dir = opendir("/proc/self/fd"))) {
+		// sleep 2 seconds and try again
+		sleep(2);
+		if (!(dir = opendir("/proc/self/fd"))) {
+			fprintf(stderr, "Error: cannot open /proc/self/fd directory\n");
+			exit(1);
+		}
+	}
+	struct dirent *entry;
+	while ((entry = readdir(dir)) != NULL) {
+		if (strcmp(entry->d_name, ".") == 0 ||
+		    strcmp(entry->d_name, "..") == 0)
+			continue;
+
+		int fd = atoi(entry->d_name);
+
+		// don't close standard streams
+		if (fd == STDIN_FILENO ||
+		    fd == STDOUT_FILENO ||
+		    fd == STDERR_FILENO)
+			continue;
+
+		if (fd == dirfd(dir))
+			continue; // just postponed
+
+		// dont't close file descriptors in keep list
+		int keep = 0;
+		if (keep_list) {
+			size_t i;
+			for (i = 0; i < sz; i++) {
+				if (keep_list[i] == fd) {
+					keep = 1;
+					break;
+				}
+			}
+		}
+		if (keep)
+			continue;
+
+		close(fd);
+	}
+	closedir(dir);
+}
+
 int has_handler(pid_t pid, int signal) {
 	if (signal > 0 && signal <= SIGRTMAX) {
 		char *fname;

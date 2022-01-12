@@ -72,11 +72,8 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 	}
 
 	// close all other file descriptors
-	if ((filtermask & SBOX_KEEP_FDS) == 0) {
-		int i;
-		for (i = 3; i < FIREJAIL_MAX_FD; i++)
-			close(i); // close open files
-	}
+	if ((filtermask & SBOX_KEEP_FDS) == 0)
+		close_all(NULL, 0);
 
 	umask(027);
 

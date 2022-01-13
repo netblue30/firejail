@@ -57,6 +57,7 @@ private-cache
 
 blacklist ${PATH}/curl
 blacklist ${PATH}/wget
+blacklist ${PATH}/wget2
 
 #dbus-user none - prevents access to passwords saved in GNOME Keyring and KWallet, also breaks Gnome connector.
 dbus-system none

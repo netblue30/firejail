@@ -61,6 +61,7 @@ private-tmp
 
 blacklist ${PATH}/curl
 blacklist ${PATH}/wget
+blacklist ${PATH}/wget2
 
 # 'dbus-user none' breaks various desktop integration features like global menus, native notifications,
 # Gnome connector, KDE connect and power management on KDE Plasma.

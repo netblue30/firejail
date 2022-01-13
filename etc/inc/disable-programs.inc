@@ -616,6 +616,7 @@ blacklist ${HOME}/.config/vivaldi
 blacklist ${HOME}/.config/vivaldi-snapshot
 blacklist ${HOME}/.config/vlc
 blacklist ${HOME}/.config/wesnoth
+blacklist ${HOME}/.config/wget
 blacklist ${HOME}/.config/wireshark
 blacklist ${HOME}/.config/wormux
 blacklist ${HOME}/.config/xchat

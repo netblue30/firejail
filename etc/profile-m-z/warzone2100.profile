@@ -18,9 +18,9 @@ include disable-programs.inc
 
 mkdir ${HOME}/.warzone2100-3.1
 mkdir ${HOME}/.warzone2100-3.2
+whitelist ${HOME}/.local/share/warzone2100-3.3.0 # config dir moved under .local/share
 whitelist ${HOME}/.warzone2100-3.1
 whitelist ${HOME}/.warzone2100-3.2
-whitelist ${HOME}/.local/share/warzone2100-3.3.0 # config dir moved under .local/share
 whitelist /usr/share/games
 whitelist /usr/share/gdm
 include whitelist-common.inc

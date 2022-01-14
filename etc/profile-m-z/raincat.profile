@@ -29,7 +29,7 @@ noroot
 notv
 nou2f
 novideo
-protocol unix,
+protocol unix
 net none
 seccomp
 shell none
@@ -37,10 +37,10 @@ tracelog
 
 disable-mnt
 private
-private-bin raincat,
+private-bin raincat
 private-cache
 private-dev
-private-etc timidity.cfg,timidity,machine-id,pulse,passwd,drirc,
+private-etc drirc,machine-id,passwd,pulse,timidity,timidity.cfg
 #private-lib
 private-tmp
 

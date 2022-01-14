@@ -45,6 +45,6 @@ shell none
 tracelog
 
 disable-mnt
-private-bin which,sh,bash,dash,warzone2100
+private-bin bash,dash,sh,warzone2100,which
 private-dev
 private-tmp

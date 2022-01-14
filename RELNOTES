@@ -19,7 +19,7 @@ firejail (0.9.67) baseline; urgency=low
   * new profiles: yt-dlp, goldendict, goldendict, bundle, cmake
   * new profiles: make, meson, pip, codium, telnet, ftp, OpenStego
   * new profiles: imv, retroarch, torbrowser, CachyBrowser,
-  * new profiles: notable, RPCS3
+  * new profiles: notable, RPCS3, wget2, raincat,
  -- netblue30 <netblue30@yahoo.com>  Thu, 29 Jul 2021 09:00:00 -0500
 
 firejail (0.9.66) baseline; urgency=low

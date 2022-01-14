@@ -119,6 +119,8 @@ static void hnode_free(HNode *elem) {
 		htable[h] = elem->hnext;
 	else
 		prev->hnext = elem->hnext;
+	if (elem->hostname)
+		free(elem->hostname);
 	free(elem);
 }
 

@@ -981,6 +981,7 @@ blacklist ${HOME}/.local/share/wesnoth
 blacklist ${HOME}/.local/share/wormux
 blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
+blacklist ${HOME}/.local/share/warzone2100-3.*
 blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.local/state/pipewire
 blacklist ${HOME}/.lv2

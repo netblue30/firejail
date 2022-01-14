@@ -724,6 +724,11 @@ env CFLAGS="-W -Wall -Werror"
 .TP
 \fBipc-namespace
 Enable IPC namespace.
+
+.TP
+\fBkeep-fd
+Inherit open file descriptors to sandbox.
+
 .TP
 \fBname sandboxname
 Set sandbox name. Example:

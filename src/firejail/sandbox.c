@@ -399,9 +399,25 @@ static int monitor_application(pid_t app_pid) {
 	return arg_deterministic_exit_code ? app_status : status;
 }
 
+
 static void print_time(void) {
 	float delta = timetrace_end();
 	fmessage("Child process initialized in %.02f ms\n", delta);
+}
+
+
+int *build_keep_fd_array(size_t *sz) {
+	if (!cfg.keep_fd) {
+		*sz = 0;
+		return NULL;
+	}
+
+	int *rv = str_to_int_array(cfg.keep_fd, sz);
+	if (!rv) {
+		fprintf(stderr, "Error: invalid keep-fd option\n");
+		exit(1);
+	}
+	return rv;
 }
 
 
@@ -461,10 +477,27 @@ static int ok_to_run(const char *program) {
 	return 0;
 }
 
+
 void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
-	// set environment
-	if (no_sandbox == 0)
+	if (no_sandbox == 0) {
+		// don't leak open file descriptors
+		if (!arg_keep_fd_all) {
+			size_t sz;
+			int *keep = build_keep_fd_array(&sz);
+			close_all(keep, sz);
+			if (keep)
+				free(keep);
+		}
+
+		// set nice and rlimits
+		if (arg_nice)
+			set_nice(cfg.nice);
+		set_rlimits();
+
 		env_defaults();
+	}
+
+	// set environment
 	env_apply_all();
 
 	// restore original umask
@@ -1252,12 +1285,6 @@ int sandbox(void* sandbox_arg) {
 #ifdef HAVE_APPARMOR
 		set_apparmor();
 #endif
-
-		// set nice and rlimits
-		if (arg_nice)
-			set_nice(cfg.nice);
-		set_rlimits();
-
 		start_application(0, -1, set_sandbox_status);
 	}
 

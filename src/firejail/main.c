@@ -149,6 +149,7 @@ int arg_nou2f = 0; // --nou2f
 int arg_noinput = 0; // --noinput
 int arg_deterministic_exit_code = 0;	// always exit with first child's exit status
 int arg_deterministic_shutdown = 0; 	// shut down the sandbox if first child dies
+int arg_keep_fd_all = 0;		// inherit all file descriptors to sandbox
 DbusPolicy arg_dbus_user = DBUS_POLICY_ALLOW;	// --dbus-user
 DbusPolicy arg_dbus_system = DBUS_POLICY_ALLOW;	// --dbus-system
 const char *arg_dbus_log_file = NULL;
@@ -1861,6 +1862,14 @@ int main(int argc, char **argv, char **envp) {
 				exit(1);
 			}
 			profile_add_ignore(argv[i] + 9);
+		}
+		else if (strncmp(argv[i], "--keep-fd=", 10) == 0) {
+			if (strcmp(argv[i] + 10, "all") == 0)
+				arg_keep_fd_all = 1;
+			else {
+				const char *add = argv[i] + 10;
+				profile_list_augment(&cfg.keep_fd, add);
+			}
 		}
 #ifdef HAVE_CHROOT
 		else if (strncmp(argv[i], "--chroot=", 9) == 0) {

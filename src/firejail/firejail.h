@@ -710,6 +710,7 @@ void env_ibus_load(void);
 void fs_whitelist(void);
 
 // pulseaudio.c
+void pipewire_disable(void);
 void pulseaudio_init(void);
 void pulseaudio_disable(void);
 

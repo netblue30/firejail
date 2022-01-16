@@ -51,7 +51,7 @@ static void disable_rundir_pipewire(const char *path) {
 		exit(1);
 	}
 
-	int i;
+	size_t i;
 	for (i = 0; i < globbuf.gl_pathc; i++) {
 		char *dir = globbuf.gl_pathv[i];
 		assert(dir);

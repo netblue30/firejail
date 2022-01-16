@@ -1051,6 +1051,9 @@ int sandbox(void* sandbox_arg) {
 		// disable pulseaudio
 		pulseaudio_disable();
 
+		// disable pipewire
+		pipewire_disable();
+
 		// disable /dev/snd
 		fs_dev_disable_sound();
 	}

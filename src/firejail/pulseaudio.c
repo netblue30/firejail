@@ -25,6 +25,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <sys/wait.h>
+#include <glob.h>
 
 #include <fcntl.h>
 #ifndef O_PATH
@@ -32,6 +33,59 @@
 #endif
 
 #define PULSE_CLIENT_SYSCONF "/etc/pulse/client.conf"
+
+
+
+static void disable_rundir_pipewire(const char *path) {
+	assert(path);
+
+	// globbing for path/pipewire-*
+	char *pattern;
+	if (asprintf(&pattern, "%s/pipewire-*", path) == -1)
+		errExit("asprintf");
+
+	glob_t globbuf;
+	int globerr = glob(pattern, GLOB_NOCHECK | GLOB_NOSORT, NULL, &globbuf);
+	if (globerr) {
+		fprintf(stderr, "Error: failed to glob pattern %s\n", pattern);
+		exit(1);
+	}
+
+	int i;
+	for (i = 0; i < globbuf.gl_pathc; i++) {
+		char *dir = globbuf.gl_pathv[i];
+		assert(dir);
+
+		// don't disable symlinks - disable_file_or_dir will bind-mount an empty directory on top of it!
+		if (is_link(dir))
+			continue;
+		disable_file_or_dir(dir);
+	}
+	globfree(&globbuf);
+	free(pattern);
+}
+
+
+
+// disable pipewire socket
+void pipewire_disable(void) {
+	if (arg_debug)
+		printf("disable pipewire\n");
+	// blacklist user config directory
+	disable_file_path(cfg.homedir, ".config/pipewire");
+
+	// blacklist pipewire in XDG_RUNTIME_DIR
+	const char *name = env_get("XDG_RUNTIME_DIR");
+	if (name)
+		disable_rundir_pipewire(name);
+
+	// try the default location anyway
+	char *path;
+	if (asprintf(&path, "/run/user/%d", getuid()) == -1)
+		errExit("asprintf");
+	disable_rundir_pipewire(path);
+	free(path);
+}
 
 // disable pulseaudio socket
 void pulseaudio_disable(void) {

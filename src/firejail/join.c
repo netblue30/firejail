@@ -569,11 +569,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			dbus_set_system_bus_env();
 #endif
 
-		// set nice and rlimits
-		if (arg_nice)
-			set_nice(cfg.nice);
-		set_rlimits();
-
 		start_application(0, shfd, NULL);
 
 		__builtin_unreachable();

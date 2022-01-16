@@ -1104,6 +1104,26 @@ Example:
 $ firejail --keep-dev-shm --private-dev
 
 .TP
+\fB\-\-keep-fd=all
+Inherit all open file descriptors to the sandbox. By default only file descriptors 0, 1 and 2 are inherited to the sandbox, and all other file descriptors are closed.
+.br
+
+.br
+Example:
+.br
+$ firejail --keep-fd=all
+
+.TP
+\fB\-\-keep-fd=file_descriptor
+Don't close specified open file descriptors. By default only file descriptors 0, 1 and 2 are inherited to the sandbox, and all other file descriptors are closed.
+.br
+
+.br
+Example:
+.br
+$ firejail --keep-fd=3,4,5
+
+.TP
 \fB\-\-keep-var-tmp
 /var/tmp directory is untouched.
 .br

@@ -142,4 +142,5 @@ int pid_proc_cmdline_x11_xpra_xephyr(const pid_t pid);
 int pid_hidepid(void);
 void warn_dumpable(void);
 const char *gnu_basename(const char *path);
+int *str_to_int_array(const char *str, size_t *sz);
 #endif

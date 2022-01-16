@@ -119,6 +119,7 @@ static char *usage_str =
 	"    --join-or-start=name|pid - join the sandbox or start a new one.\n"
 	"    --keep-config-pulse - disable automatic ~/.config/pulse init.\n"
 	"    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
+	"    --keep-fd - inherit open file descriptors to sandbox.\n"
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
 	"    --list - list all sandboxes.\n"
 #ifdef HAVE_FILE_TRANSFER

@@ -31,6 +31,7 @@
 #include <dirent.h>
 #include <string.h>
 #include <time.h>
+#include <limits.h>
 #include "../include/common.h"
 #define BUFLEN 4096
 
@@ -318,6 +319,55 @@ const char *gnu_basename(const char *path) {
 	if (!last_slash)
 		return path;
 	return last_slash+1;
+}
+
+// takes string with comma separated int values, returns int array
+int *str_to_int_array(const char *str, size_t *sz) {
+	assert(str && sz);
+
+	size_t curr_sz = 0;
+	size_t arr_sz = 16;
+	int *rv = malloc(arr_sz * sizeof(int));
+	if (!rv)
+		errExit("malloc");
+
+	char *dup = strdup(str);
+	if (!dup)
+		errExit("strdup");
+	char *tok = strtok(dup, ",");
+	if (!tok) {
+		free(dup);
+		free(rv);
+		goto errout;
+	}
+
+	while (tok) {
+		char *end;
+		long val = strtol(tok, &end, 10);
+		if (end == tok || *end != '\0' || val < INT_MIN || val > INT_MAX) {
+			free(dup);
+			free(rv);
+			goto errout;
+		}
+
+		if (curr_sz == arr_sz) {
+			arr_sz *= 2;
+			rv = realloc(rv, arr_sz * sizeof(int));
+			if (!rv)
+				errExit("realloc");
+		}
+		rv[curr_sz++] = val;
+
+		tok = strtok(NULL, ",");
+	}
+	free(dup);
+
+	*sz = curr_sz;
+	return rv;
+
+errout:
+	*sz = 0;
+	return NULL;
 }
 
 //**************************

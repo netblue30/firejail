@@ -298,10 +298,10 @@ void dbus_proxy_start(void) {
 		errExit("fork");
 	if (dbus_proxy_pid == 0) {
 		// close open files
-		int keep_list[2];
-		keep_list[0] = status_pipe[1];
-		keep_list[1] = args_pipe[0];
-		close_all(keep_list, ARRAY_SIZE(keep_list));
+		int keep[2];
+		keep[0] = status_pipe[1];
+		keep[1] = args_pipe[0];
+		close_all(keep, ARRAY_SIZE(keep));
 
 		if (arg_dbus_log_file != NULL) {
 			int output_fd = creat(arg_dbus_log_file, 0666);

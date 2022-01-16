@@ -290,6 +290,15 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strncmp(ptr, "keep-fd ", 8) == 0) {
+		if (strcmp(ptr + 8, "all") == 0)
+			arg_keep_fd_all = 1;
+		else {
+			const char *add = ptr + 8;
+			profile_list_augment(&cfg.keep_fd, add);
+		}
+		return 0;
+	}
 	if (strncmp(ptr, "xephyr-screen ", 14) == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {

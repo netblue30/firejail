@@ -34,7 +34,7 @@ typedef struct rnode_t {
 RNode *head = 0;
 int radix_nodes = 0;
 
-static inline RNode *addOne(RNode *ptr, uint32_t ip, uint32_t mask, char *name) {
+static inline RNode *addOne(RNode *ptr, char *name) {
 	assert(ptr);
 	if (ptr->one)
 		return ptr->one;
@@ -52,7 +52,7 @@ static inline RNode *addOne(RNode *ptr, uint32_t ip, uint32_t mask, char *name) 
 	return node;
 }
 
-static inline RNode *addZero(RNode *ptr, uint32_t ip, uint32_t mask, char *name) {
+static inline RNode *addZero(RNode *ptr, char *name) {
 	assert(ptr);
 	if (ptr->zero)
 		return ptr->zero;
@@ -91,9 +91,9 @@ char *radix_add(uint32_t ip, uint32_t mask, char *name) {
 		lastm |= m;
 		int valid = (lastm == mask)? 1: 0;
 		if (m & ip)
-			ptr = addOne(ptr, ip & lastm, mask & lastm, (valid)? name: NULL);
+			ptr = addOne(ptr, (valid)? name: NULL);
 		else
-			ptr = addZero(ptr, ip & lastm, mask & lastm, (valid)? name: NULL);
+			ptr = addZero(ptr, (valid)? name: NULL);
 	}
 	assert(ptr);
 	if (!ptr->name) {

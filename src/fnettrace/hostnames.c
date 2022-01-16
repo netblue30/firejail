@@ -29,7 +29,7 @@ char *retrieve_hostname(uint32_t ip) {
 	if (geoip_not_found)
 		return NULL;
 	geoip_calls++;
-	
+
 	char *rv = NULL;
 	char *cmd;
 	if (asprintf(&cmd, "/usr/bin/geoiplookup %d.%d.%d.%d", PRINT_IP(ip)) == -1)
@@ -46,7 +46,7 @@ char *retrieve_hostname(uint32_t ip) {
 				ptr = buf + 22;
 				if (*ptr == ' ' && *(ptr + 3) == ',' &&  *(ptr + 4) == ' ') {
 					rv = ptr + 5;
-					radix_add(ip, 0xffffffff, ptr + 5);
+					rv = radix_add(ip, 0xffffffff, rv);
 				}
 			}
 		}
@@ -55,7 +55,7 @@ char *retrieve_hostname(uint32_t ip) {
 	}
 	else
 		geoip_not_found = 1;
-	
+
 	free(cmd);
 
 	return NULL;
@@ -120,11 +120,5 @@ void load_hostnames(const char *fname) {
 errexit:
 	fprintf(stderr, "Error: invalid line %d in file %s\n", line, fname);
 	exit(1);
-}
-
-void build_list(const char *fname) {
-	assert(fname);
-	load_hostnames(fname);
-	radix_build_list();
 }
 

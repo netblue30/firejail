@@ -62,6 +62,5 @@ void logprintf(char* fmt, ...);
 extern int geoip_calls;
 void load_hostnames(const char *fname);
 char* retrieve_hostname(uint32_t ip);
-void build_list(const char *fname);
 
 #endif

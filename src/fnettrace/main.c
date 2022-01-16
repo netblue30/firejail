@@ -29,7 +29,6 @@ typedef struct hnode_t {
 	struct hnode_t *hnext;	// used for hash table
 	struct hnode_t *dnext;	// used to display stremas on the screen
 	uint32_t ip_src;
-	uint32_t ip_dst;
 	uint32_t  bytes;	// number of bytes received in the last display interval
 	uint16_t port_src;
 	uint8_t protocol;
@@ -46,7 +45,7 @@ HNode *htable[HMAX] = {NULL};
 // display linked list
 HNode *dlist = NULL;
 
-static void hnode_add(uint32_t ip_src, uint32_t ip_dst, uint8_t protocol, uint16_t port_src, uint32_t bytes) {
+static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint32_t bytes) {
 	uint8_t h = hash(ip_src);
 
 	// find
@@ -55,7 +54,7 @@ static void hnode_add(uint32_t ip_src, uint32_t ip_dst, uint8_t protocol, uint16
 	while (ptr) {
 		if (ptr->ip_src == ip_src) {
 			ip_instance++;
-			if (ptr->ip_dst == ip_dst && ptr->port_src == port_src && ptr->protocol == protocol) {
+			if (ptr->port_src == port_src && ptr->protocol == protocol) {
 				ptr->bytes += bytes;
 				return;
 			}
@@ -71,7 +70,6 @@ static void hnode_add(uint32_t ip_src, uint32_t ip_dst, uint8_t protocol, uint16
 		errExit("malloc");
 	hnew->hostname = NULL;
 	hnew->ip_src = ip_src;
-	hnew->ip_dst = ip_dst;
 	hnew->port_src = port_src;
 	hnew->protocol = protocol;
 	hnew->hnext = NULL;
@@ -119,8 +117,6 @@ static void hnode_free(HNode *elem) {
 		htable[h] = elem->hnext;
 	else
 		prev->hnext = elem->hnext;
-	if (elem->hostname)
-		free(elem->hostname);
 	free(elem);
 }
 
@@ -245,18 +241,12 @@ static void hnode_print(unsigned bw) {
 			else
 				snprintf(bytes, 11, "%u B/s ", (unsigned) (ptr->bytes / DISPLAY_INTERVAL));
 
-			char *hostname = ptr->hostname;
-			if (!hostname)
-				hostname = radix_find_last(ptr->ip_src);
-			if (!hostname)
-				hostname = retrieve_hostname(ptr->ip_src);
-			if (!hostname)
-				hostname = " ";
-			else {
-				ptr->hostname = strdup(hostname);
-				if (!ptr->hostname)
-					errExit("strdup");
-			}
+			if (!ptr->hostname)
+				ptr->hostname = radix_longest_prefix_match(ptr->ip_src);
+			if (!ptr->hostname)
+				ptr->hostname = retrieve_hostname(ptr->ip_src);
+			if (!ptr->hostname)
+				ptr->hostname = " ";
 
 			unsigned bwunit = bw / DISPLAY_BW_UNITS;
 			char *bwline;
@@ -274,13 +264,13 @@ static void hnode_print(unsigned bw) {
 				protocol = "(UDP)";
 /*
 			else (ptr->port_src == 443)
-				protocol = "SSL";
+				protocol = "TLS";
 			else if (ptr->port_src == 53)
 				protocol = "DNS";
 */
 
 			len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s\n",
-				bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, hostname);
+				bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->hostname);
 			adjust_line(line, len, cols);
 			printf("%s", line);
 
@@ -360,16 +350,12 @@ static void run_trace(void) {
 				memcpy(&ip_src, buf + 12, 4);
 				ip_src = ntohl(ip_src);
 
-				uint32_t ip_dst;
-				memcpy(&ip_dst, buf + 16, 4);
-				ip_dst = ntohl(ip_dst);
-
 				uint8_t hlen = (buf[0] & 0x0f) * 4;
 				uint16_t port_src;
 				memcpy(&port_src, buf + hlen, 2);
 				port_src = ntohs(port_src);
 
-				hnode_add(ip_src, ip_dst, buf[9], port_src, bytes + 14);
+				hnode_add(ip_src, buf[9], port_src, bytes + 14);
 			}
 		}
 	}
@@ -537,7 +523,6 @@ void logprintf(char* fmt, ...) {
 static void usage(void) {
 	printf("Usage: fnetlock [OPTIONS]\n");
 	printf("Options:\n");
-	printf("   --build=filename - compact list of addresses\n");
 	printf("   --help, -? - this help screen\n");
 	printf("   --log=filename - netlocker logfile\n");
 	printf("   --netfilter - build the firewall rules and commit them.\n");
@@ -552,20 +537,14 @@ int main(int argc, char **argv) {
 	radix_add(0x09000000, 0xff000000, "IBM");
 	radix_add(0x09090909, 0xffffffff, "Quad9 DNS");
 	radix_add(0x09000000, 0xff000000, "IBM");
-	radix_print();
 	printf("This test should print \"IBM, Quad9 DNS, IBM\"\n");
-	char *name = radix_find_first(0x09090909);
+	char *name = radix_longest_prefix_match(0x09040404);
 	printf("%s, ", name);
-	name = radix_find_last(0x09090909);
+	name = radix_longest_prefix_match(0x09090909);
 	printf("%s, ", name);
-	name = radix_find_last(0x09322209);
+	name = radix_longest_prefix_match(0x09322209);
 	printf("%s\n", name);
 #endif
-
-	if (argc == 2 && strncmp(argv[1], "--build=", 8) == 0) {
-		build_list(argv[1] + 8);
-		return 0;
-	}
 
 	if (getuid() != 0) {
 		fprintf(stderr, "Error: you need to be root to run this program\n");

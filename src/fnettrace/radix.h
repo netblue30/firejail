@@ -20,19 +20,8 @@
 #ifndef RADIX_H
 #define RADIX_H
 
-typedef struct rnode_t {
-	struct rnode_t *zero;
-	struct rnode_t *one;
-	uint32_t ip;
-	uint32_t mask;
-	char *name;
-} RNode;
-
 extern int radix_nodes;
-char *radix_find_first(uint32_t ip);
-char *radix_find_last(uint32_t ip);
-void radix_add(uint32_t ip, uint32_t mask, char *name);
-void radix_print(void);
-void radix_build_list(void);
+char *radix_longest_prefix_match(uint32_t ip);
+char *radix_add(uint32_t ip, uint32_t mask, char *name);
 
 #endif

@@ -399,27 +399,10 @@ static int monitor_application(pid_t app_pid) {
 	return arg_deterministic_exit_code ? app_status : status;
 }
 
-
 static void print_time(void) {
 	float delta = timetrace_end();
 	fmessage("Child process initialized in %.02f ms\n", delta);
 }
-
-
-int *build_keep_fd_array(size_t *sz) {
-	if (!cfg.keep_fd) {
-		*sz = 0;
-		return NULL;
-	}
-
-	int *rv = str_to_int_array(cfg.keep_fd, sz);
-	if (!rv) {
-		fprintf(stderr, "Error: invalid keep-fd option\n");
-		exit(1);
-	}
-	return rv;
-}
-
 
 // check execute permissions for the program
 // this is done typically by the shell
@@ -477,17 +460,29 @@ static int ok_to_run(const char *program) {
 	return 0;
 }
 
+static void close_file_descriptors(void) {
+	if (arg_keep_fd_all)
+		return;
+
+	if (!cfg.keep_fd) {
+		close_all(NULL, 0);
+		return;
+	}
+
+	size_t sz = 0;
+	int *keep = str_to_int_array(cfg.keep_fd, &sz);
+	if (!keep) {
+		fprintf(stderr, "Error: invalid keep-fd option\n");
+		exit(1);
+	}
+	close_all(keep, sz);
+	free(keep);
+}
+
 
 void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	if (no_sandbox == 0) {
-		// don't leak open file descriptors
-		if (!arg_keep_fd_all) {
-			size_t sz;
-			int *keep = build_keep_fd_array(&sz);
-			close_all(keep, sz);
-			if (keep)
-				free(keep);
-		}
+		close_file_descriptors();
 
 		// set nice and rlimits
 		if (arg_nice)

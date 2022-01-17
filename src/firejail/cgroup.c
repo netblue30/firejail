@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/wait.h>
 #include <errno.h>
 
@@ -122,6 +123,9 @@ void set_cgroup(const char *fname, pid_t pid) {
 		drop_privs(0);
 
 		do_set_cgroup(fname, pid);
+
+		__gcov_flush();
+
 		_exit(0);
 	}
 	waitpid(child, NULL, 0);

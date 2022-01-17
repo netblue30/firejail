@@ -6,6 +6,7 @@ include wine.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/wine
 noblacklist ${HOME}/.cache/winetricks
 noblacklist ${HOME}/.Steam
 noblacklist ${HOME}/.local/share/Steam

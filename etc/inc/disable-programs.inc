@@ -286,6 +286,7 @@ blacklist ${HOME}/.config/Meltytech
 blacklist ${HOME}/.config/Mendeley Ltd.
 blacklist ${HOME}/.config/Microsoft
 blacklist ${HOME}/.config/Min
+blacklist ${HOME}/.config/MangoHud
 blacklist ${HOME}/.config/ModTheSpire
 blacklist ${HOME}/.config/Mousepad
 blacklist ${HOME}/.config/Mumble

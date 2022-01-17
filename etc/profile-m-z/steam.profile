@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/Epic
 noblacklist ${HOME}/.config/Loop_Hero
+noblacklist ${HOME}/.config/MangoHud
 noblacklist ${HOME}/.config/ModTheSpire
 noblacklist ${HOME}/.config/RogueLegacy
 noblacklist ${HOME}/.config/RogueLegacyStorageContainer
@@ -55,6 +56,7 @@ include disable-programs.inc
 
 mkdir ${HOME}/.config/Epic
 mkdir ${HOME}/.config/Loop_Hero
+mkdir ${HOME}/.config/MangoHud
 mkdir ${HOME}/.config/ModTheSpire
 mkdir ${HOME}/.config/RogueLegacy
 mkdir ${HOME}/.config/unity3d
@@ -85,6 +87,7 @@ mkfile ${HOME}/.steampath
 mkfile ${HOME}/.steampid
 whitelist ${HOME}/.config/Epic
 whitelist ${HOME}/.config/Loop_Hero
+whitelist ${HOME}/.config/MangoHud
 whitelist ${HOME}/.config/ModTheSpire
 whitelist ${HOME}/.config/RogueLegacy
 whitelist ${HOME}/.config/RogueLegacyStorageContainer

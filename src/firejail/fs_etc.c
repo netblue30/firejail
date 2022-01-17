@@ -142,7 +142,7 @@ errexit:
 static void duplicate(const char *fname, const char *private_dir, const char *private_run_dir) {
 	assert(fname);
 
-	if (*fname == '~' || *fname == '/' || strncmp(fname, "..", 2) == 0) {
+	if (*fname == '~' || *fname == '/' || strstr(fname, "..")) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
 	}

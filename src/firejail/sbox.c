@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <net/if.h>
 #include <stdarg.h>
+#include <sys/resource.h>
 #include <sys/wait.h>
 #include "../include/seccomp.h"
 
@@ -76,6 +77,11 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 		close_all(NULL, 0);
 
 	umask(027);
+
+	// https://seclists.org/oss-sec/2021/q4/43
+	struct rlimit tozero = { .rlim_cur = 0, .rlim_max = 0 };
+	if (setrlimit(RLIMIT_CORE, &tozero))
+		errExit("setrlimit");
 
 	// apply filters
 	if (filtermask & SBOX_CAPS_NONE) {
@@ -289,7 +295,7 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 	if (waitpid(child, &status, 0) == -1 ) {
 		errExit("waitpid");
 	}
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
 		fprintf(stderr, "Error: failed to run %s, exiting...\n", arg[0]);
 		exit(1);
 	}

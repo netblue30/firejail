@@ -78,11 +78,6 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 
 	umask(027);
 
-	// https://seclists.org/oss-sec/2021/q4/43
-	struct rlimit tozero = { .rlim_cur = 0, .rlim_max = 0 };
-	if (setrlimit(RLIMIT_CORE, &tozero))
-		errExit("setrlimit");
-
 	// apply filters
 	if (filtermask & SBOX_CAPS_NONE) {
 		caps_drop_all();
@@ -209,6 +204,11 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 	if (filtermask & SBOX_USER)
 		drop_privs(1);
 	else if (filtermask & SBOX_ROOT) {
+		// https://seclists.org/oss-sec/2021/q4/43
+		struct rlimit tozero = { .rlim_cur = 0, .rlim_max = 0 };
+		if (setrlimit(RLIMIT_CORE, &tozero))
+			errExit("setrlimit");
+
 		// elevate privileges in order to get grsecurity working
 		if (setreuid(0, 0))
 			errExit("setreuid");
@@ -295,7 +295,8 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 	if (waitpid(child, &status, 0) == -1 ) {
 		errExit("waitpid");
 	}
-	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+	if (WIFSIGNALED(status) ||
+	   (WIFEXITED(status) && WEXITSTATUS(status) != 0)) {
 		fprintf(stderr, "Error: failed to run %s, exiting...\n", arg[0]);
 		exit(1);
 	}

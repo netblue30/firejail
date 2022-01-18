@@ -1,6 +1,7 @@
 firejail (0.9.67) baseline; urgency=low
   * work in progress
   * exit code: distinguish fatal signals by adding 128 (#4533)
+  * close file descriptors greater than 2 (--keep-fd) (#4845)
   * intrusion detection system (--ids-init, --ids-check)
   * deterministic shutdown (--deterministic-exit-code,
      --deterministic-shutdown) (#4635)

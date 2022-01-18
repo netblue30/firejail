@@ -283,6 +283,25 @@ INTRUSION DETECTION SYSTEM (IDS)
 
 `````
 
+### File descriptors
+`````
+       --keep-fd=all
+              Inherit all open file descriptors to  the  sandbox.  By  default
+              only  file  descriptors 0, 1 and 2 are inherited to the sandbox,
+              and all other file descriptors are closed.
+
+              Example:
+              $ firejail --keep-fd=all
+
+       --keep-fd=file_descriptor
+              Don't close specified open file  descriptors.  By  default  only
+              file  descriptors  0,  1 and 2 are inherited to the sandbox, and
+              all other file descriptors are closed.
+
+              Example:
+              $ firejail --keep-fd=3,4,5
+`````
+
 ### Deteministic Shutdown
 `````
       --deterministic-exit-code
@@ -298,7 +317,7 @@ INTRUSION DETECTION SYSTEM (IDS)
 
 ### Network Monitor
 `````
-        --nettrace=name|pid
+       --nettrace=name|pid
               Monitor TCP and UDP traffic coming into the sandbox specified by
               name or pid. Only networked sandboxes  created  with  --net  are
               supported.

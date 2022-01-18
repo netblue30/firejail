@@ -49,7 +49,6 @@ HNode *dlist = NULL;
 // speed up malloc/free
 #define HNODE_MAX_MALLOC 16
 static HNode *hnode_unused = NULL;
-static int hnode_malloc_cnt = 0;
 HNode *hmalloc(void) {
 	if (hnode_unused == NULL) {
 		hnode_unused = malloc(sizeof(HNode) * HNODE_MAX_MALLOC);

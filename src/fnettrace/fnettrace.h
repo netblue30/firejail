@@ -29,11 +29,10 @@
 #include <stdarg.h>
 //#define DEBUG 1
 
-//#define NETLOCK_INTERVAL 15
-#define NETLOCK_INTERVAL 60
-#define DISPLAY_INTERVAL 2
-#define DISPLAY_TTL 4
-#define DISPLAY_BW_UNITS 20
+#define NETLOCK_INTERVAL 60	// seconds
+#define DISPLAY_INTERVAL 2	// seconds
+#define DISPLAY_TTL 4		// display intervals (4 * 2 seconds)
+#define DISPLAY_BW_UNITS 20	// length of the bandwidth bar
 
 
 static inline void ansi_topleft(void) {

@@ -20,7 +20,7 @@
 #
 # Static Internet Map
 #
-# Unfortunately, we cannot do a hostname lookup. This will leak a lot of
+# Unfortunately we cannot do a hostname lookup. This will leak a lot of
 # information about what network resources we access.
 # A static map, helped out by geoip package available on all Linux distros,
 # will have to do it for now!

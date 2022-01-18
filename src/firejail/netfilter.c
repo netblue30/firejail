@@ -93,7 +93,10 @@ void netfilter_netlock(pid_t pid) {
 void netfilter_trace(pid_t pid) {
 	EUID_ASSERT();
 
-	enter_network_namespace(pid);
+	// a pid of 0 means the main system network namespace
+	if (pid)
+		enter_network_namespace(pid);
+
 	char *cmd;
 	if (asprintf(&cmd, "%s/firejail/fnettrace", LIBDIR) == -1)
 		errExit("asprintf");

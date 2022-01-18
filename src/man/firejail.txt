@@ -1463,6 +1463,28 @@ $ firejail --name=browser --net=eth0 --netfilter firefox &
 $ firejail --netfilter6.print=browser
 
 .TP
+\fB\-\-netlock=name/pid
+Several type of programs (email clients, multiplayer games etc.) talk to a very small
+number of IP addresses. But the best example is tor browser. It only talks to a guard node,
+and there are two or three more on standby in case the main one fails.
+During startup, the browser contacts all of them, after that it keeps talking to the main
+one... for weeks!
+
+Use the network locking feature to build and deploy a network firewall in your sandbox.
+The firewall allows only the network traffic to the IP addresses detected during the program
+startup. Traffic to any other address is quietly dropped. By default the startup monitoring
+time is one minute. Example:
+.br
+
+.br
+$ firejail --net=eth0 --netlock \\
+.br
+--private=~/tor-browser_en-US ./start-tor-browser.desktop
+.br
+
+.br
+
+.TP
 \fB\-\-netmask=address
 Use this option when you want to assign an IP address in a new namespace and
 the parent interface specified by --net is not configured. An IP address and
@@ -1500,25 +1522,35 @@ PID  User    RX(KB/s) TX(KB/s) Command
 .br
 7383 netblue 9.045    0.112    firejail \-\-net=eth0 transmission
 .TP
-\fB\-\-nettrace=name|pid
+\fB\-\-nettrace[=name|pid]
 Monitor TCP and UDP traffic coming into the sandbox specified by name or pid. Only networked sandboxes
 created with \-\-net are supported.
 .br
 
 .br
-$ firejail --nettrace=browser
-.br
-   86 KB/s *********           64.222.84.207:443 United States
-.br
-   76 KB/s ********            192.229.210.163:443 MCI
-.br
-  111 B/s                      9.9.9.9:53 Quad9 DNS
-.br
-   32 KB/s ***                 142.250.179.182:443 Google
+Without a name/pid, Firejail will monitor the main system network namespace.
 .br
 
 .br
-If /usr/bin/geoiplookup is installed (geoip-bin packet in Debian),
+ $ firejail --nettrace=browser
+.br
+
+.br
+                        95 KB/s  geoip 457, IP database 4436
+.br
+   52 KB/s ***********           64.222.84.207:443 United States
+.br
+   33 KB/s *******               89.147.74.105:63930 Hungary
+.br
+    0 B/s                        45.90.28.0:443 NextDNS
+.br
+    0 B/s                        94.70.122.176:52309(UDP) Greece
+.br
+  339 B/s                        104.26.7.35:443 Cloudflare
+.br
+
+.br
+If /usr/bin/geoiplookup is installed (geoip-bin package in Debian),
 the country the IP address originates from is added to the trace.
 We also use the static IP map in /etc/firejail/hostnames
 to print the domain names for some of the more common websites and cloud platforms.

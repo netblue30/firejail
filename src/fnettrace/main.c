@@ -26,7 +26,7 @@ static int arg_netfilter = 0;
 static char *arg_log = NULL;
 
 typedef struct hnode_t {
-	struct hnode_t *hnext;	// used for hash table
+	struct hnode_t *hnext;	// used for hash table and unused linked list
 	struct hnode_t *dnext;	// used to display stremas on the screen
 	uint32_t ip_src;
 	uint32_t  bytes;	// number of bytes received in the last display interval
@@ -44,6 +44,36 @@ typedef struct hnode_t {
 HNode *htable[HMAX] = {NULL};
 // display linked list
 HNode *dlist = NULL;
+
+
+// speed up malloc/free
+#define HNODE_MAX_MALLOC 16
+static HNode *hnode_unused = NULL;
+static int hnode_malloc_cnt = 0;
+HNode *hmalloc(void) {
+	if (hnode_unused == NULL) {
+		hnode_unused = malloc(sizeof(HNode) * HNODE_MAX_MALLOC);
+		if (!hnode_unused)
+			errExit("malloc");
+		memset(hnode_unused, 0, sizeof(HNode) * HNODE_MAX_MALLOC);
+		HNode *ptr = hnode_unused;
+		int i;
+		for ( i = 1; i < HNODE_MAX_MALLOC; i++, ptr++)
+			ptr->hnext = hnode_unused + i;
+	}
+
+	HNode *rv = hnode_unused;
+	hnode_unused = hnode_unused->hnext;
+	return rv;
+}
+
+void hfree(HNode *ptr) {
+	assert(ptr);
+	memset(ptr, 0, sizeof(HNode));
+	ptr->hnext = hnode_unused;
+	hnode_unused = ptr;
+}
+
 
 static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint32_t bytes) {
 	uint8_t h = hash(ip_src);
@@ -65,9 +95,8 @@ static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint
 #ifdef DEBUG
 	printf("malloc %d.%d.%d.%d\n", PRINT_IP(ip_src));
 #endif
-	HNode *hnew = malloc(sizeof(HNode));
-	if (!hnew)
-		errExit("malloc");
+	HNode *hnew = hmalloc();
+	assert(hnew);
 	hnew->hostname = NULL;
 	hnew->ip_src = ip_src;
 	hnew->port_src = port_src;
@@ -117,7 +146,7 @@ static void hnode_free(HNode *elem) {
 		htable[h] = elem->hnext;
 	else
 		prev->hnext = elem->hnext;
-	free(elem);
+	hfree(elem);
 }
 
 #ifdef DEBUG
@@ -194,14 +223,15 @@ static unsigned adjust_bandwidth(unsigned bw) {
 
 static void hnode_print(unsigned bw) {
 	assert(!arg_netfilter);
-	ansi_clrscr();
-
+	bw = (bw < 1024 * DISPLAY_INTERVAL)? 1024 * DISPLAY_INTERVAL: bw;
 #ifdef DEBUG
 	printf("*********************\n");
 	debug_dlist();
 	printf("-----------------------------\n");
 	debug_hnode();
 	printf("*********************\n");
+#else
+	ansi_clrscr();
 #endif
 
 	// get terminal size
@@ -291,6 +321,17 @@ static void hnode_print(unsigned bw) {
 		ptr = next;
 	}
 
+#ifdef DEBUG
+	{
+		int cnt = 0;
+		HNode *ptr = hnode_unused;
+		while (ptr) {
+			cnt++;
+			ptr = ptr->hnext;
+		}
+		printf("hnode unused %d\n", cnt);
+	}
+#endif
 }
 
 static void run_trace(void) {
@@ -343,9 +384,22 @@ static void run_trace(void) {
 
 		unsigned bytes = recvfrom(sock, buf, MAX_BUF_SIZE, 0, NULL, NULL);
 		if (bytes >= 20) { // size of IP header
-			bw += bytes + 14; // assume a 14 byte Ethernet layer
+#ifdef DEBUG
+			{
+				uint32_t ip_src;
+				memcpy(&ip_src, buf + 12, 4);
+				ip_src = ntohl(ip_src);
+
+				uint32_t ip_dst;
+				memcpy(&ip_dst, buf + 16, 4);
+				ip_dst = ntohl(ip_dst);
+				printf("%d.%d.%d.%d -> %d.%d.%d.%d, %u bytes\n", PRINT_IP(ip_src), PRINT_IP(ip_dst), bytes);
+			}
+#endif
 			// filter out loopback traffic
-			if (buf[12] != 127) {
+			if (buf[12] != 127 && buf[16] != 127) {
+				bw += bytes + 14; // assume a 14 byte Ethernet layer
+
 				uint32_t ip_src;
 				memcpy(&ip_src, buf + 12, 4);
 				ip_src = ntohl(ip_src);

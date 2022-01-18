@@ -34,18 +34,44 @@ typedef struct rnode_t {
 RNode *head = 0;
 int radix_nodes = 0;
 
+// get rid of the malloc overhead
+#define RNODE_MAX_MALLOC 128
+static RNode *rnode_unused = NULL;
+static int rnode_malloc_cnt = 0;
+static RNode *rmalloc(void) {
+	if (rnode_unused == NULL || rnode_malloc_cnt >= RNODE_MAX_MALLOC) {
+		rnode_unused = malloc(sizeof(RNode) * RNODE_MAX_MALLOC);
+		if (!rnode_unused)
+			errExit("malloc");
+		memset(rnode_unused, 0, sizeof(RNode) * RNODE_MAX_MALLOC);
+		rnode_malloc_cnt = 0;
+	}
+
+	rnode_malloc_cnt++;
+	return rnode_unused + rnode_malloc_cnt - 1;
+}
+
+
+static inline char *duplicate_name(const char *name) {
+	assert(name);
+
+	if (strcmp(name, "United States") == 0)
+		return "United States";
+	else if (strcmp(name, "Amazon") == 0)
+		return "Amazon";
+	return strdup(name);
+}
+
 static inline RNode *addOne(RNode *ptr, char *name) {
 	assert(ptr);
 	if (ptr->one)
 		return ptr->one;
-	RNode *node = malloc(sizeof(RNode));
-	if (!node)
-		errExit("malloc");
-	memset(node, 0, sizeof(RNode));
+	RNode *node = rmalloc();
+	assert(node);
 	if (name) {
-		node->name = strdup(name);
+		node->name = duplicate_name(name);
 		if (!node->name)
-			errExit("strdup");
+			errExit("duplicate name");
 	}
 
 	ptr->one = node;
@@ -56,14 +82,12 @@ static inline RNode *addZero(RNode *ptr, char *name) {
 	assert(ptr);
 	if (ptr->zero)
 		return ptr->zero;
-	RNode *node = malloc(sizeof(RNode));
-	if (!node)
-		errExit("malloc");
-	memset(node, 0, sizeof(RNode));
+	RNode *node = rmalloc();
+	assert(node);
 	if (name) {
-		node->name = strdup(name);
+		node->name = duplicate_name(name);
 		if (!node->name)
-			errExit("strdup");
+			errExit("duplicate name");
 	}
 
 	ptr->zero = node;
@@ -97,9 +121,9 @@ char *radix_add(uint32_t ip, uint32_t mask, char *name) {
 	}
 	assert(ptr);
 	if (!ptr->name) {
-		ptr->name = strdup(name);
+		ptr->name = duplicate_name(name);
 		if (!ptr->name)
-			errExit("strdup");
+			errExit("duplicate_name");
 	}
 
 	return ptr->name;

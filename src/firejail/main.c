@@ -409,9 +409,22 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 #endif
 #ifdef HAVE_NETWORK
+	else if (strcmp(argv[i], "--nettrace") == 0) {
+		if (checkcfg(CFG_NETWORK)) {
+			netfilter_trace(0);
+		}
+		else
+			exit_err_feature("networking");
+		exit(0);
+	}
 	else if (strncmp(argv[i], "--nettrace=", 11) == 0) {
-		pid_t pid = require_pid(argv[i] + 11);
-		netfilter_trace(pid);
+		if (checkcfg(CFG_NETWORK)) {
+			pid_t pid = require_pid(argv[i] + 11);
+			netfilter_trace(pid);
+		}
+		else
+			exit_err_feature("networking");
+		exit(0);
 	}
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
 		if (checkcfg(CFG_NETWORK)) {
@@ -2316,11 +2329,20 @@ int main(int argc, char **argv, char **envp) {
 			continue;
 		}
 #ifdef HAVE_NETWORK
-		else if (strcmp(argv[i], "--netlock") == 0)
-			arg_netlock = 1;
+		else if (strcmp(argv[i], "--netlock") == 0) {
+			if (checkcfg(CFG_NETWORK))
+				arg_netlock = 1;
+			else
+				exit_err_feature("networking");
+		}
 		else if (strncmp(argv[i], "--netlock=", 10) == 0) {
-			pid_t pid = require_pid(argv[i] + 10);
-			netfilter_netlock(pid);
+			if (checkcfg(CFG_NETWORK)) {
+				pid_t pid = require_pid(argv[i] + 10);
+				netfilter_netlock(pid);
+			}
+			else
+				exit_err_feature("networking");
+			exit(0);
 		}
 		else if (strncmp(argv[i], "--interface=", 12) == 0) {
 			if (checkcfg(CFG_NETWORK)) {

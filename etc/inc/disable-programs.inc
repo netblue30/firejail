@@ -190,6 +190,7 @@ blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/quodlibet
 blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/qutebrowser
+blacklist ${HOME}/.cache/rclone
 blacklist ${HOME}/.cache/rednotebook
 blacklist ${HOME}/.cache/rhythmbox
 blacklist ${HOME}/.cache/rpcs3
@@ -232,6 +233,7 @@ blacklist ${HOME}/.clion*
 blacklist ${HOME}/.cliqz
 blacklist ${HOME}/.clonk
 blacklist ${HOME}/.config/0ad
+blacklist ${HOME}/.config/1Password
 blacklist ${HOME}/.config/2048-qt
 blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/Audaciousrc
@@ -277,6 +279,7 @@ blacklist ${HOME}/.config/KeePass
 blacklist ${HOME}/.config/KeePassXCrc
 blacklist ${HOME}/.config/Kid3
 blacklist ${HOME}/.config/Kingsoft
+blacklist ${HOME}/.config/Ledger Live
 blacklist ${HOME}/.config/LibreCAD
 blacklist ${HOME}/.config/Loop_Hero
 blacklist ${HOME}/.config/Luminance
@@ -377,6 +380,7 @@ blacklist ${HOME}/.config/chromium-flags.conf
 blacklist ${HOME}/.config/clipit
 blacklist ${HOME}/.config/cliqz
 blacklist ${HOME}/.config/cmus
+blacklist ${HOME}/.config/cointop
 blacklist ${HOME}/.config/com.github.bleakgrey.tootle
 blacklist ${HOME}/.config/corebird
 blacklist ${HOME}/.config/cower
@@ -570,6 +574,7 @@ blacklist ${HOME}/.config/quodlibet
 blacklist ${HOME}/.config/qupzilla
 blacklist ${HOME}/.config/qutebrowser
 blacklist ${HOME}/.config/ranger
+blacklist ${HOME}/.config/rclone
 blacklist ${HOME}/.config/redshift
 blacklist ${HOME}/.config/redshift.conf
 blacklist ${HOME}/.config/remmina

@@ -15,6 +15,13 @@ firejail (0.9.68rc2) baseline; urgency=low
   * removed whitelist=yes/no in /etc/firejail/firejail.config
   * new condition: ALLOW_TRAY (#4510 #4599)
   * remove (some) environment variables with auth-tokens (#4157)
+  * bugfix: Error mounting tmpfs (MS_REMOUNT flag not being cleared) (#4387)
+  * bugfix: --build clears the environment (#4460 #4467)
+  * bugfix: Firejail does not work with a custom hosts file (#2758 #4560)
+  * bugfix: --tracelog and --trace override /etc/ld.so.preload (#4558 #4586)
+  * bugfix: Firejail rejects empty arguments (#4395)
+  * bugfix: firecfg does not work with symlinks (discord.desktop) (#4235)
+  * bugfix: Seccomp list output goes to stdout instead of stderr (#4328)
   * new includes: whitelist-run-common.inc (#4288), disable-X11.inc (#4462)
   * removed includes: disable-passwordmgr.inc (#4461)
   * new profiles: microsoft-edge-beta, clion-eap, lifeograph, zim

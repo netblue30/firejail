@@ -377,6 +377,7 @@ blacklist ${HOME}/.config/chromium-flags.conf
 blacklist ${HOME}/.config/clipit
 blacklist ${HOME}/.config/cliqz
 blacklist ${HOME}/.config/cmus
+blacklist ${HOME}/.config/cointop
 blacklist ${HOME}/.config/com.github.bleakgrey.tootle
 blacklist ${HOME}/.config/corebird
 blacklist ${HOME}/.config/cower

@@ -21,9 +21,15 @@ whitelist ${HOME}/.config/Signal
 
 private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,machine-id,nsswitch.conf,pki,resolv.conf,ssl
 
-# allow D-Bus notifications
 dbus-user filter
+
+# allow D-Bus notifications
 dbus-user.talk org.freedesktop.Notifications
+
+# allow D-Bus communication with firefox for opening links
+dbus-user.talk org.mozilla.Firefox.*
+dbus-user.talk org.mozilla.firefox.*
+
 ignore dbus-user none
 
 # Redirect

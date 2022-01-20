@@ -123,6 +123,7 @@ endif
 	# plugins w/o read permission (non-dumpable)
 	install -m 0711 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
 	install -m 0711 -t $(DESTDIR)$(libdir)/firejail src/fshaper/fshaper.sh
+	install -m 0644 -t $(DESTDIR)$(libdir)/firejail src/fnettrace/static-ip-map
 ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	# contrib scripts
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail contrib/*.py contrib/*.sh
@@ -138,7 +139,6 @@ endif
 	# profiles and settings
 	install -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config
-	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/fnettrace/hostnames
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config etc/ids.config
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 ifeq ($(BUSYBOX_WORKAROUND),yes)

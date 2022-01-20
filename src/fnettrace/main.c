@@ -623,11 +623,8 @@ int main(int argc, char **argv) {
 	if (arg_netfilter)
 		logprintf("starting network lockdown\n");
 	else  {
-		char *fname;
-		if (asprintf(&fname, "%s/hostnames", SYSCONFDIR) == -1)
-			errExit("asprintf");
+		char *fname = LIBDIR "/firejail/static-ip-map";
 		load_hostnames(fname);
-		free(fname);
 	}
 
 	run_trace();

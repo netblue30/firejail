@@ -349,6 +349,7 @@ Build a new /bin in a temporary filesystem, and copy the programs in the list.
 The files in the list must be expressed as relative to the /bin,
 /sbin, /usr/bin, /usr/sbin, or /usr/local/bin directories.
 The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
+Multiple private-bin commands are allowed.
 .TP
 \fBprivate-cache
 Mount an empty temporary filesystem on top of the .cache directory in user home. All
@@ -374,6 +375,7 @@ the /etc directory, and must not contain the / character
 (e.g., /etc/foo must be expressed as foo, but /etc/foo/bar --
 expressed as foo/bar -- is disallowed).
 All modifications are discarded when the sandbox is closed.
+Multiple private-etc commands are allowed.
 #ifdef HAVE_PRIVATE_HOME
 .TP
 \fBprivate-home file,directory

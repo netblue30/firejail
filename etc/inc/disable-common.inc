@@ -632,3 +632,6 @@ blacklist ${RUNUSER}/update-notifier.pid
 
 # tor-browser
 blacklist ${HOME}/.local/opt/tor-browser
+
+# pass utility (pass package in Debian etc.)
+blacklist ${HOME}/.password-store

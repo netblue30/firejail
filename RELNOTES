@@ -12,6 +12,7 @@ firejail (0.9.68rc1) baseline; urgency=low
   * build: firecfg.config is now installed to /etc/firejail/ (#4669)
   * removed --disable-whitelist at compile time
   * removed whitelist=yes/no in /etc/firejail/firejail.config
+  * added netlink to --protocol list (#4605)
   * new condition: ALLOW_TRAY (#4510 #4599)
   * remove (some) environment variables with auth-tokens (#4157)
   * new includes: whitelist-run-common.inc (#4288), disable-X11.inc (#4462)

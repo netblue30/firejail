@@ -58,6 +58,7 @@ static char *protocol[] = {
 	"netlink",
 	"packet",
 	"bluetooth",
+	"netlink",
 	NULL
 };
 
@@ -68,7 +69,8 @@ static struct sock_filter protocol_filter_command[] = {
 	WHITELIST(AF_INET6),
 	WHITELIST(AF_NETLINK),
 	WHITELIST(AF_PACKET),
-	WHITELIST(AF_BLUETOOTH)
+	WHITELIST(AF_BLUETOOTH),
+	WHITELIST(AF_NETLINK)
 };
 #endif
 // Note: protocol[] and protocol_filter_command are synchronized

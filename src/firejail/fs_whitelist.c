@@ -337,21 +337,34 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 			// fix pam-tmpdir (#2685)
 			const char *env = env_get("TMP");
 			if (env) {
-				char *pamtmpdir;
-				if (asprintf(&pamtmpdir, "/tmp/user/%u", getuid()) == -1)
+				// we allow TMP env set as /tmp/user/$UID and /tmp/$UID - see #4151
+				char *pamtmpdir1;
+				if (asprintf(&pamtmpdir1, "/tmp/user/%u", getuid()) == -1)
 					errExit("asprintf");
-				if (strcmp(env, pamtmpdir) == 0) {
+				char *pamtmpdir2; // see #4151
+				if (asprintf(&pamtmpdir2, "/tmp/%u", getuid()) == -1)
+					errExit("asprintf");
+				if (strcmp(env, pamtmpdir1) == 0) {
 					// create empty user-owned /tmp/user/$UID directory
 					EUID_ROOT();
-					mkdir_attr("/tmp/user", 0711, 0, 0);
+					mkdir_attr("/tmp/user", 0755, 0, 0);
 					selinux_relabel_path("/tmp/user", "/tmp/user");
 					fs_logger("mkdir /tmp/user");
-					mkdir_attr(pamtmpdir, 0700, getuid(), 0);
-					selinux_relabel_path(pamtmpdir, pamtmpdir);
-					fs_logger2("mkdir", pamtmpdir);
+					mkdir_attr(pamtmpdir1, 0700, getuid(), 0);
+					selinux_relabel_path(pamtmpdir1, pamtmpdir1);
+					fs_logger2("mkdir", pamtmpdir1);
 					EUID_USER();
 				}
-				free(pamtmpdir);
+				else if (strcmp(env, pamtmpdir2) == 0) {
+					// create empty user-owned /tmp/user/$UID directory
+					EUID_ROOT();
+					mkdir_attr(pamtmpdir2, 0700, getuid(), 0);
+					selinux_relabel_path(pamtmpdir2, pamtmpdir2);
+					fs_logger2("mkdir", pamtmpdir2);
+					EUID_USER();
+				}
+				free(pamtmpdir1);
+				free(pamtmpdir2);
 			}
 		}
 

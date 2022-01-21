@@ -314,9 +314,9 @@ void invalid_filename(const char *fname, int globbing) {
 
 	char *reject;
 	if (globbing)
-		reject = "\\&!\"'<>%^{};,"; // file globbing ('*?[]') is allowed
+		reject = "\\&!\"<>%^{};,"; // file globbing ('*?[]') is allowed
 	else
-		reject = "\\&!?\"'<>%^{};,*[]";
+		reject = "\\&!?\"<>%^{};,*[]";
 	char *c = strpbrk(ptr, reject);
 	if (c) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename: rejected character: \"%c\"\n", fname, *c);

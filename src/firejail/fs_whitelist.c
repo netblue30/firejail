@@ -341,7 +341,7 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 				char *pamtmpdir1;
 				if (asprintf(&pamtmpdir1, "/tmp/user/%u", getuid()) == -1)
 					errExit("asprintf");
-				char *pamtmpdir2; // see #4151
+				char *pamtmpdir2;
 				if (asprintf(&pamtmpdir2, "/tmp/%u", getuid()) == -1)
 					errExit("asprintf");
 				if (strcmp(env, pamtmpdir1) == 0) {
@@ -356,7 +356,7 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 					EUID_USER();
 				}
 				else if (strcmp(env, pamtmpdir2) == 0) {
-					// create empty user-owned /tmp/user/$UID directory
+					// create empty user-owned /tmp/$UID directory
 					EUID_ROOT();
 					mkdir_attr(pamtmpdir2, 0700, getuid(), 0);
 					selinux_relabel_path(pamtmpdir2, pamtmpdir2);

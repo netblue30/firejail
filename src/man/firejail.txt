@@ -1912,8 +1912,9 @@ The files in the list must be expressed as relative to the /bin,
 /sbin, /usr/bin, /usr/sbin, or /usr/local/bin directories.
 If no listed files are found, /bin directory will be empty.
 The same directory is also bind-mounted over /sbin, /usr/bin, /usr/sbin and /usr/local/bin.
-All modifications are discarded when the sandbox is closed. File globbing is supported,
-see \fBFILE GLOBBING\fR section for more details.
+All modifications are discarded when the sandbox is closed.
+Multiple private-bin commands are allowed and they accumulate.
+File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br
 
 .br
@@ -2009,6 +2010,7 @@ The files and directories in the list must be expressed as relative to
 the /etc directory (e.g., /etc/foo must be expressed as foo).
 If no listed file is found, /etc directory will be empty.
 All modifications are discarded when the sandbox is closed.
+Multiple private-etc commands are allowed and they accumulate.
 .br
 
 .br

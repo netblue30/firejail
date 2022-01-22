@@ -43,7 +43,7 @@ noroot
 notv
 nou2f
 novideo
-protocol unix,inet,inet6,bluetooth
+protocol unix,inet,inet6,bluetooth,netlink
 seccomp
 seccomp.block-secondary
 shell none

@@ -29,6 +29,7 @@ noblacklist ${HOME}/.local/share/kxmlgui5/kmail
 noblacklist ${HOME}/.local/share/kxmlgui5/kmail2
 noblacklist ${HOME}/.local/share/local-mail
 noblacklist ${HOME}/.local/share/notes
+noblacklist ${RUNUSER}/akonadi
 noblacklist /tmp/akonadi-*
 
 include disable-common.inc

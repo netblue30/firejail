@@ -17,6 +17,7 @@ noblacklist ${HOME}/.local/share/apps/korganizer
 noblacklist ${HOME}/.local/share/contacts
 noblacklist ${HOME}/.local/share/local-mail
 noblacklist ${HOME}/.local/share/notes
+noblacklist ${RUNUSER}/akonadi
 noblacklist /sbin
 noblacklist /tmp/akonadi-*
 noblacklist /usr/sbin

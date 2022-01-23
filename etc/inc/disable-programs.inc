@@ -1137,6 +1137,7 @@ blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/yt-dlp.conf
 blacklist ${HOME}/yt-dlp.conf.txt
 blacklist ${RUNUSER}/*firefox*
+blacklist ${RUNUSER}/akonadi
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*
 blacklist /var/games/nethack

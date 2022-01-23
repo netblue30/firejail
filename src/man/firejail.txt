@@ -185,10 +185,7 @@ $ firejail "\-\-blacklist=/home/username/My Virtual Machines"
 $ firejail \-\-blacklist=/home/username/My\\ Virtual\\ Machines
 .TP
 \fB\-\-build
-The command builds a whitelisted profile. The profile is printed on the screen. If /usr/bin/strace is installed on the system, it also
-builds a whitelisted seccomp profile. The program is run in a very relaxed sandbox,
-with only --caps.drop=all and --nonewprivs. Programs that raise user privileges are not supported
-in order to allow strace to run. Chromium and Chromium-based browsers will not work.
+The command builds a whitelisted profile. The profile is printed on the screen. The program is run in a very relaxed sandbox, with only --caps.drop=all and --nonewprivs. Programs that raise user privileges are not supported. Chromium and Chromium-based browsers will not work.
 .br
 
 .br

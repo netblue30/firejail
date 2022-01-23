@@ -504,7 +504,7 @@ There is no root account (uid 0) defined in the namespace.
 \fBprotocol protocol1,protocol2,protocol3
 Enable protocol filter. The filter is based on seccomp and checks the
 first argument to socket system call. Recognized values: \fBunix\fR,
-\fBinet\fR, \fBinet6\fR, \fBnetlink\fR, \fBpacket\fR, \fBbluetooth\fR and \fBnetlink\fR.
+\fBinet\fR, \fBinet6\fR, \fBnetlink\fR, \fBpacket\fR, and \fBbluetooth\fR.
 Multiple protocol commands are allowed.
 .TP
 \fBseccomp

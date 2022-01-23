@@ -1,0 +1,40 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2022 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+
+send -- "firejail --noprofile --keep-fd=\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Error: invalid keep-fd option"
+}
+after 100
+
+send -- "firejail --noprofile --keep-fd=,,,\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Error: invalid keep-fd option"
+}
+after 100
+
+send -- "firejail --noprofile --keep-fd=dall\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Error: invalid keep-fd option"
+}
+after 100
+
+send -- "firejail --noprofile --keep-fd=6,7,8,10b,11\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Error: invalid keep-fd option"
+}
+after 100
+
+
+puts "\nall done\n"

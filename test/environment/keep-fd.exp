@@ -1,0 +1,223 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2022 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+
+#
+# obtain some open file descriptors
+#
+send -- "exec {WRITE_FD}> blabla\r"
+after 100
+
+send -- "readlink -v /proc/self/fd/\$WRITE_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"/blabla"
+}
+after 100
+
+send -- "exec {READ_FD}< blabla\r"
+after 100
+
+send -- "readlink -v /proc/self/fd/\$READ_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"/blabla"
+}
+after 100
+
+
+#
+# inherit environment variables
+#
+send -- "export READ_FD\r"
+send -- "export WRITE_FD\r"
+after 100
+
+
+#
+# close all file descriptors
+# 0, 1, 2 stay open
+#
+send -- "firejail --noprofile\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Child process initialized"
+}
+after 100
+
+# off by one because of ls
+send -- "ls /proc/self/fd | wc -w\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"4"
+}
+after 100
+
+send -- "readlink -v /proc/self/fd/\$READ_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"No such file or directory"
+}
+after 100
+
+send -- "readlink -v /proc/self/fd/\$WRITE_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"No such file or directory"
+}
+after 100
+
+send -- "exit\r"
+after 500
+
+
+#
+# keep one file descriptor
+#
+send -- "firejail --noprofile --keep-fd=\$READ_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"Child process initialized"
+}
+after 100
+
+# off by one because of ls
+send -- "ls /proc/self/fd | wc -w\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"5"
+}
+after 100
+
+send -- "readlink -v /proc/self/fd/\$READ_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"/blabla"
+}
+after 100
+
+send -- "readlink -v /proc/self/fd/\$WRITE_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"No such file or directory"
+}
+after 100
+
+send -- "exit\r"
+after 500
+
+
+#
+# keep other file descriptor
+#
+send -- "firejail --noprofile --keep-fd=\$WRITE_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"Child process initialized"
+}
+after 100
+
+# off by one because of ls
+send -- "ls /proc/self/fd | wc -w\r"
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"5"
+}
+after 100
+
+send -- "readlink -v /proc/self/fd/\$READ_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	"No such file or directory"
+}
+after 100
+
+send -- "readlink -v /proc/self/fd/\$WRITE_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"/blabla"
+}
+after 100
+
+send -- "exit\r"
+after 500
+
+
+#
+# keep both file descriptors
+#
+send -- "firejail --noprofile --keep-fd=\$READ_FD,\$WRITE_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 14\n";exit}
+	"Child process initialized"
+}
+after 100
+
+# off by one because of ls
+send -- "ls /proc/self/fd | wc -w\r"
+expect {
+	timeout {puts "TESTING ERROR 15\n";exit}
+	"6"
+}
+after 100
+
+send -- "readlink -v /proc/self/fd/\$READ_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 16\n";exit}
+	"/blabla"
+}
+after 100
+
+send -- "readlink -v /proc/self/fd/\$WRITE_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 17\n";exit}
+	"/blabla"
+}
+after 100
+
+send -- "exit\r"
+after 500
+
+
+#
+# keep all file descriptors
+#
+send -- "firejail --noprofile --keep-fd=all\r"
+expect {
+	timeout {puts "TESTING ERROR 18\n";exit}
+	"Child process initialized"
+}
+after 100
+
+send -- "readlink -v /proc/self/fd/\$READ_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 19\n";exit}
+	"/blabla"
+}
+after 100
+
+send -- "readlink -v /proc/self/fd/\$WRITE_FD\r"
+expect {
+	timeout {puts "TESTING ERROR 20\n";exit}
+	"/blabla"
+}
+after 100
+
+send -- "exit\r"
+after 500
+
+
+#
+# cleanup
+#
+send -- "rm -f blabla\r"
+after 100
+
+
+puts "\nall done\n"

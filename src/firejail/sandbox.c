@@ -464,6 +464,9 @@ static void close_file_descriptors(void) {
 	if (arg_keep_fd_all)
 		return;
 
+	if (arg_debug)
+		printf("Closing non-standard file descriptors\n");
+
 	if (!cfg.keep_fd) {
 		close_all(NULL, 0);
 		return;

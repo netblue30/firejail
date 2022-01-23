@@ -127,5 +127,11 @@ echo "TESTING: deterministic exit code (test/environment/deterministic-exit-code
 echo "TESTING: deterministic shutdown (test/environment/deterministic-shutdown.exp)"
 ./deterministic-shutdown.exp
 
+echo "TESTING: keep fd (test/environment/keep-fd.exp)"
+./keep-fd.exp
+
+echo "TESTING: keep fd errors (test/environment/keep-fd-bad.exp)"
+./keep-fd-bad.exp
+
 echo "TESTING: retain umask (test/environment/umask.exp)"
 (umask 123 && ./umask.exp)

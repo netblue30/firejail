@@ -3,14 +3,15 @@
 # Copyright (C) 2014-2022 Firejail Authors
 # License GPL v2
 
-set timeout 5
+set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --deterministic-shutdown bash -c \"sleep 10 & exec sleep 1\"\r"
+send -- "firejail --deterministic-shutdown bash -c \"sleep 100 & exec sleep 1\"\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Parent is shutting down, bye..."
 }
+after 100
 
 puts "\nall done\n"

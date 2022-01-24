@@ -16,6 +16,7 @@ blacklist ${HOME}/.Natron
 blacklist ${HOME}/.PlayOnLinux
 blacklist ${HOME}/.PyCharm*
 blacklist ${HOME}/.Sayonara
+blacklist ${HOME}/Seafile/.seafile-data
 blacklist ${HOME}/.Steam
 blacklist ${HOME}/.Steampath
 blacklist ${HOME}/.Steampid
@@ -317,6 +318,7 @@ blacklist ${HOME}/.config/Riot
 blacklist ${HOME}/.config/Rocket.Chat
 blacklist ${HOME}/.config/RogueLegacy
 blacklist ${HOME}/.config/RogueLegacyStorageContainer
+blacklist ${HOME}/.config/Seafile
 blacklist ${HOME}/.config/Signal
 blacklist ${HOME}/.config/Sinew Software Systems
 blacklist ${HOME}/.config/Slack

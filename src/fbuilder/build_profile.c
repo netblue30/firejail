@@ -22,7 +22,6 @@
 #include <sys/wait.h>
 
 #define TRACE_OUTPUT "/tmp/firejail-trace.XXXXXX"
-#define STRACE_OUTPUT "/tmp/firejail-strace.XXXXXX"
 
 void build_profile(int argc, char **argv, int index, FILE *fp) {
 	// next index is the application name
@@ -41,36 +40,33 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	if(asprintf(&output,"--trace=%s",trace_output) == -1)
 		errExit("asprintf");
 
-	char *cmdlist[] = {
-	  BINDIR "/firejail",
-	  "--quiet",
-	  "--noprofile",
-	  "--caps.drop=all",
-	  "--seccomp",
-	  output,
-	  "--shell=none",
-	};
-
 	// calculate command length
-	unsigned len = (int) sizeof(cmdlist) / sizeof(char*) + argc - index + 1;
-	if (arg_debug)
-		printf("command len %d + %d + 1\n", (int) (sizeof(cmdlist) / sizeof(char*)), argc - index);
-	char *cmd[len];
-	cmd[0] = cmdlist[0];	// explicit assignment to clean scan-build error
+	unsigned len = 64;	// plenty of space for firejail command line
+	len += argc - index;	// program command line
+	len += 1;		// NULL
 
 	// build command
-	unsigned i = 0;
-	for (i = 0; i < (int) sizeof(cmdlist) / sizeof(char*); i++)
-		cmd[i] = cmdlist[i];
+	char *cmd[len];
+	unsigned curr_len = 0;
+	cmd[curr_len++] = BINDIR "/firejail";
+	cmd[curr_len++] = "--quiet";
+	cmd[curr_len++] = "--noprofile";
+	cmd[curr_len++] = "--caps.drop=all";
+	cmd[curr_len++] = "--seccomp";
+	cmd[curr_len++] = "--shell=none";
+	cmd[curr_len++] = output;
+	if (arg_appimage)
+		cmd[curr_len++] = "--appimage";
 
-	int i2 = index;
-	for (; i < (len - 1); i++, i2++)
-		cmd[i] = argv[i2];
-	assert(i < len);
-	cmd[i] = NULL;
+	int i;
+	for (i = index; i < argc; i++)
+		cmd[curr_len++] = argv[i];
+
+	assert(curr_len < len);
+	cmd[curr_len] = NULL;
 
 	if (arg_debug) {
-		for (i = 0; i < len; i++)
+		for (i = 0; cmd[i]; i++)
 			printf("%s%s\n", (i)?"\t":"", cmd[i]);
 	}
 

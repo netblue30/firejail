@@ -134,6 +134,8 @@ announ (https://github.com/announ)
 	- evince profile fix
 Anton Shestakov (https://github.com/antonv6)
 	- add whitelist items for uim
+	- allow /etc/vulkan in steam profile
+	- allow ~/.cache/wine in lutris and wine profile
 Antonio Russo (https://github.com/aerusso)
 	- enumerate root directories in apparmor profile
 	- fix join-or-start
@@ -838,6 +840,11 @@ Raphaël Droz (https://github.com/drzraf)
 	- zoom profile fixes
 realaltffour (https://github.com/realaltffour)
 	- add lynx support to newsboat profile
+Reed Riley (https://github.com/reedriley)
+	- cointop profile
+	- 1password profile
+	- blacklist rclone, 1Password, Ledger Live and cointop
+	- allow Signal to open links in Firefox
 Reiner Herrmann (https://github.com/reinerh)
 	- a number of build patches
 	- man page fixes

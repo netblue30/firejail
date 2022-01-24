@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${PATH}/llvm*
 noblacklist ${HOME}/Games
 noblacklist ${HOME}/.cache/lutris
+noblacklist ${HOME}/.cache/wine
 noblacklist ${HOME}/.cache/winetricks
 noblacklist ${HOME}/.config/lutris
 noblacklist ${HOME}/.local/share/lutris
@@ -34,6 +35,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/Games
 mkdir ${HOME}/.cache/lutris
+mkdir ${HOME}/.cache/wine
 mkdir ${HOME}/.cache/winetricks
 mkdir ${HOME}/.config/lutris
 mkdir ${HOME}/.local/share/lutris
@@ -41,6 +43,7 @@ mkdir ${HOME}/.local/share/lutris
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/Games
 whitelist ${HOME}/.cache/lutris
+whitelist ${HOME}/.cache/wine
 whitelist ${HOME}/.cache/winetricks
 whitelist ${HOME}/.config/lutris
 whitelist ${HOME}/.local/share/lutris

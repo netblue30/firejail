@@ -216,6 +216,7 @@ blacklist ${HOME}/.cache/vmware
 blacklist ${HOME}/.cache/warsow-2.1
 blacklist ${HOME}/.cache/waterfox
 blacklist ${HOME}/.cache/wesnoth
+blacklist ${HOME}/.cache/wine
 blacklist ${HOME}/.cache/winetricks
 blacklist ${HOME}/.cache/xmms2
 blacklist ${HOME}/.cache/xournalpp

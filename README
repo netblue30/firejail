@@ -1051,6 +1051,8 @@ Ted Robertson (https://github.com/tredondo)
 	- various documentation fixes
 	- blacklist Exodus wallet
 	- blacklist monero-project directory
+Tus1688 (https://github.com/Tus1688)
+	- added neovim profile
 user1024 (user1024@tut.by)
 	- electron profile whitelisting
 	- fixed Rocket.Chat profile

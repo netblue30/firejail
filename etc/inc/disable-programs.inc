@@ -16,7 +16,6 @@ blacklist ${HOME}/.Natron
 blacklist ${HOME}/.PlayOnLinux
 blacklist ${HOME}/.PyCharm*
 blacklist ${HOME}/.Sayonara
-blacklist ${HOME}/Seafile/.seafile-data
 blacklist ${HOME}/.Steam
 blacklist ${HOME}/.Steampath
 blacklist ${HOME}/.Steampid
@@ -1133,6 +1132,7 @@ blacklist ${HOME}/Arduino
 blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud
 blacklist ${HOME}/Nextcloud/Notes
+blacklist ${HOME}/Seafile/.seafile-data
 blacklist ${HOME}/SoftMaker
 blacklist ${HOME}/Standard Notes Backups
 blacklist ${HOME}/TeamSpeak3-Client-linux_amd64

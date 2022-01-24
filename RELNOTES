@@ -1,4 +1,4 @@
-firejail (0.9.68rc1) baseline; urgency=low
+firejail (0.9.68rc2) baseline; urgency=low
   * work in progress
   * exit code: distinguish fatal signals by adding 128 (#4533)
   * close file descriptors greater than 2 (--keep-fd) (#4845)
@@ -22,7 +22,8 @@ firejail (0.9.68rc1) baseline; urgency=low
   * new profiles: yt-dlp, goldendict, goldendict, bundle, cmake
   * new profiles: make, meson, pip, codium, telnet, ftp, OpenStego
   * new profiles: imv, retroarch, torbrowser, CachyBrowser,
-  * new profiles: notable, RPCS3, wget2, raincat, conitop, 1passwd
+  * new profiles: notable, RPCS3, wget2, raincat, conitop, 1passwd,
+  * new profiles: Seafile
  -- netblue30 <netblue30@yahoo.com>  Tue, 18 Jan 2022 09:00:00 -0500
 
 firejail (0.9.66) baseline; urgency=low

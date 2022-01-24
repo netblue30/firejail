@@ -228,6 +228,8 @@ Carlo Abelli (https://github.com/carloabelli)
 	- fixed udiskie profile
 	- Allow mbind syscall for GIMP
 	- fixed simple-scan
+Case_Of (https://github.com/CaseOf)
+	- added Seafile profile
 Cat (https://github.com/ecat3)
 	- prevent tmux connecting to an existing session
 cayday (https://github.com/caydey)

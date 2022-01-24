@@ -31,6 +31,7 @@
 #define MAX_BUF 4096
 // main.c
 extern int arg_debug;
+extern int arg_appimage;
 
 // build_profile.c
 void build_profile(int argc, char **argv, int index, FILE *fp);

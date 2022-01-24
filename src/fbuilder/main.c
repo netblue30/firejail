@@ -19,6 +19,7 @@
 */
 #include "fbuilder.h"
 int arg_debug = 0;
+int arg_appimage = 0;
 
 static void usage(void) {
 	printf("Firejail profile builder\n");
@@ -49,6 +50,8 @@ printf("\n");
 		}
 		else if (strcmp(argv[i], "--debug") == 0)
 			arg_debug = 1;
+		else if (strcmp(argv[i], "--appimage") == 0)
+			arg_appimage = 1;
 		else if (strcmp(argv[i], "--build") == 0)
 			; // do nothing, this is passed down from firejail
 		else if (strncmp(argv[i], "--build=", 8) == 0) {

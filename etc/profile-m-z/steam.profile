@@ -165,3 +165,5 @@ private-tmp
 
 # dbus-user none
 # dbus-system none
+
+read-only ${HOME}/.config/MangoHud

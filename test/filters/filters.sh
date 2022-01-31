@@ -33,8 +33,12 @@ fi
 echo "TESTING: debug options (test/filters/debug.exp)"
 ./debug.exp
 
-echo "TESTING: seccomp run files (test/filters/seccomp-run-files.exp)"
-./seccomp-run-files.exp
+if [ "$(uname -m)" = "x86_64" ]; then
+    echo "TESTING: seccomp run files (test/filters/seccomp-run-files.exp)"
+    ./seccomp-run-files.exp
+else
+    echo "TESTING SKIP: seccomp-run-files test implemented only for x86_64."
+fi
 
 echo "TESTING: seccomp postexec (test/filters/seccomp-postexec.exp)"
 ./seccomp-postexec.exp
@@ -111,8 +115,12 @@ echo "TESTING: seccomp chmod profile - seccomp lists (test/filters/seccomp-chmod
 echo "TESTING: seccomp empty (test/filters/seccomp-empty.exp)"
 ./seccomp-empty.exp
 
-echo "TESTING: seccomp numeric (test/filters/seccomp-numeric.exp)"
-./seccomp-numeric.exp
+if [ "$(uname -m)" = "x86_64" ]; then
+    echo "TESTING: seccomp numeric (test/filters/seccomp-numeric.exp)"
+    ./seccomp-numeric.exp
+else
+        echo "TESTING SKIP: seccomp numeric test implemented only for x86_64"
+fi
 
 if [ "$(uname -m)" = "x86_64" ]; then
        echo "TESTING: seccomp join (test/filters/seccomp-join.exp)"

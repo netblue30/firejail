@@ -132,9 +132,7 @@ See the following discussions for details:
 
 ### Other
 
-Try installing Firejail from your distribution.
-
-Firejail is included in Alpine, ALT Linux, Arch, Artix, Chakra, Debian, Deepin, Devuan, Fedora, Gentoo, Manjaro, Mint, NixOS, Parabola, Parrot, PCLinuxOS, ROSA, Solus, Slackware/SlackBuilds, Trisquel, Ubuntu, Void and possibly others.
+Firejail is included in a large numbre of Linux distributions.
 
 Note: The firejail 0.9.52-LTS version is deprecated.
 

@@ -42,8 +42,12 @@ echo "TESTING: read/write /var/tmp (test/fs/fs_var_tmp.exp)"
 ./fs_var_tmp.exp
 rm -f /var/tmp/_firejail_test_file
 
-echo "TESTING: private-lib (test/fs/private-lib.exp)"
-./private-lib.exp
+if [ "$(uname -m)" = "x86_64" ]; then
+    echo "TESTING: private-lib (test/fs/private-lib.exp)"
+    ./private-lib.exp
+else
+    echo "TESTING SKIP: private-lib test implemented only for x86_64."
+fi
 
 echo "TESTING: read/write /var/lock (test/fs/fs_var_lock.exp)"
 ./fs_var_lock.exp

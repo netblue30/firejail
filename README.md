@@ -132,7 +132,7 @@ See the following discussions for details:
 
 ### Other
 
-Firejail is included in a large numbre of Linux distributions.
+Firejail is included in a large number of Linux distributions.
 
 Note: The firejail 0.9.52-LTS version is deprecated.
 

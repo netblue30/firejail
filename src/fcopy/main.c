@@ -404,8 +404,7 @@ static void duplicate_link(const char *src, const char *dest, struct stat *s) {
 
 	// NixOS problem #4887:
 	//	/etc/fonts is a double symlink to a directory - copy the files instead of copying the symlink
-	//	they could have some other dirs handled this way, so let's do it for all files in /etc
-	if (strncmp(src, "/etc/", 5) == 0) {
+	if (strcmp(src, "/etc/fonts") == 0) {
 		duplicate_dir(src, dest, s);
 		free(rsrc);
 		free(rdest);

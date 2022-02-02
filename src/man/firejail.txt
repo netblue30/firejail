@@ -1458,17 +1458,19 @@ $ firejail --name=browser --net=eth0 --netfilter firefox &
 $ firejail --netfilter6.print=browser
 
 .TP
-\fB\-\-netlock=name/pid
+\fB\-\-netlock
 Several type of programs (email clients, multiplayer games etc.) talk to a very small
 number of IP addresses. But the best example is tor browser. It only talks to a guard node,
 and there are two or three more on standby in case the main one fails.
 During startup, the browser contacts all of them, after that it keeps talking to the main
 one... for weeks!
 
-Use the network locking feature to build and deploy a network firewall in your sandbox.
-The firewall allows only the network traffic to the IP addresses detected during the program
-startup. Traffic to any other address is quietly dropped. By default the startup monitoring
-time is one minute. Example:
+Use the network locking feature to build and deploy a custom network firewall in your sandbox.
+The firewall allows only the traffic to the IP addresses detected during the program
+startup. Traffic to any other address is quietly dropped. By default the network monitoring
+time is one minute.
+
+A network namespace (\-\-net=eth0) is required for this feature to work. Example:
 .br
 
 .br

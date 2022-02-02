@@ -23,6 +23,7 @@
 #define MAX_BUF_SIZE (64 * 1024)
 
 static int arg_netfilter = 0;
+static int arg_tail = 0;
 static char *arg_log = NULL;
 
 typedef struct hnode_t {
@@ -574,11 +575,16 @@ void logprintf(char* fmt, ...) {
 }
 
 static void usage(void) {
-	printf("Usage: fnetlock [OPTIONS]\n");
+	printf("Usage: fnettrace [OPTIONS]\n");
 	printf("Options:\n");
 	printf("   --help, -? - this help screen\n");
 	printf("   --log=filename - netlocker logfile\n");
 	printf("   --netfilter - build the firewall rules and commit them.\n");
+	printf("   --tail - \"tail -f\" functionality\n");
+	printf("Examples:\n");
+	printf("   # fnettrace                              - traffic trace\n");
+	printf("   # fnettrace --netfilter --log=logfile    - netlocker, dump output in logfile\n");
+	printf("   # fnettrace --tail --log=logifile        - similar to \"tail -f logfile\"\n");
 	printf("\n");
 }
 
@@ -599,11 +605,6 @@ int main(int argc, char **argv) {
 	printf("%s\n", name);
 #endif
 
-	if (getuid() != 0) {
-		fprintf(stderr, "Error: you need to be root to run this program\n");
-		return 1;
-	}
-
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-?") == 0) {
 			usage();
@@ -611,12 +612,32 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--netfilter") == 0)
 			arg_netfilter = 1;
+		else if (strcmp(argv[i], "--tail") == 0)
+			arg_tail = 1;
 		else if (strncmp(argv[i], "--log=", 6) == 0)
 			arg_log = argv[i] + 6;
 		else {
 			fprintf(stderr, "Error: invalid argument\n");
 			return 1;
 		}
+	}
+
+	// tail
+	if (arg_tail) {
+		if (!arg_log) {
+			fprintf(stderr, "Error: no log file\n");
+			usage();
+			exit(1);
+		}
+
+		tail(arg_log);
+		sleep(5);
+		exit(0);
+	}
+
+	if (getuid() != 0) {
+		fprintf(stderr, "Error: you need to be root to run this program\n");
+		return 1;
 	}
 
 	ansi_clrscr();
@@ -629,6 +650,11 @@ int main(int argc, char **argv) {
 
 	run_trace();
 	if (arg_netfilter) {
+		// TCP path MTU discovery will not work properly since the firewall drops all ICMP packets
+		// Instead, we use iPacketization Layer PMTUD (RFC 4821) support in Linux kernel
+		int rv = system("echo 1 > /proc/sys/net/ipv4/tcp_mtu_probing");
+		(void) rv;
+
 		deploy_netfilter();
 		sleep(3);
 		if (arg_log)

@@ -23,10 +23,15 @@
 #include "../include/common.h"
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <time.h>
 #include <stdarg.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+
+
 //#define DEBUG 1
 
 #define NETLOCK_INTERVAL 60	// seconds
@@ -61,5 +66,8 @@ void logprintf(char* fmt, ...);
 extern int geoip_calls;
 void load_hostnames(const char *fname);
 char* retrieve_hostname(uint32_t ip);
+
+// tail.c
+void tail(const char *logfile);
 
 #endif

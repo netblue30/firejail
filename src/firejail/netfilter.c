@@ -41,17 +41,16 @@ void netfilter_netlock(pid_t pid) {
 
 	// try to find a X terminal
 	char *terminal = NULL;
-	if (access("/usr/bin/lxterminal", X_OK) == 0)
-		terminal = "/usr/bin/lxterminal";
-	else if (access("/usr/bin/xterm", X_OK) == 0)
+	if (access("/usr/bin/xterm", X_OK) == 0)
 		terminal = "/usr/bin/xterm";
+	else if (access("/usr/bin/lxterminal", X_OK) == 0)
+		terminal = "/usr/bin/lxterminal";
 	else if (access("/usr/bin/xfce4-terminal", X_OK) == 0)
 		terminal = "/usr/bin/xfce4-terminal";
 	else if (access("/usr/bin/konsole", X_OK) == 0)
 		terminal = "/usr/bin/konsole";
 // problem: newer gnome-terminal versions don't support -e command line option???
-//	else if (access("/usr/bin/gnome-terminal", X_OK) == 0)
-//		terminal = "/usr/bin/gnome-terminal";
+// same for mate-terminal
 
 	if (isatty(STDIN_FILENO))
 		terminal = NULL;
@@ -64,7 +63,7 @@ void netfilter_netlock(pid_t pid) {
 			drop_privs(0);
 
 			char *cmd;
-			if (asprintf(&cmd, "%s -e \"tail -f %s\"", terminal, flog) == -1)
+			if (asprintf(&cmd, "%s -e \"%s/firejail/fnettrace --tail --log=%s\"", terminal, LIBDIR, flog) == -1)
 				errExit("asprintf");
 			int rv = system(cmd);
 			(void) rv;

@@ -17,41 +17,47 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include "jailcheck.h"
-#include <netdb.h>
-#include <arpa/inet.h>
-#include <ifaddrs.h>
-#include <net/if.h>
-#include <linux/connector.h>
-#include <linux/netlink.h>
-#include <linux/if_link.h>
-#include <linux/sockios.h>
-#include <sys/ioctl.h>
+#include "fnettrace.h"
 
+void tail(const char *logfile) {
+	assert(logfile);
 
-void network_test(void) {
-	// I am root running in a network namespace
-	struct ifaddrs *ifaddr, *ifa;
-	int found = 0;
+	// wait for no more than 5 seconds for the logfile to appear in the filesystem
+	int cnt = 5;
+	while (access(logfile, R_OK) && cnt > 0)
+		cnt--;
+	if (cnt == 0)
+		exit(1);
 
-	// walk through the linked list
-	if (getifaddrs(&ifaddr) == -1)
-		errExit("getifaddrs");
-	for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
-		if (strcmp(ifa->ifa_name, "lo") == 0)
-			continue;
+	off_t last_size = 0;
 
-		found = 1;
-		break;
+	while (1) {
+		int fd = open(logfile, O_RDONLY);
+		if (fd == -1)
+			return;
+
+		off_t size = lseek(fd, 0, SEEK_END);
+		if (size < 0) {
+			close(fd);
+			return;
+		}
+
+		char *content = NULL;
+		int mmapped = 0;
+		if (size && size != last_size) {
+			content = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
+			close(fd);
+			if (content != MAP_FAILED)
+				mmapped = 1;
+		}
+
+		if (mmapped) {
+			printf("%.*s", (int) (size - last_size), content + last_size);
+			fflush(0);
+			munmap(content, size);
+			last_size = size;
+		}
+
+		sleep(1);
 	}
-
-	freeifaddrs(ifaddr);
-
-	if (found)
-		printf("   Networking: enabled\n");
-	else
-		printf("   Networking: disabled\n");
 }
-
-
-

@@ -136,6 +136,7 @@ Anton Shestakov (https://github.com/antonv6)
 	- add whitelist items for uim
 	- allow /etc/vulkan in steam profile
 	- allow ~/.cache/wine in lutris and wine profile
+	- support MangoHud in steam profile
 Antonio Russo (https://github.com/aerusso)
 	- enumerate root directories in apparmor profile
 	- fix join-or-start
@@ -520,6 +521,7 @@ Jan-Niclas (https://github.com/0x6a61)
 	- fix Firefox 'Profile not found' - whitelist /run/user/xxx/firefox
 Jan Sonntag (https://github.com/jmetrius)
 	- added OpenStego profile
+	- allow common access to EGL External platform configuration directory
 Jean Lucas (https://github.com/flacks)
 	- fix Discord profile
 	- add AnyDesk profile

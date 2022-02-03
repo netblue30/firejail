@@ -12,6 +12,7 @@ whitelist /usr/share/cursors
 whitelist /usr/share/dconf
 whitelist /usr/share/distro-info
 whitelist /usr/share/drirc.d
+whitelist /usr/share/egl
 whitelist /usr/share/enchant
 whitelist /usr/share/enchant-2
 whitelist /usr/share/file

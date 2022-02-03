@@ -25,7 +25,7 @@ nosound
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,inet,inet6 # remove inet,inet6 to disable network access
 seccomp
 shell none
 

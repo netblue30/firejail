@@ -286,6 +286,7 @@ blacklist ${HOME}/.config/LibreCAD
 blacklist ${HOME}/.config/Loop_Hero
 blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/LyX
+blacklist ${HOME}/.config/MangoHud
 blacklist ${HOME}/.config/Mattermost
 blacklist ${HOME}/.config/Meltytech
 blacklist ${HOME}/.config/Mendeley Ltd.

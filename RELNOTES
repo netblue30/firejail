@@ -1,5 +1,9 @@
 firejail (0.9.68rc2) baseline; urgency=low
   * work in progress
+  * security: on Ubuntu, the PPA is now recommended over the distro package
+    (see README.md) (#4748)
+  * security: bugfix: private-cwd leaks access to the entire filesystem
+    (#4780); reported by Hugo Osvaldo Barrera
   * exit code: distinguish fatal signals by adding 128 (#4533)
   * close file descriptors greater than 2 (--keep-fd) (#4845)
   * intrusion detection system (--ids-init, --ids-check)

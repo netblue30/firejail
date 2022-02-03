@@ -402,15 +402,6 @@ static void duplicate_link(const char *src, const char *dest, struct stat *s) {
 	gid_t gid = s->st_gid;
 	mode_t mode = s->st_mode;
 
-	// NixOS problem #4887:
-	//	/etc/fonts is a double symlink to a directory - copy the files instead of copying the symlink
-	if (strcmp(src, "/etc/fonts") == 0) {
-		duplicate_dir(src, dest, s);
-		free(rsrc);
-		free(rdest);
-		return;
-	}
-
 	// build destination file name
 	char *name;
 	//     char *ptr = strrchr(rsrc, '/');

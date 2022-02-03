@@ -165,7 +165,14 @@ static void duplicate(const char *fname, const char *private_dir, const char *pr
 		errExit("asprintf");
 
 	build_dirs(src, dst, strlen(private_dir), strlen(private_run_dir));
-	sbox_run(SBOX_ROOT | SBOX_SECCOMP, 3, PATH_FCOPY, src, dst);
+
+	// follow links! this will make a copy of the file or directory pointed by the symlink
+	// this will solve problems such as NixOS #4887
+	// don't follow links to dynamic directories such as /proc
+	if (strcmp(src, "/etc/mtab") == 0)
+		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 3, PATH_FCOPY, src, dst);
+	else
+		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", src, dst);
 
 	free(dst);
 	fs_logger2("clone", src);

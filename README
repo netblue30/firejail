@@ -337,6 +337,8 @@ Duncan Overbruck (https://github.com/Duncaen)
 Eduard Tolosa (https://github.com/Edu4rdSHL)
 	- fixed and hardened qpdfview.profile
 	- fixed gajim.profile
+Eklektisk (https://github.com/Eklektisk)
+	- update librewolf.profile: use new d-bus message bus
 emacsomancer (https://github.com/emacsomancer)
 	- added profile for Conkeror browser
 Emil Gedda (https://github.com/EmilGedda)

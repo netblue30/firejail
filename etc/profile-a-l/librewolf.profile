@@ -38,6 +38,7 @@ include whitelist-usr-share-common.inc
 
 dbus-user filter
 dbus-user.own io.gitlab.librewolf.*
+dbus-user.own org.mozilla.librewolf.*
 # Add the next line to your librewolf.local to enable native notifications.
 #dbus-user.talk org.freedesktop.Notifications
 # Add the next line to your librewolf.local to allow inhibiting screensavers.

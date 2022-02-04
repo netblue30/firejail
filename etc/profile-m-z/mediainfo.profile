@@ -1,6 +1,7 @@
 # Firejail profile for mediainfo
 # Description: Command-line utility for reading information from audio/video files
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include mediainfo.local
 # Persistent global definitions

@@ -29,6 +29,7 @@ firejail (0.9.68rc2) baseline; urgency=low
   * bugfix: Firejail rejects empty arguments (#4395)
   * bugfix: firecfg does not work with symlinks (discord.desktop) (#4235)
   * bugfix: Seccomp list output goes to stdout instead of stderr (#4328)
+  * bugfix: private-etc does not work with symlinks (#4887)
   * new includes: whitelist-run-common.inc (#4288), disable-X11.inc (#4462)
   * removed includes: disable-passwordmgr.inc (#4461)
   * new profiles: microsoft-edge-beta, clion-eap, lifeograph, zim

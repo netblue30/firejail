@@ -12,8 +12,8 @@ firejail (0.9.68rc2) baseline; urgency=low
   * noprinters command (#4607 #4827)
   * network monitor (--nettrace)
   * network locker (--netlock) (#4848)
-  * whitelist-ro profile command
-  * AppImage support in --build command
+  * whitelist-ro profile command (#4740)
+  * AppImage support in --build command (#4878)
   * build: firecfg.config is now installed to /etc/firejail/ (#4669)
   * removed --disable-whitelist at compile time
   * removed whitelist=yes/no in /etc/firejail/firejail.config
@@ -31,7 +31,7 @@ firejail (0.9.68rc2) baseline; urgency=low
   * bugfix: Seccomp list output goes to stdout instead of stderr (#4328)
   * bugfix: private-etc does not work with symlinks (#4887)
   * new includes: whitelist-run-common.inc (#4288), disable-X11.inc (#4462)
-  * removed includes: disable-passwordmgr.inc (#4461)
+  * removed includes: disable-passwordmgr.inc (#4454 #4461)
   * new profiles: microsoft-edge-beta, clion-eap, lifeograph, zim
   * new profiles: io.github.lainsce.Notejot, rednotebook, gallery-dl
   * new profiles: yt-dlp, goldendict, goldendict, bundle, cmake

@@ -13,6 +13,7 @@ firejail (0.9.68rc2) baseline; urgency=low
   * feature: network monitor (--nettrace)
   * feature: network locker (--netlock) (#4848)
   * feature: whitelist-ro profile command (#4740)
+  * feature: Unset TMP if it doesn't exist inside of sandbox (#4151)
   * feature: Allow apostrophe in whitelist and blacklist (#4614)
   * feature: AppImage support in --build command (#4878)
   * modifs: exit code: distinguish fatal signals by adding 128 (#4533)

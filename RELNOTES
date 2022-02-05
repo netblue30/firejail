@@ -8,7 +8,7 @@ firejail (0.9.68rc2) baseline; urgency=low
   * feature: ALLOW_TRAY condition (#4510 #4599)
   * feature: intrusion detection system (--ids-init, --ids-check)
   * feature: deterministic shutdown command (--deterministic-exit-code,
-     --deterministic-shutdown) (#4635)
+     --deterministic-shutdown) (#928 #3042 #4635)
   * feature: noprinters command (#4607 #4827)
   * feature: network monitor (--nettrace)
   * feature: network locker (--netlock) (#4848)
@@ -16,7 +16,7 @@ firejail (0.9.68rc2) baseline; urgency=low
   * feature: Allow apostrophe in whitelist and blacklist (#4614)
   * feature: AppImage support in --build command (#4878)
   * modifs: exit code: distinguish fatal signals by adding 128 (#4533)
-  * modifs: firecfg.config is now installed to /etc/firejail/ (#4669)
+  * modifs: firecfg.config is now installed to /etc/firejail/ (#408 #4669)
   * modifs: close file descriptors greater than 2 (--keep-fd) (#4845)
   * modifs: nogroups now stopped causing certain system groups to be dropped,
     which are now controlled by the relevant "no" options instead (such as

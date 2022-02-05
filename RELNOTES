@@ -4,8 +4,8 @@ firejail (0.9.68rc2) baseline; urgency=low
     (see README.md) (#4748)
   * security: bugfix: private-cwd leaks access to the entire filesystem
     (#4780); reported by Hugo Osvaldo Barrera
-  * exit code: distinguish fatal signals by adding 128 (#4533)
-  * close file descriptors greater than 2 (--keep-fd) (#4845)
+  * remove (some) environment variables with auth-tokens (#4157)
+  * new condition: ALLOW_TRAY (#4510 #4599)
   * intrusion detection system (--ids-init, --ids-check)
   * deterministic shutdown (--deterministic-exit-code,
      --deterministic-shutdown) (#4635)
@@ -15,11 +15,11 @@ firejail (0.9.68rc2) baseline; urgency=low
   * whitelist-ro profile command (#4740)
   * Allow apostrophe in whitelist and blacklist (#4614)
   * AppImage support in --build command (#4878)
+  * exit code: distinguish fatal signals by adding 128 (#4533)
   * build: firecfg.config is now installed to /etc/firejail/ (#4669)
+  * close file descriptors greater than 2 (--keep-fd) (#4845)
   * removed --disable-whitelist at compile time
   * removed whitelist=yes/no in /etc/firejail/firejail.config
-  * new condition: ALLOW_TRAY (#4510 #4599)
-  * remove (some) environment variables with auth-tokens (#4157)
   * bugfix: Fix sndio support (#4362 #4365)
   * bugfix: Error mounting tmpfs (MS_REMOUNT flag not being cleared) (#4387)
   * bugfix: --build clears the environment (#4460 #4467)

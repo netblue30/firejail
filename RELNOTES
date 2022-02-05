@@ -18,6 +18,10 @@ firejail (0.9.68rc2) baseline; urgency=low
   * modifs: exit code: distinguish fatal signals by adding 128 (#4533)
   * modifs: firecfg.config is now installed to /etc/firejail/ (#4669)
   * modifs: close file descriptors greater than 2 (--keep-fd) (#4845)
+  * modifs: nogroups now stopped causing certain system groups to be dropped,
+    which are now controlled by the relevant "no" options instead (such as
+    nosound -> drop audio group), which fixes device access issues on systems
+    not using (e)logind (such as with seatd) (#4632 #4725 #4732 #4851)
   * removal: --disable-whitelist at compile time
   * removal: whitelist=yes/no in /etc/firejail/firejail.config
   * bugfix: Fix sndio support (#4362 #4365)
@@ -31,6 +35,9 @@ firejail (0.9.68rc2) baseline; urgency=low
   * bugfix: firecfg does not work with symlinks (discord.desktop) (#4235)
   * bugfix: Seccomp list output goes to stdout instead of stderr (#4328)
   * bugfix: private-etc does not work with symlinks (#4887)
+  * docs: fix contradictory descriptions of machine-id ("preserves" vs
+    "spoofs") (#4689)
+  * docs: Document that private-bin and private-etc always accumulate (#4078)
   * new includes: whitelist-run-common.inc (#4288), disable-X11.inc (#4462)
   * removed includes: disable-passwordmgr.inc (#4454 #4461)
   * new profiles: microsoft-edge-beta, clion-eap, lifeograph, zim

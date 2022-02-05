@@ -4,22 +4,26 @@ firejail (0.9.68rc2) baseline; urgency=low
     (see README.md) (#4748)
   * security: bugfix: private-cwd leaks access to the entire filesystem
     (#4780); reported by Hugo Osvaldo Barrera
-  * exit code: distinguish fatal signals by adding 128 (#4533)
-  * close file descriptors greater than 2 (--keep-fd) (#4845)
-  * intrusion detection system (--ids-init, --ids-check)
-  * deterministic shutdown (--deterministic-exit-code,
+  * feature: remove (some) environment variables with auth-tokens (#4157)
+  * feature: ALLOW_TRAY condition (#4510 #4599)
+  * feature: intrusion detection system (--ids-init, --ids-check)
+  * feature: deterministic shutdown command (--deterministic-exit-code,
      --deterministic-shutdown) (#4635)
-  * noprinters command (#4607 #4827)
-  * network monitor (--nettrace)
-  * network locker (--netlock) (#4848)
-  * whitelist-ro profile command (#4740)
-  * Allow apostrophe in whitelist and blacklist (#4614)
-  * AppImage support in --build command (#4878)
-  * build: firecfg.config is now installed to /etc/firejail/ (#4669)
-  * removed --disable-whitelist at compile time
-  * removed whitelist=yes/no in /etc/firejail/firejail.config
-  * new condition: ALLOW_TRAY (#4510 #4599)
-  * remove (some) environment variables with auth-tokens (#4157)
+  * feature: noprinters command (#4607 #4827)
+  * feature: network monitor (--nettrace)
+  * feature: network locker (--netlock) (#4848)
+  * feature: whitelist-ro profile command (#4740)
+  * feature: Allow apostrophe in whitelist and blacklist (#4614)
+  * feature: AppImage support in --build command (#4878)
+  * modifs: exit code: distinguish fatal signals by adding 128 (#4533)
+  * modifs: firecfg.config is now installed to /etc/firejail/ (#4669)
+  * modifs: close file descriptors greater than 2 (--keep-fd) (#4845)
+  * modifs: nogroups now stopped causing certain system groups to be dropped,
+    which are now controlled by the relevant "no" options instead (such as
+    nosound -> drop audio group), which fixes device access issues on systems
+    not using (e)logind (such as with seatd) (#4632 #4725 #4732 #4851)
+  * removal: --disable-whitelist at compile time
+  * removal: whitelist=yes/no in /etc/firejail/firejail.config
   * bugfix: Fix sndio support (#4362 #4365)
   * bugfix: Error mounting tmpfs (MS_REMOUNT flag not being cleared) (#4387)
   * bugfix: --build clears the environment (#4460 #4467)
@@ -31,6 +35,9 @@ firejail (0.9.68rc2) baseline; urgency=low
   * bugfix: firecfg does not work with symlinks (discord.desktop) (#4235)
   * bugfix: Seccomp list output goes to stdout instead of stderr (#4328)
   * bugfix: private-etc does not work with symlinks (#4887)
+  * docs: fix contradictory descriptions of machine-id ("preserves" vs
+    "spoofs") (#4689)
+  * docs: Document that private-bin and private-etc always accumulate (#4078)
   * new includes: whitelist-run-common.inc (#4288), disable-X11.inc (#4462)
   * removed includes: disable-passwordmgr.inc (#4454 #4461)
   * new profiles: microsoft-edge-beta, clion-eap, lifeograph, zim

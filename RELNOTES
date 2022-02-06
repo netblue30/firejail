@@ -6,8 +6,6 @@ firejail (0.9.68rc2) baseline; urgency=low
     (#4780); reported by Hugo Osvaldo Barrera
   * feature: remove (some) environment variables with auth-tokens (#4157)
   * feature: ALLOW_TRAY condition (#4510 #4599)
-  * feature: add ci profile checks for sorting disable-programs.inc and
-    firecfg.config and for the required arguments in private-etc (#2739 #4643)
   * feature: intrusion detection system (--ids-init, --ids-check)
   * feature: deterministic shutdown command (--deterministic-exit-code,
      --deterministic-shutdown) (#928 #3042 #4635)
@@ -43,6 +41,9 @@ firejail (0.9.68rc2) baseline; urgency=low
   * build: allow building with address sanitizer (#4594)
   * build: Stop linking pthread (#4695)
   * build: Configure cleanup and improvements (#4712)
+  * ci: add profile checks for sorting disable-programs.inc and
+    firecfg.config and for the required arguments in private-etc (#2739 #4643)
+  * ci: pin GitHub actions to SHAs and use Dependabot to update them (#4774)
   * docs: fix contradictory descriptions of machine-id ("preserves" vs
     "spoofs") (#4689)
   * docs: Document that private-bin and private-etc always accumulate (#4078)

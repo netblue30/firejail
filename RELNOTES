@@ -32,6 +32,7 @@ firejail (0.9.68rc2) baseline; urgency=low
   * bugfix: Firejail does not work with a custom hosts file (#2758 #4560)
   * bugfix: --tracelog and --trace override /etc/ld.so.preload (#4558 #4586)
   * bugfix: PATH_MAX is undeclared on musl libc (#4578 #4579 #4583)
+  * bugfix: firejail symlinks are not skipped with private-bin + globs (#4626)
   * bugfix: Firejail rejects empty arguments (#4395)
   * bugfix: firecfg does not work with symlinks (discord.desktop) (#4235)
   * bugfix: Seccomp list output goes to stdout instead of stderr (#4328)

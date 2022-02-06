@@ -40,6 +40,9 @@ firejail (0.9.68rc2) baseline; urgency=low
   * bugfix: firecfg does not work with symlinks (discord.desktop) (#4235)
   * bugfix: Seccomp list output goes to stdout instead of stderr (#4328)
   * bugfix: private-etc does not work with symlinks (#4887)
+  * build: allow building with address sanitizer (#4594)
+  * build: Stop linking pthread (#4695)
+  * build: Configure cleanup and improvements (#4712)
   * docs: fix contradictory descriptions of machine-id ("preserves" vs
     "spoofs") (#4689)
   * docs: Document that private-bin and private-etc always accumulate (#4078)

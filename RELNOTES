@@ -1,5 +1,4 @@
 firejail (0.9.68) baseline; urgency=low
-  * work in progress
   * security: on Ubuntu, the PPA is now recommended over the distro package
     (see README.md) (#4748)
   * security: bugfix: private-cwd leaks access to the entire filesystem

@@ -39,8 +39,8 @@ shell none
 
 private-cache
 # Note: private-dev prevents the program from seeing new devices (such as
-# hardware keys) on /dev after it has already started; add "ignore nou2f" to
-# keepassxc.local if this is an issue (see #4883).
+# hardware keys) on /dev after it has already started; add "ignore private-dev"
+# to keepassxc.local if this is an issue (see #4883).
 private-dev
 private-tmp
 

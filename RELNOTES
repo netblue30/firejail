@@ -6,6 +6,8 @@ firejail (0.9.68rc2) baseline; urgency=low
     (#4780); reported by Hugo Osvaldo Barrera
   * feature: remove (some) environment variables with auth-tokens (#4157)
   * feature: ALLOW_TRAY condition (#4510 #4599)
+  * feature: add ci profile checks for sorting disable-programs.inc and
+    firecfg.config and for the required arguments in private-etc (#2739 #4643)
   * feature: intrusion detection system (--ids-init, --ids-check)
   * feature: deterministic shutdown command (--deterministic-exit-code,
      --deterministic-shutdown) (#928 #3042 #4635)
@@ -13,6 +15,7 @@ firejail (0.9.68rc2) baseline; urgency=low
   * feature: network monitor (--nettrace)
   * feature: network locker (--netlock) (#4848)
   * feature: whitelist-ro profile command (#4740)
+  * feature: disable pipewire with --nosound (#4855)
   * feature: Unset TMP if it doesn't exist inside of sandbox (#4151)
   * feature: Allow apostrophe in whitelist and blacklist (#4614)
   * feature: AppImage support in --build command (#4878)

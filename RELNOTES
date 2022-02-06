@@ -6,6 +6,8 @@ firejail (0.9.68rc2) baseline; urgency=low
     (#4780); reported by Hugo Osvaldo Barrera
   * feature: remove (some) environment variables with auth-tokens (#4157)
   * feature: ALLOW_TRAY condition (#4510 #4599)
+  * feature: add basic Firejail support to AppArmor base abstraction (#3226
+    #4628)
   * feature: intrusion detection system (--ids-init, --ids-check)
   * feature: deterministic shutdown command (--deterministic-exit-code,
      --deterministic-shutdown) (#928 #3042 #4635)
@@ -48,6 +50,7 @@ firejail (0.9.68rc2) baseline; urgency=low
     "spoofs") (#4689)
   * docs: Document that private-bin and private-etc always accumulate (#4078)
   * new includes: whitelist-run-common.inc (#4288), disable-X11.inc (#4462)
+  * new includes: disable-proc.inc (#4521)
   * removed includes: disable-passwordmgr.inc (#4454 #4461)
   * new profiles: microsoft-edge-beta, clion-eap, lifeograph, zim
   * new profiles: io.github.lainsce.Notejot, rednotebook, gallery-dl

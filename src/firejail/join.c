@@ -315,6 +315,11 @@ static int open_shell(void) {
 		fprintf(stderr, "Error: cannot open shell %s\n", cfg.shell);
 		exit(1);
 	}
+
+	// pass file descriptor through to the final fexecve
+	if (asprintf(&cfg.keep_fd, "%s,%d", cfg.keep_fd ? cfg.keep_fd : "", fd) == -1)
+		errExit("asprintf");
+
 	return fd;
 }
 

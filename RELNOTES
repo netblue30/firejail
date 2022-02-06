@@ -1,4 +1,4 @@
-firejail (0.9.68rc2) baseline; urgency=low
+firejail (0.9.68) baseline; urgency=low
   * work in progress
   * security: on Ubuntu, the PPA is now recommended over the distro package
     (see README.md) (#4748)
@@ -40,6 +40,7 @@ firejail (0.9.68rc2) baseline; urgency=low
   * bugfix: firecfg does not work with symlinks (discord.desktop) (#4235)
   * bugfix: Seccomp list output goes to stdout instead of stderr (#4328)
   * bugfix: private-etc does not work with symlinks (#4887)
+  * bugfix: Hardware key not detected on keepassxc (#4883)
   * build: allow building with address sanitizer (#4594)
   * build: Stop linking pthread (#4695)
   * build: Configure cleanup and improvements (#4712)
@@ -62,7 +63,7 @@ firejail (0.9.68rc2) baseline; urgency=low
   * new profiles: imv, retroarch, torbrowser, CachyBrowser,
   * new profiles: notable, RPCS3, wget2, raincat, conitop, 1passwd,
   * new profiles: Seafile, neovim, com.github.tchx84.Flatseal
- -- netblue30 <netblue30@yahoo.com>  Tue, 18 Jan 2022 09:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sun, 6 Feb 2022 09:00:00 -0500
 
 firejail (0.9.66) baseline; urgency=low
   * deprecated --audit options, relpaced by jailcheck utility

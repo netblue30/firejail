@@ -46,6 +46,9 @@ firejail (0.9.68rc2) baseline; urgency=low
   * ci: add profile checks for sorting disable-programs.inc and
     firecfg.config and for the required arguments in private-etc (#2739 #4643)
   * ci: pin GitHub actions to SHAs and use Dependabot to update them (#4774)
+  * docs: Add new command checklist to CONTRIBUTING.md (#4413)
+  * docs: Rework bug report issue template and add both a question and a
+    feature request template (#4479 #4515 #4561)
   * docs: fix contradictory descriptions of machine-id ("preserves" vs
     "spoofs") (#4689)
   * docs: Document that private-bin and private-etc always accumulate (#4078)

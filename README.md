@@ -223,29 +223,29 @@ No include .local found in /etc/firejail/noprofile.profile
 Warning: multiple caps in /etc/firejail/transmission-daemon.profile
 
 Stats:
-    profiles			1176
-    include local profile	1175   (include profile-name.local)
-    include globals		1144   (include globals.local)
-    blacklist ~/.ssh		1050   (include disable-common.inc)
-    seccomp			1070
-    capabilities		1171
-    noexec			1057   (include disable-exec.inc)
-    noroot			979
-    memory-deny-write-execute	258
-    apparmor			700
-    private-bin			681
-    private-dev			1033
-    private-etc			533
-    private-tmp			905
-    whitelist home directory	562
-    whitelist var		842   (include whitelist-var-common.inc)
-    whitelist run/user		1145   (include whitelist-runuser-common.inc
+    profiles			1184
+    include local profile	1183   (include profile-name.local)
+    include globals		1152   (include globals.local)
+    blacklist ~/.ssh		1057   (include disable-common.inc)
+    seccomp			1076
+    capabilities		1178
+    noexec			1064   (include disable-exec.inc)
+    noroot			985
+    memory-deny-write-execute	259
+    apparmor			707
+    private-bin			686
+    private-dev			1040
+    private-etc			537
+    private-tmp			911
+    whitelist home directory	567
+    whitelist var		849   (include whitelist-var-common.inc)
+    whitelist run/user		1153   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		614   (include whitelist-usr-share-common.inc
-    net none			399
-    dbus-user none 		662
-    dbus-user filter 		113
-    dbus-system none 		816
+    whitelist usr/share		621   (include whitelist-usr-share-common.inc
+    net none			403
+    dbus-user none 		670
+    dbus-user filter 		114
+    dbus-system none 		824
     dbus-system filter 		10
 ```
 

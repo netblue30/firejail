@@ -120,6 +120,7 @@ endif
 	install -m 0755 -d $(DESTDIR)$(libdir)/firejail
 	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS)
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS)
+	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/profstats/profstats
 	# plugins w/o read permission (non-dumpable)
 	install -m 0711 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
 	install -m 0711 -t $(DESTDIR)$(libdir)/firejail src/fshaper/fshaper.sh

@@ -42,7 +42,7 @@ tracelog
 disable-mnt
 private-bin hyperrogue
 private-cache
-private-cwd ${HOME}
+private-cwd
 private-dev
 private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
 private-tmp

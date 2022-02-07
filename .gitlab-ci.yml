@@ -21,7 +21,7 @@ build_debian_package:
         - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
 
 build_redhat_package:
-    image: centos:latest
+    image: almalinux:latest
     script:
         - dnf update -y
         - dnf install -y rpm-build gcc make

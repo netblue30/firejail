@@ -251,6 +251,3 @@ Stats:
 
 ### New profiles:
 
-clion-eap, lifeograph, io.github.lainsce.Notejot, rednotebook, zim, microsoft-edge-beta, ncdu2, gallery-dl, yt-dlp, goldendict, bundle,
-cmake, make, meson, pip, codium, telnet, ftp, OpenStego, imv, retroarch, torbrowser, CachyBrowser, notable, RPCS3, wget2, raincat,
-cointop, 1password, Seafile, neowim

@@ -3659,7 +3659,7 @@ if test "x$enable_firetunnel" != "xno"; then :
 
 fi
 
-HAVE_PRIVATEHOME=""
+HAVE_PRIVATE_HOME=""
 
 # Check whether --enable-private-home was given.
 if test "${enable_private_home+set}" = set; then :
@@ -3846,7 +3846,7 @@ if test "x$enable_lts" = "xyes"; then :
 	HAVE_USERTMPFS=""
 	HAVE_MAN="-DHAVE_MAN"
 	HAVE_FIRETUNNEL=""
-	HAVE_PRIVATEHOME=""
+	HAVE_PRIVATE_HOME=""
 	HAVE_CHROOT=""
 	HAVE_GLOBALCFG=""
 	HAVE_USERNS=""

@@ -130,7 +130,7 @@ AS_IF([test "x$enable_firetunnel" != "xno"], [
 	HAVE_FIRETUNNEL="-DHAVE_FIRETUNNEL"
 ])
 
-HAVE_PRIVATEHOME=""
+HAVE_PRIVATE_HOME=""
 AC_SUBST([HAVE_PRIVATE_HOME])
 AC_ARG_ENABLE([private-home],
     [AS_HELP_STRING([--disable-private-home], [disable private home feature])])
@@ -249,7 +249,7 @@ AS_IF([test "x$enable_lts" = "xyes"], [
 	HAVE_USERTMPFS=""
 	HAVE_MAN="-DHAVE_MAN"
 	HAVE_FIRETUNNEL=""
-	HAVE_PRIVATEHOME=""
+	HAVE_PRIVATE_HOME=""
 	HAVE_CHROOT=""
 	HAVE_GLOBALCFG=""
 	HAVE_USERNS=""

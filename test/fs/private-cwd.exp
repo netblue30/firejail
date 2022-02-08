@@ -7,46 +7,48 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "cd /tmp\r"
-after 100
-
-# testing profile and private
-send -- "firejail --private-cwd\r"
-expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
-}
-sleep 1
-
-send -- "pwd\r"
+send -- "firejail --private-cwd pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"$env(HOME)"
 }
-after 100
-
-send -- "exit\r"
 sleep 1
 
-send -- "cd /\r"
-after 100
+send -- "firejail --private-cwd=/etc pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"/etc"
+}
+sleep 1
 
-# testing profile and private
-send -- "firejail --private-cwd=/tmp\r"
+send -- "firejail --private --private-cwd=. pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Child process initialized"
+	"invalid private working directory"
 }
 sleep 1
 
-send -- "pwd\r"
+after 100
+send -- "firejail  --private-cwd='\${HOME}' pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"/tmp"
+	"$env(HOME)"
+}
+sleep 1
+
+after 100
+send -- "firejail  --private-cwd=\"\${HOME}\" pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"$env(HOME)"
+}
+sleep 1
+
+send -- "firejail  --profile=private-cwd.profile pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"$env(HOME)"
 }
 after 100
-
-send -- "exit\r"
-sleep 1
 
 puts "all done\n"

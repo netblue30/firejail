@@ -453,17 +453,27 @@ void fs_check_private_dir(void) {
 }
 
 // check new private working directory (--private-cwd= option) - exit if it fails
+// for testing:
+//    $ firejail --private --private-cwd=. --noprofile ls
+//	issue #4780: exposes full home directory, not the --private one
+//   $ firejail --private-cwd=.. --noprofile ls  -> error: full dir path required
+//   $ firejail --private-cwd=/etc --noprofile ls  -> OK
+//   $ firejail --private-cwd=FULL-SYMLINK-PATH  --noprofile ls  -> error: no symlinks
+//   $ firejail --private --private-cwd="${HOME}" --noprofile ls -al  --> OK
+//   $ firejail --private --private-cwd='${HOME}' --noprofile ls -al  --> OK
+//   $ firejail --private-cwd  --> OK: should go in top of the home dir
+//   profile with "private-cwd ${HOME}
 void fs_check_private_cwd(const char *dir) {
 	EUID_ASSERT();
 	invalid_filename(dir, 0); // no globbing
-	if (strcmp(dir, ".") == 0 || *dir != '/')
+	if (strcmp(dir, ".") == 0)
 		goto errout;
 
 	// Expand the working directory
 	cfg.cwd = expand_macros(dir);
 
 	// realpath/is_dir not used because path may not exist outside of jail
-	if (strstr(cfg.cwd, ".."))
+	if (strstr(cfg.cwd, "..") || *cfg.cwd != '/')
 		goto errout;
 
 	return;

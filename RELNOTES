@@ -1,5 +1,6 @@
 firejail (0.9.69) baseline; urgency=low
   * work in progress
+  * bugfix: --private-cwd not expanding macros, broken hyperrogue (#4910)
  -- netblue30 <netblue30@yahoo.com>  Mon, 7 Feb 2022 09:00:00 -0500
 
 firejail (0.9.68) baseline; urgency=low

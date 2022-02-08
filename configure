@@ -1380,7 +1380,7 @@ Optional Features:
   --disable-firetunnel    disable firetunnel
   --disable-private-home  disable private home feature
   --disable-chroot        disable chroot
-  --disable-globalcfg     if the global config file firejail.cfg is not
+  --disable-globalcfg     if the global config file firejail.config is not
                           present, continue the program using defaults
   --disable-network       disable network
   --disable-userns        disable user namespace

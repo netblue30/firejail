@@ -150,7 +150,7 @@ HAVE_GLOBALCFG=""
 AC_SUBST([HAVE_GLOBALCFG])
 AC_ARG_ENABLE([globalcfg],
     [AS_HELP_STRING([--disable-globalcfg],
-        [if the global config file firejail.cfg is not present, continue the program using defaults])])
+        [if the global config file firejail.config is not present, continue the program using defaults])])
 AS_IF([test "x$enable_globalcfg" != "xno"], [
 	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
 ])

@@ -11,7 +11,7 @@ match_max 100000
 send -- "firejail --net=br0 --mtu=1000 --noprofile\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 

@@ -15,7 +15,7 @@ while { $i <= $MAXi } {
 	send -- "firejail --net=eth0 --ip=192.168.1.$i\r"
 	expect {
 		timeout {puts "TESTING ERROR 0\n";exit}
-		"Child process initialized"
+		-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 	}
 	incr i
 	after 100
@@ -30,7 +30,7 @@ while { $i <= $MAXi } {
 	send -- "firejail --net=eth0 --iprange=192.168.1.201,192.168.1.220\r"
 	expect {
 		timeout {puts "TESTING ERROR 2\n";exit}
-		"Child process initialized"
+		-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 	}
 	puts "************ $i ******************\n"
 	incr i

@@ -18,7 +18,7 @@ sleep 1
 send -- "firejail --net=br1 --ip=10.10.30.10 --name=test1 --netfilter=/etc/firejail/tcpserver.net,5555 ./tcpserver 5555\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 

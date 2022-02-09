@@ -11,7 +11,7 @@ match_max 100000
 send --  "firejail --name=jointesting --cpu=0 --nice=2\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 2
 
@@ -26,17 +26,21 @@ after 100
 
 send --  "firejail --join=jointesting\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"Switching to pid"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "ps aux\r"
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"/bin/bash"
 }
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"/bin/bash"
 }
 
@@ -44,13 +48,13 @@ send -- "exit\r"
 sleep 1
 send --  "firejail --join-network=jointesting\r"
 expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
+	timeout {puts "TESTING ERROR 6\n";exit}
 	"is only available to root user"
 }
 after 100
 send --  "firejail --join-filesystem=jointesting\r"
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
+	timeout {puts "TESTING ERROR 7\n";exit}
 	"is only available to root user"
 }
 

@@ -10,7 +10,7 @@ match_max 100000
 send -- "firejail --whitelist=/dev/null --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -26,7 +26,7 @@ sleep 1
 send -- "firejail --whitelist=/dev/null --whitelist=/dev/random\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -42,7 +42,7 @@ sleep 1
 send -- "firejail --private-dev --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -97,7 +97,7 @@ if { $have_snd > 0 } {
 	send -- "firejail --private-dev --nosound ls /dev\r"
 	expect {
 		timeout {puts "TESTING ERROR 7\n";exit}
-		"Child process initialized"
+		-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 	}
 	expect {
 		timeout {puts "TESTING ERROR 8\n";exit}
@@ -114,7 +114,7 @@ if { $have_dvd > 0 } {
 	send -- "firejail --private-dev --nodvd ls /dev\r"
 	expect {
 		timeout {puts "TESTING ERROR 10\n";exit}
-		"Child process initialized"
+		-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 	}
 	expect {
 		timeout {puts "TESTING ERROR 11\n";exit}
@@ -135,7 +135,7 @@ if { $have_dri > 0 } {
 	send -- "firejail --private-dev --no3d ls /dev\r"
 	expect {
 		timeout {puts "TESTING ERROR 17\n";exit}
-		"Child process initialized"
+		-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 	}
 	expect {
 		timeout {puts "TESTING ERROR 18\n";exit}

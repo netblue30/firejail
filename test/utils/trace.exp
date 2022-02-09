@@ -10,7 +10,7 @@ match_max 100000
 send -- "firejail --trace mkdir ttt\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
@@ -21,7 +21,7 @@ sleep 1
 send -- "firejail --trace rmdir ttt\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
@@ -32,7 +32,7 @@ sleep 1
 send -- "firejail --trace touch ttt\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
@@ -44,7 +44,7 @@ sleep 1
 send -- "firejail --trace rm ttt\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
@@ -55,7 +55,7 @@ sleep 1
 send -- "firejail --trace wget -q debian.org\r"
 #expect {
 #	timeout {puts "TESTING ERROR 8.1\n";exit}
-#	"Child process initialized"
+#	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 #}
 #expect {
 #	timeout {puts "TESTING ERROR 8.2\n";exit}
@@ -86,7 +86,7 @@ sleep 1
 send -- "firejail --trace rm index.html\r"
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
@@ -98,7 +98,7 @@ sleep 1
 send --  "firejail --trace\r"
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}

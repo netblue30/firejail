@@ -11,7 +11,7 @@ match_max 100000
 send -- "firejail --profile=macro-whitelist.profile ls ~\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
@@ -42,7 +42,7 @@ sleep 1
 send -- "firejail --profile=macro-blacklist.profile ls ~/Desktop\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
@@ -53,7 +53,7 @@ sleep 1
 send -- "firejail --profile=macro-blacklist.profile ls ~/Documents\r"
 expect {
 	timeout {puts "TESTING ERROR 9n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
@@ -64,7 +64,7 @@ sleep 1
 send -- "firejail --profile=macro-blacklist.profile ls ~/Downloads\r"
 expect {
 	timeout {puts "TESTING ERROR 11n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 12n";exit}
@@ -75,7 +75,7 @@ sleep 1
 send -- "firejail --profile=macro-blacklist.profile ls ~/Music\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
@@ -86,7 +86,7 @@ sleep 1
 send -- "firejail --profile=macro-blacklist.profile ls ~/Pictures\r"
 expect {
 	timeout {puts "TESTING ERROR 15\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 16\n";exit}
@@ -97,7 +97,7 @@ sleep 1
 send -- "firejail --profile=macro-blacklist.profile ls ~/Videos\r"
 expect {
 	timeout {puts "TESTING ERROR 17\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 18\n";exit}
@@ -108,7 +108,7 @@ sleep 1
 send -- "firejail --profile=macro-readonly.profile touch ~/Desktop/blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 19\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 20\n";exit}
@@ -119,7 +119,7 @@ sleep 1
 send -- "firejail --profile=macro-readonly.profile touch ~/Documents/blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 21\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 22\n";exit}
@@ -130,7 +130,7 @@ sleep 1
 send -- "firejail --profile=macro-readonly.profile touch ~/Downloads/blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 23\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 24\n";exit}
@@ -141,7 +141,7 @@ sleep 1
 send -- "firejail --profile=macro-readonly.profile touch ~/Music/blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 25\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 26\n";exit}
@@ -152,7 +152,7 @@ sleep 1
 send -- "firejail --profile=macro-readonly.profile touch ~/Pictures/blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 27\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 28\n";exit}
@@ -163,7 +163,7 @@ sleep 1
 send -- "firejail --profile=macro-readonly.profile touch ~/Videos/blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 29\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 30\n";exit}

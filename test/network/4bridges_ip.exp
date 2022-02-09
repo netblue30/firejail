@@ -27,7 +27,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 0.4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "exit\r"
@@ -53,7 +53,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1.4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "exit\r"
@@ -80,7 +80,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2.4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "exit\r"
@@ -108,7 +108,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "exit\r"
@@ -137,7 +137,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 
 # check default gateway

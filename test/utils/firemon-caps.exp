@@ -10,7 +10,7 @@ match_max 100000
 send --  "firejail --name=bingo1 --noprofile --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -18,7 +18,7 @@ spawn $env(SHELL)
 send --  "firejail --name=bingo2 --noprofile\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -26,7 +26,7 @@ spawn $env(SHELL)
 send --  "firejail --name=bingo3 --noprofile --caps.drop=all\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -34,7 +34,7 @@ spawn $env(SHELL)
 send --  "firejail --noprofile --name=bingo4 --caps.drop=chown,kill\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -42,7 +42,7 @@ spawn $env(SHELL)
 send --  "firejail --noprofile --name=bingo5 --caps.keep=chown,kill\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -50,7 +50,7 @@ spawn $env(SHELL)
 send --  "firejail --name=bingo6 --profile=caps1.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -58,7 +58,7 @@ spawn $env(SHELL)
 send --  "firejail --name=bingo7 --profile=caps2.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 

@@ -16,7 +16,7 @@ after 100
 send -- "firejail --whitelist=/mnt/firejail-test-file --whitelist=/mnt/firejail-test-dir --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -39,7 +39,7 @@ after 100
 send -- "firejail --whitelist=/opt/firejail-test-file  --whitelist=/opt/firejail-test-dir --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -61,7 +61,7 @@ after 100
 send -- "firejail --whitelist=/media/firejail-test-file --whitelist=/media/firejail-test-dir --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -78,7 +78,7 @@ sleep 1
 send -- "firejail --whitelist=/var/run --whitelist=/var/lock --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -100,7 +100,7 @@ after 100
 send -- "firejail --whitelist=/srv/firejail-test-file --whitelist=/srv/firejail-test-dir --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 

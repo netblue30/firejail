@@ -11,7 +11,7 @@ match_max 100000
 send --  "firejail --noprofile --name=\"rlimit testing\"\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -21,11 +21,15 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Switching to pid"
 }
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
 sleep 1
 
 send -- "cat /proc/self/limits\r"
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"Max open files            1234                 1234"
 }
 after 100

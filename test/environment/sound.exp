@@ -11,7 +11,7 @@ match_max 100000
 send -- "firejail --nosound speaker-test\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
@@ -22,7 +22,7 @@ sleep 2
 send -- "firejail --nosound aplay -l\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
@@ -39,7 +39,7 @@ sleep 2
 send -- "firejail --profile=sound.profile speaker-test\r"
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}
@@ -50,7 +50,7 @@ sleep 2
 send -- "firejail --profile=sound.profile aplay -l\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
@@ -67,7 +67,7 @@ sleep 2
 send -- "firejail aplay -l\r"
 expect {
 	timeout {puts "TESTING ERROR 23\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 24\n";exit}

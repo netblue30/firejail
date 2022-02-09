@@ -10,7 +10,7 @@ match_max 100000
 send -- "ssh firejail-test@0\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized" {puts "OK\n"}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms" {puts "OK\n"}
 	"an existing sandbox was detected" {puts "OK\n"}
 }
 sleep 1

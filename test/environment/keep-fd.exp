@@ -47,7 +47,7 @@ after 100
 send -- "firejail --noprofile\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+	-re {Child process initialized in [0-9]+.[0-9]+ ms}
 }
 after 100
 
@@ -83,7 +83,7 @@ after 500
 send -- "firejail --noprofile --keep-fd=\$READ_FD\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"Child process initialized"
+	-re {Child process initialized in [0-9]+.[0-9]+ ms}
 }
 after 100
 
@@ -119,7 +119,7 @@ after 500
 send -- "firejail --noprofile --keep-fd=\$WRITE_FD\r"
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
-	"Child process initialized"
+	-re {Child process initialized in [0-9]+.[0-9]+ ms}
 }
 after 100
 
@@ -155,7 +155,7 @@ after 500
 send -- "firejail --noprofile --keep-fd=\$READ_FD,\$WRITE_FD\r"
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
-	"Child process initialized"
+	-re {Child process initialized in [0-9]+.[0-9]+ ms}
 }
 after 100
 
@@ -191,7 +191,7 @@ after 500
 send -- "firejail --noprofile --keep-fd=all\r"
 expect {
 	timeout {puts "TESTING ERROR 18\n";exit}
-	"Child process initialized"
+	-re {Child process initialized in [0-9]+.[0-9]+ ms}
 }
 after 100
 

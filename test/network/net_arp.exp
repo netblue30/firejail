@@ -10,27 +10,27 @@ match_max 100000
 send -- "firejail --net=br0 sleep 20 &\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 send -- "firejail --net=br0 sleep 20 &\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 send -- "firejail --net=br0 sleep 20 &\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 send -- "firejail --net=br0 sleep 20 &\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 send -- "firejail --net=br0 sleep 20 &\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 
 # will fail

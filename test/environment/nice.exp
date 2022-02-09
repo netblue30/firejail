@@ -10,7 +10,7 @@ match_max 100000
 send -- "firejail --nice=15\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -39,7 +39,7 @@ after 100
 send -- "firejail --profile=nice.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -70,7 +70,7 @@ after 100
 send -- "firejail --nice=-5\r"
 expect {
 	timeout {puts "TESTING ERROR 17\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 

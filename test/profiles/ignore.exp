@@ -17,7 +17,7 @@ send -- "firejail --debug --ignore=seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	BLACKLIST {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 send -- "exit\r"
@@ -26,7 +26,7 @@ sleep 1
 send -- "firejail --ignore=seccomp --ignore=shell --profile=ignore.profile \r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 
@@ -42,7 +42,7 @@ sleep 1
 send -- "firejail --ignore=private --ignore=shell --profile=ignore.profile \r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 
@@ -59,7 +59,7 @@ send -- "firejail --debug --profile=ignore2.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
 	BLACKLIST {puts "TESTING ERROR 8\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 
 after 100
@@ -69,7 +69,7 @@ sleep 1
 send -- "firejail --ignore=quiet --ignore=shell --profile=ignore.profile \r"
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 

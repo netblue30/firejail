@@ -24,7 +24,7 @@ if { ! [file exists /tmp/fjtest-dir] } {
 send -- "firejail --noprofile --tmpfs=~/fjtest-dir\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 500
 

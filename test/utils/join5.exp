@@ -9,8 +9,8 @@ match_max 100000
 
 send --  "firejail --name=test123 --profile=join5.profile\r"
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"Child process initialized"
+	timeout {puts "TESTING ERROR 0\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 spawn $env(SHELL)
@@ -19,14 +19,18 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Switching to pid"
 }
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
 sleep 1
 send -- "ps aux\r"
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"/bin/bash"
 }
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"/bin/bash"
 }
 
@@ -35,11 +39,11 @@ after 100
 
 send --  "firejail --protocol.print=test123\r"
 expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"Switching to pid"
 }
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
+	timeout {puts "TESTING ERROR 6\n";exit}
 	"unix"
 }
 

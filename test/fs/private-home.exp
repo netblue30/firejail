@@ -26,7 +26,7 @@ after 100
 send -- "firejail --private-home=_firejail_test_file1,_firejail_test_file2,_firejail_test_dir1\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 
@@ -86,7 +86,7 @@ after 100
 send -- "firejail --private-home=_firejail_test_link2\r"
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 send -- "file ~/_firejail_test_link2\r"

@@ -18,7 +18,7 @@ set chroot [lindex $argv 1]
 send -- "firejail --noprofile --private-etc=group,hostname,hosts,nsswitch.conf,passwd,resolv.conf,skel\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -40,7 +40,7 @@ if { $overlay == "overlay" } {
 	expect {
 		timeout {puts "TESTING ERROR 2\n";exit}
 		"overlay option is not available" {puts "grsecurity\n"; exit}
-		"Child process initialized" {puts "normal system\n"}
+		-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms" {puts "normal system\n"}
 	}
 	sleep 1
 
@@ -68,7 +68,7 @@ if { $chroot == "chroot" } {
 	expect {
 		timeout {puts "TESTING ERROR 5\n";exit}
 		"chroot option is not available" {puts "grsecurity\n"; exit}
-		"Child process initialized"
+		-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 	}
 	sleep 1
 

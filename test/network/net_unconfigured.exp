@@ -12,7 +12,7 @@ send -- "firejail --noprofile --net=br-unconfigured --ip=none\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"eth0" {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "bash\r"
@@ -53,7 +53,7 @@ send -- "firejail --noprofile --net=br-unconfigured\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
 	"eth0" {puts "TESTING ERROR 8\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "bash\r"
@@ -93,7 +93,7 @@ send -- "firejail --noprofile --net=br-unconfigured --defaultgw=10.10.80.1\r"
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
 	"eth0" {puts "TESTING ERROR 15\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "bash\r"
@@ -133,7 +133,7 @@ send -- "firejail --noprofile --net=br-unconfigured --ip=10.10.80.1 --defaultgw=
 expect {
 	timeout {puts "TESTING ERROR 21\n";exit}
 	"eth0" {puts "TESTING ERROR 22\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "bash\r"
@@ -180,7 +180,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 30\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "bash\r"

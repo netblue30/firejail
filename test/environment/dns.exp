@@ -30,7 +30,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1.5\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 1.6\n";exit}
@@ -47,7 +47,7 @@ expect {
 	"DNS server 8.8.8.8" {puts "TESTING ERROR 2.3\n";exit}
 	"DNS server 4.2.2.1" {puts "TESTING ERROR 2.4\n";exit}
 	"DNS server ::2" {puts "TESTING ERROR 2.5\n";exit}
-	"Child process initialized" {puts "TESTING ERROR 2.6\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms" {puts "TESTING ERROR 2.6\n";exit}
 	"Parent is shutting down, bye..." {puts "TESTING ERROR 2.7\n";exit}
 	"root"
 }
@@ -56,7 +56,7 @@ after 100
 send -- "firejail --dns=8.8.4.4 --dns=8.8.8.8 --dns=4.2.2.1 --dns=::2\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -85,7 +85,7 @@ sleep 1
 send -- "firejail --profile=dns.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 5.1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 

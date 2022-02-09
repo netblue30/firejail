@@ -27,7 +27,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "exit\r"
@@ -41,7 +41,7 @@ expect {
 	"Chain INPUT (policy DROP" {puts "TESTING ERROR 5.1\n";exit}
 	"ACCEPT     all  --  any    any     anywhere" {puts "TESTING ERROR 5.1\n";exit}
 	"ACCEPT     icmp --  any    any     anywhere" {puts "TESTING ERROR 5.1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "exit\r"
@@ -55,7 +55,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 send -- "ping -c 1 -w 3 10.10.20.1\r"
@@ -75,7 +75,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 7.1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 2
 send -- "ping -c 1 -w 3 10.10.20.1\r"

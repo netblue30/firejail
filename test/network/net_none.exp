@@ -12,7 +12,7 @@ send -- "firejail --net=none\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"eth0" {puts "TESTING ERROR 0.1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -47,7 +47,7 @@ send -- "firejail --profile=net_none.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"eth0" {puts "TESTING ERROR 3.1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 

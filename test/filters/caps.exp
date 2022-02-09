@@ -10,7 +10,7 @@ match_max 100000
 send -- "firejail --caps.keep=chown,fowner --noprofile\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 
@@ -29,7 +29,7 @@ sleep 1
 send -- "firejail --caps.drop=all --noprofile\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 
@@ -48,7 +48,7 @@ sleep 1
 send -- "firejail --caps.drop=chown,dac_override,dac_read_search,fowner --noprofile\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 
@@ -81,7 +81,7 @@ expect {
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
 	"Drop CAP_" {puts "TESTING ERROR 14\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 send -- "exit\r"
@@ -93,7 +93,7 @@ sleep 1
 #send -- "firejail --profile=caps2.profile\r"
 #expect {
 #	timeout {puts "TESTING ERROR 15\n";exit}
-#	"Child process initialized"
+#	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 #}
 #after 100
 #
@@ -113,7 +113,7 @@ sleep 1
 send -- "firejail --profile=caps3.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 18\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 

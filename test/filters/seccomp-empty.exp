@@ -42,7 +42,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 0.7\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 2
 send -- "exit\r"
@@ -78,7 +78,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1.7\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 2
 send -- "exit\r"
@@ -120,7 +120,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2.7\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 2
 send -- "exit\r"
@@ -156,7 +156,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.7\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 2
 send -- "exit\r"

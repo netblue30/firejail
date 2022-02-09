@@ -23,7 +23,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 2
 
@@ -51,7 +51,7 @@ expect {
 send -- "firejail --name=blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 2
 

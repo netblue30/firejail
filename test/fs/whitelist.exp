@@ -36,7 +36,7 @@ after 200
 send -- "firejail --whitelist=~/fjtest-file --whitelist=~/fjtest-dir --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -73,7 +73,7 @@ sleep 1
 send -- "firejail --whitelist=~/fjtest-dir/fjtest-dir/fjtest-file\r"
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -98,7 +98,7 @@ sleep 1
 send -- "firejail --whitelist=~/fjtest-file-lnk --whitelist=~/fjtest-dir-lnk\r"
 expect {
 	timeout {puts "TESTING ERROR 20\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 

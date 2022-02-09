@@ -24,7 +24,7 @@ after 100
 send -- "firejail  --shell=none ls\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
@@ -35,7 +35,7 @@ after 100
 send -- "firejail  --profile=shell-none.profile ls\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}

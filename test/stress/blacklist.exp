@@ -14,7 +14,7 @@ set i 1
 send -- "firejail --profile=blacklist.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 
 while { $i <= $MAXi } {
@@ -36,7 +36,7 @@ set i 1
 send -- "firejail --profile=noblacklist.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 
 while { $i <= $MAXi } {

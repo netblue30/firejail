@@ -23,7 +23,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 2
 
@@ -64,7 +64,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 2
 
@@ -90,7 +90,7 @@ send -- "firejail --debug --netfilter6=ipv6.net\r"
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
 	"Installing IPv6 firewall" {puts "TESTING ERROR 12\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 send -- "exit\r"

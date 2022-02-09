@@ -22,7 +22,7 @@ sleep 1
 send -- "firejail --noprofile --private-tmp\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
@@ -49,7 +49,7 @@ if { $overlay == "overlay" } {
 	expect {
 		timeout {puts "TESTING ERROR 2\n";exit}
 		"overlay option is not available" {puts "grsecurity\n"; exit}
-		"Child process initialized" {puts "normal system\n"}
+		-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms" {puts "normal system\n"}
 	}
 	sleep 1
 
@@ -76,7 +76,7 @@ if { $chroot == "chroot" } {
 	send -- "firejail --noprofile --chroot=/tmp/chroot --private-tmp\r"
 	expect {
 		timeout {puts "TESTING ERROR 4\n";exit}
-		"Child process initialized"
+		-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 	}
 	sleep 1
 

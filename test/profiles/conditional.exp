@@ -14,7 +14,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 send -- "exit\r"
@@ -24,7 +24,7 @@ send -- "firejail --debug --profile=cond1.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"conditional HAS_NODBUS, private" {puts "TESTING ERROR 3\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 send -- "exit\r"

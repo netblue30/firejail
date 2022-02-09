@@ -21,7 +21,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
@@ -34,7 +34,7 @@ after 100
 send --  "firejail --debug sleep 1; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
@@ -60,7 +60,7 @@ expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
 	"Installing /run/firejail/mnt/seccomp/seccomp seccomp filter" {puts "TESTING ERROR 11\n";exit}
 	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 12\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
@@ -79,7 +79,7 @@ send --  "firejail --debug --ignore=protocol sleep 1; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 17\n";exit}
 	"Installing /run/firejail/mnt/seccomp/seccomp.protocol seccomp filter" {puts "TESTING ERROR 18\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 19\n";exit}
@@ -101,7 +101,7 @@ after 100
 send --  "firejail --debug --memory-deny-write-execute sleep 1; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 24\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 25\n";exit}
@@ -118,7 +118,7 @@ send --  "firejail --debug --seccomp.block-secondary sleep 1; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 27\n";exit}
 	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 28\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 29\n";exit}
@@ -141,7 +141,7 @@ send --  "firejail --debug --profile=block-secondary.profile sleep 1; echo done\
 expect {
 	timeout {puts "TESTING ERROR 33\n";exit}
 	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 34\n";exit}
-	"Child process initialized"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 35\n";exit}

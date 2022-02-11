@@ -125,7 +125,8 @@ int check_can_drop_all_groups() {
 	 * and #4603.
 	 */
 	if (access("/run/systemd/seats/", F_OK) != 0) {
-		fwarning("logind not detected, nogroups command ignored\n");
+		// TODO: wrc causes this to be printed even with (e)logind (see #4930)
+		//fwarning("logind not detected, nogroups command ignored\n");
 		can_drop_all_groups = 0;
 		goto out;
 	}

@@ -66,4 +66,4 @@ dbus-system none
 
 memory-deny-write-execute
 read-only ${HOME}
-read-only /tmp
+#read-only /tmp # breaks mandoc (see #4927)

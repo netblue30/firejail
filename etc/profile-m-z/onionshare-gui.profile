@@ -1,4 +1,5 @@
 # Firejail profile for onionshare-gui
+# Description: Share a file over Tor Hidden Services anonymously and securely
 # This file is overwritten after every install/update
 # Persistent local customizations
 include onionshare-gui.local
@@ -34,8 +35,13 @@ novideo
 protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
 
 private-dev
 private-tmp
+
+dbus-user filter
+dbus-user.talk org.freedesktop.Notifications
+dbus-system none
 
 memory-deny-write-execute

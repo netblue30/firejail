@@ -42,6 +42,7 @@ private-tmp
 
 dbus-user filter
 dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
 dbus-system none
 
 memory-deny-write-execute

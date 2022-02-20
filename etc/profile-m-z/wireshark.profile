@@ -26,7 +26,7 @@ include whitelist-var-common.inc
 
 apparmor
 # caps.drop all
-caps.keep dac_override,net_admin,net_raw
+caps.keep dac_override,dac_read_search,net_admin,net_raw
 netfilter
 no3d
 # nogroups - breaks network traffic capture for unprivileged users

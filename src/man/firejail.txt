@@ -2684,7 +2684,7 @@ $ firejail \-\-list
 $ firejail \-\-shutdown=3272
 .TP
 \fB\-\-tab
-Enable bash completion in sandboxes using private or whitelisted home directories.
+Enable shell tab completion in sandboxes using private or whitelisted home directories.
 .br
 
 .br

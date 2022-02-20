@@ -55,6 +55,7 @@ whitelist /usr/share/qt
 whitelist /usr/share/qt4
 whitelist /usr/share/qt5
 whitelist /usr/share/qt5ct
+whitelist /usr/share/qt6ct
 whitelist /usr/share/sounds
 whitelist /usr/share/tcl8.6
 whitelist /usr/share/tcltk

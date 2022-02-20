@@ -1,0 +1,46 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2022 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+
+send -- "firejail --private ls -al\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	".inputrc"
+}
+sleep 1
+
+send -- "firejail --private --tab ls -al\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	".inputrc" {puts "TESTING ERROR 4\n";exit}
+	"Parent is shutting down"
+}
+sleep 1
+
+send -- "firejail --private --profile=tab.profile ls -al\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	".inputrc" {puts "TESTING ERROR 7\n";exit}
+	"Parent is shutting down"
+}
+sleep 1
+
+puts "\nall done\n"

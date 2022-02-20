@@ -2683,6 +2683,13 @@ $ firejail \-\-list
 .br
 $ firejail \-\-shutdown=3272
 .TP
+\fB\-\-tab
+Enable bash completion in sandboxes using private or whitelisted home directories.
+.br
+
+.br
+$ firejail \-\-private --tab
+.TP
 \fB\-\-timeout=hh:mm:ss
 Kill the sandbox automatically after the time has elapsed. The time is specified in hours/minutes/seconds format.
 .br

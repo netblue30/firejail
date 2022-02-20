@@ -34,8 +34,10 @@
 #endif
 
 static void disable_tab_completion(const char *homedir) {
-	char *fname;
+	if (arg_tab)
+		return;
 
+	char *fname;
 	if (asprintf(&fname, "%s/.inputrc", homedir) == -1)
 		errExit("asprintf");
 

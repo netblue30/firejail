@@ -245,6 +245,8 @@ static char *usage_str =
 	"    --shell=none - run the program directly without a user shell.\n"
 	"    --shell=program - set default user shell.\n"
 	"    --shutdown=name|pid - shutdown the sandbox identified by name or PID.\n"
+	"    --tab - enable shell tab completion in sandboxes using private or\n"
+	"\twhitelisted home directories.\n"
 	"    --timeout=hh:mm:ss - kill the sandbox automatically after the time\n"
 	"\thas elapsed.\n"
 	"    --tmpfs=dirname - mount a tmpfs filesystem on directory dirname.\n"

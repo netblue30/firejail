@@ -155,6 +155,7 @@ DbusPolicy arg_dbus_system = DBUS_POLICY_ALLOW;	// --dbus-system
 const char *arg_dbus_log_file = NULL;
 int arg_dbus_log_user = 0;
 int arg_dbus_log_system = 0;
+int arg_tab = 0;
 int login_shell = 0;
 
 int parent_to_child_fds[2];
@@ -2798,6 +2799,8 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--deterministic-shutdown") == 0) {
 			arg_deterministic_shutdown = 1;
 		}
+		else if (strcmp(argv[i], "--tab") == 0)
+			arg_tab = 1;
 		else {
 			// double dash - positional params to follow
 			if (strcmp(argv[i], "--") == 0) {

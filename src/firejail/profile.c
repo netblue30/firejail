@@ -389,6 +389,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
+	else if (strcmp(ptr, "tab") == 0) {
+		arg_tab = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "private-cwd") == 0) {
 		cfg.cwd = NULL;
 		arg_private_cwd = 1;

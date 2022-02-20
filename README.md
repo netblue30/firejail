@@ -213,6 +213,14 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 Milestone page: https://github.com/netblue30/firejail/milestone/1
 
+### Shell tab completion
+```
+       --tab  Enable bash completion in sandboxes using private or whitelisted
+              home directories.
+
+              $ firejail --private --tab
+```
+
 ### Profile Statistics
 
 A small tool to print profile statistics. Compile and install as usual. The tool is installed in /usr/lib/firejail directory.
@@ -251,3 +259,4 @@ Stats:
 
 ### New profiles:
 
+onionshare, onionshare-cli

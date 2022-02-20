@@ -10,6 +10,9 @@ export LC_ALL=C
 # These directories are required by some tests:
 mkdir -p ~/Desktop ~/Documents ~/Downloads ~/Music ~/Pictures ~/Videos
 
+echo "TESTING: tab completion (test/fs/tab.exp)"
+./tab.exp
+
 rm -fr ~/_firejail_test_*
 echo "TESTING: mkdir/mkfile (test/fs/mkdir_mkfile.exp)"
 ./mkdir_mkfile.exp

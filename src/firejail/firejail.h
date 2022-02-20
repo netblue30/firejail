@@ -365,6 +365,7 @@ extern DbusPolicy arg_dbus_system; // --dbus-system
 extern int arg_dbus_log_user;
 extern int arg_dbus_log_system;
 extern const char *arg_dbus_log_file;
+extern int arg_tab;
 
 extern int login_shell;
 extern int parent_to_child_fds[2];

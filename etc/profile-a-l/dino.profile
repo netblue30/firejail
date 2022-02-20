@@ -44,4 +44,13 @@ private-dev
 # private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl -- breaks server connection
 private-tmp
 
-dbus-system none
+dbus-user filter
+# Integration with notification and other desktop environment functionalities
+dbus-user.own im.dino.Dino
+# dconf integration
+dbus-user.talk ca.desrt.dconf
+# Notification support
+dbus-user.talk org.freedesktop.Notifications
+dbus-system filter
+# Integration with systemd-logind or elogind
+dbus-system.talk org.freedesktop.login1

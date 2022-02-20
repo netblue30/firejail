@@ -10,6 +10,7 @@ noblacklist ${HOME}/.cache/qBittorrent
 noblacklist ${HOME}/.config/qBittorrent
 noblacklist ${HOME}/.config/qBittorrentrc
 noblacklist ${HOME}/.local/share/data/qBittorrent
+noblacklist ${HOME}/.local/share/qBittorrent
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -26,11 +27,13 @@ mkdir ${HOME}/.cache/qBittorrent
 mkdir ${HOME}/.config/qBittorrent
 mkfile ${HOME}/.config/qBittorrentrc
 mkdir ${HOME}/.local/share/data/qBittorrent
+mkdir ${HOME}/.local/share/qBittorrent
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/qBittorrent
 whitelist ${HOME}/.config/qBittorrent
 whitelist ${HOME}/.config/qBittorrentrc
 whitelist ${HOME}/.local/share/data/qBittorrent
+whitelist ${HOME}/.local/share/qBittorrent
 include whitelist-common.inc
 include whitelist-var-common.inc
 

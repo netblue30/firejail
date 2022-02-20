@@ -962,6 +962,7 @@ blacklist ${HOME}/.local/share/plasma_notes
 blacklist ${HOME}/.local/share/profanity
 blacklist ${HOME}/.local/share/psi
 blacklist ${HOME}/.local/share/psi+
+blacklist ${HOME}/.local/share/qBittorrent
 blacklist ${HOME}/.local/share/qpdfview
 blacklist ${HOME}/.local/share/quadrapassel
 blacklist ${HOME}/.local/share/qutebrowser

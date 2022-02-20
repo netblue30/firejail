@@ -215,7 +215,7 @@ Milestone page: https://github.com/netblue30/firejail/milestone/1
 
 ### Shell tab completion
 ```
-       --tab  Enable bash completion in sandboxes using private or whitelisted
+       --tab  Enable shell tab completion in sandboxes using private or whitelisted
               home directories.
 
               $ firejail --private --tab

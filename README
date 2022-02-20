@@ -156,6 +156,8 @@ Austin S. Hemmelgarn (https://github.com/Ferroin)
 	- unbound profile update
 Avi Lumelsky (https://github.com/avilum)
 	- syscall.sh improvements
+avallach2000 (https://github.com/avallach2000(
+	- fix qbittorrent profile
 avoidr (https://github.com/avoidr)
 	- whitelist fix
 	- recently-used.xbel fix
@@ -265,6 +267,7 @@ croket (https://github.com/crocket)
 	- fix librewolf profile
 	- added profiles for imv, retroarch, and torbrowser
 	- fix dino profile
+	- fix wireshark profile
 curiosity-seeker (https://github.com/curiosity-seeker - old)
 curiosityseeker (https://github.com/curiosityseeker - new)
 	- tightening unbound and dnscrypt-proxy profiles

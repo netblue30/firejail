@@ -19,7 +19,6 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.cache/Zeal
-mkdir ${HOME}/.config/qt5ct
 mkdir ${HOME}/.config/Zeal
 mkdir ${HOME}/.local/share/Zeal
 whitelist ${HOME}/.cache/Zeal

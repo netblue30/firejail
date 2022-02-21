@@ -23,6 +23,7 @@ noblacklist ${HOME}/.config/kio_httprc
 noblacklist ${HOME}/.config/kioslaverc
 noblacklist ${HOME}/.config/ksslcablacklist
 noblacklist ${HOME}/.config/qt5ct
+noblacklist ${HOME}/.config/qt6ct
 noblacklist ${HOME}/.config/qtcurve
 
 blacklist ${HOME}/.config/*

@@ -49,7 +49,7 @@ seccomp !chroot
 shell none
 
 disable-mnt
-# private-bin bibletime,qt5ct
+# private-bin bibletime
 private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,login.defs,machine-id,passwd,pki,resolv.conf,ssl,sword,sword.conf

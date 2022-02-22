@@ -158,6 +158,7 @@ Avi Lumelsky (https://github.com/avilum)
 	- syscall.sh improvements
 avallach2000 (https://github.com/avallach2000(
 	- fix qbittorrent profile
+	- support for changing appearance of the Qt6 apps with qt6ct
 avoidr (https://github.com/avoidr)
 	- whitelist fix
 	- recently-used.xbel fix

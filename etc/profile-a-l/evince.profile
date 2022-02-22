@@ -52,7 +52,7 @@ seccomp.block-secondary
 shell none
 tracelog
 
-private-bin evince,evince-previewer,evince-thumbnailer,bash,dash,sh
+private-bin evince,evince-previewer,evince-thumbnailer,sh
 private-cache
 private-dev
 private-etc alternatives,fonts,group,ld.so.cache,ld.so.preload,machine-id,passwd

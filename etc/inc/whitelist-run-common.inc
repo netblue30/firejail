@@ -7,6 +7,7 @@ whitelist /run/cups/cups.sock
 whitelist /run/dbus/system_bus_socket
 whitelist /run/media
 whitelist /run/resolvconf/resolv.conf
+whitelist /run/netconfig/resolv.conf	# openSUSE Leap
 whitelist /run/shm
 whitelist /run/systemd/journal/dev-log
 whitelist /run/systemd/journal/socket

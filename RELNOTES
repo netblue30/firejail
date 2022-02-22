@@ -3,6 +3,7 @@ firejail (0.9.69) baseline; urgency=low
   * feature: enable shell tab completion (#4936)
   * bugfix: --private-cwd not expanding macros, broken hyperrogue (#4910)
   * bugfix: nogroups + wrc prints confusing messages (#4930 #4933)
+  * bugfix: openSUSE Leap - whitelist-run-common.inc (#4954)
   * ci: replace centos (EOL) with almalinux (#4912)
   * docs: Refer to firejail.config in configuration files (#4916)
   * new profiles: onionshare, onionshare-cli

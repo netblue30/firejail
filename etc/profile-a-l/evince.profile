@@ -15,6 +15,7 @@ noblacklist ${DOCUMENTS}
 
 blacklist /usr/libexec
 
+include allow-bin-sh.inc
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -51,7 +52,7 @@ seccomp.block-secondary
 shell none
 tracelog
 
-private-bin evince,evince-previewer,evince-thumbnailer
+private-bin evince,evince-previewer,evince-thumbnailer,bash,dash,sh
 private-cache
 private-dev
 private-etc alternatives,fonts,group,ld.so.cache,ld.so.preload,machine-id,passwd

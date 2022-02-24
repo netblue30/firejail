@@ -21,6 +21,7 @@ allow-debuggers
 allusers
 keep-config-pulse
 keep-dev-shm
+keep-fd all
 keep-var-tmp
 writable-etc
 writable-run-user

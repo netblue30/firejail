@@ -13,5 +13,7 @@ whitelist /usr/share/gconf-editor
 
 ignore x11 none
 
+ignore memory-deny-write-execute
+
 # Redirect
 include gconf.profile

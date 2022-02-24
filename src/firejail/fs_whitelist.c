@@ -592,10 +592,6 @@ void fs_whitelist(void) {
 		if (strstr(new_name, ".."))
 			whitelist_error(new_name);
 
-		// /run/firejail is not allowed
-		if (strncmp(new_name, RUN_FIREJAIL_DIR, strlen(RUN_FIREJAIL_DIR)) == 0)
-			whitelist_error(new_name);
-
 		TopDir *current_top = NULL;
 		if (!nowhitelist_flag) {
 			// extract whitelist top level directory
@@ -615,6 +611,13 @@ void fs_whitelist(void) {
 				}
 			}
 			free(dir);
+		}
+
+		// /run/firejail directory is internal and not allowed
+		if (strncmp(new_name, RUN_FIREJAIL_DIR, strlen(RUN_FIREJAIL_DIR)) == 0) {
+			entry = entry->next;
+			free(new_name);
+			continue;
 		}
 
 		// extract resolved path of the file
@@ -653,9 +656,13 @@ void fs_whitelist(void) {
 			continue;
 		}
 
-		// /run/firejail is not allowed
-		if (strncmp(fname, RUN_FIREJAIL_DIR, strlen(RUN_FIREJAIL_DIR)) == 0)
-			whitelist_error(fname);
+		// /run/firejail directory is internal and not allowed
+		if (strncmp(fname, RUN_FIREJAIL_DIR, strlen(RUN_FIREJAIL_DIR)) == 0) {
+			entry = entry->next;
+			free(new_name);
+			free(fname);
+			continue;
+		}
 
 		if (nowhitelist_flag) {
 			// store the path in nowhitelist array

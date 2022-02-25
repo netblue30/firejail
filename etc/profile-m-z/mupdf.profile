@@ -4,7 +4,7 @@
 # Persistent local customizations
 include mupdf.local
 # Persistent global definitions
-#include globals.local
+include globals.local
 
 noblacklist ${DOCUMENTS}
 

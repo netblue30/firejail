@@ -146,11 +146,10 @@ MountData *get_last_mount(void) {
 
 // Returns mount id, or -1 if fd refers to a procfs or sysfs file
 static int get_mount_id_from_handle(int fd) {
-	EUID_ASSERT();
-
 	char *proc;
 	if (asprintf(&proc, "/proc/self/fd/%d", fd) == -1)
 		errExit("asprintf");
+
 	struct file_handle *fh = malloc(sizeof *fh);
 	if (!fh)
 		errExit("malloc");
@@ -172,40 +171,42 @@ static int get_mount_id_from_handle(int fd) {
 
 // Returns mount id, or -1 on kernels < 3.15
 static int get_mount_id_from_fdinfo(int fd) {
-	EUID_ASSERT();
-	int rv = -1;
-
 	char *proc;
 	if (asprintf(&proc, "/proc/self/fdinfo/%d", fd) == -1)
 		errExit("asprintf");
-	EUID_ROOT();
-	FILE *fp = fopen(proc, "re");
-	EUID_USER();
-	if (!fp)
-		goto errexit;
 
+	int called_as_root = 0;
+	if (geteuid() == 0)
+		called_as_root = 1;
+
+	if (called_as_root == 0)
+		EUID_ROOT();
+
+	FILE *fp = fopen(proc, "re");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot read proc file\n");
+		exit(1);
+	}
+
+	if (called_as_root == 0)
+		EUID_USER();
+
+	int rv = -1;
 	char buf[MAX_BUF];
 	while (fgets(buf, MAX_BUF, fp)) {
-		if (strncmp(buf, "mnt_id:", 7) == 0) {
-			if (sscanf(buf + 7, "%d", &rv) == 1)
+		if (sscanf(buf, "mnt_id: %d", &rv) == 1)
 				break;
-			goto errexit;
-		}
 	}
 
 	free(proc);
 	fclose(fp);
 	return rv;
-
-errexit:
-	fprintf(stderr, "Error: cannot read proc file\n");
-	exit(1);
 }
 
 int get_mount_id(int fd) {
-	int rv = get_mount_id_from_fdinfo(fd);
+	int rv = get_mount_id_from_handle(fd);
 	if (rv < 0)
-		rv = get_mount_id_from_handle(fd);
+		rv = get_mount_id_from_fdinfo(fd);
 	return rv;
 }
 

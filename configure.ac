@@ -237,6 +237,14 @@ AS_IF([test "x$enable_force_nonewprivs" = "xyes"], [
 	HAVE_FORCE_NONEWPRIVS="-DHAVE_FORCE_NONEWPRIVS"
 ])
 
+HAVE_ONLY_SYSCFG_PROFILES=""
+AC_SUBST([HAVE_ONLY_SYSCFG_PROFILES])
+AC_ARG_ENABLE([only-syscfg-profiles],
+    [AS_HELP_STRING([--enable-only-syscfg-profiles], [disable profiles in $HOME/.config/firejail])])
+AS_IF([test "x$enable_only_syscfg_profiles" = "xyes"], [
+    HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
+])
+
 HAVE_LTS=""
 AC_SUBST([HAVE_LTS])
 AC_ARG_ENABLE([lts],
@@ -305,6 +313,7 @@ Configuration options:
    Install as a SUID executable: $HAVE_SUID
    LTS: $HAVE_LTS
    Always enforce filters: $HAVE_FORCE_NONEWPRIVS
+   Disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
 
 EOF
 

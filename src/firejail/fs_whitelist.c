@@ -49,20 +49,24 @@ static void whitelist_error(const char *path) {
 	exit(1);
 }
 
-static int whitelist_mkpath(const char* path, mode_t mode) {
+static int whitelist_mkpath(const char *parentdir, const char *relpath, mode_t mode) {
+	// starting from top level directory
+	int parentfd = safer_openat(-1, parentdir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
+	if (parentfd < 0)
+		errExit("open");
+
 	// work on a copy of the path
-	char *dup = strdup(path);
+	char *dup = strdup(relpath);
 	if (!dup)
 		errExit("strdup");
 
 	// only create leading directories, don't create the file
 	char *p = strrchr(dup, '/');
-	assert(p);
+	if (!p) { // nothing to do
+		free(dup);
+		return parentfd;
+	}
 	*p = '\0';
-
-	int parentfd = open("/", O_PATH|O_DIRECTORY|O_CLOEXEC);
-	if (parentfd == -1)
-		errExit("open");
 
 	// traverse the path, return -1 if a symlink is encountered
 	int fd = -1;
@@ -97,24 +101,35 @@ static int whitelist_mkpath(const char* path, mode_t mode) {
 		tok = strtok(NULL, "/");
 	}
 
-	if (done)
-		fs_logger2("mkpath", path);
+	if (done) {
+		char *abspath;
+		if (asprintf(&abspath, "%s/%s", parentdir, relpath) < 0)
+			errExit("asprintf");
+		fs_logger2("mkpath", abspath);
+		free(abspath);
+	}
 
 	free(dup);
 	return fd;
 }
 
-static void whitelist_file(int dirfd, const char *relpath, const char *path) {
+static void whitelist_file(const TopDir * const top, const char *path) {
 	EUID_ASSERT();
-	assert(relpath && path);
+	assert(top && path);
+
+	// check if path is inside top level directory
+	size_t top_pathlen = strlen(top->path);
+	if (strncmp(top->path, path, top_pathlen) != 0 || path[top_pathlen] != '/')
+		return;
+	const char *relpath = path + top_pathlen + 1;
 
 	// open mount source, using a file descriptor that refers to the
 	// top level directory
 	// as the top level directory was opened before mounting the tmpfs
 	// we still have full access to all directory contents
-	// take care to not follow symbolic links (dirfd was obtained without
+	// take care to not follow symbolic links (top->fd was obtained without
 	// following a link, too)
-	int fd = safer_openat(dirfd, relpath, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+	int fd = safer_openat(top->fd, relpath, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 	if (fd == -1) {
 		if (arg_debug || arg_debug_whitelists)
 			printf("Debug %d: skip whitelist %s\n", __LINE__, path);
@@ -130,17 +145,15 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 		return;
 	}
 
+	// now modify the tmpfs:
 	// create mount target as root, except if inside home or run/user/$UID directory
-	if ((strncmp(path, cfg.homedir, homedir_len) != 0 || path[homedir_len] != '/') &&
-	    (strncmp(path, runuser, runuser_len) != 0 || path[runuser_len] != '/'))
+	if (strcmp(top->path, cfg.homedir) != 0 &&
+	    strcmp(top->path, runuser) != 0)
 		EUID_ROOT();
 
 	// create path of the mount target
-	int fd2 = whitelist_mkpath(path, 0755);
+	int fd2 = whitelist_mkpath(top->path, relpath, 0755);
 	if (fd2 == -1) {
-		// something went wrong during path creation or a symlink was found;
-		// if there is a symlink somewhere in the path of the mount target,
-		// assume the file is whitelisted already
 		if (arg_debug || arg_debug_whitelists)
 			printf("Debug %d: skip whitelist %s\n", __LINE__, path);
 		close(fd);
@@ -149,13 +162,14 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 	}
 
 	// get file name of the mount target
-	const char *file = gnu_basename(path);
+	const char *file = gnu_basename(relpath);
 
-	// create mount target itself and open it, a symlink is rejected
+	// create mount target itself if necessary
+	// and open it, a symlink is not allowed
 	int fd3 = -1;
 	if (S_ISDIR(s.st_mode)) {
-		// directory foo can exist already:
-		// firejail --whitelist=~/foo/bar --whitelist=~/foo
+		// directory bar can exist already:
+		// firejail --whitelist=/foo/bar/baz --whitelist=/foo/bar
 		if (mkdirat(fd2, file, 0755) == -1 && errno != EEXIST) {
 			if (arg_debug || arg_debug_whitelists) {
 				perror("mkdir");
@@ -169,8 +183,8 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 		fd3 = openat(fd2, file, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	}
 	else
-		// create an empty file, fails with EEXIST if it is whitelisted already:
-		// firejail --whitelist=/foo --whitelist=/foo/bar
+		// create an empty file
+		// fails with EEXIST if it is whitelisted already
 		fd3 = openat(fd2, file, O_RDONLY|O_CREAT|O_EXCL|O_CLOEXEC, S_IRUSR|S_IWUSR);
 
 	if (fd3 == -1) {
@@ -212,16 +226,23 @@ static void whitelist_file(int dirfd, const char *relpath, const char *path) {
 	fs_logger2("whitelist", path);
 }
 
-static void whitelist_symlink(const char *link, const char *target) {
+static void whitelist_symlink(const TopDir * const top, const char *link, const char *target) {
 	EUID_ASSERT();
-	assert(link && target);
+	assert(top && link && target);
 
-	// create files as root, except if inside home or run/user/$UID directory
-	if ((strncmp(link, cfg.homedir, homedir_len) != 0 || link[homedir_len] != '/') &&
-	    (strncmp(link, runuser, runuser_len) != 0 || link[runuser_len] != '/'))
+	// confirm link is inside top level directory
+	// this should never fail
+	size_t top_pathlen = strlen(top->path);
+	assert(strncmp(top->path, link, top_pathlen) == 0 && link[top_pathlen] == '/');
+
+	const char *relpath = link + top_pathlen + 1;
+
+	// create link as root, except if inside home or run/user/$UID directory
+	if (strcmp(top->path, cfg.homedir) != 0 &&
+	    strcmp(top->path, runuser) != 0)
 		EUID_ROOT();
 
-	int fd = whitelist_mkpath(link, 0755);
+	int fd = whitelist_mkpath(top->path, relpath, 0755);
 	if (fd == -1) {
 		if (arg_debug || arg_debug_whitelists)
 			printf("Debug %d: cannot create symbolic link %s\n", __LINE__, link);
@@ -230,7 +251,7 @@ static void whitelist_symlink(const char *link, const char *target) {
 	}
 
 	// get file name of symlink
-	const char *file = gnu_basename(link);
+	const char *file = gnu_basename(relpath);
 
 	// create the link
 	if (symlinkat(target, fd, file) == -1) {
@@ -285,7 +306,7 @@ static void globbing(const char *pattern) {
 }
 
 // mount tmpfs on all top level directories
-static void tmpfs_topdirs(const TopDir *topdirs) {
+static void tmpfs_topdirs(const TopDir * const topdirs) {
 	int tmpfs_home = 0;
 	int tmpfs_runuser = 0;
 
@@ -329,9 +350,7 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 			fs_logger2("whitelist", RUN_FIREJAIL_DIR);
 
 			// restore /run/user/$UID directory
-			// get path relative to /run
-			const char *rel = runuser + 5;
-			whitelist_file(topdirs[i].fd, rel, runuser);
+			whitelist_file(&topdirs[i], runuser);
 		}
 		else if (strcmp(topdirs[i].path, "/tmp") == 0) {
 			// fix pam-tmpdir (#2685)
@@ -371,12 +390,7 @@ static void tmpfs_topdirs(const TopDir *topdirs) {
 		// restore user home directory if it is masked by the tmpfs
 		// creates path owned by root
 		// does nothing if user home directory doesn't exist
-		size_t topdir_len = strlen(topdirs[i].path);
-		if (strncmp(topdirs[i].path, cfg.homedir, topdir_len) == 0 && cfg.homedir[topdir_len] == '/') {
-			// get path relative to top level directory
-			const char *rel = cfg.homedir + topdir_len + 1;
-			whitelist_file(topdirs[i].fd, rel, cfg.homedir);
-		}
+		whitelist_file(&topdirs[i], cfg.homedir);
 	}
 
 	// user home directory
@@ -720,9 +734,6 @@ void fs_whitelist(void) {
 		entry = entry->next;
 	}
 
-	// release nowhitelist memory
-	free(nowhitelist);
-
 	// mount tmpfs on all top level directories
 	tmpfs_topdirs(topdirs);
 
@@ -732,24 +743,15 @@ void fs_whitelist(void) {
 		if (entry->wparam) {
 			char *file = entry->wparam->file;
 			char *link = entry->wparam->link;
-			const char *topdir = entry->wparam->top->path;
-			size_t topdir_len = strlen(topdir);
-			int dirfd = entry->wparam->top->fd;
+			const TopDir * const current_top = entry->wparam->top;
 
 			// top level directories of link and file can differ
-			// whitelist the file only if it is in same top level directory
-			if (strncmp(file, topdir, topdir_len) == 0 && file[topdir_len] == '/') {
-				// get path relative to top level directory
-				const char *rel = file + topdir_len + 1;
-
-				if (arg_debug || arg_debug_whitelists)
-					printf("Debug %d: file: %s; dirfd: %d; topdir: %s; rel: %s\n", __LINE__, file, dirfd, topdir, rel);
-				whitelist_file(dirfd, rel, file);
-			}
+			// will whitelist the file only if it is in same top level directory
+			whitelist_file(current_top, file);
 
 			// create the link if any
 			if (link) {
-				whitelist_symlink(link, file);
+				whitelist_symlink(current_top, link, file);
 				free(link);
 			}
 
@@ -762,12 +764,15 @@ void fs_whitelist(void) {
 	}
 
 	// release resources
-	free(runuser);
-
 	size_t i;
+	for (i = 0; i < nowhitelist_c; i++)
+		free(nowhitelist[i]);
+	free(nowhitelist);
+
 	for (i = 0; i < TOP_MAX && topdirs[i].path; i++) {
 		free(topdirs[i].path);
 		close(topdirs[i].fd);
 	}
 	free(topdirs);
+	free(runuser);
 }

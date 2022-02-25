@@ -628,6 +628,7 @@ EGREP
 GREP
 CPP
 HAVE_LTS
+HAVE_ONLY_SYSCFG_PROFILES
 HAVE_FORCE_NONEWPRIVS
 HAVE_CONTRIB_INSTALL
 HAVE_GCOV
@@ -732,6 +733,7 @@ enable_busybox_workaround
 enable_gcov
 enable_contrib_install
 enable_force_nonewprivs
+enable_only_syscfg_profiles
 enable_lts
 '
       ac_precious_vars='build_alias
@@ -1395,6 +1397,8 @@ Optional Features:
                           install contrib scripts
   --enable-force-nonewprivs
                           enable force nonewprivs
+  --enable-only-syscfg-profiles
+                          disable profiles in $HOME/.config/firejail
   --enable-lts            enable long-term support software version (LTS)
 
 Some influential environment variables:
@@ -3434,8 +3438,8 @@ if test "x$enable_apparmor" = "xyes"; then :
 	HAVE_APPARMOR="-DHAVE_APPARMOR"
 
 pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for libapparmor" >&5
-$as_echo_n "checking for libapparmor... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for AA" >&5
+$as_echo_n "checking for AA... " >&6; }
 
 if test -n "$AA_CFLAGS"; then
     pkg_cv_AA_CFLAGS="$AA_CFLAGS"
@@ -3475,7 +3479,7 @@ fi
 
 
 if test $pkg_failed = yes; then
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 
 if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
@@ -3502,7 +3506,7 @@ Alternatively, you may set the environment variables AA_CFLAGS
 and AA_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details." "$LINENO" 5
 elif test $pkg_failed = untried; then
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
 $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
@@ -3827,6 +3831,19 @@ fi
 if test "x$enable_force_nonewprivs" = "xyes"; then :
 
 	HAVE_FORCE_NONEWPRIVS="-DHAVE_FORCE_NONEWPRIVS"
+
+fi
+
+HAVE_ONLY_SYSCFG_PROFILES=""
+
+# Check whether --enable-only-syscfg-profiles was given.
+if test "${enable_only_syscfg_profiles+set}" = set; then :
+  enableval=$enable_only_syscfg_profiles;
+fi
+
+if test "x$enable_only_syscfg_profiles" = "xyes"; then :
+
+    HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
 
 fi
 
@@ -5497,6 +5514,7 @@ Configuration options:
    Install as a SUID executable: $HAVE_SUID
    LTS: $HAVE_LTS
    Always enforce filters: $HAVE_FORCE_NONEWPRIVS
+   Disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
 
 EOF
 

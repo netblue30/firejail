@@ -13,7 +13,11 @@ noblacklist ${HOME}/.config/evolution
 noblacklist ${HOME}/.config/geary
 noblacklist ${HOME}/.local/share/evolution
 noblacklist ${HOME}/.local/share/geary
+noblacklist ${HOME}/.local/share/pki
 noblacklist ${HOME}/.mozilla
+noblacklist ${HOME}/.pki
+
+include allow-bin-sh.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -38,7 +42,9 @@ whitelist ${HOME}/.config/evolution
 whitelist ${HOME}/.config/geary
 whitelist ${HOME}/.local/share/evolution
 whitelist ${HOME}/.local/share/geary
+whitelist ${HOME}/.local/share/pki
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
+whitelist ${HOME}/.pki
 whitelist /usr/share/geary
 include whitelist-common.inc
 include whitelist-runuser-common.inc
@@ -47,7 +53,8 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-machine-id
+ipc-namespace
+#machine-id
 netfilter
 no3d
 nodvd
@@ -55,7 +62,7 @@ nogroups
 noinput
 nonewprivs
 noroot
-nosound
+#nosound
 notv
 nou2f
 novideo
@@ -66,21 +73,22 @@ shell none
 tracelog
 
 # disable-mnt
-# Add 'ignore private-bin' to geary.local for hyperlink support
-private-bin geary
+#private-bin geary,sh
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,hostname,hosts,ld.so.cache,ld.so.preload,pki,resolv.conf,ssl,xdg
+private-etc alternatives,ca-certificates,crypto-policies,fonts,group,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.preload,machine-id,mailcap,mime.types,nsswitch.conf,passwd,pki,resolv.conf,ssl,xdg
 private-tmp
 
 dbus-user filter
 dbus-user.own org.gnome.Geary
 dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.gnome.Contacts
 dbus-user.talk org.gnome.OnlineAccounts
 dbus-user.talk org.gnome.evolution.dataserver.AddressBook10
 dbus-user.talk org.gnome.evolution.dataserver.Sources5
+?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini

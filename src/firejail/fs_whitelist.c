@@ -55,6 +55,13 @@ static int whitelist_mkpath(const char *parentdir, const char *relpath, mode_t m
 	if (parentfd < 0)
 		errExit("open");
 
+	// top level directory mount id
+	int mountid = get_mount_id(parentfd);
+	if (mountid < 0) {
+		close(parentfd);
+		return -1;
+	}
+
 	// work on a copy of the path
 	char *dup = strdup(relpath);
 	if (!dup)
@@ -92,6 +99,15 @@ static int whitelist_mkpath(const char *parentdir, const char *relpath, mode_t m
 			if (arg_debug || arg_debug_whitelists)
 				perror("open");
 			close(parentfd);
+			free(dup);
+			return -1;
+		}
+		// different mount id indicates earlier whitelist mount
+		if (get_mount_id(fd) != mountid) {
+			if (arg_debug || arg_debug_whitelists)
+				printf("Debug %d: whitelisted already\n", __LINE__);
+			close(parentfd);
+			close(fd);
 			free(dup);
 			return -1;
 		}

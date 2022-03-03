@@ -154,7 +154,7 @@ static char *resolve_hardcoded(char *entries[]) {
 	struct stat s;
 
 	int i = 0;
-	while (entries[i] != NULL) {
+	while (i < MAX_TRANSLATIONS && entries[i] != NULL) {
 		if (asprintf(&fname, "%s/%s", cfg.homedir, entries[i]) == -1)
 			errExit("asprintf");
 

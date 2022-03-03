@@ -1042,6 +1042,7 @@ blacklist ${HOME}/.openshot_qt
 blacklist ${HOME}/.openttd
 blacklist ${HOME}/.opera
 blacklist ${HOME}/.opera-beta
+blacklist ${HOME}/.opera-developer
 blacklist ${HOME}/.ostrichriders
 blacklist ${HOME}/.paradoxinteractive
 blacklist ${HOME}/.parallelrealities/blobwars

@@ -22,9 +22,11 @@
 #define MAXBUF 4098
 
 typedef struct macro_t {
-	char *name;	// macro name
+	char *name;		// macro name
 	char *xdg;		// xdg line in ~/.config/user-dirs.dirs
-#define MAX_TRANSLATIONS 3	// several translations in case ~/.config/user-dirs.dirs not found
+	// several translations in case ~/.config/user-dirs.dirs not found:
+	// English, Russian, French, Italian, Spanish, Portuguese, German
+#define MAX_TRANSLATIONS 7
 	char *translation[MAX_TRANSLATIONS];
 } Macro;
 
@@ -32,37 +34,37 @@ Macro macro[] = {
 	{
 		"${DOWNLOADS}",
 		"XDG_DOWNLOAD_DIR=\"$HOME/",
-		{ "Downloads", "Загрузки", "Téléchargement" }
+		{ "Downloads", "Загрузки", "Téléchargement", "Scaricati", "Descargas", "Downloads", "Downloads" }
 	},
 
 	{
 	 	"${MUSIC}",
 		"XDG_MUSIC_DIR=\"$HOME/",
-		{"Music", "Музыка", "Musique"}
+		{"Music", "Музыка", "Musique", "Musica", "Música", "Música", "Musik" }
 	},
 
 	{
 	 	"${VIDEOS}",
 		"XDG_VIDEOS_DIR=\"$HOME/",
-		{"Videos", "Видео", "Vidéos"}
+		{"Videos", "Видео", "Vidéos", "Video", "Vídeos", "Vídeos", "Videos" }
 	},
 
 	{
 	 	"${PICTURES}",
 		"XDG_PICTURES_DIR=\"$HOME/",
-		{"Pictures", "Изображения", "Photos"}
+		{"Pictures", "Изображения", "Photos", "Immagini", "Imágenes", "Imagens", "Bilder" }
 	},
 
 	{
 		"${DESKTOP}",
 		"XDG_DESKTOP_DIR=\"$HOME/",
-		{"Desktop", "Рабочий стол", "Bureau"}
+		{"Desktop", "Рабочий стол", "Bureau", "Scrivania", "Escritorio", "Área de trabalho", "Schreibtisch" }
 	},
 
 	{
 		"${DOCUMENTS}",
 		"XDG_DOCUMENTS_DIR=\"$HOME/",
-		{"Documents", "Документы", "Documents"}
+		{"Documents", "Документы", "Documents", "Documenti", "Documentos", "Documentos", "Dokumente" }
 	},
 
 	{ 0 }

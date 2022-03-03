@@ -25,7 +25,6 @@ include disable-xdg.inc
 whitelist /usr/share/groff
 whitelist /usr/share/info
 whitelist /usr/share/lintian
-whitelist /usr/share/locale
 whitelist /usr/share/man
 whitelist /var/cache/man
 #include whitelist-common.inc

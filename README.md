@@ -259,4 +259,4 @@ Stats:
 
 ### New profiles:
 
-onionshare, onionshare-cli
+onionshare, onionshare-cli, opera-developer

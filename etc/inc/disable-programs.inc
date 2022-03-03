@@ -177,6 +177,7 @@ blacklist ${HOME}/.cache/nvim
 blacklist ${HOME}/.cache/okular
 blacklist ${HOME}/.cache/opera
 blacklist ${HOME}/.cache/opera-beta
+blacklist ${HOME}/.cache/opera-developer
 blacklist ${HOME}/.cache/org.gabmus.gfeeds
 blacklist ${HOME}/.cache/org.gnome.Books
 blacklist ${HOME}/.cache/org.gnome.Maps
@@ -553,6 +554,7 @@ blacklist ${HOME}/.config/onlyoffice
 blacklist ${HOME}/.config/openmw
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
+blacklist ${HOME}/.config/opera-developer
 blacklist ${HOME}/.config/orage
 blacklist ${HOME}/.config/org.gabmus.gfeeds.json
 blacklist ${HOME}/.config/org.gabmus.gfeeds.saved_articles
@@ -1040,6 +1042,7 @@ blacklist ${HOME}/.openshot_qt
 blacklist ${HOME}/.openttd
 blacklist ${HOME}/.opera
 blacklist ${HOME}/.opera-beta
+blacklist ${HOME}/.opera-developer
 blacklist ${HOME}/.ostrichriders
 blacklist ${HOME}/.paradoxinteractive
 blacklist ${HOME}/.parallelrealities/blobwars

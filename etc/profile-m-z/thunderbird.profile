@@ -47,6 +47,7 @@ whitelist ${HOME}/.gnupg
 whitelist ${HOME}/.thunderbird
 
 whitelist /usr/share/gnupg
+whitelist /usr/share/gnupg2
 whitelist /usr/share/mozilla
 whitelist /usr/share/thunderbird
 whitelist /usr/share/webext

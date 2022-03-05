@@ -825,11 +825,13 @@ void fs_proc_sys_dev_boot(void) {
 // disable firejail configuration in ~/.config/firejail
 void disable_config(void) {
 	EUID_USER();
+#ifndef HAVE_ONLY_SYSCFG_PROFILES
 	char *fname;
 	if (asprintf(&fname, "%s/.config/firejail", cfg.homedir) == -1)
 		errExit("asprintf");
 	disable_file(BLACKLIST_FILE, fname);
 	free(fname);
+#endif
 
 	// disable run time information
 	disable_file(BLACKLIST_FILE, RUN_FIREJAIL_NETWORK_DIR);

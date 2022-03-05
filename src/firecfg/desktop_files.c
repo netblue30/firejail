@@ -24,11 +24,16 @@
 static int check_profile(const char *name, const char *homedir) {
 	// build profile name
 	char *profname1;
+#ifndef HAVE_ONLY_SYSCFG_PROFILES
 	char *profname2;
+#endif
 	if (asprintf(&profname1, "%s/%s.profile", SYSCONFDIR, name) == -1)
 		errExit("asprintf");
+
+#ifndef HAVE_ONLY_SYSCFG_PROFILES
 	if (asprintf(&profname2, "%s/.config/firejail/%s.profile", homedir, name) == -1)
 		errExit("asprintf");
+#endif
 
 	int rv = 0;
 	if (access(profname1, R_OK) == 0) {
@@ -36,14 +41,18 @@ static int check_profile(const char *name, const char *homedir) {
 			printf("found %s\n", profname1);
 		rv = 1;
 	}
+#ifndef HAVE_ONLY_SYSCFG_PROFILES
 	else if (access(profname2, R_OK) == 0) {
 		if (arg_debug)
 			printf("found %s\n", profname2);
 		rv = 1;
 	}
+#endif
 
 	free(profname1);
+#ifndef HAVE_ONLY_SYSCFG_PROFILES
 	free(profname2);
+#endif
 	return rv;
 }
 

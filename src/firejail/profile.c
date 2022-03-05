@@ -72,6 +72,7 @@ static int profile_find(const char *name, const char *dir, int add_ext) {
 // search and read the profile specified by name from firejail directories
 // return  1 if a profile was found
 int profile_find_firejail(const char *name, int add_ext) {
+#ifndef HAVE_ONLY_SYSCFG_PROFILES
 	// look for a profile in ~/.config/firejail directory
 	char *usercfgdir;
 	if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
@@ -84,6 +85,9 @@ int profile_find_firejail(const char *name, int add_ext) {
 		rv = profile_find(name, SYSCONFDIR, add_ext);
 
 	return rv;
+#else
+	return profile_find(name, SYSCONFDIR, add_ext);
+#endif
 }
 
 //***************************************************

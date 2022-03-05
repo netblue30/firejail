@@ -628,6 +628,7 @@ EGREP
 GREP
 CPP
 HAVE_LTS
+HAVE_ONLY_SYSCFG_PROFILES
 HAVE_FORCE_NONEWPRIVS
 HAVE_CONTRIB_INSTALL
 HAVE_GCOV
@@ -732,6 +733,7 @@ enable_busybox_workaround
 enable_gcov
 enable_contrib_install
 enable_force_nonewprivs
+enable_only_syscfg_profiles
 enable_lts
 '
       ac_precious_vars='build_alias
@@ -1395,6 +1397,8 @@ Optional Features:
                           install contrib scripts
   --enable-force-nonewprivs
                           enable force nonewprivs
+  --enable-only-syscfg-profiles
+                          disable profiles in $HOME/.config/firejail
   --enable-lts            enable long-term support software version (LTS)
 
 Some influential environment variables:
@@ -3830,6 +3834,19 @@ if test "x$enable_force_nonewprivs" = "xyes"; then :
 
 fi
 
+HAVE_ONLY_SYSCFG_PROFILES=""
+
+# Check whether --enable-only-syscfg-profiles was given.
+if test "${enable_only_syscfg_profiles+set}" = set; then :
+  enableval=$enable_only_syscfg_profiles;
+fi
+
+if test "x$enable_only_syscfg_profiles" = "xyes"; then :
+
+    HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
+
+fi
+
 HAVE_LTS=""
 
 # Check whether --enable-lts was given.
@@ -5497,6 +5514,7 @@ Configuration options:
    Install as a SUID executable: $HAVE_SUID
    LTS: $HAVE_LTS
    Always enforce filters: $HAVE_FORCE_NONEWPRIVS
+   Disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
 
 EOF
 

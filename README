@@ -332,6 +332,8 @@ dm9pZCAq (https://github.com/dm9pZCAq)
 dmfreemon (https://github.com/dmfreemon)
 	- add sandbox name or name of private directory to the window title when xpra is used
 	- handle malloc() failures; use gnu_basename() instead of basenaem()
+Dmitriy Chestnykh (https://github.com/chestnykh)
+	- add ability to disable user profiles at compile time
 dshmgh (https://github.com/dshmgh)
 	- overlayfs fix for systems with /home mounted on a separate partition
 Duncan Overbruck (https://github.com/Duncaen)

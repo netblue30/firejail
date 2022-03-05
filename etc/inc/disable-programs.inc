@@ -30,6 +30,7 @@ blacklist ${HOME}/.aMule
 blacklist ${HOME}/.abook
 blacklist ${HOME}/.addressbook
 blacklist ${HOME}/.alpine-smime
+blacklist ${HOME}/.ammonite
 blacklist ${HOME}/.android
 blacklist ${HOME}/.anydesk
 blacklist ${HOME}/.arduino15
@@ -466,6 +467,7 @@ blacklist ${HOME}/.config/iridium
 blacklist ${HOME}/.config/itch
 blacklist ${HOME}/.config/jami
 blacklist ${HOME}/.config/jd-gui.cfg
+blacklist ${HOME}/.config/jgit
 blacklist ${HOME}/.config/k3brc
 blacklist ${HOME}/.config/kaffeinerc
 blacklist ${HOME}/.config/kalgebrarc
@@ -692,6 +694,7 @@ blacklist ${HOME}/.freemind
 blacklist ${HOME}/.frogatto
 blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.funnyboat
+blacklist ${HOME}/.g8
 blacklist ${HOME}/.gallery-dl.conf
 blacklist ${HOME}/.geekbench5
 blacklist ${HOME}/.gimp*
@@ -714,6 +717,7 @@ blacklist ${HOME}/.icedove
 blacklist ${HOME}/.imagej
 blacklist ${HOME}/.inkscape
 blacklist ${HOME}/.itch
+blacklist ${HOME}/.ivy2
 blacklist ${HOME}/.jack-server
 blacklist ${HOME}/.jack-settings
 blacklist ${HOME}/.jak
@@ -1071,6 +1075,7 @@ blacklist ${HOME}/.repo_.gitconfig.json
 blacklist ${HOME}/.repoconfig
 blacklist ${HOME}/.retroshare
 blacklist ${HOME}/.ripperXrc
+blacklist ${HOME}/.sbt
 blacklist ${HOME}/.scorched3d
 blacklist ${HOME}/.scribus
 blacklist ${HOME}/.scribusrc

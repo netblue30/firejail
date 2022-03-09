@@ -6,26 +6,22 @@ include skypeforlinux.local
 include globals.local
 
 # Disabled until someone reported positive feedback
-ignore include whitelist-common.inc
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 ignore include whitelist-var-common.inc
 ignore nou2f
-ignore novideo
-ignore private-dev
-
-ignore dbus-user none
 
 # breaks Skype
 ignore apparmor
+ignore dbus-user none
 ignore noexec /tmp
+ignore novideo
+ignore private-dev # needs /dev/disk
 
 noblacklist ${HOME}/.config/skypeforlinux
 
 mkdir ${HOME}/.config/skypeforlinux
 whitelist ${HOME}/.config/skypeforlinux
-
-# private-dev - needs /dev/disk
 
 dbus-user filter
 dbus-user.talk org.freedesktop.Notifications

@@ -141,7 +141,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "#nou2f\t# disable U2F devices\n");
 		fprintf(fp, "#novideo\t# disable video capture devices\n");
 		build_protocol(trace_output, fp);
-		fprintf(fp, "seccomp\n");
+		fprintf(fp, "seccomp !chroot\t# allowing chroot, just in case this is an Electron app\n");
 		fprintf(fp, "shell none\n");
 		fprintf(fp, "tracelog\n");
 		fprintf(fp, "\n");

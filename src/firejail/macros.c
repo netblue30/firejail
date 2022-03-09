@@ -24,8 +24,8 @@
 typedef struct macro_t {
 	char *name;		// macro name
 	char *xdg;		// xdg line in ~/.config/user-dirs.dirs
-	// several translations in case ~/.config/user-dirs.dirs not found:
-	// English, Russian, French, Italian, Spanish, Portuguese, German
+	// several translations in case ~/.config/user-dirs.dirs not found
+	// covered currently: English, Russian, French, Italian, Spanish, Portuguese, German
 #define MAX_TRANSLATIONS 7
 	char *translation[MAX_TRANSLATIONS];
 } Macro;
@@ -34,37 +34,37 @@ Macro macro[] = {
 	{
 		"${DOWNLOADS}",
 		"XDG_DOWNLOAD_DIR=\"$HOME/",
-		{ "Downloads", "Загрузки", "Téléchargement", "Scaricati", "Descargas", "Downloads", "Downloads" }
+		{"Downloads", "Загрузки", "Téléchargement", "Scaricati", "Descargas"}
 	},
 
 	{
 	 	"${MUSIC}",
 		"XDG_MUSIC_DIR=\"$HOME/",
-		{"Music", "Музыка", "Musique", "Musica", "Música", "Música", "Musik" }
+		{"Music", "Музыка", "Musique", "Musica", "Música", "Musik"}
 	},
 
 	{
 	 	"${VIDEOS}",
 		"XDG_VIDEOS_DIR=\"$HOME/",
-		{"Videos", "Видео", "Vidéos", "Video", "Vídeos", "Vídeos", "Videos" }
+		{"Videos", "Видео", "Vidéos", "Video", "Vídeos"}
 	},
 
 	{
 	 	"${PICTURES}",
 		"XDG_PICTURES_DIR=\"$HOME/",
-		{"Pictures", "Изображения", "Photos", "Immagini", "Imágenes", "Imagens", "Bilder" }
+		{"Pictures", "Изображения", "Photos", "Immagini", "Imágenes", "Imagens", "Bilder"}
 	},
 
 	{
 		"${DESKTOP}",
 		"XDG_DESKTOP_DIR=\"$HOME/",
-		{"Desktop", "Рабочий стол", "Bureau", "Scrivania", "Escritorio", "Área de trabalho", "Schreibtisch" }
+		{"Desktop", "Рабочий стол", "Bureau", "Scrivania", "Escritorio", "Área de trabalho", "Schreibtisch"}
 	},
 
 	{
 		"${DOCUMENTS}",
 		"XDG_DOCUMENTS_DIR=\"$HOME/",
-		{"Documents", "Документы", "Documents", "Documenti", "Documentos", "Documentos", "Dokumente" }
+		{"Documents", "Документы", "Documenti", "Documentos", "Dokumente"}
 	},
 
 	{ 0 }

@@ -185,7 +185,7 @@ $ firejail "\-\-blacklist=/home/username/My Virtual Machines"
 $ firejail \-\-blacklist=/home/username/My\\ Virtual\\ Machines
 .TP
 \fB\-\-build
-The command builds a whitelisted profile. The profile is printed on the screen. The program is run in a very relaxed sandbox, with only --caps.drop=all and --nonewprivs. Programs that raise user privileges are not supported. Chromium and Chromium-based browsers will not work.
+The command builds a whitelisted profile. The profile is printed on the screen. The program is run in a very relaxed sandbox, with only --caps.drop=all and --nonewprivs. Programs that raise user privileges are not supported.
 .br
 
 .br
@@ -195,7 +195,7 @@ $ firejail --build vlc ~/Videos/test.mp4
 .TP
 \fB\-\-build=profile-file
 The command builds a whitelisted profile, and saves it in profile-file. The program is run in a very relaxed sandbox,
-with only --caps.drop=all and --nonewprivs. Programs that raise user privileges are not supported. Chromium and Chromium-based browsers will not work.
+with only --caps.drop=all and --nonewprivs. Programs that raise user privileges are not supported.
 .br
 
 .br

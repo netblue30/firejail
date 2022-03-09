@@ -14,6 +14,8 @@ include globals.local
 # Disabled until someone reported positive feedback
 ignore include disable-xdg.inc
 ignore whitelist ${DOWNLOADS}
+ignore whitelist ${HOME}/.config/Electron
+ignore whitelist ${HOME}/.config/electron-flag*.conf
 ignore include whitelist-common.inc
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc

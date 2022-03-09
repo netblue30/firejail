@@ -9,6 +9,7 @@ firejail (0.9.69) baseline; urgency=low
   * bugfix: fix printing in evince (#5011)
   * ci: replace centos (EOL) with almalinux (#4912)
   * docs: Refer to firejail.config in configuration files (#4916)
+  * docs: firejail.config: add warning about allow-tray (#4946)
   * new profiles: onionshare, onionshare-cli
  -- netblue30 <netblue30@yahoo.com>  Mon, 7 Feb 2022 09:00:00 -0500
 

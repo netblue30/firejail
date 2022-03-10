@@ -46,7 +46,8 @@ static void print_file_or_dir(const char *path, const char *fname) {
 	struct stat s;
 	if (stat(name, &s) == -1) {
 		if (lstat(name, &s) == -1) {
-			printf("Error: cannot access %s\n", name);
+			printf("Error: cannot access %s\n", do_replace_cntrl_chars(name, '?'));
+			free(name);
 			return;
 		}
 	}
@@ -151,12 +152,17 @@ static void print_file_or_dir(const char *path, const char *fname) {
 	if (allocated)
 		free(groupname);
 
+	// file size
 	char *sz;
 	if (asprintf(&sz, "%d", (int) s.st_size) == -1)
 		errExit("asprintf");
-	printf("%11.10s %s\n", sz, fname);
-	free(sz);
 
+	// file name
+	char *fname_print = replace_cntrl_chars(fname, '?');
+
+	printf("%11.10s %s\n", sz, fname_print);
+	free(sz);
+	free(fname_print);
 }
 
 static void print_directory(const char *path) {
@@ -192,13 +198,15 @@ void ls(const char *path) {
 		fprintf(stderr, "Error: cannot access %s\n", path);
 		exit(1);
 	}
+
+	// debug doesn't filter control characters currently
 	if (arg_debug)
 		printf("ls %s\n", rp);
 
 	// list directory contents
 	struct stat s;
 	if (stat(rp, &s) == -1) {
-		fprintf(stderr, "Error: cannot access %s\n", rp);
+		fprintf(stderr, "Error: cannot access %s\n", do_replace_cntrl_chars(rp, '?'));
 		exit(1);
 	}
 	if (S_ISDIR(s.st_mode))
@@ -237,13 +245,13 @@ void cat(const char *path) {
 		fprintf(stderr, "Error: %s is not a regular file\n", path);
 		exit(1);
 	}
-	bool tty = isatty(STDOUT_FILENO);
+	int tty = isatty(STDOUT_FILENO);
 
 	int c;
 	while ((c = fgetc(fp)) != EOF) {
 		// file is untrusted
 		// replace control characters when printing to a terminal
-		if (tty && c != '\t' && c != '\n' && iscntrl((unsigned char) c))
+		if (tty && iscntrl((unsigned char) c) && c != '\t' && c != '\n')
 			c = '?';
 		fputc(c, stdout);
 	}
@@ -325,7 +333,6 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		// redirection
 		if (dup2(fd, STDOUT_FILENO) == -1)
 			errExit("dup2");
-		assert(fd != STDOUT_FILENO);
 		close(fd);
 		op = SANDBOX_FS_CAT;
 	}

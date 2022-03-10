@@ -66,13 +66,17 @@ after 100
 send -- "fnetfilter test2.net,icmp-type,destination-unreachable,time-exceeded,echo-request\r"
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}
-	"cannot open test2.net,"
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"is an invalid filename"
 }
 after 100
 
 send -- "fnetfilter test3.net,44 outfile\r"
 expect {
-	timeout {puts "TESTING ERROR 13\n";exit}
+	timeout {puts "TESTING ERROR 14\n";exit}
 	"invalid template argument on line 1"
 }
 after 100

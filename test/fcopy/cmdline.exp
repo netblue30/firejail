@@ -32,14 +32,22 @@ after 100
 send -- "fcopy f%oo1 foo2\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"invalid source file name"
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"is an invalid filename"
 }
 after 100
 
 send -- "fcopy foo1 f,oo2\r"
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"invalid dest file name"
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"Error:"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"is an invalid filename"
 }
 after 100
 

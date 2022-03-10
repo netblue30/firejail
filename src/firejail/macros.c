@@ -265,28 +265,6 @@ char *expand_macros(const char *path) {
 	return rv;
 }
 
-// replace control characters with a '?'
-static char *fix_control_chars(const char *fname) {
-	assert(fname);
-
-	size_t len = strlen(fname);
-	char *rv = malloc(len + 1);
-	if (!rv)
-		errExit("malloc");
-
-	size_t i = 0;
-	while (fname[i] != '\0') {
-		if (iscntrl((unsigned char) fname[i]))
-			rv[i] = '?';
-		else
-			rv[i] = fname[i];
-		i++;
-	}
-	rv[i] = '\0';
-
-	return rv;
-}
-
 void invalid_filename(const char *fname, int globbing) {
 //	EUID_ASSERT();
 	assert(fname);
@@ -304,24 +282,5 @@ void invalid_filename(const char *fname, int globbing) {
 			return;
 	}
 
-	size_t i = 0;
-	while (ptr[i] != '\0') {
-		if (iscntrl((unsigned char) ptr[i])) {
-			char *new = fix_control_chars(fname);
-			fprintf(stderr, "Error: \"%s\" is an invalid filename: no control characters allowed\n", new);
-			exit(1);
-		}
-		i++;
-	}
-
-	char *reject;
-	if (globbing)
-		reject = "\\&!\"<>%^{};,"; // file globbing ('*?[]') is allowed
-	else
-		reject = "\\&!?\"<>%^{};,*[]";
-	char *c = strpbrk(ptr, reject);
-	if (c) {
-		fprintf(stderr, "Error: \"%s\" is an invalid filename: rejected character: \"%c\"\n", fname, *c);
-		exit(1);
-	}
+	reject_meta_chars(ptr, globbing);
 }

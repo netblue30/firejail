@@ -276,9 +276,9 @@ static void install_list_entry(const char *lib) {
 	assert(lib);
 
 	// filename check
-	int len = strlen(lib);
-	if (strcspn(lib, "\\&!?\"'<>%^(){}[];,") != (size_t)len ||
-	strstr(lib, "..")) {
+	reject_meta_chars(lib, 1);
+
+	if (strstr(lib, "..")) {
 		fprintf(stderr, "Error: \"%s\" is an invalid library\n", lib);
 		exit(1);
 	}

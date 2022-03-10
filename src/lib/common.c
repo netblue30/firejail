@@ -321,6 +321,66 @@ const char *gnu_basename(const char *path) {
 	return last_slash+1;
 }
 
+char *do_replace_cntrl_chars(char *str, char c) {
+	if (str) {
+		size_t i;
+		for (i = 0; str[i]; i++) {
+			if (iscntrl((unsigned char) str[i]))
+				str[i] = c;
+		}
+	}
+	return str;
+}
+
+char *replace_cntrl_chars(const char *str, char c) {
+	assert(str);
+
+	char *rv = strdup(str);
+	if (!rv)
+		errExit("strdup");
+
+	do_replace_cntrl_chars(rv, c);
+	return rv;
+}
+
+int has_cntrl_chars(const char *str) {
+	assert(str);
+
+	size_t i;
+	for (i = 0; str[i]; i++) {
+		if (iscntrl((unsigned char) str[i]))
+			return 1;
+	}
+	return 0;
+}
+
+void reject_cntrl_chars(const char *fname) {
+	assert(fname);
+
+	if (has_cntrl_chars(fname)) {
+		char *fname_print = replace_cntrl_chars(fname, '?');
+
+		fprintf(stderr, "Error: \"%s\" is an invalid filename: no control characters are allowed\n", fname_print);
+		exit(1);
+	}
+}
+
+void reject_meta_chars(const char *fname, int globbing) {
+	assert(fname);
+
+	reject_cntrl_chars(fname);
+
+	const char *reject = "\\&!?\"<>%^{};,*[]";
+	if (globbing)
+		reject = "\\&!\"<>%^{};,"; // file globbing ('*?[]') is allowed
+
+	const char *c = strpbrk(fname, reject);
+	if (c) {
+		fprintf(stderr, "Error: \"%s\" is an invalid filename: rejected character: \"%c\"\n", fname, *c);
+		exit(1);
+	}
+}
+
 // takes string with comma separated int values, returns int array
 int *str_to_int_array(const char *str, size_t *sz) {
 	assert(str && sz);

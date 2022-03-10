@@ -187,10 +187,9 @@ printf("\n");
 	char *command = (argc == 3)? argv[1]: NULL;
 //printf("command %s\n", command);
 //printf("destfile %s\n", destfile);
+
 	// destfile is a real filename
-	int len = strlen(destfile);
-	if (strcspn(destfile, "\\&!?\"'<>%^(){};,*[]") != (size_t)len)
-		err_exit_cannot_open_file(destfile);
+	reject_meta_chars(destfile, 0);
 
 	// handle default config (command = NULL, destfile)
 	if (command == NULL) {

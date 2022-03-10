@@ -472,18 +472,12 @@ int main(int argc, char **argv) {
 	size_t len = strlen(src);
 	while (len > 1 && src[len - 1] == '/')
 		src[--len] = '\0';
-	if (strcspn(src, "\\*&!?\"'<>%^(){}[];,") != len) {
-		fprintf(stderr, "Error fcopy: invalid source file name %s\n", src);
-		exit(1);
-	}
+	reject_meta_chars(src, 0);
 
 	len = strlen(dest);
 	while (len > 1 && dest[len - 1] == '/')
 		dest[--len] = '\0';
-	if (strcspn(dest, "\\*&!?\"'<>%^(){}[];,~") != len) {
-		fprintf(stderr, "Error fcopy: invalid dest file name %s\n", dest);
-		exit(1);
-	}
+	reject_meta_chars(dest, 0);
 
 	// the destination should be a directory;
 	struct stat s;

@@ -676,6 +676,8 @@ Martin Carpenter (https://github.com/mcarpenter)
 Martin Dosch (spam-debian@mdosch.de)
 	- support for gnome-shell integration addon in Firefox
 	  (Bug-Debian: https://bugs.debian.org/872720)
+Martin Sandsmark (https://github.com/sandsmark)
+	- songrec profile
 Martynas Janonis (https://github.com/mjanonis)
 	- update wrc for Arch Linux
 Matt Parnell (https://github.com/ilikenwf)

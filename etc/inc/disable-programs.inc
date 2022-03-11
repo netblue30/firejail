@@ -831,6 +831,7 @@ blacklist ${HOME}/.local/share/Ricochet
 blacklist ${HOME}/.local/share/RogueLegacy
 blacklist ${HOME}/.local/share/RogueLegacyStorageContainer
 blacklist ${HOME}/.local/share/Shortwave
+blacklist ${HOME}/.local/share/SongRec
 blacklist ${HOME}/.local/share/Steam
 blacklist ${HOME}/.local/share/SteamWorld Dig 2
 blacklist ${HOME}/.local/share/SteamWorldDig

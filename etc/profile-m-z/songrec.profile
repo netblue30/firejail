@@ -6,23 +6,34 @@ include songrec.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.local/share/SongRec
+noblacklist ${MUSIC}
+noblacklist ${VIDEOS}
 
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
-include disable-passwdmgr.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-xdg.inc
 
+nowhitelist ${PICTURES}
+
+mkdir ${HOME}/.local/share/SongRec
+whitelist ${HOME}/.local/share/SongRec
 include whitelist-common.inc
 include whitelist-player-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all
 netfilter
 no3d
 nogroups
+noinput
 nonewprivs
 noroot
 notv
@@ -34,7 +45,8 @@ seccomp.block-secondary
 shell none
 
 disable-mnt
-private-bin songrec,ffmpeg
+private-bin ffmpeg,songrec
+private-cache
 private-dev
 private-tmp
 

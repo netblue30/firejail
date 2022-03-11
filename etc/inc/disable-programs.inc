@@ -1063,6 +1063,7 @@ blacklist ${HOME}/.pinerc
 blacklist ${HOME}/.pinercex
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.pioneer
+blacklist ${HOME}/.prey
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.pylint.d
 blacklist ${HOME}/.qemu-launcher

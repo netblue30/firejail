@@ -21,7 +21,7 @@
 #ifndef GCOV_WRAPPER_H
 #define GCOV_WRAPPER_H
 
-#ifdef HAS_GCOV
+#ifdef HAVE_GCOV
 #include <gcov.h>
 
 /*
@@ -41,6 +41,6 @@ static void __gcov_flush(void) {
 #define __gcov_dump() ((void)0)
 #define __gcov_reset() ((void)0)
 #define __gcov_flush() ((void)0)
-#endif /* HAS_GCOV */
+#endif /* HAVE_GCOV */
 
 #endif /* GCOV_WRAPPER_H */

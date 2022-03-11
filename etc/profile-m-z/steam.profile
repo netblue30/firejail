@@ -35,6 +35,7 @@ noblacklist ${HOME}/.local/share/vpltd
 noblacklist ${HOME}/.local/share/vulkan
 noblacklist ${HOME}/.mbwarband
 noblacklist ${HOME}/.paradoxinteractive
+noblacklist ${HOME}/.prey
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.steampath
 noblacklist ${HOME}/.steampid
@@ -82,6 +83,7 @@ mkdir ${HOME}/.local/share/vpltd
 mkdir ${HOME}/.local/share/vulkan
 mkdir ${HOME}/.mbwarband
 mkdir ${HOME}/.paradoxinteractive
+mkdir ${HOME}/.prey
 mkdir ${HOME}/.steam
 mkfile ${HOME}/.steampath
 mkfile ${HOME}/.steampid
@@ -115,6 +117,7 @@ whitelist ${HOME}/.local/share/vpltd
 whitelist ${HOME}/.local/share/vulkan
 whitelist ${HOME}/.mbwarband
 whitelist ${HOME}/.paradoxinteractive
+whitelist ${HOME}/.prey
 whitelist ${HOME}/.steam
 whitelist ${HOME}/.steampath
 whitelist ${HOME}/.steampid
@@ -143,7 +146,8 @@ novideo
 protocol unix,inet,inet6,netlink
 # seccomp sometimes causes issues (see #2951, #3267).
 # Add 'ignore seccomp' to your steam.local if you experience this.
-seccomp !ptrace
+# mount, name_to_handle_at, pivot_root and umount2 are used by Proton >= 5.13
+seccomp !chroot,!mount,!name_to_handle_at,!pivot_root,!ptrace,!umount2
 shell none
 # tracelog breaks integrated browser
 #tracelog

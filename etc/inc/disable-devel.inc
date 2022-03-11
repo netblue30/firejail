@@ -41,6 +41,13 @@ blacklist /etc/java
 blacklist /usr/lib/java
 blacklist /usr/share/java
 
+# Scala
+blacklist ${PATH}/scala
+blacklist ${PATH}/scala3
+blacklist ${PATH}/scala3-compiler
+blacklist ${PATH}/scala3-repl
+blacklist ${PATH}/scalac
+
 #OpenSSL
 blacklist ${PATH}/openssl
 blacklist ${PATH}/openssl-1.0

@@ -9,7 +9,9 @@ blacklist ${HOME}/.local/share/Trash
 
 # History files in $HOME and clipboard managers
 blacklist-nolog ${HOME}/.*_history
+blacklist-nolog ${HOME}/.*_history_*
 blacklist-nolog ${HOME}/.adobe
+blacklist-nolog ${HOME}/.ammonite/history
 blacklist-nolog ${HOME}/.cache/greenclip*
 blacklist-nolog ${HOME}/.histfile
 blacklist-nolog ${HOME}/.history
@@ -360,6 +362,7 @@ read-only ${HOME}/.bin
 read-only ${HOME}/.cargo/bin
 read-only ${HOME}/.gem
 read-only ${HOME}/.local/bin
+read-only ${HOME}/.local/share/coursier/bin
 read-only ${HOME}/.luarocks
 read-only ${HOME}/.npm-packages
 read-only ${HOME}/.nvm

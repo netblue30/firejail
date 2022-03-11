@@ -1024,6 +1024,8 @@ the-antz (https://github.com/the-antz)
 	- Fix libx265 encoding in ffmpeg profile
 	- Fix Firefox profile
 	- Profile tweaks
+TheOneric (https://github.com/TheOneric)
+	- Fix newest Steam client and Proton ≥ 5.13
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified

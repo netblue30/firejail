@@ -22,20 +22,20 @@ implemented directly in Linux kernel and available on any Linux computer.
 <table><tr>
 
 <td>
-<a href="https://www.brighteon.com/6ebef4a5-20fe-4071-9d03-e6172c806ff7" target="_blank">
-<img src="https://photos.brighteon.com/thumbnail/092dccab-9974-4775-93d2-35e31b2ebf61"
+<a href="https://odysee.com/@netblue30:9/firefox:c" target="_blank">
+<img src="https://thumbs.odycdn.com/acf4b1c66737feb97640fb1d28a7daa6.png"
 alt="Advanced Browser Security" width="240" height="142" border="10" /><br/>Advanced Browser Security</a>
 </td>
 
 <td>
-<a href="https://www.brighteon.com/f09f693a-9847-4d9e-aaaf-60f756cc3833" target="_blank">
-<img src="https://photos.brighteon.com/thumbnail/ab951131-81c7-4a6b-b483-924a342fea11"
+<a href="https://odysee.com/@netblue30:9/nonet:7" target="_blank">
+<img src="https://thumbs.odycdn.com/5be2964201c31689ee8f78cb9f35e89a.png"
 alt="How To Disable Network Access" width="240" height="142" border="10" /><br/>How To Disable Network Access</a>
 </td>
 
 <td>
-<a href="https://www.brighteon.com/94ae1731-2352-4cda-bb48-7cc7a6ad32f8" target="_blank">
-<img src="https://photos.brighteon.com/thumbnail/5c90254c-61f3-4927-ac57-ae279dc543cf"
+<a href="https://odysee.com/@netblue30:9/divested:2" target="_blank">
+<img src="https://thumbs.odycdn.com/f30ece33a6547af9ae48244f4ba73028.png"
 alt="Deep Dive" width="240" height="142" border="10" /><br/>Deep Dive</a>
 </td>
 
@@ -55,7 +55,7 @@ Wiki: https://github.com/netblue30/firejail/wiki
 
 GitLab-CI status: https://gitlab.com/Firejail/firejail_ci/pipelines/
 
-Video Channel: https://www.brighteon.com/channels/netblue30
+Video Channel: https://odysee.com/@netblue30:9?order=new
 
 Backup Video Channel: https://www.bitchute.com/profile/JSBsA1aoQVfW/
 

@@ -143,7 +143,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		build_protocol(trace_output, fp);
 		fprintf(fp, "seccomp !chroot\t# allowing chroot, just in case this is an Electron app\n");
 		fprintf(fp, "shell none\n");
-		fprintf(fp, "tracelog\n");
+		fprintf(fp, "#tracelog\t# send blacklist violations to syslog\n");
 		fprintf(fp, "\n");
 
 		fprintf(fp, "#disable-mnt\t# no access to /mnt, /media, /run/mount and /run/media\n");

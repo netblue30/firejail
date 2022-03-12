@@ -30,7 +30,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		exit(1);
 	}
 
-	char trace_output[] = "/tmp/firejail-trace.XXXXXX";
+	char trace_output[] = TRACE_OUTPUT;
 	int tfile = mkstemp(trace_output);
 	if(tfile == -1)
 		errExit("mkstemp");
@@ -147,7 +147,8 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "\n");
 
 		fprintf(fp, "#disable-mnt\t# no access to /mnt, /media, /run/mount and /run/media\n");
-		build_bin(trace_output, fp);
+		if (!arg_appimage)
+			build_bin(trace_output, fp);
 		fprintf(fp, "#private-cache\t# run with an empty ~/.cache directory\n");
 		build_dev(trace_output, fp);
 		build_etc(trace_output, fp);

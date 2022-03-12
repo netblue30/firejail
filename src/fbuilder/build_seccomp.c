@@ -190,7 +190,7 @@ void build_protocol(const char *fname, FILE *fp) {
 	if (net == 0)
 		fprintf(fp, "net none\n");
 	else {
-		fprintf(fp, "# net eth0\n");
+		fprintf(fp, "#net eth0\n");
 		fprintf(fp, "netfilter\n");
 	}
 }

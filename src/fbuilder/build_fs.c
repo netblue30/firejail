@@ -286,6 +286,7 @@ static char *dev_skip[] = {
 	"/dev/pts",
 	"/dev/ptmx",
 	"/dev/log",
+	"/dev/shm",
 
 	"/dev/aload",	// old ALSA devices, not covered in private-dev
 	"/dev/dsp",		// old OSS device, deprecated

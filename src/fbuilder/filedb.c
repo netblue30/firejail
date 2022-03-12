@@ -96,7 +96,7 @@ FileDB *filedb_load_whitelist(FileDB *head, const char *fname, const char *prefi
 		errExit("asprintf");
 	FILE *fp = fopen(f, "r");
 	if (!fp) {
-		fprintf(stderr, "Error: cannot open whitelist-common.inc\n");
+		fprintf(stderr, "Error: cannot open %s\n", f);
 		free(f);
 		exit(1);
 	}

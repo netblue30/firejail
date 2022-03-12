@@ -95,6 +95,9 @@ void process_home(const char *fname, char *home, int home_len) {
 		    strcmp(ptr, ".bashrc") == 0)
 			continue;
 
+		// skip flatpak files
+		if (strncmp(ptr, ".local/share/flatpak", 20) == 0)
+			continue;
 
 		// try to find the relevant directory for this file
 		char *dir = extract_dir(ptr);

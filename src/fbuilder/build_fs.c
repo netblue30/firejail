@@ -183,6 +183,8 @@ void build_var(const char *fname, FILE *fp) {
 	assert(fname);
 
 	var_skip = filedb_load_whitelist(var_skip, "whitelist-var-common.inc", "whitelist /var/");
+	var_skip = filedb_add(var_skip, "lib/flatpak");
+	var_skip = filedb_add(var_skip, "lib/snapd");
 	process_files(fname, "/var", var_callback);
 
 	// always whitelist /var

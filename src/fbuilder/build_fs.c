@@ -132,9 +132,20 @@ static void etc_callback(char *ptr) {
 	if (strncmp(ptr, "/etc/firejail", 13) == 0)
 		return;
 
+	// extract the directory:
+	assert(strncmp(ptr, "/etc", 4) == 0);
+	char *p1 = ptr + 4;
+	if (*p1 != '/')
+		return;
+	p1++;
+
+	if (*p1 == '/')	// double '/'
+		p1++;
+	if (*p1 == '\0')
+		return;
+
 	// add only top files and directories
-	ptr += 5;	// skip "/etc/"
-	char *end = strchr(ptr, '/');
+	char *end = strchr(p1, '/');
 	if (end)
 		*end = '\0';
 	etc_out = filedb_add(etc_out, ptr);
@@ -178,6 +189,11 @@ static char *var_skip[] = {
 static FileDB *var_out = NULL;
 static FileDB *var_skip = NULL;
 static void var_callback(char *ptr) {
+	// skip /var/lib/flatpak, /var/lib/snapd directory
+	if (strncmp(ptr, "/var/lib/flatpak", 16) == 0 ||
+	    strncmp(ptr, "/var/lib/snapd", 14) == 0)
+		return;
+
 	// extract the directory:
 	assert(strncmp(ptr, "/var", 4) == 0);
 	char *p1 = ptr + 4;
@@ -198,8 +214,6 @@ void build_var(const char *fname, FILE *fp) {
 	assert(fname);
 
 	var_skip = filedb_load_whitelist(var_skip, "whitelist-var-common.inc", "whitelist /var/");
-	var_skip = filedb_add(var_skip, "lib/flatpak");
-	var_skip = filedb_add(var_skip, "lib/snapd");
 	process_files(fname, "/var", var_callback);
 
 	// always whitelist /var

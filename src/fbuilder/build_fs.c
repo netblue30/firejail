@@ -134,18 +134,18 @@ static void etc_callback(char *ptr) {
 
 	// extract the directory:
 	assert(strncmp(ptr, "/etc", 4) == 0);
-	char *p1 = ptr + 4;
-	if (*p1 != '/')
+	ptr += 4;
+	if (*ptr != '/')
 		return;
-	p1++;
+	ptr++;
 
-	if (*p1 == '/')	// double '/'
-		p1++;
-	if (*p1 == '\0')
+	if (*ptr == '/')	// double '/'
+		ptr++;
+	if (*ptr == '\0')
 		return;
 
 	// add only top files and directories
-	char *end = strchr(p1, '/');
+	char *end = strchr(ptr, '/');
 	if (end)
 		*end = '\0';
 	etc_out = filedb_add(etc_out, ptr);

@@ -122,8 +122,10 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "\n");
 
 		fprintf(fp, "### Filesystem Whitelisting ###\n");
-		build_share(trace_output, fp);
-		//todo: include whitelist-runuser-common.inc
+		build_run(trace_output, fp);
+		build_runuser(trace_output, fp);
+		if (!arg_appimage)
+			build_share(trace_output, fp);
 		build_var(trace_output, fp);
 		fprintf(fp, "\n");
 

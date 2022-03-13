@@ -222,6 +222,88 @@ void build_var(const char *fname, FILE *fp) {
 	fprintf(fp, "include whitelist-var-common.inc\n");
 }
 
+//*******************************************
+// run directory
+//*******************************************
+static FileDB *run_out = NULL;
+static FileDB *run_skip = NULL;
+static void run_callback(char *ptr) {
+	// skip /run/firejail
+	if (strncmp(ptr, "/run/firejail", 13) == 0)
+		return;
+	// skip files in /run/user
+	if (strncmp(ptr, "/run/user", 9) == 0)
+		return;
+
+	// extract the directory:
+	assert(strncmp(ptr, "/run", 4) == 0);
+	char *p1 = ptr + 4;
+	if (*p1 != '/')
+		return;
+	p1++;
+
+	if (*p1 == '/')	// double '/'
+		p1++;
+	if (*p1 == '\0')
+		return;
+
+	if (!filedb_find(run_skip, p1))
+		run_out = filedb_add(run_out, p1);
+}
+
+void build_run(const char *fname, FILE *fp) {
+	assert(fname);
+
+	run_skip = filedb_load_whitelist(run_skip, "whitelist-run-common.inc", "whitelist /run/");
+	process_files(fname, "/run", run_callback);
+
+	// always whitelist /run
+	if (run_out)
+		filedb_print(run_out, "whitelist /run/", fp);
+	fprintf(fp, "include whitelist-run-common.inc\n");
+}
+
+//*******************************************
+// ${RUNUSER} directory
+//*******************************************
+static char *runuser_fname = NULL;
+static FileDB *runuser_out = NULL;
+static FileDB *runuser_skip = NULL;
+static void runuser_callback(char *ptr) {
+	// extract the directory:
+	assert(runuser_fname);
+	assert(strncmp(ptr, runuser_fname, strlen(runuser_fname)) == 0);
+	char *p1 = ptr + strlen(runuser_fname);
+	if (*p1 != '/')
+		return;
+	p1++;
+
+	if (*p1 == '/')	// double '/'
+		p1++;
+	if (*p1 == '\0')
+		return;
+
+	if (!filedb_find(runuser_skip, p1))
+		runuser_out = filedb_add(runuser_out, p1);
+}
+
+void build_runuser(const char *fname, FILE *fp) {
+	assert(fname);
+
+	if (asprintf(&runuser_fname, "/run/user/%d", getuid()) < 0)
+		errExit("asprintf");
+
+	if (!is_dir(runuser_fname))
+		return;
+
+	runuser_skip = filedb_load_whitelist(runuser_skip, "whitelist-runuser-common.inc", "whitelist ${RUNUSER}/");
+	process_files(fname, runuser_fname, runuser_callback);
+
+	// always whitelist /run/user/$UID
+	if (runuser_out)
+		filedb_print(runuser_out, "whitelist ${RUNUSER}/", fp);
+	fprintf(fp, "include whitelist-runuser-common.inc\n");
+}
 
 //*******************************************
 // usr/share directory

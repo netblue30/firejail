@@ -7,5 +7,10 @@ include mupdf-gl.local
 # added by included profile
 #include globals.local
 
+noblacklist ${HOME}/.cache/mupdf.history
+noblacklist ${HOME}/.mupdf.history
+
+ignore no3d
+
 # Redirect
 include mupdf.profile

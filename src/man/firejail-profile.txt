@@ -505,7 +505,7 @@ There is no root account (uid 0) defined in the namespace.
 Enable protocol filter. The filter is based on seccomp and checks the
 first argument to socket system call. Recognized values: \fBunix\fR,
 \fBinet\fR, \fBinet6\fR, \fBnetlink\fR, \fBpacket\fR, and \fBbluetooth\fR.
-Multiple protocol commands are allowed.
+Multiple protocol commands are allowed and they accumulate.
 .TP
 \fBseccomp
 Enable seccomp filter and blacklist the syscalls in the default list. See man 1 firejail for more details.

@@ -26,7 +26,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-
+#include <fnmatch.h>
 
 #define MAX_BUF 4096
 // main.c
@@ -63,7 +63,7 @@ char *extract_dir(char *fname);
 typedef struct filedb_t {
 	struct filedb_t *next;
 	char *fname;	// file name
-	int len;		// length of file name
+	unsigned len;	// length of file name
 } FileDB;
 
 FileDB *filedb_add(FileDB *head, const char *fname);

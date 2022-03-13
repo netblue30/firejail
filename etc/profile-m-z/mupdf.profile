@@ -7,7 +7,6 @@ include mupdf.local
 include globals.local
 
 noblacklist ${DOCUMENTS}
-noblacklist ${HOME}/.mupdf.history
 
 include disable-common.inc
 include disable-devel.inc

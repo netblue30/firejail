@@ -8,7 +8,6 @@ include vscodium.local
 
 noblacklist ${HOME}/.VSCodium
 noblacklist ${HOME}/.config/VSCodium
-noblacklist ${HOME}/.vscode-oss
 
 # Redirect
 include code.profile

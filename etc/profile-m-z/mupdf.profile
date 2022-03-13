@@ -7,6 +7,7 @@ include mupdf.local
 include globals.local
 
 noblacklist ${DOCUMENTS}
+noblacklist ${HOME}/.mupdf.history
 
 include disable-common.inc
 include disable-devel.inc
@@ -41,3 +42,6 @@ private-tmp
 
 dbus-user none
 dbus-system none
+
+memory-deny-write-execute
+read-only ${HOME}

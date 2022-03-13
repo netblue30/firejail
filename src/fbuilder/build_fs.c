@@ -68,8 +68,23 @@ static void process_file(const char *fname, const char *dir, void (*callback)(ch
 			ptr += 7;
 		else if (strncmp(ptr, "open ", 5) == 0)
 			ptr += 5;
+		else if (strncmp(ptr, "opendir ", 8) == 0)
+			ptr += 8;
+		else if (strncmp(ptr, "connect ", 8) == 0) {
+			ptr += 8;
+			// file descriptor argument
+			if (!isdigit(*ptr))
+				continue;
+			while (isdigit(*ptr))
+				ptr++;
+			if (*ptr++ != ' ')
+				continue;
+			if (*ptr != '/')
+				continue;
+		}
 		else
 			continue;
+
 		if (strncmp(ptr, dir, dir_len) != 0)
 			continue;
 

@@ -17,5 +17,16 @@ whitelist ${HOME}/.cache/opera
 whitelist ${HOME}/.config/opera
 whitelist ${HOME}/.opera
 
+# https://github.com/netblue30/firejail/issues/4965
+ignore whitelist /usr/share/mozilla/extensions
+ignore whitelist /usr/share/webext
+
+# opera uses opera_sandbox instead of chrome-sandbox
+noblacklist /usr/lib/opera/opera_sandbox
+ignore noblacklist /usr/lib/chromium/chrome-sandbox
+
+# Add the below to your opera.local if you want to disable auto update
+#env OPERA_AUTOUPDATE_DISABLED=1
+
 # Redirect
 include chromium-common.profile

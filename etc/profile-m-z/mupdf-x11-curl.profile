@@ -8,9 +8,9 @@ include mupdf-x11-curl.local
 #include globals.local
 
 ignore net none
-
 netfilter
 protocol unix,inet,inet6
+ignore protocol
 
 private-etc alternatives,ca-certificates,crypto-policies,hosts,ld.so.cache,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
 

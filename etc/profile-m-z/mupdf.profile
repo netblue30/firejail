@@ -21,6 +21,7 @@ apparmor
 caps.drop all
 machine-id
 net none
+no3d
 nodvd
 nogroups
 noinput
@@ -41,3 +42,6 @@ private-tmp
 
 dbus-user none
 dbus-system none
+
+memory-deny-write-execute
+read-only ${HOME}

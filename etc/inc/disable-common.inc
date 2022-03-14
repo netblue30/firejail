@@ -13,6 +13,7 @@ blacklist-nolog ${HOME}/.*_history_*
 blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.ammonite/history
 blacklist-nolog ${HOME}/.cache/greenclip*
+blacklist-nolog ${HOME}/.cache/mupdf.history
 blacklist-nolog ${HOME}/.histfile
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.kde/share/apps/klipper

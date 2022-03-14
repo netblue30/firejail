@@ -7,8 +7,5 @@ include mupdf-x11.local
 # added by included profile
 #include globals.local
 
-memory-deny-write-execute
-read-only ${HOME}
-
 # Redirect
 include mupdf.profile

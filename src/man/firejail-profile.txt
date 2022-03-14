@@ -344,6 +344,17 @@ closed.
 \fBprivate directory
 Use directory as user home.
 --private and --private=directory cannot be used together.
+.br
+
+.br
+Bug: Even with this enabled, some commands (such as mkdir, mkfile and
+private-cache) will still operate on the original home directory.
+Workaround: Disable the incompatible commands, such as by using "ignore mkdir"
+and "ignore mkfile".
+For details, see
+.UR https://github.com/netblue30/firejail/issues/903
+#903
+.UE
 .TP
 \fBprivate-bin file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.

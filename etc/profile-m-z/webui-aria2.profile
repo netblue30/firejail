@@ -6,6 +6,7 @@ include webui-aria2.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.nvm
 noblacklist ${PATH}/node
 
 include disable-common.inc

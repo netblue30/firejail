@@ -512,6 +512,7 @@ blacklist /usr/lib/policykit-1/polkit-agent-helper-1
 blacklist /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 blacklist /usr/lib/eject/dmcrypt-get-device
 blacklist /usr/lib/chromium/chrome-sandbox
+blacklist /usr/lib/opera/opera_sandbox
 blacklist /usr/lib/vmware
 blacklist ${PATH}/suexec
 blacklist /usr/lib/squid/basic_pam_auth

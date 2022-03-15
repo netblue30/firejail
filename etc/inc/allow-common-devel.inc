@@ -8,8 +8,13 @@ noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.git-credentials
 
 # Java
+noblacklist ${HOME}/.ammonite
+noblacklist ${HOME}/.config/jgit
+noblacklist ${HOME}/.g8
 noblacklist ${HOME}/.gradle
+noblacklist ${HOME}/.ivy2
 noblacklist ${HOME}/.java
+noblacklist ${HOME}/.sbt
 
 # Node.js
 noblacklist ${HOME}/.node-gyp

@@ -12,6 +12,8 @@ ignore read-only ${HOME}/.local/lib
 # Allow python3 (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
+noblacklist ${HOME}/.cache/pip
+
 #whitelist ${HOME}/.local/lib/python*
 
 # Redirect

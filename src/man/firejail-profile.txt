@@ -343,6 +343,7 @@ closed.
 .TP
 \fBprivate directory
 Use directory as user home.
+--private and --private=directory cannot be used together.
 .TP
 \fBprivate-bin file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.

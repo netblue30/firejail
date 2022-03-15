@@ -15,7 +15,6 @@ include globals.local
 # used by nvm: curl, sha256sum, tar and wget. We have comments in these
 # profiles on how to enable nvm support via local overrides.
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 ignore read-only ${HOME}/.npm-packages
@@ -40,6 +39,7 @@ include disable-common.inc
 include disable-exec.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-X11.inc
 include disable-xdg.inc
 
 # If you want whitelisting, change ${HOME}/Projects below to your node projects directory

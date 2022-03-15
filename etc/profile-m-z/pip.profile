@@ -14,6 +14,7 @@ include allow-python3.inc
 
 noblacklist ${HOME}/.cache/pip
 
+#whitelist ${HOME}/.cache/pip
 #whitelist ${HOME}/.local/lib/python*
 
 # Redirect

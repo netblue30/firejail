@@ -8,6 +8,7 @@ include cmake.local
 include globals.local
 
 whitelist /usr/share/cmake
+whitelist /usr/share/cmake-*
 
 memory-deny-write-execute
 

@@ -45,7 +45,7 @@ noroot
 notv
 nou2f
 novideo
-# Add `protocol unix` to your ocenaudio.local to disable networking.
+# Add `protocol unix\nignore protocol` to your ocenaudio.local to disable networking.
 protocol unix,inet,inet6
 seccomp
 shell none

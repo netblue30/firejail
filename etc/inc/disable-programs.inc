@@ -175,6 +175,7 @@ blacklist ${HOME}/.cache/mypaint
 blacklist ${HOME}/.cache/netsurf
 blacklist ${HOME}/.cache/nheko
 blacklist ${HOME}/.cache/nvim
+blacklist ${HOME}/.cache/ocenaudio
 blacklist ${HOME}/.cache/okular
 blacklist ${HOME}/.cache/opera
 blacklist ${HOME}/.cache/opera-beta

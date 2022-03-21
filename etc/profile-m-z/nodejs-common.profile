@@ -7,7 +7,7 @@ include nodejs-common.local
 # added by caller profile
 #include globals.local
 
-NOTE: gulp, node-gyp, npm, npx, semver and yarn are all node scripts
+# NOTE: gulp, node-gyp, npm, npx, semver and yarn are all node scripts
 # using the `#!/usr/bin/env node` shebang. By sandboxing node the full
 # node.js stack will be firejailed. The only exception is nvm, which is implemented
 # as a sourced shell function, not an executable binary. Hence it is not

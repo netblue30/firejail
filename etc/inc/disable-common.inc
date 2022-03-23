@@ -370,6 +370,9 @@ read-only ${HOME}/.nvm
 read-only ${HOME}/.rustup
 read-only ${HOME}/bin
 
+# Write-protection for portable apps
+read-only ${HOME}/Applications # used for storing AppImages
+
 # Write-protection for desktop entries
 read-only ${HOME}/.config/menus
 read-only ${HOME}/.gnome/apps

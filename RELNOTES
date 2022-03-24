@@ -7,9 +7,12 @@ firejail (0.9.69) baseline; urgency=low
   * bugfix: nogroups + wrc prints confusing messages (#4930 #4933)
   * bugfix: openSUSE Leap - whitelist-run-common.inc (#4954)
   * bugfix: fix printing in evince (#5011)
+  * bugfix: gcov: fix gcov functions always declared as dummy (#5028)
   * ci: replace centos (EOL) with almalinux (#4912)
   * docs: Refer to firejail.config in configuration files (#4916)
   * docs: firejail.config: add warning about allow-tray (#4946)
+  * docs: mention that the protocol command accumulates (#5043)
+  * docs: mention inconsistent homedir bug involving --private=dir (#5052)
   * new profiles: onionshare, onionshare-cli, songrec
  -- netblue30 <netblue30@yahoo.com>  Mon, 7 Feb 2022 09:00:00 -0500
 

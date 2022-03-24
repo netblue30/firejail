@@ -1026,6 +1026,7 @@ the-antz (https://github.com/the-antz)
 	- Profile tweaks
 TheOneric (https://github.com/TheOneric)
 	- Fix newest Steam client and Proton ≥ 5.13
+	- Fix black window in Steam client
 thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified

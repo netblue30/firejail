@@ -343,6 +343,18 @@ closed.
 .TP
 \fBprivate directory
 Use directory as user home.
+--private and --private=directory cannot be used together.
+.br
+
+.br
+Bug: Even with this enabled, some commands (such as mkdir, mkfile and
+private-cache) will still operate on the original home directory.
+Workaround: Disable the incompatible commands, such as by using "ignore mkdir"
+and "ignore mkfile".
+For details, see
+.UR https://github.com/netblue30/firejail/issues/903
+#903
+.UE
 .TP
 \fBprivate-bin file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
@@ -505,7 +517,7 @@ There is no root account (uid 0) defined in the namespace.
 Enable protocol filter. The filter is based on seccomp and checks the
 first argument to socket system call. Recognized values: \fBunix\fR,
 \fBinet\fR, \fBinet6\fR, \fBnetlink\fR, \fBpacket\fR, and \fBbluetooth\fR.
-Multiple protocol commands are allowed.
+Multiple protocol commands are allowed and they accumulate.
 .TP
 \fBseccomp
 Enable seccomp filter and blacklist the syscalls in the default list. See man 1 firejail for more details.

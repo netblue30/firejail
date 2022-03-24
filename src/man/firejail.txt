@@ -1905,6 +1905,17 @@ Use directory as user home.
 Example:
 .br
 $ firejail \-\-private=/home/netblue/firefox-home firefox
+.br
+
+.br
+Bug: Even with this enabled, some commands (such as mkdir, mkfile and
+private-cache) will still operate on the original home directory.
+Workaround: Disable the incompatible commands, such as by using "ignore mkdir"
+and "ignore mkfile".
+For details, see
+.UR https://github.com/netblue30/firejail/issues/903
+#903
+.UE
 
 .TP
 \fB\-\-private-bin=file,file
@@ -2171,6 +2182,7 @@ $ firejail \-\-profile.print=browser
 \fB\-\-protocol=protocol,protocol,protocol
 Enable protocol filter. The filter is based on seccomp and checks the first argument to socket system call.
 Recognized values: unix, inet, inet6, netlink, packet, and bluetooth. This option is not supported for i386 architecture.
+Multiple protocol commands are allowed and they accumulate.
 .br
 
 .br

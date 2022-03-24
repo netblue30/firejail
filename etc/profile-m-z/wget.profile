@@ -11,6 +11,10 @@ noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/.wget-hsts
 noblacklist ${HOME}/.wgetrc
 
+# If you use nvm, add the below lines to your wget.local
+#ignore read-only ${HOME}/.nvm
+#noblacklist ${HOME}/.nvm
+
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 

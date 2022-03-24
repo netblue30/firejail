@@ -1144,6 +1144,7 @@ blacklist ${HOME}/.yarn-config
 blacklist ${HOME}/.yarncache
 blacklist ${HOME}/.yarnrc
 blacklist ${HOME}/.zoom
+blacklist ${HOME}/Applications # used for storing AppImages
 blacklist ${HOME}/Arduino
 blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud

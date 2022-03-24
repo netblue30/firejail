@@ -18,6 +18,10 @@ noblacklist ${HOME}/.curlrc
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
+# If you use nvm, add the below lines to your curl.local
+#ignore read-only ${HOME}/.nvm
+#noblacklist ${HOME}/.nvm
+
 include disable-common.inc
 include disable-exec.inc
 include disable-programs.inc

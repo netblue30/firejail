@@ -2,6 +2,8 @@
 # Persistent customizations should go in a .local file.
 include allow-nodejs.local
 
+ignore read-only ${HOME}/.nvm
+noblacklist ${HOME}/.nvm
 noblacklist ${PATH}/node
 noblacklist /usr/include/node
 

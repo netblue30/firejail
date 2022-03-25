@@ -8,6 +8,8 @@ include globals.local
 
 noblacklist ${HOME}/.megaglest
 
+include allow-lua.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -19,7 +21,8 @@ include disable-xdg.inc
 mkdir ${HOME}/.megaglest
 whitelist ${HOME}/.megaglest
 whitelist /usr/share/megaglest
-whitelist /usr/share/games/megaglest	# Debian version
+# Debian version
+whitelist /usr/share/games/megaglest
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

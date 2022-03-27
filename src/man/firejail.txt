@@ -216,6 +216,7 @@ not change the execution of firejail.
 Linux capabilities is a kernel feature designed to split up the root privilege into a set of distinct privileges.
 These privileges can be enabled or disabled independently, thus restricting what a process running
 as root can do in the system.
+See capabilities(7) for details.
 
 By default root programs run with all capabilities enabled. \-\-caps option disables the following capabilities:
 CAP_SYS_MODULE, CAP_SYS_RAWIO,

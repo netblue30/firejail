@@ -483,6 +483,7 @@ Enable AppArmor confinement.
 .TP
 \fBcaps
 Enable default Linux capabilities filter.
+See capabilities(7) for details.
 .TP
 \fBcaps.drop capability,capability,capability
 Blacklist given Linux capabilities.

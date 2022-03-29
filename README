@@ -582,6 +582,7 @@ Jose Riha (https://github.com/jose1711)
 	- goldendict profile fix
 	- whitelist /usr/share/nextcloud to allow access to translation files
 	- fix clipgrab profile
+	- fix Hugin profile
 jrabe (https://github.com/jrabe)
 	- disallow access to kdbx files
 	- Epiphany profile
@@ -725,6 +726,7 @@ Neo00001 (https://github.com/Neo00001)
 	- add kdiff3 profile
 NetSysFire (https://github.com/NetSysFire)
 	- update weechat profile
+	- update megaglest profile
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory

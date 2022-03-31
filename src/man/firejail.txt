@@ -395,7 +395,7 @@ $ firejail \-\-dbus-system=none
 
 .TP
 \fB\-\-dbus-system.broadcast=name=[member][@path]
-Allows the application to receive broadcast signals from theindicated interface
+Allows the application to receive broadcast signals from the indicated interface
 member at the indicated object path exposed by the indicated bus name on the
 system DBus.
 The name may have a .* suffix to match all names underneath it, including
@@ -522,7 +522,7 @@ $ firejail \-\-dbus-user=none
 
 .TP
 \fB\-\-dbus-user.broadcast=name=[member][@path]
-Allows the application to receive broadcast signals from theindicated interface
+Allows the application to receive broadcast signals from the indicated interface
 member at the indicated object path exposed by the indicated bus name on the
 session DBus.
 The name may have a .* suffix to match all names underneath it, including

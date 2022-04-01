@@ -13,8 +13,6 @@ ignore include whitelist-usr-share-common.inc
 ignore novideo
 ignore private-tmp
 
-ignore novideo
-
 # see #3404
 ignore apparmor
 ignore dbus-user none

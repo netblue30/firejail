@@ -28,7 +28,7 @@ static char *arg_log = NULL;
 
 typedef struct hnode_t {
 	struct hnode_t *hnext;	// used for hash table and unused linked list
-	struct hnode_t *dnext;	// used to display stremas on the screen
+	struct hnode_t *dnext;	// used to display streams on the screen
 	uint32_t ip_src;
 	uint32_t  bytes;	// number of bytes received in the last display interval
 	uint16_t port_src;
@@ -221,6 +221,35 @@ static unsigned adjust_bandwidth(unsigned bw) {
 	return (max < (sum / 2))? sum: max;
 }
 
+static inline const char *common_port(uint16_t port) {
+	if (port > 123)
+		return NULL;
+
+	if (port == 20 || port == 21)
+		return "(FTP)";
+	else if (port == 22)
+		return "(SSH)";
+	else if (port == 23)
+		return "(telnet)";
+	else if (port == 25)
+		return "(SMTP)";
+	else if (port == 67)
+		return "(DHCP)";
+	else if (port == 69)
+		return "(TFTP)";
+	else if (port == 80)
+		return "(HTTP)";
+	else if (port == 109)
+		return "(POP2)";
+	else if (port == 110)
+		return "(POP3)";
+	else if (port == 123)
+		return "(NTP)";
+
+	return NULL;
+}
+
+
 static void hnode_print(unsigned bw) {
 	assert(!arg_netfilter);
 	bw = (bw < 1024 * DISPLAY_INTERVAL)? 1024 * DISPLAY_INTERVAL: bw;
@@ -285,19 +314,19 @@ static void hnode_print(unsigned bw) {
 			else
 				bwline = print_bw(ptr->bytes / bwunit);
 
-			char *protocol = "";
-			if (ptr->port_src == 80)
-				protocol = "(HTTP)";
+			const char *protocol = NULL;
+			if (ptr->port_src == 443)
+				protocol = "(TLS)";
+			else if (ptr->port_src == 53)
+				protocol = "(DNS)";
 			else if (ptr->port_src == 853)
 				protocol = "(DoT)";
+			else if ((protocol = common_port(ptr->port_src)) != NULL)
+				;
 			else if (ptr->protocol == 0x11)
 				protocol = "(UDP)";
-/*
-			else (ptr->port_src == 443)
-				protocol = "TLS";
-			else if (ptr->port_src == 53)
-				protocol = "DNS";
-*/
+			if (protocol == NULL)
+				protocol = "";
 
 			len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s\n",
 				bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->hostname);
@@ -409,7 +438,8 @@ static void run_trace(void) {
 				memcpy(&port_src, buf + hlen, 2);
 				port_src = ntohs(port_src);
 
-				hnode_add(ip_src, buf[9], port_src, bytes + 14);
+				uint8_t protocol = buf[9];
+				hnode_add(ip_src, protocol, port_src, bytes + 14);
 			}
 		}
 	}

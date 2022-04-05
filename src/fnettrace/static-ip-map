@@ -37,8 +37,10 @@
 192.168.0.0/16 local network
 10.0.0.0/8 local network
 172.16.0.0/16 local network
+169.254.0.0/16 local link
 
 #  huge address ranges
+4.0.0.0/9 Level 3
 6.0.0.0/8 US Army
 7.0.0.0/8 US Army
 9.0.0.0/8 IBM

@@ -815,6 +815,7 @@ blacklist ${HOME}/.local/share/Empathy
 blacklist ${HOME}/.local/share/Enpass
 blacklist ${HOME}/.local/share/FasterThanLight
 blacklist ${HOME}/.local/share/Flavio Tordini
+blacklist ${HOME}/.local/share/HotlineMiami
 blacklist ${HOME}/.local/share/IntoTheBreach
 blacklist ${HOME}/.local/share/JetBrains
 blacklist ${HOME}/.local/share/KDE/neochat

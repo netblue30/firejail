@@ -599,7 +599,14 @@ noblacklist /var/lib/flatpak/exports
 blacklist /var/lib/flatpak/*
 
 # snap
+blacklist ${HOME}/snap
+blacklist ${PATH}/snap
+blacklist ${PATH}/snapctl
 blacklist ${RUNUSER}/snapd-session-agent.socket
+blacklist /snap
+blacklist /usr/lib/snapd
+blacklist /var/lib/snapd
+blacklist /var/snap
 
 # mail directories used by mutt
 blacklist ${HOME}/.Mail

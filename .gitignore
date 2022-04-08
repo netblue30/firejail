@@ -24,6 +24,8 @@ firemon.1
 firecfg.1
 jailcheck.1
 mkdeb.sh
+src/fnettrace-dns/fnettrace-dns
+src/fnettrace-sni/fnettrace-sni
 src/firejail/firejail
 src/firemon/firemon
 src/firecfg/firecfg

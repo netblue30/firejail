@@ -40,7 +40,7 @@ static void print_tls(uint32_t ip_dest, unsigned char *pkt, unsigned len) {
 
 	// look for server name indication
 	unsigned char *ptr = pkt;
-	int i = 0;
+	unsigned int i = 0;
 	char *name = NULL;
 	while (i < (len - 20)) {
 		// 3 zeros and 3 matching length fields
@@ -59,7 +59,7 @@ static void print_tls(uint32_t ip_dest, unsigned char *pkt, unsigned len) {
 
 			if (len1 == (len2 + 2) && len1 == (len3 + 5)) {
 				*(ptr + 9 + len3) = 0;
-				name = ptr + 9;
+				name = (char *) (ptr + 9);
 				break;
 			}
 		}

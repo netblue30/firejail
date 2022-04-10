@@ -9,6 +9,7 @@ include globals.local
 
 noblacklist /sbin
 noblacklist /usr/sbin
+noblacklist /var/lib/libvirt
 
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}

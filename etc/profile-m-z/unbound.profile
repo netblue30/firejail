@@ -10,7 +10,7 @@ noblacklist /sbin
 noblacklist /usr/sbin
 
 blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc
@@ -19,8 +19,11 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/dns
 include whitelist-usr-share-common.inc
 
+whitelist /var/lib/ca-certificates
+read-only /var/lib/ca-certificates
 whitelist /var/lib/unbound
 whitelist /var/run
 
@@ -48,5 +51,4 @@ writable-var
 dbus-user none
 dbus-system none
 
-# mdwe can break modules/plugins
 memory-deny-write-execute

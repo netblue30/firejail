@@ -11,7 +11,7 @@ noblacklist /sbin
 noblacklist /usr/sbin
 
 blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc
@@ -36,6 +36,6 @@ seccomp
 
 disable-mnt
 private
-private-cache
 private-dev
+private-tmp
 writable-var

@@ -19,6 +19,9 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /var/lib/libvirt/dnsmasq
+whitelist /var/run
+
 caps.keep net_admin,net_bind_service,net_raw,setgid,setuid
 no3d
 nodvd
@@ -35,3 +38,4 @@ disable-mnt
 private
 private-cache
 private-dev
+writable-var

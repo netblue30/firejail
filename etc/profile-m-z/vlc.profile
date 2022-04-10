@@ -27,9 +27,11 @@ whitelist ${HOME}/.config/aacs
 whitelist ${HOME}/.local/share/vlc
 include whitelist-common.inc
 include whitelist-player-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
-#apparmor - on Ubuntu 18.04 it refuses to start without dbus access
+apparmor
 caps.drop all
 netfilter
 nogroups
@@ -45,9 +47,10 @@ private-bin cvlc,nvlc,qvlc,rvlc,svlc,vlc
 private-dev
 private-tmp
 
-# dbus needed for MPRIS
-# dbus-user none
-# dbus-system none
-
-# mdwe is disabled due to breaking hardware accelerated decoding
-#memory-deny-write-execute
+dbus-user filter
+dbus-user.own org.mpris.MediaPlayer2.vlc
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.ScreenSaver
+?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
+dbus-user.talk org.mpris.MediaPlayer2.Player
+dbus-system none

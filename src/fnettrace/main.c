@@ -233,6 +233,8 @@ static inline const char *common_port(uint16_t port) {
 		return "(telnet)";
 	else if (port == 25)
 		return "(SMTP)";
+	else if (port == 43)
+		return "(WHOIS)";
 	else if (port == 67)
 		return "(DHCP)";
 	else if (port == 69)

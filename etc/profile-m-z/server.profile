@@ -33,6 +33,9 @@ include globals.local
 
 noblacklist /sbin
 noblacklist /usr/sbin
+noblacklist /etc/init.d
+noblacklist /var/lib/apt
+noblacklist /var/cache/apt
 # noblacklist /var/opt
 
 blacklist /tmp/.X11-unix
@@ -50,7 +53,9 @@ include disable-xdg.inc
 # include whitelist-usr-share-common.inc
 # include whitelist-var-common.inc
 
-apparmor
+# people use to install servers all over the place!
+# apparmor runs executable only from default system locations
+# apparmor
 caps
 # ipc-namespace
 machine-id
@@ -59,15 +64,16 @@ no3d
 nodvd
 # nogroups
 noinput
-# nonewprivs
+nonewprivs
 # noroot
 nosound
 notv
 nou2f
 novideo
-# protocol unix,inet,inet6,netlink
+protocol unix,inet,inet6,netlink,packet
 seccomp
 # shell none
+tab # allow tab completion
 
 disable-mnt
 private

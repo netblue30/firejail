@@ -34,8 +34,6 @@ include globals.local
 noblacklist /sbin
 noblacklist /usr/sbin
 noblacklist /etc/init.d
-noblacklist /var/lib/apt
-noblacklist /var/cache/apt
 # noblacklist /var/opt
 
 blacklist /tmp/.X11-unix

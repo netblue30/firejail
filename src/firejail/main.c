@@ -2874,6 +2874,17 @@ int main(int argc, char **argv, char **envp) {
 		}
 	}
 
+	// check writable_etc and DNS/DHCP
+	if (arg_writable_etc) {
+		if (cfg.dns1 != NULL || any_dhcp()) {
+			// we could end up overwriting the real /etc/resolv.conf, so we better exit now!
+			fprintf(stderr, "Error: --dns/--ip=dhcp and --writable-etc are mutually exclusive\n");
+			exit(1);
+		}
+	}
+
+
+
 	// enable seccomp if only seccomp.block-secondary was specified
 	if (arg_seccomp_block_secondary)
 		arg_seccomp = 1;

@@ -106,7 +106,7 @@ include globals.local
 #blacklist ${RUNUSER}/wayland-*
 # Disable RUNUSER (cli only; supersedes Disable Wayland)
 #blacklist ${RUNUSER}
-# Remove the next blacklist if you system has no /usr/libexec dir,
+# Remove the next blacklist if your system has no /usr/libexec dir,
 # otherwise try to add it.
 #blacklist /usr/libexec
 

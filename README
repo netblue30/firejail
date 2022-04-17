@@ -368,6 +368,8 @@ Florian Begusch (https://github.com/florianbegusch)
 	- fix jailprober.py
 floxo (https://github.com/floxo)
 	- fixed qml disk cache issue
+Foemass (https://github.com/Foemass)
+	- documentation
 Franco (nextime) Lanza (https://github.com/nextime)
 	- added --private-template/--private-home
 František Polášek (https://github.com/fandaa)
@@ -932,6 +934,7 @@ Simo Piiroinen (https://github.com/spiiroin)
 	- Jolla/SailfishOS patches
 slowpeek (https://github.com/slowpeek)
 	- refine appimage example in docs
+	- allow resolution of .local names with avahi-daemon in the apparmor profile
 smitsohu (https://github.com/smitsohu)
 	- read-only kde4 services directory
 	- enhanced mediathekview profile

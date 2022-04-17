@@ -67,6 +67,9 @@ owner /{,var/}run/media/** w,
 # Allow access to cups printing socket.
 /{,var/}run/cups/cups.sock w,
 
+# Allow access to avahi-daemon socket.
+/{,var/}run/avahi-daemon/socket w,
+
 # Allow access to pcscd socket (smartcards)
 /{,var/}run/pcscd/pcscd.comm w,
 

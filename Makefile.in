@@ -118,6 +118,7 @@ endif
 	install -m 0755 src/jailcheck/jailcheck $(DESTDIR)$(bindir)
 	# libraries and plugins
 	install -m 0755 -d $(DESTDIR)$(libdir)/firejail
+	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/firecfg/firejail-welcome.sh
 	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS)
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS)
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/profstats/profstats

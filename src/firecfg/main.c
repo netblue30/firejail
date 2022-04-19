@@ -37,6 +37,7 @@ static char *usage_str =
 	"   --debug - print debug messages.\n\n"
 	"   --fix - fix .desktop files.\n\n"
 	"   --fix-sound - create ~/.config/pulse/client.conf file.\n\n"
+	"   --guide - guided configuration for new users.\n\n"
 	"   --help, -? - this help screen.\n\n"
 	"   --list - list all firejail symbolic links.\n\n"
 	"   --version - print program version and exit.\n\n"
@@ -371,6 +372,10 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--fix") == 0) {
 			fix_desktop_files(home);
+			return 0;
+		}
+		else if (strcmp(argv[i], "--guide") == 0) {
+			return system(LIBDIR "/firejail/firejail-welcome.sh");
 			return 0;
 		}
 		else if (strcmp(argv[i], "--list") == 0) {

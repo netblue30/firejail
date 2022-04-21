@@ -15,7 +15,7 @@
 PROGRAM=$1
 SYSCONFDIR=$2
 
-if ! command -v $PROGRAM >/dev/null; then
+if ! command -v "$PROGRAM" >/dev/null; then
 	echo "Please install $PROGRAM."
 	exit 1
 fi
@@ -37,8 +37,10 @@ enable_nonewprivs=false
 read -r -d $'\0' MSG_INTRO <<EOM
 <big><b>Welcome to Firejail!</b></big>
 
-
-This guide will walk you through some of the most common sandbox customizations. At the end of the guide you'll have the option to save your changes in Firejail's global config file at <b>/etc/firejail/firejail.config</b>. A copy of the original file is stored as <b>/etc/firejal/firejail.config-</b>.
+This guide will walk you through some of the most common sandbox customizations. At the end of the
+guide you'll have the option to save your changes in Firejail's global config file at
+<b>/etc/firejail/firejail.config</b>. A copy of the original file is stored as
+<b>/etc/firejal/firejail.config-</b>.
 
 Please note that running this script a second time can set new options, but does not clear options set in a previous run.
 
@@ -62,7 +64,6 @@ EOM
 if $PROGRAM --title="$TITLE" --question --ellipsize --text="$MSG_Q_RUN_FIRECFG"; then
 	run_firecfg=true
 fi
-[[ $? -eq 1 ]] && exit 0
 
 #******************************************************
 # U2F
@@ -156,43 +157,41 @@ if $PROGRAM --title="$TITLE" --question --ellipsize --text="$MSG_Q_SECCOMP"; the
 	sed_scripts+=("-e s/# seccomp-error-action EPERM/seccomp-error-action kill/")
 fi
 
-
-
-
 #******************************************************
 # root
 #******************************************************
 read -r -d $'\0' MSG_RUN <<EOM
 Now, I will apply the changes. This is what I will do:
+
+
 EOM
 
-MSG_RUN+="\\n\\n"
 if [[ "$run_firecfg" == "true" ]]; then
-	MSG_RUN+="     * enable Firejail for all recognized programs\\n"
+	MSG_RUN+="     * enable Firejail for all recognized programs\n"
 fi
 if [[ "$enable_u2f" == "true" ]]; then
-	MSG_RUN+="     * allow browsers to access U2F devices\\n"
+	MSG_RUN+="     * allow browsers to access U2F devices\n"
 fi
 if [[ "$enable_drm" == "true" ]]; then
-	MSG_RUN+="     * allow browsers to play DRM content\\n"
+	MSG_RUN+="     * allow browsers to play DRM content\n"
 fi
 if [[ "$enable_nonewprivs" == "true" ]]; then
-	MSG_RUN+="     * enable nonewprivs globally\\n"
+	MSG_RUN+="     * enable nonewprivs globally\n"
 fi
 if [[ "$enable_restricted_net" == "true" ]]; then
-	MSG_RUN+="     * restrict networking features\\n"
+	MSG_RUN+="     * restrict networking features\n"
 fi
 if [[ "$enable_seccomp_kill" == "true" ]]; then
-	MSG_RUN+="     * enable seccomp kill\\n"
+	MSG_RUN+="     * enable seccomp kill\n"
 fi
-MSG_RUN+="\\n\\nPress OK to continue, or close this window to stop the program."
+MSG_RUN+="\n\nPress OK to continue, or close this window to stop the program."
 
 $PROGRAM --title="$TITLE" --info --width=600 --height=40 --text="$MSG_RUN"
 [[ $? -eq 1 ]] && exit 0
 
 if [[ -n "${sed_scripts[*]}" ]]; then
-	cp $SYSCONFDIR/firejail.config $SYSCONFDIR/firejail.config-
-	sed -i "${sed_scripts[@]}" $SYSCONFDIR/firejail.config
+	cp "$SYSCONFDIR"/firejail.config "$SYSCONFDIR"/firejail.config-
+	sed -i "${sed_scripts[@]}" "$SYSCONFDIR"/firejail.config
 fi
 if [[ "$run_firecfg" == "true" ]]; then
 	# return 55 to inform firecfg symlinks are desired

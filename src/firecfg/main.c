@@ -22,6 +22,7 @@
 #include "../include/firejail_user.h"
 int arg_debug = 0;
 char *arg_bindir = "/usr/local/bin";
+int arg_guide = 0;
 
 static char *usage_str =
 	"Firecfg is the desktop configuration utility for Firejail software. The utility\n"
@@ -375,8 +376,7 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 		else if (strcmp(argv[i], "--guide") == 0) {
-			return system(LIBDIR "/firejail/firejail-welcome.sh");
-			return 0;
+			arg_guide = 1;
 		}
 		else if (strcmp(argv[i], "--list") == 0) {
 			list();
@@ -442,6 +442,19 @@ int main(int argc, char **argv) {
 		umask(orig_umask);
 	}
 
+	if (arg_guide) {
+		int status = system("sudo "LIBDIR "/firejail/firejail-welcome.sh zenity " SYSCONFDIR);
+		if (status == -1) {
+			fprintf(stderr, "Error: cannot run firejail-welcome.sh\n");
+			exit(1);
+		}
+
+		// the last 8 bits of the status is the return value of the command executed by system()
+		// firejail-welcome.sh returns 55 if setting sysmlinks is required
+		if (WEXITSTATUS(status)  != 55)
+			return 0;
+	}
+
 	// clear all symlinks
 	clean();
 
@@ -472,8 +485,6 @@ int main(int argc, char **argv) {
 		}
 #endif
 	}
-
-
 
 	// set new symlinks based on ~/.config/firejail directory
 	set_links_homedir(home);

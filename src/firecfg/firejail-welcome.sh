@@ -3,126 +3,203 @@
 # This file is part of Firejail project
 # Copyright (C) 2020-2022 Firejail Authors
 # License GPL v2
+#
+# Usage: firejail-welcome PROGRAM SYSCONFDIR
+# where PROGRAM is detected and driven by firecfg.
+# SYSCONFDIR is most of the time /etc/firejail.
+#
+# The plan is to go with zenity by default. If zenity is not installed
+# we will provide a console-only replacement in /usr/lib/firejail/fzenity
+#
 
-if ! command -v zenity >/dev/null; then
-	echo "Please install zenity."
-	exit 1
-fi
-if ! command -v sudo >/dev/null; then
-	echo "Please install sudo."
+PROGRAM=$1
+SYSCONFDIR=$2
+
+if ! command -v $PROGRAM >/dev/null; then
+	echo "Please install $PROGRAM."
 	exit 1
 fi
 
 export LANG=en_US.UTF8
 
-zenity --title=firejail-welcome.sh --text-info --width=750 --height=500 <<EOM
-Welcome to firejail!
+TITLE="Firejail Configuration Guide"
+sed_scripts=()
+run_firecfg=false
+enable_u2f=false
+enable_drm=false
+enable_seccomp_kill=false
+enable_restricted_net=false
+enable_nonewprivs=false
 
-This is a quick setup guide for newbies.
+#******************************************************
+# Intro
+#******************************************************
+read -r -d $'\0' MSG_INTRO <<EOM
+<big><b>Welcome to Firejail!</b></big>
 
-Profiles for programs can be found in /etc/firejail. Own customizations should go in a file named
-<profile-name>.local in ~/.config/firejal.
 
-Firejail's own configuration can be found at /etc/firejail/firejail.config.
+This guide will walk you through some of the most common sandbox customizations. At the end of the guide you'll have the option to save your changes in Firejail's global config file at <b>/etc/firejail/firejail.config</b>. A copy of the original file is stored as <b>/etc/firejal/firejail.config-</b>.
 
-Please note that running this script a second time can set new options, but does not unset options
-set in a previous run.
+Please note that running this script a second time can set new options, but does not clear options set in a previous run.
 
-Website: https://firejail.wordpress.com
-Bug-Tracker: https://github.com/netblue30/firejail/issues
-Documentation:
-- https://github.com/netblue30/firejail/wiki
-- https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions
-- https://firejail.wordpress.com/documentation-2
-- man:firejail(1) and man:firejail-profile(5)
+Press OK to continue, or close this window to stop the program.
 
-PS: If you have any improvements for this script, open an issue or pull request.
 EOM
+$PROGRAM --title="$TITLE" --info --width=600 --height=40 --text="$MSG_INTRO"
 [[ $? -eq 1 ]] && exit 0
 
-sed_scripts=()
+#******************************************************
+# symlinks
+#******************************************************
+read -r -d $'\0' MSG_Q_RUN_FIRECFG <<EOM
+<big><b>Should most programs be sandboxed by default?</b></big>
 
+Currently, Firejail recognizes more than 1000 regular desktop programs. These programs
+can be sandboxed automatically when you start them.
+
+EOM
+
+if $PROGRAM --title="$TITLE" --question --ellipsize --text="$MSG_Q_RUN_FIRECFG"; then
+	run_firecfg=true
+fi
+[[ $? -eq 1 ]] && exit 0
+
+#******************************************************
+# U2F
+#******************************************************
 read -r -d $'\0' MSG_Q_BROWSER_DISABLE_U2F <<EOM
 <big><b>Should browsers be allowed to access u2f hardware?</b></big>
+
+Universal Two-Factor (U2F) devices are used as a password store for online
+accounts. These devices usually come in a form of a USB key.
+
 EOM
 
-read -r -d $'\0' MSG_Q_BROWSER_ALLOW_DRM <<EOM
-<big><b>Should browsers be able to play DRM content?</b></big>
-
-\$HOME is noexec,nodev,nosuid by default for the most sandboxes. This means that executing programs which are located in \$HOME,
-is forbidden, the setuid attribute on files is ignored and device files inside \$HOME don't work. Browsers install proprietary
-DRM plug-ins such as Widevine under \$HOME by default. In order to use them, \$HOME must be mounted exec inside the sandbox to
-allow their execution. Clearly, this may help an attacker to start malicious code.
-
-NOTE: Other software written in an interpreter language such as bash, python or java can always be started from \$HOME.
-
-HINT: If <tt>/home</tt> has its own partition, you can mount it <tt>nodev,nosuid</tt> for all programs.
-EOM
-
-read -r -d $'\0' MSG_L_ADVANCED_OPTIONS <<EOM
-You maybe want to set some of these advanced options.
-EOM
-
-read -r -d $'\0' MSG_Q_RUN_FIRECFG <<EOM
-<big><b>Should most programs be started in firejail by default?</b></big>
-EOM
-
-read -r -d $'\0' MSG_I_ROOT_REQUIRED <<EOM
-In order to apply these changes, root privileges are required.
-You will now be asked to enter your password.
-EOM
-
-read -r -d $'\0' MSG_I_FINISH <<EOM
-🥳
-EOM
-
-if zenity --title=firejail-welcome.sh --question --ellipsize --text="$MSG_Q_BROWSER_DISABLE_U2F"; then
+if $PROGRAM --title="$TITLE" --question --ellipsize --text="$MSG_Q_BROWSER_DISABLE_U2F"; then
+	enable_u2f=true
 	sed_scripts+=("-e s/# browser-disable-u2f yes/browser-disable-u2f no/")
 fi
 
-if zenity --title=firejail-welcome.sh --question --ellipsize --text="$MSG_Q_BROWSER_ALLOW_DRM"; then
+#******************************************************
+# DRM
+#******************************************************
+read -r -d $'\0' MSG_Q_BROWSER_ALLOW_DRM <<EOM
+<big><b>Should browsers be able to play DRM content?</b></big>
+
+The home directory is <tt>noexec,nodev,nosuid</tt> by default for most applications.
+This means that executing programs located in your home directory is forbidden.
+
+Browsers install proprietary DRM plug-ins such as Widevine in your home directory.
+In order to use them, your home must be mounted <tt>exec</tt> inside the sandbox. This
+may give the people developing and distributing the plug-in access to your private
+data.
+
+NOTE: Software written in an interpreted language such as bash, python or java can
+always be started from home directory.
+
+HINT: If <tt>/home</tt> has its own partition, you can mount it <tt>nodev,nosuid</tt> for all programs.
+
+EOM
+
+if $PROGRAM --title="$TITLE" --question --ellipsize --text="$MSG_Q_BROWSER_ALLOW_DRM"; then
+	enable_drm=true
 	sed_scripts+=("-e s/# browser-allow-drm no/browser-allow-drm yes/")
 fi
 
-advanced_options=$(zenity --title=firejail-welcome.sh --list --width=800 --height=200 \
-	--text="$MSG_L_ADVANCED_OPTIONS" --multiple --checklist --separator=" " \
-	--column="" --column=Option --column=Description <<EOM
+#******************************************************
+# nonewprivs
+#******************************************************
+read -r -d $'\0' MSG_Q_NONEWPRIVS <<EOM
+<big><b>Should we force nonweprivs by default?</b></big>
 
-force-nonewprivs
-Always set nonewprivs, this is a strong mitigation against exploits in firejail. However some programs like chromium or wireshark maybe don't work anymore.
+nonewprivs is a Linux kernel feature that prevents programs from rising privileges.
+It is also a strong mitigation against exploits in Firejail. However, some programs
+like chromium, wireshark, or even ping might not work.
 
-restricted-network
-Restrict all network related commands except 'net none' to root only.
+NOTE: seccomp enables nonewprivs automatically. Most applications supported by
+default by Firejail are using seccomp.
 
-seccomp-error-action=kill
-Kill programs which violate seccomp rules (default: return a error).
 EOM
-)
 
-if [[ $advanced_options == *force-nonewprivs* ]]; then
+if $PROGRAM --title="$TITLE" --question --ellipsize --text="$MSG_Q_NONEWPRIVS"; then
+	enable_nonewprivs=true
 	sed_scripts+=("-e s/# force-nonewprivs no/force-nonewprivs yes/")
 fi
-if [[ $advanced_options == *restricted-network* ]]; then
+
+#******************************************************
+# restricted network
+#******************************************************
+read -r -d $'\0' MSG_Q_NETWORK <<EOM
+<big><b>Should we restrict network functionality?</b></big>
+
+Restrict all network related commands except '<tt>net none</tt>' to root only.
+
+EOM
+
+if $PROGRAM --title="$TITLE" --question --ellipsize --text="$MSG_Q_NETWORK"; then
+	enable_restricted_net=true
 	sed_scripts+=("-e s/# restricted-network no/restricted-network yes/")
 fi
-if [[ $advanced_options == *seccomp-error-action=kill* ]]; then
+
+#******************************************************
+# seccomp kill
+#******************************************************
+read -r -d $'\0' MSG_Q_SECCOMP <<EOM
+<big><b>Should we kill programs that violate seccomp rules?</b></big>
+
+By default seccomp prevents the program from running the syscall and returns an error.
+
+EOM
+
+if $PROGRAM --title="$TITLE" --question --ellipsize --text="$MSG_Q_SECCOMP"; then
+	enable_seccomp_kill=true
 	sed_scripts+=("-e s/# seccomp-error-action EPERM/seccomp-error-action kill/")
 fi
 
-if zenity --title=firejail-welcome.sh --question --ellipsize --text="$MSG_Q_RUN_FIRECFG"; then
-	run_firecfg=true
+
+
+
+#******************************************************
+# root
+#******************************************************
+read -r -d $'\0' MSG_RUN <<EOM
+Now, I will apply the changes. This is what I will do:
+EOM
+
+MSG_RUN+="\\n\\n"
+if [[ "$run_firecfg" == "true" ]]; then
+	MSG_RUN+="     * enable Firejail for all recognized programs\\n"
 fi
+if [[ "$enable_u2f" == "true" ]]; then
+	MSG_RUN+="     * allow browsers to access U2F devices\\n"
+fi
+if [[ "$enable_drm" == "true" ]]; then
+	MSG_RUN+="     * allow browsers to play DRM content\\n"
+fi
+if [[ "$enable_nonewprivs" == "true" ]]; then
+	MSG_RUN+="     * enable nonewprivs globally\\n"
+fi
+if [[ "$enable_restricted_net" == "true" ]]; then
+	MSG_RUN+="     * restrict networking features\\n"
+fi
+if [[ "$enable_seccomp_kill" == "true" ]]; then
+	MSG_RUN+="     * enable seccomp kill\\n"
+fi
+MSG_RUN+="\\n\\nPress OK to continue, or close this window to stop the program."
 
-zenity --title=firejail-welcome.sh --info --ellipsize --text="$MSG_I_ROOT_REQUIRED"
+$PROGRAM --title="$TITLE" --info --width=600 --height=40 --text="$MSG_RUN"
+[[ $? -eq 1 ]] && exit 0
 
-passwd=$(zenity --title=firejail-welcome.sh --password --cancel-label=OK)
 if [[ -n "${sed_scripts[*]}" ]]; then
-	sudo -S -p "" -- sed -i "${sed_scripts[@]}" /etc/firejail/firejail.config <<<"$passwd" || { zenity --title=firejail-welcome.sh --error; exit 1; };
+	cp $SYSCONFDIR/firejail.config $SYSCONFDIR/firejail.config-
+	sed -i "${sed_scripts[@]}" $SYSCONFDIR/firejail.config
 fi
 if [[ "$run_firecfg" == "true" ]]; then
-	sudo -S -p "" -- firecfg <<<"$passwd" || { zenity --title=firejail-welcome.sh --error; exit 1; };
+	# return 55 to inform firecfg symlinks are desired
+	exit 55
 fi
-sudo -k
-unset passwd
 
-zenity --title=firejail-welcome.sh --info --icon-name=security-medium-symbolic --text="$MSG_I_FINISH"
+#******************************************************
+# all done
+#******************************************************
+exit 0

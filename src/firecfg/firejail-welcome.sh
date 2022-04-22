@@ -4,7 +4,7 @@
 # Copyright (C) 2020-2022 Firejail Authors
 # License GPL v2
 #
-# Usage: firejail-welcome PROGRAM SYSCONFDIR
+# Usage: firejail-welcome PROGRAM SYSCONFDIR USER_NAME
 # where PROGRAM is detected and driven by firecfg.
 # SYSCONFDIR is most of the time /etc/firejail.
 #
@@ -12,14 +12,13 @@
 # we will provide a console-only replacement in /usr/lib/firejail/fzenity
 #
 
-PROGRAM=$1
-SYSCONFDIR=$2
-
-if ! command -v "$PROGRAM" >/dev/null; then
-	echo "Please install $PROGRAM."
+if ! command -v "$1" >/dev/null; then
+	echo "Please install $1."
 	exit 1
 fi
 
+PROGRAM="sudo -u $3 $1"
+SYSCONFDIR=$2
 export LANG=en_US.UTF8
 
 TITLE="Firejail Configuration Guide"
@@ -165,7 +164,7 @@ Now, I will apply the changes. This is what I will do:
 
 
 EOM
-
+MSG_RUN+="\n\n"
 if [[ "$run_firecfg" == "true" ]]; then
 	MSG_RUN+="     * enable Firejail for all recognized programs\n"
 fi

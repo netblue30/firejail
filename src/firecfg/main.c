@@ -443,11 +443,15 @@ int main(int argc, char **argv) {
 	}
 
 	if (arg_guide) {
-		int status = system("sudo "LIBDIR "/firejail/firejail-welcome.sh zenity " SYSCONFDIR);
+		char *cmd;
+		if (asprintf(&cmd, "sudo %s/firejail/firejail-welcome.sh /usr/bin/zenity %s %s", LIBDIR, SYSCONFDIR, user) == -1)
+			errExit("asprintf");
+		int status = system(cmd);
 		if (status == -1) {
 			fprintf(stderr, "Error: cannot run firejail-welcome.sh\n");
 			exit(1);
 		}
+		free(cmd);
 
 		// the last 8 bits of the status is the return value of the command executed by system()
 		// firejail-welcome.sh returns 55 if setting sysmlinks is required

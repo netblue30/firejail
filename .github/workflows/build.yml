@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@dcd71f646680f2efd8db4afa5ad64fdcba30e748
+    - name: update package information
+      run: sudo apt-get update
     - name: install dependencies
       run: sudo apt-get install gcc-11 libapparmor-dev libselinux1-dev expect xzdec
     - name: configure

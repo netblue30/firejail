@@ -89,7 +89,7 @@ char *print_line(char *in, int col) {
 
 void paginate(char *in) {
 	struct winsize w;
-	int col = 80;
+	unsigned col = 80;
 	if (ioctl(0, TIOCGWINSZ, &w) == 0)
 		col = w.ws_col;
 

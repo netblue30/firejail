@@ -712,6 +712,8 @@ mirabellette (https://github.com/mirabellette)
 	- add comment to thunderbird.profile to allow Firefox to load profiles
 mjudtmann (https://github.com/mjudtmann)
 	- lock firejail configuration in disable-mgmt.inc
+m00nwtchr (https://github.com/m00nwtchr)
+	- Whitelist electron-flags.conf for all versions of electron
 mustaqimM (https://github.com/mustaqimM)
 	- added profile for Nylas Mail
 n1trux (https://github.com/n1trux)

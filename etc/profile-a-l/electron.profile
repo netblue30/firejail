@@ -5,7 +5,7 @@
 include electron.local
 
 noblacklist ${HOME}/.config/Electron
-noblacklist ${HOME}/.config/electron-flag*.conf
+noblacklist ${HOME}/.config/electron*-flag*.conf
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,7 +16,7 @@ include disable-xdg.inc
 
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/Electron
-whitelist ${HOME}/.config/electron-flag*.conf
+whitelist ${HOME}/.config/electron*-flag*.conf
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

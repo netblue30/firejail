@@ -20,7 +20,7 @@ jobs:
   profile-checks:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@dcd71f646680f2efd8db4afa5ad64fdcba30e748
+    - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
     - name: sort.py
       run: ./ci/check/profiles/sort.py etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
     - name: private-etc-always-required.sh

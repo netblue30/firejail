@@ -36,12 +36,13 @@ enable_nonewprivs=false
 read -r -d $'\0' MSG_INTRO <<EOM
 <big><b>Welcome to Firejail!</b></big>
 
-This guide will walk you through some of the most common sandbox customizations. At the end of the
-guide you'll have the option to save your changes in Firejail's global config file at
-<b>/etc/firejail/firejail.config</b>. A copy of the original file is stored as
-<b>/etc/firejal/firejail.config-</b>.
+This guide will walk you through some of the most common sandbox customizations.
+At the end of the guide you'll have the option to save your changes in Firejail's
+global config file at <b>/etc/firejail/firejail.config</b>. A copy of the original file is saved
+as <b>/etc/firejal/firejail.config-</b>.
 
-Please note that running this script a second time can set new options, but does not clear options set in a previous run.
+Please note that running this script a second time can set new options, but does
+not clear options set in a previous run.
 
 Press OK to continue, or close this window to stop the program.
 

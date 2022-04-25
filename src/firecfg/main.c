@@ -444,8 +444,14 @@ int main(int argc, char **argv) {
 
 	if (arg_guide) {
 		char *cmd;
+if (arg_debug) {
+		if (asprintf(&cmd, "sudo %s/firejail/firejail-welcome.sh /usr/lib/firejail/fzenity %s %s", LIBDIR, SYSCONFDIR, user) == -1)
+			errExit("asprintf");
+}
+else {
 		if (asprintf(&cmd, "sudo %s/firejail/firejail-welcome.sh /usr/bin/zenity %s %s", LIBDIR, SYSCONFDIR, user) == -1)
 			errExit("asprintf");
+}
 		int status = system(cmd);
 		if (status == -1) {
 			fprintf(stderr, "Error: cannot run firejail-welcome.sh\n");

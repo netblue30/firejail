@@ -407,7 +407,7 @@ blacklist ${HOME}/.config/dolphin-emu
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
 blacklist ${HOME}/.config/draw.io
-blacklist ${HOME}/.config/electron-flag*.conf
+blacklist ${HOME}/.config/electron*-flag*.conf
 blacklist ${HOME}/.config/electron-mail
 blacklist ${HOME}/.config/emaildefaults
 blacklist ${HOME}/.config/emailidentities

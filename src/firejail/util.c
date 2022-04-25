@@ -173,11 +173,17 @@ static void clean_supplementary_groups(gid_t gid) {
 	assert(cfg.username);
 	gid_t groups[MAX_GROUPS];
 	int ngroups = MAX_GROUPS;
+
+	if (arg_nogroups && check_can_drop_all_groups()) {
+		if (setgroups(0, NULL) < 0)
+			errExit("setgroups");
+		if (arg_debug)
+			printf("No supplementary groups\n");
+		return;
+	}
+
 	int rv = getgrouplist(cfg.username, gid, groups, &ngroups);
 	if (rv == -1)
-		goto clean_all;
-
-	if (arg_nogroups && check_can_drop_all_groups())
 		goto clean_all;
 
 	// clean supplementary group list

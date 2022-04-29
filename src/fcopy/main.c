@@ -286,11 +286,9 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 	}
 
 	// extract mode and ownership
-	if (stat(infname, &s) != 0) {
-		if (!arg_quiet)
-			fprintf(stderr, "Warning fcopy: skipping %s, cannot find inode\n", infname);
+	if (stat(infname, &s) != 0)
 		goto out;
-	}
+
 	uid_t uid = s.st_uid;
 	gid_t gid = s.st_gid;
 	mode_t mode = s.st_mode;

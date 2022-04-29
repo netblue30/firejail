@@ -46,6 +46,7 @@ src/bash_completion/firejail.bash_completion
 src/zsh_completion/_firejail
 src/jailcheck/jailcheck
 src/fnettrace/fnettrace
+src/fzenity/fzenity
 uids.h
 seccomp
 seccomp.debug

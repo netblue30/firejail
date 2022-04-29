@@ -30,7 +30,7 @@
 #define PIDS_BUFLEN 4096
 //Process pids[max_pids];
 Process *pids = NULL;
-int max_pids=32769;
+int max_pids=32769; // recalculated for every read_pid() call
 
 // get the memory associated with this pid
 void pid_getmem(unsigned pid, unsigned *rss, unsigned *shared) {
@@ -303,20 +303,22 @@ void pid_store_cpu(unsigned index, unsigned parent, unsigned *utime, unsigned *s
 
 // mon_pid: pid of sandbox to be monitored, 0 if all sandboxes are included
 void pid_read(pid_t mon_pid) {
-	if (pids == NULL) {
-		FILE *fp = fopen("/proc/sys/kernel/pid_max", "r");
-		if (fp) {
-			int val;
-			if (fscanf(fp, "%d", &val) == 1) {
-				if (val >= max_pids)
-					max_pids = val + 1;
-			}
-			fclose(fp);
+	FILE *fp = fopen("/proc/sys/kernel/pid_max", "r");
+	if (fp) {
+		int val;
+		if (fscanf(fp, "%d", &val) == 1) {
+			if (val >= max_pids)
+				max_pids = val + 1;
 		}
+		fclose(fp);
+	}
+
+	if (pids == NULL) {
 		pids = malloc(sizeof(Process) * max_pids);
 		if (pids == NULL)
 			errExit("malloc");
 	}
+
 	memset(pids, 0, sizeof(Process) * max_pids);
 	pid_t mypid = getpid();
 
@@ -332,9 +334,12 @@ void pid_read(pid_t mon_pid) {
 
 	struct dirent *entry;
 	char *end;
+	pid_t new_max_pids = 0;
 	while ((entry = readdir(dir))) {
 		pid_t pid = strtol(entry->d_name, &end, 10);
 		pid %= max_pids;
+		if (pid > new_max_pids)
+			new_max_pids = pid;
 		if (end == entry->d_name || *end)
 			continue;
 		if (pid == mypid)
@@ -417,6 +422,9 @@ void pid_read(pid_t mon_pid) {
 		free(file);
 	}
 	closedir(dir);
+
+	// update max_pid
+	max_pids = new_max_pids;
 
 	pid_t pid;
 	for (pid = 0; pid < max_pids; pid++) {

@@ -47,7 +47,7 @@ static char *get_user_name(uid_t uid) {
 
 static char *get_header(void) {
 	char *rv;
-	if (asprintf(&rv, "%-5.5s %-9.9s %-10.10s %-10.10s %s",
+	if (asprintf(&rv, "%-7.7s %-9.9s %-10.10s %-10.10s %s",
 		"PID", "User", "RX(KB/s)", "TX(KB/s)", "Command") == -1)
 		errExit("asprintf");
 
@@ -183,7 +183,7 @@ static void print_proc(int index, int itv, int col) {
 	sprintf(ptrtx, "%.03f", tx_kbps);
 
 	char buf[1024 + 1];
-	snprintf(buf, 1024, "%-5.5s %-9.9s %-10.10s %-10.10s %s",
+	snprintf(buf, 1024, "%-7.7s %-9.9s %-10.10s %-10.10s %s",
 		pidstr, ptruser, ptrrx, ptrtx, ptrcmd);
 	if (col < 1024)
 		buf[col] = '\0';

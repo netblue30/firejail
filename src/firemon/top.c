@@ -47,7 +47,7 @@ static char *get_user_name(uid_t uid) {
 
 static char *get_header(void) {
 	char *rv;
-	if (asprintf(&rv, "%-5.5s %-9.9s %-8.8s %-8.8s %-5.5s %-4.4s %-9.9s %s",
+	if (asprintf(&rv, "%-7.7s %-9.9s %-8.8s %-8.8s %-5.5s %-4.4s %-9.9s %s",
 		"PID", "User", "RES(KiB)", "SHR(KiB)", "CPU%", "Prcs", "Uptime", "Command") == -1)
 		errExit("asprintf");
 
@@ -165,7 +165,7 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 		char prcs_str[10];
 		snprintf(prcs_str, 10, "%d", *cnt);
 
-		if (asprintf(&rv, "%-5.5s %-9.9s %-8.8s %-8.8s %-5.5s %-4.4s %-9.9s %s",
+		if (asprintf(&rv, "%-7.7s %-9.9s %-8.8s %-8.8s %-5.5s %-4.4s %-9.9s %s",
 		                 pidstr, ptruser, rss, shared, cpu_str, prcs_str, uptime_str, ptrcmd) == -1)
 			errExit("asprintf");
 

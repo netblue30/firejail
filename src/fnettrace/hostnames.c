@@ -50,7 +50,7 @@ char *retrieve_hostname(uint32_t ip) {
 				}
 			}
 		}
-		fclose(fp);
+		pclose(fp);
 		return rv;
 	}
 	else

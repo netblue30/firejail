@@ -5,12 +5,6 @@ include google-chrome-beta.local
 # Persistent global definitions
 include globals.local
 
-# Disable for now, see https://github.com/netblue30/firejail/pull/3688#issuecomment-718711565
-ignore whitelist /usr/share/mozilla/extensions
-ignore whitelist /usr/share/webext
-ignore include whitelist-runuser-common.inc
-ignore include whitelist-usr-share-common.inc
-
 noblacklist ${HOME}/.cache/google-chrome-beta
 noblacklist ${HOME}/.config/google-chrome-beta
 

@@ -1,20 +1,4 @@
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-bindir=@bindir@
-libdir=@libdir@
-datarootdir=@datarootdir@
-mandir=@mandir@
-sysconfdir=@sysconfdir@
-
-VERSION=@PACKAGE_VERSION@
-NAME=@PACKAGE_NAME@
-PACKAGE_TARNAME=@PACKAGE_TARNAME@
-DOCDIR=@docdir@
-HAVE_APPARMOR=@HAVE_APPARMOR@
-HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
-BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@
-HAVE_SUID=@HAVE_SUID@
-HAVE_MAN=@HAVE_MAN@
+include config.mk
 
 ifneq ($(HAVE_MAN),no)
 MAN_TARGET = man
@@ -101,7 +85,7 @@ distclean: clean
 		$(MAKE) -C $$dir distclean; \
 	done
 	$(MAKE) -C test distclean
-	rm -fr Makefile autom4te.cache config.log config.status src/common.mk mkdeb.sh
+	rm -fr Makefile autom4te.cache config.log config.mk config.status src/common.mk mkdeb.sh
 
 realinstall:
 	# firejail executable
@@ -208,6 +192,7 @@ COPYING \
 Makefile.in \
 README \
 RELNOTES \
+config.mk.in \
 configure \
 configure.ac \
 contrib \

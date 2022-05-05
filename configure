@@ -4087,7 +4087,7 @@ fi
 
 ac_config_files="$ac_config_files mkdeb.sh"
 
-ac_config_files="$ac_config_files Makefile src/bash_completion/Makefile src/common.mk src/fbuilder/Makefile src/fcopy/Makefile src/fids/Makefile src/firecfg/Makefile src/firejail/Makefile src/firemon/Makefile src/fldd/Makefile src/fnet/Makefile src/fnetfilter/Makefile src/fnettrace-dns/Makefile src/fnettrace-sni/Makefile src/fnettrace/Makefile src/fsec-optimize/Makefile src/fsec-print/Makefile src/fseccomp/Makefile src/ftee/Makefile src/fzenity/Makefile src/jailcheck/Makefile src/lib/Makefile src/libpostexecseccomp/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/man/Makefile src/profstats/Makefile src/zsh_completion/Makefile test/Makefile"
+ac_config_files="$ac_config_files Makefile config.mk src/bash_completion/Makefile src/common.mk src/fbuilder/Makefile src/fcopy/Makefile src/fids/Makefile src/firecfg/Makefile src/firejail/Makefile src/firemon/Makefile src/fldd/Makefile src/fnet/Makefile src/fnetfilter/Makefile src/fnettrace-dns/Makefile src/fnettrace-sni/Makefile src/fnettrace/Makefile src/fsec-optimize/Makefile src/fsec-print/Makefile src/fseccomp/Makefile src/ftee/Makefile src/fzenity/Makefile src/jailcheck/Makefile src/lib/Makefile src/libpostexecseccomp/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/man/Makefile src/profstats/Makefile src/zsh_completion/Makefile test/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4797,6 +4797,7 @@ do
   case $ac_config_target in
     "mkdeb.sh") CONFIG_FILES="$CONFIG_FILES mkdeb.sh" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
+    "config.mk") CONFIG_FILES="$CONFIG_FILES config.mk" ;;
     "src/bash_completion/Makefile") CONFIG_FILES="$CONFIG_FILES src/bash_completion/Makefile" ;;
     "src/common.mk") CONFIG_FILES="$CONFIG_FILES src/common.mk" ;;
     "src/fbuilder/Makefile") CONFIG_FILES="$CONFIG_FILES src/fbuilder/Makefile" ;;

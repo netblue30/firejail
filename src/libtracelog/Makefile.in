@@ -1,8 +1,5 @@
-CC=@CC@
-PREFIX=@prefix@
-VERSION=@PACKAGE_VERSION@
-NAME=@PACKAGE_NAME@
-HAVE_FATAL_WARNINGS=@HAVE_FATAL_WARNINGS@
+ROOT = ../..
+include $(ROOT)/config.mk
 
 H_FILE_LIST       = $(sort $(wildcard *.h))
 C_FILE_LIST       = $(sort $(wildcard *.c))

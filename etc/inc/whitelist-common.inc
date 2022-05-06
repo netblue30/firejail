@@ -85,3 +85,7 @@ whitelist ${HOME}/.kde4/share/config/oxygenrc
 whitelist ${HOME}/.kde4/share/icons
 whitelist ${HOME}/.local/share/qt5ct
 whitelist ${HOME}/.local/share/qt6ct
+
+# NixOS specific to resolve binary paths in
+# user environment
+whitelist ${HOME}/.nix-profile

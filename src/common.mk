@@ -7,7 +7,6 @@
 H_FILE_LIST       = $(sort $(wildcard *.h))
 C_FILE_LIST       = $(sort $(wildcard *.c))
 OBJS = $(C_FILE_LIST:.c=.o)
-BINOBJS =  $(foreach file, $(OBJS), $file)
 
 CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' $(HAVE_GCOV)
 CFLAGS += -DPREFIX='"$(prefix)"' -DSYSCONFDIR='"$(sysconfdir)/firejail"' -DLIBDIR='"$(libdir)"' -DBINDIR='"$(bindir)"'   -DVARDIR='"/var/lib/firejail"'

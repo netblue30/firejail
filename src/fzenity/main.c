@@ -74,7 +74,7 @@ char *print_line(char *in, int col) {
 	if (*ptr == '\n') {
 		*ptr++ = '\0';
 		printf("%s\n", in);
-		return ptr++;
+		return ptr;
 	}
 	else if (i == col) {
 		while (*ptr != ' ' && ptr != in)

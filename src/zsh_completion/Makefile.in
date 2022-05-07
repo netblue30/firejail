@@ -1,7 +1,8 @@
 .PHONY: all
 all: _firejail
 
-include ../common.mk
+ROOT = ../..
+include $(ROOT)/src/common.mk
 
 _firejail: _firejail.in
 	gawk -f ../man/preproc.awk -- $(MANFLAGS) < $< > $@.tmp

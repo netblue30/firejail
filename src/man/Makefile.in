@@ -1,7 +1,8 @@
 .PHONY: all
 all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-profile.man firemon.man jailcheck.man
 
-include ../common.mk
+ROOT = ../..
+include $(ROOT)/src/common.mk
 
 %.man: %.txt
 	gawk -f ./preproc.awk -- $(MANFLAGS) < $< > $@

@@ -1,7 +1,8 @@
 .PHONY: all
 all: fseccomp
 
-include ../common.mk
+ROOT = ../..
+include $(ROOT)/src/common.mk
 
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/syscall.h
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@

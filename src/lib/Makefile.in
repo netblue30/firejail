@@ -1,4 +1,5 @@
-include ../common.mk
+ROOT = ../..
+include $(ROOT)/src/common.mk
 
 .PHONY: all
 all: $(OBJS)

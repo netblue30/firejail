@@ -1,7 +1,8 @@
 .PHONY: all
 all: fzenity
 
-include ../common.mk
+ROOT = ../..
+include $(ROOT)/src/common.mk
 
 %.o : %.c $(H_FILE_LIST) ../include/common.h
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@

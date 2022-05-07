@@ -1,8 +1,11 @@
+.PHONY: all
+all: lib
+
 ROOT = ../..
 include $(ROOT)/src/common.mk
 
-.PHONY: all
-all: $(OBJS)
+.PHONY: lib
+lib: $(OBJS)
 
 %.o : %.c $(H_FILE_LIST) $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@

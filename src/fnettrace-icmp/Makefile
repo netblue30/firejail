@@ -1,19 +1,22 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+PROG = fnettrace-icmp
+TARGET = $(PROG)
+
 .PHONY: all
-all: fnettrace-icmp
+all: $(TARGET)
 
 include $(ROOT)/src/common.mk
 
 %.o : %.c $(HDRS) $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
-fnettrace-icmp: $(OBJS) $(ROOT)/config.mk
+$(PROG): $(OBJS) $(ROOT)/config.mk
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)
 
 .PHONY: clean
-clean:; rm -fr *.o fnettrace-icmp *.gcov *.gcda *.gcno *.plist
+clean:; rm -fr *.o $(PROG) *.gcov *.gcda *.gcno *.plist
 
 .PHONY: distclean
 distclean: clean

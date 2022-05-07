@@ -1,8 +1,10 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+TARGET = lib
+
 .PHONY: all
-all: lib
+all: $(TARGET)
 
 include $(ROOT)/src/common.mk
 

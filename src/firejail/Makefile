@@ -1,6 +1,9 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+PROG = firejail
+TARGET = $(PROG)
+
 MOD_HDRS = \
 ../include/rundefs.h \
 ../include/common.h \
@@ -20,18 +23,18 @@ MOD_OBJS = \
 ../lib/syscall.o
 
 .PHONY: all
-all: firejail
+all: $(TARGET)
 
 include $(ROOT)/src/common.mk
 
 %.o : %.c $(HDRS) $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
-firejail: $(OBJS) $(ROOT)/config.mk
+$(PROG): $(OBJS) $(ROOT)/config.mk
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)
 
 .PHONY: clean
-clean:; rm -fr *.o firejail *.gcov *.gcda *.gcno *.plist
+clean:; rm -fr *.o $(PROG) *.gcov *.gcda *.gcno *.plist
 
 .PHONY: distclean
 distclean: clean

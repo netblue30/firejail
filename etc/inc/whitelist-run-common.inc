@@ -14,3 +14,4 @@ whitelist /run/systemd/journal/socket
 whitelist /run/systemd/resolve/resolv.conf
 whitelist /run/systemd/resolve/stub-resolv.conf
 whitelist /run/udev/data
+whitelist /run/opengl-driver	# NixOS

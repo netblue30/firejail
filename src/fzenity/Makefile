@@ -1,12 +1,14 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+MOD_HDRS = ../include/common.h
+
 .PHONY: all
 all: fzenity
 
 include $(ROOT)/src/common.mk
 
-%.o : %.c $(HDRS) ../include/common.h $(ROOT)/config.mk
+%.o : %.c $(HDRS) $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 fzenity: $(OBJS) $(ROOT)/config.mk

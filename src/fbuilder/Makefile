@@ -1,12 +1,14 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+MOD_HDRS = ../include/common.h ../include/syscall.h
+
 .PHONY: all
 all: fbuilder
 
 include $(ROOT)/src/common.mk
 
-%.o : %.c $(HDRS) ../include/common.h ../include/syscall.h $(ROOT)/config.mk
+%.o : %.c $(HDRS) $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 fbuilder: $(OBJS) $(ROOT)/config.mk

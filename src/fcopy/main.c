@@ -22,6 +22,8 @@
 #include <ftw.h>
 #include <errno.h>
 #include <pwd.h>
+#include <limits.h>
+#include <sys/xattr.h>
 
 #include <fcntl.h>
 #ifndef O_PATH
@@ -48,6 +50,7 @@ static unsigned file_cnt = 0;
 
 static char *outpath = NULL;
 static char *inpath = NULL;
+static char **keep_xattrs = NULL;
 
 #if HAVE_SELINUX
 static struct selabel_handle *label_hnd = NULL;
@@ -98,6 +101,79 @@ static void selinux_relabel_path(const char *path, const char *inside_path) {
 	(void) path;
 	(void) inside_path;
 #endif
+}
+
+// Convert a string of comma-separated values into a NULL-terminated string array.
+// The original string is modified in-place.
+static char **csv_to_strv(char *clist)
+{
+	// Don't try to split an empty string
+	if (!clist || *clist == '\0')
+		return NULL;
+
+	// Count items first (number of commas + 1)
+	size_t strv_len = 1;
+	for (char *ptr = clist; *ptr; ++ptr) {
+		if (*ptr == ',')
+			++strv_len;
+	}
+
+	// 1 more item is allocated for the NULL terminator
+	char **strv = calloc(strv_len + 1, sizeof(char *));
+	if (!strv)
+		errExit("calloc");
+
+	char **strvp = strv;
+	while (clist && *clist != '\0') {
+		char *end = strchr(clist, ',');
+		if (end) {
+			*end = '\0';
+			end++;
+		}
+
+		*strvp = strdup(clist);
+		if (!*strvp)
+			errExit("strdup");
+
+		strvp++;
+		clist = end;
+	}
+
+	return strv;
+}
+
+static void copy_xattr(const char *src, const char *dst, const char *name)
+{
+	static unsigned char *xattr_buf = NULL;
+
+	if (!xattr_buf) {
+		xattr_buf = malloc(XATTR_SIZE_MAX);
+		if (!xattr_buf)
+			errExit("malloc");
+	}
+
+	ssize_t len = lgetxattr(src, name, xattr_buf, XATTR_SIZE_MAX);
+	if (len == -1) {
+		// It's okay for some files to have no desired xattrs,
+		// so print this message only for debug purposes
+		if (arg_debug)
+			printf("Warning fcopy: cannot get %s xattr on %s, xattr is not copied\n", name, src);
+		return;
+	}
+
+	if (lsetxattr(dst, name, xattr_buf, len, 0) != 0 && !arg_quiet)
+		printf("Warning fcopy: cannot set %s xattr on %s, xattr is not copied\n", name, dst);
+}
+
+static void copy_xattrs(const char *src, const char *dst, char *const names[])
+{
+	if (names == NULL)
+		return;
+
+	while (*names) {
+		copy_xattr(src, dst, *names);
+		names++;
+	}
 }
 
 // modified version of the function from util.c
@@ -153,6 +229,7 @@ static void copy_file(const char *srcname, const char *destname, mode_t mode, ui
 	close(dst);
 
 	selinux_relabel_path(destname, srcname);
+	copy_xattrs(srcname, destname, keep_xattrs);
 
 	return;
 
@@ -418,7 +495,7 @@ static void duplicate_link(const char *src, const char *dest, struct stat *s) {
 
 
 static void usage(void) {
-	fputs("Usage: fcopy [--follow-link] src dest\n"
+	fputs("Usage: fcopy [--follow-link] [--keep-xattrs <xattrs>] src dest\n"
 		"\n"
 		"Copy SRC to DEST/SRC. SRC may be a file, directory, or symbolic link.\n"
 		"If SRC is a directory it is copied recursively.  If it is a symlink,\n"
@@ -455,6 +532,8 @@ int main(int argc, char **argv) {
 	for (int i = 1; i < argc - 2; ++i) {
 		if (strcmp(argv[i], "--follow-link") == 0)
 			arg_follow_link = 1;
+		else if (strcmp(argv[i], "--keep-xattrs") == 0)
+			keep_xattrs = csv_to_strv(argv[++i]);
 	}
 
 	char *src = argv[argc - 2];

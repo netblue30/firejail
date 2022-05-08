@@ -1124,6 +1124,16 @@ Example:
 $ firejail --keep-fd=3,4,5
 
 .TP
+\fB\-\-keep-xattrs=name,name,name
+Copy the specified extended attributes. By default, none of the xattrs are copied for files in private-bin, private-etc and private-home. Attributes are always preserved for bind-mounted files. See xattr(7) for details.
+.br
+
+.br
+Example:
+.br
+$ firejail --keep-xattrs=security.ima,security.SMACK64
+
+.TP
 \fB\-\-keep-var-tmp
 /var/tmp directory is untouched.
 .br

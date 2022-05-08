@@ -146,7 +146,7 @@ void dhcp_store_exec(void) {
 		}
 	}
 
-	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", dhclient_path, RUN_MNT_DIR);
+	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 6, PATH_FCOPY, "--follow-link", "--keep-xattrs", cfg.keep_xattrs, dhclient_path, RUN_MNT_DIR);
 }
 
 void dhcp_start(void) {

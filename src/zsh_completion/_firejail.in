@@ -105,6 +105,7 @@ _firejail_args=(
     '--keep-config-pulse[disable automatic ~/.config/pulse init]'
     '--keep-dev-shm[/dev/shm directory is untouched (even with --private-dev)]'
     '--keep-fd[inherit open file descriptors to sandbox]'
+    '*--keep-xattrs=-[copy the specified extended attributes to the sandbox]'
     '--keep-var-tmp[/var/tmp directory is untouched]'
     '--machine-id[spoof /etc/machine-id with a random id]'
     '--memory-deny-write-execute[seccomp filter to block attempts to create memory mappings that are both writable and executable]'

@@ -746,6 +746,10 @@ Enable IPC namespace.
 Inherit open file descriptors to sandbox.
 
 .TP
+\fBkeep-xattrs name,name,name
+Copy the specified extended attributes to the sandbox.
+
+.TP
 \fBname sandboxname
 Set sandbox name. Example:
 .br

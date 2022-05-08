@@ -569,11 +569,11 @@ static void duplicate(char *name) {
 		if (asprintf(&path, "%s/%s", RUN_HOME_DIR, ptr) == -1)
 			errExit("asprintf");
 		create_empty_dir_as_user(path, 0755);
-		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FCOPY, fname, path);
+		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 5, PATH_FCOPY, "--keep-xattrs", cfg.keep_xattrs, fname, path);
 		free(path);
 	}
 	else
-		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FCOPY, fname, RUN_HOME_DIR);
+		sbox_run(SBOX_USER| SBOX_CAPS_NONE | SBOX_SECCOMP, 5, PATH_FCOPY, "--keep-xattrs", cfg.keep_xattrs, fname, RUN_HOME_DIR);
 	fs_logger2("clone", fname);
 	fs_logger_print();	// save the current log
 

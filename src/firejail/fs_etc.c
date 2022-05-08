@@ -170,9 +170,9 @@ static void duplicate(const char *fname, const char *private_dir, const char *pr
 	// this will solve problems such as NixOS #4887
 	// don't follow links to dynamic directories such as /proc
 	if (strcmp(src, "/etc/mtab") == 0)
-		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 3, PATH_FCOPY, src, dst);
+		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 5, PATH_FCOPY, "--keep-xattrs", cfg.keep_xattrs, src, dst);
 	else
-		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 4, PATH_FCOPY, "--follow-link", src, dst);
+		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 6, PATH_FCOPY, "--follow-link", "--keep-xattrs", cfg.keep_xattrs, src, dst);
 
 	free(dst);
 	fs_logger2("clone", src);

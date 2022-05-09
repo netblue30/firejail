@@ -55,6 +55,10 @@ static void load_seccomp(void) {
 	};
 
 	prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+#ifdef SECCOMP_FILTER_FLAG_LOG
+	syscall(SYS_seccomp, SECCOMP_SET_MODE_FILTER, SECCOMP_FILTER_FLAG_LOG, &prog);
+#else
 	prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &prog);
+#endif
 	munmap(filter, size);
 }

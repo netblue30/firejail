@@ -22,4 +22,3 @@ clean:; rm -fr $(OBJS) libpostexecseccomp.so *.plist
 
 .PHONY: distclean
 distclean: clean
-	rm -fr Makefile

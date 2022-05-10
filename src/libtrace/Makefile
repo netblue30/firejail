@@ -9,17 +9,16 @@ CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' -fstack-prot
 LDFLAGS += -pie -fPIE -Wl,-z,relro -Wl,-z,now
 
 .PHONY: all
-all: libtracelog.so
+all: libtrace.so
 
-%.o : %.c $(H_FILE_LIST) ../include/rundefs.h
+%.o : %.c $(H_FILE_LIST)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-libtracelog.so: $(OBJS)
+libtrace.so: $(OBJS)
 	$(CC) $(LDFLAGS) -shared -fPIC -z relro -o $@ $(OBJS) -ldl
 
 .PHONY: clean
-clean:; rm -fr $(OBJS) libtracelog.so *.plist
+clean:; rm -fr $(OBJS) libtrace.so *.plist
 
 .PHONY: distclean
 distclean: clean
-	rm -fr Makefile

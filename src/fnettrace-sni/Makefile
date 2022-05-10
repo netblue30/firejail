@@ -1,5 +1,5 @@
 .PHONY: all
-all: fnettrace-dns
+all: fnettrace-sni
 
 ROOT = ../..
 include $(ROOT)/src/common.mk
@@ -7,12 +7,11 @@ include $(ROOT)/src/common.mk
 %.o : %.c $(H_FILE_LIST)
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
-fnettrace-dns: $(OBJS)
+fnettrace-sni: $(OBJS)
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)
 
 .PHONY: clean
-clean:; rm -fr *.o fnettrace-dns *.gcov *.gcda *.gcno *.plist
+clean:; rm -fr *.o fnettrace-sni *.gcov *.gcda *.gcno *.plist
 
 .PHONY: distclean
 distclean: clean
-	rm -fr Makefile

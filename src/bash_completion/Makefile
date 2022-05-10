@@ -1,18 +1,17 @@
 .PHONY: all
-all: _firejail
+all: firejail.bash_completion
 
 ROOT = ../..
 include $(ROOT)/config.mk
 
-_firejail: _firejail.in
+firejail.bash_completion: firejail.bash_completion.in
 	gawk -f ../man/preproc.awk -- $(MANFLAGS) < $< > $@.tmp
 	sed "s|_SYSCONFDIR_|$(sysconfdir)|" < $@.tmp > $@
 	rm $@.tmp
 
 .PHONY: clean
 clean:
-	rm -fr _firejail
+	rm -fr firejail.bash_completion
 
 .PHONY: distclean
 distclean: clean
-	rm -fr Makefile

@@ -282,40 +282,7 @@ if test "$prefix" = /usr; then
 	test "$sysconfdir" = '${prefix}/etc' && sysconfdir="/etc"
 fi
 
-AC_CONFIG_FILES([mkdeb.sh], [chmod +x mkdeb.sh])
-AC_CONFIG_FILES([
-Makefile
-config.mk
-config.sh
-src/bash_completion/Makefile
-src/common.mk
-src/fbuilder/Makefile
-src/fcopy/Makefile
-src/fids/Makefile
-src/firecfg/Makefile
-src/firejail/Makefile
-src/firemon/Makefile
-src/fldd/Makefile
-src/fnet/Makefile
-src/fnetfilter/Makefile
-src/fnettrace-dns/Makefile
-src/fnettrace-sni/Makefile
-src/fnettrace/Makefile
-src/fsec-optimize/Makefile
-src/fsec-print/Makefile
-src/fseccomp/Makefile
-src/ftee/Makefile
-src/fzenity/Makefile
-src/jailcheck/Makefile
-src/lib/Makefile
-src/libpostexecseccomp/Makefile
-src/libtrace/Makefile
-src/libtracelog/Makefile
-src/man/Makefile
-src/profstats/Makefile
-src/zsh_completion/Makefile
-test/Makefile
-])
+AC_CONFIG_FILES([config.mk config.sh])
 AC_OUTPUT
 
 cat <<EOF

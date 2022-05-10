@@ -1,5 +1,5 @@
 .PHONY: all
-all: fcopy
+all: fnetfilter
 
 ROOT = ../..
 include $(ROOT)/src/common.mk
@@ -7,12 +7,11 @@ include $(ROOT)/src/common.mk
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/syscall.h
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
-fcopy: $(OBJS) ../lib/common.o
+fnetfilter: $(OBJS) ../lib/common.o
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o $(LIBS) $(EXTRA_LDFLAGS)
 
 .PHONY: clean
-clean:; rm -fr *.o fcopy *.gcov *.gcda *.gcno *.plist
+clean:; rm -fr *.o fnetfilter *.gcov *.gcda *.gcno *.plist
 
 .PHONY: distclean
 distclean: clean
-	rm -fr Makefile

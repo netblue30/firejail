@@ -10,7 +10,6 @@
 .directory
 *.man
 .vscode
-Makefile
 autom4te.cache/
 config.log
 config.mk
@@ -25,7 +24,6 @@ firejail.1
 firemon.1
 firecfg.1
 jailcheck.1
-mkdeb.sh
 src/fnettrace-dns/fnettrace-dns
 src/fnettrace-sni/fnettrace-sni
 src/firejail/firejail
@@ -57,7 +55,6 @@ seccomp.64
 seccomp.block_secondary
 seccomp.mdwx
 seccomp.mdwx.32
-src/common.mk
 aclocal.m4
 __pycache__
 *.pyc

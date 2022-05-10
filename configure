@@ -4085,9 +4085,7 @@ if test "$prefix" = /usr; then
 	test "$sysconfdir" = '${prefix}/etc' && sysconfdir="/etc"
 fi
 
-ac_config_files="$ac_config_files mkdeb.sh"
-
-ac_config_files="$ac_config_files Makefile config.mk config.sh src/bash_completion/Makefile src/common.mk src/fbuilder/Makefile src/fcopy/Makefile src/fids/Makefile src/firecfg/Makefile src/firejail/Makefile src/firemon/Makefile src/fldd/Makefile src/fnet/Makefile src/fnetfilter/Makefile src/fnettrace-dns/Makefile src/fnettrace-sni/Makefile src/fnettrace/Makefile src/fsec-optimize/Makefile src/fsec-print/Makefile src/fseccomp/Makefile src/ftee/Makefile src/fzenity/Makefile src/jailcheck/Makefile src/lib/Makefile src/libpostexecseccomp/Makefile src/libtrace/Makefile src/libtracelog/Makefile src/man/Makefile src/profstats/Makefile src/zsh_completion/Makefile test/Makefile"
+ac_config_files="$ac_config_files config.mk config.sh"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4795,38 +4793,8 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
-    "mkdeb.sh") CONFIG_FILES="$CONFIG_FILES mkdeb.sh" ;;
-    "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "config.mk") CONFIG_FILES="$CONFIG_FILES config.mk" ;;
     "config.sh") CONFIG_FILES="$CONFIG_FILES config.sh" ;;
-    "src/bash_completion/Makefile") CONFIG_FILES="$CONFIG_FILES src/bash_completion/Makefile" ;;
-    "src/common.mk") CONFIG_FILES="$CONFIG_FILES src/common.mk" ;;
-    "src/fbuilder/Makefile") CONFIG_FILES="$CONFIG_FILES src/fbuilder/Makefile" ;;
-    "src/fcopy/Makefile") CONFIG_FILES="$CONFIG_FILES src/fcopy/Makefile" ;;
-    "src/fids/Makefile") CONFIG_FILES="$CONFIG_FILES src/fids/Makefile" ;;
-    "src/firecfg/Makefile") CONFIG_FILES="$CONFIG_FILES src/firecfg/Makefile" ;;
-    "src/firejail/Makefile") CONFIG_FILES="$CONFIG_FILES src/firejail/Makefile" ;;
-    "src/firemon/Makefile") CONFIG_FILES="$CONFIG_FILES src/firemon/Makefile" ;;
-    "src/fldd/Makefile") CONFIG_FILES="$CONFIG_FILES src/fldd/Makefile" ;;
-    "src/fnet/Makefile") CONFIG_FILES="$CONFIG_FILES src/fnet/Makefile" ;;
-    "src/fnetfilter/Makefile") CONFIG_FILES="$CONFIG_FILES src/fnetfilter/Makefile" ;;
-    "src/fnettrace-dns/Makefile") CONFIG_FILES="$CONFIG_FILES src/fnettrace-dns/Makefile" ;;
-    "src/fnettrace-sni/Makefile") CONFIG_FILES="$CONFIG_FILES src/fnettrace-sni/Makefile" ;;
-    "src/fnettrace/Makefile") CONFIG_FILES="$CONFIG_FILES src/fnettrace/Makefile" ;;
-    "src/fsec-optimize/Makefile") CONFIG_FILES="$CONFIG_FILES src/fsec-optimize/Makefile" ;;
-    "src/fsec-print/Makefile") CONFIG_FILES="$CONFIG_FILES src/fsec-print/Makefile" ;;
-    "src/fseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/fseccomp/Makefile" ;;
-    "src/ftee/Makefile") CONFIG_FILES="$CONFIG_FILES src/ftee/Makefile" ;;
-    "src/fzenity/Makefile") CONFIG_FILES="$CONFIG_FILES src/fzenity/Makefile" ;;
-    "src/jailcheck/Makefile") CONFIG_FILES="$CONFIG_FILES src/jailcheck/Makefile" ;;
-    "src/lib/Makefile") CONFIG_FILES="$CONFIG_FILES src/lib/Makefile" ;;
-    "src/libpostexecseccomp/Makefile") CONFIG_FILES="$CONFIG_FILES src/libpostexecseccomp/Makefile" ;;
-    "src/libtrace/Makefile") CONFIG_FILES="$CONFIG_FILES src/libtrace/Makefile" ;;
-    "src/libtracelog/Makefile") CONFIG_FILES="$CONFIG_FILES src/libtracelog/Makefile" ;;
-    "src/man/Makefile") CONFIG_FILES="$CONFIG_FILES src/man/Makefile" ;;
-    "src/profstats/Makefile") CONFIG_FILES="$CONFIG_FILES src/profstats/Makefile" ;;
-    "src/zsh_completion/Makefile") CONFIG_FILES="$CONFIG_FILES src/zsh_completion/Makefile" ;;
-    "test/Makefile") CONFIG_FILES="$CONFIG_FILES test/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
@@ -5240,11 +5208,6 @@ which seems to be undefined.  Please make sure it is defined" >&2;}
 
   esac
 
-
-  case $ac_file$ac_mode in
-    "mkdeb.sh":F) chmod +x mkdeb.sh ;;
-
-  esac
 done # for ac_tag
 
 

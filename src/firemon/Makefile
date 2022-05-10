@@ -15,4 +15,3 @@ clean:; rm -fr *.o firemon *.gcov *.gcda *.gcno *.plist
 
 .PHONY: distclean
 distclean: clean
-	rm -fr Makefile

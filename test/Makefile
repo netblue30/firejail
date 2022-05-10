@@ -11,4 +11,3 @@ clean:
 
 .PHONY: distclean
 distclean: clean
-	rm -f Makefile

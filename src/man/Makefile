@@ -12,4 +12,3 @@ clean:; rm -fr *.man
 
 .PHONY: distclean
 distclean: clean
-	rm -fr Makefile

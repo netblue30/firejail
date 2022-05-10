@@ -85,7 +85,7 @@ distclean: clean
 		$(MAKE) -C $$dir distclean; \
 	done
 	$(MAKE) -C test distclean
-	rm -fr Makefile autom4te.cache config.log config.mk config.sh config.status src/common.mk mkdeb.sh
+	rm -fr autom4te.cache config.log config.mk config.sh config.status
 
 realinstall:
 	# firejail executable
@@ -189,7 +189,7 @@ uninstall:
 
 DISTFILES = \
 COPYING \
-Makefile.in \
+Makefile \
 README \
 RELNOTES \
 config.mk.in \
@@ -200,20 +200,18 @@ contrib \
 etc \
 install.sh \
 m4 \
-mkdeb.sh.in \
+mkdeb.sh \
 mketc.sh \
 mkman.sh \
 platform \
 src
 
-DISTFILES_TEST = test/Makefile.in test/apps test/apps-x11 test/apps-x11-xorg test/root test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils test/chroot
+DISTFILES_TEST = test/Makefile test/apps test/apps-x11 test/apps-x11-xorg test/root test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils test/chroot
 
 dist:
 	mv config.sh config.sh.old
 	mv config.status config.status.old
-	mv mkdeb.sh mkdeb.sh.old
 	make distclean
-	mv mkdeb.sh.old mkdeb.sh
 	mv config.status.old config.status
 	mv config.sh.old config.sh
 	rm -fr $(NAME)-$(VERSION) $(NAME)-$(VERSION).tar.xz

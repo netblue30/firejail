@@ -1,4 +1,4 @@
-# common definitions for all makefiles
+# Common definitions for building C programs and non-shared objects
 
 CC=@CC@
 prefix=@prefix@

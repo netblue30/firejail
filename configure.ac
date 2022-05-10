@@ -286,6 +286,7 @@ AC_CONFIG_FILES([mkdeb.sh], [chmod +x mkdeb.sh])
 AC_CONFIG_FILES([
 Makefile
 config.mk
+config.sh
 src/bash_completion/Makefile
 src/common.mk
 src/fbuilder/Makefile

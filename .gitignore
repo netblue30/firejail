@@ -14,6 +14,7 @@ Makefile
 autom4te.cache/
 config.log
 config.mk
+config.sh
 config.status
 firejail-*.tar.xz
 firejail-login.5

@@ -101,7 +101,7 @@ distclean: clean
 		$(MAKE) -C $$dir distclean; \
 	done
 	$(MAKE) -C test distclean
-	rm -fr Makefile autom4te.cache config.log config.status config.h src/common.mk mkdeb.sh
+	rm -fr Makefile autom4te.cache config.log config.status src/common.mk mkdeb.sh
 
 realinstall:
 	# firejail executable

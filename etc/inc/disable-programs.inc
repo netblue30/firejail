@@ -959,7 +959,6 @@ blacklist ${HOME}/.local/share/newsboat
 blacklist ${HOME}/.local/share/nheko
 blacklist ${HOME}/.local/share/nomacs
 blacklist ${HOME}/.local/share/notes
-blacklist ${HOME}/.local/share/nvim
 blacklist ${HOME}/.local/share/ocenaudio
 blacklist ${HOME}/.local/share/okular
 blacklist ${HOME}/.local/share/onlyoffice

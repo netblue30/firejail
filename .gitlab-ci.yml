@@ -54,7 +54,7 @@ build_apparmor:
     script:
         - apt-get update -qq
         - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config gawk
-        - ./configure --prefix=/usr --enable-apparmor && make deb-apparmor && dpkg -i firejail*.deb
+        - ./configure && make deb-apparmor && dpkg -i firejail*.deb
         - command -V firejail && firejail --version
         - firejail --version | grep -F 'AppArmor support is enabled'
 

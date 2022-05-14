@@ -9,17 +9,9 @@
 set -e
 NAME=@PACKAGE_NAME@
 VERSION=@PACKAGE_VERSION@
-HAVE_APPARMOR=@HAVE_APPARMOR@
-HAVE_SELINUX=@HAVE_SELINUX@
 EXTRA_VERSION=$1
 
-CONFIG_ARGS="--prefix=/usr"
-if [ -n "$HAVE_APPARMOR" ]; then
-    CONFIG_ARGS="$CONFIG_ARGS --enable-apparmor"
-fi
-if [ -n "$HAVE_SELINUX" ]; then
-    CONFIG_ARGS="$CONFIG_ARGS --enable-selinux"
-fi
+test "$#" -gt 0 && shift
 
 CODE_ARCHIVE="$NAME-$VERSION.tar.xz"
 CODE_DIR="$NAME-$VERSION"
@@ -36,7 +28,7 @@ echo "*****************************************"
 tar -xJvf "$CODE_ARCHIVE"
 #mkdir -p "$INSTALL_DIR"
 cd "$CODE_DIR"
-./configure $CONFIG_ARGS
+./configure --prefix=/usr "$@"
 make -j2
 mkdir debian
 DESTDIR=debian make install-strip

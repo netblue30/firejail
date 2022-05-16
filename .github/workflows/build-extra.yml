@@ -35,6 +35,10 @@ jobs:
       run: CC=clang-11 ./configure --enable-fatal-warnings
     - name: make
       run: make
+    - name: make install
+      run: sudo make install
+    - name: print version
+      run: command -V firejail && firejail --version
   scan-build:
     runs-on: ubuntu-20.04
     steps:

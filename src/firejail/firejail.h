@@ -833,6 +833,7 @@ extern char *config_seccomp_filter_add;
 extern char **whitelist_reject_topdirs;
 
 int checkcfg(int val);
+void print_version(void);
 void print_compiletime_support(void);
 
 // appimage.c

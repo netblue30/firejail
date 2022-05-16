@@ -56,6 +56,7 @@ build_apparmor:
         - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config gawk
         - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail*.deb
         - command -V firejail && firejail --version
+        - firejail --version | grep -F 'AppArmor support is enabled'
 
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest

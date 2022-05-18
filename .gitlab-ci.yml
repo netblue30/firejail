@@ -11,6 +11,7 @@ build_ubuntu_package:
         - apt-get update -qq
         - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian pkg-config python3 gawk
         - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
+        - command -V firejail && firejail --version
         - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_debian_package:
@@ -19,6 +20,7 @@ build_debian_package:
         - apt-get update -qq
         - apt-get install -y -qq build-essential lintian pkg-config gawk
         - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
+        - command -V firejail && firejail --version
 
 build_redhat_package:
     image: almalinux:latest
@@ -26,6 +28,7 @@ build_redhat_package:
         - dnf update -y
         - dnf install -y rpm-build gcc make
         - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
+        - command -V firejail && firejail --version
 
 build_fedora_package:
     image: fedora:latest
@@ -33,6 +36,7 @@ build_fedora_package:
         - dnf update -y
         - dnf install -y rpm-build gcc make
         - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
+        - command -V firejail && firejail --version
         - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_src_package:
@@ -42,6 +46,7 @@ build_src_package:
         - apk upgrade
         - apk add build-base linux-headers python3 gawk
         - ./configure --prefix=/usr && make && make install-strip
+        - command -V firejail && firejail --version
         # - python3 contrib/sort.py etc/*.{profile,inc}
 
 build_apparmor:
@@ -49,7 +54,9 @@ build_apparmor:
     script:
         - apt-get update -qq
         - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config gawk
-        - ./configure --prefix=/usr && make deb-apparmor && dpkg -i firejail*.deb
+        - ./configure --prefix=/usr --enable-apparmor && make deb-apparmor && dpkg -i firejail*.deb
+        - command -V firejail && firejail --version
+        - firejail --version | grep -F 'AppArmor support is enabled'
 
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest

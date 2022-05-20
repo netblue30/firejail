@@ -1031,10 +1031,6 @@ int main(int argc, char **argv, char **envp) {
 
 	// sanity check for arguments
 	for (i = 0; i < argc; i++) {
-//		if (*argv[i] == 0) { // see #4395 - bug reported by Debian
-//			fprintf(stderr, "Error: too short arguments: argv[%d] is empty\n", i);
-//			exit(1);
-//		}
 		if (strlen(argv[i]) >= MAX_ARG_LEN) {
 			fprintf(stderr, "Error: too long arguments: argv[%d] len (%zu) >= MAX_ARG_LEN (%d)\n", i, strlen(argv[i]), MAX_ARG_LEN);
 			exit(1);
@@ -1279,6 +1275,10 @@ int main(int argc, char **argv, char **envp) {
 	// check for force-nonewprivs in /etc/firejail/firejail.config file
 	if (checkcfg(CFG_FORCE_NONEWPRIVS))
 		arg_nonewprivs = 1;
+
+	// check oom
+	if ((i = check_arg(argc, argv, "--oom=", 0)) != 0)
+		oom_set(argv[i] + 6);
 
 	// parse arguments
 	for (i = 1; i < argc; i++) {
@@ -2717,6 +2717,9 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--timeout=", 10) == 0)
 			cfg.timeout = extract_timeout(argv[i] + 10);
 		else if (strcmp(argv[i], "--appimage") == 0) {
+			// already handled
+		}
+		else if (strncmp(argv[i], "--oom=", 6) == 0) {
 			// already handled
 		}
 		else if (strcmp(argv[i], "--shell=none") == 0) {

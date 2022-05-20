@@ -922,4 +922,7 @@ void selinux_relabel_path(const char *path, const char *inside_path);
 // ids.c
 void run_ids(int argc, char **argv);
 
+// oom.c
+void oom_set(const char *oom_string);
+
 #endif

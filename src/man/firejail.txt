@@ -1783,6 +1783,17 @@ Disable video devices.
 \fB\-\-nowhitelist=dirname_or_filename
 Disable whitelist for this directory or file.
 
+.TP
+\fB\-\-oom=value
+Configure kernel's OutOfMemory-killer score for this sandbox. The acceptable score values are between 0 and 1000
+for regular users, and -1000 to 1000 for root. For more information on OOM kernel feature see \fBman choom\fR.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-oom=300 firefox
+
 #ifdef HAVE_OUTPUT
 .TP
 \fB\-\-output=logfile

@@ -173,6 +173,7 @@ static char *usage_str =
 	"    --novideo - disable video devices.\n"
 	"    --nou2f - disable U2F devices.\n"
 	"    --nowhitelist=filename - disable whitelist for file or directory.\n"
+	"    --oom=value - configure OutOfMemory killer for the sandbox\n"
 #ifdef HAVE_OUTPUT
 	"    --output=logfile - stdout logging and log rotation.\n"
 	"    --output-stderr=logfile - stdout and stderr logging and log rotation.\n"

@@ -221,6 +221,18 @@ Milestone page: https://github.com/netblue30/firejail/milestone/1
               $ firejail --private --tab
 ```
 
+### Kernel OutOfMemory-killer
+`````
+       --oom=value
+              Configure kernel's OutOfMemory-killer score  for  this  sandbox.
+              The  acceptable  score values are between 0 and 1000 for regular
+              users, and -1000 to 1000 for root. For more information  on  OOM
+              kernel feature see man choom.
+
+              Example:
+              $ firejail --oom=300 firefox
+`````
+
 ### Profile Statistics
 
 A small tool to print profile statistics. Compile and install as usual. The tool is installed in /usr/lib/firejail directory.

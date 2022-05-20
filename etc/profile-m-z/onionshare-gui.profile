@@ -23,6 +23,7 @@ mkdir ${HOME}/.config/onionshare
 mkdir ${HOME}/OnionShare
 whitelist ${HOME}/.config/onionshare
 whitelist ${HOME}/OnionShare
+whitelist /usr/share/onionshare
 include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc

@@ -11,6 +11,7 @@ noblacklist ${HOME}/.vimrc
 noblacklist ${HOME}/.cache/nvim
 noblacklist ${HOME}/.config/nvim
 noblacklist ${HOME}/.local/share/nvim
+noblacklist ${HOME}/.local/state/nvim
 
 include disable-common.inc
 include disable-devel.inc
@@ -48,5 +49,6 @@ dbus-system none
 read-only ${HOME}/.config
 read-write ${HOME}/.config/nvim
 read-write ${HOME}/.local/share/nvim
+read-write ${HOME}/.local/state/nvim
 read-write ${HOME}/.vim
 read-write ${HOME}/.vimrc

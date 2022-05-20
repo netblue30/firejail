@@ -22,6 +22,7 @@ blacklist-nolog ${HOME}/.local/share/fish/fish_history
 blacklist-nolog ${HOME}/.local/share/ibus-typing-booster
 blacklist-nolog ${HOME}/.local/share/klipper
 blacklist-nolog ${HOME}/.local/share/nvim
+blacklist-nolog ${HOME}/.local/state/nvim
 blacklist-nolog ${HOME}/.macromedia
 blacklist-nolog ${HOME}/.mupdf.history
 blacklist-nolog ${HOME}/.python-history
@@ -339,6 +340,7 @@ read-only ${HOME}/.iscreenrc
 read-only ${HOME}/.local/lib
 read-only ${HOME}/.local/share/cool-retro-term
 read-only ${HOME}/.local/share/nvim
+read-only ${HOME}/.local/state/nvim
 read-only ${HOME}/.mailcap
 read-only ${HOME}/.msmtprc
 read-only ${HOME}/.mutt/muttrc

@@ -1000,6 +1000,7 @@ blacklist ${HOME}/.local/share/vulkan
 blacklist ${HOME}/.local/share/warsow-2.1
 blacklist ${HOME}/.local/share/warzone2100-3.*
 blacklist ${HOME}/.local/share/wesnoth
+blacklist ${HOME}/.local/share/wget
 blacklist ${HOME}/.local/share/wormux
 blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader

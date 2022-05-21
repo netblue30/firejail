@@ -61,6 +61,8 @@ void netfilter_netlock(pid_t pid) {
 			; // run without terminal logger
 		else if (p == 0) { // child
 			drop_privs(0);
+			env_apply_all();
+			umask(orig_umask);
 
 			char *cmd;
 			if (asprintf(&cmd, "%s -e \"%s/firejail/fnettrace --tail --log=%s\"", terminal, LIBDIR, flog) == -1)

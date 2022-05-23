@@ -48,7 +48,9 @@ private-dev
 private-lib
 private-tmp
 
-dbus-user none
+dbus-user filter
+dbus-user.own com.transmissionbt.Transmission.*
+dbus-user.talk org.freedesktop.Notifications
 dbus-system none
 
 memory-deny-write-execute

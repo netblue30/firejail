@@ -233,6 +233,17 @@ Milestone page: https://github.com/netblue30/firejail/milestone/1
               $ firejail --oom=300 firefox
 `````
 
+### Guided configuration
+`````
+$ man firecfg
+[...]
+       --guide
+              Guided configuration for new users.
+
+              Example:
+              $ sudo firecfg --guide
+`````
+
 ### Profile Statistics
 
 A small tool to print profile statistics. Compile and install as usual. The tool is installed in /usr/lib/firejail directory.

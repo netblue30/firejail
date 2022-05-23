@@ -82,6 +82,16 @@ a long time ago, and the introduction of PID namespace in Linux kernel breaks th
 reportedly fixed in PulseAudio version 9. If you have sound problems on your system, run
 "firecfg --fix-sound" command in a terminal, followed by logout/login in order to apply the changes.
 .TP
+\fB\-\-guide
+Guided configuration for new users.
+.br
+
+.br
+Example:
+.br
+$ sudo firecfg --guide
+.br
+.TP
 \fB\-\-debug
 Print debug messages.
 .TP

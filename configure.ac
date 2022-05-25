@@ -54,6 +54,14 @@ AS_IF([test "x$enable_sanitizer" != "xno" ],
 	], [AC_MSG_ERROR([sanitizer not supported: $enable_sanitizer])]
 )])
 
+HAVE_IDS=""
+AC_SUBST([HAVE_IDS])
+AC_ARG_ENABLE([ids],
+    [AS_HELP_STRING([--enable-ids], [enable ids])])
+AS_IF([test "x$enable_ids" = "xyes"], [
+	HAVE_IDS="-DHAVE_IDS"
+])
+
 HAVE_APPARMOR=""
 AC_SUBST([HAVE_APPARMOR])
 AC_ARG_ENABLE([apparmor],
@@ -249,6 +257,7 @@ AC_ARG_ENABLE([lts],
     [AS_HELP_STRING([--enable-lts], [enable long-term support software version (LTS)])])
 AS_IF([test "x$enable_lts" = "xyes"], [
 	HAVE_LTS="-DHAVE_LTS"
+	HAVE_IDS=""
 	HAVE_DBUSPROXY=""
 	HAVE_OVERLAYFS=""
 	HAVE_OUTPUT=""
@@ -300,6 +309,7 @@ Configuration options:
    allow tmpfs as regular user: $HAVE_USERTMPFS
    enable --ouput logging: $HAVE_OUTPUT
    Manpage support: $HAVE_MAN
+   IDS support: $HAVE_IDS
    firetunnel support: $HAVE_FIRETUNNEL
    busybox workaround: $BUSYBOX_WORKAROUND
    Spectre compiler patch: $HAVE_SPECTRE

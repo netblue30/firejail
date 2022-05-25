@@ -365,6 +365,14 @@ void print_compiletime_support(void) {
 #endif
 		);
 
+	printf("\t- IDS support is %s\n",
+#ifdef HAVE_IDS
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
 	printf("\t- networking support is %s\n",
 #ifdef HAVE_NETWORK
 		"enabled"
@@ -427,6 +435,4 @@ void print_compiletime_support(void) {
 		"disabled"
 #endif
 		);
-
-
 }

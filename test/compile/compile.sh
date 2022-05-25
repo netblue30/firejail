@@ -31,6 +31,7 @@ arr[15]="TEST 15: compile private-home disabled"
 arr[16]="TEST 16: compile disable manpages"
 arr[17]="TEST 17: disable tmpfs as regular user"
 arr[18]="TEST 18: disable private home"
+arr[18]="TEST 19: enable ids"
 
 # remove previous reports and output file
 cleanup() {
@@ -380,6 +381,23 @@ cp output-make om18
 rm output-configure output-make
 
 #*****************************************************************
+# TEST 19
+#*****************************************************************
+# - enable ids
+#*****************************************************************
+print_title "${arr[19]}"
+cd firejail
+make distclean
+./configure --prefix=/usr --enable-ids --enable-fatal-warnings 2>&1 | tee ../output-configure
+make -j4 2>&1 | tee ../output-make
+cd ..
+grep Warning output-configure output-make > ./report-test19
+grep Error output-configure output-make >> ./report-test19
+cp output-configure oc19
+cp output-make om19
+rm output-configure output-make
+
+#*****************************************************************
 # PRINT REPORTS
 #*****************************************************************
 echo
@@ -411,3 +429,4 @@ echo ${arr[15]}
 echo ${arr[16]}
 echo ${arr[17]}
 echo ${arr[18]}
+echo ${arr[19]}

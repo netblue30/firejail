@@ -1090,8 +1090,17 @@ int main(int argc, char **argv, char **envp) {
 		run_builder(argc, argv); // this function will not return
 
 	// intrusion detection system
+#ifdef HAVE_IDS
 	if (check_arg(argc, argv, "--ids-", 0)) // supports both --ids-init and --ids-check
 		run_ids(argc, argv); // this function will not return
+#else
+	if (check_arg(argc, argv, "--ids-", 0)) { // supports both --ids-init and --ids-check
+		fprintf(stderr, "Error: IDS features disabled in your Firejail build.\n"
+			"\tTo enable it, configure your build system using --enable-ids.\n"
+			"\tExample: ./configure --prefix=/usr --enable-ids\n\n");
+		exit(1);
+	}
+#endif
 
 	EUID_ROOT();
 #ifndef HAVE_SUID

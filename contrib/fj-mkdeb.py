@@ -29,6 +29,12 @@ def run(srcdir, args):
         else:
             escaped_args.append(shlex.quote(a))
 
+    # Remove generated files.
+    if not dry_run:
+        distclean = subprocess.call(['make', 'distclean'])
+        if distclean != 0:
+            return distclean
+
     # Run configure to generate mkdeb.sh.
     first_config = subprocess.call(['./configure', '--prefix=/usr'] + args)
     if first_config != 0:

@@ -22,6 +22,7 @@ noblacklist ${HOME}/.local/share/kxmlgui5/kateopenheaderplugin
 noblacklist ${HOME}/.local/share/kxmlgui5/katepart
 noblacklist ${HOME}/.local/share/kxmlgui5/kateproject
 noblacklist ${HOME}/.local/share/kxmlgui5/katesearch
+noblacklist /etc/profile.d
 
 include allow-common-devel.inc
 

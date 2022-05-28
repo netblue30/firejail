@@ -12,11 +12,18 @@ noblacklist ${HOME}/.config/nano
 noblacklist ${HOME}/.emacs
 noblacklist ${HOME}/.emacs.d
 noblacklist ${HOME}/.gitconfig
+noblacklist ${HOME}/.git-credential-cache
 noblacklist ${HOME}/.git-credentials
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.nanorc
 noblacklist ${HOME}/.vim
 noblacklist ${HOME}/.viminfo
+
+# Allow environment variables (rmenv'ed by disable-common.inc)
+ignore rmenv GH_TOKEN
+ignore rmenv GITHUB_TOKEN
+ignore rmenv GH_ENTERPRISE_TOKEN
+ignore rmenv GITHUB_ENTERPRISE_TOKEN
 
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc

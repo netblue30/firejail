@@ -23,6 +23,8 @@ noblacklist ${HOME}/.local/share/kxmlgui5/katepart
 noblacklist ${HOME}/.local/share/kxmlgui5/kateproject
 noblacklist ${HOME}/.local/share/kxmlgui5/katesearch
 
+include allow-common-devel.inc
+
 include disable-common.inc
 # include disable-devel.inc
 include disable-exec.inc

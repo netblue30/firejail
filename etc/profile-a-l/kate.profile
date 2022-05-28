@@ -52,7 +52,6 @@ novideo
 protocol unix
 seccomp
 shell none
-tracelog
 
 # private-bin kate,kbuildsycoca4,kdeinit4
 private-dev

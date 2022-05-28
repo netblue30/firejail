@@ -14,6 +14,7 @@ noblacklist ${HOME}/.config/katerc
 noblacklist ${HOME}/.config/kateschemarc
 noblacklist ${HOME}/.config/katesyntaxhighlightingrc
 noblacklist ${HOME}/.config/katevirc
+noblacklist ${HOME}/.config/kwinrc
 noblacklist ${HOME}/.local/share/kate
 noblacklist ${HOME}/.local/share/kxmlgui5/kate
 noblacklist ${HOME}/.local/share/kxmlgui5/katefiletree

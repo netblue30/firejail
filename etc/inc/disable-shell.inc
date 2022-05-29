@@ -13,4 +13,5 @@ blacklist ${PATH}/sh
 blacklist ${PATH}/tclsh
 blacklist ${PATH}/tcsh
 blacklist ${PATH}/zsh
+blacklist /etc/profile
 blacklist /etc/profile.d

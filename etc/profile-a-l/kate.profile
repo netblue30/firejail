@@ -23,7 +23,6 @@ noblacklist ${HOME}/.local/share/kxmlgui5/kateopenheaderplugin
 noblacklist ${HOME}/.local/share/kxmlgui5/katepart
 noblacklist ${HOME}/.local/share/kxmlgui5/kateproject
 noblacklist ${HOME}/.local/share/kxmlgui5/katesearch
-noblacklist /etc/profile.d
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc

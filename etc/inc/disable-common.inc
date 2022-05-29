@@ -261,7 +261,6 @@ blacklist /etc/grub*
 blacklist /etc/kernel*
 blacklist /etc/logrotate*
 blacklist /etc/modules*
-blacklist /etc/profile.d
 blacklist /etc/rc.local
 # rc1.d, rc2.d, ...
 blacklist /etc/rc?.d

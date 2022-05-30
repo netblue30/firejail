@@ -269,6 +269,7 @@ croket (https://github.com/crocket)
 	- added profiles for imv, retroarch, and torbrowser
 	- fix dino profile
 	- fix wireshark profile
+	- prevent emptty /usr/share in google-chrome profiles
 curiosity-seeker (https://github.com/curiosity-seeker - old)
 curiosityseeker (https://github.com/curiosityseeker - new)
 	- tightening unbound and dnscrypt-proxy profiles
@@ -487,6 +488,9 @@ Helmut Grohne (https://github.com/helmutg)
 	-  compiler support in the build system - Debian bug #869707
 hhzek0014 (https://github.com/hhzek0014)
 	- updated bibletime.profile
+hknaack (https://github.com/hknaack)
+	- Kate profile fixes
+	- seamonkey.profile: support enigmail/gpg
 hlein (https://github.com/hlein)
 	- strip out \r's from jail prober
 	- make env/arg sanity check failure messages more useful
@@ -569,6 +573,8 @@ Jonas Heinrich (https://github.com/onny)
 	- added signal-desktop profile
 	- fixed franz profile
 	- remove /etc/hosts is_link check for NixOS
+	- whitelist for NixOS to resolve binary paths in user environment
+	- NixOS fix OpenGL app support
 Jose Riha (https://github.com/jose1711)
 	- added meteo-qt profile
 	- created qgis, links, xlinks profiles
@@ -714,6 +720,8 @@ mjudtmann (https://github.com/mjudtmann)
 	- lock firejail configuration in disable-mgmt.inc
 m00nwtchr (https://github.com/m00nwtchr)
 	- Whitelist electron-flags.conf for all versions of electron
+	- electron profile updates
+	- Fix glob pattern and update other profiles/includes (electron profile)
 mustaqimM (https://github.com/mustaqimM)
 	- added profile for Nylas Mail
 n1trux (https://github.com/n1trux)
@@ -937,6 +945,7 @@ Simo Piiroinen (https://github.com/spiiroin)
 slowpeek (https://github.com/slowpeek)
 	- refine appimage example in docs
 	- allow resolution of .local names with avahi-daemon in the apparmor profile
+	- allow access to avahi-daemon in apparmor/firejail-default
 smitsohu (https://github.com/smitsohu)
 	- read-only kde4 services directory
 	- enhanced mediathekview profile

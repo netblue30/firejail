@@ -222,7 +222,7 @@ deb: dist
 	./mkdeb.sh
 
 deb-apparmor: dist
-	./mkdeb.sh -apparmor
+	./mkdeb.sh -apparmor --enable-apparmor
 
 test-compile: dist
 	cd test/compile; ./compile.sh $(NAME)-$(VERSION)

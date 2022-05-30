@@ -14,6 +14,7 @@ noblacklist ${HOME}/.config/katerc
 noblacklist ${HOME}/.config/kateschemarc
 noblacklist ${HOME}/.config/katesyntaxhighlightingrc
 noblacklist ${HOME}/.config/katevirc
+noblacklist ${HOME}/.config/kwinrc
 noblacklist ${HOME}/.local/share/kate
 noblacklist ${HOME}/.local/share/kxmlgui5/kate
 noblacklist ${HOME}/.local/share/kxmlgui5/katefiletree
@@ -22,6 +23,9 @@ noblacklist ${HOME}/.local/share/kxmlgui5/kateopenheaderplugin
 noblacklist ${HOME}/.local/share/kxmlgui5/katepart
 noblacklist ${HOME}/.local/share/kxmlgui5/kateproject
 noblacklist ${HOME}/.local/share/kxmlgui5/katesearch
+noblacklist /etc/profile.d
+
+include allow-common-devel.inc
 
 include disable-common.inc
 # include disable-devel.inc
@@ -48,7 +52,6 @@ novideo
 protocol unix
 seccomp
 shell none
-tracelog
 
 # private-bin kate,kbuildsycoca4,kdeinit4
 private-dev

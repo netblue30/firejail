@@ -303,6 +303,7 @@ void pid_store_cpu(unsigned index, unsigned parent, unsigned *utime, unsigned *s
 
 // mon_pid: pid of sandbox to be monitored, 0 if all sandboxes are included
 void pid_read(pid_t mon_pid) {
+	unsigned old_max_pids = max_pids;
 	FILE *fp = fopen("/proc/sys/kernel/pid_max", "r");
 	if (fp) {
 		int val;
@@ -314,12 +315,13 @@ void pid_read(pid_t mon_pid) {
 	}
 
 	if (pids == NULL) {
+		old_max_pids = max_pids;
 		pids = malloc(sizeof(Process) * max_pids);
 		if (pids == NULL)
 			errExit("malloc");
 	}
 
-	memset(pids, 0, sizeof(Process) * max_pids);
+	memset(pids, 0, sizeof(Process) * old_max_pids);
 	pid_t mypid = getpid();
 
 	DIR *dir;
@@ -424,7 +426,7 @@ void pid_read(pid_t mon_pid) {
 	closedir(dir);
 
 	// update max_pid
-	max_pids = new_max_pids;
+	max_pids = new_max_pids + 1;
 
 	pid_t pid;
 	for (pid = 0; pid < max_pids; pid++) {

@@ -273,34 +273,6 @@ void pid_print_list(unsigned index, int nowrap) {
 	print_elem(index, nowrap);
 }
 
-// recursivity!!!
-void pid_store_cpu(unsigned index, unsigned parent, unsigned *utime, unsigned *stime) {
-	if (pids[index].level == 1) {
-		*utime = 0;
-		*stime = 0;
-	}
-
-	// Remove unused parameter warning
-	(void)parent;
-
-	unsigned utmp = 0;
-	unsigned stmp = 0;
-	pid_get_cpu_time(index, &utmp, &stmp);
-	*utime += utmp;
-	*stime += stmp;
-
-	unsigned i;
-	for (i = index + 1; i < (unsigned)max_pids; i++) {
-		if (pids[i].parent == (pid_t)index)
-			pid_store_cpu(i, index, utime, stime);
-	}
-
-	if (pids[index].level == 1) {
-		pids[index].utime = *utime;
-		pids[index].stime = *stime;
-	}
-}
-
 // mon_pid: pid of sandbox to be monitored, 0 if all sandboxes are included
 void pid_read(pid_t mon_pid) {
 	unsigned old_max_pids = max_pids;

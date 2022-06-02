@@ -106,10 +106,8 @@ void get_stats(int parent) {
 	}
 
 	// store data
-	pids[parent].rx_delta = rx - pids[parent].rx;
-	pids[parent].rx = rx;
-	pids[parent].tx_delta = tx - pids[parent].tx;
-	pids[parent].tx = tx;
+	pids[parent].option.netstats.rx = rx - pids[parent].option.netstats.rx;
+	pids[parent].option.netstats.tx = tx - pids[parent].option.netstats.tx;
 
 
 	free(fname);
@@ -117,10 +115,8 @@ void get_stats(int parent) {
 	return;
 
 errexit:
-	pids[parent].rx = 0;
-	pids[parent].tx = 0;
-	pids[parent].rx_delta = 0;
-	pids[parent].tx_delta = 0;
+	pids[parent].option.netstats.rx = 0;
+	pids[parent].option.netstats.tx = 0;
 }
 
 
@@ -174,11 +170,11 @@ static void print_proc(int index, int itv, int col) {
 		ptruser = "";
 
 
-	float rx_kbps = ((float) pids[index].rx_delta / 1000) / itv;
+	float rx_kbps = ((float) pids[index].option.netstats.rx / 1000) / itv;
 	char ptrrx[15];
 	sprintf(ptrrx, "%.03f", rx_kbps);
 
-	float tx_kbps = ((float) pids[index].tx_delta / 1000) / itv;
+	float tx_kbps = ((float) pids[index].option.netstats.tx / 1000) / itv;
 	char ptrtx[15];
 	sprintf(ptrtx, "%.03f", tx_kbps);
 

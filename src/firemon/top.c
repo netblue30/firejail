@@ -154,8 +154,8 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 
 		// cpu
 		itv *= clocktick;
-		float ud = (float) (*utime - pids[index].utime) / itv * 100;
-		float sd = (float) (*stime - pids[index].stime) / itv * 100;
+		float ud = (float) (*utime - pids[index].option.top.utime) / itv * 100;
+		float sd = (float) (*stime - pids[index].option.top.stime) / itv * 100;
 		float cd = ud + sd;
 		*cpu = cd;
 		char cpu_str[10];
@@ -177,6 +177,34 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 	}
 
 	return rv;
+}
+
+// recursivity!!!
+void pid_store_cpu(unsigned index, unsigned parent, unsigned *utime, unsigned *stime) {
+	if (pids[index].level == 1) {
+		*utime = 0;
+		*stime = 0;
+	}
+
+	// Remove unused parameter warning
+	(void)parent;
+
+	unsigned utmp = 0;
+	unsigned stmp = 0;
+	pid_get_cpu_time(index, &utmp, &stmp);
+	*utime += utmp;
+	*stime += stmp;
+
+	unsigned i;
+	for (i = index + 1; i < (unsigned)max_pids; i++) {
+		if (pids[i].parent == (pid_t)index)
+			pid_store_cpu(i, index, utime, stime);
+	}
+
+	if (pids[index].level == 1) {
+		pids[index].option.top.utime = *utime;
+		pids[index].option.top.stime = *stime;
+	}
 }
 
 

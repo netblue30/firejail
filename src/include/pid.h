@@ -31,14 +31,23 @@ typedef struct {
 	unsigned char zombie;
 	pid_t parent;
 	uid_t uid;
-	char *user;
-	char *cmd;
-	unsigned utime;
-	unsigned stime;
-	unsigned long long rx;	// network rx, bytes
-	unsigned long long tx;	// networking tx, bytes
-	unsigned rx_delta;
-	unsigned tx_delta;
+
+	union {
+		struct event_t {
+			char *user;
+			char *cmd;
+		} event;
+
+		struct top_t {
+			unsigned utime;
+			unsigned stime;
+		} top;
+
+		struct netstats_t {
+			unsigned long long rx;	// network rx, bytes
+			unsigned long long tx;	// networking tx, bytes
+		} netstats;
+	} option;
 } Process;
 //extern Process pids[max_pids];
 extern Process *pids;
@@ -52,7 +61,6 @@ char *pid_get_user_name(uid_t uid);
 // print functions
 void pid_print_tree(unsigned index, unsigned parent, int nowrap);
 void pid_print_list(unsigned index, int nowrap);
-void pid_store_cpu(unsigned index, unsigned parent, unsigned *utime, unsigned *stime);
 void pid_read(pid_t mon_pid);
 
 #endif

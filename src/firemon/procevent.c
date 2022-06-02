@@ -417,18 +417,18 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 			sprintf(lineptr, " %u", pid);
 			lineptr += strlen(lineptr);
 
-			char *user = pids[pid].user;
+			char *user = pids[pid].option.event.user;
 			if (!user)
 				user = pid_get_user_name(pids[pid].uid);
 			if (user) {
-				pids[pid].user = user;
+				pids[pid].option.event.user = user;
 				sprintf(lineptr, " (%s)", user);
 				lineptr += strlen(lineptr);
 			}
 
 
 			int sandbox_closed = 0; // exit sandbox flag
-			char *cmd = pids[pid].cmd;
+			char *cmd = pids[pid].option.event.cmd;
 			if (!cmd) {
 				cmd = pid_proc_cmdline(pid);
 			}
@@ -465,10 +465,10 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 
 			// unflag pid for exit events
 			if (remove_pid) {
-				if (pids[pid].user)
-					free(pids[pid].user);
-				if (pids[pid].cmd)
-					free(pids[pid].cmd);
+				if (pids[pid].option.event.user)
+					free(pids[pid].option.event.user);
+				if (pids[pid].option.event.cmd)
+					free(pids[pid].option.event.cmd);
 				memset(&pids[pid], 0, sizeof(Process));
 			}
 
@@ -485,9 +485,9 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 
 			// on uid events the uid is changing
 			if (proc_ev->what == PROC_EVENT_UID) {
-				if (pids[pid].user)
-					free(pids[pid].user);
-				pids[pid].user = 0;
+				if (pids[pid].option.event.user)
+					free(pids[pid].option.event.user);
+				pids[pid].option.event.user = 0;
 				pids[pid].uid = pid_get_uid(pid);
 			}
 
@@ -503,6 +503,17 @@ void procevent(pid_t pid) {
 	if (getuid() != 0) {
 		fprintf(stderr, "Error: you need to be root to get process events\n");
 		exit(1);
+	}
+
+	// set max_pids to the max value allowed by the kernel
+	FILE *fp = fopen("/proc/sys/kernel/pid_max", "r");
+	if (fp) {
+		int val;
+		if (fscanf(fp, "%d", &val) == 1) {
+			if (val >= max_pids)
+				max_pids = val + 1;
+		}
+		fclose(fp);
 	}
 
 	// monitor using netlink

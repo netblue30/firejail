@@ -1528,7 +1528,7 @@ PID  User    RX(KB/s) TX(KB/s) Command
 .TP
 \fB\-\-nettrace[=name|pid]
 Monitor TCP and UDP traffic coming into the sandbox specified by name or pid. Only networked sandboxes
-created with \-\-net are supported.
+created with \-\-net are supported. This option is only available when running the sandbox as root.
 .br
 
 .br
@@ -1536,7 +1536,7 @@ Without a name/pid, Firejail will monitor the main system network namespace.
 .br
 
 .br
- $ firejail --nettrace=browser
+ $ sudo firejail --nettrace=browser
 .br
 
 .br

@@ -409,6 +409,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #ifdef HAVE_NETWORK
 	else if (strcmp(argv[i], "--nettrace") == 0) {
 		if (checkcfg(CFG_NETWORK)) {
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: --nettrace is only available to root user\n");
+				exit(1);
+			}
 			netfilter_trace(0);
 		}
 		else
@@ -417,6 +421,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 	else if (strncmp(argv[i], "--nettrace=", 11) == 0) {
 		if (checkcfg(CFG_NETWORK)) {
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: --nettrace is only available to root user\n");
+				exit(1);
+			}
 			pid_t pid = require_pid(argv[i] + 11);
 			netfilter_trace(pid);
 		}

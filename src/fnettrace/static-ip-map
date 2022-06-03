@@ -96,6 +96,9 @@
 199.59.148.0/22 Twitter
 208.80.152.0/22 Wikipedia
 
+# StackPath
+151.139.0.0/16 StackPath
+
 # Akamai
 23.0.0.0/12 Akamai
 23.32.0.0/11 Akamai

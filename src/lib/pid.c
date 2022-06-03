@@ -74,8 +74,14 @@ void pid_get_cpu_time(unsigned pid, unsigned *utime, unsigned *stime) {
 	if (fgets(line, PIDS_BUFLEN - 1, fp)) {
 		char *ptr = line;
 		// jump 13 fields
+
+		// end of comm string
+		ptr = strchr(ptr, ')');
+		if (ptr == NULL)
+			goto myexit;
+
 		int i;
-		for (i = 0; i < 13; i++) {
+		for (i = 0; i < 11; i++) {
 			while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
 				ptr++;
 			if (*ptr == '\0')

@@ -1883,8 +1883,6 @@ int main(int argc, char **argv, char **envp) {
 			arg_noprofile = 1;
 			// force keep-config-pulse in order to keep ~/.config/pulse as is
 			arg_keep_config_pulse = 1;
-			// force nonewprivs
-			arg_nonewprivs = 1;
 		}
 		else if (strncmp(argv[i], "--ignore=", 9) == 0) {
 			if (custom_profile) {

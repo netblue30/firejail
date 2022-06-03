@@ -1,6 +1,5 @@
 firejail (0.9.69) baseline; urgency=low
   * work in progress
-  * modif: --noprofile enforces nonewprivs
   * modif: --nettrace only available to root user
   * modif: --ids feature needs to be enabled at compile time (#5155)
   * feature: enable shell tab completion (#4936)

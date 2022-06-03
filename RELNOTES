@@ -2,13 +2,13 @@ firejail (0.9.69) baseline; urgency=low
   * work in progress
   * modif: --noprofile enforces nonewprivs
   * modif: --nettrace only available to root user
-  * modif: --ids feature needs to be enabled at compile time
+  * modif: --ids feature needs to be enabled at compile time (#5155)
   * feature: enable shell tab completion (#4936)
   * feature: disable user profiles at compile time (#4990)
-  * feature: --oom, kernel OutOfMemory-killer
-  * feature: firecfg --guide, guided user configuration
+  * feature: --oom, kernel OutOfMemory-killer (#5122)
+  * feature: firecfg --guide, guided user configuration (#5111)
   * rework: whitelist restructuring (#4985)
-  * rework: firemon, speed up lots of fixes
+  * rework: firemon, speed up and lots of fixes
   * bugfix: --private-cwd not expanding macros, broken hyperrogue (#4910)
   * bugfix: nogroups + wrc prints confusing messages (#4930 #4933)
   * bugfix: openSUSE Leap - whitelist-run-common.inc (#4954)

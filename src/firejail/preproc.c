@@ -85,7 +85,10 @@ void preproc_build_firejail_dir(void) {
 	}
 
 	create_empty_file_as_root(RUN_RO_FILE, S_IRUSR);
+	fs_remount(RUN_RO_FILE, MOUNT_READONLY, 0);
+
 	create_empty_dir_as_root(RUN_RO_DIR, S_IRUSR);
+	fs_remount(RUN_RO_DIR, MOUNT_READONLY, 0);
 }
 
 // build /run/firejail/mnt directory

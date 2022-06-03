@@ -1696,7 +1696,7 @@ Disable printers.
 
 .TP
 \fB\-\-noprofile
-Do not use a security profile.
+Do not use a security profile. nonewprivs is enforced for this option.
 .br
 
 .br

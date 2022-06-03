@@ -1,8 +1,10 @@
 firejail (0.9.69) baseline; urgency=low
   * work in progress
+  * modif: --noprofile enforces nonewprivs
   * feature: enable shell tab completion (#4936)
   * feature: disable user profiles at compile time (#4990)
   * rework: whitelist restructuring (#4985)
+  * rework: firemon, speed up lots of fixes
   * bugfix: --private-cwd not expanding macros, broken hyperrogue (#4910)
   * bugfix: nogroups + wrc prints confusing messages (#4930 #4933)
   * bugfix: openSUSE Leap - whitelist-run-common.inc (#4954)

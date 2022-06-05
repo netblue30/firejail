@@ -12,6 +12,12 @@ include whitelist-runuser-common.inc
 private-bin transmission-gtk
 private-cache
 
+# If you need native notifications, add the next lines to your transmission-gtk.local.
+#ignore dbus-user none
+#dbus-user filter
+#dbus-user.own com.transmissionbt.Transmission.*
+#dbus-user.talk org.freedesktop.Notifications
+
 ignore memory-deny-write-execute
 
 # Redirect

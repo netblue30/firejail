@@ -16,6 +16,8 @@ firejail (0.9.69) baseline; urgency=low
   * bugfix: fix printing in evince (#5011)
   * bugfix: gcov: fix gcov functions always declared as dummy (#5028)
   * bugfix: Stop warning on safe supplementary group clean (#5114)
+  * build: remove ultimately unused INSTALL and RANLIB check macros (#5133)
+  * build: mkdeb.sh.in: pass remaining arguments to ./configure (#5154)
   * ci: replace centos (EOL) with almalinux (#4912)
   * ci: fix --version not printing compile-time features (#5147)
   * ci: print version after install & fix apparmor support on build_apparmor

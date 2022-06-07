@@ -1,6 +1,6 @@
 firejail (0.9.69) baseline; urgency=low
   * work in progress
-  * feature: enable shell tab completion (#4936)
+  * feature: enable shell tab completion with --tab (#4936)
   * feature: disable user profiles at compile time (#4990)
   * feature: --oom, kernel OutOfMemory-killer (#5122)
   * feature: firecfg --guide, guided user configuration (#5111)

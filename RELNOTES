@@ -2,6 +2,8 @@ firejail (0.9.69) baseline; urgency=low
   * work in progress
   * feature: enable shell tab completion with --tab (#4936)
   * feature: disable user profiles at compile time (#4990)
+  * feature: Allow resolution of .local names with avahi-daemon in the apparmor
+    profile (#5088)
   * feature: --oom, kernel OutOfMemory-killer (#5122)
   * feature: firecfg --guide, guided user configuration (#5111)
   * modif: --nettrace only available to root user
@@ -13,6 +15,7 @@ firejail (0.9.69) baseline; urgency=low
   * bugfix: openSUSE Leap - whitelist-run-common.inc (#4954)
   * bugfix: fix printing in evince (#5011)
   * bugfix: gcov: fix gcov functions always declared as dummy (#5028)
+  * bugfix: Stop warning on safe supplementary group clean (#5114)
   * ci: replace centos (EOL) with almalinux (#4912)
   * ci: fix --version not printing compile-time features (#5147)
   * ci: print version after install & fix apparmor support on build_apparmor

@@ -38,6 +38,12 @@ void preproc_build_firejail_dir(void) {
 		create_empty_dir_as_root(RUN_FIREJAIL_DIR, 0755);
 	}
 
+	// restricted search permission
+	// only root should be able to lock files in this directory
+	if (stat(RUN_FIREJAIL_SANDBOX_DIR, &s)) {
+		create_empty_dir_as_root(RUN_FIREJAIL_SANDBOX_DIR, 0700);
+	}
+
 	if (stat(RUN_FIREJAIL_NETWORK_DIR, &s)) {
 		create_empty_dir_as_root(RUN_FIREJAIL_NETWORK_DIR, 0755);
 	}

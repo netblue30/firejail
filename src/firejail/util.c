@@ -41,7 +41,7 @@
 #endif
 
 #define MAX_GROUPS 1024
-#define MAXBUF 4098
+#define MAXBUF 4096
 #define EMPTY_STRING ("")
 
 
@@ -802,77 +802,6 @@ void check_unsigned(const char *str, const char *msg) {
 }
 
 
-#define BUFLEN 4096
-// find the first child for this parent; return 1 if error
-int find_child(pid_t parent, pid_t *child) {
-	EUID_ASSERT();
-	*child = 0;				  // use it to flag a found child
-
-	DIR *dir;
-	EUID_ROOT();				  // grsecurity fix
-	if (!(dir = opendir("/proc"))) {
-		// sleep 2 seconds and try again
-		sleep(2);
-		if (!(dir = opendir("/proc"))) {
-			fprintf(stderr, "Error: cannot open /proc directory\n");
-			exit(1);
-		}
-	}
-
-	struct dirent *entry;
-	char *end;
-	while (*child == 0 && (entry = readdir(dir))) {
-		pid_t pid = strtol(entry->d_name, &end, 10);
-		if (end == entry->d_name || *end)
-			continue;
-		if (pid == parent)
-			continue;
-
-		// open stat file
-		char *file;
-		if (asprintf(&file, "/proc/%u/status", pid) == -1) {
-			perror("asprintf");
-			exit(1);
-		}
-		FILE *fp = fopen(file, "re");
-		if (!fp) {
-			free(file);
-			continue;
-		}
-
-		// look for firejail executable name
-		char buf[BUFLEN];
-		while (fgets(buf, BUFLEN - 1, fp)) {
-			if (strncmp(buf, "PPid:", 5) == 0) {
-				char *ptr = buf + 5;
-				while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
-					ptr++;
-				}
-				if (*ptr == '\0') {
-					fprintf(stderr, "Error: cannot read /proc file\n");
-					exit(1);
-				}
-				if (parent == atoi(ptr)) {
-					// we don't want /usr/bin/xdg-dbus-proxy!
-					char *cmdline = pid_proc_cmdline(pid);
-					if (cmdline) {
-						if (strncmp(cmdline, XDG_DBUS_PROXY_PATH, strlen(XDG_DBUS_PROXY_PATH)) != 0)
-							*child = pid;
-						free(cmdline);
-					}
-				}
-				break;		  // stop reading the file
-			}
-		}
-		fclose(fp);
-		free(file);
-	}
-	closedir(dir);
-	EUID_USER();
-	return (*child)? 0:1;			  // 0 = found, 1 = not found
-}
-
-
 void extract_command_name(int index, char **argv) {
 	EUID_ASSERT();
 	assert(argv);
@@ -961,14 +890,14 @@ void wait_for_other(int fd) {
 	//****************************
 	// wait for the parent to be initialized
 	//****************************
-	char childstr[BUFLEN + 1];
+	char childstr[MAXBUF + 1];
 	int newfd = fcntl(fd, F_DUPFD_CLOEXEC, 0);
 	if (newfd == -1)
 		errExit("fcntl");
 	FILE* stream;
 	stream = fdopen(newfd, "r");
 	*childstr = '\0';
-	if (fgets(childstr, BUFLEN, stream)) {
+	if (fgets(childstr, MAXBUF, stream)) {
 		// remove \n)
 		char *ptr = childstr;
 		while(*ptr !='\0' && *ptr != '\n')
@@ -1018,50 +947,6 @@ void notify_other(int fd) {
 	fprintf(stream, "arg_noroot=%d\n", arg_noroot);
 	fflush(stream);
 	fclose(stream);
-}
-
-uid_t pid_get_uid(pid_t pid) {
-	EUID_ASSERT();
-	uid_t rv = 0;
-
-	// open status file
-	char *file;
-	if (asprintf(&file, "/proc/%u/status", pid) == -1) {
-		perror("asprintf");
-		exit(1);
-	}
-	EUID_ROOT();				  // grsecurity fix
-	FILE *fp = fopen(file, "re");
-	if (!fp) {
-		free(file);
-		fprintf(stderr, "Error: cannot open /proc file\n");
-		exit(1);
-	}
-
-	// extract uid
-	static const int PIDS_BUFLEN = 1024;
-	char buf[PIDS_BUFLEN];
-	while (fgets(buf, PIDS_BUFLEN - 1, fp)) {
-		if (strncmp(buf, "Uid:", 4) == 0) {
-			char *ptr = buf + 4;
-			while (*ptr != '\0' && (*ptr == ' ' || *ptr == '\t')) {
-				ptr++;
-			}
-			if (*ptr == '\0') {
-				fprintf(stderr, "Error: cannot read /proc file\n");
-				exit(1);
-			}
-
-			rv = atoi(ptr);
-			break;			  // break regardless!
-		}
-	}
-
-	fclose(fp);
-	free(file);
-	EUID_USER();				  // grsecurity fix
-
-	return rv;
 }
 
 
@@ -1144,12 +1029,14 @@ void create_empty_dir_as_root(const char *dir, mode_t mode) {
 		/* coverity[toctou] */
 		// don't fail if directory already exists. This can be the case in a race
 		// condition, when two jails launch at the same time. See #1013
-		if (mkdir(dir, mode) == -1 && errno != EEXIST)
+		mode_t tmp = umask(~mode); // let's avoid an extra chmod race
+		int rv = mkdir(dir, mode);
+		umask(tmp);
+		if (rv < 0 && errno != EEXIST)
 			errExit("mkdir");
-		if (set_perms(dir, 0, 0, mode))
-			errExit("set_perms");
-		ASSERT_PERMS(dir, 0, 0, mode);
 	}
+
+	ASSERT_PERMS(dir, 0, 0, mode);
 }
 
 void create_empty_file_as_root(const char *fname, mode_t mode) {
@@ -1163,12 +1050,15 @@ void create_empty_file_as_root(const char *fname, mode_t mode) {
 		/* coverity[toctou] */
 		// don't fail if file already exists. This can be the case in a race
 		// condition, when two jails launch at the same time. Compare to #1013
-		FILE *fp = fopen(fname, "we");
-		if (!fp)
-			errExit("fopen");
-		SET_PERMS_STREAM(fp, 0, 0, mode);
-		fclose(fp);
+		mode_t tmp = umask(~mode); // let's avoid an extra chmod race
+		int fd = open(fname, O_RDONLY|O_CREAT|O_CLOEXEC, mode);
+		umask(tmp);
+		if (fd < 0)
+			errExit("open");
+		close(fd);
 	}
+
+	ASSERT_PERMS(fname, 0, 0, mode);
 }
 
 // return 1 if error
@@ -1463,8 +1353,8 @@ int has_handler(pid_t pid, int signal) {
 		EUID_USER();
 		free(fname);
 		if (fp) {
-			char buf[BUFLEN];
-			while (fgets(buf, BUFLEN, fp)) {
+			char buf[MAXBUF];
+			while (fgets(buf, MAXBUF, fp)) {
 				if (strncmp(buf, "SigCgt:", 7) == 0) {
 					unsigned long long val;
 					if (sscanf(buf + 7, "%llx", &val) != 1) {
@@ -1484,11 +1374,7 @@ int has_handler(pid_t pid, int signal) {
 }
 
 void enter_network_namespace(pid_t pid) {
-	// in case the pid is that of a firejail process, use the pid of the first child process
-	pid_t child = switch_to_child(pid);
-
-	// exit if no permission to join the sandbox
-	check_join_permission(child);
+	ProcessHandle sandbox = pin_sandbox_process(pid);
 
 	// check network namespace
 	char *name;
@@ -1502,10 +1388,11 @@ void enter_network_namespace(pid_t pid) {
 
 	// join the namespace
 	EUID_ROOT();
-	if (join_namespace(child, "net")) {
+	if (process_join_namespace(sandbox, "net")) {
 		fprintf(stderr, "Error: cannot join the network namespace\n");
 		exit(1);
 	}
+	unpin_process(sandbox);
 }
 
 // return 1 if error, 0 if a valid pid was found

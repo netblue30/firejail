@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "firejail.h"
+#include <fcntl.h>
 #include <sched.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -87,22 +88,6 @@ void save_cpu(void) {
 	}
 }
 
-void load_cpu(const char *fname) {
-	if (!fname)
-		return;
-
-	FILE *fp = fopen(fname, "re");
-	if (fp) {
-		unsigned tmp;
-		int rv = fscanf(fp, "%x", &tmp);
-		if (rv)
-			cfg.cpus = (uint32_t) tmp;
-		fclose(fp);
-	}
-	else
-		fwarning("cannot load cpu affinity mask\n");
-}
-
 void set_cpu_affinity(void) {
 	// set cpu affinity
 	cpu_set_t mask;
@@ -131,21 +116,8 @@ void set_cpu_affinity(void) {
         	}
 }
 
-static void print_cpu(int pid) {
-	char *file;
-	if (asprintf(&file, "/proc/%d/status", pid) == -1) {
-		errExit("asprintf");
-		exit(1);
-	}
-
-	EUID_ROOT();	// grsecurity
-	FILE *fp = fopen(file, "re");
-	EUID_USER();	// grsecurity
-	if (!fp) {
-		printf("  Error: cannot open %s\n", file);
-		free(file);
-		return;
-	}
+static void print_cpu(ProcessHandle process) {
+	FILE *fp = process_fopen(process, "status");
 
 #define MAXBUF 4096
 	char buf[MAXBUF];
@@ -153,28 +125,21 @@ static void print_cpu(int pid) {
 		if (strncmp(buf, "Cpus_allowed_list:", 18) == 0) {
 			printf("  %s", buf);
 			fflush(0);
-			free(file);
 			fclose(fp);
 			return;
 		}
 	}
 	fclose(fp);
-	free(file);
 }
 
-// allow any user to run --cpu.print
+// TODO: allow any user to run --cpu.print
 void cpu_print_filter(pid_t pid) {
 	EUID_ASSERT();
 
-	// in case the pid is that of a firejail process, use the pid of the first child process
-	pid = switch_to_child(pid);
+	ProcessHandle sandbox = pin_sandbox_process(pid);
 
-	// now check if the pid belongs to a firejail sandbox
-	if (is_ready_for_join(pid) == false) {
-		fprintf(stderr, "Error: no valid sandbox\n");
-		exit(1);
-	}
+	print_cpu(sandbox);
+	unpin_process(sandbox);
 
-	print_cpu(pid);
 	exit(0);
 }

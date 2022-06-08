@@ -134,7 +134,8 @@ static inline int mac_not_zero(const unsigned char mac[6]) {
 
 void timetrace_start(void);
 float timetrace_end(void);
-int join_namespace(pid_t pid, char *type);
+int join_namespace_by_fd(int dirfd, char *typestr);
+int join_namespace(pid_t pid, char *typestr);
 int name2pid(const char *name, pid_t *pid);
 char *pid_proc_comm(const pid_t pid);
 char *pid_proc_cmdline(const pid_t pid);

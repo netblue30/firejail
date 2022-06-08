@@ -63,27 +63,23 @@ void protocol_print_filter(pid_t pid) {
 
 	(void) pid;
 #ifdef SYS_socket
-	// in case the pid is that of a firejail process, use the pid of the first child process
-	pid = switch_to_child(pid);
+	ProcessHandle sandbox = pin_sandbox_process(pid);
 
-	// exit if no permission to join the sandbox
-	check_join_permission(pid);
+	// chroot in the sandbox
+	process_rootfs_chroot(sandbox);
+	unpin_process(sandbox);
 
 	// find the seccomp filter
-	EUID_ROOT();
-	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_PROTOCOL_CFG) == -1)
-		errExit("asprintf");
-
 	struct stat s;
-	if (stat(fname, &s) == -1) {
+	if (stat(RUN_PROTOCOL_CFG, &s) != 0) {
 		printf("Cannot access seccomp filter.\n");
 		exit(1);
 	}
 
 	// read and print the filter
-	protocol_filter_load(fname);
-	free(fname);
+	EUID_ROOT();
+	protocol_filter_load(RUN_PROTOCOL_CFG);
+
 	if (cfg.protocol)
 		printf("%s\n", cfg.protocol);
 	exit(0);

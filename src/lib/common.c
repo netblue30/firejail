@@ -22,7 +22,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
-#include <fcntl.h>
 #include <sys/syscall.h>
 #include <errno.h>
 #include <unistd.h>
@@ -32,32 +31,94 @@
 #include <string.h>
 #include <time.h>
 #include <limits.h>
+#include <sched.h>
 #include "../include/common.h"
+
+#include <fcntl.h>
+#ifndef O_PATH
+#define O_PATH 010000000
+#endif
+
+#include <sys/ioctl.h>
+#ifndef NSIO
+#define NSIO 0xb7
+#endif
+#ifndef NS_GET_USERNS
+#define NS_GET_USERNS _IO(NSIO, 0x1)
+#endif
+
 #define BUFLEN 4096
 
-int join_namespace(pid_t pid, char *type) {
+
+int join_namespace_by_fd(int dirfd, char *typestr) {
+	int type;
+	if (strcmp(typestr, "net") == 0)
+		type = CLONE_NEWNET;
+	else if (strcmp(typestr, "mnt") == 0)
+		type = CLONE_NEWNS;
+	else if (strcmp(typestr, "ipc") == 0)
+		type = CLONE_NEWIPC;
+	else if (strcmp(typestr, "pid") == 0)
+		type = CLONE_NEWPID;
+	else if (strcmp(typestr, "uts") == 0)
+		type = CLONE_NEWUTS;
+	else if (strcmp(typestr, "user") == 0)
+		type = CLONE_NEWUSER;
+	else
+		assert(0);
+
 	char *path;
-	if (asprintf(&path, "/proc/%u/ns/%s", pid, type) == -1)
+	if (asprintf(&path, "ns/%s", typestr) == -1)
 		errExit("asprintf");
 
-	int fd = open(path, O_RDONLY);
+	int fd = openat(dirfd, path, O_RDONLY|O_CLOEXEC);
+	free(path);
 	if (fd < 0)
 		goto errout;
 
-	if (syscall(__NR_setns, fd, 0) < 0) {
+	// require that target namespace is owned by
+	// the current user namespace (Linux >= 4.9)
+	struct stat self_userns;
+	if (stat("/proc/self/ns/user", &self_userns) == 0) {
+		int usernsfd = ioctl(fd, NS_GET_USERNS);
+		if (usernsfd != -1) {
+			struct stat dest_userns;
+			if (fstat(usernsfd, &dest_userns) < 0)
+				errExit("fstat");
+			close(usernsfd);
+			if (dest_userns.st_ino != self_userns.st_ino ||
+			    dest_userns.st_dev != self_userns.st_dev) {
+				close(fd);
+				goto errout;
+			}
+		}
+	}
+
+	if (syscall(__NR_setns, fd, type) < 0) {
 		close(fd);
 		goto errout;
 	}
 
 	close(fd);
-	free(path);
 	return 0;
 
 errout:
-	free(path);
-	fprintf(stderr, "Error: cannot join namespace %s\n", type);
+	fprintf(stderr, "Error: cannot join namespace %s\n", typestr);
 	return -1;
+}
 
+int join_namespace(pid_t pid, char *typestr) {
+	char path[64];
+	snprintf(path, sizeof(path), "/proc/%d", pid);
+	int fd = open(path, O_PATH|O_CLOEXEC);
+	if (fd < 0) {
+		fprintf(stderr, "Error: cannot open %s: %s\n", path, strerror(errno));
+		exit(1);
+	}
+
+	int rv = join_namespace_by_fd(fd, typestr);
+	close(fd);
+	return rv;
 }
 
 // return 1 if error

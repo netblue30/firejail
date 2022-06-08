@@ -42,6 +42,7 @@ static uint64_t caps = 0;
 static unsigned display = 0;
 #define BUFLEN 4096
 
+
 static void signal_handler(int sig){
 	flush_stdin();
 
@@ -57,46 +58,6 @@ static void install_handler(void) {
 	sga.sa_flags = 0;
 	sigaction(SIGTERM, &sga, NULL);
 }
-
-#ifdef HAVE_APPARMOR
-static void extract_apparmor(pid_t pid) {
-	if (checkcfg(CFG_APPARMOR)) {
-		EUID_USER();
-		if (aa_is_enabled() == 1) {
-			// get pid of next child process
-			pid_t child;
-			if (find_child(pid, &child) == 1)
-				child = pid; // no child, proceed with current pid
-
-			// get name of AppArmor profile
-			char *fname;
-			if (asprintf(&fname, "/proc/%d/attr/current", child) == -1)
-				errExit("asprintf");
-			EUID_ROOT();
-			int fd = open(fname, O_RDONLY|O_CLOEXEC);
-			EUID_USER();
-			free(fname);
-			if (fd == -1)
-				goto errexit;
-			char buf[BUFLEN];
-			ssize_t rv = read(fd, buf, sizeof(buf) - 1);
-			close(fd);
-			if (rv < 0)
-				goto errexit;
-			buf[rv] = '\0';
-			// process confined by Firejail's AppArmor policy?
-			if (strncmp(buf, "firejail-default", 16) == 0)
-				arg_apparmor = 1;
-		}
-		EUID_ROOT();
-	}
-	return;
-
-errexit:
-	fprintf(stderr, "Error: cannot read /proc file\n");
-	exit(1);
-}
-#endif // HAVE_APPARMOR
 
 static void extract_x11_display(pid_t pid) {
 	char *fname;
@@ -150,159 +111,6 @@ static void extract_command(int argc, char **argv, int index) {
 	build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, index, true);
 }
 
-static void extract_nogroups(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_GROUPS_CFG) == -1)
-		errExit("asprintf");
-
-	struct stat s;
-	if (stat(fname, &s) == -1) {
-		free(fname);
-		return;
-	}
-
-	arg_nogroups = 1;
-	free(fname);
-}
-
-static void extract_nonewprivs(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_NONEWPRIVS_CFG) == -1)
-		errExit("asprintf");
-
-	struct stat s;
-	if (stat(fname, &s) == -1) {
-		free(fname);
-		return;
-	}
-
-	arg_nonewprivs = 1;
-	free(fname);
-}
-
-static void extract_cpu(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_CPU_CFG) == -1)
-		errExit("asprintf");
-
-	struct stat s;
-	if (stat(fname, &s) == -1) {
-		free(fname);
-		return;
-	}
-
-	// there is a CPU_CFG file, load it!
-	load_cpu(fname);
-	free(fname);
-}
-
-static void extract_cgroup(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_CGROUP_CFG) == -1)
-		errExit("asprintf");
-
-	struct stat s;
-	if (stat(fname, &s) == -1) {
-		free(fname);
-		return;
-	}
-
-	// there is a cgroup file CGROUP_CFG, load it!
-	load_cgroup(fname);
-	free(fname);
-}
-
-static void extract_caps(pid_t pid) {
-	// open stat file
-	char *file;
-	if (asprintf(&file, "/proc/%u/status", pid) == -1) {
-		perror("asprintf");
-		exit(1);
-	}
-	FILE *fp = fopen(file, "re");
-	if (!fp)
-		goto errexit;
-
-	char buf[BUFLEN];
-	while (fgets(buf, BUFLEN - 1, fp)) {
-		if (strncmp(buf, "CapBnd:", 7) == 0) {
-			char *ptr = buf + 7;
-			unsigned long long val;
-			if (sscanf(ptr, "%llx", &val) != 1)
-				goto errexit;
-			apply_caps = 1;
-			caps = val;
-		}
-		else if (strncmp(buf, "NoNewPrivs:", 11) == 0) {
-			char *ptr = buf + 11;
-			int val;
-			if (sscanf(ptr, "%d", &val) != 1)
-				goto errexit;
-			if (val)
-				arg_nonewprivs = 1;
-		}
-	}
-	fclose(fp);
-	free(file);
-	return;
-
-errexit:
-	fprintf(stderr, "Error: cannot read stat file for process %u\n", pid);
-	exit(1);
-}
-
-static void extract_user_namespace(pid_t pid) {
-	// test user namespaces available in the kernel
-	struct stat s1;
-	struct stat s2;
-	struct stat s3;
-	if (stat("/proc/self/ns/user", &s1) == 0 &&
-	    stat("/proc/self/uid_map", &s2) == 0 &&
-	    stat("/proc/self/gid_map", &s3) == 0);
-	else
-		return;
-
-	// read uid map
-	char *uidmap;
-	if (asprintf(&uidmap, "/proc/%u/uid_map", pid) == -1)
-		errExit("asprintf");
-	FILE *fp = fopen(uidmap, "re");
-	if (!fp) {
-		free(uidmap);
-		return;
-	}
-
-	// check uid map
-	int u1;
-	int u2;
-	if (fscanf(fp, "%d %d", &u1, &u2) == 2) {
-		if (arg_debug)
-			printf("User namespace detected: %s, %d, %d\n", uidmap, u1, u2);
-		if (u1 != 0 || u2 != 0)
-			arg_noroot = 1;
-	}
-	fclose(fp);
-	free(uidmap);
-}
-
-static void extract_umask(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_UMASK_FILE) == -1)
-		errExit("asprintf");
-
-	FILE *fp = fopen(fname, "re");
-	free(fname);
-	if (!fp) {
-		fprintf(stderr, "Error: cannot open umask file\n");
-		exit(1);
-	}
-	if (fscanf(fp, "%3o", &orig_umask) != 1) {
-		fprintf(stderr, "Error: cannot read umask\n");
-		exit(1);
-	}
-	fclose(fp);
-}
-
 static int open_shell(void) {
 	EUID_ASSERT();
 	assert(cfg.shell);
@@ -316,25 +124,127 @@ static int open_shell(void) {
 		exit(1);
 	}
 
-	// pass file descriptor through to the final fexecve
+	// file descriptor needs to reach final fexecve
 	if (asprintf(&cfg.keep_fd, "%s,%d", cfg.keep_fd ? cfg.keep_fd : "", fd) == -1)
 		errExit("asprintf");
 
 	return fd;
 }
 
-// return false if the sandbox identified by pid is not fully set up yet or if
-// it is no firejail sandbox at all, return true if the sandbox is complete
-bool is_ready_for_join(const pid_t pid) {
-	EUID_ASSERT();
+static void extract_nogroups(ProcessHandle sandbox) {
+	struct stat s;
+
+	if (process_rootfs_stat(sandbox, RUN_GROUPS_CFG, &s) == 0)
+		arg_nogroups = 1;
+}
+
+static void extract_nonewprivs(ProcessHandle sandbox) {
+	struct stat s;
+
+	if (process_rootfs_stat(sandbox, RUN_NONEWPRIVS_CFG, &s) == 0)
+		arg_nonewprivs = 1;
+}
+
+static void extract_caps(ProcessHandle sandbox) {
+	// open status file
+	FILE *fp = process_fopen(sandbox, "status");
+
+	char buf[BUFLEN];
+	while (fgets(buf, BUFLEN, fp)) {
+		if (strncmp(buf, "CapBnd:", 7) == 0) {
+			unsigned long long val;
+			if (sscanf(buf + 7, "%llx", &val) != 1)
+				goto errexit;
+			apply_caps = 1;
+			caps = val;
+		}
+		else if (strncmp(buf, "NoNewPrivs:", 11) == 0) {
+			int val;
+			if (sscanf(buf + 11, "%d", &val) != 1)
+				goto errexit;
+			if (val)
+				arg_nonewprivs = 1;
+		}
+	}
+	fclose(fp);
+	return;
+
+errexit:
+	fprintf(stderr, "Error: cannot read /proc/%d/status\n", process_get_pid(sandbox));
+	exit(1);
+}
+
+static void extract_user_namespace(ProcessHandle sandbox) {
+	// test user namespaces available in the kernel
+	struct stat self_userns;
+	if (stat("/proc/self/ns/user", &self_userns) != 0)
+		return;
+
+	// check sandbox user namespace
+	struct stat dest_userns;
+	process_stat(sandbox, "ns/user", &dest_userns);
+
+	if (dest_userns.st_ino != self_userns.st_ino ||
+	    dest_userns.st_dev != self_userns.st_dev)
+		arg_noroot = 1;
+}
+
+static void extract_cpu(ProcessHandle sandbox) {
+	int fd = process_rootfs_open(sandbox, RUN_CPU_CFG);
+	if (fd < 0)
+		return; // not configured
+
+	FILE *fp = fdopen(fd, "r");
+	if (!fp)
+		errExit("fdopen");
+
+	unsigned tmp;
+	if (fscanf(fp, "%x", &tmp) == 1)
+		cfg.cpus = (uint32_t) tmp;
+	fclose(fp);
+}
+
+static void extract_cgroup(ProcessHandle sandbox) {
+	int fd = process_rootfs_open(sandbox, RUN_CGROUP_CFG);
+	if (fd < 0)
+		return; // not configured
+
+	FILE *fp = fdopen(fd, "r");
+	if (!fp)
+		errExit("fdopen");
+
+	char buf[BUFLEN];
+	if (fgets(buf, BUFLEN, fp)) {
+		cfg.cgroup = strdup(buf);
+		if (!cfg.cgroup)
+			errExit("strdup");
+	}
+	fclose(fp);
+}
+
+static void extract_umask(ProcessHandle sandbox) {
+	int fd = process_rootfs_open(sandbox, RUN_UMASK_FILE);
+	if (fd < 0) {
+		fprintf(stderr, "Error: cannot open umask file\n");
+		exit(1);
+	}
+
+	FILE *fp = fdopen(fd, "r");
+	if (!fp)
+		errExit("fdopen");
+
+	if (fscanf(fp, "%3o", &orig_umask) != 1) {
+		fprintf(stderr, "Error: cannot read umask\n");
+		exit(1);
+	}
+	fclose(fp);
+}
+
+// returns false if the sandbox is not fully set up yet,
+// or true if the sandbox is complete
+static bool has_join_file(ProcessHandle sandbox) {
 	// check if a file /run/firejail/mnt/join exists
-	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_JOIN_FILE) == -1)
-		errExit("asprintf");
-	EUID_ROOT();
-	int fd = open(fname, O_RDONLY|O_CLOEXEC);
-	EUID_USER();
-	free(fname);
+	int fd = process_rootfs_open(sandbox, RUN_JOIN_FILE);
 	if (fd == -1)
 		return false;
 	struct stat s;
@@ -354,84 +264,183 @@ bool is_ready_for_join(const pid_t pid) {
 }
 
 #define SNOOZE 10000 // sleep interval in microseconds
-void check_join_permission(pid_t pid) {
+static void check_joinable(ProcessHandle sandbox) {
 	// check if pid belongs to a fully set up firejail sandbox
 	unsigned long i;
-	for (i = SNOOZE; is_ready_for_join(pid) == false; i += SNOOZE) { // give sandbox some time to start up
+	for (i = SNOOZE; has_join_file(sandbox) == false; i += SNOOZE) { // give sandbox some time to start up
 		if (i > join_timeout) {
 			fprintf(stderr, "Error: no valid sandbox\n");
 			exit(1);
 		}
 		usleep(SNOOZE);
 	}
-	// check privileges for non-root users
-	uid_t uid = getuid();
-	if (uid != 0) {
-		uid_t sandbox_uid = pid_get_uid(pid);
-		if (uid != sandbox_uid) {
-			fprintf(stderr, "Error: permission is denied to join a sandbox created by a different user.\n");
-			exit(1);
-		}
-	}
 }
 
-pid_t switch_to_child(pid_t pid) {
-	EUID_ASSERT();
-	EUID_ROOT();
-	pid_t rv = pid;
-	errno = 0;
-	char *comm = pid_proc_comm(pid);
-	if (!comm) {
-		if (errno == ENOENT)
-			fprintf(stderr, "Error: cannot find process with pid %d\n", pid);
-		else
-			fprintf(stderr, "Error: cannot read /proc file\n");
+static ProcessHandle find_pidns_parent(pid_t pid) {
+	// identify current pid namespace
+	struct stat self_pidns;
+	if (stat("/proc/self/ns/pid", &self_pidns) < 0)
+		errExit("stat");
+
+	ProcessHandle process = pin_process(pid);
+
+	// in case pid is member of a different pid namespace
+	// find parent who created that namespace
+	while (1) {
+		struct stat dest_pidns;
+		process_stat(process, "ns/pid", &dest_pidns);
+
+		if (dest_pidns.st_ino == self_pidns.st_ino &&
+		    dest_pidns.st_dev == self_pidns.st_dev)
+			break; // always true for init process
+
+		// next parent process
+		ProcessHandle next = pin_parent_process(process);
+		unpin_process(process);
+		process = next;
+	}
+
+	return process;
+}
+
+static void check_firejail_comm(ProcessHandle process) {
+	// open /proc/pid/comm
+	// note: comm value is under control of the target process
+	FILE *fp = process_fopen(process, "comm");
+
+	char comm[16];
+	if (fscanf(fp, "%15s", comm) != 1) {
+		fprintf(stderr, "Error: cannot read /proc file\n");
 		exit(1);
 	}
-	EUID_USER();
+	fclose(fp);
 
-	if (strcmp(comm, "firejail") == 0) {
-		if (find_child(pid, &rv) == 1) {
-			fprintf(stderr, "Error: no valid sandbox\n");
-			exit(1);
-		}
-		fmessage("Switching to pid %u, the first child process inside the sandbox\n", (unsigned) rv);
+	if (strcmp(comm, "firejail") != 0) {
+		fprintf(stderr, "Error: no valid sandbox\n");
+		exit(1);
 	}
-	free(comm);
-	return rv;
+
+	return;
+}
+
+static void check_firejail_credentials(ProcessHandle process) {
+	// open /proc/pid/status
+	FILE *fp = process_fopen(process, "status");
+
+	uid_t ruid = -1;
+	uid_t suid = -1;
+	char buf[4096];
+	while (fgets(buf, sizeof(buf), fp)) {
+		if (sscanf(buf, "Uid: %u %*u %u", &ruid, &suid) == 2)
+			break;
+	}
+	fclose(fp);
+
+	// target process should be privileged and owned by the user
+	if (suid != 0)
+		goto errexit;
+	uid_t u = getuid();
+	if (ruid != u && u != 0)
+		goto errexit;
+
+	return;
+
+errexit:
+	fprintf(stderr, "Error: no valid sandbox\n");
+	exit(1);
+}
+
+static pid_t read_sandbox_pidfile(pid_t parent) {
+	char *pidfile;
+	if (asprintf(&pidfile, "%s/%d", RUN_FIREJAIL_SANDBOX_DIR, parent) == -1)
+		errExit("asprintf");
+
+	// open the pidfile
+	EUID_ROOT();
+	int pidfile_fd = open(pidfile, O_RDWR|O_CLOEXEC);
+	free(pidfile);
+	EUID_USER();
+	if (pidfile_fd < 0)
+		goto errexit;
+
+	// assume pidfile is outdated if parent doesn't hold a lock
+	struct flock pidfile_lock = {
+		.l_type = F_WRLCK,
+		.l_whence = SEEK_SET,
+		.l_start = 0,
+		.l_len = 0,
+		.l_pid = 0,
+	};
+	if (fcntl(pidfile_fd, F_GETLK, &pidfile_lock) < 0)
+		errExit("fcntl");
+	if (pidfile_lock.l_type == F_UNLCK)
+		goto errexit;
+	if (pidfile_lock.l_pid != parent)
+		goto errexit;
+
+	// read pidfile
+	pid_t sandbox;
+	FILE *fp = fdopen(pidfile_fd, "r");
+	if (!fp)
+		errExit("fdopen");
+	if (fscanf(fp, "%d", &sandbox) != 1)
+		goto errexit;
+	fclose(fp);
+
+	return sandbox;
+
+errexit:
+	fprintf(stderr, "Error: no valid sandbox\n");
+	exit(1);
+}
+
+static ProcessHandle switch_to_sandbox(ProcessHandle parent) {
+	// firejail forks many children, identify the sandbox child
+	// using a pidfile created by the sandbox parent
+	pid_t pid = read_sandbox_pidfile(process_get_pid(parent));
+
+	// pin the sandbox child
+	fmessage("Switching to pid %d, the first child process inside the sandbox\n", pid);
+	ProcessHandle sandbox = pin_child_process(parent, pid);
+
+	return sandbox;
+}
+
+ProcessHandle pin_sandbox_process(pid_t pid) {
+	EUID_ASSERT();
+
+	ProcessHandle parent = find_pidns_parent(pid);
+	check_firejail_comm(parent);
+	check_firejail_credentials(parent);
+
+	ProcessHandle sandbox = switch_to_sandbox(parent);
+	check_joinable(sandbox);
+
+	unpin_process(parent);
+	return sandbox;
 }
 
 
 
 void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ASSERT();
+	ProcessHandle sandbox = pin_sandbox_process(pid);
 
-	pid_t parent = pid;
-	// in case the pid is that of a firejail process, use the pid of the first child process
-	pid = switch_to_child(pid);
-
-	// exit if no permission to join the sandbox
-	check_join_permission(pid);
-
-	extract_x11_display(parent);
+	extract_x11_display(pid);
 
 	int shfd = -1;
 	if (!arg_shell_none)
 		shfd = open_shell();
 
-	EUID_ROOT();
 	// in user mode set caps seccomp, cpu, cgroup, etc
 	if (getuid() != 0) {
-		extract_nonewprivs(pid);  // redundant on Linux >= 4.10; duplicated in function extract_caps
-		extract_caps(pid);
-		extract_cpu(pid);
-		extract_cgroup(pid);
-		extract_nogroups(pid);
-		extract_user_namespace(pid);
-		extract_umask(pid);
-#ifdef HAVE_APPARMOR
-		extract_apparmor(pid);
-#endif
+		extract_nonewprivs(sandbox);  // redundant on Linux >= 4.10; duplicated in function extract_caps
+		extract_caps(sandbox);
+		extract_cpu(sandbox);
+		extract_cgroup(sandbox);
+		extract_nogroups(sandbox);
+		extract_user_namespace(sandbox);
+		extract_umask(sandbox);
 	}
 
 	// set cgroup
@@ -439,20 +448,21 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		set_cgroup(cfg.cgroup, getpid());
 
 	// join namespaces
+	EUID_ROOT();
 	if (arg_join_network) {
-		if (join_namespace(pid, "net"))
+		if (process_join_namespace(sandbox, "net"))
 			exit(1);
 	}
 	else if (arg_join_filesystem) {
-		if (join_namespace(pid, "mnt"))
+		if (process_join_namespace(sandbox, "mnt"))
 			exit(1);
 	}
 	else {
-		if (join_namespace(pid, "ipc") ||
-		    join_namespace(pid, "net") ||
-		    join_namespace(pid, "pid") ||
-		    join_namespace(pid, "uts") ||
-		    join_namespace(pid, "mnt"))
+		if (process_join_namespace(sandbox, "ipc") ||
+		    process_join_namespace(sandbox, "net") ||
+		    process_join_namespace(sandbox, "pid") ||
+		    process_join_namespace(sandbox, "uts") ||
+		    process_join_namespace(sandbox, "mnt"))
 			exit(1);
 	}
 
@@ -463,42 +473,25 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		// drop discretionary access control capabilities for root sandboxes
 		caps_drop_dac_override();
 
-		// chroot into /proc/PID/root directory
-		char *rootdir;
-		if (asprintf(&rootdir, "/proc/%d/root", pid) == -1)
-			errExit("asprintf");
-
-		int rv;
 		if (!arg_join_network) {
-			rv = chroot(rootdir); // this will fail for processes in sandboxes not started with --chroot option
-			if (rv == 0)
-				printf("changing root to %s\n", rootdir);
-		}
+			// mount namespace doesn't know about --chroot
+			fmessage("Changing root to /proc/%d/root\n", process_get_pid(sandbox));
+			process_rootfs_chroot(sandbox);
 
-		EUID_USER();
-		if (chdir("/") < 0)
-			errExit("chdir");
-		if (cfg.homedir) {
-			struct stat s;
-			if (stat(cfg.homedir, &s) == 0) {
-				/* coverity[toctou] */
-				if (chdir(cfg.homedir) < 0)
-					errExit("chdir");
-			}
+			// load seccomp filters
+			if (getuid() != 0)
+				seccomp_load_file_list();
 		}
 
 		// set caps filter
-		EUID_ROOT();
 		if (apply_caps == 1)	// not available for uid 0
 			caps_set(caps);
-		if (getuid() != 0)
-			seccomp_load_file_list();
 
-		// mount user namespace or drop privileges
+		// user namespace
 		if (arg_noroot) {	// not available for uid 0
 			if (arg_debug)
 				printf("Joining user namespace\n");
-			if (join_namespace(1, "user"))
+			if (process_join_namespace(sandbox, "user"))
 				exit(1);
 
 			// user namespace resets capabilities
@@ -506,6 +499,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			if (apply_caps == 1)	// not available for uid 0
 				caps_set(caps);
 		}
+		EUID_USER();
+		unpin_process(sandbox);
 
 		// set nonewprivs
 		if (arg_nonewprivs == 1) {	// not available for uid 0
@@ -514,7 +509,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 				printf("NO_NEW_PRIVS set\n");
 		}
 
-		EUID_USER();
 		int cwd = 0;
 		if (cfg.cwd) {
 			if (chdir(cfg.cwd) == 0)
@@ -579,6 +573,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		__builtin_unreachable();
 	}
 	EUID_USER();
+	unpin_process(sandbox);
+
 	if (shfd != -1)
 		close(shfd);
 

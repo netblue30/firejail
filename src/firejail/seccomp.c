@@ -21,6 +21,7 @@
 #include "firejail.h"
 #include "../include/seccomp.h"
 #include <sys/mman.h>
+#include <sys/wait.h>
 
 typedef struct filter_list {
 	struct filter_list *next;
@@ -425,26 +426,20 @@ int seccomp_filter_mdwx(bool native) {
 void seccomp_print_filter(pid_t pid) {
 	EUID_ASSERT();
 
-	// in case the pid is that of a firejail process, use the pid of the first child process
-	pid = switch_to_child(pid);
+	ProcessHandle sandbox = pin_sandbox_process(pid);
 
-	// exit if no permission to join the sandbox
-	check_join_permission(pid);
+	// chroot in the sandbox
+	process_rootfs_chroot(sandbox);
+	unpin_process(sandbox);
+
+	drop_privs(0);
 
 	// find the seccomp list file
-	EUID_ROOT();
-	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_SECCOMP_LIST) == -1)
-		errExit("asprintf");
-
-	int fd = open(fname, O_RDONLY|O_CLOEXEC);
-	if (fd < 0)
-		goto errexit;
-
-	FILE *fp = fdopen(fd, "r");
-	if (!fp)
-		goto errexit;
-	free(fname);
+	FILE *fp = fopen(RUN_SECCOMP_LIST, "re");
+	if (!fp) {
+		printf("Cannot access seccomp filter.\n");
+		exit(1);
+	}
 
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
@@ -453,21 +448,21 @@ void seccomp_print_filter(pid_t pid) {
 		if (ptr)
 			*ptr = '\0';
 
-		if (asprintf(&fname, "/proc/%d/root%s", pid, buf) == -1)
-			errExit("asprintf");
-		printf("FILE: %s\n", fname); fflush(0);
+		printf("FILE: %s\n", buf); fflush(0);
 
-		// read and print the filter - run this as root, the user doesn't have access
-		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 2, PATH_FSEC_PRINT, fname);
-		fflush(0);
+		// read and print the filter
+		pid_t child = fork();
+		if (child < 0)
+			errExit("fork");
+		if (child == 0) {
+			execl(PATH_FSEC_PRINT, PATH_FSEC_PRINT, buf, NULL);
+			errExit("execl");
+		}
+		waitpid(child, NULL, 0);
 
 		printf("\n"); fflush(0);
-		free(fname);
 	}
 	fclose(fp);
-	exit(0);
 
-errexit:
-	printf("Cannot access seccomp filter.\n");
-	exit(1);
+	exit(0);
 }

@@ -22,6 +22,7 @@
 #include <errno.h>
 #include <linux/filter.h>
 #include <stddef.h>
+#include <fcntl.h>
 #include <linux/capability.h>
 #include <linux/audit.h>
 #include <sys/prctl.h>
@@ -381,34 +382,21 @@ void caps_keep_list(const char *clist) {
 }
 
 #define MAXBUF 4098
-static uint64_t extract_caps(int pid) {
-	EUID_ASSERT();
-
-	char *file;
-	if (asprintf(&file, "/proc/%d/status", pid) == -1)
-		errExit("asprintf");
-
-	EUID_ROOT();	// grsecurity
-	FILE *fp = fopen(file, "re");
-	EUID_USER();	// grsecurity
-	if (!fp)
-		goto errexit;
+static uint64_t extract_caps(ProcessHandle process) {
+	FILE *fp = process_fopen(process, "status");
 
 	char buf[MAXBUF];
 	while (fgets(buf, MAXBUF, fp)) {
 		if (strncmp(buf, "CapBnd:\t", 8) == 0) {
-			char *ptr = buf + 8;
 			unsigned long long val;
-			sscanf(ptr, "%llx", &val);
-			free(file);
-			fclose(fp);
-			return val;
+			if (sscanf(buf + 8, "%llx", &val) == 1) {
+				fclose(fp);
+				return val;
+			}
+			break;
 		}
 	}
-	fclose(fp);
 
-errexit:
-	free(file);
 	fprintf(stderr, "Error: cannot read caps configuration\n");
 	exit(1);
 }
@@ -416,13 +404,11 @@ errexit:
 void caps_print_filter(pid_t pid) {
 	EUID_ASSERT();
 
-	// in case the pid is that of a firejail process, use the pid of the first child process
-	pid = switch_to_child(pid);
+	ProcessHandle sandbox = pin_sandbox_process(pid);
 
-	// exit if no permission to join the sandbox
-	check_join_permission(pid);
+	uint64_t caps = extract_caps(sandbox);
+	unpin_process(sandbox);
 
-	uint64_t caps = extract_caps(pid);
 	int i;
 	uint64_t mask;
 	int elems = sizeof(capslist) / sizeof(capslist[0]);

@@ -271,44 +271,25 @@ void net_check_cfg(void) {
 #define MAXBUF 4096
 void net_dns_print(pid_t pid) {
 	EUID_ASSERT();
-	// drop privileges - will not be able to read /etc/resolv.conf for --noroot option
+	ProcessHandle sandbox = pin_sandbox_process(pid);
 
-	// in case the pid is that of a firejail process, use the pid of the first child process
-	pid = switch_to_child(pid);
+	// chroot in the sandbox
+	process_rootfs_chroot(sandbox);
+	unpin_process(sandbox);
 
-	// exit if no permission to join the sandbox
-	check_join_permission(pid);
+	drop_privs(0);
 
-	EUID_ROOT();
-	if (join_namespace(pid, "mnt"))
+	// read /etc/resolv.conf
+	FILE *fp = fopen("/etc/resolv.conf", "re");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot read /etc/resolv.conf\n");
 		exit(1);
-
-	pid_t child = fork();
-	if (child < 0)
-		errExit("fork");
-	if (child == 0) {
-		caps_drop_all();
-		if (chdir("/") < 0)
-			errExit("chdir");
-
-		// access /etc/resolv.conf
-		FILE *fp = fopen("/etc/resolv.conf", "re");
-		if (!fp) {
-			fprintf(stderr, "Error: cannot access /etc/resolv.conf\n");
-			exit(1);
-		}
-
-		char buf[MAXBUF];
-		while (fgets(buf, MAXBUF, fp))
-			printf("%s", buf);
-		printf("\n");
-		fclose(fp);
-		exit(0);
 	}
 
-	// wait for the child to finish
-	waitpid(child, NULL, 0);
-	flush_stdin();
+	char buf[MAXBUF];
+	while (fgets(buf, MAXBUF, fp))
+		printf("%s", buf);
+
 	exit(0);
 }
 

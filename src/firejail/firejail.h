@@ -477,11 +477,29 @@ void top(void);
 // usage.c
 void usage(void);
 
+// process.c
+typedef struct processhandle_instance_t * ProcessHandle;
+
+ProcessHandle pin_process(pid_t pid);
+void unpin_process(ProcessHandle process);
+pid_t process_get_pid(ProcessHandle process);
+int process_get_fd(ProcessHandle process);
+int process_stat_nofail(ProcessHandle process, const char *fname, struct stat *s);
+int process_stat(ProcessHandle process, const char *fname, struct stat *s);
+int process_open_nofail(ProcessHandle process, const char *fname);
+int process_open(ProcessHandle process, const char *fname);
+FILE *process_fopen(ProcessHandle process, const char *fname);
+int process_join_namespace(ProcessHandle process, char *type);
+void process_send_signal(ProcessHandle process, int signum);
+ProcessHandle pin_parent_process(ProcessHandle process);
+ProcessHandle pin_child_process(ProcessHandle process, pid_t child);
+void process_rootfs_chroot(ProcessHandle process);
+int process_rootfs_stat(ProcessHandle process, const char *fname, struct stat *s);
+int process_rootfs_open(ProcessHandle process, const char *fname);
+
 // join.c
+ProcessHandle pin_sandbox_process(pid_t pid);
 void join(pid_t pid, int argc, char **argv, int index) __attribute__((noreturn));
-bool is_ready_for_join(const pid_t pid);
-void check_join_permission(pid_t pid);
-pid_t switch_to_child(pid_t pid);
 
 // shutdown.c
 void shut(pid_t pid);
@@ -648,13 +666,11 @@ void set_rlimits(void);
 // cpu.c
 void read_cpu_list(const char *str);
 void set_cpu_affinity(void);
-void load_cpu(const char *fname);
 void save_cpu(void);
 void cpu_print_filter(pid_t pid) __attribute__((noreturn));
 
 // cgroup.c
 void save_cgroup(void);
-void load_cgroup(const char *fname);
 void check_cgroup_file(const char *fname);
 void set_cgroup(const char *fname, pid_t pid);
 
@@ -862,9 +878,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define PATH_FSECCOMP_MAIN (LIBDIR "/firejail/fseccomp")		// when called from main thread
 #define PATH_FSECCOMP ( RUN_FIREJAIL_LIB_DIR "/fseccomp")	// when called from sandbox thread
 
-// FSEC_PRINT is run outside of sandbox by --seccomp.print
-// it is also run from inside the sandbox by --debug; in this case we do an access(filename, X_OK) test first
-#define PATH_FSEC_PRINT (LIBDIR "/firejail/fsec-print")
+#define PATH_FSEC_PRINT (RUN_FIREJAIL_LIB_DIR "/fsec-print")
 
 #define PATH_FSEC_OPTIMIZE (RUN_FIREJAIL_LIB_DIR "/fsec-optimize")
 
@@ -899,6 +913,7 @@ void delete_bandwidth_run_file(pid_t pid);
 void set_name_run_file(pid_t pid);
 void set_x11_run_file(pid_t pid, int display);
 void set_profile_run_file(pid_t pid, const char *fname);
+int set_sandbox_run_file(pid_t pid, pid_t child);
 
 // dbus.c
 int dbus_check_name(const char *name);

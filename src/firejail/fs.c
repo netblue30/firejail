@@ -834,6 +834,7 @@ void disable_config(void) {
 #endif
 
 	// disable run time information
+	disable_file(BLACKLIST_FILE, RUN_FIREJAIL_SANDBOX_DIR);
 	disable_file(BLACKLIST_FILE, RUN_FIREJAIL_NETWORK_DIR);
 	disable_file(BLACKLIST_FILE, RUN_FIREJAIL_BANDWIDTH_DIR);
 	disable_file(BLACKLIST_FILE, RUN_FIREJAIL_NAME_DIR);

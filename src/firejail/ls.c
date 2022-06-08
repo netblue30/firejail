@@ -286,11 +286,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 	EUID_ASSERT();
 	assert(path1);
 
-	// in case the pid is that of a firejail process, use the pid of the first child process
-	pid = switch_to_child(pid);
-
-	// exit if no permission to join the sandbox
-	check_join_permission(pid);
+	ProcessHandle sandbox = pin_sandbox_process(pid);
 
 	// expand paths
 	char *fname1 = expand_path(path1);
@@ -337,18 +333,9 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		op = SANDBOX_FS_CAT;
 	}
 
-	// sandbox root directory
-	char *rootdir;
-	if (asprintf(&rootdir, "/proc/%d/root", pid) == -1)
-		errExit("asprintf");
-
 	if (op == SANDBOX_FS_LS || op == SANDBOX_FS_CAT) {
-		EUID_ROOT();
-		// chroot
-		if (chroot(rootdir) < 0)
-			errExit("chroot");
-		if (chdir("/") < 0)
-			errExit("chdir");
+		// chroot into the sandbox
+		process_rootfs_chroot(sandbox);
 
 		// drop privileges
 		drop_privs(0);
@@ -410,11 +397,8 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		if (child < 0)
 			errExit("fork");
 		if (child == 0) {
-			// chroot
-			if (chroot(rootdir) < 0)
-				errExit("chroot");
-			if (chdir("/") < 0)
-				errExit("chdir");
+			// chroot into the sandbox
+			process_rootfs_chroot(sandbox);
 
 			// drop privileges
 			drop_privs(0);
@@ -442,10 +426,6 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		EUID_USER();
 	}
 
-	if (fname2)
-		free(fname2);
-	free(fname1);
-	free(rootdir);
-
+	unpin_process(sandbox);
 	exit(0);
 }

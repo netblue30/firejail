@@ -1011,6 +1011,7 @@ int main(int argc, char **argv, char **envp) {
 	int prog_index = -1;			  // index in argv where the program command starts
 	int lockfd_network = -1;
 	int lockfd_directory = -1;
+	int lockfd_sandboxfile = -1;
 	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
@@ -3119,6 +3120,9 @@ int main(int argc, char **argv, char **envp) {
 		errExit("clone");
 	EUID_USER();
 
+	// sandbox pidfile
+	lockfd_sandboxfile = set_sandbox_run_file(getpid(), child);
+
 	if (!arg_command && !arg_quiet) {
 		fmessage("Parent pid %u, child pid %u\n", sandbox_pid, child);
 		// print the path of the new log directory
@@ -3301,12 +3305,28 @@ int main(int argc, char **argv, char **envp) {
 
 	// lock netfilter firewall
 	if (arg_netlock) {
-		char *cmd;
-		if (asprintf(&cmd, "firejail --netlock=%d&", getpid()) == -1)
-			errExit("asprintf");
-		int rv = system(cmd);
-		(void) rv;
-		free(cmd);
+		pid_t netlock_child = fork();
+		if (netlock_child < 0)
+			errExit("fork");
+		if (netlock_child == 0) {
+			close_all(NULL, 0);
+			// drop privileges
+			if (setresgid(-1, getgid(), getgid()) != 0)
+				errExit("setresgid");
+			if (setresuid(-1, getuid(), getuid()) != 0)
+				errExit("setresuid");
+
+			char arg[64];
+			snprintf(arg, sizeof(arg), "--netlock=%d", getpid());
+
+			char *cmd[3];
+			cmd[0] = BINDIR "/firejail";
+			cmd[1] = arg;
+			cmd[2] = NULL;
+			execvp(cmd[0], cmd);
+			perror("Cannot start netlock");
+			_exit(1);
+		}
 	}
 
 	int status = 0;
@@ -3326,7 +3346,8 @@ int main(int argc, char **argv, char **envp) {
 	// end of signal-safe code
 	//*****************************
 
-
+	// release lock
+	close(lockfd_sandboxfile);
 
 	if (WIFEXITED(status)){
 		myexit(WEXITSTATUS(status));

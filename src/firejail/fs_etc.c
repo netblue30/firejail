@@ -104,7 +104,10 @@ static void build_dirs(char *src, char *dst, size_t src_prefix_len, size_t dst_p
 				*q = '\0';
 				*r = '/';
 				r = q;
-				mkdir_attr(dst, s.st_mode, 0, 0);
+				if (mkdir(dst, 0700) != 0 && errno != EEXIST)
+					errExit("mkdir");
+				if (chmod(dst, s.st_mode) != 0)
+					errExit("chmod");
 			}
 			if (!last) {
 				// If we're not at the final terminating null, restore

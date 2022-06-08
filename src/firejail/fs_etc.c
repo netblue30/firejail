@@ -104,7 +104,7 @@ static void build_dirs(char *src, char *dst, size_t src_prefix_len, size_t dst_p
 				*q = '\0';
 				*r = '/';
 				r = q;
-				create_empty_dir_as_root(dst, s.st_mode);
+				mkdir_attr(dst, s.st_mode, 0, 0);
 			}
 			if (!last) {
 				// If we're not at the final terminating null, restore
@@ -330,9 +330,9 @@ void fs_rebuild_etc(void) {
 				symlink_done = 1;
 		}
 		else if (S_ISDIR(s.st_mode))
-			create_empty_dir_as_root(dest, s.st_mode);
+			create_empty_dir_as_root(dest, S_IRWXU);
 		else
-			create_empty_file_as_root(dest, s.st_mode);
+			create_empty_file_as_root(dest, S_IRUSR | S_IWUSR);
 
 		// bind-mount src on top of dest
 		if (!symlink_done) {

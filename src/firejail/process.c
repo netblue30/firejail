@@ -96,7 +96,7 @@ int process_stat_nofail(ProcessHandle process, const char *fname, struct stat *s
 int process_stat(ProcessHandle process, const char *fname, struct stat *s) {
 	int rv = process_stat_nofail(process, fname, s);
 	if (rv) {
-		fprintf(stderr, "Error: cannot stat /proc/%d/%s: %s\n", process->pid, fname, strerror(errno));
+		fprintf(stderr, "Error: cannot stat /proc/%d/%s: %s\n", process_get_pid(process), fname, strerror(errno));
 		exit(1);
 	}
 
@@ -117,7 +117,7 @@ int process_open_nofail(ProcessHandle process, const char *fname) {
 int process_open(ProcessHandle process, const char *fname) {
 	int rv = process_open_nofail(process, fname);
 	if (rv < 0) {
-		fprintf(stderr, "Error: cannot open /proc/%d/%s: %s\n", process->pid, fname, strerror(errno));
+		fprintf(stderr, "Error: cannot open /proc/%d/%s: %s\n", process_get_pid(process), fname, strerror(errno));
 		exit(1);
 	}
 

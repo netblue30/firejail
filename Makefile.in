@@ -207,6 +207,11 @@ DISTFILES = "src etc m4 platform contrib configure configure.ac Makefile.in inst
 DISTFILES_TEST = "test/Makefile.in test/apps test/apps-x11 test/apps-x11-xorg test/root test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils test/chroot"
 
 dist:
+	mv config.status config.status.old
+	mv mkdeb.sh mkdeb.sh.old
+	make distclean
+	mv mkdeb.sh.old mkdeb.sh
+	mv config.status.old config.status
 	rm -fr $(NAME)-$(VERSION) $(NAME)-$(VERSION).tar.xz
 	mkdir -p $(NAME)-$(VERSION)/test
 	cp -a "$(DISTFILES)" $(NAME)-$(VERSION)

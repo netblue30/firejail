@@ -1,5 +1,8 @@
-firejail (0.9.69) baseline; urgency=low
-  * work in progress
+firejail (0.9.70) baseline; urgency=low
+  * security: CVE-2022-31214 - root escalation in --join logic
+    Reported by  Matthias Gerstner, working exploit code was provided to our
+    development team. In the same time frame, the problem was independently
+    reported by Birk Blechschmidt. Full working exploit code was also provided.
   * feature: enable shell tab completion with --tab (#4936)
   * feature: disable user profiles at compile time (#4990)
   * feature: Allow resolution of .local names with avahi-daemon in the apparmor

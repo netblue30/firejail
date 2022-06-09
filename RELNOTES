@@ -5,10 +5,10 @@ firejail (0.9.69) baseline; urgency=low
   * feature: Allow resolution of .local names with avahi-daemon in the apparmor
     profile (#5088)
   * feature: always log seccomp errors (#5110)
-  * feature: --oom, kernel OutOfMemory-killer (#5122)
   * feature: firecfg --guide, guided user configuration (#5111)
-  * modif: --nettrace only available to root user
+  * feature: --oom, kernel OutOfMemory-killer (#5122)
   * modif: --ids feature needs to be enabled at compile time (#5155)
+  * modif: --nettrace only available to root user
   * rework: whitelist restructuring (#4985)
   * rework: firemon, speed up and lots of fixes
   * bugfix: --private-cwd not expanding macros, broken hyperrogue (#4910)

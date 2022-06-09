@@ -69,7 +69,7 @@ void oom_set(const char *oom_string) {
 		}
 		int newoom;
 		if (1 != fscanf(fp, "%d", &newoom)) {
-			fprintf(stderr, "Error: connot read from %s\n", fname);
+			fprintf(stderr, "Error: cannot read from %s\n", fname);
 			exit(1);
 		}
 		fclose(fp);

@@ -28,7 +28,9 @@ firejail (0.9.69) baseline; urgency=low
   * docs: mention that the protocol command accumulates (#5043)
   * docs: mention inconsistent homedir bug involving --private=dir (#5052)
   * docs: mention capabilities(7) on --caps (#5078)
-  * new profiles: onionshare, onionshare-cli, songrec
+  * new profiles: onionshare, onionshare-cli, opera-developer, songrec
+  * new profiles: node-gyp, npx, semver, ping-hardened
+  * removed profiles: nvm
  -- netblue30 <netblue30@yahoo.com>  Mon, 7 Feb 2022 09:00:00 -0500
 
 firejail (0.9.68) baseline; urgency=low

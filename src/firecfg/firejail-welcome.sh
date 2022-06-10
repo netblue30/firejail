@@ -111,7 +111,7 @@ fi
 # nonewprivs
 #******************************************************
 read -r -d $'\0' MSG_Q_NONEWPRIVS <<EOM
-<big><b>Should we force nonweprivs by default?</b></big>
+<big><b>Should we force nonewprivs by default?</b></big>
 
 nonewprivs is a Linux kernel feature that prevents programs from rising privileges.
 It is also a strong mitigation against exploits in Firejail. However, some programs

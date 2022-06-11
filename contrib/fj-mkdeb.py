@@ -22,11 +22,6 @@ def run(srcdir, args):
             # prefix should ALWAYS be /usr here.  Discard user-set values
             args.remove(a)
 
-    # Remove generated files.
-    distclean = subprocess.call(['make', 'distclean'])
-    if distclean != 0:
-        return distclean
-
     # Run configure to generate mkdeb.sh.
     first_config = subprocess.call(['./configure', '--prefix=/usr'] + args)
     if first_config != 0:

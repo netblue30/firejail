@@ -207,42 +207,11 @@ You can also use this tool to get a list of syscalls needed by a program: [contr
 
 We also keep a list of profile fixes for previous released versions in [etc-fixes](https://github.com/netblue30/firejail/tree/master/etc-fixes) directory.
 
-## Latest released version: 0.9.68
+## Latest released version: 0.9.70
 
-## Current development version: 0.9.69
+## Current development version: 0.9.71
 
 Milestone page: https://github.com/netblue30/firejail/milestone/1
-
-### Shell tab completion
-```
-       --tab  Enable shell tab completion in sandboxes using private or whitelisted
-              home directories.
-
-              $ firejail --private --tab
-```
-
-### Kernel OutOfMemory-killer
-`````
-       --oom=value
-              Configure kernel's OutOfMemory-killer score  for  this  sandbox.
-              The  acceptable  score values are between 0 and 1000 for regular
-              users, and -1000 to 1000 for root. For more information  on  OOM
-              kernel feature see man choom.
-
-              Example:
-              $ firejail --oom=300 firefox
-`````
-
-### Guided configuration
-`````
-$ man firecfg
-[...]
-       --guide
-              Guided configuration for new users.
-
-              Example:
-              $ sudo firecfg --guide
-`````
 
 ### Profile Statistics
 
@@ -254,30 +223,30 @@ No include .local found in /etc/firejail/noprofile.profile
 Warning: multiple caps in /etc/firejail/transmission-daemon.profile
 
 Stats:
-    profiles			1184
-    include local profile	1183   (include profile-name.local)
-    include globals		1152   (include globals.local)
-    blacklist ~/.ssh		1057   (include disable-common.inc)
-    seccomp			1076
-    capabilities		1178
-    noexec			1064   (include disable-exec.inc)
-    noroot			985
-    memory-deny-write-execute	259
-    apparmor			707
-    private-bin			686
-    private-dev			1040
-    private-etc			537
-    private-tmp			911
-    whitelist home directory	567
-    whitelist var		849   (include whitelist-var-common.inc)
-    whitelist run/user		1153   (include whitelist-runuser-common.inc
+    profiles			1191
+    include local profile	1190   (include profile-name.local)
+    include globals		1164   (include globals.local)
+    blacklist ~/.ssh		1063   (include disable-common.inc)
+    seccomp			1082
+    capabilities		1185
+    noexec			1070   (include disable-exec.inc)
+    noroot			991
+    memory-deny-write-execute	267
+    apparmor			710
+    private-bin			689
+    private-dev			1041
+    private-etc			539
+    private-tmp			915
+    whitelist home directory	573
+    whitelist var		855   (include whitelist-var-common.inc)
+    whitelist run/user		1159   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		621   (include whitelist-usr-share-common.inc
+    whitelist usr/share		628   (include whitelist-usr-share-common.inc
     net none			403
-    dbus-user none 		670
-    dbus-user filter 		114
-    dbus-system none 		824
-    dbus-system filter 		10
+    dbus-user none 		673
+    dbus-user filter 		122
+    dbus-system none 		832
+    dbus-system filter 		12
 ```
 
 ### New profiles:

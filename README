@@ -838,6 +838,7 @@ PizzaDude (https://github.com/pizzadude)
 	- added profile for torbrowser-launcher
 	- added profile for sayonara and qmmp
 	- remove tracelog from Firefox profile
+	- fix welcome.sh
 polyzen (https://github.com/polyzen)
 	- fixed wusc issue with mpv/Vulkan
 probonopd (https://github.com/probonopd)

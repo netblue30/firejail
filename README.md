@@ -63,35 +63,6 @@ Backup Video Channel: https://www.bitchute.com/profile/JSBsA1aoQVfW/
 
 We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@protonmail.com
 
-`````
-Security Advisory - Feb 8, 2021
-
-Summary: A vulnerability resulting in root privilege escalation was discovered in
-Firejail's OverlayFS code,
-
-Versions affected: Firejail software versions starting with 0.9.30.
-Long Term Support (LTS) Firejail branch is not affected by this bug.
-
-Workaround: Disable overlayfs feature at runtime.
-In a text editor open /etc/firejail/firejail.config file, and set "overlayfs" entry to "no".
-
-      $ grep overlayfs /etc/firejail/firejail.config
-      # Enable or disable overlayfs features, default enabled.
-      overlayfs no
-
-Fix: The bug is fixed in Firejail version 0.9.64.4
-
-GitHub commit: (file configure.ac)
-https://github.com/netblue30/firejail/commit/97d8a03cad19501f017587cc4e47d8418273834b
-
-Credit:  Security researcher Roman Fiedler analyzed the code and discovered the vulnerability.
-Functional PoC exploit code was provided to Firejail development team.
-A description of the problem is here on Roman's blog:
-
-https://unparalleled.eu/publications/2021/advisory-unpar-2021-0.txt
-https://unparalleled.eu/blog/2021/20210208-rigged-race-against-firejail-for-local-root/
-`````
-
 ## Installing
 
 ### Debian
@@ -133,8 +104,6 @@ See the following discussions for details:
 ### Other
 
 Firejail is included in a large number of Linux distributions.
-
-Note: The firejail 0.9.52-LTS version is deprecated.
 
 You can also install one of the [released packages](http://sourceforge.net/projects/firejail/files/firejail), or clone Firejail’s source code from our Git repository and compile manually:
 

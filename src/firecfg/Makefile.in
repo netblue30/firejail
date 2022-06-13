@@ -1,7 +1,8 @@
 .PHONY: all
 all: firecfg
 
-include ../common.mk
+ROOT = ../..
+include $(ROOT)/src/common.mk
 
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/euid_common.h ../include/libnetlink.h ../include/firejail_user.h ../include/pid.h
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@

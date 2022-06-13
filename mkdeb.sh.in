@@ -7,8 +7,9 @@
 # a code archive should already be available
 
 set -e
-NAME=@PACKAGE_NAME@
-VERSION=@PACKAGE_VERSION@
+
+. "$(dirname "$0")/config.sh"
+
 EXTRA_VERSION=$1
 
 test "$#" -gt 0 && shift

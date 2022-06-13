@@ -1012,7 +1012,6 @@ int main(int argc, char **argv, char **envp) {
 	int lockfd_network = -1;
 	int lockfd_directory = -1;
 	int lockfd_sandboxfile = -1;
-	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
 	int arg_netlock = 0;
@@ -1565,23 +1564,6 @@ int main(int argc, char **argv, char **envp) {
 			if (getuid() != 0 &&cfg.nice < 0)
 				cfg.nice = 0;
 			arg_nice = 1;
-		}
-		else if (strncmp(argv[i], "--cgroup=", 9) == 0) {
-			if (checkcfg(CFG_CGROUP)) {
-				if (option_cgroup) {
-					fprintf(stderr, "Error: only one cgroup can be defined\n");
-					exit(1);
-				}
-				cfg.cgroup = strdup(argv[i] + 9);
-				if (!cfg.cgroup)
-					errExit("strdup");
-
-				check_cgroup_file(cfg.cgroup);
-				set_cgroup(cfg.cgroup, getpid());
-				option_cgroup = 1;
-			}
-			else
-				exit_err_feature("cgroup");
 		}
 
 		//*************************************

@@ -1144,21 +1144,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-	// cgroup
-	if (strncmp(ptr, "cgroup ", 7) == 0) {
-		if (checkcfg(CFG_CGROUP)) {
-			cfg.cgroup = strdup(ptr + 7);
-			if (!cfg.cgroup)
-				errExit("strdup");
-
-			check_cgroup_file(cfg.cgroup);
-			set_cgroup(cfg.cgroup, getpid());
-		}
-		else
-			warning_feature_disabled("cgroup");
-		return 0;
-	}
-
 	// writable-etc
 	if (strcmp(ptr, "writable-etc") == 0) {
 		if (cfg.etc_private_keep) {

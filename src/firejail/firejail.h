@@ -211,7 +211,6 @@ typedef struct config_t {
 	// cpu affinity, nice and control groups
 	uint32_t cpus;
 	int nice;
-	char *cgroup;
 
 	// command line
 	char *command_line;
@@ -669,11 +668,6 @@ void set_cpu_affinity(void);
 void save_cpu(void);
 void cpu_print_filter(pid_t pid) __attribute__((noreturn));
 
-// cgroup.c
-void save_cgroup(void);
-void check_cgroup_file(const char *fname);
-void set_cgroup(const char *fname, pid_t pid);
-
 // output.c
 void check_output(int argc, char **argv);
 
@@ -830,7 +824,6 @@ enum {
 	CFG_BROWSER_ALLOW_DRM,
 	CFG_APPARMOR,
 	CFG_DBUS,
-	CFG_CGROUP,
 	CFG_NAME_CHANGE,
 	CFG_SECCOMP_ERROR_ACTION,
 	// CFG_FILE_COPY_LIMIT - file copy limit handled using setenv/getenv

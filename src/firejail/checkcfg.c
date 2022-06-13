@@ -100,7 +100,6 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_X11, "x11")
 			PARSE_YESNO(CFG_APPARMOR, "apparmor")
 			PARSE_YESNO(CFG_BIND, "bind")
-			PARSE_YESNO(CFG_CGROUP, "cgroup")
 			PARSE_YESNO(CFG_NAME_CHANGE, "name-change")
 			PARSE_YESNO(CFG_USERNS, "userns")
 			PARSE_YESNO(CFG_CHROOT, "chroot")

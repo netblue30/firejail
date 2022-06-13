@@ -204,24 +204,6 @@ static void extract_cpu(ProcessHandle sandbox) {
 	fclose(fp);
 }
 
-static void extract_cgroup(ProcessHandle sandbox) {
-	int fd = process_rootfs_open(sandbox, RUN_CGROUP_CFG);
-	if (fd < 0)
-		return; // not configured
-
-	FILE *fp = fdopen(fd, "r");
-	if (!fp)
-		errExit("fdopen");
-
-	char buf[BUFLEN];
-	if (fgets(buf, BUFLEN, fp)) {
-		cfg.cgroup = strdup(buf);
-		if (!cfg.cgroup)
-			errExit("strdup");
-	}
-	fclose(fp);
-}
-
 static void extract_umask(ProcessHandle sandbox) {
 	int fd = process_rootfs_open(sandbox, RUN_UMASK_FILE);
 	if (fd < 0) {
@@ -437,15 +419,10 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		extract_nonewprivs(sandbox);  // redundant on Linux >= 4.10; duplicated in function extract_caps
 		extract_caps(sandbox);
 		extract_cpu(sandbox);
-		extract_cgroup(sandbox);
 		extract_nogroups(sandbox);
 		extract_user_namespace(sandbox);
 		extract_umask(sandbox);
 	}
-
-	// set cgroup
-	if (cfg.cgroup)	// not available for uid 0
-		set_cgroup(cfg.cgroup, getpid());
 
 	// join namespaces
 	EUID_ROOT();

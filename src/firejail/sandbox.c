@@ -1150,9 +1150,6 @@ int sandbox(void* sandbox_arg) {
 	// save cpu affinity mask to CPU_CFG file
 	save_cpu();
 
-	// save cgroup in CGROUP_CFG file
-	save_cgroup();
-
 	// set seccomp
 	// install protocol filter
 #ifdef SYS_socket

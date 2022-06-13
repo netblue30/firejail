@@ -131,8 +131,8 @@ AS_IF([test "x$enable_man" != "xno"], [
 HAVE_FIRETUNNEL=""
 AC_SUBST([HAVE_FIRETUNNEL])
 AC_ARG_ENABLE([firetunnel],
-    [AS_HELP_STRING([--disable-firetunnel], [disable firetunnel])])
-AS_IF([test "x$enable_firetunnel" != "xno"], [
+    [AS_HELP_STRING([--enable-firetunnel], [enable firetunnel])])
+AS_IF([test "x$enable_firetunnel" = "xyes"], [
 	HAVE_FIRETUNNEL="-DHAVE_FIRETUNNEL"
 ])
 

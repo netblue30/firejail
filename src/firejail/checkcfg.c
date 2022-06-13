@@ -59,6 +59,7 @@ int checkcfg(int val) {
 		cfg_val[CFG_SECCOMP_ERROR_ACTION] = -1;
 		cfg_val[CFG_BROWSER_ALLOW_DRM] = 0;
 		cfg_val[CFG_ALLOW_TRAY] = 0;
+		cfg_val[CFG_CHROOT] = 0;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";

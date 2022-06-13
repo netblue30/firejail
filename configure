@@ -5284,36 +5284,38 @@ fi
 
 cat <<EOF
 
-Configuration options:
-   prefix: $prefix
-   sysconfdir: $sysconfdir
-   apparmor: $HAVE_APPARMOR
-   SELinux labeling support: $HAVE_SELINUX
-   global config: $HAVE_GLOBALCFG
-   chroot: $HAVE_CHROOT
-   network: $HAVE_NETWORK
-   user namespace: $HAVE_USERNS
-   X11 sandboxing support: $HAVE_X11
-   private home support: $HAVE_PRIVATE_HOME
-   file transfer support: $HAVE_FILE_TRANSFER
-   overlayfs support: $HAVE_OVERLAYFS
-   DBUS proxy support: $HAVE_DBUSPROXY
-   allow tmpfs as regular user: $HAVE_USERTMPFS
-   enable --ouput logging: $HAVE_OUTPUT
-   Manpage support: $HAVE_MAN
-   IDS support: $HAVE_IDS
-   firetunnel support: $HAVE_FIRETUNNEL
-   busybox workaround: $BUSYBOX_WORKAROUND
-   Spectre compiler patch: $HAVE_SPECTRE
+Compile options:
    EXTRA_LDFLAGS: $EXTRA_LDFLAGS
    EXTRA_CFLAGS: $EXTRA_CFLAGS
    fatal warnings: $HAVE_FATAL_WARNINGS
-   Gcov instrumentation: $HAVE_GCOV
-   Install contrib scripts: $HAVE_CONTRIB_INSTALL
-   Install as a SUID executable: $HAVE_SUID
+   gcov instrumentation: $HAVE_GCOV
+   install as a SUID executable: $HAVE_SUID
+   install contrib scripts: $HAVE_CONTRIB_INSTALL
+   prefix: $prefix
+   sysconfdir: $sysconfdir
+   Spectre compiler patch: $HAVE_SPECTRE
+
+Features:
+   allow tmpfs as regular user: $HAVE_USERTMPFS
+   always enforce filters: $HAVE_FORCE_NONEWPRIVS
+   apparmor: $HAVE_APPARMOR
+   busybox workaround: $BUSYBOX_WORKAROUND
+   chroot: $HAVE_CHROOT
+   DBUS proxy support: $HAVE_DBUSPROXY
+   disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
+   enable --ouput logging: $HAVE_OUTPUT
+   file transfer support: $HAVE_FILE_TRANSFER
+   firetunnel support: $HAVE_FIRETUNNEL
+   global config: $HAVE_GLOBALCFG
+   IDS support: $HAVE_IDS
    LTS: $HAVE_LTS
-   Always enforce filters: $HAVE_FORCE_NONEWPRIVS
-   Disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
+   manpage support: $HAVE_MAN
+   network: $HAVE_NETWORK
+   overlayfs support: $HAVE_OVERLAYFS
+   private home support: $HAVE_PRIVATE_HOME
+   SELinux labeling support: $HAVE_SELINUX
+   user namespace: $HAVE_USERNS
+   X11 sandboxing support: $HAVE_X11
 
 EOF
 

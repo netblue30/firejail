@@ -75,9 +75,6 @@ void seccomp(pid_t pid, int print_procs);
 // cpu.c
 void cpu(pid_t pid, int print_procs);
 
-// cgroup.c
-void cgroup(pid_t pid, int print_procs);
-
 // tree.c
 void tree(pid_t pid);
 

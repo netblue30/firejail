@@ -34,7 +34,6 @@ static int arg_interface = 0;
 static int arg_seccomp = 0;
 static int arg_caps = 0;
 static int arg_cpu = 0;
-static int arg_cgroup = 0;
 static int arg_x11 = 0;
 static int arg_top = 0;
 static int arg_list = 0;
@@ -173,8 +172,6 @@ int main(int argc, char **argv) {
 		// cumulative options with or without a pid argument
 		else if (strcmp(argv[i], "--x11") == 0)
 			arg_x11 = 1;
-		else if (strcmp(argv[i], "--cgroup") == 0)
-			arg_cgroup = 1;
 		else if (strcmp(argv[i], "--cpu") == 0)
 			arg_cpu = 1;
 		else if (strcmp(argv[i], "--seccomp") == 0)
@@ -264,12 +261,11 @@ int main(int argc, char **argv) {
 
 	// if --name requested without other options, print all data
 	if (pid && !arg_cpu && !arg_seccomp && !arg_caps && !arg_apparmor &&
-	    !arg_cgroup && !arg_x11 && !arg_interface && !arg_route && !arg_arp) {
+	    !arg_x11 && !arg_interface && !arg_route && !arg_arp) {
 		arg_tree = 1;
 		arg_cpu = 1;
 		arg_seccomp = 1;
 		arg_caps = 1;
-		arg_cgroup = 1;
 		arg_x11 = 1;
 		arg_interface = 1;
 		arg_route = 1;
@@ -293,10 +289,6 @@ int main(int argc, char **argv) {
 	}
 	if (arg_apparmor) {
 		apparmor((pid_t) pid, print_procs);
-		print_procs = 0;
-	}
-	if (arg_cgroup) {
-		cgroup((pid_t) pid, print_procs);
 		print_procs = 0;
 	}
 	if (arg_x11) {

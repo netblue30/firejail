@@ -21,9 +21,6 @@ Print ARP table for each sandbox.
 \fB\-\-caps
 Print capabilities configuration for each sandbox.
 .TP
-\fB\-\-cgroup
-Print control group information for each sandbox.
-.TP
 \fB\-\-cpu
 Print CPU affinity for each sandbox.
 .TP

@@ -683,17 +683,13 @@ ignore dbus-user.talk org.freedesktop.Notifications
 .br
 [...]
 #endif
-.SH Resource limits, CPU affinity, Control Groups
+.SH Resource limits, CPU affinity
 These profile entries define the limits on system resources (rlimits) for the processes inside the sandbox.
 The limits can be modified inside the sandbox using the regular \fBulimit\fR command. \fBcpu\fR command
-configures the CPU cores available, and \fBcgroup\fR command
-place the sandbox in an existing control group.
+configures the CPU cores available.
 
 Examples:
 
-.TP
-\fBcgroup /sys/fs/cgroup/g1/tasks
-The sandbox is placed in g1 control group.
 .TP
 \fBcpu 0,1,2
 Use only CPU cores 0, 1 and 2.

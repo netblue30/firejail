@@ -289,15 +289,6 @@ $ firejail \-\-caps.print=3272
 \fB\-\-cat=name|pid filename
 Print content of file from sandbox container, see FILE TRANSFER section for more details.
 #endif
-.TP
-\fB\-\-cgroup=file
-Place the sandbox in the specified control group. file is the full path of a tasks or cgroup.procs file.
-.br
-
-.br
-Example:
-.br
-# firejail \-\-cgroup=/sys/fs/cgroup/g1/tasks
 #ifdef HAVE_CHROOT
 .TP
 \fB\-\-chroot=dirname
@@ -994,7 +985,7 @@ $ firejail \-\-ipc-namespace firefox
 Join the sandbox identified by name or by PID. By default a /bin/bash shell is started after joining the sandbox.
 If a program is specified, the program is run in the sandbox. If \-\-join command is issued as a regular user,
 all security filters are configured for the new process the same they are configured in the sandbox.
-If \-\-join command is issued as root, the security filters, cgroups and cpus configurations are not applied
+If \-\-join command is issued as root, the security filters and cpus configurations are not applied
 to the process joining the sandbox.
 .br
 
@@ -1019,13 +1010,13 @@ $ firejail \-\-join=3272
 \fB\-\-join-filesystem=name|pid
 Join the mount namespace of the sandbox identified by name or PID. By default a /bin/bash shell is started after joining the sandbox.
 If a program is specified, the program is run in the sandbox. This command is available only to root user.
-Security filters, cgroups and cpus configurations are not applied to the process joining the sandbox.
+Security filters and cpus configurations are not applied to the process joining the sandbox.
 #ifdef HAVE_NETWORK
 .TP
 \fB\-\-join-network=name|pid
 Join the network namespace of the sandbox identified by name. By default a /bin/bash shell is started after joining the sandbox.
 If a program is specified, the program is run in the sandbox. This command is available only to root user.
-Security filters, cgroups and cpus configurations are not applied to the process joining the sandbox. Example:
+Security filters and cpus configurations are not applied to the process joining the sandbox. Example:
 .br
 
 .br

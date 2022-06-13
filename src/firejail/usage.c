@@ -49,7 +49,6 @@ static char *usage_str =
 #ifdef HAVE_FILE_TRANSFER
 	"    --cat=name|pid filename - print content of file from sandbox container.\n"
 #endif
-	"    --cgroup=tasks-file - place the sandbox in the specified control group.\n"
 #ifdef HAVE_CHROOT
 	"    --chroot=dirname - chroot into directory.\n"
 #endif

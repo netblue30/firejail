@@ -29,7 +29,6 @@ static char *help_str =
 	"\t--apparmor - print AppArmor confinement status for each sandbox.\n\n"
 	"\t--arp - print ARP table for each sandbox.\n\n"
 	"\t--caps - print capabilities configuration for each sandbox.\n\n"
-	"\t--cgroup - print control group information for each sandbox.\n\n"
 	"\t--cpu - print CPU affinity for each sandbox.\n\n"
 	"\t--debug - print debug messages.\n\n"
 	"\t--help, -? - this help screen.\n\n"

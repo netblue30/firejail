@@ -67,6 +67,7 @@ include disable-xdg.inc
 whitelist /usr/share/doc/node
 whitelist /usr/share/nvm
 whitelist /usr/share/systemtap/tapset/node.stp
+include build-systems-common.profile
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

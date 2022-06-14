@@ -18,7 +18,7 @@ expect {
 }
 after 100
 
-end -- "firejail --noprofile --chroot=\"bla&&bla\"\r"
+send -- "firejail --noprofile --chroot=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 3.2\n";exit}
 	"Error:"

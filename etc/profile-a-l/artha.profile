@@ -10,7 +10,6 @@ noblacklist ${HOME}/.config/artha.conf
 noblacklist ${HOME}/.config/artha.log
 noblacklist ${HOME}/.config/enchant
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
@@ -60,7 +59,10 @@ private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
 private-lib libnotify.so.*
 private-tmp
 
-# dbus-user none
-# dbus-system none
+dbus-user filter
+dbus-user.own org.artha.unique.*
+dbus-user.talk org.freedesktop.Notifications
+?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
+dbus-system none
 
 memory-deny-write-execute

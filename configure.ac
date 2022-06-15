@@ -339,7 +339,7 @@ Features:
    chroot: $HAVE_CHROOT
    DBUS proxy support: $HAVE_DBUSPROXY
    disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
-   enable --ouput logging: $HAVE_OUTPUT
+   enable --output logging: $HAVE_OUTPUT
    file transfer support: $HAVE_FILE_TRANSFER
    firetunnel support: $HAVE_FIRETUNNEL
    global config: $HAVE_GLOBALCFG

@@ -18,17 +18,6 @@ expect {
 }
 after 100
 
-send -- "firejail --noprofile --chroot=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 3.2\n";exit}
-	"Error:"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.3\n";exit}
-	"is an invalid filename"
-}
-after 100
-
 send -- "firejail --noprofile --netfilter=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 4.2\n";exit}

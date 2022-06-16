@@ -91,7 +91,6 @@ _firejail_args=(
     '--caps.drop=all[drop all capabilities]'
     '*--caps.drop=-[drop capabilities: all|cap1,cap2,...]: :_caps'
     '*--caps.keep=-[keep capabilities: cap1,cap2,...]: :_caps'
-    '--cgroup=-[place the sandbox in the specified control group]: :'
     '--cpu=-[set cpu affinity]: :->cpus'
     "--deterministic-exit-code[always exit with first child's status code]"
     '--deterministic-shutdown[terminate orphan processes]'

@@ -103,9 +103,6 @@ echo "TESTING: firejail configuration (test/root/checkcfg.exp)"
 ./checkcfg.exp
 cp ../../etc/firejail.config /etc/firejail/.
 
-echo "TESTING: cgroup (test/root/cgroup.exp)"
-./cgroup.exp
-
 echo "TESTING: tmpfs (test/root/option_tmpfs.exp)"
 ./option_tmpfs.exp
 

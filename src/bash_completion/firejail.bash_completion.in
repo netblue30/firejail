@@ -42,10 +42,6 @@ _firejail()
             _filedir -d
             return 0
             ;;
-        --cgroup)
-            _filedir -d
-            return 0
-            ;;
         --tmpfs)
             _filedir
             return 0

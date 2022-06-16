@@ -414,7 +414,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	if (!arg_shell_none)
 		shfd = open_shell();
 
-	// in user mode set caps seccomp, cpu, cgroup, etc
+	// in user mode set caps seccomp, cpu etc.
 	if (getuid() != 0) {
 		extract_nonewprivs(sandbox);  // redundant on Linux >= 4.10; duplicated in function extract_caps
 		extract_caps(sandbox);

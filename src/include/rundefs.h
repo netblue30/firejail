@@ -37,7 +37,6 @@
 #define RUN_RO_DIR			RUN_FIREJAIL_DIR "/firejail.ro.dir"
 #define RUN_RO_FILE			RUN_FIREJAIL_DIR "/firejail.ro.file"
 #define RUN_MNT_DIR			RUN_FIREJAIL_DIR "/mnt"	// a tmpfs is mounted on this directory before any of the files below are created
-#define RUN_CGROUP_CFG			RUN_MNT_DIR "/cgroup"
 #define RUN_CPU_CFG			RUN_MNT_DIR "/cpu"
 #define RUN_GROUPS_CFG			RUN_MNT_DIR "/groups"
 #define RUN_PROTOCOL_CFG		RUN_MNT_DIR "/protocol"

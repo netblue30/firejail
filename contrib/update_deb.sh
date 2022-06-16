@@ -12,9 +12,7 @@ cd firejail
 ./configure --enable-apparmor --prefix=/usr
 
 # Fix https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=916920
-sed -i \
-    -e "s/# cgroup .*/cgroup no/" \
-    -e "s/# restricted-network .*/restricted-network yes/" \
+sed -i "s/# restricted-network .*/restricted-network yes/" \
     etc/firejail.config
 
 make deb

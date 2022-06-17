@@ -36,7 +36,7 @@ nosound
 notv
 nou2f
 novideo
-protocol inet,inet6
+protocol unix,inet,inet6,netlink
 seccomp
 seccomp.block-secondary
 shell none

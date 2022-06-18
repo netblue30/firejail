@@ -31,7 +31,7 @@ typedef struct {
 
 static ErrnoEntry errnolist[] = {
 //
-// code generated using tools/extract-errnos
+// code generated using ../tools/extract_errnos.sh
 //
 	{"EPERM", EPERM},
 	{"ENOENT", ENOENT},

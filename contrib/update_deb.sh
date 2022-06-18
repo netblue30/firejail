@@ -9,13 +9,13 @@ set -e
 
 git clone --depth=1 https://github.com/netblue30/firejail.git
 cd firejail
-./configure --enable-apparmor --prefix=/usr
+./configure
 
 # Fix https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=916920
 sed -i "s/# restricted-network .*/restricted-network yes/" \
     etc/firejail.config
 
-make deb
+make deb-apparmor
 sudo dpkg -i firejail*.deb
 echo "Firejail updated."
 cd ..

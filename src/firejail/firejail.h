@@ -828,6 +828,7 @@ enum {
 	CFG_SECCOMP_ERROR_ACTION,
 	// CFG_FILE_COPY_LIMIT - file copy limit handled using setenv/getenv
 	CFG_ALLOW_TRAY,
+	CFG_SECCOMP_LOG,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

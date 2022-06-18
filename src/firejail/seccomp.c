@@ -71,11 +71,17 @@ int seccomp_install_filters(void) {
 			assert(fl->fname);
 			if (arg_debug)
 				printf("Installing %s seccomp filter\n", fl->fname);
+			int rv = 0;
 #ifdef SECCOMP_FILTER_FLAG_LOG
-			if (syscall(SYS_seccomp, SECCOMP_SET_MODE_FILTER, SECCOMP_FILTER_FLAG_LOG, &fl->prog)) {
+			if (checkcfg(CFG_SECCOMP_LOG))
+				rv = syscall(SYS_seccomp, SECCOMP_SET_MODE_FILTER, SECCOMP_FILTER_FLAG_LOG, &fl->prog);
+			else
+				rv = prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &fl->prog);
 #else
-			if (prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &fl->prog)) {
+			rv = prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, &fl->prog);
 #endif
+
+			if (rv == -1) {
 				if (!err_printed)
 					fwarning("seccomp disabled, it requires a Linux kernel version 3.5 or newer.\n");
 				err_printed = 1;

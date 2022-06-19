@@ -157,6 +157,7 @@ int arg_dbus_log_user = 0;
 int arg_dbus_log_system = 0;
 int arg_tab = 0;
 int login_shell = 0;
+int just_run_the_shell = 0;
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -795,15 +796,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		if (checkcfg(CFG_JOIN) || getuid() == 0) {
 			logargs(argc, argv);
 
-			if (arg_shell_none) {
-				if (argc <= (i+1)) {
-					fprintf(stderr, "Error: --shell=none set, but no command specified\n");
-					exit(1);
-				}
-				cfg.original_program_index = i + 1;
-			}
-
-			if (!cfg.shell && !arg_shell_none)
+			if (argc <= (i+1))
+				just_run_the_shell = 1;
+			cfg.original_program_index = i + 1;
+			if (!cfg.shell)
 				cfg.shell = cfg.usershell;
 
 			// join sandbox by pid or by name
@@ -821,19 +817,17 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		if (checkcfg(CFG_JOIN) || getuid() == 0) {
 			logargs(argc, argv);
 
-			if (arg_shell_none) {
-				if (argc <= (i+1)) {
-					fprintf(stderr, "Error: --shell=none set, but no command specified\n");
-					exit(1);
-				}
-				cfg.original_program_index = i + 1;
-			}
+			if (argc <= (i+1))
+				just_run_the_shell = 1;
+			cfg.original_program_index = i + 1;
 
+			if (!cfg.shell)
+				cfg.shell = cfg.usershell;
+
+printf("***** %d\n", just_run_the_shell);
 			// try to join by name only
 			pid_t pid;
 			if (!read_pid(argv[i] + 16, &pid)) {
-				if (!cfg.shell && !arg_shell_none)
-					cfg.shell = cfg.usershell;
 
 				join(pid, argc, argv, i + 1);
 				exit(0);

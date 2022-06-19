@@ -51,6 +51,7 @@
 #endif
 
 static int force_nonewprivs = 0;
+extern int just_run_the_shell;
 
 static int monitored_pid = 0;
 static void sandbox_handler(int sig){
@@ -506,10 +507,28 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
 	}
 
+	if (just_run_the_shell) {
+		char *arg[2];
+		arg[0] = cfg.usershell;
+		arg[1] = NULL;
+
+		if (!arg_command && !arg_quiet)
+			print_time();
+
+		__gcov_dump();
+
+		seccomp_install_filters();
+
+		if (set_sandbox_status)
+			*set_sandbox_status = SANDBOX_DONE;
+		execvp(arg[0], arg);
+
+
+	}
 	//****************************************
 	// start the program without using a shell
 	//****************************************
-	if (arg_shell_none) {
+	else if (arg_shell_none) {
 		if (arg_debug) {
 			int i;
 			for (i = cfg.original_program_index; i < cfg.original_argc; i++) {

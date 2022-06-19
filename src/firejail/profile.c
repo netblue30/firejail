@@ -367,7 +367,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "shell none") == 0) {
-		arg_shell_none = 1;
+		fprintf(stderr, "Warning: \"shell none\" command in the profile file is done by default; the command will be deprecated\n");
 		return 0;
 	}
 	else if (strcmp(ptr, "tracelog") == 0) {

@@ -105,7 +105,7 @@ char *arg_netfilter_file = NULL;			// netfilter file
 char *arg_netfilter6_file = NULL;		// netfilter6 file
 char *arg_netns = NULL;			// "ip netns"-created network namespace to use
 int arg_doubledash = 0;			// double dash
-int arg_shell_none = 0;			// run the program directly without a shell
+int arg_shell_none = 1;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
 int arg_keep_dev_shm = 0;                       // preserve /dev/shm
 int arg_private_etc = 0;			// private etc directory
@@ -2692,7 +2692,7 @@ int main(int argc, char **argv, char **envp) {
 			// already handled
 		}
 		else if (strcmp(argv[i], "--shell=none") == 0) {
-			arg_shell_none = 1;
+			fprintf(stderr, "Warning: --shell=none is done by default; the command will be deprecated\n");
 			if (cfg.shell) {
 				fprintf(stderr, "Error: a shell was already specified\n");
 				return 1;

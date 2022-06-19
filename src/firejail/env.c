@@ -119,7 +119,7 @@ void env_defaults(void) {
 //	env_store_name_val("MOZ_NO_REMOTE, "1", SETENV);
 	env_store_name_val("container", "firejail", SETENV); // LXC sets container=lxc,
 	if (!cfg.shell)
-		cfg.shell = guess_shell();
+		cfg.shell = cfg.usershell;
 	if (cfg.shell)
 		env_store_name_val("SHELL", cfg.shell, SETENV);
 

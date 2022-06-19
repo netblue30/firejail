@@ -154,6 +154,7 @@ typedef struct config_t {
 	// user data
 	char *username;
 	char *homedir;
+	char *usershell;
 
 	// filesystem
 	ProfileEntry *profile;

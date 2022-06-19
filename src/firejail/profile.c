@@ -1562,7 +1562,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			EUID_USER();
 			if (!r) {
 				if (!cfg.shell && !arg_shell_none)
-					cfg.shell = guess_shell();
+					cfg.shell = cfg.usershell;
 
 				// find first non-option arg
 				int i;

@@ -245,6 +245,9 @@ static void init_cfg(int argc, char **argv) {
 	cfg.username = strdup(pw->pw_name);
 	if (!cfg.username)
 		errExit("strdup");
+	cfg.usershell = strdup(pw->pw_shell);
+	if (!cfg.usershell)
+		errExit("strdup");
 
 	// check user database
 	if (!firejail_user_check(cfg.username)) {
@@ -801,7 +804,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			}
 
 			if (!cfg.shell && !arg_shell_none)
-				cfg.shell = guess_shell();
+				cfg.shell = cfg.usershell;
 
 			// join sandbox by pid or by name
 			pid_t pid = require_pid(argv[i] + 7);
@@ -830,7 +833,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			pid_t pid;
 			if (!read_pid(argv[i] + 16, &pid)) {
 				if (!cfg.shell && !arg_shell_none)
-					cfg.shell = guess_shell();
+					cfg.shell = cfg.usershell;
 
 				join(pid, argc, argv, i + 1);
 				exit(0);
@@ -851,7 +854,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			}
 
 			if (!cfg.shell && !arg_shell_none)
-				cfg.shell = guess_shell();
+				cfg.shell = cfg.usershell;
 
 			// join sandbox by pid or by name
 			pid_t pid = require_pid(argv[i] + 15);
@@ -871,7 +874,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		}
 
 		if (!cfg.shell && !arg_shell_none)
-			cfg.shell = guess_shell();
+			cfg.shell = cfg.usershell;
 
 		// join sandbox by pid or by name
 		pid_t pid = require_pid(argv[i] + 18);
@@ -887,40 +890,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 
-}
-
-char *guess_shell(void) {
-	const char *shell;
-	char *retval;
-
-	shell = env_get("SHELL");
-	if (shell) {
-		invalid_filename(shell, 0); // no globbing
-		if (access(shell, X_OK) == 0 && !is_dir(shell) && strstr(shell, "..") == NULL &&
-		    strcmp(gnu_basename(shell), "firejail") != 0)
-			goto found;
-	}
-
-	// shells in order of preference
-	static const char * const shells[] = {"/bin/bash", "/bin/csh", "/usr/bin/zsh", "/bin/sh", "/bin/ash", NULL };
-
-	int i = 0;
-	while (shells[i] != NULL) {
-		// access call checks as real UID/GID, not as effective UID/GID
-		if (access(shells[i], X_OK) == 0) {
-			shell = shells[i];
-			goto found;
-		}
-		i++;
-	}
-
-	return NULL;
-
- found:
-	retval = strdup(shell);
-	if (!retval)
-		errExit("strdup");
-	return retval;
 }
 
 // return argument index
@@ -2901,7 +2870,7 @@ int main(int argc, char **argv, char **envp) {
 
 	// guess shell if unspecified
 	if (!arg_shell_none && !cfg.shell) {
-		cfg.shell = guess_shell();
+		cfg.shell = cfg.usershell;
 		if (!cfg.shell) {
 			fprintf(stderr, "Error: unable to guess your shell, please set explicitly by using --shell option.\n");
 			exit(1);

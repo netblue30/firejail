@@ -190,7 +190,7 @@ void run_no_sandbox(int argc, char **argv) {
 
 	if (prog_index == 0) {
 		// got no command, require a shell and try to execute it
-		cfg.shell = guess_shell();
+		cfg.shell = cfg.usershell;
 		if (!cfg.shell) {
 			fprintf(stderr, "Error: unable to guess your shell, please set SHELL environment variable\n");
 			exit(1);

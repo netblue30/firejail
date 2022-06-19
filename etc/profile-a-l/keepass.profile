@@ -35,7 +35,6 @@ notv
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 
 private-cache
 # Note: private-dev prevents the program from seeing new devices (such as

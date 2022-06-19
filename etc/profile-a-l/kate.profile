@@ -51,7 +51,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 # private-bin kate,kbuildsycoca4,kdeinit4
 private-dev

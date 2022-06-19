@@ -43,7 +43,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-shell none
 tracelog
 
 private-bin imv,imv-wayland,imv-x11,sh

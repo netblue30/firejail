@@ -26,7 +26,6 @@ nosound
 notv
 nou2f
 novideo
-shell none
 tracelog
 
 # private-etc alternatives,fonts,passwd - minimal required to run but will probably break

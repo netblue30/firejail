@@ -28,7 +28,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp !chroot,!ioperm
-shell none
 
 private-cache
 private-dev

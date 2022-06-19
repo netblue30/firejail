@@ -38,7 +38,6 @@ nou2f
 novideo
 protocol unix,netlink
 seccomp
-shell none
 
 private-bin ppsspp,PPSSPP,PPSSPPQt,PPSSPPSDL
 # Add the next line to your ppsspp.local if you do not need controller support.

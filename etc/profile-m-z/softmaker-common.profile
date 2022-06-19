@@ -37,7 +37,6 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-shell none
 tracelog
 
 private-bin freeoffice-planmaker,freeoffice-presentations,freeoffice-textmaker,planmaker18,planmaker18free,presentations18,presentations18free,sh,textmaker18,textmaker18free

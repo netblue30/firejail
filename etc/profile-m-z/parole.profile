@@ -23,7 +23,6 @@ noroot
 notv
 protocol unix,inet,inet6
 seccomp
-shell none
 
 private-bin dbus-launch,parole
 private-cache

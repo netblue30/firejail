@@ -31,7 +31,6 @@ notv
 nou2f
 protocol unix
 seccomp
-shell none
 tracelog
 
 private-cache

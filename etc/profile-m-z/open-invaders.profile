@@ -32,7 +32,6 @@ nou2f
 novideo
 protocol unix,netlink
 seccomp
-shell none
 
 private-bin open-invaders
 private-dev

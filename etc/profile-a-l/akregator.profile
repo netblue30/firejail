@@ -42,7 +42,6 @@ novideo
 protocol unix,inet,inet6,netlink
 # chroot syscalls are needed for setting up the built-in sandbox
 seccomp !chroot
-shell none
 
 disable-mnt
 private-bin akregator,akregatorstorageexporter,dbus-launch,kdeinit4,kdeinit4_shutdown,kdeinit4_wrapper,kdeinit5,kdeinit5_shutdown,kdeinit5_wrapper,kshell4,kshell5

@@ -29,7 +29,6 @@ notv
 nou2f
 protocol unix
 seccomp
-shell none
 
 private-bin natron,Natron,NatronRenderer
 

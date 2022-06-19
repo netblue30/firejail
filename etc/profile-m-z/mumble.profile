@@ -35,7 +35,6 @@ noroot
 notv
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 tracelog
 
 disable-mnt

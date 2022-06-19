@@ -48,7 +48,6 @@ novideo
 # Add `protocol unix\nignore protocol` to your ocenaudio.local to disable networking.
 protocol unix,inet,inet6
 seccomp
-shell none
 tracelog
 
 private-bin ocenaudio,ocenvst

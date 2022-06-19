@@ -42,7 +42,6 @@ novideo
 protocol unix,inet,inet6
 seccomp
 seccomp.block-secondary
-shell none
 
 disable-mnt
 private-bin ffmpeg,songrec

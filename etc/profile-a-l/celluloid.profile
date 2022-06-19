@@ -48,7 +48,6 @@ nou2f
 protocol unix,inet,inet6
 seccomp
 seccomp.block-secondary
-shell none
 tracelog
 
 private-bin celluloid,env,gnome-mpv,python*,youtube-dl

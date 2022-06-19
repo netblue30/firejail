@@ -62,7 +62,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 tracelog
 
 # Add your own diff viewer,editor,pinentry program to private-bin in your git-cola.local.

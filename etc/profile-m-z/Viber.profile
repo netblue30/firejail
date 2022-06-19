@@ -29,7 +29,6 @@ noroot
 notv
 protocol unix,inet,inet6
 seccomp !chroot
-shell none
 
 disable-mnt
 private-bin awk,bash,dig,sh,Viber

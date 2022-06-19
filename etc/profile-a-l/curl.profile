@@ -48,7 +48,6 @@ nou2f
 novideo
 protocol inet,inet6
 seccomp
-shell none
 tracelog
 
 # private-bin curl

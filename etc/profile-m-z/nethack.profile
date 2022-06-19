@@ -32,7 +32,6 @@ notv
 novideo
 #protocol unix,netlink
 #seccomp
-shell none
 
 disable-mnt
 #private

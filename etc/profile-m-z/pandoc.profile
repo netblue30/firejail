@@ -43,7 +43,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-shell none
 tracelog
 x11 none
 

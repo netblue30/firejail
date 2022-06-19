@@ -45,7 +45,6 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp !chroot
 seccomp.block-secondary
-shell none
 #tracelog -- breaks
 
 private-bin context,gettext,ghostwriter,latex,mktexfmt,pandoc,pdflatex,pdfroff,prince,weasyprint,wkhtmltopdf

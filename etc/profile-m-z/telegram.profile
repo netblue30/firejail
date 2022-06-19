@@ -41,7 +41,6 @@ notv
 protocol unix,inet,inet6,netlink
 seccomp
 seccomp.block-secondary
-shell none
 
 disable-mnt
 private-bin bash,sh,telegram,Telegram,telegram-desktop,xdg-open

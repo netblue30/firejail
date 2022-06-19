@@ -37,7 +37,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 
 # disable-mnt
 # Add your custom event hook commands to 'private-bin' in your aria2c.local.

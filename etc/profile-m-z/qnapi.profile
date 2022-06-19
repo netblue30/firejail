@@ -41,7 +41,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 tracelog
 
 private-bin 7z,qnapi

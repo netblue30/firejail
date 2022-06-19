@@ -42,7 +42,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 disable-mnt
 # private home directory doesn't work on some distros, so we go for a regular home

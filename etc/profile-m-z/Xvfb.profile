@@ -35,7 +35,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 disable-mnt
 # using a private home directory

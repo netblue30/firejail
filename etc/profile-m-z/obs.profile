@@ -33,7 +33,6 @@ notv
 nou2f
 protocol unix,inet,inet6
 seccomp
-shell none
 tracelog
 
 private-bin bash,obs,obs-ffmpeg-mux,python*,sh

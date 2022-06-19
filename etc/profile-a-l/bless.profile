@@ -30,7 +30,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 # private-bin bash,bless,mono,sh
 private-cache

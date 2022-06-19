@@ -47,7 +47,6 @@ notv
 ?BROWSER_DISABLE_U2F: nou2f
 protocol unix,inet,inet6,netlink
 seccomp !chroot
-shell none
 
 disable-mnt
 private-bin bash,otter-browser,sh,which

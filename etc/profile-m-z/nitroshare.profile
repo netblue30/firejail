@@ -36,7 +36,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 
 disable-mnt
 private-bin awk,grep,nitroshare,nitroshare-cli,nitroshare-nmh,nitroshare-send,nitroshare-ui

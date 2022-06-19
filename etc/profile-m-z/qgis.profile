@@ -46,7 +46,6 @@ novideo
 # blacklisting of mbind system calls breaks old version
 seccomp !mbind
 protocol unix,inet,inet6,netlink
-shell none
 tracelog
 
 disable-mnt

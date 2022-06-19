@@ -27,7 +27,6 @@ nou2f
 novideo
 protocol inet,inet6
 seccomp
-shell none
 
 private-bin mcabber
 private-dev

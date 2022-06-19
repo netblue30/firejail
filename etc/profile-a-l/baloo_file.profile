@@ -46,7 +46,6 @@ novideo
 protocol unix
 # blacklisting of ioprio_set system calls breaks baloo_file
 seccomp !ioprio_set
-shell none
 # x11 xorg
 
 private-bin baloo_file,baloo_file_extractor,baloo_filemetadata_temp_extractor,kbuildsycoca4

@@ -36,7 +36,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 tracelog
 
 # private-bin calls a file manager - whatever is installed!

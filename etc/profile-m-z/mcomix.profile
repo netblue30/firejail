@@ -50,7 +50,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-shell none
 tracelog
 
 # mcomix <= 1.2 uses python2

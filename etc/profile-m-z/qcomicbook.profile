@@ -47,7 +47,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-shell none
 tracelog
 
 private-bin 7z,7zr,qcomicbook,rar,sh,tar,unace,unrar,unzip

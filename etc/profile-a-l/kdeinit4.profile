@@ -29,7 +29,6 @@ novideo
 notv
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 
 private-bin kbuildsycoca4,kded4,kdeinit4,knotify4
 private-dev

@@ -32,7 +32,6 @@ nou2f
 novideo
 protocol unix
 seccomp !request_key
-shell none
 tracelog
 
 private-bin awk,cut,dbus-send,egrep,file,grep,head,python*,readlink,sed,sh,udiskie,uname,which,xdg-mime,xdg-open,xprop

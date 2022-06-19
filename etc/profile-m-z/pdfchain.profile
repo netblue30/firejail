@@ -30,7 +30,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 private-bin pdfchain,pdftk,sh
 private-dev

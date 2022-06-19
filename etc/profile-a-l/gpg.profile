@@ -40,7 +40,6 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-shell none
 tracelog
 
 # private-bin gpg,gpg-agent

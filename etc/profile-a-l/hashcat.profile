@@ -33,7 +33,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 x11 none
 
 disable-mnt

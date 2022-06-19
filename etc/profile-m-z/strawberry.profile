@@ -36,7 +36,6 @@ novideo
 protocol unix,inet,inet6,netlink
 # blacklisting of ioprio_set system calls breaks strawberry
 seccomp !ioprio_set
-shell none
 tracelog
 
 disable-mnt

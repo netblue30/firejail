@@ -35,7 +35,6 @@ novideo
 # Add netlink protocol to use UPnP
 protocol unix,inet,inet6
 seccomp
-shell none
 
 private-bin amule
 private-dev

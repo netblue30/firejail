@@ -34,7 +34,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 private-bin env,python*,sdat2img
 private-cache

@@ -33,7 +33,6 @@ caps.keep chown,net_raw,sys_nice
 netfilter
 nogroups
 notv
-shell none
 tracelog
 
 #disable-mnt

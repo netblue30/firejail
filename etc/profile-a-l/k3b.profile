@@ -32,7 +32,6 @@ notv
 novideo
 # protocol unix - breaks privileged helpers
 # seccomp - breaks privileged helpers
-shell none
 
 private-dev
 # private-tmp

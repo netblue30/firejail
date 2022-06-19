@@ -35,7 +35,6 @@ protocol unix,inet,inet6
 # blacklisting of ioprio_set system calls breaks auto-updating of
 # MPD's database when files in music_directory are changed
 seccomp !ioprio_set
-shell none
 
 #private-bin bash,mpd
 private-cache

@@ -34,7 +34,6 @@ noinput
 notv
 nou2f
 novideo
-shell none
 
 disable-mnt
 private-cache

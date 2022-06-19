@@ -32,7 +32,6 @@ novideo
 protocol unix
 net none
 seccomp
-shell none
 tracelog
 
 disable-mnt

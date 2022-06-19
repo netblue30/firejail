@@ -33,7 +33,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 private-bin bash,jd-gui,sh
 private-cache

@@ -77,7 +77,6 @@ nou2f
 protocol unix,inet,inet6,netlink
 seccomp
 seccomp.block-secondary
-shell none
 tracelog
 
 private-bin env,mpv,python*,waf,youtube-dl,yt-dlp

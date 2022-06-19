@@ -33,7 +33,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 
 # private-etc drirc,fonts,gcrypt,hosts,kde5rc,mpd.conf,passwd,samba,ssl,xdg
 private-bin cantata,mpd,perl

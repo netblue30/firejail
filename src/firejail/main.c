@@ -2816,11 +2816,9 @@ int main(int argc, char **argv, char **envp) {
 
 	// prog_index could still be -1 if no program was specified
 	if (prog_index == -1 && arg_shell_none) {
-just_run_the_shell = 1;
-if (!cfg.shell)
-	cfg.shell = cfg.usershell;
-//		fprintf(stderr, "Error: shell=none configured, but no program specified\n");
-//		exit(1);
+		just_run_the_shell = 1;
+		if (!cfg.shell)
+			cfg.shell = cfg.usershell;
 	}
 
 	// check trace configuration

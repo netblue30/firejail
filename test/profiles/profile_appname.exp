@@ -16,10 +16,6 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Reading profile /etc/firejail/firefox-common.profile"
 }
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"shell=none configured, but no program specified"
-}
 
 after 100
 puts "\nall done\n"

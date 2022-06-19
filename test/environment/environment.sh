@@ -36,9 +36,6 @@ echo "TESTING: extract command (extract_command.exp)"
 echo "TESTING: environment variables (test/environment/env.exp)"
 ./env.exp
 
-echo "TESTING: shell none(test/environment/shell-none.exp)"
-./shell-none.exp
-
 which dash 2>/dev/null
 if [ "$?" -eq 0 ];
 then

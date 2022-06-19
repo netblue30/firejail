@@ -37,7 +37,6 @@ nou2f
 novideo
 protocol unix,netlink
 seccomp
-shell none
 tracelog
 
 disable-mnt

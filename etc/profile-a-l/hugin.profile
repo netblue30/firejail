@@ -34,7 +34,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 private-bin align_image_stack,autooptimiser,calibrate_lens_gui,celeste_standalone,checkpto,cpclean,cpfind,deghosting_mask,enblend,fulla,geocpset,hugin,hugin_executor,hugin_hdrmerge,hugin_lensdb,hugin_stitch_project,icpfind,linefind,nona,pano_modify,pano_trafo,PTBatcherGUI,pto_gen,pto_lensstack,pto_mask,pto_merge,pto_move,pto_template,pto_var,sh,tca_correct,uname,verdandi,vig_optimize
 private-cache

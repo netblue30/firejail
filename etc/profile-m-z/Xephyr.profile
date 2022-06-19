@@ -31,7 +31,6 @@ notv
 nou2f
 protocol unix
 seccomp
-shell none
 
 disable-mnt
 # using a private home directory

@@ -49,7 +49,6 @@ novideo
 nou2f
 protocol unix
 seccomp
-shell none
 tracelog
 x11 none
 

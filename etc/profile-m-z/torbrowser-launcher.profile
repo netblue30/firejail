@@ -52,7 +52,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp !chroot
-shell none
 #tracelog - may cause issues, see #1930
 
 disable-mnt

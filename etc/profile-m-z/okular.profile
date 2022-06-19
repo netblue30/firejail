@@ -57,7 +57,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 tracelog
 
 private-bin kbuildsycoca4,kdeinit4,lpr,okular,unar,unrar

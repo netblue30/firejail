@@ -37,7 +37,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 # private-bin kbuildsycoca4,kdeinit4,kfind
 private-dev

@@ -36,7 +36,6 @@ notv
 nou2f
 novideo
 seccomp
-shell none
 tracelog
 
 disable-mnt

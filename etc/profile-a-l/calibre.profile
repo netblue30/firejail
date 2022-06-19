@@ -32,7 +32,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp !chroot
-shell none
 
 private-dev
 private-tmp

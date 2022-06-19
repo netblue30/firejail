@@ -46,7 +46,6 @@ novideo
 protocol unix,inet,inet6,netlink,bluetooth
 seccomp
 seccomp.block-secondary
-shell none
 tracelog
 
 disable-mnt

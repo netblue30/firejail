@@ -32,7 +32,6 @@ notv
 protocol unix,inet,inet6,netlink
 # blacklisting of ioperm system calls breaks simple-scan
 seccomp !ioperm
-shell none
 tracelog
 
 # private-bin simple-scan

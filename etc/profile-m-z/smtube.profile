@@ -40,7 +40,6 @@ nonewprivs
 noroot
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 
 #no private-bin because users can add their own players to smtube and that would prevent that
 private-dev

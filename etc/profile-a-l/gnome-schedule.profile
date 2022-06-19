@@ -55,7 +55,6 @@ nosound
 notv
 nou2f
 novideo
-shell none
 tracelog
 
 disable-mnt

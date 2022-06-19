@@ -28,7 +28,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 private-bin apktool,basename,bash,dirname,expr,java,sh
 private-cache

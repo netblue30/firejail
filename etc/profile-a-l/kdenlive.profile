@@ -31,7 +31,6 @@ notv
 nou2f
 protocol unix,netlink
 seccomp
-shell none
 
 private-bin dbus-launch,dvdauthor,ffmpeg,ffplay,ffprobe,genisoimage,kdeinit4,kdeinit4_shutdown,kdeinit4_wrapper,kdeinit5,kdeinit5_shutdown,kdeinit5_wrapper,kdenlive,kdenlive_render,kshell4,kshell5,melt,mlt-melt,vlc,xine
 private-dev

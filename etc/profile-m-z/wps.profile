@@ -38,7 +38,6 @@ novideo
 protocol unix,inet,inet6
 # seccomp causes some minor issues. Add the next line to your wps.local if you can live with those.
 #seccomp
-shell none
 tracelog
 
 private-cache

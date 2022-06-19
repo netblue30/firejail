@@ -27,7 +27,6 @@ notv
 nou2f
 protocol unix
 seccomp
-shell none
 tracelog
 
 #private-bin melt,nice,qmelt,shotcut

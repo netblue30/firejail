@@ -44,7 +44,6 @@ noroot
 nou2f
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 
 private-bin env,mplayer,mpv,python*,smplayer,smtube,waf,youtube-dl
 private-dev

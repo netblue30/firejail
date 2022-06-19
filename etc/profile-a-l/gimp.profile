@@ -56,7 +56,6 @@ notv
 nou2f
 protocol unix
 seccomp !mbind
-shell none
 tracelog
 
 private-dev

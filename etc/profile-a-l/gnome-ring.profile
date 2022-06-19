@@ -25,7 +25,6 @@ noroot
 notv
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 
 disable-mnt
 # private-dev

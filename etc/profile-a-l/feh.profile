@@ -31,7 +31,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 private-bin feh,jpegexiforient,jpegtran
 private-cache

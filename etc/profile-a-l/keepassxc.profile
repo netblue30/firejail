@@ -82,7 +82,6 @@ novideo
 protocol unix
 seccomp !name_to_handle_at
 seccomp.block-secondary
-shell none
 tracelog
 
 private-bin keepassxc,keepassxc-cli,keepassxc-proxy

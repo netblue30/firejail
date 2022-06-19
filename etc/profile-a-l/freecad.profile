@@ -34,7 +34,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 private-bin freecad,freecadcmd,python*
 private-cache

@@ -38,7 +38,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 disable-mnt
 private-bin bash,clawsker,perl,sh,which

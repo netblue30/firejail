@@ -48,7 +48,6 @@ nogroups
 noinput
 notv
 ?BROWSER_DISABLE_U2F: nou2f
-shell none
 
 disable-mnt
 private-cache

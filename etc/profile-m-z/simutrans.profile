@@ -32,7 +32,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 # private-bin simutrans
 private-dev

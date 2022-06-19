@@ -34,7 +34,6 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-shell none
 
 private-bin dragon
 private-dev

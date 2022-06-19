@@ -38,7 +38,6 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-shell none
 
 # deluge is using python on Debian
 private-bin deluge,deluge-console,deluge-gtk,deluge-web,deluged,python*,sh,uname

@@ -41,7 +41,6 @@ nou2f
 novideo
 protocol unix,netlink
 #seccomp - breaks loading with no logs
-shell none
 #tracelog - 32/64 bit incompatibility
 
 private-bin PCSX2

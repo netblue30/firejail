@@ -29,7 +29,6 @@ notv
 nou2f
 protocol unix,inet,inet6
 seccomp
-shell none
 
 disable-mnt
 private-bin cp,sh,XMind

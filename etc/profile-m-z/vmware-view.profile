@@ -43,7 +43,6 @@ novideo
 protocol unix,inet,inet6
 seccomp !iopl
 seccomp.block-secondary
-shell none
 tracelog
 
 disable-mnt

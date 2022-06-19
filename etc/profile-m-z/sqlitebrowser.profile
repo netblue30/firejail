@@ -37,7 +37,6 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 seccomp.block-secondary
-shell none
 
 private-bin sqlitebrowser
 private-cache

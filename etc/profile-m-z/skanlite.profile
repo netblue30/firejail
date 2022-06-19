@@ -26,7 +26,6 @@ notv
 protocol unix,inet,inet6,netlink
 # blacklisting of ioperm system calls breaks skanlite
 seccomp !ioperm
-shell none
 
 # private-bin kbuildsycoca4,kdeinit4,skanlite
 # private-dev

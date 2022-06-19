@@ -31,7 +31,6 @@ notv
 nou2f
 protocol unix
 seccomp
-shell none
 
 #private-bin ardour4,ardour5,ardour5-copy-mixer,ardour5-export,ardour5-fix_bbtppq,grep,ldd,nm,sed,sh
 private-cache

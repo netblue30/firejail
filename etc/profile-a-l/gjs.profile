@@ -36,7 +36,6 @@ notv
 nou2f
 protocol unix,inet,inet6
 seccomp
-shell none
 tracelog
 
 # private-bin gjs,gnome-books,gnome-documents,gnome-maps,gnome-photos,gnome-weather

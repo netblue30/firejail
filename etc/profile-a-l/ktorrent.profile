@@ -55,7 +55,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 
 private-bin kbuildsycoca4,kdeinit4,ktorrent
 private-dev

@@ -41,7 +41,6 @@ noroot
 nou2f
 protocol unix,inet,inet6,netlink
 seccomp
-shell none
 
 private-bin cvlc,nvlc,qvlc,rvlc,svlc,vlc
 private-dev

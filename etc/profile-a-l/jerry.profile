@@ -29,7 +29,6 @@ notv
 novideo
 protocol unix
 seccomp
-shell none
 tracelog
 
 private-bin bash,jerry,sh,stockfish

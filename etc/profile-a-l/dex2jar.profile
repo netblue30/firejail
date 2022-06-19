@@ -32,7 +32,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 private-bin bash,dex2jar,dirname,expr,grep,java,ls,sh,uname
 private-cache

@@ -29,7 +29,6 @@ notv
 nou2f
 protocol unix
 seccomp
-shell none
 
 private-bin ffmpeg,ffplay,ffprobe,melt,zart
 private-dev

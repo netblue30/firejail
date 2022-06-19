@@ -48,7 +48,6 @@ novideo
 protocol unix,inet,inet6
 seccomp
 seccomp.block-secondary
-shell none
 #tracelog - may cause issues, see #1930
 
 disable-mnt

@@ -34,7 +34,6 @@ nou2f
 novideo
 protocol unix,inet
 seccomp
-shell none
 tracelog
 
 private-bin audacity

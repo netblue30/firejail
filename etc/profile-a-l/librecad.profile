@@ -34,7 +34,6 @@ novideo
 protocol unix,inet,inet6
 netfilter
 seccomp
-shell none
 #tracelog
 
 #disable-mnt

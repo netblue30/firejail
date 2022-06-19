@@ -34,7 +34,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp !chroot
-shell none
 
 disable-mnt
 private-dev

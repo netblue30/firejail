@@ -28,7 +28,6 @@ novideo
 # remove inet,inet6 to disable network access
 protocol unix,inet,inet6
 seccomp
-shell none
 
 # private-bin geeqie
 private-dev

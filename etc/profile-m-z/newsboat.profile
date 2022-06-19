@@ -47,7 +47,6 @@ nou2f
 novideo
 protocol inet,inet6
 seccomp
-shell none
 
 disable-mnt
 private-bin gzip,lynx,newsboat,sh,w3m

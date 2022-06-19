@@ -33,7 +33,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 private-bin archlinux-java,awk,bash,dirname,expr,find,grep,java,java-config,ls,pdfsam,readlink,sh,sort,uname,which
 private-cache

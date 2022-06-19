@@ -49,7 +49,6 @@ novideo
 # protocol command is built using seccomp; nonewprivs will kill it
 #protocol unix,inet,inet6,netlink,packet
 #seccomp
-shell none
 tracelog
 
 disable-mnt

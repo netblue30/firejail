@@ -36,7 +36,6 @@ notv
 novideo
 protocol unix
 seccomp
-shell none
 tracelog
 
 # These options work but are disabled in case

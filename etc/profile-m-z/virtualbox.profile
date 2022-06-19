@@ -39,7 +39,6 @@ netfilter
 nodvd
 #nogroups
 notv
-shell none
 tracelog
 
 #disable-mnt

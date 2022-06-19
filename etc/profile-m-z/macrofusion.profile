@@ -34,7 +34,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 
 private-bin align_image_stack,enfuse,env,exiftool,macrofusion,python*
 private-cache

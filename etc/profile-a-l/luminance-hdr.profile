@@ -29,7 +29,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-shell none
 tracelog
 
 #private-bin luminance-hdr,luminance-hdr-cli,align_image_stack

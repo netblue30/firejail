@@ -102,18 +102,6 @@ expect {
 }
 after 100
 
-send -- "firejail --shell=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 12.2\n";exit}
-	"Error:"
-}
-expect {
-	timeout {puts "TESTING ERROR 12.3\n";exit}
-	"is an invalid filename"
-}
-after 100
-
-
 send -- "firejail --whitelist=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 14.2\n";exit}

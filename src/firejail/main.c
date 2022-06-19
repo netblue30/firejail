@@ -847,7 +847,7 @@ printf("***** %d\n", just_run_the_shell);
 				exit(1);
 			}
 
-			if (!cfg.shell && !arg_shell_none)
+			if (!cfg.shell)
 				cfg.shell = cfg.usershell;
 
 			// join sandbox by pid or by name
@@ -867,7 +867,7 @@ printf("***** %d\n", just_run_the_shell);
 			exit(1);
 		}
 
-		if (!cfg.shell && !arg_shell_none)
+		if (!cfg.shell)
 			cfg.shell = cfg.usershell;
 
 		// join sandbox by pid or by name
@@ -2816,8 +2816,11 @@ int main(int argc, char **argv, char **envp) {
 
 	// prog_index could still be -1 if no program was specified
 	if (prog_index == -1 && arg_shell_none) {
-		fprintf(stderr, "Error: shell=none configured, but no program specified\n");
-		exit(1);
+just_run_the_shell = 1;
+if (!cfg.shell)
+	cfg.shell = cfg.usershell;
+//		fprintf(stderr, "Error: shell=none configured, but no program specified\n");
+//		exit(1);
 	}
 
 	// check trace configuration

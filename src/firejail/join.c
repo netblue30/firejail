@@ -111,6 +111,7 @@ static void extract_command(int argc, char **argv, int index) {
 	build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, index, true);
 }
 
+#if 0
 static int open_shell(void) {
 	EUID_ASSERT();
 
@@ -129,6 +130,7 @@ static int open_shell(void) {
 
 	return fd;
 }
+#endif
 
 static void extract_nogroups(ProcessHandle sandbox) {
 	struct stat s;

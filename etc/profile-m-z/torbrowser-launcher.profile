@@ -50,7 +50,7 @@ noroot
 notv
 nou2f
 novideo
-protocol unix,inet,inet6,netlink
+protocol unix,inet,inet6
 seccomp !chroot
 #tracelog - may cause issues, see #1930
 

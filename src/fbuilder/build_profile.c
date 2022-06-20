@@ -53,7 +53,6 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 	cmd[curr_len++] = "--noprofile";
 	cmd[curr_len++] = "--caps.drop=all";
 	cmd[curr_len++] = "--seccomp=!chroot";
-	cmd[curr_len++] = "--shell=none";
 	cmd[curr_len++] = output;
 	if (arg_appimage)
 		cmd[curr_len++] = "--appimage";

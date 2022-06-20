@@ -242,8 +242,6 @@ static char *usage_str =
 	"    --seccomp.32[.drop,.keep][=syscall] - like above but for 32 bit architecture.\n"
 	"    --seccomp-error-action=errno|kill|log - change error code, kill process\n"
 	"\tor log the attempt.\n"
-	"    --shell=none - run the program directly without a user shell.\n"
-	"    --shell=program - set default user shell.\n"
 	"    --shutdown=name|pid - shutdown the sandbox identified by name or PID.\n"
 	"    --tab - enable shell tab completion in sandboxes using private or\n"
 	"\twhitelisted home directories.\n"

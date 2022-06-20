@@ -565,6 +565,7 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	else { // appimage
 		char *arg[5];
 		int index = 0;
+		assert(cfg.usershell);
 		arg[index++] = cfg.usershell;
 		if (cfg.command_line) {
 			if (arg_debug)

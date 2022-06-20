@@ -36,33 +36,6 @@ echo "TESTING: extract command (extract_command.exp)"
 echo "TESTING: environment variables (test/environment/env.exp)"
 ./env.exp
 
-which dash 2>/dev/null
-if [ "$?" -eq 0 ];
-then
-        echo "TESTING: dash (test/environment/dash.exp)"
-        ./dash.exp
-else
-        echo "TESTING SKIP: dash not found"
-fi
-
-which csh 2>/dev/null
-if [ "$?" -eq 0 ];
-then
-        echo "TESTING: csh (test/environment/csh.exp)"
-        ./csh.exp
-else
-        echo "TESTING SKIP: csh not found"
-fi
-
-which zsh 2>/dev/null
-if [ "$?" -eq 0 ];
-then
-        echo "TESTING: zsh (test/environment/zsh.exp)"
-        ./zsh.exp
-else
-        echo "TESTING SKIP: zsh not found"
-fi
-
 echo "TESTING: firejail in firejail - single sandbox (test/environment/firejail-in-firejail.exp)"
 ./firejail-in-firejail.exp
 

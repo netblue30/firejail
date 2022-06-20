@@ -16,14 +16,6 @@ expect {
 sleep 2
 
 spawn $env(SHELL)
-send --  "firejail --shell=none --join=jointesting\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"shell=none set, but no command specified"
-}
-after 100
-
-
 send --  "firejail --join=jointesting\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}

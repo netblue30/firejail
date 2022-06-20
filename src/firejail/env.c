@@ -118,10 +118,7 @@ void env_defaults(void) {
 //	env_store_name_val("QTWEBENGINE_DISABLE_SANDBOX", "1", SETENV);
 //	env_store_name_val("MOZ_NO_REMOTE, "1", SETENV);
 	env_store_name_val("container", "firejail", SETENV); // LXC sets container=lxc,
-	if (!cfg.shell)
-		cfg.shell = cfg.usershell;
-	if (cfg.shell)
-		env_store_name_val("SHELL", cfg.shell, SETENV);
+	env_store_name_val("SHELL", cfg.usershell, SETENV);
 
 	// spawn KIO slaves inside the sandbox
 	env_store_name_val("KDE_FORK_SLAVES", "1", SETENV);

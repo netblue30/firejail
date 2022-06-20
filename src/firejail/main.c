@@ -105,7 +105,6 @@ char *arg_netfilter_file = NULL;			// netfilter file
 char *arg_netfilter6_file = NULL;		// netfilter6 file
 char *arg_netns = NULL;			// "ip netns"-created network namespace to use
 int arg_doubledash = 0;			// double dash
-int arg_shell_none = 1;			// run the program directly without a shell
 int arg_private_dev = 0;			// private dev directory
 int arg_keep_dev_shm = 0;                       // preserve /dev/shm
 int arg_private_etc = 0;			// private etc directory
@@ -799,8 +798,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			if (argc <= (i+1))
 				just_run_the_shell = 1;
 			cfg.original_program_index = i + 1;
-			if (!cfg.shell)
-				cfg.shell = cfg.usershell;
 
 			// join sandbox by pid or by name
 			pid_t pid = require_pid(argv[i] + 7);
@@ -821,10 +818,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 				just_run_the_shell = 1;
 			cfg.original_program_index = i + 1;
 
-			if (!cfg.shell)
-				cfg.shell = cfg.usershell;
-
-printf("***** %d\n", just_run_the_shell);
 			// try to join by name only
 			pid_t pid;
 			if (!read_pid(argv[i] + 16, &pid)) {
@@ -847,9 +840,6 @@ printf("***** %d\n", just_run_the_shell);
 				exit(1);
 			}
 
-			if (!cfg.shell)
-				cfg.shell = cfg.usershell;
-
 			// join sandbox by pid or by name
 			pid_t pid = require_pid(argv[i] + 15);
 			join(pid, argc, argv, i + 1);
@@ -866,9 +856,6 @@ printf("***** %d\n", just_run_the_shell);
 			fprintf(stderr, "Error: --join-filesystem is only available to root user\n");
 			exit(1);
 		}
-
-		if (!cfg.shell)
-			cfg.shell = cfg.usershell;
 
 		// join sandbox by pid or by name
 		pid_t pid = require_pid(argv[i] + 18);
@@ -2685,45 +2672,9 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--oom=", 6) == 0) {
 			// already handled
 		}
-		else if (strcmp(argv[i], "--shell=none") == 0) {
-			fprintf(stderr, "Warning: --shell=none is done by default; the command will be deprecated\n");
-			if (cfg.shell) {
-				fprintf(stderr, "Error: a shell was already specified\n");
-				return 1;
-			}
-		}
 		else if (strncmp(argv[i], "--shell=", 8) == 0) {
-			if (arg_shell_none) {
-				fprintf(stderr, "Error: --shell=none was already specified.\n");
-				return 1;
-			}
-			invalid_filename(argv[i] + 8, 0); // no globbing
-
-			if (cfg.shell) {
-				fprintf(stderr, "Error: only one user shell can be specified\n");
-				return 1;
-			}
-			cfg.shell = argv[i] + 8;
-
-			if (is_dir(cfg.shell) || strstr(cfg.shell, "..")) {
-				fprintf(stderr, "Error: invalid shell\n");
-				exit(1);
-			}
-
-			// access call checks as real UID/GID, not as effective UID/GID
-			if(cfg.chrootdir) {
-				char *shellpath;
-				if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
-					errExit("asprintf");
-				if (access(shellpath, X_OK)) {
-					fprintf(stderr, "Error: cannot access shell file in chroot\n");
-					exit(1);
-				}
-				free(shellpath);
-			} else if (access(cfg.shell, X_OK)) {
-				fprintf(stderr, "Error: cannot access shell file\n");
-				exit(1);
-			}
+			fprintf(stderr, "Warning: --shell feature has been deprecated\n");
+			exit(1);
 		}
 		else if (strcmp(argv[i], "-c") == 0) {
 			arg_command = 1;
@@ -2785,9 +2736,6 @@ int main(int argc, char **argv, char **envp) {
 				cfg.command_name = strdup(argv[i]);
 				if (!cfg.command_name)
 					errExit("strdup");
-
-				// disable shell=* for appimages
-				arg_shell_none = 0;
 			}
 			else
 				extract_command_name(i, argv);
@@ -2814,12 +2762,6 @@ int main(int argc, char **argv, char **envp) {
 		}
 	}
 
-	// prog_index could still be -1 if no program was specified
-	if (prog_index == -1 && arg_shell_none) {
-		just_run_the_shell = 1;
-		if (!cfg.shell)
-			cfg.shell = cfg.usershell;
-	}
 
 	// check trace configuration
 	if (arg_trace && arg_tracelog) {
@@ -2863,27 +2805,18 @@ int main(int argc, char **argv, char **envp) {
 		free(msg);
 	}
 
-	// guess shell if unspecified
-	if (!arg_shell_none && !cfg.shell) {
-		cfg.shell = cfg.usershell;
-		if (!cfg.shell) {
-			fprintf(stderr, "Error: unable to guess your shell, please set explicitly by using --shell option.\n");
-			exit(1);
-		}
-		if (arg_debug)
-			printf("Autoselecting %s as shell\n", cfg.shell);
-	}
-
 	// build the sandbox command
-	if (prog_index == -1 && cfg.shell) {
-		assert(cfg.command_line == NULL); // runs cfg.shell
+	if (prog_index == -1) {
+		just_run_the_shell = 1;
+
+		assert(cfg.command_line == NULL); // runs the user shell
 		if (arg_appimage) {
 			fprintf(stderr, "Error: no appimage archive specified\n");
 			exit(1);
 		}
 
-		cfg.window_title = cfg.shell;
-		cfg.command_name = cfg.shell;
+		cfg.window_title = cfg.usershell;
+		cfg.command_name = cfg.usershell;
 	}
 	else if (arg_appimage) {
 		if (arg_debug)
@@ -2907,11 +2840,8 @@ int main(int argc, char **argv, char **envp) {
 
 	// load the profile
 	if (!arg_noprofile && !custom_profile) {
-		if (arg_appimage) {
+		if (arg_appimage)
 			custom_profile = appimage_find_profile(cfg.command_name);
-			// disable shell=* for appimages
-			arg_shell_none = 0;
-		}
 		else
 			custom_profile = profile_find_firejail(cfg.command_name, 1);
 	}

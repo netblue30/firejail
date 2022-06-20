@@ -113,14 +113,13 @@ static void extract_command(int argc, char **argv, int index) {
 
 static int open_shell(void) {
 	EUID_ASSERT();
-	assert(cfg.shell);
 
 	if (arg_debug)
-		printf("Opening shell %s\n", cfg.shell);
+		printf("Opening shell %s\n", cfg.usershell);
 	// file descriptor will leak if not opened with O_CLOEXEC !!
-	int fd = open(cfg.shell, O_PATH|O_CLOEXEC);
+	int fd = open(cfg.usershell, O_PATH|O_CLOEXEC);
 	if (fd == -1) {
-		fprintf(stderr, "Error: cannot open shell %s\n", cfg.shell);
+		fprintf(stderr, "Error: cannot open shell %s\n", cfg.usershell);
 		exit(1);
 	}
 
@@ -411,8 +410,9 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	extract_x11_display(pid);
 
 	int shfd = -1;
-	if (!arg_shell_none)
-		shfd = open_shell();
+// Note: this might be used by joining appimages!!!!
+//	if (!arg_shell_none)
+//		shfd = open_shell();
 
 	// in user mode set caps seccomp, cpu etc.
 	if (getuid() != 0) {
@@ -516,10 +516,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 #endif
 
 		extract_command(argc, argv, index);
-		if (cfg.command_line == NULL) {
-			assert(cfg.shell);
-			cfg.window_title = cfg.shell;
-		}
+		if (cfg.command_line == NULL)
+			cfg.window_title = cfg.usershell;
 		else if (arg_debug)
 			printf("Extracted command #%s#\n", cfg.command_line);
 

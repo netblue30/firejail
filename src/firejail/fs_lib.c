@@ -392,8 +392,7 @@ void fs_private_lib(void) {
 	char *private_list = cfg.lib_private_keep;
 	if (arg_debug || arg_debug_private_lib)
 		printf("Starting private-lib processing: program %s, shell %s\n",
-			(cfg.original_program_index > 0)? cfg.original_argv[cfg.original_program_index]: "none",
-		(arg_shell_none)? "none": cfg.shell);
+			(cfg.original_program_index > 0)? cfg.original_argv[cfg.original_program_index]: "none", cfg.usershell);
 
 	// create /run/firejail/mnt/lib directory
 	mkdir_attr(RUN_LIB_DIR, 0755, 0, 0);
@@ -430,15 +429,15 @@ void fs_private_lib(void) {
 		}
 	}
 
-	// for the shell
-	if (!arg_shell_none) {
-		if (arg_debug || arg_debug_private_lib)
-			printf("Installing shell libraries\n");
-
-		fslib_install_list(cfg.shell);
-		// a shell is useless without some basic commands
-		fslib_install_list("/bin/ls,/bin/cat,/bin/mv,/bin/rm");
-	}
+// Note: this might be used for appimages!!!
+//	if (!arg_shell_none) {
+//		if (arg_debug || arg_debug_private_lib)
+//			printf("Installing shell libraries\n");
+//
+//		fslib_install_list(cfg.shell);
+//		// a shell is useless without some basic commands
+//		fslib_install_list("/bin/ls,/bin/cat,/bin/mv,/bin/rm");
+//	}
 
 	// for the listed libs and directories
 	if (private_list && *private_list != '\0') {

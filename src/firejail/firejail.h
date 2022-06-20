@@ -217,7 +217,6 @@ typedef struct config_t {
 	char *command_line;
 	char *window_title;
 	char *command_name;
-	char *shell;
 	char **original_argv;
 	int original_argc;
 	int original_program_index;
@@ -310,7 +309,6 @@ extern char *arg_netfilter_file;	// netfilter file
 extern char *arg_netfilter6_file;	// netfilter file
 extern char *arg_netns;		// "ip netns"-created network namespace to use
 extern int arg_doubledash;	// double dash
-extern int arg_shell_none;	// run the program directly without a shell
 extern int arg_private_dev;	// private dev directory
 extern int arg_keep_dev_shm;    // preserve /dev/shm
 extern int arg_private_etc;	// private etc directory

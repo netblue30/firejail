@@ -528,7 +528,7 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	//****************************************
 	// start the program without using a shell
 	//****************************************
-	else if (arg_shell_none) {
+	else if (!arg_appimage) {
 		if (arg_debug) {
 			int i;
 			for (i = cfg.original_program_index; i < cfg.original_argc; i++) {
@@ -560,17 +560,15 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
 	}
 	//****************************************
-	// start the program using a shell
+	// start the program using a shell (appimages)
 	//****************************************
-	else {
-		assert(cfg.shell);
-
+	else { // appimage
 		char *arg[5];
 		int index = 0;
-		arg[index++] = cfg.shell;
+		arg[index++] = cfg.usershell;
 		if (cfg.command_line) {
 			if (arg_debug)
-				printf("Running %s command through %s\n", cfg.command_line, cfg.shell);
+				printf("Running %s command through %s\n", cfg.command_line, cfg.usershell);
 			arg[index++] = "-c";
 			if (arg_doubledash)
 				arg[index++] = "--";
@@ -578,11 +576,11 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 		}
 		else if (login_shell) {
 			if (arg_debug)
-				printf("Starting %s login shell\n", cfg.shell);
+				printf("Starting %s login shell\n", cfg.usershell);
 			arg[index++] = "-l";
 		}
 		else if (arg_debug)
-			printf("Starting %s shell\n", cfg.shell);
+			printf("Starting %s shell\n", cfg.usershell);
 
 		assert(index < 5);
 		arg[index] = NULL;
@@ -590,7 +588,7 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 		if (arg_debug) {
 			char *msg;
 			if (asprintf(&msg, "sandbox %d, execvp into %s",
-				sandbox_pid, cfg.command_line ? cfg.command_line : cfg.shell) == -1)
+				sandbox_pid, cfg.command_line ? cfg.command_line : cfg.usershell) == -1)
 				errExit("asprintf");
 			logmsg(msg);
 			free(msg);

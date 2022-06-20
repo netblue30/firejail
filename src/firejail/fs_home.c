@@ -62,7 +62,7 @@ static void skel(const char *homedir) {
 	disable_tab_completion(homedir);
 
 	// zsh
-	if (!arg_shell_none && (strcmp(cfg.shell,"/usr/bin/zsh") == 0 || strcmp(cfg.shell,"/bin/zsh") == 0)) {
+	if (strcmp(cfg.usershell,"/usr/bin/zsh") == 0 || strcmp(cfg.usershell,"/bin/zsh") == 0) {
 		// copy skel files
 		if (asprintf(&fname, "%s/.zshrc", homedir) == -1)
 			errExit("asprintf");
@@ -86,7 +86,7 @@ static void skel(const char *homedir) {
 		free(fname);
 	}
 	// csh
-	else if (!arg_shell_none && strcmp(cfg.shell,"/bin/csh") == 0) {
+	else if (strcmp(cfg.usershell,"/bin/csh") == 0) {
 		// copy skel files
 		if (asprintf(&fname, "%s/.cshrc", homedir) == -1)
 			errExit("asprintf");

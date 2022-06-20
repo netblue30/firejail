@@ -189,25 +189,15 @@ void run_no_sandbox(int argc, char **argv) {
 	}
 
 	if (prog_index == 0) {
-		// got no command, require a shell and try to execute it
-		cfg.shell = cfg.usershell;
-		if (!cfg.shell) {
-			fprintf(stderr, "Error: unable to guess your shell, please set SHELL environment variable\n");
-			exit(1);
-		}
-
 		assert(cfg.command_line == NULL);
-		cfg.window_title = cfg.shell;
+		cfg.window_title = cfg.usershell;
 	} else {
 		// this sandbox might not allow execution of a shell
-		// force --shell=none in order to not break firecfg symbolic links
-		arg_shell_none = 1;
-
 		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index, true);
 	}
 
 	fwarning("an existing sandbox was detected. "
-		"%s will run without any additional sandboxing features\n", prog_index ? argv[prog_index] : cfg.shell);
+		"%s will run without any additional sandboxing features\n", prog_index ? argv[prog_index] : cfg.usershell);
 
 	cfg.original_argv = argv;
 	cfg.original_program_index = prog_index;

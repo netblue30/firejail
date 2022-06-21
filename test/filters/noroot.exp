@@ -81,11 +81,11 @@ spawn $env(SHELL)
 send -- "firejail --debug --join=test\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
-	"User namespace detected"
+	"Joining user namespace"
 }
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
-	"Joining user namespace"
+	"Child process initialized"
 }
 sleep 1
 

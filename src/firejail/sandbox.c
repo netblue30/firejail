@@ -528,7 +528,7 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	//****************************************
 	// start the program without using a shell
 	//****************************************
-	else if (!arg_appimage) {
+	else if (!arg_appimage && !arg_doubledash) {
 		if (arg_debug) {
 			int i;
 			for (i = cfg.original_program_index; i < cfg.original_argc; i++) {
@@ -560,9 +560,9 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 		execvp(cfg.original_argv[cfg.original_program_index], &cfg.original_argv[cfg.original_program_index]);
 	}
 	//****************************************
-	// start the program using a shell (appimages)
+	// start the program using a shell
 	//****************************************
-	else { // appimage
+	else { // appimage or double-dash
 		char *arg[5];
 		int index = 0;
 		assert(cfg.usershell);

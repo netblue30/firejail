@@ -13,8 +13,6 @@ mkdir ${HOME}/.config/transmission-remote-gtk
 whitelist ${HOME}/.config/transmission-remote-gtk
 
 private-etc alternatives,fonts,hostname,hosts,ld.so.cache,ld.so.preload,resolv.conf
-# Problems with private-lib (see issue #2889)
-ignore private-lib
 
 ignore memory-deny-write-execute
 

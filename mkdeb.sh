@@ -10,10 +10,6 @@ set -e
 
 . "$(dirname "$0")/config.sh"
 
-EXTRA_VERSION=$1
-
-test "$#" -gt 0 && shift
-
 CODE_ARCHIVE="$TARNAME-$VERSION.tar.xz"
 CODE_DIR="$TARNAME-$VERSION"
 INSTALL_DIR="${INSTALL_DIR}${CODE_DIR}/debian"

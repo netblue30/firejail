@@ -61,6 +61,7 @@ int checkcfg(int val) {
 		cfg_val[CFG_ALLOW_TRAY] = 0;
 		cfg_val[CFG_CHROOT] = 0;
 		cfg_val[CFG_SECCOMP_LOG] = 0;
+		cfg_val[CFG_PRIVATE_LIB] = 0;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";

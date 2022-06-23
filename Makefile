@@ -1,4 +1,4 @@
-include config.mk
+-include config.mk
 
 ifneq ($(HAVE_MAN),no)
 MAN_TARGET = man

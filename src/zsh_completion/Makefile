@@ -2,7 +2,7 @@
 all: _firejail
 
 ROOT = ../..
-include $(ROOT)/config.mk
+-include $(ROOT)/config.mk
 
 _firejail: _firejail.in
 	gawk -f ../man/preproc.awk -- $(MANFLAGS) < $< > $@.tmp

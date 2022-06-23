@@ -2,7 +2,7 @@
 all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-profile.man firemon.man jailcheck.man
 
 ROOT = ../..
-include $(ROOT)/config.mk
+-include $(ROOT)/config.mk
 
 %.man: %.txt
 	gawk -f ./preproc.awk -- $(MANFLAGS) < $< > $@

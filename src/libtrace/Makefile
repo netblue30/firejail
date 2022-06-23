@@ -1,5 +1,5 @@
 ROOT = ../..
-include $(ROOT)/config.mk
+-include $(ROOT)/config.mk
 
 H_FILE_LIST       = $(sort $(wildcard *.h))
 C_FILE_LIST       = $(sort $(wildcard *.c))

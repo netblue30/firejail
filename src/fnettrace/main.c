@@ -222,8 +222,27 @@ static unsigned adjust_bandwidth(unsigned bw) {
 }
 
 static inline const char *common_port(uint16_t port) {
-	if (port > 123)
+	if (port > 194) {
+		if (port >= 6660 && port <= 6669)
+			return "(IRC)";
+		else if (port == 6679)
+			return "(IRC)";
+		else if (port == 6771)
+			return "(BitTorrent)";
+		else if (port >= 6881 && port <= 6999)
+			return "(BitTorrent)";
+		else if (port == 9001)
+			return "(Tor)";
+		else if (port == 9030)
+			return "(Tor)";
+		else if (port == 9050)
+			return "(Tor)";
+		else if (port == 9051)
+			return "(Tor)";
+		else if (port == 9150)
+			return "(Tor)";
 		return NULL;
+	}
 
 	if (port == 20 || port == 21)
 		return "(FTP)";
@@ -245,8 +264,16 @@ static inline const char *common_port(uint16_t port) {
 		return "(POP2)";
 	else if (port == 110)
 		return "(POP3)";
+	else if (port == 113)
+		return "(IRC)";
 	else if (port == 123)
 		return "(NTP)";
+	else if (port == 161)
+		return "(SNMP)";
+	else if (port == 162)
+		return "(SNMP)";
+	else if (port == 194)
+		return "(IRC)";
 
 	return NULL;
 }
@@ -321,12 +348,19 @@ static void hnode_print(unsigned bw) {
 				protocol = "(TLS)";
 			else if (ptr->port_src == 53)
 				protocol = "(DNS)";
-			else if (ptr->port_src == 853)
-				protocol = "(DoT)";
+			else if (ptr->port_src == 853) {
+				if (ptr->protocol == 0x06)
+					protocol = "(DoT)";
+				else if (ptr->protocol == 0x11)
+					protocol = "(DoQ)";
+				else
+					protocol = NULL;
+			}
 			else if ((protocol = common_port(ptr->port_src)) != NULL)
 				;
 			else if (ptr->protocol == 0x11)
 				protocol = "(UDP)";
+
 			if (protocol == NULL)
 				protocol = "";
 

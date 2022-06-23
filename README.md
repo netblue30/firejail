@@ -205,6 +205,7 @@ Stats:
     private-bin			689
     private-dev			1041
     private-etc			539
+    private-lib			70
     private-tmp			915
     whitelist home directory	573
     whitelist var		855   (include whitelist-var-common.inc)
@@ -213,8 +214,8 @@ Stats:
     whitelist usr/share		628   (include whitelist-usr-share-common.inc
     net none			403
     dbus-user none 		673
-    dbus-user filter 		122
-    dbus-system none 		832
+    dbus-user filter 		123
+    dbus-system none 		833
     dbus-system filter 		12
 ```
 

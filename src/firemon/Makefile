@@ -4,10 +4,10 @@ all: firemon
 ROOT = ../..
 include $(ROOT)/src/common.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/pid.h
+%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/pid.h $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
-firemon: $(OBJS) ../lib/common.o ../lib/pid.o
+firemon: $(OBJS) ../lib/common.o ../lib/pid.o $(ROOT)/config.mk
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/pid.o $(LIBS) $(EXTRA_LDFLAGS)
 
 .PHONY: clean

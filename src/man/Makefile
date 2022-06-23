@@ -4,7 +4,7 @@ all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-pro
 ROOT = ../..
 -include $(ROOT)/config.mk
 
-%.man: %.txt
+%.man: %.txt $(ROOT)/config.mk
 	gawk -f ./preproc.awk -- $(MANFLAGS) < $< > $@
 
 .PHONY: clean

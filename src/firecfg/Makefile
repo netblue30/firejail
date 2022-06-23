@@ -4,10 +4,10 @@ all: firecfg
 ROOT = ../..
 include $(ROOT)/src/common.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/euid_common.h ../include/libnetlink.h ../include/firejail_user.h ../include/pid.h
+%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/euid_common.h ../include/libnetlink.h ../include/firejail_user.h ../include/pid.h $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
-firecfg: $(OBJS) ../lib/common.o ../lib/firejail_user.o
+firecfg: $(OBJS) ../lib/common.o ../lib/firejail_user.o $(ROOT)/config.mk
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/firejail_user.o $(LIBS) $(EXTRA_LDFLAGS)
 
 .PHONY: clean

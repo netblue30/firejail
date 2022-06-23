@@ -11,10 +11,10 @@ LDFLAGS += -pie -fPIE -Wl,-z,relro -Wl,-z,now
 .PHONY: all
 all: libpostexecseccomp.so
 
-%.o : %.c $(H_FILE_LIST) ../include/seccomp.h ../include/rundefs.h
+%.o : %.c $(H_FILE_LIST) ../include/seccomp.h ../include/rundefs.h $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-libpostexecseccomp.so: $(OBJS)
+libpostexecseccomp.so: $(OBJS) $(ROOT)/config.mk
 	$(CC) $(LDFLAGS) -shared -fPIC -z relro -o $@ $(OBJS) -ldl
 
 .PHONY: clean

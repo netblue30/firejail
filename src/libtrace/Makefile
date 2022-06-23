@@ -11,10 +11,10 @@ LDFLAGS += -pie -fPIE -Wl,-z,relro -Wl,-z,now
 .PHONY: all
 all: libtrace.so
 
-%.o : %.c $(H_FILE_LIST)
+%.o : %.c $(H_FILE_LIST) $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-libtrace.so: $(OBJS)
+libtrace.so: $(OBJS) $(ROOT)/config.mk
 	$(CC) $(LDFLAGS) -shared -fPIC -z relro -o $@ $(OBJS) -ldl
 
 .PHONY: clean

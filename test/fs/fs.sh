@@ -46,8 +46,12 @@ echo "TESTING: read/write /var/tmp (test/fs/fs_var_tmp.exp)"
 rm -f /var/tmp/_firejail_test_file
 
 if [ "$(uname -m)" = "x86_64" ]; then
+    fjconfig=/etc/firejail/firejail.config
+    printf 'private-lib yes\n' | sudo tee -a "$fjconfig" >/dev/null
     echo "TESTING: private-lib (test/fs/private-lib.exp)"
     ./private-lib.exp
+    printf '%s\n' "$(sed '/^private-lib yes$/d' "$fjconfig")" |
+      sudo tee "$fjconfig" >/dev/null
 else
     echo "TESTING SKIP: private-lib test implemented only for x86_64."
 fi

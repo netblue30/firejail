@@ -36,6 +36,7 @@ noblacklist ${HOME}/.local/share/vpltd
 noblacklist ${HOME}/.local/share/vulkan
 noblacklist ${HOME}/.mbwarband
 noblacklist ${HOME}/.paradoxinteractive
+noblacklist ${HOME}/.paradoxlauncher
 noblacklist ${HOME}/.prey
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.steampath
@@ -85,6 +86,7 @@ mkdir ${HOME}/.local/share/vpltd
 mkdir ${HOME}/.local/share/vulkan
 mkdir ${HOME}/.mbwarband
 mkdir ${HOME}/.paradoxinteractive
+mkdir ${HOME}/.paradoxlauncher
 mkdir ${HOME}/.prey
 mkdir ${HOME}/.steam
 mkfile ${HOME}/.steampath
@@ -120,6 +122,7 @@ whitelist ${HOME}/.local/share/vpltd
 whitelist ${HOME}/.local/share/vulkan
 whitelist ${HOME}/.mbwarband
 whitelist ${HOME}/.paradoxinteractive
+whitelist ${HOME}/.paradoxlauncher
 whitelist ${HOME}/.prey
 whitelist ${HOME}/.steam
 whitelist ${HOME}/.steampath

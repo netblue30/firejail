@@ -12,7 +12,7 @@ import os, subprocess, sys
 def run(srcdir, args):
     if srcdir: os.chdir(srcdir)
 
-    if not (os.path.isfile('./mkdeb.sh.in')):
+    if not (os.path.isfile('./mkdeb.sh')):
         print('Error: Not a firejail source tree?  Exiting.')
         return 1
 
@@ -22,7 +22,7 @@ def run(srcdir, args):
             # prefix should ALWAYS be /usr here.  Discard user-set values
             args.remove(a)
 
-    # Run configure to generate mkdeb.sh.
+    # Run configure to generate config.sh.
     first_config = subprocess.call(['./configure', '--prefix=/usr'] + args)
     if first_config != 0:
         return first_config
@@ -62,9 +62,9 @@ usage:
         if not (srcdir):
             # srcdir not manually specified, try to auto-detect
             srcdir = os.path.dirname(os.path.abspath(sys.argv[0] + '/..'))
-            if not (os.path.isfile(srcdir + '/mkdeb.sh.in')):
+            if not (os.path.isfile(srcdir + '/mkdeb.sh')):
                 # Script is probably installed.  Check the cwd.
-                if os.path.isfile('./mkdeb.sh.in'):
+                if os.path.isfile('./mkdeb.sh'):
                     srcdir = None
                 else:
                     print(

@@ -1,4 +1,4 @@
-include config.mk
+-include config.mk
 
 ifneq ($(HAVE_MAN),no)
 MAN_TARGET = man
@@ -21,6 +21,10 @@ MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 fi
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
 
+config.mk config.sh:
+	printf 'run ./configure to generate %s\n' "$@" >&2
+	false
+
 .PHONY: all_items $(ALL_ITEMS)
 all_items: $(ALL_ITEMS)
 $(ALL_ITEMS): $(MYDIRS)
@@ -31,7 +35,7 @@ mydirs: $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
 
-$(MANPAGES): src/man
+$(MANPAGES): src/man config.mk
 	./mkman.sh $(VERSION) src/man/$(basename $@).man $@
 
 man: $(MANPAGES)
@@ -85,9 +89,9 @@ distclean: clean
 		$(MAKE) -C $$dir distclean; \
 	done
 	$(MAKE) -C test distclean
-	rm -fr Makefile autom4te.cache config.log config.mk config.sh config.status src/common.mk mkdeb.sh
+	rm -fr autom4te.cache config.log config.mk config.sh config.status
 
-realinstall:
+realinstall: config.mk
 	# firejail executable
 	install -m 0755 -d $(DESTDIR)$(bindir)
 	install -m 0755 src/firejail/firejail $(DESTDIR)$(bindir)
@@ -171,7 +175,7 @@ install-strip: all
 	strip $(ALL_ITEMS)
 	$(MAKE) realinstall
 
-uninstall:
+uninstall: config.mk
 	rm -f $(DESTDIR)$(bindir)/firejail
 	rm -f $(DESTDIR)$(bindir)/firemon
 	rm -f $(DESTDIR)$(bindir)/firecfg
@@ -189,7 +193,7 @@ uninstall:
 
 DISTFILES = \
 COPYING \
-Makefile.in \
+Makefile \
 README \
 RELNOTES \
 config.mk.in \
@@ -200,20 +204,18 @@ contrib \
 etc \
 install.sh \
 m4 \
-mkdeb.sh.in \
+mkdeb.sh \
 mketc.sh \
 mkman.sh \
 platform \
 src
 
-DISTFILES_TEST = test/Makefile.in test/apps test/apps-x11 test/apps-x11-xorg test/root test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils test/chroot
+DISTFILES_TEST = test/Makefile test/apps test/apps-x11 test/apps-x11-xorg test/root test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils test/chroot
 
-dist:
+dist: config.mk
 	mv config.sh config.sh.old
 	mv config.status config.status.old
-	mv mkdeb.sh mkdeb.sh.old
 	make distclean
-	mv mkdeb.sh.old mkdeb.sh
 	mv config.status.old config.status
 	mv config.sh.old config.sh
 	rm -fr $(NAME)-$(VERSION) $(NAME)-$(VERSION).tar.xz
@@ -225,19 +227,20 @@ dist:
 	tar -cJvf $(NAME)-$(VERSION).tar.xz $(NAME)-$(VERSION)
 	rm -fr $(NAME)-$(VERSION)
 
-asc:; ./mkasc.sh $(VERSION)
+asc: config.mk
+	./mkasc.sh $(VERSION)
 
-deb: dist
+deb: dist config.sh
 	./mkdeb.sh
 
-deb-apparmor: dist
+deb-apparmor: dist config.sh
 	./mkdeb.sh -apparmor --enable-apparmor
 
-test-compile: dist
+test-compile: dist config.mk
 	cd test/compile; ./compile.sh $(NAME)-$(VERSION)
 
 .PHONY: rpms
-rpms: src/man
+rpms: src/man config.mk
 	./platform/rpm/mkrpm.sh $(NAME) $(VERSION)
 
 extras: all

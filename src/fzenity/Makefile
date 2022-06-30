@@ -1,18 +1,17 @@
 .PHONY: all
-all: profstats
+all: fzenity
 
 ROOT = ../..
 include $(ROOT)/src/common.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h
+%.o : %.c $(H_FILE_LIST) ../include/common.h $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
-profstats: $(OBJS)
+fzenity: $(OBJS) $(ROOT)/config.mk
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)
 
 .PHONY: clean
-clean:; rm -fr *.o profstats *.gcov *.gcda *.gcno *.plist
+clean:; rm -fr *.o fzenity *.gcov *.gcda *.gcno *.plist
 
 .PHONY: distclean
 distclean: clean
-	rm -fr Makefile

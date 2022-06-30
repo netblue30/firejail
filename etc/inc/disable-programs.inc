@@ -1052,6 +1052,7 @@ blacklist ${HOME}/.opera-beta
 blacklist ${HOME}/.opera-developer
 blacklist ${HOME}/.ostrichriders
 blacklist ${HOME}/.paradoxinteractive
+blacklist ${HOME}/.paradoxlauncher
 blacklist ${HOME}/.parallelrealities/blobwars
 blacklist ${HOME}/.pcsxr
 blacklist ${HOME}/.penguin-command

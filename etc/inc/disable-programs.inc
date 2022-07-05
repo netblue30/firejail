@@ -810,6 +810,7 @@ blacklist ${HOME}/.local/lib/vivaldi
 blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/Anki2
+blacklist ${HOME}/.local/share/Colossal Order
 blacklist ${HOME}/.local/share/Dredmor
 blacklist ${HOME}/.local/share/Empathy
 blacklist ${HOME}/.local/share/Enpass

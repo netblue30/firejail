@@ -18,6 +18,7 @@ noblacklist ${HOME}/.local/share/3909/PapersPlease
 noblacklist ${HOME}/.local/share/aspyr-media
 noblacklist ${HOME}/.local/share/bohemiainteractive
 noblacklist ${HOME}/.local/share/cdprojektred
+noblacklist ${HOME}/.local/share/Colossal Order
 noblacklist ${HOME}/.local/share/Dredmor
 noblacklist ${HOME}/.local/share/FasterThanLight
 noblacklist ${HOME}/.local/share/feral-interactive
@@ -69,6 +70,7 @@ mkdir ${HOME}/.local/share/3909/PapersPlease
 mkdir ${HOME}/.local/share/aspyr-media
 mkdir ${HOME}/.local/share/bohemiainteractive
 mkdir ${HOME}/.local/share/cdprojektred
+mkdir ${HOME}/.local/share/Colossal Order
 mkdir ${HOME}/.local/share/Dredmor
 mkdir ${HOME}/.local/share/FasterThanLight
 mkdir ${HOME}/.local/share/feral-interactive
@@ -104,6 +106,7 @@ whitelist ${HOME}/.local/share/3909/PapersPlease
 whitelist ${HOME}/.local/share/aspyr-media
 whitelist ${HOME}/.local/share/bohemiainteractive
 whitelist ${HOME}/.local/share/cdprojektred
+whitelist ${HOME}/.local/share/Colossal Order
 whitelist ${HOME}/.local/share/Dredmor
 whitelist ${HOME}/.local/share/FasterThanLight
 whitelist ${HOME}/.local/share/feral-interactive

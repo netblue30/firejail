@@ -10,6 +10,7 @@
 .directory
 *.man
 .vscode
+/firejail-*/
 autom4te.cache/
 config.log
 config.mk

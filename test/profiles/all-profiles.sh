@@ -37,8 +37,8 @@ echo "TESTING: profile read-only links (test/profiles/profile_readonly.exp)"
 echo "TESTING: profile no permissions (test/profiles/profile_noperm.exp)"
 ./profile_noperm.exp
 
-PROFILES=`ls /etc/firejail/transmission*.profile /etc/firejail/fi*.profile /etc/firejail/fl*.profile /etc/firejail/free*.profile`
-echo "TESTING: small number of default profiles installed in /etc"
+PROFILES=`ls /etc/firejail/*.profile`
+echo "TESTING: default profiles installed in /etc"
 
 for PROFILE in $PROFILES
 do

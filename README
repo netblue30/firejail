@@ -67,6 +67,8 @@ Firejail Authors (alphabetical order)
 0x7969 (https://github.com/0x7969)
 	- fix wire-desktop.profile
 	- add ferdi.profile
+0x9fff00 (https://github.com/0x9fff00)
+	- add Colossal Order to steam.profile
 7twin (https://github.com/7twin_)
 	- fix typos
 	- fix flameshot raw screenshots
@@ -116,6 +118,8 @@ Alexander Gerasiov (https://github.com/gerasiov)
 	- profile updates
 Alexander Stein (https://github.com/ajstein)
 	- added profile for qutebrowser
+alkim0 (https://github.com/alkim0)
+	- warn when encountering EIO during remount
 Amin Vakil (https://github.com/aminvakil)
 	- whois profile fix
 	- added profile for strawberry
@@ -316,6 +320,7 @@ Davide Beatrici (https://github.com/davidebeatrici)
 	- minetest fixes
 	- map /dev/input with "--private-dev", add "--no-input" option to disable it
 	- whitelist /usr/share/TelegramDesktop in telegram.profile
+	- allow access to ~/.cache/winetricks
 David Hyrule (https://github.com/Svaag)
 	- remove nou2f in ssh profile
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)

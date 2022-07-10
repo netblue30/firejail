@@ -530,7 +530,9 @@ static void fs_remount_simple(const char *path, OPERATION op) {
 	if (fstat(fd, &s) < 0) {
 		// fstat can fail with EACCES if path is a FUSE mount,
 		// mounted without 'allow_root' or 'allow_other'
-		if (errno != EACCES)
+		// fstat can also fail with EIO if the underlying FUSE system
+		// is being buggy
+		if (errno != EACCES && errno != EIO)
 			errExit("fstat");
 		close(fd);
 		goto out;

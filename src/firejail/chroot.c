@@ -33,41 +33,27 @@
 void fs_check_chroot_dir(void) {
 	EUID_ASSERT();
 	assert(cfg.chrootdir);
-	if (strstr(cfg.chrootdir, "..") ||
-	    is_link(cfg.chrootdir))
-		goto errout;
 
 	// check chroot dirname exists, chrooting into the root directory is not allowed
 	char *rpath = realpath(cfg.chrootdir, NULL);
-	if (rpath == NULL || !is_dir(rpath) || strcmp(rpath, "/") == 0)
-		goto errout;
-
-	char *overlay;
-	if (asprintf(&overlay, "%s/.firejail", cfg.homedir) == -1)
-		errExit("asprintf");
-	if (strncmp(rpath, overlay, strlen(overlay)) == 0) {
-		fprintf(stderr, "Error: invalid chroot directory: no directories in %s are allowed\n", overlay);
+	if (rpath == NULL || !is_dir(rpath) || strcmp(rpath, "/") == 0) {
+		fprintf(stderr, "Error: invalid chroot directory %s\n", cfg.chrootdir);
 		exit(1);
 	}
-	free(overlay);
 
 	cfg.chrootdir = rpath;
 	return;
-
-errout:
-	fprintf(stderr, "Error: invalid chroot directory %s\n", cfg.chrootdir);
-	exit(1);
 }
 
 // copy /etc/resolv.conf or /etc/machine-id in chroot directory
 static void update_file(int parentfd, const char *relpath) {
 	assert(relpath && relpath[0] && relpath[0] != '/');
 
-	char *abspath;
-	if (asprintf(&abspath, "/%s", relpath) == -1)
-		errExit("asprintf");
-	int in = open(abspath, O_RDONLY|O_CLOEXEC);
-	free(abspath);
+	int rootfd = open("/", O_PATH|O_CLOEXEC);
+	if (rootfd == -1)
+		errExit("open");
+	int in = openat(rootfd, relpath, O_RDONLY|O_CLOEXEC);
+	close(rootfd);
 	if (in == -1)
 		goto errout;
 

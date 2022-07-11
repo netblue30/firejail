@@ -907,7 +907,8 @@ void delete_bandwidth_run_file(pid_t pid);
 void set_name_run_file(pid_t pid);
 void set_x11_run_file(pid_t pid, int display);
 void set_profile_run_file(pid_t pid, const char *fname);
-int set_sandbox_run_file(pid_t pid, pid_t child);
+void set_sandbox_run_file(pid_t pid, pid_t child);
+void release_sandbox_run_file_lock(void);
 
 // dbus.c
 int dbus_check_name(const char *name);

@@ -164,7 +164,8 @@ void set_profile_run_file(pid_t pid, const char *fname) {
 	free(runfile);
 }
 
-int set_sandbox_run_file(pid_t pid, pid_t child) {
+static int sandbox_run_file_fd = -1;
+void set_sandbox_run_file(pid_t pid, pid_t child) {
 	char *runfile;
 	if (asprintf(&runfile, "%s/%d", RUN_FIREJAIL_SANDBOX_DIR, pid) == -1)
 		errExit("asprintf");
@@ -172,8 +173,8 @@ int set_sandbox_run_file(pid_t pid, pid_t child) {
 	EUID_ROOT();
 	// the file is deleted first
 	// this file should be opened with O_CLOEXEC set
-	int fd = open(runfile, O_CREAT | O_WRONLY | O_TRUNC | O_CLOEXEC, S_IRUSR | S_IWUSR);
-	if (fd < 0) {
+	sandbox_run_file_fd = open(runfile, O_CREAT | O_WRONLY | O_TRUNC | O_CLOEXEC, S_IRUSR | S_IWUSR);
+	if (sandbox_run_file_fd < 0) {
 		fprintf(stderr, "Error: cannot create %s\n", runfile);
 		exit(1);
 	}
@@ -185,7 +186,7 @@ int set_sandbox_run_file(pid_t pid, pid_t child) {
 	size_t len = strlen(buf);
 	size_t done = 0;
 	while (done != len) {
-		ssize_t rv = write(fd, buf + done, len - done);
+		ssize_t rv = write(sandbox_run_file_fd, buf + done, len - done);
 		if (rv < 0)
 			errExit("write");
 		done += rv;
@@ -193,14 +194,19 @@ int set_sandbox_run_file(pid_t pid, pid_t child) {
 
 	// set exclusive lock on the file
 	// the lock is never inherited, and is released if this process dies ungracefully
-	struct flock sandboxlock = {
+	struct flock sandbox_lock = {
 		.l_type = F_WRLCK,
 		.l_whence = SEEK_SET,
 		.l_start = 0,
 		.l_len = 0,
 	};
-	if (fcntl(fd, F_SETLK, &sandboxlock) < 0)
+	if (fcntl(sandbox_run_file_fd, F_SETLK, &sandbox_lock) < 0)
 		errExit("fcntl");
+}
 
-	return fd;
+void release_sandbox_run_file_lock(void) {
+	assert(sandbox_run_file_fd > -1);
+
+	close(sandbox_run_file_fd);
+	sandbox_run_file_fd = -1;
 }

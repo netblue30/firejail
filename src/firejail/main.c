@@ -190,6 +190,8 @@ static void myexit(int rv) {
 }
 
 static void my_handler(int s) {
+	release_sandbox_run_file_lock();
+
 	fmessage("\nParent received signal %d, shutting down the child process...\n", s);
 	logsignal(s);
 
@@ -961,7 +963,6 @@ int main(int argc, char **argv, char **envp) {
 	int prog_index = -1;			  // index in argv where the program command starts
 	int lockfd_network = -1;
 	int lockfd_directory = -1;
-	int lockfd_sandboxfile = -1;
 	int custom_profile = 0;	// custom profile loaded
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
 	int arg_netlock = 0;
@@ -2997,7 +2998,7 @@ int main(int argc, char **argv, char **envp) {
 	EUID_USER();
 
 	// sandbox pidfile
-	lockfd_sandboxfile = set_sandbox_run_file(getpid(), child);
+	set_sandbox_run_file(getpid(), child);
 
 	if (!arg_command && !arg_quiet) {
 		fmessage("Parent pid %u, child pid %u\n", sandbox_pid, child);
@@ -3222,8 +3223,7 @@ int main(int argc, char **argv, char **envp) {
 	// end of signal-safe code
 	//*****************************
 
-	// release lock
-	close(lockfd_sandboxfile);
+	release_sandbox_run_file_lock();
 
 	if (WIFEXITED(status)){
 		myexit(WEXITSTATUS(status));

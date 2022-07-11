@@ -309,33 +309,34 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 		}
 		// create destination file if necessary
 		EUID_ASSERT();
-		int fd = open(dest_fname, O_WRONLY|O_CREAT|O_CLOEXEC, S_IRUSR | S_IWUSR);
-		if (fd == -1) {
+		int dest = open(dest_fname, O_WRONLY|O_CREAT|O_CLOEXEC, S_IRUSR | S_IWUSR);
+		if (dest == -1) {
 			fprintf(stderr, "Error: cannot open %s for writing\n", dest_fname);
 			exit(1);
 		}
 		struct stat s;
-		if (fstat(fd, &s) == -1)
+		if (fstat(dest, &s) == -1)
 			errExit("fstat");
 		if (!S_ISREG(s.st_mode)) {
-			fprintf(stderr, "Error: %s is no regular file\n", dest_fname);
+			fprintf(stderr, "Error: %s is not a regular file\n", dest_fname);
 			exit(1);
 		}
-		if (ftruncate(fd, 0) == -1)
+		if (ftruncate(dest, 0) == -1)
 			errExit("ftruncate");
 		// go quiet - messages on stdout will corrupt the file
 		arg_debug = 0;
 		arg_quiet = 1;
 		// redirection
-		if (dup2(fd, STDOUT_FILENO) == -1)
+		if (dup2(dest, STDOUT_FILENO) == -1)
 			errExit("dup2");
-		close(fd);
+		close(dest);
 		op = SANDBOX_FS_CAT;
 	}
 
 	if (op == SANDBOX_FS_LS || op == SANDBOX_FS_CAT) {
 		// chroot into the sandbox
 		process_rootfs_chroot(sandbox);
+		unpin_process(sandbox);
 
 		// drop privileges
 		drop_privs(0);
@@ -344,88 +345,48 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			ls(fname1);
 		else
 			cat(fname1);
-
-		__gcov_flush();
 	}
 	// get file from host and store it in the sandbox
 	else if (op == SANDBOX_FS_PUT && path2) {
-		char *src_fname =fname1;
+		char *src_fname = fname1;
 		char *dest_fname = fname2;
 
-		EUID_ROOT();
-		if (arg_debug)
-			printf("copy %s to %s\n", src_fname, dest_fname);
-
-		// create a user-owned temporary file in /run/firejail directory
-		char tmp_fname[] = "/run/firejail/tmpget-XXXXXX";
-		int fd = mkstemp(tmp_fname);
-		if (fd == -1) {
-			fprintf(stderr, "Error: cannot create temporary file %s\n", tmp_fname);
-			exit(1);
-		}
-		SET_PERMS_FD(fd, getuid(), getgid(), 0600);
-		close(fd);
-
-		// copy the source file into the temporary file - we need to chroot
-		pid_t child = fork();
-		if (child < 0)
-			errExit("fork");
-		if (child == 0) {
-			// drop privileges
-			drop_privs(0);
-
-			// copy the file
-			if (copy_file(src_fname, tmp_fname, getuid(), getgid(), 0600)) // already a regular user
-				_exit(1);
-
-			__gcov_flush();
-
-			_exit(0);
-		}
-
-		// wait for the child to finish
-		int status = 0;
-		waitpid(child, &status, 0);
-		if (WIFEXITED(status) && WEXITSTATUS(status) == 0);
-		else {
-			unlink(tmp_fname);
+		EUID_ASSERT();
+		int src = open(src_fname, O_RDONLY|O_CLOEXEC);
+		if (src == -1) {
+			fprintf(stderr, "Error: cannot open %s for reading\n", src_fname);
 			exit(1);
 		}
 
-		// copy the temporary file into the destination file
-		child = fork();
-		if (child < 0)
-			errExit("fork");
-		if (child == 0) {
-			// chroot into the sandbox
-			process_rootfs_chroot(sandbox);
+		// chroot into the sandbox
+		process_rootfs_chroot(sandbox);
+		unpin_process(sandbox);
 
-			// drop privileges
-			drop_privs(0);
+		// drop privileges
+		drop_privs(0);
 
-			// copy the file
-			if (copy_file(tmp_fname, dest_fname, getuid(), getgid(), 0600)) // already a regular user
-				_exit(1);
-
-			__gcov_flush();
-
-			_exit(0);
-		}
-
-		// wait for the child to finish
-		status = 0;
-		waitpid(child, &status, 0);
-		if (WIFEXITED(status) && WEXITSTATUS(status) == 0);
-		else {
-			unlink(tmp_fname);
+		int dest = open(dest_fname, O_WRONLY|O_CREAT|O_CLOEXEC, S_IRUSR | S_IWUSR);
+		if (dest == -1) {
+			fprintf(stderr, "Error: cannot open %s for writing\n", dest_fname);
 			exit(1);
 		}
+		struct stat s;
+		if (fstat(dest, &s) == -1)
+			errExit("fstat");
+		if (!S_ISREG(s.st_mode)) {
+			fprintf(stderr, "Error: %s is not a regular file\n", dest_fname);
+			exit(1);
+		}
+		if (ftruncate(dest, 0) == -1)
+			errExit("ftruncate");
 
-		// remove the temporary file
-		unlink(tmp_fname);
-		EUID_USER();
+		if (copy_file_by_fd(src, dest) != 0)
+			fwarning("an error occured during copying\n");
+		close(src);
+		close(dest);
 	}
 
-	unpin_process(sandbox);
+	__gcov_flush();
+
 	exit(0);
 }

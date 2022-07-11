@@ -534,6 +534,7 @@ void logmsg(const char *msg);
 void logargs(int argc, char **argv) ;
 void logerr(const char *msg);
 void set_nice(int inc);
+int copy_file_by_fd(int src, int dst);
 int copy_file(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);
 void copy_file_as_user(const char *srcname, const char *destname, mode_t mode);
 void copy_file_from_user_to_root(const char *srcname, const char *destname, uid_t uid, gid_t gid, mode_t mode);

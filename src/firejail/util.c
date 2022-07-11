@@ -406,7 +406,7 @@ void set_nice(int inc) {
 }
 
 
-static int copy_file_by_fd(int src, int dst) {
+int copy_file_by_fd(int src, int dst) {
 	assert(src >= 0);
 	assert(dst >= 0);
 

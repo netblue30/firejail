@@ -22,7 +22,6 @@
 #include "firejail.h"
 #include "../include/gcov_wrapper.h"
 #include <sys/mount.h>
-#include <sys/sendfile.h>
 #include <errno.h>
 
 #include <fcntl.h>
@@ -91,8 +90,8 @@ static void update_file(int parentfd, const char *relpath) {
 		close(in);
 		goto errout;
 	}
-	if (sendfile(out, in, NULL, src.st_size) == -1)
-		errExit("sendfile");
+	if (copy_file_by_fd(in, out) != 0)
+		errExit("copy_file_by_fd");
 	close(in);
 	close(out);
 	return;

@@ -7,7 +7,7 @@ include aria2c.local
 include globals.local
 
 noblacklist ${HOME}/.aria2
-noblacklist ${HOME}/.cache/winetricks
+noblacklist ${HOME}/.cache/winetricks # XXX: See #5238
 noblacklist ${HOME}/.config/aria2
 noblacklist ${HOME}/.netrc
 

@@ -27,8 +27,13 @@ static int tmpfs_mounted = 0;
 
 // build /run/firejail directory
 void preproc_build_firejail_dir(void) {
+	struct stat s;
+
 	// CentOS 6 doesn't have /run directory
-	create_empty_dir_as_root(RUN_FIREJAIL_BASEDIR, 0755);
+	if (stat(RUN_FIREJAIL_BASEDIR, &s)) {
+		create_empty_dir_as_root(RUN_FIREJAIL_BASEDIR, 0755);
+	}
+
 	create_empty_dir_as_root(RUN_FIREJAIL_DIR, 0755);
 	create_empty_dir_as_root(RUN_FIREJAIL_NETWORK_DIR, 0755);
 	create_empty_dir_as_root(RUN_FIREJAIL_BANDWIDTH_DIR, 0755);

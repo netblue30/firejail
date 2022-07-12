@@ -190,8 +190,6 @@ static void myexit(int rv) {
 }
 
 static void my_handler(int s) {
-	release_sandbox_run_file_lock();
-
 	fmessage("\nParent received signal %d, shutting down the child process...\n", s);
 	logsignal(s);
 
@@ -204,6 +202,7 @@ static void my_handler(int s) {
 			kill(child, SIGKILL);
 		waitpid(child, NULL, 0);
 	}
+	release_sandbox_lock();
 	myexit(128 + s);
 }
 
@@ -3223,7 +3222,7 @@ int main(int argc, char **argv, char **envp) {
 	// end of signal-safe code
 	//*****************************
 
-	release_sandbox_run_file_lock();
+	release_sandbox_lock();
 
 	if (WIFEXITED(status)){
 		myexit(WEXITSTATUS(status));

@@ -164,7 +164,7 @@ void set_profile_run_file(pid_t pid, const char *fname) {
 	free(runfile);
 }
 
-static int sandbox_run_file_fd = -1;
+static int sandbox_lock_fd = -1;
 void set_sandbox_run_file(pid_t pid, pid_t child) {
 	char *runfile;
 	if (asprintf(&runfile, "%s/%d", RUN_FIREJAIL_SANDBOX_DIR, pid) == -1)
@@ -173,8 +173,8 @@ void set_sandbox_run_file(pid_t pid, pid_t child) {
 	EUID_ROOT();
 	// the file is deleted first
 	// this file should be opened with O_CLOEXEC set
-	sandbox_run_file_fd = open(runfile, O_CREAT | O_WRONLY | O_TRUNC | O_CLOEXEC, S_IRUSR | S_IWUSR);
-	if (sandbox_run_file_fd < 0) {
+	int fd = open(runfile, O_CREAT | O_WRONLY | O_TRUNC | O_CLOEXEC, S_IRUSR | S_IWUSR);
+	if (fd < 0) {
 		fprintf(stderr, "Error: cannot create %s\n", runfile);
 		exit(1);
 	}
@@ -186,7 +186,7 @@ void set_sandbox_run_file(pid_t pid, pid_t child) {
 	size_t len = strlen(buf);
 	size_t done = 0;
 	while (done != len) {
-		ssize_t rv = write(sandbox_run_file_fd, buf + done, len - done);
+		ssize_t rv = write(fd, buf + done, len - done);
 		if (rv < 0)
 			errExit("write");
 		done += rv;
@@ -200,13 +200,15 @@ void set_sandbox_run_file(pid_t pid, pid_t child) {
 		.l_start = 0,
 		.l_len = 0,
 	};
-	if (fcntl(sandbox_run_file_fd, F_SETLK, &sandbox_lock) < 0)
+	if (fcntl(fd, F_SETLK, &sandbox_lock) < 0)
 		errExit("fcntl");
+
+	sandbox_lock_fd = fd;
 }
 
-void release_sandbox_run_file_lock(void) {
-	assert(sandbox_run_file_fd > -1);
+void release_sandbox_lock(void) {
+	assert(sandbox_lock_fd > -1);
 
-	close(sandbox_run_file_fd);
-	sandbox_run_file_fd = -1;
+	close(sandbox_lock_fd);
+	sandbox_lock_fd = -1;
 }

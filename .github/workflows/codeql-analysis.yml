@@ -9,8 +9,10 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
       - 'etc/**'
       - .git-blame-ignore-revs
+      - .github/pull_request_template.md
       - .gitignore
       - CONTRIBUTING.md
       - COPYING
@@ -22,8 +24,10 @@ on:
     # The branches below must be a subset of the branches above
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
       - 'etc/**'
       - .git-blame-ignore-revs
+      - .github/pull_request_template.md
       - .gitignore
       - CONTRIBUTING.md
       - COPYING

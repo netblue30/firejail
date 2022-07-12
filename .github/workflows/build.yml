@@ -4,7 +4,9 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
       - .git-blame-ignore-revs
+      - .github/pull_request_template.md
       - .gitignore
       - CONTRIBUTING.md
       - COPYING
@@ -15,7 +17,9 @@ on:
   pull_request:
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
       - .git-blame-ignore-revs
+      - .github/pull_request_template.md
       - .gitignore
       - CONTRIBUTING.md
       - COPYING

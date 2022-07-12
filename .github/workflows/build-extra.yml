@@ -4,7 +4,10 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
+      - .git-blame-ignore-revs
+      - .gitignore
       - CONTRIBUTING.md
+      - COPYING
       - README
       - README.md
       - RELNOTES
@@ -16,7 +19,10 @@ on:
   pull_request:
     branches: [ master ]
     paths-ignore:
+      - .git-blame-ignore-revs
+      - .gitignore
       - CONTRIBUTING.md
+      - COPYING
       - README
       - README.md
       - RELNOTES

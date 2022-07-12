@@ -6,8 +6,10 @@ on:
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
       - .github/pull_request_template.md
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README
@@ -19,8 +21,10 @@ on:
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
       - .github/pull_request_template.md
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README

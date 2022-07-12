@@ -12,8 +12,10 @@ on:
       - '.github/ISSUE_TEMPLATE/*'
       - 'etc/**'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
       - .github/pull_request_template.md
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README
@@ -27,8 +29,10 @@ on:
       - '.github/ISSUE_TEMPLATE/*'
       - 'etc/**'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
       - .github/pull_request_template.md
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README

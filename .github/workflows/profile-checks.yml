@@ -4,17 +4,17 @@ on:
   push:
     branches: [ master ]
     paths:
-      - 'etc/**'
       - 'ci/check/profiles/**'
-      - 'src/firecfg/firecfg.config'
-      - 'contrib/sort.py'
+      - 'etc/**'
+      - contrib/sort.py
+      - src/firecfg/firecfg.config
   pull_request:
     branches: [ master ]
     paths:
-      - 'etc/**'
       - 'ci/check/profiles/**'
-      - 'src/firecfg/firecfg.config'
-      - 'contrib/sort.py'
+      - 'etc/**'
+      - contrib/sort.py
+      - src/firecfg/firecfg.config
 
 permissions:  # added using https://github.com/step-security/secure-workflows
   contents: read

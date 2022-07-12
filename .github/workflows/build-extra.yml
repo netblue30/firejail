@@ -4,7 +4,10 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+      - 'etc/**'
       - .git-blame-ignore-revs
+      - .github/pull_request_template.md
       - .gitignore
       - CONTRIBUTING.md
       - COPYING
@@ -12,14 +15,14 @@ on:
       - README.md
       - RELNOTES
       - SECURITY.md
-      - 'etc/**'
-      - 'src/firecfg/firecfg.config'
-      - '.github/ISSUE_TEMPLATE/*'
-      - '.github/pull_request_template.md'
+      - src/firecfg/firecfg.config
   pull_request:
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+      - 'etc/**'
       - .git-blame-ignore-revs
+      - .github/pull_request_template.md
       - .gitignore
       - CONTRIBUTING.md
       - COPYING
@@ -27,10 +30,7 @@ on:
       - README.md
       - RELNOTES
       - SECURITY.md
-      - 'etc/**'
-      - 'src/firecfg/firecfg.config'
-      - '.github/ISSUE_TEMPLATE/*'
-      - '.github/pull_request_template.md'
+      - src/firecfg/firecfg.config
 
 permissions:  # added using https://github.com/step-security/secure-workflows
   contents: read

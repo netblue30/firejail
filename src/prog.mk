@@ -22,7 +22,7 @@ $(PROG): $(OBJS) $(ROOT)/config.mk
 	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)
 
 .PHONY: clean
-clean:; rm -fr *.o $(PROG) *.gcov *.gcda *.gcno *.plist
+clean:; rm -fr *.o $(PROG) *.gcov *.gcda *.gcno *.plist $(TOCLEAN)
 
 .PHONY: distclean
-distclean: clean
+distclean: clean; rm -fr $(TODISTCLEAN)

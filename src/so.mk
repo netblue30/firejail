@@ -19,7 +19,7 @@ $(SO): $(OBJS) $(ROOT)/config.mk
 	$(CC) $(LDFLAGS) -shared -fPIC -z relro -o $@ $(OBJS) -ldl
 
 .PHONY: clean
-clean:; rm -fr $(OBJS) $(SO) *.plist
+clean:; rm -fr $(OBJS) $(SO) *.plist $(TOCLEAN)
 
 .PHONY: distclean
-distclean: clean
+distclean: clean; rm -fr $(TODISTCLEAN)

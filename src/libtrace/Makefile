@@ -1,6 +1,9 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+SO = libtrace.so
+TARGET = $(SO)
+
 HDRS := $(sort $(wildcard *.h)) $(MOD_HDRS)
 SRCS := $(sort $(wildcard *.c)) $(MOD_SRCS)
 OBJS := $(SRCS:.c=.o) $(MOD_OBJS)
@@ -8,16 +11,16 @@ CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' -fstack-prot
 LDFLAGS += -pie -fPIE -Wl,-z,relro -Wl,-z,now
 
 .PHONY: all
-all: libtrace.so
+all: $(TARGET)
 
 %.o : %.c $(HDRS) $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-libtrace.so: $(OBJS) $(ROOT)/config.mk
+$(SO): $(OBJS) $(ROOT)/config.mk
 	$(CC) $(LDFLAGS) -shared -fPIC -z relro -o $@ $(OBJS) -ldl
 
 .PHONY: clean
-clean:; rm -fr $(OBJS) libtrace.so *.plist
+clean:; rm -fr $(OBJS) $(SO) *.plist
 
 .PHONY: distclean
 distclean: clean

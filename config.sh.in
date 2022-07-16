@@ -1,2 +1,3 @@
+# @configure_input@
 NAME=@PACKAGE_NAME@
 VERSION=@PACKAGE_VERSION@

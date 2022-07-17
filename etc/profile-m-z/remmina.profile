@@ -12,7 +12,8 @@ noblacklist ${HOME}/.local/share/remmina
 
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc
-# Remmina needs to load some modules
+
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
 include disable-common.inc

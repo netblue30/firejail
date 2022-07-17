@@ -92,7 +92,16 @@ static const SyscallGroupList sysgroups[] = {
 	  "io_setup,"
 #endif
 #ifdef SYS_io_submit
-	  "io_submit"
+	  "io_submit,"
+#endif
+#ifdef SYS_io_uring_enter
+	  "io_uring_enter,"
+#endif
+#ifdef SYS_io_uring_register
+	  "io_uring_register,"
+#endif
+#ifdef SYS_io_uring_setup
+	  "io_uring_setup"
 #endif
 	},
 	{ .name = "@basic-io", .list =
@@ -101,6 +110,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_close
 	  "close,"
+#endif
+#ifdef SYS_close_range
+	  "close_range,"
 #endif
 #ifdef SYS_dup
 	  "dup,"
@@ -212,6 +224,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_perf_event_open
 	  "perf_event_open,"
 #endif
+#ifdef SYS_pidfd_getfd
+	  "pidfd_getfd,"
+#endif
 #ifdef SYS_process_vm_writev
 	  "process_vm_writev,"
 #endif
@@ -290,7 +305,7 @@ static const SyscallGroupList sysgroups[] = {
 	  "remap_file_pages,"
 #endif
 #ifdef SYS_set_mempolicy
-	  "set_mempolicy"
+	  "set_mempolicy,"
 #endif
 #ifdef SYS_vmsplice
 	  "vmsplice,"
@@ -349,6 +364,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_close
 	  "close,"
+#endif
+#ifdef SYS_close_range
+	  "close_range,"
 #endif
 #ifdef SYS_creat
 	  "creat,"
@@ -502,6 +520,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_openat
 	  "openat,"
+#endif
+#ifdef SYS_openat2
+	  "openat2,"
 #endif
 #ifdef SYS_readlink
 	  "readlink,"
@@ -657,6 +678,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_pipe2
 	  "pipe2,"
 #endif
+#ifdef SYS_process_madvise
+	  "process_madvise,"
+#endif
 #ifdef SYS_process_vm_readv
 	  "process_vm_readv,"
 #endif
@@ -731,8 +755,26 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_chroot
 	  "chroot,"
 #endif
+#ifdef SYS_fsconfig
+	  "fsconfig,"
+#endif
+#ifdef SYS_fsmount
+	  "fsmount,"
+#endif
+#ifdef SYS_fsopen
+	  "fsopen,"
+#endif
+#ifdef SYS_fspick
+	  "fspick,"
+#endif
 #ifdef SYS_mount
 	  "mount,"
+#endif
+#ifdef SYS_move_mount
+	  "move_mount,"
+#endif
+#ifdef SYS_open_tree
+	  "open_tree,"
 #endif
 #ifdef SYS_pivot_root
 	  "pivot_root,"
@@ -985,6 +1027,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_clone
 	  "clone,"
 #endif
+#ifdef SYS_clone3
+	  "clone3,"
+#endif
 #ifdef SYS_execveat
 	  "execveat,"
 #endif
@@ -996,6 +1041,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_kill
 	  "kill,"
+#endif
+#ifdef SYS_pidfd_open
+	  "pidfd_open,"
 #endif
 #ifdef SYS_pidfd_send_signal
 	  "pidfd_send_signal,"

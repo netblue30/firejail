@@ -61,6 +61,10 @@ void seccomp_keep(const char *fname1, const char *fname2, char *list, bool nativ
 void memory_deny_write_execute(const char *fname);
 void memory_deny_write_execute_32(const char *fname);
 
+// namespaces.c
+void deny_ns(const char *fname, const char *list);
+void deny_ns_32(const char *fname, const char *list);
+
 // seccomp_print
 void filter_print(const char *fname);
 

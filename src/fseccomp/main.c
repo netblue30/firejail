@@ -48,6 +48,8 @@ static void usage(void) {
 	printf("\tfseccomp keep32 file1 file2 list\n");
 	printf("\tfseccomp memory-deny-write-execute file\n");
 	printf("\tfseccomp memory-deny-write-execute.32 file\n");
+	printf("\tfseccomp restrict-namespaces file list\n");
+	printf("\tfseccomp restrict-namespaces.32 file list\n");
 }
 
 int main(int argc, char **argv) {
@@ -135,6 +137,10 @@ printf("\n");
 		memory_deny_write_execute(argv[2]);
 	else if (argc == 3 && strcmp(argv[1], "memory-deny-write-execute.32") == 0)
 		memory_deny_write_execute_32(argv[2]);
+	else if (argc == 4 && strcmp(argv[1], "restrict-namespaces") == 0)
+		deny_ns(argv[2], argv[3]);
+	else if (argc == 4 && strcmp(argv[1], "restrict-namespaces.32") == 0)
+		deny_ns_32(argv[2], argv[3]);
 	else {
 		fprintf(stderr, "Error fseccomp: invalid arguments\n");
 		return 1;

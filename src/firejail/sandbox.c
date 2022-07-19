@@ -1209,6 +1209,16 @@ int sandbox(void* sandbox_arg) {
 		seccomp_load(RUN_SECCOMP_MDWX_32);
 	}
 
+	if (cfg.restrict_namespaces) {
+		seccomp_filter_namespaces(true, cfg.restrict_namespaces);
+		seccomp_filter_namespaces(false, cfg.restrict_namespaces);
+
+		if (arg_debug)
+			printf("Install namespaces filter\n");
+		seccomp_load(RUN_SECCOMP_NS);	// install filter
+		seccomp_load(RUN_SECCOMP_NS_32);
+	}
+
 	// make seccomp filters read-only
 	fs_remount(RUN_SECCOMP_DIR, MOUNT_READONLY, 0);
 	seccomp_debug();

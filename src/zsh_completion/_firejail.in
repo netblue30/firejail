@@ -103,7 +103,7 @@ _firejail_args=(
     '--join-or-start=-[join the sandbox or start a new one name|pid]: :_all_firejails'
     '--keep-config-pulse[disable automatic ~/.config/pulse init]'
     '--keep-dev-shm[/dev/shm directory is untouched (even with --private-dev)]'
-    '--keep-fd[inherit open file descriptors to sandbox]'
+    '--keep-fd[inherit open file descriptors to sandbox]: :'
     '--keep-var-tmp[/var/tmp directory is untouched]'
     '--machine-id[spoof /etc/machine-id with a random id]'
     '--memory-deny-write-execute[seccomp filter to block attempts to create memory mappings that are both writable and executable]'
@@ -141,6 +141,8 @@ _firejail_args=(
     "--quiet[turn off Firejail's output.]"
     '*--read-only=-[set directory or file read-only]: :_files'
     '*--read-write=-[set directory or file read-write]: :_files'
+    '--restrict-namespaces[seccomp filter that blocks attempts to create new namespaces]'
+    '--restrict-namespaces=-[seccomp filter that blocks attempts to create specified namespaces]: :'
     "--rlimit-as=-[set the maximum size of the process's virtual memory (address space) in bytes]: :"
     '--rlimit-cpu=-[set the maximum CPU time in seconds]: :'
     '--rlimit-fsize=-[set the maximum file size that can be created by a process]: :'

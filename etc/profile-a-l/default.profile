@@ -60,3 +60,4 @@ seccomp
 # deterministic-shutdown
 # memory-deny-write-execute
 # read-only ${HOME}
+# restrict-namespaces

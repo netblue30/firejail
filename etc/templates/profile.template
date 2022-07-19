@@ -228,3 +228,4 @@ include globals.local
 ##noexec PATH
 ##read-only ${HOME}
 ##read-write ${HOME}
+#restrict-namespaces

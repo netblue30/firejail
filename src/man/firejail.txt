@@ -693,6 +693,7 @@ Example:
 .br
 $ firejail \-\-net=eth0 \-\-defaultgw=10.10.20.1 firefox
 #endif
+
 .TP
 \fB\-\-deterministic-exit-code
 Always exit firejail with the first child's exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
@@ -2255,6 +2256,29 @@ $ touch ~/test/a
 .br
 $ firejail --read-only=~/test --read-write=~/test/a
 
+
+.TP
+\fB\-\-restrict-namespaces
+Install a seccomp filter that blocks attempts to create new cgroup, ipc, net, mount, pid, time, user or uts namespaces.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-restrict-namespaces
+
+.TP
+\fB\-\-restrict-namespaces=cgroup,ipc,net,mnt,pid,time,user,uts
+Install a seccomp filter that blocks attempts to create any of the specified namespaces. The filter examines
+the arguments of clone, unshare and setns system calls and returns error EPERM to the process
+(or kills it or logs the attempt, see \-\-seccomp-error-action below) if necessary. Note that the filter is not
+able to examine the arguments of clone3 system calls, and always responds to these calls with error ENOSYS.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-restrict-namespaces=user,net
 
 .TP
 \fB\-\-rlimit-as=number

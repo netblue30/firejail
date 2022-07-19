@@ -17,6 +17,9 @@ syn match fjComment "#.*$" contains=fjTodo
 syn keyword fjCapability audit_control audit_read audit_write block_suspend chown dac_override dac_read_search fowner fsetid ipc_lock ipc_owner kill lease linux_immutable mac_admin mac_override mknod net_admin net_bind_service net_broadcast net_raw setgid setfcap setpcap setuid sys_admin sys_boot sys_chroot sys_module sys_nice sys_pacct sys_ptrace sys_rawio sys_resource sys_time sys_tty_config syslog wake_alarm nextgroup=fjCapabilityList contained
 syn match fjCapabilityList /,/ nextgroup=fjCapability contained
 
+syn keyword fjNamespaces cgroup ipc net mnt pid time user uts nextgroup=fjNamespacesList contained
+syn match fjNamespacesList /,/ nextgroup=fjNamespaces contained
+
 syn keyword fjProtocol unix inet inet6 netlink packet nextgroup=fjProtocolList contained
 syn match fjProtocolList /,/ nextgroup=fjProtocol contained
 
@@ -48,7 +51,7 @@ syn keyword fjFilter filter contained
 syn match fjVar /\v\$\{(CFG|DESKTOP|DOCUMENTS|DOWNLOADS|HOME|MUSIC|PATH|PICTURES|RUNUSER|VIDEOS)}/
 
 " Commands grabbed from: src/firejail/profile.c
-" Generate list with: { rg -o 'strn?cmp\(ptr, "([^"]+) "' -r '$1' src/firejail/profile.c; echo private-lib; } | grep -vEx '(include|ignore|caps\.drop|caps\.keep|protocol|seccomp|seccomp\.drop|seccomp\.keep|env|rmenv|net|ip)' | sort -u | tr $'\n' '|' # private-lib is special-cased in the code and doesn't match the regex; grep-ed patterns are handled later with 'syn match nextgroup=' directives (except for include which is special-cased as a fjCommandNoCond keyword)
+" Generate list with: { rg -o 'strn?cmp\(ptr, "([^"]+) "' -r '$1' src/firejail/profile.c; echo private-lib; } | grep -vEx '(include|ignore|caps\.drop|caps\.keep|protocol|restrict-namespaces|seccomp|seccomp\.drop|seccomp\.keep|env|rmenv|net|ip)' | sort -u | tr $'\n' '|' # private-lib is special-cased in the code and doesn't match the regex; grep-ed patterns are handled later with 'syn match nextgroup=' directives (except for include which is special-cased as a fjCommandNoCond keyword)
 syn match fjCommand /\v(bind|blacklist|blacklist-nolog|cpu|defaultgw|dns|hostname|hosts-file|ip6|iprange|join-or-start|mac|mkdir|mkfile|mtu|name|netfilter|netfilter6|netmask|nice|noblacklist|noexec|nowhitelist|overlay-named|private|private-bin|private-cwd|private-etc|private-home|private-lib|private-opt|private-srv|read-only|read-write|rlimit-as|rlimit-cpu|rlimit-fsize|rlimit-nofile|rlimit-nproc|rlimit-sigpending|timeout|tmpfs|veth-name|whitelist|xephyr-screen) / skipwhite contained
 " Generate list with: rg -o 'strn?cmp\(ptr, "([^ "]*[^ ])"' -r '$1' src/firejail/profile.c | grep -vEx '(include|rlimit|quiet)' | sed -e 's/\./\\./' | sort -u | tr $'\n' '|' # include/rlimit are false positives, quiet is special-cased below
 syn match fjCommand /\v(allow-debuggers|allusers|apparmor|caps|deterministic-exit-code|deterministic-shutdown|disable-mnt|ipc-namespace|keep-config-pulse|keep-dev-shm|keep-fd|keep-var-tmp|machine-id|memory-deny-write-execute|netfilter|no3d|noautopulse|nodbus|nodvd|nogroups|noinput|nonewprivs|noprinters|noroot|nosound|notv|nou2f|novideo|overlay|overlay-tmpfs|private|private-cache|private-cwd|private-dev|private-lib|private-tmp|seccomp|seccomp\.32|seccomp\.block-secondary|tracelog|writable-etc|writable-run-user|writable-var|writable-var-log|x11)$/ contained
@@ -56,6 +59,7 @@ syn match fjCommand /ignore / nextgroup=fjCommand,fjCommandNoCond skipwhite cont
 syn match fjCommand /caps\.drop / nextgroup=fjCapability,fjAll skipwhite contained
 syn match fjCommand /caps\.keep / nextgroup=fjCapability skipwhite contained
 syn match fjCommand /protocol / nextgroup=fjProtocol skipwhite contained
+syn match fjCommand /restrict-namespaces / nextgroup=fjNamespaces skipwhite contained
 syn match fjCommand /\vseccomp(\.32)?(\.drop|\.keep)? / nextgroup=fjSyscall skipwhite contained
 syn match fjCommand /x11 / nextgroup=fjX11Sandbox skipwhite contained
 syn match fjCommand /env / nextgroup=fjEnvVar skipwhite contained

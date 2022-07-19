@@ -91,10 +91,18 @@ void preproc_mount_mnt_dir(void) {
 			copy_file(PATH_SECCOMP_MDWX, RUN_SECCOMP_MDWX, getuid(), getgid(), 0644); // root needed
 			copy_file(PATH_SECCOMP_MDWX_32, RUN_SECCOMP_MDWX_32, getuid(), getgid(), 0644); // root needed
 		}
-		// as root, create empty RUN_SECCOMP_PROTOCOL and RUN_SECCOMP_POSTEXEC files
+		// as root, create empty RUN_SECCOMP_PROTOCOL, RUN_SECCOMP_NS and RUN_SECCOMP_POSTEXEC files
 		create_empty_file_as_root(RUN_SECCOMP_PROTOCOL, 0644);
 		if (set_perms(RUN_SECCOMP_PROTOCOL, getuid(), getgid(), 0644))
 			errExit("set_perms");
+		if (cfg.restrict_namespaces) {
+			create_empty_file_as_root(RUN_SECCOMP_NS, 0644);
+			if (set_perms(RUN_SECCOMP_NS, getuid(), getgid(), 0644))
+				errExit("set_perms");
+			create_empty_file_as_root(RUN_SECCOMP_NS_32, 0644);
+			if (set_perms(RUN_SECCOMP_NS_32, getuid(), getgid(), 0644))
+				errExit("set_perms");
+		}
 		create_empty_file_as_root(RUN_SECCOMP_POSTEXEC, 0644);
 		if (set_perms(RUN_SECCOMP_POSTEXEC, getuid(), getgid(), 0644))
 			errExit("set_perms");

@@ -26,7 +26,8 @@
 
 extern char *xephyr_screen;
 
-#define MAX_READ 8192				  // line buffer for profile files
+#define MAX_READ 8192		// line buffer for profile files
+#define MAX_LIST 16384		// size limit for argument lists
 
 // find and read the profile specified by name from dir directory
 // return  1 if a profile was found
@@ -1042,6 +1043,24 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	// restrict-namespaces
+	if (strcmp(ptr, "restrict-namespaces") == 0) {
+		if (checkcfg(CFG_SECCOMP))
+			profile_list_augment(&cfg.restrict_namespaces, "cgroup,ipc,net,mnt,pid,time,user,uts");
+		else
+			warning_feature_disabled("seccomp");
+		return 0;
+	}
+	if (strncmp(ptr, "restrict-namespaces ", 20) == 0) {
+		if (checkcfg(CFG_SECCOMP)) {
+			const char *add = ptr + 20;
+			profile_list_augment(&cfg.restrict_namespaces, add);
+		}
+		else
+			warning_feature_disabled("seccomp");
+		return 0;
+	}
+
 	// seccomp error action
 	if (strncmp(ptr, "seccomp-error-action ", 21) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
@@ -1959,4 +1978,10 @@ void profile_list_augment(char **list, const char *items)
 		errExit("asprintf");
 	free(*list);
 	*list = profile_list_compress(tmp);
+
+	// lists should not grow indefinitely
+	if (strlen(*list) > MAX_LIST) {
+		fprintf(stderr, "Error: argument list is too long\n");
+		exit(1);
+	}
 }

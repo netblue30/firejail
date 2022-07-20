@@ -385,7 +385,6 @@ char *guess_shell(void);
 #define SANDBOX_DONE '1'
 int sandbox(void* sandbox_arg);
 void start_application(int no_sandbox, int fd, char *set_sandbox_status) __attribute__((noreturn));
-void set_apparmor(void);
 
 // network_main.c
 void net_configure_sandbox_ip(Bridge *br);

@@ -33,10 +33,6 @@
 #define PR_SET_NO_NEW_PRIVS 38
 #endif
 
-#ifdef HAVE_APPARMOR
-#include <sys/apparmor.h>
-#endif
-
 static int apply_caps = 0;
 static uint64_t caps = 0;
 static unsigned display = 0;
@@ -512,10 +508,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 
 		// kill the child in case the parent died
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
-
-#ifdef HAVE_APPARMOR
-		set_apparmor();
-#endif
 
 		extract_command(argc, argv, index);
 		if (cfg.command_line == NULL)

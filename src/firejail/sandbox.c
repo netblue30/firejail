@@ -128,7 +128,7 @@ static void set_caps(void) {
 }
 
 #ifdef HAVE_APPARMOR
-void set_apparmor(void) {
+static void set_apparmor(void) {
 	EUID_ASSERT();
 	if (checkcfg(CFG_APPARMOR) && arg_apparmor) {
 		if (aa_change_onexec("firejail-default")) {
@@ -486,6 +486,9 @@ static void close_file_descriptors(void) {
 
 void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	if (no_sandbox == 0) {
+#ifdef HAVE_APPARMOR
+		set_apparmor();
+#endif
 		close_file_descriptors();
 
 		// set nice and rlimits
@@ -1299,10 +1302,7 @@ int sandbox(void* sandbox_arg) {
 		errExit("fork");
 
 	if (app_pid == 0) {
-#ifdef HAVE_APPARMOR
-		set_apparmor();
-#endif
-		start_application(0, -1, set_sandbox_status);
+		start_application(0, -1, set_sandbox_status);	// this function does not return
 	}
 
 	munmap(set_sandbox_status, 1);

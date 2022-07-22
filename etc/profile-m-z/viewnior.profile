@@ -19,6 +19,7 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
 
+whitelist /usr/share/viewnior
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

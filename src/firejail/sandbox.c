@@ -50,7 +50,6 @@
 #include <sys/apparmor.h>
 #endif
 
-static int force_nonewprivs = 0;
 extern int just_run_the_shell;
 
 static int monitored_pid = 0;
@@ -629,7 +628,6 @@ static void enforce_filters(void) {
 	fmessage("\n** Warning: dropping all Linux capabilities and setting NO_NEW_PRIVS prctl **\n\n");
 	// enforce NO_NEW_PRIVS
 	arg_nonewprivs = 1;
-	force_nonewprivs = 1;
 
 	// disable all capabilities
 	arg_caps_drop_all = 1;
@@ -832,14 +830,9 @@ int sandbox(void* sandbox_arg) {
 			exit(rv);
 	}
 
-#ifdef HAVE_FORCE_NONEWPRIVS
-	bool always_enforce_filters = true;
-#else
-	bool always_enforce_filters = false;
-#endif
 	// for --appimage, --chroot and --overlay* we force NO_NEW_PRIVS
 	// and drop all capabilities
-	if (getuid() != 0 && (arg_appimage || cfg.chrootdir || arg_overlay || always_enforce_filters))
+	if (getuid() != 0 && (arg_appimage || cfg.chrootdir || arg_overlay))
 		enforce_filters();
 
 	// need ld.so.preload if tracing or seccomp with any non-default lists
@@ -1266,17 +1259,15 @@ int sandbox(void* sandbox_arg) {
 	//****************************************
 	// Set NO_NEW_PRIVS if desired
 	//****************************************
-	if (arg_nonewprivs) {
-		prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
-
-		if (prctl(PR_GET_NO_NEW_PRIVS, 0, 0, 0, 0) != 1) {
-			fwarning("cannot set NO_NEW_PRIVS, it requires a Linux kernel version 3.5 or newer.\n");
-			if (force_nonewprivs) {
-				fprintf(stderr, "Error: NO_NEW_PRIVS required for this sandbox, exiting ...\n");
-				exit(1);
-			}
+#ifndef HAVE_FORCE_NONEWPRIVS
+	if (arg_nonewprivs)
+#endif
+	{
+		if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) != 0) {
+			fprintf(stderr, "Error: cannot set NO_NEW_PRIVS, it requires a Linux kernel version 3.5 or newer.\n");
+			exit(1);
 		}
-		else if (arg_debug)
+		if (arg_debug)
 			printf("NO_NEW_PRIVS set\n");
 	}
 

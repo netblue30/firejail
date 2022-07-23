@@ -13,6 +13,7 @@ noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
 
 blacklist /usr/libexec
+blacklist /sys/class/net
 
 mkdir ${HOME}/.cache/mozilla/torbrowser
 mkdir ${HOME}/.mozilla

@@ -16,6 +16,7 @@ include allow-python2.inc
 include allow-python3.inc
 
 blacklist /srv
+blacklist /sys/class/net
 
 include disable-common.inc
 include disable-devel.inc

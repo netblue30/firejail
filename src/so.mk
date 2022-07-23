@@ -1,6 +1,9 @@
 # Common definitions for making shared objects.
 #
 # Note: $(ROOT)/config.mk must be included before this file.
+#
+# The includer should probably define SO and TARGET and may also want to define
+# MOD_HDRS, MOD_SRCS, MOD_OBJS, TOCLEAN and TODISTCLEAN.
 
 HDRS := $(sort $(wildcard *.h)) $(MOD_HDRS)
 SRCS := $(sort $(wildcard *.c)) $(MOD_SRCS)

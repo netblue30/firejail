@@ -47,7 +47,7 @@ int is_lib_64(const char *exe) {
 	if (fd < 0)
 		return 0;
 
-	unsigned char buf[EI_NIDENT];
+	unsigned char buf[EI_NIDENT] = {0};
 	ssize_t len = 0;
 	while (len < EI_NIDENT) {
 		ssize_t sz = read(fd, buf + len, EI_NIDENT - len);

@@ -300,7 +300,7 @@ void fs_var_utmp(void) {
 
 	// read current utmp
 	struct utmp *u;
-	struct utmp u_boot;
+	struct utmp u_boot = {0};
 	setutent();
 	while ((u = getutent()) != NULL) {
 		if (u->ut_type == BOOT_TIME) {

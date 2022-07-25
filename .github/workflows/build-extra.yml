@@ -58,4 +58,14 @@ jobs:
     - name: install cppcheck
       run: sudo apt-get install cppcheck
     - name: cppcheck
+      run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance -i src/firejail/checkcfg.c -i src/firejail/main.c .
+  # new cppcheck version currently chokes on checkcfg.c and main.c, therefore scan all files also
+  # with older cppcheck version from ubuntu 20.04.
+  cppcheck_old:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+    - name: install cppcheck
+      run: sudo apt-get install cppcheck
+    - name: cppcheck
       run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .

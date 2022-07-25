@@ -31,8 +31,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+    - name: install dependencies
+      run: sudo apt-get install libapparmor-dev libselinux1-dev
     - name: configure
-      run: CC=clang-11 ./configure --enable-fatal-warnings
+      run: CC=clang-11 ./configure --enable-fatal-warnings --enable-apparmor --enable-selinux
     - name: make
       run: make
     - name: make install
@@ -43,10 +45,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-    - name: install clang-tools-11
-      run: sudo apt-get install clang-tools-11
+    - name: install clang-tools-11 and dependencies
+      run: sudo apt-get install clang-tools-11 libapparmor-dev libselinux1-dev
     - name: configure
-      run: CC=clang-11 ./configure --enable-fatal-warnings
+      run: CC=clang-11 ./configure --enable-fatal-warnings --enable-apparmor --enable-selinux
     - name: scan-build
       run: NO_EXTRA_CFLAGS="yes" scan-build-11 --status-bugs make
   cppcheck:

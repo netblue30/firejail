@@ -939,6 +939,17 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strcmp(ptr, "apparmor") == 0) {
 #ifdef HAVE_APPARMOR
 		arg_apparmor = 1;
+		apparmor_profile = "firejail-default";
+#endif
+		return 0;
+	}
+	
+	if (strncmp(ptr, "apparmor ", 9) == 0) {
+#ifdef HAVE_APPARMOR
+		arg_apparmor = 1;
+		apparmor_profile = strdup(ptr + 9);
+		if (!apparmor_profile)
+			errExit("strdup");
 #endif
 		return 0;
 	}

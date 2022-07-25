@@ -478,7 +478,11 @@ Allow tools such as strace and gdb inside the sandbox by whitelisting system cal
 #ifdef HAVE_APPARMOR
 .TP
 \fBapparmor
-Enable AppArmor confinement.
+Enable AppArmor confinement with the "firejail-default" AppArmor profile.
+.TP
+\fBapparmor profile_name
+Enable AppArmor confinement with a custom AppArmor profile.
+Note that the profile in question must already be loaded into the kernel.
 #endif
 .TP
 \fBcaps

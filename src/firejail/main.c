@@ -133,6 +133,7 @@ int arg_writable_run_user = 0;			// writable /run/user
 int arg_writable_var_log = 0;		// writable /var/log
 int arg_appimage = 0;				// appimage
 int arg_apparmor = 0;				// apparmor
+char *apparmor_profile = NULL;	// apparmor profile
 int arg_allow_debuggers = 0;			// allow debuggers
 int arg_x11_block = 0;				// block X11
 int arg_x11_xorg = 0;				// use X11 security extension
@@ -1287,8 +1288,14 @@ int main(int argc, char **argv, char **envp) {
 		// filtering
 		//*************************************
 #ifdef HAVE_APPARMOR
-		else if (strcmp(argv[i], "--apparmor") == 0)
+		else if (strcmp(argv[i], "--apparmor") == 0) {
 			arg_apparmor = 1;
+			apparmor_profile = "firejail-default";
+		}
+		else if (strncmp(argv[i], "--apparmor=", 11) == 0) {
+			arg_apparmor = 1;
+			apparmor_profile = argv[i] + 11;
+		}
 #endif
 		else if (strncmp(argv[i], "--protocol=", 11) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {

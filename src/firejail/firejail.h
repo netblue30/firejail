@@ -163,6 +163,7 @@ typedef struct config_t {
 #define MAX_PROFILE_IGNORE 32
 	char *profile_ignore[MAX_PROFILE_IGNORE];
 	char *keep_fd;		// inherit file descriptors to sandbox
+	char *keep_xattrs;	// keep xattrs on copied files
 	char *chrootdir;	// chroot directory
 	char *home_private;	// private home directory
 	char *home_private_keep;	// keep list for private home directory

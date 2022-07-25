@@ -1832,6 +1832,10 @@ int main(int argc, char **argv, char **envp) {
 				profile_list_augment(&cfg.keep_fd, add);
 			}
 		}
+		else if (strncmp(argv[i], "--keep-xattrs=", 14) == 0) {
+			const char *xattr = argv[i] + 14;
+			profile_list_augment(&cfg.keep_xattrs, xattr);
+		}
 #ifdef HAVE_CHROOT
 		else if (strncmp(argv[i], "--chroot=", 9) == 0) {
 			if (checkcfg(CFG_CHROOT)) {
@@ -2865,6 +2869,10 @@ int main(int argc, char **argv, char **envp) {
 			fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
 	}
 	EUID_ASSERT();
+
+	// make sure that the xattr list is not null
+	if (!cfg.keep_xattrs)
+		cfg.keep_xattrs = "";
 
 	// block X11 sockets
 	if (arg_x11_block)

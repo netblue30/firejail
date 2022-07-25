@@ -303,6 +303,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		return 0;
 	}
+	if (strncmp(ptr, "keep-xattrs ", 12) == 0) {
+		const char *xattr = ptr + 12;
+		profile_list_augment(&cfg.keep_xattrs, xattr);
+		return 0;
+	}
 	if (strncmp(ptr, "xephyr-screen ", 14) == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {

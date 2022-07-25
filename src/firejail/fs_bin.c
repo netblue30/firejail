@@ -187,7 +187,7 @@ static void duplicate(char *fname) {
 			if (valid_full_path_file(actual_path)) {
 				// solving problems such as /bin/sh -> /bin/dash
 				// copy the real file pointed by symlink
-				sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, actual_path, RUN_BIN_DIR);
+				sbox_run(SBOX_ROOT| SBOX_SECCOMP, 5, PATH_FCOPY, "--keep-xattrs", cfg.keep_xattrs, actual_path, RUN_BIN_DIR);
 				prog_cnt++;
 				char *f = strrchr(actual_path, '/');
 				if (f && *(++f) !='\0')
@@ -198,7 +198,7 @@ static void duplicate(char *fname) {
 	}
 
 	// copy a file or a symlink
-	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 3, PATH_FCOPY, full_path, RUN_BIN_DIR);
+	sbox_run(SBOX_ROOT| SBOX_SECCOMP, 5, PATH_FCOPY, "--keep-xattrs", cfg.keep_xattrs, full_path, RUN_BIN_DIR);
 	prog_cnt++;
 	free(full_path);
 	report_duplication(fname);

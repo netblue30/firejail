@@ -110,7 +110,7 @@ expect {
 send -- "exit\r"
 sleep 1
 
-send -- "firejail --trace --dns=208.67.222.222 wget -q debian.org\r"
+send -- "firejail --trace --dns=208.67.222.222 -- curl --silent --output /dev/null debian.org\r"
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}
 	"connect"
@@ -125,8 +125,6 @@ expect {
 }
 after 100
 
-send -- "rm index.html\r"
-after 100
 send -- "exit\r"
 sleep 1
 

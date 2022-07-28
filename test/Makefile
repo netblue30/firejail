@@ -3,7 +3,7 @@ TESTS=$(patsubst %/,%,$(wildcard */))
 .PHONY: $(TESTS)
 $(TESTS):
 	cd $@ && ./$@.sh 2>&1 | tee $@.log
-	cd $@ && grep -a TESTING $@.log && grep -a -L "TESTING ERROR" $@.log
+	cd $@ && grep -a TESTING $@.log && ! grep -a -q "TESTING ERROR" $@.log
 
 .PHONY: clean
 clean:

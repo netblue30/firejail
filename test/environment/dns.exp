@@ -110,20 +110,22 @@ expect {
 send -- "exit\r"
 sleep 1
 
-send -- "firejail --trace --dns=208.67.222.222 -- curl --silent --output /dev/null debian.org\r"
-expect {
-	timeout {puts "TESTING ERROR 6.1\n";exit}
-	"connect"
-}
-expect {
-	timeout {puts "TESTING ERROR 6.2\n";exit}
-	"208.67.222.222"
-}
-expect {
-	timeout {puts "TESTING ERROR 6.3\n";exit}
-	"53"
-}
-after 100
+# test disabled, as Github CI uses systemd-resolved, which does not work
+# properly with --dns=, so curl does not use the specified nameserver
+#send -- "firejail --trace --dns=208.67.222.222 -- curl --silent --output /dev/null debian.org\r"
+#expect {
+#	timeout {puts "TESTING ERROR 6.1\n";exit}
+#	"connect"
+#}
+#expect {
+#	timeout {puts "TESTING ERROR 6.2\n";exit}
+#	"208.67.222.222"
+#}
+#expect {
+#	timeout {puts "TESTING ERROR 6.3\n";exit}
+#	"53"
+#}
+#after 100
 
 send -- "exit\r"
 sleep 1

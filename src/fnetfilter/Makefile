@@ -1,7 +1,9 @@
+ROOT = ../..
+-include $(ROOT)/config.mk
+
 .PHONY: all
 all: fnetfilter
 
-ROOT = ../..
 include $(ROOT)/src/common.mk
 
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/syscall.h $(ROOT)/config.mk

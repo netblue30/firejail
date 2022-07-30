@@ -1,3 +1,4 @@
+ROOT = .
 -include config.mk
 
 ifneq ($(HAVE_MAN),no)

@@ -1,7 +1,9 @@
+ROOT = ../..
+-include $(ROOT)/config.mk
+
 .PHONY: all
 all: firecfg
 
-ROOT = ../..
 include $(ROOT)/src/common.mk
 
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/euid_common.h ../include/libnetlink.h ../include/firejail_user.h ../include/pid.h $(ROOT)/config.mk

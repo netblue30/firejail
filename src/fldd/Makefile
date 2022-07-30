@@ -1,7 +1,9 @@
+ROOT = ../..
+-include $(ROOT)/config.mk
+
 .PHONY: all
 all: fldd
 
-ROOT = ../..
 include $(ROOT)/src/common.mk
 
 %.o : %.c $(H_FILE_LIST) ../include/common.h ../include/syscall.h ../include/ldd_utils.h $(ROOT)/config.mk

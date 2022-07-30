@@ -1,8 +1,6 @@
 # Common definitions for building C programs and non-shared objects.
 #
-# Note: "ROOT" must be defined before including this file.
-
--include $(ROOT)/config.mk
+# Note: $(ROOT)/config.mk must be included before this file.
 
 H_FILE_LIST       = $(sort $(wildcard *.h))
 C_FILE_LIST       = $(sort $(wildcard *.c))

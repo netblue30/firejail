@@ -1,7 +1,9 @@
+ROOT = ../..
+-include $(ROOT)/config.mk
+
 .PHONY: all
 all: lib
 
-ROOT = ../..
 include $(ROOT)/src/common.mk
 
 .PHONY: lib

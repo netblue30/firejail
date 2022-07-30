@@ -20,15 +20,15 @@ on:
 
 jobs:
   build_and_test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
     - name: update package information
       run: sudo apt-get update
     - name: install dependencies
-      run: sudo apt-get install gcc-11 libapparmor-dev libselinux1-dev expect xzdec
+      run: sudo apt-get install gcc-12 libapparmor-dev libselinux1-dev expect xzdec
     - name: configure
-      run: CC=gcc-11 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux --prefix=/usr
+      run: CC=gcc-12 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux --prefix=/usr
     - name: make
       run: make
     - name: make install

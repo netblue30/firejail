@@ -27,7 +27,7 @@
 
 static int prog_cnt = 0;
 
-static char *paths[] = {
+static const char * const paths[] = {
 	"/usr/local/bin",
 	"/usr/bin",
 	"/bin",
@@ -40,7 +40,7 @@ static char *paths[] = {
 };
 
 // return 1 if found, 0 if not found
-static char *check_dir_or_file(const char *name) {
+static const char *check_dir_or_file(const char *name) {
 	EUID_ASSERT();
 	assert(name);
 	struct stat s;
@@ -160,7 +160,7 @@ static void duplicate(char *fname) {
 	else {
 		// Find the standard directory (by looping through paths[])
 		// where the filename fname is located
-		char *path = check_dir_or_file(fname);
+		const char *path = check_dir_or_file(fname);
 		if (!path)
 			return;
 		if (asprintf(&full_path, "%s/%s", path, fname) == -1)

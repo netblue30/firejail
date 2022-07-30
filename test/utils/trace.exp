@@ -68,10 +68,6 @@ expect {
 	"wget:fopen /etc/wgetrc"  {puts "OK\n";}
 }
 expect {
-	timeout {puts "TESTING ERROR 8.4\n";exit}
-	"wget:fopen /etc/hosts"
-}
-expect {
 	timeout {puts "TESTING ERROR 8.5\n";exit}
 	"wget:connect"
 }

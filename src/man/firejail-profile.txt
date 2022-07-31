@@ -520,6 +520,12 @@ first argument to socket system call. Recognized values: \fBunix\fR,
 \fBinet\fR, \fBinet6\fR, \fBnetlink\fR, \fBpacket\fR, and \fBbluetooth\fR.
 Multiple protocol commands are allowed and they accumulate.
 .TP
+\fBrestrict-namespaces
+Install a seccomp filter that blocks attempts to create new cgroup, ipc, net, mount, pid, time, user or uts namespaces.
+.TP
+\fBrestrict-namespaces cgroup,ipc,net,mnt,pid,time,user,uts
+Install a seccomp filter that blocks attempts to create any of the specified namespaces.
+.TP
 \fBseccomp
 Enable seccomp filter and blacklist the syscalls in the default list. See man 1 firejail for more details.
 .TP

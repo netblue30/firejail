@@ -416,7 +416,7 @@ int seccomp_filter_mdwx(bool native) {
 
 	// build the seccomp filter as a regular user
 	int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3,
-		 PATH_FSECCOMP, command, filter);
+		PATH_FSECCOMP, command, filter);
 
 	if (rv) {
 		fprintf(stderr, "Error: cannot build memory-deny-write-execute filter\n");
@@ -425,6 +425,35 @@ int seccomp_filter_mdwx(bool native) {
 
 	if (arg_debug)
 		printf("Memory-deny-write-execute filter configured\n");
+
+	return 0;
+}
+
+// create namespaces filter
+int seccomp_filter_namespaces(bool native, const char *list) {
+	if (arg_debug)
+		printf("Build restrict-namespaces filter\n");
+
+	const char *command, *filter;
+	if (native) {
+		command = "restrict-namespaces";
+		filter = RUN_SECCOMP_NS;
+	} else {
+		command = "restrict-namespaces.32";
+		filter = RUN_SECCOMP_NS_32;
+	}
+
+	// build the seccomp filter as a regular user
+	int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 4,
+		PATH_FSECCOMP, command, filter, list);
+
+	if (rv) {
+		fprintf(stderr, "Error: cannot build restrict-namespaces filter\n");
+		exit(rv);
+	}
+
+	if (arg_debug)
+		printf("restrict-namespaces filter configured\n");
 
 	return 0;
 }

@@ -68,6 +68,8 @@
 #define RUN_SECCOMP_32			RUN_SECCOMP_DIR "/seccomp.32"			// 32bit arch filter installed on 64bit architectures
 #define RUN_SECCOMP_MDWX		RUN_SECCOMP_DIR "/seccomp.mdwx"			// filter for memory-deny-write-execute
 #define RUN_SECCOMP_MDWX_32		RUN_SECCOMP_DIR "/seccomp.mdwx.32"
+#define RUN_SECCOMP_NS			RUN_SECCOMP_DIR "/seccomp.namespaces"
+#define RUN_SECCOMP_NS_32		RUN_SECCOMP_DIR "/seccomp.namespaces.32"
 #define RUN_SECCOMP_BLOCK_SECONDARY	RUN_SECCOMP_DIR "/seccomp.block_secondary"	// secondary arch blocking filter
 #define RUN_SECCOMP_POSTEXEC		RUN_SECCOMP_DIR "/seccomp.postexec"		// filter for post-exec library
 #define RUN_SECCOMP_POSTEXEC_32		RUN_SECCOMP_DIR "/seccomp.postexec32"		// filter for post-exec library

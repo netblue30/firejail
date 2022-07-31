@@ -198,6 +198,7 @@ typedef struct config_t {
 	char *seccomp_list_drop, *seccomp_list_drop32;	// seccomp drop list
 	char *seccomp_list_keep, *seccomp_list_keep32;	// seccomp keep list
 	char *protocol;			// protocol list
+	char *restrict_namespaces;			// namespaces list
 	char *seccomp_error_action;			// error action: kill, log or errno
 
 	// rlimits
@@ -632,6 +633,7 @@ int seccomp_load(const char *fname);
 int seccomp_filter_drop(bool native);
 int seccomp_filter_keep(bool native);
 int seccomp_filter_mdwx(bool native);
+int seccomp_filter_namespaces(bool native, const char *list);
 void seccomp_print_filter(pid_t pid) __attribute__((noreturn));
 
 // caps.c

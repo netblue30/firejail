@@ -1400,6 +1400,20 @@ int main(int argc, char **argv, char **envp) {
 			else
 				exit_err_feature("seccomp");
 		}
+		else if (strcmp(argv[i], "--restrict-namespaces") == 0) {
+			if (checkcfg(CFG_SECCOMP))
+				profile_list_augment(&cfg.restrict_namespaces, "cgroup,ipc,net,mnt,pid,time,user,uts");
+			else
+				exit_err_feature("seccomp");
+		}
+		else if (strncmp(argv[i], "--restrict-namespaces=", 22) == 0) {
+			if (checkcfg(CFG_SECCOMP)) {
+				const char *add = argv[i] + 22;
+				profile_list_augment(&cfg.restrict_namespaces, add);
+			}
+			else
+				exit_err_feature("seccomp");
+		}
 		else if (strncmp(argv[i], "--seccomp-error-action=", 23) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
 				int config_seccomp_error_action = checkcfg(CFG_SECCOMP_ERROR_ACTION);

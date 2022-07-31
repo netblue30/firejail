@@ -90,6 +90,7 @@ dbus-user none
 # deterministic-shutdown
 # memory-deny-write-execute
 # read-only ${HOME}
+# restrict-namespaces
 # writable-run-user
 # writable-var
 # writable-var-log

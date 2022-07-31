@@ -1239,7 +1239,8 @@ int main(int argc, char **argv, char **envp) {
 	if (check_arg(argc, argv, "--appimage", 1))
 		arg_appimage = 1;
 
-	// check for force-nonewprivs in /etc/firejail/firejail.config file
+	// load configuration file /etc/firejail/firejail.config
+	// and check for force-nonewprivs
 	if (checkcfg(CFG_FORCE_NONEWPRIVS))
 		arg_nonewprivs = 1;
 

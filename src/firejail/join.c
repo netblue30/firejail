@@ -133,6 +133,8 @@ static void extract_nogroups(ProcessHandle sandbox) {
 
 	if (process_rootfs_stat(sandbox, RUN_GROUPS_CFG, &s) == 0)
 		arg_nogroups = 1;
+	else if (errno != ENOENT)
+		errExit("stat");
 }
 
 static void extract_nonewprivs(ProcessHandle sandbox) {
@@ -140,6 +142,8 @@ static void extract_nonewprivs(ProcessHandle sandbox) {
 
 	if (process_rootfs_stat(sandbox, RUN_NONEWPRIVS_CFG, &s) == 0)
 		arg_nonewprivs = 1;
+	else if (errno != ENOENT)
+		errExit("stat");
 }
 
 static void extract_caps(ProcessHandle sandbox) {
@@ -477,13 +481,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		EUID_USER();
 		unpin_process(sandbox);
 
-		// set nonewprivs
-		if (arg_nonewprivs == 1) {	// not available for uid 0
-			int rv = prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
-			if (arg_debug && rv == 0)
-				printf("NO_NEW_PRIVS set\n");
-		}
-
 		int cwd = 0;
 		if (cfg.cwd) {
 			if (chdir(cfg.cwd) == 0)
@@ -501,6 +498,17 @@ void join(pid_t pid, int argc, char **argv, int index) {
 						errExit("chdir");
 				}
 			}
+		}
+
+		// set nonewprivs
+#ifndef HAVE_FORCE_NONEWPRIVS
+		if (arg_nonewprivs == 1)	// not available for uid 0
+#endif
+		{
+			if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) != 0)
+				errExit("prctl");
+			if (arg_debug)
+				printf("NO_NEW_PRIVS set\n");
 		}
 
 		// drop privileges

@@ -1,3 +1,5 @@
+# @configure_input@
+#
 # Configure-time variable definitions and any other common definition that can
 # be safely included by all makefiles.
 #

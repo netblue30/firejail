@@ -179,8 +179,8 @@ uninstall: config.mk
 	rm -f $(DESTDIR)$(bindir)/firejail
 	rm -f $(DESTDIR)$(bindir)/firemon
 	rm -f $(DESTDIR)$(bindir)/firecfg
+	rm -f $(DESTDIR)$(bindir)/jailcheck
 	rm -fr $(DESTDIR)$(libdir)/firejail
-	rm -fr $(DESTDIR)$(libdir)/jailcheck
 	rm -fr $(DESTDIR)$(datarootdir)/doc/firejail
 	for man in $(MANPAGES); do \
 		rm -f $(DESTDIR)$(mandir)/man5/$$man*; \
@@ -189,6 +189,9 @@ uninstall: config.mk
 	rm -f $(DESTDIR)$(datarootdir)/bash-completion/completions/firejail
 	rm -f $(DESTDIR)$(datarootdir)/bash-completion/completions/firemon
 	rm -f $(DESTDIR)$(datarootdir)/bash-completion/completions/firecfg
+	rm -f $(DESTDIR)$(datarootdir)/zsh/site-functions/_firejail
+	rm -f $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect/firejail.vim
+	rm -f $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax/firejail.vim
 	@echo "If you want to install a different version of firejail, you might also need to run 'rm -fr $(DESTDIR)$(sysconfdir)/firejail', see #2038."
 
 DISTFILES = \

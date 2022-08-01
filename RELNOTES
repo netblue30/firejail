@@ -5,6 +5,9 @@ firejail (0.9.71) baseline; urgency=low
   * build: deduplicate configure-time vars into new config files (#5140)
   * build: fix file mode of shell scripts (644 -> 755) (#5206)
   * build: reduce autoconf input files from 32 to 2 (#5219)
+  * build: add dist build directory to .gitignore (#5248)
+  * build: add autoconf auto-generation comment to input files (#5251)
+  * ci: ignore git-related paths and the project license (#5249)
  -- netblue30 <netblue30@yahoo.com>  Sat, 11 Jun 2022 09:00:00 -0500
 
 firejail (0.9.70) baseline; urgency=low

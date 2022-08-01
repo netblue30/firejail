@@ -1,5 +1,7 @@
 firejail (0.9.71) baseline; urgency=low
   * work in progress
+  * feat: On failing to remount a fuse filesystem, give warning instead of
+  * erroring out (#5240 #5242)
   * build: deduplicate configure-time vars into new config files (#5140)
   * build: fix file mode of shell scripts (644 -> 755) (#5206)
   * build: reduce autoconf input files from 32 to 2 (#5219)

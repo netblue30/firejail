@@ -11,8 +11,10 @@ blacklist ${RUNUSER}/wayland-*
 
 include disable-exec.inc
 
+apparmor
 caps.drop all
 ipc-namespace
+machine-id
 net none
 no3d
 nodvd
@@ -24,8 +26,8 @@ nosound
 notv
 nou2f
 novideo
-protocol unix
-seccomp
+# block the socket syscall to simulate an be empty protocol line, see #639
+seccomp socket
 seccomp.block-secondary
 x11 none
 

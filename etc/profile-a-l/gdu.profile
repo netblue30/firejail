@@ -24,6 +24,7 @@ nosound
 notv
 nou2f
 novideo
+protocol unix
 seccomp
 seccomp.block-secondary
 x11 none

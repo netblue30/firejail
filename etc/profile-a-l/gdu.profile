@@ -39,8 +39,8 @@ dbus-system none
 memory-deny-write-execute
 
 # gdu has built-in delete (d), empty (e) dir/file support and shell spawning (b) features.
-# To harden the sandbox we cripple those here.
-# Add ignore statements in your gdu.local if you need/want these functionalities.
-include disable-shell.inc
-private-bin gdu
-read-only ${HOME}
+# Depending on workflow and use case the sandbox can be hardened by adding the
+# lines below to your gdu.local if you don't need/want these functionalities.
+#include disable-shell.inc
+#private-bin gdu
+#read-only ${HOME}

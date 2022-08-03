@@ -24,14 +24,20 @@ nosound
 notv
 nou2f
 novideo
-protocol unix
 seccomp
+seccomp.block-secondary
 x11 none
 
 private-dev
-# private-tmp
 
 dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+
+# gdu has built-in delete (d), empty (e) dir/file support and shell spawning (b) features.
+# To harden the sandbox we cripple those here.
+# Add ignore statements in your gdu.local if you need/want these functionalities.
+include disable-shell.inc
+private-bin gdu
+read-only ${HOME}

@@ -22,6 +22,7 @@ on:
       - README.md
       - RELNOTES
       - SECURITY.md
+      - src/firecfg/firecfg.config
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ master ]
@@ -39,6 +40,7 @@ on:
       - README.md
       - RELNOTES
       - SECURITY.md
+      - src/firecfg/firecfg.config
   schedule:
     - cron: '0 7 * * 2'
 

@@ -60,3 +60,4 @@ Homepage: https://firejail.wordpress.com
 .BR firejail-profile (5),
 .BR firejail-login (5),
 .BR jailcheck (1)
+.\" vim: set filetype=groff :

@@ -1031,3 +1031,4 @@ Homepage: https://firejail.wordpress.com
 
 .UR https://github.com/netblue30/firejail/wiki/Creating-Profiles
 .UE
+.\" vim: set filetype=groff :

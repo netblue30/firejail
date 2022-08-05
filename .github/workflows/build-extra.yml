@@ -6,6 +6,8 @@ on:
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - 'etc/**'
+      - 'contrib/vim/**'
+      - 'src/man/*.txt'
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
@@ -24,6 +26,8 @@ on:
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - 'etc/**'
+      - 'contrib/vim/**'
+      - 'src/man/*.txt'
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md

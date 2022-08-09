@@ -23,4 +23,4 @@ dbus-user.talk org.gnome.keyring.SystemPrompter
 # dbus-user.talk org.freedesktop.Notifications
 
 # Redirect
-include email-common.profile
+include claws-sylpheed-common.profile

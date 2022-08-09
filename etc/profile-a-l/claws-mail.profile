@@ -1,5 +1,5 @@
 # Firejail profile for claws-mail
-# Description: Fast, lightweight and user-friendly GTK+2 based email client
+# Description: Fast, lightweight and user-friendly GTK+ based email client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include claws-mail.local
@@ -27,4 +27,4 @@ dbus-user.talk org.gnome.keyring.SystemPrompter
 # dbus-user.talk org.freedesktop.Notifications
 
 # Redirect
-include email-common.profile
+include claws-sylpheed-common.profile

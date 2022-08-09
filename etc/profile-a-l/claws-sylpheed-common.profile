@@ -1,8 +1,8 @@
-# Firejail profile for email-common
+# Firejail profile for claws-sylpheed-common
 # Description: Common profile for claws-mail and sylpheed email clients
 # This file is overwritten after every install/update
 # Persistent local customizations
-include email-common.local
+include claws-sylpheed-common.local
 # Persistent global definitions
 # added by caller profile
 #include globals.local
@@ -11,7 +11,7 @@ noblacklist ${HOME}/.bogofilter
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.signature
-# when storing mail outside the default ${HOME}/Mail path, 'noblacklist' the custom path in your email-common.local
+# when storing mail outside the default ${HOME}/Mail path, 'noblacklist' the custom path in your claws-sylpheed-common.local
 # and 'blacklist' it in your disable-common.local too so it is kept hidden from other applications
 noblacklist ${HOME}/Mail
 
@@ -33,7 +33,7 @@ whitelist ${HOME}/.gnupg
 whitelist ${HOME}/.signature
 whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
-# when storing mail outside the default ${HOME}/Mail path, 'whitelist' the custom path in your email-common.local
+# when storing mail outside the default ${HOME}/Mail path, 'whitelist' the custom path in your claws-sylpheed-common.local
 whitelist ${HOME}/Mail
 whitelist ${RUNUSER}/gnupg
 whitelist /usr/share/gnupg
@@ -72,7 +72,7 @@ writable-run-user
 
 dbus-system none
 
-# If you want to read local mail stored in /var/mail, add the following to email-common.local:
+# If you want to read local mail stored in /var/mail, add the following to claws-sylpheed-common.local:
 #noblacklist /var/mail
 #noblacklist /var/spool/mail
 #whitelist /var/mail

@@ -1,4 +1,5 @@
 # Firejail profile for makepkg
+# Description: A utility to automate the building of Arch Linux packages
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

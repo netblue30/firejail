@@ -24,7 +24,7 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-# Add the next line to your ping.local if your kernel allows unprivileged userns clone.
+# Add the next line to your ping.local if your kernel allows "unprivileged userns clone".
 #include ping-hardened.inc.profile
 
 apparmor

@@ -1,5 +1,5 @@
 # Firejail profile for electron
-# Description: Build cross platform desktop apps with web technologies
+# Description: Common profile for electron apps
 # This file is overwritten after every install/update
 # Persistent local customizations
 include electron.local
@@ -22,7 +22,7 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-# Add the next line to your chromium-common.local if your kernel allows unprivileged userns clone.
+# Add the next line to your electron.local if your kernel allows "unprivileged userns clone".
 #include chromium-common-hardened.inc.profile
 
 apparmor

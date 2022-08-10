@@ -20,7 +20,8 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
-apparmor
+## Enabling App Armor appears to break some Fedora / Arch installs
+#apparmor
 caps.drop all
 net none
 no3d

@@ -14,7 +14,7 @@ mkdir ${HOME}/.config/microsoft-edge-beta
 whitelist ${HOME}/.cache/microsoft-edge-beta
 whitelist ${HOME}/.config/microsoft-edge-beta
 
-private-opt microsoft
+whitelist /opt/microsoft/msedge-beta
 
 # Redirect
 include chromium-common.profile

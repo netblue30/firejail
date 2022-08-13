@@ -7,8 +7,6 @@ endif
 
 COMPLETIONDIRS = src/zsh_completion src/bash_completion
 
-.PHONY: all
-all: all_items mydirs $(MAN_TARGET) filters
 APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailcheck/jailcheck
 SBOX_APPS = src/fbuilder/fbuilder src/ftee/ftee src/fids/fids
 SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter src/fzenity/fzenity
@@ -21,6 +19,9 @@ COMPLETIONS = src/zsh_completion/_firejail src/bash_completion/firejail.bash_com
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5 jailcheck.1
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
+
+.PHONY: all
+all: all_items mydirs $(MAN_TARGET) filters
 
 config.mk config.sh:
 	printf 'run ./configure to generate %s\n' "$@" >&2

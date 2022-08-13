@@ -7,6 +7,10 @@
 # up overriding the includer's intended default target (which by default is the
 # first target encountered).
 
+NAME=@PACKAGE_NAME@
+PACKAGE_TARNAME=@PACKAGE_TARNAME@
+VERSION=@PACKAGE_VERSION@
+
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 bindir=@bindir@
@@ -15,9 +19,6 @@ datarootdir=@datarootdir@
 mandir=@mandir@
 sysconfdir=@sysconfdir@
 
-VERSION=@PACKAGE_VERSION@
-NAME=@PACKAGE_NAME@
-PACKAGE_TARNAME=@PACKAGE_TARNAME@
 DOCDIR=@docdir@
 HAVE_APPARMOR=@HAVE_APPARMOR@
 HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@

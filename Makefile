@@ -124,8 +124,8 @@ ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	install -m 0644 contrib/vim/syntax/firejail.vim $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
 endif
 	# documents
-	install -m 0755 -d $(DESTDIR)$(DOCDIR)
-	install -m 0644 -t $(DESTDIR)$(DOCDIR) COPYING README RELNOTES etc/templates/*
+	install -m 0755 -d $(DESTDIR)$(docdir)
+	install -m 0644 -t $(DESTDIR)$(docdir) COPYING README RELNOTES etc/templates/*
 	# profiles and settings
 	install -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config

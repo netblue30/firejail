@@ -16,10 +16,10 @@ exec_prefix=@exec_prefix@
 bindir=@bindir@
 libdir=@libdir@
 datarootdir=@datarootdir@
+docdir=@docdir@
 mandir=@mandir@
 sysconfdir=@sysconfdir@
 
-DOCDIR=@docdir@
 HAVE_APPARMOR=@HAVE_APPARMOR@
 HAVE_CONTRIB_INSTALL=@HAVE_CONTRIB_INSTALL@
 BUSYBOX_WORKAROUND=@BUSYBOX_WORKAROUND@

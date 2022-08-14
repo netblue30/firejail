@@ -182,6 +182,43 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 Milestone page: https://github.com/netblue30/firejail/milestone/1
 
+### Restrict namespaces
+
+`````
+       --restrict-namespaces
+              Install a seccomp filter that  blocks  attempts  to  create  new
+              cgroup, ipc, net, mount, pid, time, user or uts namespaces.
+
+              Example:
+              $ firejail --restrict-namespaces
+
+       --restrict-namespaces=cgroup,ipc,net,mnt,pid,time,user,uts
+              Install  a  seccomp filter that blocks attempts to create any of
+              the specified namespaces. The filter examines the  arguments  of
+              clone, unshare and setns system calls and returns error EPERM to
+              the process (or kills it or logs the attempt, see  --seccomp-er‐
+              ror-action below) if necessary. Note that the filter is not able
+              to examine the arguments of clone3 system calls, and always  re‐
+              sponds to these calls with error ENOSYS.
+
+              Example:
+              $ firejail --restrict-namespaces=user,net
+`````
+
+#### Support for custom AppArmor profiles
+
+`````
+      --apparmor
+              Enable AppArmor confinement with the "firejail-default" AppArmor
+              profile.   For more information, please see APPARMOR section be‐
+              low.
+
+       --apparmor=profile_name
+              Enable AppArmor confinement  with  a  custom  AppArmor  profile.
+              Note  that  profile  in question must already be loaded into the
+              kernel.  For more information, please see APPARMOR  section  be‐
+`````
+
 ### Profile Statistics
 
 A small tool to print profile statistics. Compile and install as usual. The tool is installed in /usr/lib/firejail directory.

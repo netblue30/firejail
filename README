@@ -182,6 +182,8 @@ avoidr (https://github.com/avoidr)
 	- added mcabber profile
 	- fixed mpv profile
 	- various other fixes
+Азалия Смарагдова/ChrysoliteAzalea (https://github.com/ChrysoliteAzalea)
+	-  add support for custom AppArmor profiles (--apparmor=)
 backspac (https://github.com/backspac)
 	- firecfg fixes
 	- add steam-runtime alias

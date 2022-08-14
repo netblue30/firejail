@@ -858,11 +858,15 @@ pszxzsd (https://github.com/pszxzsd)
 	-uGet profile
 pwnage-pineapple (https://github.com/pwnage-pineapple)
 	- update Okular profile
+Quentin Retornaz (https://github.com/qretornaz-adapei42)
+	- microsoft-edge profiles fixes
 Quentin Minster (https://github.com/laomaiweng)
 	- propagate --quiet to children Firejail'ed processes
 	- nodbus enhancements/bugfixes
 	- added vim syntax and ftdetect files
 	- Allow exec from /usr/libexec & co. with AppArmor
+ra1nb0w (https://github.com/ra1nb0w)
+	- fix vmware profile
 Rafael Cavalcanti (https://github.com/rccavalcanti)
 	- chromium profile fixes for Arch Linux
 Rahiel Kasim (https://github.com/rahiel)

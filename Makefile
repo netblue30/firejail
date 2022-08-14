@@ -124,8 +124,8 @@ ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	install -m 0644 contrib/vim/syntax/firejail.vim $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
 endif
 	# documents
-	install -m 0755 -d $(DESTDIR)$(DOCDIR)
-	install -m 0644 -t $(DESTDIR)$(DOCDIR) COPYING README RELNOTES etc/templates/*
+	install -m 0755 -d $(DESTDIR)$(docdir)
+	install -m 0644 -t $(DESTDIR)$(docdir) COPYING README RELNOTES etc/templates/*
 	# profiles and settings
 	install -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config
@@ -221,14 +221,14 @@ dist: config.mk
 	make distclean
 	mv config.status.old config.status
 	mv config.sh.old config.sh
-	rm -fr $(NAME)-$(VERSION) $(NAME)-$(VERSION).tar.xz
-	mkdir -p $(NAME)-$(VERSION)/test
-	cp -a $(DISTFILES) $(NAME)-$(VERSION)
-	cp -a $(DISTFILES_TEST) $(NAME)-$(VERSION)/test
-	rm -rf $(NAME)-$(VERSION)/src/tools
-	find $(NAME)-$(VERSION) -name .svn -delete
-	tar -cJvf $(NAME)-$(VERSION).tar.xz $(NAME)-$(VERSION)
-	rm -fr $(NAME)-$(VERSION)
+	rm -fr $(TARNAME)-$(VERSION) $(TARNAME)-$(VERSION).tar.xz
+	mkdir -p $(TARNAME)-$(VERSION)/test
+	cp -a $(DISTFILES) $(TARNAME)-$(VERSION)
+	cp -a $(DISTFILES_TEST) $(TARNAME)-$(VERSION)/test
+	rm -rf $(TARNAME)-$(VERSION)/src/tools
+	find $(TARNAME)-$(VERSION) -name .svn -delete
+	tar -cJvf $(TARNAME)-$(VERSION).tar.xz $(TARNAME)-$(VERSION)
+	rm -fr $(TARNAME)-$(VERSION)
 
 asc: config.mk
 	./mkasc.sh $(VERSION)
@@ -240,11 +240,11 @@ deb-apparmor: dist config.sh
 	./mkdeb.sh -apparmor --enable-apparmor
 
 test-compile: dist config.mk
-	cd test/compile; ./compile.sh $(NAME)-$(VERSION)
+	cd test/compile; ./compile.sh $(TARNAME)-$(VERSION)
 
 .PHONY: rpms
 rpms: src/man config.mk
-	./platform/rpm/mkrpm.sh $(NAME) $(VERSION)
+	./platform/rpm/mkrpm.sh $(TARNAME) $(VERSION)
 
 extras: all
 	$(MAKE) -C extras/firetools

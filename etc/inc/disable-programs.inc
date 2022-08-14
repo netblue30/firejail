@@ -155,6 +155,7 @@ blacklist ${HOME}/.cache/liferea
 blacklist ${HOME}/.cache/lutris
 blacklist ${HOME}/.cache/marker
 blacklist ${HOME}/.cache/matrix-mirage
+blacklist ${HOME}/.cache/microsoft-edge
 blacklist ${HOME}/.cache/microsoft-edge-beta
 blacklist ${HOME}/.cache/microsoft-edge-dev
 blacklist ${HOME}/.cache/midori
@@ -520,6 +521,7 @@ blacklist ${HOME}/.config/meld
 blacklist ${HOME}/.config/menulibre.cfg
 blacklist ${HOME}/.config/meteo-qt
 blacklist ${HOME}/.config/mfusion
+blacklist ${HOME}/.config/microsoft-edge
 blacklist ${HOME}/.config/microsoft-edge-beta
 blacklist ${HOME}/.config/microsoft-edge-dev
 blacklist ${HOME}/.config/midori

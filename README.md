@@ -258,4 +258,4 @@ Stats:
 
 ### New profiles:
 
-onionshare, onionshare-cli, opera-developer, songrec, gdu
+onionshare, onionshare-cli, opera-developer, songrec, gdu, makedeb

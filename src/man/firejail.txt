@@ -67,6 +67,17 @@ Firejail allows the user to manage application security using security profiles.
 Each profile defines a set of permissions for a specific application or group
 of applications. The software includes security profiles for a number of more common
 Linux programs, such as Mozilla Firefox, Chromium, VLC, Transmission etc.
+.\" TODO: Explain the security/usability tradeoffs from #4601.
+.PP
+Firejail is currently implemented as an SUID binary, which means that if a
+malicious or compromised user account manages to exploit a bug in Firejail,
+that could ultimately lead to a privilege escalation to root.
+To mitigate this, it is recommended to only allow trusted users to run firejail
+(see firejail-users(5) for details on how to achieve that).
+For more details on the security/usability tradeoffs of Firejail, see:
+.UR https://github.com/netblue30/firejail/discussions/4601
+#4601
+.UE
 .PP
 Alternative sandbox technologies like snap (https://snapcraft.io/) and flatpak (https://flatpak.org/)
 are not supported. Snap and flatpak packages have their own native management tools and will

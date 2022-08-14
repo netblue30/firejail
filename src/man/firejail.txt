@@ -122,7 +122,13 @@ $ firejail --allusers
 #ifdef HAVE_APPARMOR
 .TP
 \fB\-\-apparmor
-Enable AppArmor confinement. For more information, please see \fBAPPARMOR\fR section below.
+Enable AppArmor confinement with the "firejail-default" AppArmor profile.
+For more information, please see \fBAPPARMOR\fR section below.
+.TP
+\fB\-\-apparmor=profile_name
+Enable AppArmor confinement with a custom AppArmor profile.
+Note that profile in question must already be loaded into the kernel.
+For more information, please see \fBAPPARMOR\fR section below.
 .TP
 \fB\-\-apparmor.print=name|pid
 Print the AppArmor confinement status for the sandbox identified by name or by PID.

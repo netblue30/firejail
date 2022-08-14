@@ -130,7 +130,7 @@ static void set_caps(void) {
 static void set_apparmor(void) {
 	EUID_ASSERT();
 	if (checkcfg(CFG_APPARMOR) && arg_apparmor) {
-		if (aa_change_onexec("firejail-default")) {
+		if (aa_stack_onexec(apparmor_profile)) {
 			fwarning("Cannot confine the application using AppArmor.\n"
 				"Maybe firejail-default AppArmor profile is not loaded into the kernel.\n"
 				"As root, run \"aa-enforce firejail-default\" to load it.\n");

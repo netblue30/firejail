@@ -30,7 +30,9 @@ static char *usage_str =
 	"    -- - signal the end of options and disables further option processing.\n"
 	"    --allow-debuggers - allow tools such as strace and gdb inside the sandbox.\n"
 	"    --allusers - all user home directories are visible inside the sandbox.\n"
-	"    --apparmor - enable AppArmor confinement.\n"
+	"    --apparmor - enable AppArmor confinement with the default profile.\n"
+	"    --apparmor=profile_name - enable AppArmor confinement with a\n"
+	"\tcustom profile.\n"
 	"    --apparmor.print=name|pid - print apparmor status.\n"
 	"    --appimage - sandbox an AppImage application.\n"
 #ifdef HAVE_NETWORK

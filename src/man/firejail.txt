@@ -1144,6 +1144,33 @@ Example:
 .br
 $ firejail --keep-var-tmp
 
+#ifdef HAVE_LANDLOCK
+.TP
+\fB\-\-landlock-read=path
+Create a Landlock ruleset (if it doesn't already exist) and add a read access rule for path. Note: if a process doesn't have CAP_SYS_ADMIN and the "No New Privileges" restriction is not enabled, the Landlock self-restriction will fail and Firejail will exit with an error.
+.br
+
+.TP
+\fB\-\-landlock-write=path
+Create a Landlock ruleset (if it doesn't already exist) and add a write access rule for path. Note: if a process doesn't have CAP_SYS_ADMIN and the "No New Privileges" restriction is not enabled, the Landlock self-restriction will fail and Firejail will exit with an error.
+.br
+
+.TP
+\fB\-\-landlock-restricted-write=path
+Create a Landlock ruleset (if it doesn't already exist) and add a write access rule for path. This type of write access doesn't include the permission to create Unix domain sockets, FIFO pipes and block devices. Note: if a process doesn't have CAP_SYS_ADMIN and the "No New Privileges" restriction is not enabled, the Landlock self-restriction will fail and Firejail will exit with an error.
+.br
+
+.TP
+\fB\-\-landlock-execute=path
+Create a Landlock ruleset (if it doesn't already exist) and add an execution permission rule for path. Note: if a process doesn't have CAP_SYS_ADMIN and the "No New Privileges" restriction is not enabled, the Landlock self-restriction will fail and Firejail will exit with an error.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-landlock-read=/ \-\-landlock-restricted-write=/home \-\-landlock-execute=/usr
+#endif
+
 .TP
 \fB\-\-list
 List all sandboxes, see \fBMONITORING\fR section for more details.
@@ -1261,6 +1288,7 @@ $ firejail --list
 .br
 1312:netblue:browser-1312:firejail --name=browser --private firefox --no-remote
 .br
+
 #ifdef HAVE_NETWORK
 .TP
 \fB\-\-net=bridge_interface

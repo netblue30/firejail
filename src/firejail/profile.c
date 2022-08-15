@@ -21,6 +21,9 @@
 #include "../include/gcov_wrapper.h"
 #include "../include/seccomp.h"
 #include "../include/syscall.h"
+#ifdef HAVE_LANDLOCK
+#include "../include/tinyLL.h"
+#endif
 #include <dirent.h>
 #include <sys/stat.h>
 
@@ -1044,6 +1047,38 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			warning_feature_disabled("seccomp");
 		return 0;
 	}
+
+#ifdef HAVE_LANDLOCK
+	// Landlock ruleset paths
+	if (strncmp(ptr, "landlock-read ", 14) == 0) {
+		if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+		if (add_read_access_rule_by_path(arg_landlock, ptr+14)) {
+			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+		}
+		return 0;
+	}
+	else if (strncmp(ptr, "landlock-write ", 15) == 0) {
+		if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+		if (add_write_access_rule_by_path(arg_landlock, ptr+15,0)) {
+			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+		}
+		return 0;
+	}
+	else if (strncmp(ptr, "landlock-restricted-write ", 26) == 0) {
+		if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+		if (add_write_access_rule_by_path(arg_landlock, ptr+26,1)) {
+			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+		}
+		return 0;
+	}
+	else if (strncmp(ptr, "landlock-execute ", 17) == 0) {
+		if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+		if (add_execute_rule_by_path(arg_landlock, ptr+17)) {
+			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+		}
+		return 0;
+	}
+#endif
 
 	// memory deny write&execute
 	if (strcmp(ptr, "memory-deny-write-execute") == 0) {

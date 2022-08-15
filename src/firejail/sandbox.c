@@ -21,6 +21,9 @@
 #include "firejail.h"
 #include "../include/gcov_wrapper.h"
 #include "../include/seccomp.h"
+#ifdef HAVE_LANDLOCK
+#include "../include/tinyLL.h"
+#endif
 #include <sys/mman.h>
 #include <sys/mount.h>
 #include <sys/wait.h>
@@ -488,6 +491,16 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 #ifdef HAVE_APPARMOR
 		set_apparmor();
 #endif
+#ifdef HAVE_LANDLOCK
+		// set Landlock
+		if (arg_landlock >= 0) {
+			if (landlock_restrict_self(arg_landlock,0)) {
+				fprintf(stderr,"An error has occured while enabling Landlock self-restriction. Exiting...\n");
+				exit(1); // it isn't safe to continue if Landlock self-restriction was enabled and the "landlock_restrict_self" syscall has failed
+			}
+		}
+#endif
+
 		close_file_descriptors();
 
 		// set nice and rlimits

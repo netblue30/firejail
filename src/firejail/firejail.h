@@ -23,6 +23,7 @@
 #include "../include/euid_common.h"
 #include "../include/rundefs.h"
 #include <linux/limits.h> // Note: Plain limits.h may break ARG_MAX (see #4583)
+#include <linux/landlock.h>
 #include <stdarg.h>
 #include <sys/stat.h>
 
@@ -285,6 +286,8 @@ extern int arg_seccomp;	// enable default seccomp filter
 extern int arg_seccomp32;	// enable default seccomp filter for 32 bit arch
 extern int arg_seccomp_postexec;	// need postexec ld.preload library?
 extern int arg_seccomp_block_secondary;	// block any secondary architectures
+
+extern int arg_landlock; // Landlock ruleset file descriptor
 
 extern int arg_caps_default_filter;	// enable default capabilities filter
 extern int arg_caps_drop;		// drop list

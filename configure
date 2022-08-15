@@ -652,6 +652,7 @@ HAVE_DBUSPROXY
 EXTRA_LDFLAGS
 EXTRA_CFLAGS
 HAVE_SELINUX
+HAVE_LANDLOCK
 AA_LIBS
 AA_CFLAGS
 PKG_CONFIG_LIBDIR
@@ -713,6 +714,7 @@ enable_sanitizer
 enable_ids
 enable_apparmor
 enable_selinux
+enable_landlock
 enable_dbusproxy
 enable_output
 enable_usertmpfs
@@ -1374,6 +1376,7 @@ Optional Features:
   --enable-ids            enable ids
   --enable-apparmor       enable apparmor
   --enable-selinux        SELinux labeling support
+  --enable-landlock       Landlock self-restriction support
   --disable-dbusproxy     disable dbus proxy
   --disable-output        disable --output logging
   --disable-usertmpfs     disable tmpfs as regular user
@@ -3342,7 +3345,19 @@ if test "x$enable_selinux" = "xyes"; then :
 
 fi
 
+HAVE_LANDLOCK=""
 
+# Check whether --enable-landlock was given.
+if test "${enable_landlock+set}" = set; then :
+  enableval=$enable_landlock;
+fi
+
+if test "x$enable_landlock" = "xyes"; then :
+
+	HAVE_LANDLOCK="-DHAVE_LANDLOCK"
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -ltinyll"
+
+fi
 
 
 
@@ -5277,6 +5292,7 @@ Features:
    overlayfs support: $HAVE_OVERLAYFS
    private home support: $HAVE_PRIVATE_HOME
    SELinux labeling support: $HAVE_SELINUX
+   Landlock self-restriction support: $HAVE_LANDLOCK
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11
 

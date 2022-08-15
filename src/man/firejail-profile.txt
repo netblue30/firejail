@@ -497,6 +497,27 @@ Blacklist all Linux capabilities.
 .TP
 \fBcaps.keep capability,capability,capability
 Whitelist given Linux capabilities.
+#ifdef HAVE_LANDLOCK
+.TP
+\fBlandlock-read path
+Create a Landlock ruleset (if it doesn't already exist) and add a read access rule for path. Note: if a process doesn't have CAP_SYS_ADMIN and the "No New Privileges" restriction is not enabled, the Landlock self-restriction will fail and Firejail will exit with an error.
+.br
+
+.TP
+\fBlandlock-write path
+Create a Landlock ruleset (if it doesn't already exist) and add a write access rule for path. Note: if a process doesn't have CAP_SYS_ADMIN and the "No New Privileges" restriction is not enabled, the Landlock self-restriction will fail and Firejail will exit with an error.
+.br
+
+.TP
+\fBlandlock-restricted-write path
+Create a Landlock ruleset (if it doesn't already exist) and add a write access rule for path. This type of write access doesn't include the permission to create Unix domain sockets, FIFO pipes and block devices. Note: if a process doesn't have CAP_SYS_ADMIN and the "No New Privileges" restriction is not enabled, the Landlock self-restriction will fail and Firejail will exit with an error.
+.br
+
+.TP
+\fBlandlock-execute path
+Create a Landlock ruleset (if it doesn't already exist) and add an execution permission rule for path. Note: if a process doesn't have CAP_SYS_ADMIN and the "No New Privileges" restriction is not enabled, the Landlock self-restriction will fail and Firejail will exit with an error.
+.br
+#endif
 .TP
 \fBmemory-deny-write-execute
 Install a seccomp filter to block attempts to create memory mappings

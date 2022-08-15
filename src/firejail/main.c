@@ -23,6 +23,9 @@
 #include "../include/gcov_wrapper.h"
 #include "../include/syscall.h"
 #include "../include/seccomp.h"
+#ifdef HAVE_LANDLOCK
+#include "../include/tinyLL.h"
+#endif
 #define _GNU_SOURCE
 #include <sys/utsname.h>
 #include <sched.h>
@@ -80,6 +83,10 @@ int arg_seccomp32 = 0;				// enable default seccomp filter for 32 bit arch
 int arg_seccomp_postexec = 0;			// need postexec ld.preload library?
 int arg_seccomp_block_secondary = 0;		// block any secondary architectures
 int arg_seccomp_error_action = 0;
+
+#ifdef HAVE_LANDLOCK
+int arg_landlock = -1;				// Landlock ruleset file descriptor (-1 if it doesn't exist)
+#endif
 
 int arg_caps_default_filter = 0;			// enable default capabilities filter
 int arg_caps_drop = 0;				// drop list
@@ -1401,6 +1408,32 @@ int main(int argc, char **argv, char **envp) {
 			else
 				exit_err_feature("seccomp");
 		}
+#ifdef HAVE_LANDLOCK
+		else if (strncmp(argv[i], "--landlock-read=", 16) == 0) {
+			if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+			if (add_read_access_rule_by_path(arg_landlock, argv[i]+16)) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+		}
+		else if (strncmp(argv[i], "--landlock-write=", 17) == 0) {
+			if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+			if (add_write_access_rule_by_path(arg_landlock, argv[i]+17,0)) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+		}
+		else if (strncmp(argv[i], "--landlock-restricted-write=", 28) == 0) {
+			if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+			if (add_write_access_rule_by_path(arg_landlock, argv[i]+28,1)) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+		}
+		else if (strncmp(argv[i], "--landlock-execute=", 19) == 0) {
+			if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+			if (add_execute_rule_by_path(arg_landlock, argv[i]+19)) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+		}
+#endif
 		else if (strcmp(argv[i], "--memory-deny-write-execute") == 0) {
 			if (checkcfg(CFG_SECCOMP))
 				arg_memory_deny_write_execute = 1;

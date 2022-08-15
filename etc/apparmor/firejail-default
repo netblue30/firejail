@@ -33,6 +33,7 @@ owner /{,var/}run/firejail/dbus/[0-9]*/[0-9]*-user w,
 #ptrace,
 # Allow obtaining some process information, but not ptrace(2)
 ptrace (read,readby) peer=@{profile_name},
+ptrace (read,readby) peer=@{profile_name}//&unconfined,
 
 ##########
 # Allow read access to whole filesystem and control it from firejail.
@@ -123,6 +124,7 @@ network packet,
 ##########
 # There is no equivalent in Firejail for filtering signals.
 ##########
+signal (send) peer=@{profile_name}//&unconfined,
 signal (send) peer=@{profile_name},
 signal (receive),
 

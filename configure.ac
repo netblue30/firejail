@@ -87,7 +87,7 @@ AC_ARG_ENABLE([landlock])
     [AS_HELP_STRING([--enable-landlock], [Landlock self-restriction support])]
 AS_IF([test "x$enable_landlock" = "xyes"], [
 	HAVE_LANDLOCK="-DHAVE_LANDLOCK"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -ltinyll"
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS"
 ])
 
 AC_SUBST([EXTRA_CFLAGS])

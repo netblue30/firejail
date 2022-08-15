@@ -21,9 +21,6 @@
 #include "../include/gcov_wrapper.h"
 #include "../include/seccomp.h"
 #include "../include/syscall.h"
-#ifdef HAVE_LANDLOCK
-#include "../include/tinyLL.h"
-#endif
 #include <dirent.h>
 #include <sys/stat.h>
 

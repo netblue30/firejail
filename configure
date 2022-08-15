@@ -3355,7 +3355,7 @@ fi
 if test "x$enable_landlock" = "xyes"; then :
 
 	HAVE_LANDLOCK="-DHAVE_LANDLOCK"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -ltinyll"
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS"
 
 fi
 

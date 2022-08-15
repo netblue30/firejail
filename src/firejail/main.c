@@ -23,9 +23,6 @@
 #include "../include/gcov_wrapper.h"
 #include "../include/syscall.h"
 #include "../include/seccomp.h"
-#ifdef HAVE_LANDLOCK
-#include "../include/tinyLL.h"
-#endif
 #define _GNU_SOURCE
 #include <sys/utsname.h>
 #include <sched.h>

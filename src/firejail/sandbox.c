@@ -21,9 +21,6 @@
 #include "firejail.h"
 #include "../include/gcov_wrapper.h"
 #include "../include/seccomp.h"
-#ifdef HAVE_LANDLOCK
-#include "../include/tinyLL.h"
-#endif
 #include <sys/mman.h>
 #include <sys/mount.h>
 #include <sys/wait.h>

@@ -105,10 +105,12 @@ _firejail_args=(
     '--keep-dev-shm[/dev/shm directory is untouched (even with --private-dev)]'
     '--keep-fd[inherit open file descriptors to sandbox]: :'
     '--keep-var-tmp[/var/tmp directory is untouched]'
-    '--landlock-read=-[Landlock read access rule]: :_files'
-    '--landlock-write=-[Landlock write access rule]: :_files'
-    "--landlock-restricted-write=-[Landlock write access rule that doesn't include creation of FIFO pipes, sockets and block devices]: :_files"
-    '--landlock-execute=-[Landlock execution-permitting rule]: :_files'
+    '--landlock[Basic Landlock ruleset]'
+    '--landlock.proc=-[Access to the /proc directory]: :(no ro rw)'
+    '--landlock.read=-[Landlock read access rule]: :_files'
+    '--landlock.write=-[Landlock write access rule]: :_files'
+    "--landlock.special=-[Landlock access rule for creation of FIFO pipes, sockets and block devices]: :_files"
+    '--landlock.execute=-[Landlock execution-permitting rule]: :_files'
     '--machine-id[spoof /etc/machine-id with a random id]'
     '--memory-deny-write-execute[seccomp filter to block attempts to create memory mappings that are both writable and executable]'
     '*--mkdir=-[create a directory]:'

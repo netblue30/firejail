@@ -499,23 +499,31 @@ Blacklist all Linux capabilities.
 Whitelist given Linux capabilities.
 #ifdef HAVE_LANDLOCK
 .TP
-\fBlandlock-read path
-Create a Landlock ruleset (if it doesn't already exist) and add a read access rule for path. Note: if a process doesn't have CAP_SYS_ADMIN and the "No New Privileges" restriction is not enabled, the Landlock self-restriction will fail and Firejail will exit with an error.
+\fBlandlock
+Create a Landlock ruleset (if it doesn't already exist) and add basic access rules to it.
+.br
+.TP
+\fBlandlock.proc no|ro|rw
+Add an access rule for /proc directory (read-only if set to \fBro\fR and read-write if set to \fBrw\fR). The access rule for /proc is added after this directory is set up in the sandbox. Access rules for /proc set up with other Landlock-related profile options have no effect.
+.br
+.TP
+\fBlandlock.read path
+Create a Landlock ruleset (if it doesn't already exist) and add a read access rule for path.
 .br
 
 .TP
-\fBlandlock-write path
-Create a Landlock ruleset (if it doesn't already exist) and add a write access rule for path. Note: if a process doesn't have CAP_SYS_ADMIN and the "No New Privileges" restriction is not enabled, the Landlock self-restriction will fail and Firejail will exit with an error.
+\fBlandlock.write path
+Create a Landlock ruleset (if it doesn't already exist) and add a write access rule for path.
 .br
 
 .TP
-\fBlandlock-restricted-write path
-Create a Landlock ruleset (if it doesn't already exist) and add a write access rule for path. This type of write access doesn't include the permission to create Unix domain sockets, FIFO pipes and block devices. Note: if a process doesn't have CAP_SYS_ADMIN and the "No New Privileges" restriction is not enabled, the Landlock self-restriction will fail and Firejail will exit with an error.
+\fBlandlock.special path
+Create a Landlock ruleset (if it doesn't already exist) and add an access rule for creation of FIFO pipes, Unix-domain sockets and block devices beneath given path.
 .br
 
 .TP
-\fBlandlock-execute path
-Create a Landlock ruleset (if it doesn't already exist) and add an execution permission rule for path. Note: if a process doesn't have CAP_SYS_ADMIN and the "No New Privileges" restriction is not enabled, the Landlock self-restriction will fail and Firejail will exit with an error.
+\fBlandlock.execute path
+Create a Landlock ruleset (if it doesn't already exist) and add an execution permission rule for path.
 .br
 #endif
 .TP

@@ -42,19 +42,19 @@ _firejail()
             _filedir -d
             return 0
             ;;
-        --landlock-read)
+        --landlock.read)
             _filedir
             return 0
             ;;
-        --landlock-write)
+        --landlock.write)
             _filedir
             return 0
             ;;
-        --landlock-restricted-write)
+        --landlock.special)
             _filedir
             return 0
             ;;
-        --landlock-execute)
+        --landlock.execute)
             _filedir
             return 0
             ;;

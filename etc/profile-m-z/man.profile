@@ -56,7 +56,7 @@ disable-mnt
 #private-bin apropos,bash,cat,catman,col,gpreconv,groff,grotty,gunzip,gzip,less,man,most,nroff,preconv,sed,sh,tbl,tr,troff,whatis,which,xtotroff,zcat,zsoelim
 private-cache
 private-dev
-private-etc alternatives,fonts,groff,ld.so.cache,ld.so.preload,locale,locale.alias,locale.conf,man_db.conf,manpath.config,selinux,sysless,xdg
+private-etc alternatives,fonts,groff,group,ld.so.cache,ld.so.preload,locale,locale.alias,locale.conf,login.defs,man_db.conf,manpath.config,passwd,selinux,sysless,xdg
 #private-tmp
 
 dbus-user none

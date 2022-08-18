@@ -4,7 +4,8 @@ firejail (0.9.71) baseline; urgency=low
     a seccomp filter for both 64 and 32 bit architectures
   * feature: On failing to remount a fuse filesystem, give warning instead of
     erroring out (#5240 #5242)
-  * feature: support for custom AppArmor profiles (--apparmor=) (#5274)
+  * feature: support for custom AppArmor profiles (--apparmor=) (#5274 #5316
+    #5317)
   * build: deduplicate configure-time vars into new config files (#5140 #5284)
   * build: fix file mode of shell scripts (644 -> 755) (#5206)
   * build: reduce autoconf input files from 32 to 2 (#5219)

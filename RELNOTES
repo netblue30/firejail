@@ -1,9 +1,9 @@
 firejail (0.9.71) baseline; urgency=low
   * work in progress
-  * feature: restrict namespaces (--restrict-namespaces) implemented as
-    a seccomp filter for both 64 and 32 bit architectures (#4939 #5259)
   * feature: On failing to remount a fuse filesystem, give warning instead of
     erroring out (#5240 #5242)
+  * feature: restrict namespaces (--restrict-namespaces) implemented as
+    a seccomp filter for both 64 and 32 bit architectures (#4939 #5259)
   * feature: support for custom AppArmor profiles (--apparmor=) (#5274 #5316
     #5317)
   * build: deduplicate configure-time vars into new config files (#5140 #5284)

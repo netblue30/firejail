@@ -156,7 +156,10 @@ protocol unix,inet,inet6,netlink
 # seccomp sometimes causes issues (see #2951, #3267).
 # Add 'ignore seccomp' to your steam.local if you experience this.
 # mount, name_to_handle_at, pivot_root and umount2 are used by Proton >= 5.13
+# (see #4366).
 seccomp !chroot,!mount,!name_to_handle_at,!pivot_root,!ptrace,!umount2
+# process_vm_readv is used by Proton > 7.2 (see #5185).
+seccomp.32 !process_vm_readv
 # tracelog breaks integrated browser
 #tracelog
 

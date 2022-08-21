@@ -149,6 +149,7 @@ blacklist ${HOME}/.cache/ksmserver-logout-greeter
 blacklist ${HOME}/.cache/ksplashqml
 blacklist ${HOME}/.cache/kube
 blacklist ${HOME}/.cache/kwin
+blacklist ${HOME}/.cache/lbry-viewer
 blacklist ${HOME}/.cache/libgweather
 blacklist ${HOME}/.cache/librewolf
 blacklist ${HOME}/.cache/liferea
@@ -502,6 +503,7 @@ blacklist ${HOME}/.config/ktorrentrc
 blacklist ${HOME}/.config/ktouch2rc
 blacklist ${HOME}/.config/kube
 blacklist ${HOME}/.config/kwriterc
+blacklist ${HOME}/.config/lbry-viewer
 blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/liferea

@@ -943,7 +943,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
-	
+
 	if (strncmp(ptr, "apparmor ", 9) == 0) {
 #ifdef HAVE_APPARMOR
 		arg_apparmor = 1;

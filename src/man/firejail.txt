@@ -2922,8 +2922,10 @@ all directories in /usr.
 .br
 
 .br
-Symbolic link handling: with the exception of user home, both the link and the real file should be in
-the same top directory. For user home, both the link and the real file should be owned by the user.
+Symbolic link handling: With the exception of the user home directory, both the
+link and the real file should be in the same top directory.
+For symbolic links in the user home directory, both the link and the real file
+should be owned by the user.
 .br
 
 .br

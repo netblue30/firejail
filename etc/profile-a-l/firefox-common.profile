@@ -34,7 +34,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-# machine-id breaks pulse audio; add it to your firefox-common.local if sound is not required.
+# machine-id breaks pulse audio; add it to your firefox-common.local if pulse audio is not being used.
 #machine-id
 netfilter
 nodvd
@@ -48,8 +48,8 @@ notv
 protocol unix,inet,inet6,netlink
 # The below seccomp configuration still permits chroot syscall. See https://github.com/netblue30/firejail/issues/2506 for possible workarounds.
 seccomp !chroot
-# Disable tracelog, it breaks or causes major issues with many firefox based browsers, see https://github.com/netblue30/firejail/issues/1930.
-#tracelog
+# tracelog, it breaks or causes major issues with older (< v100) firefox based browsers, see https://github.com/netblue30/firejail/issues/1930.
+tracelog
 
 disable-mnt
 ?BROWSER_DISABLE_U2F: private-dev
@@ -65,4 +65,5 @@ blacklist ${PATH}/wget2
 # 'dbus-user none' breaks various desktop integration features like global menus, native notifications,
 # Gnome connector, KDE connect and power management on KDE Plasma.
 dbus-user none
+# comment next line to use bluez-alsa.
 dbus-system none

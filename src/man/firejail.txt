@@ -191,6 +191,13 @@ Blacklist directory or file. File globbing is supported, see \fBFILE GLOBBING\fR
 .br
 
 .br
+Symbolic link handling: Blacklisting a path that is a symbolic link will also
+blacklist the path that it points to.
+For example, if ~/foo is blacklisted and it points to /foo, then /foo will also
+be blacklisted.
+.br
+
+.br
 Example:
 .br
 $ firejail \-\-blacklist=/sbin \-\-blacklist=/usr/sbin
@@ -2922,8 +2929,12 @@ all directories in /usr.
 .br
 
 .br
-Symbolic link handling: With the exception of the user home directory, both the
-link and the real file should be in the same top directory.
+Symbolic link handling: Whitelisting a path that is a symbolic link will also
+whitelist the path that it points to.
+For example, if ~/foo is whitelisted and it points to ~/bar, then ~/bar will
+also be whitelisted.
+Restrictions: With the exception of the user home directory, both the link and
+the real file should be in the same top directory.
 For symbolic links in the user home directory, both the link and the real file
 should be owned by the user.
 .br

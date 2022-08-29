@@ -22,9 +22,6 @@
 #include "../include/common.h"
 #include "../include/euid_common.h"
 #include "../include/rundefs.h"
-#ifdef HAVE_LANDLOCK
-#include <linux/landlock.h>
-#endif
 #include <linux/limits.h> // Note: Plain limits.h may break ARG_MAX (see #4583)
 #include <stdarg.h>
 #include <sys/stat.h>
@@ -32,25 +29,7 @@
 // debug restricted shell
 //#define DEBUG_RESTRICTED_SHELL
 
-#ifdef HAVE_LANDLOCK
 
-extern int landlock_create_ruleset(struct landlock_ruleset_attr *rsattr,size_t size,__u32 flags);
-
-extern int landlock_add_rule(int fd,enum landlock_rule_type t,void *attr,__u32 flags);
-
-extern int landlock_restrict_self(int fd,__u32 flags);
-
-extern int create_full_ruleset();
-
-extern int add_read_access_rule_by_path(int rset_fd,char *allowed_path);
-
-extern int add_write_access_rule_by_path(int rset_fd,char *allowed_path);
-
-extern int add_create_special_rule_by_path(int rset_fd,char *allowed_path);
-
-extern int add_execute_rule_by_path(int rset_fd,char *allowed_path);
-
-#endif
 
 // profiles
 #define DEFAULT_USER_PROFILE	"default"
@@ -306,11 +285,6 @@ extern int arg_seccomp;	// enable default seccomp filter
 extern int arg_seccomp32;	// enable default seccomp filter for 32 bit arch
 extern int arg_seccomp_postexec;	// need postexec ld.preload library?
 extern int arg_seccomp_block_secondary;	// block any secondary architectures
-
-#ifdef HAVE_LANDLOCK
-extern int arg_landlock; // Landlock ruleset file descriptor
-extern int arg_landlock_proc;				// Landlock rule for accessing /proc (0 for no access, 1 for read-only and 2 for read-write)
-#endif
 
 extern int arg_caps_default_filter;	// enable default capabilities filter
 extern int arg_caps_drop;		// drop list

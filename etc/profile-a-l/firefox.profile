@@ -17,6 +17,7 @@ include globals.local
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
 noblacklist ${RUNUSER}/*firefox*
+noblacklist ${RUNUSER}/psd/*firefox*
 
 blacklist /usr/libexec
 

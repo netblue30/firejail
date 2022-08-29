@@ -1,5 +1,5 @@
 # Firejail profile for lbry-viewer
-# Description:CLI viewer for searching and playing videos from LBRY, with the Librarian frontend
+# Description:CLI for searching and playing videos from LBRY, with the Librarian frontend
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

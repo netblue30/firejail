@@ -25,7 +25,6 @@ mkdir ${HOME}/.cache/mozilla/firefox
 mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.mozilla
-whitelist ${RUNUSER}/psd/*firefox*
 
 # Add one of the following whitelist options to your firefox.local to enable KeePassXC Plugin support.
 # NOTE: start KeePassXC before Firefox and keep it open to allow communication between them.
@@ -39,6 +38,7 @@ whitelist /usr/share/gtk-doc/html
 whitelist /usr/share/mozilla
 whitelist /usr/share/webext
 whitelist ${RUNUSER}/*firefox*
+whitelist ${RUNUSER}/psd/*firefox*
 include whitelist-usr-share-common.inc
 
 # firefox requires a shell to launch on Arch - add the next line to your firefox.local to enable private-bin.

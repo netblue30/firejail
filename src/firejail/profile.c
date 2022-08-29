@@ -372,7 +372,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "tracelog") == 0) {
-		arg_tracelog = 1;
+		if (checkcfg(CFG_TRACELOG))
+			arg_tracelog = 1;
+		// no warning, we have tracelog in over 400 profiles
 		return 0;
 	}
 	else if (strcmp(ptr, "private") == 0) {

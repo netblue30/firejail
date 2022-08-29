@@ -189,7 +189,7 @@ Milestone page: https://github.com/netblue30/firejail/milestone/1
   * modif: disabled chroot by default in /etc/firejail/firejail.config (#5190)
   * modif: shell none set as default (#5190)
   * modif: removed --shell= (#5190)
-  * modif: private-lib disabled by defautl in /etc/firejail/firejail.config (#5190)
+  * modif: private-lib disabled by default in /etc/firejail/firejail.config (#5190)
 
 ### Restrict namespaces
 

@@ -182,6 +182,15 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 Milestone page: https://github.com/netblue30/firejail/milestone/1
 
+### Modified functionality
+
+  * modif:  removed cgroups commands (#5190)
+  * modif: changed --disable-firetunnel into --enable-firetunnel in configure.ac (#5190)
+  * modif: disabled chroot by default in /etc/firejail/firejail.config (#5190)
+  * modif: shell none set as default (#5190)
+  * modif: removed --shell= (#5190)
+  * modif: private-lib disabled by defautl in /etc/firejail/firejail.config (#5190)
+
 ### Restrict namespaces
 
 `````

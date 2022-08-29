@@ -42,6 +42,22 @@ _firejail()
             _filedir -d
             return 0
             ;;
+        --landlock.read)
+            _filedir
+            return 0
+            ;;
+        --landlock.write)
+            _filedir
+            return 0
+            ;;
+        --landlock.special)
+            _filedir
+            return 0
+            ;;
+        --landlock.execute)
+            _filedir
+            return 0
+            ;;
         --tmpfs)
             _filedir
             return 0

@@ -149,6 +149,7 @@ blacklist ${HOME}/.cache/ksmserver-logout-greeter
 blacklist ${HOME}/.cache/ksplashqml
 blacklist ${HOME}/.cache/kube
 blacklist ${HOME}/.cache/kwin
+blacklist ${HOME}/.cache/lbry-viewer
 blacklist ${HOME}/.cache/libgweather
 blacklist ${HOME}/.cache/librewolf
 blacklist ${HOME}/.cache/liferea
@@ -503,6 +504,7 @@ blacklist ${HOME}/.config/ktorrentrc
 blacklist ${HOME}/.config/ktouch2rc
 blacklist ${HOME}/.config/kube
 blacklist ${HOME}/.config/kwriterc
+blacklist ${HOME}/.config/lbry-viewer
 blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/liferea
@@ -622,6 +624,7 @@ blacklist ${HOME}/.config/tox
 blacklist ${HOME}/.config/transgui
 blacklist ${HOME}/.config/transmission
 blacklist ${HOME}/.config/truecraft
+blacklist ${HOME}/.config/tuir
 blacklist ${HOME}/.config/tuta_integration
 blacklist ${HOME}/.config/tutanota-desktop
 blacklist ${HOME}/.config/tvbrowser
@@ -995,6 +998,7 @@ blacklist ${HOME}/.local/share/telepathy
 blacklist ${HOME}/.local/share/terasology
 blacklist ${HOME}/.local/share/torbrowser
 blacklist ${HOME}/.local/share/totem
+blacklist ${HOME}/.local/share/tuir
 blacklist ${HOME}/.local/share/uzbl
 blacklist ${HOME}/.local/share/vlc
 blacklist ${HOME}/.local/share/vpltd

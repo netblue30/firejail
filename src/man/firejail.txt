@@ -1151,6 +1151,41 @@ Example:
 .br
 $ firejail --keep-var-tmp
 
+#ifdef HAVE_LANDLOCK
+.TP
+\fB\-\-landlock
+Create a Landlock ruleset (if it doesn't already exist) and add basic access rules to it. See \fBLANDLOCK\fR section for more information.
+.br
+.TP
+\fB\-\-landlock.proc=no|ro|rw
+Add an access rule for /proc directory (read-only if set to \fBro\fR and read-write if set to \fBrw\fR). The access rule for /proc is added after this directory is set up in the sandbox. Access rules for /proc set up with other Landlock-related command-line options have no effect.
+.br
+.TP
+\fB\-\-landlock.read=path
+Create a Landlock ruleset (if it doesn't already exist) and add a read access rule for path.
+.br
+
+.TP
+\fB\-\-landlock.write=path
+Create a Landlock ruleset (if it doesn't already exist) and add a write access rule for path. 
+.br
+
+.TP
+\fB\-\-landlock.special=path
+Create a Landlock ruleset (if it doesn't already exist) and add a permission rule to create FIFO pipes, Unix domain sockets and block devices beneath given path.
+.br
+
+.TP
+\fB\-\-landlock.execute=path
+Create a Landlock ruleset (if it doesn't already exist) and add an execution permission rule for path.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-landlock.read=/ \-\-landlock.write=/home \-\-landlock.execute=/usr
+#endif
+
 .TP
 \fB\-\-list
 List all sandboxes, see \fBMONITORING\fR section for more details.
@@ -1268,6 +1303,7 @@ $ firejail --list
 .br
 1312:netblue:browser-1312:firejail --name=browser --private firefox --no-remote
 .br
+
 #ifdef HAVE_NETWORK
 .TP
 \fB\-\-net=bridge_interface
@@ -3201,7 +3237,34 @@ To enable AppArmor confinement on top of your current Firejail security features
 .br
 $ firejail --apparmor firefox
 #endif
+#ifdef HAVE_LANDLOCK
+.SH LANDLOCK
+.TP
+Landlock is a Linux security module first introduced in the 5.13 version of Linux kernel. It allows unprivileged processes to restrict their access to the filesystem. Once imposed, these restrictions can never be removed, and all child processes created by a Landlock-restricted processes inherit these restrictions. Firejail supports Landlock as an additional sandboxing feature. It can be used to ensure that a sandboxed application can only access files and directories that it was explicitly allowed to access. Firejail supports populating the ruleset with both basic set of rules and with custom set of rules. Basic set of rules allows read-only access to /bin, /dev, /etc, /lib, /opt, /proc, /usr and /var, read-write access to the home directory, and allows execution of binaries located in /bin, /opt and /usr.
+.br
 
+.TP
+Important notes:
+.br
+
+.br
+- A process can install a Landlock ruleset only if it has either \fBCAP_SYS_ADMIN\fR in its effective capability set, or the "No New Privileges" restriction enabled. Because of this, enabling the Landlock feature will also cause Firejail to enable the "No New Privileges" restriction, regardless of the profile or the \fB\-\-no\-new\-privs\fR command line option.
+.br
+
+.br
+- Access to the /proc directory is managed through the \fB\-\-landlock.proc\fR command line option.
+
+.br
+- Access to the /etc directory is automatically allowed. To override this, use the \fB\-\-writable\-etc\fR command line option. You can also use the \fB\-\-private\-etc\fR option to restrict access to the /etc directory.
+.br
+
+.TP
+To enable Landlock self-restriction on top of your current Firejail security features, pass \fB\-\-landlock\fR flag to Firejail command line. You can also use \fB\-\-landlock.read\fR, \fB\-\-landlock.write\fR, \fB\-\-landlock.special\fR and \fB\-\-landlock.execute\fR options together with \fB\-\-landlock\fR or instead of it. Example:
+.br
+
+.br
+$ firejail --landlock --landlock.read=/media --landlock.proc=ro mc
+#endif
 .SH DESKTOP INTEGRATION
 A symbolic link to /usr/bin/firejail under the name of a program, will start the program in Firejail sandbox.
 The symbolic link should be placed in the first $PATH position. On most systems, a good place

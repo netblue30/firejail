@@ -348,7 +348,8 @@ errout:
 
 
 static void exit_err_feature(const char *feature) {
-	fprintf(stderr, "Error: %s feature is disabled in Firejail configuration file\n", feature);
+	fprintf(stderr, "Error: %s feature is disabled in Firejail configuration file %s\n",
+		feature, SYSCONFDIR "/firejail.config");
 	exit(1);
 }
 
@@ -1570,8 +1571,12 @@ int main(int argc, char **argv, char **envp) {
 				arg_tracefile = tmp;
 			}
 		}
-		else if (strcmp(argv[i], "--tracelog") == 0)
-			arg_tracelog = 1;
+		else if (strcmp(argv[i], "--tracelog") == 0) {
+			if (checkcfg(CFG_TRACELOG))
+				arg_tracelog = 1;
+			else
+				exit_err_feature("tracelog");
+		}
 		else if (strncmp(argv[i], "--rlimit-cpu=", 13) == 0) {
 			check_unsigned(argv[i] + 13, "Error: invalid rlimit");
 			sscanf(argv[i] + 13, "%llu", &cfg.rlimit_cpu);

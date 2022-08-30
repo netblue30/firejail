@@ -214,7 +214,7 @@ Milestone page: https://github.com/netblue30/firejail/milestone/1
               $ firejail --restrict-namespaces=user,net
 `````
 
-#### Support for custom AppArmor profiles
+### Support for custom AppArmor profiles
 
 `````
       --apparmor
@@ -238,30 +238,30 @@ No include .local found in /etc/firejail/noprofile.profile
 Warning: multiple caps in /etc/firejail/transmission-daemon.profile
 
 Stats:
-    profiles			1191
-    include local profile	1190   (include profile-name.local)
-    include globals		1164   (include globals.local)
-    blacklist ~/.ssh		1063   (include disable-common.inc)
-    seccomp			1082
-    capabilities		1185
-    noexec			1070   (include disable-exec.inc)
-    noroot			991
-    memory-deny-write-execute	267
-    apparmor			710
-    private-bin			689
-    private-dev			1041
-    private-etc			539
+    profiles			1196
+    include local profile	1195   (include profile-name.local)
+    include globals		1169   (include globals.local)
+    blacklist ~/.ssh		1067   (include disable-common.inc)
+    seccomp			1087
+    capabilities		1190
+    noexec			1075   (include disable-exec.inc)
+    noroot			995
+    memory-deny-write-execute	269
+    apparmor			713
+    private-bin			695
+    private-dev			1045
+    private-etc			542
     private-lib			70
-    private-tmp			915
-    whitelist home directory	573
-    whitelist var		855   (include whitelist-var-common.inc)
-    whitelist run/user		1159   (include whitelist-runuser-common.inc
+    private-tmp			918
+    whitelist home directory	575
+    whitelist var		858   (include whitelist-var-common.inc)
+    whitelist run/user		1164   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		628   (include whitelist-usr-share-common.inc
-    net none			403
-    dbus-user none 		673
+    whitelist usr/share		630   (include whitelist-usr-share-common.inc
+    net none			404
+    dbus-user none 		677
     dbus-user filter 		123
-    dbus-system none 		833
+    dbus-system none 		837
     dbus-system filter 		12
 ```
 

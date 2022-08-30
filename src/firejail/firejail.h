@@ -32,6 +32,25 @@
 // debug restricted shell
 //#define DEBUG_RESTRICTED_SHELL
 
+#ifdef HAVE_LANDLOCK
+
+extern int landlock_create_ruleset(struct landlock_ruleset_attr *rsattr,size_t size,__u32 flags);
+
+extern int landlock_add_rule(int fd,enum landlock_rule_type t,void *attr,__u32 flags);
+
+extern int landlock_restrict_self(int fd,__u32 flags);
+
+extern int create_full_ruleset();
+
+extern int add_read_access_rule_by_path(int rset_fd,char *allowed_path);
+
+extern int add_write_access_rule_by_path(int rset_fd,char *allowed_path);
+
+extern int add_create_special_rule_by_path(int rset_fd,char *allowed_path);
+
+extern int add_execute_rule_by_path(int rset_fd,char *allowed_path);
+
+#endif
 
 // profiles
 #define DEFAULT_USER_PROFILE	"default"
@@ -838,7 +857,6 @@ enum {
 	// CFG_FILE_COPY_LIMIT - file copy limit handled using setenv/getenv
 	CFG_ALLOW_TRAY,
 	CFG_SECCOMP_LOG,
-	CFG_TRACELOG,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;
@@ -944,17 +962,5 @@ void run_ids(int argc, char **argv);
 
 // oom.c
 void oom_set(const char *oom_string);
-
-// landlock.c
-#ifdef HAVE_LANDLOCK
-int landlock_create_ruleset(struct landlock_ruleset_attr *rsattr,size_t size,__u32 flags);
-int landlock_add_rule(int fd,enum landlock_rule_type t,void *attr,__u32 flags);
-int landlock_restrict_self(int fd,__u32 flags);
-int create_full_ruleset();
-int add_read_access_rule_by_path(int rset_fd,char *allowed_path);
-int add_write_access_rule_by_path(int rset_fd,char *allowed_path);
-int add_create_special_rule_by_path(int rset_fd,char *allowed_path);
-int add_execute_rule_by_path(int rset_fd,char *allowed_path);
-#endif
 
 #endif

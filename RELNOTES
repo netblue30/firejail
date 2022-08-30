@@ -6,9 +6,9 @@ firejail (0.9.71) baseline; urgency=low
   * modif: disabled chroot by default in /etc/firejail/firejail.config (#5190)
   * modif: shell none set as default (#5190)
   * modif: removed --shell= (#5190)
-  * modif: private-lib disabled by defautl in /etc/firejail/firejail.config
+  * modif: private-lib disabled by default in /etc/firejail/firejail.config
     (#5190)
-  * modif: tracelog disabled by defautl in /etc/firejail/firejail.config
+  * modif: tracelog disabled by default in /etc/firejail/firejail.config
     (#5190)
   * feature: On failing to remount a fuse filesystem, give warning instead of
     erroring out (#5240 #5242)

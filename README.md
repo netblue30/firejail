@@ -214,7 +214,7 @@ Milestone page: https://github.com/netblue30/firejail/milestone/1
               $ firejail --restrict-namespaces=user,net
 `````
 
-### Support for custom AppArmor profiles
+#### Support for custom AppArmor profiles
 
 `````
       --apparmor
@@ -228,50 +228,6 @@ Milestone page: https://github.com/netblue30/firejail/milestone/1
               kernel.  For more information, please see APPARMOR  section  be‐
 `````
 
-### Landlock support - EXPERIMENTAL
-For the next release (0.9.72), landlock support is experimental. It is disabled in the normal build
-or in the executable archives we provide. It will be "officially" released
-in 0.9.74, sometime early next year. For now, use --enable-landlock durring software compile:
-`````
-$ ./configure --enable-landlock
-`````
-The functionality is segragated with ifdefs in the code, at times it might not even compile!
-Work in progress, the interface described in the man page below could change.
-`````
-       --landlock
-              Create a Landlock ruleset (if it doesn't already exist) and  add
-              basic access rules to it. See LANDLOCK section for more informa‐
-              tion.
-
-       --landlock.proc=no|ro|rw
-              Add an access rule for /proc directory (read-only if set  to  ro
-              and read-write if set to rw). The access rule for /proc is added
-              after this directory is set up in the sandbox. Access rules  for
-              /proc  set  up  with other Landlock-related command-line options
-              have no effect.
-
-       --landlock.read=path
-              Create a Landlock ruleset (if it doesn't already exist) and  add
-              a read access rule for path.
-
-       --landlock.write=path
-              Create  a Landlock ruleset (if it doesn't already exist) and add
-              a write access rule for path.
-
-       --landlock.special=path
-              Create a Landlock ruleset (if it doesn't already exist) and  add
-              a  permission rule to create FIFO pipes, Unix domain sockets and
-              block devices beneath given path.
-
-       --landlock.execute=path
-              Create a Landlock ruleset (if it doesn't already exist) and  add
-              an execution permission rule for path.
-
-              Example:
-              $   firejail  --landlock.read=/  --landlock.write=/home  --land‐
-              lock.execute=/usr
-`````
-
 ### Profile Statistics
 
 A small tool to print profile statistics. Compile and install as usual. The tool is installed in /usr/lib/firejail directory.
@@ -282,30 +238,30 @@ No include .local found in /etc/firejail/noprofile.profile
 Warning: multiple caps in /etc/firejail/transmission-daemon.profile
 
 Stats:
-    profiles			1196
-    include local profile	1195   (include profile-name.local)
-    include globals		1169   (include globals.local)
-    blacklist ~/.ssh		1067   (include disable-common.inc)
-    seccomp			1087
-    capabilities		1190
-    noexec			1075   (include disable-exec.inc)
-    noroot			995
-    memory-deny-write-execute	269
-    apparmor			713
-    private-bin			695
-    private-dev			1045
-    private-etc			542
+    profiles			1191
+    include local profile	1190   (include profile-name.local)
+    include globals		1164   (include globals.local)
+    blacklist ~/.ssh		1063   (include disable-common.inc)
+    seccomp			1082
+    capabilities		1185
+    noexec			1070   (include disable-exec.inc)
+    noroot			991
+    memory-deny-write-execute	267
+    apparmor			710
+    private-bin			689
+    private-dev			1041
+    private-etc			539
     private-lib			70
-    private-tmp			918
-    whitelist home directory	575
-    whitelist var		858   (include whitelist-var-common.inc)
-    whitelist run/user		1164   (include whitelist-runuser-common.inc
+    private-tmp			915
+    whitelist home directory	573
+    whitelist var		855   (include whitelist-var-common.inc)
+    whitelist run/user		1159   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		630   (include whitelist-usr-share-common.inc
-    net none			404
-    dbus-user none 		677
+    whitelist usr/share		628   (include whitelist-usr-share-common.inc
+    net none			403
+    dbus-user none 		673
     dbus-user filter 		123
-    dbus-system none 		837
+    dbus-system none 		833
     dbus-system filter 		12
 ```
 

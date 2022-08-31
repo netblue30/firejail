@@ -231,7 +231,7 @@ Milestone page: https://github.com/netblue30/firejail/milestone/1
 ### Landlock support - EXPERIMENTAL
 For the next release (0.9.72), landlock support is experimental. It is disabled in the normal build
 or in the executable archives we provide. It will be "officially" released
-in 0.9.74, sometime early next year. For now, use --enable-landlock during software compile:
+in 0.9.74, sometime early next year. For now, use --enable-landlock durring software compile:
 `````
 $ ./configure --enable-landlock
 `````

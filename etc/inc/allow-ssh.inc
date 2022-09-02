@@ -5,6 +5,7 @@ include allow-ssh.local
 noblacklist ${HOME}/.ssh
 noblacklist /etc/ssh
 noblacklist /etc/ssh/ssh_config
+noblacklist /etc/ssh/ssh_config.d
 noblacklist ${PATH}/ssh
 noblacklist /tmp/ssh-*
 # Arch Linux and derivatives

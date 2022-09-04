@@ -235,40 +235,40 @@ in 0.9.74, sometime early next year. For now, use --enable-landlock during softw
 `````
 $ ./configure --enable-landlock
 `````
-The functionality is segragated with ifdefs in the code, at times it might not even compile!
+The functionality is segregated with ifdefs in the code, at times it might not even compile!
 Work in progress, the interface described in the man page below could change.
 `````
        --landlock
-              Create a Landlock ruleset (if it doesn't already exist) and  add
+              Create a Landlock ruleset (if it doesn't already exist) and add
               basic access rules to it. See LANDLOCK section for more informa‐
               tion.
 
        --landlock.proc=no|ro|rw
-              Add an access rule for /proc directory (read-only if set  to  ro
+              Add an access rule for /proc directory (read-only if set to ro
               and read-write if set to rw). The access rule for /proc is added
-              after this directory is set up in the sandbox. Access rules  for
-              /proc  set  up  with other Landlock-related command-line options
+              after this directory is set up in the sandbox. Access rules for
+              /proc set up with other Landlock-related command-line options
               have no effect.
 
        --landlock.read=path
-              Create a Landlock ruleset (if it doesn't already exist) and  add
+              Create a Landlock ruleset (if it doesn't already exist) and add
               a read access rule for path.
 
        --landlock.write=path
-              Create  a Landlock ruleset (if it doesn't already exist) and add
+              Create a Landlock ruleset (if it doesn't already exist) and add
               a write access rule for path.
 
        --landlock.special=path
-              Create a Landlock ruleset (if it doesn't already exist) and  add
-              a  permission rule to create FIFO pipes, Unix domain sockets and
+              Create a Landlock ruleset (if it doesn't already exist) and add
+              a permission rule to create FIFO pipes, Unix domain sockets and
               block devices beneath given path.
 
        --landlock.execute=path
-              Create a Landlock ruleset (if it doesn't already exist) and  add
+              Create a Landlock ruleset (if it doesn't already exist) and add
               an execution permission rule for path.
 
               Example:
-              $   firejail  --landlock.read=/  --landlock.write=/home  --land‐
+              $ firejail --landlock.read=/ --landlock.write=/home --land‐
               lock.execute=/usr
 
 LANDLOCK

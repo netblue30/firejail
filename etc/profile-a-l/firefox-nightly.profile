@@ -6,5 +6,8 @@ include firefox-nightly.local
 # added by included profile
 #include globals.local
 
+# Edition-specific D-Bus filter
+dbus-user.own org.mozilla.firefoxnightly.*
+
 # Redirect
 include firefox.profile

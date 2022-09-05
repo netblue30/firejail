@@ -7,7 +7,8 @@ include firefox-developer-edition.local
 # added by included profile
 #include globals.local
 
-# Edition-specific DBus filter
+# Edition-specific D-Bus filters
+dbus-user.own org.mozilla.FirefoxDeveloperEdition.*
 dbus-user.own org.mozilla.firefoxdeveloperedition.*
 
 # Redirect

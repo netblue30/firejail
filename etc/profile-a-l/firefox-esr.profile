@@ -8,7 +8,8 @@ include firefox-esr.local
 
 whitelist /usr/share/firefox-esr
 
-# Edition-specific D-Bus filter
+# Edition-specific D-Bus filters
+dbus-user.own org.mozilla.Firefox_Esr.*
 dbus-user.own org.mozilla.firefox_esr.*
 
 # Redirect

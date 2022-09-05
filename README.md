@@ -43,6 +43,8 @@ alt="Deep Dive" width="240" height="142" border="10" /><br/>Deep Dive</a>
 
 Project webpage: https://firejail.wordpress.com/
 
+IRC: https://web.libera.chat/#firejail
+
 Download and Installation: https://firejail.wordpress.com/download-2/
 
 Features: https://firejail.wordpress.com/features-3/

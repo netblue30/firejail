@@ -3436,7 +3436,7 @@ Important notes:
 Privileges" restriction enabled.
 Because of this, enabling the Landlock feature will also cause Firejail to
 enable the "No New Privileges" restriction, regardless of the profile or the
-\fB\-\-no\-new\-privs\fR command line option.
+\fB\-\-nonewprivs\fR command line option.
 .PP
 - Access to the /proc directory is managed through the \fB\-\-landlock.proc\fR
 command line option.

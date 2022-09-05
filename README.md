@@ -270,46 +270,6 @@ Work in progress, the interface described in the man page below could change.
               Example:
               $   firejail  --landlock.read=/  --landlock.write=/home  --land‐
               lock.execute=/usr
-
-LANDLOCK
-       Landlock is a Linux security module first introduced in the  5.13  ver‐
-       sion  of  Linux  kernel.  It  allows unprivileged processes to restrict
-       their access to the filesystem. Once imposed,  these  restrictions  can
-       never  be  removed,  and  all child processes created by a Landlock-re‐
-       stricted processes inherit these restrictions. Firejail supports  Land‐
-       lock as an additional sandboxing feature. It can be used to ensure that
-       a sandboxed application can only access files and directories  that  it
-       was  explicitly  allowed  to  access.  Firejail supports populating the
-       ruleset with both basic set of rules and with custom set of rules.  Ba‐
-       sic  set  of  rules  allows read-only access to /bin, /dev, /etc, /lib,
-       /opt, /proc, /usr and /var, read-write access to  the  home  directory,
-       and allows execution of binaries located in /bin, /opt and /usr.
-
-       Important notes:
-
-              - A process can install a Landlock ruleset only if it has either
-              CAP_SYS_ADMIN in its effective capability set, or  the  "No  New
-              Privileges"  restriction  enabled. Because of this, enabling the
-              Landlock feature will also cause Firejail to enable the "No  New
-              Privileges"  restriction,  regardless  of  the  profile  or  the
-              --no-new-privs command line option.
-
-              - Access to the /proc directory is managed through  the  --land‐
-              lock.proc command line option.
-
-              -  Access  to  the  /etc  directory is automatically allowed. To
-              override this, use the --writable-etc command line  option.  You
-              can  also use the --private-etc option to restrict access to the
-              /etc directory.
-
-       To enable Landlock self-restriction on top of your current Firejail se‐
-       curity features, pass --landlock flag to Firejail command line. You can
-       also  use  --landlock.read,  --landlock.write,  --landlock.special  and
-       --landlock.execute  options  together with --landlock or instead of it.
-       Example:
-
-              $ firejail --landlock --landlock.read=/media  --landlock.proc=ro
-              mc
 `````
 
 ### Profile Statistics

@@ -624,6 +624,9 @@ ac_includes_default="\
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+EGREP
+GREP
+CPP
 HAVE_LTS
 HAVE_ONLY_SYSCFG_PROFILES
 HAVE_FORCE_NONEWPRIVS
@@ -648,10 +651,6 @@ HAVE_OVERLAYFS
 HAVE_DBUSPROXY
 EXTRA_LDFLAGS
 EXTRA_CFLAGS
-EGREP
-GREP
-CPP
-HAVE_LANDLOCK
 HAVE_SELINUX
 AA_LIBS
 AA_CFLAGS
@@ -714,7 +713,6 @@ enable_sanitizer
 enable_ids
 enable_apparmor
 enable_selinux
-enable_landlock
 enable_dbusproxy
 enable_output
 enable_usertmpfs
@@ -1376,7 +1374,6 @@ Optional Features:
   --enable-ids            enable ids
   --enable-apparmor       enable apparmor
   --enable-selinux        SELinux labeling support
-  --enable-landlock       Landlock self-restriction support
   --disable-dbusproxy     disable dbus proxy
   --disable-output        disable --output logging
   --disable-usertmpfs     disable tmpfs as regular user
@@ -3345,11 +3342,336 @@ if test "x$enable_selinux" = "xyes"; then :
 
 fi
 
-HAVE_LANDLOCK=""
 
-# Check whether --enable-landlock was given.
-if test "${enable_landlock+set}" = set; then :
-  enableval=$enable_landlock;
+
+
+
+HAVE_DBUSPROXY=""
+
+# Check whether --enable-dbusproxy was given.
+if test "${enable_dbusproxy+set}" = set; then :
+  enableval=$enable_dbusproxy;
+fi
+
+if test "x$enable_dbusproxy" != "xno"; then :
+
+	HAVE_DBUSPROXY="-DHAVE_DBUSPROXY"
+
+fi
+
+# overlayfs features temporarily disabled pending fixes
+HAVE_OVERLAYFS=""
+
+#AC_ARG_ENABLE([overlayfs],
+#    [AS_HELP_STRING([--disable-overlayfs], [disable overlayfs])])
+#AS_IF([test "x$enable_overlayfs" != "xno"], [
+#	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
+#])
+
+HAVE_OUTPUT=""
+
+# Check whether --enable-output was given.
+if test "${enable_output+set}" = set; then :
+  enableval=$enable_output;
+fi
+
+if test "x$enable_output" != "xno"; then :
+
+	HAVE_OUTPUT="-DHAVE_OUTPUT"
+
+fi
+
+HAVE_USERTMPFS=""
+
+# Check whether --enable-usertmpfs was given.
+if test "${enable_usertmpfs+set}" = set; then :
+  enableval=$enable_usertmpfs;
+fi
+
+if test "x$enable_usertmpfs" != "xno"; then :
+
+	HAVE_USERTMPFS="-DHAVE_USERTMPFS"
+
+fi
+
+HAVE_MAN="no"
+
+# Check whether --enable-man was given.
+if test "${enable_man+set}" = set; then :
+  enableval=$enable_man;
+fi
+
+if test "x$enable_man" != "xno"; then :
+
+	HAVE_MAN="-DHAVE_MAN"
+	# Extract the first word of "gawk", so it can be a program name with args.
+set dummy gawk; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_prog_HAVE_GAWK+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$HAVE_GAWK"; then
+  ac_cv_prog_HAVE_GAWK="$HAVE_GAWK" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_prog_HAVE_GAWK="yes"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  test -z "$ac_cv_prog_HAVE_GAWK" && ac_cv_prog_HAVE_GAWK="no"
+fi
+fi
+HAVE_GAWK=$ac_cv_prog_HAVE_GAWK
+if test -n "$HAVE_GAWK"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $HAVE_GAWK" >&5
+$as_echo "$HAVE_GAWK" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+	if test "x$HAVE_GAWK" != "xyes"; then :
+  as_fn_error $? "*** gawk not found ***" "$LINENO" 5
+fi
+
+fi
+
+HAVE_FIRETUNNEL=""
+
+# Check whether --enable-firetunnel was given.
+if test "${enable_firetunnel+set}" = set; then :
+  enableval=$enable_firetunnel;
+fi
+
+if test "x$enable_firetunnel" = "xyes"; then :
+
+	HAVE_FIRETUNNEL="-DHAVE_FIRETUNNEL"
+
+fi
+
+HAVE_PRIVATE_HOME=""
+
+# Check whether --enable-private-home was given.
+if test "${enable_private_home+set}" = set; then :
+  enableval=$enable_private_home;
+fi
+
+if test "x$enable_private_home" != "xno"; then :
+
+	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
+
+fi
+
+HAVE_CHROOT=""
+
+# Check whether --enable-chroot was given.
+if test "${enable_chroot+set}" = set; then :
+  enableval=$enable_chroot;
+fi
+
+if test "x$enable_chroot" != "xno"; then :
+
+	HAVE_CHROOT="-DHAVE_CHROOT"
+
+fi
+
+HAVE_GLOBALCFG=""
+
+# Check whether --enable-globalcfg was given.
+if test "${enable_globalcfg+set}" = set; then :
+  enableval=$enable_globalcfg;
+fi
+
+if test "x$enable_globalcfg" != "xno"; then :
+
+	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
+
+fi
+
+HAVE_NETWORK=""
+
+# Check whether --enable-network was given.
+if test "${enable_network+set}" = set; then :
+  enableval=$enable_network;
+fi
+
+if test "x$enable_network" != "xno"; then :
+
+	HAVE_NETWORK="-DHAVE_NETWORK"
+
+fi
+
+HAVE_USERNS=""
+
+# Check whether --enable-userns was given.
+if test "${enable_userns+set}" = set; then :
+  enableval=$enable_userns;
+fi
+
+if test "x$enable_userns" != "xno"; then :
+
+	HAVE_USERNS="-DHAVE_USERNS"
+
+fi
+
+HAVE_X11=""
+
+# Check whether --enable-x11 was given.
+if test "${enable_x11+set}" = set; then :
+  enableval=$enable_x11;
+fi
+
+if test "x$enable_x11" != "xno"; then :
+
+	HAVE_X11="-DHAVE_X11"
+
+fi
+
+HAVE_FILE_TRANSFER=""
+
+# Check whether --enable-file-transfer was given.
+if test "${enable_file_transfer+set}" = set; then :
+  enableval=$enable_file_transfer;
+fi
+
+if test "x$enable_file_transfer" != "xno"; then :
+
+	HAVE_FILE_TRANSFER="-DHAVE_FILE_TRANSFER"
+
+fi
+
+HAVE_SUID=""
+
+# Check whether --enable-suid was given.
+if test "${enable_suid+set}" = set; then :
+  enableval=$enable_suid;
+fi
+
+if test "x$enable_suid" != "xno"; then :
+
+	HAVE_SUID="-DHAVE_SUID"
+
+fi
+
+HAVE_FATAL_WARNINGS=""
+
+# Check whether --enable-fatal_warnings was given.
+if test "${enable_fatal_warnings+set}" = set; then :
+  enableval=$enable_fatal_warnings;
+fi
+
+if test "x$enable_fatal_warnings" = "xyes"; then :
+
+	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
+
+fi
+
+BUSYBOX_WORKAROUND="no"
+
+# Check whether --enable-busybox-workaround was given.
+if test "${enable_busybox_workaround+set}" = set; then :
+  enableval=$enable_busybox_workaround;
+fi
+
+if test "x$enable_busybox_workaround" = "xyes"; then :
+
+	BUSYBOX_WORKAROUND="yes"
+
+fi
+
+
+HAVE_GCOV=""
+
+# Check whether --enable-gcov was given.
+if test "${enable_gcov+set}" = set; then :
+  enableval=$enable_gcov;
+fi
+
+if test "x$enable_gcov" = "xyes"; then :
+
+	HAVE_GCOV="--coverage -DHAVE_GCOV"
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage"
+
+fi
+
+HAVE_CONTRIB_INSTALL="yes"
+
+# Check whether --enable-contrib-install was given.
+if test "${enable_contrib_install+set}" = set; then :
+  enableval=$enable_contrib_install;
+fi
+
+if test "x$enable_contrib_install" = "xno"; then :
+
+       HAVE_CONTRIB_INSTALL="no"
+
+fi
+
+HAVE_FORCE_NONEWPRIVS=""
+
+# Check whether --enable-force-nonewprivs was given.
+if test "${enable_force_nonewprivs+set}" = set; then :
+  enableval=$enable_force_nonewprivs;
+fi
+
+if test "x$enable_force_nonewprivs" = "xyes"; then :
+
+	HAVE_FORCE_NONEWPRIVS="-DHAVE_FORCE_NONEWPRIVS"
+
+fi
+
+HAVE_ONLY_SYSCFG_PROFILES=""
+
+# Check whether --enable-only-syscfg-profiles was given.
+if test "${enable_only_syscfg_profiles+set}" = set; then :
+  enableval=$enable_only_syscfg_profiles;
+fi
+
+if test "x$enable_only_syscfg_profiles" = "xyes"; then :
+
+    HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
+
+fi
+
+HAVE_LTS=""
+
+# Check whether --enable-lts was given.
+if test "${enable_lts+set}" = set; then :
+  enableval=$enable_lts;
+fi
+
+if test "x$enable_lts" = "xyes"; then :
+
+	HAVE_LTS="-DHAVE_LTS"
+	HAVE_IDS=""
+	HAVE_DBUSPROXY=""
+	HAVE_OVERLAYFS=""
+	HAVE_OUTPUT=""
+	HAVE_USERTMPFS=""
+	HAVE_MAN="-DHAVE_MAN"
+	HAVE_FIRETUNNEL=""
+	HAVE_PRIVATE_HOME=""
+	HAVE_CHROOT=""
+	HAVE_GLOBALCFG=""
+	HAVE_USERNS=""
+	HAVE_X11=""
+	HAVE_FILE_TRANSFER=""
+	HAVE_SUID="-DHAVE_SUID"
+	BUSYBOX_WORKAROUND="no"
+	HAVE_CONTRIB_INSTALL="no",
+
 fi
 
 ac_ext=c
@@ -3748,352 +4070,6 @@ fi
 
 done
 
-
-if test "x$enable_landlock" = "xyes"; then :
-
-	ac_fn_c_check_header_mongrel "$LINENO" "linux/landlock.h" "ac_cv_header_linux_landlock_h" "$ac_includes_default"
-if test "x$ac_cv_header_linux_landlock_h" = xyes; then :
-
-else
-  as_fn_error $? "*** LANDLOCK support is not installed (/usr/include/linux/landlock.h missing) ***" "$LINENO" 5
-fi
-
-
-	HAVE_LANDLOCK="-DHAVE_LANDLOCK"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS"
-
-fi
-
-
-
-
-HAVE_DBUSPROXY=""
-
-# Check whether --enable-dbusproxy was given.
-if test "${enable_dbusproxy+set}" = set; then :
-  enableval=$enable_dbusproxy;
-fi
-
-if test "x$enable_dbusproxy" != "xno"; then :
-
-	HAVE_DBUSPROXY="-DHAVE_DBUSPROXY"
-
-fi
-
-# overlayfs features temporarily disabled pending fixes
-HAVE_OVERLAYFS=""
-
-#AC_ARG_ENABLE([overlayfs],
-#    [AS_HELP_STRING([--disable-overlayfs], [disable overlayfs])])
-#AS_IF([test "x$enable_overlayfs" != "xno"], [
-#	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
-#])
-
-HAVE_OUTPUT=""
-
-# Check whether --enable-output was given.
-if test "${enable_output+set}" = set; then :
-  enableval=$enable_output;
-fi
-
-if test "x$enable_output" != "xno"; then :
-
-	HAVE_OUTPUT="-DHAVE_OUTPUT"
-
-fi
-
-HAVE_USERTMPFS=""
-
-# Check whether --enable-usertmpfs was given.
-if test "${enable_usertmpfs+set}" = set; then :
-  enableval=$enable_usertmpfs;
-fi
-
-if test "x$enable_usertmpfs" != "xno"; then :
-
-	HAVE_USERTMPFS="-DHAVE_USERTMPFS"
-
-fi
-
-HAVE_MAN="no"
-
-# Check whether --enable-man was given.
-if test "${enable_man+set}" = set; then :
-  enableval=$enable_man;
-fi
-
-if test "x$enable_man" != "xno"; then :
-
-	HAVE_MAN="-DHAVE_MAN"
-	# Extract the first word of "gawk", so it can be a program name with args.
-set dummy gawk; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_prog_HAVE_GAWK+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test -n "$HAVE_GAWK"; then
-  ac_cv_prog_HAVE_GAWK="$HAVE_GAWK" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_prog_HAVE_GAWK="yes"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-  test -z "$ac_cv_prog_HAVE_GAWK" && ac_cv_prog_HAVE_GAWK="no"
-fi
-fi
-HAVE_GAWK=$ac_cv_prog_HAVE_GAWK
-if test -n "$HAVE_GAWK"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $HAVE_GAWK" >&5
-$as_echo "$HAVE_GAWK" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
-	if test "x$HAVE_GAWK" != "xyes"; then :
-  as_fn_error $? "*** gawk not found ***" "$LINENO" 5
-fi
-
-fi
-
-HAVE_FIRETUNNEL=""
-
-# Check whether --enable-firetunnel was given.
-if test "${enable_firetunnel+set}" = set; then :
-  enableval=$enable_firetunnel;
-fi
-
-if test "x$enable_firetunnel" = "xyes"; then :
-
-	HAVE_FIRETUNNEL="-DHAVE_FIRETUNNEL"
-
-fi
-
-HAVE_PRIVATE_HOME=""
-
-# Check whether --enable-private-home was given.
-if test "${enable_private_home+set}" = set; then :
-  enableval=$enable_private_home;
-fi
-
-if test "x$enable_private_home" != "xno"; then :
-
-	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
-
-fi
-
-HAVE_CHROOT=""
-
-# Check whether --enable-chroot was given.
-if test "${enable_chroot+set}" = set; then :
-  enableval=$enable_chroot;
-fi
-
-if test "x$enable_chroot" != "xno"; then :
-
-	HAVE_CHROOT="-DHAVE_CHROOT"
-
-fi
-
-HAVE_GLOBALCFG=""
-
-# Check whether --enable-globalcfg was given.
-if test "${enable_globalcfg+set}" = set; then :
-  enableval=$enable_globalcfg;
-fi
-
-if test "x$enable_globalcfg" != "xno"; then :
-
-	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
-
-fi
-
-HAVE_NETWORK=""
-
-# Check whether --enable-network was given.
-if test "${enable_network+set}" = set; then :
-  enableval=$enable_network;
-fi
-
-if test "x$enable_network" != "xno"; then :
-
-	HAVE_NETWORK="-DHAVE_NETWORK"
-
-fi
-
-HAVE_USERNS=""
-
-# Check whether --enable-userns was given.
-if test "${enable_userns+set}" = set; then :
-  enableval=$enable_userns;
-fi
-
-if test "x$enable_userns" != "xno"; then :
-
-	HAVE_USERNS="-DHAVE_USERNS"
-
-fi
-
-HAVE_X11=""
-
-# Check whether --enable-x11 was given.
-if test "${enable_x11+set}" = set; then :
-  enableval=$enable_x11;
-fi
-
-if test "x$enable_x11" != "xno"; then :
-
-	HAVE_X11="-DHAVE_X11"
-
-fi
-
-HAVE_FILE_TRANSFER=""
-
-# Check whether --enable-file-transfer was given.
-if test "${enable_file_transfer+set}" = set; then :
-  enableval=$enable_file_transfer;
-fi
-
-if test "x$enable_file_transfer" != "xno"; then :
-
-	HAVE_FILE_TRANSFER="-DHAVE_FILE_TRANSFER"
-
-fi
-
-HAVE_SUID=""
-
-# Check whether --enable-suid was given.
-if test "${enable_suid+set}" = set; then :
-  enableval=$enable_suid;
-fi
-
-if test "x$enable_suid" != "xno"; then :
-
-	HAVE_SUID="-DHAVE_SUID"
-
-fi
-
-HAVE_FATAL_WARNINGS=""
-
-# Check whether --enable-fatal_warnings was given.
-if test "${enable_fatal_warnings+set}" = set; then :
-  enableval=$enable_fatal_warnings;
-fi
-
-if test "x$enable_fatal_warnings" = "xyes"; then :
-
-	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
-
-fi
-
-BUSYBOX_WORKAROUND="no"
-
-# Check whether --enable-busybox-workaround was given.
-if test "${enable_busybox_workaround+set}" = set; then :
-  enableval=$enable_busybox_workaround;
-fi
-
-if test "x$enable_busybox_workaround" = "xyes"; then :
-
-	BUSYBOX_WORKAROUND="yes"
-
-fi
-
-
-HAVE_GCOV=""
-
-# Check whether --enable-gcov was given.
-if test "${enable_gcov+set}" = set; then :
-  enableval=$enable_gcov;
-fi
-
-if test "x$enable_gcov" = "xyes"; then :
-
-	HAVE_GCOV="--coverage -DHAVE_GCOV"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage"
-
-fi
-
-HAVE_CONTRIB_INSTALL="yes"
-
-# Check whether --enable-contrib-install was given.
-if test "${enable_contrib_install+set}" = set; then :
-  enableval=$enable_contrib_install;
-fi
-
-if test "x$enable_contrib_install" = "xno"; then :
-
-       HAVE_CONTRIB_INSTALL="no"
-
-fi
-
-HAVE_FORCE_NONEWPRIVS=""
-
-# Check whether --enable-force-nonewprivs was given.
-if test "${enable_force_nonewprivs+set}" = set; then :
-  enableval=$enable_force_nonewprivs;
-fi
-
-if test "x$enable_force_nonewprivs" = "xyes"; then :
-
-	HAVE_FORCE_NONEWPRIVS="-DHAVE_FORCE_NONEWPRIVS"
-
-fi
-
-HAVE_ONLY_SYSCFG_PROFILES=""
-
-# Check whether --enable-only-syscfg-profiles was given.
-if test "${enable_only_syscfg_profiles+set}" = set; then :
-  enableval=$enable_only_syscfg_profiles;
-fi
-
-if test "x$enable_only_syscfg_profiles" = "xyes"; then :
-
-    HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
-
-fi
-
-HAVE_LTS=""
-
-# Check whether --enable-lts was given.
-if test "${enable_lts+set}" = set; then :
-  enableval=$enable_lts;
-fi
-
-if test "x$enable_lts" = "xyes"; then :
-
-	HAVE_LTS="-DHAVE_LTS"
-	HAVE_IDS=""
-	HAVE_DBUSPROXY=""
-	HAVE_OVERLAYFS=""
-	HAVE_OUTPUT=""
-	HAVE_USERTMPFS=""
-	HAVE_MAN="-DHAVE_MAN"
-	HAVE_FIRETUNNEL=""
-	HAVE_PRIVATE_HOME=""
-	HAVE_CHROOT=""
-	HAVE_GLOBALCFG=""
-	HAVE_USERNS=""
-	HAVE_X11=""
-	HAVE_FILE_TRANSFER=""
-	HAVE_SUID="-DHAVE_SUID"
-	BUSYBOX_WORKAROUND="no"
-	HAVE_CONTRIB_INSTALL="no",
-
-fi
 
 ac_fn_c_check_header_mongrel "$LINENO" "linux/seccomp.h" "ac_cv_header_linux_seccomp_h" "$ac_includes_default"
 if test "x$ac_cv_header_linux_seccomp_h" = xyes; then :

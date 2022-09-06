@@ -122,12 +122,6 @@ static char *usage_str =
 	"    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
 	"    --keep-fd - inherit open file descriptors to sandbox.\n"
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
-	"    --landlock - add basic rules to the Landlock ruleset.\n"
-	"    --landlock.proc=no|ro|rw - add an access rule for /proc to the Landlock ruleset.\n"
-	"    --landlock.read=path - add a read access rule for the path to the Landlock ruleset.\n"
-	"    --landlock.write=path - add a write access rule for the path to the Landlock ruleset.\n"
-	"    --landlock.special=path - add an access rule for creating FIFO pipes, Unix domain sockets and block devices for the path to the Landlock ruleset.\n"
-	"    --landlock.execute=path - add an execution-permitting rule for the path to the Landlock ruleset.\n"
 	"    --list - list all sandboxes.\n"
 #ifdef HAVE_FILE_TRANSFER
 	"    --ls=name|pid dir_or_filename - list files in sandbox container.\n"

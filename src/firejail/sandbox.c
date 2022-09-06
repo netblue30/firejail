@@ -488,7 +488,6 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 #ifdef HAVE_APPARMOR
 		set_apparmor();
 #endif
-
 		close_file_descriptors();
 
 		// set nice and rlimits
@@ -509,16 +508,6 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 		printf("Starting application\n");
 		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
 	}
-
-#ifdef HAVE_LANDLOCK
-		// set Landlock
-		if (arg_landlock >= 0) {
-			if (landlock_restrict_self(arg_landlock,0)) {
-				fprintf(stderr,"An error has occured while enabling Landlock self-restriction. Exiting...\n");
-				exit(1); // it isn't safe to continue if Landlock self-restriction was enabled and the "landlock_restrict_self" syscall has failed
-			}
-		}
-#endif
 
 	if (just_run_the_shell) {
 		char *arg[2];
@@ -1010,15 +999,6 @@ int sandbox(void* sandbox_arg) {
 	fs_proc_sys_dev_boot();
 
 	//****************************
-	// Allow access to /proc
-	//****************************
-#ifdef HAVE_LANDLOCK
-	if (arg_landlock>-1) {
-		if (arg_landlock_proc >= 1) add_read_access_rule_by_path(arg_landlock, "/proc/");
-		if (arg_landlock_proc == 2) add_write_access_rule_by_path(arg_landlock, "/proc/");
-}
-#endif
-	//****************************
 	// handle /mnt and /media
 	//****************************
 	if (checkcfg(CFG_DISABLE_MNT))
@@ -1113,12 +1093,9 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// rebuild etc directory, set dns
 	//****************************
-	if (!arg_writable_etc){
+	if (!arg_writable_etc)
 		fs_rebuild_etc();
-#ifdef HAVE_LANDLOCK
-		if (arg_landlock>-1) add_read_access_rule_by_path(arg_landlock, "/etc/");
-#endif
-	}
+
 	//****************************
 	// start dhcp client
 	//****************************

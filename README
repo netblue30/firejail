@@ -253,8 +253,6 @@ cayday (https://github.com/caydey)
 Christian Pinedo (https://github.com/chrpinedo)
 	- added nicotine profile
 	- allow python3 in totem profile
-ChrysoliteAzalea (https://github.com/ChrysoliteAzalea)
-	- Landlock support
 creideiki (https://github.com/creideiki)
 	- make the sandbox process reap all children
 	- tor browser profile fix

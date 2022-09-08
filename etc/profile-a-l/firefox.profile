@@ -17,6 +17,7 @@ include globals.local
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
 noblacklist ${RUNUSER}/*firefox*
+noblacklist ${RUNUSER}/psd/*firefox*
 
 blacklist /usr/libexec
 
@@ -37,6 +38,7 @@ whitelist /usr/share/gtk-doc/html
 whitelist /usr/share/mozilla
 whitelist /usr/share/webext
 whitelist ${RUNUSER}/*firefox*
+whitelist ${RUNUSER}/psd/*firefox*
 include whitelist-usr-share-common.inc
 
 # firefox requires a shell to launch on Arch - add the next line to your firefox.local to enable private-bin.

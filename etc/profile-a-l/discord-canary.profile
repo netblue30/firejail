@@ -10,8 +10,8 @@ noblacklist ${HOME}/.config/discordcanary
 mkdir ${HOME}/.config/discordcanary
 whitelist ${HOME}/.config/discordcanary
 
-private-bin discord-canary,electron,electron[0-9],electron[0-9][0-9]
-private-opt discord-canary
+private-bin DiscordCanary,discord-canary
+private-opt DiscordCanary,discord-canary
 
 # Redirect
 include discord-common.profile

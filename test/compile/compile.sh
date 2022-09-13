@@ -31,7 +31,7 @@ arr[15]="TEST 15: compile private-home disabled"
 arr[16]="TEST 16: compile disable manpages"
 arr[17]="TEST 17: disable tmpfs as regular user"
 arr[18]="TEST 18: disable private home"
-arr[18]="TEST 19: enable ids"
+arr[19]="TEST 19: enable ids"
 
 # remove previous reports and output file
 cleanup() {

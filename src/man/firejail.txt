@@ -319,7 +319,7 @@ Print content of file from sandbox container, see FILE TRANSFER section for more
 Chroot the sandbox into a root filesystem. Unlike the regular filesystem container,
 the system directories are mounted read-write. If the sandbox is started as a
 regular user, nonewprivs and a default capabilities filter are enabled.
-Disabled by default in firejail.config.
+Note: this command may be enabled in firejail.config with "chroot yes".
 .br
 
 .br
@@ -2086,7 +2086,7 @@ The files and directories in the list must be expressed as relative to
 the /lib directory.
 The idea is to build a new /lib in a temporary filesystem,
 with only the library files necessary to run the application.
-Disabled by default in firejail.config.
+Note: this command may be enabled in firejail.config with "private-lib yes".
 It could be as simple as:
 .br
 
@@ -2819,7 +2819,7 @@ parent is shutting down, bye...
 \fB\-\-tracelog
 This option enables auditing blacklisted files and directories. A message
 is sent to syslog in case the file or the directory is accessed.
-Disabled by default in firejail.config.
+Note: this command may be enabled in firejail.config with "tracelog yes".
 .br
 
 .br

@@ -46,14 +46,14 @@ echo "TESTING: read/write /var/tmp (test/fs/fs_var_tmp.exp)"
 rm -f /var/tmp/_firejail_test_file
 
 if [ "$(uname -m)" = "x86_64" ]; then
-    fjconfig=/etc/firejail/firejail.config
-    printf 'private-lib yes\n' | sudo tee -a "$fjconfig" >/dev/null
-    echo "TESTING: private-lib (test/fs/private-lib.exp)"
-    ./private-lib.exp
-    printf '%s\n' "$(sed '/^private-lib yes$/d' "$fjconfig")" |
-      sudo tee "$fjconfig" >/dev/null
+	fjconfig=/etc/firejail/firejail.config
+	printf 'private-lib yes\n' | sudo tee -a "$fjconfig" >/dev/null
+	echo "TESTING: private-lib (test/fs/private-lib.exp)"
+	./private-lib.exp
+	printf '%s\n' "$(sed '/^private-lib yes$/d' "$fjconfig")" |
+		sudo tee "$fjconfig" >/dev/null
 else
-    echo "TESTING SKIP: private-lib test implemented only for x86_64."
+	echo "TESTING SKIP: private-lib test implemented only for x86_64."
 fi
 
 echo "TESTING: read/write /var/lock (test/fs/fs_var_lock.exp)"
@@ -61,11 +61,11 @@ echo "TESTING: read/write /var/lock (test/fs/fs_var_lock.exp)"
 rm -f /var/lock/_firejail_test_file
 
 if [ -w /dev/shm ]; then
-    echo "TESTING: read/write /dev/shm (test/fs/fs_dev_shm.exp)"
-    ./fs_dev_shm.exp
-    rm -f /dev/shm/_firejail_test_file
+	echo "TESTING: read/write /dev/shm (test/fs/fs_dev_shm.exp)"
+	./fs_dev_shm.exp
+	rm -f /dev/shm/_firejail_test_file
 else
-    echo "TESTING SKIP: /dev/shm not writable"
+	echo "TESTING SKIP: /dev/shm not writable"
 fi
 
 echo "TESTING: private (test/fs/private.exp)"

@@ -29,7 +29,7 @@ then
 	echo "TESTING: snmpd (test/root/snmpd.exp)"
 	./snmpd.exp
 else
-	echo "TESTING SKIP: snmpd  not found"
+	echo "TESTING SKIP: snmpd not found"
 fi
 
 
@@ -38,7 +38,7 @@ then
 	echo "TESTING: apache2 (test/root/apache2.exp)"
 	./apache2.exp
 else
-	echo "TESTING SKIP: apache2  not found"
+	echo "TESTING SKIP: apache2 not found"
 fi
 
 if [ -f /etc/init.d/isc-dhcp-server ]
@@ -54,7 +54,7 @@ then
 	echo "TESTING: unbound (test/root/unbound.exp)"
 	./unbound.exp
 else
-	echo "TESTING SKIP: unbound  not found"
+	echo "TESTING SKIP: unbound not found"
 fi
 
 if [ -f /etc/init.d/nginx ]
@@ -62,7 +62,7 @@ then
 	echo "TESTING: nginx (test/root/nginx.exp)"
 	./nginx.exp
 else
-	echo "TESTING SKIP: nginx  not found"
+	echo "TESTING SKIP: nginx not found"
 fi
 
 #********************************

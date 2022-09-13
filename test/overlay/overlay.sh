@@ -38,18 +38,17 @@ else
 	echo "TESTING SKIP: firefox not found"
 fi
 
-
 # check xpra/xephyr
 if command -v xpra
 then
-        echo "xpra found"
+	echo "xpra found"
 else
-        echo "xpra not found"
+	echo "xpra not found"
 	if command -v Xephyr
 	then
-        	echo "Xephyr found"
+		echo "Xephyr found"
 	else
-        	echo "TESTING SKIP: xpra and/or Xephyr not found"
+		echo "TESTING SKIP: xpra and/or Xephyr not found"
 		exit
 	fi
 fi

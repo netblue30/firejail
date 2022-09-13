@@ -9,26 +9,23 @@ CHROOT="chroot"
 NETWORK="network"
 
 while [ $# -gt 0 ]; do    # Until you run out of parameters . . .
-    case "$1" in
-    --nooverlay)
-    	OVERLAY="none"
-	;;
-    --nochroot)
-    	CHROOT="none"
-	;;
-    --nonetwork)
-        NETWORK="none"
-        ;;
-    --help)
-    	echo "./test.sh [--nooverlay|--nochroot|--nonetwork|--help] | grep TESTING"
-    	exit
-    	;;
-    esac
-    shift       # Check next set of parameters.
+	case "$1" in
+	--nooverlay)
+		OVERLAY="none"
+		;;
+	--nochroot)
+		CHROOT="none"
+		;;
+	--nonetwork)
+		NETWORK="none"
+		;;
+	--help)
+		echo "./test.sh [--nooverlay|--nochroot|--nonetwork|--help] | grep TESTING"
+		exit
+		;;
+	esac
+	shift       # Check next set of parameters.
 done
-
-
-
 
 #
 # Feature testing

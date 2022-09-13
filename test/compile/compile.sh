@@ -53,17 +53,17 @@ print_title() {
 
 DIST="$1"
 while [ $# -gt 0 ]; do    # Until you run out of parameters . . .
-    case "$1" in
-    --clean)
-    	cleanup
-    	exit
-	;;
-    --help)
-    	echo "./compile.sh [--clean|--help]"
-    	exit
-    	;;
-    esac
-    shift       # Check next set of parameters.
+	case "$1" in
+	--clean)
+		cleanup
+		exit
+		;;
+	--help)
+		echo "./compile.sh [--clean|--help]"
+		exit
+		;;
+	esac
+	shift       # Check next set of parameters.
 done
 
 cleanup
@@ -89,7 +89,6 @@ cp output-configure oc1
 cp output-make om1
 rm output-configure output-make
 
-
 #*****************************************************************
 # TEST 2
 #*****************************************************************
@@ -98,7 +97,7 @@ rm output-configure output-make
 print_title "${arr[2]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-dbusproxy  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-dbusproxy --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test2
@@ -115,7 +114,7 @@ rm output-configure output-make
 print_title "${arr[3]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-chroot  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-chroot --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test3
@@ -132,7 +131,7 @@ rm output-configure output-make
 print_title "${arr[4]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-firetunnel  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-firetunnel --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test4
@@ -149,7 +148,7 @@ rm output-configure output-make
 print_title "${arr[5]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-userns  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-userns --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test5
@@ -167,7 +166,7 @@ rm output-configure output-make
 print_title "${arr[6]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-network  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-network --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test6
@@ -184,7 +183,7 @@ rm output-configure output-make
 print_title "${arr[7]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-x11  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-x11 --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test7
@@ -218,7 +217,7 @@ rm output-configure output-make
 print_title "${arr[9]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-file-transfer  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-file-transfer --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test9
@@ -235,7 +234,7 @@ rm output-configure output-make
 print_title "${arr[10]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-whitelist  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-whitelist --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test10
@@ -252,7 +251,7 @@ rm output-configure output-make
 print_title "${arr[11]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-globalcfg  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-globalcfg --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test11
@@ -269,7 +268,7 @@ rm output-configure output-make
 print_title "${arr[12]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --enable-apparmor  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --enable-apparmor --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test12
@@ -354,7 +353,7 @@ rm output-configure output-make
 print_title "${arr[17]}"
 cd firejail
 make distclean
-./configure --prefix=/usr  --disable-usertmpfs --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-usertmpfs --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test17

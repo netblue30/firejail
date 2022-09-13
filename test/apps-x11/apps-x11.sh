@@ -10,7 +10,6 @@ export LC_ALL=C
 echo "TESTING: no x11 (test/apps-x11/x11-none.exp)"
 ./x11-none.exp
 
-
 if command -v xterm
 then
 	echo "TESTING: xterm x11 xorg"
@@ -18,14 +17,14 @@ then
 
 	if command -v xpra
 	then
-	echo "TESTING: xterm x11 xpra"
-	./xterm-xpra.exp
+		echo "TESTING: xterm x11 xpra"
+		./xterm-xpra.exp
 	fi
 
 	if command -v Xephyr
 	then
-	echo "TESTING: xterm x11 xephyr"
-	./xterm-xephyr.exp
+		echo "TESTING: xterm x11 xephyr"
+		./xterm-xephyr.exp
 	fi
 else
 	echo "TESTING SKIP: xterm not found"
@@ -34,14 +33,14 @@ fi
 # check xpra/xephyr
 if command -v xpra
 then
-        echo "xpra found"
+	echo "xpra found"
 else
-        echo "xpra not found"
+	echo "xpra not found"
 	if command -v Xephyr
 	then
-        	echo "Xephyr found"
+		echo "Xephyr found"
 	else
-        	echo "TESTING SKIP: xpra and/or Xephyr not found"
+		echo "TESTING SKIP: xpra and/or Xephyr not found"
 		exit
 	fi
 fi

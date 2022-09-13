@@ -25,6 +25,7 @@ Exit-Codes:
 # Requirements:
 #  python >= 3.6
 from sys import argv, exit as sys_exit
+import os
 
 
 def sort_alphabetical(raw_items):
@@ -85,6 +86,7 @@ def fix_profile(filename):
 
 def main(args):
     exit_code = 0
+    os.environ['LC_ALL'] = 'C'
     print(f"sort.py: checking {len(args)} {'profiles' if len(args) != 1 else 'profile'}...")
     for filename in args:
         try:

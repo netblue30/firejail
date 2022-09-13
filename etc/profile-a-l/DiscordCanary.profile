@@ -3,15 +3,8 @@
 # Persistent local customizations
 include DiscordCanary.local
 # Persistent global definitions
-include globals.local
-
-noblacklist ${HOME}/.config/discordcanary
-
-mkdir ${HOME}/.config/discordcanary
-whitelist ${HOME}/.config/discordcanary
-
-private-bin DiscordCanary,discord-canary
-private-opt DiscordCanary,discord-canary
+# added by included profile
+#include globals.local
 
 # Redirect
-include discord-common.profile
+include discord-canary.profile

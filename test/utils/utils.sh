@@ -33,8 +33,7 @@ echo "TESTING: version (test/utils/version.exp)"
 echo "TESTING: help (test/utils/help.exp)"
 ./help.exp
 
-which man 2>/dev/null
-if [ "$?" -eq 0 ];
+if command -v man
 then
         echo "TESTING: man (test/utils/man.exp)"
         ./man.exp

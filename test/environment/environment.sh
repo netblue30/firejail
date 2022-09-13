@@ -39,8 +39,7 @@ echo "TESTING: environment variables (test/environment/env.exp)"
 echo "TESTING: firejail in firejail - single sandbox (test/environment/firejail-in-firejail.exp)"
 ./firejail-in-firejail.exp
 
-which aplay 2>/dev/null
-if [ "$?" -eq 0 ] && [ "$(aplay -l | grep -c "List of PLAYBACK")" -gt 0 ];
+if command -v aplay && [ "$(aplay -l | grep -c "List of PLAYBACK")" -gt 0 ];
 then
         echo "TESTING: sound (test/environment/sound.exp)"
         ./sound.exp
@@ -54,8 +53,7 @@ echo "TESTING: nice (test/environment/nice.exp)"
 echo "TESTING: quiet (test/environment/quiet.exp)"
 ./quiet.exp
 
-which strace 2>/dev/null
-if [ "$?" -eq 0 ];
+if command -v strace
 then
         echo "TESTING: --allow-debuggers (test/environment/allow-debuggers.exp)"
         ./allow-debuggers.exp
@@ -67,8 +65,7 @@ fi
 #       $ sudo apt-get install ibus-table-array30
 #       $ ibus-setup
 
-find ~/.config/ibus/bus | grep unix-0
-if [ "$?" -eq 0 ];
+if find ~/.config/ibus/bus | grep unix-0
 then
 	echo "TESTING: ibus (test/environment/ibus.exp)"
 	./ibus.exp

@@ -17,7 +17,7 @@ if [ -z "${1##*/firejail}" ]; then
 else
     # First argument is not named firejail, then add default unless environment
     # variable already set.
-    set -- ${FIREJAIL:=$(which firejail)} "$@"
+    set -- ${FIREJAIL:=$(command -v firejail)} "$@"
 fi
 
 bash -c "kill -STOP \$\$; exec \"\$0\" \"\$@\"" "$@" &

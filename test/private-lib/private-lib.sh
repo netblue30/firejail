@@ -11,8 +11,7 @@ LIST="gnome-logs gnome-system-log gnome-nettool pavucontrol dig evince whois gal
 
 
 for app in $LIST; do
-	which $app 2>/dev/null
-	if [ "$?" -eq 0 ];
+	if command -v "$app"
 	then
 		echo "TESTING: private-lib $app"
 		./$app.exp

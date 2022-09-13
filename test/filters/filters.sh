@@ -96,8 +96,7 @@ echo "TESTING: seccomp errno (test/filters/seccomp-errno.exp)"
 echo "TESTING: seccomp su (test/filters/seccomp-su.exp)"
 ./seccomp-su.exp
 
-which strace 2>/dev/null
-if [ $? -eq 0 ]; then
+if command -v strace; then
         echo "TESTING: seccomp ptrace (test/filters/seccomp-ptrace.exp)"
         ./seccomp-ptrace.exp
 else

@@ -11,8 +11,7 @@ export LC_ALL=C
 #********************************
 # firecfg
 #********************************
-which less 2>/dev/null
-if [ "$?" -eq 0 ];
+if command -v less
 then
 	echo "TESTING: firecfg (test/root/firecfg.exp)"
 	mv /home/netblue/.local/share/applications /home/netblue/.local/share/applications-store

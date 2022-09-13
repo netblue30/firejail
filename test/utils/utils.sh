@@ -7,7 +7,7 @@ export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
-if [ -f /etc/debian_version ]; then
+if [[ -f /etc/debian_version ]]; then
 	libdir=$(dirname "$(dpkg -L firejail | grep fcopy)")
 	export PATH="$PATH:$libdir"
 fi
@@ -47,7 +47,7 @@ echo "TESTING: list (test/utils/list.exp)"
 echo "TESTING: tree (test/utils/tree.exp)"
 ./tree.exp
 
-if [ $(grep -c ^processor /proc/cpuinfo) -gt 1 ];
+if [[ $(grep -c ^processor /proc/cpuinfo) -gt 1 ]]
 then
 	echo "TESTING: cpu.print (test/utils/cpu-print.exp)"
 	./cpu-print.exp

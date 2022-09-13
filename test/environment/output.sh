@@ -5,7 +5,7 @@
 
 i="0"
 
-while [ $i -lt 150000 ]
+while [[ $i -lt 150000 ]]
 do
 	echo "message number $i"
 	i=$((i+1))

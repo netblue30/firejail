@@ -38,7 +38,7 @@ echo "TESTING: environment variables (test/environment/env.exp)"
 echo "TESTING: firejail in firejail - single sandbox (test/environment/firejail-in-firejail.exp)"
 ./firejail-in-firejail.exp
 
-if command -v aplay && [ "$(aplay -l | grep -c "List of PLAYBACK")" -gt 0 ];
+if command -v aplay && [[ $(aplay -l | grep -c "List of PLAYBACK") -gt 0 ]]
 then
 	echo "TESTING: sound (test/environment/sound.exp)"
 	./sound.exp

@@ -52,7 +52,7 @@ print_title() {
 }
 
 DIST="$1"
-while [ $# -gt 0 ]; do    # Until you run out of parameters . . .
+while [[ $# -gt 0 ]]; do    # Until you run out of parameters . . .
 	case "$1" in
 	--clean)
 		cleanup

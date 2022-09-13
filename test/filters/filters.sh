@@ -7,23 +7,23 @@ export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
-if [ -f /etc/debian_version ]; then
+if [[ -f /etc/debian_version ]]; then
 	libdir=$(dirname "$(dpkg -L firejail | grep fseccomp)")
 	export PATH="$PATH:$libdir"
 fi
 export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 
-if [ -f /sys/kernel/security/apparmor/profiles ]; then
+if [[ -f /sys/kernel/security/apparmor/profiles ]]; then
 	echo "TESTING: apparmor (test/filters/apparmor.exp)"
 	./apparmor.exp
 else
 	echo "TESTING SKIP: no apparmor support in Linux kernel (test/filters/apparmor.exp)"
 fi
 
-if [ "$(uname -m)" = "x86_64" ]; then
+if [[ $(uname -m) == "x86_64" ]]; then
 	echo "TESTING: memory-deny-write-execute (test/filters/memwrexe.exp)"
 	./memwrexe.exp
-elif [ "$(uname -m)" = "i686" ]; then
+elif [[ $(uname -m) == "i686" ]]; then
 	echo "TESTING: memory-deny-write-execute (test/filters/memwrexe-32.exp)"
 	./memwrexe-32.exp
 else
@@ -33,7 +33,7 @@ fi
 echo "TESTING: debug options (test/filters/debug.exp)"
 ./debug.exp
 
-if [ "$(uname -m)" = "x86_64" ]; then
+if [[ $(uname -m) == "x86_64" ]]; then
 	echo "TESTING: seccomp run files (test/filters/seccomp-run-files.exp)"
 	./seccomp-run-files.exp
 else
@@ -61,7 +61,7 @@ echo "TESTING: capabilities join (test/filters/caps-join.exp)"
 ./caps-join.exp
 
 rm -f seccomp-test-file
-if [ "$(uname -m)" = "x86_64" ]; then
+if [[ $(uname -m) == "x86_64" ]]; then
 	echo "TESTING: fseccomp (test/filters/fseccomp.exp)"
 	./fseccomp.exp
 else
@@ -70,7 +70,7 @@ fi
 rm -f seccomp-test-file
 
 
-if [ "$(uname -m)" = "x86_64" ]; then
+if [[ $(uname -m) == "x86_64" ]]; then
 	echo "TESTING: protocol (test/filters/protocol.exp)"
 	./protocol.exp
 else
@@ -80,10 +80,10 @@ fi
 echo "TESTING: seccomp bad empty (test/filters/seccomp-bad-empty.exp)"
 ./seccomp-bad-empty.exp
 
-if [ "$(uname -m)" = "x86_64" ]; then
+if [[ $(uname -m) == "x86_64" ]]; then
 	echo "TESTING: seccomp debug (test/filters/seccomp-debug.exp)"
 	./seccomp-debug.exp
-elif [ "$(uname -m)" = "i686" ]; then
+elif [[ $(uname -m) == "i686" ]]; then
 	echo "TESTING: seccomp debug (test/filters/seccomp-debug-32.exp)"
 	./seccomp-debug-32.exp
 else
@@ -114,14 +114,14 @@ echo "TESTING: seccomp chmod profile - seccomp lists (test/filters/seccomp-chmod
 echo "TESTING: seccomp empty (test/filters/seccomp-empty.exp)"
 ./seccomp-empty.exp
 
-if [ "$(uname -m)" = "x86_64" ]; then
+if [[ $(uname -m) == "x86_64" ]]; then
 	echo "TESTING: seccomp numeric (test/filters/seccomp-numeric.exp)"
 	./seccomp-numeric.exp
 else
 	echo "TESTING SKIP: seccomp numeric test implemented only for x86_64"
 fi
 
-if [ "$(uname -m)" = "x86_64" ]; then
+if [[ $(uname -m) == "x86_64" ]]; then
 	echo "TESTING: seccomp join (test/filters/seccomp-join.exp)"
 	./seccomp-join.exp
 else

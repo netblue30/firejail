@@ -8,7 +8,7 @@ OVERLAY="overlay"
 CHROOT="chroot"
 NETWORK="network"
 
-while [ $# -gt 0 ]; do    # Until you run out of parameters . . .
+while [[ $# -gt 0 ]]; do    # Until you run out of parameters . . .
 	case "$1" in
 	--nooverlay)
 		OVERLAY="none"
@@ -61,7 +61,7 @@ echo "TESTING: 1.10 disable /selinux"
 ####################
 # networking features
 ####################
-if [ $NETWORK == "network" ]
+if [[ $NETWORK == "network" ]]
 then
 	echo "TESTING: 2.1 hostname"
 	./2.1.exp "$OVERLAY" "$CHROOT"

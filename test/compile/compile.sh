@@ -47,7 +47,7 @@ print_title() {
 	echo
 	echo
 	echo "**************************************************"
-	echo $1
+	echo "$1"
 	echo "**************************************************"
 }
 
@@ -76,8 +76,8 @@ cleanup
 #*****************************************************************
 print_title "${arr[1]}"
 echo "$DIST"
-tar -xJvf ../../$DIST.tar.xz
-mv $DIST firejail
+tar -xJvf ../../"$DIST.tar.xz"
+mv "$DIST" firejail
 
 cd firejail
 ./configure --prefix=/usr --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -410,23 +410,23 @@ echo "**********************************************************"
 
 wc -l report-test*
 echo
-echo  "Legend:"
-echo ${arr[1]}
-echo ${arr[2]}
-echo ${arr[3]}
-echo ${arr[4]}
-echo ${arr[5]}
-echo ${arr[6]}
-echo ${arr[7]}
-echo ${arr[8]}
-echo ${arr[9]}
-echo ${arr[10]}
-echo ${arr[11]}
-echo ${arr[12]}
-echo ${arr[13]}
-echo ${arr[14]}
-echo ${arr[15]}
-echo ${arr[16]}
-echo ${arr[17]}
-echo ${arr[18]}
-echo ${arr[19]}
+echo "Legend:"
+echo "${arr[1]}"
+echo "${arr[2]}"
+echo "${arr[3]}"
+echo "${arr[4]}"
+echo "${arr[5]}"
+echo "${arr[6]}"
+echo "${arr[7]}"
+echo "${arr[8]}"
+echo "${arr[9]}"
+echo "${arr[10]}"
+echo "${arr[11]}"
+echo "${arr[12]}"
+echo "${arr[13]}"
+echo "${arr[14]}"
+echo "${arr[15]}"
+echo "${arr[16]}"
+echo "${arr[17]}"
+echo "${arr[18]}"
+echo "${arr[19]}"

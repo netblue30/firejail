@@ -319,8 +319,6 @@ Print content of file from sandbox container, see FILE TRANSFER section for more
 Chroot the sandbox into a root filesystem. Unlike the regular filesystem container,
 the system directories are mounted read-write. If the sandbox is started as a
 regular user, nonewprivs and a default capabilities filter are enabled.
-Note: Support for this command is controlled in firejail.config with the
-\fBchroot\fR option.
 .br
 
 .br
@@ -332,6 +330,9 @@ $ firejail \-\-chroot=/media/ubuntu warzone2100
 .br
 For automatic mounting of X11 and PulseAudio sockets set environment variables
 FIREJAIL_CHROOT_X11 and FIREJAIL_CHROOT_PULSE.
+.br
+Note: Support for this command is controlled in firejail.config with the
+\fBchroot\fR option.
 #endif
 .TP
 \fB\-\-cpu=cpu-number,cpu-number,cpu-number
@@ -2087,8 +2088,6 @@ The files and directories in the list must be expressed as relative to
 the /lib directory.
 The idea is to build a new /lib in a temporary filesystem,
 with only the library files necessary to run the application.
-Note: Support for this command is controlled in firejail.config with the
-\fBprivate-lib\fR option.
 It could be as simple as:
 .br
 
@@ -2134,6 +2133,9 @@ $ ps
 $
 .br
 
+.br
+Note: Support for this command is controlled in firejail.config with the
+\fBprivate-lib\fR option.
 .TP
 \fB\-\-private-opt=file,directory
 Build a new /opt in a temporary
@@ -2821,8 +2823,6 @@ parent is shutting down, bye...
 \fB\-\-tracelog
 This option enables auditing blacklisted files and directories. A message
 is sent to syslog in case the file or the directory is accessed.
-Note: Support for this command is controlled in firejail.config with the
-+\fBtracelog\fR option.
 .br
 
 .br
@@ -2865,6 +2865,9 @@ $ firejail \-\-tree
 .br
   11970:netblue:transmission-gtk
 
+.br
+Note: Support for this command is controlled in firejail.config with the
++\fBtracelog\fR option.
 #ifdef HAVE_FIRETUNNEL
 .TP
 \fB\-\-tunnel[=devname]

@@ -331,6 +331,8 @@ $ firejail \-\-chroot=/media/ubuntu warzone2100
 For automatic mounting of X11 and PulseAudio sockets set environment variables
 FIREJAIL_CHROOT_X11 and FIREJAIL_CHROOT_PULSE.
 .br
+
+.br
 Note: Support for this command is controlled in firejail.config with the
 \fBchroot\fR option.
 #endif
@@ -2843,6 +2845,11 @@ Dec  3 11:43:25 debian firejail[70]: blacklist violation - sandbox 26370, exe fi
 Dec  3 11:46:17 debian firejail[70]: blacklist violation - sandbox 26370, exe firefox, syscall opendir, path /boot
 .br
 [...]
+.br
+
+.br
+Note: Support for this command is controlled in firejail.config with the
+\fBtracelog\fR option.
 .TP
 \fB\-\-tree
 Print a tree of all sandboxed processes, see \fBMONITORING\fR section for more details.
@@ -2864,10 +2871,6 @@ $ firejail \-\-tree
 #endif
 .br
   11970:netblue:transmission-gtk
-
-.br
-Note: Support for this command is controlled in firejail.config with the
-+\fBtracelog\fR option.
 #ifdef HAVE_FIRETUNNEL
 .TP
 \fB\-\-tunnel[=devname]

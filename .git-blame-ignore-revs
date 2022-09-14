@@ -1,4 +1,13 @@
-# Revert "move whitelist/blacklist to allow/deny"
-f43382f1e9707b4fd5e63c7bfe881912aa4ee994
-# move whitelist/blacklist to allow/deny
-fe0f975f447d59977d90c3226cc8c623b31b20b3
+# Note: Entries (and sections) should be listed in topological order (that is,
+# in the same order that is shown by `git log --oneline`) and they can be
+# generated with one of the following commands:
+#
+# TZ=UTC0 git show --date='format-local:%Y-%m-%d' --pretty='%H # %cd | %s' -s
+#   [<commit>...]
+#
+# TZ=UTC0 git log --date='format-local:%Y-%m-%d' --pretty='%H # %cd | %s'
+#   [<revision-range>]
+
+# "move whitelist/blacklist to allow/deny"
+f43382f1e9707b4fd5e63c7bfe881912aa4ee994 # 2021-07-18 | Revert "move whitelist/blacklist to allow/deny"
+fe0f975f447d59977d90c3226cc8c623b31b20b3 # 2021-07-05 | move whitelist/blacklist to allow/deny

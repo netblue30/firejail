@@ -2871,7 +2871,7 @@ $ firejail \-\-tree
 #endif
 .br
   11970:netblue:transmission-gtk
-  
+
 #ifdef HAVE_FIRETUNNEL
 .TP
 \fB\-\-tunnel[=devname]

@@ -1,20 +1,20 @@
 firejail (0.9.71) baseline; urgency=low
   * work in progress
-  * modif: removed --cgroup= command (#5190 #5200)
-  * modif: disabled firetunnel by default in configure.ac (#5190)
-  * modif: disabled chroot by default in /etc/firejail/firejail.config (#5190)
-  * modif: set --shell=none as the default (#5190)
-  * modif: removed --shell= command (#5190 #5196 #5209)
-  * modif: disabled private-lib by default in /etc/firejail/firejail.config
-    (#5190 #5216)
-  * modif: disabled tracelog by default in /etc/firejail/firejail.config
-    (#5190)
   * feature: On failing to remount a fuse filesystem, give warning instead of
     erroring out (#5240 #5242)
   * feature: restrict namespaces (--restrict-namespaces) implemented as
     a seccomp filter for both 64 and 32 bit architectures (#4939 #5259)
   * feature: support for custom AppArmor profiles (--apparmor=) (#5274 #5316
     #5317)
+  * modif: removed --cgroup= command (#5190 #5200)
+  * modif: set --shell=none as the default (#5190)
+  * modif: removed --shell= command (#5190 #5196 #5209)
+  * modif: disabled firetunnel by default in configure.ac (#5190)
+  * modif: disabled chroot by default in /etc/firejail/firejail.config (#5190)
+  * modif: disabled private-lib by default in /etc/firejail/firejail.config
+    (#5190 #5216)
+  * modif: disabled tracelog by default in /etc/firejail/firejail.config
+    (#5190)
   * bugfix: Flood of seccomp audit log entries (#5207)
   * build: deduplicate configure-time vars into new config files (#5140 #5284)
   * build: fix file mode of shell scripts (644 -> 755) (#5206)

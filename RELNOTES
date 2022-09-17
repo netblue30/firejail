@@ -27,6 +27,10 @@ firejail (0.9.71) baseline; urgency=low
   * docs: mention risk of SUID binaries and also firejail-users(5) (#5288
     #5290)
   * docs: set vim filetype on man pages for syntax highlighting (#5296)
+  * docs: note that blacklist/whitelist follow symlinks (#5344)
+  * docs: Add IRC channel info to README.md (#5361)
+  * docs: man: Note that some commands can be disabled in firejail.config
+    (#5366)
  -- netblue30 <netblue30@yahoo.com>  Sat, 11 Jun 2022 09:00:00 -0500
 
 firejail (0.9.70) baseline; urgency=low

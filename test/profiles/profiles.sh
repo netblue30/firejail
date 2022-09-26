@@ -37,11 +37,11 @@ echo "TESTING: profile read-only links (test/profiles/profile_readonly.exp)"
 echo "TESTING: profile no permissions (test/profiles/profile_noperm.exp)"
 ./profile_noperm.exp
 
-PROFILES=`ls /etc/firejail/transmission*.profile /etc/firejail/fi*.profile /etc/firejail/fl*.profile /etc/firejail/free*.profile`
+profiles=( /etc/firejail/transmission*.profile /etc/firejail/fi*.profile /etc/firejail/fl*.profile /etc/firejail/free*.profile )
 echo "TESTING: small number of default profiles installed in /etc"
 
-for PROFILE in $PROFILES
+for profile in "${profiles[@]}"
 do
-	echo "TESTING: $PROFILE"
-	./test-profile.exp $PROFILE
+	echo "TESTING: $profile"
+	./test-profile.exp "$profile"
 done

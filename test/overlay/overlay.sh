@@ -22,8 +22,7 @@ rm -fr ~/_firejail_test_*
 ./fs-tmpfs.exp
 rm -fr ~/_firejail_test_*
 
-which firefox 2>/dev/null
-if [ "$?" -eq 0 ];
+if command -v firefox
 then
 	echo "TESTING: overlay firefox"
 	./firefox.exp
@@ -31,8 +30,7 @@ else
 	echo "TESTING SKIP: firefox not found"
 fi
 
-which firefox 2>/dev/null
-if [ "$?" -eq 0 ];
+if command -v firefox
 then
 	echo "TESTING: overlay firefox x11 xorg"
 	./firefox.exp
@@ -40,26 +38,22 @@ else
 	echo "TESTING SKIP: firefox not found"
 fi
 
-
 # check xpra/xephyr
-which xpra 2>/dev/null
-if [ "$?" -eq 0 ];
+if command -v xpra
 then
-        echo "xpra found"
+	echo "xpra found"
 else
-        echo "xpra not found"
-	which Xephyr 2>/dev/null
-	if [ "$?" -eq 0 ];
+	echo "xpra not found"
+	if command -v Xephyr
 	then
-        	echo "Xephyr found"
+		echo "Xephyr found"
 	else
-        	echo "TESTING SKIP: xpra and/or Xephyr not found"
+		echo "TESTING SKIP: xpra and/or Xephyr not found"
 		exit
 	fi
 fi
 
-which firefox 2>/dev/null
-if [ "$?" -eq 0 ];
+if command -v firefox
 then
 	echo "TESTING: overlay firefox x11"
 	./firefox-x11.exp

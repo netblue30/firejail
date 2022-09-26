@@ -17,6 +17,4 @@ echo "TESTING: chroot (test/chroot/fs_chroot.exp)"
 echo "TESTING: unchroot as root (test/chroot/unchroot-as-root.exp)"
 sudo ./unchroot-as-root.exp
 
-
-
 rm -f unchroot

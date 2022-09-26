@@ -7,7 +7,7 @@ export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
-if [ -f /etc/debian_version ]; then
+if [[ -f /etc/debian_version ]]; then
 	libdir=$(dirname "$(dpkg -L firejail | grep fcopy)")
 	export PATH="$PATH:$libdir"
 fi

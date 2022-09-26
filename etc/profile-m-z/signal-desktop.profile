@@ -26,9 +26,8 @@ dbus-user filter
 # allow D-Bus notifications
 dbus-user.talk org.freedesktop.Notifications
 
-# allow D-Bus communication with firefox for opening links
-dbus-user.talk org.mozilla.Firefox.*
-dbus-user.talk org.mozilla.firefox.*
+# allow D-Bus communication with Firefox browsers for opening links
+dbus-user.talk org.mozilla.*
 
 ignore dbus-user none
 

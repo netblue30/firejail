@@ -13,6 +13,9 @@ noblacklist ${HOME}/.kde4/share/apps/digikam
 noblacklist ${HOME}/.local/share/kxmlgui5/digikam
 noblacklist ${PICTURES}
 
+# Allow perl (blacklisted by disable-interpreters.inc)
+include allow-perl.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

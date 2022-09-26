@@ -3227,7 +3227,7 @@ int main(int argc, char **argv, char **envp) {
 				errExit("setresuid");
 
 			char arg[64];
-			snprintf(arg, sizeof(arg), "--netlock=%d", getpid());
+			snprintf(arg, sizeof(arg), "--netlock=%d", sandbox_pid);
 
 			char *cmd[3];
 			cmd[0] = BINDIR "/firejail";

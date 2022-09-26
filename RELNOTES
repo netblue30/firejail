@@ -1,21 +1,20 @@
 firejail (0.9.71) baseline; urgency=low
   * work in progress
-  * modif:  removed cgroups commands (#5190)
-  * modif: changed --disable-firetunnel into --enable-firetunnel in
-    configure.ac (#5190)
-  * modif: disabled chroot by default in /etc/firejail/firejail.config (#5190)
-  * modif: shell none set as default (#5190)
-  * modif: removed --shell= (#5190)
-  * modif: private-lib disabled by default in /etc/firejail/firejail.config
-    (#5190)
-  * modif: tracelog disabled by default in /etc/firejail/firejail.config
-    (#5190)
   * feature: On failing to remount a fuse filesystem, give warning instead of
     erroring out (#5240 #5242)
   * feature: restrict namespaces (--restrict-namespaces) implemented as
     a seccomp filter for both 64 and 32 bit architectures (#4939 #5259)
   * feature: support for custom AppArmor profiles (--apparmor=) (#5274 #5316
     #5317)
+  * modif: removed --cgroup= command (#5190 #5200)
+  * modif: set --shell=none as the default (#5190)
+  * modif: removed --shell= command (#5190 #5196 #5209)
+  * modif: disabled firetunnel by default in configure.ac (#5190)
+  * modif: disabled chroot by default in /etc/firejail/firejail.config (#5190)
+  * modif: disabled private-lib by default in /etc/firejail/firejail.config
+    (#5190 #5216)
+  * modif: disabled tracelog by default in /etc/firejail/firejail.config
+    (#5190)
   * bugfix: Flood of seccomp audit log entries (#5207)
   * build: deduplicate configure-time vars into new config files (#5140 #5284)
   * build: fix file mode of shell scripts (644 -> 755) (#5206)
@@ -28,6 +27,10 @@ firejail (0.9.71) baseline; urgency=low
   * docs: mention risk of SUID binaries and also firejail-users(5) (#5288
     #5290)
   * docs: set vim filetype on man pages for syntax highlighting (#5296)
+  * docs: note that blacklist/whitelist follow symlinks (#5344)
+  * docs: Add IRC channel info to README.md (#5361)
+  * docs: man: Note that some commands can be disabled in firejail.config
+    (#5366)
  -- netblue30 <netblue30@yahoo.com>  Sat, 11 Jun 2022 09:00:00 -0500
 
 firejail (0.9.70) baseline; urgency=low

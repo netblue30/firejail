@@ -33,6 +33,11 @@
 #
 #
 
+#
+# The following list of addresses was compiled from various public sources.
+#
+
+
 # local network addresses
 192.168.0.0/16 local network
 10.0.0.0/8 local network
@@ -81,19 +86,89 @@
 201.159.220.0/22 whois.lacnic.net Ecuador
 
 # some popular websites
+23.160.0.0/24 Twitch
+23.246.0.0/18, Netflix
 31.13.24.0/21 Facebook
 31.13.64.0/18 Facebook
+37.77.184.0/21 Netflix
+45.57.0.0/17 Netflix
+45.58.64.0/20 Dropbox
+45.113.128.0/22 Twitch
+52.223.192.0/18 Twitch
+63.245.208.0/23 Mozilla
 64.63.0.0/18 Twitter
+64.112.13.0/24 Dropbox
+64.120.128.0/17 Netflix
+66.197.128.0/17 Netflix
+69.53.224.0/19 Netflix
 69.171.224.0/19 Facebook
+91.105.192.0/23 Telegram
+91.108.4.0/22 Telegram
+91.108.8.0/21 Telegram
+91.108.16.0/21 Telegram
+91.108.56.0/22 Telegram
+91.189.88.0/24 Ubuntu One
+91.189.90.0/23 Ubuntu One
+91.189.92.0/23 Ubuntu One
+91.189.94.0/24 Ubuntu One
+95.161.64.0/20 Telegram
+99.181.64.0/18 Twitch
+103.53.48.0/23 Twitch
 104.244.40.0/21 Twitter
 129.134.0.0/16 Facebook
 140.82.112.0/20 GitHub
+103.10.124.0/23 Steam
+103.28.54.0/24 Steam
+108.160.160.0/20 Dropbox
+108.175.32.0/20 Netflix
+143.55.64.0/20 Github
+146.66.152.0/24 Steam
+146.66.155.0/24 Steam
+149.154.160.0/20 Telegram
+153.254.86.0/24 Steam
+155.133.224.0/22 Steam
+155.133.230.0/24 Steam
+155.133.232.0/23 Steam
+155.133.234.0/24 Steam
+155.133.236.0/22 Steam
+155.133.240.0/23 Steam
+155.133.245.0/24 Steam
+155.133.246.0/24 Steam
+155.133.248.0/21 Steam
 157.240.0.0/16 Facebook
+162.125.0.0/16 Dropbox
+162.213.32.0/22 Ubuntu One
+162.254.192.0/21 Steam
+185.2.220.0/22 Netflix
+185.9.188.0/22 Netflix
+185.25.182.0/23 Steam
+185.42.204.0/22 Twitch
+185.45.8.0/22 Dropbox
+185.76.151.0/24 Telegram
+185.105.164.0/24 Dropbox
+185.125.188.0/22 Ubuntu One
 185.199.108.0/22 GitHub
 188.64.224.0/21 Twitter
+190.217.33.0/24 Steam
 192.0.64.0/18 Wordpress
+192.16.64.0/21 Twitch
+192.30.252.0/22 GitHub
+192.69.96.0/22 Steam
+192.108.239.0/24 Twitch
+192.173.64.0/18 Netflix
+192.189.200.0/23 Dropbox
+194.169.254.0/24 Ubuntu One
+198.38.96.0/19 Netflix
+198.45.48.0/20 Netflix
+199.9.248.0/21 Twitch
 199.16.156.0/22 Twitter
 199.59.148.0/22 Twitter
+205.185.194.0/24 Steam
+205.196.6.0/24 Steam
+207.45.72.0/22 Netflix
+208.64.200.0/22 Steam
+208.75.76.0/22 Netflix
+208.78.164.0/22 Steam
 208.80.152.0/22 Wikipedia
 
 # StackPath

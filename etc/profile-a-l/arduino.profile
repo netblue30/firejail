@@ -10,13 +10,10 @@ noblacklist ${HOME}/.arduino15
 noblacklist ${HOME}/Arduino
 noblacklist ${DOCUMENTS}
 
-# Allow java (blacklisted by disable-devel.inc)
-include allow-java.inc
+# Allows files commonly used by IDEs
+include allow-common-devel.inc
 
 include disable-common.inc
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 

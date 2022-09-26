@@ -19,6 +19,13 @@ include allow-perl.inc
 include allow-python2.inc
 include allow-python3.inc
 
+# The lines below are needed to find the default Firefox profile name, to allow
+# opening links in an existing instance of Firefox (note that it still fails if
+# there isn't a Firefox instance running with the default profile; see #5352)
+noblacklist ${HOME}/.mozilla
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
+read-only ${HOME}/.mozilla/firefox/profiles.ini
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -55,5 +62,8 @@ private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,machine-id,mime.types,nsswitch.conf,passwd,pki,pulse,resolv.conf,ssl,X11,xdg
 private-tmp
 
-dbus-user none
+dbus-user filter
+# allow D-Bus communication with firefox for opening links
+dbus-user.talk org.mozilla.*
+
 dbus-system none

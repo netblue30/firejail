@@ -77,6 +77,7 @@ Firejail Authors (alphabetical order)
 	- add pybitmessage profile
 a1346054 (https://github.com/a1346054)
 	- add missing final newlines in various files
+	- Remove deprecated syntax and modernize shell test scripts
 Ádler Jonas Gross (https://github.com/adgross)
 	- AppArmor fix
 Adrian L. Shaw (https://github.com/adrianlshaw)
@@ -121,6 +122,7 @@ Alexander Stein (https://github.com/ajstein)
 	- added profile for qutebrowser
 alkim0 (https://github.com/alkim0)
 	- warn when encountering EIO during remount
+	- Add profile for chafa
 Amin Vakil (https://github.com/aminvakil)
 	- whois profile fix
 	- added profile for strawberry
@@ -929,6 +931,7 @@ rusty-snake (https://github.com/rusty-snake)
 	- added sort.py to contrib
 sak96 (https://github.com/sak96)
 	- discord profile fixes
+	- Fix Firefox 'Profile not found' for psd (v6.45)
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)

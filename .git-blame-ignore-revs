@@ -1,4 +1,35 @@
-# move whitelist/blacklist to allow/deny
-fe0f975f447d59977d90c3226cc8c623b31b20b3
-# Revert "move whitelist/blacklist to allow/deny"
-f43382f1e9707b4fd5e63c7bfe881912aa4ee994
+# Note: Entries (and sections) should be listed in topological order (that is,
+# in the same order that is shown by `git log --oneline`) and they can be
+# generated with one of the following commands:
+#
+# TZ=UTC0 git show --date='format-local:%Y-%m-%d' --pretty='%H # %cd | %s' -s
+#   [<commit>...]
+#
+# TZ=UTC0 git log --date='format-local:%Y-%m-%d' --pretty='%H # %cd | %s'
+#   [<revision-range>]
+
+# Landlock v1
+97874c3bf923798b0e3ab119d169aaa9b1314221 # 2022-09-05 | Revert "Merge pull request #5315 from ChrysoliteAzalea/landlock"
+b900bdc87463d79568aef46cb7e3b373fbff84b1 # 2022-09-05 | Revert "compile fix"
+bfcacff665b750ae7b9fc984496df26fcd7cc53d # 2022-09-05 | Revert "tracelog disabled by default in /etc/firejail/firejail.config file"
+2a79f3a2689711e6151187063bb55a6af3160b6f # 2022-09-05 | Revert "README/README.md"
+67348ac9c2cdf9d30efbf9fd13eaf0a4adc3be00 # 2022-09-05 | Revert "typos"
+0cd20b7e81a7815f57055b38f0746ef14fed2cd0 # 2022-09-05 | Revert "fix syntax in configure.ac"
+26c74796f3c76b8f0ea0b95a863eb707ecced195 # 2022-09-05 | Revert "landlock: check for landlock support in glibc"
+5b206611c01e42a6d63c596be45bcf085832b035 # 2022-09-05 | Revert "landlock: support in firejail --version"
+2f3c19a87dd49b220f69f27f8c14c627277355d6 # 2022-09-04 | landlock: support in firejail --version
+c5a052ffa4e2ccaf240635db116a49986808a2b6 # 2022-09-04 | landlock: check for landlock support in glibc
+2d885e5a091f847d7c2128506947b0f67dd2edab # 2022-09-04 | fix syntax in configure.ac
+0594c5d3d0f1ddc4049cf2ed38676a1cdc8d6843 # 2022-08-30 | typos
+796fa09636195d8751a7bbc1e1bc88bf8c3ac95a # 2022-08-30 | README/README.md
+6e687c30110a52f267c1779c4eeab82bded9cb77 # 2022-08-29 | tracelog disabled by default in /etc/firejail/firejail.config file
+836ffe37ff891886f15243eacc70963368d57a3f # 2022-08-29 | compile fix
+c6d7474c138f92b3cb3992b5c57750af89eb3b77 # 2022-08-16 | tinyLL has been removed as it's no longer needed
+460fa7a6f98cc1e7aec2953e6523f32677d546c7 # 2022-08-16 | Proposed fixes.
+877fc99d541af83a9486dfff43580e33dedd8b4c # 2022-08-15 | Update quotation marks in src/zsh_completion/_firejail.in
+ba828befe06b99b7dc2d504085cb40aa2d710998 # 2022-08-15 | Landlock functions are added to the code of Firejail, removing the dependency on tinyLL
+61b15442898eeb1db2d23b6b2eb72a705ceb368a # 2022-08-15 | Landlock support has been added.
+
+# "move whitelist/blacklist to allow/deny"
+f43382f1e9707b4fd5e63c7bfe881912aa4ee994 # 2021-07-18 | Revert "move whitelist/blacklist to allow/deny"
+fe0f975f447d59977d90c3226cc8c623b31b20b3 # 2021-07-05 | move whitelist/blacklist to allow/deny

@@ -23,6 +23,9 @@ firejail (0.9.71) baseline; urgency=low
   * build: add autoconf auto-generation comment to input files (#5251)
   * build: Add files make uninstall forgot to remove (#5283)
   * build: add and use TARNAME instead of NAME for paths (#5310)
+  * build: only install ids.config when --enable-ids is set (#5357)
+  * build: Remove deprecated syntax and modernize shell test scripts (#5370)
+  * ci: bump ubuntu to 22.04 and use newer compilers / analyzers (#5275)
   * ci: ignore git-related paths and the project license (#5249)
   * docs: mention risk of SUID binaries and also firejail-users(5) (#5288
     #5290)

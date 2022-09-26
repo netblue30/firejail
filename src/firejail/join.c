@@ -545,7 +545,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			dbus_set_system_bus_env();
 #endif
 
-		start_application(0, shfd, NULL);
+		start_application(arg_join_network || arg_join_filesystem, shfd, NULL);
 
 		__builtin_unreachable();
 	}

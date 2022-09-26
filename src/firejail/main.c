@@ -824,7 +824,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			// try to join by name only
 			pid_t pid;
 			if (!read_pid(argv[i] + 16, &pid)) {
-
 				join(pid, argc, argv, i + 1);
 				exit(0);
 			}
@@ -843,6 +842,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 				exit(1);
 			}
 
+			if (argc <= (i+1))
+				just_run_the_shell = 1;
+			cfg.original_program_index = i + 1;
+
 			// join sandbox by pid or by name
 			pid_t pid = require_pid(argv[i] + 15);
 			join(pid, argc, argv, i + 1);
@@ -859,6 +862,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			fprintf(stderr, "Error: --join-filesystem is only available to root user\n");
 			exit(1);
 		}
+
+		if (argc <= (i+1))
+			just_run_the_shell = 1;
+		cfg.original_program_index = i + 1;
 
 		// join sandbox by pid or by name
 		pid_t pid = require_pid(argv[i] + 18);

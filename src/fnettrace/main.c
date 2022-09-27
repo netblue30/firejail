@@ -74,7 +74,7 @@ void hfree(HNode *ptr) {
 	hnode_unused = ptr;
 }
 
-
+// using protocol 0 and port 0 for ICMP
 static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint32_t bytes) {
 	uint8_t h = hash(ip_src);
 
@@ -183,7 +183,7 @@ static char *print_bw(unsigned units) {
 
 		unsigned i;
 		for (i = 0; i < DISPLAY_BW_UNITS; i++, ptr++)
-			sprintf(ptr, "%s", (i < units)? "*": " ");
+			sprintf(ptr, "%s", (i < units) ? "*" : " ");
 		sprintf(ptr, "%s", " ");
 	}
 
@@ -196,7 +196,7 @@ static inline void adjust_line(char *str, int len, int cols) {
 		len = LINE_MAX;
 	if (cols > 4 && len > cols) {
 		str[cols] = '\0';
-		str[cols- 1] = '\n';
+		str[cols - 1] = '\n';
 	}
 }
 
@@ -211,18 +211,44 @@ static unsigned adjust_bandwidth(unsigned bw) {
 	unsigned max = 0;
 	for ( i = 0; i < BWMAX_CNT; i++) {
 		sum += array[i];
-		max = (max > array[i])? max: array[i];
+		max = (max > array[i]) ? max : array[i];
 	}
 	sum /= BWMAX_CNT;
 
 	if (++instance >= BWMAX_CNT)
 		instance = 0;
 
-	return (max < (sum / 2))? sum: max;
+	return (max < (sum / 2)) ? sum : max;
 }
 
+typedef struct port_type_t {
+	uint16_t port;
+	char *service;
+} PortType;
+static PortType ports[] = {
+	{20, "(FTP)"},
+	{21, "(FTP)"},
+	{22, "(SSH)"},
+	{23, "(telnet)"},
+	{25, "(SMTP)"},
+	{43, "(WHOIS)"},
+	{67, "(DHCP)"},
+	{68, "(DHCP)"},
+	{69, "(TFTP)"},
+	{80, "(HTTP)"},
+	{109, "(POP2)"},
+	{110, "(POP3)"},
+	{113, "(IRC)"},
+	{123, "(NTP)"},
+	{161, "(SNP)"},
+	{162, "(SNP)"},
+	{194, "(IRC)"},
+	{0, NULL},
+};
+
+
 static inline const char *common_port(uint16_t port) {
-	if (port > 194) {
+	if (port >= 6660 && port <= 9150) {
 		if (port >= 6660 && port <= 6669)
 			return "(IRC)";
 		else if (port == 6679)
@@ -244,44 +270,23 @@ static inline const char *common_port(uint16_t port) {
 		return NULL;
 	}
 
-	if (port == 20 || port == 21)
-		return "(FTP)";
-	else if (port == 22)
-		return "(SSH)";
-	else if (port == 23)
-		return "(telnet)";
-	else if (port == 25)
-		return "(SMTP)";
-	else if (port == 43)
-		return "(WHOIS)";
-	else if (port == 67)
-		return "(DHCP)";
-	else if (port == 69)
-		return "(TFTP)";
-	else if (port == 80)
-		return "(HTTP)";
-	else if (port == 109)
-		return "(POP2)";
-	else if (port == 110)
-		return "(POP3)";
-	else if (port == 113)
-		return "(IRC)";
-	else if (port == 123)
-		return "(NTP)";
-	else if (port == 161)
-		return "(SNMP)";
-	else if (port == 162)
-		return "(SNMP)";
-	else if (port == 194)
-		return "(IRC)";
+	if (port <= 194) {
+		PortType *ptr =&ports[0];
+		while(ptr->service != NULL) {
+			if (ptr->port == port)
+				return ptr->service;
+			ptr++;
+		}
+	}
 
 	return NULL;
 }
 
 
+
 static void hnode_print(unsigned bw) {
 	assert(!arg_netfilter);
-	bw = (bw < 1024 * DISPLAY_INTERVAL)? 1024 * DISPLAY_INTERVAL: bw;
+	bw = (bw < 1024 * DISPLAY_INTERVAL) ? 1024 * DISPLAY_INTERVAL : bw;
 #ifdef DEBUG
 	printf("*********************\n");
 	debug_dlist();
@@ -322,10 +327,10 @@ static void hnode_print(unsigned bw) {
 			char bytes[11];
 			if (ptr->bytes > (DISPLAY_INTERVAL * 1024 * 1024 * 2)) // > 2 MB/second
 				snprintf(bytes, 11, "%u MB/s",
-					(unsigned) (ptr->bytes / (DISPLAY_INTERVAL * 1024* 1024)));
+					 (unsigned) (ptr->bytes / (DISPLAY_INTERVAL * 1024 * 1024)));
 			else if (ptr->bytes > (DISPLAY_INTERVAL * 1024 * 2)) // > 2 KB/second
 				snprintf(bytes, 11, "%u KB/s",
-					(unsigned) (ptr->bytes / (DISPLAY_INTERVAL * 1024)));
+					 (unsigned) (ptr->bytes / (DISPLAY_INTERVAL * 1024)));
 			else
 				snprintf(bytes, 11, "%u B/s ", (unsigned) (ptr->bytes / DISPLAY_INTERVAL));
 
@@ -363,9 +368,13 @@ static void hnode_print(unsigned bw) {
 
 			if (protocol == NULL)
 				protocol = "";
+			if (ptr->port_src == 0)
+				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d (ICMP) %s\n",
+					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->hostname);
+			else
+				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s\n",
+					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->hostname);
 
-			len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s\n",
-				bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->hostname);
 			adjust_line(line, len, cols);
 			printf("%s", line);
 
@@ -399,6 +408,7 @@ static void hnode_print(unsigned bw) {
 #endif
 }
 
+// trace rx traffic coming in
 static void run_trace(void) {
 	if (arg_netfilter)
 		logprintf("accumulating traffic for %d seconds\n", NETLOCK_INTERVAL);
@@ -406,7 +416,8 @@ static void run_trace(void) {
 	// trace only rx ipv4 tcp and upd
 	int s1 = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
 	int s2 = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
-	if (s1 < 0 || s2 < 0)
+	int s3 = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
+	if (s1 < 0 || s2 < 0 || s3 < 0)
 		errExit("socket");
 
 	unsigned start = time(NULL);
@@ -434,18 +445,29 @@ static void run_trace(void) {
 		FD_ZERO(&rfds);
 		FD_SET(s1, &rfds);
 		FD_SET(s2, &rfds);
+		FD_SET(s3, &rfds);
 		int maxfd = (s1 > s2) ? s1 : s2;
-		 maxfd++;
+		maxfd = (s3 > maxfd) ? s3 : maxfd;
+		maxfd++;
+
 		struct timeval tv;
 		tv.tv_sec = 1;
 		tv.tv_usec = 0;
+
 		int rv = select(maxfd, &rfds, NULL, NULL, &tv);
 		if (rv < 0)
 			errExit("select");
 		else if (rv == 0)
 			continue;
 
-		int sock = (FD_ISSET(s1, &rfds)) ? s1 : s2;
+		int icmp = 0;
+		int sock = s1;
+		if (FD_ISSET(s2, &rfds))
+			sock = s2;
+		else if (FD_ISSET(s3, &rfds)) {
+			sock = s3;
+			icmp = 1;
+		}
 
 		unsigned bytes = recvfrom(sock, buf, MAX_BUF_SIZE, 0, NULL, NULL);
 		if (bytes >= 20) { // size of IP header
@@ -470,12 +492,16 @@ static void run_trace(void) {
 				ip_src = ntohl(ip_src);
 
 				uint8_t hlen = (buf[0] & 0x0f) * 4;
-				uint16_t port_src;
-				memcpy(&port_src, buf + hlen, 2);
-				port_src = ntohs(port_src);
+				if (icmp)
+					hnode_add(ip_src, 0, 0, bytes + 14);
+				else {
+					uint16_t port_src;
+					memcpy(&port_src, buf + hlen, 2);
+					port_src = ntohs(port_src);
 
-				uint8_t protocol = buf[9];
-				hnode_add(ip_src, protocol, port_src, bytes + 14);
+					uint8_t protocol = buf[9];
+					hnode_add(ip_src, protocol, port_src, bytes + 14);
+				}
 			}
 		}
 	}
@@ -506,7 +532,7 @@ static int print_filter(FILE *fp) {
 			// filter rules are targeting ip address, the port number is disregarded,
 			// so we look only at the first instance of an address
 			if (ptr->ip_instance == 1) {
-				char *protocol = (ptr->protocol == 6)? "tcp": "udp";
+				char *protocol = (ptr->protocol == 6) ? "tcp" : "udp";
 				fprintf(fp, "-A INPUT -s %d.%d.%d.%d -p %s  -j ACCEPT\n",
 					PRINT_IP(ptr->ip_src),
 					protocol);
@@ -583,7 +609,7 @@ static void deploy_netfilter(void) {
 		exit(1);
 	}
 
-	FILE* fp = fdopen(fd, "w");
+	FILE *fp = fdopen(fd, "w");
 	if (!fp) {
 		rv = unlink(fname);
 		(void) rv;
@@ -621,21 +647,21 @@ static void deploy_netfilter(void) {
 	logprintf("\nfirewall deployed\n");
 }
 
-void logprintf(char* fmt, ...) {
+void logprintf(char *fmt, ...) {
 	if (!arg_log)
 		return;
 
 	FILE *fp = fopen(arg_log, "a");
 	if (fp) { // disregard if error
 		va_list args;
-		va_start(args,fmt);
+		va_start(args, fmt);
 		vfprintf(fp, fmt, args);
 		va_end(args);
 		fclose(fp);
 	}
 
 	va_list args;
-	va_start(args,fmt);
+	va_start(args, fmt);
 	vfprintf(stdout, fmt, args);
 	va_end(args);
 }

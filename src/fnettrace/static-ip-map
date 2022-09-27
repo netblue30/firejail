@@ -65,9 +65,13 @@
 214.0.0.0/8 	US Army
 215.0.0.0/8 US Army
 
-# whois/DNS
+# DNS
 1.1.1.0/24 Cloudflare DNS
 1.0.0.0/24 Cloudflare DNS
+4.2.2.1/32 Level3 DNS
+4.2.2.2/32 Level3 DNS
+4.2.2.3/32 Level3 DNS
+4.2.2.4/32 Level3 DNS
 8.8.4.0/24 Google DNS
 8.8.8.0/24 Google DNS
 9.9.9.0/24 Quad9 DNS
@@ -76,6 +80,9 @@
 149.112.120.0/21 CIRA DNS Canada
 176.103.128.0/19 Adguard DNS
 185.228.168.0/24 Cleanbrowsing DNS
+208.67.216.0/21 OpenDNS
+
+# whois
 193.0.0.0/21 whois.ripe.net Netherlands
 199.5.26.0/24 whois.arin.net US
 199.15.80.0/21 whois.publicinterestregistry.net Canada

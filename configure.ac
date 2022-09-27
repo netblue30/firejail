@@ -272,7 +272,7 @@ AS_IF([test "x$enable_lts" = "xyes"], [
 	HAVE_FILE_TRANSFER=""
 	HAVE_SUID="-DHAVE_SUID"
 	BUSYBOX_WORKAROUND="no"
-	HAVE_CONTRIB_INSTALL="no",
+	HAVE_CONTRIB_INSTALL="no"
 ])
 
 AC_CHECK_HEADER([linux/seccomp.h], [], AC_MSG_ERROR([*** SECCOMP support is not installed (/usr/include/linux/seccomp.h missing) ***]))

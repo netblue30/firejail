@@ -3670,7 +3670,7 @@ if test "x$enable_lts" = "xyes"; then :
 	HAVE_FILE_TRANSFER=""
 	HAVE_SUID="-DHAVE_SUID"
 	BUSYBOX_WORKAROUND="no"
-	HAVE_CONTRIB_INSTALL="no",
+	HAVE_CONTRIB_INSTALL="no"
 
 fi
 

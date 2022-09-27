@@ -322,13 +322,10 @@ EOF
 
 if test "$HAVE_LTS" = -DHAVE_LTS; then
 	cat <<\EOF
-
-
 *********************************************************
 *    Warning: Long-term support (LTS) was enabled!      *
 *    Most compile-time options have been rewritten!     *
 *********************************************************
-
 
 EOF
 fi

@@ -21,22 +21,22 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_PROG_CC
 
 HAVE_SPECTRE="no"
-AX_CHECK_COMPILE_FLAG(
-    [-mindirect-branch=thunk],
-    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -mindirect-branch=thunk"]
-)
-AX_CHECK_COMPILE_FLAG(
-    [-mretpoline],
-    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -mretpoline"]
-)
-AX_CHECK_COMPILE_FLAG(
-    [-fstack-clash-protection],
-    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-clash-protection"]
-)
-AX_CHECK_COMPILE_FLAG(
-    [-fstack-protector-strong],
-    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-protector-strong"]
-)
+AX_CHECK_COMPILE_FLAG([-mindirect-branch=thunk], [
+	HAVE_SPECTRE="yes"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -mindirect-branch=thunk"
+])
+AX_CHECK_COMPILE_FLAG([-mretpoline], [
+	HAVE_SPECTRE="yes"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -mretpoline"
+])
+AX_CHECK_COMPILE_FLAG([-fstack-clash-protection], [
+	HAVE_SPECTRE="yes"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-clash-protection"
+])
+AX_CHECK_COMPILE_FLAG([-fstack-protector-strong], [
+	HAVE_SPECTRE="yes"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-protector-strong"
+])
 
 AC_ARG_ENABLE([analyzer],
     [AS_HELP_STRING([--enable-analyzer], [enable GCC static analyzer])])
@@ -68,8 +68,10 @@ AC_ARG_ENABLE([apparmor],
     [AS_HELP_STRING([--enable-apparmor], [enable apparmor])])
 AS_IF([test "x$enable_apparmor" = "xyes"], [
 	HAVE_APPARMOR="-DHAVE_APPARMOR"
-	PKG_CHECK_MODULES([AA], [libapparmor],
-	    [EXTRA_CFLAGS="$EXTRA_CFLAGS $AA_CFLAGS" && EXTRA_LDFLAGS="$EXTRA_LDFLAGS $AA_LIBS"])
+	PKG_CHECK_MODULES([AA], [libapparmor], [
+		EXTRA_CFLAGS="$EXTRA_CFLAGS $AA_CFLAGS"
+		EXTRA_LDFLAGS="$EXTRA_LDFLAGS $AA_LIBS"
+	])
 ])
 
 HAVE_SELINUX=""

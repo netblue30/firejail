@@ -3615,7 +3615,7 @@ fi
 
 if test "x$enable_contrib_install" = "xno"; then :
 
-       HAVE_CONTRIB_INSTALL="no"
+	HAVE_CONTRIB_INSTALL="no"
 
 fi
 
@@ -3641,7 +3641,7 @@ fi
 
 if test "x$enable_only_syscfg_profiles" = "xyes"; then :
 
-    HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
+	HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
 
 fi
 

@@ -232,7 +232,7 @@ AC_SUBST([HAVE_CONTRIB_INSTALL])
 AC_ARG_ENABLE([contrib-install],
     [AS_HELP_STRING([--enable-contrib-install], [install contrib scripts])])
 AS_IF([test "x$enable_contrib_install" = "xno"], [
-       HAVE_CONTRIB_INSTALL="no"
+	HAVE_CONTRIB_INSTALL="no"
 ])
 
 HAVE_FORCE_NONEWPRIVS=""
@@ -248,7 +248,7 @@ AC_SUBST([HAVE_ONLY_SYSCFG_PROFILES])
 AC_ARG_ENABLE([only-syscfg-profiles],
     [AS_HELP_STRING([--enable-only-syscfg-profiles], [disable profiles in $HOME/.config/firejail])])
 AS_IF([test "x$enable_only_syscfg_profiles" = "xyes"], [
-    HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
+	HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
 ])
 
 HAVE_LTS=""

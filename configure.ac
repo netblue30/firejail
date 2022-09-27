@@ -49,12 +49,12 @@ AC_ARG_ENABLE([sanitizer],
         [enable a compiler-based sanitizer (debug)])],
     [],
     [enable_sanitizer=no])
-AS_IF([test "x$enable_sanitizer" != "xno" ],
-	[AX_CHECK_COMPILE_FLAG([-fsanitize=$enable_sanitizer], [
+AS_IF([test "x$enable_sanitizer" != "xno" ], [
+	AX_CHECK_COMPILE_FLAG([-fsanitize=$enable_sanitizer], [
 		EXTRA_CFLAGS="$EXTRA_CFLAGS -fsanitize=$enable_sanitizer -fno-omit-frame-pointer"
 		EXTRA_LDFLAGS="$EXTRA_LDFLAGS -fsanitize=$enable_sanitizer"
-	], [AC_MSG_ERROR([sanitizer not supported: $enable_sanitizer])]
-)])
+	], [AC_MSG_ERROR([sanitizer not supported: $enable_sanitizer])])
+])
 
 HAVE_IDS=""
 AC_SUBST([HAVE_IDS])

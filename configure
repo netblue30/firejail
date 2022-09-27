@@ -3056,7 +3056,8 @@ else
 fi
 
 if test "x$enable_sanitizer" != "xno" ; then :
-  as_CACHEVAR=`$as_echo "ax_cv_check_cflags__-fsanitize=$enable_sanitizer" | $as_tr_sh`
+
+	as_CACHEVAR=`$as_echo "ax_cv_check_cflags__-fsanitize=$enable_sanitizer" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C compiler accepts -fsanitize=$enable_sanitizer" >&5
 $as_echo_n "checking whether C compiler accepts -fsanitize=$enable_sanitizer... " >&6; }
 if eval \${$as_CACHEVAR+:} false; then :
@@ -3094,8 +3095,8 @@ if eval test \"x\$"$as_CACHEVAR"\" = x"yes"; then :
 
 else
   as_fn_error $? "sanitizer not supported: $enable_sanitizer" "$LINENO" 5
-
 fi
+
 
 fi
 

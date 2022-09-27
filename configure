@@ -3345,7 +3345,6 @@ fi
 
 
 
-
 HAVE_DBUSPROXY=""
 
 # Check whether --enable-dbusproxy was given.
@@ -3590,7 +3589,6 @@ if test "x$enable_busybox_workaround" = "xyes"; then :
 	BUSYBOX_WORKAROUND="yes"
 
 fi
-
 
 HAVE_GCOV=""
 

@@ -84,7 +84,6 @@ AS_IF([test "x$enable_selinux" = "xyes"], [
 AC_SUBST([EXTRA_CFLAGS])
 AC_SUBST([EXTRA_LDFLAGS])
 
-
 HAVE_DBUSPROXY=""
 AC_SUBST([HAVE_DBUSPROXY])
 AC_ARG_ENABLE([dbusproxy],
@@ -216,7 +215,6 @@ AC_ARG_ENABLE([busybox-workaround],
 AS_IF([test "x$enable_busybox_workaround" = "xyes"], [
 	BUSYBOX_WORKAROUND="yes"
 ])
-
 
 HAVE_GCOV=""
 AC_SUBST([HAVE_GCOV])

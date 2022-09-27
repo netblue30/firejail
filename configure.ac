@@ -277,7 +277,8 @@ AS_IF([test "x$enable_lts" = "xyes"], [
 	HAVE_CONTRIB_INSTALL="no"
 ])
 
-AC_CHECK_HEADER([linux/seccomp.h], [], AC_MSG_ERROR([*** SECCOMP support is not installed (/usr/include/linux/seccomp.h missing) ***]))
+AC_CHECK_HEADER([linux/seccomp.h], [],
+    [AC_MSG_ERROR([*** SECCOMP support is not installed (/usr/include/linux/seccomp.h missing) ***])])
 
 # set sysconfdir
 if test "$prefix" = /usr; then

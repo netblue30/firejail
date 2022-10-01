@@ -16,6 +16,7 @@ include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
@@ -28,6 +29,7 @@ whitelist ${HOME}/.config/qutebrowser
 whitelist ${HOME}/.local/share/qutebrowser
 include whitelist-common.inc
 
+apparmor
 caps.drop all
 netfilter
 nodvd
@@ -38,3 +40,19 @@ protocol unix,inet,inet6,netlink
 # blacklisting of chroot system calls breaks qt webengine
 seccomp !chroot,!name_to_handle_at
 # tracelog
+
+disable-mnt
+private-cache
+private-dev
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,localtime,machine-id,pki,pulse,resolv.conf,ssl
+private-tmp
+
+dbus-user filter
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.mpris.MediaPlayer2.*
+# Add the next line to your qutebrowser.local to allow screen sharing under wayland.
+#dbus-user.talk org.freedesktop.portal.Desktop
+# Add the next line to your qutebrowser.local if screen sharing sharing still does not work
+# with the above lines (might depend on the portal implementation).
+#ignore noroot
+dbus-system none

@@ -58,6 +58,7 @@ whitelist ${HOME}/.config/yt-dlp.conf
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/yt-dlp.conf
 whitelist ${HOME}/yt-dlp.conf.txt
+whitelist /usr/lib/mpv-mpris
 whitelist /usr/share/lua
 whitelist /usr/share/lua*
 whitelist /usr/share/vulkan

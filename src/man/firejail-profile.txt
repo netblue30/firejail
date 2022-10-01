@@ -254,6 +254,15 @@ blacklist /usr/bin/gcc*
 blacklist ${PATH}/ifconfig
 .br
 blacklist ${HOME}/.ssh
+.br
+
+.br
+Blacklisted files are visible, but get a size of 0 bytes, permissions 400,
+ownership set to root:root, and reset timestamps and extended attributes.
+I/O operations on them will fail. (including deletes).
+.br
+Blacklisted directories are visible, but get permissions 400,
+ownership set to root:root and reset timestamps. I/O operations on them will fail. 
 
 .TP
 \fBblacklist-nolog file_or_directory
@@ -269,9 +278,13 @@ blacklist-nolog /usr/bin/gcc*
 .TP
 \fBbind directory1,directory2
 Mount-bind directory1 on top of directory2. This option is only available when running as root.
+Directories will retain the ownership and permissions of the original directory being mounted over. (directory2)
+After termination, modificationss affect the overlay directory. (directory1)
 .TP
 \fBbind file1,file2
 Mount-bind file1 on top of file2. This option is only available when running as root.
+Files will retain the ownership and permissions of the original file being mounted over (file2)
+After termination, deletes do not persist but writes affect the overlayed file (file1)
 .TP
 \fBdisable-mnt
 Disable /mnt, /media, /run/mount and /run/media access.
@@ -434,7 +447,9 @@ Make directory or file read-only.
 Make directory or file read-write.
 .TP
 \fBtmpfs directory
-Mount an empty tmpfs filesystem on top of directory. Directories outside user home or not owned by the user are not allowed. Sandboxes running as root are exempt from these restrictions.
+Mount an empty tmpfs filesystem on top of directory. Changes do not persist after termination.
+Directories outside user home or not owned by the user are not allowed. Sandboxes running as root are exempt from these restrictions.
+This directive has no effect for files (they appear unmodified and changes persist after termination).
 .TP
 \fBtracelog
 Blacklist violations logged to syslog.

@@ -362,7 +362,7 @@ scan-build: clean
 
 .PHONY: codespell
 codespell: clean
-	codespell --ignore-regex "UE|creat|shotcut|ether" src test
+	codespell --ignore-regex "UE|creat|doas|shotcut|ether" src test
 
 .PHONY: print-env
 print-env:

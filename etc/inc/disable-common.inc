@@ -416,6 +416,7 @@ blacklist /tmp/ssh-*
 # top secret
 blacklist /.fscrypt
 blacklist /etc/davfs2/secrets
+blacklist /etc/doas.conf
 blacklist /etc/group+
 blacklist /etc/group-
 blacklist /etc/gshadow
@@ -428,6 +429,8 @@ blacklist /etc/shadow+
 blacklist /etc/shadow-
 blacklist /etc/ssh
 blacklist /etc/ssh/*
+blacklist /etc/sudo*.conf
+blacklist /etc/sudoers*
 blacklist /home/.ecryptfs
 blacklist /home/.fscrypt
 blacklist ${HOME}/*.kdb

@@ -47,9 +47,10 @@ private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,localtime,machine-id,pki,pulse,resolv.conf,ssl
 private-tmp
 
-dbus-user filter
-dbus-user.talk org.freedesktop.Notifications
-dbus-user.talk org.mpris.MediaPlayer2.*
+# to-do: mpris support https://github.com/netblue30/firejail/pull/5389#issuecomment-1264556158
+#dbus-user filter
+#dbus-user.talk org.freedesktop.Notifications
+#dbus-user.talk org.mpris.MediaPlayer2.*
 # Add the next line to your qutebrowser.local to allow screen sharing under wayland.
 #dbus-user.talk org.freedesktop.portal.Desktop
 # Add the next line to your qutebrowser.local if screen sharing sharing still does not work

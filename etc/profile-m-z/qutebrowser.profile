@@ -10,6 +10,9 @@ noblacklist ${HOME}/.cache/qutebrowser
 noblacklist ${HOME}/.config/qutebrowser
 noblacklist ${HOME}/.local/share/qutebrowser
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
+include allow-bin-sh.inc
+
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
@@ -19,6 +22,7 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
+include disable-shell.inc
 
 mkdir ${HOME}/.cache/qutebrowser
 mkdir ${HOME}/.config/qutebrowser
@@ -27,7 +31,12 @@ whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/qutebrowser
 whitelist ${HOME}/.config/qutebrowser
 whitelist ${HOME}/.local/share/qutebrowser
+whitelist /usr/share/qtbrowser
 include whitelist-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all

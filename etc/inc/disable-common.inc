@@ -479,6 +479,7 @@ blacklist ${PATH}/chage
 blacklist ${PATH}/chfn
 blacklist ${PATH}/chsh
 blacklist ${PATH}/crontab
+blacklist ${PATH}/doas
 blacklist ${PATH}/evtest
 blacklist ${PATH}/expiry
 blacklist ${PATH}/fusermount

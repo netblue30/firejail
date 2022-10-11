@@ -24,6 +24,8 @@
 #include <linux/if_ether.h>
 #define MAX_BUF_SIZE (64 * 1024)
 
+static char last[512] = {'\0'};
+
 // pkt - start of DNS layer
 void print_dns(uint32_t ip_src, unsigned char *pkt) {
 	assert(pkt);
@@ -32,6 +34,8 @@ void print_dns(uint32_t ip_src, unsigned char *pkt) {
 	sprintf(ip, "%d.%d.%d.%d", PRINT_IP(ip_src));
 	time_t seconds = time(NULL);
 	struct tm *t = localtime(&seconds);
+
+	int nxdomain = (*(pkt + 3) & 0x03 == 0x03)? 1: 0;
 
 	// expecting a single question count
 	if (pkt[4] != 0 || pkt[5] != 1)
@@ -49,8 +53,24 @@ void print_dns(uint32_t ip_src, unsigned char *pkt) {
 		len += delta;;
 		ptr += delta;
 	}
+	if (*ptr  != 0)
+		goto errout;
 
-	printf("%02d:%02d:%02d  %15s  %s\n", t->tm_hour, t->tm_min, t->tm_sec, ip, pkt + 12 + 1);
+	ptr++;
+	uint16_t type;
+	memcpy(&type, ptr, 2);
+	type = ntohs(type);
+
+	// filter output
+	char tmp[sizeof(last)];
+	snprintf(tmp, sizeof(last), "%02d:%02d:%02d  %-15s  %s (type %u)%s",
+		t->tm_hour, t->tm_min, t->tm_sec, ip, pkt + 12 + 1,
+		type, (nxdomain)? " NXDOMAIN": "");
+	if (strcmp(tmp, last)) {
+		printf("%s\n", tmp);
+		strcpy(last, tmp);
+	}
+
 	return;
 
 errout:

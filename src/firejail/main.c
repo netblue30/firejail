@@ -419,7 +419,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 				fprintf(stderr, "Error: --nettrace is only available to root user\n");
 				exit(1);
 			}
-			netfilter_trace(0);
+			netfilter_trace(0, LIBDIR "/firejail/fnettrace");
 		}
 		else
 			exit_err_feature("networking");
@@ -432,7 +432,57 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 				exit(1);
 			}
 			pid_t pid = require_pid(argv[i] + 11);
-			netfilter_trace(pid);
+			netfilter_trace(pid, LIBDIR "/firejail/fnettrace");
+		}
+		else
+			exit_err_feature("networking");
+		exit(0);
+	}
+	else if (strcmp(argv[i], "--nettrace-dns") == 0) {
+		if (checkcfg(CFG_NETWORK)) {
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: --nettrace-dns is only available to root user\n");
+				exit(1);
+			}
+			netfilter_trace(0, LIBDIR "/firejail/fnettrace-dns");
+		}
+		else
+			exit_err_feature("networking");
+		exit(0);
+	}
+	else if (strncmp(argv[i], "--nettrace-dns=", 15) == 0) {
+		if (checkcfg(CFG_NETWORK)) {
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: --nettrace is only available to root user\n");
+				exit(1);
+			}
+			pid_t pid = require_pid(argv[i] + 15);
+			netfilter_trace(pid, LIBDIR "/firejail/fnettrace-dns");
+		}
+		else
+			exit_err_feature("networking");
+		exit(0);
+	}
+	else if (strcmp(argv[i], "--nettrace-sni") == 0) {
+		if (checkcfg(CFG_NETWORK)) {
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: --nettrace is only available to root user\n");
+				exit(1);
+			}
+			netfilter_trace(0, LIBDIR "/firejail/fnettrace-sni");
+		}
+		else
+			exit_err_feature("networking");
+		exit(0);
+	}
+	else if (strncmp(argv[i], "--nettrace-sni=", 15) == 0) {
+		if (checkcfg(CFG_NETWORK)) {
+			if (getuid() != 0) {
+				fprintf(stderr, "Error: --nettrace is only available to root user\n");
+				exit(1);
+			}
+			pid_t pid = require_pid(argv[i] + 15);
+			netfilter_trace(pid, LIBDIR "/firejail/fnettrace-sni");
 		}
 		else
 			exit_err_feature("networking");

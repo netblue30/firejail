@@ -153,7 +153,9 @@ static char *usage_str =
 	"\tparent interfaces.\n"
 	"    --netns=name - Run the program in a named, persistent network namespace.\n"
 	"    --netstats - monitor network statistics.\n"
-	"    --nettrace - monitor TCP and UDP traffic coming into the sandbox.\n"
+	"    --nettrace - monitor received TCP, UDP and ICMP traffic.\n"
+	"    --nettrace - monitor DNS queries.\n"
+	"    --nettrace - monitor Server Name Indiication (TLS/SNI).\n"
 #endif
 	"    --nice=value - set nice value.\n"
 	"    --no3d - disable 3D hardware acceleration.\n"

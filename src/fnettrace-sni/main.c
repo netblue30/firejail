@@ -24,6 +24,8 @@
 #include <linux/if_ether.h>
 #define MAX_BUF_SIZE (64 * 1024)
 
+static char last[512] = {'\0'};
+
 // pkt - start of TLS layer
 static void print_tls(uint32_t ip_dest, unsigned char *pkt, unsigned len) {
 	assert(pkt);
@@ -67,18 +69,25 @@ static void print_tls(uint32_t ip_dest, unsigned char *pkt, unsigned len) {
 		i++;
 	}
 
-	if (name)
-		printf("%02d:%02d:%02d  %15s  %s\n", t->tm_hour, t->tm_min, t->tm_sec, ip, name);
+	if (name) {
+		// filter output
+		char tmp[sizeof(last)];
+		snprintf(tmp, sizeof(last), "%02d:%02d:%02d  %-15s  %s", t->tm_hour, t->tm_min, t->tm_sec, ip, name);
+		if (strcmp(tmp, last)) {
+			printf("%s\n", tmp);
+			strcpy(last, tmp);
+		}
+	}
 	else
 		goto nosni;
 	return;
 
 errout:
-	printf("%02d:%02d:%02d  %15s  Error: invalid TLS packet\n", t->tm_hour, t->tm_min, t->tm_sec, ip);
+	printf("%02d:%02d:%02d  %-15s  Error: invalid TLS packet\n", t->tm_hour, t->tm_min, t->tm_sec, ip);
 	return;
 
 nosni:
-	printf("%02d:%02d:%02d  %15s  no SNI\n", t->tm_hour, t->tm_min, t->tm_sec, ip);
+	printf("%02d:%02d:%02d  %-15s  no SNI\n", t->tm_hour, t->tm_min, t->tm_sec, ip);
 	return;
 }
 
@@ -131,7 +140,7 @@ static void custom_bpf(int sock) {
 }
 
 static void run_trace(void) {
-	// grab all Ethernet packets and use a custom BPF filter to get only UDP from source port 53
+	// grab all Ethernet packets and use a custom BPF filter to get TLS/SNI packets
 	int s = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 	if (s < 0)
 		errExit("socket");

@@ -78,6 +78,7 @@
 45.90.28.0/22 NextDNS
 149.112.112.0/24 Quad9 DNS
 149.112.120.0/21 CIRA DNS Canada
+146.255.56.96/29 Applied Privacy
 176.103.128.0/19 Adguard DNS
 185.228.168.0/24 Cleanbrowsing DNS
 208.67.216.0/21 OpenDNS
@@ -94,13 +95,14 @@
 
 # some popular websites
 23.160.0.0/24 Twitch
-23.246.0.0/18, Netflix
+23.246.0.0/18 Netflix
 31.13.24.0/21 Facebook
 31.13.64.0/18 Facebook
 37.77.184.0/21 Netflix
 45.57.0.0/17 Netflix
 45.58.64.0/20 Dropbox
 45.113.128.0/22 Twitch
+47.88.0.0/14 Alibaba
 52.223.192.0/18 Twitch
 63.245.208.0/23 Mozilla
 64.63.0.0/18 Twitter
@@ -122,12 +124,12 @@
 99.181.64.0/18 Twitch
 103.53.48.0/23 Twitch
 104.244.40.0/21 Twitter
-129.134.0.0/16 Facebook
-140.82.112.0/20 GitHub
 103.10.124.0/23 Steam
 103.28.54.0/24 Steam
 108.160.160.0/20 Dropbox
 108.175.32.0/20 Netflix
+129.134.0.0/16 Facebook
+140.82.112.0/20 GitHub
 143.55.64.0/20 Github
 146.66.152.0/24 Steam
 146.66.155.0/24 Steam
@@ -146,6 +148,7 @@
 162.125.0.0/16 Dropbox
 162.213.32.0/22 Ubuntu One
 162.254.192.0/21 Steam
+172.98.56.0/22 Rumble
 185.2.220.0/22 Netflix
 185.9.188.0/22 Netflix
 185.25.182.0/23 Steam
@@ -156,6 +159,7 @@
 185.105.164.0/24 Dropbox
 185.125.188.0/22 Ubuntu One
 185.199.108.0/22 GitHub
+185.205.69.0/24 Tutanota
 188.64.224.0/21 Twitter
 190.217.33.0/24 Steam
 192.0.64.0/18 Wordpress
@@ -179,8 +183,22 @@
 208.78.164.0/22 Steam
 208.80.152.0/22 Wikipedia
 
+# WholeSale Internet
+69.197.128.0/18 WholeSale Internet
+173.208.128.0/17 WholeSale Internet
+204.12.192.0/18 WholeSale Internet
+208.110.64.0/19 WholeSale Internet
+208.110.91.0/24 WholeSale Internet
+208.67.0.0/21 WholeSale Internet
+
 # StackPath
+69.16.173.0/24 StackPath
+69.16.174.0/23 StackPath
+69.16.176.0/20 StackPath
 151.139.0.0/16 StackPath
+
+# Linode
+172.104.0.0/15 Linode
 
 # Akamai
 23.0.0.0/12 Akamai

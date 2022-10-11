@@ -675,7 +675,7 @@ void check_output(int argc, char **argv);
 
 // netfilter.c
 void netfilter_netlock(pid_t pid);
-void netfilter_trace(pid_t pid);
+void netfilter_trace(pid_t pid, const char *cmd);
 void check_netfilter_file(const char *fname);
 void netfilter(const char *fname);
 void netfilter6(const char *fname);

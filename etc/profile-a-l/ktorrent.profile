@@ -22,7 +22,9 @@ include disable-programs.inc
 include disable-shell.inc
 
 mkdir ${HOME}/.kde/share/apps/ktorrent
+mkdir ${HOME}/.kde/share/config
 mkdir ${HOME}/.kde4/share/apps/ktorrent
+mkdir ${HOME}/.kde4/share/config
 mkdir ${HOME}/.local/share/ktorrent
 mkdir ${HOME}/.local/share/kxmlgui5/ktorrent
 mkfile ${HOME}/.config/ktorrentrc

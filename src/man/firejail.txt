@@ -164,12 +164,12 @@ private-bin and private-lib are disabled by default when running appimages.
 .br
 Example:
 .br
-$ firejail --appimage --profile=krita krita-3.0-x86_64.appimage
+$ firejail --profile=krita --appimage krita-3.0-x86_64.appimage
 .br
-$ firejail --appimage --private --profile=krita krita-3.0-x86_64.appimage
+$ firejail --private --profile=krita --appimage krita-3.0-x86_64.appimage
 .br
 #ifdef HAVE_X11
-$ firejail --appimage --net=none --x11 --profile=krita krita-3.0-x86_64.appimage
+$ firejail --net=none --x11 --profile=krita --appimage krita-3.0-x86_64.appimage
 #endif
 .TP
 #ifdef HAVE_NETWORK

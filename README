@@ -968,6 +968,7 @@ slowpeek (https://github.com/slowpeek)
 	- refine appimage example in docs
 	- allow resolution of .local names with avahi-daemon in the apparmor profile
 	- allow access to avahi-daemon in apparmor/firejail-default
+	- make appimage examples consistent with --appimage option short description
 smitsohu (https://github.com/smitsohu)
 	- read-only kde4 services directory
 	- enhanced mediathekview profile

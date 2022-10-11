@@ -35,7 +35,7 @@ void print_dns(uint32_t ip_src, unsigned char *pkt) {
 	time_t seconds = time(NULL);
 	struct tm *t = localtime(&seconds);
 
-	int nxdomain = (*(pkt + 3) & 0x03 == 0x03)? 1: 0;
+	int nxdomain = ((*(pkt + 3) & 0x03) == 0x03)? 1: 0;
 
 	// expecting a single question count
 	if (pkt[4] != 0 || pkt[5] != 1)

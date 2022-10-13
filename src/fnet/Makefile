@@ -6,7 +6,7 @@ all: fnet
 
 include $(ROOT)/src/common.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/libnetlink.h $(ROOT)/config.mk
+%.o : %.c $(HDRS) ../include/common.h ../include/libnetlink.h $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 fnet: $(OBJS) ../lib/common.o ../lib/libnetlink.o $(ROOT)/config.mk

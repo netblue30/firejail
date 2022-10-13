@@ -6,7 +6,7 @@ all: fnettrace-sni
 
 include $(ROOT)/src/common.mk
 
-%.o : %.c $(H_FILE_LIST) $(ROOT)/config.mk
+%.o : %.c $(HDRS) $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 fnettrace-sni: $(OBJS) $(ROOT)/config.mk

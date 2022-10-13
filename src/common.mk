@@ -2,9 +2,9 @@
 #
 # Note: $(ROOT)/config.mk must be included before this file.
 
-H_FILE_LIST       = $(sort $(wildcard *.h))
-C_FILE_LIST       = $(sort $(wildcard *.c))
-OBJS = $(C_FILE_LIST:.c=.o)
+HDRS = $(sort $(wildcard *.h))
+SRCS = $(sort $(wildcard *.c))
+OBJS = $(SRCS:.c=.o)
 
 CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' $(HAVE_GCOV)
 CFLAGS += -DPREFIX='"$(prefix)"' -DSYSCONFDIR='"$(sysconfdir)/firejail"' -DLIBDIR='"$(libdir)"' -DBINDIR='"$(bindir)"'   -DVARDIR='"/var/lib/firejail"'

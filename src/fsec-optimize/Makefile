@@ -6,7 +6,7 @@ all: fsec-optimize
 
 include $(ROOT)/src/common.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/seccomp.h ../include/syscall.h $(ROOT)/config.mk
+%.o : %.c $(HDRS) ../include/common.h ../include/seccomp.h ../include/syscall.h $(ROOT)/config.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 fsec-optimize: $(OBJS) ../lib/common.o ../lib/errno.o $(ROOT)/config.mk

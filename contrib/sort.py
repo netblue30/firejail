@@ -53,7 +53,7 @@ def fix_profile(filename):
         lines = profile.read().split("\n")
         was_fixed = False
         fixed_profile = []
-        for lineno, line in enumerate(lines):
+        for lineno, line in enumerate(lines, 1):
             if line[:12] in ("private-bin ", "private-etc ", "private-lib "):
                 fixed_line = f"{line[:12]}{sort_alphabetical(line[12:])}"
             elif line[:13] in ("seccomp.drop ", "seccomp.keep "):
@@ -69,8 +69,8 @@ def fix_profile(filename):
             if fixed_line != line:
                 was_fixed = True
                 print(
-                    f"{filename}:{lineno + 1}:-{line}\n"
-                    f"{filename}:{lineno + 1}:+{fixed_line}"
+                    f"{filename}:{lineno}:-{line}\n"
+                    f"{filename}:{lineno}:+{fixed_line}"
                 )
             fixed_profile.append(fixed_line)
         if was_fixed:

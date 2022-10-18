@@ -29,7 +29,7 @@ from sys import argv, exit as sys_exit
 
 def sort_alphabetical(raw_items):
     items = raw_items.split(",")
-    items.sort(key=lambda s: s.casefold())
+    items.sort(key=str.casefold)
     return ",".join(items)
 
 

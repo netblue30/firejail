@@ -27,8 +27,8 @@ Exit-Codes:
 from sys import argv, exit as sys_exit
 
 
-def sort_alphabetical(raw_items):
-    items = raw_items.split(",")
+def sort_alphabetical(original_items):
+    items = original_items.split(",")
     items.sort(key=str.casefold)
     return ",".join(items)
 

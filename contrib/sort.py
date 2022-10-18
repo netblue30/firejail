@@ -30,7 +30,7 @@ Exit Codes:
 
 # Requirements:
 #  python >= 3.6
-from sys import argv, exit as sys_exit
+from sys import argv, exit as sys_exit, stderr
 
 
 def sort_alphabetical(original_items):
@@ -103,13 +103,16 @@ def main(args):
             else:
                 fix_profile(filename)
         except FileNotFoundError:
-            print(f"[ Error ] Can't find `{filename}'")
+            print(f"[ Error ] Can't find `{filename}'", file=stderr)
             exit_code = 1
         except PermissionError:
-            print(f"[ Error ] Can't read/write `{filename}'")
+            print(f"[ Error ] Can't read/write `{filename}'", file=stderr)
             exit_code = 1
         except Exception as err:
-            print(f"[ Error ] An error occurred while processing `{filename}': {err}")
+            print(
+                f"[ Error ] An error occurred while processing `{filename}': {err}",
+                file=stderr,
+            )
             exit_code = 1
     return exit_code
 

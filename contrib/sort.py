@@ -2,7 +2,7 @@
 # This file is part of Firejail project
 # Copyright (C) 2014-2022 Firejail Authors
 # License GPL v2
-"""
+"""\
 Sort the arguments of commands in profiles.
 
 Usage: ./sort.py [/path/to/profile ...]
@@ -25,6 +25,7 @@ Examples:
 Exit Codes:
   0: Success: No profiles needed fixing.
   1: Error: One or more profiles could not be processed correctly.
+  2: Error: Missing arguments.
   101: Info: One or more profiles were fixed.
 """
 
@@ -94,8 +95,13 @@ def fix_profile(filename):
 
 
 def main(args):
-    exit_code = 0
+    if len(args) < 1:
+        print(__doc__, file=stderr)
+        return 2
+
     print(f"sort.py: checking {len(args)} profile(s)...")
+
+    exit_code = 0
     for filename in args:
         try:
             if exit_code not in (1, 101):

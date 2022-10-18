@@ -33,17 +33,17 @@ def sort_alphabetical(original_items):
     return ",".join(items)
 
 
-def sort_protocol(protocols):
+def sort_protocol(original_protocols):
     """sort the given protocols into this scheme: unix,inet,inet6,netlink,packet,bluetooth"""
 
     # shortcut for common protocol lines
-    if protocols in ("unix", "unix,inet,inet6"):
-        return protocols
+    if original_protocols in ("unix", "unix,inet,inet6"):
+        return original_protocols
 
     fixed_protocols = ""
     for protocol in ("unix", "inet", "inet6", "netlink", "packet", "bluetooth"):
         for prefix in ("", "-", "+", "="):
-            if f",{prefix}{protocol}," in f",{protocols},":
+            if f",{prefix}{protocol}," in f",{original_protocols},":
                 fixed_protocols += f"{prefix}{protocol},"
     return fixed_protocols[:-1]
 

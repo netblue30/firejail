@@ -3,11 +3,17 @@
 # Copyright (C) 2014-2022 Firejail Authors
 # License GPL v2
 """
-Sort the items of multi-item options in profiles, the following options are supported:
-  private-bin, private-etc, private-lib, caps.drop, caps.keep, seccomp.drop, seccomp.drop, protocol
+Sort the arguments of commands in profiles.
 
-Usage:
-    $ ./sort.py /path/to/profile [ /path/to/profile2 /path/to/profile3 ... ]
+Usage: ./sort.py [/path/to/profile ...]
+
+The following commands are supported:
+
+    private-bin, private-etc, private-lib, caps.drop, caps.keep, seccomp.drop,
+    seccomp.drop, protocol
+
+Note that this is only applicable to commands that support multiple arguments.
+
 Keep in mind that this will overwrite your profile(s).
 
 Examples:
@@ -16,10 +22,10 @@ Examples:
     $ ./sort.py ~/.config/firejail/*.{profile,inc,local}
     $ sudo ./sort.py /etc/firejail/*.{profile,inc,local}
 
-Exit-Codes:
-  0: No Error; No Profile Fixed.
-  1: Error, one or more profiles were not processed correctly.
-  101: No Error; One or more profile were fixed.
+Exit Codes:
+  0: Success: No profiles needed fixing.
+  1: Error: One or more profiles could not be processed correctly.
+  101: Info: One or more profiles were fixed.
 """
 
 # Requirements:
@@ -34,7 +40,11 @@ def sort_alphabetical(original_items):
 
 
 def sort_protocol(original_protocols):
-    """sort the given protocols into this scheme: unix,inet,inet6,netlink,packet,bluetooth"""
+    """
+    Sort the given protocols into the following order:
+
+        unix,inet,inet6,netlink,packet,bluetooth
+    """
 
     # shortcut for common protocol lines
     if original_protocols in ("unix", "unix,inet,inet6"):

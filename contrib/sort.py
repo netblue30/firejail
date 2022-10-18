@@ -2,10 +2,16 @@
 # This file is part of Firejail project
 # Copyright (C) 2014-2022 Firejail Authors
 # License GPL v2
-"""\
+
+# Requirements:
+#  python >= 3.6
+from os import path
+from sys import argv, exit as sys_exit, stderr
+
+__doc__ = f"""\
 Sort the arguments of commands in profiles.
 
-Usage: ./sort.py [/path/to/profile ...]
+Usage: {path.basename(argv[0])} [/path/to/profile ...]
 
 The following commands are supported:
 
@@ -17,10 +23,10 @@ Note that this is only applicable to commands that support multiple arguments.
 Keep in mind that this will overwrite your profile(s).
 
 Examples:
-    $ ./sort.py MyAwesomeProfile.profile
-    $ ./sort.py new_profile.profile second_new_profile.profile
-    $ ./sort.py ~/.config/firejail/*.{profile,inc,local}
-    $ sudo ./sort.py /etc/firejail/*.{profile,inc,local}
+    $ {argv[0]} MyAwesomeProfile.profile
+    $ {argv[0]} new_profile.profile second_new_profile.profile
+    $ {argv[0]} ~/.config/firejail/*.{{profile,inc,local}}
+    $ sudo {argv[0]} /etc/firejail/*.{{profile,inc,local}}
 
 Exit Codes:
   0: Success: No profiles needed fixing.
@@ -28,10 +34,6 @@ Exit Codes:
   2: Error: Missing arguments.
   101: Info: One or more profiles were fixed.
 """
-
-# Requirements:
-#  python >= 3.6
-from sys import argv, exit as sys_exit, stderr
 
 
 def sort_alphabetical(original_items):

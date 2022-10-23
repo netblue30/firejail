@@ -19,6 +19,7 @@
 */
 #include "fnettrace.h"
 #include "radix.h"
+#include <limits.h>
 #include <sys/ioctl.h>
 #define MAX_BUF_SIZE (64 * 1024)
 
@@ -190,7 +191,6 @@ static char *print_bw(unsigned units) {
 	return bw_line[units];
 }
 
-#define LINE_MAX 200
 static inline void adjust_line(char *str, int len, int cols) {
 	if (len > LINE_MAX) // functions such as snprintf truncate the string, and return the length of the untruncated string
 		len = LINE_MAX;

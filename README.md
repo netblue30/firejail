@@ -221,6 +221,58 @@ Milestone page: https://github.com/netblue30/firejail/milestone/1
               kernel.  For more information, please see APPARMOR  section  be‐
 `````
 
+### dnstrace
+`````
+      --dnstrace[=name|pid]
+              Monitor DNS queries. The sandbox can be  specified  by  name  or
+              pid.  Only networked sandboxes created with --net are supported.
+              This option is only available when running the sandbox as root.
+
+              Without a name/pid, Firejail will monitor the main  system  net‐
+              work namespace.
+
+              $ sudo firejail --dnstrace=browser
+              11:31:43  9.9.9.9        linux.com (type 1)
+              11:31:45  9.9.9.9        fonts.googleapis.com (type 1) NXDOMAIN
+              11:31:45  9.9.9.9        js.hs-scripts.com (type 1) NXDOMAIN
+              11:31:45  9.9.9.9        www.linux.com (type 1)
+              11:31:45  9.9.9.9        fonts.googleapis.com (type 1) NXDOMAIN
+              11:31:52  9.9.9.9        js.hs-scripts.com (type 1) NXDOMAIN
+              11:32:05  9.9.9.9        secure.gravatar.com (type 1)
+              11:32:06  9.9.9.9        secure.gravatar.com (type 1)
+              11:32:08  9.9.9.9        taikai.network (type 1)
+              11:32:08  9.9.9.9        cdn.jsdelivr.net (type 1)
+              11:32:08  9.9.9.9        taikai.azureedge.net (type 1)
+              11:32:08  9.9.9.9        www.youtube.com (type 1)
+`````
+
+### snitrace
+`````
+     --snitrace[=name|pid]
+              Monitor Server Name Indication (TLS/SNI).  The  sandbox  can  be
+              specified  by name or pid. Only networked sandboxes created with
+              --net are supported. This option is only available when  running
+              the sandbox as root.
+
+              Without  a  name/pid, Firejail will monitor the main system net‐
+              work namespace.
+
+              $ sudo firejail --snitrace=browser
+              07:49:51  23.185.0.3       linux.com
+              07:49:51  23.185.0.3       www.linux.com
+              07:50:05  192.0.73.2       secure.gravatar.com
+              07:52:35  172.67.68.93     www.howtoforge.com
+              07:52:37  13.225.103.59    sf.ezoiccdn.com
+              07:52:42  142.250.176.3    www.gstatic.com
+              07:53:03  173.236.250.32   www.linuxlinks.com
+              07:53:05  192.0.77.37      c0.wp.com
+              07:53:08  192.0.78.32      jetpack.wordpress.com
+              07:53:09  192.0.77.32      s0.wp.com
+              07:53:09  192.0.77.2       i0.wp.com
+              07:53:10  192.0.77.2       i0.wp.com
+              07:53:11  192.0.73.2       1.gravatar.com
+`````
+
 ### Profile Statistics
 
 A small tool to print profile statistics. Compile and install as usual. The tool is installed in /usr/lib/firejail directory.

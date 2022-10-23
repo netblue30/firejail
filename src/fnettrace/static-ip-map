@@ -184,12 +184,13 @@
 208.80.152.0/22 Wikipedia
 
 # WholeSale Internet
+69.30.192.0/18 WholeSale Internet
 69.197.128.0/18 WholeSale Internet
 173.208.128.0/17 WholeSale Internet
 204.12.192.0/18 WholeSale Internet
+208.67.0.0/21 WholeSale Internet
 208.110.64.0/19 WholeSale Internet
 208.110.91.0/24 WholeSale Internet
-208.67.0.0/21 WholeSale Internet
 
 # StackPath
 69.16.173.0/24 StackPath

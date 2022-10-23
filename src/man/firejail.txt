@@ -911,7 +911,7 @@ Ignore command in profile file.
 .br
 Example:
 .br
-$ firejail \-\-ignore=shell --ignore=seccomp firefox
+$ firejail --ignore=seccomp --ignore=caps firefox
 #ifdef HAVE_NETWORK
 .br
 $ firejail \-\-ignore="net eth0" firefox
@@ -2499,7 +2499,7 @@ filters.
 .br
 Example:
 .br
-$ firejail \-\-noprofile \-\-shell=none \-\-seccomp=execve sh
+$ firejail \-\-noprofile \-\-seccomp=execve sh
 .br
 Parent pid 32751, child pid 32752
 .br
@@ -2576,7 +2576,7 @@ additional filter for 32 bit system calls can be installed with
 .br
 Example:
 .br
-$ firejail \-\-shell=none \-\-seccomp.keep=poll,select,[...] transmission-gtk
+$ firejail \-\-seccomp.keep=poll,select,[...] transmission-gtk
 
 .TP
 \fB\-\-seccomp.print=name|pid
@@ -2757,25 +2757,6 @@ allow tighter filters if the only alternative is to allow a system
 call.
 .br
 
-.TP
-\fB\-\-shell=none
-Run the program directly, without a user shell.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-shell=none script.sh
-.TP
-\fB\-\-shell=program
-Set default user shell. Use this shell to run the application using \-c shell option.
-For example "firejail \-\-shell=/bin/dash firefox" will start Mozilla Firefox as "/bin/dash \-c firefox".
-By default the user's preferred shell is used.
-.br
-
-.br
-Example:
-$firejail \-\-shell=/bin/dash script.sh
 .TP
 \fB\-\-shutdown=name|pid
 Shutdown the sandbox identified by name or PID.

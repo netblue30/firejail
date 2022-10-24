@@ -791,7 +791,9 @@ Without a name/pid, Firejail will monitor the main system network namespace.
 .br
 
 .br
-$ sudo firejail --dnstrace=browser
+Example:
+.br
+$ sudo firejail --dnstrace
 .br
 11:31:43  9.9.9.9        linux.com (type 1)
 .br
@@ -915,6 +917,34 @@ $ firejail --ignore=seccomp --ignore=caps firefox
 #ifdef HAVE_NETWORK
 .br
 $ firejail \-\-ignore="net eth0" firefox
+#endif
+
+#ifdef HAVE_NETWORK
+.TP
+\fB\-\-icmptrace[=name|pid]
+Monitor ICMP traffic. The sandbox can be specified by name or pid. Only networked sandboxes
+created with \-\-net are supported. This option is only available when running the sandbox as root.
+.br
+
+.br
+Without a name/pid, Firejail will monitor the main system network namespace.
+.br
+
+.br
+Example
+.br
+$ sudo firejail --icmptrace
+.br
+20:53:54  192.168.1.60 -> 142.250.65.174 - 98 bytes - Echo request/0
+.br
+20:53:54  142.250.65.174 -> 192.168.1.60 - 98 bytes - Echo reply/0
+.br
+20:53:55  192.168.1.60 -> 142.250.65.174 - 98 bytes - Echo request/0
+.br
+20:53:55  142.250.65.174 -> 192.168.1.60 - 98 bytes - Echo reply/0
+.br
+20:53:55  192.168.1.60 -> 1.1.1.1 - 154 bytes - Destination unreachable/Port unreachable
+.br
 #endif
 
 .TP
@@ -1597,7 +1627,9 @@ Without a name/pid, Firejail will monitor the main system network namespace.
 .br
 
 .br
-$ sudo firejail --nettrace=browser
+Example:
+.br
+$ sudo firejail --nettrace
 .br
                         95 KB/s  geoip 457, IP database 4436
 .br
@@ -2791,7 +2823,9 @@ Without a name/pid, Firejail will monitor the main system network namespace.
 .br
 
 .br
-$ sudo firejail --snitrace=browser
+Example:
+.br
+$ sudo firejail --snitrace
 .br
 07:49:51  23.185.0.3       linux.com
 .br

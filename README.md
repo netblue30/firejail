@@ -272,6 +272,29 @@ Milestone page: https://github.com/netblue30/firejail/milestone/1
               07:53:10  192.0.77.2       i0.wp.com
               07:53:11  192.0.73.2       1.gravatar.com
 `````
+### icmptrace
+`````
+       --icmptrace[=name|pid]
+              Monitor  ICMP  traffic.  The sandbox can be specified by name or
+              pid. Only networked sandboxes created with --net are  supported.
+              This option is only available when running the sandbox as root.
+
+              Without  a  name/pid, Firejail will monitor the main system net‐
+              work namespace.
+
+              Example
+              $ sudo firejail --icmptrace
+              20:53:54  192.168.1.60 -> 142.250.65.174 - 98 bytes -  Echo  re‐
+              quest/0
+              20:53:54   142.250.65.174  -> 192.168.1.60 - 98 bytes - Echo re‐
+              ply/0
+              20:53:55  192.168.1.60 -> 142.250.65.174 - 98 bytes -  Echo  re‐
+              quest/0
+              20:53:55   142.250.65.174  -> 192.168.1.60 - 98 bytes - Echo re‐
+              ply/0
+              20:53:55  192.168.1.60 -> 1.1.1.1 - 154 bytes - Destination  un‐
+              reachable/Port unreachable
+`````
 
 ### Profile Statistics
 

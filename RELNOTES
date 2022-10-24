@@ -7,7 +7,7 @@ firejail (0.9.71) baseline; urgency=low
   * feature: support for custom AppArmor profiles (--apparmor=) (#5274 #5316
     #5317)
   * feature: added support for ICMP in nettrace
-  * feature: --dnstrace and --snitrace
+  * feature: --dnstrace, --icmptrace, and --snitrace
   * modif: removed --cgroup= command (#5190 #5200)
   * modif: set --shell=none as the default (#5190)
   * modif: removed --shell= command (#5190 #5196 #5209)

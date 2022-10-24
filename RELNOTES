@@ -17,6 +17,7 @@ firejail (0.9.71) baseline; urgency=low
     (#5190 #5216)
   * modif: disabled tracelog by default in /etc/firejail/firejail.config
     (#5190)
+  * modif: removed grsecurity support
   * bugfix: Flood of seccomp audit log entries (#5207)
   * build: deduplicate configure-time vars into new config files (#5140 #5284)
   * build: fix file mode of shell scripts (644 -> 755) (#5206)

@@ -27,6 +27,7 @@ firecfg.1
 jailcheck.1
 src/fnettrace-dns/fnettrace-dns
 src/fnettrace-sni/fnettrace-sni
+src/fnettrace-icmp/fnettrace-icmp
 src/firejail/firejail
 src/firemon/firemon
 src/firecfg/firecfg

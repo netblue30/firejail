@@ -1418,11 +1418,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
 			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-				exit(1);
-			}
 			arg_overlay = 1;
 			arg_overlay_keep = 1;
 			arg_overlay_reuse = 1;
@@ -1455,11 +1450,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
 			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-				exit(1);
-			}
 			arg_overlay = 1;
 		}
 		else
@@ -1474,11 +1464,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-				exit(1);
-			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
 				exit(1);
 			}
 			arg_overlay = 1;

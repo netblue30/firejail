@@ -728,8 +728,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 #ifdef HAVE_NETWORK
 	else if (strcmp(argv[i], "--netstats") == 0) {
 		if (checkcfg(CFG_NETWORK)) {
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0 || pid_hidepid())
+			if (pid_hidepid())
 				sbox_run(SBOX_ROOT | SBOX_CAPS_HIDEPID | SBOX_SECCOMP | SBOX_ALLOW_STDIN,
 					2, PATH_FIREMON, "--netstats");
 			else
@@ -1747,11 +1746,6 @@ int main(int argc, char **argv, char **envp) {
 					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 					exit(1);
 				}
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-					exit(1);
-				}
 				arg_overlay = 1;
 				arg_overlay_keep = 1;
 
@@ -1773,11 +1767,6 @@ int main(int argc, char **argv, char **envp) {
 				}
 				if (cfg.chrootdir) {
 					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
 					exit(1);
 				}
 				arg_overlay = 1;
@@ -1809,11 +1798,6 @@ int main(int argc, char **argv, char **envp) {
 				}
 				if (cfg.chrootdir) {
 					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
 					exit(1);
 				}
 				arg_overlay = 1;
@@ -1954,11 +1938,6 @@ int main(int argc, char **argv, char **envp) {
 					exit(1);
 				}
 
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --chroot option is not available on Grsecurity systems\n");
-					exit(1);
-				}
 				// extract chroot dirname
 				cfg.chrootdir = argv[i] + 9;
 				if (*cfg.chrootdir == '\0') {

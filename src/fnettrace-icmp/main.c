@@ -37,7 +37,7 @@ char *type_description[19] = {
 	"unassigned",
 	"Echo request",
 	"Router advertisement",
-	"Router solicitation"
+	"Router solicitation",
 	"Time exceeded",
 	"Bad IP header",
 	"Timestamp",

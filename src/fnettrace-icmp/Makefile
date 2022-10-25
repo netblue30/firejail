@@ -4,4 +4,4 @@ ROOT = ../..
 PROG = fnettrace-icmp
 TARGET = $(PROG)
 
-include $(ROOT)/src/common.mk
+include $(ROOT)/src/prog.mk

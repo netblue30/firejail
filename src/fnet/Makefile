@@ -7,4 +7,4 @@ TARGET = $(PROG)
 MOD_HDRS = ../include/common.h ../include/libnetlink.h
 MOD_OBJS = ../lib/common.o ../lib/libnetlink.o
 
-include $(ROOT)/src/common.mk
+include $(ROOT)/src/prog.mk

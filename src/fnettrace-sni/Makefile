@@ -4,4 +4,4 @@ ROOT = ../..
 PROG = fnettrace-sni
 TARGET = $(PROG)
 
-include $(ROOT)/src/common.mk
+include $(ROOT)/src/prog.mk

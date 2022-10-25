@@ -7,4 +7,4 @@ TARGET = $(PROG)
 MOD_HDRS = ../include/common.h ../include/syscall.h
 MOD_OBJS = ../lib/common.o
 
-include $(ROOT)/src/common.mk
+include $(ROOT)/src/prog.mk

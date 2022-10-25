@@ -3,7 +3,7 @@ ROOT = ../..
 
 TARGET = lib
 
-include $(ROOT)/src/common.mk
+include $(ROOT)/src/prog.mk
 
 .PHONY: lib
 lib: $(OBJS)

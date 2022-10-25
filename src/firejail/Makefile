@@ -22,4 +22,4 @@ MOD_OBJS = \
 ../lib/errno.o \
 ../lib/syscall.o
 
-include $(ROOT)/src/common.mk
+include $(ROOT)/src/prog.mk

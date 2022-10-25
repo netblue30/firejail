@@ -4,4 +4,4 @@ ROOT = ../..
 PROG = fnettrace-dns
 TARGET = $(PROG)
 
-include $(ROOT)/src/common.mk
+include $(ROOT)/src/prog.mk

@@ -4,4 +4,4 @@ ROOT = ../..
 PROG = ftee
 TARGET = $(PROG)
 
-include $(ROOT)/src/common.mk
+include $(ROOT)/src/prog.mk

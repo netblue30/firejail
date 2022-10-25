@@ -13,4 +13,4 @@ MOD_HDRS = \
 
 MOD_OBJS = ../lib/common.o ../lib/firejail_user.o
 
-include $(ROOT)/src/common.mk
+include $(ROOT)/src/prog.mk

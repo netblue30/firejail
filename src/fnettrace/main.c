@@ -21,6 +21,8 @@
 #include "radix.h"
 #include <limits.h>
 #include <sys/ioctl.h>
+#include <sys/prctl.h>
+#include <signal.h>
 #define MAX_BUF_SIZE (64 * 1024)
 
 static int arg_netfilter = 0;
@@ -731,6 +733,9 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "Error: you need to be root to run this program\n");
 		return 1;
 	}
+
+	// kill the process if the parent died
+	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
 
 	ansi_clrscr();
 	if (arg_netfilter)

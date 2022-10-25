@@ -22,6 +22,8 @@
 #include <time.h>
 #include <linux/filter.h>
 #include <linux/if_ether.h>
+#include <sys/prctl.h>
+#include <signal.h>
 #define MAX_BUF_SIZE (64 * 1024)
 
 static char last[512] = {'\0'};
@@ -106,6 +108,18 @@ static void custom_bpf(int sock) {
 	}
 }
 
+static void print_date(void) {
+	static int day = -1;
+	time_t now = time(NULL);
+	struct tm *t = localtime(&now);
+
+	if (day != t->tm_yday) {
+		printf("\nDNS trace for %s", ctime(&now));
+		day = t->tm_yday;
+	}
+	fflush(0);
+}
+
 static void run_trace(void) {
 	// grab all Ethernet packets and use a custom BPF filter to get only UDP from source port 53
  	int s = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
@@ -113,19 +127,24 @@ static void run_trace(void) {
 		errExit("socket");
 	custom_bpf(s);
 
+	struct timeval tv;
+	tv.tv_sec = 10;
+	tv.tv_usec = 0;
 	unsigned char buf[MAX_BUF_SIZE];
 	while (1) {
 		fd_set rfds;
 		FD_ZERO(&rfds);
 		FD_SET(s, &rfds);
-		struct timeval tv;
-		tv.tv_sec = 1;
-		tv.tv_usec = 0;
 		int rv = select(s + 1, &rfds, NULL, NULL, &tv);
 		if (rv < 0)
 			errExit("select");
-		else if (rv == 0)
+		else if (rv == 0) {
+			print_date();
+			tv.tv_sec = 10;
+			tv.tv_usec = 0;
 			continue;
+		}
+
 		unsigned bytes = recvfrom(s, buf, MAX_BUF_SIZE, 0, NULL, NULL);
 
 		if (bytes >= (14 + 20 + 8)) { // size of  MAC + IP + UDP headers
@@ -174,8 +193,10 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 
-	time_t now = time(NULL);
-	printf("DNS trace for %s\n", ctime(&now));
+	// kill the process if the parent died
+	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
+
+	print_date();
 	run_trace();
 
 	return 0;

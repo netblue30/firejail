@@ -32,10 +32,18 @@ on:
       - '.github/ISSUE_TEMPLATE/*'
       - '.github/pull_request_template.md'
 
+permissions:  # added using https://github.com/step-security/secure-workflows
+  contents: read
+
 jobs:
   build-clang:
     runs-on: ubuntu-22.04
     steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+      with:
+        egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
     - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
     - name: install dependencies
       run: sudo apt-get install libapparmor-dev libselinux1-dev
@@ -50,6 +58,11 @@ jobs:
   scan-build:
     runs-on: ubuntu-22.04
     steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+      with:
+        egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
     - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
     - name: install clang-tools-14 and dependencies
       run: sudo apt-get install clang-tools-14 libapparmor-dev libselinux1-dev
@@ -60,6 +73,11 @@ jobs:
   cppcheck:
     runs-on: ubuntu-22.04
     steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+      with:
+        egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
     - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
     - name: install cppcheck
       run: sudo apt-get install cppcheck
@@ -70,6 +88,11 @@ jobs:
   cppcheck_old:
     runs-on: ubuntu-20.04
     steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
+      with:
+        egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
     - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
     - name: install cppcheck
       run: sudo apt-get install cppcheck

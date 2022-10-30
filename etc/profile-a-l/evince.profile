@@ -7,7 +7,7 @@ include evince.local
 include globals.local
 
 # WARNING: This exposes information like file history from other programs.
-# You can add a blacklist for it in your evince.local for additional hardening if you can life with some restrictions.
+# You can add a blacklist for it in your evince.local for additional hardening if you can live with some restrictions.
 noblacklist ${HOME}/.local/share/gvfs-metadata
 
 noblacklist ${HOME}/.config/evince

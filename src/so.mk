@@ -9,7 +9,11 @@ HDRS := $(sort $(wildcard *.h)) $(MOD_HDRS)
 SRCS := $(sort $(wildcard *.c)) $(MOD_SRCS)
 OBJS := $(SRCS:.c=.o) $(MOD_OBJS)
 
-CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIC -Wformat -Wformat-security
+CFLAGS += \
+	-ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' \
+	-fstack-protector-all -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security \
+	-fPIC
+
 LDFLAGS += -pie -fPIE -Wl,-z,relro -Wl,-z,now
 
 .PHONY: all

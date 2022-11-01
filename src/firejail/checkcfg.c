@@ -168,10 +168,10 @@ int checkcfg(int val) {
 			}
 
 			// Xephyr command extra parameters
-			else if (strncmp(ptr, "xephyr-extra-params ", 20) == 0) {
+			else if (strncmp(ptr, "xephyr-extra-params ", 21) == 0) {
 				if (*xephyr_extra_params != '\0')
 					goto errout;
-				xephyr_extra_params = strdup(ptr + 20);
+				xephyr_extra_params = strdup(ptr + 21);
 				if (!xephyr_extra_params)
 					errExit("strdup");
 			}

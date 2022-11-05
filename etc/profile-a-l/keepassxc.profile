@@ -13,6 +13,7 @@ noblacklist ${HOME}/.config/keepassxc
 noblacklist ${HOME}/.config/KeePassXCrc
 noblacklist ${HOME}/.keepassxc
 noblacklist ${DOCUMENTS}
+noblacklist ${RUNUSER}/app
 
 # Allow browser profiles, required for browser integration.
 noblacklist ${HOME}/.config/BraveSoftware
@@ -31,6 +32,8 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
+
+mkdir ${RUNUSER}/app/org.keepassxc.KeePassXC
 
 # You can enable whitelisting for keepassxc by adding the below to your keepassxc.local.
 # If you do, you MUST store your database under ${HOME}/Documents/KeePassXC/foo.kdbx.
@@ -62,6 +65,7 @@ include disable-xdg.inc
 #whitelist ${HOME}/.config/KeePassXCrc
 #include whitelist-common.inc
 
+whitelist ${RUNUSER}/app/org.keepassxc.KeePassXC
 whitelist /usr/share/keepassxc
 include whitelist-run-common.inc
 include whitelist-usr-share-common.inc

@@ -32,6 +32,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/keepassxc
 # You can enable whitelisting for keepassxc by adding the below to your keepassxc.local.
 # If you do, you MUST store your database under ${HOME}/Documents/KeePassXC/foo.kdbx.
 #mkdir ${HOME}/Documents/KeePassXC
@@ -62,6 +63,7 @@ include disable-xdg.inc
 #whitelist ${HOME}/.config/KeePassXCrc
 #include whitelist-common.inc
 
+whitelist ${HOME}/.config/keepassxc
 whitelist /usr/share/keepassxc
 include whitelist-run-common.inc
 include whitelist-usr-share-common.inc

@@ -62,6 +62,7 @@ include disable-xdg.inc
 #whitelist ${HOME}/.config/KeePassXCrc
 #include whitelist-common.inc
 
+whitelist ${RUNUSER}/wayland-*
 whitelist /usr/share/keepassxc
 include whitelist-run-common.inc
 include whitelist-usr-share-common.inc

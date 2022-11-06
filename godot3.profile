@@ -8,4 +8,4 @@ include godot3.local
 #include globals.local
 
 # Redirect
-include godot
+include godot.profile

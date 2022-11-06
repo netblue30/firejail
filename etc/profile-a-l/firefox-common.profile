@@ -47,7 +47,7 @@ notv
 ?BROWSER_DISABLE_U2F: nou2f
 protocol unix,inet,inet6,netlink
 # The below seccomp configuration still permits chroot syscall. See https://github.com/netblue30/firejail/issues/2506 for possible workarounds.
-seccomp !chroot
+seccomp !chroot,!semtimedop
 # Disable tracelog, it breaks or causes major issues with many firefox based browsers, see https://github.com/netblue30/firejail/issues/1930.
 #tracelog
 

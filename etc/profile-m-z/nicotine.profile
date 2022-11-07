@@ -8,8 +8,12 @@ include globals.local
 
 noblacklist ${HOME}/.nicotine
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
+include allow-bin-sh.inc
+
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -37,6 +41,7 @@ nodvd
 nogroups
 noinput
 nonewprivs
+noprinters
 noroot
 nosound
 notv
@@ -47,7 +52,7 @@ seccomp
 tracelog
 
 disable-mnt
-private-bin nicotine,python2*
+#private-bin bash,nicotine,python2*,python3*,sh
 private-cache
 private-dev
 private-tmp

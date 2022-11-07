@@ -52,7 +52,7 @@ seccomp
 tracelog
 
 disable-mnt
-#private-bin bash,nicotine,python2*,python3*,sh
+#private-bin nicotine,python2*
 private-cache
 private-dev
 private-tmp

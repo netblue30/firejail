@@ -956,6 +956,22 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "apparmor-replace") == 0) {
+#ifdef HAVE_APPARMOR
+		arg_apparmor = 1;
+		apparmor_replace = true;
+#endif
+		return 0;
+	}
+
+	if (strcmp(ptr, "apparmor-stack") == 0) {
+#ifdef HAVE_APPARMOR
+		arg_apparmor = 1;
+		apparmor_replace = false;
+#endif
+		return 0;
+	}
+
 	if (strncmp(ptr, "protocol ", 9) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			const char *add = ptr + 9;

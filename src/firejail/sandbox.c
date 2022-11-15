@@ -130,7 +130,14 @@ static void set_caps(void) {
 static void set_apparmor(void) {
 	EUID_ASSERT();
 	if (checkcfg(CFG_APPARMOR) && arg_apparmor) {
-		if (aa_stack_onexec(apparmor_profile)) {
+		int res = 0;
+		if(apparmor_replace){
+			fwarning("Replacing profile instead of stacking it. It is a legacy behavior that can result in relaxation of the protection. It is here as a temporary measure to unbreak the software that has been broken by switching to the stacking behavior.\n");
+			res = aa_change_onexec(apparmor_profile);
+		} else {
+			res = aa_stack_onexec(apparmor_profile);
+		}
+		if (res) {
 			fwarning("Cannot confine the application using AppArmor.\n"
 				"Maybe firejail-default AppArmor profile is not loaded into the kernel.\n"
 				"As root, run \"aa-enforce firejail-default\" to load it.\n");

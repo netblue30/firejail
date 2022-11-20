@@ -67,6 +67,7 @@ blacklist ${HOME}/.cache/GoldenDict
 blacklist ${HOME}/.cache/INRIA
 blacklist ${HOME}/.cache/INRIA/Natron
 blacklist ${HOME}/.cache/JetBrains/CLion*
+blacklist ${HOME}/.cache/JetBrains/PyCharm*
 blacklist ${HOME}/.cache/KDE/neochat
 blacklist ${HOME}/.cache/Mendeley Ltd.
 blacklist ${HOME}/.cache/MusicBrainz
@@ -280,6 +281,7 @@ blacklist ${HOME}/.config/Gpredict
 blacklist ${HOME}/.config/INRIA
 blacklist ${HOME}/.config/InSilmaril
 blacklist ${HOME}/.config/JetBrains/CLion*
+blacklist ${HOME}/.config/JetBrains/PyCharm*
 blacklist ${HOME}/.config/Jitsi Meet
 blacklist ${HOME}/.config/KDE/neochat
 blacklist ${HOME}/.config/KeePass

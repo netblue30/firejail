@@ -11,7 +11,7 @@ firejail [OPTIONS] [program and arguments]
 Start an AppImage program:
 .PP
 .RS
-firejail [OPTIONS] --appimage [appimage-file and arguments]
+firejail [OPTIONS] --appimage [OPTIONS] [appimage-file and arguments]
 .RE
 .PP
 #ifdef HAVE_FILE_TRANSFER
@@ -164,15 +164,22 @@ private-bin and private-lib are disabled by default when running appimages.
 .br
 Example:
 .br
-$ firejail --profile=krita --appimage krita-3.0-x86_64.appimage
+$ firejail --appimage --profile=krita krita-3.0-x86_64.appimage
 .br
-$ firejail --private --profile=krita --appimage krita-3.0-x86_64.appimage
+$ firejail --quiet --appimage --private --profile=krita krita-3.0-x86_64.appimage
 .br
 #ifdef HAVE_X11
-$ firejail --net=none --x11 --profile=krita --appimage krita-3.0-x86_64.appimage
+$ firejail --appimage --net=none --x11 --profile=krita krita-3.0-x86_64.appimage
 #endif
-.TP
+.br
+
+.br
+Note: When using both \fB--appimage\fR and \fB--profile\fR, it is recommended
+to always specify the former before the latter, so that any \fB?HAS_APPIMAGE\fR
+conditionals inside of the profile evaluate to true (see \fB?CONDITIONAL\fR in
+firejail-profile(5)).
 #ifdef HAVE_NETWORK
+.TP
 \fB\-\-bandwidth=name|pid
 Set bandwidth limits for the sandbox identified by name or PID, see \fBTRAFFIC SHAPING\fR section for more details.
 #endif

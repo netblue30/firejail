@@ -14,7 +14,7 @@ Using a specific profile:
 .br
 Example:
 .br
-$ firejail --profile=/etc/firejail/kdenlive.profile --appimage kdenlive.appimage
+$ firejail --appimage --profile=/etc/firejail/kdenlive.profile kdenlive.appimage
 .br
 
 .br
@@ -25,7 +25,7 @@ $ firejail --profile=/etc/firejail/kdenlive.profile --appimage kdenlive.appimage
 .br
 Example:
 .br
-$ firejail --profile=kdenlive --appimage kdenlive.appimage
+$ firejail --appimage --profile=kdenlive kdenlive.appimage
 .br
 
 .br
@@ -178,6 +178,11 @@ Currently the only conditionals supported this way are HAS_APPIMAGE, HAS_NET, HA
 can be enabled or disabled globally in Firejail's configuration file.
 
 The profile line may be any profile line that you would normally use in a profile \fBexcept\fR for "quiet" and "include" lines.
+
+Note: When using one or more conditionals and \fB--profile\fR, it is
+recommended that the relevant option(s) (such as \fB--appimage\fR) be specified
+before \fB--profile\fR, so that their respective conditional(s) (such as
+\fB?HAS_APPIMAGE\fR) inside of the profile evaluate to true.
 
 .TP
 \fBinclude other.profile

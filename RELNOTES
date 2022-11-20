@@ -38,6 +38,8 @@ firejail (0.9.71) baseline; urgency=low
   * docs: Add IRC channel info to README.md (#5361)
   * docs: man: Note that some commands can be disabled in firejail.config
     (#5366)
+  * docs: Add gist note to bug_report.md (#5398)
+  * docs: clarify that --appimage should appear before --profile (#5402 #5451)
  -- netblue30 <netblue30@yahoo.com>  Sat, 11 Jun 2022 09:00:00 -0500
 
 firejail (0.9.70) baseline; urgency=low

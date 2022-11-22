@@ -60,7 +60,7 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 
-private-bin kbuildsycoca4,kdeinit4,ktorrent
+private-bin kbuildsycoca4,kdeinit4,ktmagnetdownloader,ktorrent,ktupnptest
 private-dev
 # private-lib - problems on Arch
 private-tmp

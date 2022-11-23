@@ -10,6 +10,7 @@ include globals.local
 ignore include whitelist-runuser-common.inc
 ignore include whitelist-usr-share-common.inc
 
+ignore apparmor
 ignore dbus-user none
 ignore dbus-system none
 
@@ -21,7 +22,7 @@ whitelist ${HOME}/.config/Whalebird
 no3d
 
 private-bin electron,electron[0-9],electron[0-9][0-9],whalebird
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl
 
 # Redirect
 include electron.profile

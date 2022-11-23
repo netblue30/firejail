@@ -13,6 +13,8 @@ ignore noexec /tmp
 # you will need to uncomment the 'brave + tor' rule in /etc/apparmor.d/local/firejail-default.
 # Alternatively you can add 'ignore apparmor' to your brave.local.
 ignore noexec ${HOME}
+# Causes slow starts (#4604)
+ignore private-cache
 
 noblacklist ${HOME}/.cache/BraveSoftware
 noblacklist ${HOME}/.config/BraveSoftware

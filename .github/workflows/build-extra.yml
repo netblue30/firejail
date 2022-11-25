@@ -4,33 +4,43 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+      - 'etc/**'
+      - 'contrib/vim/**'
+      - 'src/man/*.txt'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
+      - .github/pull_request_template.md
+      - .github/workflows/codeql-analysis.yml
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README
       - README.md
       - RELNOTES
       - SECURITY.md
-      - 'etc/**'
-      - 'src/firecfg/firecfg.config'
-      - '.github/ISSUE_TEMPLATE/*'
-      - '.github/pull_request_template.md'
+      - src/firecfg/firecfg.config
   pull_request:
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+      - 'etc/**'
+      - 'contrib/vim/**'
+      - 'src/man/*.txt'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
+      - .github/pull_request_template.md
+      - .github/workflows/codeql-analysis.yml
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README
       - README.md
       - RELNOTES
       - SECURITY.md
-      - 'etc/**'
-      - 'src/firecfg/firecfg.config'
-      - '.github/ISSUE_TEMPLATE/*'
-      - '.github/pull_request_template.md'
+      - src/firecfg/firecfg.config
 
 permissions:  # added using https://github.com/step-security/secure-workflows
   contents: read

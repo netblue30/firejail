@@ -9,28 +9,42 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+      - 'etc/**'
+      - 'contrib/vim/**'
+      - 'src/man/*.txt'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
+      - .github/pull_request_template.md
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README
       - README.md
       - RELNOTES
       - SECURITY.md
-      - 'etc/**'
+      - src/firecfg/firecfg.config
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+      - 'etc/**'
+      - 'contrib/vim/**'
+      - 'src/man/*.txt'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
+      - .github/pull_request_template.md
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README
       - README.md
       - RELNOTES
       - SECURITY.md
-      - 'etc/**'
+      - src/firecfg/firecfg.config
   schedule:
     - cron: '0 7 * * 2'
 

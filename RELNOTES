@@ -31,8 +31,11 @@ firejail (0.9.71) baseline; urgency=low
   * build: only install ids.config when --enable-ids is set (#5356 #5357)
   * build: Remove deprecated syntax and modernize shell test scripts (#5370)
   * build: Fix musl warnings (#5421 #5431)
+  * build: sort.py improvements (#5429)
+  * build: deduplicate makefiles (#5478)
   * ci: bump ubuntu to 22.04 and use newer compilers / analyzers (#5275)
   * ci: ignore git-related paths and the project license (#5249)
+  * ci: sort and ignore more paths (#5481)
   * docs: mention risk of SUID binaries and also firejail-users(5) (#5288
     #5290)
   * docs: set vim filetype on man pages for syntax highlighting (#5296)

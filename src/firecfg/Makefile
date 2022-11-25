@@ -1,17 +1,16 @@
-.PHONY: all
-all: firecfg
-
 ROOT = ../..
-include $(ROOT)/src/common.mk
+-include $(ROOT)/config.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/euid_common.h ../include/libnetlink.h ../include/firejail_user.h ../include/pid.h $(ROOT)/config.mk
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+PROG = firecfg
+TARGET = $(PROG)
 
-firecfg: $(OBJS) ../lib/common.o ../lib/firejail_user.o $(ROOT)/config.mk
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/firejail_user.o $(LIBS) $(EXTRA_LDFLAGS)
+MOD_HDRS = \
+../include/common.h \
+../include/euid_common.h \
+../include/libnetlink.h \
+../include/firejail_user.h \
+../include/pid.h
 
-.PHONY: clean
-clean:; rm -fr *.o firecfg *.gcov *.gcda *.gcno *.plist
+MOD_OBJS = ../lib/common.o ../lib/firejail_user.o
 
-.PHONY: distclean
-distclean: clean
+include $(ROOT)/src/prog.mk

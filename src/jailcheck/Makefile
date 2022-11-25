@@ -1,17 +1,10 @@
-.PHONY: all
-all: jailcheck
-
 ROOT = ../..
-include $(ROOT)/src/common.mk
+-include $(ROOT)/config.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/pid.h $(ROOT)/config.mk
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+PROG = jailcheck
+TARGET = $(PROG)
 
-jailcheck: $(OBJS) $(ROOT)/config.mk
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS)  ../lib/common.o ../lib/pid.o $(LIBS) $(EXTRA_LDFLAGS)
+MOD_HDRS = ../include/common.h ../include/pid.h
+MOD_OBJS = ../lib/common.o ../lib/pid.o
 
-.PHONY: clean
-clean:; rm -fr *.o jailcheck *.gcov *.gcda *.gcno *.plist
-
-.PHONY: distclean
-distclean: clean
+include $(ROOT)/src/prog.mk

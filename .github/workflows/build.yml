@@ -44,8 +44,16 @@ jobs:
     - name: Harden Runner
       uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
       with:
-        egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
-
+        egress-policy: block
+        allowed-endpoints: >
+          azure.archive.ubuntu.com:80
+          debian.org:80
+          github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+          www.debian.org:443
+          www.debian.org:80
+          yahoo.com:1025
     - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
     - name: update package information
       run: sudo apt-get update

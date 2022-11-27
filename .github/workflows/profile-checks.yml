@@ -4,6 +4,7 @@ on:
   push:
     branches: [ master ]
     paths:
+      - .github/workflows/profile-checks.yml
       - 'ci/check/profiles/**'
       - 'etc/**'
       - contrib/sort.py
@@ -11,6 +12,7 @@ on:
   pull_request:
     branches: [ master ]
     paths:
+      - .github/workflows/profile-checks.yml
       - 'ci/check/profiles/**'
       - 'etc/**'
       - contrib/sort.py

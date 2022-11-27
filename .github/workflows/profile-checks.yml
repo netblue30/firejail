@@ -4,17 +4,17 @@ on:
   push:
     branches: [ master ]
     paths:
-      - .github/workflows/profile-checks.yml
       - 'ci/check/profiles/**'
       - 'etc/**'
+      - .github/workflows/profile-checks.yml
       - contrib/sort.py
       - src/firecfg/firecfg.config
   pull_request:
     branches: [ master ]
     paths:
-      - .github/workflows/profile-checks.yml
       - 'ci/check/profiles/**'
       - 'etc/**'
+      - .github/workflows/profile-checks.yml
       - contrib/sort.py
       - src/firecfg/firecfg.config
 

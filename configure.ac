@@ -328,7 +328,7 @@ if test "$HAVE_LTS" = -DHAVE_LTS; then
 
 *********************************************************
 *    Warning: Long-term support (LTS) was enabled!      *
-*    Most compile-time options have bean rewritten!     *
+*    Most compile-time options have been rewritten!     *
 *********************************************************
 
 

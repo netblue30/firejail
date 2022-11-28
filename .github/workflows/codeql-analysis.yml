@@ -16,6 +16,7 @@ on:
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
       - CONTRIBUTING.md
@@ -36,6 +37,7 @@ on:
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
       - CONTRIBUTING.md

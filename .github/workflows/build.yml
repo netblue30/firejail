@@ -9,6 +9,7 @@ on:
       - .github/dependabot.yml
       - .github/pull_request_template.md
       - .github/workflows/codeql-analysis.yml
+      - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
       - CONTRIBUTING.md
@@ -25,6 +26,7 @@ on:
       - .github/dependabot.yml
       - .github/pull_request_template.md
       - .github/workflows/codeql-analysis.yml
+      - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
       - CONTRIBUTING.md

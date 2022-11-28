@@ -35,7 +35,10 @@ firejail (0.9.71) baseline; urgency=low
   * build: deduplicate makefiles (#5478)
   * ci: bump ubuntu to 22.04 and use newer compilers / analyzers (#5275)
   * ci: ignore git-related paths and the project license (#5249)
+  * ci: Harden GitHub Actions (StepSecurity) (#5439)
   * ci: sort and ignore more paths (#5481)
+  * ci: whitelist needed endpoints and block access to sudo (#5485)
+  * docs: fix typos (#5189 #5349)
   * docs: mention risk of SUID binaries and also firejail-users(5) (#5288
     #5290)
   * docs: set vim filetype on man pages for syntax highlighting (#5296)

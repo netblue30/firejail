@@ -16,6 +16,7 @@ on:
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
       - CONTRIBUTING.md
@@ -36,6 +37,7 @@ on:
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
       - CONTRIBUTING.md
@@ -72,7 +74,12 @@ jobs:
     - name: Harden Runner
       uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
       with:
-        egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+        disable-sudo: true
+        egress-policy: block
+        allowed-endpoints: >
+          api.github.com:443
+          github.com:443
+          uploads.github.com:443
 
     - name: Checkout repository
       uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8

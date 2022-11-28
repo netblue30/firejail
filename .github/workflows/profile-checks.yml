@@ -6,6 +6,7 @@ on:
     paths:
       - 'ci/check/profiles/**'
       - 'etc/**'
+      - .github/workflows/profile-checks.yml
       - contrib/sort.py
       - src/firecfg/firecfg.config
   pull_request:
@@ -13,6 +14,7 @@ on:
     paths:
       - 'ci/check/profiles/**'
       - 'etc/**'
+      - .github/workflows/profile-checks.yml
       - contrib/sort.py
       - src/firecfg/firecfg.config
 
@@ -26,7 +28,10 @@ jobs:
     - name: Harden Runner
       uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
       with:
+        disable-sudo: true
         egress-policy: block
+        allowed-endpoints: >
+          github.com:443
 
     - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
     - name: sort.py

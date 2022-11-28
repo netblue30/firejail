@@ -8,6 +8,8 @@ include firefox-common.local
 
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
+# noexec ${RUNUSER} breaks DRM binaries when using profile-sync-daemon.
+?BROWSER_ALLOW_DRM: ignore noexec ${RUNUSER}
 
 # Add the next line to your firefox-common.local to allow access to common programs/addons/plugins.
 #include firefox-common-addons.profile

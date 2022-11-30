@@ -291,6 +291,8 @@ AC_OUTPUT
 cat <<EOF
 
 Compile options:
+   CC: $CC
+   CFLAGS: $CFLAGS
    EXTRA_CFLAGS: $EXTRA_CFLAGS
    EXTRA_LDFLAGS: $EXTRA_LDFLAGS
    fatal warnings: $HAVE_FATAL_WARNINGS

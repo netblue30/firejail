@@ -72,7 +72,7 @@ AS_IF([test "x$enable_apparmor" = "xyes"], [
 	HAVE_APPARMOR="-DHAVE_APPARMOR"
 	PKG_CHECK_MODULES([AA], [libapparmor], [
 		EXTRA_CFLAGS="$EXTRA_CFLAGS $AA_CFLAGS"
-		EXTRA_LDFLAGS="$EXTRA_LDFLAGS $AA_LIBS"
+		LIBS="$LIBS $AA_LIBS"
 	])
 ])
 
@@ -82,7 +82,7 @@ AC_ARG_ENABLE([selinux],
     [AS_HELP_STRING([--enable-selinux], [SELinux labeling support])])
 AS_IF([test "x$enable_selinux" = "xyes"], [
 	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux"
+	LIBS="$LIBS -lselinux"
 ])
 
 AC_SUBST([EXTRA_CFLAGS])
@@ -226,7 +226,8 @@ AC_ARG_ENABLE([gcov],
     [AS_HELP_STRING([--enable-gcov], [Gcov instrumentation])])
 AS_IF([test "x$enable_gcov" = "xyes"], [
 	HAVE_GCOV="--coverage -DHAVE_GCOV"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage"
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS --coverage"
+	LIBS="$LIBS -lgcov"
 ])
 
 HAVE_CONTRIB_INSTALL="yes"

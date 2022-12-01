@@ -2914,7 +2914,9 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___mindirect_branch_thunk" >&5
 $as_echo "$ax_cv_check_cflags___mindirect_branch_thunk" >&6; }
 if test "x$ax_cv_check_cflags___mindirect_branch_thunk" = xyes; then :
-  HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -mindirect-branch=thunk"
+
+	HAVE_SPECTRE="yes"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -mindirect-branch=thunk"
 
 else
   :
@@ -2950,7 +2952,9 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___mretpoline" >&5
 $as_echo "$ax_cv_check_cflags___mretpoline" >&6; }
 if test "x$ax_cv_check_cflags___mretpoline" = xyes; then :
-  HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -mretpoline"
+
+	HAVE_SPECTRE="yes"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -mretpoline"
 
 else
   :
@@ -2986,7 +2990,9 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___fstack_clash_protection" >&5
 $as_echo "$ax_cv_check_cflags___fstack_clash_protection" >&6; }
 if test "x$ax_cv_check_cflags___fstack_clash_protection" = xyes; then :
-  HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-clash-protection"
+
+	HAVE_SPECTRE="yes"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-clash-protection"
 
 else
   :
@@ -3022,7 +3028,9 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___fstack_protector_strong" >&5
 $as_echo "$ax_cv_check_cflags___fstack_protector_strong" >&6; }
 if test "x$ax_cv_check_cflags___fstack_protector_strong" = xyes; then :
-  HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-protector-strong"
+
+	HAVE_SPECTRE="yes"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-protector-strong"
 
 else
   :
@@ -3048,7 +3056,8 @@ else
 fi
 
 if test "x$enable_sanitizer" != "xno" ; then :
-  as_CACHEVAR=`$as_echo "ax_cv_check_cflags__-fsanitize=$enable_sanitizer" | $as_tr_sh`
+
+	as_CACHEVAR=`$as_echo "ax_cv_check_cflags__-fsanitize=$enable_sanitizer" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C compiler accepts -fsanitize=$enable_sanitizer" >&5
 $as_echo_n "checking whether C compiler accepts -fsanitize=$enable_sanitizer... " >&6; }
 if eval \${$as_CACHEVAR+:} false; then :
@@ -3086,8 +3095,8 @@ if eval test \"x\$"$as_CACHEVAR"\" = x"yes"; then :
 
 else
   as_fn_error $? "sanitizer not supported: $enable_sanitizer" "$LINENO" 5
-
 fi
+
 
 fi
 
@@ -3323,7 +3332,10 @@ else
 	AA_LIBS=$pkg_cv_AA_LIBS
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-	EXTRA_CFLAGS="$EXTRA_CFLAGS $AA_CFLAGS" && EXTRA_LDFLAGS="$EXTRA_LDFLAGS $AA_LIBS"
+
+		EXTRA_CFLAGS="$EXTRA_CFLAGS $AA_CFLAGS"
+		EXTRA_LDFLAGS="$EXTRA_LDFLAGS $AA_LIBS"
+
 fi
 
 fi
@@ -3341,7 +3353,6 @@ if test "x$enable_selinux" = "xyes"; then :
 	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux"
 
 fi
-
 
 
 
@@ -3591,7 +3602,6 @@ if test "x$enable_busybox_workaround" = "xyes"; then :
 
 fi
 
-
 HAVE_GCOV=""
 
 # Check whether --enable-gcov was given.
@@ -3615,7 +3625,7 @@ fi
 
 if test "x$enable_contrib_install" = "xno"; then :
 
-       HAVE_CONTRIB_INSTALL="no"
+	HAVE_CONTRIB_INSTALL="no"
 
 fi
 
@@ -3641,7 +3651,7 @@ fi
 
 if test "x$enable_only_syscfg_profiles" = "xyes"; then :
 
-    HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
+	HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
 
 fi
 
@@ -3670,7 +3680,7 @@ if test "x$enable_lts" = "xyes"; then :
 	HAVE_FILE_TRANSFER=""
 	HAVE_SUID="-DHAVE_SUID"
 	BUSYBOX_WORKAROUND="no"
-	HAVE_CONTRIB_INSTALL="no",
+	HAVE_CONTRIB_INSTALL="no"
 
 fi
 
@@ -5284,13 +5294,10 @@ EOF
 
 if test "$HAVE_LTS" = -DHAVE_LTS; then
 	cat <<\EOF
-
-
 *********************************************************
 *    Warning: Long-term support (LTS) was enabled!      *
-*    Most compile-time options have bean rewritten!     *
+*    Most compile-time options have been rewritten!     *
 *********************************************************
-
 
 EOF
 fi

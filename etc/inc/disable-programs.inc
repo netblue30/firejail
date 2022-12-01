@@ -611,6 +611,7 @@ blacklist ${HOME}/.config/sound-juicer
 blacklist ${HOME}/.config/specialmailcollectionsrc
 blacklist ${HOME}/.config/spectaclerc
 blacklist ${HOME}/.config/spotify
+blacklist ${HOME}/.config/spotify-adblock
 blacklist ${HOME}/.config/sqlitebrowser
 blacklist ${HOME}/.config/stellarium
 blacklist ${HOME}/.config/straw-viewer

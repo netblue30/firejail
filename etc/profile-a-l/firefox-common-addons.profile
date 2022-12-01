@@ -3,6 +3,10 @@
 include firefox-common-addons.local
 
 ignore whitelist ${RUNUSER}/*firefox*
+ignore whitelist ${RUNUSER}/psd/*firefox*
+# Add one of the following options to your firefox-common-addons.local if you enabled KeePassXC Plugin support.
+#ignore whitelist ${RUNUSER}/kpxc_server
+#ignore whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 ignore include whitelist-runuser-common.inc
 ignore private-cache
 

@@ -16,6 +16,8 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.kde/share/config
+mkdir ${HOME}/.kde4/share/config
 mkdir ${HOME}/.local/share/kxmlgui5/kcalc
 mkfile ${HOME}/.config/kcalcrc
 mkfile ${HOME}/.kde/share/config/kcalcrc

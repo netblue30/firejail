@@ -11,6 +11,7 @@ on:
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - 'etc/**'
+      - 'contrib/gtksourceview-5/**'
       - 'contrib/vim/**'
       - 'src/man/*.txt'
       - .git-blame-ignore-revs
@@ -32,6 +33,7 @@ on:
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - 'etc/**'
+      - 'contrib/gtksourceview-5/**'
       - 'contrib/vim/**'
       - 'src/man/*.txt'
       - .git-blame-ignore-revs

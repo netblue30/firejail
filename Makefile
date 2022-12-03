@@ -125,6 +125,9 @@ ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	install -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
 	install -m 0644 contrib/vim/ftdetect/firejail.vim $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect
 	install -m 0644 contrib/vim/syntax/firejail.vim $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
+	# gtksourceview-5 language-specs
+	install -m 0755 -d $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs
+	install -m 0644 contrib/gtksourceview-5/language-specs/firejail-profile.lang $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs
 endif
 	# documents
 	install -m 0755 -d $(DESTDIR)$(docdir)

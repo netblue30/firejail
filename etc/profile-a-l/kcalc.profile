@@ -16,10 +16,14 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+# Legacy paths
+#mkdir ${HOME}/.kde/share/config
+#mkdir ${HOME}/.kde4/share/config
+#mkfile ${HOME}/.kde/share/config/kcalcrc
+#mkfile ${HOME}/.kde4/share/config/kcalcrc
+
 mkdir ${HOME}/.local/share/kxmlgui5/kcalc
 mkfile ${HOME}/.config/kcalcrc
-mkfile ${HOME}/.kde/share/config/kcalcrc
-mkfile ${HOME}/.kde4/share/config/kcalcrc
 whitelist ${HOME}/.config/kcalcrc
 whitelist ${HOME}/.kde/share/config/kcalcrc
 whitelist ${HOME}/.kde4/share/config/kcalcrc

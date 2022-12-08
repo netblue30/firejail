@@ -336,4 +336,4 @@ Stats:
 ### New profiles:
 
 onionshare, onionshare-cli, opera-developer, songrec, gdu, makedeb, lbry-viewer, tuir,
-cinelerra-gg
+cinelerra-gg, tesseract

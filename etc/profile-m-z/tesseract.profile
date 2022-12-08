@@ -53,7 +53,7 @@ x11 none
 private-bin ambiguous_words,classifier_tester,cntraining,combine_lang_model,combine_tessdata,dawg2wordlist,lstmeval,lstmtraining,merge_unicharsets,mftraining,set_unicharset_properties,shapeclustering,tesseract,text2image,unicharset_extractor,wordlist2dawg
 private-cache
 private-dev
-private-etc fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
+private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
 #private-lib libtesseract.so.*
 private-tmp
 

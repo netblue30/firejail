@@ -9,25 +9,26 @@ HDRS := $(sort $(wildcard *.h)) $(MOD_HDRS)
 SRCS := $(sort $(wildcard *.c)) $(MOD_SRCS)
 OBJS := $(SRCS:.c=.o) $(MOD_OBJS)
 
-CFLAGS += \
+PROG_CFLAGS = \
 	-ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' \
 	-fstack-protector-all -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security \
 	-fPIE \
 	-DPREFIX='"$(prefix)"' -DSYSCONFDIR='"$(sysconfdir)/firejail"' \
 	-DLIBDIR='"$(libdir)"' -DBINDIR='"$(bindir)"' \
 	-DVARDIR='"/var/lib/firejail"' \
-	$(HAVE_GCOV) $(MANFLAGS)
+	$(HAVE_GCOV) $(MANFLAGS) \
+	$(EXTRA_CFLAGS)
 
-LDFLAGS += -pie -fPIE -Wl,-z,relro -Wl,-z,now
+PROG_LDFLAGS = -pie -fPIE -Wl,-z,relro -Wl,-z,now $(EXTRA_LDFLAGS)
 
 .PHONY: all
 all: $(TARGET)
 
 %.o : %.c $(HDRS) $(ROOT)/config.mk
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(PROG_CFLAGS) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(PROG): $(OBJS) $(ROOT)/config.mk
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)
+	$(CC) $(PROG_LDFLAGS) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
 
 .PHONY: clean
 clean:; rm -fr *.o $(PROG) *.gcov *.gcda *.gcno *.plist $(TOCLEAN)

@@ -51,8 +51,15 @@ HAVE_ONLY_SYSCFG_PROFILES=@HAVE_ONLY_SYSCFG_PROFILES@
 
 MANFLAGS = $(HAVE_LTS) $(HAVE_OUTPUT) $(HAVE_X11) $(HAVE_PRIVATE_HOME) $(HAVE_APPARMOR) $(HAVE_IDS) $(HAVE_OVERLAYFS) $(HAVE_USERTMPFS) $(HAVE_DBUSPROXY) $(HAVE_FIRETUNNEL) $(HAVE_GLOBALCFG) $(HAVE_CHROOT) $(HAVE_NETWORK) $(HAVE_USERNS) $(HAVE_FILE_TRANSFER) $(HAVE_SELINUX) $(HAVE_SUID) $(HAVE_FORCE_NONEWPRIVS) $(HAVE_ONLY_SYSCFG_PROFILES)
 
+# User variables - should not be modified in the code (as they are reserved for
+# the user building the package); see the following for details:
+# https://www.gnu.org/software/automake/manual/1.16.5/html_node/User-Variables.html
 CC=@CC@
 CFLAGS=@CFLAGS@
+LDFLAGS=@LDFLAGS@
+
+# Project variables
+LIBS=@LIBS@
 
 ifdef NO_EXTRA_CFLAGS
 else

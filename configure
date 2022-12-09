@@ -3334,7 +3334,7 @@ else
 $as_echo "yes" >&6; }
 
 		EXTRA_CFLAGS="$EXTRA_CFLAGS $AA_CFLAGS"
-		EXTRA_LDFLAGS="$EXTRA_LDFLAGS $AA_LIBS"
+		LIBS="$LIBS $AA_LIBS"
 
 fi
 
@@ -3350,7 +3350,7 @@ fi
 if test "x$enable_selinux" = "xyes"; then :
 
 	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux"
+	LIBS="$LIBS -lselinux"
 
 fi
 
@@ -3612,7 +3612,8 @@ fi
 if test "x$enable_gcov" = "xyes"; then :
 
 	HAVE_GCOV="--coverage -DHAVE_GCOV"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage"
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS --coverage"
+	LIBS="$LIBS -lgcov"
 
 fi
 
@@ -5258,8 +5259,12 @@ fi
 cat <<EOF
 
 Compile options:
+   CC: $CC
+   CFLAGS: $CFLAGS
+   LDFLAGS: $LDFLAGS
    EXTRA_CFLAGS: $EXTRA_CFLAGS
    EXTRA_LDFLAGS: $EXTRA_LDFLAGS
+   LIBS: $LIBS
    fatal warnings: $HAVE_FATAL_WARNINGS
    gcov instrumentation: $HAVE_GCOV
    install as a SUID executable: $HAVE_SUID

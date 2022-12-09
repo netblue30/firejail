@@ -9,21 +9,21 @@ HDRS := $(sort $(wildcard *.h)) $(MOD_HDRS)
 SRCS := $(sort $(wildcard *.c)) $(MOD_SRCS)
 OBJS := $(SRCS:.c=.o) $(MOD_OBJS)
 
-CFLAGS += \
+SO_CFLAGS = \
 	-ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' \
 	-fstack-protector-all -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security \
 	-fPIC
 
-LDFLAGS += -pie -fPIE -Wl,-z,relro -Wl,-z,now
+SO_LDFLAGS = -pie -fPIE -Wl,-z,relro -Wl,-z,now
 
 .PHONY: all
 all: $(TARGET)
 
 %.o : %.c $(HDRS) $(ROOT)/config.mk
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(SO_CFLAGS) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(SO): $(OBJS) $(ROOT)/config.mk
-	$(CC) $(LDFLAGS) -shared -fPIC -z relro -o $@ $(OBJS) -ldl
+	$(CC) $(SO_LDFLAGS) -shared -fPIC -z relro $(LDFLAGS) -o $@ $(OBJS) -ldl
 
 .PHONY: clean
 clean:; rm -fr $(OBJS) $(SO) *.plist $(TOCLEAN)

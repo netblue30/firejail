@@ -57,7 +57,7 @@ private
 private-cache
 private-dev
 # /etc/hosts is required in private-etc; however, just adding it to the list doesn't solve the problem!
-#private-etc ca-certificates,crypto-policies,hosts,pki,resolv.conf,ssl
+#private-etc alternatives,ca-certificates,crypto-policies,hosts,pki,resolv.conf,ssl
 private-lib
 private-tmp
 

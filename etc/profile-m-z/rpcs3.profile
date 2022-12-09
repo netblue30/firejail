@@ -54,7 +54,7 @@ tracelog
 
 disable-mnt
 #private-cache
-#private-etc ca-certificates,crypto-policies,machine-id,pki,resolv.conf,ssl # seems to need awk
+#private-etc alternatives,ca-certificates,crypto-policies,machine-id,pki,resolv.conf,ssl # seems to need awk
 private-tmp
 
 dbus-user none

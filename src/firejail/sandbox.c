@@ -1127,8 +1127,10 @@ int sandbox(void* sandbox_arg) {
 			struct stat s;
 			if (stat(cfg.homedir, &s) == 0) {
 				/* coverity[toctou] */
-				if (chdir(cfg.homedir) < 0)
-					errExit("chdir");
+				if (chdir(cfg.homedir) < 0) {
+					fprintf(stderr, "Error: unable to enter home directory: %s: %s\n", cfg.homedir, strerror(errno));
+					exit(1);
+				}
 			}
 		}
 	}

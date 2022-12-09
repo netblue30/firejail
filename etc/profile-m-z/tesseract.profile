@@ -46,7 +46,7 @@ nosound
 notv
 nou2f
 novideo
-seccomp socket
+seccomp
 tracelog
 x11 none
 

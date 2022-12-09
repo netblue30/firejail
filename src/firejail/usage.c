@@ -91,6 +91,9 @@ static char *usage_str =
 	"    --deterministic-shutdown - terminate orphan processes.\n"
 	"    --dns=address - set DNS server.\n"
 	"    --dns.print=name|pid - print DNS configuration.\n"
+#ifdef HAVE_NETWORK
+	"    --dnstrace - monitor DNS queries.\n"
+#endif
 	"    --env=name=value - set environment variable.\n"
 	"    --fs.print=name|pid - print the filesystem log.\n"
 #ifdef HAVE_FILE_TRANSFER
@@ -99,6 +102,9 @@ static char *usage_str =
 	"    --help, -? - this help screen.\n"
 	"    --hostname=name - set sandbox hostname.\n"
 	"    --hosts-file=file - use file as /etc/hosts.\n"
+#ifdef HAVE_NETWORK
+	"    --icmptrace - monitor Server Name Indiication (TLS/SNI).\n"
+#endif
 	"    --ids-check - verify file system.\n"
 	"    --ids-init - initialize IDS database.\n"
 	"    --ignore=command - ignore command in profile files.\n"
@@ -154,8 +160,6 @@ static char *usage_str =
 	"    --netns=name - Run the program in a named, persistent network namespace.\n"
 	"    --netstats - monitor network statistics.\n"
 	"    --nettrace - monitor received TCP, UDP and ICMP traffic.\n"
-	"    --nettrace - monitor DNS queries.\n"
-	"    --nettrace - monitor Server Name Indiication (TLS/SNI).\n"
 #endif
 	"    --nice=value - set nice value.\n"
 	"    --no3d - disable 3D hardware acceleration.\n"

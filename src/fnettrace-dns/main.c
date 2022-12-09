@@ -70,6 +70,7 @@ void print_dns(uint32_t ip_src, unsigned char *pkt) {
 		type, (nxdomain)? " NXDOMAIN": "");
 	if (strcmp(tmp, last)) {
 		printf("%s\n", tmp);
+		fflush(0);
 		strcpy(last, tmp);
 	}
 
@@ -77,6 +78,7 @@ void print_dns(uint32_t ip_src, unsigned char *pkt) {
 
 errout:
 	printf("%02d:%02d:%02d  %15s  Error: invalid DNS packet\n", t->tm_hour, t->tm_min, t->tm_sec, ip);
+	fflush(0);
 }
 
 // https://www.kernel.org/doc/html/latest/networking/filter.html

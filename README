@@ -615,6 +615,8 @@ juan (https://github.com/nyancat18)
 	- fixed Kdenlive, Shotcut profiles
 	- new profiles for Cinelerra, Cliqz, Bluefish
 	- profile hardening
+k4leg (https://github.com/k4leg)
+	- fix PyCharm profiles
 Kaan Genç (https://github.com/SeriousBug)
 	- dynamic allocation of noblacklist buffer
 Karoshi42 (https://github.com/karoshi42)

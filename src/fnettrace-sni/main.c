@@ -77,6 +77,7 @@ static void print_tls(uint32_t ip_dest, unsigned char *pkt, unsigned len) {
 		snprintf(tmp, sizeof(last), "%02d:%02d:%02d  %-15s  %s", t->tm_hour, t->tm_min, t->tm_sec, ip, name);
 		if (strcmp(tmp, last)) {
 			printf("%s\n", tmp);
+			fflush(0);
 			strcpy(last, tmp);
 		}
 	}
@@ -86,6 +87,7 @@ static void print_tls(uint32_t ip_dest, unsigned char *pkt, unsigned len) {
 
 errout:
 	printf("%02d:%02d:%02d  %-15s  Error: invalid TLS packet\n", t->tm_hour, t->tm_min, t->tm_sec, ip);
+	fflush(0);
 	return;
 
 nosni:

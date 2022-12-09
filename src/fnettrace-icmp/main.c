@@ -64,19 +64,19 @@ char *code_dest_unreachable[16] = {
 	"Host unreachable for ToS",
 	"Communication administratively prohibited",
 	"Host Precedence Violation",
-	"Precedence cutoff in effect "
+	"Precedence cutoff in effect"
 };
 
 char *code_redirect_message[4] = {
 	"Datagram for the Network",
 	"Datagram for the Host",
 	"Datagram for the ToS & network",
-	"Datagram for the ToS & host "
+	"Datagram for the ToS & host"
 };
 
 char *code_time_exceeded[2] = {
 	"TTL expired in transit",
-	"Fragment reassembly time exceeded "
+	"Fragment reassembly time exceeded"
 };
 
 char *code_bad_ip_header[3] = {
@@ -115,6 +115,7 @@ static void print_icmp(uint32_t ip_dest, uint32_t ip_src, uint8_t type, uint8_t 
 		icmp_bytes,
 		type_ptr,
 		code_ptr);
+	fflush(0);
 }
 
 // https://www.kernel.org/doc/html/latest/networking/filter.html

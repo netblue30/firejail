@@ -39,7 +39,7 @@ seccomp
 #disable-mnt
 private-bin librecad
 private-dev
-# private-etc cups,drirc,fonts,passwd,xdg
+#private-etc alternatives,cups,drirc,fonts,passwd,xdg
 #private-lib
 private-tmp
 

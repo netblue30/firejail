@@ -44,12 +44,12 @@ nosound
 notv
 nou2f
 novideo
-#protocol unix
+protocol unix
 seccomp
 tracelog
 
 disable-mnt
-private-bin clipit
+private-bin clipit,xdotool
 private-cache
 private-dev
 private-lib
@@ -58,5 +58,6 @@ private-tmp
 dbus-user none
 dbus-system none
 
-memory-deny-write-execute
+#memory-deny-write-execute
+restrict-namespaces
 read-only ${HOME}

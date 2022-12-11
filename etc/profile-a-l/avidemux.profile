@@ -1,5 +1,6 @@
 # Firejail profile for Avidemux
 # Description: Avidemux is a free video editor designed for simple cutting, filtering and encoding tasks.
+# This file is overwritten after every install/update
 # Persistent local customizations
 include avidemux.local
 # Persistent global definitions

@@ -42,6 +42,7 @@ blacklist ${HOME}/.asunder_album_title
 blacklist ${HOME}/.atom
 blacklist ${HOME}/.attic
 blacklist ${HOME}/.audacity-data
+blacklist ${HOME}/.avidemux3
 blacklist ${HOME}/.avidemux6
 blacklist ${HOME}/.ballbuster.hs
 blacklist ${HOME}/.balsa

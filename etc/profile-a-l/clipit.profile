@@ -52,7 +52,7 @@ disable-mnt
 private-bin clipit,xdotool
 private-cache
 private-dev
-private-lib
+private-lib libxdo.so.*
 private-tmp
 
 dbus-user none

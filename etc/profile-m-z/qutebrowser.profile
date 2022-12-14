@@ -31,7 +31,7 @@ whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/qutebrowser
 whitelist ${HOME}/.config/qutebrowser
 whitelist ${HOME}/.local/share/qutebrowser
-whitelist /usr/share/qtbrowser
+whitelist /usr/share/qutebrowser
 include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc

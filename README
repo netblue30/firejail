@@ -505,6 +505,7 @@ hhzek0014 (https://github.com/hhzek0014)
 hknaack (https://github.com/hknaack)
 	- Kate profile fixes
 	- seamonkey.profile: support enigmail/gpg
+	- Avidemux tools support
 hlein (https://github.com/hlein)
 	- strip out \r's from jail prober
 	- make env/arg sanity check failure messages more useful

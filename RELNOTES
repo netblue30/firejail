@@ -33,6 +33,8 @@ firejail (0.9.72rc1) baseline; urgency=low
   * build: Fix musl warnings (#5421 #5431)
   * build: sort.py improvements (#5429)
   * build: deduplicate makefiles (#5478)
+  * build: fix formatting and misc in configure (#5488)
+  * build: actually set LDFLAGS/LIBS & stop overriding CFLAGS/LDFLAGS (#5504)
   * ci: bump ubuntu to 22.04 and use newer compilers / analyzers (#5275)
   * ci: ignore git-related paths and the project license (#5249)
   * ci: Harden GitHub Actions (StepSecurity) (#5439)

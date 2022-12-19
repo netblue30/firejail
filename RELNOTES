@@ -1,4 +1,4 @@
-firejail (0.9.71) baseline; urgency=low
+firejail (0.9.72rc1) baseline; urgency=low
   * work in progress
   * feature: On failing to remount a fuse filesystem, give warning instead of
     erroring out (#5240 #5242)

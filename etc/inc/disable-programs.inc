@@ -2,6 +2,7 @@
 # Persistent customizations should go in a .local file.
 include disable-programs.local
 
+blacklist /etc/ssmtp
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.AndroidStudio*

@@ -28,7 +28,7 @@ caps.drop all
 # Add the below lines to your audacity.local if you need online plugins.
 #ignore net none
 #netfilter
-#protocol inet,inet6
+#protocol inet6
 net none
 no3d
 nodvd
@@ -39,7 +39,7 @@ noroot
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,inet
 seccomp
 tracelog
 

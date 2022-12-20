@@ -50,3 +50,5 @@ private-srv none
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

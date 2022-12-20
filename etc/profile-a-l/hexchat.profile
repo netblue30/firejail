@@ -55,3 +55,4 @@ private-dev
 private-tmp
 
 # memory-deny-write-execute - breaks python
+restrict-namespaces

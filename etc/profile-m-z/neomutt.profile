@@ -129,3 +129,4 @@ read-only ${HOME}/.elinks
 read-only ${HOME}/.nanorc
 read-only ${HOME}/.signature
 read-only ${HOME}/.w3m
+restrict-namespaces

@@ -34,3 +34,5 @@ private-bin gthumb
 private-cache
 private-dev
 private-tmp
+
+restrict-namespaces

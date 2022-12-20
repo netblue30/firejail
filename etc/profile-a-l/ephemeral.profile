@@ -61,3 +61,5 @@ private-tmp
 # breaks preferences
 # dbus-user none
 # dbus-system none
+
+restrict-namespaces

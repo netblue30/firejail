@@ -36,3 +36,4 @@ disable-mnt
 private-dev
 private-tmp
 
+restrict-namespaces

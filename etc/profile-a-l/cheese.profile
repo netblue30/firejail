@@ -58,3 +58,5 @@ dbus-user filter
 dbus-user.own org.gnome.Cheese
 dbus-user.talk ca.desrt.dconf
 dbus-system none
+
+restrict-namespaces

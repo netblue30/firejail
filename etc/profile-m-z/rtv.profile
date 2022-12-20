@@ -62,3 +62,5 @@ private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,host
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

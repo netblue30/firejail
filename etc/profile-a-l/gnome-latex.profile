@@ -50,3 +50,5 @@ private-dev
 private-etc alternatives,dconf,fonts,gtk-3.0,latexmk.conf,ld.so.cache,ld.so.preload,login.defs,passwd,texlive
 
 dbus-system none
+
+restrict-namespaces

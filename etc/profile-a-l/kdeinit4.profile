@@ -34,3 +34,4 @@ private-bin kbuildsycoca4,kded4,kdeinit4,knotify4
 private-dev
 private-tmp
 
+restrict-namespaces

@@ -24,3 +24,5 @@ seccomp !chroot
 
 private-cache
 private-tmp
+
+# restrict-namespaces

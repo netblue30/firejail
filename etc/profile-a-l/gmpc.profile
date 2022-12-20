@@ -51,3 +51,4 @@ writable-run-user
 # dbus-system none
 
 # memory-deny-write-execute - breaks on Arch
+restrict-namespaces

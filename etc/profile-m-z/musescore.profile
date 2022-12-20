@@ -39,3 +39,5 @@ tracelog
 
 # private-bin musescore,mscore
 private-tmp
+
+# restrict-namespaces

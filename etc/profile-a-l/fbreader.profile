@@ -36,3 +36,5 @@ seccomp
 private-bin fbreader,FBReader
 private-dev
 private-tmp
+
+restrict-namespaces

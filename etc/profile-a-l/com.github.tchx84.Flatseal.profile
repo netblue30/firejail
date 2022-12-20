@@ -62,3 +62,4 @@ dbus-user.talk org.gnome.Software
 dbus-system none
 
 read-write ${HOME}/.local/share/flatpak/overrides
+restrict-namespaces

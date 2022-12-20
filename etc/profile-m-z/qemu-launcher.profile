@@ -25,3 +25,4 @@ private-cache
 private-tmp
 
 noexec /tmp
+restrict-namespaces

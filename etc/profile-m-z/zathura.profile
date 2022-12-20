@@ -59,3 +59,4 @@ dbus-system none
 read-only ${HOME}
 read-write ${HOME}/.config/zathura
 read-write ${HOME}/.local/share/zathura
+restrict-namespaces

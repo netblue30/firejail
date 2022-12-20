@@ -53,3 +53,4 @@ dbus-system none
 
 # mdwe is broken under Wayland, but works under Xorg.
 #memory-deny-write-execute
+restrict-namespaces

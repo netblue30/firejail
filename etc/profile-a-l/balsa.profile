@@ -79,3 +79,4 @@ dbus-user.talk org.gnome.keyring.SystemPrompter
 dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini
+restrict-namespaces

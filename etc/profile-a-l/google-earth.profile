@@ -39,3 +39,4 @@ private-bin bash,dirname,google-earth,grep,ls,sed,sh
 private-dev
 private-opt google
 
+restrict-namespaces

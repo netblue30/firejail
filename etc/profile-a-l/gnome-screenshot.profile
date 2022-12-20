@@ -48,3 +48,5 @@ dbus-user filter
 dbus-user.own org.gnome.Screenshot
 dbus-user.talk org.gnome.Shell.Screenshot
 dbus-system none
+
+restrict-namespaces

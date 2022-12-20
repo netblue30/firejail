@@ -37,3 +37,5 @@ seccomp
 # private-etc alternatives,drirc,fonts,gcrypt,hosts,kde5rc,mpd.conf,passwd,samba,ssl,xdg
 private-bin cantata,mpd,perl
 private-dev
+
+restrict-namespaces

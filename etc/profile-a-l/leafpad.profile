@@ -38,3 +38,4 @@ private-dev
 private-lib
 private-tmp
 
+restrict-namespaces

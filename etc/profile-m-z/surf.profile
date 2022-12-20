@@ -36,3 +36,4 @@ private-dev
 private-etc alternatives,ca-certificates,crypto-policies,fonts,group,hosts,ld.so.cache,ld.so.preload,machine-id,passwd,pki,resolv.conf,ssl
 private-tmp
 
+restrict-namespaces

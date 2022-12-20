@@ -100,3 +100,4 @@ dbus-system none
 
 # Add the next line to your nodejs-common.local if you prefer to disable gatsby telemetry.
 #env GATSBY_TELEMETRY_DISABLED=1
+restrict-namespaces

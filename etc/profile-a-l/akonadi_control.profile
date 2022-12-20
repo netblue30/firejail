@@ -55,3 +55,4 @@ tracelog
 private-dev
 # private-tmp - breaks programs that depend on akonadi
 
+# restrict-namespaces

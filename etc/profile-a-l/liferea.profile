@@ -59,3 +59,5 @@ dbus-user.talk ca.desrt.dconf
 # Add the next line to your liferea.local if you use the 'Libsecret Support' plugin.
 #dbus-user.talk org.freedesktop.secrets
 dbus-system none
+
+restrict-namespaces

@@ -46,7 +46,8 @@ private-dev
 private-etc alternatives,ld.so.cache,ld.so.preload
 private-tmp
 
-memory-deny-write-execute
-
 dbus-user none
 dbus-system none
+
+memory-deny-write-execute
+restrict-namespaces

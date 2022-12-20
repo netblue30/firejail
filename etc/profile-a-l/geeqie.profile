@@ -34,3 +34,5 @@ seccomp
 
 # private-bin geeqie
 private-dev
+
+restrict-namespaces

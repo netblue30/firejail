@@ -81,3 +81,4 @@ dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini
 read-only ${HOME}/.signature
+restrict-namespaces

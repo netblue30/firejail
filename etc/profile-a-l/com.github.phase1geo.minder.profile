@@ -58,3 +58,5 @@ dbus-user filter
 dbus-user.own com.github.phase1geo.minder
 dbus-user.talk ca.desrt.dconf
 dbus-system none
+
+restrict-namespaces

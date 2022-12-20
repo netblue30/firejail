@@ -48,3 +48,4 @@ dbus-user none
 dbus-system none
 
 # memory-deny-write-execute -- see #3790
+restrict-namespaces

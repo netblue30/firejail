@@ -30,3 +30,4 @@ seccomp
 
 read-write ${HOME}/.emacs
 read-write ${HOME}/.emacs.d
+restrict-namespaces

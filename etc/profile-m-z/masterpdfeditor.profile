@@ -38,3 +38,4 @@ private-dev
 private-etc alternatives,fonts,ld.so.cache,ld.so.preload
 private-tmp
 
+restrict-namespaces

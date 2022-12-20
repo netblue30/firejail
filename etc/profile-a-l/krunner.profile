@@ -35,3 +35,5 @@ protocol unix,inet,inet6
 seccomp
 
 # private-cache
+
+restrict-namespaces

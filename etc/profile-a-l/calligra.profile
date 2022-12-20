@@ -37,3 +37,4 @@ private-dev
 
 # noexec ${HOME}
 noexec /tmp
+restrict-namespaces

@@ -52,3 +52,5 @@ private-etc alsa,alternatives,asound.conf,dconf,fonts,gtk-2.0,gtk-3.0,ld.so.cach
 private-tmp
 
 dbus-system none
+
+restrict-namespaces

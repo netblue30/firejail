@@ -56,3 +56,4 @@ private-tmp
 # dbus-system none
 
 read-only ${HOME}
+restrict-namespaces

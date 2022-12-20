@@ -67,3 +67,5 @@ dbus-user filter
 dbus-user.own org.gabmus.gfeeds
 dbus-user.talk ca.desrt.dconf
 dbus-system none
+
+restrict-namespaces

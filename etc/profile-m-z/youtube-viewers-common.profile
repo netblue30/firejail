@@ -67,3 +67,5 @@ dbus-user filter
 dbus-user.talk org.mozilla.*
 
 dbus-system none
+
+restrict-namespaces

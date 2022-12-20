@@ -63,3 +63,4 @@ read-only ${HOME}
 read-write ${HOME}/.cache/agenda
 read-write ${HOME}/.config/agenda
 read-write ${HOME}/.local/share/agenda
+restrict-namespaces

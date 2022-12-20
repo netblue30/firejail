@@ -48,7 +48,7 @@ notv
 protocol unix,inet,inet6,netlink
 # blacklisting of chroot system calls breaks qt webengine
 seccomp !chroot,!name_to_handle_at
-# tracelog
+#tracelog
 
 disable-mnt
 private-cache
@@ -65,3 +65,5 @@ dbus-user.talk org.freedesktop.Notifications
 # with the above lines (might depend on the portal implementation).
 #ignore noroot
 dbus-system none
+
+#restrict-namespaces

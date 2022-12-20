@@ -42,3 +42,4 @@ private-etc alternatives,fonts,ld.so.cache,ld.so.preload
 private-tmp
 
 memory-deny-write-execute
+restrict-namespaces

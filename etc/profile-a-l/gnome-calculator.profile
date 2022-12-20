@@ -52,3 +52,5 @@ dbus-user filter
 dbus-user.own org.gnome.Calculator
 dbus-user.talk ca.desrt.dconf
 dbus-system none
+
+restrict-namespaces

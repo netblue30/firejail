@@ -28,3 +28,5 @@ tracelog
 # private-bin xfburn
 # private-dev
 # private-tmp
+
+restrict-namespaces

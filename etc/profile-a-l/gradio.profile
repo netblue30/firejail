@@ -52,3 +52,5 @@ dbus-user.own de.haeckerfelix.gradio
 dbus-user.own org.mpris.MediaPlayer2.gradio
 dbus-user.talk ca.desrt.dconf
 dbus-system none
+
+restrict-namespaces

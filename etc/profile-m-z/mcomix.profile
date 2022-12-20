@@ -70,3 +70,4 @@ read-write ${HOME}/.local/share/mcomix
 read-write ${HOME}/.local/share
 # used by mcomix <= 1.2, tip, make a symbolic link to .cache/thumbnails
 read-write ${HOME}/.thumbnails
+restrict-namespaces

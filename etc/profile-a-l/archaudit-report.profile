@@ -36,3 +36,4 @@ private-bin arch-audit,archaudit-report,bash,cat,comm,cut,date,fold,grep,pacman,
 private-tmp
 
 memory-deny-write-execute
+restrict-namespaces

@@ -27,3 +27,5 @@ seccomp
 
 private-bin cmus
 private-etc alternatives,asound.conf,ca-certificates,crypto-policies,group,ld.so.cache,ld.so.preload,machine-id,pki,pulse,resolv.conf,ssl
+
+restrict-namespaces

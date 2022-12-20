@@ -54,3 +54,4 @@ dbus-user none
 dbus-system none
 
 # memory-deny-write-execute - it breaks old versions of ffmpeg
+restrict-namespaces

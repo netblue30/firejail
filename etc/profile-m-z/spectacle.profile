@@ -65,3 +65,5 @@ dbus-user.talk org.freedesktop.FileManager1
 #dbus-user.talk org.kde.JobViewServer
 #dbus-user.talk org.kde.kglobalaccel
 dbus-system none
+
+restrict-namespaces

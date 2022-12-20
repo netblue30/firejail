@@ -59,3 +59,4 @@ dbus-user.talk org.gnome.Shell.Screencast
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

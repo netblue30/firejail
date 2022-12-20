@@ -60,3 +60,5 @@ dbus-user filter
 dbus-user.own com.github.fabiocolacio.marker
 dbus-user.talk ca.desrt.dconf
 dbus-system none
+
+restrict-namespaces

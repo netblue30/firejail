@@ -42,3 +42,5 @@ private-tmp
 # dbus needed for MPRIS
 # dbus-user none
 # dbus-system none
+
+restrict-namespaces

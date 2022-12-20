@@ -63,3 +63,5 @@ private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,dconf,
 private-tmp
 
 dbus-system none
+
+restrict-namespaces

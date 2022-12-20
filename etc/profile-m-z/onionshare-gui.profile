@@ -65,3 +65,4 @@ dbus-user.talk org.freedesktop.secrets
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

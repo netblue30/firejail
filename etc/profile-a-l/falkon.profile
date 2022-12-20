@@ -53,3 +53,5 @@ private-tmp
 # dbus-user filter
 # dbus-user.own org.kde.Falkon
 dbus-system none
+
+# restrict-namespaces

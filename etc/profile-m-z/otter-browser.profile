@@ -56,3 +56,5 @@ private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts
 private-tmp
 
 dbus-system none
+
+# restrict-namespaces

@@ -37,3 +37,5 @@ protocol unix,inet,inet6,netlink
 seccomp !mbind
 
 private-dev
+
+restrict-namespaces

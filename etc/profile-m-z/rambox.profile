@@ -35,4 +35,6 @@ protocol unix,inet,inet6,netlink
 # electron-based application, needing chroot
 #seccomp
 seccomp !chroot
-# tracelog
+#tracelog
+
+#restrict-namespaces

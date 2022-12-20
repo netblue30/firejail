@@ -44,3 +44,4 @@ dbus-user none
 dbus-system none
 
 read-only ${HOME}
+restrict-namespaces

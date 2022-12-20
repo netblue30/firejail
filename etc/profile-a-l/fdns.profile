@@ -47,3 +47,4 @@ private-etc alternatives,ca-certificates,crypto-policies,fdns,ld.so.cache,ld.so.
 private-tmp
 
 memory-deny-write-execute
+restrict-namespaces

@@ -73,3 +73,5 @@ dbus-user.own org.gnome.Maps
 dbus-system filter
 #dbus-system.talk org.freedesktop.NetworkManager
 dbus-system.talk org.freedesktop.GeoClue2
+
+restrict-namespaces

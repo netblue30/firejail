@@ -47,3 +47,5 @@ disable-mnt
 private-bin bash,dash,sh,warzone2100,which
 private-dev
 private-tmp
+
+restrict-namespaces

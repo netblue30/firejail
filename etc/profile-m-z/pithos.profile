@@ -40,3 +40,4 @@ private-bin env,pithos,python*
 private-dev
 private-tmp
 
+restrict-namespaces

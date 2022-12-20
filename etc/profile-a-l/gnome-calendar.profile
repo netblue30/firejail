@@ -60,3 +60,4 @@ dbus-system filter
 #dbus-system.talk org.freedesktop.GeoClue2
 
 read-only ${HOME}
+restrict-namespaces

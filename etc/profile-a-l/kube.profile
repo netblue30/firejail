@@ -78,3 +78,4 @@ dbus-user.talk org.freedesktop.Notifications
 dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini
+restrict-namespaces

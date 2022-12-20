@@ -53,3 +53,4 @@ dbus-system none
 
 read-only ${HOME}
 read-write ${HOME}/.xonotic
+restrict-namespaces

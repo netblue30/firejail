@@ -60,3 +60,4 @@ dbus-user.talk org.freedesktop.Tracker1
 dbus-system none
 
 env WEBKIT_FORCE_SANDBOX=0
+restrict-namespaces

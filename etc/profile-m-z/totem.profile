@@ -57,3 +57,5 @@ private-tmp
 # makes settings immutable
 # dbus-user none
 dbus-system none
+
+restrict-namespaces

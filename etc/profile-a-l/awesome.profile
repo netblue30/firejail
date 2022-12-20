@@ -17,3 +17,4 @@ protocol unix,inet,inet6
 seccomp
 
 read-only ${HOME}/.config/awesome/autorun.sh
+restrict-namespaces

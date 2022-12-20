@@ -52,3 +52,4 @@ dbus-system none
 
 # never write anything
 read-only ${HOME}
+restrict-namespaces

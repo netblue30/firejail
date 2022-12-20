@@ -75,4 +75,5 @@ dbus-system.talk org.freedesktop.login1
 # Add the next line to your gajim.local to enable location plugin support.
 #dbus-system.talk org.freedesktop.GeoClue2
 
+restrict-namespaces
 join-or-start gajim

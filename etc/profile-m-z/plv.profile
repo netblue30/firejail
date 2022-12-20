@@ -57,3 +57,4 @@ dbus-system none
 read-only ${HOME}
 read-write ${HOME}/.config/PacmanLogViewer
 read-only /var/log/pacman.log
+restrict-namespaces

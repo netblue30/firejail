@@ -106,5 +106,7 @@ dbus-user.talk org.xfce.ScreenSaver
 dbus-system filter
 dbus-system.talk org.freedesktop.login1
 
+restrict-namespaces
+
 # Mutex is stored in /tmp by default, which is broken by private-tmp.
 join-or-start keepassxc

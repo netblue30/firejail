@@ -55,3 +55,4 @@ dbus-system none
 
 read-only ${HOME}
 read-write ${HOME}/.geekbench5
+restrict-namespaces

@@ -56,3 +56,5 @@ dbus-user.talk org.freedesktop.secrets
 # Add the next line to your nheko.local to enable notification support.
 #dbus-user.talk org.freedesktop.Notifications
 dbus-system none
+
+restrict-namespaces

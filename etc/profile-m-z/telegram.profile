@@ -56,3 +56,5 @@ dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.gnome.Mutter.IdleMonitor
 dbus-user.talk org.freedesktop.ScreenSaver
 dbus-system none
+
+restrict-namespaces

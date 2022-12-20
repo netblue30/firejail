@@ -44,3 +44,5 @@ private-etc alternatives,ld.so.cache,ld.so.preload
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

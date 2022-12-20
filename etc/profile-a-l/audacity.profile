@@ -6,6 +6,11 @@ include audacity.local
 # Persistent global definitions
 include globals.local
 
+# Add the below lines to your audacity.local if you need online plugins.
+#ignore net none
+#netfilter
+#protocol inet6
+
 noblacklist ${HOME}/.audacity-data
 noblacklist ${DOCUMENTS}
 noblacklist ${MUSIC}
@@ -25,10 +30,6 @@ allow-debuggers
 ## Enabling App Armor appears to break some Fedora / Arch installs
 #apparmor
 caps.drop all
-# Add the below lines to your audacity.local if you need online plugins.
-#ignore net none
-#netfilter
-#protocol inet6
 net none
 no3d
 nodvd

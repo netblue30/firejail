@@ -10,6 +10,11 @@ include globals.local
 blacklist ${RUNUSER}
 blacklist /usr/libexec
 
+noblacklist /etc/logcheck
+noblacklist /etc/ssmtp
+noblacklist /sbin
+noblacklist /usr/sbin
+
 noblacklist ${DOCUMENTS}
 include disable-common.inc
 include disable-devel.inc

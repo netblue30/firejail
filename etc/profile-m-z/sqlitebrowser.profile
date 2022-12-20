@@ -49,3 +49,4 @@ private-tmp
 # dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)
+restrict-namespaces

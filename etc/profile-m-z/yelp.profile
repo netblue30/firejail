@@ -74,3 +74,5 @@ read-write ${HOME}/.cache
 # your yelp.local if you need PDF printing support.
 #noblacklist ${DOCUMENTS}
 #whitelist ${DOCUMENTS}
+
+restrict-namespaces

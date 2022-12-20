@@ -52,3 +52,4 @@ private-etc alternatives,fonts,gimp,gtk-2.0,kde4rc,kde5rc,ld.so.cache,ld.so.prel
 # dbus-system none
 
 # memory-deny-write-execute
+restrict-namespaces

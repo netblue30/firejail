@@ -38,3 +38,4 @@ private-dev
 private-tmp
 
 read-write /var/lib/bitlbee
+restrict-namespaces

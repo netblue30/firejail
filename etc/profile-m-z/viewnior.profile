@@ -50,3 +50,4 @@ dbus-user none
 dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issues #1803 and #1808)
+restrict-namespaces

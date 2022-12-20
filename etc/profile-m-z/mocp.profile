@@ -50,3 +50,4 @@ dbus-system none
 memory-deny-write-execute
 read-only ${HOME}
 read-write ${HOME}/.moc
+restrict-namespaces

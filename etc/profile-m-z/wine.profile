@@ -40,3 +40,5 @@ notv
 seccomp
 
 private-dev
+
+restrict-namespaces

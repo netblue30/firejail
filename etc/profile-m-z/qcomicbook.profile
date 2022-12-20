@@ -64,3 +64,4 @@ read-write ${HOME}/.config/PawelStolowski
 read-write ${HOME}/.local/share/PawelStolowski
 #to allow ${HOME}/.local/share/recently-used.xbel
 read-write ${HOME}/.local/share
+restrict-namespaces

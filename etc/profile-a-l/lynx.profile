@@ -39,3 +39,5 @@ private-cache
 private-dev
 # private-etc alternatives,ca-certificates,crypto-policies,pki,ssl
 private-tmp
+
+restrict-namespaces

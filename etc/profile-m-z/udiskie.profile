@@ -42,3 +42,5 @@ private-cache
 private-dev
 private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg
 private-tmp
+
+restrict-namespaces

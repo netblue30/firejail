@@ -53,3 +53,5 @@ dbus-user.talk org.freedesktop.Notifications
 dbus-system filter
 # Integration with systemd-logind or elogind
 dbus-system.talk org.freedesktop.login1
+
+restrict-namespaces

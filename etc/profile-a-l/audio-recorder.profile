@@ -51,3 +51,4 @@ dbus-user.talk ca.desrt.dconf
 dbus-system none
 
 # memory-deny-write-execute - breaks on Arch
+restrict-namespaces

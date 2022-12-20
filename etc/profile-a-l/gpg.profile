@@ -51,3 +51,4 @@ private-dev
 # installing/upgrading archlinux-keyring extremely slow.
 read-write /etc/pacman.d/gnupg
 read-write /usr/share/pacman/keyrings
+restrict-namespaces

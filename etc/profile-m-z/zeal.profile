@@ -69,3 +69,4 @@ dbus-user.talk org.mozilla.*
 dbus-system none
 
 # memory-deny-write-execute - breaks on Arch
+restrict-namespaces

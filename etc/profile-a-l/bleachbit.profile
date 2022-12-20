@@ -40,3 +40,4 @@ dbus-system none
 
 # memory-deny-write-execute breaks some systems, see issue #1850
 # memory-deny-write-execute
+restrict-namespaces

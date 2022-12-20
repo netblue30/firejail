@@ -18,3 +18,4 @@ seccomp
 
 read-only ${HOME}/.config/openbox/autostart
 read-only ${HOME}/.config/openbox/environment
+restrict-namespaces

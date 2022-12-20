@@ -53,3 +53,5 @@ private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

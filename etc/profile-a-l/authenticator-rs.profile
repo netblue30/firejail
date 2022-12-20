@@ -52,3 +52,5 @@ private-tmp
 dbus-user filter
 dbus-user.talk ca.desrt.dconf
 dbus-system none
+
+restrict-namespaces

@@ -58,3 +58,4 @@ private-lib GConf,libpython*,python2*
 private-tmp
 
 memory-deny-write-execute
+restrict-namespaces

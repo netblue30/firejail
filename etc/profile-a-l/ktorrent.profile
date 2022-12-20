@@ -67,3 +67,4 @@ private-tmp
 
 deterministic-shutdown
 # memory-deny-write-execute
+restrict-namespaces

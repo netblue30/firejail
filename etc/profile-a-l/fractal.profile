@@ -55,3 +55,5 @@ dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.secrets
 dbus-system none
+
+restrict-namespaces

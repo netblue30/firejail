@@ -60,3 +60,4 @@ private-tmp
 read-only ${HOME}
 read-write ${HOME}/.cache/com.github.johnfactotum.Foliate
 read-write ${HOME}/.local/share/com.github.johnfactotum.Foliate
+restrict-namespaces

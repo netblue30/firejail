@@ -44,3 +44,4 @@ private-dev
 private-etc alternatives,asound.conf,dconf,fonts,fonts,gtk-3.0,ld.so.cache,ld.so.preload,machine-id,pulse,selinux,xdg
 private-tmp
 
+restrict-namespaces

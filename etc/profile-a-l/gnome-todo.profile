@@ -61,3 +61,4 @@ dbus-system none
 #dbus-system.talk org.freedesktop.login1
 
 read-only ${HOME}
+restrict-namespaces

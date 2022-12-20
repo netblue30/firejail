@@ -62,3 +62,5 @@ dbus-user.talk org.freedesktop.Notifications
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-user.talk org.kde.kwalletd5
 dbus-system none
+
+restrict-namespaces

@@ -32,3 +32,5 @@ tracelog
 private-dev
 # private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,machine-id,pki,pulse,ssl
 # private-tmp
+
+restrict-namespaces

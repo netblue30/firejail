@@ -35,3 +35,4 @@ private-bin cp,sh,XMind
 private-tmp
 private-dev
 
+restrict-namespaces

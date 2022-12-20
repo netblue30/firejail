@@ -30,3 +30,5 @@ tracelog
 
 # private-bin gpa,gpg
 private-dev
+
+restrict-namespaces

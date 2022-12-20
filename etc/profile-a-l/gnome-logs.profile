@@ -51,3 +51,4 @@ dbus-system none
 
 # Add 'ignore read-only ${HOME}' to your gnome-logs.local if you export logs to a file under your ${HOME}.
 read-only ${HOME}
+restrict-namespaces

@@ -33,3 +33,4 @@ writable-var
 writable-var-log
 
 memory-deny-write-execute
+restrict-namespaces

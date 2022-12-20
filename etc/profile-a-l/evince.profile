@@ -64,3 +64,5 @@ dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.gtk.vfs.Daemon
 dbus-user.talk org.gtk.vfs.Metadata
 dbus-system none
+
+restrict-namespaces

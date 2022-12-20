@@ -69,4 +69,5 @@ private-etc alternatives,cups,fonts,kde4rc,kde5rc,ld.so.cache,ld.so.preload,mach
 
 # memory-deny-write-execute
 
+restrict-namespaces
 join-or-start okular

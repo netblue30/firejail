@@ -32,3 +32,4 @@ private-bin guayadeque
 private-dev
 private-tmp
 
+restrict-namespaces

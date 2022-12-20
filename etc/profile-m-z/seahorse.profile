@@ -67,3 +67,5 @@ dbus-user.own org.gnome.seahorse
 dbus-user.own org.gnome.seahorse.Application
 dbus-user.talk org.freedesktop.secrets
 dbus-system none
+
+restrict-namespaces

@@ -68,3 +68,5 @@ blacklist ${PATH}/wget2
 # Gnome connector, KDE connect and power management on KDE Plasma.
 dbus-user none
 dbus-system none
+
+#restrict-namespaces

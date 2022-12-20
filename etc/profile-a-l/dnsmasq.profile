@@ -40,3 +40,5 @@ private
 private-dev
 private-tmp
 writable-var
+
+restrict-namespaces

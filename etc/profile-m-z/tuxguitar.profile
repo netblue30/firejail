@@ -43,3 +43,5 @@ tracelog
 
 private-dev
 private-tmp
+
+restrict-namespaces

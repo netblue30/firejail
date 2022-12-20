@@ -62,3 +62,4 @@ read-write ${HOME}/.config/menus
 read-write ${HOME}/.gnome/apps
 read-write ${HOME}/.local/share/applications
 read-write ${HOME}/.local/share/flatpak/exports
+restrict-namespaces

@@ -56,3 +56,4 @@ read-only ${HOME}
 read-only /var/log/apt/history.log
 read-only /var/log/dnf.rpm.log
 read-only /var/log/pacman.log
+restrict-namespaces

@@ -57,3 +57,5 @@ dbus-user none
 #dbus-user.own com.gitlab.newsflash
 #dbus-user.talk org.freedesktop.Notifications
 dbus-system none
+
+restrict-namespaces

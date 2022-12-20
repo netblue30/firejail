@@ -32,3 +32,5 @@ seccomp
 tracelog
 
 disable-mnt
+
+restrict-namespaces

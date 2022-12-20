@@ -49,3 +49,5 @@ private-dev
 private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload
 private-lib eog,eom,gdk-pixbuf-2.*,gio,girepository-1.*,gvfs,libgconf-2.so.*
 private-tmp
+
+restrict-namespaces

@@ -51,3 +51,5 @@ disable-mnt
 private-dev
 # private-etc alternatives,gai.conf,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,machine-id,nsswitch.conf,resolv.conf,X11,xpra
 private-tmp
+
+restrict-namespaces

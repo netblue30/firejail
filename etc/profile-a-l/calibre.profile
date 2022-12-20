@@ -35,3 +35,5 @@ seccomp !chroot
 
 private-dev
 private-tmp
+
+# restrict-namespaces

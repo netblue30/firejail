@@ -42,3 +42,4 @@ private-dev
 private-tmp
 
 memory-deny-write-execute
+restrict-namespaces

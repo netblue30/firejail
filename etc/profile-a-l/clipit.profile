@@ -59,5 +59,5 @@ dbus-user none
 dbus-system none
 
 #memory-deny-write-execute
-restrict-namespaces
 read-only ${HOME}
+restrict-namespaces

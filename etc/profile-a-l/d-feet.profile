@@ -53,3 +53,4 @@ private-etc alternatives,dbus-1,fonts,ld.so.cache,ld.so.preload,machine-id
 private-tmp
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)
+restrict-namespaces

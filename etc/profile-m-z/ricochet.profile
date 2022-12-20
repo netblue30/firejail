@@ -39,3 +39,4 @@ private-bin ricochet,tor
 private-dev
 #private-etc alternatives,alternatives,ca-certificates,crypto-policies,fonts,pki,ssl,tor,X11
 
+restrict-namespaces

@@ -54,3 +54,4 @@ dbus-system none
 
 read-only ${HOME}
 read-write ${HOME}/.cache/mesa_shader_cache
+restrict-namespaces

@@ -65,3 +65,5 @@ dbus-user.talk org.kde.KWin
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 ?ALLOW_TRAY: dbus-user.own org.kde.*
 dbus-system none
+
+restrict-namespaces

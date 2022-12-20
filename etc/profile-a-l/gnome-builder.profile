@@ -37,3 +37,4 @@ seccomp
 private-dev
 
 read-write ${HOME}/.bash_history
+restrict-namespaces

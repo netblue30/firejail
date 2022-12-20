@@ -52,3 +52,5 @@ private-bin baloo_file,baloo_file_extractor,baloo_filemetadata_temp_extractor,kb
 private-cache
 private-dev
 private-tmp
+
+restrict-namespaces

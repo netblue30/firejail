@@ -44,3 +44,5 @@ dbus-user.talk org.freedesktop.Notifications
 #dbus-user.own org.kde.klauncher
 #dbus-user.talk org.kde.knotify
 dbus-system none
+
+# restrict-namespaces

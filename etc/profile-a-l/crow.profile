@@ -43,3 +43,4 @@ private-opt none
 private-tmp
 private-srv none
 
+restrict-namespaces

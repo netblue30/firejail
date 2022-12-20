@@ -91,3 +91,4 @@ dbus-user.talk org.gnome.evolution.dataserver.Sources5
 dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini
+restrict-namespaces

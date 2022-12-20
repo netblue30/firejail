@@ -54,4 +54,5 @@ private-tmp
 
 dbus-system none
 
+restrict-namespaces
 join-or-start libreoffice

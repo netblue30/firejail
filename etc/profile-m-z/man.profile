@@ -65,3 +65,4 @@ dbus-system none
 memory-deny-write-execute
 read-only ${HOME}
 #read-only /tmp # breaks mandoc (see #4927)
+restrict-namespaces

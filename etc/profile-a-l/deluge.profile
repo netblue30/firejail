@@ -43,3 +43,5 @@ seccomp
 private-bin deluge,deluge-console,deluge-gtk,deluge-web,deluged,python*,sh,uname
 private-dev
 private-tmp
+
+restrict-namespaces

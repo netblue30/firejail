@@ -41,3 +41,4 @@ private-opt Gitter
 private-dev
 private-tmp
 
+restrict-namespaces

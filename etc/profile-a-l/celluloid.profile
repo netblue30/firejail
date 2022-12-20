@@ -64,3 +64,4 @@ dbus-system none
 
 read-only ${HOME}
 read-write ${HOME}/.config/celluloid
+restrict-namespaces

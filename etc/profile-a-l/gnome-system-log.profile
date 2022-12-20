@@ -53,3 +53,4 @@ writable-var-log
 memory-deny-write-execute
 # Add 'ignore read-only ${HOME}' to your gnome-system-log.local if you export logs to a file under your ${HOME}.
 read-only ${HOME}
+restrict-namespaces

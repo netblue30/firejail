@@ -53,3 +53,5 @@ dbus-user filter
 # Add the next line to your spectral.local to enable notification support.
 #dbus-user.talk org.freedesktop.Notifications
 dbus-system none
+
+restrict-namespaces

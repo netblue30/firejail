@@ -53,3 +53,5 @@ private-etc alternatives,dbus-1,dconf,fonts,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.pr
 private-tmp
 
 dbus-system none
+
+restrict-namespaces

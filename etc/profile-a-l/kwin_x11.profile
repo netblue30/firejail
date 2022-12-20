@@ -44,3 +44,5 @@ private-bin kwin_x11
 private-dev
 private-etc alternatives,drirc,fonts,kde5rc,ld.so.cache,ld.so.preload,machine-id,xdg
 private-tmp
+
+restrict-namespaces

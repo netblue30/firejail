@@ -44,3 +44,4 @@ dbus-user none
 dbus-system none
 
 #memory-deny-write-execute
+#restrict-namespaces

@@ -53,3 +53,5 @@ dbus-user.talk org.freedesktop.ScreenSaver
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-user.talk org.mpris.MediaPlayer2.Player
 dbus-system none
+
+restrict-namespaces

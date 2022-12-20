@@ -40,3 +40,5 @@ private
 private-dev
 # private-etc alternatives,gai.conf,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,nsswitch.conf,resolv.conf
 #private-tmp
+
+restrict-namespaces

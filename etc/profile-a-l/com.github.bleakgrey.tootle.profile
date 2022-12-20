@@ -52,3 +52,5 @@ private-tmp
 # dbus-user.own com.github.bleakgrey.tootle
 # dbus-user.talk ca.desrt.dconf
 dbus-system none
+
+restrict-namespaces

@@ -61,3 +61,4 @@ dbus-user.talk org.freedesktop.secrets
 dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini
+restrict-namespaces

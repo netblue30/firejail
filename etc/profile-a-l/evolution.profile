@@ -43,3 +43,5 @@ seccomp
 private-dev
 private-tmp
 writable-var
+
+restrict-namespaces

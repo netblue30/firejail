@@ -31,3 +31,5 @@ seccomp
 
 #private-bin bash,chmod,fetchmail,procmail
 private-dev
+
+restrict-namespaces

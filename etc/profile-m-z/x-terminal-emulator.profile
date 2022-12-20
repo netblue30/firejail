@@ -21,3 +21,4 @@ dbus-user none
 dbus-system none
 
 noexec /tmp
+restrict-namespaces

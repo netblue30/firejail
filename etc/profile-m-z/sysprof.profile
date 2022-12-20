@@ -74,3 +74,4 @@ dbus-user.own org.gnome.Sysprof3
 dbus-user.talk ca.desrt.dconf
 
 # memory-deny-write-execute - breaks on Arch
+restrict-namespaces

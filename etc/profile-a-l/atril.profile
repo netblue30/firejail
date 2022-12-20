@@ -49,3 +49,4 @@ private-tmp
 
 # webkit gtk killed by memory-deny-write-execute
 #memory-deny-write-execute
+restrict-namespaces

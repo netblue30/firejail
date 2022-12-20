@@ -46,3 +46,5 @@ private-tmp
 
 dbus-user filter
 dbus-system none
+
+restrict-namespaces

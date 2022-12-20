@@ -38,3 +38,4 @@ private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.s
 private-tmp
 
 memory-deny-write-execute
+restrict-namespaces

@@ -27,3 +27,5 @@ seccomp
 private-bin dbus-launch,parole
 private-cache
 private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.preload,machine-id,passwd,pki,pulse,ssl
+
+restrict-namespaces

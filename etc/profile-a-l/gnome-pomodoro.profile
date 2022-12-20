@@ -56,3 +56,4 @@ dbus-system none
 
 read-only ${HOME}
 read-write ${HOME}/.local/share/gnome-pomodoro
+restrict-namespaces

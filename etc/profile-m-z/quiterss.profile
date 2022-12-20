@@ -52,3 +52,4 @@ private-bin quiterss
 private-dev
 # private-etc alternatives,ca-certificates,crypto-policies,pki,ssl,X11
 
+restrict-namespaces

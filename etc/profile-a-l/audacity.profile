@@ -20,9 +20,15 @@ include disable-xdg.inc
 
 include whitelist-var-common.inc
 
+# Silence blacklist violation. See #5539.
+allow-debuggers
 ## Enabling App Armor appears to break some Fedora / Arch installs
 #apparmor
 caps.drop all
+# Add the below lines to your audacity.local if you need online plugins.
+#ignore net none
+#netfilter
+#protocol inet,inet6
 net none
 no3d
 nodvd
@@ -33,7 +39,7 @@ noroot
 notv
 nou2f
 novideo
-protocol unix,inet
+protocol unix
 seccomp
 tracelog
 

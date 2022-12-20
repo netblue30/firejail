@@ -85,6 +85,7 @@ blacklist ${HOME}/.cache/agenda
 blacklist ${HOME}/.cache/akonadi*
 blacklist ${HOME}/.cache/atril
 blacklist ${HOME}/.cache/attic
+blacklist ${HOME}/.cache/audacity
 blacklist ${HOME}/.cache/babl
 blacklist ${HOME}/.cache/bnox
 blacklist ${HOME}/.cache/borg
@@ -359,6 +360,7 @@ blacklist ${HOME}/.config/artha.log
 blacklist ${HOME}/.config/asunder
 blacklist ${HOME}/.config/atril
 blacklist ${HOME}/.config/audacious
+blacklist ${HOME}/.config/audacity
 blacklist ${HOME}/.config/autokey
 blacklist ${HOME}/.config/avidemux3_qt5rc
 blacklist ${HOME}/.config/aweather
@@ -861,6 +863,7 @@ blacklist ${HOME}/.local/share/akonadi*
 blacklist ${HOME}/.local/share/akregator
 blacklist ${HOME}/.local/share/apps/korganizer
 blacklist ${HOME}/.local/share/aspyr-media
+blacklist ${HOME}/.local/share/audacity
 blacklist ${HOME}/.local/share/authenticator-rs
 blacklist ${HOME}/.local/share/autokey
 blacklist ${HOME}/.local/share/backintime
@@ -1015,6 +1018,7 @@ blacklist ${HOME}/.local/share/wormux
 blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
+blacklist ${HOME}/.local/state/audacity
 blacklist ${HOME}/.local/state/pipewire
 blacklist ${HOME}/.lv2
 blacklist ${HOME}/.lyx

@@ -4,8 +4,9 @@ firejail (0.9.72rc1) baseline; urgency=low
     erroring out (#5240 #5242)
   * feature: Update syscall tables and seccomp groups (#5188)
   * feature: improve force-nonewprivs security guarantees (#5217 #5271)
-  * feature: restrict namespaces (--restrict-namespaces) implemented as
-    a seccomp filter for both 64 and 32 bit architectures (#4939 #5259)
+  * feature: add support for restricting the creation of Linux namespaces
+    (--restrict-namespaces, --restrict-namespaces=), implemented as a seccomp
+    filter for both 64 and 32 bit architectures (#4939 #5259)
   * feature: support for custom AppArmor profiles (--apparmor=) (#5274 #5316
     #5317)
   * feature: added support for ICMP in nettrace

@@ -7,6 +7,8 @@ include audacity.local
 include globals.local
 
 noblacklist ${HOME}/.audacity-data
+noblacklist ${HOME}/.config/audacity
+noblacklist ${HOME}/.local/share/audacity
 noblacklist ${DOCUMENTS}
 noblacklist ${MUSIC}
 

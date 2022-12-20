@@ -2,7 +2,6 @@
 # Persistent customizations should go in a .local file.
 include disable-programs.local
 
-blacklist /etc/ssmtp
 blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.AndroidStudio*
@@ -1182,6 +1181,7 @@ blacklist ${HOME}/yt-dlp.conf.txt
 blacklist ${RUNUSER}/*firefox*
 blacklist ${RUNUSER}/akonadi
 blacklist ${RUNUSER}/psd/*firefox*
+blacklist /etc/ssmtp
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*
 blacklist /var/games/nethack

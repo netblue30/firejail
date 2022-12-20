@@ -7,10 +7,10 @@ firejail (0.9.72rc1) baseline; urgency=low
   * feature: add support for restricting the creation of Linux namespaces
     (--restrict-namespaces, --restrict-namespaces=), implemented as a seccomp
     filter for both 64 and 32 bit architectures (#4939 #5259)
-  * feature: support for custom AppArmor profiles (--apparmor=) (#5274 #5316
-    #5317)
-  * feature: added support for ICMP in nettrace
-  * feature: --dnstrace, --icmptrace, and --snitrace
+  * feature: add support for custom AppArmor profiles (--apparmor=) (#5274
+    #5316 #5317)
+  * feature: add support for ICMP in nettrace
+  * feature: add --dnstrace, --icmptrace, and --snitrace commands
   * feature: Add basic gtksourceview language-spec (file type detection/syntax
     highlighting for profiles) (#5502)
   * feature: add restrict-namespaces to (almost) all applicable profiles (#5440

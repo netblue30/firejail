@@ -1018,7 +1018,7 @@ blacklist ${HOME}/.local/share/wormux
 blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura*/
-blacklist ${HOME}/.local/state/audacity/*
+blacklist ${HOME}/.local/state/audacity
 blacklist ${HOME}/.local/state/pipewire
 blacklist ${HOME}/.lv2
 blacklist ${HOME}/.lyx

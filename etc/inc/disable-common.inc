@@ -558,6 +558,7 @@ blacklist /tmp/tmux-*
 # disable terminals running as server resulting in sandbox escape
 blacklist ${PATH}/gnome-terminal
 blacklist ${PATH}/gnome-terminal.wrapper
+blacklist ${PATH}/kgx
 # blacklist ${PATH}/konsole
 # konsole doesn't seem to have this problem - last tested on Ubuntu 16.04
 blacklist ${PATH}/lilyterm

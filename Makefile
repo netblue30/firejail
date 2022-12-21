@@ -242,6 +242,9 @@ dist: config.mk
 asc: config.mk
 	./mkasc.sh $(VERSION)
 
+deb: dist config.sh
+	./mkdeb.sh
+
 deb-apparmor: dist config.sh
 	./mkdeb.sh -apparmor --enable-apparmor
 

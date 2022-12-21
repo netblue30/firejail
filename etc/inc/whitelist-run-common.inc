@@ -3,6 +3,7 @@
 include whitelist-run-common.local
 
 whitelist /run/NetworkManager/resolv.conf
+whitelist /run/avahi-daemon/socket
 whitelist /run/cups/cups.sock
 whitelist /run/dbus/system_bus_socket
 whitelist /run/media

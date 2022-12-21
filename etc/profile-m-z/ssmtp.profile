@@ -58,7 +58,7 @@ seccomp.block-secondary
 tracelog
 
 disable-mnt
-# private works but we loose ${HOME}/dead.letter
+# private works but then we lose ${HOME}/dead.letter
 # which is useful to get notified on mail issues
 #private
 private-bin mailq,newaliases,sendmail,ssmtp

@@ -57,6 +57,7 @@ disable-mnt
 private-cache
 private-dev
 private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gconf,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,login.defs,nsswitch.conf,pango,passwd,pkcs11,pki,protocols,resolv.conf,rpc,services,ssh,ssl,xdg
+private-tmp
 writable-run-user
 
 dbus-user filter

@@ -24,6 +24,7 @@ include disable-xdg.inc
 #mkdir ${HOME}/.ssh
 #whitelist ${HOME}/.gnupg
 #whitelist ${HOME}/.ssh
+whitelist /tmp/ssh-*
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 whitelist /usr/share/seahorse

@@ -42,7 +42,7 @@ protocol unix,inet,inet6
 seccomp
 tracelog
 
-# private-bin gpg,gpg-agent
+# private-bin gpg
 private-cache
 private-dev
 

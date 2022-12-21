@@ -7,7 +7,5 @@ include seahorse-tool.local
 # added by included profile
 #include globals.local
 
-private-tmp
-
 # Redirect
 include seahorse.profile

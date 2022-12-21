@@ -8,6 +8,9 @@ include seahorse-daemon.local
 # added by included profile
 #include globals.local
 
+blacklist ${RUNUSER}/wayland-*
+include disable-X11.inc
+
 memory-deny-write-execute
 
 # Redirect

@@ -6,8 +6,6 @@ include seahorse.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
-
 noblacklist ${HOME}/.gnupg
 
 # Allow ssh (blacklisted by disable-common.inc)
@@ -59,12 +57,14 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gconf,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,nsswitch.conf,pango,pki,protocols,resolv.conf,rpc,services,ssh,ssl,X11
+private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gconf,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,login.defs,nsswitch.conf,pango,passwd,pkcs11,pki,protocols,resolv.conf,rpc,services,ssh,ssl,xdg
+private-tmp
 writable-run-user
 
 dbus-user filter
 dbus-user.own org.gnome.seahorse
 dbus-user.own org.gnome.seahorse.Application
+dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.freedesktop.secrets
 dbus-system none
 

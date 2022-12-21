@@ -7,9 +7,5 @@ include seahorse-tool.local
 # added by included profile
 #include globals.local
 
-# private-etc workaround for: #2877
-private-etc alternatives,firejail,ld.so.cache,ld.so.preload,login.defs,passwd
-private-tmp
-
 # Redirect
 include seahorse.profile

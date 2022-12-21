@@ -8,7 +8,7 @@ blacklist /proc/bootconfig
 blacklist /proc/buddyinfo
 blacklist /proc/cgroups
 blacklist /proc/cmdline
-blacklist /proc/config.gz # also in disable-common.inc
+blacklist /proc/config.gz # keep this here even though it's also in disable-common.inc
 blacklist /proc/consoles
 #blacklist /proc/cpuinfo
 blacklist /proc/crypto

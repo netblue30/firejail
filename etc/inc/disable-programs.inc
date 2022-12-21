@@ -1181,6 +1181,7 @@ blacklist ${HOME}/yt-dlp.conf.txt
 blacklist ${RUNUSER}/*firefox*
 blacklist ${RUNUSER}/akonadi
 blacklist ${RUNUSER}/psd/*firefox*
+blacklist /etc/ssmtp
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*
 blacklist /var/games/nethack

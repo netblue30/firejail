@@ -620,7 +620,7 @@ blacklist ${HOME}/mail
 blacklist ${HOME}/postponed
 blacklist ${HOME}/sent
 
-# kernel configuration
+# kernel configuration - keep this here although it's also in disable-proc.inc
 blacklist /proc/config.gz
 
 # prevent DNS malware attempting to communicate with the server using regular DNS tools

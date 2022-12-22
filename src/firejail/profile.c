@@ -655,6 +655,16 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
+	else if (strcmp(ptr, "netlock") == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			arg_netlock = 1;
+		}
+		else
+			warning_feature_disabled("networking");
+#endif
+		return 0;
+	}
 	else if (strncmp(ptr, "netns ", 6) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {

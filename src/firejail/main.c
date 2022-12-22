@@ -158,6 +158,7 @@ int arg_dbus_log_system = 0;
 int arg_tab = 0;
 int login_shell = 0;
 int just_run_the_shell = 0;
+int arg_netlock = 0;
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -1052,7 +1053,6 @@ int main(int argc, char **argv, char **envp) {
 	int lockfd_directory = -1;
 	int custom_profile = 0;	// custom profile loaded
 	int arg_caps_cmdline = 0; 	// caps requested on command line (used to break out of --chroot)
-	int arg_netlock = 0;
 	char **ptr;
 
 

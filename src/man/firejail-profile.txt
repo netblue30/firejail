@@ -977,6 +977,10 @@ If a new network namespace is created, enabled default network filter.
 \fBnetfilter filename
 If a new network namespace is created, enabled the network filter in filename.
 
+.TP
+\fBnetlock
+Generate a custom network filter and enable it.
+
 
 .TP
 \fBnetmask address

@@ -436,6 +436,7 @@ blacklist ${HOME}/.config/gajim
 blacklist ${HOME}/.config/galculator
 blacklist ${HOME}/.config/gallery-dl
 blacklist ${HOME}/.config/gconf
+blacklist ${HOME}/.config/gdfuse
 blacklist ${HOME}/.config/geany
 blacklist ${HOME}/.config/geary
 blacklist ${HOME}/.config/gedit
@@ -708,6 +709,7 @@ blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.funnyboat
 blacklist ${HOME}/.g8
 blacklist ${HOME}/.gallery-dl.conf
+blacklist ${HOME}/.gdfuse
 blacklist ${HOME}/.geekbench5
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.gist

@@ -116,6 +116,7 @@ blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/fractal
 blacklist ${HOME}/.cache/freecol
 blacklist ${HOME}/.cache/gajim
+blacklist ${HOME}/.cache/gdfuse
 blacklist ${HOME}/.cache/geary
 blacklist ${HOME}/.cache/geeqie
 blacklist ${HOME}/.cache/gegl-0.4
@@ -899,6 +900,7 @@ blacklist ${HOME}/.local/share/feral-interactive
 blacklist ${HOME}/.local/share/five-or-more
 blacklist ${HOME}/.local/share/freecol
 blacklist ${HOME}/.local/share/gajim
+blacklist ${HOME}/.local/share/gdfuse
 blacklist ${HOME}/.local/share/geary
 blacklist ${HOME}/.local/share/geeqie
 blacklist ${HOME}/.local/share/ghostwriter

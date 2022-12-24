@@ -1,0 +1,173 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2022 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+#
+# clone
+#
+
+send --  "firejail --noprofile ./namespaces clone cgroup,ipc,mnt,net,pid,user,uts\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"clone successful"
+}
+after 100
+
+send --  "firejail --noprofile --restrict-namespaces ./namespaces clone user\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Error: clone: Operation not permitted"
+}
+after 100
+
+send --  "firejail --noprofile --restrict-namespaces=user ./namespaces clone user\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Error: clone: Operation not permitted"
+}
+after 100
+
+send --  "firejail --noprofile --restrict-namespaces=user ./namespaces clone cgroup,ipc,mnt,net,pid,user,uts\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"Error: clone: Operation not permitted"
+}
+after 100
+
+send --  "firejail --noprofile --restrict-namespaces=cgroup,ipc ./namespaces clone cgroup\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"Error: clone: Operation not permitted"
+}
+after 100
+
+send --  "firejail --noprofile --restrict-namespaces=cgroup,ipc ./namespaces clone ipc\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"Error: clone: Operation not permitted"
+}
+after 100
+
+send --  "firejail --noprofile --restrict-namespaces=cgroup,ipc ./namespaces clone mnt,net,pid,uts\r"
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"clone successful"
+}
+after 100
+
+#
+# unshare
+#
+
+send --  "firejail --noprofile ./namespaces unshare cgroup,ipc,mnt,net,pid,user,uts\r"
+expect {
+	timeout {puts "TESTING ERROR 14\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 15\n";exit}
+	"unshare successful"
+}
+after 100
+
+send --  "firejail --noprofile --restrict-namespaces ./namespaces unshare user\r"
+expect {
+	timeout {puts "TESTING ERROR 16\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 17\n";exit}
+	"Error: unshare: Operation not permitted"
+}
+after 100
+
+send --  "firejail --noprofile --restrict-namespaces=user ./namespaces unshare user\r"
+expect {
+	timeout {puts "TESTING ERROR 18\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 19\n";exit}
+	"Error: unshare: Operation not permitted"
+}
+after 100
+
+send --  "firejail --noprofile --restrict-namespaces=user ./namespaces unshare cgroup,ipc,mnt,net,pid,user,uts\r"
+expect {
+	timeout {puts "TESTING ERROR 20\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 21\n";exit}
+	"Error: unshare: Operation not permitted"
+}
+after 100
+
+send --  "firejail --noprofile --restrict-namespaces=cgroup,ipc ./namespaces unshare cgroup\r"
+expect {
+	timeout {puts "TESTING ERROR 22\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 23\n";exit}
+	"Error: unshare: Operation not permitted"
+}
+after 100
+
+send --  "firejail --noprofile --restrict-namespaces=cgroup,ipc ./namespaces unshare ipc\r"
+expect {
+	timeout {puts "TESTING ERROR 24\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 25\n";exit}
+	"Error: unshare: Operation not permitted"
+}
+after 100
+
+send --  "firejail --noprofile --restrict-namespaces=cgroup,ipc ./namespaces unshare mnt,net,pid,uts\r"
+expect {
+	timeout {puts "TESTING ERROR 26\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 27\n";exit}
+	"unshare successful"
+}
+
+
+after 100
+puts "\nall done\n"

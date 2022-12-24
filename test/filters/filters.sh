@@ -30,6 +30,16 @@ else
 	echo "TESTING SKIP: memwrexe binary only running on x86_64 and i686."
 fi
 
+if [[ $(uname -m) == "x86_64" ]]; then
+	echo "TESTING: restrict-namespaces (test/filters/namespaces.exp)"
+	./namespaces.exp
+elif [[ $(uname -m) == "i686" ]]; then
+	echo "TESTING: restrict-namespaces (test/filters/namespaces-32.exp)"
+	./namespaces-32.exp
+else
+	echo "TESTING SKIP: namespaces binary only running on x86_64 and i686."
+fi
+
 echo "TESTING: debug options (test/filters/debug.exp)"
 ./debug.exp
 

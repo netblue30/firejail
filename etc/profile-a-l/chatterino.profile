@@ -7,17 +7,11 @@ include chatterino.local
 include globals.local
 
 # Also allow access to mpv/vlc, they're usable via streamlink.
-noblacklist ${HOME}/.cache/vlc
-noblacklist ${HOME}/.config/aacs
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/pulse
 noblacklist ${HOME}/.config/vlc
 noblacklist ${HOME}/.local/share/chatterino
 noblacklist ${HOME}/.local/share/vlc
-# To upload images, whitelist/noblacklist their path in chatterino.local.
-#noblacklist ${HOME}/Pictures/
-# For custom notification sounds, whitelist/noblacklist their path in chatterino.local.
-#noblacklist ${HOME}/Music/
 
 # Allow Python for Streamlink integration (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
@@ -34,25 +28,22 @@ include disable-proc.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-# Also allow access to mpv/vlc, they're usable via streamlink.
-mkdir ${HOME}/.cache/vlc
-mkdir ${HOME}/.config/aacs
+# Also allow read-only access to mpv/VLC, they're usable via streamlink.
 mkdir ${HOME}/.config/mpv
 mkdir ${HOME}/.config/pulse
 mkdir ${HOME}/.config/vlc
 mkdir ${HOME}/.local/share/chatterino
 mkdir ${HOME}/.local/share/vlc
-whitelist ${HOME}/.cache/vlc
-whitelist ${HOME}/.config/aacs
-whitelist ${HOME}/.config/mpv
-whitelist ${HOME}/.config/pulse
-whitelist ${HOME}/.config/vlc
+# VLC preferences will fail to save with read-only set.
 whitelist ${HOME}/.local/share/chatterino
-whitelist ${HOME}/.local/share/vlc
+whitelist-ro ${HOME}/.config/mpv
+whitelist-ro ${HOME}/.config/pulse
+whitelist-ro ${HOME}/.config/vlc
+whitelist-ro ${HOME}/.local/share/vlc
 # To upload images, whitelist/noblacklist their path in chatterino.local.
-#whitelist ${HOME}/Pictures/pic1.png
+#whitelist ${PICTURES}/pic1.png
 # For custom notification sounds, whitelist/noblacklist their path in chatterino.local.
-#whitelist ${HOME}/Music/
+#whitelist ${MUSIC}/sound.ogg
 # whitelist-*.inc includes
 include whitelist-common.inc
 include whitelist-run-common.inc
@@ -80,10 +71,7 @@ tracelog
 
 disable-mnt
 # Add more private-bin lines for browsers or video players to chatterino.local if wanted.
-private-bin chatterino,pgrep
-private-bin ffmpeg,python*,streamlink
-private-bin cvlc,nvlc,qvlc,rvlc,svlc,vlc
-private-bin env,mpv,python*,waf,youtube-dl,yt-dlp
+private-bin chatterino,cvlc,env,ffmpeg,mpv,nvlc,pgrep,python*,qvlc,rvlc,streamlink,svlc,vlc,waf
 # private-cache may cause issues with mpv (see #2838)
 private-cache
 private-dev
@@ -98,6 +86,7 @@ dbus-user.talk org.freedesktop.Notifications
 # For media player integration.
 dbus-user.talk org.freedesktop.ScreenSaver
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
+dbus-user.own org.mpris.MediaPlayer2.chatterino
 dbus-user.talk org.mpris.MediaPlayer2.Player
 dbus-system none
 

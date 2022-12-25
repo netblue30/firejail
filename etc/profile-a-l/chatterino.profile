@@ -19,7 +19,6 @@ include allow-python3.inc
 # Allow Lua for mpv (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
-# disable-*.inc includes
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -40,7 +39,6 @@ whitelist-ro ${HOME}/.local/share/vlc
 #whitelist ${PICTURES}
 # For custom notification sounds, whitelist/noblacklist their path in chatterino.local.
 #whitelist ${MUSIC}
-# whitelist-*.inc includes
 include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc

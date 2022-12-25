@@ -6,6 +6,11 @@ include chatterino.local
 # Persistent global definitions
 include globals.local
 
+# To upload images, whitelist/noblacklist their path in chatterino.local.
+#whitelist ${PICTURES}
+# For custom notification sounds, whitelist/noblacklist their path in chatterino.local.
+#whitelist ${MUSIC}
+
 # Also allow access to mpv/vlc, they're usable via streamlink.
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/pulse
@@ -13,11 +18,11 @@ noblacklist ${HOME}/.config/vlc
 noblacklist ${HOME}/.local/share/chatterino
 noblacklist ${HOME}/.local/share/vlc
 
-# Allow Python for Streamlink integration (blacklisted by disable-interpreters.inc)
-include allow-python3.inc
-
 # Allow Lua for mpv (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
+
+# Allow Python for Streamlink integration (blacklisted by disable-interpreters.inc)
+include allow-python3.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -35,10 +40,6 @@ whitelist-ro ${HOME}/.config/mpv
 whitelist-ro ${HOME}/.config/pulse
 whitelist-ro ${HOME}/.config/vlc
 whitelist-ro ${HOME}/.local/share/vlc
-# To upload images, whitelist/noblacklist their path in chatterino.local.
-#whitelist ${PICTURES}
-# For custom notification sounds, whitelist/noblacklist their path in chatterino.local.
-#whitelist ${MUSIC}
 include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc
@@ -65,7 +66,7 @@ tracelog
 
 disable-mnt
 # Add more private-bin lines for browsers or video players to chatterino.local if wanted.
-private-bin chatterino,cvlc,env,ffmpeg,mpv,nvlc,pgrep,python*,qvlc,rvlc,streamlink,svlc,vlc,waf
+private-bin chatterino,cvlc,env,ffmpeg,mpv,nvlc,pgrep,python*,qvlc,rvlc,streamlink,svlc,vlc
 # private-cache may cause issues with mpv (see #2838)
 private-cache
 private-dev

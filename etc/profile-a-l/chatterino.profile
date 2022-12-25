@@ -29,11 +29,7 @@ include disable-programs.inc
 include disable-xdg.inc
 
 # Also allow read-only access to mpv/VLC, they're usable via streamlink.
-mkdir ${HOME}/.config/mpv
-mkdir ${HOME}/.config/pulse
-mkdir ${HOME}/.config/vlc
 mkdir ${HOME}/.local/share/chatterino
-mkdir ${HOME}/.local/share/vlc
 # VLC preferences will fail to save with read-only set.
 whitelist ${HOME}/.local/share/chatterino
 whitelist-ro ${HOME}/.config/mpv

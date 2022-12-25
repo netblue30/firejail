@@ -50,7 +50,7 @@ whitelist ${HOME}/.config/vlc
 whitelist ${HOME}/.local/share/chatterino
 whitelist ${HOME}/.local/share/vlc
 # To upload images, whitelist/noblacklist their path in chatterino.local.
-#whitelist ${HOME}/Pictures/
+#whitelist ${HOME}/Pictures/pic1.png
 # For custom notification sounds, whitelist/noblacklist their path in chatterino.local.
 #whitelist ${HOME}/Music/
 # whitelist-*.inc includes
@@ -88,17 +88,11 @@ private-bin env,mpv,python*,waf,youtube-dl,yt-dlp
 private-cache
 private-dev
 private-etc alsa,alternatives,asound.conf,ca-certificates,dbus-1,fonts,hostname,hosts,kde4rc,kde5rc,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,nvidia,passwd,pulse,resolv.conf,rpc,services,ssl,Trolltech.conf,X11
-private-opt none
 private-srv none
 private-tmp
 
 dbus-user filter
 dbus-user.own com.chatterino.*
-# Session Bus Policy from flatpak
-dbus-user.talk com.canonical.AppMenu.Registrar
-dbus-user.talk org.kde.kconfig.notify
-dbus-user.talk org.kde.KGlobalSettings
-dbus-user.talk org.freedesktop.Flatpak
 # Allow notifications.
 dbus-user.talk org.freedesktop.Notifications
 # For media player integration.
@@ -109,8 +103,6 @@ dbus-system none
 
 # Prevents browsers/players from lingering after Chatterino is closed.
 #deterministic-shutdown
-# Add to chatterino.local to force Qt to use its wayland QPA plugin.
-#env QT_QPA_PLATFORM=wayland
 # memory-deny-write-execute may break streamlink and browser integration.
 #memory-deny-write-execute
 restrict-namespaces

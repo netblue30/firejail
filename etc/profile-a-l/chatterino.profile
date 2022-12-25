@@ -41,9 +41,9 @@ whitelist-ro ${HOME}/.config/pulse
 whitelist-ro ${HOME}/.config/vlc
 whitelist-ro ${HOME}/.local/share/vlc
 # To upload images, whitelist/noblacklist their path in chatterino.local.
-#whitelist ${PICTURES}/pic1.png
+#whitelist ${PICTURES}
 # For custom notification sounds, whitelist/noblacklist their path in chatterino.local.
-#whitelist ${MUSIC}/sound.ogg
+#whitelist ${MUSIC}
 # whitelist-*.inc includes
 include whitelist-common.inc
 include whitelist-run-common.inc

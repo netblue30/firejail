@@ -14,7 +14,7 @@ caps.drop all
 netfilter
 noroot
 protocol unix,inet,inet6
-seccomp
+seccomp !chroot
 
 read-only ${HOME}/.config/awesome/autorun.sh
-restrict-namespaces
+#restrict-namespaces

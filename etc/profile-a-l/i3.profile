@@ -14,6 +14,6 @@ caps.drop all
 netfilter
 noroot
 protocol unix,inet,inet6
-seccomp
+seccomp !chroot
 
-restrict-namespaces
+#restrict-namespaces

@@ -25,6 +25,7 @@
 static int cnt_profiles = 0;
 static int cnt_apparmor = 0;
 static int cnt_seccomp = 0;
+static int cnt_restrict_namespaces = 0;
 static int cnt_caps = 0;
 static int cnt_dbus_system_none = 0;
 static int cnt_dbus_user_none = 0;
@@ -69,6 +70,7 @@ static int arg_whitelisthome = 0;
 static int arg_noroot = 0;
 static int arg_print_blacklist = 0;
 static int arg_print_whitelist = 0;
+static int arg_restrict_namespaces = 0;
 
 static char *profile = NULL;
 
@@ -91,6 +93,7 @@ static void usage(void) {
 	printf("   --print-whitelist - print all --private and --whitelist for a profile\n");
 	printf("   --seccomp - print profiles without seccomp\n");
 	printf("   --memory-deny-write-execute - print profiles without \"memory-deny-write-execute\"\n");
+	printf("   --restrict-namespaces - print profiles without \"restrict-namespaces\"\n");
 	printf("   --whitelist-home - print profiles whitelisting home directory\n");
 	printf("   --whitelist-var - print profiles without \"include whitelist-var-common.inc\"\n");
 	printf("   --whitelist-runuser - print profiles without \"include whitelist-runuser-common.inc\" or \"blacklist ${RUNUSER}\"\n");
@@ -152,6 +155,8 @@ static void process_file(char *fname) {
 
 		if (strncmp(ptr, "seccomp", 7) == 0)
 			cnt_seccomp++;
+		if (strncmp(ptr, "restrict-namespaces", 19) == 0)
+			cnt_restrict_namespaces++;
 		else if (strncmp(ptr, "caps", 4) == 0)
 			cnt_caps++;
 		else if (strncmp(ptr, "include disable-exec.inc", 24) == 0)
@@ -242,6 +247,8 @@ int main(int argc, char **argv) {
 			arg_caps = 1;
 		else if (strcmp(argv[i], "--seccomp") == 0)
 			arg_seccomp = 1;
+		else if (strcmp(argv[i], "--restrict-namespaces") == 0)
+			arg_restrict_namespaces = 1;
 		else if (strcmp(argv[i], "--memory-deny-write-execute") == 0)
 			arg_mdwx = 1;
 		else if (strcmp(argv[i], "--noexec") == 0)
@@ -291,7 +298,7 @@ int main(int argc, char **argv) {
 	for (i = start; i < argc; i++) {
 		cnt_profiles++;
 
-		// watch seccomp
+		int restrict_namespaces = cnt_restrict_namespaces;
 		int seccomp = cnt_seccomp;
 		int caps = cnt_caps;
 		int apparmor = cnt_apparmor;
@@ -334,6 +341,8 @@ int main(int argc, char **argv) {
 			cnt_whitelistrunuser = whitelistrunuser + 1;
 		if (cnt_seccomp > (seccomp + 1))
 			cnt_seccomp = seccomp + 1;
+		if (cnt_restrict_namespaces > (restrict_namespaces + 1))
+			cnt_seccomp = restrict_namespaces + 1;
 		if (cnt_dbus_user_none > (dbususernone + 1))
 			cnt_dbus_user_none = dbususernone + 1;
 		if (cnt_dbus_user_filter > (dbususerfilter + 1))
@@ -353,6 +362,8 @@ int main(int argc, char **argv) {
 			printf("No caps found in %s\n", argv[i]);
 		if (arg_seccomp && seccomp == cnt_seccomp)
 			printf("No seccomp found in %s\n", argv[i]);
+		if (arg_restrict_namespaces && restrict_namespaces == cnt_restrict_namespaces)
+			printf("No restrict-namespaces found in %s\n", argv[i]);
 		if (arg_noexec && noexec == cnt_noexec)
 			printf("No include disable-exec.inc found in %s\n", argv[i]);
 		if (arg_noroot && noroot == cnt_noroot)
@@ -397,6 +408,7 @@ int main(int argc, char **argv) {
 	printf("    noexec\t\t\t%d   (include disable-exec.inc)\n", cnt_noexec);
 	printf("    noroot\t\t\t%d\n", cnt_noroot);
 	printf("    memory-deny-write-execute\t%d\n", cnt_mdwx);
+	printf("    restrict-namespaces\t\t%d\n", cnt_restrict_namespaces);
 	printf("    apparmor\t\t\t%d\n", cnt_apparmor);
 	printf("    private-bin\t\t\t%d\n", cnt_privatebin);
 	printf("    private-dev\t\t\t%d\n", cnt_privatedev);

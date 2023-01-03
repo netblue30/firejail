@@ -320,6 +320,7 @@ blacklist ${HOME}/.config/Pinta
 blacklist ${HOME}/.config/QGIS
 blacklist ${HOME}/.config/QMediathekView
 blacklist ${HOME}/.config/Qlipper
+blacklist ${HOME}/.config/QQ
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Quotient

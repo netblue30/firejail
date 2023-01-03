@@ -208,11 +208,12 @@ bbhtt (https://github.com/bbhtt)
 	- email clients whitelisting and fixes
 Benjamin Kampmann (https://github.com/ligthyear)
 	- Forward exit code from child process
+BeautyYuYanli (https://github.com/BeautyYuYanli)
+	- add linuxqq and qq profiles
 bitfreak25 (https://github.com/bitfreak25)
 	- added PlayOnLinux profile
 	- minetest profile fix
 	- added sylpheed profile
-
 bn0785ac (https://github.com/bn0785ac)
 	- fixed bnox, dnox profiles
 	- support all tor-browser langpacks
@@ -283,6 +284,8 @@ croket (https://github.com/crocket)
 	- fix dino profile
 	- fix wireshark profile
 	- prevent emptty /usr/share in google-chrome profiles
+cubercsl (https://github.com/cubercsl)
+	- add linuxqq and qq profiles
 curiosity-seeker (https://github.com/curiosity-seeker - old)
 curiosityseeker (https://github.com/curiosityseeker - new)
 	- tightening unbound and dnscrypt-proxy profiles

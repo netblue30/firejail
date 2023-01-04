@@ -879,6 +879,7 @@ blacklist ${HOME}/.local/share/caja-python
 blacklist ${HOME}/.local/share/calligragemini
 blacklist ${HOME}/.local/share/cantata
 blacklist ${HOME}/.local/share/cdprojektred
+blacklist ${HOME}/.local/share/chatterino
 blacklist ${HOME}/.local/share/clipit
 blacklist ${HOME}/.local/share/com.github.johnfactotum.Foliate
 blacklist ${HOME}/.local/share/contacts

@@ -35,6 +35,8 @@ include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
 apparmor
+# Fixme!
+apparmor-replace
 caps.drop all
 # machine-id breaks pulse audio; add it to your firefox-common.local if sound is not required.
 #machine-id

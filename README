@@ -349,6 +349,8 @@ dmfreemon (https://github.com/dmfreemon)
 	- handle malloc() failures; use gnu_basename() instead of basenaem()
 Dmitriy Chestnykh (https://github.com/chestnykh)
 	- add ability to disable user profiles at compile time
+Dpeta (https://github.com/Dpeta)
+	- add Chatterino profile
 dshmgh (https://github.com/dshmgh)
 	- overlayfs fix for systems with /home mounted on a separate partition
 Duncan Overbruck (https://github.com/Duncaen)
@@ -648,6 +650,7 @@ KOLANICH (https://github.com/KOLANICH)
 	- added symlink fixer fix_private-bin.py in contrib section
 	- update fix_private-bin.py
 	- fix meld
+	- temporary fix to the bug caused by apparmor profiles stacking
 kortewegdevries (https://github.com/kortewegdevries)
 	- a whole bunch of new profiles and fixes
 	- whitelisting evolution, kmail
@@ -972,6 +975,7 @@ slowpeek (https://github.com/slowpeek)
 	- allow resolution of .local names with avahi-daemon in the apparmor profile
 	- allow access to avahi-daemon in apparmor/firejail-default
 	- make appimage examples consistent with --appimage option short description
+	- blacklist google-drive-ocamlfuse config
 smitsohu (https://github.com/smitsohu)
 	- read-only kde4 services directory
 	- enhanced mediathekview profile

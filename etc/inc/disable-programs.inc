@@ -116,6 +116,7 @@ blacklist ${HOME}/.cache/fossamail
 blacklist ${HOME}/.cache/fractal
 blacklist ${HOME}/.cache/freecol
 blacklist ${HOME}/.cache/gajim
+blacklist ${HOME}/.cache/gdfuse
 blacklist ${HOME}/.cache/geary
 blacklist ${HOME}/.cache/geeqie
 blacklist ${HOME}/.cache/gegl-0.4
@@ -437,6 +438,7 @@ blacklist ${HOME}/.config/gajim
 blacklist ${HOME}/.config/galculator
 blacklist ${HOME}/.config/gallery-dl
 blacklist ${HOME}/.config/gconf
+blacklist ${HOME}/.config/gdfuse
 blacklist ${HOME}/.config/geany
 blacklist ${HOME}/.config/geary
 blacklist ${HOME}/.config/gedit
@@ -709,6 +711,7 @@ blacklist ${HOME}/.frozen-bubble
 blacklist ${HOME}/.funnyboat
 blacklist ${HOME}/.g8
 blacklist ${HOME}/.gallery-dl.conf
+blacklist ${HOME}/.gdfuse
 blacklist ${HOME}/.geekbench5
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.gist
@@ -877,6 +880,7 @@ blacklist ${HOME}/.local/share/caja-python
 blacklist ${HOME}/.local/share/calligragemini
 blacklist ${HOME}/.local/share/cantata
 blacklist ${HOME}/.local/share/cdprojektred
+blacklist ${HOME}/.local/share/chatterino
 blacklist ${HOME}/.local/share/clipit
 blacklist ${HOME}/.local/share/com.github.johnfactotum.Foliate
 blacklist ${HOME}/.local/share/contacts
@@ -898,6 +902,7 @@ blacklist ${HOME}/.local/share/feral-interactive
 blacklist ${HOME}/.local/share/five-or-more
 blacklist ${HOME}/.local/share/freecol
 blacklist ${HOME}/.local/share/gajim
+blacklist ${HOME}/.local/share/gdfuse
 blacklist ${HOME}/.local/share/geary
 blacklist ${HOME}/.local/share/geeqie
 blacklist ${HOME}/.local/share/ghostwriter

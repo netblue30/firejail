@@ -18,9 +18,6 @@ whitelist ${HOME}/.config/QQ
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${DESKTOP}
 
-# Add the next line to your linuxqq.local if your kernel allows unprivileged userns clone.
-#include chromium-common-hardened.inc.profile
-
 ignore apparmor
 noprinters
 

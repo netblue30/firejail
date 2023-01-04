@@ -1,5 +1,5 @@
 # Firejail profile for claws-mail
-# Description: Fast, lightweight and user-friendly GTK+2 based email client
+# Description: Fast, lightweight and user-friendly GTK based email client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include claws-mail.local
@@ -22,9 +22,15 @@ whitelist /usr/share/doc/claws-mail
 
 dbus-user filter
 dbus-user.talk ca.desrt.dconf
-dbus-user.talk org.gnome.keyring.SystemPrompter
 # Add the next line to your claws-mail.local if you use the notification plugin.
 # dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.gnome.keyring
+dbus-user.talk org.gnome.keyring.PrivatePrompter
+dbus-user.talk org.gnome.keyring.SystemPrompter
+dbus-user.talk org.gnome.seahorse
+dbus-user.talk org.gnome.seahorse.Application
+dbus-user.talk org.mozilla.*
 
 # Redirect
 include email-common.profile

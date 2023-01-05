@@ -31,7 +31,7 @@ include whitelist-run-common.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
-apparmor
+#apparmor
 caps.drop all
 netfilter
 nogroups

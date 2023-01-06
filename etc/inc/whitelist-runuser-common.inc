@@ -6,6 +6,7 @@ include whitelist-runuser-common.local
 
 whitelist ${RUNUSER}/bus
 whitelist ${RUNUSER}/dconf
+whitelist ${RUNUSER}/fireurl
 whitelist ${RUNUSER}/gdm/Xauthority
 whitelist ${RUNUSER}/ICEauthority
 whitelist ${RUNUSER}/.mutter-Xwaylandauth.*

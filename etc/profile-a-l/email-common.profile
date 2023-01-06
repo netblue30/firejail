@@ -79,11 +79,8 @@ dbus-user filter
 dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.secrets
-dbus-user.talk org.gnome.keyring
-dbus-user.talk org.gnome.keyring.PrivatePrompter
-dbus-user.talk org.gnome.keyring.SystemPrompter
-dbus-user.talk org.gnome.seahorse
-dbus-user.talk org.gnome.seahorse.Application
+dbus-user.talk org.gnome.keyring.*
+dbus-user.talk org.gnome.seahorse.*
 dbus-user.talk org.mozilla.*
 dbus-system none
 

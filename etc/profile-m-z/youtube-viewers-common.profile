@@ -54,12 +54,13 @@ seccomp
 tracelog
 
 disable-mnt
-private-bin bash,ffmpeg,ffprobe,mpv,perl,python*,sh,smplayer,stty,wget,wget2,which,youtube-dl,yt-dlp
+private-bin bash,ffmpeg,ffprobe,fireurl,mpv,perl,python*,sh,smplayer,stty,wget,wget2,which,youtube-dl,yt-dlp
 private-cache
 private-dev
 private-etc @tls-ca,@x11,host.conf,mime.types
 private-tmp
 
+dbus-user none
 dbus-system none
 
 restrict-namespaces

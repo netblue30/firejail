@@ -326,9 +326,22 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 	// sandbox name
 	else if (strncmp(ptr, "name ", 5) == 0) {
+		int only_numbers = 1;
 		cfg.name = ptr + 5;
 		if (strlen(cfg.name) == 0) {
 			fprintf(stderr, "Error: invalid sandbox name\n");
+			exit(1);
+		}
+		const char *c = cfg.name;
+		while (*c) {
+			if (!isdigit(*c)) {
+				only_numbers = 0;
+				break;
+			}
+			++c;
+		}
+		if (only_numbers) {
+			fprintf(stderr, "Error: invalid sandbox name: it only contains digits\n");
 			exit(1);
 		}
 		return 0;

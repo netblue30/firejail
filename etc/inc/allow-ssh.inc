@@ -2,6 +2,8 @@
 # Persistent customizations should go in a .local file.
 include allow-ssh.local
 
+# Ansible
+noblacklist ${HOME}/.ansible/cp
 noblacklist ${HOME}/.ssh
 noblacklist /etc/ssh
 noblacklist /etc/ssh/ssh_config
@@ -14,6 +16,3 @@ noblacklist /usr/lib/ssh
 noblacklist /usr/lib/openssh
 # Fedora and derivatives
 noblacklist /usr/libexec/openssh
-
-# Ansible
-noblacklist ${HOME}/.ansible/cp

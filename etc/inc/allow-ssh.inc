@@ -14,3 +14,6 @@ noblacklist /usr/lib/ssh
 noblacklist /usr/lib/openssh
 # Fedora and derivatives
 noblacklist /usr/libexec/openssh
+
+# Ansible
+noblacklist ${HOME}/.ansible/cp

@@ -58,6 +58,7 @@ firejail (0.9.72rc1) baseline; urgency=low
   * docs: clarify that --appimage should appear before --profile (#5402 #5451)
   * docs: add more Firefox examples to the firejail-local AppArmor profile
     (#5493)
+  * docs: Fix broken Restrict-DBus wiki link on profile.template (#5554)
  -- netblue30 <netblue30@yahoo.com>  Sat, 11 Jun 2022 09:00:00 -0500
 
 firejail (0.9.70) baseline; urgency=low

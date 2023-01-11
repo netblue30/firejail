@@ -27,10 +27,29 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+whitelist ${HOME}/.config/QMediathekView
+whitelist ${HOME}/.local/share/QMediathekView
+
+whitelist ${HOME}/.config/mpv
+whitelist ${HOME}/.config/smplayer
+whitelist ${HOME}/.config/totem
+whitelist ${HOME}/.config/vlc
+whitelist ${HOME}/.config/xplayer
+whitelist ${HOME}/.local/share/totem
+whitelist ${HOME}/.local/share/xplayer
+whitelist ${HOME}/.mplayer
+
+whitelist ${DOWNLOADS}
+whitelist ${VIDEOS}
+
 whitelist /usr/share/qtchooser
+include whitelist-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 netfilter
 # no3d
@@ -38,11 +57,12 @@ nodvd
 nogroups
 noinput
 nonewprivs
+noprinters
 noroot
 notv
 nou2f
 novideo
-protocol unix,inet,inet6,netlink
+protocol unix,inet,inet6
 seccomp
 tracelog
 
@@ -50,6 +70,7 @@ disable-mnt
 private-bin mplayer,mpv,QMediathekView,smplayer,totem,vlc,xplayer
 private-cache
 private-dev
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,login.defs,nsswitch.conf,passwd,pki,pulse,resolv.conf,ssl
 private-tmp
 
 dbus-user none

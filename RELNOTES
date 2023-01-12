@@ -1,5 +1,4 @@
-firejail (0.9.72rc1) baseline; urgency=low
-  * work in progress
+firejail (0.9.72) baseline; urgency=low
   * feature: On failing to remount a fuse filesystem, give warning instead of
     erroring out (#5240 #5242)
   * feature: Update syscall tables and seccomp groups (#5188)

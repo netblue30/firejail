@@ -61,7 +61,7 @@ firejail (0.9.72) baseline; urgency=low
   * docs: add more Firefox examples to the firejail-local AppArmor profile
     (#5493)
   * docs: Fix broken Restrict-DBus wiki link on profile.template (#5554)
- -- netblue30 <netblue30@yahoo.com>  Sat, 11 Jun 2022 09:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Thu, 12 Jan 2023 09:00:00 -0500
 
 firejail (0.9.70) baseline; urgency=low
   * security: CVE-2022-31214 - root escalation in --join logic

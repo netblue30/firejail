@@ -30,7 +30,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"AppArmor: firejail-default enforce"
+	"AppArmor: firejail-default//&unconfined enforce"
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
@@ -38,21 +38,21 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"AppArmor: firejail-default enforce"
+	"AppArmor: firejail-default//&unconfined enforce"
 }
 after 100
 
 send -- "firejail --apparmor.print=test1\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"AppArmor: firejail-default enforce"
+	"AppArmor: firejail-default//&unconfined enforce"
 }
 after 100
 
 send -- "firejail --apparmor.print=test2\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"AppArmor: firejail-default enforce"
+	"AppArmor: firejail-default//&unconfined enforce"
 }
 after 100
 

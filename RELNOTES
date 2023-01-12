@@ -27,6 +27,7 @@ firejail (0.9.72rc1) baseline; urgency=low
     (#5190)
   * modif: removed grsecurity support
   * bugfix: Flood of seccomp audit log entries (#5207)
+  * bugfix: --netlock does not work (Error: no valid sandbox) (#5312)
   * build: deduplicate configure-time vars into new config files (#5140 #5284)
   * build: fix file mode of shell scripts (644 -> 755) (#5206)
   * build: reduce autoconf input files from 32 to 2 (#5219)

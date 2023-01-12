@@ -268,16 +268,16 @@ scan-build: clean
 # make test
 #
 
-TESTS=profiles private-lib apps apps-x11 apps-x11-xorg sysutils utils environment filters fs fcopy fnetfilter
+TESTS=profiles apps apps-x11 apps-x11-xorg sysutils utils environment filters fs fcopy fnetfilter
 TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 
 $(TEST_TARGETS):
 	$(MAKE) -C test $(subst test-,,$@)
 
-test: test-profiles test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
+test: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"
 
-test-noprofiles: test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
+test-noprofiles: test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"
 
 test-github: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
@@ -288,6 +288,9 @@ test-github: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sy
 # The tests are very intrusive, by the time you are done
 # with them you will need to restart your computer.
 ##########################################
+# private-lib is disabled by default in /etc/firejail/firejail.config
+test-private-lib:
+	$(MAKE) -C test $(subst test-,,$@)
 
 # a firejail-test account is required, public/private key setup
 test-ssh:

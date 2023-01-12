@@ -27,8 +27,13 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/QMediathekView
+mkdir ${HOME}/.local/share/QMediathekView
 whitelist ${HOME}/.config/QMediathekView
 whitelist ${HOME}/.local/share/QMediathekView
+
+whitelist ${DOWNLOADS}
+whitelist ${VIDEOS}
 
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/smplayer
@@ -38,10 +43,6 @@ whitelist ${HOME}/.config/xplayer
 whitelist ${HOME}/.local/share/totem
 whitelist ${HOME}/.local/share/xplayer
 whitelist ${HOME}/.mplayer
-
-whitelist ${DOWNLOADS}
-whitelist ${VIDEOS}
-
 whitelist /usr/share/qtchooser
 include whitelist-common.inc
 include whitelist-run-common.inc

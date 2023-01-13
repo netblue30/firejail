@@ -212,7 +212,6 @@ static char *usage_str =
 	"    --private-srv=file,directory - build a new /srv in a temporary filesystem.\n"
 	"    --profile=filename|profile_name - use a custom profile.\n"
 	"    --profile.print=name|pid - print the name of profile file.\n"
-	"    --profile-path=directory - use this directory to look for profile files.\n"
 	"    --protocol=protocol,protocol,protocol - enable protocol filter.\n"
 	"    --protocol.print=name|pid - print the protocol filter.\n"
 #ifdef HAVE_FILE_TRANSFER

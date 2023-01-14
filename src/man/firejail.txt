@@ -3040,7 +3040,7 @@ $ firejail \-\-net=br0 --veth-name=if0
 Whitelist directory or file. A temporary file system is mounted on the top directory, and the
 whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
 everything else is discarded when the sandbox is closed. The top directory can be
-all directories in / (except /dev, /proc and /sys), /sys/module, /run/user/$UID, $HOME and
+all directories in / (except /proc and /sys), /sys/module, /run/user/$UID, $HOME and
 all directories in /usr.
 .br
 
@@ -3064,7 +3064,7 @@ Example:
 .br
 $ firejail \-\-noprofile \-\-whitelist=~/.mozilla
 .br
-$ firejail \-\-whitelist=/tmp/.X11-unix
+$ firejail \-\-whitelist=/tmp/.X11-unix \-\-whitelist=/dev/null
 .br
 $ firejail "\-\-whitelist=/home/username/My Virtual Machines"
 .br

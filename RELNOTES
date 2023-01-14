@@ -25,7 +25,6 @@ firejail (0.9.72) baseline; urgency=low
   * modif: disabled tracelog by default in /etc/firejail/firejail.config
     (#5190)
   * modif: removed grsecurity support
-  * modif: disabled whitelisting for /dev directory
   * bugfix: Flood of seccomp audit log entries (#5207)
   * bugfix: --netlock does not work (Error: no valid sandbox) (#5312)
   * bugfix: Remove invalid --profile-path from --help (#5585 #5586)

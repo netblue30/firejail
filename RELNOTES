@@ -7,7 +7,7 @@ firejail (0.9.72) baseline; urgency=low
     (--restrict-namespaces, --restrict-namespaces=), implemented as a seccomp
     filter for both 64 and 32 bit architectures (#4939 #5259)
   * feature: add support for custom AppArmor profiles (--apparmor=) (#5274
-    #5316 #5317)
+    #5316 #5317 #5475)
   * feature: add support for ICMP in nettrace
   * feature: add --dnstrace, --icmptrace, and --snitrace commands
   * feature: Add basic gtksourceview language-spec (file type detection/syntax

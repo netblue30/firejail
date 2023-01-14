@@ -27,7 +27,6 @@ firejail (0.9.72) baseline; urgency=low
   * modif: removed grsecurity support
   * bugfix: Flood of seccomp audit log entries (#5207)
   * bugfix: --netlock does not work (Error: no valid sandbox) (#5312)
-  * bugfix: Remove invalid --profile-path from --help (#5585 #5586)
   * build: deduplicate configure-time vars into new config files (#5140 #5284)
   * build: fix file mode of shell scripts (644 -> 755) (#5206)
   * build: reduce autoconf input files from 32 to 2 (#5219)
@@ -61,6 +60,7 @@ firejail (0.9.72) baseline; urgency=low
   * docs: add more Firefox examples to the firejail-local AppArmor profile
     (#5493)
   * docs: Fix broken Restrict-DBus wiki link on profile.template (#5554)
+  * docs: Remove invalid --profile-path from --help (#5585 #5586)
  -- netblue30 <netblue30@yahoo.com>  Thu, 12 Jan 2023 09:00:00 -0500
 
 firejail (0.9.70) baseline; urgency=low

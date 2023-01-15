@@ -197,6 +197,12 @@ static void print_elem(unsigned index, int nowrap) {
 	char *user = pid_get_user_name(uid);
 	char *user_allocated = user;
 
+	char *cmd_escape = escape_cntrl_chars(cmd);
+	if (cmd_escape) {
+		free(cmd);
+		cmd = cmd_escape;
+	}
+
 	// extract sandbox name - pid == index
 	char *sandbox_name = "";
 	char *sandbox_name_allocated = NULL;
@@ -224,7 +230,15 @@ static void print_elem(unsigned index, int nowrap) {
 	}
 	free(fname);
 
-	if (user ==NULL)
+	char *sandbox_name_escape = escape_cntrl_chars(sandbox_name);
+	if (sandbox_name_escape) {
+		if (sandbox_name_allocated)
+			free(sandbox_name_allocated);
+		sandbox_name = sandbox_name_escape;
+		sandbox_name_allocated = sandbox_name;
+	}
+
+	if (user == NULL)
 		user = "";
 	if (cmd) {
 		if (col < 4 || nowrap)

@@ -1,3 +1,7 @@
+firejail (0.9.73) baseline; urgency=low
+  * work in progress
+ -- netblue30 <netblue30@yahoo.com>  Mon, 16 Jan 2023 09:00:00 -0500
+
 firejail (0.9.72) baseline; urgency=low
   * feature: On failing to remount a fuse filesystem, give warning instead of
     erroring out (#5240 #5242)

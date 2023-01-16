@@ -22,7 +22,7 @@ sleep 1
 send -- "cat /etc/passwd;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"No such file or directory"
+	"Permission denied"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}

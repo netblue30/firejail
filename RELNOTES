@@ -15,6 +15,7 @@ firejail (0.9.72) baseline; urgency=low
   * feature: add restrict-namespaces to (almost) all applicable profiles (#5440
     #5537)
   * feature: add support for netlock in profile files
+  * feature: add etc-hide-blacklisted flag in firejail.config (#5010 #5230)
   * modif: removed --cgroup= command (#5190 #5200)
   * modif: set --shell=none as the default (#5190)
   * modif: removed --shell= command (#5190 #5196 #5209)

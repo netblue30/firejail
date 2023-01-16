@@ -238,6 +238,8 @@ Bundy01 (https://github.com/Bundy01)
 	- update virtualbox.profile
 	- Quodlibet profile
 	- update apparmor firejail-local for Brave + ipfs
+bymoz089 (https://github.com/bymoz089)
+	- add timezone access to make libical functional
 BytesTuner (https://github.com/BytesTuner)
 	- provided keepassxc profile
 caoliver (https://github.com/caoliver)

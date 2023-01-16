@@ -22,9 +22,11 @@ noblacklist ${HOME}/.zoom
 nowhitelist ${DOWNLOADS}
 
 mkdir ${HOME}/.cache/zoom
+mkfile ${HOME}/.config/zoom.conf
 mkfile ${HOME}/.config/zoomus.conf
 mkdir ${HOME}/.zoom
 whitelist ${HOME}/.cache/zoom
+whitelist ${HOME}/.config/zoom.conf
 whitelist ${HOME}/.config/zoomus.conf
 whitelist ${HOME}/.zoom
 

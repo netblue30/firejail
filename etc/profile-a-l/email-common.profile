@@ -69,7 +69,7 @@ tracelog
 # disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,gnupg,groups,gtk-2.0,gtk-3.0,hostname,hosts,hosts.conf,ld.so.cache,ld.so.preload,localtime,machine-id,mailname,nsswitch.conf,passwd,pki,resolv.conf,selinux,ssl,xdg
+private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,gnupg,groups,gtk-2.0,gtk-3.0,hostname,hosts,hosts.conf,ld.so.cache,ld.so.preload,localtime,machine-id,mailname,nsswitch.conf,passwd,pki,resolv.conf,selinux,ssl,timezone,xdg
 private-tmp
 # encrypting and signing email
 writable-run-user

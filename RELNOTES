@@ -15,7 +15,6 @@ firejail (0.9.72) baseline; urgency=low
   * feature: add restrict-namespaces to (almost) all applicable profiles (#5440
     #5537)
   * feature: add support for netlock in profile files
-  * feature: add etc-hide-blacklisted flag in firejail.config (#5010 #5230)
   * modif: removed --cgroup= command (#5190 #5200)
   * modif: set --shell=none as the default (#5190)
   * modif: removed --shell= command (#5190 #5196 #5209)
@@ -25,6 +24,9 @@ firejail (0.9.72) baseline; urgency=low
     (#5190 #5216)
   * modif: disabled tracelog by default in /etc/firejail/firejail.config
     (#5190)
+  * modif: stop hiding blacklisted files in /etc by default and add a new
+    etc-hide-blacklisted option to firejail.config that enables the previous
+    behavior (disabled by default) (#5010 #5230 #5591 #5595)
   * modif: removed grsecurity support
   * bugfix: Flood of seccomp audit log entries (#5207)
   * bugfix: --netlock does not work (Error: no valid sandbox) (#5312)

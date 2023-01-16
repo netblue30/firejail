@@ -62,7 +62,7 @@ firejail (0.9.72) baseline; urgency=low
     (#5493)
   * docs: Fix broken Restrict-DBus wiki link on profile.template (#5554)
   * docs: Remove invalid --profile-path from --help (#5585 #5586)
- -- netblue30 <netblue30@yahoo.com>  Thu, 12 Jan 2023 09:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Mon, 16 Jan 2023 09:00:00 -0500
 
 firejail (0.9.70) baseline; urgency=low
   * security: CVE-2022-31214 - root escalation in --join logic

@@ -162,7 +162,7 @@ static void disable_file(OPERATION op, const char *filename) {
 				fs_logger2("blacklist-nolog", fname);
 
 			// files in /etc will be reprocessed during /etc rebuild
-			if (checkcfg(CFG_ETC_NO_BLACKLISTED) && strncmp(fname, "/etc/", 5) == 0) {
+			if (checkcfg(CFG_ETC_HIDE_BLACKLISTED) && strncmp(fname, "/etc/", 5) == 0) {
 				ProfileEntry *prf = malloc(sizeof(ProfileEntry));
 				if (!prf)
 					errExit("malloc");

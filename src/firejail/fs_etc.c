@@ -267,7 +267,7 @@ void fs_rebuild_etc(void) {
 	if (cfg.dns1 == NULL && !any_dhcp()) {
 		// this function has the effect that updates to files using rename(2) don't propagate into the sandbox
 		// avoid this in the default setting, in order to not break /etc/resolv.conf (issue #5010)
-		if (!checkcfg(CFG_ETC_NO_BLACKLISTED))
+		if (!checkcfg(CFG_ETC_HIDE_BLACKLISTED))
 			return;
 		have_dhcp = 0;
 	}

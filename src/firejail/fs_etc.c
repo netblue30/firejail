@@ -265,9 +265,10 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 void fs_rebuild_etc(void) {
 	int have_dhcp = 1;
 	if (cfg.dns1 == NULL && !any_dhcp()) {
-		// this function has the effect that updates to files using rename(2) don't propagate into the sandbox
-		// avoid this in the default setting, in order to not break /etc/resolv.conf (issue #5010)
-		if (!checkcfg(CFG_ETC_NO_BLACKLISTED))
+		// Disabling this option ensures that updates to files using
+		// rename(2) propagate into the sandbox, in order to avoid
+		// breaking /etc/resolv.conf (issue #5010).
+		if (!checkcfg(CFG_ETC_HIDE_BLACKLISTED))
 			return;
 		have_dhcp = 0;
 	}

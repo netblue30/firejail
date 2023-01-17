@@ -580,8 +580,6 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 			if (arg_debug)
 				printf("Running %s command through %s\n", cfg.command_line, cfg.usershell);
 			arg[index++] = "-c";
-			if (arg_doubledash)
-				arg[index++] = "--";
 			arg[index++] = cfg.command_line;
 		}
 		else if (login_shell) {

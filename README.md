@@ -178,123 +178,10 @@ You can also use this tool to get a list of syscalls needed by a program: [contr
 
 We also keep a list of profile fixes for previous released versions in [etc-fixes](https://github.com/netblue30/firejail/tree/master/etc-fixes) directory.
 
-## Latest released version: 0.9.70
+## Latest released version: 0.9.72
 
-## Current development version: 0.9.71
+## Current development version: 0.9.73
 
-Milestone page: https://github.com/netblue30/firejail/milestone/1
-
-### Restrict namespaces
-
-`````
-       --restrict-namespaces
-              Install a seccomp filter that  blocks  attempts  to  create  new
-              cgroup, ipc, net, mount, pid, time, user or uts namespaces.
-
-              Example:
-              $ firejail --restrict-namespaces
-
-       --restrict-namespaces=cgroup,ipc,net,mnt,pid,time,user,uts
-              Install  a  seccomp filter that blocks attempts to create any of
-              the specified namespaces. The filter examines the  arguments  of
-              clone, unshare and setns system calls and returns error EPERM to
-              the process (or kills it or logs the attempt, see  --seccomp-er‐
-              ror-action below) if necessary. Note that the filter is not able
-              to examine the arguments of clone3 system calls, and always  re‐
-              sponds to these calls with error ENOSYS.
-
-              Example:
-              $ firejail --restrict-namespaces=user,net
-`````
-
-### Support for custom AppArmor profiles
-
-`````
-      --apparmor
-              Enable AppArmor confinement with the "firejail-default" AppArmor
-              profile.   For more information, please see APPARMOR section be‐
-              low.
-
-       --apparmor=profile_name
-              Enable AppArmor confinement  with  a  custom  AppArmor  profile.
-              Note  that  profile  in question must already be loaded into the
-              kernel.  For more information, please see APPARMOR  section  be‐
-`````
-
-### dnstrace
-`````
-      --dnstrace[=name|pid]
-              Monitor DNS queries. The sandbox can be  specified  by  name  or
-              pid.  Only networked sandboxes created with --net are supported.
-              This option is only available when running the sandbox as root.
-
-              Without a name/pid, Firejail will monitor the main  system  net‐
-              work namespace.
-
-              $ sudo firejail --dnstrace=browser
-              11:31:43  9.9.9.9        linux.com (type 1)
-              11:31:45  9.9.9.9        fonts.googleapis.com (type 1) NXDOMAIN
-              11:31:45  9.9.9.9        js.hs-scripts.com (type 1) NXDOMAIN
-              11:31:45  9.9.9.9        www.linux.com (type 1)
-              11:31:45  9.9.9.9        fonts.googleapis.com (type 1) NXDOMAIN
-              11:31:52  9.9.9.9        js.hs-scripts.com (type 1) NXDOMAIN
-              11:32:05  9.9.9.9        secure.gravatar.com (type 1)
-              11:32:06  9.9.9.9        secure.gravatar.com (type 1)
-              11:32:08  9.9.9.9        taikai.network (type 1)
-              11:32:08  9.9.9.9        cdn.jsdelivr.net (type 1)
-              11:32:08  9.9.9.9        taikai.azureedge.net (type 1)
-              11:32:08  9.9.9.9        www.youtube.com (type 1)
-`````
-
-### snitrace
-`````
-     --snitrace[=name|pid]
-              Monitor Server Name Indication (TLS/SNI).  The  sandbox  can  be
-              specified  by name or pid. Only networked sandboxes created with
-              --net are supported. This option is only available when  running
-              the sandbox as root.
-
-              Without  a  name/pid, Firejail will monitor the main system net‐
-              work namespace.
-
-              $ sudo firejail --snitrace=browser
-              07:49:51  23.185.0.3       linux.com
-              07:49:51  23.185.0.3       www.linux.com
-              07:50:05  192.0.73.2       secure.gravatar.com
-              07:52:35  172.67.68.93     www.howtoforge.com
-              07:52:37  13.225.103.59    sf.ezoiccdn.com
-              07:52:42  142.250.176.3    www.gstatic.com
-              07:53:03  173.236.250.32   www.linuxlinks.com
-              07:53:05  192.0.77.37      c0.wp.com
-              07:53:08  192.0.78.32      jetpack.wordpress.com
-              07:53:09  192.0.77.32      s0.wp.com
-              07:53:09  192.0.77.2       i0.wp.com
-              07:53:10  192.0.77.2       i0.wp.com
-              07:53:11  192.0.73.2       1.gravatar.com
-`````
-### icmptrace
-`````
-       --icmptrace[=name|pid]
-              Monitor  ICMP  traffic.  The sandbox can be specified by name or
-              pid. Only networked sandboxes created with --net are  supported.
-              This option is only available when running the sandbox as root.
-
-              Without  a  name/pid, Firejail will monitor the main system net‐
-              work namespace.
-
-              Example
-              $ sudo firejail --icmptrace
-              20:53:54  192.168.1.60 -> 142.250.65.174 - 98 bytes -  Echo  re‐
-              quest/0
-              20:53:54   142.250.65.174  -> 192.168.1.60 - 98 bytes - Echo re‐
-              ply/0
-              20:53:55  192.168.1.60 -> 142.250.65.174 - 98 bytes -  Echo  re‐
-              quest/0
-              20:53:55   142.250.65.174  -> 192.168.1.60 - 98 bytes - Echo re‐
-              ply/0
-              20:53:55  192.168.1.60 -> 1.1.1.1 - 154 bytes - Destination  un‐
-              reachable/Port unreachable
-`````
 
 ### Profile Statistics
 
@@ -306,40 +193,33 @@ No include .local found in /etc/firejail/noprofile.profile
 Warning: multiple caps in /etc/firejail/transmission-daemon.profile
 
 Stats:
-    profiles			1205
-    include local profile	1204   (include profile-name.local)
-    include globals		1178   (include globals.local)
-    blacklist ~/.ssh		1076   (include disable-common.inc)
-    seccomp			1095
-    capabilities		1199
-    noexec			1084   (include disable-exec.inc)
-    noroot			1002
+     profiles			1209
+    include local profile	1208   (include profile-name.local)
+    include globals		1181   (include globals.local)
+    blacklist ~/.ssh		1079   (include disable-common.inc)
+    seccomp			1096
+    capabilities		1202
+    noexec			1087   (include disable-exec.inc)
+    noroot			1003
     memory-deny-write-execute	272
-    restrict-namespaces		962
-    apparmor			720
+    restrict-namespaces		958
+    apparmor			753
     private-bin			704
-    private-dev			1055
-    private-etc			546
+    private-dev			1058
+    private-etc			550
     private-lib			71
-    private-tmp			929
-    whitelist home directory	581
-    whitelist var		867   (include whitelist-var-common.inc)
-    whitelist run/user		1173   (include whitelist-runuser-common.inc
+    private-tmp			932
+    whitelist home directory	585
+    whitelist var		870   (include whitelist-var-common.inc)
+    whitelist run/user		1176   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		637   (include whitelist-usr-share-common.inc
+    whitelist usr/share		640   (include whitelist-usr-share-common.inc
     net none			410
-    dbus-user none 		677
-    dbus-user filter 		137
-    dbus-system none 		848
+    dbus-user none 		679
+    dbus-user filter 		141
+    dbus-system none 		851
     dbus-system filter 		12
 
 ```
-
-### New profiles:
-
-onionshare, onionshare-cli, opera-developer, songrec, gdu, makedeb, lbry-viewer, tuir,
-cinelerra-gg, tesseract, avidemux3_cli, avidemux3_jobs_qt5, avidemux3_qt5, ssmtp,
-linuxqq, qq
-
 
 

@@ -786,6 +786,8 @@ nolanl (https://github.com/nolanl)
 	- added localtime to signal-desktop's profile
 nyancat18 (https://github.com/nyancat18)
 	- added ardour4, dooble, karbon, krita profiles
+nya1 (https://github.com/nya1)
+	- remove apparmor options in --help when building without apparmor support
 Ondra Nekola (https://github.com/satai)
 	- allow firefox theming with non-global themes
 OndrejMalek (https://github.com/OndrejMalek)

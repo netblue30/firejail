@@ -24,7 +24,6 @@ apparmor
 caps.drop all
 machine-id
 net none
-no3d
 nodvd
 nogroups
 noinput

@@ -16,6 +16,7 @@ ignore dbus-system none
 # If you use such a system, add 'ignore nogroups' to your zoom.local.
 #ignore nogroups
 
+noblacklist ${HOME}/.config/zoom.conf
 noblacklist ${HOME}/.config/zoomus.conf
 noblacklist ${HOME}/.zoom
 

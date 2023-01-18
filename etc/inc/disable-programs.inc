@@ -674,6 +674,7 @@ blacklist ${HOME}/.config/yt-dlp
 blacklist ${HOME}/.config/yt-dlp.conf
 blacklist ${HOME}/.config/zathura
 blacklist ${HOME}/.config/zim
+blacklist ${HOME}/.config/zoom.conf
 blacklist ${HOME}/.config/zoomus.conf
 blacklist ${HOME}/.conkeror.mozdev.org
 blacklist ${HOME}/.crawl

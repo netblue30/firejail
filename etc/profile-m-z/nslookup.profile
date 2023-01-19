@@ -45,7 +45,7 @@ tracelog
 
 disable-mnt
 private-bin bash,nslookup,sh
-private-etc login.defs,passwd,resolv.conf
+private-etc alternatives,ld.so.conf.d,ld.so.preload,login.defs,passwd,resolv.conf
 private-dev
 private-tmp
 

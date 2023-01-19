@@ -10,11 +10,9 @@ match_max 100000
 send -- "firejail man firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
+	"(press RETURN)" {puts "TESTING SKIP 1.1\n";exit}
+	"Press RETURN to continue" {puts "TESTING SKIP 1.2\n";exit}
 	"NAME"
-}
-expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	"SYNOPSIS"
 }
 after 100
 puts "\nall done\n"

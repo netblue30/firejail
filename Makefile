@@ -275,8 +275,8 @@ $(TEST_TARGETS):
 	$(MAKE) -C test $(subst test-,,$@)
 
 
-# extract some data about the testing setup: kernel, network connectivity, pwd
-lab-setup:; uname -r; pwd; whoami; cat /etc/resolv.conf; cat /etc/hosts; ping -c 3 yahoo.com; dig yahoo.com; host yahoo.com; nslookup yahoo.com;
+# extract some data about the testing setup: kernel, network connectivity, user
+lab-setup:; uname -r; pwd; whoami; cat /etc/resolv.conf; cat /etc/hosts; dig dns.quad9.net; ping -c 3 dns.quad9.net
 
 
 test: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters

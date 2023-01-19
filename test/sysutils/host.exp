@@ -1,0 +1,18 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2022 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail host  -W 1 -R 0 dns.quad9.net\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"no servers could be reached" {puts "no network connectivity!\n";exit}
+	"NXDOMAIN" {puts "not found\n";exit}
+	"has address"
+}
+after 100
+puts "\nall done\n"

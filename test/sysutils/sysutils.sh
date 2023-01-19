@@ -78,3 +78,37 @@ then
 else
 	echo "TESTING SKIP: ping not found"
 fi
+
+if command -v dig
+then
+	echo "TESTING: dig"
+	./dig.exp
+else
+	echo "TESTING SKIP: dig not found"
+fi
+
+if command -v host
+then
+	echo "TESTING: host"
+	./host.exp
+else
+	echo "TESTING SKIP: host not found"
+fi
+
+if command -v nslookup
+then
+	echo "TESTING: nslookup"
+	./host.exp
+else
+	echo "TESTING SKIP: nslookup not found"
+fi
+
+if command -v man
+then
+	echo "TESTING: man"
+	./man.exp
+else
+	echo "TESTING SKIP: man not found"
+fi
+
+

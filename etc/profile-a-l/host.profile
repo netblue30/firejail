@@ -42,7 +42,7 @@ tracelog
 disable-mnt
 private
 private-bin bash,host,sh
-private-etc resolv.conf,login.defs,passwd
+private-etc login.defs,passwd,resolv.conf
 private-dev
 private-tmp
 

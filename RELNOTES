@@ -1,5 +1,8 @@
 firejail (0.9.73) baseline; urgency=low
   * work in progress
+  * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
+  * docs: remove apparmor options in --help when building without apparmor
+    support (#5589)
  -- netblue30 <netblue30@yahoo.com>  Mon, 16 Jan 2023 09:00:00 -0500
 
 firejail (0.9.72) baseline; urgency=low

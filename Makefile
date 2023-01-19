@@ -274,13 +274,19 @@ TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 $(TEST_TARGETS):
 	$(MAKE) -C test $(subst test-,,$@)
 
-test: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
+
+# extract some data about the testing setup: kernel, network connectivity, pwd
+lab-setup:; uname -r; pwd; whoami; cat /etc/resolv.conf; cat /etc/hosts; ping -c 3 yahoo.com; dig yahoo.com; host yahoo.com; nslookup yahoo.com;
+
+
+test: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"
 
-test-noprofiles: test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
+test-noprofiles: lab-setup test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"
 
-test-github: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
+
+test-github: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
 	echo "TEST COMPLETE"
 
 ##########################################

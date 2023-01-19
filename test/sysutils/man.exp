@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail man ls\r"
+send -- "firejail man firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"NAME"

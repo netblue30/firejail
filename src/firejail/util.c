@@ -255,7 +255,6 @@ static void clean_supplementary_groups(gid_t gid) {
 	return;
 
 clean_all:
-	fwarning("cleaning all supplementary groups\n");
 	if (setgroups(0, NULL) < 0)
 		errExit("setgroups");
 }

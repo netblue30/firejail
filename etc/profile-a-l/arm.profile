@@ -42,7 +42,7 @@ tracelog
 disable-mnt
 private-bin arm,bash,ldconfig,lsof,ps,python*,sh,tor
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,passwd,pki,ssl,tor
+private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,passwd,pki,resolv.conf,ssl,tor
 private-tmp
 
 restrict-namespaces

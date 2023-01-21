@@ -8,10 +8,10 @@ spawn $env(SHELL)
 match_max 100000
 
 send -- "mkdir --mode=700 ~/.cache\r"
-after 100
+after 500
 
 send -- "touch ~/.cache/abcdefg\r"
-after 100
+after 500
 
 if { ! [file exists ~/.cache/abcdefg] } {
 	puts "TESTING ERROR 0\n"

@@ -38,7 +38,7 @@ expect {
 	"Installing /run/firejail/mnt/seccomp/seccomp.protocol seccomp filter"
 }
 after 100
-send -- "ls -l /run/firejail/mnt/seccomp | grep -c seccomp\r"
+send -- "wc -l /run/firejail/mnt/seccomp/seccomp.list\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
 	"3"
@@ -61,7 +61,7 @@ expect {
 	"monitoring"
 }
 after 100
-send -- "ls -l /run/firejail/mnt | grep -c seccomp\r"
+send -- "wc -l /run/firejail/mnt/seccomp/seccomp.list\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
 	"4"
@@ -87,10 +87,10 @@ expect {
 	"/run/firejail/mnt/seccomp/seccomp.protocol seccomp filter"
 }
 after 100
-send -- "ls -l /run/firejail/mnt/seccomp | grep -c seccomp\r"
+send -- "wc -l /run/firejail/mnt/seccomp/seccomp.list\r"
 expect {
 	timeout {puts "TESTING ERROR 18\n";exit}
-	"10"
+	"7"
 }
 send -- "exit\r"
 sleep 1

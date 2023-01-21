@@ -47,7 +47,7 @@ private-cache
 # private-dev prevents (some) interfaces from being shown.
 # Add the below line to your wirehsark.local if you only want to inspect pcap files.
 #private-dev
-# private-etc alternatives,ca-certificates,crypto-policies,fonts,group,hosts,machine-id,passwd,pki,ssl
+# private-etc alternatives,ca-certificates,crypto-policies,fonts,group,hosts,machine-id,passwd,pki,resolv.conf,ssl
 private-tmp
 
 dbus-user none

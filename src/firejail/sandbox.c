@@ -1096,10 +1096,10 @@ int sandbox(void* sandbox_arg) {
 		fs_dev_disable_input();
 
 	//****************************
-	// rebuild etc directory, set dns
+	// set DNS
 	//****************************
-	if (!arg_writable_etc)
-		fs_rebuild_etc();
+	if (cfg.dns1 != NULL || any_dhcp())
+		fs_resolvconf();
 
 	//****************************
 	// start dhcp client

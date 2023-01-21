@@ -67,7 +67,7 @@ static void disable_file(OPERATION op, const char *filename) {
 		// they don't seem to like a uid of 0
 		// force mounting
 		int fd = open(filename, O_PATH|O_CLOEXEC);
-		if (fd < 0) 
+		if (fd < 0)
 			return;
 
 		EUID_ROOT();
@@ -159,7 +159,7 @@ static void disable_file(OPERATION op, const char *filename) {
 				fs_logger2("blacklist-nolog", fname);
 
 			// files in /etc will be reprocessed during /etc rebuild
-			if (checkcfg(CFG_ETC_HIDE_BLACKLISTED) && strncmp(fname, "/etc/", 5) == 0) {
+			if (strncmp(fname, "/etc/", 5) == 0) {
 				ProfileEntry *prf = malloc(sizeof(ProfileEntry));
 				if (!prf)
 					errExit("malloc");

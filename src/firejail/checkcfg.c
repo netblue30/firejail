@@ -51,7 +51,6 @@ int checkcfg(int val) {
 			cfg_val[i] = 1; // most of them are enabled by default
 		cfg_val[CFG_RESTRICTED_NETWORK] = 0; // disabled by default
 		cfg_val[CFG_FORCE_NONEWPRIVS] = 0;
-		cfg_val[CFG_ETC_HIDE_BLACKLISTED] = 0;
 		cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0;
 		cfg_val[CFG_FIREJAIL_PROMPT] = 0;
 		cfg_val[CFG_DISABLE_MNT] = 0;
@@ -116,7 +115,6 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_TRACELOG, "tracelog")
 			PARSE_YESNO(CFG_XEPHYR_WINDOW_TITLE, "xephyr-window-title")
 			PARSE_YESNO(CFG_OVERLAYFS, "overlayfs")
-			PARSE_YESNO(CFG_ETC_HIDE_BLACKLISTED, "etc-hide-blacklisted")
 			PARSE_YESNO(CFG_PRIVATE_BIN, "private-bin")
 			PARSE_YESNO(CFG_PRIVATE_BIN_NO_LOCAL, "private-bin-no-local")
 			PARSE_YESNO(CFG_PRIVATE_CACHE, "private-cache")

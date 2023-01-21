@@ -26,6 +26,41 @@
 #include <unistd.h>
 #include <dirent.h>
 
+void fs_resolvconf(void) {
+	if (arg_debug)
+		printf("Creating a new /etc/resolv.conf file\n");
+	FILE *fp = fopen(RUN_RESOLVCONF_FILE, "wxe");
+	if (!fp) {
+		fprintf(stderr, "Error: cannot create /etc/resolv.conf file\n");
+		exit(1);
+	}
+
+	if (cfg.dns1) {
+		if (any_dhcp())
+			fwarning("network setup uses DHCP, nameservers will likely be overwritten\n");
+		fprintf(fp, "nameserver %s\n", cfg.dns1);
+	}
+	if (cfg.dns2)
+		fprintf(fp, "nameserver %s\n", cfg.dns2);
+	if (cfg.dns3)
+		fprintf(fp, "nameserver %s\n", cfg.dns3);
+	if (cfg.dns4)
+		fprintf(fp, "nameserver %s\n", cfg.dns4);
+
+	// mode and owner
+	SET_PERMS_STREAM(fp, 0, 0, 0644);
+
+	fclose(fp);
+	selinux_relabel_path(RUN_RESOLVCONF_FILE, "/etc/resolv.conf");
+
+
+	if (mount(RUN_RESOLVCONF_FILE, "/etc/resolv.conf", "none", MS_BIND, "mode=644,gid=0") < 0)
+		errExit("mount");
+
+	fs_logger("create /etc/resolv.conf");
+}
+
+
 // spoof /etc/machine_id
 void fs_machineid(void) {
 	union machineid_t {
@@ -262,6 +297,7 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	fmessage("Private %s installed in %0.2f ms\n", private_dir, timetrace_end());
 }
 
+#if 0
 void fs_rebuild_etc(void) {
 	int have_dhcp = 1;
 	if (cfg.dns1 == NULL && !any_dhcp()) {
@@ -392,3 +428,4 @@ void fs_rebuild_etc(void) {
 
 	fs_logger("create /etc/resolv.conf");
 }
+#endif

@@ -693,6 +693,7 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 void network_set_run_file(pid_t pid);
 
 // fs_etc.c
+char *fs_etc_build(char *str);
 void fs_resolvconf(void);
 void fs_machineid(void);
 void fs_private_dir_copy(const char *private_dir, const char *private_run_dir, const char *private_list);

@@ -1366,6 +1366,20 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	// private /etc without a list of files and directories
+	if (strcmp(ptr, "private-etc") == 0) {
+		if (checkcfg(CFG_PRIVATE_ETC)) {
+			if (arg_writable_etc) {
+				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+				exit(1);
+			}
+			arg_private_etc = 1;
+		}
+		else
+			warning_feature_disabled("private-etc");
+		return 0;
+	}
+
 	// private /opt list of files and directories
 	if (strncmp(ptr, "private-opt ", 12) == 0) {
 		if (checkcfg(CFG_PRIVATE_OPT)) {

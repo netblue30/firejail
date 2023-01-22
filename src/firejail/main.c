@@ -2044,6 +2044,17 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--keep-dev-shm") == 0) {
 			arg_keep_dev_shm = 1;
 		}
+		else if (strcmp(argv[i], "--private-etc") == 0) {
+			if (checkcfg(CFG_PRIVATE_ETC)) {
+				if (arg_writable_etc) {
+					fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+					exit(1);
+				}
+				arg_private_etc = 1;
+			}
+			else
+				exit_err_feature("private-etc");
+		}
 		else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
 			if (checkcfg(CFG_PRIVATE_ETC)) {
 				if (arg_writable_etc) {

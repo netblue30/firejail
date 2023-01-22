@@ -1030,6 +1030,7 @@ int sandbox(void* sandbox_arg) {
 			 * 3. mount RUN_ETC_DIR at /etc
 			 */
 			timetrace_start();
+			cfg.etc_private_keep = fs_etc_build(cfg.etc_private_keep);
 			fs_private_dir_copy("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
 
 			if (umount2("/etc/group", MNT_DETACH) == -1)
@@ -1046,7 +1047,8 @@ int sandbox(void* sandbox_arg) {
 
 			// openSUSE configuration is split between /etc and /usr/etc
 			// process private-etc a second time
-			fs_private_dir_list("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep);
+			if (access("/usr/etc", F_OK) == 0)
+				fs_private_dir_list("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep);
 		}
 	}
 

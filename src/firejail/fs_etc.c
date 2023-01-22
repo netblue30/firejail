@@ -24,7 +24,145 @@
 #include <sys/types.h>
 #include <time.h>
 #include <unistd.h>
-#include <dirent.h>
+#include <glob.h>
+
+#define ETC_MAX 256
+static int etc_cnt = 0;
+static char *etc_list[ETC_MAX + 1] = { // plus 1 for ending NULL pointer
+	"alternatives",
+	"fonts",
+	"ld.so.cache",
+	"ld.so.conf",
+	"ld.so.conf.d",
+	"ld.so.preload",
+	"locale",
+	"locale.alias",
+	"locale.conf",
+	"locale.gen",
+	"localtime",
+	"nsswitch.conf",
+	"passwd",
+	NULL
+};
+
+static char*etc_group_network[] = {
+	"hostname",
+	"hosts",
+	"resolv.conf",
+	"protocols",
+	NULL
+};
+
+static char *etc_group_gnome[] = {
+	"xdg",
+	"drirc",
+	"dconf",
+	"gtk-2.0",
+	"gtk-3.0",
+	NULL
+};
+
+static char *etc_group_kde[] = {
+	"xdg",
+	"drirc",
+	"kde4rc",
+	"kde5rc",
+	NULL
+};
+
+static char *etc_group_sound[] = {
+	"alsa",
+	"asound.conf",
+	"machine-id", // required by PulseAudio
+	"pulse",
+	NULL
+};
+
+static char *etc_group_tls_ca[] = {
+	"ca-certificates",
+	"ca-certificates.conf",
+	"crypto-policies",
+	"pki",
+	"ssl",
+	NULL
+};
+
+static void etc_copy_group(char **pptr) {
+	assert(pptr);
+
+	while (*pptr != NULL) {
+		etc_list[etc_cnt++] = *pptr;
+		etc_list[etc_cnt] = NULL;
+		pptr++;
+	}
+}
+
+static void etc_add(const char *file) {
+	assert(file);
+	if (etc_cnt >= ETC_MAX) {
+		fprintf(stderr, "Error: size of private_etc list exceeded (%d maximum)\n", ETC_MAX);
+		exit(1);
+	}
+
+	// look for file in the current list
+	int i;
+	for (i = 0; i < etc_cnt; i++) {
+		if (strcmp(file, etc_list[i]) == 0) {
+			if (arg_debug)
+				printf("private-etc arguments: skip %s\n", file);
+			return;
+		}
+	}
+
+	char *ptr = strdup(file);
+	if (!ptr)
+		errExit("strdup");
+	etc_list[etc_cnt++] = ptr;
+	etc_list[etc_cnt] = NULL;
+}
+
+// str can be NULL
+char *fs_etc_build(char *str) {
+	while (etc_list[etc_cnt++]);
+	etc_cnt--;
+	if (!arg_nonetwork)
+		etc_copy_group(&etc_group_network[0]);
+	if (!arg_nosound)
+		etc_copy_group(&etc_group_sound[0]);
+
+	// parsing
+	if (str) {
+		char* ptr = strtok(str, ",");
+		while (ptr) {
+			// look for standard groups
+			if (strcmp(ptr, "TLS-CA") == 0)
+				etc_copy_group(&etc_group_tls_ca[0]);
+			if (strcmp(ptr, "GNOME") == 0)
+				etc_copy_group(&etc_group_gnome[0]);
+			if (strcmp(ptr, "KDE") == 0)
+				etc_copy_group(&etc_group_kde[0]);
+			else
+				etc_add(ptr);
+			ptr = strtok(NULL, ",");
+		}
+	}
+
+	// manufacture the new string
+	int len = 0;
+	int i;
+	for (i = 0; i < etc_cnt; i++)
+		len += strlen(etc_list[i]) + 1; // plus 1 for the trailing ','
+	char *rv = malloc(len + 1);
+	if (!rv)
+		errExit("malloc");
+	char *ptr = rv;
+	for (i = 0; i < etc_cnt; i++) {
+		sprintf(ptr, "%s,", etc_list[i]);
+		ptr += strlen(etc_list[i]) + 1;
+	}
+
+	return rv;
+}
 
 void fs_resolvconf(void) {
 	if (arg_debug)
@@ -178,19 +316,11 @@ errexit:
 }
 
 static void duplicate(const char *fname, const char *private_dir, const char *private_run_dir) {
-	assert(fname);
-
-	if (*fname == '~' || *fname == '/' || strstr(fname, "..")) {
-		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
-		exit(1);
-	}
-	invalid_filename(fname, 0); // no globbing
-
 	char *src;
 	if (asprintf(&src,  "%s/%s", private_dir, fname) == -1)
 		errExit("asprintf");
+
 	if (check_dir_or_file(src) == 0) {
-		fwarning("skipping %s for private %s\n", fname, private_dir);
 		free(src);
 		return;
 	}
@@ -204,8 +334,9 @@ static void duplicate(const char *fname, const char *private_dir, const char *pr
 
 	build_dirs(src, dst, strlen(private_dir), strlen(private_run_dir));
 
-	// follow links! this will make a copy of the file or directory pointed by the symlink
+	// follow links by default, thus making a copy of the file or directory pointed by the symlink
 	// this will solve problems such as NixOS #4887
+	//
 	// don't follow links to dynamic directories such as /proc
 	if (strcmp(src, "/etc/mtab") == 0)
 		sbox_run(SBOX_ROOT | SBOX_SECCOMP, 3, PATH_FCOPY, src, dst);
@@ -214,9 +345,38 @@ static void duplicate(const char *fname, const char *private_dir, const char *pr
 
 	free(dst);
 	fs_logger2("clone", src);
-	free(src);
 }
 
+static void duplicate_globbing(const char *fname, const char *private_dir, const char *private_run_dir) {
+	assert(fname);
+
+	if (*fname == '~' || *fname == '/' || strstr(fname, "..")) {
+		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
+		exit(1);
+	}
+	invalid_filename(fname, 1); // no globbing
+
+	char *pattern;
+	if (asprintf(&pattern,  "%s/%s", private_dir, fname) == -1)
+		errExit("asprintf");
+
+	glob_t globbuf;
+	int globerr = glob(pattern, GLOB_NOCHECK | GLOB_NOSORT | GLOB_PERIOD, NULL, &globbuf);
+	if (globerr) {
+		fprintf(stderr, "Error: failed to glob pattern %s\n", pattern);
+		exit(1);
+	}
+
+	size_t i;
+	int len = strlen(private_dir);
+	for (i = 0; i < globbuf.gl_pathc; i++) {
+		char *path = globbuf.gl_pathv[i];
+		duplicate(path + len + 1, private_dir, private_run_dir);
+	}
+
+	globfree(&globbuf);
+	free(pattern);
+}
 
 void fs_private_dir_copy(const char *private_dir, const char *private_run_dir, const char *private_list) {
 	assert(private_dir);
@@ -256,10 +416,10 @@ void fs_private_dir_copy(const char *private_dir, const char *private_run_dir, c
 			fprintf(stderr, "Error: invalid private %s argument\n", private_dir);
 			exit(1);
 		}
-		duplicate(ptr, private_dir, private_run_dir);
+		duplicate_globbing(ptr, private_dir, private_run_dir);
 
 		while ((ptr = strtok(NULL, ",")) != NULL)
-			duplicate(ptr, private_dir, private_run_dir);
+			duplicate_globbing(ptr, private_dir, private_run_dir);
 		free(dlist);
 		fs_logger_print();
 	}
@@ -297,135 +457,3 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	fmessage("Private %s installed in %0.2f ms\n", private_dir, timetrace_end());
 }
 
-#if 0
-void fs_rebuild_etc(void) {
-	int have_dhcp = 1;
-	if (cfg.dns1 == NULL && !any_dhcp()) {
-		// Disabling this option ensures that updates to files using
-		// rename(2) propagate into the sandbox, in order to avoid
-		// breaking /etc/resolv.conf (issue #5010).
-		if (!checkcfg(CFG_ETC_HIDE_BLACKLISTED))
-			return;
-		have_dhcp = 0;
-	}
-
-	if (arg_debug)
-		printf("rebuilding /etc directory\n");
-	if (mkdir(RUN_DNS_ETC, 0755))
-		errExit("mkdir");
-	selinux_relabel_path(RUN_DNS_ETC, "/etc");
-	fs_logger("tmpfs /etc");
-
-	DIR *dir = opendir("/etc");
-	if (!dir)
-		errExit("opendir");
-
-	struct stat s;
-	struct dirent *entry;
-	while ((entry = readdir(dir))) {
-		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
-			continue;
-
-		// skip files in cfg.profile_rebuild_etc list
-		// these files are already blacklisted
-		{
-			ProfileEntry *prf = cfg.profile_rebuild_etc;
-			int found = 0;
-			while (prf) {
-				if (strcmp(entry->d_name, prf->data + 5) == 0) { // 5 is strlen("/etc/")
-					found = 1;
-					break;
-				}
-				prf = prf->next;
-			}
-			if (found)
-				continue;
-		}
-
-		// for resolv.conf we might have to  create a brand new file later
-		if (have_dhcp &&
-		    (strcmp(entry->d_name, "resolv.conf") == 0 ||
-		     strcmp(entry->d_name, "resolv.conf.dhclient-new") == 0))
-			continue;
-//		printf("linking %s\n", entry->d_name);
-
-		char *src;
-		if (asprintf(&src, "/etc/%s", entry->d_name) == -1)
-			errExit("asprintf");
-		if (stat(src, &s) != 0) {
-			free(src);
-			continue;
-		}
-
-		char *dest;
-		if (asprintf(&dest, "%s/%s", RUN_DNS_ETC, entry->d_name) == -1)
-			errExit("asprintf");
-
-		int symlink_done = 0;
-		if (is_link(src)) {
-			char *rp =realpath(src, NULL);
-			if (rp == NULL) {
-				free(src);
-				free(dest);
-				continue;
-			}
-			if (symlink(rp, dest))
-				errExit("symlink");
-			else
-				symlink_done = 1;
-		}
-		else if (S_ISDIR(s.st_mode))
-			create_empty_dir_as_root(dest, S_IRWXU);
-		else
-			create_empty_file_as_root(dest, S_IRUSR | S_IWUSR);
-
-		// bind-mount src on top of dest
-		if (!symlink_done) {
-			if (mount(src, dest, NULL, MS_BIND|MS_REC, NULL) < 0)
-				errExit("mount bind mirroring /etc");
-		}
-		fs_logger2("clone", src);
-
-		free(src);
-		free(dest);
-	}
-	closedir(dir);
-
-	// mount bind our private etc directory on top of /etc
-	if (arg_debug)
-		printf("Mount-bind %s on top of /etc\n", RUN_DNS_ETC);
-	if (mount(RUN_DNS_ETC, "/etc", NULL, MS_BIND|MS_REC, NULL) < 0)
-		errExit("mount bind mirroring /etc");
-	fs_logger("mount /etc");
-
-	if (have_dhcp == 0)
-		return;
-
-	if (arg_debug)
-		printf("Creating a new /etc/resolv.conf file\n");
-	FILE *fp = fopen("/etc/resolv.conf", "wxe");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot create /etc/resolv.conf file\n");
-		exit(1);
-	}
-
-	if (cfg.dns1) {
-		if (any_dhcp())
-			fwarning("network setup uses DHCP, nameservers will likely be overwritten\n");
-		fprintf(fp, "nameserver %s\n", cfg.dns1);
-	}
-	if (cfg.dns2)
-		fprintf(fp, "nameserver %s\n", cfg.dns2);
-	if (cfg.dns3)
-		fprintf(fp, "nameserver %s\n", cfg.dns3);
-	if (cfg.dns4)
-		fprintf(fp, "nameserver %s\n", cfg.dns4);
-
-	// mode and owner
-	SET_PERMS_STREAM(fp, 0, 0, 0644);
-
-	fclose(fp);
-
-	fs_logger("create /etc/resolv.conf");
-}
-#endif

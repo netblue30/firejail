@@ -134,6 +134,16 @@ contrib/syntax/files/example: contrib/syntax/files/example.in $(SYNTAX_LISTS)
 	@printf 'Generating %s from %s\n' $@ $<
 	@$(edit_syntax_file) $< >$@
 
+# gtksourceview language-specs
+contrib/syntax/files/%.lang: contrib/syntax/files/%.lang.in $(SYNTAX_LISTS)
+	@printf 'Generating %s from %s\n' $@ $<
+	@$(edit_syntax_file) $< >$@
+
+# vim syntax files
+contrib/syntax/files/%.vim: contrib/syntax/files/%.vim.in $(SYNTAX_LISTS)
+	@printf 'Generating %s from %s\n' $@ $<
+	@$(edit_syntax_file) $< >$@
+
 .PHONY: clean
 clean:
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \

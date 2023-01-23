@@ -17,6 +17,8 @@ config.mk
 config.sh
 config.status
 contrib/syntax/files/example
+contrib/syntax/files/firejail-profile.lang
+contrib/syntax/files/firejail.vim
 firejail-*.tar.xz
 firejail-login.5
 firejail-profile.5

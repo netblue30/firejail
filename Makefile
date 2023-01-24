@@ -201,6 +201,7 @@ uninstall: config.mk
 	rm -f $(DESTDIR)$(datarootdir)/zsh/site-functions/_firejail
 	rm -f $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect/firejail.vim
 	rm -f $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax/firejail.vim
+	rm -f $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs/firejail-profile.lang
 	@echo "If you want to install a different version of firejail, you might also need to run 'rm -fr $(DESTDIR)$(sysconfdir)/firejail', see #2038."
 
 DISTFILES = \

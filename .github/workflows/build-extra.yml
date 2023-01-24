@@ -5,7 +5,7 @@ on:
     branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
-      - 'contrib/gtksourceview-5/**'
+      - 'contrib/syntax/**'
       - 'contrib/vim/**'
       - 'etc/**'
       - 'src/man/*.txt'
@@ -27,7 +27,7 @@ on:
     branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
-      - 'contrib/gtksourceview-5/**'
+      - 'contrib/syntax/**'
       - 'contrib/vim/**'
       - 'etc/**'
       - 'src/man/*.txt'

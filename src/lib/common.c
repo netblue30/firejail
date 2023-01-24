@@ -404,59 +404,62 @@ char *replace_cntrl_chars(const char *str, char c) {
 	return rv;
 }
 
+// Replaces each control character in str with an escape sequence, such as by
+// replacing '\n' (0x0a) with "\\n" (0x5c6e).
 char *escape_cntrl_chars(const char *str) {
-	if (str) {
-		unsigned int cntrl_chars = 0;
-		const char *c = str;
-		while (*c) {
-			switch (*c++) {
-				case '\b':
-				case '\a':
-				case '\e':
-				case '\f':
-				case '\n':
-				case '\r':
-				case '\t':
-				case '\v':
-				case '\"':
-				case '\'':
-				case '\?':
-				case '\\':
-					++cntrl_chars;
-				default: break;
-			}
+	if (str == NULL)
+		return NULL;
+
+	unsigned int cntrl_chars = 0;
+	const char *c = str;
+	while (*c) {
+		switch (*c++) {
+		case '\b':
+		case '\a':
+		case '\e':
+		case '\f':
+		case '\n':
+		case '\r':
+		case '\t':
+		case '\v':
+		case '\"':
+		case '\'':
+		case '\?':
+		case '\\':
+			++cntrl_chars;
+		default:
+			break;
 		}
-		char *rv = malloc(strlen(str) + cntrl_chars + 1);
-		char *ptr = rv;
-		if (!rv)
-			errExit("malloc");
-		c = str;
-		while (*c) {
-			if (iscntrl(*c)) {
-				*ptr++ = '\\';
-				switch (*c) {
-					case '\b': *ptr++ = 'b'; break;
-					case '\a': *ptr++ = 'a'; break;
-					case '\e': *ptr++ = 'e'; break;
-					case '\f': *ptr++ = 'f'; break;
-					case '\n': *ptr++ = 'n'; break;
-					case '\r': *ptr++ = 'r'; break;
-					case '\t': *ptr++ = 't'; break;
-					case '\v': *ptr++ = 'v'; break;
-					case '\"': *ptr++ = '\"'; break;
-					case '\'': *ptr++ = '\''; break;
-					case '\?': *ptr++ = '?'; break;
-					case '\\': *ptr++ = '\\'; break;
-				}
-			} else {
-				*ptr++ = *c;
-			}
-			c++;
-		}
-		*ptr = '\0';
-		return rv;
 	}
-	return NULL;
+	char *ptr, *rv = malloc(strlen(str) + cntrl_chars + 1);
+	if (!rv)
+		errExit("malloc");
+	ptr = rv;
+	c = str;
+	while (*c) {
+		if (iscntrl(*c)) {
+			*ptr++ = '\\';
+			switch (*c) {
+			case '\b': *ptr++ = 'b'; break;
+			case '\a': *ptr++ = 'a'; break;
+			case '\e': *ptr++ = 'e'; break;
+			case '\f': *ptr++ = 'f'; break;
+			case '\n': *ptr++ = 'n'; break;
+			case '\r': *ptr++ = 'r'; break;
+			case '\t': *ptr++ = 't'; break;
+			case '\v': *ptr++ = 'v'; break;
+			case '\"': *ptr++ = '\"'; break;
+			case '\'': *ptr++ = '\''; break;
+			case '\?': *ptr++ = '?'; break;
+			case '\\': *ptr++ = '\\'; break;
+			}
+		} else {
+			*ptr++ = *c;
+		}
+		c++;
+	}
+	*ptr = '\0';
+	return rv;
 }
 
 int has_cntrl_chars(const char *str) {

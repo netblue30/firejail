@@ -25,67 +25,9 @@
 #include <time.h>
 #include <unistd.h>
 #include <glob.h>
+#include "../include/etc_groups.h"
 
-#define ETC_MAX 256
 static int etc_cnt = 0;
-static char *etc_list[ETC_MAX + 1] = { // plus 1 for ending NULL pointer
-	"alternatives",
-	"fonts",
-	"ld.so.cache",
-	"ld.so.conf",
-	"ld.so.conf.d",
-	"ld.so.preload",
-	"locale",
-	"locale.alias",
-	"locale.conf",
-	"locale.gen",
-	"localtime",
-	"nsswitch.conf",
-	"passwd",
-	NULL
-};
-
-static char*etc_group_network[] = {
-	"hostname",
-	"hosts",
-	"resolv.conf",
-	"protocols",
-	NULL
-};
-
-static char *etc_group_gnome[] = {
-	"xdg",
-	"drirc",
-	"dconf",
-	"gtk-2.0",
-	"gtk-3.0",
-	NULL
-};
-
-static char *etc_group_kde[] = {
-	"xdg",
-	"drirc",
-	"kde4rc",
-	"kde5rc",
-	NULL
-};
-
-static char *etc_group_sound[] = {
-	"alsa",
-	"asound.conf",
-	"machine-id", // required by PulseAudio
-	"pulse",
-	NULL
-};
-
-static char *etc_group_tls_ca[] = {
-	"ca-certificates",
-	"ca-certificates.conf",
-	"crypto-policies",
-	"pki",
-	"ssl",
-	NULL
-};
 
 static void etc_copy_group(char **pptr) {
 	assert(pptr);
@@ -137,10 +79,14 @@ char *fs_etc_build(char *str) {
 			// look for standard groups
 			if (strcmp(ptr, "TLS-CA") == 0)
 				etc_copy_group(&etc_group_tls_ca[0]);
-			if (strcmp(ptr, "GNOME") == 0)
-				etc_copy_group(&etc_group_gnome[0]);
-			if (strcmp(ptr, "KDE") == 0)
-				etc_copy_group(&etc_group_kde[0]);
+			if (strcmp(ptr, "GUI") == 0)
+				etc_copy_group(&etc_group_gui[0]);
+			if (strcmp(ptr, "SOUND") == 0)
+				etc_copy_group(&etc_group_sound[0]);
+			if (strcmp(ptr, "NETWORK") == 0)
+				etc_copy_group(&etc_group_network[0]);
+			if (strcmp(ptr, "GAMES") == 0)
+				etc_copy_group(&etc_group_games[0]);
 			else
 				etc_add(ptr);
 			ptr = strtok(NULL, ",");

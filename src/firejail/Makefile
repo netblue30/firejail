@@ -13,7 +13,9 @@ MOD_HDRS = \
 ../include/seccomp.h \
 ../include/syscall_i386.h \
 ../include/syscall_x86_64.h \
-../include/firejail_user.h
+../include/firejail_user.h \
+../include/etc_groups.h
+
 
 MOD_OBJS = \
 ../lib/common.o \

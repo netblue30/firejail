@@ -6,6 +6,10 @@ MAN_TARGET = man
 MAN_SRC = src/man
 endif
 
+ifneq ($(HAVE_CONTRIB_INSTALL),no)
+CONTRIB_TARGET = contrib
+endif
+
 COMPLETIONDIRS = src/zsh_completion src/bash_completion
 
 APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailcheck/jailcheck
@@ -38,7 +42,7 @@ SYNTAX_FILES := $(SYNTAX_FILES_IN:.in=)
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
 
 .PHONY: all
-all: all_items mydirs filters $(MAN_TARGET)
+all: all_items mydirs filters $(MAN_TARGET) $(CONTRIB_TARGET)
 
 config.mk config.sh:
 	@printf 'error: run ./configure to generate %s\n' "$@" >&2

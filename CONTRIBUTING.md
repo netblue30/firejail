@@ -38,7 +38,7 @@ If you add a new command, here's the checklist:
 
  - [ ] Update manpages: firejail(1) and firejail-profile(5)
  - [ ] Update shell completions
- - [ ] Update syntax files (run `make syntax`)
+ - [ ] Update syntax files (run `make syntax` or just `make`)
  - [ ] Update --help
 
 # Editing the wiki

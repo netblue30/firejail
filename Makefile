@@ -17,12 +17,12 @@ SBOX_APPS_NON_DUMPABLE += src/fnettrace-icmp/fnettrace-icmp
 MYDIRS = src/lib $(MAN_SRC) $(COMPLETIONDIRS)
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 COMPLETIONS = src/zsh_completion/_firejail src/bash_completion/firejail.bash_completion
-MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5 jailcheck.1
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
+MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5 jailcheck.1
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
 
 .PHONY: all
-all: all_items mydirs $(MAN_TARGET) filters
+all: all_items mydirs filters $(MAN_TARGET)
 
 config.mk config.sh:
 	@printf 'error: run ./configure to generate %s\n' "$@" >&2
@@ -37,11 +37,6 @@ $(ALL_ITEMS): $(MYDIRS)
 mydirs: $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
-
-$(MANPAGES): src/man config.mk
-	./mkman.sh $(VERSION) src/man/$(basename $@).man $@
-
-man: $(MANPAGES)
 
 filters: $(SECCOMP_FILTERS) $(SBOX_APPS_NON_DUMPABLE)
 seccomp: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
@@ -65,14 +60,19 @@ seccomp.mdwx: src/fseccomp/fseccomp
 seccomp.mdwx.32: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp memory-deny-write-execute.32 seccomp.mdwx.32
 
+$(MANPAGES): src/man config.mk
+	./mkman.sh $(VERSION) src/man/$(basename $@).man $@
+
+man: $(MANPAGES)
+
 .PHONY: clean
 clean:
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
 		$(MAKE) -C $$dir clean; \
 	done
 	$(MAKE) -C test clean
-	rm -f $(MANPAGES) $(MANPAGES:%=%.gz) firejail*.rpm
 	rm -f $(SECCOMP_FILTERS)
+	rm -f $(MANPAGES) $(MANPAGES:%=%.gz) firejail*.rpm
 	rm -f test/utils/index.html*
 	rm -f test/utils/wget-log
 	rm -f test/utils/firejail-test-file*

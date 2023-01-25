@@ -19,6 +19,22 @@ MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so s
 COMPLETIONS = src/zsh_completion/_firejail src/bash_completion/firejail.bash_completion
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
 MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5 jailcheck.1
+
+SYSCALL_HEADERS := $(sort $(wildcard src/include/syscall*.h))
+
+# Lists of keywords used in profiles; used for generating syntax files.
+SYNTAX_LISTS = \
+	contrib/syntax/lists/profile_commands_arg0.list \
+	contrib/syntax/lists/profile_commands_arg1.list \
+	contrib/syntax/lists/profile_conditionals.list \
+	contrib/syntax/lists/profile_macros.list \
+	contrib/syntax/lists/syscall_groups.list \
+	contrib/syntax/lists/syscalls.list \
+	contrib/syntax/lists/system_errnos.list
+
+SYNTAX_FILES_IN := $(sort $(wildcard contrib/syntax/files/*.in))
+SYNTAX_FILES := $(SYNTAX_FILES_IN:.in=)
+
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
 
 .PHONY: all
@@ -65,6 +81,59 @@ $(MANPAGES): src/man config.mk
 
 man: $(MANPAGES)
 
+# Makes all targets in contrib/
+.PHONY: contrib
+contrib: syntax
+
+.PHONY: syntax
+syntax: $(SYNTAX_FILES)
+
+# TODO: include/rlimit are false positives
+contrib/syntax/lists/profile_commands_arg0.list: src/firejail/profile.c
+	@sed -En 's/.*strn?cmp\(ptr, "([^ "]*[^ ])".*/\1/p' $< | \
+	grep -Ev '^(include|rlimit)$$' | sed 's/\./\\./' | sort -u >$@
+
+# TODO: private-lib is special-cased in the code and doesn't match the regex
+contrib/syntax/lists/profile_commands_arg1.list: src/firejail/profile.c
+	@{ sed -En 's/.*strn?cmp\(ptr, "([^"]+) ".*/\1/p' $<; echo private-lib; } | \
+	sort -u >$@
+
+contrib/syntax/lists/profile_conditionals.list: src/firejail/profile.c
+	@awk -- 'BEGIN {process=0;} /^Cond conditionals\[\] = \{$$/ {process=1;} \
+		/\t*\{"[^"]+".*/ \
+		{ if (process) {print gensub(/^\t*\{"([^"]+)".*$$/, "\\1", 1);} } \
+		/^\t\{ NULL, NULL \}$$/ {process=0;}' \
+		$< | sort -u >$@
+
+contrib/syntax/lists/profile_macros.list: src/firejail/macros.c
+	@sed -En 's/.*\$$\{([^}]+)\}.*/\1/p' $< | sort -u >$@
+
+contrib/syntax/lists/syscall_groups.list: src/lib/syscall.c
+	@sed -En 's/.*"@([^",]+).*/\1/p' $< | sort -u >$@
+
+contrib/syntax/lists/syscalls.list: $(SYSCALL_HEADERS)
+	@sed -n 's/{\s\+"\([^"]\+\)",.*},/\1/p' $(SYSCALL_HEADERS) | \
+	sort -u >$@
+
+contrib/syntax/lists/system_errnos.list: src/lib/errno.c
+	@sed -En 's/.*"(E[^"]+).*/\1/p' $< | sort -u >$@
+
+pipe_fromlf = { tr '\n' '|' | sed 's/|$$//'; }
+space_fromlf = { tr '\n' ' ' | sed 's/ $$//'; }
+edit_syntax_file = sed \
+	-e "s/@make_input@/$$(basename $@).  Generated from $$(basename $<) by make./" \
+	-e "s/@FJ_PROFILE_COMMANDS_ARG0@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_commands_arg0.list)/" \
+	-e "s/@FJ_PROFILE_COMMANDS_ARG1@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_commands_arg1.list)/" \
+	-e "s/@FJ_PROFILE_CONDITIONALS@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_conditionals.list)/" \
+	-e "s/@FJ_PROFILE_MACROS@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_macros.list)/" \
+	-e "s/@FJ_SYSCALLS@/$$($(space_fromlf) <contrib/syntax/lists/syscalls.list)/" \
+	-e "s/@FJ_SYSCALL_GROUPS@/$$($(pipe_fromlf) <contrib/syntax/lists/syscall_groups.list)/" \
+	-e "s/@FJ_SYSTEM_ERRNOS@/$$($(pipe_fromlf) <contrib/syntax/lists/system_errnos.list)/"
+
+contrib/syntax/files/example: contrib/syntax/files/example.in $(SYNTAX_LISTS)
+	@printf 'Generating %s from %s\n' $@ $<
+	@$(edit_syntax_file) $< >$@
+
 .PHONY: clean
 clean:
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
@@ -73,6 +142,7 @@ clean:
 	$(MAKE) -C test clean
 	rm -f $(SECCOMP_FILTERS)
 	rm -f $(MANPAGES) $(MANPAGES:%=%.gz) firejail*.rpm
+	rm -f $(SYNTAX_FILES)
 	rm -f test/utils/index.html*
 	rm -f test/utils/wget-log
 	rm -f test/utils/firejail-test-file*

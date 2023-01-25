@@ -16,6 +16,7 @@ config.log
 config.mk
 config.sh
 config.status
+contrib/syntax/files/example
 firejail-*.tar.xz
 firejail-login.5
 firejail-profile.5

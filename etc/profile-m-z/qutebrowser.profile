@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.cache/qutebrowser
 noblacklist ${HOME}/.config/qutebrowser
 noblacklist ${HOME}/.local/share/qutebrowser
+noblacklist ${RUNUSER}/qutebrowser
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
@@ -27,10 +28,12 @@ include disable-shell.inc
 mkdir ${HOME}/.cache/qutebrowser
 mkdir ${HOME}/.config/qutebrowser
 mkdir ${HOME}/.local/share/qutebrowser
+mkdir ${RUNUSER}/qutebrowser
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/qutebrowser
 whitelist ${HOME}/.config/qutebrowser
 whitelist ${HOME}/.local/share/qutebrowser
+whitelist ${RUNUSER}/qutebrowser
 whitelist /usr/share/qutebrowser
 include whitelist-common.inc
 include whitelist-run-common.inc

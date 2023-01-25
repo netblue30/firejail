@@ -182,6 +182,44 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ## Current development version: 0.9.73
 
+### private-etc rework
+`````
+      --private-etc
+
+       --private-etc=file,directory
+              The files installed by --private-etc are copies of the  original
+              system  files  from  /etc  directory.   By  default, the command
+              brings in a skeleton of files and directories used by most  con‐
+              sole tools:
+
+              $ firejail --private-etc dig debian.org
+
+              For X11/GTK/QT/Gnome/KDE  programs add GUI group as a parameter.
+              Example:
+
+              $ firejail --private-etc=GUI,python* gimp
+
+              /etc/python* directories are not part of the generic GUI  group.
+              These directories are reuqired by Gimp plugin system. File glob‐
+              bing is supported.
+
+              For games, add GAMES group:
+
+              $ firejail --private-etc=GUI,GAMES warzone2100
+
+              Sound and networking files are  included  automatically,  unless
+              --nosound  or  --net=none  are  specified.   Files for encrypted
+              TLS/SSL protocol are in TLS-CA group.
+
+              $ firejail --private-etc=TLS-CA,wgetrc wget https://debian.org
+
+              Note: The easiest way to extract the list of /etc files accessed
+              by your program is using strace utility:
+
+              $ strace /usr/bin/transmission-qt 2>&1 | grep open | grep etc
+
+`````
+We keep the list of groups in [src/include/etc_groups.h](https://github.com/netblue30/firejail/blob/master/src/include/etc_groups.h)
 
 ### Profile Statistics
 

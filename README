@@ -383,6 +383,8 @@ Felipe Barriga Richards (https://github.com/fbarriga)
 fenuks (https://github.com/fenuks)
 	- fix sound in games using FMOD
 	- allow /opt/tor-browser for Tor Browser profile
+fkrone (https://github.com/fkrone)
+	- fix Zoom profile
 Florian Begusch (https://github.com/florianbegusch)
 	- (la)tex profiles
 	- fixed transmission-common.profile
@@ -743,6 +745,8 @@ mirabellette (https://github.com/mirabellette)
 	- add comment to thunderbird.profile to allow Firefox to load profiles
 mjudtmann (https://github.com/mjudtmann)
 	- lock firejail configuration in disable-mgmt.inc
+Mohammed Anas  (https://github.com/mhmdanas)
+	- fix dbus notifications
 m00nwtchr (https://github.com/m00nwtchr)
 	- Whitelist electron-flags.conf for all versions of electron
 	- electron profile updates

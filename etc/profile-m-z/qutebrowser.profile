@@ -27,11 +27,13 @@ include disable-shell.inc
 mkdir ${HOME}/.cache/qutebrowser
 mkdir ${HOME}/.config/qutebrowser
 mkdir ${HOME}/.local/share/qutebrowser
+mkdir ${RUNUSER}/qutebrowser
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/qutebrowser
 whitelist ${HOME}/.config/qutebrowser
 whitelist ${HOME}/.local/share/qutebrowser
 whitelist /usr/share/qutebrowser
+whitelist ${RUNUSER}/qutebrowser
 include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc

@@ -85,6 +85,8 @@ static char *etc_group_games[] = {
 	"timidity", // MIDI
 	"timidity.cfg",
 	"openal", // 3D sound
+	"gcrypt", // GNU crypto library
+	NULL
 };
 
 #endif

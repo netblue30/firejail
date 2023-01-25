@@ -2127,9 +2127,7 @@ cdrom  cdrw  dri  dvd  dvdrw  full  log  null  ptmx  pts  random  shm  snd  sr0 
 .br
 $
 .TP
-\fB\-\-private-etc
-.TP
-\fB\-\-private-etc=file,directory
+\fB\-\-private-etc, \-\-private-etc=file,directory
 The files installed by \-\-private-etc are copies of the original system files from /etc directory.
 By default, the command brings in a skeleton of files and directories used by most console tools:
 

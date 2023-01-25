@@ -184,9 +184,7 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ### private-etc rework
 `````
-      --private-etc
-
-       --private-etc=file,directory
+       --private-etc, --private-etc=file,directory
               The files installed by --private-etc are copies of the  original
               system  files  from  /etc  directory.   By  default, the command
               brings in a skeleton of files and directories used by most  con‐
@@ -220,6 +218,7 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 `````
 We keep the list of groups in [src/include/etc_groups.h](https://github.com/netblue30/firejail/blob/master/src/include/etc_groups.h)
+Discussion: https://github.com/netblue30/firejail/discussions/5610
 
 ### Profile Statistics
 

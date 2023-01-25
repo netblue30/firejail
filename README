@@ -93,6 +93,8 @@ Akhil Hans Maulloo (https://github.com/kouul)
 Albin Kauffmann (https://github.com/albinou)
 	- Firefox and Chromium profile fixes
 	- info to allow screen sharing in profiles
+Alexandre Provencio (https://github.com/aleprovencio)
+	- fix qutebrowser not opening tabs
 Alex Leahu (https://github.com/alxjsn)
 	- fix screen sharing configuration on Wayland
 Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)

@@ -25,8 +25,8 @@ ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
 all: all_items mydirs $(MAN_TARGET) filters
 
 config.mk config.sh:
-	printf 'run ./configure to generate %s\n' "$@" >&2
-	false
+	@printf 'error: run ./configure to generate %s\n' "$@" >&2
+	@false
 
 .PHONY: all_items $(ALL_ITEMS)
 all_items: $(ALL_ITEMS)

@@ -23,6 +23,7 @@ noblacklist ${HOME}/.mail
 noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.msmtprc
 noblacklist ${HOME}/.mutt
+noblacklist ${HOME}/.mutthistory
 noblacklist ${HOME}/.muttrc
 noblacklist ${HOME}/.nanorc
 noblacklist ${HOME}/.signature
@@ -89,6 +90,7 @@ whitelist ${HOME}/.mail
 whitelist ${HOME}/.mailcap
 whitelist ${HOME}/.msmtprc
 whitelist ${HOME}/.mutt
+whitelist ${HOME}/.mutthistory
 whitelist ${HOME}/.muttrc
 whitelist ${HOME}/.nanorc
 whitelist ${HOME}/.signature

@@ -52,7 +52,6 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.Mail
-mkdir ${HOME}/.bogofilter
 mkdir ${HOME}/.cache/mutt
 mkdir ${HOME}/.config/mutt
 mkdir ${HOME}/.gnupg
@@ -63,7 +62,6 @@ mkdir ${HOME}/mail
 mkdir ${HOME}/postponed
 mkdir ${HOME}/sent
 mkfile ${HOME}/.mailcap
-mkfile ${HOME}/.msmtprc
 mkfile ${HOME}/.muttrc
 mkfile ${HOME}/.signature
 whitelist ${DOCUMENTS}

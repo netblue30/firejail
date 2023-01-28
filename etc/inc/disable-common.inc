@@ -330,6 +330,7 @@ read-only ${HOME}/.cargo/env
 read-only ${HOME}/.config/nvim
 read-only ${HOME}/.config/pkcs11
 read-only ${HOME}/.dotfiles
+read-only ${HOME}/.elinks
 read-only ${HOME}/.emacs
 read-only ${HOME}/.emacs.d
 read-only ${HOME}/.exrc
@@ -345,6 +346,7 @@ read-only ${HOME}/.msmtprc
 read-only ${HOME}/.mutt/muttrc
 read-only ${HOME}/.muttrc
 read-only ${HOME}/.nano
+read-only ${HOME}/.nanorc
 read-only ${HOME}/.npmrc
 read-only ${HOME}/.pythonrc.py
 read-only ${HOME}/.reportbugrc
@@ -352,6 +354,7 @@ read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.vim
 read-only ${HOME}/.viminfo
 read-only ${HOME}/.vimrc
+read-only ${HOME}/.w3m
 read-only ${HOME}/.xmonad
 read-only ${HOME}/.xscreensaver
 read-only ${HOME}/.yarnrc

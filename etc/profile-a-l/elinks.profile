@@ -17,5 +17,7 @@ whitelist ${HOME}/.elinks
 
 private-bin elinks
 
+read-write ${HOME}/.elinks
+
 # Redirect
 include links-common.profile

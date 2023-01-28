@@ -95,32 +95,32 @@ syntax: $(SYNTAX_FILES)
 # TODO: include/rlimit are false positives
 contrib/syntax/lists/profile_commands_arg0.list: src/firejail/profile.c
 	@sed -En 's/.*strn?cmp\(ptr, "([^ "]*[^ ])".*/\1/p' $< | \
-	grep -Ev '^(include|rlimit)$$' | sed 's/\./\\./' | sort -u >$@
+	grep -Ev '^(include|rlimit)$$' | sed 's/\./\\./' | LC_ALL=C sort -u >$@
 
 # TODO: private-lib is special-cased in the code and doesn't match the regex
 contrib/syntax/lists/profile_commands_arg1.list: src/firejail/profile.c
 	@{ sed -En 's/.*strn?cmp\(ptr, "([^"]+) ".*/\1/p' $<; echo private-lib; } | \
-	sort -u >$@
+	LC_ALL=C sort -u >$@
 
 contrib/syntax/lists/profile_conditionals.list: src/firejail/profile.c
 	@awk -- 'BEGIN {process=0;} /^Cond conditionals\[\] = \{$$/ {process=1;} \
 		/\t*\{"[^"]+".*/ \
 		{ if (process) {print gensub(/^\t*\{"([^"]+)".*$$/, "\\1", 1);} } \
 		/^\t\{ NULL, NULL \}$$/ {process=0;}' \
-		$< | sort -u >$@
+		$< | LC_ALL=C sort -u >$@
 
 contrib/syntax/lists/profile_macros.list: src/firejail/macros.c
-	@sed -En 's/.*\$$\{([^}]+)\}.*/\1/p' $< | sort -u >$@
+	@sed -En 's/.*\$$\{([^}]+)\}.*/\1/p' $< | LC_ALL=C sort -u >$@
 
 contrib/syntax/lists/syscall_groups.list: src/lib/syscall.c
-	@sed -En 's/.*"@([^",]+).*/\1/p' $< | sort -u >$@
+	@sed -En 's/.*"@([^",]+).*/\1/p' $< | LC_ALL=C sort -u >$@
 
 contrib/syntax/lists/syscalls.list: $(SYSCALL_HEADERS)
 	@sed -n 's/{\s\+"\([^"]\+\)",.*},/\1/p' $(SYSCALL_HEADERS) | \
-	sort -u >$@
+	LC_ALL=C sort -u >$@
 
 contrib/syntax/lists/system_errnos.list: src/lib/errno.c
-	@sed -En 's/.*"(E[^"]+).*/\1/p' $< | sort -u >$@
+	@sed -En 's/.*"(E[^"]+).*/\1/p' $< | LC_ALL=C sort -u >$@
 
 pipe_fromlf = { tr '\n' '|' | sed 's/|$$//'; }
 space_fromlf = { tr '\n' ' ' | sed 's/ $$//'; }

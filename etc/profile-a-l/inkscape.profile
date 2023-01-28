@@ -54,6 +54,7 @@ tracelog
 # private-bin inkscape,potrace,python* - problems on Debian stretch
 private-cache
 private-dev
+private-etc inkscape: GUI,ImageMagick*,python*
 private-tmp
 
 dbus-user none

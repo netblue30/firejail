@@ -35,8 +35,10 @@ static char *etc_list[ETC_MAX + 1] = { // plus 1 for ending NULL pointer
 	"locale.alias",
 	"locale.conf",
 	"localtime",
+	"login.defs", // firejail reading UID/GID MIN and MAX at startup
 	"nsswitch.conf",
 	"passwd",
+	"group",
 	NULL
 };
 
@@ -77,6 +79,7 @@ static char *etc_group_gui[] = {
 	"gtk-3.0",
 	"kde4rc",
 	"kde5rc",
+	"pango", // text rendering/internationalization
 	NULL
 };
 
@@ -85,7 +88,6 @@ static char *etc_group_games[] = {
 	"timidity", // MIDI
 	"timidity.cfg",
 	"openal", // 3D sound
-	"gcrypt", // GNU crypto library
 	NULL
 };
 

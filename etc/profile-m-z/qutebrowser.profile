@@ -56,7 +56,7 @@ seccomp !chroot,!name_to_handle_at
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,localtime,machine-id,pki,pulse,resolv.conf,ssl
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,localtime,machine-id,passwd,pki,pulse,resolv.conf,ssl
 private-tmp
 
 dbus-user filter

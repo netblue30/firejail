@@ -28,8 +28,19 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.cache/inkscape
+mkdir ${HOME}/.config/inkscape
+mkdir ${HOME}/.inkscape
+whitelist ${DOCUMENTS}
+whitelist ${DOWNLOADS}
+whitelist ${PICTURES}
+whitelist ${HOME}/.cache/inkscape
+whitelist ${HOME}/.config/inkscape
+whitelist ${HOME}/.inkscape
 whitelist /usr/share/inkscape
+include whitelist-common.inc
 include whitelist-run-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -57,7 +68,10 @@ private-dev
 private-etc ImageMagick*,inkscape: GUI,python*
 private-tmp
 
-dbus-user none
+dbus-user filter
+dbus-user.own org.inkscape.Inkscape
+dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.gtk.vfs.*
 dbus-system none
 
 # memory-deny-write-execute

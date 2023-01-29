@@ -1018,6 +1018,7 @@ blacklist ${HOME}/.local/share/vlc
 blacklist ${HOME}/.local/share/vpltd
 blacklist ${HOME}/.local/share/vulkan
 blacklist ${HOME}/.local/share/warsow-2.1
+blacklist ${HOME}/.local/share/warzone2100
 blacklist ${HOME}/.local/share/warzone2100-3.*
 blacklist ${HOME}/.local/share/wesnoth
 blacklist ${HOME}/.local/share/wget

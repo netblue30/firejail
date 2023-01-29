@@ -17,6 +17,8 @@ include disable-interpreters.inc
 include disable-programs.inc
 #include disable-shell.inc - problems on Debian 11
 
+mkdir ${HOME}/.local/share/warzone2100
+mkdir ${HOME}/.local/share/warzone2100-3.3.0
 mkdir ${HOME}/.warzone2100-3.1
 mkdir ${HOME}/.warzone2100-3.2
 whitelist ${HOME}/.local/share/warzone2100

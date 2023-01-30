@@ -25,6 +25,7 @@ blacklist-nolog ${HOME}/.local/share/nvim
 blacklist-nolog ${HOME}/.local/state/nvim
 blacklist-nolog ${HOME}/.macromedia
 blacklist-nolog ${HOME}/.mupdf.history
+blacklist-nolog ${HOME}/.mutthistory
 blacklist-nolog ${HOME}/.python-history
 blacklist-nolog ${HOME}/.python_history
 blacklist-nolog ${HOME}/.pythonhist

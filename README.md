@@ -184,7 +184,7 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ### private-etc rework
 `````
-       --private-etc, --private-etc=file,directory
+       --private-etc, --private-etc=file,directory,@group
               The files installed by --private-etc are copies of the  original
               system  files  from  /etc  directory.   By  default, the command
               brings in a skeleton of files and directories used by most  con‐
@@ -192,24 +192,23 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
               $ firejail --private-etc dig debian.org
 
-              For X11/GTK/QT/Gnome/KDE  programs add GUI group as a parameter.
-              Example:
+              For  X11/GTK/QT/Gnome/KDE   programs add @x11 group as a parame‐
+              ter. Example:
 
-              $ firejail --private-etc=GUI,python* gimp
+              $ firejail --private-etc=@x11,gcrypt,python* gimp
 
-              /etc/python* directories are not part of the generic GUI  group.
-              These directories are reuqired by Gimp plugin system. File glob‐
-              bing is supported.
+              gcrypt and /etc/python* directories are not part of the  generic
+              @x11 group.  File globbing is supported.
 
-              For games, add GAMES group:
+              For games, add @games group:
 
-              $ firejail --private-etc=GUI,GAMES warzone2100
+              $ firejail --private-etc=@games,@x11 warzone2100
 
-              Sound and networking files are  included  automatically,  unless
-              --nosound  or  --net=none  are  specified.   Files for encrypted
-              TLS/SSL protocol are in TLS-CA group.
+              Sound  and  networking  files are included automatically, unless
+              --nosound or --net=none  are  specified.   Files  for  encrypted
+              TLS/SSL protocol are in @tls-ca group.
 
-              $ firejail --private-etc=TLS-CA,wgetrc wget https://debian.org
+              $ firejail --private-etc=@tls-ca,wgetrc wget https://debian.org
 
               Note: The easiest way to extract the list of /etc files accessed
               by your program is using strace utility:

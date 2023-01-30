@@ -56,5 +56,6 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+read-write ${HOME}/.config/nano
 read-write ${HOME}/.nanorc
 restrict-namespaces

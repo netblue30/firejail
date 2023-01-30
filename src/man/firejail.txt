@@ -1224,6 +1224,14 @@ Example:
 $ firejail --keep-fd=3,4,5
 
 .TP
+\fB\-\-keep-shell-rc
+By default, when using a private home directory, firejail copies files from the
+system's user home template (/etc/skel) into it, which overrides attempts to
+whitelist the original files (such as ~/.bashrc and ~/.zshrc).
+This option disables this feature, and enables the user to whitelist the
+original files.
+
+.TP
 \fB\-\-keep-var-tmp
 /var/tmp directory is untouched.
 .br

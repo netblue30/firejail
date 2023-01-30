@@ -1235,6 +1235,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "keep-shell-rc") == 0) {
+		arg_keep_shell_rc = 1;
+		return 0;
+	}
+
 	// writable-var
 	if (strcmp(ptr, "writable-var") == 0) {
 		arg_writable_var = 1;

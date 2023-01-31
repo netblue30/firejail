@@ -15,14 +15,6 @@ else
 	echo "TESTING SKIP: cpio not found"
 fi
 
-#if command -v strings
-#then
-#	echo "TESTING: strings"
-#	./strings.exp
-#else
-#	echo "TESTING SKIP: strings not found"
-#fi
-
 if command -v gzip
 then
 	echo "TESTING: gzip"
@@ -111,4 +103,27 @@ else
 	echo "TESTING SKIP: man not found"
 fi
 
+if command -v wget
+then
+	echo "TESTING: wget"
+	./wget.exp
+else
+	echo "TESTING SKIP: wget not found"
+fi
+
+if command -v curl
+then
+	echo "TESTING: curl"
+	./curl.exp
+else
+	echo "TESTING SKIP: curl not found"
+fi
+
+if command -v strings
+then
+	echo "TESTING: strings"
+	./strings.exp
+else
+	echo "TESTING SKIP: strings not found"
+fi
 

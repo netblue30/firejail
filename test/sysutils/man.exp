@@ -10,8 +10,8 @@ match_max 100000
 send -- "firejail man firejail\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"(press RETURN)" {puts "TESTING SKIP 1.1\n";exit}
-	"Press RETURN to continue" {puts "TESTING SKIP 1.2\n";exit}
+	"(press RETURN)" {puts "TESTING SKIP: terminal is not fully functional - 1.1\n";exit}
+	"Press RETURN to continue" {puts "TESTING SKIP: terminal is not fully functional - 1.2\n";exit}
 	"NAME"
 }
 after 100

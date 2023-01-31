@@ -69,5 +69,7 @@ jobs:
       run: sudo make install
     - name: print version
       run: command -V firejail && firejail --version
+    - name: run sysutils tests
+      run: SHELL=/bin/bash make test-sysutils
     - name: run tests
       run: SHELL=/bin/bash make test-github

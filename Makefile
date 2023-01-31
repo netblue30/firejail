@@ -370,7 +370,7 @@ test-noprofiles: lab-setup test-fcopy test-fnetfilter test-fs test-utils test-sy
 	echo "TEST COMPLETE"
 
 
-test-github: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
+test-github: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test-environment
 	echo "TEST COMPLETE"
 
 ##########################################

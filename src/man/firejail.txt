@@ -1330,6 +1330,7 @@ $ firejail \-\-net=eth0 \-\-mtu=1492
 \fB\-\-name=name
 Set sandbox name. Several options, such as \-\-join and \-\-shutdown, can use
 this name to identify a sandbox.
+The name cannot contain only digits, as that is treated as a PID in the other options, such as in \-\-join.
 
 In case the name supplied by the user is already in use by another sandbox, Firejail will assign a
 new name as "name-PID", where PID is the process ID of the sandbox. This functionality

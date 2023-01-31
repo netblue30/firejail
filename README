@@ -125,6 +125,8 @@ Alexander Stein (https://github.com/ajstein)
 alkim0 (https://github.com/alkim0)
 	- warn when encountering EIO during remount
 	- Add profile for chafa
+amano-kenji  (https://github.com/amano-kenji)
+	- fix private-etc in qutebrowser profile
 Amin Vakil (https://github.com/aminvakil)
 	- whois profile fix
 	- added profile for strawberry
@@ -679,6 +681,8 @@ Laurent Declercq (https://github.com/nuxwin)
 	- fixed test for shell interpreter in chroots
 LaurentGH (https://github.com/LaurentGH)
 	- allow private-bin parameters to be absolute paths
+layderv (https://github.com/layderv)
+	- prevent sandbox name from containing only digits
 lecso7 (https://github.com/lecso7)
 	- added goldendict profile
 	- allow evince to read .cbz file format

@@ -1,6 +1,7 @@
 firejail (0.9.73) baseline; urgency=low
   * work in progress
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
+  * modif: prevent sandbox name from containing only digits (#5578)
   * docs: remove apparmor options in --help when building without apparmor
     support (#5589)
   * fix: qutebrowser not opening tabs (#5601)

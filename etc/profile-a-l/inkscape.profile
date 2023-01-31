@@ -16,7 +16,6 @@ noblacklist ${PICTURES}
 noblacklist ${HOME}/.config/GIMP
 noblacklist ${HOME}/.gimp*
 
-
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
@@ -74,5 +73,4 @@ dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.gtk.vfs.*
 dbus-system none
 
-# memory-deny-write-execute
 restrict-namespaces

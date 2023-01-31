@@ -74,7 +74,7 @@ jobs:
     - name: run sysutils tests
       run: SHELL=/bin/bash make test-sysutils
     - name: run profile tests
-      run: SHELL=/bin/bash make test-priofiles
+      run: SHELL=/bin/bash make test-profiles
     - name: run fcopy tests
       run: SHELL=/bin/bash make test-fcopy
     - name: run fnetfilter tests

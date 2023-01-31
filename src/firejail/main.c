@@ -2172,9 +2172,22 @@ int main(int argc, char **argv, char **envp) {
 		// hostname, etc
 		//*************************************
 		else if (strncmp(argv[i], "--name=", 7) == 0) {
+			int only_numbers = 1;
 			cfg.name = argv[i] + 7;
 			if (strlen(cfg.name) == 0) {
 				fprintf(stderr, "Error: please provide a name for sandbox\n");
+				return 1;
+			}
+			const char *c = cfg.name;
+			while (*c) {
+				if (!isdigit(*c)) {
+					only_numbers = 0;
+					break;
+				}
+				++c;
+			}
+			if (only_numbers) {
+				fprintf(stderr, "Error: invalid sandbox name: it only contains digits\n");
 				return 1;
 			}
 		}

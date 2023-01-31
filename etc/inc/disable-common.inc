@@ -18,6 +18,7 @@ blacklist-nolog ${HOME}/.histfile
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.kde/share/apps/klipper
 blacklist-nolog ${HOME}/.kde4/share/apps/klipper
+blacklist-nolog ${HOME}/.lesshst
 blacklist-nolog ${HOME}/.local/share/fish/fish_history
 blacklist-nolog ${HOME}/.local/share/ibus-typing-booster
 blacklist-nolog ${HOME}/.local/share/klipper
@@ -25,10 +26,9 @@ blacklist-nolog ${HOME}/.local/share/nvim
 blacklist-nolog ${HOME}/.local/state/nvim
 blacklist-nolog ${HOME}/.macromedia
 blacklist-nolog ${HOME}/.mupdf.history
+blacklist-nolog ${HOME}/.mutthistory
 blacklist-nolog ${HOME}/.python-history
-blacklist-nolog ${HOME}/.python_history
 blacklist-nolog ${HOME}/.pythonhist
-blacklist-nolog ${HOME}/.lesshst
 blacklist-nolog ${HOME}/.viminfo
 blacklist-nolog /tmp/clipmenu*
 

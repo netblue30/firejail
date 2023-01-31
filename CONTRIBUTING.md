@@ -38,8 +38,7 @@ If you add a new command, here's the checklist:
 
  - [ ] Update manpages: firejail(1) and firejail-profile(5)
  - [ ] Update shell completions
- - [ ] Update vim syntax files
- - [ ] Update gtksourceview language specs
+ - [ ] Update syntax files (run `make syntax` or just `make`)
  - [ ] Update --help
 
 # Editing the wiki

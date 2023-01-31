@@ -23,7 +23,7 @@
 
 #define ETC_MAX 256
 
-// DEFAULT
+// @default
 static char *etc_list[ETC_MAX + 1] = { // plus 1 for ending NULL pointer
 	"alternatives",
 	"fonts",
@@ -42,7 +42,7 @@ static char *etc_list[ETC_MAX + 1] = { // plus 1 for ending NULL pointer
 	NULL
 };
 
-// SOUND
+// @sound
 static char *etc_group_sound[] = {
 	"alsa",
 	"asound.conf",
@@ -51,7 +51,7 @@ static char *etc_group_sound[] = {
 	NULL
 };
 
-// NETWORK
+// @network
 static char*etc_group_network[] = {
 	"hostname",
 	"hosts",
@@ -60,7 +60,7 @@ static char*etc_group_network[] = {
 	NULL
 };
 
-// TLS-CA
+// @tls-ca
 static char *etc_group_tls_ca[] = {
 	"ca-certificates",
 	"crypto-policies",
@@ -70,8 +70,8 @@ static char *etc_group_tls_ca[] = {
 	NULL
 };
 
-// GUI
-static char *etc_group_gui[] = {
+// @x11
+static char *etc_group_x11[] = {
 	"xdg",
 	"drirc",
 	"dconf",
@@ -80,10 +80,12 @@ static char *etc_group_gui[] = {
 	"kde4rc",
 	"kde5rc",
 	"pango", // text rendering/internationalization
+	"nvidia",
+	"X11",
 	NULL
 };
 
-// GAMES
+// @games
 static char *etc_group_games[] = {
 	"timidity", // MIDI
 	"timidity.cfg",

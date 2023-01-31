@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- @make_input@ -->
 <!-- vim: set ts=2 sts=2 sw=2 et: -->
 <!--
   https://gitlab.gnome.org/GNOME/gtksourceview/-/blob/master/docs/lang-tutorial.md
@@ -20,15 +21,15 @@
 
   <definitions>
     <define-regex id="commands-with-arguments" extended="true">
-      (apparmor|bind|blacklist-nolog|blacklist|caps.drop|caps.keep|cpu|dbus-system.broadcast|dbus-system.call|dbus-system.own|dbus-system.see|dbus-system.talk|dbus-system|dbus-user.broadcast|dbus-user.call|dbus-user.own|dbus-user.see|dbus-user.talk|dbus-user|defaultgw|dns|env|hostname|hosts-file|ignore|include|ip6|ip|iprange|join-or-start|keep-fd|mac|mkdir|mkfile|mtu|name|net|netfilter6|netfilter|netmask|netns|nice|noblacklist|noexec|nowhitelist|overlay-named|private-bin|private-cwd|private-etc|private-home|private-lib|private-opt|private-srv|private|protocol|read-only|read-write|restrict-namespaces|rlimit-as|rlimit-cpu|rlimit-fsize|rlimit-nofile|rlimit-nproc|rlimit-sigpending|rlimit|rmenv|seccomp-error-action|seccomp.32.drop|seccomp.32.keep|seccomp.32|seccomp.drop|seccomp.keep|seccomp|shell|timeout|tmpfs|veth-name|whitelist-ro|whitelist|x11|xephyr-screen)
+      (@FJ_PROFILE_COMMANDS_ARG1@)
     </define-regex>
 
     <define-regex id="commands-without-arguments" extended="true">
-      (allow-debuggers|allusers|apparmor|caps|deterministic-exit-code|deterministic-shutdown|disable-mnt|ipc-namespace|keep-config-pulse|keep-dev-shm|keep-fd|keep-var-tmp|machine-id|memory-deny-write-execute|netfilter|no3d|noautopulse|nodbus|nodvd|nogroups|noinput|nonewprivs|noprinters|noroot|nosound|notv|nou2f|novideo|overlay-tmpfs|overlay|private-cache|private-cwd|private-dev|private-lib|private-tmp|private|quiet|restrict-namespaces|seccomp.32|seccomp.block-secondary|seccomp|tab|tracelog|writable-etc|writable-run-user|writable-var-log|writable-var|x11)
+      (@FJ_PROFILE_COMMANDS_ARG0@)
     </define-regex>
 
     <define-regex id="conditions" extended="true">
-      (ALLOW_TRAY|BROWSER_ALLOW_DRM|BROWSER_DISABLE_U2F|HAS_APPIMAGE|HAS_NET|HAS_NODBUS|HAS_NOSOUND|HAS_X11)
+      (@FJ_PROFILE_CONDITIONALS@)
     </define-regex>
 
     <context id="conditional-line">

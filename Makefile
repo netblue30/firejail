@@ -369,8 +369,8 @@ test: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test
 test-noprofiles: lab-setup test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"
 
-
-test-github: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test-environment
+# old gihub test; the new test is driven directly from .github/workflows/build.yml
+test-github: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
 	echo "TEST COMPLETE"
 
 ##########################################

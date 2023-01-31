@@ -67,9 +67,21 @@ jobs:
       run: make
     - name: make install
       run: sudo make install
-    - name: print version
+    - name: print firejail version
       run: command -V firejail && firejail --version
+    - name: lab setup
+      run: SHELL=/bin/bash make lab-setup
     - name: run sysutils tests
       run: SHELL=/bin/bash make test-sysutils
-    - name: run tests
-      run: SHELL=/bin/bash make test-github
+    - name: run profile tests
+      run: SHELL=/bin/bash make test-priofiles
+    - name: run fcopy tests
+      run: SHELL=/bin/bash make test-fcopy
+    - name: run fnetfilter tests
+      run: SHELL=/bin/bash make test-fnetfilter
+    - name: run fs tests
+      run: SHELL=/bin/bash make test-fs
+    - name: run utils tests
+      run: SHELL=/bin/bash make test-utils
+    - name: run environment tests
+      run: SHELL=/bin/bash make test-environment

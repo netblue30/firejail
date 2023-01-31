@@ -7,6 +7,7 @@ include warzone2100.local
 include globals.local
 
 noblacklist ${HOME}/.warzone2100-3.*
+noblacklist ${HOME}/.local/share/warzone2100
 noblacklist ${HOME}/.local/share/warzone2100-3.*
 
 include disable-common.inc
@@ -16,13 +17,17 @@ include disable-interpreters.inc
 include disable-programs.inc
 #include disable-shell.inc - problems on Debian 11
 
+mkdir ${HOME}/.local/share/warzone2100
+mkdir ${HOME}/.local/share/warzone2100-3.3.0
 mkdir ${HOME}/.warzone2100-3.1
 mkdir ${HOME}/.warzone2100-3.2
+whitelist ${HOME}/.local/share/warzone2100
 whitelist ${HOME}/.local/share/warzone2100-3.3.0 # config dir moved under .local/share
 whitelist ${HOME}/.warzone2100-3.1
 whitelist ${HOME}/.warzone2100-3.2
 whitelist /usr/share/games
 whitelist /usr/share/gdm
+whitelist /usr/share/warzone2100
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

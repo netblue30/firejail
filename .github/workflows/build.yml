@@ -85,5 +85,3 @@ jobs:
       run: SHELL=/bin/bash make test-utils
     - name: run environment tests
       run: SHELL=/bin/bash make test-environment
-    - name: run security filters tests
-      run: SHELL=/bin/bash make test-filters

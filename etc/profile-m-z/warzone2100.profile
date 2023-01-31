@@ -51,7 +51,7 @@ tracelog
 disable-mnt
 private-bin bash,dash,sh,warzone2100,which
 private-dev
-private-etc GAMES,GUI
+private-etc @games,@x11
 private-tmp
 
 restrict-namespaces

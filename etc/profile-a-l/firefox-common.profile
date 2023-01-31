@@ -60,7 +60,7 @@ disable-mnt
 # private-etc below works fine on most distributions. There are some problems on CentOS.
 # Add it to your firefox-common.local if you want to enable it.
 #private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,group,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,machine-id,mailcap,mime.types,nsswitch.conf,pango,passwd,pki,pulse,resolv.conf,selinux,ssl,X11,xdg
-private-etc GUI,mailcap,mime.types,NETWORK,os-release,TLS-CA
+private-etc @tls-ca,@x11,mailcap,mime.types,os-release
 private-tmp
 
 blacklist ${PATH}/curl

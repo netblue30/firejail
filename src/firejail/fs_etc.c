@@ -77,15 +77,15 @@ char *fs_etc_build(char *str) {
 		char* ptr = strtok(str, ",");
 		while (ptr) {
 			// look for standard groups
-			if (strcmp(ptr, "TLS-CA") == 0)
+			if (strcmp(ptr, "@tls-ca") == 0)
 				etc_copy_group(&etc_group_tls_ca[0]);
-			if (strcmp(ptr, "GUI") == 0)
-				etc_copy_group(&etc_group_gui[0]);
-			if (strcmp(ptr, "SOUND") == 0)
+			if (strcmp(ptr, "@x11") == 0)
+				etc_copy_group(&etc_group_x11[0]);
+			if (strcmp(ptr, "@sound") == 0)
 				etc_copy_group(&etc_group_sound[0]);
-			if (strcmp(ptr, "NETWORK") == 0)
+			if (strcmp(ptr, "@network") == 0)
 				etc_copy_group(&etc_group_network[0]);
-			if (strcmp(ptr, "GAMES") == 0)
+			if (strcmp(ptr, "@games") == 0)
 				etc_copy_group(&etc_group_games[0]);
 			else
 				etc_add(ptr);

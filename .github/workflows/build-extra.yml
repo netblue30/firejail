@@ -5,9 +5,9 @@ on:
     branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
-      - 'etc/**'
-      - 'contrib/gtksourceview-5/**'
+      - 'contrib/syntax/**'
       - 'contrib/vim/**'
+      - 'etc/**'
       - 'src/man/*.txt'
       - .git-blame-ignore-revs
       - .github/dependabot.yml
@@ -27,9 +27,9 @@ on:
     branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
-      - 'etc/**'
-      - 'contrib/gtksourceview-5/**'
+      - 'contrib/syntax/**'
       - 'contrib/vim/**'
+      - 'etc/**'
       - 'src/man/*.txt'
       - .git-blame-ignore-revs
       - .github/dependabot.yml

@@ -1,4 +1,5 @@
 # Firejail
+
 [![Build Status](https://gitlab.com/Firejail/firejail_ci/badges/master/pipeline.svg)](https://gitlab.com/Firejail/firejail_ci/pipelines/)
 [![CodeQL](https://github.com/netblue30/firejail/workflows/CodeQL/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACodeQL)
 [![Build CI](https://github.com/netblue30/firejail/workflows/Build%20CI/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3A%22Build+CI%22)
@@ -114,12 +115,15 @@ $ git clone https://github.com/netblue30/firejail.git
 $ cd firejail
 $ ./configure && make && sudo make install-strip
 `````
+
 On Debian/Ubuntu you will need to install git and gcc compiler. AppArmor
 development libraries and pkg-config are required when using `--enable-apparmor`
 ./configure option:
+
 `````
 $ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 `````
+
 For `--selinux` option, add libselinux1-dev (libselinux-devel for Fedora).
 
 Detailed information on using firejail from git is available on the [wiki](https://github.com/netblue30/firejail/wiki/Using-firejail-from-git).
@@ -134,7 +138,9 @@ $ firejail transmission-gtk   # starting Transmission BitTorrent
 $ firejail vlc                # starting VideoLAN Client
 $ sudo firejail /etc/init.d/nginx start
 `````
+
 Run `firejail --list` in a terminal to list all active sandboxes. Example:
+
 `````
 $ firejail --list
 1617:netblue:/usr/bin/firejail /usr/bin/firefox-esr
@@ -147,6 +153,7 @@ $ firejail --list
 ## Desktop integration
 
 Integrate your sandbox into your desktop by running the following two commands:
+
 `````
 $ firecfg --fix-sound
 $ sudo firecfg
@@ -169,7 +176,6 @@ You can find the profiles for all supported applications in [/etc/firejail](http
 If you keep additional Firejail security profiles in a public repository, please give us a link:
 
 * https://github.com/chiraag-nataraj/firejail-profiles
-
 * https://github.com/triceratops1/fe
 
 Use this issue to request new profiles: [#1139](https://github.com/netblue30/firejail/issues/1139)
@@ -183,6 +189,7 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 ## Current development version: 0.9.73
 
 ### --keep-shell-rc
+
 `````
        --keep-shell-rc
               By default, when using a private home directory, firejail copies
@@ -190,10 +197,10 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
               which overrides attempts to whitelist the original  files  (such
               as  ~/.bashrc and ~/.zshrc).  This option disables this feature,
               and enables the user to whitelist the original files.
-
 `````
 
 ### private-etc rework
+
 `````
        --private-etc, --private-etc=file,directory,@group
               The files installed by --private-etc are copies of the original
@@ -226,6 +233,7 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
               $ strace /usr/bin/transmission-qt 2>&1 | grep open | grep etc
 `````
+
 We keep the list of groups in [src/include/etc_groups.h](https://github.com/netblue30/firejail/blob/master/src/include/etc_groups.h)
 Discussion: https://github.com/netblue30/firejail/discussions/5610
 
@@ -233,6 +241,7 @@ Discussion: https://github.com/netblue30/firejail/discussions/5610
 
 A small tool to print profile statistics. Compile and install as usual. The tool is installed in /usr/lib/firejail directory.
 Run it over the profiles in /etc/profiles:
+
 ```
 $ /usr/lib/firejail/profstats /etc/firejail/*.profile
 No include .local found in /etc/firejail/noprofile.profile

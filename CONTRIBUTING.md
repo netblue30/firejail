@@ -1,6 +1,8 @@
+# Contributing
+
 Welcome to firejail, and thank you for your interest in contributing!
 
-# Opening an issue:
+## Opening an issue
 
 We welcome issues, whether to ask a question, provide information, request a new profile or
 feature, or to report a suspected bug or problem.
@@ -29,7 +31,7 @@ firejail-profiles was not installed when installing firejail.
 We take security bugs very seriously. If you believe you have found one, please report it by
 emailing us at netblue30@protonmail.com
 
-# Opening an pull request:
+## Opening a pull request
 
 Pull requests with enhancements, bugfixes or new profiles are very welcome.
 
@@ -44,6 +46,6 @@ If you add a new command, here's the checklist:
 - [ ] Update syntax files (run `make syntax` or just `make`)
 - [ ] Update --help
 
-# Editing the wiki
+## Editing the wiki
 
 You are highly encouraged to add your own tips and tricks to the [wiki](https://github.com/netblue30/firejail/wiki).

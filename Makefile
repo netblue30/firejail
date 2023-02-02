@@ -58,6 +58,7 @@ mydirs: $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
 
+.PHONY: filters
 filters: $(SECCOMP_FILTERS) $(SBOX_APPS_NON_DUMPABLE)
 seccomp: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
 	src/fseccomp/fseccomp default seccomp
@@ -83,6 +84,7 @@ seccomp.mdwx.32: src/fseccomp/fseccomp
 $(MANPAGES): src/man config.mk
 	./mkman.sh $(VERSION) src/man/$(basename $@).man $@
 
+.PHONY: man
 man: $(MANPAGES)
 
 # Makes all targets in contrib/
@@ -178,6 +180,7 @@ distclean: clean
 	$(MAKE) -C test distclean
 	rm -fr autom4te.cache config.log config.mk config.sh config.status
 
+.PHONY: realinstall
 realinstall: config.mk
 	# firejail executable
 	install -m 0755 -d $(DESTDIR)$(bindir)
@@ -261,13 +264,16 @@ endif
 	install -m 0755 -d $(DESTDIR)$(datarootdir)/zsh/site-functions
 	install -m 0644 src/zsh_completion/_firejail $(DESTDIR)$(datarootdir)/zsh/site-functions/
 
+.PHONY: install
 install: all
 	$(MAKE) realinstall
 
+.PHONY: install-strip
 install-strip: all
 	strip $(ALL_ITEMS)
 	$(MAKE) realinstall
 
+.PHONY: uninstall
 uninstall: config.mk
 	rm -f $(DESTDIR)$(bindir)/firejail
 	rm -f $(DESTDIR)$(bindir)/firemon
@@ -309,6 +315,7 @@ src
 
 DISTFILES_TEST = test/Makefile test/apps test/apps-x11 test/apps-x11-xorg test/root test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils test/chroot
 
+.PHONY: dist
 dist: config.mk
 	mv config.sh config.sh.old
 	mv config.status config.status.old
@@ -324,15 +331,19 @@ dist: config.mk
 	tar -cJvf $(TARNAME)-$(VERSION).tar.xz $(TARNAME)-$(VERSION)
 	rm -fr $(TARNAME)-$(VERSION)
 
+.PHONY: asc
 asc: config.mk
 	./mkasc.sh $(VERSION)
 
+.PHONY: deb
 deb: dist config.sh
 	./mkdeb.sh
 
+.PHONY: deb-apparmor
 deb-apparmor: dist config.sh
 	./mkdeb.sh -apparmor --enable-apparmor
 
+.PHONY: test-compile
 test-compile: dist config.mk
 	cd test/compile; ./compile.sh $(TARNAME)-$(VERSION)
 
@@ -340,12 +351,15 @@ test-compile: dist config.mk
 rpms: src/man config.mk
 	./platform/rpm/mkrpm.sh $(TARNAME) $(VERSION)
 
+.PHONY: extras
 extras: all
 	$(MAKE) -C extras/firetools
 
+.PHONY: cppcheck
 cppcheck: clean
 	cppcheck --force --error-exitcode=1 --enable=warning,performance .
 
+.PHONY: scan-build
 scan-build: clean
 	NO_EXTRA_CFLAGS="yes" scan-build make
 

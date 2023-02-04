@@ -42,12 +42,11 @@ static char *etc_list[ETC_MAX + 1] = { // plus 1 for ending NULL pointer
 	NULL
 };
 
-// @sound
-static char *etc_group_sound[] = {
-	"alsa",
-	"asound.conf",
-	"machine-id", // required by PulseAudio
-	"pulse",
+// @games
+static char *etc_group_games[] = {
+	"openal", // 3D sound
+	"timidity", // MIDI
+	"timidity.cfg",
 	NULL
 };
 
@@ -57,6 +56,15 @@ static char*etc_group_network[] = {
 	"hosts",
 	"protocols",
 	"resolv.conf",
+	NULL
+};
+
+// @sound
+static char *etc_group_sound[] = {
+	"alsa",
+	"asound.conf",
+	"machine-id", // required by PulseAudio
+	"pulse",
 	NULL
 };
 
@@ -82,14 +90,6 @@ static char *etc_group_x11[] = {
 	"pango", // text rendering/internationalization
 	"X11",
 	"xdg",
-	NULL
-};
-
-// @games
-static char *etc_group_games[] = {
-	"openal", // 3D sound
-	"timidity", // MIDI
-	"timidity.cfg",
 	NULL
 };
 

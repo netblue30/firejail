@@ -45,7 +45,7 @@ private-bin aria2c,gzip
 # Add 'private-cache' to your aria2c.local if you don't use Lutris/winetricks (see issue #2772).
 #private-cache
 private-dev
-private-etc @tls-ca,groups
+private-etc @tls-ca
 private-lib libreadline.so.*
 private-tmp
 

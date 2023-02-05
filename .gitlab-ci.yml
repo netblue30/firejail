@@ -9,7 +9,7 @@ build_ubuntu_package:
     image: ubuntu:rolling
     script:
         - apt-get update -qq
-        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian pkg-config python3 gawk
+        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config python3 gawk
         - ./configure && make deb && dpkg -i firejail*.deb
         - command -V firejail && firejail --version
         - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
@@ -18,7 +18,7 @@ build_debian_package:
     image: debian:stretch
     script:
         - apt-get update -qq
-        - apt-get install -y -qq build-essential lintian pkg-config gawk
+        - apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config gawk
         - ./configure && make deb && dpkg -i firejail*.deb
         - command -V firejail && firejail --version
 
@@ -49,14 +49,14 @@ build_src_package:
         - command -V firejail && firejail --version
         # - python3 contrib/sort.py etc/*.{profile,inc}
 
-build_apparmor:
+build_no_apparmor:
     image: ubuntu:latest
     script:
         - apt-get update -qq
-        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config gawk
-        - ./configure && make deb-apparmor && dpkg -i firejail*.deb
+        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian pkg-config gawk
+        - ./configure && make dist && ./mkdeb.sh --disable-apparmor && dpkg -i firejail*.deb
         - command -V firejail && firejail --version
-        - firejail --version | grep -F 'AppArmor support is enabled'
+        - firejail --version | grep -F 'AppArmor support is disabled'
 
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest

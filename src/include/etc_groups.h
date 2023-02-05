@@ -80,13 +80,14 @@ static char *etc_group_tls_ca[] = {
 
 // @x11
 static char *etc_group_x11[] = {
+	"ati", // 3D
 	"dconf",
 	"drirc",
 	"gtk-2.0",
 	"gtk-3.0",
 	"kde4rc",
 	"kde5rc",
-	"nvidia",
+	"nvidia", // 3D
 	"pango", // text rendering/internationalization
 	"X11",
 	"xdg",

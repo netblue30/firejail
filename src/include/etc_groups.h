@@ -27,6 +27,7 @@
 static char *etc_list[ETC_MAX + 1] = { // plus 1 for ending NULL pointer
 	"alternatives",
 	"fonts",
+	"group",
 	"ld.so.cache",
 	"ld.so.conf",
 	"ld.so.conf.d",
@@ -38,7 +39,23 @@ static char *etc_list[ETC_MAX + 1] = { // plus 1 for ending NULL pointer
 	"login.defs", // firejail reading UID/GID MIN and MAX at startup
 	"nsswitch.conf",
 	"passwd",
-	"group",
+	NULL
+};
+
+// @games
+static char *etc_group_games[] = {
+	"openal", // 3D sound
+	"timidity", // MIDI
+	"timidity.cfg",
+	NULL
+};
+
+// @network
+static char*etc_group_network[] = {
+	"hostname",
+	"hosts",
+	"protocols",
+	"resolv.conf",
 	NULL
 };
 
@@ -48,15 +65,6 @@ static char *etc_group_sound[] = {
 	"asound.conf",
 	"machine-id", // required by PulseAudio
 	"pulse",
-	NULL
-};
-
-// @network
-static char*etc_group_network[] = {
-	"hostname",
-	"hosts",
-	"resolv.conf",
-	"protocols",
 	NULL
 };
 
@@ -72,24 +80,16 @@ static char *etc_group_tls_ca[] = {
 
 // @x11
 static char *etc_group_x11[] = {
-	"xdg",
-	"drirc",
 	"dconf",
+	"drirc",
 	"gtk-2.0",
 	"gtk-3.0",
 	"kde4rc",
 	"kde5rc",
-	"pango", // text rendering/internationalization
 	"nvidia",
+	"pango", // text rendering/internationalization
 	"X11",
-	NULL
-};
-
-// @games
-static char *etc_group_games[] = {
-	"timidity", // MIDI
-	"timidity.cfg",
-	"openal", // 3D sound
+	"xdg",
 	NULL
 };
 

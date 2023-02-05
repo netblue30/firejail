@@ -4,6 +4,8 @@ firejail (0.9.73) baseline; urgency=low
   * modif: Prevent sandbox name from containing only digits (#5578)
   * bugfix: qutebrowser: links will not open in the existing instance (#5601
     #5618)
+  * build: auto-generate syntax files (#5627)
+  * build: mark most phony targets as such (#5637)
   * docs: remove apparmor options in --help when building without apparmor
     support (#5589)
  -- netblue30 <netblue30@yahoo.com>  Mon, 16 Jan 2023 09:00:00 -0500

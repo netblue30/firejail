@@ -91,29 +91,27 @@ static void arr_clean(void) {
 	arr_x11 = 0;
 }
 
-static void arr_print(void) {
-	printf("private-etc ");
+static char *arr_print(void) {
+	char *last_line = outptr;
 	outprintf("private-etc ");
 
-	if (arr_games) {
-		printf("@games,");
+	if (arr_games)
 		outprintf("@games,");
-	}
-	if (arr_tls_ca) {
-		printf("@tls-ca,");
+	if (arr_tls_ca)
 		outprintf("@tls-ca,");
-	}
-	if (arr_x11) {
-		printf("@x11,");
+	if (arr_x11)
 		outprintf("@x11,");
-	}
+
 	int i;
-	for (i = 0; i < arr_cnt; i++) {
-		printf("%s,", arr[i]);
+	for (i = 0; i < arr_cnt; i++)
 		outprintf("%s,", arr[i]);
+	if (*(outptr - 1) == ' ' || *(outptr - 1) == ',') {
+		outptr--;
+		*outptr = '\0';
 	}
-	printf("\n");
 	outprintf("\n");
+
+	return last_line;
 }
 
 static void process_file(const char *fname) {
@@ -127,6 +125,7 @@ static void process_file(const char *fname) {
 
 	outptr = outbuf;
 	*outptr = '\0';
+	arr_clean();
 
 	char line[MAX_BUF];
 	char orig_line[MAX_BUF];
@@ -135,16 +134,13 @@ static void process_file(const char *fname) {
 	while (fgets(line, MAX_BUF, fp)) {
 		cnt++;
 		if (strncmp(line, "private-etc ", 12) != 0)  {
-			sprintf(outptr, "%s", line);
-			outptr += strlen(outptr);
+			outprintf("%s", line);
 			continue;
 		}
+		strcpy(orig_line,line);
 		char *ptr = strchr(line, '\n');
 		if (ptr)
 			*ptr = '\0';
-
-		print = 1;
-		strcpy(orig_line,line);
 
 		ptr = line + 12;
 		while (*ptr == ' ' || *ptr == '\t')
@@ -154,7 +150,7 @@ static void process_file(const char *fname) {
 		char *ptr2 = ptr;
 		while (*ptr2 != '\0') {
 			if (*ptr2 == ' ' || *ptr2 == '\t') {
-				fprintf(stderr, "Error: invlid private-etc line %s:%d\n", fname, cnt);
+				fprintf(stderr, "Error: invalid private-etc line %s:%d\n", fname, cnt);
 				exit(1);
 			}
 			ptr2++;
@@ -183,17 +179,21 @@ static void process_file(const char *fname) {
 			ptr = strtok(NULL, ",");
 		}
 
-		printf("\n%s: %s\n%s: ", fname, orig_line, fname);
-		arr_print();
-		arr_clean();
+		char *last_line = arr_print();
+		if (strcmp(last_line, orig_line) == 0) {
+			fclose(fp);
+			return;
+		}
+		printf("\n********************\n%s\n\n%s\n%s\n", fname, orig_line, last_line);
+		print = 1;
 	}
 
 	fclose(fp);
 
 	if (print) {
-		printf("Replace %s file? (Y/N): ", fname);
-		fgets(line, MAX_BUF, stdin);
-		if (*line == 'y' || *line == 'Y') {
+//		printf("Replace? (Y/N): ", fname);
+//		fgets(line, MAX_BUF, stdin);
+//		if (*line == 'y' || *line == 'Y') {
 			fp = fopen(fname, "w");
 			if (!fp) {
 				fprintf(stderr, "Error: cannot open profile file\n");
@@ -201,7 +201,7 @@ static void process_file(const char *fname) {
 			}
 			fprintf(fp, "%s", outbuf);
 			fclose(fp);
-		}
+//		}
 	}
 }
 

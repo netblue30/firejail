@@ -53,7 +53,7 @@ tracelog
 private-bin marker,python3*
 private-cache
 private-dev
-private-etc @x11,dconfgtk-3.0
+private-etc @x11,dconf
 private-tmp
 
 dbus-user filter

@@ -22,7 +22,7 @@ whitelist ${HOME}/.config/Whalebird
 no3d
 
 private-bin electron,electron[0-9],electron[0-9][0-9],whalebird
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl
+private-etc @tls-ca
 
 # Redirect
 include electron.profile

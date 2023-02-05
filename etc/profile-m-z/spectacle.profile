@@ -55,7 +55,7 @@ disable-mnt
 private-bin spectacle
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
+private-etc
 private-tmp
 
 dbus-user filter

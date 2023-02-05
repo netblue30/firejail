@@ -44,7 +44,7 @@ disable-mnt
 private-bin bash,klavaro,sh,tclsh,tclsh*
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload
+private-etc
 private-tmp
 private-opt none
 private-srv none

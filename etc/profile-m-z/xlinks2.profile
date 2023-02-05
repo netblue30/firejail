@@ -14,7 +14,7 @@ include whitelist-common.inc
 # if you want to use user-configured programs add 'private-bin PROGRAM1,PROGRAM2'
 # to your xlinks.local or append 'PROGRAM1,PROGRAM2' to this private-bin line
 private-bin xlinks2
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload
+private-etc
 
 # Redirect
 include links2.profile

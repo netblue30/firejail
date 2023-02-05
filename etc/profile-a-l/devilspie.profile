@@ -47,7 +47,7 @@ disable-mnt
 private-bin devilspie
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-lib gconv
 private-tmp
 

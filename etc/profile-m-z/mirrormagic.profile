@@ -43,7 +43,7 @@ private
 private-bin mirrormagic
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload,machine-id
+private-etc
 private-tmp
 
 dbus-user none

@@ -19,7 +19,7 @@ read-only ${HOME}/.mozilla/firefox/profiles.ini
 mkdir ${HOME}/.config/Signal
 whitelist ${HOME}/.config/Signal
 
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,machine-id,nsswitch.conf,pki,resolv.conf,ssl
+private-etc @tls-ca
 
 dbus-user filter
 

@@ -39,7 +39,7 @@ private
 private-bin raincat
 private-cache
 private-dev
-private-etc alternatives,drirc,ld.so.cache,ld.so.preload,machine-id,passwd,pulse,timidity,timidity.cfg
+private-etc @games,@x11
 #private-lib
 private-tmp
 

@@ -45,7 +45,7 @@ disable-mnt
 private-bin ktouch
 private-cache
 private-dev
-private-etc alternatives,fonts,kde5rc,ld.so.cache,ld.so.preload,machine-id
+private-etc @x11
 private-tmp
 
 dbus-user none

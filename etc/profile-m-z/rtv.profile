@@ -58,7 +58,7 @@ disable-mnt
 private-bin less,python*,rtv,sh,xdg-settings
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mailcap,mime.types,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl,terminfo,xdg
+private-etc @tls-ca,@x11,host.conf,mailcap,mime.types,rpc,services,terminfo
 
 dbus-user none
 dbus-system none

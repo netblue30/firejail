@@ -53,7 +53,7 @@ disable-mnt
 private-bin seaf-cli,seaf-daemon,seafile-applet
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
+private-etc @tls-ca,host.conf,rpc,services
 #private-opt none
 private-tmp
 

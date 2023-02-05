@@ -48,7 +48,7 @@ disable-mnt
 private-bin gjs,gnome-characters
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,pango,X11,xdg
+private-etc @x11,gconf,mime.types
 private-tmp
 
 # Add the next lines to your gnome-characters.local if you don't need access to recently used chars.

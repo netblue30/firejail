@@ -45,7 +45,7 @@ disable-mnt
 private-cache
 private-bin blind-id,darkplaces-glx,darkplaces-sdl,dirname,ldd,netstat,ps,readlink,sh,uname,xonotic*
 private-dev
-private-etc alternatives,asound.conf,ca-certificates,crypto-policies,drirc,fonts,group,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,machine-id,nsswitch.conf,passwd,pki,pulse,resolv.conf,ssl
+private-etc @tls-ca,@x11,host.conf
 private-tmp
 
 dbus-user none

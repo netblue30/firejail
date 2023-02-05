@@ -32,7 +32,7 @@ seccomp !chroot
 
 disable-mnt
 private-bin awk,bash,dig,sh,Viber
-private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,hosts,ld.so.cache,ld.so.preload,localtime,machine-id,mailcap,nsswitch.conf,pki,proxychains.conf,pulse,resolv.conf,ssl,X11
+private-etc @tls-ca,@x11,mailcap,proxychains.conf
 private-tmp
 
 # restrict-namespaces

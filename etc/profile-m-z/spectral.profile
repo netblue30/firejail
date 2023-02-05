@@ -45,7 +45,7 @@ disable-mnt
 private-cache
 private-bin spectral
 private-dev
-private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,mime.types,nsswitch.conf,pki,pulse,resolv.conf,selinux,ssl,X11,xdg
+private-etc @tls-ca,@x11,host.conf,mime.types,selinux
 private-tmp
 
 dbus-user filter

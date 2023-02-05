@@ -53,7 +53,7 @@ tracelog
 private-bin ocenaudio,ocenvst
 private-cache
 private-dev
-private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,group,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,mime.types,nsswitch.conf,pki,pulse,resolv.conf,ssl,X11,xdg
+private-etc @tls-ca,@x11,mime.types
 private-opt ocenaudio
 private-tmp
 

@@ -58,7 +58,7 @@ seccomp !chroot
 disable-mnt
 private-bin bash,cat,cp,cut,dirname,env,expr,file,gpg,grep,gxmessage,id,kdialog,ln,mkdir,mv,python*,rm,sed,sh,tail,tar,tclsh,test,tor-browser,tor-browser-en,torbrowser-launcher,update-desktop-database,xmessage,xz,zenity
 private-dev
-private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,pki,pulse,resolv.conf,ssl
+private-etc @tls-ca
 private-tmp
 
 dbus-user none

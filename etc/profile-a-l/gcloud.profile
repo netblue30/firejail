@@ -35,7 +35,7 @@ tracelog
 
 disable-mnt
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,hosts,ld.so.cache,ld.so.preload,localtime,nsswitch.conf,pki,resolv.conf,ssl
+private-etc @tls-ca
 private-tmp
 
 dbus-user none

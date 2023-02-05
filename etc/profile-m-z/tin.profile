@@ -57,7 +57,7 @@ disable-mnt
 private-bin rtin,tin
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload,passwd,resolv.conf,terminfo,tin
+private-etc terminfo,tin
 private-lib terminfo
 private-tmp
 

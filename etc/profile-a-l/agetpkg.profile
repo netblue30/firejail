@@ -49,7 +49,7 @@ tracelog
 private-bin agetpkg,python3
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,pki,resolv.conf,ssl
+private-etc @tls-ca
 private-tmp
 
 dbus-user none

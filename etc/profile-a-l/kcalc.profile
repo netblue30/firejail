@@ -59,7 +59,7 @@ disable-mnt
 private-bin kcalc
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,locale,locale.conf
+private-etc
 # private-lib - problems on Arch
 private-tmp
 

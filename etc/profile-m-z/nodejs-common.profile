@@ -92,7 +92,7 @@ seccomp.block-secondary
 
 disable-mnt
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,group,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,login.defs,mime.types,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl,xdg
+private-etc @tls-ca,@x11,host.conf,mime.types,rpc,services
 #private-tmp
 
 dbus-user none

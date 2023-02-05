@@ -46,7 +46,7 @@ tracelog
 private-bin 7z,qnapi
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,resolv.conf
+private-etc
 private-opt none
 private-tmp
 

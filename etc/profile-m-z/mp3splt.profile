@@ -43,7 +43,7 @@ disable-mnt
 private-bin flacsplt,mp3splt,mp3wrap,oggsplt
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-tmp
 
 dbus-user none

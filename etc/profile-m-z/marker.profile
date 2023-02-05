@@ -53,7 +53,7 @@ tracelog
 private-bin marker,python3*
 private-cache
 private-dev
-private-etc alternatives,dconfgtk-3.0,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,pango,X11
+private-etc @x11,dconfgtk-3.0
 private-tmp
 
 dbus-user filter

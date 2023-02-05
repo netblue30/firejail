@@ -57,7 +57,7 @@ tracelog
 private-bin env,ffmpeg,python*,youtube-dl
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,hostname,hosts,ld.so.cache,ld.so.preload,mime.types,pki,resolv.conf,ssl,youtube-dl.conf
+private-etc @tls-ca,mime.types,youtube-dl.conf
 private-tmp
 
 dbus-user none

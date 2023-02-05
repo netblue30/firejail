@@ -29,7 +29,7 @@ tracelog
 disable-mnt
 private-bin tilp
 private-cache
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload
+private-etc
 private-tmp
 
 restrict-namespaces

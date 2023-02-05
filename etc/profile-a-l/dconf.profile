@@ -45,7 +45,7 @@ disable-mnt
 private-bin dconf,gsettings
 private-cache
 private-dev
-private-etc alternatives,dconf,ld.so.cache,ld.so.preload
+private-etc @x11
 private-lib
 private-tmp
 

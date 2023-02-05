@@ -47,7 +47,7 @@ x11 none
 #private-bin exiftool,perl
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-tmp
 
 dbus-user none

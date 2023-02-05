@@ -40,7 +40,7 @@ tracelog
 
 private-bin keepassx,keepassx2
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
+private-etc
 private-tmp
 
 dbus-user none

@@ -42,7 +42,7 @@ tracelog
 private-bin freeoffice-planmaker,freeoffice-presentations,freeoffice-textmaker,planmaker18,planmaker18free,presentations18,presentations18free,sh,textmaker18,textmaker18free
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,SoftMaker,ssl
+private-etc @tls-ca,SoftMaker
 private-tmp
 
 dbus-user none

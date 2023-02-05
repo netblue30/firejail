@@ -124,7 +124,7 @@ tracelog
 # disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,gai.conf,gcrypt,gnupg,gnutls,hostname,hosts,hosts.conf,ld.so.cache,ld.so.preload,mail,mailname,Mutt,Muttrc,Muttrc.d,nntpserver,nsswitch.conf,passwd,pki,resolv.conf,ssl,terminfo,xdg
+private-etc @tls-ca,@x11,gai.conf,gnupg,gnutls,hosts.conf,mail,mailname,Mutt,Muttrc,Muttrc.d,nntpserver,terminfo
 private-tmp
 writable-run-user
 writable-var

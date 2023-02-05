@@ -45,7 +45,7 @@ disable-mnt
 private-bin gnome-todo
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload,localtime,passwd,xdg
+private-etc @x11
 private-tmp
 
 dbus-user filter

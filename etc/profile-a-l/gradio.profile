@@ -44,7 +44,7 @@ disable-mnt
 private-bin gradio
 private-cache
 private-dev
-private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,machine-id,pki,pulse,resolv.conf,ssl,xdg
+private-etc @tls-ca,@x11,host.conf
 private-tmp
 
 dbus-user filter

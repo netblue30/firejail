@@ -41,7 +41,7 @@ tracelog
 private-bin mocp
 private-cache
 private-dev
-private-etc alternatives,asound.conf,ca-certificates,crypto-policies,group,ld.so.cache,ld.so.preload,machine-id,pki,pulse,resolv.conf,ssl
+private-etc @tls-ca
 private-tmp
 
 dbus-user none

@@ -50,7 +50,7 @@ disable-mnt
 private-bin io.github.lainsce.Notejot
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,pango,X11
+private-etc @x11
 private-tmp
 
 dbus-user filter

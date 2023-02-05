@@ -43,7 +43,7 @@ disable-mnt
 private-bin alienarena
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,drirc,fonts,glvnd,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,nsswitch.conf,nvidia,pango,pki,protocols,pulse,resolv.conf,rpc,services,ssl,X11
+private-etc @tls-ca,@x11,bumblebee,glvnd,host.conf,rpc,services
 private-tmp
 
 dbus-user none

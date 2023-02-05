@@ -51,7 +51,7 @@ disable-mnt
 private-bin com.github.phase1geo.minder
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,pango,passwd,X11,xdg
+private-etc @x11,mime.types
 private-tmp
 
 dbus-user filter

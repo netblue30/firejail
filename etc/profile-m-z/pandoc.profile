@@ -49,7 +49,7 @@ x11 none
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload,texlive,texmf
+private-etc texlive,texmf
 private-tmp
 
 dbus-user none

@@ -62,7 +62,7 @@ disable-mnt
 private-bin apostrophe,fmtutil,kpsewhich,mktexfmt,pandoc,pdftex,perl,python3*,sh,xdvipdfmx,xelatex,xetex
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,pango,texlive,X11
+private-etc @x11,texlive
 private-tmp
 
 dbus-user filter

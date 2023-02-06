@@ -18,7 +18,7 @@ mkdir ${HOME}/.config/Twitch
 whitelist ${HOME}/.config/Twitch
 
 private-bin electron,electron[0-9],electron[0-9][0-9],twitch
-private-etc @tls-ca,@x11,bumblebee,host.conf,mime.types,selinux
+private-etc @tls-ca,@x11,bumblebee,host.conf,mime.types
 private-opt Twitch
 
 # Redirect

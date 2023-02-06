@@ -52,7 +52,7 @@ tracelog
 
 private-bin celluloid,env,gnome-mpv,python*,youtube-dl
 private-cache
-private-etc @tls-ca,@x11,libva.conf,pkcs11,selinux
+private-etc @tls-ca,@x11,libva.conf,pkcs11
 private-dev
 private-tmp
 

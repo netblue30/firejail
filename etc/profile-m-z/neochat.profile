@@ -53,7 +53,7 @@ tracelog
 disable-mnt
 private-bin neochat
 private-dev
-private-etc @tls-ca,@x11,dbus-1,host.conf,mime.types,rpc,services,Trolltech.conf
+private-etc @tls-ca,@x11,dbus-1,host.conf,mime.types,rpc,services
 private-tmp
 
 dbus-user filter

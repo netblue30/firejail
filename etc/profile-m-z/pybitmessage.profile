@@ -40,7 +40,7 @@ seccomp
 disable-mnt
 private-bin bash,env,ldconfig,pybitmessage,python*,sh,stat
 private-dev
-private-etc @tls-ca,@x11,PyBitmessage,PyBitmessage.conf,selinux,sni-qt.conf,system-fips,Trolltech.conf
+private-etc @tls-ca,@x11,PyBitmessage,PyBitmessage.conf,sni-qt.conf,system-fips
 private-tmp
 
 restrict-namespaces

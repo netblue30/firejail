@@ -14,7 +14,7 @@ mkdir ${HOME}/.config/youtubemusic-nativefier-040164
 whitelist ${HOME}/.config/youtubemusic-nativefier-040164
 
 private-bin electron,electron[0-9],electron[0-9][0-9],youtubemusic-nativefier
-private-etc @tls-ca,@x11,bumblebee,host.conf,mime.types,selinux
+private-etc @tls-ca,@x11,bumblebee,host.conf,mime.types
 private-opt youtubemusic-nativefier
 
 # Redirect

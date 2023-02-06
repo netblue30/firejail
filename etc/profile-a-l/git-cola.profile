@@ -69,7 +69,7 @@ tracelog
 private-bin basename,bash,cola,envsubst,gettext,git,git-cola,git-dag,git-gui,gitk,gpg,gpg-agent,nano,ps,python*,sh,ssh,ssh-agent,tclsh,tr,wc,which,xed
 private-cache
 private-dev
-private-etc @tls-ca,@x11,gitconfig,host.conf,mime.types,selinux,ssh
+private-etc @tls-ca,@x11,gitconfig,host.conf,mime.types,ssh
 private-tmp
 writable-run-user
 

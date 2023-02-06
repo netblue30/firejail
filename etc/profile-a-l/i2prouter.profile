@@ -67,7 +67,7 @@ seccomp
 disable-mnt
 private-cache
 private-dev
-private-etc @tls-ca,@x11,i2p,java-10-openjdk,java-11-openjdk,java-12-openjdk,java-13-openjdk,java-8-openjdk,java-9-openjdk,java-openjdk
+private-etc @tls-ca,@x11,i2p,java*
 private-tmp
 
 restrict-namespaces

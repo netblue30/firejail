@@ -49,7 +49,7 @@ disable-mnt
 private-bin anki,python*
 private-cache
 private-dev
-private-etc @tls-ca,@x11,Trolltech.conf
+private-etc @tls-ca,@x11
 private-tmp
 
 dbus-user none

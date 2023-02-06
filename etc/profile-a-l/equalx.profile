@@ -53,7 +53,7 @@ disable-mnt
 private-bin equalx,gs,pdflatex,pdftocairo
 private-cache
 private-dev
-private-etc @x11,equalx,equalx.conf,latexmk.conf,papersize,texlive,Trolltech.conf
+private-etc @x11,equalx,equalx.conf,latexmk.conf,papersize,texlive
 private-tmp
 
 dbus-user none

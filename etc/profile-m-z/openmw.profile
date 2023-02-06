@@ -52,7 +52,7 @@ tracelog
 private-bin bsatool,esmtool,niftest,openmw,openmw-cs,openmw-essimporter,openmw-iniimporter,openmw-launcher,openmw-wizard
 private-cache
 private-dev
-private-etc @x11,bumblebee,glvnd,mime.types,openmw,Trolltech.conf
+private-etc @x11,bumblebee,glvnd,mime.types,openmw
 private-opt none
 private-tmp
 

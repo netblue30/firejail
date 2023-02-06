@@ -70,7 +70,7 @@ private-bin chatterino,cvlc,env,ffmpeg,mpv,nvlc,pgrep,python*,qvlc,rvlc,streamli
 # private-cache may cause issues with mpv (see #2838)
 private-cache
 private-dev
-private-etc @tls-ca,@x11,dbus-1,rpc,services,Trolltech.conf
+private-etc @tls-ca,@x11,dbus-1,rpc,services
 private-srv none
 private-tmp
 

@@ -41,7 +41,7 @@ tracelog
 # private-bin calls a file manager - whatever is installed!
 #private-bin env,gio-launch-desktop,gnome-music,python*,yelp
 private-dev
-private-etc @x11,selinux
+private-etc @x11
 private-tmp
 
 restrict-namespaces

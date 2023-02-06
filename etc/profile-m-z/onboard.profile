@@ -49,7 +49,7 @@ disable-mnt
 private-cache
 private-bin onboard,python*,tput
 private-dev
-private-etc @x11,dbus-1,mime.types,selinux
+private-etc @x11,dbus-1,mime.types
 private-tmp
 
 dbus-system none

@@ -18,15 +18,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <assert.h>
 #include "../include/etc_groups.h"
-#define errExit(msg)    do { char msgout[500]; sprintf(msgout, "Error %s:%s(%d)", msg, __FUNCTION__, __LINE__); perror(msgout); exit(1);} while (0)
-
-
+#include "../include/common.h"
+#include <stdarg.h>
 
 #define MAX_BUF 4098
 #define MAX_ARR 1024
@@ -223,7 +217,7 @@ static void usage(void) {
 	printf("Group and clean private-etc entries in one or more profile files.\n");
 	printf("Options:\n");
 	printf("   --debug - print debug messages\n");
-	printf("   --help - this help screen\n");
+	printf("   -h, -?, --help - this help screen\n");
 	printf("   --replace - replace profile file\n");
 }
 

@@ -46,7 +46,7 @@ private-bin java,sh,signal-cli
 private-cache
 private-dev
 # Does not work with all Java configurations. You will notice immediately, so you might want to give it a try
-#private-etc alternatives,ca-certificates,crypto-policies,dbus-1,host.conf,hostname,hosts,java-10-openjdk,java-7-openjdk,java-8-openjdk,java-9-openjdk,java.conf,machine-id,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl
+#private-etc alternatives,ca-certificates,crypto-policies,dbus-1,host.conf,hostname,hosts,java*,machine-id,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl
 private-tmp
 
 restrict-namespaces

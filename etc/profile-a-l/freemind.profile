@@ -43,7 +43,7 @@ disable-mnt
 private-bin bash,cp,dirname,dpkg,echo,freemind,grep,java,lsb_release,mkdir,readlink,rpm,sed,sh,uname,which
 private-cache
 private-dev
-#private-etc alternatives,fonts,java
+#private-etc alternatives,fonts,java*
 private-tmp
 private-opt none
 private-srv none

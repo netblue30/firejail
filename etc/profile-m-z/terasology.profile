@@ -40,7 +40,7 @@ seccomp
 
 disable-mnt
 private-dev
-private-etc @tls-ca,@x11,dbus-1,host.conf,java-7-openjdk,java-8-openjdk,lsb-release,mime.types
+private-etc @tls-ca,@x11,dbus-1,host.conf,java*,lsb-release,mime.types
 private-tmp
 
 dbus-user none

@@ -51,7 +51,7 @@ private-bin context,gettext,ghostwriter,latex,mktexfmt,pandoc,pdflatex,pdfroff,p
 private-cache
 private-dev
 # passwd,login.defs,firejail are a temporary workaround for #2877 and can be removed once it is fixed
-private-etc @tls-ca,@x11,dbus-1,firejail,gconf,groups,host.conf,mime.types,rpc,services,texlive
+private-etc @tls-ca,@x11,dbus-1,firejail,gconf,host.conf,mime.types,rpc,services,texlive,Trolltech.conf
 private-tmp
 
 dbus-user filter

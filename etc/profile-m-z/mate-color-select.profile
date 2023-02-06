@@ -32,7 +32,7 @@ seccomp
 
 disable-mnt
 private-bin mate-color-select
-private-etc
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload
 private-dev
 private-lib
 private-tmp

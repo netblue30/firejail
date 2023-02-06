@@ -39,7 +39,7 @@ private
 private-bin gravity-beams-and-evaporating-stars
 private-cache
 private-dev
-private-etc
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
 private-tmp
 
 dbus-user none

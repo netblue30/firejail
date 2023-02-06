@@ -45,7 +45,7 @@ disable-mnt
 private-bin xfce4-mixer,xfconf-query
 private-cache
 private-dev
-private-etc
+private-etc alternatives,asound.conf,fonts,ld.so.cache,ld.so.preload,machine-id,pulse
 private-tmp
 
 dbus-user filter

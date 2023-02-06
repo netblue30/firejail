@@ -43,7 +43,7 @@ tracelog
 disable-mnt
 #private-bin gmpc
 private-cache
-private-etc
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload,resolv.conf
 private-tmp
 writable-run-user
 

@@ -45,7 +45,7 @@ tracelog
 disable-mnt
 private-bin cameramonitor,python*
 private-cache
-private-etc
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload
 private-tmp
 
 # dbus-user none

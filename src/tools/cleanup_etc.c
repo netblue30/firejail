@@ -18,9 +18,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#include "../include/etc_groups.h"
-#include "../include/common.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <stdarg.h>
+#include <assert.h>
+#include "../include/etc_groups.h"
+#define errExit(msg)    do { char msgout[500]; sprintf(msgout, "Error %s:%s(%d)", msg, __FUNCTION__, __LINE__); perror(msgout); exit(1);} while (0)
+
+
 
 #define MAX_BUF 4098
 #define MAX_ARR 1024
@@ -32,8 +38,6 @@ static int arr_x11 = 0;
 static int arr_games = 0;
 static char outbuf[256 * 1024];
 static char *outptr;
-static int arg_replace = 0;
-static int arg_debug = 0;
 
 void outprintf(char* fmt, ...) {
 	va_list args;
@@ -74,17 +78,6 @@ static void arr_add(const char *fname) {
 	arr_cnt++;
 }
 
-int arr_cmp(const void *p1, const void *p2) {
-	char **ptr1 = (char **) p1;
-	char **ptr2 = (char **) p2;
-
-	return strcmp(*ptr1, *ptr2);
-}
-
-static void arr_sort(void) {
-	qsort(&arr[0], arr_cnt, sizeof(char *), arr_cmp);
-}
-
 static void arr_clean(void) {
 	int i;
 	for (i = 0; i < arr_cnt; i++) {
@@ -98,27 +91,29 @@ static void arr_clean(void) {
 	arr_x11 = 0;
 }
 
-static char *arr_print(void) {
-	char *last_line = outptr;
+static void arr_print(void) {
+	printf("private-etc ");
 	outprintf("private-etc ");
 
-	if (arr_games)
+	if (arr_games) {
+		printf("@games,");
 		outprintf("@games,");
-	if (arr_tls_ca)
-		outprintf("@tls-ca,");
-	if (arr_x11)
-		outprintf("@x11,");
-
-	int i;
-	for (i = 0; i < arr_cnt; i++)
-		outprintf("%s,", arr[i]);
-	if (*(outptr - 1) == ' ' || *(outptr - 1) == ',') {
-		outptr--;
-		*outptr = '\0';
 	}
+	if (arr_tls_ca) {
+		printf("@tls-ca,");
+		outprintf("@tls-ca,");
+	}
+	if (arr_x11) {
+		printf("@x11,");
+		outprintf("@x11,");
+	}
+	int i;
+	for (i = 0; i < arr_cnt; i++) {
+		printf("%s,", arr[i]);
+		outprintf("%s,", arr[i]);
+	}
+	printf("\n");
 	outprintf("\n");
-
-	return last_line;
 }
 
 static void process_file(const char *fname) {
@@ -126,13 +121,12 @@ static void process_file(const char *fname) {
 
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
-		fprintf(stderr, "Error: cannot open %s file\n", fname);
+		fprintf(stderr, "Error: cannot open profile file\n");
 		exit(1);
 	}
 
 	outptr = outbuf;
 	*outptr = '\0';
-	arr_clean();
 
 	char line[MAX_BUF];
 	char orig_line[MAX_BUF];
@@ -140,15 +134,17 @@ static void process_file(const char *fname) {
 	int print = 0;
 	while (fgets(line, MAX_BUF, fp)) {
 		cnt++;
-		if (strncmp(line, "private-etc", 11) != 0)  {
-			outprintf("%s", line);
+		if (strncmp(line, "private-etc ", 12) != 0)  {
+			sprintf(outptr, "%s", line);
+			outptr += strlen(outptr);
 			continue;
 		}
-
-		strcpy(orig_line,line);
 		char *ptr = strchr(line, '\n');
 		if (ptr)
 			*ptr = '\0';
+
+		print = 1;
+		strcpy(orig_line,line);
 
 		ptr = line + 12;
 		while (*ptr == ' ' || *ptr == '\t')
@@ -158,7 +154,7 @@ static void process_file(const char *fname) {
 		char *ptr2 = ptr;
 		while (*ptr2 != '\0') {
 			if (*ptr2 == ' ' || *ptr2 == '\t') {
-				fprintf(stderr, "Error: invalid private-etc line %s:%d\n", fname, cnt);
+				fprintf(stderr, "Error: invlid private-etc line %s:%d\n", fname, cnt);
 				exit(1);
 			}
 			ptr2++;
@@ -166,8 +162,6 @@ static void process_file(const char *fname) {
 
 		ptr = strtok(ptr, ",");
 		while (ptr) {
-			if (arg_debug)
-				printf("%s\n", ptr);
 			if (arr_check(ptr, &etc_list[0]));
 			else if (arr_check(ptr, &etc_group_sound[0]));
 			else if (arr_check(ptr, &etc_group_network[0]));
@@ -189,36 +183,30 @@ static void process_file(const char *fname) {
 			ptr = strtok(NULL, ",");
 		}
 
-		arr_sort();
-		char *last_line = arr_print();
-		if (strcmp(last_line, orig_line) == 0) {
-			fclose(fp);
-			return;
-		}
-		printf("\n********************\nfile: %s\n\nold: %s\nnew: %s\n", fname, orig_line, last_line);
-		print = 1;
+		printf("\n%s: %s\n%s: ", fname, orig_line, fname);
+		arr_print();
+		arr_clean();
 	}
 
 	fclose(fp);
 
-	if (print && arg_replace) {
-		fp = fopen(fname, "w");
-		if (!fp) {
-			fprintf(stderr, "Error: cannot open profile file\n");
-			exit(1);
+	if (print) {
+		printf("Replace %s file? (Y/N): ", fname);
+		fgets(line, MAX_BUF, stdin);
+		if (*line == 'y' || *line == 'Y') {
+			fp = fopen(fname, "w");
+			if (!fp) {
+				fprintf(stderr, "Error: cannot open profile file\n");
+				exit(1);
+			}
+			fprintf(fp, "%s", outbuf);
+			fclose(fp);
 		}
-		fprintf(fp, "%s", outbuf);
-		fclose(fp);
 	}
 }
 
 static void usage(void) {
-	printf("usage: cleanup-etc [options] file.profile [file.profile]\n");
-	printf("Group and clean private-etc entries in one or more profile files.\n");
-	printf("Options:\n");
-	printf("   --debug - print debug messages\n");
-	printf("   -h, -?, --help - this help screen\n");
-	printf("   --replace - replace profile file\n");
+	printf("usage: cleanup-etc file.profile\n");
 }
 
 int main(int argc, char **argv) {
@@ -230,25 +218,13 @@ int main(int argc, char **argv) {
 
 	int i;
 	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "-h") == 0 ||
-		     strcmp(argv[i], "-?") == 0 ||
-		     strcmp(argv[i], "--help") == 0) {
+		if (strcmp(argv[i], "-h") == 0) {
 			usage();
 			return 0;
 		}
-		else if (strcmp(argv[i], "--debug") == 0)
-			arg_debug = 1;
-		else if (strcmp(argv[i], "--replace") == 0)
-			arg_replace = 1;
-		else if (*argv[i] == '-') {
-			fprintf(stderr, "Error: invalid program option %s\n", argv[i]);
-			return 1;
-		}
-		else
-			break;
 	}
 
-	for (; i < argc; i++)
+	for (i = 1; i < argc; i++)
 		process_file(argv[i]);
 
 	return 0;

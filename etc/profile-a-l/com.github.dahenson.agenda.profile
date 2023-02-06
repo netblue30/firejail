@@ -51,7 +51,7 @@ disable-mnt
 private-bin com.github.dahenson.agenda
 private-cache
 private-dev
-private-etc @x11
+private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload
 private-tmp
 
 dbus-user filter

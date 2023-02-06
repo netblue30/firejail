@@ -35,7 +35,7 @@ seccomp
 private-bin feh,jpegexiforient,jpegtran
 private-cache
 private-dev
-private-etc feh
+private-etc alternatives,feh,ld.so.cache,ld.so.preload
 private-tmp
 
 dbus-user none

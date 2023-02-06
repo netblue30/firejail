@@ -58,7 +58,7 @@ disable-mnt
 private-bin python3*,rednotebook
 private-cache
 private-dev
-private-etc @x11
+private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,pango,X11
 private-tmp
 
 dbus-user none

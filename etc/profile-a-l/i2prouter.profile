@@ -67,7 +67,7 @@ seccomp
 disable-mnt
 private-cache
 private-dev
-private-etc @tls-ca,@x11,i2p,java*
+private-etc alternatives,ca-certificates,crypto-policies,dconf,group,hostname,hosts,i2p,java-10-openjdk,java-11-openjdk,java-12-openjdk,java-13-openjdk,java-8-openjdk,java-9-openjdk,java-openjdk,ld.so.cache,ld.so.preload,localtime,machine-id,nsswitch.conf,passwd,pki,resolv.conf,ssl
 private-tmp
 
 restrict-namespaces

@@ -12,7 +12,7 @@ endif
 
 COMPLETIONDIRS = src/zsh_completion src/bash_completion
 
-APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailcheck/jailcheck src/etc-cleanup/etc-cleanup
+APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailcheck/jailcheck
 SBOX_APPS = src/fbuilder/fbuilder src/ftee/ftee src/fids/fids
 SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter src/fzenity/fzenity
 SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
@@ -200,7 +200,6 @@ endif
 	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS)
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS)
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/profstats/profstats
-	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/etc-cleanup/etc-cleanup
 	# plugins w/o read permission (non-dumpable)
 	install -m 0711 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
 	install -m 0711 -t $(DESTDIR)$(libdir)/firejail src/fshaper/fshaper.sh

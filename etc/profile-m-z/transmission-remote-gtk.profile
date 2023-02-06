@@ -12,7 +12,7 @@ noblacklist ${HOME}/.config/transmission-remote-gtk
 mkdir ${HOME}/.config/transmission-remote-gtk
 whitelist ${HOME}/.config/transmission-remote-gtk
 
-private-etc
+private-etc alternatives,fonts,hostname,hosts,ld.so.cache,ld.so.preload,resolv.conf
 
 ignore memory-deny-write-execute
 

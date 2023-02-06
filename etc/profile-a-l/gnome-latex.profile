@@ -47,7 +47,7 @@ tracelog
 private-cache
 private-dev
 # passwd,login.defs,firejail are a temporary workaround for #2877 and can be removed once it is fixed
-private-etc @x11,latexmk.conf,texlive
+private-etc alternatives,dconf,fonts,gtk-3.0,latexmk.conf,ld.so.cache,ld.so.preload,login.defs,passwd,texlive
 
 dbus-system none
 

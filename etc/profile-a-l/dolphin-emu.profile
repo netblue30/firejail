@@ -54,7 +54,7 @@ private-bin bash,dolphin-emu,dolphin-emu-x11,sh
 private-cache
 # Add the next line to your dolphin-emu.local if you do not need controller support.
 #private-dev
-private-etc @tls-ca,@x11,bumblebee,gconf,glvnd,host.conf,mime.types,rpc,services
+private-etc alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,kde4rc,kde5rc,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,nvidia,pango,pki,protocols,pulse,resolv.conf,rpc,services,ssl,Trolltech.conf,X11,xdg
 private-opt none
 private-tmp
 

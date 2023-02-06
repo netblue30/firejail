@@ -42,7 +42,7 @@ seccomp
 private-bin ppsspp,PPSSPP,PPSSPPQt,PPSSPPSDL
 # Add the next line to your ppsspp.local if you do not need controller support.
 #private-dev
-private-etc @tls-ca,@x11,host.conf
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,drirc,fonts,group,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,machine-id,nsswitch.conf,passwd,pki,pulse,resolv.conf,ssl
 private-opt ppsspp
 private-tmp
 

@@ -47,7 +47,7 @@ disable-mnt
 #private-bin bash,geekbench*,sh -- #4576
 private-cache
 private-dev
-private-etc lsb-release
+private-etc alternatives,group,ld.so.cache,ld.so.preload,lsb-release,passwd
 private-tmp
 
 dbus-user none

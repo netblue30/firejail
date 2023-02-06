@@ -33,6 +33,6 @@ seccomp !chroot
 
 disable-mnt
 private-dev
-private-etc @tls-ca
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,machine-id,pki,pulse,ssl
 
 # restrict-namespaces

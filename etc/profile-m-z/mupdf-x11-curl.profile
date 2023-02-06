@@ -12,7 +12,7 @@ ignore net none
 netfilter
 protocol unix,inet,inet6
 
-private-etc @tls-ca
+private-etc alternatives,ca-certificates,crypto-policies,hosts,ld.so.cache,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
 
 # Redirect
 include mupdf.profile

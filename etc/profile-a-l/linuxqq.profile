@@ -23,7 +23,7 @@ noprinters
 
 # If you don't need/want to save anything to disk you can add `private` to your linuxqq.local.
 #private
-private-etc @tls-ca,@x11,host.conf,os-release
+private-etc alsa,alternatives,ca-certificates,crypto-policies,fonts,group,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,login.defs,machine-id,nsswitch.conf,os-release,passwd,pki,pulse,resolv.conf,ssl,xdg
 private-opt QQ
 
 dbus-user filter

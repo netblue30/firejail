@@ -75,7 +75,7 @@ tracelog
 #private-bin geary,sh
 private-cache
 private-dev
-private-etc @tls-ca,@x11,mailcap,mime.types
+private-etc alternatives,ca-certificates,crypto-policies,fonts,group,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.preload,machine-id,mailcap,mime.types,nsswitch.conf,passwd,pki,resolv.conf,ssl,xdg
 private-tmp
 
 dbus-user filter

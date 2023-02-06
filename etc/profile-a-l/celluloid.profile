@@ -52,7 +52,7 @@ tracelog
 
 private-bin celluloid,env,gnome-mpv,python*,youtube-dl
 private-cache
-private-etc @tls-ca,@x11,libva.conf,pkcs11
+private-etc alternatives,ca-certificates,crypto-policies,dconf,drirc,fonts,gtk-3.0,hosts,ld.so.cache,ld.so.preload,libva.conf,localtime,machine-id,pkcs11,pki,resolv.conf,selinux,ssl,xdg
 private-dev
 private-tmp
 

@@ -63,7 +63,7 @@ disable-mnt
 private-bin python*,zim
 private-cache
 private-dev
-private-etc @x11,gconf
+private-etc alternatives,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,pango,X11
 private-tmp
 
 dbus-user none

@@ -38,7 +38,7 @@ seccomp
 disable-mnt
 private-bin crow
 private-dev
-private-etc @tls-ca,@x11
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,ld.so.cache,ld.so.preload,machine-id,nsswitch.conf,pki,pulse,resolv.conf,ssl
 private-opt none
 private-tmp
 private-srv none

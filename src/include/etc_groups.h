@@ -20,7 +20,6 @@
 
 #ifndef ETC_GROUPS_H
 #define ETC_GROUPS_H
-#include <stddef.h>
 
 #define ETC_MAX 256
 
@@ -40,7 +39,6 @@ static char *etc_list[ETC_MAX + 1] = { // plus 1 for ending NULL pointer
 	"login.defs", // firejail reading UID/GID MIN and MAX at startup
 	"nsswitch.conf",
 	"passwd",
-	"selinux",
 	NULL
 };
 
@@ -49,7 +47,6 @@ static char *etc_group_games[] = {
 	"openal", // 3D sound
 	"timidity", // MIDI
 	"timidity.cfg",
-	"vulkan", // next generation OpenGL stack
 	NULL
 };
 
@@ -92,7 +89,6 @@ static char *etc_group_x11[] = {
 	"kde5rc",
 	"nvidia", // 3D
 	"pango", // text rendering/internationalization
-	"Trolltech.conf", // old QT config file
 	"X11",
 	"xdg",
 	NULL

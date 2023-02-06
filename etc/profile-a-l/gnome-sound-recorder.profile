@@ -39,7 +39,7 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-etc @games,@x11
+private-etc alsa,alternatives,asound.conf,dconf,fonts,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,machine-id,openal,pango,pulse,xdg
 private-tmp
 
 restrict-namespaces

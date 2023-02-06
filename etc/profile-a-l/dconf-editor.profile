@@ -42,7 +42,7 @@ disable-mnt
 private-bin dconf-editor
 private-cache
 private-dev
-private-etc @x11
+private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload,machine-id
 private-lib
 private-tmp
 

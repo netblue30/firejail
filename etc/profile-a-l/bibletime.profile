@@ -51,7 +51,7 @@ disable-mnt
 # private-bin bibletime
 private-cache
 private-dev
-private-etc @tls-ca,sword,sword.conf
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,login.defs,machine-id,passwd,pki,resolv.conf,ssl,sword,sword.conf
 private-tmp
 
 dbus-user none

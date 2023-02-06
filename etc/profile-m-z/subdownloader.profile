@@ -43,7 +43,7 @@ tracelog
 
 private-cache
 private-dev
-private-etc
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload
 private-tmp
 
 dbus-user none

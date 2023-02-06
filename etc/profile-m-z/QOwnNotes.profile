@@ -49,7 +49,7 @@ tracelog
 disable-mnt
 private-bin gio,QOwnNotes
 private-dev
-private-etc @tls-ca,host.conf
+private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hosts,ld.so.cache,ld.so.preload,machine-id,nsswitch.conf,pki,pulse,resolv.conf,ssl
 private-tmp
 
 restrict-namespaces

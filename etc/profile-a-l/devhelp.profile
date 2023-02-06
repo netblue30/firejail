@@ -41,7 +41,7 @@ disable-mnt
 private-bin devhelp
 private-cache
 private-dev
-private-etc @tls-ca,@x11
+private-etc alternatives,dconf,fonts,ld.so.cache,ld.so.preload,machine-id,ssl
 private-tmp
 
 # makes settings immutable

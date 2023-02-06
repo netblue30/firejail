@@ -48,7 +48,7 @@ tracelog
 disable-mnt
 private-bin bash,dig,sh
 private-dev
-private-etc
+private-etc alternatives,ld.so.cache,ld.so.preload,login.defs,passwd,resolv.conf
 # Add the next line to your dig.local on non Debian/Ubuntu OS (see issue #3038).
 #private-lib
 private-tmp

@@ -42,7 +42,7 @@ tracelog
 private-bin galculator
 private-cache
 private-dev
-private-etc
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload
 private-lib
 private-tmp
 

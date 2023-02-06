@@ -17,7 +17,7 @@ ignore include disable-shell.inc
 # all capabilities this is automatically read-only.
 noblacklist /var/lib/pacman
 
-private-etc
+private-etc alternatives,group,ld.so.cache,ld.so.preload,localtime,login.defs,passwd
 #private-lib libfakeroot,liblzma.so.*,libreadline.so.*
 # Debian based distributions need this for 'dpkg --unpack' (incl. synaptic)
 writable-var

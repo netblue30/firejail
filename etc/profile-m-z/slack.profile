@@ -26,7 +26,7 @@ mkdir ${HOME}/.config/Slack
 whitelist ${HOME}/.config/Slack
 
 private-bin electron,electron[0-9],electron[0-9][0-9],locale,sh,slack
-private-etc @tls-ca,debian_version,fedora-release,os-release,redhat-release,system-release,system-release-cpe
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,debian_version,fedora-release,fonts,group,ld.so.cache,ld.so.conf,ld.so.preload,localtime,machine-id,os-release,passwd,pki,pulse,redhat-release,resolv.conf,ssl,system-release,system-release-cpe
 
 # Redirect
 include electron.profile

@@ -43,7 +43,7 @@ tracelog
 disable-mnt
 # private-bin audio-recorder
 private-cache
-private-etc
+private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
 private-tmp
 
 dbus-user filter

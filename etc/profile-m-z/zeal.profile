@@ -60,7 +60,7 @@ disable-mnt
 private-bin zeal
 private-cache
 private-dev
-private-etc @tls-ca,@x11,host.conf,mime.types,rpc,services
+private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,pango,pki,protocols,resolv.conf,rpc,services,ssl,Trolltech.conf,X11,xdg
 private-tmp
 
 dbus-user filter

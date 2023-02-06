@@ -42,7 +42,7 @@ disable-mnt
 private-bin gnome-character-map,gucharmap
 private-cache
 private-dev
-private-etc @x11,dbus-1,gconf,mime.types
+private-etc alternatives,dbus-1,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,X11,xdg
 private-lib
 private-tmp
 

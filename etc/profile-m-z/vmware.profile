@@ -38,6 +38,6 @@ tracelog
 #disable-mnt
 # Add the next line to your vmware.local to enable private-bin.
 #private-bin env,bash,sh,ovftool,vmafossexec,vmaf_*,vmnet-*,vmplayer,vmrest,vmrun,vmss2core,vmstat,vmware,vmware-*
-private-etc @tls-ca,@x11,conf.d,mtab,vmware,vmware-installer,vmware-vix
+private-etc alsa,alternatives,asound.conf,ca-certificates,conf.d,crypto-policies,dconf,fonts,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.preload,localtime,machine-id,mtab,passwd,pki,pulse,resolv.conf,ssl,vmware,vmware-installer,vmware-vix
 dbus-user none
 dbus-system none

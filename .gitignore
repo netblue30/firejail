@@ -47,7 +47,6 @@ src/fcopy/fcopy
 src/fldd/fldd
 src/fbuilder/fbuilder
 src/profstats/profstats
-src/etc-cleanup/etc-cleanup
 src/bash_completion/firejail.bash_completion
 src/zsh_completion/_firejail
 src/jailcheck/jailcheck

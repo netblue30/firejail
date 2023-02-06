@@ -42,7 +42,7 @@ disable-mnt
 private-bin bash,cut,glxinfo,grep,head,openarena,openarena_ded,quake3,zenity
 private-cache
 private-dev
-private-etc @games,@x11,selinux,udev
+private-etc @games,@x11,udev
 private-tmp
 
 dbus-user none

@@ -17,7 +17,7 @@ mkdir ${HOME}/.config/Youtube
 whitelist ${HOME}/.config/Youtube
 
 private-bin electron,electron[0-9],electron[0-9][0-9],youtube
-private-etc @tls-ca,@x11,bumblebee,host.conf,mime.types,selinux
+private-etc @tls-ca,@x11,bumblebee,host.conf,mime.types
 private-opt Youtube
 
 # Redirect

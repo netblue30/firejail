@@ -46,7 +46,7 @@ disable-mnt
 private-bin fractal
 private-cache
 private-dev
-private-etc @tls-ca,@x11,host.conf,mime.types,selinux
+private-etc @tls-ca,@x11,host.conf,mime.types
 private-tmp
 
 dbus-user filter

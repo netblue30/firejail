@@ -48,7 +48,7 @@ disable-mnt
 # private-bin kazam,python*
 private-cache
 private-dev
-private-etc @x11,selinux
+private-etc @x11
 private-tmp
 
 dbus-system none

@@ -49,7 +49,7 @@ disable-mnt
 private-bin homebank
 private-cache
 private-dev
-private-etc @tls-ca,@x11,mime.types,selinux
+private-etc @tls-ca,@x11,mime.types
 private-tmp
 
 dbus-user none

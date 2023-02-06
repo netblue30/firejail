@@ -47,7 +47,7 @@ disable-mnt
 # private-bin falkon
 private-cache
 private-dev
-private-etc @tls-ca,@x11,adobe,mailcap,mime.types,selinux
+private-etc @tls-ca,@x11,adobe,mailcap,mime.types
 private-tmp
 
 # dbus-user filter

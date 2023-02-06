@@ -67,7 +67,7 @@ tracelog
 private-bin kube,sink_synchronizer
 private-cache
 private-dev
-private-etc @tls-ca,@x11,selinux
+private-etc @tls-ca,@x11
 private-tmp
 writable-run-user
 

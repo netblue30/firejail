@@ -52,7 +52,7 @@ disable-mnt
 private-bin bash,otter-browser,sh,which
 private-cache
 ?BROWSER_DISABLE_U2F: private-dev
-private-etc @tls-ca,@x11,mailcap,mime.types,selinux
+private-etc @tls-ca,@x11,mailcap,mime.types
 private-tmp
 
 dbus-system none

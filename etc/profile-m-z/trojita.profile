@@ -53,7 +53,7 @@ tracelog
 private-bin trojita
 private-cache
 private-dev
-private-etc @tls-ca,@x11,selinux
+private-etc @tls-ca,@x11
 private-tmp
 
 dbus-user filter

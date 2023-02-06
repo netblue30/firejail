@@ -47,7 +47,7 @@ disable-mnt
 private-bin bash,mono,mono-sgen,sh,smuxi-frontend-gnome
 private-cache
 private-dev
-private-etc @tls-ca,@x11,mono,selinux
+private-etc @tls-ca,@x11,mono
 private-tmp
 
 dbus-user none

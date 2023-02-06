@@ -51,7 +51,7 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-etc @tls-ca,QGIS,QGIS.conf,Trolltech.conf
+private-etc @tls-ca,@x11,QGIS,QGIS.conf
 private-tmp
 
 dbus-user none

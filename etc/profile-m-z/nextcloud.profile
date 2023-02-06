@@ -61,7 +61,7 @@ tracelog
 disable-mnt
 private-bin nextcloud,nextcloud-desktop
 private-cache
-private-etc @tls-ca,@x11,host.conf,Nextcloud,os-release,selinux
+private-etc @tls-ca,@x11,Nextcloud,host.conf,os-release
 private-dev
 private-tmp
 

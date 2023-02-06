@@ -69,7 +69,7 @@ tracelog
 # disable-mnt
 private-cache
 private-dev
-private-etc @tls-ca,@x11,gnupg,groups,hosts.conf,mailname,selinux,timezone
+private-etc @tls-ca,@x11,gnupg,groups,hosts.conf,mailname,timezone
 private-tmp
 # encrypting and signing email
 writable-run-user

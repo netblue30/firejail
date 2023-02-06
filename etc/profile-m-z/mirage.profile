@@ -53,7 +53,7 @@ disable-mnt
 private-bin ldconfig,mirage
 private-cache
 private-dev
-private-etc @tls-ca,@x11,host.conf,mime.types,selinux
+private-etc @tls-ca,@x11,host.conf,mime.types
 private-tmp
 
 dbus-user none

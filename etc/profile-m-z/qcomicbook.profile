@@ -52,7 +52,7 @@ tracelog
 private-bin 7z,7zr,qcomicbook,rar,sh,tar,unace,unrar,unzip
 private-cache
 private-dev
-private-etc @x11,mime.types,Trolltech.conf
+private-etc @x11,mime.types
 private-tmp
 
 dbus-user none

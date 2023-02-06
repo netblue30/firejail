@@ -70,7 +70,7 @@ disable-mnt
 private-bin getopt,psi
 private-cache
 private-dev
-private-etc @tls-ca,@x11,selinux
+private-etc @tls-ca,@x11
 private-tmp
 
 dbus-user none

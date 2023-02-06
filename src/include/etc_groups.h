@@ -20,6 +20,7 @@
 
 #ifndef ETC_GROUPS_H
 #define ETC_GROUPS_H
+#include <stddef.h>
 
 #define ETC_MAX 256
 

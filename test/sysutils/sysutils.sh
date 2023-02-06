@@ -127,3 +127,11 @@ else
 	echo "TESTING SKIP: strings not found"
 fi
 
+if command -v whois
+then
+	echo "TESTING: whois"
+	./whois.exp
+else
+	echo "TESTING SKIP: whois not found"
+fi
+

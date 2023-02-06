@@ -46,7 +46,7 @@ private
 private-bin bash,sh,whois
 private-cache
 private-dev
-private-etc services,whois.conf
+private-etc jwhois.conf,services,whois.conf
 private-lib gconv
 private-tmp
 

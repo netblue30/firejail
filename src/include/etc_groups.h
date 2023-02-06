@@ -48,6 +48,7 @@ static char *etc_group_games[] = {
 	"openal", // 3D sound
 	"timidity", // MIDI
 	"timidity.cfg",
+	"vulkan", // next generation OpenGL stack
 	NULL
 };
 

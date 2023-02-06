@@ -38,6 +38,8 @@ static int arr_x11 = 0;
 static int arr_games = 0;
 static char outbuf[256 * 1024];
 static char *outptr;
+static int arg_replace = 0;
+static int arg_debug = 0;
 
 void outprintf(char* fmt, ...) {
 	va_list args;
@@ -76,6 +78,17 @@ static void arr_add(const char *fname) {
 	if (!arr[arr_cnt])
 		errExit("strdup");
 	arr_cnt++;
+}
+
+int arr_cmp(const void *p1, const void *p2) {
+	char **ptr1 = (char **) p1;
+	char **ptr2 = (char **) p2;
+
+	return strcmp(*ptr1, *ptr2);
+}
+
+static void arr_sort(void) {
+	qsort(&arr[0], arr_cnt, sizeof(char *), arr_cmp);
 }
 
 static void arr_clean(void) {
@@ -119,7 +132,7 @@ static void process_file(const char *fname) {
 
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
-		fprintf(stderr, "Error: cannot open profile file\n");
+		fprintf(stderr, "Error: cannot open %s file\n", fname);
 		exit(1);
 	}
 
@@ -133,10 +146,11 @@ static void process_file(const char *fname) {
 	int print = 0;
 	while (fgets(line, MAX_BUF, fp)) {
 		cnt++;
-		if (strncmp(line, "private-etc ", 12) != 0)  {
+		if (strncmp(line, "private-etc", 11) != 0)  {
 			outprintf("%s", line);
 			continue;
 		}
+
 		strcpy(orig_line,line);
 		char *ptr = strchr(line, '\n');
 		if (ptr)
@@ -158,6 +172,8 @@ static void process_file(const char *fname) {
 
 		ptr = strtok(ptr, ",");
 		while (ptr) {
+			if (arg_debug)
+				printf("%s\n", ptr);
 			if (arr_check(ptr, &etc_list[0]));
 			else if (arr_check(ptr, &etc_group_sound[0]));
 			else if (arr_check(ptr, &etc_group_network[0]));
@@ -179,34 +195,36 @@ static void process_file(const char *fname) {
 			ptr = strtok(NULL, ",");
 		}
 
+		arr_sort();
 		char *last_line = arr_print();
 		if (strcmp(last_line, orig_line) == 0) {
 			fclose(fp);
 			return;
 		}
-		printf("\n********************\n%s\n\n%s\n%s\n", fname, orig_line, last_line);
+		printf("\n********************\nfile: %s\n\nold: %s\nnew: %s\n", fname, orig_line, last_line);
 		print = 1;
 	}
 
 	fclose(fp);
 
-	if (print) {
-//		printf("Replace? (Y/N): ", fname);
-//		fgets(line, MAX_BUF, stdin);
-//		if (*line == 'y' || *line == 'Y') {
-			fp = fopen(fname, "w");
-			if (!fp) {
-				fprintf(stderr, "Error: cannot open profile file\n");
-				exit(1);
-			}
-			fprintf(fp, "%s", outbuf);
-			fclose(fp);
-//		}
+	if (print && arg_replace) {
+		fp = fopen(fname, "w");
+		if (!fp) {
+			fprintf(stderr, "Error: cannot open profile file\n");
+			exit(1);
+		}
+		fprintf(fp, "%s", outbuf);
+		fclose(fp);
 	}
 }
 
 static void usage(void) {
-	printf("usage: cleanup-etc file.profile\n");
+	printf("usage: cleanup-etc [options] file.profile [file.profile]\n");
+	printf("Group and clean private-etc entries in one or more profile files.\n");
+	printf("Options:\n");
+	printf("   --debug - print debug messages\n");
+	printf("   --help - this help screen\n");
+	printf("   --replace - replace profile file\n");
 }
 
 int main(int argc, char **argv) {
@@ -218,13 +236,25 @@ int main(int argc, char **argv) {
 
 	int i;
 	for (i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "-h") == 0) {
+		if (strcmp(argv[i], "-h") == 0 ||
+		     strcmp(argv[i], "-?") == 0 ||
+		     strcmp(argv[i], "--help") == 0) {
 			usage();
 			return 0;
 		}
+		else if (strcmp(argv[i], "--debug") == 0)
+			arg_debug = 1;
+		else if (strcmp(argv[i], "--replace") == 0)
+			arg_replace = 1;
+		else if (*argv[i] == '-') {
+			fprintf(stderr, "Error: invalid program option %s\n", argv[i]);
+			return 1;
+		}
+		else
+			break;
 	}
 
-	for (i = 1; i < argc; i++)
+	for (; i < argc; i++)
 		process_file(argv[i]);
 
 	return 0;

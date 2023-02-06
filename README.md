@@ -182,6 +182,17 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ## Current development version: 0.9.73
 
+### --keep-shell-rc
+`````
+       --keep-shell-rc
+              By default, when using a private home directory, firejail copies
+              files  from the system's user home template (/etc/skel) into it,
+              which overrides attempts to whitelist the original  files  (such
+              as  ~/.bashrc and ~/.zshrc).  This option disables this feature,
+              and enables the user to whitelist the original files.
+
+`````
+
 ### private-etc rework
 `````
        --private-etc, --private-etc=file,directory,@group

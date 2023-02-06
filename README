@@ -147,6 +147,8 @@ announ (https://github.com/announ)
 	- mpv and youtube-dl profile fixes
 	- git profile fix
 	- evince profile fix
+Antoine Catton (https://github.com/acatton)
+	- add keep-shell-rc command and option
 Anton Shestakov (https://github.com/antonv6)
 	- add whitelist items for uim
 	- allow /etc/vulkan in steam profile
@@ -753,6 +755,7 @@ mjudtmann (https://github.com/mjudtmann)
 	- lock firejail configuration in disable-mgmt.inc
 Mohammed Anas  (https://github.com/mhmdanas)
 	- fix dbus notifications
+	- fix libEGL warning for abiword
 m00nwtchr (https://github.com/m00nwtchr)
 	- Whitelist electron-flags.conf for all versions of electron
 	- electron profile updates

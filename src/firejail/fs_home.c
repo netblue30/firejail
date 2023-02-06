@@ -361,7 +361,8 @@ void fs_private_homedir(void) {
 	}
 	EUID_USER();
 
-	skel(homedir);
+	if (!arg_keep_shell_rc)
+		skel(homedir);
 	if (xflag)
 		copy_xauthority();
 	if (aflag)
@@ -430,7 +431,8 @@ void fs_private(void) {
 		selinux_relabel_path(homedir, homedir);
 	}
 
-	skel(homedir);
+	if (!arg_keep_shell_rc)
+		skel(homedir);
 	if (xflag)
 		copy_xauthority();
 	if (aflag)
@@ -682,7 +684,8 @@ void fs_private_home_list(void) {
 		errExit("mounting tmpfs");
 	EUID_USER();
 
-	skel(homedir);
+	if (!arg_keep_shell_rc)
+		skel(homedir);
 	if (xflag)
 		copy_xauthority();
 	if (aflag)

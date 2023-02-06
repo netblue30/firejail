@@ -10,6 +10,7 @@ disable-mnt
 ipc-namespace
 keep-config-pulse
 keep-dev-shm
+keep-shell-rc
 keep-var-tmp
 machine-id
 memory-deny-write-execute

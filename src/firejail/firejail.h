@@ -332,6 +332,7 @@ extern int arg_nice;		// nice value configured
 extern int arg_ipc;		// enable ipc namespace
 extern int arg_writable_etc;	// writable etc
 extern int arg_keep_config_pulse;	// disable automatic ~/.config/pulse init
+extern int arg_keep_shell_rc;	// do not copy shell configuration from /etc/skel
 extern int arg_writable_var;	// writable var
 extern int arg_keep_var_tmp; // don't overwrite /var/tmp
 extern int arg_writable_run_user;	// writable /run/user

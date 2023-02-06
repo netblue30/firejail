@@ -127,6 +127,7 @@ int arg_nice = 0;				// nice value configured
 int arg_ipc = 0;					// enable ipc namespace
 int arg_writable_etc = 0;			// writable etc
 int arg_keep_config_pulse = 0;			// disable automatic ~/.config/pulse init
+int arg_keep_shell_rc = 0;			// do not copy shell configuration from /etc/skel
 int arg_writable_var = 0;			// writable var
 int arg_keep_var_tmp = 0;                       // don't overwrite /var/tmp
 int arg_writable_run_user = 0;			// writable /run/user
@@ -1974,6 +1975,9 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strcmp(argv[i], "--keep-config-pulse") == 0) {
 			arg_keep_config_pulse = 1;
+		}
+		else if (strcmp(argv[i], "--keep-shell-rc") == 0) {
+			arg_keep_shell_rc = 1;
 		}
 		else if (strcmp(argv[i], "--writable-var") == 0) {
 			arg_writable_var = 1;

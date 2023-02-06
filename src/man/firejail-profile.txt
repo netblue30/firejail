@@ -288,6 +288,9 @@ pulse servers or non-standard socket paths.
 \fBkeep-dev-shm
 /dev/shm directory is untouched (even with private-dev).
 .TP
+\fBkeep-shell-rc
+Do not copy shell rc files (such as ~/.bashrc and ~/.zshrc) from /etc/skel.
+.TP
 \fBkeep-var-tmp
 /var/tmp directory is untouched.
 .TP

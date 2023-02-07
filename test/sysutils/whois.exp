@@ -10,7 +10,8 @@ match_max 100000
 send -- "firejail whois debian.org\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Domain Name"
+	"Domain Name" {puts "testing ok\n"}
+	"Connection refused" {puts "TESTING SKIP: connection refused\n"}
 }
 
 after 100

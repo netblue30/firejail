@@ -60,7 +60,7 @@ jobs:
     - name: update package information
       run: sudo apt-get update
     - name: install dependencies
-      run: sudo apt-get install gcc-12 libapparmor-dev libselinux1-dev expect xzdec
+      run: sudo apt-get install gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois
     - name: configure
       run: CC=gcc-12 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux --prefix=/usr
     - name: make
@@ -73,6 +73,8 @@ jobs:
       run: SHELL=/bin/bash make lab-setup
     - name: run sysutils tests
       run: SHELL=/bin/bash make test-sysutils
+    - name: run private-etc tests
+      run: SHELL=/bin/bash make test-private-etc
     - name: run profile tests
       run: SHELL=/bin/bash make test-profiles
     - name: run fcopy tests

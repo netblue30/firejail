@@ -7,7 +7,6 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-# directory with ~
 send -- "firejail --private-etc=passwd,group,resolv.conf,X11\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

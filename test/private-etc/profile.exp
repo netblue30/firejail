@@ -1,0 +1,90 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2022 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --profile=p1.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 1
+
+send -- "LC_ALL=C ls -al /etc\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"X11"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"group"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"passwd"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"resolv.conf"
+}
+
+
+send -- "file /etc/shadow\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"No such file or directory"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+send -- "firejail --profile=p2.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 1
+
+send -- "LC_ALL=C ls -al /etc\r"
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"X11"
+}
+expect {
+	timeout {puts "TESTING ERROR 14\n";exit}
+	"group"
+}
+expect {
+	timeout {puts "TESTING ERROR 15\n";exit}
+	"passwd"
+}
+expect {
+	timeout {puts "TESTING ERROR 16\n";exit}
+	"resolv.conf"
+}
+
+
+send -- "file /etc/shadow\r"
+expect {
+	timeout {puts "TESTING ERROR 17\n";exit}
+	"No such file or directory"
+}
+after 100
+send -- "exit\r"
+sleep 1
+
+
+
+
+
+
+
+
+
+
+after 100
+puts "\nall done\n"

@@ -1077,6 +1077,7 @@ blacklist ${HOME}/.ostrichriders
 blacklist ${HOME}/.paradoxinteractive
 blacklist ${HOME}/.paradoxlauncher
 blacklist ${HOME}/.parallelrealities/blobwars
+blacklist ${HOME}/.parsec
 blacklist ${HOME}/.pcsxr
 blacklist ${HOME}/.penguin-command
 blacklist ${HOME}/.pine-crash

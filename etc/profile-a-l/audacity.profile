@@ -50,6 +50,7 @@ tracelog
 
 private-bin audacity
 private-dev
+private-etc @x11,gcrypt
 private-tmp
 
 # problems on Fedora 27

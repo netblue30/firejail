@@ -39,7 +39,7 @@ disable-mnt
 private-bin gnome-logs
 private-cache
 private-dev
-private-etc
+private-etc machine-id
 private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
 writable-var-log

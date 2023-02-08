@@ -75,7 +75,6 @@ static char *etc_group_sound[] = {
 static char *etc_group_tls_ca[] = {
 	"ca-certificates",
 	"crypto-policies",
-	"gcrypt",
 	"pki",
 	"ssl",
 	NULL
@@ -86,6 +85,7 @@ static char *etc_group_x11[] = {
 	"ati", // 3D
 	"dconf",
 	"drirc",
+	"gcrypt", // GNU crypto library (GPG)
 	"gtk-2.0",
 	"gtk-3.0",
 	"kde4rc",

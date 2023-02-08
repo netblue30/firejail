@@ -90,6 +90,7 @@ static char *etc_group_x11[] = {
 	"gtk-3.0",
 	"kde4rc",
 	"kde5rc",
+	"machine-id", // QT dbus lib is crashing without it!
 	"nvidia", // 3D
 	"pango", // text rendering/internationalization
 	"Trolltech.conf", // old QT config file

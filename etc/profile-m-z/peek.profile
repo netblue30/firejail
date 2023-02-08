@@ -53,9 +53,9 @@ seccomp.block-secondary
 tracelog
 
 disable-mnt
-private-bin bash,convert,ffmpeg,firejail,fish,gst-*-1.0,orcc,peek,python3*,sh,which,zsh
+private-bin bash,convert,ffmpeg,fish,gst-*-1.0,orcc,peek,python3*,sh,which,zsh
 private-dev
-private-etc @x11,firejail
+private-etc @x11
 private-tmp
 
 dbus-user filter

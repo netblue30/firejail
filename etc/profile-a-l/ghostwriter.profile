@@ -58,7 +58,7 @@ private-bin affixcompress,analyze,chmorph,cmark,context,gettext,ghostwriter,huns
 private-cache
 private-dev
 # passwd,login.defs,firejail are a temporary workaround for #2877 and can be removed once it is fixed
-private-etc @tls-ca,@x11,dbus-1,firejail,gconf,host.conf,mime.types,rpc,services,texlive
+private-etc @tls-ca,@x11,dbus-1,gconf,host.conf,mime.types,rpc,services,texlive
 private-tmp
 
 dbus-user filter

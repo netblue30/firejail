@@ -7,20 +7,14 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "/bin/gzip -c /usr/bin/firejail > firejail_t1\r"
-sleep 1
+send -- "rm index.html*\r"
+after 500
 
-send -- "firejail /bin/gzip -c /usr/bin/firejail > firejail_t2\r"
-sleep 1
-
-send -- "diff -s firejail_t1 firejail_t2\r"
+send -- "firejail gzip -c ../../mkdeb.sh | firejail gunzip -c\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"firejail_t1 and firejail_t2 are identical"
+	"This file is part of Firejail project"
 }
-
-send -- "rm firejail_t*\r"
-sleep 1
-
+after 500
 
 puts "\nall done\n"

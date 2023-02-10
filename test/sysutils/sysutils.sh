@@ -7,6 +7,14 @@ export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
+if command -v gzip
+then
+	echo "TESTING: gzip"
+	./gzip.exp
+else
+	echo "TESTING SKIP: md5sum not found"
+fi
+
 if command -v md5sum
 then
 	echo "TESTING: md5sum"

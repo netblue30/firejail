@@ -2176,7 +2176,6 @@ int main(int argc, char **argv, char **envp) {
 		// hostname, etc
 		//*************************************
 		else if (strncmp(argv[i], "--name=", 7) == 0) {
-			int only_numbers = 1;
 			cfg.name = argv[i] + 7;
 			if (strlen(cfg.name) == 0) {
 				fprintf(stderr, "Error: please provide a name for sandbox\n");

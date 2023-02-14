@@ -342,7 +342,7 @@ deb: dist config.sh
 
 .PHONY: deb-apparmor
 deb-apparmor: dist config.sh
-	./mkdeb.sh -apparmor --enable-apparmor
+	env EXTRA_VERSION=-apparmor ./mkdeb.sh --enable-apparmor
 
 .PHONY: test-compile
 test-compile: dist config.mk

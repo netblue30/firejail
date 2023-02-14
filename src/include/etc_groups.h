@@ -75,7 +75,8 @@ static char *etc_group_sound[] = {
 static char *etc_group_tls_ca[] = {
 	"ca-certificates",
 	"crypto-policies",
-	"gcrypt", // GNU crypto library (GPG)
+	"gcrypt", // GNU crypto library - contains hardware config for various encryption schemes
+		// and random number generators. The file is not installed by Debian.
 	"pki",
 	"ssl",
 	NULL

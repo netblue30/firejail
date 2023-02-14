@@ -774,6 +774,8 @@ Neo00001 (https://github.com/Neo00001)
 	- update telegram profile
 	- add spectacle profile
 	- add kdiff3 profile
+netcarver (https://github.com/netcarver)
+	- prevent access to LUKS keyfile
 NetSysFire (https://github.com/NetSysFire)
 	- update weechat profile
 	- update megaglest profile
@@ -996,6 +998,7 @@ slowpeek (https://github.com/slowpeek)
 	- allow access to avahi-daemon in apparmor/firejail-default
 	- make appimage examples consistent with --appimage option short description
 	- blacklist google-drive-ocamlfuse config
+	- blacklist sendgmail config
 smitsohu (https://github.com/smitsohu)
 	- read-only kde4 services directory
 	- enhanced mediathekview profile

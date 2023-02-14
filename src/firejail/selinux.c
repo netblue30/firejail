@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2022 Firejail and systemd authors
+ * Copyright (C) 2020-2023 Firejail and systemd authors
  *
  * This file is part of firejail project, from systemd selinux-util.c
  *

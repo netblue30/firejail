@@ -230,14 +230,6 @@ static void print_elem(unsigned index, int nowrap) {
 	}
 	free(fname);
 
-	char *sandbox_name_escaped = escape_cntrl_chars(sandbox_name);
-	if (sandbox_name_escaped) {
-		if (sandbox_name_allocated)
-			free(sandbox_name_allocated);
-		sandbox_name = sandbox_name_escaped;
-		sandbox_name_allocated = sandbox_name;
-	}
-
 	if (user == NULL)
 		user = "";
 	if (cmd) {

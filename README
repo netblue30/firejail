@@ -685,6 +685,7 @@ LaurentGH (https://github.com/LaurentGH)
 	- allow private-bin parameters to be absolute paths
 layderv (https://github.com/layderv)
 	- prevent sandbox name from containing only digits
+	- clean escape control characters from the command line
 lecso7 (https://github.com/lecso7)
 	- added goldendict profile
 	- allow evince to read .cbz file format

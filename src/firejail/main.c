@@ -2182,16 +2182,8 @@ int main(int argc, char **argv, char **envp) {
 				fprintf(stderr, "Error: please provide a name for sandbox\n");
 				return 1;
 			}
-			const char *c = cfg.name;
-			while (*c) {
-				if (!isdigit(*c)) {
-					only_numbers = 0;
-					break;
-				}
-				++c;
-			}
-			if (only_numbers) {
-				fprintf(stderr, "Error: invalid sandbox name: it only contains digits\n");
+			if (invalid_name(cfg.name)) {
+				fprintf(stderr, "Error: invalid sandbox name\n");
 				return 1;
 			}
 		}
@@ -2199,6 +2191,10 @@ int main(int argc, char **argv, char **envp) {
 			cfg.hostname = argv[i] + 11;
 			if (strlen(cfg.hostname) == 0) {
 				fprintf(stderr, "Error: please provide a hostname for sandbox\n");
+				return 1;
+			}
+			if (invalid_name(cfg.hostname)) {
+				fprintf(stderr, "Error: invalid hostname\n");
 				return 1;
 			}
 		}

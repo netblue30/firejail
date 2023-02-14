@@ -1448,6 +1448,29 @@ static int has_link(const char *dir) {
 	return 0;
 }
 
+// allow strict ASCII letters and numbers; names with only numbers are rejected; spaces are rejected
+int invalid_name(const char *name) {
+	const char *c = name;
+
+	int only_numbers = 1;
+	while (*c) {
+		if (!isalnum(*c))
+			return 1;
+		if (!isdigit(*c))
+			only_numbers = 0;
+		++c;
+	}
+	if (only_numbers)
+		return 1;
+
+	// restrict name to 64 chars max
+	if (strlen(name) > 64)
+		return 1;
+
+	return 0;
+}
+
+
 void check_homedir(const char *dir) {
 	assert(dir);
 	if (dir[0] != '/') {

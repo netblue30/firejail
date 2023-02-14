@@ -525,6 +525,7 @@ int macro_id(const char *name);
 
 
 // util.c
+int invalid_name(const char *name);
 void errLogExit(char* fmt, ...) __attribute__((noreturn));
 void fwarning(char* fmt, ...);
 void fmessage(char* fmt, ...);

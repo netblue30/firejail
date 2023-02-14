@@ -62,7 +62,7 @@ jobs:
     - name: install dependencies
       run: sudo apt-get install gcc-12 libapparmor-dev libselinux1-dev expect xzdec
     - name: configure
-      run: CC=gcc-12 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux --prefix=/usr
+      run: CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux
     - name: make
       run: make
     - name: make install

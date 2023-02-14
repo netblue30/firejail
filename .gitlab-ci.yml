@@ -10,7 +10,7 @@ build_ubuntu_package:
     script:
         - apt-get update -qq
         - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian pkg-config python3 gawk
-        - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
+        - ./configure && make deb && dpkg -i firejail*.deb
         - command -V firejail && firejail --version
         - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
@@ -19,7 +19,7 @@ build_debian_package:
     script:
         - apt-get update -qq
         - apt-get install -y -qq build-essential lintian pkg-config gawk
-        - ./configure --prefix=/usr && make deb && dpkg -i firejail*.deb
+        - ./configure && make deb && dpkg -i firejail*.deb
         - command -V firejail && firejail --version
 
 build_redhat_package:

@@ -7,47 +7,36 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-
-send -- "firejail --name=ftest\r"
-expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-after 100
-
-spawn $env(SHELL)
-send -- "firejail --name=ftest\r"
+send -- "firejail --name=12345\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+	"invalid sandbox name"
 }
 after 100
 
-spawn $env(SHELL)
-send -- "firejail --name=ftest\r"
+send --  "firejail --name=\"join testing\"\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+	"invalid sandbox name"
 }
 after 100
 
-spawn $env(SHELL)
-send -- "firejail --name=ftest\r"
+
+send --  "firejail --name=join\\ testing\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+	"invalid sandbox name"
 }
 after 100
 
-spawn $env(SHELL)
-send -- "firejail --name=ftest\r"
+send -- "firejail --name=asdf,12345\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+	"invalid sandbox name"
 }
 after 100
 
-spawn $env(SHELL)
+
 send -- "firejail --name=ftest\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
@@ -104,30 +93,50 @@ expect {
 after 100
 
 spawn $env(SHELL)
-send -- "firejail --list\r"
+send -- "firejail --name=ftest\r"
 expect {
 	timeout {puts "TESTING ERROR 12\n";exit}
-	":ftest:"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
+after 100
+
+spawn $env(SHELL)
+send -- "firejail --name=ftest\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
-	":ftest-"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
+after 100
+
+spawn $env(SHELL)
+send -- "firejail --name=ftest\r"
 expect {
 	timeout {puts "TESTING ERROR 14\n";exit}
-	":ftest-"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
+after 100
+
+spawn $env(SHELL)
+send -- "firejail --name=ftest\r"
 expect {
 	timeout {puts "TESTING ERROR 15\n";exit}
-	":ftest-"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
+after 100
+
+spawn $env(SHELL)
+send -- "firejail --name=ftest\r"
 expect {
 	timeout {puts "TESTING ERROR 16\n";exit}
-	":ftest-"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
+after 100
+
+spawn $env(SHELL)
+send -- "firejail --list\r"
 expect {
 	timeout {puts "TESTING ERROR 17\n";exit}
-	":ftest-"
+	":ftest:"
 }
 expect {
 	timeout {puts "TESTING ERROR 18\n";exit}
@@ -151,6 +160,26 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 23\n";exit}
+	":ftest-"
+}
+expect {
+	timeout {puts "TESTING ERROR 24\n";exit}
+	":ftest-"
+}
+expect {
+	timeout {puts "TESTING ERROR 25\n";exit}
+	":ftest-"
+}
+expect {
+	timeout {puts "TESTING ERROR 26\n";exit}
+	":ftest-"
+}
+expect {
+	timeout {puts "TESTING ERROR 27\n";exit}
+	":ftest-"
+}
+expect {
+	timeout {puts "TESTING ERROR 28\n";exit}
 	":ftest-"
 }
 sleep 1

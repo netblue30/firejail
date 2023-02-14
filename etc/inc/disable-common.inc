@@ -450,6 +450,9 @@ blacklist ${HOME}/.vaults
 blacklist /run/timeshift
 blacklist /var/backup
 
+# dm-crypt / LUKS
+blacklist /crypto_keyfile.bin
+
 # Remove environment variables with auth tokens.
 # Note however that the sandbox might still have access to the
 # files where these variables are set.

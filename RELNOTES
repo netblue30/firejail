@@ -2,11 +2,11 @@ firejail (0.9.73) baseline; urgency=low
   * work in progress
   * feature: Add "keep-shell-rc" command and option (#1127 #5634)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
-  * modif: Prevent sandbox name (--name=) and host name (--hostname)
-     from containing only digits (#5578)
+  * modif: Prevent sandbox name (--name=) and host name (--hostname=)
+    from containing only digits (#5578)
   * modif: Escape control characters of the command line (#5613)
   * modif: Allow only letters and digits for sandbox name (--name=) and
-     host name (--hostname)
+    host name (--hostname=)
   * bugfix: qutebrowser: links will not open in the existing instance (#5601
     #5618)
   * build: auto-generate syntax files (#5627)

@@ -2,7 +2,7 @@
 # Description: Simple and modern GTK eBook reader
 # This file is overwritten after every install/update
 # Persistent local customizations
-include foliate.local
+include com.github.johnfactotum.Foliate.local
 # Persistent global definitions
 include globals.local
 

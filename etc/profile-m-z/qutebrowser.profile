@@ -18,6 +18,8 @@ include allow-bin-sh.inc
 include allow-python2.inc
 include allow-python3.inc
 
+ignore noexec ${HOME}
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -41,7 +43,7 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-apparmor
+#apparmor # breaks userscripts under ${HOME}, see #5639
 caps.drop all
 netfilter
 nodvd

@@ -29,6 +29,7 @@ whitelist /usr/share/gtk-engines
 whitelist /usr/share/gtksourceview-3.0
 whitelist /usr/share/gtksourceview-4
 whitelist /usr/share/hunspell
+whitelist /usr/share/hyphen
 whitelist /usr/share/hwdata
 whitelist /usr/share/icons
 whitelist /usr/share/icu

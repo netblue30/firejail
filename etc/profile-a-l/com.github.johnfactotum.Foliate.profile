@@ -28,7 +28,6 @@ whitelist ${HOME}/.local/share/com.github.johnfactotum.Foliate
 whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 whitelist /usr/share/com.github.johnfactotum.Foliate
-whitelist /usr/share/hyphen
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

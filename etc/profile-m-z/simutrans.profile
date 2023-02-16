@@ -35,6 +35,7 @@ seccomp
 
 # private-bin simutrans
 private-dev
+private-etc @games,@x11
 private-tmp
 
 dbus-user none

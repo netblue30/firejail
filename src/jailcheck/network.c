@@ -52,6 +52,3 @@ void network_test(void) {
 	else
 		printf("   Networking: disabled\n");
 }
-
-
-

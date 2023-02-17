@@ -152,4 +152,3 @@ char *radix_longest_prefix_match(uint32_t ip) {
 
 	return (rv)? rv->name: NULL;
 }
-

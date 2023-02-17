@@ -121,4 +121,3 @@ errexit:
 	fprintf(stderr, "Error: invalid line %d in file %s\n", line, fname);
 	exit(1);
 }
-

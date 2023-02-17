@@ -340,10 +340,6 @@ asc: config.mk
 deb: dist config.sh
 	./mkdeb.sh
 
-.PHONY: deb-apparmor
-deb-apparmor: dist config.sh
-	env EXTRA_VERSION=-apparmor ./mkdeb.sh --enable-apparmor
-
 .PHONY: test-compile
 test-compile: dist config.mk
 	cd test/compile; ./compile.sh $(TARNAME)-$(VERSION)

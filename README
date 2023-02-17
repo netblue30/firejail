@@ -34,7 +34,7 @@ $ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
 
 We build our release firejail.tar.xz and firejail.deb packages using the following command:
-$ make distclean && ./configure && make deb-apparmor
+$ make distclean && ./configure && make deb
 
 
 Maintainer:

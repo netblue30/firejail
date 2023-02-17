@@ -15,7 +15,7 @@ cd firejail
 sed -i "s/# restricted-network .*/restricted-network yes/" \
     etc/firejail.config
 
-make deb-apparmor
+make deb
 sudo dpkg -i firejail*.deb
 echo "Firejail updated."
 cd ..

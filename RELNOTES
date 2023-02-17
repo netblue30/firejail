@@ -12,8 +12,11 @@ firejail (0.9.73) baseline; urgency=low
   * build: auto-generate syntax files (#5627)
   * build: mark most phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
+  * build: deb: enable apparmor by default & remove deb-apparmor (#5668)
   * docs: remove apparmor options in --help when building without apparmor
     support (#5589)
+  * docs: selinux.c: Split Copyright notice & use same license as upstream
+    (#5667)
  -- netblue30 <netblue30@yahoo.com>  Mon, 16 Jan 2023 09:00:00 -0500
 
 firejail (0.9.72) baseline; urgency=low

@@ -33,7 +33,7 @@ expect {
 	"0.0.0.0/0 via 192.168.1.1, dev eth0, metric 0" {puts "Debian testing\n";}
 	"0.0.0.0/0 via 192.168.1.1, dev enp0s3, metric 1024" {puts "Centos 7 testing\n";}
 	"0.0.0.0/0 via 192.168.1.1, dev enp0s3, metric 0" {puts "OpenSUSE testing\n";}
-            "0.0.0.0/0 via 192.168.1.1, dev enp0s3, metric 100" {puts "Arch testing\n";}
+	"0.0.0.0/0 via 192.168.1.1, dev enp0s3, metric 100" {puts "Arch testing\n";}
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}

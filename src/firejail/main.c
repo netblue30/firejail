@@ -894,8 +894,8 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 
 	}
 	else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
-		// NOTE: this is first part of option handler, sandbox name is
-		// set in other part
+		// Note: This is the first part of the option handler; the
+		// sandbox name is set in the other part
 		if (checkcfg(CFG_JOIN) || getuid() == 0) {
 			logargs(argc, argv);
 
@@ -2818,8 +2818,9 @@ int main(int argc, char **argv, char **envp) {
 		}
 #endif
 		else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
-			// NOTE: this is second part of option handler, atempt
-			// to find and join sandbox is done in other one
+			// Note: This is the second part of the option handler;
+			// the attempt to find and join the sandbox is done in
+			// the other one
 
 			// set sandbox name and start normally
 			cfg.name = argv[i] + 16;

@@ -166,7 +166,7 @@ static void process_file(char *fname) {
 		else if (strncmp(ptr, "include whitelist-var-common.inc", 32) == 0)
 			cnt_whitelistvar++;
 		else if (strncmp(ptr, "include whitelist-runuser-common.inc", 36) == 0 ||
-		        strncmp(ptr, "blacklist ${RUNUSER}", 20) == 0)
+			strncmp(ptr, "blacklist ${RUNUSER}", 20) == 0)
 			cnt_whitelistrunuser++;
 		else if (strncmp(ptr, "include whitelist-common.inc", 28) == 0)
 			cnt_whitelisthome++;
@@ -283,10 +283,10 @@ int main(int argc, char **argv) {
 			arg_dbus_user_none = 1;
 		else if (*argv[i] == '-') {
 			fprintf(stderr, "Error: invalid option %s\n", argv[i]);
-		 	return 1;
-		 }
-		 else
-		 	break;
+			return 1;
+		}
+		else
+			break;
 	}
 
 	start = i;

@@ -30,8 +30,8 @@ static int find(const char *program, const char *directory) {
 
 	struct stat s;
 	if (stat(fname, &s) == 0) {
-	     	if (arg_debug)
-	     		printf("found %s in directory %s\n", program, directory);
+		if (arg_debug)
+			printf("found %s in directory %s\n", program, directory);
 		retval = 1;
 	}
 
@@ -44,8 +44,8 @@ static int find(const char *program, const char *directory) {
 int which(const char *program) {
 	// check some well-known paths
 	if (find(program, "/bin") || find(program, "/usr/bin") ||
-	     find(program, "/sbin") || find(program, "/usr/sbin") ||
-	     find(program, "/usr/games"))
+	    find(program, "/sbin") || find(program, "/usr/sbin") ||
+	    find(program, "/usr/games"))
 		return 1;
 
 	// check environment

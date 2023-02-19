@@ -515,7 +515,7 @@ int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
 	if (!orig_connect)
 		orig_connect = (orig_connect_t)dlsym(RTLD_NEXT, "connect");
 
- 	int rv = orig_connect(sockfd, addr, addrlen);
+	int rv = orig_connect(sockfd, addr, addrlen);
 	print_sockaddr(sockfd, "connect", addr, rv);
 
 	return rv;

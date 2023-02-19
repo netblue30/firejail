@@ -144,7 +144,7 @@ long unsigned int appimage2_size(int fd) {
 		return 0;
 
 	if ((ehdr.e_ident[EI_DATA] != ELFDATA2LSB) &&
-	     (ehdr.e_ident[EI_DATA] != ELFDATA2MSB))
+	    (ehdr.e_ident[EI_DATA] != ELFDATA2MSB))
 		return 0;
 
 	if(ehdr.e_ident[EI_CLASS] == ELFCLASS32) {

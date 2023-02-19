@@ -17,8 +17,9 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 /*
-    This code borrows heavily from src/libappimage_shared/elf.c in libappimage
+ * This code borrows heavily from src/libappimage_shared/elf.c in libappimage
  */
 /*
 Compile with:

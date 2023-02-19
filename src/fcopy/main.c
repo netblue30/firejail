@@ -92,7 +92,7 @@ static void selinux_relabel_path(const char *path, const char *inside_path) {
 			printf("Cannot relabel %s: %s\n", path, strerror(errno));
 	}
 	freecon(fcon);
- close:
+close:
 	close(fd);
 #else
 	(void) path;

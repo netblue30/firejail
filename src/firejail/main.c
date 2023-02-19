@@ -47,8 +47,8 @@
 #endif
 
 #ifdef __ia64__
-/* clone(2) has a different interface on ia64, as it needs to know
-   the size of the stack */
+/* clone(2) has a different interface on ia64, as it needs to know the size of
+ * the stack */
 int __clone2(int (*fn)(void *),
              void *child_stack_base, size_t stack_size,
              int flags, void *arg, ...

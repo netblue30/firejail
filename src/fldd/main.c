@@ -193,9 +193,9 @@ static void parse_elf(const char *exe) {
 	}
 	goto close;
 
- error_close:
+error_close:
 	perror("copy libs");
- close:
+close:
 	if (base)
 		munmap(base, s.st_size);
 
@@ -295,7 +295,7 @@ int main(int argc, char **argv) {
 //system("cat /proc/self/status");
 int i;
 for (i = 0; i < argc; i++)
-        printf("*%s* ", argv[i]);
+	printf("*%s* ", argv[i]);
 printf("\n");
 }
 #endif

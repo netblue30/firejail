@@ -24,8 +24,8 @@
  *
  * Authors:	Alexey Kuznetsov, <kuznet@ms2.inr.ac.ru>
  *
- */
- /*
+*/
+/*
  * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project

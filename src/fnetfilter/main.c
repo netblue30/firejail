@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project

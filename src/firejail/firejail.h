@@ -266,7 +266,7 @@ static inline int any_ip6_dhcp(void) {
 }
 
 static inline int any_dhcp(void) {
-  return any_ip_dhcp() || any_ip6_dhcp();
+	return any_ip_dhcp() || any_ip6_dhcp();
 }
 
 extern int arg_private;		// mount private /home

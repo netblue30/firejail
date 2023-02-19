@@ -35,11 +35,11 @@
 #include "../include/rundefs.h"
 
 #define tprintf(fp, args...) \
-    do { \
-        if (!fp)\
-            init(); \
-        fprintf(fp, args); \
-    } while(0)
+	do { \
+		if (!fp)\
+			init(); \
+		fprintf(fp, args); \
+	} while(0)
 
 // break recursivity on fopen call
 typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);

@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
@@ -47,7 +47,7 @@ static void usage(void) {
 	printf("\tfnet config mac addr\n");
 	printf("\tfnet config ipv6 dev ip\n");
 	printf("\tfnet ifup dev\n");
-  printf("\tfnet waitll dev\n");
+	printf("\tfnet waitll dev\n");
 }
 
 int main(int argc, char **argv) {
@@ -144,9 +144,9 @@ printf("\n");
 	else if (argc == 5 && strcmp(argv[1], "config") == 0 && strcmp(argv[2], "ipv6") == 0) {
 		net_if_ip6(argv[3], argv[4]);
 	}
-  else if (argc == 3 && strcmp(argv[1], "waitll") == 0) {
-    net_if_waitll(argv[2]);
-  }
+	else if (argc == 3 && strcmp(argv[1], "waitll") == 0) {
+		net_if_waitll(argv[2]);
+	}
 	else {
 		fprintf(stderr, "Error fnet: invalid arguments\n");
 		return 1;

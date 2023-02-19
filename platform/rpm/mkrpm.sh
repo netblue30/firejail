@@ -31,7 +31,7 @@ fi
 tmpdir=$(mktemp -d)
 mkdir -p ${tmpdir}/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 function cleanup {
-  rm -rf ${tmpdir}
+    rm -rf ${tmpdir}
 }
 trap cleanup EXIT
 

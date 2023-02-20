@@ -1,3 +1,6 @@
 * text=auto eol=lf
 
+*.AppImage -text
+*.zip -text
+
 /etc/inc/*.inc linguist-language=text

@@ -1080,7 +1080,8 @@ int main(int argc, char **argv, char **envp) {
 	// sanity check for arguments
 	for (i = 0; i < argc; i++) {
 		if (strlen(argv[i]) >= MAX_ARG_LEN) {
-			fprintf(stderr, "Error: too long arguments: argv[%d] len (%zu) >= MAX_ARG_LEN (%d)\n", i, strlen(argv[i]), MAX_ARG_LEN);
+			fprintf(stderr, "Error: too long argument: argv[%d] len (%zu) >= MAX_ARG_LEN (%d): %s\n",
+			        i, strlen(argv[i]), MAX_ARG_LEN, argv[i]);
 			exit(1);
 		}
 	}

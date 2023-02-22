@@ -50,7 +50,7 @@ disable-mnt
 private-bin goldendict
 private-cache
 private-dev
-private-etc @tls-ca
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl
 private-tmp
 
 dbus-user none

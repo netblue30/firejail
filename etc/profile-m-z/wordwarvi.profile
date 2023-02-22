@@ -44,7 +44,7 @@ private
 private-bin wordwarvi
 private-cache
 private-dev
-private-etc
+private-etc alsa,alternatives,asound.conf,ld.so.cache,ld.so.preload,machine-id,pulse
 private-tmp
 
 dbus-user none

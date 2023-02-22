@@ -24,7 +24,7 @@ whitelist ${HOME}/.mozilla/firefox/profiles.ini
 read-only ${HOME}/.mozilla/firefox/profiles.ini
 
 ?HAS_APPIMAGE: ignore private-dev
-private-etc @tls-ca
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl
 private-opt tutanota-desktop
 
 # Redirect

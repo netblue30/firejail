@@ -51,7 +51,7 @@ tracelog
 disable-mnt
 private-bin flameshot
 private-cache
-private-etc @tls-ca
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.preload,machine-id,pki,resolv.conf,ssl
 private-dev
 #private-tmp
 

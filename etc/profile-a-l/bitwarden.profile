@@ -23,7 +23,7 @@ no3d
 nosound
 
 ?HAS_APPIMAGE: ignore private-dev
-private-etc @tls-ca
+private-etc alternatives,ca-certificates,crypto-policies,fonts,hosts,ld.so.cache,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
 private-opt Bitwarden
 
 # Redirect

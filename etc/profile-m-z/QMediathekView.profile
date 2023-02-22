@@ -71,7 +71,7 @@ disable-mnt
 private-bin mplayer,mpv,QMediathekView,smplayer,totem,vlc,xplayer
 private-cache
 private-dev
-private-etc @tls-ca
+private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,group,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,login.defs,nsswitch.conf,passwd,pki,pulse,resolv.conf,ssl
 private-tmp
 
 dbus-user none

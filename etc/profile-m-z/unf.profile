@@ -48,7 +48,7 @@ private-bin unf
 private-cache
 ?HAS_APPIMAGE: ignore private-dev
 private-dev
-private-etc
+private-etc alternatives,ld.so.cache,ld.so.preload
 private-lib gcc/*/*/libgcc_s.so.*
 private-tmp
 

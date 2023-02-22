@@ -56,7 +56,7 @@ private
 #private-bin ping - has mammoth problems with execvp: "No such file or directory"
 private-cache
 private-dev
-private-etc @tls-ca
+private-etc alternatives,ca-certificates,crypto-policies,hosts,ld.so.cache,ld.so.preload,login.defs,passwd,pki,resolv.conf,ssl
 private-lib
 private-tmp
 

@@ -42,7 +42,7 @@ private
 private-bin gnubik
 private-cache
 private-dev
-private-etc @x11
+private-etc alternatives,drirc,fonts,gtk-2.0,ld.so.cache,ld.so.preload
 private-tmp
 
 dbus-user none

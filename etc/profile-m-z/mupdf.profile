@@ -36,7 +36,7 @@ seccomp
 tracelog
 
 private-dev
-private-etc
+private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
 private-tmp
 
 dbus-user none

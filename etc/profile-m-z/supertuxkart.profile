@@ -53,7 +53,7 @@ private-bin supertuxkart
 private-cache
 # Add the next line to your supertuxkart.local if you do not need controller support.
 #private-dev
-private-etc @games,@tls-ca,@x11
+private-etc alternatives,ca-certificates,crypto-policies,drirc,hosts,ld.so.cache,ld.so.preload,machine-id,openal,pki,resolv.conf,ssl
 private-tmp
 private-opt none
 private-srv none

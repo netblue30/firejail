@@ -35,7 +35,7 @@ tracelog
 
 private-bin gpredict
 private-dev
-private-etc @tls-ca
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,pki,resolv.conf,ssl
 private-tmp
 
 restrict-namespaces

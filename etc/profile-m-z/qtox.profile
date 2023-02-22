@@ -42,7 +42,7 @@ disable-mnt
 private-bin qtox
 private-cache
 private-dev
-private-etc @tls-ca
+private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,localtime,machine-id,pki,pulse,resolv.conf,ssl
 private-tmp
 
 dbus-user none

@@ -52,7 +52,7 @@ tracelog
 private-bin 7z,7zr,qcomicbook,rar,sh,tar,unace,unrar,unzip
 private-cache
 private-dev
-private-etc @x11,mime.types
+private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,Trolltech.conf,X11,xdg
 private-tmp
 
 dbus-user none

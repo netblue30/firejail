@@ -43,7 +43,7 @@ disable-mnt
 private-bin locale,zulip
 private-cache
 private-dev
-private-etc
+private-etc alternatives,asound.conf,fonts,ld.so.cache,ld.so.preload,machine-id
 private-tmp
 
 restrict-namespaces

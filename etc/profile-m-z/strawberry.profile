@@ -42,7 +42,7 @@ disable-mnt
 private-bin strawberry,strawberry-tagreader
 private-cache
 private-dev
-private-etc @tls-ca,host.conf
+private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
 private-tmp
 
 dbus-system none

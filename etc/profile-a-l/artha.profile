@@ -54,7 +54,7 @@ disable-mnt
 private-bin artha,enchant,notify-send
 private-cache
 private-dev
-private-etc
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
 private-lib libnotify.so.*
 private-tmp
 

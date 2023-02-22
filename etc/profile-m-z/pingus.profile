@@ -50,7 +50,7 @@ disable-mnt
 private-bin pingus,pingus.bin,sh
 private-cache
 private-dev
-private-etc
+private-etc alternatives,ld.so.cache,ld.so.preload,machine-id
 private-tmp
 
 dbus-user none

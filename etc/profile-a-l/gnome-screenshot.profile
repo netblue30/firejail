@@ -41,7 +41,7 @@ tracelog
 disable-mnt
 private-bin gnome-screenshot
 private-dev
-private-etc @x11
+private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload,localtime,machine-id
 private-tmp
 
 dbus-user filter

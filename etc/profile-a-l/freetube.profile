@@ -18,7 +18,7 @@ mkdir ${HOME}/.config/FreeTube
 whitelist ${HOME}/.config/FreeTube
 
 private-bin electron,electron[0-9],electron[0-9][0-9],freetube,sh
-private-etc @tls-ca,@x11,host.conf,mime.types
+private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,mime.types,nsswitch.conf,pki,pulse,resolv.conf,ssl,X11,xdg
 
 dbus-user filter
 dbus-user.own org.mpris.MediaPlayer2.chromium.*

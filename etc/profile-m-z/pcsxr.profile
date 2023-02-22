@@ -47,7 +47,7 @@ private-bin pcsxr
 private-cache
 # Add the next line to your pcsxr.local if you do not need controller support.
 #private-dev
-private-etc @tls-ca,@x11,bumblebee,gconf,glvnd,host.conf,mime.types,rpc,services
+private-etc alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,dconf,drirc,fonts,gconf,glvnd,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,nvidia,pango,pki,protocols,pulse,resolv.conf,rpc,services,ssl,X11,xdg
 private-opt none
 private-tmp
 

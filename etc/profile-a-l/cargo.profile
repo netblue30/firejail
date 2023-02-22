@@ -16,7 +16,7 @@ noblacklist ${HOME}/.cargo/credentials.toml
 #whitelist ${HOME}/.rustup
 
 #private-bin cargo,rustc
-private-etc @tls-ca,host.conf,magic,magic.mgc,rpc,services
+private-etc alternatives,ca-certificates,crypto-policies,group,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,magic,magic.mgc,nsswitch.conf,passwd,pki,protocols,resolv.conf,rpc,services,ssl
 
 memory-deny-write-execute
 

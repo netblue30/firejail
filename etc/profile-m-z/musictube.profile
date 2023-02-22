@@ -49,7 +49,7 @@ disable-mnt
 private-bin musictube
 private-cache
 private-dev
-private-etc @tls-ca,@x11,host.conf,mime.types
+private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,drirc,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,mime.types,nsswitch.conf,pki,pulse,resolv.conf,selinux,ssl,X11,xdg
 private-tmp
 
 dbus-user none

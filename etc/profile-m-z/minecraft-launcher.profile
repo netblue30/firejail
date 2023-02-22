@@ -50,7 +50,7 @@ private-cache
 private-dev
 # If multiplayer or realms break, add 'private-etc <your-own-java-folder-from-/etc>'
 # or 'ignore private-etc' to your minecraft-launcher.local.
-private-etc @tls-ca,@x11,host.conf,java*,mime.types,services,timezone
+private-etc alternatives,asound.conf,ati,ca-certificates,crypto-policies,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,java*,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,login.defs,machine-id,mime.types,nvidia,passwd,pki,pulse,resolv.conf,selinux,services,ssl,timezone,X11,xdg
 private-opt minecraft-launcher
 private-tmp
 

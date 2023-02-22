@@ -29,7 +29,7 @@ read-only ${HOME}/.mozilla/firefox/profiles.ini
 machine-id
 nosound
 
-private-etc @tls-ca,@x11
+private-etc alternatives,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
 private-opt ElectronMail
 
 dbus-user filter

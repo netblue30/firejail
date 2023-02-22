@@ -40,7 +40,7 @@ tracelog
 disable-mnt
 private-bin blobby
 private-dev
-private-etc @x11
+private-etc alsa,alternatives,asound.conf,drirc,group,hosts,ld.so.cache,ld.so.preload,login.defs,machine-id,passwd,pulse
 private-lib
 private-tmp
 

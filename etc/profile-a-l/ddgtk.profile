@@ -44,7 +44,7 @@ tracelog
 disable-mnt
 private-bin bash,dd,ddgtk,grep,lsblk,python*,sed,sh,tr
 private-cache
-private-etc
+private-etc alternatives,fonts,ld.so.cache,ld.so.preload
 private-tmp
 
 dbus-user none

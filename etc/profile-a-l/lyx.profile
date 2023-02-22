@@ -32,7 +32,7 @@ apparmor
 machine-id
 
 # private-bin atril,dvilualatex,env,latex,lua*,luatex,lyx,lyxclient,okular,pdf2latex,pdflatex,pdftex,perl*,python*,qpdf,qpdfview,sh,tex2lyx,texmf,xelatex
-private-etc @x11,lyx,mime.types,texmf
+private-etc alternatives,dconf,fonts,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,locale,locale.alias,locale.conf,lyx,machine-id,mime.types,passwd,texmf,X11,xdg
 
 # Redirect
 include latex-common.profile

@@ -30,6 +30,6 @@ seccomp
 
 private-bin mcabber
 private-dev
-private-etc @tls-ca
+private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,pki,ssl
 
 restrict-namespaces

@@ -168,8 +168,10 @@ blacklist ${HOME}/.local/share/systemd
 blacklist ${PATH}/systemctl
 blacklist ${PATH}/systemd-run
 blacklist ${RUNUSER}/systemd
+blacklist /etc/credstore*
 blacklist /etc/systemd/network
 blacklist /etc/systemd/system
+blacklist /run/credentials
 blacklist /var/lib/systemd
 # creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
 #blacklist /var/run/systemd

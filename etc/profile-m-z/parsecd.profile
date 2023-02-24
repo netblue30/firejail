@@ -7,12 +7,25 @@ include parsecd.local
 include globals.local
 
 noblacklist ${HOME}/.parsec
+ignore noexec ${HOME}
+
+include disable-common.inc
+include disable-devel.inc
+include disable-exec.inc
+include disable-interpreters.inc
+include disable-proc.inc
+include disable-programs.inc
+include disable-shell.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.parsec
 whitelist ${HOME}/.parsec
 whitelist /usr/share/parsec
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
+include whitelist-var-common.inc
 
 # Due to the nature of parsec, the following directives will not work:
 # - no3d

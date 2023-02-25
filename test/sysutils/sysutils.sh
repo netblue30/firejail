@@ -1,11 +1,35 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
+
+if command -v gzip
+then
+	echo "TESTING: gzip"
+	./gzip.exp
+else
+	echo "TESTING SKIP: md5sum not found"
+fi
+
+if command -v md5sum
+then
+	echo "TESTING: md5sum"
+	./md5sum.exp
+else
+	echo "TESTING SKIP: md5sum not found"
+fi
+
+if command -v sha512sum
+then
+	echo "TESTING: sha512sum"
+	./sha512sum.exp
+else
+	echo "TESTING SKIP: sha512sum not found"
+fi
 
 if command -v cpio
 then
@@ -21,14 +45,6 @@ then
 	./gzip.exp
 else
 	echo "TESTING SKIP: gzip not found"
-fi
-
-if command -v xzdec
-then
-	echo "TESTING: xzdec"
-	./xzdec.exp
-else
-	echo "TESTING SKIP: xzdec not found"
 fi
 
 if command -v xz
@@ -134,4 +150,3 @@ then
 else
 	echo "TESTING SKIP: whois not found"
 fi
-

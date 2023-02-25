@@ -22,6 +22,7 @@ mkdir ${HOME}/.frozen-bubble
 whitelist ${HOME}/.frozen-bubble
 include whitelist-common.inc
 include whitelist-runuser-common.inc
+whitelist /usr/share/games
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -42,6 +43,7 @@ tracelog
 disable-mnt
 # private-bin frozen-bubble
 private-dev
+private-etc @games,@x11
 private-tmp
 
 dbus-user none

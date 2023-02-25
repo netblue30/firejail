@@ -605,6 +605,7 @@ blacklist ${HOME}/.config/rpcs3
 blacklist ${HOME}/.config/rtv
 blacklist ${HOME}/.config/scribus
 blacklist ${HOME}/.config/scribusrc
+blacklist ${HOME}/.config/sendgmail
 blacklist ${HOME}/.config/sinew.in
 blacklist ${HOME}/.config/sink
 blacklist ${HOME}/.config/skypeforlinux
@@ -1077,6 +1078,7 @@ blacklist ${HOME}/.ostrichriders
 blacklist ${HOME}/.paradoxinteractive
 blacklist ${HOME}/.paradoxlauncher
 blacklist ${HOME}/.parallelrealities/blobwars
+blacklist ${HOME}/.parsec
 blacklist ${HOME}/.pcsxr
 blacklist ${HOME}/.penguin-command
 blacklist ${HOME}/.pine-crash
@@ -1107,6 +1109,7 @@ blacklist ${HOME}/.sbt
 blacklist ${HOME}/.scorched3d
 blacklist ${HOME}/.scribus
 blacklist ${HOME}/.scribusrc
+blacklist ${HOME}/.sendgmail.*
 blacklist ${HOME}/.simutrans
 blacklist ${HOME}/.smartgit/*/passwords
 blacklist ${HOME}/.ssr

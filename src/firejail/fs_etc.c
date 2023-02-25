@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -402,4 +402,3 @@ void fs_private_dir_list(const char *private_dir, const char *private_run_dir, c
 	fs_private_dir_mount(private_dir, private_run_dir);
 	fmessage("Private %s installed in %0.2f ms\n", private_dir, timetrace_end());
 }
-

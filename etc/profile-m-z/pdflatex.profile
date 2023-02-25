@@ -9,4 +9,3 @@ private-bin pdflatex
 
 # Redirect
 include latex-common.profile
-

@@ -7,4 +7,4 @@ include electron-hardened.inc.local
 #include globals.local
 
 # Redirect
-include chrome-common-hardened.inc.profile
+include chromium-common-hardened.inc.profile

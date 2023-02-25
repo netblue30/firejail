@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -76,7 +76,7 @@ void noexec_test(const char *path) {
 
 	if (child == 0) { // child
 		// drop privileges
- 		if (setgid(user_gid) != 0)
+		if (setgid(user_gid) != 0)
 			errExit("setgid");
 		if (setuid(user_uid) != 0)
 			errExit("setuid");

@@ -168,8 +168,10 @@ blacklist ${HOME}/.local/share/systemd
 blacklist ${PATH}/systemctl
 blacklist ${PATH}/systemd-run
 blacklist ${RUNUSER}/systemd
+blacklist /etc/credstore*
 blacklist /etc/systemd/network
 blacklist /etc/systemd/system
+blacklist /run/credentials
 blacklist /var/lib/systemd
 # creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
 #blacklist /var/run/systemd
@@ -449,6 +451,9 @@ blacklist ${HOME}/.ssh
 blacklist ${HOME}/.vaults
 blacklist /run/timeshift
 blacklist /var/backup
+
+# dm-crypt / LUKS
+blacklist /crypto_keyfile.bin
 
 # Remove environment variables with auth tokens.
 # Note however that the sandbox might still have access to the

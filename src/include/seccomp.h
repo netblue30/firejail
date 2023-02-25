@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -194,24 +194,24 @@
 #endif
 
 #define VALIDATE_ARCHITECTURE \
-     BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
-     BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_NR, 1, 0), \
-     BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
+	BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
+	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_NR, 1, 0), \
+	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
 #define VALIDATE_ARCHITECTURE_KILL \
-     BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
-     BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_NR, 1, 0), \
-     KILL_OR_RETURN_ERRNO
+	BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
+	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_NR, 1, 0), \
+	KILL_OR_RETURN_ERRNO
 
 #define VALIDATE_ARCHITECTURE_64 \
-     BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
-     BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_64, 1, 0), \
-     BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
+	BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
+	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_64, 1, 0), \
+	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
 #define VALIDATE_ARCHITECTURE_32 \
-     BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
-     BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_32, 1, 0), \
-     BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
+	BPF_STMT(BPF_LD+BPF_W+BPF_ABS, (offsetof(struct seccomp_data, arch))), \
+	BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, ARCH_32, 1, 0), \
+	BPF_STMT(BPF_RET+BPF_K, SECCOMP_RET_ALLOW)
 
 #ifndef X32_SYSCALL_BIT
 #define X32_SYSCALL_BIT 0x40000000

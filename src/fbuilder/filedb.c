@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -38,8 +38,8 @@ FileDB *filedb_find(FileDB *head, const char *fname) {
 		if (strlen(fname) > ptr->len &&
 		    fname[ptr->len] == '/' &&
 		    strncmp(ptr->fname, fname, ptr->len) == 0) {
-		    	found = 1;
-		    	break;
+			found = 1;
+			break;
 		}
 
 		ptr = ptr->next;

@@ -8,4 +8,3 @@ include globals.local
 
 # Redirect
 include softmaker-common.profile
-

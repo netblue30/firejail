@@ -2,7 +2,7 @@
 # Description: RPCS3 emulator
 # This file is overwritten after every install/update
 # Persistent local customizations
-include rpcs3.local 
+include rpcs3.local
 # Persistent global definitions
 include globals.local
 

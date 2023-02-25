@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 #
 # Usage: ./platform/rpm/mkrpm.sh firejail <version> "<config options>"
@@ -31,7 +31,7 @@ fi
 tmpdir=$(mktemp -d)
 mkdir -p ${tmpdir}/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 function cleanup {
-  rm -rf ${tmpdir}
+    rm -rf ${tmpdir}
 }
 trap cleanup EXIT
 

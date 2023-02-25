@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
@@ -18,4 +18,3 @@ echo "TESTING: groups (test/private-etc/groups.exp)"
 
 echo "TESTING: etc-cleanup (test/private-etc/etc-cleanup.exp)"
 ./etc-cleanup.exp
-

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -1101,7 +1101,7 @@ void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
 	if (mkdir(fname, mode) == -1 ||
 	    chmod(fname, mode) == -1 ||
 	    chown(fname, uid, gid)) {
-	    	fprintf(stderr, "Error: failed to create %s directory\n", fname);
+		fprintf(stderr, "Error: failed to create %s directory\n", fname);
 		errExit("mkdir/chmod");
 	}
 
@@ -1447,6 +1447,29 @@ static int has_link(const char *dir) {
 		return 1;
 	return 0;
 }
+
+// allow strict ASCII letters and numbers; names with only numbers are rejected; spaces are rejected
+int invalid_name(const char *name) {
+	const char *c = name;
+
+	int only_numbers = 1;
+	while (*c) {
+		if (!isalnum(*c))
+			return 1;
+		if (!isdigit(*c))
+			only_numbers = 0;
+		++c;
+	}
+	if (only_numbers)
+		return 1;
+
+	// restrict name to 64 chars max
+	if (strlen(name) > 64)
+		return 1;
+
+	return 0;
+}
+
 
 void check_homedir(const char *dir) {
 	assert(dir);

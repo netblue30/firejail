@@ -1,0 +1,34 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Build
+[configure.ac]
+indent_size = 8
+indent_style = tab
+
+[*{.mk,Makefile}{,.in}]
+indent_size = 8
+indent_style = tab
+
+# Source code and scripts
+[*.{c,h}{,.in}]
+indent_size = 8
+indent_style = tab
+
+[*.{awk,exp,sh}{,.in}]
+indent_size = 8
+indent_style = tab
+
+[*.py{,.in}]
+indent_size = 4
+indent_style = space
+
+# Misc
+[.gitlab-ci.yml]
+indent_size = 4
+indent_style = space

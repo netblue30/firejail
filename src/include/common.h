@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -143,6 +143,7 @@ int pid_proc_cmdline_x11_xpra_xephyr(const pid_t pid);
 int pid_hidepid(void);
 char *do_replace_cntrl_chars(char *str, char c);
 char *replace_cntrl_chars(const char *str, char c);
+char *escape_cntrl_chars(const char *str);
 int has_cntrl_chars(const char *str);
 void reject_cntrl_chars(const char *fname);
 void reject_meta_chars(const char *fname, int globbing);

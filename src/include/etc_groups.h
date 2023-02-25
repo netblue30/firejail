@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -28,6 +28,10 @@
 static char *etc_list[ETC_MAX + 1] = { // plus 1 for ending NULL pointer
 	"alternatives",
 	"fonts",
+	"gcrypt", 	// GNU crypto library - it contains configuration for specialized encryption
+		// and random number generators hardware.
+		// The directory is not installed in Debian. On Fedora it is an empty directory.
+		// The defaults in glibc cover the regular PC.
 	"group",
 	"ld.so.cache",
 	"ld.so.conf",
@@ -49,7 +53,6 @@ static char *etc_group_games[] = {
 	"openal", // 3D sound
 	"timidity", // MIDI
 	"timidity.cfg",
-	"vulkan", // next generation OpenGL stack
 	NULL
 };
 
@@ -75,7 +78,6 @@ static char *etc_group_sound[] = {
 static char *etc_group_tls_ca[] = {
 	"ca-certificates",
 	"crypto-policies",
-	"gcrypt",
 	"pki",
 	"ssl",
 	NULL
@@ -90,9 +92,11 @@ static char *etc_group_x11[] = {
 	"gtk-3.0",
 	"kde4rc",
 	"kde5rc",
+	"machine-id", // QT dbus lib is crashing without it!
 	"nvidia", // 3D
 	"pango", // text rendering/internationalization
 	"Trolltech.conf", // old QT config file
+	"vulkan", // next generation OpenGL stack
 	"X11",
 	"xdg",
 	NULL

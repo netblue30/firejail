@@ -34,7 +34,7 @@ $ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
 
 We build our release firejail.tar.xz and firejail.deb packages using the following command:
-$ make distclean && ./configure && make deb-apparmor
+$ make distclean && ./configure && make deb
 
 
 Maintainer:
@@ -329,6 +329,8 @@ Dara Adib (https://github.com/daradib)
 	- linphone profile fix
 Dario Pellegrini (https://github.com/dpellegr)
 	- allowing links in netns
+David Fetter (https://github.com/davidfetter)
+	- bump up copyright years
 David Thole (https://github.com/TheDarkTrumpet)
 	- added profile for teams-for-linux
 Davide Beatrici (https://github.com/davidebeatrici)
@@ -685,6 +687,7 @@ LaurentGH (https://github.com/LaurentGH)
 	- allow private-bin parameters to be absolute paths
 layderv (https://github.com/layderv)
 	- prevent sandbox name from containing only digits
+	- clean escape control characters from the command line
 lecso7 (https://github.com/lecso7)
 	- added goldendict profile
 	- allow evince to read .cbz file format
@@ -774,9 +777,12 @@ Neo00001 (https://github.com/Neo00001)
 	- update telegram profile
 	- add spectacle profile
 	- add kdiff3 profile
+netcarver (https://github.com/netcarver)
+	- prevent access to LUKS keyfile
 NetSysFire (https://github.com/NetSysFire)
 	- update weechat profile
 	- update megaglest profile
+	- added parsecd profile
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory
@@ -996,6 +1002,7 @@ slowpeek (https://github.com/slowpeek)
 	- allow access to avahi-daemon in apparmor/firejail-default
 	- make appimage examples consistent with --appimage option short description
 	- blacklist google-drive-ocamlfuse config
+	- blacklist sendgmail config
 smitsohu (https://github.com/smitsohu)
 	- read-only kde4 services directory
 	- enhanced mediathekview profile
@@ -1073,7 +1080,7 @@ SYN-cook (https://github.com/SYN-cook)
 startx2017 (https://github.com/startx2017)
 	- syscall list update
 	- updated default seccomp filters - added bpf, clock_settime, personality, process_vm_writev, query_module,
-	              settimeofday, stime, umount, userfaultfd, ustat, vm86, and vm86old
+	  settimeofday, stime, umount, userfaultfd, ustat, vm86, and vm86old
 	- enable/disable join support in /etc/firejail/firejail.config
 	- firecfg fix: create ~/.local/share/applications directory if it doesn't exist
 	- firejail.config cleanup
@@ -1242,4 +1249,4 @@ Zack Weinberg (https://github.com/zackw)
 zupatisc (https://github.com/zupatisc)
 	- patch-util fix
 
-Copyright (C) 2014-2022 Firejail Authors
+Copyright (C) 2014-2023 Firejail Authors

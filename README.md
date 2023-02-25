@@ -268,5 +268,3 @@ Stats:
     dbus-system filter 		12
 
 ```
-
-

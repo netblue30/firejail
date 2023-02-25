@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -265,7 +265,7 @@ int net_get_mac(const char *ifname, unsigned char mac[6]) {
 	int sock;
 
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-              	errExit("socket");
+		errExit("socket");
 
 	memset(&ifr, 0, sizeof(ifr));
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);

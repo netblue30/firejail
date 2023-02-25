@@ -35,7 +35,6 @@ whitelist /usr/share/apostrophe
 whitelist /usr/share/texlive
 whitelist /usr/share/texmf
 whitelist /usr/share/pandoc-*
-whitelist /usr/share/perl5
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

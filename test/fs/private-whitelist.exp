@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -32,9 +32,9 @@ send -- "ls -a ~ | wc -l\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"3" {puts "3\n"}
-        "4" {puts "4\n"}
-        "5" {puts "5\n"}
-        "6" {puts "6\n"}
+	"4" {puts "4\n"}
+	"5" {puts "5\n"}
+	"6" {puts "6\n"}
 }
 
 sleep 1

@@ -51,6 +51,7 @@ tracelog
 private-bin rhythmbox,rhythmbox-client
 private-cache
 private-dev
+private-etc @tls-ca,@x11,python*
 private-tmp
 
 dbus-user filter

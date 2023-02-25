@@ -53,7 +53,7 @@ tracelog
 private-bin trojita
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,hostname,hosts,ld.so.cache,ld.so.preload,pki,resolv.conf,selinux,ssl,xdg
+private-etc @tls-ca,@x11
 private-tmp
 
 dbus-user filter
@@ -61,3 +61,4 @@ dbus-user.talk org.freedesktop.secrets
 dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini
+restrict-namespaces

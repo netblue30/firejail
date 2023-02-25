@@ -65,3 +65,4 @@ private-cache
 private-dev
 
 memory-deny-write-execute
+restrict-namespaces

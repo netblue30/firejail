@@ -52,10 +52,11 @@ disable-mnt
 private-bin gzip,lynx,newsboat,sh,w3m
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,lynx.cfg,lynx.lss,pki,resolv.conf,ssl,terminfo
+private-etc @tls-ca,lynx.cfg,lynx.lss,terminfo
 private-tmp
 
 dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

@@ -42,7 +42,9 @@ tracelog
 private-bin 7z,7za,7zr,ar,arj,atool,bash,brotli,bsdtar,bzip2,compress,cp,cpio,dpkg-deb,file-roller,gtar,gzip,isoinfo,lha,lrzip,lsar,lz4,lzip,lzma,lzop,mv,p7zip,rar,rm,rzip,sh,tar,unace,unalz,unar,uncompress,unrar,unsquashfs,unstuff,unzip,unzstd,xz,xzdec,zip,zoo,zstd
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload,xdg
+private-etc @x11
 # private-tmp
 
 dbus-system none
+
+restrict-namespaces

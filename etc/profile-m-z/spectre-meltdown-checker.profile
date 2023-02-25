@@ -10,6 +10,7 @@ blacklist ${RUNUSER}/wayland-*
 
 noblacklist ${PATH}/mount
 noblacklist ${PATH}/umount
+noblacklist /proc/config.gz
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
@@ -41,7 +42,7 @@ x11 none
 
 disable-mnt
 private
-private-bin awk,bzip2,cat,coreos-install,cpucontrol,cut,dd,dirname,dmesg,dnf,echo,grep,gunzip,gz,gzip,head,id,kldload,kldstat,liblz4-tool,lzop,mktemp,modinfo,modprobe,mount,nm,objdump,od,perl,printf,readelf,rm,sed,seq,sh,sort,spectre-meltdown-checker,spectre-meltdown-checker.sh,stat,strings,sysctl,tail,test,toolbox,tr,uname,which,xz-utils
+private-bin awk,basename,bzip2,cat,coreos-install,cpucontrol,cut,dd,dirname,dmesg,dnf,echo,grep,gunzip,gz,gzip,head,id,kldload,kldstat,liblz4-tool,lzop,mktemp,modinfo,modprobe,mount,nm,objdump,od,perl,printf,ps,readelf,rm,sed,seq,sh,sort,spectre-meltdown-checker,spectre-meltdown-checker.sh,stat,strings,sysctl,tail,test,toolbox,tr,uname,unzstd,which,xz-utils
 private-cache
 private-tmp
 
@@ -49,3 +50,4 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

@@ -38,7 +38,7 @@ seccomp
 disable-mnt
 # private-bin authenticator,python*
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,pki,resolv.conf,ssl
+private-etc @tls-ca
 private-tmp
 
 # makes settings immutable
@@ -46,3 +46,4 @@ private-tmp
 # dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)
+restrict-namespaces

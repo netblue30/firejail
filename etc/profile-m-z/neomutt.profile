@@ -50,31 +50,11 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.Mail
-mkdir ${HOME}/.bogofilter
-mkdir ${HOME}/.config/mutt
-mkdir ${HOME}/.config/nano
-mkdir ${HOME}/.config/neomutt
-mkdir ${HOME}/.elinks
-mkdir ${HOME}/.emacs.d
-mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.mail
-mkdir ${HOME}/.mutt
-mkdir ${HOME}/.neomutt
-mkdir ${HOME}/.vim
-mkdir ${HOME}/.w3m
 mkdir ${HOME}/Mail
 mkdir ${HOME}/mail
 mkdir ${HOME}/postponed
 mkdir ${HOME}/sent
-mkfile ${HOME}/.emacs
-mkfile ${HOME}/.mailcap
-mkfile ${HOME}/.msmtprc
-mkfile ${HOME}/.muttrc
-mkfile ${HOME}/.nanorc
-mkfile ${HOME}/.neomuttrc
-mkfile ${HOME}/.signature
-mkfile ${HOME}/.viminfo
-mkfile ${HOME}/.vimrc
 whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.Mail
@@ -136,7 +116,7 @@ tracelog
 # disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,gnupg,hostname,hosts,hosts.conf,ld.so.cache,ld.so.preload,mail,mailname,Mutt,Muttrc,Muttrc.d,neomuttrc,neomuttrc.d,nntpserver,nsswitch.conf,passwd,pki,resolv.conf,ssl,xdg
+private-etc @tls-ca,@x11,Mutt,Muttrc,Muttrc.d,gnupg,hosts.conf,mail,mailname,neomuttrc,neomuttrc.d,nntpserver
 private-tmp
 writable-run-user
 writable-var
@@ -145,7 +125,5 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
-read-only ${HOME}/.elinks
-read-only ${HOME}/.nanorc
 read-only ${HOME}/.signature
-read-only ${HOME}/.w3m
+restrict-namespaces

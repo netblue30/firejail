@@ -40,7 +40,9 @@ x11 none
 private-bin uudeview
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

@@ -45,6 +45,7 @@ tracelog
 
 disable-mnt
 private-bin bash,nslookup,sh
+private-etc
 private-dev
 private-tmp
 
@@ -52,3 +53,4 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

@@ -33,3 +33,5 @@ disable-mnt
 private-bin anydesk
 private-dev
 private-tmp
+
+restrict-namespaces

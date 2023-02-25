@@ -56,8 +56,7 @@ private
 #private-bin ping - has mammoth problems with execvp: "No such file or directory"
 private-cache
 private-dev
-# /etc/hosts is required in private-etc; however, just adding it to the list doesn't solve the problem!
-#private-etc ca-certificates,crypto-policies,hosts,pki,resolv.conf,ssl
+private-etc @tls-ca
 private-lib
 private-tmp
 
@@ -68,3 +67,4 @@ dbus-user none
 dbus-system none
 
 read-only ${HOME}
+#restrict-namespaces

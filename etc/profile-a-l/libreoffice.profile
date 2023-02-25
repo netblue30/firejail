@@ -50,8 +50,10 @@ tracelog
 #private-bin libreoffice,sh,uname,dirname,grep,sed,basename,ls
 private-cache
 private-dev
+private-etc @tls-ca,@x11,cups,gnupg,libreoffice,papersize,ssh
 private-tmp
 
 dbus-system none
 
+restrict-namespaces
 join-or-start libreoffice

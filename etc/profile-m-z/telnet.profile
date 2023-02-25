@@ -51,3 +51,4 @@ dbus-system none
 
 memory-deny-write-execute
 noexec ${HOME}
+restrict-namespaces

@@ -48,8 +48,10 @@ disable-mnt
 private-bin atomicparsley,ffmpeg,ffprobe,python*,youtube-dl-gui
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.preload,locale,locale.conf,passwd,pki,resolv.conf,ssl
+private-etc @tls-ca,@x11
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

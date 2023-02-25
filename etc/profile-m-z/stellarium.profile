@@ -43,3 +43,4 @@ private-bin stellarium
 private-dev
 private-tmp
 
+restrict-namespaces

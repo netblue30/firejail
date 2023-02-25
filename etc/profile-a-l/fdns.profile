@@ -42,8 +42,9 @@ private
 private-bin bash,fdns,sh
 private-cache
 #private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fdns,ld.so.cache,ld.so.preload,localtime,nsswitch.conf,passwd,pki,ssl
+private-etc @tls-ca,fdns
 # private-lib
 private-tmp
 
 memory-deny-write-execute
+restrict-namespaces

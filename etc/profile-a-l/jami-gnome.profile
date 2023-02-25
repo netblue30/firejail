@@ -39,3 +39,4 @@ private-dev
 private-tmp
 
 env QT_QPA_PLATFORM=xcb
+restrict-namespaces

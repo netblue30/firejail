@@ -14,7 +14,7 @@ mkdir ${HOME}/.config/microsoft-edge-dev
 whitelist ${HOME}/.cache/microsoft-edge-dev
 whitelist ${HOME}/.config/microsoft-edge-dev
 
-private-opt microsoft
+whitelist /opt/microsoft/msedge-dev
 
 # Redirect
 include chromium-common.profile

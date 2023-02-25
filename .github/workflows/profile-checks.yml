@@ -4,27 +4,41 @@ on:
   push:
     branches: [ master ]
     paths:
-      - 'etc/**'
       - 'ci/check/profiles/**'
-      - 'src/firecfg/firecfg.config'
-      - 'contrib/sort.py'
+      - 'etc/**'
+      - .github/workflows/profile-checks.yml
+      - contrib/sort.py
+      - src/firecfg/firecfg.config
   pull_request:
     branches: [ master ]
     paths:
-      - 'etc/**'
       - 'ci/check/profiles/**'
-      - 'src/firecfg/firecfg.config'
-      - 'contrib/sort.py'
+      - 'etc/**'
+      - .github/workflows/profile-checks.yml
+      - contrib/sort.py
+      - src/firecfg/firecfg.config
+
+permissions:  # added using https://github.com/step-security/secure-workflows
+  contents: read
 
 jobs:
   profile-checks:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
-    - name: sort.py
-      run: ./ci/check/profiles/sort.py etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
-    - name: private-etc-always-required.sh
-      run: ./ci/check/profiles/private-etc-always-required.sh etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
+    - name: Harden Runner
+      uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+      with:
+        disable-sudo: true
+        egress-policy: block
+        allowed-endpoints: >
+          github.com:443
+
+    - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+#   - name: sort.py
+#      run: ./ci/check/profiles/sort.py etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
+# Currently broken (see #5610)
+#    - name: private-etc-always-required.sh
+#      run: ./ci/check/profiles/private-etc-always-required.sh etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
     - name: sort-disable-programs.sh
       run: ./ci/check/profiles/sort-disable-programs.sh etc/inc/disable-programs.inc
     - name: sort-firecfg.config.sh

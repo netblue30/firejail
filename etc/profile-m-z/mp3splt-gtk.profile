@@ -36,8 +36,10 @@ tracelog
 private-bin mp3splt-gtk
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload,machine-id,openal,pulse
+private-etc @games,@x11
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

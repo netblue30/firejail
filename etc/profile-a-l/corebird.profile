@@ -35,3 +35,4 @@ private-bin corebird
 private-dev
 private-tmp
 
+restrict-namespaces

@@ -1,6 +1,6 @@
 #!/bin/sh
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 # based on http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/
@@ -10,12 +10,8 @@ set -e
 
 . "$(dirname "$0")/config.sh"
 
-EXTRA_VERSION=$1
-
-test "$#" -gt 0 && shift
-
-CODE_ARCHIVE="$NAME-$VERSION.tar.xz"
-CODE_DIR="$NAME-$VERSION"
+CODE_ARCHIVE="$TARNAME-$VERSION.tar.xz"
+CODE_DIR="$TARNAME-$VERSION"
 INSTALL_DIR="${INSTALL_DIR}${CODE_DIR}/debian"
 DEBIAN_CTRL_DIR="${DEBIAN_CTRL_DIR}${CODE_DIR}/debian/DEBIAN"
 
@@ -29,7 +25,7 @@ echo "*****************************************"
 tar -xJvf "$CODE_ARCHIVE"
 #mkdir -p "$INSTALL_DIR"
 cd "$CODE_DIR"
-./configure --prefix=/usr "$@"
+./configure --prefix=/usr --enable-apparmor "$@"
 make -j2
 mkdir debian
 DESTDIR=debian make install-strip

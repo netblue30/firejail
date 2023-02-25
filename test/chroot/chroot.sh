@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
@@ -16,7 +16,5 @@ echo "TESTING: chroot (test/chroot/fs_chroot.exp)"
 
 echo "TESTING: unchroot as root (test/chroot/unchroot-as-root.exp)"
 sudo ./unchroot-as-root.exp
-
-
 
 rm -f unchroot

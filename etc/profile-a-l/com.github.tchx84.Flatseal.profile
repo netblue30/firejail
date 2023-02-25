@@ -51,7 +51,7 @@ disable-mnt
 private-bin com.github.tchx84.Flatseal,gjs
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload
+private-etc @x11
 private-tmp
 
 dbus-user filter
@@ -62,3 +62,4 @@ dbus-user.talk org.gnome.Software
 dbus-system none
 
 read-write ${HOME}/.local/share/flatpak/overrides
+restrict-namespaces

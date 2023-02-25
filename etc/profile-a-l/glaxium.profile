@@ -43,8 +43,10 @@ disable-mnt
 private-bin glaxium
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,bumblebee,drirc,glvnd,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nvidia,pulse
+private-etc @x11,bumblebee,glvnd
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

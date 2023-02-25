@@ -41,10 +41,11 @@ tracelog
 disable-mnt
 private-bin xfce4-screenshooter,xfconf-query
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload,pki,resolv.conf,ssl
+private-etc @tls-ca,@x11
 private-tmp
 
 dbus-user none
 dbus-system none
 
 # memory-deny-write-execute -- see #3790
+restrict-namespaces

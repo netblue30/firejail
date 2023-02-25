@@ -22,5 +22,8 @@ ignore seccomp
 #private-etc palemoon
 #private-opt palemoon
 
+restrict-namespaces
+ignore restrict-namespaces
+
 # Redirect
 include firefox-common.profile

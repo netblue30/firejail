@@ -46,9 +46,11 @@ disable-mnt
 private-bin authenticator-rs
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,pki,resolv.conf,ssl,xdg
+private-etc @tls-ca,@x11
 private-tmp
 
 dbus-user filter
 dbus-user.talk ca.desrt.dconf
 dbus-system none
+
+restrict-namespaces

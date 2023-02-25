@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -197,6 +197,12 @@ static void print_elem(unsigned index, int nowrap) {
 	char *user = pid_get_user_name(uid);
 	char *user_allocated = user;
 
+	char *cmd_escaped = escape_cntrl_chars(cmd);
+	if (cmd_escaped) {
+		free(cmd);
+		cmd = cmd_escaped;
+	}
+
 	// extract sandbox name - pid == index
 	char *sandbox_name = "";
 	char *sandbox_name_allocated = NULL;
@@ -224,7 +230,7 @@ static void print_elem(unsigned index, int nowrap) {
 	}
 	free(fname);
 
-	if (user ==NULL)
+	if (user == NULL)
 		user = "";
 	if (cmd) {
 		if (col < 4 || nowrap)

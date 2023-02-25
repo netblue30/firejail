@@ -49,10 +49,11 @@ disable-mnt
 private-bin homebank
 private-cache
 private-dev
-private-etc alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pki,pulse,resolv.conf,selinux,ssl,X11
+private-etc @tls-ca,@x11,mime.types
 private-tmp
 
 dbus-user none
 dbus-system none
 
 # memory-deny-write-execute
+restrict-namespaces

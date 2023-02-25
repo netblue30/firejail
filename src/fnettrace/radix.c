@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -152,4 +152,3 @@ char *radix_longest_prefix_match(uint32_t ip) {
 
 	return (rv)? rv->name: NULL;
 }
-

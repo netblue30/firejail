@@ -41,8 +41,10 @@ tracelog
 private-bin abiword
 private-cache
 private-dev
-private-etc alternatives,fonts,gtk-3.0,ld.so.cache,ld.so.preload,passwd
+private-etc @x11
 private-tmp
 
 # dbus-user none
 # dbus-system none
+
+restrict-namespaces

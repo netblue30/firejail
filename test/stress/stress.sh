@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
@@ -14,7 +14,7 @@ mkdir ~/fj-stress-test
 rm blacklist.profile
 rm noblacklist.profile
 rm env.profile
-for i in `seq 1 100`;
+for i in {1..100}
 do
 	echo "hello" > ~/fj-stress-test/testfile$i
 	echo "blacklist ~/fj-stress-test/testfile$i" >> blacklist.profile

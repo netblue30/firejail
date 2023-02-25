@@ -37,3 +37,5 @@ seccomp
 private-bin mplayer
 private-dev
 private-tmp
+
+restrict-namespaces

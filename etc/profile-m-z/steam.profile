@@ -156,7 +156,10 @@ protocol unix,inet,inet6,netlink
 # seccomp sometimes causes issues (see #2951, #3267).
 # Add 'ignore seccomp' to your steam.local if you experience this.
 # mount, name_to_handle_at, pivot_root and umount2 are used by Proton >= 5.13
+# (see #4366).
 seccomp !chroot,!mount,!name_to_handle_at,!pivot_root,!ptrace,!umount2
+# process_vm_readv is used by GE-Proton7-18 (see #5185).
+seccomp.32 !process_vm_readv
 # tracelog breaks integrated browser
 #tracelog
 
@@ -172,10 +175,11 @@ seccomp !chroot,!mount,!name_to_handle_at,!pivot_root,!ptrace,!umount2
 private-dev
 # private-etc breaks a small selection of games on some systems. Add 'ignore private-etc'
 # to your steam.local to support those.
-private-etc alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,dbus-1,drirc,fonts,group,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,lsb-release,machine-id,mime.types,nvidia,os-release,passwd,pki,pulse,resolv.conf,services,ssl,vulkan
+private-etc @games,@tls-ca,@x11,bumblebee,dbus-1,host.conf,lsb-release,mime.types,os-release,services
 private-tmp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 read-only ${HOME}/.config/MangoHud
+#restrict-namespaces

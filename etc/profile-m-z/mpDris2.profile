@@ -48,10 +48,11 @@ seccomp
 private-bin mpDris2,notify-send,python*
 private-cache
 private-dev
-private-etc alternatives,hosts,ld.so.cache,ld.so.preload,nsswitch.conf
+private-etc
 private-lib libdbus-1.so.*,libdbus-glib-1.so.*,libgirepository-1.0.so.*,libnotify.so.*,libpython*,python2*,python3*
 private-tmp
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)
 
 read-only ${HOME}
+restrict-namespaces

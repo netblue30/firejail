@@ -7,8 +7,10 @@ include transmission-cli.local
 # Persistent global definitions
 include globals.local
 
+whitelist /usr/share/transmission
+
 private-bin transmission-cli
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
+private-etc @tls-ca
 
 # Redirect
 include transmission-common.profile

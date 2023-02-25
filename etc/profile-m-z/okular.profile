@@ -61,7 +61,7 @@ tracelog
 
 private-bin kbuildsycoca4,kdeinit4,lpr,okular,unar,unrar
 private-dev
-private-etc alternatives,cups,fonts,kde4rc,kde5rc,ld.so.cache,ld.so.preload,machine-id,passwd,xdg
+private-etc @x11,cups
 # private-tmp - on KDE we need access to the real /tmp for data exchange with email clients
 
 # dbus-user none
@@ -69,4 +69,5 @@ private-etc alternatives,cups,fonts,kde4rc,kde5rc,ld.so.cache,ld.so.preload,mach
 
 # memory-deny-write-execute
 
+restrict-namespaces
 join-or-start okular

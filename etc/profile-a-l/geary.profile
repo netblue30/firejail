@@ -75,7 +75,7 @@ tracelog
 #private-bin geary,sh
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,group,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.preload,machine-id,mailcap,mime.types,nsswitch.conf,passwd,pki,resolv.conf,ssl,xdg
+private-etc @tls-ca,@x11,mailcap,mime.types
 private-tmp
 
 dbus-user filter
@@ -88,6 +88,8 @@ dbus-user.talk org.gnome.OnlineAccounts
 dbus-user.talk org.gnome.evolution.dataserver.AddressBook10
 dbus-user.talk org.gnome.evolution.dataserver.Sources5
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
+dbus-user.talk org.mozilla.*
 dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini
+restrict-namespaces

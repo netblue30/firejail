@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -22,7 +22,7 @@ sleep 1
 send -- "cat /etc/passwd;echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"No such file or directory"
+	"Permission denied"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}

@@ -2,7 +2,7 @@
 # Description: RPCS3 emulator
 # This file is overwritten after every install/update
 # Persistent local customizations
-include rpcs3.local 
+include rpcs3.local
 # Persistent global definitions
 include globals.local
 
@@ -54,8 +54,10 @@ tracelog
 
 disable-mnt
 #private-cache
-#private-etc ca-certificates,crypto-policies,machine-id,pki,resolv.conf,ssl # seems to need awk
+#private-etc alternatives,ca-certificates,crypto-policies,machine-id,pki,resolv.conf,ssl # seems to need awk
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

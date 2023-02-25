@@ -46,7 +46,7 @@ disable-mnt
 private-bin qrencode
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-lib libpcre*
 private-tmp
 
@@ -54,3 +54,4 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

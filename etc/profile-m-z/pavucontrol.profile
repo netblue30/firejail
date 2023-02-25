@@ -44,7 +44,7 @@ disable-mnt
 private-bin pavucontrol
 private-cache
 private-dev
-private-etc alternatives,asound.conf,avahi,fonts,ld.so.cache,ld.so.preload,machine-id,pulse
+private-etc avahi
 private-lib
 private-tmp
 
@@ -53,3 +53,4 @@ dbus-system none
 
 # mdwe is broken under Wayland, but works under Xorg.
 #memory-deny-write-execute
+restrict-namespaces

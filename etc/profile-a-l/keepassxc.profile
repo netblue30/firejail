@@ -89,7 +89,7 @@ private-bin keepassxc,keepassxc-cli,keepassxc-proxy
 # hardware keys) on /dev after it has already started; add "ignore private-dev"
 # to keepassxc.local if this is an issue (see #4883).
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
+private-etc
 private-tmp
 
 dbus-user filter
@@ -105,6 +105,8 @@ dbus-user.talk org.xfce.ScreenSaver
 #dbus-user.talk org.freedesktop.Notifications
 dbus-system filter
 dbus-system.talk org.freedesktop.login1
+
+restrict-namespaces
 
 # Mutex is stored in /tmp by default, which is broken by private-tmp.
 join-or-start keepassxc

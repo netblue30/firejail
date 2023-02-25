@@ -20,8 +20,8 @@
 
 # allow ping etc.
 -A INPUT -p icmp --icmp-type destination-unreachable -j ACCEPT
--A INPUT -p icmp --icmp-type time-exceeded -j ACCEPT
 -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+-A INPUT -p icmp --icmp-type echo-reply -j ACCEPT
 
 # accept dns requests going out to a server on the local network
 -A OUTPUT -p udp --dport 53 -j ACCEPT

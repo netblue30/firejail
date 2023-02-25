@@ -34,8 +34,10 @@ seccomp
 # private-bin bash,bless,mono,sh
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,mono
+private-etc mono
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

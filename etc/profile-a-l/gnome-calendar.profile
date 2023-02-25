@@ -44,7 +44,7 @@ private
 private-bin gnome-calendar
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload,localtime,nsswitch.conf,pki,resolv.conf,ssl
+private-etc @tls-ca,@x11
 private-tmp
 
 dbus-user filter
@@ -60,3 +60,4 @@ dbus-system filter
 #dbus-system.talk org.freedesktop.GeoClue2
 
 read-only ${HOME}
+restrict-namespaces

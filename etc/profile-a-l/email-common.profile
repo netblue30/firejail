@@ -1,5 +1,5 @@
 # Firejail profile for email-common
-# Description: Common profile for claws-mail and sylpheed email clients
+# Description: Common profile for GUI mail clients
 # This file is overwritten after every install/update
 # Persistent local customizations
 include email-common.local
@@ -14,6 +14,8 @@ noblacklist ${HOME}/.signature
 # when storing mail outside the default ${HOME}/Mail path, 'noblacklist' the custom path in your email-common.local
 # and 'blacklist' it in your disable-common.local too so it is kept hidden from other applications
 noblacklist ${HOME}/Mail
+noblacklist /var/mail
+noblacklist /var/spool/mail
 
 noblacklist ${DOCUMENTS}
 
@@ -38,6 +40,8 @@ whitelist ${HOME}/Mail
 whitelist ${RUNUSER}/gnupg
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
+whitelist /var/mail
+whitelist /var/spool/mail
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -65,19 +69,21 @@ tracelog
 # disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,gcrypt,gnupg,groups,gtk-2.0,gtk-3.0,hostname,hosts,hosts.conf,ld.so.cache,ld.so.preload,machine-id,mailname,nsswitch.conf,passwd,pki,resolv.conf,selinux,ssl,xdg
+private-etc @tls-ca,@x11,gnupg,hosts.conf,mailname,timezone
 private-tmp
 # encrypting and signing email
 writable-run-user
+writable-var
 
+dbus-user filter
+dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.gnome.keyring.*
+dbus-user.talk org.gnome.seahorse.*
+dbus-user.talk org.mozilla.*
 dbus-system none
-
-# If you want to read local mail stored in /var/mail, add the following to email-common.local:
-#noblacklist /var/mail
-#noblacklist /var/spool/mail
-#whitelist /var/mail
-#whitelist /var/spool/mail
-#writable-var
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini
 read-only ${HOME}/.signature
+restrict-namespaces

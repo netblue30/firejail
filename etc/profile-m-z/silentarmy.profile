@@ -37,3 +37,4 @@ private-dev
 private-opt none
 private-tmp
 
+restrict-namespaces

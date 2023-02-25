@@ -43,10 +43,12 @@ seccomp
 private-bin profanity
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,localtime,mime.types,nsswitch.conf,pki,resolv.conf,ssl
+private-etc @tls-ca,mime.types
 private-tmp
 
-dbus-user none
+dbus-user filter
+dbus-user.talk org.freedesktop.Notifications
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

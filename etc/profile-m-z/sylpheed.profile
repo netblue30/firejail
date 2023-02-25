@@ -15,12 +15,5 @@ whitelist /usr/share/sylpheed
 
 # private-bin curl,gpg,gpg2,gpg-agent,gpgsm,pinentry,pinentry-gtk-2,sylpheed
 
-dbus-user filter
-dbus-user.talk ca.desrt.dconf
-dbus-user.talk org.freedesktop.secrets
-dbus-user.talk org.gnome.keyring.SystemPrompter
-# Add the next line to your sylpheed.local to enable notifications.
-# dbus-user.talk org.freedesktop.Notifications
-
 # Redirect
 include email-common.profile

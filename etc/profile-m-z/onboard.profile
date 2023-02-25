@@ -49,7 +49,9 @@ disable-mnt
 private-cache
 private-bin onboard,python*,tput
 private-dev
-private-etc alternatives,dbus-1,dconf,fonts,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,locale,locale.alias,locale.conf,mime.types,selinux,X11,xdg
+private-etc @x11,dbus-1,mime.types
 private-tmp
 
 dbus-system none
+
+restrict-namespaces

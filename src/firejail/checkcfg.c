@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -62,6 +62,7 @@ int checkcfg(int val) {
 		cfg_val[CFG_CHROOT] = 0;
 		cfg_val[CFG_SECCOMP_LOG] = 0;
 		cfg_val[CFG_PRIVATE_LIB] = 0;
+		cfg_val[CFG_TRACELOG] = 0;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -111,6 +112,7 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_SECCOMP, "seccomp")
 			PARSE_YESNO(CFG_NETWORK, "network")
 			PARSE_YESNO(CFG_RESTRICTED_NETWORK, "restricted-network")
+			PARSE_YESNO(CFG_TRACELOG, "tracelog")
 			PARSE_YESNO(CFG_XEPHYR_WINDOW_TITLE, "xephyr-window-title")
 			PARSE_YESNO(CFG_OVERLAYFS, "overlayfs")
 			PARSE_YESNO(CFG_PRIVATE_BIN, "private-bin")

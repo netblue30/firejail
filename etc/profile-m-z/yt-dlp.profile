@@ -15,7 +15,7 @@ noblacklist ${HOME}/yt-dlp.conf
 noblacklist ${HOME}/yt-dlp.conf.txt
 
 private-bin ffprobe,yt-dlp
-private-etc alternatives,ld.so.cache,ld.so.preload,yt-dlp.conf
+private-etc yt-dlp.conf
 
 # Redirect
 include youtube-dl.profile

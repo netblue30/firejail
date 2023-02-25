@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -33,8 +33,8 @@
  */
 #if __GNUC__ > 11 || (__GNUC__ == 11 && __GNUC_MINOR__ >= 1)
 static void __gcov_flush(void) {
-       __gcov_dump();
-       __gcov_reset();
+	__gcov_dump();
+	__gcov_reset();
 }
 #endif
 #else

@@ -30,7 +30,7 @@ protocol unix,inet,inet6
 
 # private-bin amarok
 private-dev
-# private-etc alternatives,asound.conf,ca-certificates,crypto-policies,machine-id,pki,pulse,ssl
+# private-etc alternatives,asound.conf,ca-certificates,crypto-policies,machine-id,pki,pulse,resolv.conf,ssl
 private-tmp
 
 dbus-user filter
@@ -44,3 +44,5 @@ dbus-user.talk org.freedesktop.Notifications
 #dbus-user.own org.kde.klauncher
 #dbus-user.talk org.kde.knotify
 dbus-system none
+
+# restrict-namespaces

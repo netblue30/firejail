@@ -51,7 +51,7 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload,locale.alias,locale.conf,mime.types,nsswitch.conf,passwd,pki,selinux,X11,xdg
+private-etc @tls-ca,@x11,mime.types
 private-tmp
 
 dbus-user none
@@ -61,3 +61,4 @@ read-write ${HOME}/.config/menus
 read-write ${HOME}/.gnome/apps
 read-write ${HOME}/.local/share/applications
 read-write ${HOME}/.local/share/flatpak/exports
+restrict-namespaces

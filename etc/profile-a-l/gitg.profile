@@ -61,3 +61,5 @@ dbus-user.talk ca.desrt.dconf
 # Add the next line to your gitg.local if you need keyring access.
 #dbus-user.talk org.freedesktop.secrets
 dbus-system none
+
+restrict-namespaces

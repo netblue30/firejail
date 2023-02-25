@@ -44,7 +44,7 @@ tracelog
 #disable-mnt
 #private-bin awk,basename,bash,env,gawk,grep,ps,readlink,sh,virtualbox,VirtualBox,VBox*,vbox*,whoami
 private-cache
-private-etc alsa,alternatives,asound.conf,ca-certificates,conf.d,crypto-policies,dconf,fonts,hostname,hosts,ld.so.cache,ld.so.preload,localtime,machine-id,pki,pulse,resolv.conf,ssl
+private-etc @tls-ca,@x11,conf.d
 private-tmp
 
 dbus-user none

@@ -37,3 +37,4 @@ dbus-system none
 read-only ${HOME}
 
 memory-deny-write-execute
+restrict-namespaces

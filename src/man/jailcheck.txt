@@ -115,3 +115,4 @@ Homepage: https://firejail.wordpress.com
 .BR firejail-profile (5),
 .BR firejail-login (5),
 .BR firejail-users (5),
+.\" vim: set filetype=groff :

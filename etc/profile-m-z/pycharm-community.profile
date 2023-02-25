@@ -5,7 +5,13 @@ include pycharm-community.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.PyCharmCE*
+noblacklist ${HOME}/.PyCharm*
+# Persistent cache is needed for spell and grammar checkers, etc.
+noblacklist ${HOME}/.cache/JetBrains/PyCharm*
+noblacklist ${HOME}/.config/JetBrains/PyCharm*
+# Not `PyCharm*`, because the state about of "anonymous data sent" is shared
+# between JetBrains IDEs.
+noblacklist ${HOME}/.local/share/JetBrains
 
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
@@ -30,7 +36,6 @@ tracelog
 
 # private-etc alternatives,fonts,passwd - minimal required to run but will probably break
 # program!
-private-cache
 private-dev
 private-tmp
 

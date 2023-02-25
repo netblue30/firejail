@@ -39,3 +39,4 @@ private-bin dragon
 private-dev
 private-tmp
 
+restrict-namespaces

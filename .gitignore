@@ -16,6 +16,9 @@ config.log
 config.mk
 config.sh
 config.status
+contrib/syntax/files/example
+contrib/syntax/files/firejail-profile.lang
+contrib/syntax/files/firejail.vim
 firejail-*.tar.xz
 firejail-login.5
 firejail-profile.5
@@ -27,6 +30,7 @@ firecfg.1
 jailcheck.1
 src/fnettrace-dns/fnettrace-dns
 src/fnettrace-sni/fnettrace-sni
+src/fnettrace-icmp/fnettrace-icmp
 src/firejail/firejail
 src/firemon/firemon
 src/firecfg/firecfg
@@ -43,6 +47,7 @@ src/fcopy/fcopy
 src/fldd/fldd
 src/fbuilder/fbuilder
 src/profstats/profstats
+src/etc-cleanup/etc-cleanup
 src/bash_completion/firejail.bash_completion
 src/zsh_completion/_firejail
 src/jailcheck/jailcheck

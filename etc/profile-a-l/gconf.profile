@@ -53,8 +53,9 @@ disable-mnt
 private-bin gconf-editor,gconf-merge-*,gconfpkg,gconftool-2,gsettings-*-convert,python2*
 private-cache
 private-dev
-private-etc alternatives,fonts,gconf,ld.so.cache,ld.so.preload
+private-etc gconf
 private-lib GConf,libpython*,python2*
 private-tmp
 
 memory-deny-write-execute
+restrict-namespaces

@@ -19,7 +19,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-# Allow zeal to open links in Firefox.
+# Allow zeal to open links in Firefox browsers.
 # This also requires dbus-user filtering (see below).
 noblacklist ${HOME}/.mozilla
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
@@ -60,13 +60,13 @@ disable-mnt
 private-bin zeal
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,nsswitch.conf,pango,pki,protocols,resolv.conf,rpc,services,ssl,Trolltech.conf,X11,xdg
+private-etc @tls-ca,@x11,host.conf,mime.types,rpc,services
 private-tmp
 
 dbus-user filter
-dbus-user.talk org.mozilla.Firefox.*
-dbus-user.talk org.mozilla.firefox.*
+dbus-user.talk org.mozilla.*
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-system none
 
 # memory-deny-write-execute - breaks on Arch
+restrict-namespaces

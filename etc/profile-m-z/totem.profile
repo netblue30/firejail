@@ -51,9 +51,11 @@ private-bin totem
 # totem needs access to ~/.cache/tracker or it exits
 #private-cache
 private-dev
-# private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,machine-id,pki,pulse,ssl
+private-etc @tls-ca,@x11,python*
 private-tmp
 
 # makes settings immutable
 # dbus-user none
 dbus-system none
+
+restrict-namespaces

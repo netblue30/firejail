@@ -42,3 +42,5 @@ tracelog
 private-dev
 # private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl
 private-tmp
+
+restrict-namespaces

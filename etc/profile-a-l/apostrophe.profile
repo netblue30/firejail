@@ -35,7 +35,6 @@ whitelist /usr/share/apostrophe
 whitelist /usr/share/texlive
 whitelist /usr/share/texmf
 whitelist /usr/share/pandoc-*
-whitelist /usr/share/perl5
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -62,10 +61,12 @@ disable-mnt
 private-bin apostrophe,fmtutil,kpsewhich,mktexfmt,pandoc,pdftex,perl,python3*,sh,xdvipdfmx,xelatex,xetex
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,pango,texlive,X11
+private-etc @x11,texlive
 private-tmp
 
 dbus-user filter
 dbus-user.own org.gnome.gitlab.somas.Apostrophe
 dbus-user.talk ca.desrt.dconf
 dbus-system none
+
+restrict-namespaces

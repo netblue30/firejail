@@ -17,6 +17,7 @@ include globals.local
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
 noblacklist ${RUNUSER}/*firefox*
+noblacklist ${RUNUSER}/psd/*firefox*
 
 blacklist /usr/libexec
 
@@ -37,6 +38,7 @@ whitelist /usr/share/gtk-doc/html
 whitelist /usr/share/mozilla
 whitelist /usr/share/webext
 whitelist ${RUNUSER}/*firefox*
+whitelist ${RUNUSER}/psd/*firefox*
 include whitelist-usr-share-common.inc
 
 # firefox requires a shell to launch on Arch - add the next line to your firefox.local to enable private-bin.
@@ -47,8 +49,7 @@ include whitelist-usr-share-common.inc
 #private-etc firefox
 
 dbus-user filter
-dbus-user.own org.mozilla.Firefox.*
-dbus-user.own org.mozilla.firefox.*
+dbus-user.own org.mozilla.*
 dbus-user.own org.mpris.MediaPlayer2.firefox.*
 # Add the next line to your firefox.local to enable native notifications.
 #dbus-user.talk org.freedesktop.Notifications

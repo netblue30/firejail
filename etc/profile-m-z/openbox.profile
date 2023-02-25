@@ -14,7 +14,8 @@ caps.drop all
 netfilter
 noroot
 protocol unix,inet,inet6
-seccomp
+seccomp !chroot
 
 read-only ${HOME}/.config/openbox/autostart
 read-only ${HOME}/.config/openbox/environment
+#restrict-namespaces

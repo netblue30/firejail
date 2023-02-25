@@ -26,7 +26,7 @@ $ cd firejail
 $ ./configure && make && sudo make install-strip
 
 On Debian/Ubuntu you will need to install git and gcc compiler. AppArmor
-development libraries and pkg-config are required when using --apparmor
+development libraries and pkg-config are required when using --enable-apparmor
 ./configure option:
 
 $ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
@@ -34,7 +34,7 @@ $ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
 
 We build our release firejail.tar.xz and firejail.deb packages using the following command:
-$ make distclean && ./configure && make deb-apparmor
+$ make distclean && ./configure && make deb
 
 
 Maintainer:
@@ -43,6 +43,7 @@ Maintainer:
 Committers
 - chiraag-nataraj (https://github.com/chiraag-nataraj)
 - crass (https://github.com/crass)
+- ChrysoliteAzalea (https://github.com/ChrysoliteAzalea)
 - curiosityseeker (https://github.com/curiosityseeker)
 - glitsj16 (https://github.com/glitsj16)
 - Fred-Barclay (https://github.com/Fred-Barclay)
@@ -76,6 +77,7 @@ Firejail Authors (alphabetical order)
 	- add pybitmessage profile
 a1346054 (https://github.com/a1346054)
 	- add missing final newlines in various files
+	- Remove deprecated syntax and modernize shell test scripts
 Ádler Jonas Gross (https://github.com/adgross)
 	- AppArmor fix
 Adrian L. Shaw (https://github.com/adrianlshaw)
@@ -91,6 +93,8 @@ Akhil Hans Maulloo (https://github.com/kouul)
 Albin Kauffmann (https://github.com/albinou)
 	- Firefox and Chromium profile fixes
 	- info to allow screen sharing in profiles
+Alexandre Provencio (https://github.com/aleprovencio)
+	- fix qutebrowser not opening tabs
 Alex Leahu (https://github.com/alxjsn)
 	- fix screen sharing configuration on Wayland
 Alexey Kuznetsov (kuznet@ms2.inr.ac.ru)
@@ -120,6 +124,9 @@ Alexander Stein (https://github.com/ajstein)
 	- added profile for qutebrowser
 alkim0 (https://github.com/alkim0)
 	- warn when encountering EIO during remount
+	- Add profile for chafa
+amano-kenji  (https://github.com/amano-kenji)
+	- fix private-etc in qutebrowser profile
 Amin Vakil (https://github.com/aminvakil)
 	- whois profile fix
 	- added profile for strawberry
@@ -140,6 +147,8 @@ announ (https://github.com/announ)
 	- mpv and youtube-dl profile fixes
 	- git profile fix
 	- evince profile fix
+Antoine Catton (https://github.com/acatton)
+	- add keep-shell-rc command and option
 Anton Shestakov (https://github.com/antonv6)
 	- add whitelist items for uim
 	- allow /etc/vulkan in steam profile
@@ -182,6 +191,8 @@ avoidr (https://github.com/avoidr)
 	- added mcabber profile
 	- fixed mpv profile
 	- various other fixes
+Азалия Смарагдова/ChrysoliteAzalea (https://github.com/ChrysoliteAzalea)
+	-  add support for custom AppArmor profiles (--apparmor=)
 backspac (https://github.com/backspac)
 	- firecfg fixes
 	- add steam-runtime alias
@@ -203,11 +214,12 @@ bbhtt (https://github.com/bbhtt)
 	- email clients whitelisting and fixes
 Benjamin Kampmann (https://github.com/ligthyear)
 	- Forward exit code from child process
+BeautyYuYanli (https://github.com/BeautyYuYanli)
+	- add linuxqq and qq profiles
 bitfreak25 (https://github.com/bitfreak25)
 	- added PlayOnLinux profile
 	- minetest profile fix
 	- added sylpheed profile
-
 bn0785ac (https://github.com/bn0785ac)
 	- fixed bnox, dnox profiles
 	- support all tor-browser langpacks
@@ -232,6 +244,8 @@ Bundy01 (https://github.com/Bundy01)
 	- update virtualbox.profile
 	- Quodlibet profile
 	- update apparmor firejail-local for Brave + ipfs
+bymoz089 (https://github.com/bymoz089)
+	- add timezone access to make libical functional
 BytesTuner (https://github.com/BytesTuner)
 	- provided keepassxc profile
 caoliver (https://github.com/caoliver)
@@ -278,6 +292,8 @@ croket (https://github.com/crocket)
 	- fix dino profile
 	- fix wireshark profile
 	- prevent emptty /usr/share in google-chrome profiles
+cubercsl (https://github.com/cubercsl)
+	- add linuxqq and qq profiles
 curiosity-seeker (https://github.com/curiosity-seeker - old)
 curiosityseeker (https://github.com/curiosityseeker - new)
 	- tightening unbound and dnscrypt-proxy profiles
@@ -313,6 +329,8 @@ Dara Adib (https://github.com/daradib)
 	- linphone profile fix
 Dario Pellegrini (https://github.com/dpellegr)
 	- allowing links in netns
+David Fetter (https://github.com/davidfetter)
+	- bump up copyright years
 David Thole (https://github.com/TheDarkTrumpet)
 	- added profile for teams-for-linux
 Davide Beatrici (https://github.com/davidebeatrici)
@@ -344,6 +362,8 @@ dmfreemon (https://github.com/dmfreemon)
 	- handle malloc() failures; use gnu_basename() instead of basenaem()
 Dmitriy Chestnykh (https://github.com/chestnykh)
 	- add ability to disable user profiles at compile time
+Dpeta (https://github.com/Dpeta)
+	- add Chatterino profile
 dshmgh (https://github.com/dshmgh)
 	- overlayfs fix for systems with /home mounted on a separate partition
 Duncan Overbruck (https://github.com/Duncaen)
@@ -371,6 +391,8 @@ Felipe Barriga Richards (https://github.com/fbarriga)
 fenuks (https://github.com/fenuks)
 	- fix sound in games using FMOD
 	- allow /opt/tor-browser for Tor Browser profile
+fkrone (https://github.com/fkrone)
+	- fix Zoom profile
 Florian Begusch (https://github.com/florianbegusch)
 	- (la)tex profiles
 	- fixed transmission-common.profile
@@ -500,6 +522,7 @@ hhzek0014 (https://github.com/hhzek0014)
 hknaack (https://github.com/hknaack)
 	- Kate profile fixes
 	- seamonkey.profile: support enigmail/gpg
+	- Avidemux tools support
 hlein (https://github.com/hlein)
 	- strip out \r's from jail prober
 	- make env/arg sanity check failure messages more useful
@@ -610,6 +633,8 @@ juan (https://github.com/nyancat18)
 	- fixed Kdenlive, Shotcut profiles
 	- new profiles for Cinelerra, Cliqz, Bluefish
 	- profile hardening
+k4leg (https://github.com/k4leg)
+	- fix PyCharm profiles
 Kaan Genç (https://github.com/SeriousBug)
 	- dynamic allocation of noblacklist buffer
 Karoshi42 (https://github.com/karoshi42)
@@ -640,6 +665,7 @@ KOLANICH (https://github.com/KOLANICH)
 	- added symlink fixer fix_private-bin.py in contrib section
 	- update fix_private-bin.py
 	- fix meld
+	- temporary fix to the bug caused by apparmor profiles stacking
 kortewegdevries (https://github.com/kortewegdevries)
 	- a whole bunch of new profiles and fixes
 	- whitelisting evolution, kmail
@@ -659,6 +685,9 @@ Laurent Declercq (https://github.com/nuxwin)
 	- fixed test for shell interpreter in chroots
 LaurentGH (https://github.com/LaurentGH)
 	- allow private-bin parameters to be absolute paths
+layderv (https://github.com/layderv)
+	- prevent sandbox name from containing only digits
+	- clean escape control characters from the command line
 lecso7 (https://github.com/lecso7)
 	- added goldendict profile
 	- allow evince to read .cbz file format
@@ -727,6 +756,9 @@ mirabellette (https://github.com/mirabellette)
 	- add comment to thunderbird.profile to allow Firefox to load profiles
 mjudtmann (https://github.com/mjudtmann)
 	- lock firejail configuration in disable-mgmt.inc
+Mohammed Anas  (https://github.com/mhmdanas)
+	- fix dbus notifications
+	- fix libEGL warning for abiword
 m00nwtchr (https://github.com/m00nwtchr)
 	- Whitelist electron-flags.conf for all versions of electron
 	- electron profile updates
@@ -745,9 +777,12 @@ Neo00001 (https://github.com/Neo00001)
 	- update telegram profile
 	- add spectacle profile
 	- add kdiff3 profile
+netcarver (https://github.com/netcarver)
+	- prevent access to LUKS keyfile
 NetSysFire (https://github.com/NetSysFire)
 	- update weechat profile
 	- update megaglest profile
+	- added parsecd profile
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory
@@ -770,6 +805,8 @@ nolanl (https://github.com/nolanl)
 	- added localtime to signal-desktop's profile
 nyancat18 (https://github.com/nyancat18)
 	- added ardour4, dooble, karbon, krita profiles
+nya1 (https://github.com/nya1)
+	- remove apparmor options in --help when building without apparmor support
 Ondra Nekola (https://github.com/satai)
 	- allow firefox theming with non-global themes
 OndrejMalek (https://github.com/OndrejMalek)
@@ -856,11 +893,15 @@ pszxzsd (https://github.com/pszxzsd)
 	-uGet profile
 pwnage-pineapple (https://github.com/pwnage-pineapple)
 	- update Okular profile
+Quentin Retornaz (https://github.com/qretornaz-adapei42)
+	- microsoft-edge profiles fixes
 Quentin Minster (https://github.com/laomaiweng)
 	- propagate --quiet to children Firejail'ed processes
 	- nodbus enhancements/bugfixes
 	- added vim syntax and ftdetect files
 	- Allow exec from /usr/libexec & co. with AppArmor
+ra1nb0w (https://github.com/ra1nb0w)
+	- fix vmware profile
 Rafael Cavalcanti (https://github.com/rccavalcanti)
 	- chromium profile fixes for Arch Linux
 Rahiel Kasim (https://github.com/rahiel)
@@ -922,6 +963,7 @@ rusty-snake (https://github.com/rusty-snake)
 	- added sort.py to contrib
 sak96 (https://github.com/sak96)
 	- discord profile fixes
+	- Fix Firefox 'Profile not found' for psd (v6.45)
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
 sarneaud (https://github.com/sarneaud)
@@ -958,6 +1000,9 @@ slowpeek (https://github.com/slowpeek)
 	- refine appimage example in docs
 	- allow resolution of .local names with avahi-daemon in the apparmor profile
 	- allow access to avahi-daemon in apparmor/firejail-default
+	- make appimage examples consistent with --appimage option short description
+	- blacklist google-drive-ocamlfuse config
+	- blacklist sendgmail config
 smitsohu (https://github.com/smitsohu)
 	- read-only kde4 services directory
 	- enhanced mediathekview profile
@@ -1035,7 +1080,7 @@ SYN-cook (https://github.com/SYN-cook)
 startx2017 (https://github.com/startx2017)
 	- syscall list update
 	- updated default seccomp filters - added bpf, clock_settime, personality, process_vm_writev, query_module,
-	              settimeofday, stime, umount, userfaultfd, ustat, vm86, and vm86old
+	  settimeofday, stime, umount, userfaultfd, ustat, vm86, and vm86old
 	- enable/disable join support in /etc/firejail/firejail.config
 	- firecfg fix: create ~/.local/share/applications directory if it doesn't exist
 	- firejail.config cleanup
@@ -1204,4 +1249,4 @@ Zack Weinberg (https://github.com/zackw)
 zupatisc (https://github.com/zupatisc)
 	- patch-util fix
 
-Copyright (C) 2014-2022 Firejail Authors
+Copyright (C) 2014-2023 Firejail Authors

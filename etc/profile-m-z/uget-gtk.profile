@@ -36,3 +36,5 @@ seccomp
 private-bin uget-gtk
 private-dev
 private-tmp
+
+restrict-namespaces

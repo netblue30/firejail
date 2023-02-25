@@ -4,8 +4,14 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
+      - .github/pull_request_template.md
+      - .github/workflows/codeql-analysis.yml
+      - .github/workflows/profile-checks.yml
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README
@@ -15,8 +21,14 @@ on:
   pull_request:
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
+      - .github/pull_request_template.md
+      - .github/workflows/codeql-analysis.yml
+      - .github/workflows/profile-checks.yml
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README
@@ -24,22 +36,54 @@ on:
       - RELNOTES
       - SECURITY.md
 
+permissions:  # added using https://github.com/step-security/secure-workflows
+  contents: read
+
 jobs:
   build_and_test:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+    - name: Harden Runner
+      uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+      with:
+        egress-policy: block
+        allowed-endpoints: >
+          azure.archive.ubuntu.com:80
+          debian.org:80
+          github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+          www.debian.org:443
+          www.debian.org:80
+          yahoo.com:1025
+    - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
     - name: update package information
       run: sudo apt-get update
     - name: install dependencies
-      run: sudo apt-get install gcc-12 libapparmor-dev libselinux1-dev expect xzdec
+      run: sudo apt-get install gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois
     - name: configure
-      run: CC=gcc-12 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux --prefix=/usr
+      run: CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux
     - name: make
       run: make
     - name: make install
       run: sudo make install
-    - name: print version
+    - name: print firejail version
       run: command -V firejail && firejail --version
-    - name: run tests
-      run: SHELL=/bin/bash make test-github
+    - name: lab setup
+      run: SHELL=/bin/bash make lab-setup
+    - name: run sysutils tests
+      run: SHELL=/bin/bash make test-sysutils
+    - name: run private-etc tests
+      run: SHELL=/bin/bash make test-private-etc
+    - name: run profile tests
+      run: SHELL=/bin/bash make test-profiles
+    - name: run fcopy tests
+      run: SHELL=/bin/bash make test-fcopy
+    - name: run fnetfilter tests
+      run: SHELL=/bin/bash make test-fnetfilter
+    - name: run fs tests
+      run: SHELL=/bin/bash make test-fs
+    - name: run utils tests
+      run: SHELL=/bin/bash make test-utils
+    - name: run environment tests
+      run: SHELL=/bin/bash make test-environment

@@ -82,6 +82,9 @@ output goes here
 <summary>Output of <code>LC_ALL=C firejail --debug /path/to/program</code></summary>
 <p>
 
+<!-- If the output is too long to embed it into the comment,
+     create a secret gist at https://gist.github.com/ and link it here. -->
+
 ```
 output goes here
 ```

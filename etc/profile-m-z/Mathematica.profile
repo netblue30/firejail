@@ -27,3 +27,5 @@ nonewprivs
 noroot
 notv
 seccomp
+
+restrict-namespaces

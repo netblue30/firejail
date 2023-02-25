@@ -40,3 +40,4 @@ private-dev
 # private-tmp
 
 noexec /tmp
+restrict-namespaces

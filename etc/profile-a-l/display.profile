@@ -39,9 +39,11 @@ seccomp
 private-bin display,python*
 private-dev
 # On Debian-based systems, display is a symlink in /etc/alternatives
-private-etc alternatives,ImageMagick-6,ImageMagick-7,ld.so.cache,ld.so.preload
+private-etc ImageMagick-6,ImageMagick-7
 private-lib gcc/*/*/libgcc_s.so.*,gcc/*/*/libgomp.so.*,ImageMagick*,libfreetype.so.*,libltdl.so.*,libMagickWand-*.so.*,libXext.so.*
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

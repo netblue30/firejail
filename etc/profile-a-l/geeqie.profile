@@ -10,6 +10,9 @@ noblacklist ${HOME}/.cache/geeqie
 noblacklist ${HOME}/.config/geeqie
 noblacklist ${HOME}/.local/share/geeqie
 
+# Allow perl (blacklisted by disable-interpreters.inc)
+include allow-perl.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
@@ -31,3 +34,5 @@ seccomp
 
 # private-bin geeqie
 private-dev
+
+restrict-namespaces

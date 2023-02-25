@@ -83,6 +83,9 @@ private-dev
 # private-lib
 # private-opt none
 private-tmp
+# writable-run-user
+# writable-var
+# writable-var-log
 
 dbus-user none
 # dbus-system none
@@ -90,7 +93,4 @@ dbus-user none
 # deterministic-shutdown
 # memory-deny-write-execute
 # read-only ${HOME}
-# restrict-namespaces
-# writable-run-user
-# writable-var
-# writable-var-log
+restrict-namespaces

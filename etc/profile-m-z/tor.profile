@@ -45,6 +45,8 @@ private
 private-bin bash,tor
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,passwd,pki,ssl,tor
+private-etc @tls-ca,tor
 private-tmp
 writable-var
+
+restrict-namespaces

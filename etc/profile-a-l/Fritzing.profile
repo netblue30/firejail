@@ -36,3 +36,4 @@ seccomp
 private-dev
 private-tmp
 
+restrict-namespaces

@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 # not currently covered
@@ -31,7 +31,7 @@ arr[15]="TEST 15: compile private-home disabled"
 arr[16]="TEST 16: compile disable manpages"
 arr[17]="TEST 17: disable tmpfs as regular user"
 arr[18]="TEST 18: disable private home"
-arr[18]="TEST 19: enable ids"
+arr[19]="TEST 19: enable ids"
 
 # remove previous reports and output file
 cleanup() {
@@ -47,23 +47,23 @@ print_title() {
 	echo
 	echo
 	echo "**************************************************"
-	echo $1
+	echo "$1"
 	echo "**************************************************"
 }
 
 DIST="$1"
-while [ $# -gt 0 ]; do    # Until you run out of parameters . . .
-    case "$1" in
-    --clean)
-    	cleanup
-    	exit
-	;;
-    --help)
-    	echo "./compile.sh [--clean|--help]"
-    	exit
-    	;;
-    esac
-    shift       # Check next set of parameters.
+while [[ $# -gt 0 ]]; do    # Until you run out of parameters . . .
+	case "$1" in
+	--clean)
+		cleanup
+		exit
+		;;
+	--help)
+		echo "./compile.sh [--clean|--help]"
+		exit
+		;;
+	esac
+	shift       # Check next set of parameters.
 done
 
 cleanup
@@ -76,8 +76,8 @@ cleanup
 #*****************************************************************
 print_title "${arr[1]}"
 echo "$DIST"
-tar -xJvf ../../$DIST.tar.xz
-mv $DIST firejail
+tar -xJvf ../../"$DIST.tar.xz"
+mv "$DIST" firejail
 
 cd firejail
 ./configure --prefix=/usr --enable-fatal-warnings 2>&1 | tee ../output-configure
@@ -89,7 +89,6 @@ cp output-configure oc1
 cp output-make om1
 rm output-configure output-make
 
-
 #*****************************************************************
 # TEST 2
 #*****************************************************************
@@ -98,7 +97,7 @@ rm output-configure output-make
 print_title "${arr[2]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-dbusproxy  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-dbusproxy --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test2
@@ -115,7 +114,7 @@ rm output-configure output-make
 print_title "${arr[3]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-chroot  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-chroot --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test3
@@ -132,7 +131,7 @@ rm output-configure output-make
 print_title "${arr[4]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-firetunnel  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-firetunnel --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test4
@@ -149,7 +148,7 @@ rm output-configure output-make
 print_title "${arr[5]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-userns  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-userns --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test5
@@ -167,7 +166,7 @@ rm output-configure output-make
 print_title "${arr[6]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-network  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-network --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test6
@@ -184,7 +183,7 @@ rm output-configure output-make
 print_title "${arr[7]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-x11  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-x11 --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test7
@@ -218,7 +217,7 @@ rm output-configure output-make
 print_title "${arr[9]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-file-transfer  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-file-transfer --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test9
@@ -235,7 +234,7 @@ rm output-configure output-make
 print_title "${arr[10]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-whitelist  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-whitelist --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test10
@@ -252,7 +251,7 @@ rm output-configure output-make
 print_title "${arr[11]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --disable-globalcfg  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-globalcfg --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test11
@@ -269,7 +268,7 @@ rm output-configure output-make
 print_title "${arr[12]}"
 cd firejail
 make distclean
-./configure --prefix=/usr --enable-apparmor  --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --enable-apparmor --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test12
@@ -354,7 +353,7 @@ rm output-configure output-make
 print_title "${arr[17]}"
 cd firejail
 make distclean
-./configure --prefix=/usr  --disable-usertmpfs --enable-fatal-warnings 2>&1 | tee ../output-configure
+./configure --prefix=/usr --disable-usertmpfs --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test17
@@ -410,23 +409,23 @@ echo "**********************************************************"
 
 wc -l report-test*
 echo
-echo  "Legend:"
-echo ${arr[1]}
-echo ${arr[2]}
-echo ${arr[3]}
-echo ${arr[4]}
-echo ${arr[5]}
-echo ${arr[6]}
-echo ${arr[7]}
-echo ${arr[8]}
-echo ${arr[9]}
-echo ${arr[10]}
-echo ${arr[11]}
-echo ${arr[12]}
-echo ${arr[13]}
-echo ${arr[14]}
-echo ${arr[15]}
-echo ${arr[16]}
-echo ${arr[17]}
-echo ${arr[18]}
-echo ${arr[19]}
+echo "Legend:"
+echo "${arr[1]}"
+echo "${arr[2]}"
+echo "${arr[3]}"
+echo "${arr[4]}"
+echo "${arr[5]}"
+echo "${arr[6]}"
+echo "${arr[7]}"
+echo "${arr[8]}"
+echo "${arr[9]}"
+echo "${arr[10]}"
+echo "${arr[11]}"
+echo "${arr[12]}"
+echo "${arr[13]}"
+echo "${arr[14]}"
+echo "${arr[15]}"
+echo "${arr[16]}"
+echo "${arr[17]}"
+echo "${arr[18]}"
+echo "${arr[19]}"

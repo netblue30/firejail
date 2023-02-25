@@ -52,7 +52,7 @@ disable-mnt
 private-bin cointop
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
+private-etc @tls-ca,host.conf,rpc,services
 private-lib
 private-tmp
 
@@ -60,3 +60,4 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

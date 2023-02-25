@@ -9,33 +9,58 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+      - 'contrib/syntax/**'
+      - 'contrib/vim/**'
+      - 'etc/**'
+      - 'src/man/*.txt'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
+      - .github/pull_request_template.md
+      - .github/workflows/profile-checks.yml
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README
       - README.md
       - RELNOTES
       - SECURITY.md
-      - 'etc/**'
+      - src/firecfg/firecfg.config
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+      - 'contrib/syntax/**'
+      - 'contrib/vim/**'
+      - 'etc/**'
+      - 'src/man/*.txt'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
+      - .github/pull_request_template.md
+      - .github/workflows/profile-checks.yml
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README
       - README.md
       - RELNOTES
       - SECURITY.md
-      - 'etc/**'
+      - src/firecfg/firecfg.config
   schedule:
     - cron: '0 7 * * 2'
 
+permissions:  # added using https://github.com/step-security/secure-workflows
+  contents: read
+
 jobs:
   analyze:
+    permissions:
+      actions: read  # for github/codeql-action/init to get workflow details
+      contents: read  # for actions/checkout to fetch code
+      security-events: write  # for github/codeql-action/autobuild to send a status report
     name: Analyze
     runs-on: ubuntu-latest
 
@@ -48,12 +73,22 @@ jobs:
         # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
 
     steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+      with:
+        disable-sudo: true
+        egress-policy: block
+        allowed-endpoints: >
+          api.github.com:443
+          github.com:443
+          uploads.github.com:443
+
     - name: Checkout repository
-      uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+      uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@0c670bbf0414f39666df6ce8e718ec5662c21e03
+      uses: github/codeql-action/init@17573ee1cc1b9d061760f3a006fc4aac4f944fd5
       with:
         languages: ${{ matrix.language }}
         # If you wish to specify custom queries, you can do so here or in a config file.
@@ -64,7 +99,7 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
-      uses: github/codeql-action/autobuild@0c670bbf0414f39666df6ce8e718ec5662c21e03
+      uses: github/codeql-action/autobuild@17573ee1cc1b9d061760f3a006fc4aac4f944fd5
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
@@ -78,4 +113,4 @@ jobs:
     #   make release
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@0c670bbf0414f39666df6ce8e718ec5662c21e03
+      uses: github/codeql-action/analyze@17573ee1cc1b9d061760f3a006fc4aac4f944fd5

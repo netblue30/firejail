@@ -50,7 +50,7 @@ disable-mnt
 private-bin bijiben
 # private-cache -- access to .cache/tracker is required
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
+private-etc @x11
 private-tmp
 
 dbus-user filter
@@ -60,3 +60,4 @@ dbus-user.talk org.freedesktop.Tracker1
 dbus-system none
 
 env WEBKIT_FORCE_SANDBOX=0
+restrict-namespaces

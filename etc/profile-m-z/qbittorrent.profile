@@ -1,5 +1,5 @@
 # Firejail profile for qbittorrent
-# Description: BitTorrent client based on libtorrent-rasterbar with a Qt5 GUI
+# Description: An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar
 # This file is overwritten after every install/update
 # Persistent local customizations
 include qbittorrent.local
@@ -63,3 +63,4 @@ dbus-user none
 dbus-system none
 
 # memory-deny-write-execute - problems on Arch, see #1690 on GitHub repo
+restrict-namespaces

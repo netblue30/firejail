@@ -28,3 +28,5 @@ tracelog
 disable-mnt
 private-cache
 private-tmp
+
+restrict-namespaces

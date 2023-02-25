@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -266,7 +266,7 @@ static inline int any_ip6_dhcp(void) {
 }
 
 static inline int any_dhcp(void) {
-  return any_ip_dhcp() || any_ip6_dhcp();
+	return any_ip_dhcp() || any_ip6_dhcp();
 }
 
 extern int arg_private;		// mount private /home
@@ -332,12 +332,15 @@ extern int arg_nice;		// nice value configured
 extern int arg_ipc;		// enable ipc namespace
 extern int arg_writable_etc;	// writable etc
 extern int arg_keep_config_pulse;	// disable automatic ~/.config/pulse init
+extern int arg_keep_shell_rc;	// do not copy shell configuration from /etc/skel
 extern int arg_writable_var;	// writable var
 extern int arg_keep_var_tmp; // don't overwrite /var/tmp
 extern int arg_writable_run_user;	// writable /run/user
 extern int arg_writable_var_log; // writable /var/log
 extern int arg_appimage;	// appimage
 extern int arg_apparmor;	// apparmor
+extern char *apparmor_profile;	// apparmor profile
+extern bool apparmor_replace; // whether apparmor should replace the profile (legacy behavior)
 extern int arg_allow_debuggers;	// allow debuggers
 extern int arg_x11_block;	// block X11
 extern int arg_x11_xorg;	// use X11 security extension
@@ -353,6 +356,7 @@ extern int arg_noinput;	// --noinput
 extern int arg_deterministic_exit_code;	// always exit with first child's exit status
 extern int arg_deterministic_shutdown;	// shut down the sandbox if first child dies
 extern int arg_keep_fd_all;	// inherit all file descriptors to sandbox
+extern int arg_netlock;	// netlocker
 
 typedef enum {
 	DBUS_POLICY_ALLOW,	// Allow unrestricted access to the bus
@@ -521,6 +525,7 @@ int macro_id(const char *name);
 
 
 // util.c
+int invalid_name(const char *name);
 void errLogExit(char* fmt, ...) __attribute__((noreturn));
 void fwarning(char* fmt, ...);
 void fmessage(char* fmt, ...);
@@ -674,7 +679,7 @@ void check_output(int argc, char **argv);
 
 // netfilter.c
 void netfilter_netlock(pid_t pid);
-void netfilter_trace(pid_t pid);
+void netfilter_trace(pid_t pid, const char *cmd);
 void check_netfilter_file(const char *fname);
 void netfilter(const char *fname);
 void netfilter6(const char *fname);
@@ -690,11 +695,12 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 void network_set_run_file(pid_t pid);
 
 // fs_etc.c
+char *fs_etc_build(char *str);
+void fs_resolvconf(void);
 void fs_machineid(void);
 void fs_private_dir_copy(const char *private_dir, const char *private_run_dir, const char *private_list);
 void fs_private_dir_mount(const char *private_dir, const char *private_run_dir);
 void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list);
-void fs_rebuild_etc(void);
 
 // no_sandbox.c
 int check_namespace_virt(void);
@@ -830,6 +836,7 @@ enum {
 	// CFG_FILE_COPY_LIMIT - file copy limit handled using setenv/getenv
 	CFG_ALLOW_TRAY,
 	CFG_SECCOMP_LOG,
+	CFG_TRACELOG,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;

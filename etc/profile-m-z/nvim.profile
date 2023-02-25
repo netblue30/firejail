@@ -51,3 +51,4 @@ read-write ${HOME}/.local/share/nvim
 read-write ${HOME}/.local/state/nvim
 read-write ${HOME}/.vim
 read-write ${HOME}/.vimrc
+restrict-namespaces

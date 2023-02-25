@@ -41,3 +41,5 @@ seccomp
 private-bin bash,filezilla,fzputtygen,fzsftp,lsb_release,python*,sh,uname,zsh
 private-dev
 private-tmp
+
+restrict-namespaces

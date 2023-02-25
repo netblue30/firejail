@@ -1,13 +1,12 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-# directory with ~
 send -- "firejail --private-etc=passwd,group,resolv.conf,X11\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

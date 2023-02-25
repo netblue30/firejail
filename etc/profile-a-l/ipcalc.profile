@@ -49,7 +49,7 @@ private-bin bash,ipcalc,ipcalc-ng,perl,sh
 # private-cache
 private-dev
 # empty etc directory
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-lib
 private-opt none
 private-tmp
@@ -59,3 +59,4 @@ dbus-system none
 
 # memory-deny-write-execute
 # read-only ${HOME}
+restrict-namespaces

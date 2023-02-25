@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -30,8 +30,12 @@ static char *usage_str =
 	"    -- - signal the end of options and disables further option processing.\n"
 	"    --allow-debuggers - allow tools such as strace and gdb inside the sandbox.\n"
 	"    --allusers - all user home directories are visible inside the sandbox.\n"
-	"    --apparmor - enable AppArmor confinement.\n"
+#ifdef HAVE_APPARMOR
+	"    --apparmor - enable AppArmor confinement with the default profile.\n"
+	"    --apparmor=profile_name - enable AppArmor confinement with a\n"
+	"\tcustom profile.\n"
 	"    --apparmor.print=name|pid - print apparmor status.\n"
+#endif
 	"    --appimage - sandbox an AppImage application.\n"
 #ifdef HAVE_NETWORK
 	"    --bandwidth=name|pid - set bandwidth limits.\n"
@@ -89,6 +93,9 @@ static char *usage_str =
 	"    --deterministic-shutdown - terminate orphan processes.\n"
 	"    --dns=address - set DNS server.\n"
 	"    --dns.print=name|pid - print DNS configuration.\n"
+#ifdef HAVE_NETWORK
+	"    --dnstrace - monitor DNS queries.\n"
+#endif
 	"    --env=name=value - set environment variable.\n"
 	"    --fs.print=name|pid - print the filesystem log.\n"
 #ifdef HAVE_FILE_TRANSFER
@@ -97,6 +104,9 @@ static char *usage_str =
 	"    --help, -? - this help screen.\n"
 	"    --hostname=name - set sandbox hostname.\n"
 	"    --hosts-file=file - use file as /etc/hosts.\n"
+#ifdef HAVE_NETWORK
+	"    --icmptrace - monitor Server Name Indiication (TLS/SNI).\n"
+#endif
 	"    --ids-check - verify file system.\n"
 	"    --ids-init - initialize IDS database.\n"
 	"    --ignore=command - ignore command in profile files.\n"
@@ -119,6 +129,7 @@ static char *usage_str =
 	"    --keep-config-pulse - disable automatic ~/.config/pulse init.\n"
 	"    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
 	"    --keep-fd - inherit open file descriptors to sandbox.\n"
+	"    --keep-shell-rc - do not copy shell rc files from /etc/skel\n"
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
 	"    --list - list all sandboxes.\n"
 #ifdef HAVE_FILE_TRANSFER
@@ -151,7 +162,7 @@ static char *usage_str =
 	"\tparent interfaces.\n"
 	"    --netns=name - Run the program in a named, persistent network namespace.\n"
 	"    --netstats - monitor network statistics.\n"
-	"    --nettrace - monitor TCP and UDP traffic coming into the sandbox.\n"
+	"    --nettrace - monitor received TCP, UDP and ICMP traffic.\n"
 #endif
 	"    --nice=value - set nice value.\n"
 	"    --no3d - disable 3D hardware acceleration.\n"
@@ -204,7 +215,6 @@ static char *usage_str =
 	"    --private-srv=file,directory - build a new /srv in a temporary filesystem.\n"
 	"    --profile=filename|profile_name - use a custom profile.\n"
 	"    --profile.print=name|pid - print the name of profile file.\n"
-	"    --profile-path=directory - use this directory to look for profile files.\n"
 	"    --protocol=protocol,protocol,protocol - enable protocol filter.\n"
 	"    --protocol.print=name|pid - print the protocol filter.\n"
 #ifdef HAVE_FILE_TRANSFER

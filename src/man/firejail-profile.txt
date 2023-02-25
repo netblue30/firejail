@@ -14,7 +14,7 @@ Using a specific profile:
 .br
 Example:
 .br
-$ firejail --profile=/etc/firejail/kdenlive.profile --appimage kdenlive.appimage
+$ firejail --appimage --profile=/etc/firejail/kdenlive.profile kdenlive.appimage
 .br
 
 .br
@@ -25,7 +25,7 @@ $ firejail --profile=/etc/firejail/kdenlive.profile --appimage kdenlive.appimage
 .br
 Example:
 .br
-$ firejail --profile=kdenlive --appimage kdenlive.appimage
+$ firejail --appimage --profile=kdenlive kdenlive.appimage
 .br
 
 .br
@@ -179,6 +179,11 @@ can be enabled or disabled globally in Firejail's configuration file.
 
 The profile line may be any profile line that you would normally use in a profile \fBexcept\fR for "quiet" and "include" lines.
 
+Note: When using one or more conditionals and \fB--profile\fR, it is
+recommended that the relevant option(s) (such as \fB--appimage\fR) be specified
+before \fB--profile\fR, so that their respective conditional(s) (such as
+\fB?HAS_APPIMAGE\fR) inside of the profile evaluate to true.
+
 .TP
 \fBinclude other.profile
 Include other.profile file.
@@ -282,6 +287,9 @@ pulse servers or non-standard socket paths.
 .TP
 \fBkeep-dev-shm
 /dev/shm directory is untouched (even with private-dev).
+.TP
+\fBkeep-shell-rc
+Do not copy shell rc files (such as ~/.bashrc and ~/.zshrc) from /etc/skel.
 .TP
 \fBkeep-var-tmp
 /var/tmp directory is untouched.
@@ -478,7 +486,11 @@ Allow tools such as strace and gdb inside the sandbox by whitelisting system cal
 #ifdef HAVE_APPARMOR
 .TP
 \fBapparmor
-Enable AppArmor confinement.
+Enable AppArmor confinement with the "firejail-default" AppArmor profile.
+.TP
+\fBapparmor profile_name
+Enable AppArmor confinement with a custom AppArmor profile.
+Note that the profile in question must already be loaded into the kernel.
 #endif
 .TP
 \fBcaps
@@ -968,6 +980,10 @@ If a new network namespace is created, enabled default network filter.
 \fBnetfilter filename
 If a new network namespace is created, enabled the network filter in filename.
 
+.TP
+\fBnetlock
+Generate a custom network filter and enable it.
+
 
 .TP
 \fBnetmask address
@@ -1031,3 +1047,4 @@ Homepage: https://firejail.wordpress.com
 
 .UR https://github.com/netblue30/firejail/wiki/Creating-Profiles
 .UE
+.\" vim: set filetype=groff :

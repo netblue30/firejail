@@ -51,6 +51,7 @@ tracelog
 private-bin rhythmbox,rhythmbox-client
 private-cache
 private-dev
+private-etc @tls-ca,@x11,python*
 private-tmp
 
 dbus-user filter
@@ -63,3 +64,5 @@ dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.gnome.SettingsDaemon.MediaKeys
 dbus-system filter
 dbus-system.talk org.freedesktop.Avahi
+
+restrict-namespaces

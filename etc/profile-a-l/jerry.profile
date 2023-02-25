@@ -33,10 +33,11 @@ tracelog
 
 private-bin bash,jerry,sh,stockfish
 private-dev
-private-etc alternatives,fonts,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload
+private-etc @x11
 private-tmp
 
 dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -326,9 +326,22 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 	// sandbox name
 	else if (strncmp(ptr, "name ", 5) == 0) {
+		int only_numbers = 1;
 		cfg.name = ptr + 5;
 		if (strlen(cfg.name) == 0) {
 			fprintf(stderr, "Error: invalid sandbox name\n");
+			exit(1);
+		}
+		const char *c = cfg.name;
+		while (*c) {
+			if (!isdigit(*c)) {
+				only_numbers = 0;
+				break;
+			}
+			++c;
+		}
+		if (only_numbers) {
+			fprintf(stderr, "Error: invalid sandbox name: it only contains digits\n");
 			exit(1);
 		}
 		return 0;
@@ -372,7 +385,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "tracelog") == 0) {
-		arg_tracelog = 1;
+		if (checkcfg(CFG_TRACELOG))
+			arg_tracelog = 1;
+		// no warning, we have tracelog in over 400 profiles
 		return 0;
 	}
 	else if (strcmp(ptr, "private") == 0) {
@@ -647,6 +662,16 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			if (!arg_netfilter6_file)
 				errExit("strdup");
 			check_netfilter_file(arg_netfilter6_file);
+		}
+		else
+			warning_feature_disabled("networking");
+#endif
+		return 0;
+	}
+	else if (strcmp(ptr, "netlock") == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			arg_netlock = 1;
 		}
 		else
 			warning_feature_disabled("networking");
@@ -939,6 +964,33 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strcmp(ptr, "apparmor") == 0) {
 #ifdef HAVE_APPARMOR
 		arg_apparmor = 1;
+		apparmor_profile = "firejail-default";
+#endif
+		return 0;
+	}
+
+	if (strncmp(ptr, "apparmor ", 9) == 0) {
+#ifdef HAVE_APPARMOR
+		arg_apparmor = 1;
+		apparmor_profile = strdup(ptr + 9);
+		if (!apparmor_profile)
+			errExit("strdup");
+#endif
+		return 0;
+	}
+
+	if (strcmp(ptr, "apparmor-replace") == 0) {
+#ifdef HAVE_APPARMOR
+		arg_apparmor = 1;
+		apparmor_replace = true;
+#endif
+		return 0;
+	}
+
+	if (strcmp(ptr, "apparmor-stack") == 0) {
+#ifdef HAVE_APPARMOR
+		arg_apparmor = 1;
+		apparmor_replace = false;
 #endif
 		return 0;
 	}
@@ -1183,6 +1235,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "keep-shell-rc") == 0) {
+		arg_keep_shell_rc = 1;
+		return 0;
+	}
+
 	// writable-var
 	if (strcmp(ptr, "writable-var") == 0) {
 		arg_writable_var = 1;
@@ -1327,6 +1384,20 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	// private /etc without a list of files and directories
+	if (strcmp(ptr, "private-etc") == 0) {
+		if (checkcfg(CFG_PRIVATE_ETC)) {
+			if (arg_writable_etc) {
+				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+				exit(1);
+			}
+			arg_private_etc = 1;
+		}
+		else
+			warning_feature_disabled("private-etc");
+		return 0;
+	}
+
 	// private /opt list of files and directories
 	if (strncmp(ptr, "private-opt ", 12) == 0) {
 		if (checkcfg(CFG_PRIVATE_OPT)) {
@@ -1405,11 +1476,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
 			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-				exit(1);
-			}
 			arg_overlay = 1;
 			arg_overlay_keep = 1;
 			arg_overlay_reuse = 1;
@@ -1442,11 +1508,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
 			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-				exit(1);
-			}
 			arg_overlay = 1;
 		}
 		else
@@ -1461,11 +1522,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-				exit(1);
-			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
 				exit(1);
 			}
 			arg_overlay = 1;

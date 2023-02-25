@@ -33,8 +33,9 @@ seccomp
 disable-mnt
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
+private-etc
 private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
 
 memory-deny-write-execute
+restrict-namespaces

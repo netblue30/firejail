@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -130,7 +130,14 @@ static void set_caps(void) {
 static void set_apparmor(void) {
 	EUID_ASSERT();
 	if (checkcfg(CFG_APPARMOR) && arg_apparmor) {
-		if (aa_change_onexec("firejail-default")) {
+		int res = 0;
+		if(apparmor_replace){
+			fwarning("Replacing profile instead of stacking it. It is a legacy behavior that can result in relaxation of the protection. It is here as a temporary measure to unbreak the software that has been broken by switching to the stacking behavior.\n");
+			res = aa_change_onexec(apparmor_profile);
+		} else {
+			res = aa_stack_onexec(apparmor_profile);
+		}
+		if (res) {
 			fwarning("Cannot confine the application using AppArmor.\n"
 				"Maybe firejail-default AppArmor profile is not loaded into the kernel.\n"
 				"As root, run \"aa-enforce firejail-default\" to load it.\n");
@@ -267,7 +274,7 @@ static void sandbox_if_up(Bridge *br) {
 	}
 
 	if (br->ip6sandbox)
-		 net_if_ip6(dev, br->ip6sandbox);
+		net_if_ip6(dev, br->ip6sandbox);
 }
 
 static void chk_chroot(void) {
@@ -573,8 +580,6 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 			if (arg_debug)
 				printf("Running %s command through %s\n", cfg.command_line, cfg.usershell);
 			arg[index++] = "-c";
-			if (arg_doubledash)
-				arg[index++] = "--";
 			arg[index++] = cfg.command_line;
 		}
 		else if (login_shell) {
@@ -645,12 +650,12 @@ int sandbox(void* sandbox_arg) {
 	if (arg_debug)
 		printf("Initializing child process\n");
 
- 	// close each end of the unused pipes
- 	close(parent_to_child_fds[1]);
- 	close(child_to_parent_fds[0]);
+	// close each end of the unused pipes
+	close(parent_to_child_fds[1]);
+	close(child_to_parent_fds[0]);
 
- 	// wait for parent to do base setup
- 	wait_for_other(parent_to_child_fds[0]);
+	// wait for parent to do base setup
+	wait_for_other(parent_to_child_fds[0]);
 
 	if (arg_debug && child_pid == 1)
 		printf("PID namespace installed\n");
@@ -1025,6 +1030,7 @@ int sandbox(void* sandbox_arg) {
 			 * 3. mount RUN_ETC_DIR at /etc
 			 */
 			timetrace_start();
+			cfg.etc_private_keep = fs_etc_build(cfg.etc_private_keep);
 			fs_private_dir_copy("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
 
 			if (umount2("/etc/group", MNT_DETACH) == -1)
@@ -1041,7 +1047,8 @@ int sandbox(void* sandbox_arg) {
 
 			// openSUSE configuration is split between /etc and /usr/etc
 			// process private-etc a second time
-			fs_private_dir_list("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep);
+			if (access("/usr/etc", F_OK) == 0)
+				fs_private_dir_list("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep);
 		}
 	}
 
@@ -1091,10 +1098,10 @@ int sandbox(void* sandbox_arg) {
 		fs_dev_disable_input();
 
 	//****************************
-	// rebuild etc directory, set dns
+	// set DNS
 	//****************************
-	if (!arg_writable_etc)
-		fs_rebuild_etc();
+	if (cfg.dns1 != NULL || any_dhcp())
+		fs_resolvconf();
 
 	//****************************
 	// start dhcp client
@@ -1127,8 +1134,10 @@ int sandbox(void* sandbox_arg) {
 			struct stat s;
 			if (stat(cfg.homedir, &s) == 0) {
 				/* coverity[toctou] */
-				if (chdir(cfg.homedir) < 0)
-					errExit("chdir");
+				if (chdir(cfg.homedir) < 0) {
+					fprintf(stderr, "Error: unable to enter home directory: %s: %s\n", cfg.homedir, strerror(errno));
+					exit(1);
+				}
 			}
 		}
 	}
@@ -1250,13 +1259,13 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	// notify parent that new user namespace has been created so a proper
- 	// UID/GID map can be setup
- 	notify_other(child_to_parent_fds[1]);
- 	close(child_to_parent_fds[1]);
+	// UID/GID map can be setup
+	notify_other(child_to_parent_fds[1]);
+	close(child_to_parent_fds[1]);
 
- 	// wait for parent to finish setting up a proper UID/GID map
- 	wait_for_other(parent_to_child_fds[0]);
- 	close(parent_to_child_fds[0]);
+	// wait for parent to finish setting up a proper UID/GID map
+	wait_for_other(parent_to_child_fds[0]);
+	close(parent_to_child_fds[0]);
 
 	// somehow, the new user namespace resets capabilities;
 	// we need to do them again

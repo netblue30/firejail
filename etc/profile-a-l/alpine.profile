@@ -90,7 +90,7 @@ disable-mnt
 private-bin alpine
 private-cache
 private-dev
-private-etc alternatives,c-client.cf,ca-certificates,crypto-policies,host.conf,hostname,hosts,krb5.keytab,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mailcap,mime.types,nsswitch.conf,passwd,pine.conf,pinerc.fixed,pki,protocols,resolv.conf,rpc,services,ssl,terminfo,xdg
+private-etc @tls-ca,@x11,c-client.cf,host.conf,krb5.keytab,mailcap,mime.types,pine.conf,pinerc.fixed,rpc,services,terminfo
 private-tmp
 writable-run-user
 writable-var
@@ -100,3 +100,4 @@ dbus-system none
 
 memory-deny-write-execute
 read-only ${HOME}/.signature
+restrict-namespaces

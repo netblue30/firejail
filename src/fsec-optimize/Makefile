@@ -1,17 +1,10 @@
-.PHONY: all
-all: fsec-optimize
-
 ROOT = ../..
-include $(ROOT)/src/common.mk
+-include $(ROOT)/config.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/seccomp.h ../include/syscall.h $(ROOT)/config.mk
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+PROG = fsec-optimize
+TARGET = $(PROG)
 
-fsec-optimize: $(OBJS) ../lib/common.o ../lib/libnetlink.o $(ROOT)/config.mk
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/errno.o $(LIBS) $(EXTRA_LDFLAGS)
+MOD_HDRS = ../include/common.h ../include/seccomp.h ../include/syscall.h
+MOD_OBJS = ../lib/common.o ../lib/errno.o
 
-.PHONY: clean
-clean:; rm -fr *.o fsec-optimize *.gcov *.gcda *.gcno *.plist
-
-.PHONY: distclean
-distclean: clean
+include $(ROOT)/src/prog.mk

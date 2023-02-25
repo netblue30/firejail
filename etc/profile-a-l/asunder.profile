@@ -45,3 +45,4 @@ dbus-system none
 
 # mdwe is disabled due to breaking hardware accelerated decoding
 # memory-deny-write-execute
+restrict-namespaces

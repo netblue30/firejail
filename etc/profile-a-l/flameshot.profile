@@ -51,7 +51,7 @@ tracelog
 disable-mnt
 private-bin flameshot
 private-cache
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.preload,machine-id,pki,resolv.conf,ssl
+private-etc @tls-ca
 private-dev
 #private-tmp
 
@@ -65,3 +65,5 @@ dbus-user.talk org.kde.KWin
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 ?ALLOW_TRAY: dbus-user.own org.kde.*
 dbus-system none
+
+restrict-namespaces

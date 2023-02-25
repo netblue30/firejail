@@ -40,8 +40,10 @@ disable-mnt
 private-bin jumpnbump
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

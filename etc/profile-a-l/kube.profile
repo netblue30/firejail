@@ -67,7 +67,7 @@ tracelog
 private-bin kube,sink_synchronizer
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,gcrypt,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.preload,pki,resolv.conf,selinux,ssl,xdg
+private-etc @tls-ca,@x11
 private-tmp
 writable-run-user
 
@@ -78,3 +78,4 @@ dbus-user.talk org.freedesktop.Notifications
 dbus-system none
 
 read-only ${HOME}/.mozilla/firefox/profiles.ini
+restrict-namespaces

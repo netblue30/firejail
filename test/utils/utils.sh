@@ -1,13 +1,13 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
-if [ -f /etc/debian_version ]; then
+if [[ -f /etc/debian_version ]]; then
 	libdir=$(dirname "$(dpkg -L firejail | grep fcopy)")
 	export PATH="$PATH:$libdir"
 fi
@@ -33,13 +33,12 @@ echo "TESTING: version (test/utils/version.exp)"
 echo "TESTING: help (test/utils/help.exp)"
 ./help.exp
 
-which man 2>/dev/null
-if [ "$?" -eq 0 ];
+if command -v man
 then
-        echo "TESTING: man (test/utils/man.exp)"
-        ./man.exp
+	echo "TESTING: man (test/utils/man.exp)"
+	./man.exp
 else
-        echo "TESTING SKIP: man not found"
+	echo "TESTING SKIP: man not found"
 fi
 
 echo "TESTING: list (test/utils/list.exp)"
@@ -48,12 +47,12 @@ echo "TESTING: list (test/utils/list.exp)"
 echo "TESTING: tree (test/utils/tree.exp)"
 ./tree.exp
 
-if [ $(grep -c ^processor /proc/cpuinfo) -gt 1 ];
+if [[ $(grep -c ^processor /proc/cpuinfo) -gt 1 ]]
 then
-        echo "TESTING: cpu.print (test/utils/cpu-print.exp)"
-        ./cpu-print.exp
+	echo "TESTING: cpu.print (test/utils/cpu-print.exp)"
+	./cpu-print.exp
 else
-        echo "TESTING SKIP: cpu.print, not enough CPUs"
+	echo "TESTING SKIP: cpu.print, not enough CPUs"
 fi
 
 echo "TESTING: fs.print (test/utils/fs-print.exp)"
@@ -85,12 +84,6 @@ echo "TESTING: shutdown4 (test/utils/shutdown4.exp)"
 
 echo "TESTING: join (test/utils/join.exp)"
 ./join.exp
-
-echo "TESTING: join2 (test/utils/join2.exp)"
-./join2.exp
-
-echo "TESTING: join3 (test/utils/join3.exp)"
-./join3.exp
 
 echo "TESTING: join4 (test/utils/join4.exp)"
 ./join4.exp

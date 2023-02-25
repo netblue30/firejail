@@ -44,7 +44,7 @@ disable-mnt
 private-bin com.github.bleakgrey.tootle
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,dconf,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,machine-id mime.types,nsswitch.conf,pki,pulse,resolv.conf,ssl,X11,xdg
+private-etc @tls-ca,@x11,host.conf,mime.types
 private-tmp
 
 # Settings are immutable
@@ -52,3 +52,5 @@ private-tmp
 # dbus-user.own com.github.bleakgrey.tootle
 # dbus-user.talk ca.desrt.dconf
 dbus-system none
+
+restrict-namespaces

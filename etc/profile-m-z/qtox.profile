@@ -42,10 +42,11 @@ disable-mnt
 private-bin qtox
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,localtime,machine-id,pki,pulse,resolv.conf,ssl
+private-etc @tls-ca
 private-tmp
 
 dbus-user none
 dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)
+restrict-namespaces

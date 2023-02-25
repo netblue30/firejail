@@ -21,13 +21,17 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
 
-mkdir ${HOME}/.kde/share/apps/ktorrent
-mkdir ${HOME}/.kde4/share/apps/ktorrent
+# Legacy paths
+#mkdir ${HOME}/.kde/share/apps/ktorrent
+#mkdir ${HOME}/.kde/share/config
+#mkdir ${HOME}/.kde4/share/apps/ktorrent
+#mkdir ${HOME}/.kde4/share/config
+#mkfile ${HOME}/.kde/share/config/ktorrentrc
+#mkfile ${HOME}/.kde4/share/config/ktorrentrc
+
 mkdir ${HOME}/.local/share/ktorrent
 mkdir ${HOME}/.local/share/kxmlgui5/ktorrent
 mkfile ${HOME}/.config/ktorrentrc
-mkfile ${HOME}/.kde/share/config/ktorrentrc
-mkfile ${HOME}/.kde4/share/config/ktorrentrc
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/ktorrentrc
 whitelist ${HOME}/.kde/share/apps/ktorrent
@@ -56,10 +60,11 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 
-private-bin kbuildsycoca4,kdeinit4,ktorrent
+private-bin kbuildsycoca4,kdeinit4,ktmagnetdownloader,ktorrent,ktupnptest
 private-dev
 # private-lib - problems on Arch
 private-tmp
 
 deterministic-shutdown
 # memory-deny-write-execute
+restrict-namespaces

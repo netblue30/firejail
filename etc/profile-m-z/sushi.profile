@@ -45,3 +45,4 @@ read-only /media
 read-only /run/mount
 read-only /run/media
 read-only ${HOME}
+restrict-namespaces

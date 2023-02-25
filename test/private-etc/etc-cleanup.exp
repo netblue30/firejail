@@ -1,0 +1,33 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "/usr/lib/firejail/etc-cleanup p1.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"old: private-etc passwd,group,resolv.conf,X11"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"new: private-etc @x11"
+}
+after 500
+
+send -- "/usr/lib/firejail/etc-cleanup p3.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"old: private-etc @tls-ca,os-release,@x11,mime.types,mailcap"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"new: private-etc @tls-ca,@x11,mailcap,mime.types,os-release"
+}
+after 500
+
+
+puts "\nall done\n"

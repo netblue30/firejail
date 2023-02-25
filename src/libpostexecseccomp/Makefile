@@ -1,24 +1,9 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
-H_FILE_LIST       = $(sort $(wildcard *.h))
-C_FILE_LIST       = $(sort $(wildcard *.c))
-OBJS = $(C_FILE_LIST:.c=.o)
-BINOBJS =  $(foreach file, $(OBJS), $file)
-CFLAGS += -ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' -fstack-protector-all -D_FORTIFY_SOURCE=2 -fPIC -Wformat -Wformat-security
-LDFLAGS += -pie -fPIE -Wl,-z,relro -Wl,-z,now
+SO = libpostexecseccomp.so
+TARGET = $(SO)
 
-.PHONY: all
-all: libpostexecseccomp.so
+MOD_HDRS = ../include/seccomp.h ../include/rundefs.h
 
-%.o : %.c $(H_FILE_LIST) ../include/seccomp.h ../include/rundefs.h $(ROOT)/config.mk
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
-
-libpostexecseccomp.so: $(OBJS) $(ROOT)/config.mk
-	$(CC) $(LDFLAGS) -shared -fPIC -z relro -o $@ $(OBJS) -ldl
-
-.PHONY: clean
-clean:; rm -fr $(OBJS) libpostexecseccomp.so *.plist
-
-.PHONY: distclean
-distclean: clean
+include $(ROOT)/src/so.mk

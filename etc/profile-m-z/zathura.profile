@@ -48,7 +48,7 @@ tracelog
 private-bin zathura
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id
+private-etc
 # private-lib has problems on Debian 10
 #private-lib gcc/*/*/libgcc_s.so.*,gcc/*/*/libstdc++.so.*,libarchive.so.*,libdjvulibre.so.*,libgirara-gtk*,libpoppler-glib.so.*,libspectre.so.*,zathura
 private-tmp
@@ -59,3 +59,4 @@ dbus-system none
 read-only ${HOME}
 read-write ${HOME}/.config/zathura
 read-write ${HOME}/.local/share/zathura
+restrict-namespaces

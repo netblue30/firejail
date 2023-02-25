@@ -27,10 +27,30 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/QMediathekView
+mkdir ${HOME}/.local/share/QMediathekView
+whitelist ${HOME}/.config/QMediathekView
+whitelist ${HOME}/.local/share/QMediathekView
+
+whitelist ${DOWNLOADS}
+whitelist ${VIDEOS}
+
+whitelist ${HOME}/.config/mpv
+whitelist ${HOME}/.config/smplayer
+whitelist ${HOME}/.config/totem
+whitelist ${HOME}/.config/vlc
+whitelist ${HOME}/.config/xplayer
+whitelist ${HOME}/.local/share/totem
+whitelist ${HOME}/.local/share/xplayer
+whitelist ${HOME}/.mplayer
 whitelist /usr/share/qtchooser
+include whitelist-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+apparmor
 caps.drop all
 netfilter
 # no3d
@@ -38,11 +58,12 @@ nodvd
 nogroups
 noinput
 nonewprivs
+noprinters
 noroot
 notv
 nou2f
 novideo
-protocol unix,inet,inet6,netlink
+protocol unix,inet,inet6
 seccomp
 tracelog
 
@@ -50,9 +71,11 @@ disable-mnt
 private-bin mplayer,mpv,QMediathekView,smplayer,totem,vlc,xplayer
 private-cache
 private-dev
+private-etc @tls-ca
 private-tmp
 
 dbus-user none
 dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)
+restrict-namespaces

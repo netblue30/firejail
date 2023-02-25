@@ -9,3 +9,4 @@ protocol unix,inet,inet6
 seccomp
 
 memory-deny-write-execute
+restrict-namespaces

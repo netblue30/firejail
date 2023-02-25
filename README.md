@@ -43,6 +43,8 @@ alt="Deep Dive" width="240" height="142" border="10" /><br/>Deep Dive</a>
 
 Project webpage: https://firejail.wordpress.com/
 
+IRC: https://web.libera.chat/#firejail
+
 Download and Installation: https://firejail.wordpress.com/download-2/
 
 Features: https://firejail.wordpress.com/features-3/
@@ -113,7 +115,7 @@ $ cd firejail
 $ ./configure && make && sudo make install-strip
 `````
 On Debian/Ubuntu you will need to install git and gcc compiler. AppArmor
-development libraries and pkg-config are required when using `--apparmor`
+development libraries and pkg-config are required when using `--enable-apparmor`
 ./configure option:
 `````
 $ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
@@ -176,11 +178,57 @@ You can also use this tool to get a list of syscalls needed by a program: [contr
 
 We also keep a list of profile fixes for previous released versions in [etc-fixes](https://github.com/netblue30/firejail/tree/master/etc-fixes) directory.
 
-## Latest released version: 0.9.70
+## Latest released version: 0.9.72
 
-## Current development version: 0.9.71
+## Current development version: 0.9.73
 
-Milestone page: https://github.com/netblue30/firejail/milestone/1
+### --keep-shell-rc
+`````
+       --keep-shell-rc
+              By default, when using a private home directory, firejail copies
+              files  from the system's user home template (/etc/skel) into it,
+              which overrides attempts to whitelist the original  files  (such
+              as  ~/.bashrc and ~/.zshrc).  This option disables this feature,
+              and enables the user to whitelist the original files.
+
+`````
+
+### private-etc rework
+`````
+       --private-etc, --private-etc=file,directory,@group
+              The files installed by --private-etc are copies of the  original
+              system  files  from  /etc  directory.   By  default, the command
+              brings in a skeleton of files and directories used by most  con‐
+              sole tools:
+
+              $ firejail --private-etc dig debian.org
+
+              For  X11/GTK/QT/Gnome/KDE   programs add @x11 group as a parame‐
+              ter. Example:
+
+              $ firejail --private-etc=@x11,gcrypt,python* gimp
+
+              gcrypt and /etc/python* directories are not part of the  generic
+              @x11 group.  File globbing is supported.
+
+              For games, add @games group:
+
+              $ firejail --private-etc=@games,@x11 warzone2100
+
+              Sound  and  networking  files are included automatically, unless
+              --nosound or --net=none  are  specified.   Files  for  encrypted
+              TLS/SSL protocol are in @tls-ca group.
+
+              $ firejail --private-etc=@tls-ca,wgetrc wget https://debian.org
+
+              Note: The easiest way to extract the list of /etc files accessed
+              by your program is using strace utility:
+
+              $ strace /usr/bin/transmission-qt 2>&1 | grep open | grep etc
+
+`````
+We keep the list of groups in [src/include/etc_groups.h](https://github.com/netblue30/firejail/blob/master/src/include/etc_groups.h)
+Discussion: https://github.com/netblue30/firejail/discussions/5610
 
 ### Profile Statistics
 
@@ -192,33 +240,31 @@ No include .local found in /etc/firejail/noprofile.profile
 Warning: multiple caps in /etc/firejail/transmission-daemon.profile
 
 Stats:
-    profiles			1191
-    include local profile	1190   (include profile-name.local)
-    include globals		1164   (include globals.local)
-    blacklist ~/.ssh		1063   (include disable-common.inc)
-    seccomp			1082
-    capabilities		1185
-    noexec			1070   (include disable-exec.inc)
-    noroot			991
-    memory-deny-write-execute	267
-    apparmor			710
-    private-bin			689
-    private-dev			1041
-    private-etc			539
-    private-lib			70
-    private-tmp			915
-    whitelist home directory	573
-    whitelist var		855   (include whitelist-var-common.inc)
-    whitelist run/user		1159   (include whitelist-runuser-common.inc
+     profiles			1209
+    include local profile	1208   (include profile-name.local)
+    include globals		1181   (include globals.local)
+    blacklist ~/.ssh		1079   (include disable-common.inc)
+    seccomp			1096
+    capabilities		1202
+    noexec			1087   (include disable-exec.inc)
+    noroot			1003
+    memory-deny-write-execute	272
+    restrict-namespaces		958
+    apparmor			753
+    private-bin			704
+    private-dev			1058
+    private-etc			550
+    private-lib			71
+    private-tmp			932
+    whitelist home directory	585
+    whitelist var		870   (include whitelist-var-common.inc)
+    whitelist run/user		1176   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		628   (include whitelist-usr-share-common.inc
-    net none			403
-    dbus-user none 		673
-    dbus-user filter 		123
-    dbus-system none 		833
+    whitelist usr/share		640   (include whitelist-usr-share-common.inc
+    net none			410
+    dbus-user none 		679
+    dbus-user filter 		141
+    dbus-system none 		851
     dbus-system filter 		12
+
 ```
-
-### New profiles:
-
-onionshare, onionshare-cli, opera-developer, songrec

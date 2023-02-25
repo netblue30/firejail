@@ -62,3 +62,5 @@ tracelog
 
 disable-mnt
 private-tmp
+
+restrict-namespaces

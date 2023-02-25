@@ -47,9 +47,11 @@ disable-mnt
 # private-bin falkon
 private-cache
 private-dev
-private-etc adobe,alternatives,asound.conf,ati,ca-certificates,crypto-policies,dconf,drirc,fonts,group,gtk-2.0,gtk-3.0,hostname,hosts,ld.so.cache,ld.so.preload,localtime,machine-id,mailcap,mime.types,nsswitch.conf,pango,passwd,pki,pulse,resolv.conf,selinux,ssl,xdg
+private-etc @tls-ca,@x11,adobe,mailcap,mime.types
 private-tmp
 
 # dbus-user filter
 # dbus-user.own org.kde.Falkon
 dbus-system none
+
+# restrict-namespaces

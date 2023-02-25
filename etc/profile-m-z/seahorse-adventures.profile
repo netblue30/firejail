@@ -47,8 +47,10 @@ private
 private-bin bash,dash,python*,seahorse-adventures,sh
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload,machine-id
+private-etc
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

@@ -40,3 +40,4 @@ private-bin amule
 private-dev
 private-tmp
 
+restrict-namespaces

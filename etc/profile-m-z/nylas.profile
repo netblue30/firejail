@@ -35,3 +35,5 @@ protocol unix,inet,inet6,netlink
 seccomp
 
 private-dev
+
+restrict-namespaces

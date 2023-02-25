@@ -37,7 +37,10 @@ tracelog
 
 private-bin dosbox
 private-dev
+private-etc @games
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

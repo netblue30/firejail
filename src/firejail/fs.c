@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -123,8 +123,8 @@ static void disable_file(OPERATION op, const char *filename) {
 	if (op == BLACKLIST_FILE || op == BLACKLIST_NOLOG) {
 		// some distros put all executables under /usr/bin and make /bin a symbolic link
 		if ((strcmp(fname, "/bin") == 0 || strcmp(fname, "/usr/bin") == 0) &&
-		      is_link(filename) &&
-		      S_ISDIR(s.st_mode)) {
+		    is_link(filename) &&
+		    S_ISDIR(s.st_mode)) {
 			fwarning("%s directory link was not blacklisted\n", filename);
 		}
 		else {

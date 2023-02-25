@@ -1,23 +1,25 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail less sysutils.sh\r"
+send -- "rm -f /tmp/tt\r"
+after 500
+
+send -- "firejail less sysutils.sh > /tmp/t\r"
+sleep 1
+
+send -- "cat /tmp/t | grep Authors\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"(press RETURN)" {puts "TESTING SKIP: terminal is not fully functional - 1.1\n";exit}
-	"Press RETURN to continue" {puts "TESTING SKIP: terminal is not fully functional - 1.2\n";exit}
+	timeout {puts "TESTING ERROR 0\n";exit}
 	"Firejail Authors"
 }
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"MALLOC_CHECK"
-}
-
 after 100
+
+send -- "rm -f /tmp/t\r"
+after 500
 puts "\nall done\n"

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -266,7 +266,7 @@ static inline int any_ip6_dhcp(void) {
 }
 
 static inline int any_dhcp(void) {
-  return any_ip_dhcp() || any_ip6_dhcp();
+	return any_ip_dhcp() || any_ip6_dhcp();
 }
 
 extern int arg_private;		// mount private /home
@@ -525,6 +525,7 @@ int macro_id(const char *name);
 
 
 // util.c
+int invalid_name(const char *name);
 void errLogExit(char* fmt, ...) __attribute__((noreturn));
 void fwarning(char* fmt, ...);
 void fmessage(char* fmt, ...);

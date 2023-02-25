@@ -1,0 +1,7 @@
+[*.lang{,.in}]
+indent_size = 2
+indent_style = space
+
+[*.vim{,.in}]
+indent_size = 2
+indent_style = space

@@ -7,6 +7,8 @@ include transmission-cli.local
 # Persistent global definitions
 include globals.local
 
+whitelist /usr/share/transmission
+
 private-bin transmission-cli
 private-etc @tls-ca
 

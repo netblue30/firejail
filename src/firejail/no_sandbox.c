@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -29,10 +29,10 @@
 int is_container(const char *str) {
 	assert(str);
 	if (strcmp(str, "lxc") == 0 ||
-	     strcmp(str, "docker") == 0 ||
-	     strcmp(str, "lxc-libvirt") == 0 ||
-	     strcmp(str, "systemd-nspawn") == 0 ||
-	     strcmp(str, "rkt") == 0)
+	    strcmp(str, "docker") == 0 ||
+	    strcmp(str, "lxc-libvirt") == 0 ||
+	    strcmp(str, "systemd-nspawn") == 0 ||
+	    strcmp(str, "rkt") == 0)
 		return 1;
 	return 0;
 }

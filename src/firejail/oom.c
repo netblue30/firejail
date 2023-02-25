@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -84,4 +84,3 @@ void oom_set(const char *oom_string) {
 	if (waitpid(child, &status, 0) == -1 )
 		errExit("waitpid");
 }
-

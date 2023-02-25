@@ -44,6 +44,7 @@ tracelog
 
 private-cache
 private-dev
+private-etc @tls-ca,@x11
 private-tmp
 
 dbus-user none

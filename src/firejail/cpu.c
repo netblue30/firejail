@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -103,17 +103,17 @@ void set_cpu_affinity(void) {
 	if (sched_setaffinity(0, sizeof(mask), &mask) == -1)
 		fwarning("cannot set cpu affinity\n");
 
-        	// verify cpu affinity
+		// verify cpu affinity
 	cpu_set_t mask2;
 	CPU_ZERO(&mask2);
 	if (sched_getaffinity(0, sizeof(mask2), &mask2) == -1)
 		fwarning("cannot verify cpu affinity\n");
-        	else if (arg_debug) {
-	        	if (CPU_EQUAL(&mask, &mask2))
-        			printf("CPU affinity set\n");
+		else if (arg_debug) {
+			if (CPU_EQUAL(&mask, &mask2))
+				printf("CPU affinity set\n");
 		else
-        			printf("CPU affinity not set\n");
-        	}
+				printf("CPU affinity not set\n");
+		}
 }
 
 static void print_cpu(ProcessHandle process) {

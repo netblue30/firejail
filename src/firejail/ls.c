@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -178,7 +178,7 @@ static void print_directory(const char *path) {
 
 	n = scandir(path, &namelist, 0, alphasort);
 	if (n < 0)
-        		errExit("scandir");
+		errExit("scandir");
 	else {
 		for (i = 0; i < n; i++)
 			print_file_or_dir(path, namelist[i]->d_name);

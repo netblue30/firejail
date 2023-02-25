@@ -49,6 +49,7 @@ private-bin etr
 private-cache
 private-dev
 # private-etc alternatives,drirc,machine-id,openal,passwd
+private-etc @games,@x11
 private-tmp
 
 dbus-user none

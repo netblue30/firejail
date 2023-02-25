@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 set -x
 
@@ -13,11 +13,11 @@ set -x
 # setuid firejail process from the absolute beginning.
 
 if [ -z "${1##*/firejail}" ]; then
-    FIREJAIL=$1
+	FIREJAIL=$1
 else
-    # First argument is not named firejail, then add default unless environment
-    # variable already set.
-    set -- ${FIREJAIL:=$(command -v firejail)} "$@"
+	# First argument is not named firejail, then add default unless environment
+	# variable already set.
+	set -- ${FIREJAIL:=$(command -v firejail)} "$@"
 fi
 
 bash -c "kill -STOP \$\$; exec \"\$0\" \"\$@\"" "$@" &

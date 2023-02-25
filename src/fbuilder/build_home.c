@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -110,7 +110,7 @@ void process_home(const char *fname, char *home, int home_len) {
 		    strcmp(toadd, ".cache") == 0) {
 			if (dir)
 				free(dir);
-		    	continue;
+			continue;
 		}
 
 		// clean .cache entries

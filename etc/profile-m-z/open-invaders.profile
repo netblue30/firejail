@@ -35,6 +35,7 @@ seccomp
 
 private-bin open-invaders
 private-dev
+private-etc @x11
 private-tmp
 
 dbus-user none

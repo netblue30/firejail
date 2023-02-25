@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -8,7 +8,7 @@ cd /home
 spawn $env(SHELL)
 match_max 100000
 
-send --  "firejail --noprofile --name=\"rlimit testing\"\r"
+send --  "firejail --noprofile --name=\"rlimittesting\"\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -16,7 +16,7 @@ expect {
 sleep 1
 
 spawn $env(SHELL)
-send --  "firejail --rlimit-nofile=1234 --join=\"rlimit testing\"\r"
+send --  "firejail --rlimit-nofile=1234 --join=\"rlimittesting\"\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"Switching to pid"

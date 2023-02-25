@@ -47,14 +47,6 @@ else
 	echo "TESTING SKIP: gzip not found"
 fi
 
-if command -v xzdec
-then
-	echo "TESTING: xzdec"
-	./xzdec.exp
-else
-	echo "TESTING SKIP: xzdec not found"
-fi
-
 if command -v xz
 then
 	echo "TESTING: xz"

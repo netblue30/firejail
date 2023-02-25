@@ -22,17 +22,17 @@ mkdir ${HOME}/.parsec
 whitelist ${HOME}/.parsec
 whitelist /usr/share/parsec
 include whitelist-common.inc
-include whitelist-usr-share-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 # Due to the nature of parsec, the following directives will not work:
 # - no3d
-# - novideo
-# - nosound
 # - noinput (it does remote passthrough stuff for gamepads)
-# - private-dev (because of the above)
+# - nosound
+# - novideo
+# - private-dev (same as noinput)
 apparmor
 caps.drop all
 nodvd

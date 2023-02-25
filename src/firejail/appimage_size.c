@@ -17,8 +17,9 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 /*
-    This code borrows heavily from src/libappimage_shared/elf.c in libappimage
+ * This code borrows heavily from src/libappimage_shared/elf.c in libappimage
  */
 /*
 Compile with:
@@ -144,7 +145,7 @@ long unsigned int appimage2_size(int fd) {
 		return 0;
 
 	if ((ehdr.e_ident[EI_DATA] != ELFDATA2LSB) &&
-	     (ehdr.e_ident[EI_DATA] != ELFDATA2MSB))
+	    (ehdr.e_ident[EI_DATA] != ELFDATA2MSB))
 		return 0;
 
 	if(ehdr.e_ident[EI_CLASS] == ELFCLASS32) {

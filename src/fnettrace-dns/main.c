@@ -124,7 +124,7 @@ static void print_date(void) {
 
 static void run_trace(void) {
 	// grab all Ethernet packets and use a custom BPF filter to get only UDP from source port 53
- 	int s = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+	int s = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 	if (s < 0)
 		errExit("socket");
 	custom_bpf(s);

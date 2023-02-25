@@ -99,4 +99,3 @@ int find_child(int id) {
 	// this happens for processes sandboxed with --join
 	return first_child;
 }
-

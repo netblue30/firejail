@@ -202,8 +202,8 @@ void deny_ns_32(const char *fname, const char *list) {
 	//       0003: 20 00 00 00000000 ld data.syscall-number
 	//       0004: 06 00 00 7fff0000 ret ALLOW
 	//
-    	if (sizeof(filter))
-    		write_to_file(fd, filter, sizeof(filter));
+	if (sizeof(filter))
+		write_to_file(fd, filter, sizeof(filter));
 
 	filter_end_blacklist(fd);
 

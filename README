@@ -1079,7 +1079,7 @@ SYN-cook (https://github.com/SYN-cook)
 startx2017 (https://github.com/startx2017)
 	- syscall list update
 	- updated default seccomp filters - added bpf, clock_settime, personality, process_vm_writev, query_module,
-	              settimeofday, stime, umount, userfaultfd, ustat, vm86, and vm86old
+	  settimeofday, stime, umount, userfaultfd, ustat, vm86, and vm86old
 	- enable/disable join support in /etc/firejail/firejail.config
 	- firecfg fix: create ~/.local/share/applications directory if it doesn't exist
 	- firejail.config cleanup

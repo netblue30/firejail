@@ -35,11 +35,11 @@
 #include "../include/rundefs.h"
 
 #define tprintf(fp, args...) \
-    do { \
-        if (!fp)\
-            init(); \
-        fprintf(fp, args); \
-    } while(0)
+	do { \
+		if (!fp)\
+			init(); \
+		fprintf(fp, args); \
+	} while(0)
 
 // break recursivity on fopen call
 typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);
@@ -515,7 +515,7 @@ int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
 	if (!orig_connect)
 		orig_connect = (orig_connect_t)dlsym(RTLD_NEXT, "connect");
 
- 	int rv = orig_connect(sockfd, addr, addrlen);
+	int rv = orig_connect(sockfd, addr, addrlen);
 	print_sockaddr(sockfd, "connect", addr, rv);
 
 	return rv;

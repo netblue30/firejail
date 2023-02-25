@@ -274,7 +274,7 @@ static void sandbox_if_up(Bridge *br) {
 	}
 
 	if (br->ip6sandbox)
-		 net_if_ip6(dev, br->ip6sandbox);
+		net_if_ip6(dev, br->ip6sandbox);
 }
 
 static void chk_chroot(void) {
@@ -650,12 +650,12 @@ int sandbox(void* sandbox_arg) {
 	if (arg_debug)
 		printf("Initializing child process\n");
 
- 	// close each end of the unused pipes
- 	close(parent_to_child_fds[1]);
- 	close(child_to_parent_fds[0]);
+	// close each end of the unused pipes
+	close(parent_to_child_fds[1]);
+	close(child_to_parent_fds[0]);
 
- 	// wait for parent to do base setup
- 	wait_for_other(parent_to_child_fds[0]);
+	// wait for parent to do base setup
+	wait_for_other(parent_to_child_fds[0]);
 
 	if (arg_debug && child_pid == 1)
 		printf("PID namespace installed\n");
@@ -1259,13 +1259,13 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	// notify parent that new user namespace has been created so a proper
- 	// UID/GID map can be setup
- 	notify_other(child_to_parent_fds[1]);
- 	close(child_to_parent_fds[1]);
+	// UID/GID map can be setup
+	notify_other(child_to_parent_fds[1]);
+	close(child_to_parent_fds[1]);
 
- 	// wait for parent to finish setting up a proper UID/GID map
- 	wait_for_other(parent_to_child_fds[0]);
- 	close(parent_to_child_fds[0]);
+	// wait for parent to finish setting up a proper UID/GID map
+	wait_for_other(parent_to_child_fds[0]);
+	close(parent_to_child_fds[0]);
 
 	// somehow, the new user namespace resets capabilities;
 	// we need to do them again

@@ -78,7 +78,7 @@ void selinux_relabel_path(const char *path, const char *inside_path)
 	}
 
 	freecon(fcon);
- close:
+close:
 	close(fd);
 #else
 	(void) path;

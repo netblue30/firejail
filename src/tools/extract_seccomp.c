@@ -31,10 +31,13 @@
 #include <linux/filter.h>
 
 #define MAXBUF 1024
-#define errExit(msg)  { char msgout[256]; \
-                        snprintf(msgout, 256, "Error %d: %s", __LINE__, (msg)); \
-                        perror(msgout); \
-                        exit(1); }
+#define errExit(msg) \
+	do { \
+		char msgout[256]; \
+		snprintf(msgout, 256, "Error %d: %s", __LINE__, (msg)); \
+		perror(msgout); \
+		exit(1); \
+	} while (0);
 
 // dump all seccomp filters of a process
 // for further analysis with fsec-print

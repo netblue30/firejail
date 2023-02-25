@@ -84,4 +84,3 @@ void oom_set(const char *oom_string) {
 	if (waitpid(child, &status, 0) == -1 )
 		errExit("waitpid");
 }
-

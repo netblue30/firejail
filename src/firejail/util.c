@@ -1101,7 +1101,7 @@ void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
 	if (mkdir(fname, mode) == -1 ||
 	    chmod(fname, mode) == -1 ||
 	    chown(fname, uid, gid)) {
-	    	fprintf(stderr, "Error: failed to create %s directory\n", fname);
+		fprintf(stderr, "Error: failed to create %s directory\n", fname);
 		errExit("mkdir/chmod");
 	}
 

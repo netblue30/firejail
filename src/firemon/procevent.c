@@ -309,7 +309,7 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 #endif
 					if (proc_ev->event_data.fork.child_pid !=
 					    proc_ev->event_data.fork.child_tgid)
-					    	continue; // this is a thread, not a process
+						continue; // this is a thread, not a process
 					pid = proc_ev->event_data.fork.parent_tgid;
 #ifdef DEBUG_PRCTL
 	printf("%s: %d, event fork, pid %d\n", __FUNCTION__, __LINE__, pid);

@@ -29,4 +29,3 @@ if [[ $(uname -m) == "x86_64" ]]; then
 else
 	echo "TESTING SKIP: private-lib test implemented only for x86_64."
 fi
-

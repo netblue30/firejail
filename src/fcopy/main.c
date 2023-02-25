@@ -92,7 +92,7 @@ static void selinux_relabel_path(const char *path, const char *inside_path) {
 			printf("Cannot relabel %s: %s\n", path, strerror(errno));
 	}
 	freecon(fcon);
- close:
+close:
 	close(fd);
 #else
 	(void) path;
@@ -236,7 +236,7 @@ void copy_link(const char *target, const char *linkpath, mode_t mode, uid_t uid,
 	// if the link is already there, don't create it
 	struct stat s;
 	if (lstat(linkpath, &s) == 0)
-	       return;
+		return;
 
 	char *rp = proc_pid_to_self(target);
 	if (rp) {

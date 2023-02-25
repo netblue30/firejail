@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
@@ -57,7 +57,7 @@ void net_bridge_add_interface(const char *bridge, const char *dev) {
 
 	int sock;
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-              	errExit("socket");
+		errExit("socket");
 
 	memset(&ifr, 0, sizeof(ifr));
 	strncpy(ifr.ifr_name, bridge, IFNAMSIZ - 1);
@@ -237,7 +237,7 @@ int net_get_mac(const char *ifname, unsigned char mac[6]) {
 	int sock;
 
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-              	errExit("socket");
+		errExit("socket");
 
 	memset(&ifr, 0, sizeof(ifr));
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
@@ -291,7 +291,7 @@ int net_if_mac(const char *ifname, const unsigned char mac[6]) {
 	int sock;
 
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-              	errExit("socket");
+		errExit("socket");
 
 	memset(&ifr, 0, sizeof(ifr));
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);

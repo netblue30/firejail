@@ -150,4 +150,3 @@ then
 else
 	echo "TESTING SKIP: whois not found"
 fi
-

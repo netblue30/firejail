@@ -53,4 +53,3 @@ int db_exclude_check(const char *fname) {
 
 	return 0;
 }
-

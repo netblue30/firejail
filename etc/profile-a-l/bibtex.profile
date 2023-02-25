@@ -9,4 +9,3 @@ private-bin bibtex
 
 # Redirect
 include latex-common.profile
-

@@ -155,4 +155,3 @@ errexit:
 	fprintf(stderr, "Error fids: database corrupted\n");
 	exit(1);
 }
-

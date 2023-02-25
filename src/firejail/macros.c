@@ -38,19 +38,19 @@ Macro macro[] = {
 	},
 
 	{
-	 	"${MUSIC}",
+		"${MUSIC}",
 		"XDG_MUSIC_DIR=\"$HOME/",
 		{"Music", "Музыка", "Musique", "Musica", "Música", "Musik"}
 	},
 
 	{
-	 	"${VIDEOS}",
+		"${VIDEOS}",
 		"XDG_VIDEOS_DIR=\"$HOME/",
 		{"Videos", "Видео", "Vidéos", "Video", "Vídeos"}
 	},
 
 	{
-	 	"${PICTURES}",
+		"${PICTURES}",
 		"XDG_PICTURES_DIR=\"$HOME/",
 		{"Pictures", "Изображения", "Photos", "Immagini", "Imágenes", "Imagens", "Bilder"}
 	},

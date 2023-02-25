@@ -166,7 +166,8 @@ static char *print_top(unsigned index, unsigned parent, unsigned *utime, unsigne
 		snprintf(prcs_str, 10, "%d", *cnt);
 
 		if (asprintf(&rv, "%-7.7s %-9.9s %-8.8s %-8.8s %-5.5s %-4.4s %-9.9s %s",
-		                 pidstr, ptruser, rss, shared, cpu_str, prcs_str, uptime_str, ptrcmd) == -1)
+			     pidstr, ptruser, rss, shared, cpu_str, prcs_str,
+			     uptime_str, ptrcmd) == -1)
 			errExit("asprintf");
 
 		if (cmd)

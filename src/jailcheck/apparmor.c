@@ -37,4 +37,3 @@ void apparmor_test(pid_t pid) {
 	return;
 }
 #endif
-

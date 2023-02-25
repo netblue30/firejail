@@ -84,16 +84,16 @@ int restricted_shell(const char *user) {
 
 		// user name globbing
 		if (fnmatch(usr, user, 0) == 0) {
-		    	// process program arguments
+			// process program arguments
 
-		    	fullargv[0] = "firejail";
-		    	int i;
-		    	ptr = args;
-		    	for (i = 1; i < MAX_ARGS; i++) {
-		    		// skip blanks
-		    		while (*ptr == ' ' || *ptr == '\t')
-		    			ptr++;
-		    		fullargv[i] = ptr;
+			fullargv[0] = "firejail";
+			int i;
+			ptr = args;
+			for (i = 1; i < MAX_ARGS; i++) {
+				// skip blanks
+				while (*ptr == ' ' || *ptr == '\t')
+					ptr++;
+				fullargv[i] = ptr;
 #ifdef DEBUG_RESTRICTED_SHELL
 				{EUID_ROOT();
 				FILE *fp = fopen("/firelog", "ae");
@@ -104,23 +104,23 @@ int restricted_shell(const char *user) {
 				EUID_USER();}
 #endif
 
-		    		if (*ptr != '\0') {
-		    			// go to the end of the word
-			    		while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
-			    			ptr++;
-		    			*ptr ='\0';
-		    			fullargv[i] = strdup(fullargv[i]);
-		    			if (fullargv[i] == NULL)
-		    				errExit("strdup");
-		    			ptr++;
-		    			while (*ptr == ' ' || *ptr == '\t')
-		    				ptr++;
-		    			if (*ptr != '\0')
-			    			continue;
-		    		}
-	    			fullargv[i] = strdup(fullargv[i]);
+				if (*ptr != '\0') {
+					// go to the end of the word
+					while (*ptr != ' ' && *ptr != '\t' && *ptr != '\0')
+						ptr++;
+					*ptr ='\0';
+					fullargv[i] = strdup(fullargv[i]);
+					if (fullargv[i] == NULL)
+						errExit("strdup");
+					ptr++;
+					while (*ptr == ' ' || *ptr == '\t')
+						ptr++;
+					if (*ptr != '\0')
+						continue;
+				}
+				fullargv[i] = strdup(fullargv[i]);
 				fclose(fp);
-		    		return i + 1;
+				return i + 1;
 			}
 			fprintf(stderr, "Error: too many program arguments in users.conf line %d\n", lineno);
 			exit(1);

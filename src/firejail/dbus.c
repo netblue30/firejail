@@ -263,7 +263,7 @@ static char *find_user_socket_by_format(char *format) {
 	if (!S_ISSOCK(s.st_mode))
 		goto fail;
 	return dbus_user_socket;
- fail:
+fail:
 	free(dbus_user_socket);
 	return NULL;
 }

@@ -1,6 +1,7 @@
 firejail (0.9.73) baseline; urgency=low
   * work in progress
   * feature: Add "keep-shell-rc" command and option (#1127 #5634)
+  * feature: Print the argument when failing with "too long arguments" (#5677)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578)
@@ -13,6 +14,7 @@ firejail (0.9.73) baseline; urgency=low
   * build: mark most phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
   * build: deb: enable apparmor by default & remove deb-apparmor (#5668)
+  * build: Fix whitespace and add .editorconfig (#5674)
   * docs: remove apparmor options in --help when building without apparmor
     support (#5589)
   * docs: selinux.c: Split Copyright notice & use same license as upstream

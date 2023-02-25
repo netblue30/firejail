@@ -782,6 +782,7 @@ netcarver (https://github.com/netcarver)
 NetSysFire (https://github.com/NetSysFire)
 	- update weechat profile
 	- update megaglest profile
+	- added parsecd profile
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory

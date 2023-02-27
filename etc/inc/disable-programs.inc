@@ -320,6 +320,7 @@ blacklist ${HOME}/.config/PacmanLogViewer
 blacklist ${HOME}/.config/PawelStolowski
 blacklist ${HOME}/.config/Philipp Schmieder
 blacklist ${HOME}/.config/Pinta
+blacklist ${HOME}/.config/Postman
 blacklist ${HOME}/.config/QGIS
 blacklist ${HOME}/.config/QMediathekView
 blacklist ${HOME}/.config/QQ
@@ -480,6 +481,7 @@ blacklist ${HOME}/.config/inox
 blacklist ${HOME}/.config/iridium
 blacklist ${HOME}/.config/itch
 blacklist ${HOME}/.config/jami
+blacklist ${HOME}/.config/jami.net
 blacklist ${HOME}/.config/jd-gui.cfg
 blacklist ${HOME}/.config/jgit
 blacklist ${HOME}/.config/k3brc
@@ -1183,6 +1185,7 @@ blacklist ${HOME}/Arduino
 blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud
 blacklist ${HOME}/Nextcloud/Notes
+blacklist ${HOME}/Postman
 blacklist ${HOME}/Seafile/.seafile-data
 blacklist ${HOME}/SoftMaker
 blacklist ${HOME}/Standard Notes Backups

@@ -322,7 +322,7 @@ firejail (0.9.62) baseline; urgency=low
   * compiler flags autodetection
   * move chroot entirely from path based to file descriptor based mounts
   * whitelisting /usr/share in a large number of profiles
-  * new scripts in conrib: gdb-firejail.sh and sort.py
+  * new scripts in contrib: gdb-firejail.sh and sort.py
   * enhancement: whitelist /usr/share in some profiles
   * added signal mediation ot apparmor profile
   * new conditions: HAS_X11, HAS_NET

@@ -53,7 +53,8 @@ static char *random_hostname(void) {
 }
 
 void fs_hostname(void) {
-	const char *hostname = (cfg.hostname)? cfg.hostname: random_hostname();
+	if (!cfg.hostname)
+		cfg.hostname = random_hostname();
 	struct stat s;
 
 	// create a new /etc/hostname
@@ -63,11 +64,9 @@ void fs_hostname(void) {
 
 		create_empty_file_as_root(RUN_HOSTNAME_FILE, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		FILE *fp = fopen(RUN_HOSTNAME_FILE, "we");
-		if (!fp) {
-			fclose(fp);
+		if (!fp)
 			goto errexit;
-		}
-		fprintf(fp, "%s\n", hostname);
+		fprintf(fp, "%s\n", cfg.hostname);
 		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		fclose(fp);
 
@@ -104,7 +103,7 @@ void fs_hostname(void) {
 			// copy line
 			if (strstr(buf, "127.0.0.1") && done == 0) {
 				done = 1;
-				fprintf(fp2, "127.0.0.1 %s\n", hostname);
+				fprintf(fp2, "127.0.0.1 %s\n", cfg.hostname);
 			}
 			else
 				fprintf(fp2, "%s\n", buf);

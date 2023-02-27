@@ -1,0 +1,130 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --hostname=foo cat /etc/hostname\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 0.1\n";exit}
+	"foo"
+}
+sleep 1
+
+send --  "firejail --hostname=foo --private-etc cat /etc/hostname\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 1.1\n";exit}
+	"foo"
+}
+sleep 1
+
+send --  "firejail --hosts-file=hosts-file cat /etc/hosts\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.1\n";exit}
+	"blablabla"
+}
+sleep 1
+
+send --  "firejail --hosts-file=hosts-file --private-etc cat /etc/hosts\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.1\n";exit}
+	"blablabla"
+}
+sleep 1
+
+send --  "firejail --hosts-file=hosts-file --hostname=foo cat /etc/hosts\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.1\n";exit}
+	"foo"
+}
+expect {
+	timeout {puts "TESTING ERROR 4.2\n";exit}
+	"blablabla"
+}
+sleep 1
+
+send --  "firejail --hosts-file=hosts-file --hostname=foo --private-etc cat /etc/hosts\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 5.1\n";exit}
+	"foo"
+}
+expect {
+	timeout {puts "TESTING ERROR 5.2\n";exit}
+	"blablabla"
+}
+sleep 1
+
+# ping test
+send --  "firejail --hostname=foo --private-etc ping -c 3 foo\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"3 packets transmitted, 3 received"
+}
+sleep 1
+
+send --  "firejail --hosts-file=hosts-file --private-etc ping -c 3 blablabla\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"3 packets transmitted, 3 received"
+}
+sleep 1
+
+# random hostname
+send --  "firejail cat /etc/hostname\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 8.1\n";exit}
+	"hiko" {puts "1"}
+	"suke" {puts "2"}
+	"shi" {puts "3"}
+	"ro" {puts "4"}
+	"hito" {puts "5"}
+	"ka" {puts "6"}
+}
+sleep 1
+
+# run /bin/hostname
+send --  "firejail --noblacklist=/usr/bin/hostname --noblacklist=/bin/hostname --hostname=foo /usr/bin/hostname\r"
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 9.1\n";exit}
+	"foo"
+}
+
+
+after 500
+puts "all done\n"
+

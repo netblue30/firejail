@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -92,7 +92,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -109,7 +109,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
       with:
         egress-policy: block
         allowed-endpoints: >

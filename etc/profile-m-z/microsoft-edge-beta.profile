@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.cache/microsoft-edge-beta
 noblacklist ${HOME}/.config/microsoft-edge-beta
+noblacklist /opt/microsoft/msedge-beta/msedge-sandbox
 
 mkdir ${HOME}/.cache/microsoft-edge-beta
 mkdir ${HOME}/.config/microsoft-edge-beta
@@ -15,6 +16,8 @@ whitelist ${HOME}/.cache/microsoft-edge-beta
 whitelist ${HOME}/.config/microsoft-edge-beta
 
 whitelist /opt/microsoft/msedge-beta
+# private-opt might break the file-copy-limit, see #5307
+#private-opt microsoft
 
 # Redirect
 include chromium-common.profile

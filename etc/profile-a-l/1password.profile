@@ -17,4 +17,4 @@ private-etc @tls-ca
 ignore dbus-user none
 
 # Redirect
-include electron.profile
+include electron-common.profile

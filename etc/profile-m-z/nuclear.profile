@@ -22,4 +22,4 @@ private-etc @tls-ca,@x11,host.conf,mime.types
 private-opt nuclear
 
 # Redirect
-include electron.profile
+include electron-common.profile

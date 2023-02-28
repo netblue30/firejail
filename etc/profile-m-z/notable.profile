@@ -34,4 +34,4 @@ ignore include whitelist-usr-share-common.inc
 ignore include whitelist-var-common.inc
 
 # Redirect
-include electron.profile
+include electron-common.profile

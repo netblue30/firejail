@@ -40,4 +40,4 @@ ignore dbus-user none
 read-only ${HOME}/.mozilla/firefox/profiles.ini
 
 # Redirect
-include electron.profile
+include electron-common.profile

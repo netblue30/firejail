@@ -39,4 +39,4 @@ nosound
 # memory-deny-write-execute
 
 # Redirect
-include electron.profile
+include electron-common.profile

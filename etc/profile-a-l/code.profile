@@ -39,4 +39,4 @@ nosound
 noexec /tmp
 
 # Redirect
-include electron.profile
+include electron-common.profile

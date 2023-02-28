@@ -27,4 +27,4 @@ private-etc @tls-ca
 private-opt Bitwarden
 
 # Redirect
-include electron.profile
+include electron-common.profile

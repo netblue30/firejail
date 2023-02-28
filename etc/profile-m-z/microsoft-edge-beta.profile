@@ -1,5 +1,5 @@
 # Firejail profile for Microsoft Edge Beta
-# Description: Web browser from Microsoft,beta channel
+# Description: Web browser from Microsoft, beta channel
 # This file is overwritten after every install/update
 # Persistent local customizations
 include microsoft-edge-beta.local

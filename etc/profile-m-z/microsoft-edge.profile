@@ -1,5 +1,5 @@
 # Firejail profile for Microsoft Edge
-# Description: Web browser from Microsoft,stable channel
+# Description: Web browser from Microsoft, stable channel
 # This file is overwritten after every install/update
 # Persistent local customizations
 include microsoft-edge.local

@@ -1,5 +1,5 @@
 # Firejail profile for Microsoft Edge Dev
-# Description: Web browser from Microsoft,dev channel
+# Description: Web browser from Microsoft, dev channel
 # This file is overwritten after every install/update
 # Persistent local customizations
 include microsoft-edge-dev.local

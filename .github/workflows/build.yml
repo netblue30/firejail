@@ -71,6 +71,8 @@ jobs:
       run: command -V firejail && firejail --version
     - name: lab setup
       run: SHELL=/bin/bash make lab-setup
+    - name: run chroot tests
+      run: SHELL=/bin/bash make test-chroot
     - name: run sysutils tests
       run: SHELL=/bin/bash make test-sysutils
     - name: run private-etc tests

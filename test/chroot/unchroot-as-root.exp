@@ -22,7 +22,7 @@ after 100
 send -- "./unchroot\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Bad system call"
+	"Operation not permitted"
 }
 after 100
 

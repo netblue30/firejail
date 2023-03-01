@@ -30,4 +30,4 @@ include allow-common-devel.inc
 nosound
 
 # Redirect
-include electron.profile
+include electron-common.profile

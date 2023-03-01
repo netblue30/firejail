@@ -24,4 +24,4 @@ private-bin bash,electron,electron[0-9],electron[0-9][0-9],jitsi-meet-desktop,sh
 private-etc @tls-ca,@x11,bumblebee,glvnd,host.conf,mime.types,rpc,services
 
 # Redirect
-include electron.profile
+include electron-common.profile

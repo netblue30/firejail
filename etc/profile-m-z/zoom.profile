@@ -35,4 +35,4 @@ whitelist ${HOME}/.zoom
 #private-etc alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl
 
 # Redirect
-include electron.profile
+include electron-common.profile

@@ -15,4 +15,4 @@ whitelist ${HOME}/.config/Riot
 whitelist /usr/share/webapps/element
 
 # Redirect
-include electron.profile
+include electron-common.profile

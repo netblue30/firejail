@@ -18,4 +18,4 @@ private-etc @tls-ca,@x11,bumblebee,host.conf,mime.types
 # private-opt
 
 # Redirect
-include electron.profile
+include electron-common.profile

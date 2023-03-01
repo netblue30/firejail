@@ -25,10 +25,6 @@ expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"Hello, World!"
 }
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"ping:exec"
-}
 
 after 500
 

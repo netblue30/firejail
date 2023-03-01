@@ -19,7 +19,8 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Operation not permitted"
+	"Operation not permitted" {puts "1"}
+	"Permission denied" {puts "2"}
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

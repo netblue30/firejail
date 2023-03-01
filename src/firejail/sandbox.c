@@ -848,8 +848,7 @@ int sandbox(void* sandbox_arg) {
 		fs_trace_touch_or_store_preload();
 
 	// store hosts file
-	if (cfg.hosts_file)
-		fs_store_hosts_file();
+	fs_store_hosts_file();
 
 	//****************************
 	// configure filesystem
@@ -986,11 +985,11 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// hosts and hostname
 	//****************************
-	if (cfg.hostname)
-		fs_hostname(cfg.hostname);
+//	if (cfg.hostname)
+	fs_hostname();
 
-	if (cfg.hosts_file)
-		fs_mount_hosts_file();
+//	if (cfg.hosts_file)
+//		fs_mount_hosts_file();
 
 	//****************************
 	// /etc overrides from the network namespace

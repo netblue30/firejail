@@ -10,55 +10,61 @@ match_max 100000
 send -- "firejail  --chroot=/tmp/chroot\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Error: --chroot option is not available on Grsecurity systems" {puts "\nall done\n"; exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms" {puts "chroot available\n"};
 }
 sleep 1
 
-send -- "cd /home;pwd\r"
+send -- "pwd\r"
 expect {
-	timeout {puts "TESTING ERROR 0.1\n";exit}
-	"home"
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"/home"
 }
-sleep 1
-send -- "bash\r"
-sleep 1
+after 100
 send -- "ls /\r"
 expect {
-	timeout {puts "TESTING ERROR 0.2\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"this-is-my-chroot"
 }
 after 100
 
 send -- "ps aux\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"/bin/bash"
 }
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"bash"
-}
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"ps aux"
-}
-after 100
-
-send -- "ps aux | wc -l; pwd\r"
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"6"
 }
 after 100
 
 # check /sys directory
 send -- "ls /sys\r"
 expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"block"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"class"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"dev"
 }
 after 100
 
+# check /bin directory
+send -- "ls /bin/find\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"No such file or directory"
+}
+after 100
+send -- "/bin/ping 1.1.1.1\r"
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"Operation not permitted"
+}
 
 puts "all done\n"

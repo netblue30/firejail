@@ -22,7 +22,9 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-# Add the next line to your electron.local if your kernel allows unprivileged userns clone.
+# If your kernel allows the creation of user namespaces by unprivileged users
+# (for example, if running `unshare -U echo enabled` prints "enabled"), you
+# can add the next line to your electron.local.
 #include electron-hardened.inc.profile
 
 apparmor

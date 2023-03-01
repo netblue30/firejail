@@ -18,3 +18,6 @@ echo "TESTING: groups (test/private-etc/groups.exp)"
 
 echo "TESTING: etc-cleanup (test/private-etc/etc-cleanup.exp)"
 ./etc-cleanup.exp
+
+echo "TESTING: hostname (test/private-etc/hostname.exp)"
+./hostname.exp

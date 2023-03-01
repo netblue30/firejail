@@ -393,10 +393,6 @@ test-github: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-uti
 test-private-lib:
 	$(MAKE) -C test $(subst test-,,$@)
 
-# a firejail-test account is required, public/private key setup
-test-ssh:
-	$(MAKE) -C test $(subst test-,,$@)
-
 # requires root access
 test-chroot:
 	$(MAKE) -C test $(subst test-,,$@)
@@ -410,19 +406,8 @@ test-appimage:
 test-network:
 	$(MAKE) -C test $(subst test-,,$@)
 
-# requires the same setup as test-network
-test-stress:
-	$(MAKE) -C test $(subst test-,,$@)
-
-# Tests running a root user
-test-root:
-	$(MAKE) -C test $(subst test-,,$@)
-
 # OverlayFS is not available on all platforms
 test-overlay:
 	$(MAKE) -C test $(subst test-,,$@)
 
 # For testing hidepid system, the command to set it up is "mount -o remount,rw,hidepid=2 /proc"
-
-test-all: test-root test-chroot test-network test-appimage test-overlay
-	echo "TEST COMPLETE"

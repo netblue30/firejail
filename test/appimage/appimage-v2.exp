@@ -8,12 +8,24 @@ spawn $env(SHELL)
 match_max 100000
 set appimage_id $spawn_id
 
-send -- "firejail --name=test --appimage Leafpad-0.8.18.1.glibc2.4-x86_64.AppImage\r"
+send -- "firejail --name=test --appimage hello-x86_64.AppImage\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
-sleep 2
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Hello, World!"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Operation not permitted"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Hello, again!"
+}
+sleep 5
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
@@ -23,18 +35,9 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"appimage Leafpad"
+	"appimage hello-x86_64"
 }
 after 100
-
-# grsecurity exit
-send -- "file /proc/sys/kernel/grsecurity\r"
-expect {
-	timeout {puts "TESTING ERROR - grsecurity detection\n";exit}
-	"grsecurity: directory" {puts "grsecurity present, exiting...\n";exit}
-	"cannot open" {puts "grsecurity not present\n"}
-}
-
 
 send -- "firejail --name=blablabla\r"
 expect {
@@ -48,7 +51,7 @@ send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
-	"appimage Leafpad"
+	"appimage hello-x86_64"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
@@ -62,7 +65,7 @@ after 100
 send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"appimage Leafpad"
+	"appimage hello-x86_64"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}

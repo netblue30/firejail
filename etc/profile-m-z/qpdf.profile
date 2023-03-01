@@ -31,7 +31,6 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-hostname qpdf
 ipc-namespace
 machine-id
 net none

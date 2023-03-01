@@ -21,7 +21,6 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-hostname mdr
 ipc-namespace
 machine-id
 net none

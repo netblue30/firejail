@@ -1,8 +1,8 @@
-# Firejail profile for electron
+# Firejail profile for electron-common
 # Description: Build cross platform desktop apps with web technologies
 # This file is overwritten after every install/update
 # Persistent local customizations
-include electron.local
+include electron-common.local
 
 noblacklist ${HOME}/.config/Electron
 noblacklist ${HOME}/.config/electron*-flag*.conf
@@ -24,8 +24,8 @@ include whitelist-var-common.inc
 
 # If your kernel allows the creation of user namespaces by unprivileged users
 # (for example, if running `unshare -U echo enabled` prints "enabled"), you
-# can add the next line to your electron.local.
-#include electron-hardened.inc.profile
+# can add the next line to your electron-common.local.
+#include electron-common-hardened.inc.profile
 
 apparmor
 caps.keep sys_admin,sys_chroot

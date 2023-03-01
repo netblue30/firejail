@@ -25,4 +25,4 @@ dbus-user.own org.mpris.MediaPlayer2.chromium.*
 dbus-user.own org.mpris.MediaPlayer2.freetube
 
 # Redirect
-include electron.profile
+include electron-common.profile

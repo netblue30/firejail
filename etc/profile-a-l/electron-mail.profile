@@ -40,4 +40,4 @@ dbus-user.talk org.gnome.keyring.SystemPrompter
 dbus-user.talk org.mozilla.*
 
 # Redirect
-include electron.profile
+include electron-common.profile

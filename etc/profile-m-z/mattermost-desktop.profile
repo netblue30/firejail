@@ -26,4 +26,4 @@ private-etc @tls-ca
 #dbus-system none
 
 # Redirect
-include electron.profile
+include electron-common.profile

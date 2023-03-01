@@ -27,4 +27,4 @@ whitelist ${HOME}/.config/teams
 whitelist ${HOME}/.config/Microsoft
 
 # Redirect
-include electron.profile
+include electron-common.profile

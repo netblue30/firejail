@@ -28,4 +28,4 @@ private-etc @tls-ca
 private-opt tutanota-desktop
 
 # Redirect
-include electron.profile
+include electron-common.profile

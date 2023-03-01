@@ -25,4 +25,4 @@ mkdir ${HOME}/.config/Beaker Browser
 whitelist ${HOME}/.config/Beaker Browser
 
 # Redirect
-include electron.profile
+include electron-common.profile

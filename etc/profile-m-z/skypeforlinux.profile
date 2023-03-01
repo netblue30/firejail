@@ -30,4 +30,4 @@ dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.kde.StatusNotifierWatcher
 
 # Redirect
-include electron.profile
+include electron-common.profile

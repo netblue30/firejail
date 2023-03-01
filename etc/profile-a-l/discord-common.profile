@@ -29,4 +29,4 @@ private-etc @tls-ca
 join-or-start discord
 
 # Redirect
-include electron.profile
+include electron-common.profile

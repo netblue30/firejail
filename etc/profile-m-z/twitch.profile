@@ -22,4 +22,4 @@ private-etc @tls-ca,@x11,bumblebee,host.conf,mime.types
 private-opt Twitch
 
 # Redirect
-include electron.profile
+include electron-common.profile

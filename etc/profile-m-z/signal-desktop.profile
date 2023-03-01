@@ -32,4 +32,4 @@ dbus-user.talk org.mozilla.*
 ignore dbus-user none
 
 # Redirect
-include electron.profile
+include electron-common.profile

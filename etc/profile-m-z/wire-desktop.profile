@@ -29,4 +29,4 @@ private-bin bash,electron,electron[0-9],electron[0-9][0-9],env,sh,wire-desktop
 private-etc @tls-ca
 
 # Redirect
-include electron.profile
+include electron-common.profile

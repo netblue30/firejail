@@ -25,4 +25,4 @@ private-bin electron,electron[0-9],electron[0-9][0-9],whalebird
 private-etc @tls-ca
 
 # Redirect
-include electron.profile
+include electron-common.profile

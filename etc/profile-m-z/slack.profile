@@ -29,4 +29,4 @@ private-bin electron,electron[0-9],electron[0-9][0-9],locale,sh,slack
 private-etc @tls-ca,debian_version,fedora-release,os-release,redhat-release,system-release,system-release-cpe
 
 # Redirect
-include electron.profile
+include electron-common.profile

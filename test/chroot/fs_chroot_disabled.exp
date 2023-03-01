@@ -7,18 +7,11 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --bind=tmpfile,/etc/passwd\r"
+send -- "firejail  --chroot=/tmp/chroot\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+	"feature is disabled"
 }
 sleep 1
 
-send -- "cat /etc/passwd;pwd\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"hello"
-}
-sleep 1
-
-puts "\n"
+puts "all done\n"

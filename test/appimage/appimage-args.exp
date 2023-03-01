@@ -8,7 +8,7 @@ spawn $env(SHELL)
 match_max 100000
 
 set appimage_id $spawn_id
-send -- "firejail --name=appimage-test --debug --appimage Leafpad-0.8.17-x86_64.AppImage testfile\r"
+send -- "firejail --name=test --debug --appimage Leafpad-0.8.17-x86_64.AppImage testfile\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"execvp argument 2"
@@ -91,7 +91,7 @@ expect {
 after 100
 
 spawn $env(SHELL)
-send -- "firejail --shutdown=appimage-test\r"
+send -- "firejail --shutdown=test\r"
 
 set spawn_id $appimage_id
 expect {

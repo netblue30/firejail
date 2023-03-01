@@ -3,7 +3,7 @@
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations
-include rsync.local
+include rsync-download_only.local
 # Persistent global definitions
 include globals.local
 

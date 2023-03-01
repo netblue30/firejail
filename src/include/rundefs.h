@@ -89,6 +89,7 @@
 #define RUN_ASOUNDRC_FILE		RUN_MNT_DIR "/.asoundrc"
 #define RUN_HOSTNAME_FILE		RUN_MNT_DIR "/hostname"
 #define RUN_HOSTS_FILE			RUN_MNT_DIR "/hosts"
+#define RUN_HOSTS_FILE2			RUN_MNT_DIR "/hosts2"
 #define RUN_MACHINEID			RUN_MNT_DIR "/machine-id"
 #define RUN_LDPRELOAD_FILE		RUN_MNT_DIR "/ld.so.preload"
 #define RUN_UTMP_FILE			RUN_MNT_DIR "/utmp"

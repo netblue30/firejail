@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518
+      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -71,6 +71,8 @@ jobs:
       run: command -V firejail && firejail --version
     - name: lab setup
       run: SHELL=/bin/bash make lab-setup
+    - name: run chroot tests
+      run: SHELL=/bin/bash make test-chroot
     - name: run sysutils tests
       run: SHELL=/bin/bash make test-sysutils
     - name: run private-etc tests

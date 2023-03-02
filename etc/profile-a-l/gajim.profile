@@ -33,6 +33,7 @@ whitelist ${HOME}/.config/gajim
 whitelist ${HOME}/.local/share/gajim
 whitelist ${DOWNLOADS}
 whitelist ${RUNUSER}/gnupg
+whitelist /usr/share/gajim
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 include whitelist-common.inc

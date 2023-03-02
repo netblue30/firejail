@@ -39,11 +39,9 @@ void write_to_file(int fd, const void *data, size_t size) {
 void filter_init(int fd, bool native) {
 	struct sock_filter filter_native[] = {
 		VALIDATE_ARCHITECTURE,
-#if defined(__x86_64__)
 		EXAMINE_SYSCALL,
+#if defined(__x86_64__)
 		HANDLE_X32
-#else
-		EXAMINE_SYSCALL
 #endif
 	};
 	struct sock_filter filter_32[] = {

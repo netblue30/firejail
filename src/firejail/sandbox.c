@@ -1277,10 +1277,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************************
 	// Set NO_NEW_PRIVS if desired
 	//****************************************
-#ifndef HAVE_FORCE_NONEWPRIVS
-	if (arg_nonewprivs)
-#endif
-	{
+	if (arg_nonewprivs) {
 		if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) != 0) {
 			fprintf(stderr, "Error: cannot set NO_NEW_PRIVS, it requires a Linux kernel version 3.5 or newer.\n");
 			exit(1);

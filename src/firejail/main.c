@@ -97,7 +97,11 @@ int arg_rlimit_fsize = 0;				// rlimit fsize
 int arg_rlimit_sigpending = 0;			// rlimit fsize
 int arg_rlimit_as = 0;				// rlimit as
 int arg_nogroups = 0;				// disable supplementary groups
-int arg_nonewprivs = 0;			// set the NO_NEW_PRIVS prctl
+#ifdef HAVE_FORCE_NONEWPRIVS
+int arg_nonewprivs = 1;			// set the NO_NEW_PRIVS prctl
+#else
+int arg_nonewprivs = 0;
+#endif
 int arg_noroot = 0;				// create a new user namespace and disable root user
 int arg_netfilter;				// enable netfilter
 int arg_netfilter6;				// enable netfilter6

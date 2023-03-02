@@ -501,10 +501,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		}
 
 		// set nonewprivs
-#ifndef HAVE_FORCE_NONEWPRIVS
-		if (arg_nonewprivs == 1)	// not available for uid 0
-#endif
-		{
+		if (arg_nonewprivs == 1) {
 			if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) != 0)
 				errExit("prctl");
 			if (arg_debug)

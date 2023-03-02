@@ -2,12 +2,15 @@ firejail (0.9.73) baseline; urgency=low
   * work in progress
   * feature: Add "keep-shell-rc" command and option (#1127 #5634)
   * feature: Print the argument when failing with "too long arguments" (#5677)
+  * feature: a random hostname is assigned to each sandbox unless
+    overwritten using --hostname command
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578)
   * modif: Escape control characters of the command line (#5613)
   * modif: Allow only letters and digits for sandbox name (--name=) and
     host name (--hostname=)
+  * bugfix: fix --hostname and --hosts-file commands
   * bugfix: qutebrowser: links will not open in the existing instance (#5601
     #5618)
   * build: auto-generate syntax files (#5627)
@@ -15,11 +18,13 @@ firejail (0.9.73) baseline; urgency=low
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
   * build: deb: enable apparmor by default & remove deb-apparmor (#5668)
   * build: Fix whitespace and add .editorconfig (#5674)
+  * test: split individual test groups in github workflows
+  * test: add chroot, appimage and network tests in github workflows
   * docs: remove apparmor options in --help when building without apparmor
     support (#5589)
   * docs: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
-  * new profiles: fix-qdf, qpdf, zlib-flate 
+  * new profiles: fix-qdf, qpdf, zlib-flate
  -- netblue30 <netblue30@yahoo.com>  Mon, 16 Jan 2023 09:00:00 -0500
 
 firejail (0.9.72) baseline; urgency=low

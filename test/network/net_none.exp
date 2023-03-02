@@ -38,6 +38,6 @@ expect {
 	"3"
 }
 send -- "exit\r"
-after 100
+after 500
 
 puts "\nall done\n"

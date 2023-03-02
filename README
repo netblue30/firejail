@@ -701,7 +701,7 @@ Liorst4 (https://github.com/Liorst4)
 Lockdis (https://github.com/Lockdis)
 	- Added crow, nyx, and google-earth-pro profiles
 Lukáš Krejčí (https://github.com/lskrejci)
-        - fixed parsing of --keep-var-tmp
+	- fixed parsing of --keep-var-tmp
 luzpaz (https://github.com/luzpaz)
 	- code spelling fixes
 lxeiqr (https://github.com/lxeiqr)
@@ -717,6 +717,8 @@ mahdi1234 (https://github.com/mahdi1234)
 	- Seamonkey profiles
 Manuel Dipolt (https://github.com/xeniter)
 	- stack alignment for the ARM Architecture
+Marek Küthe (https://github.com/marek22k)
+	- allow loading plugins in gajim
 Martin Carpenter (https://github.com/mcarpenter)
 	- security audit and bug fixes
 	- Centos 6.x support

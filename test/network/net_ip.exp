@@ -94,8 +94,40 @@ expect {
 }
 after 500
 
+send -- "firejail --noprofile --net=br0 --ip=none ip addr show\r"
+expect {
+	timeout {puts "TESTING ERROR 17\n";exit}
+	"eth0" {puts "TESTING ERROR 18\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 19\n";exit}
+	"eth0"
+}
+expect {
+	timeout {puts "TESTING ERROR 20\n";exit}
+	"inet " {puts "TESTING ERROR 21\n";exit}
+	"inet6"
+}
+after 500
 
+send -- "firejail --net=br0 --mtu=1000 --noprofile ip link show\r"
+expect {
+	timeout {puts "TESTING ERROR 22\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 23\n";exit}
+	"eth0"
+}
+expect {
+	timeout {puts "TESTING ERROR 24\n";exit}
+	"mtu 1000"
+}
+expect {
+	timeout {puts "TESTING ERROR 25\n";exit}
+	"state UP"
+}
 
-
-after 100
+after 500
 puts "\nall done\n"

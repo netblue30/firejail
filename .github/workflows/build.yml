@@ -60,7 +60,7 @@ jobs:
     - name: update package information
       run: sudo apt-get update
     - name: install dependencies
-      run: sudo apt-get install gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois
+      run: sudo apt-get install gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois bridge-utils
     - name: configure
       run: CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux
     - name: make
@@ -71,6 +71,8 @@ jobs:
       run: command -V firejail && firejail --version
     - name: lab setup
       run: SHELL=/bin/bash make lab-setup
+    - name: run network tests
+      run: SHELL=/bin/bash make test-network
     - name: run appimage tests
       run: SHELL=/bin/bash make test-appimage
     - name: run chroot tests

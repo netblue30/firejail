@@ -372,7 +372,7 @@ $(TEST_TARGETS):
 
 
 # extract some data about the testing setup: kernel, network connectivity, user
-lab-setup:; uname -r; ldd --version | grep GLIBC; pwd; whoami; cat /etc/resolv.conf; cat /etc/hosts; ls /etc
+lab-setup:; uname -r; ldd --version | grep GLIBC; pwd; whoami; ip addr show; cat /etc/resolv.conf; cat /etc/hosts; ls /etc
 
 test: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-private-etc test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"
@@ -384,9 +384,15 @@ test-noprofiles: lab-setup test-fcopy test-fnetfilter test-fs test-utils test-sy
 test-appimage:
 	$(MAKE) -C test $(subst test-,,$@)
 
-# not included in "make dist" and "make test"
+# using sudo; not included in "make dist" and "make test"
 test-chroot:
 	$(MAKE) -C test $(subst test-,,$@)
+
+# using sudo; not included in "make dist" and "make test"
+test-network:
+	$(MAKE) -C test $(subst test-,,$@)
+
+
 
 # old gihub test; the new test is driven directly from .github/workflows/build.yml
 test-github: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
@@ -403,7 +409,5 @@ test-private-lib:
 
 # Root access, network devices are created before the test
 # restart your computer to get rid of these devices
-test-network:
-	$(MAKE) -C test $(subst test-,,$@)
 
 # For testing hidepid system, the command to set it up is "mount -o remount,rw,hidepid=2 /proc"

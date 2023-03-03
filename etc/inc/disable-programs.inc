@@ -83,6 +83,7 @@ blacklist ${HOME}/.cache/Tox
 blacklist ${HOME}/.cache/Zeal
 blacklist ${HOME}/.cache/agenda
 blacklist ${HOME}/.cache/akonadi*
+blacklist ${HOME}/.cache/ani-cli
 blacklist ${HOME}/.cache/atril
 blacklist ${HOME}/.cache/attic
 blacklist ${HOME}/.cache/audacity
@@ -1027,6 +1028,7 @@ blacklist ${HOME}/.local/share/wormux
 blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
+blacklist ${HOME}/.local/state/ani-cli
 blacklist ${HOME}/.local/state/audacity
 blacklist ${HOME}/.local/state/pipewire
 blacklist ${HOME}/.lv2

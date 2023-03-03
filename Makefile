@@ -392,6 +392,13 @@ test-chroot:
 test-network:
 	$(MAKE) -C test $(subst test-,,$@)
 
+# using sudo; not included in "make dist" and "make test"
+test-apparmor:
+	$(MAKE) -C test $(subst test-,,$@)
+
+# using sudo; not included in "make dist" and "make test"
+test-firecfg:
+	$(MAKE) -C test $(subst test-,,$@)
 
 
 # old gihub test; the new test is driven directly from .github/workflows/build.yml

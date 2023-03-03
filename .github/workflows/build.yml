@@ -71,6 +71,8 @@ jobs:
       run: command -V firejail && firejail --version
     - name: lab setup
       run: SHELL=/bin/bash make lab-setup
+    - name: run firecfg tests
+      run: SHELL=/bin/bash make test-firecfg
     - name: run network tests
       run: SHELL=/bin/bash make test-network
     - name: run appimage tests

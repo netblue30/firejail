@@ -1575,7 +1575,7 @@ int main(int argc, char **argv, char **envp) {
 				exit(1);
 			}
 			invalid_filename(arg_tracefile, 0); // no globbing
-			if (strstr(arg_tracefile, "..")) {
+			if (strstr(arg_tracefile, "..") || has_cntrl_chars(arg_tracefile)) {
 				fprintf(stderr, "Error: invalid file name %s\n", arg_tracefile);
 				exit(1);
 			}
@@ -2186,18 +2186,31 @@ int main(int argc, char **argv, char **envp) {
 				fprintf(stderr, "Error: please provide a name for sandbox\n");
 				return 1;
 			}
-			if (invalid_name(cfg.name)) {
+			if (invalid_name(cfg.name) || has_cntrl_chars(cfg.name)) {
 				fprintf(stderr, "Error: invalid sandbox name\n");
 				return 1;
 			}
 		}
 		else if (strncmp(argv[i], "--hostname=", 11) == 0) {
 			cfg.hostname = argv[i] + 11;
-			if (strlen(cfg.hostname) == 0) {
-				fprintf(stderr, "Error: please provide a hostname for sandbox\n");
+			size_t len = strlen(cfg.hostname);
+			if (len == 0 || len > 253) {
+				fprintf(stderr, "Error: please provide a valid hostname for sandbox, with maximum length of 253 ASCII characters\n");
 				return 1;
 			}
-			if (invalid_name(cfg.hostname)) {
+			int invalid = invalid_name(cfg.hostname);
+			char* hostname = cfg.hostname;
+			while (*hostname && !invalid) {
+				invalid = invalid || !(
+						(*hostname >= 'a' && *hostname <= 'z') ||
+						(*hostname >= 'A' && *hostname <= 'Z') ||
+						(*hostname >= '0' && *hostname <= '9') ||
+						(*hostname == '-' || *hostname == '.'));
+				hostname++;
+			}
+			invalid = invalid || cfg.hostname[0] == '-'; // must not start with -
+			invalid = invalid || cfg.hostname[len - 1] == '-'; // must not end with -
+			if (invalid) {
 				fprintf(stderr, "Error: invalid hostname\n");
 				return 1;
 			}

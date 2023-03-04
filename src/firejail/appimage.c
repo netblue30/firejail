@@ -33,12 +33,10 @@ static char *devloop = NULL;	// device file
 static long unsigned size = 0;	// offset into appimage file
 #define MAXBUF 4096
 
-#ifdef LOOP_CTL_GET_FREE	// test for older kernels; this definition is found in /usr/include/linux/loop.h
-static void err_loop(void) {
-	fprintf(stderr, "Error: cannot configure loopback device\n");
+static void err_loop(char *msg) {
+	fprintf(stderr, "%s\n", msg);
 	exit(1);
 }
-#endif
 
 // return 1 if found
 int appimage_find_profile(const char *archive) {
@@ -75,7 +73,6 @@ void appimage_set(const char *appimage) {
 	assert(devloop == NULL);	// don't call this twice!
 	EUID_ASSERT();
 
-#ifdef LOOP_CTL_GET_FREE
 	// open appimage file
 	invalid_filename(appimage, 0); // no globbing
 	int ffd = open(appimage, O_RDONLY|O_CLOEXEC);
@@ -99,29 +96,46 @@ void appimage_set(const char *appimage) {
 
 	// find or allocate a free loop device to use
 	EUID_ROOT();
-	int cfd = open("/dev/loop-control", O_RDWR|O_CLOEXEC);
-	if (cfd == -1)
-		err_loop();
-	int devnr = ioctl(cfd, LOOP_CTL_GET_FREE);
-	if (devnr == -1)
-		err_loop();
+	int cfd; // loop control fd
+	if ((cfd = open("/dev/loop-control", O_RDWR|O_CLOEXEC)) == -1) {
+		sleep(1); // sleep 1 second and try again
+		if ((cfd = open("/dev/loop-control", O_RDWR|O_CLOEXEC)) == -1)
+			err_loop("cannot open /dev/loop-control");
+	}
+
+	int devnr; // loop device number
+	if ((devnr = ioctl(cfd, LOOP_CTL_GET_FREE)) == -1) {
+		sleep(1); // sleep 1 second and try again
+		if ((devnr = ioctl(cfd, LOOP_CTL_GET_FREE)) == -1)
+			err_loop("cannot get a free loop device number");
+	}
 	close(cfd);
 	if (asprintf(&devloop, "/dev/loop%d", devnr) == -1)
 		errExit("asprintf");
 
+	int lfd; // loopback fd
+	if ((lfd = open(devloop, O_RDONLY|O_CLOEXEC)) == -1) {
+		sleep (1); // sleep 1 second and try again
+		if ((lfd = open(devloop, O_RDONLY|O_CLOEXEC)) == -1)
+			err_loop("cannot open loop device");
+	}
+
 	// associate loop device with appimage
-	int lfd = open(devloop, O_RDONLY|O_CLOEXEC);
-	if (lfd == -1)
-		err_loop();
-	if (ioctl(lfd, LOOP_SET_FD, ffd) == -1)
-		err_loop();
+	if (ioctl(lfd, LOOP_SET_FD, ffd) == -1) {
+		sleep(1); // sleep 1 second and try again
+		if (ioctl(lfd, LOOP_SET_FD, ffd) == -1)
+			err_loop("cannot associate loop device with appimage file");
+	}
 
 	if (size) {
 		struct loop_info64 info;
 		memset(&info, 0, sizeof(struct loop_info64));
 		info.lo_offset = size;
-		if (ioctl(lfd,  LOOP_SET_STATUS64, &info) == -1)
-			err_loop();
+		if (ioctl(lfd,  LOOP_SET_STATUS64, &info) == -1) {
+			sleep(1); // sleep 1 second and try again
+			if (ioctl(lfd,  LOOP_SET_STATUS64, &info) == -1)
+				err_loop("cannot set loop status");
+		}
 	}
 	close(lfd);
 	close(ffd);
@@ -143,10 +157,6 @@ void appimage_set(const char *appimage) {
 		env_store_name_val("OWD", cfg.cwd, SETENV);
 
 	__gcov_flush();
-#else
-	fprintf(stderr, "Error: /dev/loop-control interface is not supported by your kernel\n");
-	exit(1);
-#endif
 }
 
 // mount appimage into sandbox file system

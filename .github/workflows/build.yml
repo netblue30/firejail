@@ -73,6 +73,8 @@ jobs:
       run: SHELL=/bin/bash make lab-setup
     - name: run firecfg tests
       run: SHELL=/bin/bash make test-firecfg
+    - name: run apparmor tests
+      run: SHELL=/bin/bash make test-apparmor
     - name: run network tests
       run: SHELL=/bin/bash make test-network
     - name: run appimage tests

@@ -1,0 +1,3 @@
+profile test-profile flags=(attach_disconnected,mediate_deleted) {
+	/{,**} rklmwix,
+}

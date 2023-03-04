@@ -54,6 +54,6 @@ expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
 	"AppArmor: firejail-default//&unconfined enforce"
 }
-after 100
+after 500
 
 puts "\nall done\n"

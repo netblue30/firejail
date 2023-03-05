@@ -120,3 +120,18 @@ jobs:
       run: sudo apt-get install cppcheck
     - name: cppcheck
       run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
+  codespell:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
+      with:
+        egress-policy: block
+        allowed-endpoints: >
+          azure.archive.ubuntu.com:80
+          github.com:443
+    - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+    - name: install dependencies
+      run: sudo apt-get install codespell
+    - name: codespell
+      run: make  codespell

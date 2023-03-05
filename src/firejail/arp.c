@@ -299,7 +299,7 @@ static uint32_t arp_random(const char *dev, Bridge *br) {
 	return 0;
 }
 
-// go sequentially trough all IP addresses and assign the first one not in use
+// go sequentially through all IP addresses and assign the first one not in use
 static uint32_t arp_sequential(const char *dev, Bridge *br) {
 	assert(dev);
 	assert(br);

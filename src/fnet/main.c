@@ -87,7 +87,7 @@ printf("\n");
 	else if (argc == 7 && strcmp(argv[1], "create") == 0 && strcmp(argv[2], "veth") == 0) {
 		// create veth pair and move one end in the the namespace
 		net_create_veth(argv[3], argv[4], atoi(argv[6]));
-		// connect the ohter veth end to the bridge ...
+		// connect the other veth end to the bridge ...
 		net_bridge_add_interface(argv[5], argv[3]);
 		// ... and bring it  up
 		net_if_up(argv[3]);

@@ -135,7 +135,7 @@ Amin Vakil (https://github.com/aminvakil)
 Ammon Smith (https://github.com/ammongit)
 	- Add DBus filter rules specific to firefox-developer-edition
 Andreas Hunkeler (https://github.com/Karneades)
-	- Add profile for offical Linux Teams application
+	- Add profile for official Linux Teams application
 Andrey Alekseenko (https://github.com/al42and)
 	- fixing lintian warnings
 	- fixed Skype profile
@@ -688,6 +688,7 @@ LaurentGH (https://github.com/LaurentGH)
 layderv (https://github.com/layderv)
 	- prevent sandbox name from containing only digits
 	- clean escape control characters from the command line
+	- check hostname syntax
 lecso7 (https://github.com/lecso7)
 	- added goldendict profile
 	- allow evince to read .cbz file format

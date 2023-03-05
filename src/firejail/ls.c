@@ -381,7 +381,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			errExit("ftruncate");
 
 		if (copy_file_by_fd(src, dest) != 0)
-			fwarning("an error occured during copying\n");
+			fwarning("an error occurred during copying\n");
 		close(src);
 		close(dest);
 	}

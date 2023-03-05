@@ -360,6 +360,10 @@ cppcheck: clean
 scan-build: clean
 	NO_EXTRA_CFLAGS="yes" scan-build make
 
+.PHONY: codespell
+codespell: clean
+	codespell --ignore-regex "UE|creat|shotcut|ether" src test
+
 #
 # make test
 #

@@ -1323,7 +1323,7 @@ void close_all(int *keep_list, size_t sz) {
 		if (fd == dirfd(dir))
 			continue; // just postponed
 
-		// dont't close file descriptors in keep list
+		// don't close file descriptors in keep list
 		int keep = 0;
 		if (keep_list) {
 			size_t i;

@@ -134,4 +134,4 @@ jobs:
     - name: install dependencies
       run: sudo apt-get install codespell
     - name: codespell
-      run: make  codespell
+      run: make codespell

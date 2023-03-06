@@ -27,8 +27,14 @@ echo "TESTING: network scan (net_scan.exp)"
 echo "TESTING: netfilter (net_netfilter.exp)"
 ./net_netfilter.exp
 
+echo "TESTING: print network (net-print.exp)"
+./net-print.exp
+
 echo "TESTING: print dns (dns-print.exp)"
 ./dns-print.exp
+
+echo "TESTING: ipv6 (ip6.exp)"
+./ip6.exp
 
 sudo ip link set br0 down
 sudo brctl delbr br0

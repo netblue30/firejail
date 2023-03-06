@@ -89,29 +89,29 @@ int net_get_mtu(const char *ifname) {
 	return mtu;
 }
 
-void net_set_mtu(const char *ifname, int mtu) {
-	if (strlen(ifname) > IFNAMSIZ) {
-		fprintf(stderr, "Error: invalid network device name %s\n", ifname);
-		exit(1);
-	}
-
-	if (arg_debug)
-		printf("set interface %s MTU %d.\n", ifname, mtu);
-
-	int s;
-	struct ifreq ifr;
-
-	if ((s = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
-		errExit("socket");
-
-	memset(&ifr, 0, sizeof(ifr));
-	ifr.ifr_addr.sa_family = AF_INET;
-	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
-	ifr.ifr_mtu = mtu;
-	if (ioctl(s, SIOCSIFMTU, (caddr_t)&ifr) != 0)
-		fwarning("cannot set mtu for interface %s\n", ifname);
-	close(s);
-}
+//void net_set_mtu(const char *ifname, int mtu) {
+//	if (strlen(ifname) > IFNAMSIZ) {
+//		fprintf(stderr, "Error: invalid network device name %s\n", ifname);
+//		exit(1);
+//	}
+//
+//	if (arg_debug)
+//		printf("set interface %s MTU %d.\n", ifname, mtu);
+//
+//	int s;
+//	struct ifreq ifr;
+//
+//	if ((s = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
+//		errExit("socket");
+//
+//	memset(&ifr, 0, sizeof(ifr));
+//	ifr.ifr_addr.sa_family = AF_INET;
+//	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
+//	ifr.ifr_mtu = mtu;
+//	if (ioctl(s, SIOCSIFMTU, (caddr_t)&ifr) != 0)
+//		fwarning("cannot set mtu for interface %s\n", ifname);
+//	close(s);
+//}
 
 // return -1 if the interface was not found; if the interface was found retrn 0 and fill in IP address and mask
 int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu) {

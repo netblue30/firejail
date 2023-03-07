@@ -39,8 +39,8 @@ echo "TESTING: bandwidth (net_bandwidth.exp)"
 echo "TESTING: ipv6 (ip6.exp)"
 ./ip6.exp
 
-#echo "TESTING: ipv6 netfilter(ip6_netfilter.exp)"
-#./ip6_netfilter.exp
+echo "TESTING: ipv6 netfilter(ip6_netfilter.exp)"
+./ip6_netfilter.exp
 
 sudo ip link set br0 down
 sudo brctl delbr br0

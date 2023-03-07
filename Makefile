@@ -367,8 +367,11 @@ scan-build: clean
 	scan-build $(MAKE)
 
 .PHONY: codespell
-codespell: clean
-	codespell --ignore-regex "UE|creat|doas|ether|isplay|shotcut" src test
+codespell:
+	@printf 'Running %s...\n' $@
+	@codespell --ignore-regex "UE|creat|doas|ether|isplay|shotcut" \
+	  -S *.gz,*.o,*.so \
+	  src test
 
 .PHONY: print-env
 print-env:

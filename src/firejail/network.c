@@ -113,7 +113,7 @@ int net_get_mtu(const char *ifname) {
 //	close(s);
 //}
 
-// return -1 if the interface was not found; if the interface was found retrn 0 and fill in IP address and mask
+// return -1 if the interface was not found; if the interface was found return 0 and fill in IP address and mask
 int net_get_if_addr(const char *bridge, uint32_t *ip, uint32_t *mask, uint8_t mac[6], int *mtu) {
 	assert(bridge);
 	assert(ip);

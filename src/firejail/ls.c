@@ -140,7 +140,7 @@ static void print_file_or_dir(const char *path, const char *fname) {
 		}
 	}
 
-	// print grup name, 8 chars maximum
+	// print group name, 8 chars maximum
 	len = strlen(groupname);
 	if (len > 8) {
 		groupname[8] = '\0';

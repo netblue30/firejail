@@ -234,7 +234,7 @@ static void sanitize_passwd(void) {
 	SET_PERMS_STREAM(fpout, 0, 0, 0644);
 	fclose(fpout);
 
-	// mount-bind tne new password file
+	// mount-bind the new password file
 	if (mount(RUN_PASSWD_FILE, "/etc/passwd", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
 
@@ -369,7 +369,7 @@ static void sanitize_group(void) {
 	SET_PERMS_STREAM(fpout, 0, 0, 0644);
 	fclose(fpout);
 
-	// mount-bind tne new group file
+	// mount-bind the new group file
 	if (mount(RUN_GROUP_FILE, "/etc/group", "none", MS_BIND, "mode=400,gid=0") < 0)
 		errExit("mount");
 

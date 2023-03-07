@@ -26,6 +26,7 @@
 #include <sys/resource.h>
 #include <sys/wait.h>
 #include "../include/seccomp.h"
+#include "../include/gcov_wrapper.h"
 
 #include <fcntl.h>
 #ifndef O_PATH
@@ -238,6 +239,7 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 			fprintf(stderr, "Error: %s is world writable, refusing to execute\n", arg[0]);
 			exit(1);
 		}
+		__gcov_dump();
 		fexecve(fd, arg, new_environment);
 	} else {
 		assert(0);

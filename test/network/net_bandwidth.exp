@@ -1,0 +1,51 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --name=test --net=br0\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 2
+
+spawn $env(SHELL)
+send -- "firejail --bandwidth=test set br0 10 20\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Download speed  80kbps"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Upload speed  160kbps"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"configuring tc ingress"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"configuring tc egress"
+}
+after 500
+
+send -- "firejail --bandwidth=test status\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"rate 160Kbit burst 10Kb"
+}
+after 500
+
+send -- "firejail --bandwidth=test clear br0\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"Removing bandwidth limits"
+}
+sleep 1
+
+puts "\nall done\n"

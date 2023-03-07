@@ -13,7 +13,7 @@ gcov_generate() {
 	USER="$(whoami)"
 	find . -exec sudo chown "$USER:$USER" '{}' +
 	lcov -q --capture -d src/firejail -d src/lib -d src/firecfg -d src/firemon \
-		-d src/fnet -d src/fnetfilter --output-file gcov-file
+		-d src/fnet -d src/fnetfilter -d src/fcopy --output-file gcov-file
 	genhtml -q gcov-file --output-directory gcov-dir
 }
 
@@ -21,29 +21,29 @@ rm -fr gcov-dir gcov-file
 firejail --version
 gcov_generate
 
-#make test-firecfg | grep TESTING
-#gcov_generate
-#make test-apparmor | grep TESTING
-#gcov_generate
+make test-firecfg | grep TESTING
+gcov_generate
+make test-apparmor | grep TESTING
+gcov_generate
 make test-network | grep TESTING
 gcov_generate
-#make test-appimage | grep TESTING
-#gcov_generate
-#make test-chroot | grep TESTING
-#gcov_generate
-#make test-sysutils | grep TESTING
-#gcov_generate
-#make test-private-etc | grep TESTING
-#gcov_generate
-#make test-profiles | grep TESTING
-#gcov_generate
-#make test-fcopy | grep TESTING
-#gcov_generate
+make test-appimage | grep TESTING
+gcov_generate
+make test-chroot | grep TESTING
+gcov_generate
+make test-sysutils | grep TESTING
+gcov_generate
+make test-private-etc | grep TESTING
+gcov_generate
+make test-profiles | grep TESTING
+gcov_generate
+make test-fcopy | grep TESTING
+gcov_generate
 make test-fnetfilter | grep TESTING
 gcov_generate
-#make test-fs | grep TESTING
-#gcov_generate
-#make test-utils | grep TESTING
-#gcov_generate
-#make test-environment | grep TESTING
-#gcov_generate
+make test-fs | grep TESTING
+gcov_generate
+make test-utils | grep TESTING
+gcov_generate
+make test-environment | grep TESTING
+gcov_generate

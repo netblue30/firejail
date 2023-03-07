@@ -20,11 +20,12 @@ expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"statistics only for sandboxes using a new network namespace"
 }
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"firejail --name=test --net=br0"
-}
-after 500
-send -- "\r"
+# not supported on github workflows - not a tty!
+#expect {
+#	timeout {puts "TESTING ERROR 3\n";exit}
+#	"firejail --name=test --net=br0"
+#}
+#after 500
+#send -- "\r"
 after 500
 puts "\nall done\n"

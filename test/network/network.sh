@@ -42,8 +42,9 @@ echo "TESTING: ipv6 (ip6.exp)"
 echo "TESTING: ipv6 netfilter (ip6_netfilter.exp)"
 ./ip6_netfilter.exp
 
-echo "TESTING: netstats (netstats.exp)"
-./netstats.exp
+# not supported on github workflows - not a tty!
+#echo "TESTING: netstats (netstats.exp)"
+#./netstats.exp
 
 echo "TESTING: firemon arp (firemon-arp.exp)"
 ./firemon-arp.exp

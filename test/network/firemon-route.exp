@@ -1,0 +1,40 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --name=test --net=br0 --ip=10.10.20.50\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 2
+
+spawn $env(SHELL)
+send -- "firemon --route\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"firejail --name=test --net=br0 --ip=10.10.20.50"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Route table:"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"0.0.0.0/0 via 10.10.20.1"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"10.10.20.0/24, dev eth0"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"src 10.10.20.50"
+}
+after 500
+puts "\nall done\n"

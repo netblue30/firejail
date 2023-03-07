@@ -1,12 +1,12 @@
 # Site-specific additions and overrides for 'firejail-default'.
 # For more details, please see /etc/apparmor.d/local/README.
 
-# Here are some examples to allow running programs from home directory.
+# Here are some examples to allow running programs from your home directory.
 # Don't enable all of these, just pick a specific one or write a custom rule
 # instead as done below for torbrowser-launcher.
 #owner @HOME/** ix,
-#owner @HOME/bin/** ix
-#owner @HOME/.local/bin/** ix
+#owner @HOME/bin/** ix,
+#owner @HOME/.local/bin/** ix,
 
 # Uncomment to opt-in to apparmor for brave + ipfs
 #owner @{HOME}/.config/BraveSoftware/Brave-Browser/oecghfpdmkjlhnfpmmjegjacfimiafjp/*/** ix,

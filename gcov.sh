@@ -21,29 +21,29 @@ rm -fr gcov-dir gcov-file
 firejail --version
 gcov_generate
 
-#make test-firecfg | grep TESTING
-#gcov_generate
-#make test-apparmor | grep TESTING
-#gcov_generate
+make test-firecfg | grep TESTING
+gcov_generate
+make test-apparmor | grep TESTING
+gcov_generate
 make test-network | grep TESTING
 gcov_generate
-#make test-appimage | grep TESTING
-#gcov_generate
-#make test-chroot | grep TESTING
-#gcov_generate
-#make test-sysutils | grep TESTING
-#gcov_generate
-#make test-private-etc | grep TESTING
-#gcov_generate
-#make test-profiles | grep TESTING
-#gcov_generate
-#make test-fcopy | grep TESTING
-#gcov_generate
+make test-appimage | grep TESTING
+gcov_generate
+make test-chroot | grep TESTING
+gcov_generate
+make test-sysutils | grep TESTING
+gcov_generate
+make test-private-etc | grep TESTING
+gcov_generate
+make test-profiles | grep TESTING
+gcov_generate
+make test-fcopy | grep TESTING
+gcov_generate
 make test-fnetfilter | grep TESTING
 gcov_generate
-#make test-fs | grep TESTING
-#gcov_generate
-#make test-utils | grep TESTING
-#gcov_generate
-#make test-environment | grep TESTING
-#gcov_generate
+make test-fs | grep TESTING
+gcov_generate
+make test-utils | grep TESTING
+gcov_generate
+make test-environment | grep TESTING
+gcov_generate

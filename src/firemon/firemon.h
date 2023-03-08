@@ -57,9 +57,6 @@ void top(void) __attribute__((noreturn));
 // list.c
 void list(void);
 
-// interface.c
-void interface(pid_t pid, int print_procs);
-
 // arp.c
 void arp(pid_t pid, int print_procs);
 

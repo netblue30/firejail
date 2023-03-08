@@ -51,8 +51,5 @@ echo "TESTING: firemon arp (firemon-arp.exp)"
 echo "TESTING: firemon route (firemon-route.exp)"
 ./firemon-route.exp
 
-#echo "TESTING: firemon interface (firemon-interface.exp)"
-#sudo ./firemon-interface.exp
-
 sudo ip link set br0 down
 sudo brctl delbr br0

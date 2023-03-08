@@ -13,7 +13,7 @@ gcov_generate() {
 	USER="$(whoami)"
 	find . -exec sudo chown "$USER:$USER" '{}' +
 	lcov -q --capture -d src/firejail -d src/lib -d src/firecfg -d src/firemon \
-		-d src/fnet -d src/fnetfilter -d src/fcopy --output-file gcov-file
+		-d src/fnet -d src/fnetfilter -d src/fcopy -d src/fseccomp --output-file gcov-file
 	genhtml -q gcov-file --output-directory gcov-dir
 }
 
@@ -22,6 +22,8 @@ firejail --version
 gcov_generate
 
 make test-firecfg | grep TESTING
+gcov_generate
+make test-capabilities | grep TESTING
 gcov_generate
 make test-apparmor | grep TESTING
 gcov_generate

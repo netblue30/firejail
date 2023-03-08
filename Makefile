@@ -314,7 +314,7 @@ mkman.sh \
 platform \
 src
 
-DISTFILES_TEST = test/Makefile test/apps test/apps-x11 test/apps-x11-xorg test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils
+DISTFILES_TEST = test/Makefile test/apps test/apps-x11 test/apps-x11-xorg test/capabilities test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils
 
 .PHONY: dist
 dist: config.mk
@@ -368,7 +368,7 @@ codespell: clean
 # make test
 #
 
-TESTS=profiles apps apps-x11 apps-x11-xorg sysutils utils environment filters fs fcopy fnetfilter private-etc
+TESTS=profiles capabilities apps apps-x11 apps-x11-xorg sysutils utils environment filters fs fcopy fnetfilter private-etc
 TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 
 $(TEST_TARGETS):

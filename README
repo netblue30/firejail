@@ -720,6 +720,7 @@ Manuel Dipolt (https://github.com/xeniter)
 	- stack alignment for the ARM Architecture
 Marek Küthe (https://github.com/marek22k)
 	- allow loading plugins in gajim
+	- allow bsfilter in email-common.profile
 Martin Carpenter (https://github.com/mcarpenter)
 	- security audit and bug fixes
 	- Centos 6.x support

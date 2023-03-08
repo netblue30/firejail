@@ -57,18 +57,18 @@ echo "TESTING: noroot (test/filters/noroot.exp)"
 ./noroot.exp
 
 
-if grep -q "^CapBnd:\\s0000003fffffffff" /proc/self/status; then
-	echo "TESTING: capabilities (test/filters/caps.exp)"
-	./caps.exp
-else
-	echo "TESTING SKIP: other capabilities than expected (test/filters/caps.exp)"
-fi
-
-echo "TESTING: capabilities print (test/filters/caps-print.exp)"
-./caps-print.exp
-
-echo "TESTING: capabilities join (test/filters/caps-join.exp)"
-./caps-join.exp
+#if grep -q "^CapBnd:\\s0000003fffffffff" /proc/self/status; then
+#	echo "TESTING: capabilities (test/filters/caps.exp)"
+#	./caps.exp
+#else
+#	echo "TESTING SKIP: other capabilities than expected (test/filters/caps.exp)"
+#fi
+#
+#echo "TESTING: capabilities print (test/filters/caps-print.exp)"
+#./caps-print.exp
+#
+#echo "TESTING: capabilities join (test/filters/caps-join.exp)"
+#./caps-join.exp
 
 rm -f seccomp-test-file
 if [[ $(uname -m) == "x86_64" ]]; then

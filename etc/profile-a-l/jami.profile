@@ -8,11 +8,9 @@ include jami.local
 #include globals.local
 
 noblacklist ${HOME}/.config/jami.net
-noblacklist ${HOME}/Videos/Jami
 
 mkdir ${HOME}/.config/jami.net
 mkdir ${HOME}/Videos/Jami
-
 whitelist ${HOME}/.config/jami.net
 whitelist ${HOME}/Videos/Jami
 

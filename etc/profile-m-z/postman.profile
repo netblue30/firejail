@@ -1,17 +1,19 @@
 # Firejail profile for postman
+# Description: API testing platform
 # This file is overwritten after every install/update
 # Persistent local customizations
 include postman.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/Postman
-mkdir ${HOME}/Postman
-whitelist ${HOME}/Postman
-
 noblacklist ${HOME}/.config/Postman
+noblacklist ${HOME}/Postman
+
 mkdir ${HOME}/.config/Postman
+mkdir ${HOME}/Postman
+
 whitelist ${HOME}/.config/Postman
+whitelist ${HOME}/Postman
 
 #private-opt postman
 private-bin postman,electron,electron[0-9],electron[0-9][0-9],locale,sh

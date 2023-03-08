@@ -61,9 +61,6 @@ echo "TESTING: fs.print (test/utils/fs-print.exp)"
 echo "TESTING: dns.print (test/utils/dns-print.exp)"
 ./dns-print.exp
 
-echo "TESTING: caps.print (test/utils/caps-print.exp)"
-./caps-print.exp
-
 echo "TESTING: seccomp.print (test/utils/seccomp-print.exp)"
 ./seccomp-print.exp
 
@@ -110,13 +107,6 @@ if grep -q "^Seccomp.*0" /proc/self/status; then
 	./firemon-seccomp.exp
 else
 	echo "TESTING SKIP: seccomp already active (test/utils/firemon-seccomp.exp)"
-fi
-
-if grep -q "^CapBnd:\\s0000003fffffffff" /proc/self/status; then
-	echo "TESTING: firemon caps (test/utils/firemon-caps.exp)"
-	./firemon-caps.exp
-else
-	echo "TESTING SKIP: other capabilities than expected (test/utils/firemon-caps.exp)"
 fi
 
 echo "TESTING: firemon cpu (test/utils/firemon-cpu.exp)"

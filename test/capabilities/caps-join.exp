@@ -35,7 +35,7 @@ sleep 1
 
 set spawn_id $id1
 send -- "exit\r"
-after 100
+sleep 1
 
 #
 # no caps
@@ -67,7 +67,7 @@ sleep 1
 
 set spawn_id $id1
 send -- "exit\r"
-after 100
+after 500
 
 #
 # no caps
@@ -91,6 +91,6 @@ sleep 1
 
 set spawn_id $id1
 send -- "exit\r"
-after 100
+after 500
 
 puts "all done\n"

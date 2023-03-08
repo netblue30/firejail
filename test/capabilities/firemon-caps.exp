@@ -1,0 +1,47 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --name=bingo1 --noprofile --caps\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 1
+
+spawn $env(SHELL)
+send --  "firejail --name=bingo2 --noprofile\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 1
+
+spawn $env(SHELL)
+send -- "firemon --caps\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"need to be root" {puts "TESTING SKIP: /proc mounted as hidepid\n"; exit}
+	"bingo1"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"31cffff"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"bingo2"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"fffffff"
+}
+
+after 500
+
+puts "all done\n"

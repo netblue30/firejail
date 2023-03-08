@@ -21,3 +21,6 @@ echo "TESTING: capabilities print (test/filters/caps-print.exp)"
 echo "TESTING: capabilities join (test/filters/caps-join.exp)"
 ./caps-join.exp
 
+echo "TESTING: firemon caps (test/utils/firemon-caps.exp)"
+./firemon-caps.exp
+

@@ -1,1 +1,0 @@
-caps.drop chown,kill

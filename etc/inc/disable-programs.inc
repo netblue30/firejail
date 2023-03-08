@@ -517,6 +517,7 @@ blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/liferea
 blacklist ${HOME}/.config/linphone
+blacklist ${HOME}/.config/lobster
 blacklist ${HOME}/.config/lugaru
 blacklist ${HOME}/.config/lutris
 blacklist ${HOME}/.config/lximage-qt
@@ -952,6 +953,7 @@ blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/kxmlgui5/*
 blacklist ${HOME}/.local/share/liferea
 blacklist ${HOME}/.local/share/linphone
+blacklist ${HOME}/.local/share/lobster
 blacklist ${HOME}/.local/share/local-mail
 blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/love

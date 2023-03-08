@@ -213,6 +213,23 @@ void net_ifprint(int scan) {
 			fmessage("%-17.17s%-19.19s%-17.17s%-17.17s%-6.6s\n",
 				ifa->ifa_name, macstr, ipstr, maskstr, status);
 
+			// print ipv6 address
+			if (!scan) {
+				struct ifaddrs *ptr = ifa->ifa_next;
+				while (ptr) {
+					if (ptr->ifa_addr->sa_family == AF_INET6 && strcmp(ifa->ifa_name, ptr->ifa_name) == 0) {
+						struct sockaddr_in6 *s6 = (struct sockaddr_in6 *)ptr->ifa_addr;
+						struct in6_addr *in_addr = &s6->sin6_addr;
+						char buf[64];
+						if(inet_ntop(ptr->ifa_addr->sa_family, in_addr, buf, sizeof(buf))) {
+							fmessage("%-35.35s %s\n", " ", buf);
+							break;
+						}
+					}
+					ptr = ptr->ifa_next;
+				}
+			}
+
 			// network scanning
 			if (!scan)				// scanning disabled
 				continue;

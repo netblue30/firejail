@@ -8,6 +8,7 @@ include email-common.local
 #include globals.local
 
 noblacklist ${HOME}/.bogofilter
+noblacklist ${HOME}/.bsfilter
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.signature

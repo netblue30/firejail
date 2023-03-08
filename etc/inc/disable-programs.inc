@@ -51,6 +51,7 @@ blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.bitcoin
 blacklist ${HOME}/.blobby
 blacklist ${HOME}/.bogofilter
+blacklist ${HOME}/.bsfilter
 blacklist ${HOME}/.bundle
 blacklist ${HOME}/.bzf
 blacklist ${HOME}/.cache/0ad

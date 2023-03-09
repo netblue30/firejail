@@ -81,7 +81,9 @@ static char *usage_str =
 	"    --debug-blacklists - debug blacklisting.\n"
 	"    --debug-caps - print all recognized capabilities.\n"
 	"    --debug-errnos - print all recognized error numbers.\n"
+#ifdef HAVE_PRIVATE_LIB
 	"    --debug-private-lib - debug for --private-lib option.\n"
+#endif
 	"    --debug-protocols - print all recognized protocols.\n"
 	"    --debug-syscalls - print all recognized system calls.\n"
 	"    --debug-syscalls32 - print all recognized 32 bit system calls.\n"
@@ -208,6 +210,9 @@ static char *usage_str =
 	"\tcommon device files.\n"
 	"    --private-etc=file,directory - build a new /etc in a temporary\n"
 	"\tfilesystem, and copy the files and directories in the list.\n"
+#ifdef HAVE_PRIVATE_LIB
+	"    --private-lib - create a private /lib directory\n"
+#endif
 	"    --private-tmp - mount a tmpfs on top of /tmp directory.\n"
 	"    --private-cwd - do not inherit working directory inside jail.\n"
 	"    --private-cwd=directory - set working directory inside jail.\n"

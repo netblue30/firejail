@@ -5,7 +5,7 @@
 
 # GCOV test setup
 # required: sudo, lcov (apt-get install lcov)
-# setup: make distclean && ./configure --prefix=/usr --enable-apparmor --enable-gcov && make -j4 && sudo make install
+# setup: modify ./configure line below if necessary
 # run as regular user: ./gcov.sh
 # result in gcov-dir/index.html
 
@@ -17,6 +17,7 @@ gcov_generate() {
 	genhtml -q gcov-file --output-directory gcov-dir
 }
 
+make distclean && ./configure --prefix=/usr --enable-apparmor --enable-gcov --enable-fatal-warnings && make -j4 && sudo make install
 rm -fr gcov-dir gcov-file
 firejail --version
 gcov_generate

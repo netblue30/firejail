@@ -409,6 +409,14 @@ void print_compiletime_support(void) {
 #endif
 		);
 
+	printf("\t- private-lib support is %s\n",
+#ifdef HAVE_PRIVATE_LIB
+		"enabled"
+#else
+		"disabled"
+#endif
+		);
+
 	printf("\t- private-cache and tmpfs as user %s\n",
 #ifdef HAVE_USERTMPFS
 		"enabled"

@@ -641,6 +641,7 @@ HAVE_USERNS
 HAVE_NETWORK
 HAVE_GLOBALCFG
 HAVE_CHROOT
+HAVE_PRIVATE_LIB
 HAVE_PRIVATE_HOME
 HAVE_FIRETUNNEL
 HAVE_GAWK
@@ -719,6 +720,7 @@ enable_usertmpfs
 enable_man
 enable_firetunnel
 enable_private_home
+enable_private_lib
 enable_chroot
 enable_globalcfg
 enable_network
@@ -1380,6 +1382,7 @@ Optional Features:
   --disable-man           disable man pages
   --enable-firetunnel     enable firetunnel
   --disable-private-home  disable private home feature
+  --disable-private-lib   disable private lib feature
   --disable-chroot        disable chroot
   --disable-globalcfg     if the global config file firejail.config is not
                           present, continue the program using defaults
@@ -3485,6 +3488,19 @@ if test "x$enable_private_home" != "xno"; then :
 
 fi
 
+HAVE_PRIVATE_LIB=""
+
+# Check whether --enable-private-lib was given.
+if test "${enable_private_lib+set}" = set; then :
+  enableval=$enable_private_lib;
+fi
+
+if test "x$enable_private_lib" = "xyes"; then :
+
+	HAVE_PRIVATE_LIB="-DHAVE_PRIVATE_LIB"
+
+fi
+
 HAVE_CHROOT=""
 
 # Check whether --enable-chroot was given.
@@ -3674,6 +3690,7 @@ if test "x$enable_lts" = "xyes"; then :
 	HAVE_MAN="-DHAVE_MAN"
 	HAVE_FIRETUNNEL=""
 	HAVE_PRIVATE_HOME=""
+	HAVE_PRIVATE_LIB=""
 	HAVE_CHROOT=""
 	HAVE_GLOBALCFG=""
 	HAVE_USERNS=""
@@ -5291,6 +5308,7 @@ Features:
    network: $HAVE_NETWORK
    overlayfs support: $HAVE_OVERLAYFS
    private home support: $HAVE_PRIVATE_HOME
+   private lib support: $HAVE_PRIVATE_LIB
    SELinux labeling support: $HAVE_SELINUX
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11

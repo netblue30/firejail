@@ -684,9 +684,11 @@ Print all recognized error numbers in the current Firejail software build and ex
 Example:
 .br
 $ firejail \-\-debug-errnos
+#ifdef HAVE_PRIVATE_LIB
 .TP
 \fB\-\-debug-private-lib
 Debug messages for --private-lib option.
+#endif
 .TP
 \fB\-\-debug-protocols
 Print all recognized protocols in the current Firejail software build and exit.
@@ -696,6 +698,7 @@ Print all recognized protocols in the current Firejail software build and exit.
 Example:
 .br
 $ firejail \-\-debug-protocols
+#endif
 .TP
 \fB\-\-debug-syscalls
 Print all recognized system calls in the current Firejail software build and exit.
@@ -2179,6 +2182,7 @@ Example:
 .br
 $ firejail \-\-private-home=.mozilla firefox
 #endif
+#ifdef HAVE_PRIVATE_LIB
 .TP
 \fB\-\-private-lib=file,directory
 This feature is currently under heavy development. Only amd64 platforms are supported at this moment.
@@ -2234,6 +2238,7 @@ $
 .br
 Note: Support for this command is controlled in firejail.config with the
 \fBprivate-lib\fR option.
+#endif
 .TP
 \fB\-\-private-opt=file,directory
 Build a new /opt in a temporary

@@ -5,63 +5,17 @@ quiet
 # Persistent local customizations
 include youtube-dl.local
 # Persistent global definitions
-include globals.local
-
-# breaks when installed under ${HOME} via `pip install --user` (see #2833)
-ignore noexec ${HOME}
+# added by included profile
+#include globals.local
 
 noblacklist ${HOME}/.cache/youtube-dl
 noblacklist ${HOME}/.config/youtube-dl
-noblacklist ${HOME}/.netrc
-noblacklist ${MUSIC}
-noblacklist ${VIDEOS}
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
-include allow-python3.inc
 
-blacklist /tmp/.X11-unix
-blacklist ${RUNUSER}
+private-bin youtube-dl
+private-etc youtube-dl.conf
 
-include disable-common.inc
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
-include disable-programs.inc
-include disable-shell.inc
-include disable-xdg.inc
-
-include whitelist-usr-share-common.inc
-include whitelist-var-common.inc
-
-apparmor
-caps.drop all
-ipc-namespace
-machine-id
-netfilter
-no3d
-nodvd
-nogroups
-noinput
-nonewprivs
-noroot
-nosound
-notv
-nou2f
-novideo
-protocol unix,inet,inet6
-seccomp
-seccomp.block-secondary
-tracelog
-
-private-bin env,ffmpeg,python*,youtube-dl
-private-cache
-private-dev
-private-etc @tls-ca,mime.types,youtube-dl.conf
-private-tmp
-
-dbus-user none
-dbus-system none
-
-#memory-deny-write-execute - breaks on Arch (see issue #1803)
-restrict-namespaces
+# Redirect
+include yt-dlp.profile

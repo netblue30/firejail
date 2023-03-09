@@ -15,4 +15,4 @@ private-bin gallery-dl
 private-etc gallery-dl.conf
 
 # Redirect
-include youtube-dl.profile
+include yt-dlp.profile

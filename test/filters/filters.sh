@@ -53,9 +53,6 @@ fi
 echo "TESTING: seccomp postexec (test/filters/seccomp-postexec.exp)"
 ./seccomp-postexec.exp
 
-echo "TESTING: noroot (test/filters/noroot.exp)"
-./noroot.exp
-
 
 #if grep -q "^CapBnd:\\s0000003fffffffff" /proc/self/status; then
 #	echo "TESTING: capabilities (test/filters/caps.exp)"

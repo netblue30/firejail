@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --noprofile --protocol=unix --debug\r"
+send -- "firejail --noprofile --protocol=unix --debug pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"0009: 20 00 00 00000000"
@@ -29,11 +29,9 @@ expect {
 	"0012: 06 00 00 0005005f"
 }
 
-after 100
-send -- "exit\r"
-sleep 1
+after 500
 
-send -- "firejail --noprofile --protocol=bluetooth --debug\r"
+send -- "firejail --noprofile --protocol=bluetooth --debug pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
 	"0009: 20 00 00 00000000"
@@ -54,12 +52,9 @@ expect {
 	timeout {puts "TESTING ERROR1 5\n";exit}
 	"0012: 06 00 00 0005005f"
 }
+after 500
 
-after 100
-send -- "exit\r"
-sleep 1
-
-send -- "firejail --noprofile --protocol=inet,inet6 --debug\r"
+send -- "firejail --noprofile --protocol=inet,inet6 --debug pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 31\n";exit}
 	"0009: 20 00 00 00000000"
@@ -88,10 +83,5 @@ expect {
 	timeout {puts "TESTING ERROR 37\n";exit}
 	"0014: 06 00 00 0005005f"
 }
-
-after 100
-send -- "exit\r"
-
-
-after 100
+after 500
 puts "\nall done\n"

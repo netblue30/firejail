@@ -71,6 +71,8 @@ jobs:
       run: command -V firejail && firejail --version
     - name: lab setup
       run: SHELL=/bin/bash make lab-setup
+    - name: run seccomp extra tests
+      run: SHELL=/bin/bash make test-seccomp-extra
     - name: run firecfg tests
       run: SHELL=/bin/bash make test-firecfg
     - name: run capabilities tests

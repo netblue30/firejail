@@ -25,6 +25,8 @@ make test-firecfg | grep TESTING
 gcov_generate
 make test-capabilities | grep TESTING
 gcov_generate
+make test-seccomp-extra | grep TESTING
+gcov_generate
 make test-apparmor | grep TESTING
 gcov_generate
 make test-network | grep TESTING

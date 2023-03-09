@@ -1,0 +1,1 @@
+memory-deny-write-execute

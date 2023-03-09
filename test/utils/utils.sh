@@ -64,9 +64,6 @@ echo "TESTING: dns.print (test/utils/dns-print.exp)"
 echo "TESTING: seccomp.print (test/utils/seccomp-print.exp)"
 ./seccomp-print.exp
 
-echo "TESTING: protocol.print (test/utils/protocol-print.exp)"
-./protocol-print.exp
-
 echo "TESTING: shutdown (test/utils/shutdown.exp)"
 ./shutdown.exp
 

@@ -606,7 +606,6 @@ void fs_var_run(void);
 void fs_var_lock(void);
 void fs_var_tmp(void);
 void fs_var_utmp(void);
-void dbg_test_dir(const char *dir);
 
 // fs_dev.c
 void fs_dev_shm(void);

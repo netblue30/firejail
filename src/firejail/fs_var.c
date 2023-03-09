@@ -230,21 +230,6 @@ void fs_var_cache(void) {
 	}
 }
 
-void dbg_test_dir(const char *dir) {
-	if (arg_debug) {
-		if (is_dir(dir))
-			printf("%s is a directory\n", dir);
-		if (is_link(dir)) {
-			char *lnk = realpath(dir, NULL);
-			if (lnk) {
-				printf("%s is a symbolic link to %s\n", dir, lnk);
-				free(lnk);
-			}
-		}
-	}
-}
-
-
 void fs_var_lock(void) {
 
 	if (is_dir("/var/lock")) {
@@ -254,10 +239,8 @@ void fs_var_lock(void) {
 			errExit("mounting /lock");
 		fs_logger("tmpfs /var/lock");
 	}
-	else {
+	else
 		fwarning("/var/lock not mounted\n");
-		dbg_test_dir("/var/lock");
-	}
 }
 
 void fs_var_tmp(void) {
@@ -271,10 +254,8 @@ void fs_var_tmp(void) {
 			fs_logger("tmpfs /var/tmp");
 		}
 	}
-	else {
+	else
 		fwarning("/var/tmp not mounted\n");
-		dbg_test_dir("/var/tmp");
-	}
 }
 
 void fs_var_utmp(void) {

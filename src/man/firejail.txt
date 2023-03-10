@@ -698,7 +698,6 @@ Print all recognized protocols in the current Firejail software build and exit.
 Example:
 .br
 $ firejail \-\-debug-protocols
-#endif
 .TP
 \fB\-\-debug-syscalls
 Print all recognized system calls in the current Firejail software build and exit.

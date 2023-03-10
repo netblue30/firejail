@@ -186,7 +186,7 @@ static int store_asoundrc(void) {
 
 	struct stat s;
 	if (stat(src, &s) == 0) {
-		if (s.st_uid != getuid() || s.st_gid != getgid()) {
+		if (s.st_uid != getuid()) {
 			fwarning(".asoundrc is not owned by the current user, skipping...\n");
 			return 0;
 		}

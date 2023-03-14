@@ -556,6 +556,7 @@ blacklist ${PATH}/ss
 blacklist ${PATH}/traceroute
 
 # other SUID binaries
+blacklist /opt/microsoft/msedge*/msedge-sandbox
 blacklist /usr/lib/virtualbox
 blacklist /usr/lib64/virtualbox
 

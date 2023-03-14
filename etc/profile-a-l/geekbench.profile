@@ -25,7 +25,6 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-hostname geekbench
 ipc-namespace
 machine-id
 netfilter

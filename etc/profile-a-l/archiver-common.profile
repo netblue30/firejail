@@ -23,7 +23,6 @@ include disable-shell.inc
 
 apparmor
 caps.drop all
-hostname archiver
 ipc-namespace
 machine-id
 net none

@@ -19,7 +19,6 @@ include disable-shell.inc
 include whitelist-usr-share-common.inc
 
 caps.drop all
-hostname uudeview
 ipc-namespace
 machine-id
 net none

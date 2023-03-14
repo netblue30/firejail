@@ -22,7 +22,6 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-hostname whois
 ipc-namespace
 machine-id
 netfilter

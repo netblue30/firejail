@@ -46,7 +46,7 @@ nosound
 notv
 nou2f
 novideo
-# block the socket syscall to simulate an be empty protocol line, see #639
+# block socket syscall to simulate empty protocol option (see #639)
 seccomp socket
 tracelog
 x11 none

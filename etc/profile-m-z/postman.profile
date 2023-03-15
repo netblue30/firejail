@@ -9,14 +9,22 @@ include globals.local
 noblacklist ${HOME}/.config/Postman
 noblacklist ${HOME}/Postman
 
+include allow-nodejs.inc
+
 mkdir ${HOME}/.config/Postman
 mkdir ${HOME}/Postman
 whitelist ${HOME}/.config/Postman
 whitelist ${HOME}/Postman
+include whitelist-run-common.inc
 
-#private-opt postman
-private-bin postman,electron,electron[0-9],electron[0-9][0-9],locale,sh
+protocol unix,inet,inet6,netlink
+
+private-bin Postman,postman,electron,electron[0-9],electron[0-9][0-9],locale,node,sh
 private-etc alternatives,ca-certificates,crypto-policies,fonts,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,nsswitch.conf,pki,resolv.conf,ssl
+# private-opt breaks file-copy-limit, use a whitelist instead of draining RAM
+# https://github.com/netblue30/firejail/discussions/5307
+#private-opt postman
+whitelist /opt/postman
 
 # Redirect
-include electron.profile
+include electron-common.profile

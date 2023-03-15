@@ -9,8 +9,6 @@ include globals.local
 noblacklist ${HOME}/.config/Postman
 noblacklist ${HOME}/Postman
 
-include allow-nodejs.inc
-
 mkdir ${HOME}/.config/Postman
 mkdir ${HOME}/Postman
 whitelist ${HOME}/.config/Postman

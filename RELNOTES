@@ -5,16 +5,16 @@ firejail (0.9.73) baseline; urgency=low
   * feature: a random hostname is assigned to each sandbox unless
     overwritten using --hostname command
   * feature: add IPv6 support for --net.print option
-  * modif: remove firemon --interface option (duplicating --net.print option)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578)
   * modif: Escape control characters of the command line (#5613)
   * modif: Allow only letters and digits for sandbox name (--name=) and
     host name (--hostname=)
-  * bugfix: fix --hostname and --hosts-file commands
+  * modif: remove firemon --interface option (duplicating --net.print option)
   * bugfix: qutebrowser: links will not open in the existing instance (#5601
     #5618)
+  * bugfix: fix --hostname and --hosts-file commands
   * build: auto-generate syntax files (#5627)
   * build: mark most phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)

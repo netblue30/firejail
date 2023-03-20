@@ -580,6 +580,12 @@ int has_handler(pid_t pid, int signal);
 void enter_network_namespace(pid_t pid);
 int read_pid(const char *name, pid_t *pid);
 pid_t require_pid(const char *name);
+int ascii_isalnum(unsigned char c);
+int ascii_isalpha(unsigned char c);
+int ascii_isdigit(unsigned char c);
+int ascii_islower(unsigned char c);
+int ascii_isupper(unsigned char c);
+int ascii_isxdigit(unsigned char c);
 int invalid_name(const char *name);
 void check_homedir(const char *dir);
 

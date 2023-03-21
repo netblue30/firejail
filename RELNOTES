@@ -20,6 +20,7 @@ firejail (0.9.73) baseline; urgency=low
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
   * build: deb: enable apparmor by default & remove deb-apparmor (#5668)
   * build: Fix whitespace and add .editorconfig (#5674)
+  * ci: always update the package db before installing packages (#5742)
   * test: split individual test groups in github workflows
   * test: add chroot, appimage and network tests in github workflows
   * docs: remove apparmor options in --help when building without apparmor

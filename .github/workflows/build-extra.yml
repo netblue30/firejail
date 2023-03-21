@@ -61,6 +61,8 @@ jobs:
           azure.archive.ubuntu.com:80
           github.com:443
     - uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+    - name: update package information
+      run: sudo apt-get update
     - name: install dependencies
       run: sudo apt-get install libapparmor-dev libselinux1-dev
     - name: configure
@@ -82,6 +84,8 @@ jobs:
           azure.archive.ubuntu.com:80
           github.com:443
     - uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+    - name: update package information
+      run: sudo apt-get update
     - name: install clang-tools-14 and dependencies
       run: sudo apt-get install clang-tools-14 libapparmor-dev libselinux1-dev
     - name: configure
@@ -99,6 +103,8 @@ jobs:
           azure.archive.ubuntu.com:80
           github.com:443
     - uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+    - name: update package information
+      run: sudo apt-get update
     - name: install cppcheck
       run: sudo apt-get install cppcheck
     - name: cppcheck
@@ -116,6 +122,8 @@ jobs:
           azure.archive.ubuntu.com:80
           github.com:443
     - uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+    - name: update package information
+      run: sudo apt-get update
     - name: install cppcheck
       run: sudo apt-get install cppcheck
     - name: cppcheck
@@ -131,6 +139,8 @@ jobs:
           azure.archive.ubuntu.com:80
           github.com:443
     - uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+    - name: update package information
+      run: sudo apt-get update
     - name: install dependencies
       run: sudo apt-get install codespell
     - name: codespell

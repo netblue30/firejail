@@ -17,9 +17,9 @@ we can handle the report more easily:
 - Linux distribution (so that we can try to reproduce it, if necessary).
 - If you know that the problem did not exist in an earlier version of firejail, please mention it.
 - If you are reporting that a program does not work with firejail, please also run firejail with
-the `--noprofile` argument.
-For example, if `firejail firefox` does not work, please also run `firejail --noprofile firefox` and
-let us know if it runs correctly or not.
+  the `--noprofile` argument.
+  For example, if `firejail firefox` does not work, please also run `firejail --noprofile firefox` and
+  let us know if it runs correctly or not.
 - You may also try disabling various options provided in `/etc/firejail/<ProgramName.profile>` until you find out which one causes problems. It will significantly help to find solution for your issue.
 
 Please note: if you are running Debian, Ubuntu, Linux Mint, or another related

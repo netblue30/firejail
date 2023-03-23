@@ -89,6 +89,7 @@ sudo apt-get install firejail firejail-profiles
 
 Reason: The firejail package for Ubuntu 20.04 has been left vulnerable to CVE-2021-26910 for months after a patch for it was posted on Launchpad:
 
+* [CVE-2021-26910](https://github.com/advisories/GHSA-2q4h-h5jp-942w)
 * [firejail version in Ubuntu 20.04 LTS is vulnerable to CVE-2021-26910](https://bugs.launchpad.net/ubuntu/+source/firejail/+bug/1916767)
 
 See also <https://wiki.ubuntu.com/SecurityTeam/FAQ>:

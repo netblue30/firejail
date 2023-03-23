@@ -1110,6 +1110,8 @@ thewisenerd (https://github.com/thewisenerd)
 	- allow multiple private-home commands
 	- use $SHELL variable if the shell is not specified
 	- appimage: pass commandline arguments
+Thijs Raymakers (https://github.com/ThijsRay)
+	- keepassxc: Allow offering the Secret Service
 Thomas Jarosch (https://github.com/thomasjfox)
 	- disable keepassx in disable-passwdmgr.inc
 	- added uudeview profile

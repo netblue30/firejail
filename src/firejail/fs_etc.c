@@ -111,6 +111,11 @@ char *fs_etc_build(char *str) {
 }
 
 void fs_resolvconf(void) {
+	if (arg_nonetwork) {
+		if (arg_debug)
+			printf("arg_nonetwork found (--net=none). Skip creating /etc/resolv.conf file\n");
+		return;
+	}
 	if (arg_debug)
 		printf("Creating a new /etc/resolv.conf file\n");
 	FILE *fp = fopen(RUN_RESOLVCONF_FILE, "wxe");

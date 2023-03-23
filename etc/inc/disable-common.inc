@@ -346,6 +346,7 @@ read-only ${HOME}/.local/share/cool-retro-term
 read-only ${HOME}/.local/share/nvim
 read-only ${HOME}/.local/state/nvim
 read-only ${HOME}/.mailcap
+read-only ${HOME}/.mozilla/firefox/profiles.ini
 read-only ${HOME}/.msmtprc
 read-only ${HOME}/.mutt/muttrc
 read-only ${HOME}/.muttrc

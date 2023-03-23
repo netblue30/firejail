@@ -24,7 +24,6 @@ whitelist ${HOME}/.config/electron-mail
 # there isn't a Firefox instance running with the default profile; see #5352)
 noblacklist ${HOME}/.mozilla
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
-read-only ${HOME}/.mozilla/firefox/profiles.ini
 
 machine-id
 nosound

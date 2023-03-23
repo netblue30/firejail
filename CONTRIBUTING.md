@@ -22,7 +22,10 @@ we can handle the report more easily:
   the `--noprofile` argument.
   For example, if `firejail firefox` does not work, please also run `firejail --noprofile firefox` and
   let us know if it runs correctly or not.
-- You may also try disabling various options provided in `/etc/firejail/<ProgramName.profile>` until you find out which one causes problems. It will significantly help to find solution for your issue.
+- You may also try disabling various options provided in
+  `/etc/firejail/<ProgramName.profile>` until you find out which one causes
+  problems.
+  It will significantly help in finding a solution for your issue.
 
 Please note: If you are running Debian, Ubuntu, Linux Mint, or another related
 distribution and you installed firejail from your distro's repositories, please

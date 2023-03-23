@@ -139,8 +139,8 @@ cd firejail
 ./configure && make && sudo make install-strip
 ```
 
-On Debian/Ubuntu you will need to install git and gcc compiler. AppArmor
-development libraries and pkg-config are required when using `--enable-apparmor`
+On Debian/Ubuntu you will need to install git and gcc. AppArmor development
+libraries and pkg-config are required when using the `--enable-apparmor`
 ./configure option:
 
 ```sh
@@ -186,9 +186,12 @@ The first command solves some shared memory/PID namespace bugs in PulseAudio sof
 The second command integrates Firejail into your desktop. You would need to logout and login back to apply
 PulseAudio changes.
 
-Start your programs the way you are used to: desktop manager menus, file manager, desktop launchers.
-The integration applies to any program supported by default by Firejail. There are about 250 default applications
-in current Firejail version, and the number goes up with every new release.
+Start your programs the way you are used to: desktop manager menus, file
+manager, desktop launchers.
+
+The integration applies to any program supported by default by Firejail.
+There are over 900 default applications in the current Firejail version, and
+the number goes up with every new release.
 
 We keep the application list in
 [src/firecfg/firecfg.config](src/firecfg/firecfg.config)

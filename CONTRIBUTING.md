@@ -28,8 +28,9 @@ ensure that **both** of the following were installed:
 `firejail` and `firejail-profiles`. A common source of issues is that
 firejail-profiles was not installed when installing firejail.
 
-We take security bugs very seriously. If you believe you have found one, please report it by
-emailing us at netblue30@protonmail.com
+## Security vulnerabilities
+
+See [SECURITY.md](SECURITY.md).
 
 ## Opening a pull request
 

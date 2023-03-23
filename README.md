@@ -64,7 +64,7 @@ Backup Video Channel: https://www.bitchute.com/profile/JSBsA1aoQVfW/
 
 ## Security vulnerabilities
 
-We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@protonmail.com
+See [SECURITY.md](SECURITY.md).
 
 ## Installing
 

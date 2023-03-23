@@ -59,7 +59,8 @@ Committers:
 - rusty-snake (https://github.com/rusty-snake)
 - smitsohu (https://github.com/smitsohu)
 - SkewedZeppelin (https://github.com/SkewedZeppelin)
-- startx2017 (https://github.com/startx2017) - LTS and *bugfixes branches maintainer)
+- startx2017 (https://github.com/startx2017) - LTS and *bugfixes branches
+  maintainer)
 - Topi Miettinen (https://github.com/topimiettinen)
 - veloute (https://github.com/veloute)
 - Vincent43 (https://github.com/Vincent43)
@@ -317,7 +318,8 @@ curiosityseeker (https://github.com/curiosityseeker - new)
 	- updated keypassxc profile
 	- added syscalls.sh, which determine the necessary syscalls for a program
 	- fixed conky profile
-	- thunderbird.profile: harden and enable the rules necessary to make Firefox open links
+	- thunderbird.profile: harden and enable the rules necessary to make
+	  Firefox open links
 da2x (https://github.com/da2x)
 	- matched RPM license tag
 Daan Bakker (https://github.com/dbakker)
@@ -362,7 +364,8 @@ Disconnect3d (https://github.com/disconnect3d)
 dm9pZCAq (https://github.com/dm9pZCAq)
 	- fix for compilation under musl
 dmfreemon (https://github.com/dmfreemon)
-	- add sandbox name or name of private directory to the window title when xpra is used
+	- add sandbox name or name of private directory to the window title
+	  when xpra is used
 	- handle malloc() failures; use gnu_basename() instead of basenaem()
 Dmitriy Chestnykh (https://github.com/chestnykh)
 	- add ability to disable user profiles at compile time
@@ -1034,7 +1037,8 @@ soredake (https://github.com/soredake)
 	- add localtime to private-etc to make qtox show correct time
 	- fixes for the keepassxc 2.2.5 version
 SkewedZeppelin (https://github.com/SkewedZeppelin)
-	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI, Lollypop, MultiMC5 profiles
+	- added Bless, Gnome 2048, Gnome Calculator, Gnome Contacts, JD-GUI,
+	  Lollypop, MultiMC5 profiles
 	- added PDFSam, Pithos, and Xonotic profiles
 	- disabled Go, Rust, and OpenSSL in disable-devel.conf
 	- added dino profile
@@ -1052,7 +1056,8 @@ SkewedZeppelin (https://github.com/SkewedZeppelin)
 	- added IntelliJ IDEA and Android Studio profiles
 	- added arm profile
 	- lots of profile improvements/tightening
-	- added apktool, baobab, dex2jar, gitg, hashcat, obs, picard, remmina, sdat2img,
+	- added apktool, baobab, dex2jar, gitg, hashcat, obs, picard, remmina,
+	  sdat2img,
 	soundconverter, sqlitebrowser, and truecraft profiles
 	- added gnome-twitch profile
 	- Unified all 341 profiles
@@ -1089,10 +1094,12 @@ SYN-cook (https://github.com/SYN-cook)
 	- gnome-calculator changes
 startx2017 (https://github.com/startx2017)
 	- syscall list update
-	- updated default seccomp filters - added bpf, clock_settime, personality, process_vm_writev, query_module,
-	  settimeofday, stime, umount, userfaultfd, ustat, vm86, and vm86old
+	- updated default seccomp filters - added bpf, clock_settime,
+	  personality, process_vm_writev, query_module, settimeofday, stime,
+	  umount, userfaultfd, ustat, vm86, and vm86old
 	- enable/disable join support in /etc/firejail/firejail.config
-	- firecfg fix: create ~/.local/share/applications directory if it doesn't exist
+	- firecfg fix: create ~/.local/share/applications directory if it
+	  doesn't exist
 	- firejail.config cleanup
 	- --quiet fixes
 	- bugfixes branches maintainer
@@ -1254,8 +1261,8 @@ Zack Weinberg (https://github.com/zackw)
 	- wait_for_other function rewrite
 	- Xvfb X11 server support
 	- Xvfb and Xephyr profiles, modified Xpra profile
-	- support for sandboxing Xpra, Xvfb and Xephyr in independent sandboxes when started
-	  with firejail --x11
+	- support for sandboxing Xpra, Xvfb and Xephyr in independent sandboxes
+	  when started with firejail --x11
 	- support for xpra-extra-params in firejail.config
 zupatisc (https://github.com/zupatisc)
 	- patch-util fix

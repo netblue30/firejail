@@ -74,11 +74,14 @@ See [SECURITY.md](SECURITY.md).
 
 ### Debian
 
-Debian stable (bullseye): We recommend to use the [backports](https://packages.debian.org/bullseye-backports/firejail) package.
+Debian stable (bullseye): We recommend to use the
+[backports](https://packages.debian.org/bullseye-backports/firejail) package.
 
 ### Ubuntu
 
-For Ubuntu 18.04+ and derivatives (such as Linux Mint), users are **strongly advised** to use the [PPA](https://launchpad.net/~deki/+archive/ubuntu/firejail).
+For Ubuntu 18.04+ and derivatives (such as Linux Mint), users are **strongly
+advised** to use the
+[PPA](https://launchpad.net/~deki/+archive/ubuntu/firejail).
 
 How to add and install from the PPA:
 
@@ -88,10 +91,12 @@ sudo apt-get update
 sudo apt-get install firejail firejail-profiles
 ```
 
-Reason: The firejail package for Ubuntu 20.04 has been left vulnerable to CVE-2021-26910 for months after a patch for it was posted on Launchpad:
+Reason: The firejail package for Ubuntu 20.04 has been left vulnerable to
+CVE-2021-26910 for months after a patch for it was posted on Launchpad:
 
 * [CVE-2021-26910](https://github.com/advisories/GHSA-2q4h-h5jp-942w)
-* [firejail version in Ubuntu 20.04 LTS is vulnerable to CVE-2021-26910](https://bugs.launchpad.net/ubuntu/+source/firejail/+bug/1916767)
+* [firejail version in Ubuntu 20.04 LTS is vulnerable to
+  CVE-2021-26910](https://bugs.launchpad.net/ubuntu/+source/firejail/+bug/1916767)
 
 See also <https://wiki.ubuntu.com/SecurityTeam/FAQ>:
 
@@ -102,12 +107,15 @@ See also <https://wiki.ubuntu.com/SecurityTeam/FAQ>:
 > the Ubuntu Security team for the life of an Ubuntu release, while binary
 > packages in universe and multiverse are supported by the Ubuntu community.
 
-Additionally, the PPA version is likely to be more recent and to contain more profile fixes.
+Additionally, the PPA version is likely to be more recent and to contain more
+profile fixes.
 
 See the following discussions for details:
 
-* [Should I keep using the version of firejail available in my distro repos?](https://github.com/netblue30/firejail/discussions/4666)
-* [How to install the latest version on Ubuntu and derivatives](https://github.com/netblue30/firejail/discussions/4663)
+* [Should I keep using the version of firejail available in my distro
+  repos?](https://github.com/netblue30/firejail/discussions/4666)
+* [How to install the latest version on Ubuntu and
+  derivatives](https://github.com/netblue30/firejail/discussions/4663)
 
 ### Other
 
@@ -149,7 +157,8 @@ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 
 For `--selinux` option, add libselinux1-dev (libselinux-devel for Fedora).
 
-Detailed information on using firejail from git is available on the [wiki](https://github.com/netblue30/firejail/wiki/Using-firejail-from-git).
+Detailed information on using firejail from git is available on the
+[wiki](https://github.com/netblue30/firejail/wiki/Using-firejail-from-git).
 
 ## Running the sandbox
 

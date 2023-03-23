@@ -1,6 +1,8 @@
-If your PR isn't about profiles or you have no idea how to do one of these, skip the following and go ahead with this PR.
+If your PR isn't about profiles or you have no idea how to do one of these,
+skip the following and go ahead with this PR.
 
-If you submit a PR for new profiles or changing profiles, please do the following:
+If you submit a PR for new profiles or changing profiles, please do the
+following:
 
 - The ordering of options follow the rules described in
   [etc/templates/profile.template](../blob/master/etc/templates/profile.template)

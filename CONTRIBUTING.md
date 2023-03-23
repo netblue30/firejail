@@ -4,8 +4,8 @@ Welcome to firejail, and thank you for your interest in contributing!
 
 ## Opening an issue
 
-We welcome issues, whether to ask a question, provide information, request a new profile or
-feature, or to report a suspected bug or problem.
+We welcome issues, whether to ask a question, provide information, request a
+new profile or feature, or to report a suspected bug or problem.
 
 If you want to request a program profile that we don't already have, please add
 a comment in our dedicated issue:
@@ -62,4 +62,5 @@ If you add a new command, here's the checklist:
 
 ## Editing the wiki
 
-You are highly encouraged to add your own tips and tricks to the [wiki](https://github.com/netblue30/firejail/wiki).
+You are highly encouraged to add your own tips and tricks to the
+[wiki](https://github.com/netblue30/firejail/wiki).

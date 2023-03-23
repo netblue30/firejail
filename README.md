@@ -42,25 +42,16 @@ alt="Deep Dive" width="240" height="142" border="10" /><br/>Deep Dive</a>
 
 </tr></table>
 
-Project webpage: <https://firejail.wordpress.com/>
-
-IRC: <https://web.libera.chat/#firejail>
-
-Download and Installation: <https://firejail.wordpress.com/download-2/>
-
-Features: <https://firejail.wordpress.com/features-3/>
-
-Documentation: <https://firejail.wordpress.com/documentation-2/>
-
-FAQ: <https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions>
-
-Wiki: <https://github.com/netblue30/firejail/wiki>
-
-GitLab-CI status: <https://gitlab.com/Firejail/firejail_ci/pipelines/>
-
-Video Channel: <https://odysee.com/@netblue30:9?order=new>
-
-Backup Video Channel: <https://www.bitchute.com/profile/JSBsA1aoQVfW/>
+* Project webpage: <https://firejail.wordpress.com/>
+* IRC: <https://web.libera.chat/#firejail>
+* Download and Installation: <https://firejail.wordpress.com/download-2/>
+* Features: <https://firejail.wordpress.com/features-3/>
+* Documentation: <https://firejail.wordpress.com/documentation-2/>
+* FAQ: <https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions>
+* Wiki: <https://github.com/netblue30/firejail/wiki>
+* GitLab-CI status: <https://gitlab.com/Firejail/firejail_ci/pipelines/>
+* Video Channel: <https://odysee.com/@netblue30:9?order=new>
+* Backup Video Channel: <https://www.bitchute.com/profile/JSBsA1aoQVfW/>
 
 ## Security vulnerabilities
 

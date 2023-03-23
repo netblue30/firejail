@@ -110,9 +110,27 @@ See the following discussions for details:
 
 ### Other
 
-Firejail is included in a large number of Linux distributions.
+Firejail is available in multiple Linux distributions:
 
-You can also install one of the [released packages](https://github.com/netblue30/firejail/releases), or clone Firejail's source code from our Git repository and compile manually:
+<details>
+<summary>Repology</summary>
+<p>
+
+[![Packaging status (Repology)](https://repology.org/badge/vertical-allrepos/firejail.svg)](https://repology.org/project/firejail/versions)
+
+</p>
+</details>
+
+Other than the [aforementioned exceptions](#installing), as long as your
+distribution provides a [supported version](SECURITY.md) of firejail, it's
+generally a good idea to install it from the distribution.
+
+The version can be checked with `firejail --version` after installing.
+
+You can also install one of the [released
+packages](https://github.com/netblue30/firejail/releases).
+
+Or clone the source code from our git repository and build manually:
 
 ```sh
 git clone https://github.com/netblue30/firejail.git

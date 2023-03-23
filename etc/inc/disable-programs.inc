@@ -402,7 +402,6 @@ blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/cointop
 blacklist ${HOME}/.config/com.github.bleakgrey.tootle
 blacklist ${HOME}/.config/corebird
-blacklist ${HOME}/.config/cower
 blacklist ${HOME}/.config/coyim
 blacklist ${HOME}/.config/d-feet
 blacklist ${HOME}/.config/darktable

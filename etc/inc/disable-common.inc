@@ -368,6 +368,9 @@ read-only ${HOME}/_gvimrc
 read-only ${HOME}/_vimrc
 read-only ${HOME}/dotfiles
 
+# System package managers and AUR helpers
+blacklist ${HOME}/.config/cower
+
 # Make directories commonly found in $PATH read-only
 read-only ${HOME}/.bin
 read-only ${HOME}/.cargo/bin

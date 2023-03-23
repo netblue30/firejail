@@ -20,27 +20,35 @@ The sandbox is lightweight, the overhead is low. There are no complicated config
 no socket connections open, no daemons running in the background. All security features are
 implemented directly in Linux kernel and available on any Linux computer.
 
-<table><tr>
+<table>
+<tr>
 
 <td>
 <a href="https://odysee.com/@netblue30:9/firefox:c" target="_blank">
 <img src="https://thumbs.odycdn.com/acf4b1c66737feb97640fb1d28a7daa6.png"
-alt="Advanced Browser Security" width="240" height="142" border="10" /><br/>Advanced Browser Security</a>
+alt="Advanced Browser Security" width="240" height="142" border="10" />
+<br/>Advanced Browser Security
+</a>
 </td>
 
 <td>
 <a href="https://odysee.com/@netblue30:9/nonet:7" target="_blank">
 <img src="https://thumbs.odycdn.com/5be2964201c31689ee8f78cb9f35e89a.png"
-alt="How To Disable Network Access" width="240" height="142" border="10" /><br/>How To Disable Network Access</a>
+alt="How To Disable Network Access" width="240" height="142" border="10" />
+<br/>How To Disable Network Access
+</a>
 </td>
 
 <td>
 <a href="https://odysee.com/@netblue30:9/divested:2" target="_blank">
 <img src="https://thumbs.odycdn.com/f30ece33a6547af9ae48244f4ba73028.png"
-alt="Deep Dive" width="240" height="142" border="10" /><br/>Deep Dive</a>
+alt="Deep Dive" width="240" height="142" border="10" />
+<br/>Deep Dive
+</a>
 </td>
 
-</tr></table>
+</tr>
+</table>
 
 * Project webpage: <https://firejail.wordpress.com/>
 * IRC: <https://web.libera.chat/#firejail>

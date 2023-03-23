@@ -20,6 +20,8 @@ The sandbox is lightweight, the overhead is low. There are no complicated config
 no socket connections open, no daemons running in the background. All security features are
 implemented directly in Linux kernel and available on any Linux computer.
 
+## Videos
+
 <table>
 <tr>
 
@@ -49,6 +51,8 @@ alt="Deep Dive" width="240" height="142" border="10" />
 
 </tr>
 </table>
+
+## Links
 
 * Project webpage: <https://firejail.wordpress.com/>
 * IRC: <https://web.libera.chat/#firejail>

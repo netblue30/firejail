@@ -42,25 +42,25 @@ alt="Deep Dive" width="240" height="142" border="10" /><br/>Deep Dive</a>
 
 </tr></table>
 
-Project webpage: https://firejail.wordpress.com/
+Project webpage: <https://firejail.wordpress.com/>
 
-IRC: https://web.libera.chat/#firejail
+IRC: <https://web.libera.chat/#firejail>
 
-Download and Installation: https://firejail.wordpress.com/download-2/
+Download and Installation: <https://firejail.wordpress.com/download-2/>
 
-Features: https://firejail.wordpress.com/features-3/
+Features: <https://firejail.wordpress.com/features-3/>
 
-Documentation: https://firejail.wordpress.com/documentation-2/
+Documentation: <https://firejail.wordpress.com/documentation-2/>
 
-FAQ: https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions
+FAQ: <https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions>
 
-Wiki: https://github.com/netblue30/firejail/wiki
+Wiki: <https://github.com/netblue30/firejail/wiki>
 
-GitLab-CI status: https://gitlab.com/Firejail/firejail_ci/pipelines/
+GitLab-CI status: <https://gitlab.com/Firejail/firejail_ci/pipelines/>
 
-Video Channel: https://odysee.com/@netblue30:9?order=new
+Video Channel: <https://odysee.com/@netblue30:9?order=new>
 
-Backup Video Channel: https://www.bitchute.com/profile/JSBsA1aoQVfW/
+Backup Video Channel: <https://www.bitchute.com/profile/JSBsA1aoQVfW/>
 
 ## Security vulnerabilities
 
@@ -175,8 +175,8 @@ You can find the profiles for all supported applications in [/etc/firejail](http
 
 If you keep additional Firejail security profiles in a public repository, please give us a link:
 
-* https://github.com/chiraag-nataraj/firejail-profiles
-* https://github.com/triceratops1/fe
+* <https://github.com/chiraag-nataraj/firejail-profiles>
+* <https://github.com/triceratops1/fe>
 
 Use this issue to request new profiles: [#1139](https://github.com/netblue30/firejail/issues/1139)
 
@@ -235,7 +235,8 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 ```
 
 We keep the list of groups in [src/include/etc_groups.h](https://github.com/netblue30/firejail/blob/master/src/include/etc_groups.h)
-Discussion: https://github.com/netblue30/firejail/discussions/5610
+
+Discussion: <https://github.com/netblue30/firejail/discussions/5610>
 
 ### Profile Statistics
 

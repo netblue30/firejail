@@ -240,7 +240,7 @@ No include .local found in /etc/firejail/noprofile.profile
 Warning: multiple caps in /etc/firejail/transmission-daemon.profile
 
 Stats:
-     profiles			1209
+    profiles			1209
     include local profile	1208   (include profile-name.local)
     include globals		1181   (include globals.local)
     blacklist ~/.ssh		1079   (include disable-common.inc)
@@ -266,5 +266,4 @@ Stats:
     dbus-user filter 		141
     dbus-system none 		851
     dbus-system filter 		12
-
 ```

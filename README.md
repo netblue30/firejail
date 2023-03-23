@@ -112,7 +112,7 @@ See the following discussions for details:
 
 Firejail is included in a large number of Linux distributions.
 
-You can also install one of the [released packages](http://sourceforge.net/projects/firejail/files/firejail), or clone Firejail's source code from our Git repository and compile manually:
+You can also install one of the [released packages](https://github.com/netblue30/firejail/releases), or clone Firejail's source code from our Git repository and compile manually:
 
 ```sh
 git clone https://github.com/netblue30/firejail.git

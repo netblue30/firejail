@@ -23,21 +23,21 @@ Please report all security vulnerabilities to:
 
 Compile and install mainline version from GitHub:
 
-$ git clone https://github.com/netblue30/firejail.git
-$ cd firejail
-$ ./configure && make && sudo make install-strip
+    git clone https://github.com/netblue30/firejail.git
+    cd firejail
+    ./configure && make && sudo make install-strip
 
 On Debian/Ubuntu you will need to install git and gcc compiler. AppArmor
 development libraries and pkg-config are required when using --enable-apparmor
 ./configure option:
 
-$ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
+    sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 
 For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
 
 We build our release firejail.tar.xz and firejail.deb packages using the following command:
-$ make distclean && ./configure && make deb
 
+    make distclean && ./configure && make deb
 
 Maintainer:
 - netblue30 (netblue30@protonmail.com)

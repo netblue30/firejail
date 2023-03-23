@@ -110,19 +110,19 @@ Firejail is included in a large number of Linux distributions.
 
 You can also install one of the [released packages](http://sourceforge.net/projects/firejail/files/firejail), or clone Firejail's source code from our Git repository and compile manually:
 
-`````
-$ git clone https://github.com/netblue30/firejail.git
-$ cd firejail
-$ ./configure && make && sudo make install-strip
-`````
+```sh
+git clone https://github.com/netblue30/firejail.git
+cd firejail
+./configure && make && sudo make install-strip
+```
 
 On Debian/Ubuntu you will need to install git and gcc compiler. AppArmor
 development libraries and pkg-config are required when using `--enable-apparmor`
 ./configure option:
 
-`````
-$ sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
-`````
+```sh
+sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
+```
 
 For `--selinux` option, add libselinux1-dev (libselinux-devel for Fedora).
 
@@ -132,32 +132,32 @@ Detailed information on using firejail from git is available on the [wiki](https
 
 To start the sandbox, prefix your command with `firejail`:
 
-`````
-$ firejail firefox            # starting Mozilla Firefox
-$ firejail transmission-gtk   # starting Transmission BitTorrent
-$ firejail vlc                # starting VideoLAN Client
-$ sudo firejail /etc/init.d/nginx start
-`````
+```sh
+firejail firefox            # starting Mozilla Firefox
+firejail transmission-gtk   # starting Transmission BitTorrent
+firejail vlc                # starting VideoLAN Client
+sudo firejail /etc/init.d/nginx start
+```
 
 Run `firejail --list` in a terminal to list all active sandboxes. Example:
 
-`````
+```console
 $ firejail --list
 1617:netblue:/usr/bin/firejail /usr/bin/firefox-esr
 7719:netblue:/usr/bin/firejail /usr/bin/transmission-qt
 7779:netblue:/usr/bin/firejail /usr/bin/galculator
 7874:netblue:/usr/bin/firejail /usr/bin/vlc --started-from-file file:///home/netblue/firejail-whitelist.mp4
 7916:netblue:firejail --list
-`````
+```
 
 ## Desktop integration
 
 Integrate your sandbox into your desktop by running the following two commands:
 
-`````
-$ firecfg --fix-sound
-$ sudo firecfg
-`````
+```sh
+firecfg --fix-sound
+sudo firecfg
+```
 
 The first command solves some shared memory/PID namespace bugs in PulseAudio software prior to version 9.
 The second command integrates Firejail into your desktop. You would need to logout and login back to apply
@@ -190,18 +190,18 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 
 ### --keep-shell-rc
 
-`````
+```text
        --keep-shell-rc
               By default, when using a private home directory, firejail copies
               files  from the system's user home template (/etc/skel) into it,
               which overrides attempts to whitelist the original  files  (such
               as  ~/.bashrc and ~/.zshrc).  This option disables this feature,
               and enables the user to whitelist the original files.
-`````
+```
 
 ### private-etc rework
 
-`````
+```text
        --private-etc, --private-etc=file,directory,@group
               The files installed by --private-etc are copies of the original
               system files from /etc directory.  By default, the command
@@ -232,7 +232,7 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
               by your program is using strace utility:
 
               $ strace /usr/bin/transmission-qt 2>&1 | grep open | grep etc
-`````
+```
 
 We keep the list of groups in [src/include/etc_groups.h](https://github.com/netblue30/firejail/blob/master/src/include/etc_groups.h)
 Discussion: https://github.com/netblue30/firejail/discussions/5610
@@ -242,7 +242,7 @@ Discussion: https://github.com/netblue30/firejail/discussions/5610
 A small tool to print profile statistics. Compile and install as usual. The tool is installed in /usr/lib/firejail directory.
 Run it over the profiles in /etc/profiles:
 
-```
+```console
 $ /usr/lib/firejail/profstats /etc/firejail/*.profile
 No include .local found in /etc/firejail/noprofile.profile
 Warning: multiple caps in /etc/firejail/transmission-daemon.profile

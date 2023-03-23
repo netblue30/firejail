@@ -189,23 +189,35 @@ PulseAudio changes.
 Start your programs the way you are used to: desktop manager menus, file manager, desktop launchers.
 The integration applies to any program supported by default by Firejail. There are about 250 default applications
 in current Firejail version, and the number goes up with every new release.
-We keep the application list in [/etc/firejail/firecfg.config](https://github.com/netblue30/firejail/blob/master/src/firecfg/firecfg.config) file.
+
+We keep the application list in
+[src/firecfg/firecfg.config](src/firecfg/firecfg.config)
+(/etc/firejail/firecfg.config when installed).
 
 ## Security profiles
 
-Most Firejail command line options can be passed to the sandbox using profile files.
-You can find the profiles for all supported applications in [/etc/firejail](https://github.com/netblue30/firejail/tree/master/etc) directory.
+Most Firejail command line options can be passed to the sandbox using profile
+files.
 
-If you keep additional Firejail security profiles in a public repository, please give us a link:
+You can find the profiles for all supported applications in [etc/](etc/)
+(/etc/firejail/ when installed).
+
+We also keep a list of profile fixes for previous released versions in
+[etc-fixes/](etc-fixes/).
+
+If you keep additional Firejail security profiles in a public repository,
+please give us a link:
 
 * <https://github.com/chiraag-nataraj/firejail-profiles>
 * <https://github.com/triceratops1/fe>
 
-Use this issue to request new profiles: [#1139](https://github.com/netblue30/firejail/issues/1139)
+Use this issue to request new profiles:
 
-You can also use this tool to get a list of syscalls needed by a program: [contrib/syscalls.sh](contrib/syscalls.sh).
+* [Profile requests](https://github.com/netblue30/firejail/issues/1139)
 
-We also keep a list of profile fixes for previous released versions in [etc-fixes](https://github.com/netblue30/firejail/tree/master/etc-fixes) directory.
+You can also use this tool to get a list of syscalls needed by a program:
+
+* [contrib/syscalls.sh](contrib/syscalls.sh)
 
 ## Latest released version: 0.9.72
 
@@ -257,13 +269,18 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
               $ strace /usr/bin/transmission-qt 2>&1 | grep open | grep etc
 ```
 
-We keep the list of groups in [src/include/etc_groups.h](https://github.com/netblue30/firejail/blob/master/src/include/etc_groups.h)
+We keep the list of groups in
+[src/include/etc_groups.h](src/include/etc_groups.h).
 
-Discussion: <https://github.com/netblue30/firejail/discussions/5610>
+Discussion:
+
+* [private-etc rework](https://github.com/netblue30/firejail/discussions/5610)
 
 ### Profile Statistics
 
-A small tool to print profile statistics. Compile and install as usual. The tool is installed in /usr/lib/firejail directory.
+A small tool to print profile statistics. Compile and install as usual.
+The tool is installed in the /usr/lib/firejail directory.
+
 Run it over the profiles in /etc/profiles:
 
 ```console

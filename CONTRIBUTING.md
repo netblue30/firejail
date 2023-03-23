@@ -7,8 +7,10 @@ Welcome to firejail, and thank you for your interest in contributing!
 We welcome issues, whether to ask a question, provide information, request a new profile or
 feature, or to report a suspected bug or problem.
 
-If you want to request a program profile that we don't already have, please add a comment in
-our [dedicated issue](https://github.com/netblue30/firejail/issues/1139).
+If you want to request a program profile that we don't already have, please add
+a comment in our dedicated issue:
+
+- [Profile requests](https://github.com/netblue30/firejail/issues/1139)
 
 When submitting a bug report, please provide the following information so that
 we can handle the report more easily:
@@ -22,11 +24,15 @@ we can handle the report more easily:
   let us know if it runs correctly or not.
 - You may also try disabling various options provided in `/etc/firejail/<ProgramName.profile>` until you find out which one causes problems. It will significantly help to find solution for your issue.
 
-Please note: if you are running Debian, Ubuntu, Linux Mint, or another related
+Please note: If you are running Debian, Ubuntu, Linux Mint, or another related
 distribution and you installed firejail from your distro's repositories, please
-ensure that **both** of the following were installed:
-`firejail` and `firejail-profiles`. A common source of issues is that
-firejail-profiles was not installed when installing firejail.
+ensure that **all** of the following packages were installed:
+
+- firejail
+- firejail-profiles
+
+A common source of issues is that firejail-profiles was not installed when
+installing firejail.
 
 ## Security vulnerabilities
 
@@ -37,8 +43,12 @@ See [SECURITY.md](SECURITY.md).
 Pull requests with enhancements, bugfixes or new profiles are very welcome.
 
 If you want to write a new profile, the easiest way to do this is to use the
-[profile template](https://github.com/netblue30/firejail/blob/master/etc/templates/profile.template).
-If you have already written a profile, please make sure it follows the rules described in the template.
+profile template:
+
+- [etc/templates/profile.template](etc/templates/profile.template)
+
+If you have already written a profile, please make sure it follows the rules
+described in the template.
 
 If you add a new command, here's the checklist:
 

@@ -45,5 +45,4 @@ private-dev
 private-tmp
 
 memory-deny-write-execute
-read-only ${HOME}/.config/cower/config
 restrict-namespaces

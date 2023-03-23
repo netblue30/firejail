@@ -19,7 +19,6 @@ blacklist ${RUNUSER}/wayland-*
 
 # Enable severely restricted access to ${HOME}/.gnupg
 noblacklist ${HOME}/.gnupg
-read-only ${HOME}/.gnupg/gpg.conf
 read-only ${HOME}/.gnupg/trustdb.gpg
 read-only ${HOME}/.gnupg/pubring.kbx
 blacklist ${HOME}/.gnupg/random_seed

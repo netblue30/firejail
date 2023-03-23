@@ -1,9 +1,9 @@
 # Firejail
 
-[![Build Status](https://gitlab.com/Firejail/firejail_ci/badges/master/pipeline.svg)](https://gitlab.com/Firejail/firejail_ci/pipelines/)
-[![Build CI](https://github.com/netblue30/firejail/workflows/Build%20CI/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3A%22Build+CI%22)
-[![CodeQL](https://github.com/netblue30/firejail/workflows/CodeQL/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACodeQL)
-[![Packaging status](https://repology.org/badge/tiny-repos/firejail.svg)](https://repology.org/project/firejail/versions)
+[![Build CI (GitLab)](https://gitlab.com/Firejail/firejail_ci/badges/master/pipeline.svg)](https://gitlab.com/Firejail/firejail_ci/pipelines)
+[![Build CI (GitHub)](https://github.com/netblue30/firejail/workflows/Build%20CI/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3A%22Build+CI%22)
+[![CodeQL CI](https://github.com/netblue30/firejail/workflows/CodeQL/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACodeQL)
+[![Packaging status (Repology)](https://repology.org/badge/tiny-repos/firejail.svg)](https://repology.org/project/firejail/versions)
 
 Firejail is a SUID sandbox program that reduces the risk of security breaches by restricting
 the running environment of untrusted applications using Linux namespaces, seccomp-bpf
@@ -61,7 +61,8 @@ alt="Deep Dive" width="240" height="142" border="10" />
 * Documentation: <https://firejail.wordpress.com/documentation-2/>
 * FAQ: <https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions>
 * Wiki: <https://github.com/netblue30/firejail/wiki>
-* GitLab-CI status: <https://gitlab.com/Firejail/firejail_ci/pipelines/>
+* GitHub Actions: <https://github.com/netblue30/firejail/actions>
+* GitLab CI: <https://gitlab.com/Firejail/firejail_ci/pipelines>
 * Video Channel: <https://odysee.com/@netblue30:9?order=new>
 * Backup Video Channel: <https://www.bitchute.com/profile/JSBsA1aoQVfW/>
 

@@ -107,7 +107,7 @@ See the following discussions for details:
 
 Firejail is included in a large number of Linux distributions.
 
-You can also install one of the [released packages](http://sourceforge.net/projects/firejail/files/firejail), or clone Firejail’s source code from our Git repository and compile manually:
+You can also install one of the [released packages](http://sourceforge.net/projects/firejail/files/firejail), or clone Firejail's source code from our Git repository and compile manually:
 
 `````
 $ git clone https://github.com/netblue30/firejail.git
@@ -196,27 +196,27 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
 ### private-etc rework
 `````
        --private-etc, --private-etc=file,directory,@group
-              The files installed by --private-etc are copies of the  original
-              system  files  from  /etc  directory.   By  default, the command
-              brings in a skeleton of files and directories used by most  con‐
-              sole tools:
+              The files installed by --private-etc are copies of the original
+              system files from /etc directory.  By default, the command
+              brings in a skeleton of files and directories used by most
+              console tools:
 
               $ firejail --private-etc dig debian.org
 
-              For  X11/GTK/QT/Gnome/KDE   programs add @x11 group as a parame‐
-              ter. Example:
+              For X11/GTK/QT/Gnome/KDE  programs add @x11 group as a
+              parameter. Example:
 
               $ firejail --private-etc=@x11,gcrypt,python* gimp
 
-              gcrypt and /etc/python* directories are not part of the  generic
+              gcrypt and /etc/python* directories are not part of the generic
               @x11 group.  File globbing is supported.
 
               For games, add @games group:
 
               $ firejail --private-etc=@games,@x11 warzone2100
 
-              Sound  and  networking  files are included automatically, unless
-              --nosound or --net=none  are  specified.   Files  for  encrypted
+              Sound and networking files are included automatically, unless
+              --nosound or --net=none are specified.  Files for encrypted
               TLS/SSL protocol are in @tls-ca group.
 
               $ firejail --private-etc=@tls-ca,wgetrc wget https://debian.org
@@ -225,7 +225,6 @@ We also keep a list of profile fixes for previous released versions in [etc-fixe
               by your program is using strace utility:
 
               $ strace /usr/bin/transmission-qt 2>&1 | grep open | grep etc
-
 `````
 We keep the list of groups in [src/include/etc_groups.h](https://github.com/netblue30/firejail/blob/master/src/include/etc_groups.h)
 Discussion: https://github.com/netblue30/firejail/discussions/5610

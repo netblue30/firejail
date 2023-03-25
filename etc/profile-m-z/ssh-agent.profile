@@ -7,7 +7,6 @@ include ssh-agent.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 # Allow ssh (blacklisted by disable-common.inc)

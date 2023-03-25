@@ -34,4 +34,5 @@ writable-run-user
 dbus-user none
 dbus-system none
 
+deterministic-shutdown
 restrict-namespaces

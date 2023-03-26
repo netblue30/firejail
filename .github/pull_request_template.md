@@ -7,7 +7,7 @@ following:
 - The ordering of options follow the rules described in
   [etc/templates/profile.template](../blob/master/etc/templates/profile.template)
   (/usr/share/doc/firejail/profile.template when installed).
-- Order the arguments of options alphabetically. You can easily do this with
+- Order the arguments of options alphabetically.  You can easily do this with
   [sort.py](../blob/master/contrib/sort.py).
 
   The path to it depends on your distro:

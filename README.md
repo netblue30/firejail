@@ -5,20 +5,24 @@
 [![CodeQL CI](https://github.com/netblue30/firejail/workflows/CodeQL/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACodeQL)
 [![Packaging status (Repology)](https://repology.org/badge/tiny-repos/firejail.svg)](https://repology.org/project/firejail/versions)
 
-Firejail is a SUID sandbox program that reduces the risk of security breaches by restricting
-the running environment of untrusted applications using Linux namespaces, seccomp-bpf
-and Linux capabilities. It allows a process and all its descendants to have their own private
-view of the globally shared kernel resources, such as the network stack, process table, mount table.
-Firejail can work in a SELinux or AppArmor environment, and it is integrated with Linux Control Groups.
+Firejail is a SUID sandbox program that reduces the risk of security breaches
+by restricting the running environment of untrusted applications using Linux
+namespaces, seccomp-bpf and Linux capabilities.  It allows a process and all
+its descendants to have their own private view of the globally shared kernel
+resources, such as the network stack, process table, mount table.  Firejail can
+work in a SELinux or AppArmor environment, and it is integrated with Linux
+Control Groups.
 
-Written in C with virtually no dependencies, the software runs on any Linux computer with a 3.x kernel
-version or newer. It can sandbox any type of processes: servers, graphical applications, and even
-user login sessions. The software includes sandbox profiles for a number of more common Linux programs,
+Written in C with virtually no dependencies, the software runs on any Linux
+computer with a 3.x kernel version or newer.  It can sandbox any type of
+processes: servers, graphical applications, and even user login sessions.  The
+software includes sandbox profiles for a number of more common Linux programs,
 such as Mozilla Firefox, Chromium, VLC, Transmission etc.
 
-The sandbox is lightweight, the overhead is low. There are no complicated configuration files to edit,
-no socket connections open, no daemons running in the background. All security features are
-implemented directly in Linux kernel and available on any Linux computer.
+The sandbox is lightweight, the overhead is low.  There are no complicated
+configuration files to edit, no socket connections open, no daemons running in
+the background.  All security features are implemented directly in Linux kernel
+and available on any Linux computer.
 
 ## Videos
 
@@ -103,7 +107,7 @@ See also <https://wiki.ubuntu.com/SecurityTeam/FAQ>:
 > What software is supported by the Ubuntu Security team?
 >
 > Ubuntu is currently divided into four components: main, restricted, universe
-> and multiverse. All binary packages in main and restricted are supported by
+> and multiverse.  All binary packages in main and restricted are supported by
 > the Ubuntu Security team for the life of an Ubuntu release, while binary
 > packages in universe and multiverse are supported by the Ubuntu community.
 
@@ -147,7 +151,7 @@ cd firejail
 ./configure && make && sudo make install-strip
 ```
 
-On Debian/Ubuntu you will need to install git and gcc. AppArmor development
+On Debian/Ubuntu you will need to install git and gcc.  AppArmor development
 libraries and pkg-config are required when using the `--enable-apparmor`
 ./configure option:
 
@@ -171,7 +175,7 @@ firejail vlc                # starting VideoLAN Client
 sudo firejail /etc/init.d/nginx start
 ```
 
-Run `firejail --list` in a terminal to list all active sandboxes. Example:
+Run `firejail --list` in a terminal to list all active sandboxes.  Example:
 
 ```console
 $ firejail --list
@@ -191,16 +195,16 @@ firecfg --fix-sound
 sudo firecfg
 ```
 
-The first command solves some shared memory/PID namespace bugs in PulseAudio software prior to version 9.
-The second command integrates Firejail into your desktop. You would need to logout and login back to apply
-PulseAudio changes.
+The first command solves some shared memory/PID namespace bugs in PulseAudio
+software prior to version 9.  The second command integrates Firejail into your
+desktop.  You would need to logout and login back to apply PulseAudio changes.
 
 Start your programs the way you are used to: desktop manager menus, file
 manager, desktop launchers.
 
-The integration applies to any program supported by default by Firejail.
-There are over 900 default applications in the current Firejail version, and
-the number goes up with every new release.
+The integration applies to any program supported by default by Firejail.  There
+are over 900 default applications in the current Firejail version, and the
+number goes up with every new release.
 
 We keep the application list in
 [src/firecfg/firecfg.config](src/firecfg/firecfg.config)
@@ -290,8 +294,8 @@ Discussion:
 
 ### Profile Statistics
 
-A small tool to print profile statistics. Compile and install as usual.
-The tool is installed in the /usr/lib/firejail directory.
+A small tool to print profile statistics.  Compile and install as usual.  The
+tool is installed in the /usr/lib/firejail directory.
 
 Run it over the profiles in /etc/profiles:
 

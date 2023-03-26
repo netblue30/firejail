@@ -15,17 +15,18 @@ a comment in our dedicated issue:
 When submitting a bug report, please provide the following information so that
 we can handle the report more easily:
 
-- firejail version. If you're not sure, open a terminal and type `firejail --version`.
+- firejail version.  If you're not sure, open a terminal and type `firejail
+  --version`.
 - Linux distribution (so that we can try to reproduce it, if necessary).
-- If you know that the problem did not exist in an earlier version of firejail, please mention it.
-- If you are reporting that a program does not work with firejail, please also run firejail with
-  the `--noprofile` argument.
-  For example, if `firejail firefox` does not work, please also run `firejail --noprofile firefox` and
+- If you know that the problem did not exist in an earlier version of firejail,
+  please mention it.
+- If you are reporting that a program does not work with firejail, please also
+  run firejail with the `--noprofile` argument.  For example, if `firejail
+  firefox` does not work, please also run `firejail --noprofile firefox` and
   let us know if it runs correctly or not.
 - You may also try disabling various options provided in
   `/etc/firejail/<ProgramName.profile>` until you find out which one causes
-  problems.
-  It will significantly help in finding a solution for your issue.
+  problems.  It will significantly help in finding a solution for your issue.
 
 Please note: If you are running Debian, Ubuntu, Linux Mint, or another related
 distribution and you installed firejail from your distro's repositories, please

@@ -8,7 +8,7 @@ Clementine, Rhythmbox, Totem, Deluge, qBittorrent, DeaDBeeF, Dropbox, Empathy,
 FileZilla, IceCat, Thunderbird/Icedove, Pidgin, Quassel, and XChat.
 
 Firejail also expands the restricted shell facility found in bash by adding
-Linux namespace support. It supports sandboxing specific users upon login.
+Linux namespace support.  It supports sandboxing specific users upon login.
 
 Download: https://sourceforge.net/projects/firejail/files/
 Build and install: ./configure && make && sudo make install
@@ -28,7 +28,7 @@ Compile and install the mainline version from GitHub:
     cd firejail
     ./configure && make && sudo make install-strip
 
-On Debian/Ubuntu you will need to install git and gcc. AppArmor development
+On Debian/Ubuntu you will need to install git and gcc.  AppArmor development
 libraries and pkg-config are required when using the --enable-apparmor
 ./configure option:
 

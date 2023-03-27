@@ -33,7 +33,7 @@ jobs:
         allowed-endpoints: >
           github.com:443
 
-    - uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f
+    - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3
 #   - name: sort.py
 #      run: ./ci/check/profiles/sort.py etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
 # Currently broken (see #5610)

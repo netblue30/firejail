@@ -27,7 +27,7 @@ firejail (0.9.73) baseline; urgency=low
     support (#5589)
   * docs: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
-  * new profiles: fix-qdf, qpdf, zlib-flate
+  * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes
  -- netblue30 <netblue30@yahoo.com>  Mon, 16 Jan 2023 09:00:00 -0500
 
 firejail (0.9.72) baseline; urgency=low

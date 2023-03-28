@@ -221,6 +221,8 @@ include globals.local
 #dbus-user.talk org.freedesktop.Notifications
 #dbus-system none
 
+# Note: read-only entries should usually go in disable-common.inc (especially
+# entries for configuration files that allow arbitrary command execution).
 ##deterministic-shutdown
 ##env VAR=VALUE
 ##join-or-start NAME

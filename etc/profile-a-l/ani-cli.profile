@@ -35,7 +35,5 @@ private-bin ani-cli,aria2c,cat,cp,curl,cut,ffmpeg,fzf,grep,head,mkdir,mv,nl,nohu
 private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,pki,protocols,pulse,resolv.conf,rpc,services,ssl,X11,xdg
 private-tmp
 
-read-only ${HOME}/.config/mpv
-
 # Redirect
 include mpv.profile

@@ -85,6 +85,5 @@ dbus-user.talk org.gnome.seahorse.*
 dbus-user.talk org.mozilla.*
 dbus-system none
 
-read-only ${HOME}/.mozilla/firefox/profiles.ini
 read-only ${HOME}/.signature
 restrict-namespaces

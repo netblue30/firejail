@@ -69,6 +69,9 @@ blacklist ${HOME}/.xsessionrc
 blacklist /etc/X11/Xsession.d
 blacklist /etc/xdg/autostart
 read-only ${HOME}/.Xauthority
+read-only ${HOME}/.config/awesome/autorun.sh
+read-only ${HOME}/.config/openbox/autostart
+read-only ${HOME}/.config/openbox/environment
 
 # Session manager
 # see #3358
@@ -329,6 +332,7 @@ read-only ${HOME}/.ssh/config.d
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc
 read-only ${HOME}/.cargo/env
+read-only ${HOME}/.config/mpv
 read-only ${HOME}/.config/nano
 read-only ${HOME}/.config/nvim
 read-only ${HOME}/.config/pkcs11
@@ -337,6 +341,7 @@ read-only ${HOME}/.elinks
 read-only ${HOME}/.emacs
 read-only ${HOME}/.emacs.d
 read-only ${HOME}/.exrc
+read-only ${HOME}/.gnupg/gpg.conf
 read-only ${HOME}/.gvimrc
 read-only ${HOME}/.homesick
 read-only ${HOME}/.iscreenrc
@@ -345,6 +350,7 @@ read-only ${HOME}/.local/share/cool-retro-term
 read-only ${HOME}/.local/share/nvim
 read-only ${HOME}/.local/state/nvim
 read-only ${HOME}/.mailcap
+read-only ${HOME}/.mozilla/firefox/profiles.ini
 read-only ${HOME}/.msmtprc
 read-only ${HOME}/.mutt/muttrc
 read-only ${HOME}/.muttrc
@@ -365,6 +371,10 @@ read-only ${HOME}/_exrc
 read-only ${HOME}/_gvimrc
 read-only ${HOME}/_vimrc
 read-only ${HOME}/dotfiles
+
+# System package managers and AUR helpers
+blacklist ${HOME}/.config/cower
+read-only ${HOME}/.config/cower/config
 
 # Make directories commonly found in $PATH read-only
 read-only ${HOME}/.bin
@@ -390,6 +400,11 @@ read-only ${HOME}/.config/mimeapps.list
 read-only ${HOME}/.config/user-dirs.dirs
 read-only ${HOME}/.config/user-dirs.locale
 read-only ${HOME}/.local/share/mime
+
+# Configuration files that do not allow arbitrary command execution but that
+# are intended to be modified manually (in a text editor and/or by a program
+# dedicated to managing them)
+read-only ${HOME}/.config/MangoHud
 
 # Write-protection for thumbnailer dir
 read-only ${HOME}/.local/share/thumbnailers

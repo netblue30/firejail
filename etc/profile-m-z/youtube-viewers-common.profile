@@ -24,7 +24,6 @@ include allow-python3.inc
 # there isn't a Firefox instance running with the default profile; see #5352)
 noblacklist ${HOME}/.mozilla
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
-read-only ${HOME}/.mozilla/firefox/profiles.ini
 
 include disable-common.inc
 include disable-devel.inc

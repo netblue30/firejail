@@ -37,7 +37,5 @@ dbus-user.talk org.gnome.Mutter.IdleMonitor
 dbus-user.talk org.mozilla.*
 ignore dbus-user none
 
-read-only ${HOME}/.mozilla/firefox/profiles.ini
-
 # Redirect
 include electron-common.profile

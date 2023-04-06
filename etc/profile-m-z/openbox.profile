@@ -16,6 +16,4 @@ noroot
 protocol unix,inet,inet6
 seccomp !chroot
 
-read-only ${HOME}/.config/openbox/autostart
-read-only ${HOME}/.config/openbox/environment
 #restrict-namespaces

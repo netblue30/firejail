@@ -279,7 +279,8 @@ static void env_apply_list(const char * const *list, unsigned int num_items) {
 
 	while (env) {
 		if (env->op == SETENV) {
-			for (unsigned int i = 0; i < num_items; i++)
+			unsigned int i;
+			for (i = 0; i < num_items; i++)
 				if (strcmp(env->name, list[i]) == 0) {
 					// sanity check for whitelisted environment variables
 					if (strlen(env->name) + strlen(env->value) >= MAX_ENV_LEN) {

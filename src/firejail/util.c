@@ -56,7 +56,8 @@ long long unsigned parse_arg_size(char *str) {
 	}
 
 	/* checks for is value valid positive number */
-	for (int i = 0; i < len; i++) {
+	int i;
+	for (i = 0; i < len; i++) {
 		if (!isdigit(*(str+i))) {
 			return 0;
 		}

@@ -126,6 +126,7 @@ read-only ${HOME}/.config/kio_httprc
 read-only ${HOME}/.config/kiorc
 read-only ${HOME}/.config/kioslaverc
 read-only ${HOME}/.config/ksslcablacklist
+read-only ${HOME}/.config/lxqt
 read-only ${HOME}/.kde/share/apps/konsole
 read-only ${HOME}/.kde/share/apps/kssl
 read-only ${HOME}/.kde/share/config/*notifyrc

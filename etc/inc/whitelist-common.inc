@@ -64,6 +64,7 @@ whitelist ${HOME}/.config/kdeglobals
 whitelist ${HOME}/.config/kio_httprc
 whitelist ${HOME}/.config/kioslaverc
 whitelist ${HOME}/.config/ksslcablacklist
+whitelist ${HOME}/.config/lxqt
 whitelist ${HOME}/.config/qt5ct
 whitelist ${HOME}/.config/qt6ct
 whitelist ${HOME}/.config/qtcurve

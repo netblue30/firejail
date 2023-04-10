@@ -84,7 +84,7 @@ debian_ci:
         DEBFULLNAME: "$GITLAB_USER_NAME"
         DEBEMAIL: "$GITLAB_USER_EMAIL"
     before_script:
-        - git checkout -B ci_build $CI_COMMIT_SHA
+        - git checkout -B ci_build "$CI_COMMIT_SHA"
         - gitlab-ci-enable-sid
         - gitlab-ci-enable-experimental
         - |
@@ -96,22 +96,22 @@ debian_ci:
         - git config user.name "$DEBFULLNAME"
         - git config user.email "$DEBEMAIL"
         - |
-            cd $CI_PROJECT_DIR/..
+            cd "$CI_PROJECT_DIR/.."
             apt-get source --download-only -t experimental firejail ||
             apt-get source --download-only firejail
         - |
-            cd $CI_PROJECT_DIR
+            cd "$CI_PROJECT_DIR"
             tar xf ../firejail_*.debian.tar.*
         - rm -rf debian/patches/
         - |
-            VERSION=$(grep ^PACKAGE_VERSION= configure | cut -d "'" -f 2)
-            dch -v ${VERSION}-0.1~ci "Non-maintainer upload."
-            git archive -o ../firejail_${VERSION}.orig.tar.gz HEAD
-            pristine-tar commit ../firejail_${VERSION}.orig.tar.gz ci_build
+            VERSION="$(grep ^PACKAGE_VERSION= configure | cut -d "'" -f 2)"
+            dch -v "${VERSION}-0.1~ci" 'Non-maintainer upload.'
+            git archive -o "../firejail_${VERSION}.orig.tar.gz" HEAD
+            pristine-tar commit "../firejail_${VERSION}.orig.tar.gz" ci_build
             git branch -m pristine-tar origin/pristine-tar
         - git add debian
-        - git commit -m "add debian/"
-        - export CI_COMMIT_SHA=$(git rev-parse HEAD)
+        - git commit -m 'add debian/'
+        - export CI_COMMIT_SHA="$(git rev-parse HEAD)"
     script:
         - apt-get --no-install-recommends install -y -qq gawk
         - gitlab-ci-git-buildpackage

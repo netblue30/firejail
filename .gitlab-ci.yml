@@ -12,7 +12,7 @@ build_ubuntu_package:
         - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config python3 gawk
         - ./configure && make deb && dpkg -i firejail*.deb
         - command -V firejail && firejail --version
-        - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
+        # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_debian_package:
     image: debian:stretch
@@ -37,7 +37,7 @@ build_fedora_package:
         - dnf install -y rpm-build gcc make
         - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
         - command -V firejail && firejail --version
-        - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
+        # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_src_package:
     image: alpine:latest

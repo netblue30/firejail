@@ -35,11 +35,19 @@ jobs:
 
     - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
 #   - name: sort.py
-#      run: ./ci/check/profiles/sort.py etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
+#     run: >
+#       ./ci/check/profiles/sort.py
+#       etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
 # Currently broken (see #5610)
-#    - name: private-etc-always-required.sh
-#      run: ./ci/check/profiles/private-etc-always-required.sh etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
+#   - name: private-etc-always-required.sh
+#     run: >
+#       ./ci/check/profiles/private-etc-always-required.sh
+#       etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
     - name: sort-disable-programs.sh
-      run: ./ci/check/profiles/sort-disable-programs.sh etc/inc/disable-programs.inc
+      run: >
+        ./ci/check/profiles/sort-disable-programs.sh
+        etc/inc/disable-programs.inc
     - name: sort-firecfg.config.sh
-      run: ./ci/check/profiles/sort-firecfg.config.sh src/firecfg/firecfg.config
+      run: >
+        ./ci/check/profiles/sort-firecfg.config.sh
+        src/firecfg/firecfg.config

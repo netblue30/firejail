@@ -64,9 +64,14 @@ jobs:
     - name: update package information
       run: sudo apt-get update
     - name: install dependencies
-      run: sudo apt-get install gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois bridge-utils
+      run: >
+        sudo apt-get install
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois
+        bridge-utils
     - name: configure
-      run: CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux
+      run: >
+        CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings
+        --enable-analyzer --enable-apparmor --enable-selinux
     - name: make
       run: make
     - name: make install

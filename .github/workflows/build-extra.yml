@@ -68,7 +68,9 @@ jobs:
     - name: install dependencies
       run: sudo apt-get install libapparmor-dev libselinux1-dev
     - name: configure
-      run: CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor --enable-selinux
+      run: >
+        CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor
+        --enable-selinux
     - name: make
       run: make
     - name: make install
@@ -91,7 +93,9 @@ jobs:
     - name: install clang-tools-14 and dependencies
       run: sudo apt-get install clang-tools-14 libapparmor-dev libselinux1-dev
     - name: configure
-      run: CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor --enable-selinux
+      run: >
+        CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor
+        --enable-selinux
     - name: scan-build
       run: NO_EXTRA_CFLAGS="yes" scan-build-14 --status-bugs make
   cppcheck:
@@ -110,9 +114,11 @@ jobs:
     - name: install cppcheck
       run: sudo apt-get install cppcheck
     - name: cppcheck
-      run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance -i src/firejail/checkcfg.c -i src/firejail/main.c .
-  # new cppcheck version currently chokes on checkcfg.c and main.c, therefore scan all files also
-  # with older cppcheck version from ubuntu 20.04.
+      run: >
+        cppcheck -q --force --error-exitcode=1 --enable=warning,performance
+        -i src/firejail/checkcfg.c -i src/firejail/main.c .
+  # new cppcheck version currently chokes on checkcfg.c and main.c, therefore
+  # scan all files also with older cppcheck version from ubuntu 20.04.
   cppcheck_old:
     runs-on: ubuntu-20.04
     steps:

@@ -6,7 +6,9 @@ include gtk-straw-viewer.local
 # added by included profile
 #include globals.local
 
-ignore quiet
+private-bin gtk-straw-viewer
+
+include gtk-youtube-viewers-common.profile
 
 # Redirect
 include straw-viewer.profile

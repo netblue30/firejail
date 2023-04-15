@@ -6,12 +6,9 @@ include gtk3-youtube-viewer.local
 # added by included profile
 #include globals.local
 
-ignore quiet
+private-bin gtk3-youtube-viewer
 
-noblacklist /tmp/.X11-unix
-noblacklist ${RUNUSER}
-
-include whitelist-runuser-common.inc
+include gtk-youtube-viewers-common.profile
 
 # Redirect
 include youtube-viewer.profile

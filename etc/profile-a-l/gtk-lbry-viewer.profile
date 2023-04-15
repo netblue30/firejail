@@ -6,7 +6,9 @@ include gtk-lbry-viewer.local
 # added by included profile
 #include globals.local
 
-ignore quiet
+private-bin gtk-lbry-viewer
+
+include gtk-youtube-viewers-common.profile
 
 # Redirect
 include lbry-viewer.profile

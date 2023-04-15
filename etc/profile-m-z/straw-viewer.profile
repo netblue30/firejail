@@ -15,7 +15,7 @@ mkdir ${HOME}/.cache/straw-viewer
 whitelist ${HOME}/.cache/straw-viewer
 whitelist ${HOME}/.config/straw-viewer
 
-private-bin gtk-straw-viewer,straw-viewer
+private-bin straw-viewer
 
 # Redirect
 include youtube-viewers-common.profile

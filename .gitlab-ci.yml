@@ -10,7 +10,9 @@ build_ubuntu_package:
     script:
         - apt-get update -qq
         - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config python3 gawk
-        - ./configure && make deb && dpkg -i firejail*.deb
+        - ./configure
+        - make deb
+        - dpkg -i firejail*.deb
         - command -V firejail && firejail --version
         # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
@@ -19,7 +21,9 @@ build_debian_package:
     script:
         - apt-get update -qq
         - apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config gawk
-        - ./configure && make deb && dpkg -i firejail*.deb
+        - ./configure
+        - make deb
+        - dpkg -i firejail*.deb
         - command -V firejail && firejail --version
 
 build_redhat_package:
@@ -27,7 +31,9 @@ build_redhat_package:
     script:
         - dnf update -y
         - dnf install -y rpm-build gcc make
-        - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
+        - ./configure --prefix=/usr
+        - make rpms
+        - rpm -i firejail*.rpm
         - command -V firejail && firejail --version
 
 build_fedora_package:
@@ -35,7 +41,9 @@ build_fedora_package:
     script:
         - dnf update -y
         - dnf install -y rpm-build gcc make
-        - ./configure --prefix=/usr && make rpms && rpm -i firejail*.rpm
+        - ./configure --prefix=/usr
+        - make rpms
+        - rpm -i firejail*.rpm
         - command -V firejail && firejail --version
         # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
@@ -45,7 +53,9 @@ build_src_package:
         - apk update
         - apk upgrade
         - apk add build-base linux-headers python3 gawk
-        - ./configure --prefix=/usr && make && make install-strip
+        - ./configure --prefix=/usr
+        - make
+        - make install-strip
         - command -V firejail && firejail --version
         # - python3 contrib/sort.py etc/*.{profile,inc}
 
@@ -54,7 +64,10 @@ build_no_apparmor:
     script:
         - apt-get update -qq
         - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian pkg-config gawk
-        - ./configure && make dist && ./mkdeb.sh --disable-apparmor && dpkg -i firejail*.deb
+        - ./configure
+        - make dist
+        - ./mkdeb.sh --disable-apparmor
+        - dpkg -i firejail*.deb
         - command -V firejail && firejail --version
         - firejail --version | grep -F 'AppArmor support is disabled'
 

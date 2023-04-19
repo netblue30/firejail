@@ -17,6 +17,8 @@ on:
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/build-extra.yml
+      - .github/workflows/build.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
@@ -39,6 +41,8 @@ on:
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/build-extra.yml
+      - .github/workflows/build.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml

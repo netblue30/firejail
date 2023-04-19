@@ -6,7 +6,9 @@ include gtk-youtube-viewer.local
 # added by included profile
 #include globals.local
 
-ignore quiet
+private-bin gtk-youtube-viewer
+
+include gtk-youtube-viewers-common.profile
 
 # Redirect
 include youtube-viewer.profile

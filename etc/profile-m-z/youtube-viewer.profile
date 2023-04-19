@@ -15,7 +15,7 @@ mkdir ${HOME}/.config/youtube-viewer
 whitelist ${HOME}/.cache/youtube-viewer
 whitelist ${HOME}/.config/youtube-viewer
 
-private-bin gtk-youtube-viewer,gtk2-youtube-viewer,gtk3-youtube-viewer,youtube-viewer
+private-bin youtube-viewer
 
 # Redirect
 include youtube-viewers-common.profile

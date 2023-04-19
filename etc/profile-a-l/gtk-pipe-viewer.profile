@@ -6,7 +6,9 @@ include gtk-pipe-viewer.local
 # added by included profile
 #include globals.local
 
-ignore quiet
+private-bin gtk-pipe-viewer
+
+include gtk-youtube-viewers-common.profile
 
 # Redirect
 include pipe-viewer.profile

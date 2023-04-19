@@ -27,6 +27,7 @@ firejail (0.9.73) baseline; urgency=low
   * test: add chroot, appimage and network tests in github workflows
   * docs: remove apparmor options in --help when building without apparmor
     support (#5589)
+  * docs: fix typos (#5693)
   * docs: markdown formatting and misc improvements (#5757)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)

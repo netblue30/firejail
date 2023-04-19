@@ -1,5 +1,5 @@
 # Firejail profile for celluloid
-# Description: Simple GTK+ frontend for mpv
+# Description: Simple GTK frontend for mpv
 # This file is overwritten after every install/update
 # Persistent local customizations
 include celluloid.local

@@ -1,5 +1,5 @@
 # Firejail profile for dino
-# Description: Modern XMPP Chat Client using GTK+/Vala
+# Description: Modern XMPP Chat Client using GTK/Vala
 # This file is overwritten after every install/update
 # Persistent local customizations
 include dino.local

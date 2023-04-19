@@ -1,5 +1,5 @@
 # Firejail profile for apostrophe
-# Description: Distraction free Markdown editor for GNU/Linux made with GTK+
+# Description: Distraction free Markdown editor for GNU/Linux made with GTK
 # This file is overwritten after every install/update
 # Persistent local customizations
 include apostrophe.local

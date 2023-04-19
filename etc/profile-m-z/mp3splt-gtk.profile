@@ -1,5 +1,5 @@
 # Firejail profile for mp3splt-gtk
-# Description: Gtk utility for mp3/ogg splitting without decoding
+# Description: GTK utility for mp3/ogg splitting without decoding
 # This file is overwritten after every install/update
 # Persistent local customizations
 include mp3splt-gtk.local

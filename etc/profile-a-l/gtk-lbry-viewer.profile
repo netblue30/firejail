@@ -1,5 +1,5 @@
 # Firejail profile for gtk-lbry-viewer
-# Description: Gtk front-end to lbry-viewer
+# Description: GTK front-end to lbry-viewer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include gtk-lbry-viewer.local

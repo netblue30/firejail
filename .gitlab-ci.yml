@@ -57,7 +57,7 @@ build_src_package:
         - make
         - make install-strip
         - command -V firejail && firejail --version
-        # - python3 contrib/sort.py etc/*.{profile,inc}
+        # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_no_apparmor:
     image: ubuntu:latest

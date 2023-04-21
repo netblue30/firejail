@@ -44,6 +44,8 @@ permissions:  # added using https://github.com/step-security/secure-workflows
 jobs:
   build_and_test:
     runs-on: ubuntu-22.04
+    env:
+      SHELL: /bin/bash
     steps:
     - name: Harden Runner
       uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3
@@ -71,35 +73,19 @@ jobs:
       run: sudo make install
     - name: print firejail version
       run: command -V firejail && firejail --version
-    - name: lab setup
-      run: SHELL=/bin/bash make lab-setup
-    - name: run seccomp extra tests
-      run: SHELL=/bin/bash make test-seccomp-extra
-    - name: run firecfg tests
-      run: SHELL=/bin/bash make test-firecfg
-    - name: run capabilities tests
-      run: SHELL=/bin/bash make test-capabilities
-    - name: run apparmor tests
-      run: SHELL=/bin/bash make test-apparmor
-    - name: run appimage tests
-      run: SHELL=/bin/bash make test-appimage
-    - name: run chroot tests
-      run: SHELL=/bin/bash make test-chroot
-    - name: run sysutils tests
-      run: SHELL=/bin/bash make test-sysutils
-    - name: run private-etc tests
-      run: SHELL=/bin/bash make test-private-etc
-    - name: run profile tests
-      run: SHELL=/bin/bash make test-profiles
-    - name: run fcopy tests
-      run: SHELL=/bin/bash make test-fcopy
-    - name: run fnetfilter tests
-      run: SHELL=/bin/bash make test-fnetfilter
-    - name: run fs tests
-      run: SHELL=/bin/bash make test-fs
-    - name: run utils tests
-      run: SHELL=/bin/bash make test-utils
-    - name: run environment tests
-      run: SHELL=/bin/bash make test-environment
-    - name: run network tests
-      run: SHELL=/bin/bash make test-network
+    - run: make lab-setup
+    - run: make test-seccomp-extra
+    - run: make test-firecfg
+    - run: make test-capabilities
+    - run: make test-apparmor
+    - run: make test-appimage
+    - run: make test-chroot
+    - run: make test-sysutils
+    - run: make test-private-etc
+    - run: make test-profiles
+    - run: make test-fcopy
+    - run: make test-fnetfilter
+    - run: make test-fs
+    - run: make test-utils
+    - run: make test-environment
+    - run: make test-network

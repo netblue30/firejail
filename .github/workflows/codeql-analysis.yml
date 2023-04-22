@@ -91,6 +91,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
 
+    - name: print env
+      run: ./ci/printenv.sh
+
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@b2c19fb9a2a485599ccf4ed5d65527d94bc57226

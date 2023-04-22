@@ -68,6 +68,8 @@ jobs:
         sudo apt-get install
         gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois
         bridge-utils
+    - name: print env
+      run: ./ci/printenv.sh
     - name: configure
       run: >
         CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings

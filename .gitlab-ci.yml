@@ -13,6 +13,7 @@ build_ubuntu_package:
         - >
             DEBIAN_FRONTEND=noninteractive apt-get install -y -qq
             build-essential lintian libapparmor-dev pkg-config python3 gawk
+        - ./ci/printenv.sh
         - ./configure
         - make deb
         - dpkg -i firejail*.deb
@@ -27,6 +28,7 @@ build_debian_package:
         - >
             apt-get install -y -qq
             build-essential lintian libapparmor-dev pkg-config gawk
+        - ./ci/printenv.sh
         - ./configure
         - make deb
         - dpkg -i firejail*.deb
@@ -37,6 +39,7 @@ build_redhat_package:
     script:
         - dnf update -y
         - dnf install -y rpm-build gcc make
+        - ./ci/printenv.sh
         - ./configure --prefix=/usr
         - make rpms
         - rpm -i firejail*.rpm
@@ -47,6 +50,7 @@ build_fedora_package:
     script:
         - dnf update -y
         - dnf install -y rpm-build gcc make
+        - ./ci/printenv.sh
         - ./configure --prefix=/usr
         - make rpms
         - rpm -i firejail*.rpm
@@ -60,6 +64,7 @@ build_src_package:
         - apk update
         - apk upgrade
         - apk add build-base linux-headers python3 gawk
+        - ./ci/printenv.sh
         - ./configure --prefix=/usr
         - make
         - make install-strip
@@ -74,6 +79,7 @@ build_no_apparmor:
         - >
             DEBIAN_FRONTEND=noninteractive apt-get install -y -qq
             build-essential lintian pkg-config gawk
+        - ./ci/printenv.sh
         - ./configure
         - make dist
         - ./mkdeb.sh --disable-apparmor
@@ -117,5 +123,6 @@ debian_ci:
         - export CI_COMMIT_SHA="$(git rev-parse HEAD)"
     script:
         - apt-get --no-install-recommends install -y -qq gawk
+        - ./ci/printenv.sh
         - gitlab-ci-git-buildpackage
         - gitlab-ci-lintian

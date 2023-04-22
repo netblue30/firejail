@@ -17,6 +17,7 @@ build_ubuntu_package:
         - make deb
         - dpkg -i firejail*.deb
         - command -V firejail && firejail --version
+        # - python3 --version
         # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_debian_package:
@@ -50,6 +51,7 @@ build_fedora_package:
         - make rpms
         - rpm -i firejail*.rpm
         - command -V firejail && firejail --version
+        # - python3 --version
         # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_src_package:
@@ -62,6 +64,7 @@ build_src_package:
         - make
         - make install-strip
         - command -V firejail && firejail --version
+        # - python3 --version
         # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_no_apparmor:

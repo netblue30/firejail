@@ -113,6 +113,7 @@ jobs:
       run: sudo apt-get update
     - name: install cppcheck
       run: sudo apt-get install cppcheck
+    - run: cppcheck --version
     - name: cppcheck
       run: >
         cppcheck -q --force --error-exitcode=1 --enable=warning,performance
@@ -134,6 +135,7 @@ jobs:
       run: sudo apt-get update
     - name: install cppcheck
       run: sudo apt-get install cppcheck
+    - run: cppcheck --version
     - name: cppcheck
       run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
   codespell:
@@ -151,5 +153,6 @@ jobs:
       run: sudo apt-get update
     - name: install dependencies
       run: sudo apt-get install codespell
+    - run: codespell --version
     - name: codespell
       run: make codespell

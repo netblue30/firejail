@@ -2,7 +2,6 @@ name: Build-extra CI
 
 on:
   push:
-    branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - 'contrib/syntax/**'
@@ -25,7 +24,6 @@ on:
       - SECURITY.md
       - src/firecfg/firecfg.config
   pull_request:
-    branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - 'contrib/syntax/**'

@@ -1,5 +1,5 @@
 # Firejail profile for marker
-# Description: Marker is a markdown editor for Linux made with Gtk+-3.0
+# Description: Marker is a markdown editor for Linux made with GTK
 # This file is overwritten after every install/update
 # Persistent local customizations
 include marker.local

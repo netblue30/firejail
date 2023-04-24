@@ -1,5 +1,5 @@
 # Firejail profile for com.github.bleakgrey.tootle
-# Description: Gtk Mastodon client
+# Description: GTK Mastodon client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include com.github.bleakgrey.tootle.local

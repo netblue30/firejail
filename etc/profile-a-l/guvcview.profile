@@ -1,5 +1,5 @@
 # Firejail profile for guvcview
-# Description: GTK+ base UVC Viewer
+# Description: GTK-based UVC Viewer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include guvcview.local

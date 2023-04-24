@@ -1,5 +1,5 @@
 # Firejail profile for gtk-straw-viewer
-# Description: Gtk front-end to straw-viewer
+# Description: GTK front-end to straw-viewer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include gtk-straw-viewer.local

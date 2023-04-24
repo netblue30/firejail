@@ -1,5 +1,5 @@
 # Firejail profile for sylpheed
-# Description: Light weight e-mail client with GTK+
+# Description: Lightweight e-mail client made with GTK
 # This file is overwritten after every install/update
 # Persistent local customizations
 include sylpheed.local

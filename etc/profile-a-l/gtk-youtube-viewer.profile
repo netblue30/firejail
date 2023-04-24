@@ -1,5 +1,5 @@
 # Firejail profile for gtk-youtube-viewer
-# Description: Gtk front-end to youtube-viewer
+# Description: GTK front-end to youtube-viewer
 # This file is overwritten after every install/update
 # Persistent local customizations
 include gtk-youtube-viewer.local

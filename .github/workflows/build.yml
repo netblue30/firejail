@@ -52,11 +52,14 @@ jobs:
       with:
         egress-policy: block
         allowed-endpoints: >
+          1.1.1.1:1025
           azure.archive.ubuntu.com:80
           debian.org:80
+          dns.quad9.net:53
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
+          whois.pir.org:43
           www.debian.org:443
           www.debian.org:80
           yahoo.com:1025

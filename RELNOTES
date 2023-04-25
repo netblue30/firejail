@@ -27,6 +27,7 @@ firejail (0.9.73) baseline; urgency=low
   * ci: fix swapped name/email arguments in debian_ci (#5795)
   * ci: formatting and misc improvements (#5802)
   * ci: run for every branch instead of just master (#5815)
+  * ci: upgrade debian:stretch to debian:buster (#5818)
   * test: split individual test groups in github workflows
   * test: add chroot, appimage and network tests in github workflows
   * docs: remove apparmor options in --help when building without apparmor

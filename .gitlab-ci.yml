@@ -22,7 +22,7 @@ build_ubuntu_package:
         # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_debian_package:
-    image: debian:stretch
+    image: debian:buster
     script:
         - apt-get update -qq
         - >

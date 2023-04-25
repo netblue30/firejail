@@ -63,10 +63,10 @@ jobs:
           yahoo.com:1025
     - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
     - name: update package information
-      run: sudo apt-get update
+      run: sudo apt-get update -qy
     - name: install dependencies
       run: >
-        sudo apt-get install
+        sudo apt-get install -qy
         gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois
         bridge-utils
     - name: print env

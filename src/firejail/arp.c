@@ -197,7 +197,11 @@ int arp_check(const char *dev, uint32_t destaddr) {
 		double timeout = timerend - now;
 		ts.tv_sec = timeout;
 		ts.tv_usec = (timeout - ts.tv_sec) * 1000000;
-		int nready = select(maxfd + 1,  &fds, (fd_set *) 0, (fd_set *) 0, &ts);
+		if (ts.tv_sec < 0)
+			ts.tv_sec = 0;
+		if (ts.tv_usec < 0)
+			ts.tv_usec = 0;
+		int nready = select(maxfd + 1, &fds, (fd_set *) 0, (fd_set *) 0, &ts);
 		if (nready < 0)
 			errExit("select");
 		else if (nready == 0) { // timeout

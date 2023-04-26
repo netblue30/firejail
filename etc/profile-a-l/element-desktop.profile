@@ -18,6 +18,7 @@ whitelist /opt/Element
 private-opt Element
 
 dbus-user filter
+dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.secrets
 
 # Redirect

@@ -19,6 +19,7 @@ private-opt Element
 
 dbus-user filter
 dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.freedesktop.Notifications
 
 # Redirect
 include riot-desktop.profile

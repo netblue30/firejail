@@ -23,6 +23,8 @@ firejail (0.9.73) baseline; urgency=low
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
+  * ci: fix swapped name/email arguments in debian_ci (#5795)
+  * ci: formatting and misc improvements (#5802)
   * test: split individual test groups in github workflows
   * test: add chroot, appimage and network tests in github workflows
   * docs: remove apparmor options in --help when building without apparmor

@@ -364,6 +364,10 @@ scan-build: clean
 codespell: clean
 	codespell --ignore-regex "UE|creat|shotcut|ether" src test
 
+.PHONY: print-env
+print-env:
+	./ci/printenv.sh
+
 #
 # make test
 #

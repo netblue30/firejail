@@ -17,6 +17,8 @@ on:
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/build-extra.yml
+      - .github/workflows/build.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
@@ -39,6 +41,8 @@ on:
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/build-extra.yml
+      - .github/workflows/build.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
@@ -86,6 +90,9 @@ jobs:
 
     - name: Checkout repository
       uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+
+    - name: print env
+      run: ./ci/printenv.sh
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL

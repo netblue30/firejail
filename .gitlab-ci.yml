@@ -5,22 +5,30 @@
 # and fedora:latest for new setups
 # 3. Alpine for installing directly from source
 # Also builds apparmor package for Ubuntu LTS
+
 build_ubuntu_package:
     image: ubuntu:rolling
     script:
         - apt-get update -qq
-        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config python3 gawk
+        - >
+            DEBIAN_FRONTEND=noninteractive apt-get install -y -qq
+            build-essential lintian libapparmor-dev pkg-config python3 gawk
+        - ./ci/printenv.sh
         - ./configure
         - make deb
         - dpkg -i firejail*.deb
         - command -V firejail && firejail --version
+        # - python3 --version
         # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_debian_package:
     image: debian:stretch
     script:
         - apt-get update -qq
-        - apt-get install -y -qq build-essential lintian libapparmor-dev pkg-config gawk
+        - >
+            apt-get install -y -qq
+            build-essential lintian libapparmor-dev pkg-config gawk
+        - ./ci/printenv.sh
         - ./configure
         - make deb
         - dpkg -i firejail*.deb
@@ -31,6 +39,7 @@ build_redhat_package:
     script:
         - dnf update -y
         - dnf install -y rpm-build gcc make
+        - ./ci/printenv.sh
         - ./configure --prefix=/usr
         - make rpms
         - rpm -i firejail*.rpm
@@ -41,10 +50,12 @@ build_fedora_package:
     script:
         - dnf update -y
         - dnf install -y rpm-build gcc make
+        - ./ci/printenv.sh
         - ./configure --prefix=/usr
         - make rpms
         - rpm -i firejail*.rpm
         - command -V firejail && firejail --version
+        # - python3 --version
         # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_src_package:
@@ -53,17 +64,22 @@ build_src_package:
         - apk update
         - apk upgrade
         - apk add build-base linux-headers python3 gawk
+        - ./ci/printenv.sh
         - ./configure --prefix=/usr
         - make
         - make install-strip
         - command -V firejail && firejail --version
-        # - python3 contrib/sort.py etc/*.{profile,inc}
+        # - python3 --version
+        # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_no_apparmor:
     image: ubuntu:latest
     script:
         - apt-get update -qq
-        - DEBIAN_FRONTEND=noninteractive apt-get install -y -qq build-essential lintian pkg-config gawk
+        - >
+            DEBIAN_FRONTEND=noninteractive apt-get install -y -qq
+            build-essential lintian pkg-config gawk
+        - ./ci/printenv.sh
         - ./configure
         - make dist
         - ./mkdeb.sh --disable-apparmor
@@ -77,21 +93,36 @@ debian_ci:
         DEBFULLNAME: "$GITLAB_USER_NAME"
         DEBEMAIL: "$GITLAB_USER_EMAIL"
     before_script:
-        - git checkout -B ci_build $CI_COMMIT_SHA
+        - git checkout -B ci_build "$CI_COMMIT_SHA"
         - gitlab-ci-enable-sid
         - gitlab-ci-enable-experimental
-        - echo "deb-src http://deb.debian.org/debian sid main" >> /etc/apt/sources.list
-        - echo "deb-src http://deb.debian.org/debian experimental main" >> /etc/apt/sources.list
+        - |
+            cat >>/etc/apt/sources.list <<EOF
+            deb-src http://deb.debian.org/debian sid main
+            deb-src http://deb.debian.org/debian experimental main
+            EOF
         - apt-get update
         - git config user.name "$DEBFULLNAME"
         - git config user.email "$DEBEMAIL"
-        - cd $CI_PROJECT_DIR/.. && (apt-get source --download-only -t experimental firejail || apt-get source --download-only firejail)
-        - cd $CI_PROJECT_DIR && tar xf ../firejail_*.debian.tar.*
+        - |
+            cd "$CI_PROJECT_DIR/.."
+            apt-get source --download-only -t experimental firejail ||
+            apt-get source --download-only firejail
+        - |
+            cd "$CI_PROJECT_DIR"
+            tar xf ../firejail_*.debian.tar.*
         - rm -rf debian/patches/
-        - VERSION=$(grep ^PACKAGE_VERSION= configure | cut -d"'" -f2) && dch -v ${VERSION}-0.1~ci "Non-maintainer upload." && git archive -o ../firejail_${VERSION}.orig.tar.gz HEAD && pristine-tar commit ../firejail_${VERSION}.orig.tar.gz ci_build && git branch -m pristine-tar origin/pristine-tar
-        - git add debian && git commit -m "add debian/"
-        - export CI_COMMIT_SHA=$(git rev-parse HEAD)
+        - |
+            VERSION="$(grep ^PACKAGE_VERSION= configure | cut -d "'" -f 2)"
+            dch -v "${VERSION}-0.1~ci" 'Non-maintainer upload.'
+            git archive -o "../firejail_${VERSION}.orig.tar.gz" HEAD
+            pristine-tar commit "../firejail_${VERSION}.orig.tar.gz" ci_build
+            git branch -m pristine-tar origin/pristine-tar
+        - git add debian
+        - git commit -m 'add debian/'
+        - export CI_COMMIT_SHA="$(git rev-parse HEAD)"
     script:
         - apt-get --no-install-recommends install -y -qq gawk
+        - ./ci/printenv.sh
         - gitlab-ci-git-buildpackage
         - gitlab-ci-lintian

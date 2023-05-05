@@ -71,6 +71,7 @@ jobs:
       run: >
         CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor
         --enable-selinux
+        || (cat config.log; exit 1)
     - name: make
       run: make
     - name: make install
@@ -98,6 +99,7 @@ jobs:
       run: >
         CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor
         --enable-selinux
+        || (cat config.log; exit 1)
     - name: scan-build
       run: NO_EXTRA_CFLAGS="yes" scan-build-14 --status-bugs make
   cppcheck:

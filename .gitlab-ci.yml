@@ -14,7 +14,7 @@ build_ubuntu_package:
             DEBIAN_FRONTEND=noninteractive apt-get install -y -qq
             build-essential lintian libapparmor-dev pkg-config python3 gawk
         - ./ci/printenv.sh
-        - ./configure
+        - ./configure || (cat config.log; exit 1)
         - make deb
         - dpkg -i firejail*.deb
         - command -V firejail && firejail --version
@@ -29,7 +29,7 @@ build_debian_package:
             apt-get install -y -qq
             build-essential lintian libapparmor-dev pkg-config gawk
         - ./ci/printenv.sh
-        - ./configure
+        - ./configure || (cat config.log; exit 1)
         - make deb
         - dpkg -i firejail*.deb
         - command -V firejail && firejail --version
@@ -40,7 +40,7 @@ build_redhat_package:
         - dnf update -y
         - dnf install -y rpm-build gcc make
         - ./ci/printenv.sh
-        - ./configure --prefix=/usr
+        - ./configure --prefix=/usr || (cat config.log; exit 1)
         - make rpms
         - rpm -i firejail*.rpm
         - command -V firejail && firejail --version
@@ -51,7 +51,7 @@ build_fedora_package:
         - dnf update -y
         - dnf install -y rpm-build gcc make
         - ./ci/printenv.sh
-        - ./configure --prefix=/usr
+        - ./configure --prefix=/usr || (cat config.log; exit 1)
         - make rpms
         - rpm -i firejail*.rpm
         - command -V firejail && firejail --version
@@ -65,7 +65,7 @@ build_src_package:
         - apk upgrade
         - apk add build-base linux-headers python3 gawk
         - ./ci/printenv.sh
-        - ./configure --prefix=/usr
+        - ./configure --prefix=/usr || (cat config.log; exit 1)
         - make
         - make install-strip
         - command -V firejail && firejail --version
@@ -80,7 +80,7 @@ build_no_apparmor:
             DEBIAN_FRONTEND=noninteractive apt-get install -y -qq
             build-essential lintian pkg-config gawk
         - ./ci/printenv.sh
-        - ./configure
+        - ./configure || (cat config.log; exit 1)
         - make dist
         - ./mkdeb.sh --disable-apparmor
         - dpkg -i firejail*.deb

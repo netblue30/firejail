@@ -235,6 +235,20 @@ You can also use this tool to get a list of syscalls needed by a program:
 
 * [contrib/syscalls.sh](contrib/syscalls.sh)
 
+## Uninstalling
+
+firecfg creates symlinks in /usr/local/bin, so to fully remove firejail, run
+the following before uninstalling:
+
+```sh
+sudo firecfg --clean
+```
+
+See `man firecfg` for details.
+
+Note: Broken symlinks are ignored when searching for an executable in `$PATH`,
+so uninstalling without doing the above should not cause issues.
+
 ## Latest released version: 0.9.72
 
 ## Current development version: 0.9.73

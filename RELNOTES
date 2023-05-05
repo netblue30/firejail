@@ -15,6 +15,7 @@ firejail (0.9.73) baseline; urgency=low
   * bugfix: qutebrowser: links will not open in the existing instance (#5601
     #5618)
   * bugfix: fix --hostname and --hosts-file commands
+  * bugfix: arp.c: ensure positive timeout on select(2) (#5806)
   * build: auto-generate syntax files (#5627)
   * build: mark most phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
@@ -25,12 +26,14 @@ firejail (0.9.73) baseline; urgency=low
   * ci: split configure/build/install commands on gitlab (#5784)
   * ci: fix swapped name/email arguments in debian_ci (#5795)
   * ci: formatting and misc improvements (#5802)
+  * ci: run for every branch instead of just master (#5815)
   * test: split individual test groups in github workflows
   * test: add chroot, appimage and network tests in github workflows
   * docs: remove apparmor options in --help when building without apparmor
     support (#5589)
   * docs: fix typos (#5693)
   * docs: markdown formatting and misc improvements (#5757)
+  * docs: add uninstall instructions to README.md (#5812)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater

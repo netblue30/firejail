@@ -6,6 +6,8 @@ include mcomix.local
 # Persistent global definitions
 include globals.local
 
+ignore noexec ${HOME}
+
 noblacklist ${HOME}/.config/mcomix
 noblacklist ${HOME}/.local/share/mcomix
 noblacklist ${DOCUMENTS}

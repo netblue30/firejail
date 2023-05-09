@@ -132,6 +132,24 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 #ifdef SYS_umount2
 			BLACKLIST(SYS_umount2),
 #endif
+#ifdef SYS_fsopen
+			BLACKLIST(SYS_fsopen), // mount syscalls introduced 2019
+#endif
+#ifdef SYS_fsconfig
+			BLACKLIST(SYS_fsconfig),
+#endif
+#ifdef SYS_fsmount
+			BLACKLIST(SYS_fsmount),
+#endif
+#ifdef SYS_move_mount
+			BLACKLIST(SYS_move_mount),
+#endif
+#ifdef SYS_fspick
+			BLACKLIST(SYS_fspick),
+#endif
+#ifdef SYS_open_tree
+			BLACKLIST(SYS_open_tree),
+#endif
 #ifdef SYS_ptrace
 			BLACKLIST(SYS_ptrace), // trace processes
 #endif
@@ -185,6 +203,9 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 #endif
 #ifdef SYS_syslog
 			BLACKLIST(SYS_syslog), // kernel printk control
+#endif
+#ifdef SYS_personality
+			BLACKLIST(SYS_personality), // execution domain
 #endif
 			RETURN_ALLOW
 		};

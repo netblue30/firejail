@@ -180,8 +180,11 @@ static int is_link(const char *fname) {
 	return 0;
 }
 
+static const char *const usage_str =
+	"Usage: ftee filename\n";
+
 static void usage(void) {
-	printf("Usage: ftee filename\n");
+	puts(usage_str);
 }
 
 int main(int argc, char **argv) {

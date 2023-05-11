@@ -74,32 +74,34 @@ static int arg_restrict_namespaces = 0;
 
 static char *profile = NULL;
 
+static const char *const usage_str =
+	"profstats - print profile statistics\n"
+	"Usage: profstats [options] file[s]\n"
+	"Options:\n"
+	"   --apparmor - print profiles without apparmor\n"
+	"   --caps - print profiles without caps\n"
+	"   --dbus-system-none - print profiles without \"dbus-system none\"\n"
+	"   --dbus-user-none - print profiles without \"dbus-user none\"\n"
+	"   --ssh - print profiles without \"include disable-common.inc\"\n"
+	"   --noexec - print profiles without \"include disable-exec.inc\"\n"
+	"   --noroot - print profiles without \"noroot\"\n"
+	"   --private-bin - print profiles without private-bin\n"
+	"   --private-dev - print profiles without private-dev\n"
+	"   --private-etc - print profiles without private-etc\n"
+	"   --private-tmp - print profiles without private-tmp\n"
+	"   --print-blacklist - print all --blacklist for a profile\n"
+	"   --print-whitelist - print all --private and --whitelist for a profile\n"
+	"   --seccomp - print profiles without seccomp\n"
+	"   --memory-deny-write-execute - print profiles without \"memory-deny-write-execute\"\n"
+	"   --restrict-namespaces - print profiles without \"restrict-namespaces\"\n"
+	"   --whitelist-home - print profiles whitelisting home directory\n"
+	"   --whitelist-var - print profiles without \"include whitelist-var-common.inc\"\n"
+	"   --whitelist-runuser - print profiles without \"include whitelist-runuser-common.inc\" or \"blacklist ${RUNUSER}\"\n"
+	"   --whitelist-usrshare - print profiles without \"include whitelist-usr-share-common.inc\"\n"
+	"   --debug\n";
+
 static void usage(void) {
-	printf("profstats - print profile statistics\n");
-	printf("Usage: profstats [options] file[s]\n");
-	printf("Options:\n");
-	printf("   --apparmor - print profiles without apparmor\n");
-	printf("   --caps - print profiles without caps\n");
-	printf("   --dbus-system-none - print profiles without \"dbus-system none\"\n");
-	printf("   --dbus-user-none - print profiles without \"dbus-user none\"\n");
-	printf("   --ssh - print profiles without \"include disable-common.inc\"\n");
-	printf("   --noexec - print profiles without \"include disable-exec.inc\"\n");
-	printf("   --noroot - print profiles without \"noroot\"\n");
-	printf("   --private-bin - print profiles without private-bin\n");
-	printf("   --private-dev - print profiles without private-dev\n");
-	printf("   --private-etc - print profiles without private-etc\n");
-	printf("   --private-tmp - print profiles without private-tmp\n");
-	printf("   --print-blacklist - print all --blacklist for a profile\n");
-	printf("   --print-whitelist - print all --private and --whitelist for a profile\n");
-	printf("   --seccomp - print profiles without seccomp\n");
-	printf("   --memory-deny-write-execute - print profiles without \"memory-deny-write-execute\"\n");
-	printf("   --restrict-namespaces - print profiles without \"restrict-namespaces\"\n");
-	printf("   --whitelist-home - print profiles whitelisting home directory\n");
-	printf("   --whitelist-var - print profiles without \"include whitelist-var-common.inc\"\n");
-	printf("   --whitelist-runuser - print profiles without \"include whitelist-runuser-common.inc\" or \"blacklist ${RUNUSER}\"\n");
-	printf("   --whitelist-usrshare - print profiles without \"include whitelist-usr-share-common.inc\"\n");
-	printf("   --debug\n");
-	printf("\n");
+	puts(usage_str);
 }
 
 static void process_file(char *fname) {

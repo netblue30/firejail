@@ -212,13 +212,16 @@ static void process_file(const char *fname) {
 	}
 }
 
+static const char *const usage_str =
+	"usage: cleanup-etc [options] file.profile [file.profile]\n"
+	"Group and clean private-etc entries in one or more profile files.\n"
+	"Options:\n"
+	"   --debug - print debug messages\n"
+	"   -h, -?, --help - this help screen\n"
+	"   --replace - replace profile file\n";
+
 static void usage(void) {
-	printf("usage: cleanup-etc [options] file.profile [file.profile]\n");
-	printf("Group and clean private-etc entries in one or more profile files.\n");
-	printf("Options:\n");
-	printf("   --debug - print debug messages\n");
-	printf("   -h, -?, --help - this help screen\n");
-	printf("   --replace - replace profile file\n");
+	puts(usage_str);
 }
 
 int main(int argc, char **argv) {

@@ -75,8 +75,7 @@ static const char *const usage_str =
 	"\tUser - The owner of the sandbox.\n"
 	"\n"
 	"License GPL version 2 or later\n"
-	"Homepage: https://firejail.wordpress.com\n"
-	"\n";
+	"Homepage: https://firejail.wordpress.com\n";
 
 void print_version(void) {
 	printf("firemon version %s\n\n", VERSION);

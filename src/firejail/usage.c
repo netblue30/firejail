@@ -311,8 +311,7 @@ static const char *const usage_str =
 	"\tlist all running sandboxes\n"
 	"\n"
 	"License GPL version 2 or later\n"
-	"Homepage: https://firejail.wordpress.com\n"
-	"\n";
+	"Homepage: https://firejail.wordpress.com\n";
 
 void print_version(void) {
 	printf("firejail version %s\n\n", VERSION);

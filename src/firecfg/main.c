@@ -57,7 +57,7 @@ static const char *const usage_str =
 	"   [...]\n"
 	"\n"
 	"License GPL version 2 or later\n"
-	"Homepage: https://firejail.wordpress.com\n\n";
+	"Homepage: https://firejail.wordpress.com\n";
 
 static void print_version(void) {
 	printf("firecfg version %s\n\n", VERSION);

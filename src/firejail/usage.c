@@ -315,13 +315,16 @@ static char *usage_str =
 	"\n";
 
 void print_version(void) {
-	printf("firejail version %s\n", VERSION);
-	printf("\n");
+	printf("firejail version %s\n\n", VERSION);
+}
+
+void print_version_full(void) {
+	print_version();
 	print_compiletime_support();
 	printf("\n");
 }
 
 void usage(void) {
-	printf("firejail version %s\n\n", VERSION);
+	print_version();
 	puts(usage_str);
 }

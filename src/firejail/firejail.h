@@ -478,6 +478,7 @@ void top(void);
 
 // usage.c
 void print_version(void);
+void print_version_full(void);
 void usage(void);
 
 // process.c

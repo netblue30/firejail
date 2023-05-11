@@ -369,7 +369,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--version") == 0) {
-		print_version();
+		print_version_full();
 		exit(0);
 	}
 #ifdef HAVE_OVERLAYFS
@@ -1128,7 +1128,7 @@ int main(int argc, char **argv, char **envp) {
 		EUID_USER();
 		if (rv == 0) {
 			if (check_arg(argc, argv, "--version", 1)) {
-				print_version();
+				print_version_full();
 				exit(0);
 			}
 

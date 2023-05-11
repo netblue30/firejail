@@ -79,6 +79,6 @@ static char *help_str =
 	"\n";
 
 void usage(void) {
-	printf("firemon - version %s\n", VERSION);
+	printf("firemon version %s\n", VERSION);
 	puts(help_str);
 }

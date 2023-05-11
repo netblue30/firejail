@@ -38,7 +38,7 @@ static char *usage_str =
 
 
 static void usage(void) {
-	printf("jailcheck - version %s\n\n", VERSION);
+	printf("jailcheck version %s\n\n", VERSION);
 	puts(usage_str);
 }
 

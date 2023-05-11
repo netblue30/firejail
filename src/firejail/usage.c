@@ -316,6 +316,6 @@ static char *usage_str =
 
 
 void usage(void) {
-	printf("firejail - version %s\n\n", VERSION);
+	printf("firejail version %s\n\n", VERSION);
 	puts(usage_str);
 }

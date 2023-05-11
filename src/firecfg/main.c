@@ -60,7 +60,7 @@ static char *usage_str =
 	"Homepage: https://firejail.wordpress.com\n\n";
 
 static void usage(void) {
-	printf("firecfg - version %s\n\n", VERSION);
+	printf("firecfg version %s\n\n", VERSION);
 	puts(usage_str);
 }
 

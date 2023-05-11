@@ -2,6 +2,7 @@
 # Persistent customizations should go in a .local file.
 include allow-python3.local
 
+noblacklist ${HOME}/.local/lib/python3*
 noblacklist ${PATH}/python3*
 noblacklist /usr/include/python3*
 noblacklist /usr/lib/python3*

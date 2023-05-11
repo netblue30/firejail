@@ -24,7 +24,7 @@ int arg_debug = 0;
 char *arg_bindir = "/usr/local/bin";
 int arg_guide = 0;
 
-static char *usage_str =
+static const char *const usage_str =
 	"Firecfg is the desktop configuration utility for Firejail software. The utility\n"
 	"creates several symbolic links to firejail executable. This allows the user to\n"
 	"sandbox applications automatically, just by clicking on a regular desktop\n"

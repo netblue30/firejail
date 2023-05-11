@@ -19,7 +19,7 @@
 */
 #include "firemon.h"
 
-static char *help_str =
+static const char *const usage_str =
 	"Usage: firemon [OPTIONS] [PID]\n\n"
 	"Monitor processes started in a Firejail sandbox. Without any PID specified,\n"
 	"all processes started by Firejail are monitored. Descendants of these processes\n"
@@ -84,5 +84,5 @@ void print_version(void) {
 
 void usage(void) {
 	print_version();
-	puts(help_str);
+	puts(usage_str);
 }

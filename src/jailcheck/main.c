@@ -29,7 +29,7 @@ char *user_home_dir = NULL;
 char *user_run_dir = NULL;
 int arg_debug = 0;
 
-static char *usage_str =
+static const char *const usage_str =
 	"Usage: jailcheck [options] directory [directory]\n\n"
 	"Options:\n"
 	"   --debug - print debug messages.\n"

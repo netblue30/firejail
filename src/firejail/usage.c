@@ -19,7 +19,7 @@
 */
 #include "firejail.h"
 
-static char *usage_str =
+static const char *const usage_str =
 	"Firejail is a SUID sandbox program that reduces the risk of security breaches by\n"
 	"restricting the running environment of untrusted applications using Linux\n"
 	"namespaces.\n"

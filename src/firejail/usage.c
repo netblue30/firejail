@@ -321,7 +321,6 @@ void print_version(void) {
 void print_version_full(void) {
 	print_version();
 	print_compiletime_support();
-	printf("\n");
 }
 
 void usage(void) {

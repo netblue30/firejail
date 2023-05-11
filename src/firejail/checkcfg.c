@@ -305,140 +305,128 @@ errout:
 	exit(1);
 }
 
-void print_compiletime_support(void) {
-	printf("Compile time support:\n");
-	printf("\t- always force nonewprivs support is %s\n",
+static const char *const compiletime_support =
+	"Compile time support:"
+	"\n\t- always force nonewprivs support is "
 #ifdef HAVE_FORCE_NONEWPRIVS
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- AppArmor support is %s\n",
+	"\n\t- AppArmor support is "
 #ifdef HAVE_APPARMOR
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- AppImage support is %s\n",
+	"\n\t- AppImage support is "
 #ifdef LOOP_CTL_GET_FREE	// test for older kernels; this definition is found in /usr/include/linux/loop.h
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- chroot support is %s\n",
+	"\n\t- chroot support is "
 #ifdef HAVE_CHROOT
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- D-BUS proxy support is %s\n",
+	"\n\t- D-BUS proxy support is "
 #ifdef HAVE_DBUSPROXY
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- file transfer support is %s\n",
+	"\n\t- file transfer support is "
 #ifdef HAVE_FILE_TRANSFER
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- firetunnel support is %s\n",
+	"\n\t- firetunnel support is "
 #ifdef HAVE_FIRETUNNEL
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- IDS support is %s\n",
+	"\n\t- IDS support is "
 #ifdef HAVE_IDS
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- networking support is %s\n",
+	"\n\t- networking support is "
 #ifdef HAVE_NETWORK
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- output logging is %s\n",
+	"\n\t- output logging is "
 #ifdef HAVE_OUTPUT
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
-	printf("\t- overlayfs support is %s\n",
+
+	"\n\t- overlayfs support is "
 #ifdef HAVE_OVERLAYFS
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- private-home support is %s\n",
+	"\n\t- private-home support is "
 #ifdef HAVE_PRIVATE_HOME
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- private-lib support is %s\n",
+	"\n\t- private-lib support is "
 #ifdef HAVE_PRIVATE_LIB
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- private-cache and tmpfs as user %s\n",
+	"\n\t- private-cache and tmpfs as user "
 #ifdef HAVE_USERTMPFS
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- SELinux support is %s\n",
+	"\n\t- SELinux support is "
 #ifdef HAVE_SELINUX
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- user namespace support is %s\n",
+	"\n\t- user namespace support is "
 #ifdef HAVE_USERNS
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
 
-	printf("\t- X11 sandboxing support is %s\n",
+	"\n\t- X11 sandboxing support is "
 #ifdef HAVE_X11
 		"enabled"
 #else
 		"disabled"
 #endif
-		);
+	"\n";
+
+void print_compiletime_support(void) {
+	puts(compiletime_support);
 }

@@ -78,7 +78,11 @@ static char *help_str =
 	"Homepage: https://firejail.wordpress.com\n"
 	"\n";
 
+void print_version(void) {
+	printf("firemon version %s\n\n", VERSION);
+}
+
 void usage(void) {
-	printf("firemon version %s\n", VERSION);
+	print_version();
 	puts(help_str);
 }

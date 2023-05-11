@@ -59,11 +59,14 @@ static char *usage_str =
 	"License GPL version 2 or later\n"
 	"Homepage: https://firejail.wordpress.com\n\n";
 
-static void usage(void) {
+static void print_version(void) {
 	printf("firecfg version %s\n\n", VERSION);
-	puts(usage_str);
 }
 
+static void usage(void) {
+	print_version();
+	puts(usage_str);
+}
 
 static void list(void) {
 	DIR *dir = opendir(arg_bindir);
@@ -364,7 +367,7 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--debug") == 0)
 			arg_debug = 1;
 		else if (strcmp(argv[i], "--version") == 0) {
-			printf("firecfg version %s\n\n", VERSION);
+			print_version();
 			return 0;
 		}
 		else if (strcmp(argv[i], "--clean") == 0) {

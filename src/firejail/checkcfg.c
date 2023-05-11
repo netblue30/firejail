@@ -305,13 +305,6 @@ errout:
 	exit(1);
 }
 
-void print_version(void) {
-	printf("firejail version %s\n", VERSION);
-	printf("\n");
-	print_compiletime_support();
-	printf("\n");
-}
-
 void print_compiletime_support(void) {
 	printf("Compile time support:\n");
 	printf("\t- always force nonewprivs support is %s\n",

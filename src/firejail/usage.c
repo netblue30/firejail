@@ -314,6 +314,12 @@ static char *usage_str =
 	"Homepage: https://firejail.wordpress.com\n"
 	"\n";
 
+void print_version(void) {
+	printf("firejail version %s\n", VERSION);
+	printf("\n");
+	print_compiletime_support();
+	printf("\n");
+}
 
 void usage(void) {
 	printf("firejail version %s\n\n", VERSION);

@@ -4,6 +4,6 @@ ROOT = ../..
 PROG = etc-cleanup
 TARGET = $(PROG)
 
-MOD_HDRS = ../include/etc-groups.h
+MOD_HDRS = ../include/etc_groups.h
 
 include $(ROOT)/src/prog.mk

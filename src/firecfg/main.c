@@ -413,6 +413,7 @@ int main(int argc, char **argv) {
 		}
 	}
 
+	print_version();
 	if (arg_debug)
 		printf("%s %d %d %d %d\n", user, getuid(), getgid(), geteuid(), getegid());
 

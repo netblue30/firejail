@@ -51,6 +51,7 @@ blacklist ${HOME}/.bibletime
 blacklist ${HOME}/.bitcoin
 blacklist ${HOME}/.blobby
 blacklist ${HOME}/.bogofilter
+blacklist ${HOME}/.bsfilter
 blacklist ${HOME}/.bundle
 blacklist ${HOME}/.bzf
 blacklist ${HOME}/.cache/0ad
@@ -83,6 +84,7 @@ blacklist ${HOME}/.cache/Tox
 blacklist ${HOME}/.cache/Zeal
 blacklist ${HOME}/.cache/agenda
 blacklist ${HOME}/.cache/akonadi*
+blacklist ${HOME}/.cache/ani-cli
 blacklist ${HOME}/.cache/atril
 blacklist ${HOME}/.cache/attic
 blacklist ${HOME}/.cache/audacity
@@ -318,6 +320,7 @@ blacklist ${HOME}/.config/PacmanLogViewer
 blacklist ${HOME}/.config/PawelStolowski
 blacklist ${HOME}/.config/Philipp Schmieder
 blacklist ${HOME}/.config/Pinta
+blacklist ${HOME}/.config/Postman
 blacklist ${HOME}/.config/QGIS
 blacklist ${HOME}/.config/QMediathekView
 blacklist ${HOME}/.config/QQ
@@ -399,7 +402,6 @@ blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/cointop
 blacklist ${HOME}/.config/com.github.bleakgrey.tootle
 blacklist ${HOME}/.config/corebird
-blacklist ${HOME}/.config/cower
 blacklist ${HOME}/.config/coyim
 blacklist ${HOME}/.config/d-feet
 blacklist ${HOME}/.config/darktable
@@ -410,6 +412,7 @@ blacklist ${HOME}/.config/digikam
 blacklist ${HOME}/.config/digikamrc
 blacklist ${HOME}/.config/discord
 blacklist ${HOME}/.config/discordcanary
+blacklist ${HOME}/.config/discordptb
 blacklist ${HOME}/.config/dkl
 blacklist ${HOME}/.config/dnox
 blacklist ${HOME}/.config/dolphin-emu
@@ -477,6 +480,7 @@ blacklist ${HOME}/.config/inox
 blacklist ${HOME}/.config/iridium
 blacklist ${HOME}/.config/itch
 blacklist ${HOME}/.config/jami
+blacklist ${HOME}/.config/jami.net
 blacklist ${HOME}/.config/jd-gui.cfg
 blacklist ${HOME}/.config/jgit
 blacklist ${HOME}/.config/k3brc
@@ -517,6 +521,7 @@ blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
 blacklist ${HOME}/.config/liferea
 blacklist ${HOME}/.config/linphone
+blacklist ${HOME}/.config/lobster
 blacklist ${HOME}/.config/lugaru
 blacklist ${HOME}/.config/lutris
 blacklist ${HOME}/.config/lximage-qt
@@ -952,6 +957,7 @@ blacklist ${HOME}/.local/share/kwrite
 blacklist ${HOME}/.local/share/kxmlgui5/*
 blacklist ${HOME}/.local/share/liferea
 blacklist ${HOME}/.local/share/linphone
+blacklist ${HOME}/.local/share/lobster
 blacklist ${HOME}/.local/share/local-mail
 blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/love
@@ -1027,6 +1033,7 @@ blacklist ${HOME}/.local/share/wormux
 blacklist ${HOME}/.local/share/xplayer
 blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
+blacklist ${HOME}/.local/state/ani-cli
 blacklist ${HOME}/.local/state/audacity
 blacklist ${HOME}/.local/state/pipewire
 blacklist ${HOME}/.lv2
@@ -1177,6 +1184,7 @@ blacklist ${HOME}/Arduino
 blacklist ${HOME}/Monero/wallets
 blacklist ${HOME}/Nextcloud
 blacklist ${HOME}/Nextcloud/Notes
+blacklist ${HOME}/Postman
 blacklist ${HOME}/Seafile/.seafile-data
 blacklist ${HOME}/SoftMaker
 blacklist ${HOME}/Standard Notes Backups

@@ -24,7 +24,6 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-hostname unf
 ipc-namespace
 machine-id
 net none

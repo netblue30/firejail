@@ -15,7 +15,7 @@ mkdir ${HOME}/.cache/lbry-viewer
 whitelist ${HOME}/.cache/lbry-viewer
 whitelist ${HOME}/.config/lbry-viewer
 
-private-bin gtk-lbry-viewer,lbry-viewer
+private-bin lbry-viewer
 
 # Redirect
 include youtube-viewers-common.profile

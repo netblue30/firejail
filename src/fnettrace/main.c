@@ -668,18 +668,20 @@ void logprintf(char *fmt, ...) {
 	va_end(args);
 }
 
+static const char *const usage_str =
+	"Usage: fnettrace [OPTIONS]\n"
+	"Options:\n"
+	"   --help, -? - this help screen\n"
+	"   --log=filename - netlocker logfile\n"
+	"   --netfilter - build the firewall rules and commit them.\n"
+	"   --tail - \"tail -f\" functionality\n"
+	"Examples:\n"
+	"   # fnettrace                              - traffic trace\n"
+	"   # fnettrace --netfilter --log=logfile    - netlocker, dump output in logfile\n"
+	"   # fnettrace --tail --log=logifile        - similar to \"tail -f logfile\"\n";
+
 static void usage(void) {
-	printf("Usage: fnettrace [OPTIONS]\n");
-	printf("Options:\n");
-	printf("   --help, -? - this help screen\n");
-	printf("   --log=filename - netlocker logfile\n");
-	printf("   --netfilter - build the firewall rules and commit them.\n");
-	printf("   --tail - \"tail -f\" functionality\n");
-	printf("Examples:\n");
-	printf("   # fnettrace                              - traffic trace\n");
-	printf("   # fnettrace --netfilter --log=logfile    - netlocker, dump output in logfile\n");
-	printf("   # fnettrace --tail --log=logifile        - similar to \"tail -f logfile\"\n");
-	printf("\n");
+	puts(usage_str);
 }
 
 int main(int argc, char **argv) {

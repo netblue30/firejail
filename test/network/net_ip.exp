@@ -130,4 +130,44 @@ expect {
 }
 
 after 500
+
+send -- "firejail --profile=net_ip.profile ip addr show\r"
+expect {
+	timeout {puts "TESTING ERROR 26\n";exit}
+	"eth0"
+}
+expect {
+	timeout {puts "TESTING ERROR 27\n";exit}
+	"00:11:22:33:44:55"
+}
+expect {
+	timeout {puts "TESTING ERROR 28\n";exit}
+	"10.10.20.55"
+}
+expect {
+	timeout {puts "TESTING ERROR 29\n";exit}
+	"Default gateway 10.10.20.9"
+}
+expect {
+	timeout {puts "TESTING ERROR 30\n";exit}
+	"00:11:22:33:44:55"
+}
+expect {
+	timeout {puts "TESTING ERROR 31\n";exit}
+	"10.10.20.55"
+}
+after 500
+
+send -- "firejail --profile=net_ip.profile ip route  show\r"
+expect {
+	timeout {puts "TESTING ERROR 32\n";exit}
+	"default via 10.10.20.9"
+}
+expect {
+	timeout {puts "TESTING ERROR 33\n";exit}
+	"10.10.20.0/24 dev eth0 proto kernel scope link src 10.10.20.55"
+}
+after 500
+
+
 puts "\nall done\n"

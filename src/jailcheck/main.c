@@ -29,16 +29,19 @@ char *user_home_dir = NULL;
 char *user_run_dir = NULL;
 int arg_debug = 0;
 
-static char *usage_str =
+static const char *const usage_str =
 	"Usage: jailcheck [options] directory [directory]\n\n"
 	"Options:\n"
 	"   --debug - print debug messages.\n"
 	"   --help, -? - this help screen.\n"
 	"   --version - print program version and exit.\n";
 
+static void print_version(void) {
+	printf("jailcheck version %s\n\n", VERSION);
+}
 
 static void usage(void) {
-	printf("firetest - version %s\n\n", VERSION);
+	print_version();
 	puts(usage_str);
 }
 
@@ -62,7 +65,7 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 		else if (strcmp(argv[i], "--version") == 0) {
-			printf("firetest version %s\n\n", VERSION);
+			print_version();
 			return 0;
 		}
 		else if (strncmp(argv[i], "--hello=", 8) == 0) { // used by noexec test

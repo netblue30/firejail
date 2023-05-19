@@ -61,14 +61,8 @@ echo "TESTING: fs.print (test/utils/fs-print.exp)"
 echo "TESTING: dns.print (test/utils/dns-print.exp)"
 ./dns-print.exp
 
-echo "TESTING: caps.print (test/utils/caps-print.exp)"
-./caps-print.exp
-
 echo "TESTING: seccomp.print (test/utils/seccomp-print.exp)"
 ./seccomp-print.exp
-
-echo "TESTING: protocol.print (test/utils/protocol-print.exp)"
-./protocol-print.exp
 
 echo "TESTING: shutdown (test/utils/shutdown.exp)"
 ./shutdown.exp
@@ -112,21 +106,11 @@ else
 	echo "TESTING SKIP: seccomp already active (test/utils/firemon-seccomp.exp)"
 fi
 
-if grep -q "^CapBnd:\\s0000003fffffffff" /proc/self/status; then
-	echo "TESTING: firemon caps (test/utils/firemon-caps.exp)"
-	./firemon-caps.exp
-else
-	echo "TESTING SKIP: other capabilities than expected (test/utils/firemon-caps.exp)"
-fi
-
 echo "TESTING: firemon cpu (test/utils/firemon-cpu.exp)"
 ./firemon-cpu.exp
 
 echo "TESTING: firemon version (test/utils/firemon-version.exp)"
 ./firemon-version.exp
-
-echo "TESTING: firemon interface (test/utils/firemon-interface.exp)"
-./firemon-interface.exp
 
 echo "TESTING: firemon name (test/utils/firemon-name.exp)"
 ./firemon-name.exp

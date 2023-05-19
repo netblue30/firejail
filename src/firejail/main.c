@@ -369,7 +369,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--version") == 0) {
-		print_version();
+		print_version_full();
 		exit(0);
 	}
 #ifdef HAVE_OVERLAYFS
@@ -1128,7 +1128,7 @@ int main(int argc, char **argv, char **envp) {
 		EUID_USER();
 		if (rv == 0) {
 			if (check_arg(argc, argv, "--version", 1)) {
-				print_version();
+				print_version_full();
 				exit(0);
 			}
 
@@ -1355,8 +1355,10 @@ int main(int argc, char **argv, char **envp) {
 			arg_debug_blacklists = 1;
 		else if (strcmp(argv[i], "--debug-whitelists") == 0)
 			arg_debug_whitelists = 1;
+#ifdef HAVE_PRIVATE_LIB
 		else if (strcmp(argv[i], "--debug-private-lib") == 0)
 			arg_debug_private_lib = 1;
+#endif
 		else if (strcmp(argv[i], "--quiet") == 0) {
 			if (!arg_debug)
 				arg_quiet = 1;
@@ -2137,6 +2139,7 @@ int main(int argc, char **argv, char **envp) {
 			else
 				exit_err_feature("private-bin");
 		}
+#ifdef HAVE_PRIVATE_LIB
 		else if (strncmp(argv[i], "--private-lib", 13) == 0) {
 			if (checkcfg(CFG_PRIVATE_LIB)) {
 				// extract private lib list (if any)
@@ -2152,6 +2155,7 @@ int main(int argc, char **argv, char **envp) {
 			else
 				exit_err_feature("private-lib");
 		}
+#endif
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;
 		}
@@ -3005,6 +3009,11 @@ int main(int argc, char **argv, char **envp) {
 			fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
 	}
 	EUID_ASSERT();
+
+	// Note: Only attempt to print non-debug information to stdout after
+	// all profiles have been loaded (because a profile may set arg_quiet)
+	if (!arg_quiet)
+		print_version();
 
 	// block X11 sockets
 	if (arg_x11_block)

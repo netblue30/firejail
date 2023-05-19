@@ -248,5 +248,5 @@ void netfilter_print(pid_t pid, int ipv6) {
 		exit(1);
 	}
 
-	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, iptables, "-vL");
+	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, iptables, "-nvL");
 }

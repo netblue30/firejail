@@ -2,12 +2,12 @@ name: Build CI
 
 on:
   push:
-    branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/build-extra.yml
       - .github/workflows/codeql-analysis.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
@@ -19,12 +19,12 @@ on:
       - RELNOTES
       - SECURITY.md
   pull_request:
-    branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/build-extra.yml
       - .github/workflows/codeql-analysis.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
@@ -42,58 +42,58 @@ permissions:  # added using https://github.com/step-security/secure-workflows
 jobs:
   build_and_test:
     runs-on: ubuntu-22.04
+    env:
+      SHELL: /bin/bash
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
+      uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
       with:
         egress-policy: block
         allowed-endpoints: >
+          1.1.1.1:1025
           azure.archive.ubuntu.com:80
           debian.org:80
+          dns.quad9.net:53
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
+          whois.pir.org:43
           www.debian.org:443
           www.debian.org:80
           yahoo.com:1025
-    - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+    - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
     - name: update package information
       run: sudo apt-get update
     - name: install dependencies
-      run: sudo apt-get install gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois bridge-utils
+      run: >
+        sudo apt-get install
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois
+        bridge-utils
+    - name: print env
+      run: ./ci/printenv.sh
     - name: configure
-      run: CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux
+      run: >
+        CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings
+        --enable-analyzer --enable-apparmor --enable-selinux
     - name: make
       run: make
     - name: make install
       run: sudo make install
     - name: print firejail version
       run: command -V firejail && firejail --version
-    - name: lab setup
-      run: SHELL=/bin/bash make lab-setup
-    - name: run firecfg tests
-      run: SHELL=/bin/bash make test-firecfg
-    - name: run apparmor tests
-      run: SHELL=/bin/bash make test-apparmor
-    - name: run network tests
-      run: SHELL=/bin/bash make test-network
-    - name: run appimage tests
-      run: SHELL=/bin/bash make test-appimage
-    - name: run chroot tests
-      run: SHELL=/bin/bash make test-chroot
-    - name: run sysutils tests
-      run: SHELL=/bin/bash make test-sysutils
-    - name: run private-etc tests
-      run: SHELL=/bin/bash make test-private-etc
-    - name: run profile tests
-      run: SHELL=/bin/bash make test-profiles
-    - name: run fcopy tests
-      run: SHELL=/bin/bash make test-fcopy
-    - name: run fnetfilter tests
-      run: SHELL=/bin/bash make test-fnetfilter
-    - name: run fs tests
-      run: SHELL=/bin/bash make test-fs
-    - name: run utils tests
-      run: SHELL=/bin/bash make test-utils
-    - name: run environment tests
-      run: SHELL=/bin/bash make test-environment
+    - run: make lab-setup
+    - run: make test-seccomp-extra
+    - run: make test-firecfg
+    - run: make test-capabilities
+    - run: make test-apparmor
+    - run: make test-appimage
+    - run: make test-chroot
+    - run: make test-sysutils
+    - run: make test-private-etc
+    - run: make test-profiles
+    - run: make test-fcopy
+    - run: make test-fnetfilter
+    - run: make test-fs
+    - run: make test-utils
+    - run: make test-environment
+    - run: make test-network

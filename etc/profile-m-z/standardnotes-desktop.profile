@@ -18,6 +18,10 @@ mkdir ${HOME}/Standard Notes Backups
 mkdir ${HOME}/.config/Standard Notes
 whitelist ${HOME}/Standard Notes Backups
 whitelist ${HOME}/.config/Standard Notes
+include whitelist-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

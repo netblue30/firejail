@@ -56,7 +56,8 @@ long long unsigned parse_arg_size(char *str) {
 	}
 
 	/* checks for is value valid positive number */
-	for (int i = 0; i < len; i++) {
+	int i;
+	for (i = 0; i < len; i++) {
 		if (!isdigit(*(str+i))) {
 			return 0;
 		}
@@ -1448,15 +1449,42 @@ static int has_link(const char *dir) {
 	return 0;
 }
 
+int ascii_isalnum(unsigned char c) {
+	return (ascii_isalpha(c) || ascii_isdigit(c));
+}
+
+int ascii_isalpha(unsigned char c) {
+	return (ascii_islower(c) || ascii_isupper(c));
+}
+
+int ascii_isdigit(unsigned char c) {
+	return (c >= '0' && c <= '9');
+}
+
+int ascii_islower(unsigned char c) {
+	return (c >= 'a' && c <= 'z');
+}
+
+int ascii_isupper(unsigned char c) {
+	return (c >= 'A' && c <= 'Z');
+}
+
+int ascii_isxdigit(unsigned char c) {
+	int ret = (ascii_isdigit(c) ||
+	          (c >= 'a' && c <= 'f') ||
+	          (c >= 'A' && c <= 'F'));
+	return ret;
+}
+
 // allow strict ASCII letters and numbers; names with only numbers are rejected; spaces are rejected
 int invalid_name(const char *name) {
 	const char *c = name;
 
 	int only_numbers = 1;
 	while (*c) {
-		if (!isalnum(*c))
+		if (!ascii_isalnum(*c))
 			return 1;
-		if (!isdigit(*c))
+		if (!ascii_isdigit(*c))
 			only_numbers = 0;
 		++c;
 	}

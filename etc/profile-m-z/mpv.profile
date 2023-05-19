@@ -11,13 +11,13 @@ include globals.local
 # edit ~/.config/mpv/foobar.conf:
 #    screenshot-directory=~/Pictures
 
-# Mpv has a powerful lua-API, some off these lua-scripts interact
-# with external resources which are blocked by firejail. In such cases
-# you need to allow these resources by
-#  - adding additional binaries to private-bin
+# mpv has a powerful Lua API and some of the Lua scripts interact with
+# external resources which are blocked by firejail. In such cases you need to
+# allow these resources by:
+#  - noblacklisting additional paths
 #  - whitelisting additional paths
-#  - noblacklisting paths
-#  - weaking the dbus-policy
+#  - adding additional binaries to private-bin
+#  - changing/weakening the D-Bus policy
 #  - ...
 #
 # Often these scripts require a shell:
@@ -75,10 +75,12 @@ nonewprivs
 noroot
 nou2f
 protocol unix,inet,inet6,netlink
-seccomp
+seccomp !set_mempolicy
 seccomp.block-secondary
 tracelog
 
+# mpv links to libluajit, so no need to reference "lua*" in private-bin:
+# https://github.com/netblue30/firejail/pull/5711#discussion_r1125622615
 private-bin env,mpv,python*,waf,youtube-dl,yt-dlp
 # private-cache causes slow OSD, see #2838
 #private-cache

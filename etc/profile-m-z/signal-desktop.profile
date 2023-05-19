@@ -14,7 +14,6 @@ noblacklist ${HOME}/.config/Signal
 # These lines are needed to allow Firefox to open links
 noblacklist ${HOME}/.mozilla
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
-read-only ${HOME}/.mozilla/firefox/profiles.ini
 
 mkdir ${HOME}/.config/Signal
 whitelist ${HOME}/.config/Signal

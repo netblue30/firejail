@@ -15,7 +15,7 @@ mkdir ${HOME}/.cache/pipe-viewer
 whitelist ${HOME}/.cache/pipe-viewer
 whitelist ${HOME}/.config/pipe-viewer
 
-private-bin gtk-pipe-viewer,pipe-viewer
+private-bin pipe-viewer
 
 # Redirect
 include youtube-viewers-common.profile

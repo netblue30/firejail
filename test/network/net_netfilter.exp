@@ -20,7 +20,27 @@ spawn $env(SHELL)
 send -- "firejail --netfilter.print=test\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"ACCEPT     all  --  any    any     anywhere             anywhere             state RELATED,ESTABLISHED"
+	"ACCEPT"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"lo"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"ACCEPT"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"state RELATED,ESTABLISHED"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"ACCEPT"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"icmptype 8"
 }
 
 after 500

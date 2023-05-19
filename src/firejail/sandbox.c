@@ -949,6 +949,7 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
+#ifdef HAVE_PRIVATE_LIB
 	// private-lib is disabled for appimages
 	if (arg_private_lib && !arg_appimage) {
 		if (cfg.chrootdir)
@@ -959,6 +960,7 @@ int sandbox(void* sandbox_arg) {
 			fs_private_lib();
 		}
 	}
+#endif
 
 #ifdef HAVE_USERTMPFS
 	if (arg_private_cache) {

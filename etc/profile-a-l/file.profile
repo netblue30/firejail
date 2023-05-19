@@ -15,7 +15,6 @@ include disable-programs.inc
 
 apparmor
 caps.drop all
-hostname file
 ipc-namespace
 machine-id
 net none

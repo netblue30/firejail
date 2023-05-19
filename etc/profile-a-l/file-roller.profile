@@ -29,6 +29,7 @@ nodvd
 nogroups
 noinput
 nonewprivs
+noprinters
 noroot
 nosound
 notv
@@ -45,6 +46,10 @@ private-dev
 private-etc @x11
 # private-tmp
 
+dbus-user filter
+dbus-user.own org.gnome.ArchiveManager1
+dbus-user.own org.gnome.FileRoller
+dbus-user.talk ca.desrt.dconf
 dbus-system none
 
 restrict-namespaces

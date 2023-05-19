@@ -147,6 +147,14 @@ AS_IF([test "x$enable_private_home" != "xno"], [
 	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
 ])
 
+HAVE_PRIVATE_LIB=""
+AC_SUBST([HAVE_PRIVATE_LIB])
+AC_ARG_ENABLE([private-lib],
+    [AS_HELP_STRING([--disable-private-lib], [disable private lib feature])])
+AS_IF([test "x$enable_private_lib" = "xyes"], [
+	HAVE_PRIVATE_LIB="-DHAVE_PRIVATE_LIB"
+])
+
 HAVE_CHROOT=""
 AC_SUBST([HAVE_CHROOT])
 AC_ARG_ENABLE([chroot],
@@ -268,6 +276,7 @@ AS_IF([test "x$enable_lts" = "xyes"], [
 	HAVE_MAN="-DHAVE_MAN"
 	HAVE_FIRETUNNEL=""
 	HAVE_PRIVATE_HOME=""
+	HAVE_PRIVATE_LIB=""
 	HAVE_CHROOT=""
 	HAVE_GLOBALCFG=""
 	HAVE_USERNS=""
@@ -324,6 +333,7 @@ Features:
    network: $HAVE_NETWORK
    overlayfs support: $HAVE_OVERLAYFS
    private home support: $HAVE_PRIVATE_HOME
+   private lib support: $HAVE_PRIVATE_LIB
    SELinux labeling support: $HAVE_SELINUX
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11

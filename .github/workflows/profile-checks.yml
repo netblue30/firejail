@@ -2,7 +2,6 @@ name: Profile Checks
 
 on:
   push:
-    branches: [ master ]
     paths:
       - 'ci/check/profiles/**'
       - 'etc/**'
@@ -10,7 +9,6 @@ on:
       - contrib/sort.py
       - src/firecfg/firecfg.config
   pull_request:
-    branches: [ master ]
     paths:
       - 'ci/check/profiles/**'
       - 'etc/**'
@@ -26,20 +24,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
+      uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
       with:
         disable-sudo: true
         egress-policy: block
         allowed-endpoints: >
           github.com:443
 
-    - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+    - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+    - name: print env
+      run: ./ci/printenv.sh
+    - run: python3 --version
+
 #   - name: sort.py
-#      run: ./ci/check/profiles/sort.py etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
+#     run: >
+#       ./ci/check/profiles/sort.py
+#       etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
 # Currently broken (see #5610)
-#    - name: private-etc-always-required.sh
-#      run: ./ci/check/profiles/private-etc-always-required.sh etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
+#   - name: private-etc-always-required.sh
+#     run: >
+#       ./ci/check/profiles/private-etc-always-required.sh
+#       etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
     - name: sort-disable-programs.sh
-      run: ./ci/check/profiles/sort-disable-programs.sh etc/inc/disable-programs.inc
+      run: >
+        ./ci/check/profiles/sort-disable-programs.sh
+        etc/inc/disable-programs.inc
     - name: sort-firecfg.config.sh
-      run: ./ci/check/profiles/sort-firecfg.config.sh src/firecfg/firecfg.config
+      run: >
+        ./ci/check/profiles/sort-firecfg.config.sh
+        src/firecfg/firecfg.config

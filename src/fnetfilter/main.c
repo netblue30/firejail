@@ -45,9 +45,12 @@ static char *default_filter =
 "-A OUTPUT -p tcp --dport 3479 -j DROP\n"
 "COMMIT\n";
 
+static const char *const usage_str =
+	"Usage:\n"
+	"\tfnetfilter netfilter-command destination-file\n";
+
 static void usage(void) {
-	printf("Usage:\n");
-	printf("\tfnetfilter netfilter-command destination-file\n");
+	puts(usage_str);
 }
 
 static void err_exit_cannot_open_file(const char *fname) {

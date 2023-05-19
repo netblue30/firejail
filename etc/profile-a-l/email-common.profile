@@ -8,6 +8,7 @@ include email-common.local
 #include globals.local
 
 noblacklist ${HOME}/.bogofilter
+noblacklist ${HOME}/.bsfilter
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.signature
@@ -20,6 +21,9 @@ noblacklist /var/spool/mail
 
 noblacklist ${DOCUMENTS}
 
+# Allow perl (blacklisted by disable-interpreters.inc)
+include allow-perl.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -30,15 +34,18 @@ include disable-xdg.inc
 mkdir ${HOME}/.gnupg
 mkfile ${HOME}/.config/mimeapps.list
 mkfile ${HOME}/.signature
+whitelist ${HOME}/.bogofilter
+whitelist ${HOME}/.bsfilter
 whitelist ${HOME}/.config/mimeapps.list
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${HOME}/.gnupg
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${HOME}/.signature
 whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 # when storing mail outside the default ${HOME}/Mail path, 'whitelist' the custom path in your email-common.local
 whitelist ${HOME}/Mail
 whitelist ${RUNUSER}/gnupg
+whitelist /usr/share/bogofilter
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
 whitelist /var/lib/clamav 
@@ -71,7 +78,7 @@ tracelog
 # disable-mnt
 private-cache
 private-dev
-private-etc @tls-ca,@x11,clamav,gnupg,hosts.conf,mailname,timezone
+private-etc @tls-ca,@x11,bogofilter,bogofilter.cf,gnupg,hosts.conf,mailname,timezone
 private-tmp
 # encrypting and signing email
 writable-run-user
@@ -86,6 +93,5 @@ dbus-user.talk org.gnome.seahorse.*
 dbus-user.talk org.mozilla.*
 dbus-system none
 
-read-only ${HOME}/.mozilla/firefox/profiles.ini
 read-only ${HOME}/.signature
 restrict-namespaces

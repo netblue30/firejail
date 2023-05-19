@@ -93,6 +93,7 @@ private-etc
 private-tmp
 
 dbus-user filter
+dbus-user.own org.freedesktop.secrets
 dbus-user.own org.keepassxc.KeePassXC.*
 dbus-user.talk com.canonical.Unity
 dbus-user.talk org.freedesktop.ScreenSaver

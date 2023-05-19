@@ -22,7 +22,8 @@ _Describe the bug_
 
 _Steps to reproduce the behavior_
 
-1. Run in bash `LC_ALL=C firejail PROGRAM` (`LC_ALL=C` to get a consistent output in English that can be understood by everybody)
+1. Run in bash `LC_ALL=C firejail PROGRAM` (`LC_ALL=C` to get a consistent
+   output in English that can be understood by everybody)
 2. Click on '....'
 3. Scroll down to '....'
 4. See error `ERROR`
@@ -37,7 +38,8 @@ _What actually happened_
 
 ### Behavior without a profile
 
-_What changed calling `LC_ALL=C firejail --noprofile /path/to/program` in a terminal?_
+_What changed calling `LC_ALL=C firejail --noprofile /path/to/program` in a
+terminal?_
 
 ### Additional context
 
@@ -47,7 +49,8 @@ _Any other detail that may help to understand/debug the problem_
 
 - Linux distribution and version (e.g. "Ubuntu 20.04" or "Arch Linux")
 - Firejail version (`firejail --version`).
-- If you use a development version of firejail, also the commit from which it was compiled (`git rev-parse HEAD`).
+- If you use a development version of firejail, also the commit from which it
+  was compiled (`git rev-parse HEAD`).
 
 ### Checklist
 

@@ -19,7 +19,7 @@
 */
 #include "firejail.h"
 
-static char *usage_str =
+static const char *const usage_str =
 	"Firejail is a SUID sandbox program that reduces the risk of security breaches by\n"
 	"restricting the running environment of untrusted applications using Linux\n"
 	"namespaces.\n"
@@ -81,7 +81,9 @@ static char *usage_str =
 	"    --debug-blacklists - debug blacklisting.\n"
 	"    --debug-caps - print all recognized capabilities.\n"
 	"    --debug-errnos - print all recognized error numbers.\n"
+#ifdef HAVE_PRIVATE_LIB
 	"    --debug-private-lib - debug for --private-lib option.\n"
+#endif
 	"    --debug-protocols - print all recognized protocols.\n"
 	"    --debug-syscalls - print all recognized system calls.\n"
 	"    --debug-syscalls32 - print all recognized 32 bit system calls.\n"
@@ -208,6 +210,9 @@ static char *usage_str =
 	"\tcommon device files.\n"
 	"    --private-etc=file,directory - build a new /etc in a temporary\n"
 	"\tfilesystem, and copy the files and directories in the list.\n"
+#ifdef HAVE_PRIVATE_LIB
+	"    --private-lib - create a private /lib directory\n"
+#endif
 	"    --private-tmp - mount a tmpfs on top of /tmp directory.\n"
 	"    --private-cwd - do not inherit working directory inside jail.\n"
 	"    --private-cwd=directory - set working directory inside jail.\n"
@@ -306,11 +311,18 @@ static char *usage_str =
 	"\tlist all running sandboxes\n"
 	"\n"
 	"License GPL version 2 or later\n"
-	"Homepage: https://firejail.wordpress.com\n"
-	"\n";
+	"Homepage: https://firejail.wordpress.com\n";
 
+void print_version(void) {
+	printf("firejail version %s\n\n", VERSION);
+}
+
+void print_version_full(void) {
+	print_version();
+	print_compiletime_support();
+}
 
 void usage(void) {
-	printf("firejail - version %s\n\n", VERSION);
+	print_version();
 	puts(usage_str);
 }

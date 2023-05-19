@@ -23,7 +23,6 @@ include disable-xdg.inc
 # This also requires dbus-user filtering (see below).
 noblacklist ${HOME}/.mozilla
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
-read-only ${HOME}/.mozilla/firefox/profiles.ini
 
 mkdir ${HOME}/.cache/Zeal
 mkdir ${HOME}/.config/Zeal

@@ -4,28 +4,41 @@ firejail (0.9.73) baseline; urgency=low
   * feature: Print the argument when failing with "too long arguments" (#5677)
   * feature: a random hostname is assigned to each sandbox unless
     overwritten using --hostname command
+  * feature: add IPv6 support for --net.print option
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578)
   * modif: Escape control characters of the command line (#5613)
   * modif: Allow only letters and digits for sandbox name (--name=) and
     host name (--hostname=)
-  * bugfix: fix --hostname and --hosts-file commands
+  * modif: remove firemon --interface option (duplicating --net.print option)
   * bugfix: qutebrowser: links will not open in the existing instance (#5601
     #5618)
+  * bugfix: fix --hostname and --hosts-file commands
+  * bugfix: arp.c: ensure positive timeout on select(2) (#5806)
   * build: auto-generate syntax files (#5627)
   * build: mark most phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
   * build: deb: enable apparmor by default & remove deb-apparmor (#5668)
   * build: Fix whitespace and add .editorconfig (#5674)
+  * ci: always update the package db before installing packages (#5742)
+  * ci: fix codeql unable to download its own bundle (#5783)
+  * ci: split configure/build/install commands on gitlab (#5784)
+  * ci: fix swapped name/email arguments in debian_ci (#5795)
+  * ci: formatting and misc improvements (#5802)
+  * ci: run for every branch instead of just master (#5815)
+  * ci: upgrade debian:stretch to debian:buster (#5818)
   * test: split individual test groups in github workflows
   * test: add chroot, appimage and network tests in github workflows
   * docs: remove apparmor options in --help when building without apparmor
     support (#5589)
-  * docs: selinux.c: Split Copyright notice & use same license as upstream
+  * docs: fix typos (#5693)
+  * docs: markdown formatting and misc improvements (#5757)
+  * docs: add uninstall instructions to README.md (#5812)
+  * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
-  * new profiles: fix-qdf, qpdf, zlib-flate
- -- netblue30 <netblue30@yahoo.com>  Mon, 16 Jan 2023 09:00:00 -0500
+  * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
+ -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 
 firejail (0.9.72) baseline; urgency=low
   * feature: On failing to remount a fuse filesystem, give warning instead of

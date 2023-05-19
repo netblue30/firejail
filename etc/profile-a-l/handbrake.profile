@@ -1,5 +1,5 @@
 # Firejail profile for handbrake
-# Description: Versatile DVD ripper and video transcoder (GTK+ GUI)
+# Description: Versatile DVD ripper and video transcoder (GTK GUI)
 # This file is overwritten after every install/update
 # Persistent local customizations
 include handbrake.local

@@ -68,7 +68,7 @@ expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
 	"syslog              - disabled"
 }
-after 100
+after 500
 
 send -- "firejail --debug-caps\r"
 expect {
@@ -87,7 +87,7 @@ expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
 	"24	- sys_resource"
 }
-after 100
+after 500
 
 send -- "firejail --caps.keep=\"bla bla bla\"\r"
 expect {
@@ -99,5 +99,5 @@ expect {
 	"not found"
 }
 
-after 100
+after 500
 puts "\nall done\n"

@@ -2,7 +2,6 @@ name: Build-extra CI
 
 on:
   push:
-    branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - 'contrib/syntax/**'
@@ -12,6 +11,7 @@ on:
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/build.yml
       - .github/workflows/codeql-analysis.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
@@ -24,7 +24,6 @@ on:
       - SECURITY.md
       - src/firecfg/firecfg.config
   pull_request:
-    branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - 'contrib/syntax/**'
@@ -34,6 +33,7 @@ on:
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/build.yml
       - .github/workflows/codeql-analysis.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
@@ -54,17 +54,23 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
+      uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
       with:
         egress-policy: block
         allowed-endpoints: >
           azure.archive.ubuntu.com:80
           github.com:443
-    - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+    - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+    - name: update package information
+      run: sudo apt-get update
     - name: install dependencies
       run: sudo apt-get install libapparmor-dev libselinux1-dev
+    - name: print env
+      run: ./ci/printenv.sh
     - name: configure
-      run: CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor --enable-selinux
+      run: >
+        CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor
+        --enable-selinux
     - name: make
       run: make
     - name: make install
@@ -75,63 +81,80 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
+      uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
       with:
         egress-policy: block
         allowed-endpoints: >
           azure.archive.ubuntu.com:80
           github.com:443
-    - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+    - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+    - name: update package information
+      run: sudo apt-get update
     - name: install clang-tools-14 and dependencies
       run: sudo apt-get install clang-tools-14 libapparmor-dev libselinux1-dev
+    - name: print env
+      run: ./ci/printenv.sh
     - name: configure
-      run: CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor --enable-selinux
+      run: >
+        CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor
+        --enable-selinux
     - name: scan-build
       run: NO_EXTRA_CFLAGS="yes" scan-build-14 --status-bugs make
   cppcheck:
     runs-on: ubuntu-22.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
+      uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
       with:
         egress-policy: block
         allowed-endpoints: >
           azure.archive.ubuntu.com:80
           github.com:443
-    - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+    - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+    - name: update package information
+      run: sudo apt-get update
     - name: install cppcheck
       run: sudo apt-get install cppcheck
+    - run: cppcheck --version
     - name: cppcheck
-      run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance -i src/firejail/checkcfg.c -i src/firejail/main.c .
-  # new cppcheck version currently chokes on checkcfg.c and main.c, therefore scan all files also
-  # with older cppcheck version from ubuntu 20.04.
+      run: >
+        cppcheck -q --force --error-exitcode=1 --enable=warning,performance
+        -i src/firejail/checkcfg.c -i src/firejail/main.c .
+  # new cppcheck version currently chokes on checkcfg.c and main.c, therefore
+  # scan all files also with older cppcheck version from ubuntu 20.04.
   cppcheck_old:
     runs-on: ubuntu-20.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
+      uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
       with:
         egress-policy: block
         allowed-endpoints: >
           azure.archive.ubuntu.com:80
           github.com:443
-    - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+    - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+    - name: update package information
+      run: sudo apt-get update
     - name: install cppcheck
       run: sudo apt-get install cppcheck
+    - run: cppcheck --version
     - name: cppcheck
       run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
   codespell:
     runs-on: ubuntu-22.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
+      uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
       with:
         egress-policy: block
         allowed-endpoints: >
           azure.archive.ubuntu.com:80
           github.com:443
-    - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+    - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+    - name: update package information
+      run: sudo apt-get update
     - name: install dependencies
       run: sudo apt-get install codespell
+    - run: codespell --version
     - name: codespell
       run: make codespell

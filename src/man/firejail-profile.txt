@@ -407,12 +407,14 @@ the current user's home directory.
 All modifications are discarded when the sandbox is
 closed.
 #endif
+#ifdef HAVE_PRIVATE_LIB
 .TP
 \fBprivate-lib file,directory
 Build a new /lib directory and bring in the libraries required by the application to run.
 The files and directories in the list must be expressed as relative to
 the /lib directory.
 This feature is still under development, see \fBman 1 firejail\fR for some examples.
+#endif
 .TP
 \fBprivate-opt file,directory
 Build a new /opt in a temporary

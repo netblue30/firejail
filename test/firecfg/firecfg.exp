@@ -12,7 +12,20 @@ expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"ping: symbolic link to /usr/bin/firejail"
 }
+after 100
 
+send --  "file /tmp/ttt/ping\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"ping: symbolic link to /usr/bin/firejail"
+}
+after 100
+
+send -- "firecfg --list\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"/usr/local/bin/ping"
+}
 after 100
 
 puts "\nall done\n"

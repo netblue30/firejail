@@ -17,7 +17,7 @@ expect {
 	"mmap successful" {puts "TESTING ERROR 2\n";exit}
 	"Parent is shutting down"
 }
-after 100
+after 500
 
 send --  "firejail --memory-deny-write-execute ./memwrexe mprotect\r"
 expect {
@@ -29,7 +29,7 @@ expect {
 	"mprotect successful" {puts "TESTING ERROR 12\n";exit}
 	"Parent is shutting down"
 }
-after 100
+after 500
 
 send --  "firejail --memory-deny-write-execute ./memwrexe memfd_create\r"
 expect {
@@ -42,5 +42,5 @@ expect {
 	"Parent is shutting down"
 }
 
-after 100
+after 500
 puts "\nall done\n"

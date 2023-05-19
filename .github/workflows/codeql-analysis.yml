@@ -7,7 +7,6 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - 'contrib/syntax/**'
@@ -17,6 +16,8 @@ on:
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/build-extra.yml
+      - .github/workflows/build.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
@@ -28,8 +29,6 @@ on:
       - SECURITY.md
       - src/firecfg/firecfg.config
   pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ master ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/*'
       - 'contrib/syntax/**'
@@ -39,6 +38,8 @@ on:
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
+      - .github/workflows/build-extra.yml
+      - .github/workflows/build.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
@@ -74,21 +75,25 @@ jobs:
 
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57
+      uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969
       with:
         disable-sudo: true
         egress-policy: block
         allowed-endpoints: >
           api.github.com:443
           github.com:443
+          objects.githubusercontent.com:443
           uploads.github.com:443
 
     - name: Checkout repository
-      uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c
+      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+
+    - name: print env
+      run: ./ci/printenv.sh
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@32dc499307d133bb5085bae78498c0ac2cf762d5
+      uses: github/codeql-action/init@29b1f65c5e92e24fe6b6647da1eaabe529cec70f
       with:
         languages: ${{ matrix.language }}
         # If you wish to specify custom queries, you can do so here or in a config file.
@@ -99,7 +104,7 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
-      uses: github/codeql-action/autobuild@32dc499307d133bb5085bae78498c0ac2cf762d5
+      uses: github/codeql-action/autobuild@29b1f65c5e92e24fe6b6647da1eaabe529cec70f
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
@@ -113,4 +118,4 @@ jobs:
     #   make release
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@32dc499307d133bb5085bae78498c0ac2cf762d5
+      uses: github/codeql-action/analyze@29b1f65c5e92e24fe6b6647da1eaabe529cec70f

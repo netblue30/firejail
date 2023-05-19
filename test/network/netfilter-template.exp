@@ -1,0 +1,41 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+
+send -- "firejail --net=br0 --ip=10.10.30.10 --name=test1 --netfilter=/etc/firejail/blablabla\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"invalid network filter file"
+}
+after 500
+
+send -- "firejail --net=br0 --ip=10.10.20.10 --name=test1 --netfilter=/etc/firejail/tcpserver.net,5678\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 2
+
+spawn $env(SHELL)
+send -- "firejail --netfilter.print=test1\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Chain INPUT"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"ACCEPT"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"tcp dpt:5678 state NEW,ESTABLISHED"
+}
+sleep 1
+
+puts "\nall done\n"

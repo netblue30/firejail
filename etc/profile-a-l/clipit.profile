@@ -1,5 +1,5 @@
 # Firejail profile for clipit
-# Description: Lightweight GTK+ clipboard manager
+# Description: Lightweight GTK clipboard manager
 # This file is overwritten after every install/update
 # Persistent local customizations
 include clipit.local

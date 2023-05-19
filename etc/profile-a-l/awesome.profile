@@ -16,5 +16,4 @@ noroot
 protocol unix,inet,inet6
 seccomp !chroot
 
-read-only ${HOME}/.config/awesome/autorun.sh
 #restrict-namespaces

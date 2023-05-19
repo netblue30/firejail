@@ -14,6 +14,9 @@ include globals.local
 # https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions#how-do-i-run-two-instances-of-firefox
 # https://github.com/netblue30/firejail/issues/4206#issuecomment-824806968
 
+# (Ignore entry from disable-common.inc)
+ignore read-only ${HOME}/.mozilla/firefox/profiles.ini
+
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
 noblacklist ${RUNUSER}/*firefox*

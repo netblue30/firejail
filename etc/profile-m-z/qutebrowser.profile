@@ -62,6 +62,9 @@ private-etc @tls-ca
 private-tmp
 
 dbus-user filter
+# qutebrowser-qt6 uses a newer chrome version which uses the name 'chromium'
+# see https://github.com/qutebrowser/qutebrowser/issues/7431
+dbus-user.own org.mpris.MediaPlayer2.chromium.*
 dbus-user.own org.mpris.MediaPlayer2.qutebrowser.*
 dbus-user.talk org.freedesktop.Notifications
 # Add the next line to your qutebrowser.local to allow screen sharing under wayland.

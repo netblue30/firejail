@@ -19,9 +19,12 @@
 */
 #include "fsec_print.h"
 
+static const char *const usage_str =
+	"Usage:\n"
+	"\tfsec-print file - disassemble seccomp filter\n";
+
 static void usage(void) {
-	printf("Usage:\n");
-	printf("\tfsec-print file - disassemble seccomp filter\n");
+	puts(usage_str);
 }
 
 int arg_quiet = 0;

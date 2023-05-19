@@ -145,7 +145,7 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 		else if (strcmp(argv[i], "--version") == 0) {
-			printf("firemon version %s\n\n", VERSION);
+			print_version();
 			return 0;
 		}
 		else if (strcmp(argv[i], "--debug") == 0)

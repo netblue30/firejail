@@ -369,7 +369,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--version") == 0) {
-		print_version();
+		print_version_full();
 		exit(0);
 	}
 #ifdef HAVE_OVERLAYFS
@@ -1128,7 +1128,7 @@ int main(int argc, char **argv, char **envp) {
 		EUID_USER();
 		if (rv == 0) {
 			if (check_arg(argc, argv, "--version", 1)) {
-				print_version();
+				print_version_full();
 				exit(0);
 			}
 
@@ -3009,6 +3009,11 @@ int main(int argc, char **argv, char **envp) {
 			fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
 	}
 	EUID_ASSERT();
+
+	// Note: Only attempt to print non-debug information to stdout after
+	// all profiles have been loaded (because a profile may set arg_quiet)
+	if (!arg_quiet)
+		print_version();
 
 	// block X11 sockets
 	if (arg_x11_block)

@@ -19,7 +19,7 @@
 */
 #include "firejail.h"
 
-static char *usage_str =
+static const char *const usage_str =
 	"Firejail is a SUID sandbox program that reduces the risk of security breaches by\n"
 	"restricting the running environment of untrusted applications using Linux\n"
 	"namespaces.\n"
@@ -311,11 +311,18 @@ static char *usage_str =
 	"\tlist all running sandboxes\n"
 	"\n"
 	"License GPL version 2 or later\n"
-	"Homepage: https://firejail.wordpress.com\n"
-	"\n";
+	"Homepage: https://firejail.wordpress.com\n";
 
+void print_version(void) {
+	printf("firejail version %s\n\n", VERSION);
+}
+
+void print_version_full(void) {
+	print_version();
+	print_compiletime_support();
+}
 
 void usage(void) {
-	printf("firejail - version %s\n\n", VERSION);
+	print_version();
 	puts(usage_str);
 }

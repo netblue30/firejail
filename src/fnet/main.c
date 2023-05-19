@@ -35,19 +35,21 @@ void fmessage(char* fmt, ...) { // TODO: this function is duplicated in src/fire
 	fflush(0);
 }
 
+static const char *const usage_str =
+	"Usage:\n"
+	"\tfnet create veth dev1 dev2 bridge child\n"
+	"\tfnet create macvlan dev parent child\n"
+	"\tfnet moveif dev proc\n"
+	"\tfnet printif\n"
+	"\tfnet printif scan\n"
+	"\tfnet config interface dev ip mask mtu\n"
+	"\tfnet config mac addr\n"
+	"\tfnet config ipv6 dev ip\n"
+	"\tfnet ifup dev\n"
+	"\tfnet waitll dev\n";
 
 static void usage(void) {
-	printf("Usage:\n");
-	printf("\tfnet create veth dev1 dev2 bridge child\n");
-	printf("\tfnet create macvlan dev parent child\n");
-	printf("\tfnet moveif dev proc\n");
-	printf("\tfnet printif\n");
-	printf("\tfnet printif scan\n");
-	printf("\tfnet config interface dev ip mask mtu\n");
-	printf("\tfnet config mac addr\n");
-	printf("\tfnet config ipv6 dev ip\n");
-	printf("\tfnet ifup dev\n");
-	printf("\tfnet waitll dev\n");
+	puts(usage_str);
 }
 
 int main(int argc, char **argv) {

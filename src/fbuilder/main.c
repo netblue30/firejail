@@ -21,9 +21,12 @@
 int arg_debug = 0;
 int arg_appimage = 0;
 
+static const char *const usage_str =
+	"Firejail profile builder\n"
+	"Usage: firejail [--debug] --build[=profile-file] program-and-arguments\n";
+
 static void usage(void) {
-	printf("Firejail profile builder\n");
-	printf("Usage: firejail [--debug] --build[=profile-file] program-and-arguments\n");
+	puts(usage_str);
 }
 
 int main(int argc, char **argv) {

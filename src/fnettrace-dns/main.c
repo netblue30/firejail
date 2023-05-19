@@ -167,13 +167,13 @@ static void run_trace(void) {
 
 	close(s);
 }
-
+static const char *const usage_str =
+	"Usage: fnettrace-dns [OPTIONS]\n"
+	"Options:\n"
+	"   --help, -? - this help screen\n";
 
 static void usage(void) {
-	printf("Usage: fnettrace-dns [OPTIONS]\n");
-	printf("Options:\n");
-	printf("   --help, -? - this help screen\n");
-	printf("\n");
+	puts(usage_str);
 }
 
 int main(int argc, char **argv) {

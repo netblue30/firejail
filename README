@@ -359,6 +359,8 @@ dewbasaur (https://github.com/dewbasaur)
 DiGitHubCap (https://github.com/DiGitHubCap)
 	- deluge profile fix
 	- fix qt5ct colour schemes and QSS
+Dieter Plaetinck (https://github.com/Dieterbe)
+	- qutebrowser: update MPRIS name for qutebrowser-qt6
 Disconnect3d (https://github.com/disconnect3d)
 	- code cleanup
 dm9pZCAq (https://github.com/dm9pZCAq)
@@ -518,6 +520,8 @@ Hans-Christoph Steiner (https://github.com/eighthave)
 	- added xournal profile
 Harald Kubota (https://github.com/haraldkubota)
 	- zsh completion
+Harry Seiler (https://github.com/Xunil73)
+	- allow netlink in pigdin
 hawkey116477 (https://github.com/hawkeye116477)
 	- added Waterfox profile
 	- updated Cyberfox profile
@@ -537,6 +541,8 @@ hlein (https://github.com/hlein)
 	- fix display profile for Gentoo distribution
 Holger Heinz (https://github.com/hheinz)
 	- manpage work
+Hotty Capy (https://github.com/hotcapy)
+	- softmaker-common.profile: add fstab to private-etc
 Haowei Yu (https://github.com/sfc-gh-hyu)
 	- add configure options when building rpm
 Icaro Perseo (https://github.com/icaroperseo)
@@ -728,6 +734,7 @@ Manuel Dipolt (https://github.com/xeniter)
 Marek Küthe (https://github.com/marek22k)
 	- allow loading plugins in gajim
 	- allow bsfilter in email-common.profile
+	- email-common.profile: allow clamav plugin for claws-mail
 Martin Carpenter (https://github.com/mcarpenter)
 	- security audit and bug fixes
 	- Centos 6.x support
@@ -845,6 +852,8 @@ Paupiah Yash (https://github.com/CaffeinatedStud)
 	- gzip profile
 Pawel (https://github.com/grimskies)
 	- make --join return exit code of the invoked program
+Pedro Riberio (https://github.com/pedrib)
+	- fix typo in pycharm-professional include
 Peter Millerchip (https://github.com/pmillerchip)
 	- memory allocation fix
 	- --private.keep to --private-home transition

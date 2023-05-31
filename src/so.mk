@@ -11,7 +11,7 @@ OBJS := $(SRCS:.c=.o) $(MOD_OBJS)
 
 SO_CFLAGS = \
 	-ggdb -O2 -DVERSION='"$(VERSION)"' \
-	$(HAVE_FATAL_WARNINGS) \
+	-Wall -Wextra $(HAVE_FATAL_WARNINGS) \
 	-Wformat -Wformat-security \
 	-fstack-protector-all -D_FORTIFY_SOURCE=2 \
 	-fPIC

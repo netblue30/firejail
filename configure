@@ -1391,7 +1391,7 @@ Optional Features:
   --disable-x11           disable X11 sandboxing support
   --disable-file-transfer disable file transfer
   --disable-suid          install as a non-SUID executable
-  --enable-fatal-warnings -W -Wall -Werror
+  --enable-fatal-warnings -W -Werror
   --enable-busybox-workaround
                           enable busybox workaround
   --enable-gcov           Gcov instrumentation
@@ -3601,7 +3601,7 @@ fi
 
 if test "x$enable_fatal_warnings" = "xyes"; then :
 
-	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
+	HAVE_FATAL_WARNINGS="-W -Werror"
 
 fi
 

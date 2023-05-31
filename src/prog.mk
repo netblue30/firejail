@@ -10,8 +10,10 @@ SRCS := $(sort $(wildcard *.c)) $(MOD_SRCS)
 OBJS := $(SRCS:.c=.o) $(MOD_OBJS)
 
 PROG_CFLAGS = \
-	-ggdb $(HAVE_FATAL_WARNINGS) -O2 -DVERSION='"$(VERSION)"' \
-	-fstack-protector-all -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security \
+	-ggdb -O2 -DVERSION='"$(VERSION)"' \
+	-Wall -Wextra $(HAVE_FATAL_WARNINGS) \
+	-Wformat -Wformat-security \
+	-fstack-protector-all -D_FORTIFY_SOURCE=2 \
 	-fPIE \
 	-DPREFIX='"$(prefix)"' -DSYSCONFDIR='"$(sysconfdir)/firejail"' \
 	-DLIBDIR='"$(libdir)"' -DBINDIR='"$(bindir)"' \

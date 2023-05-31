@@ -215,9 +215,9 @@ AS_IF([test "x$enable_suid" != "xno"], [
 HAVE_FATAL_WARNINGS=""
 AC_SUBST([HAVE_FATAL_WARNINGS])
 AC_ARG_ENABLE([fatal_warnings],
-    [AS_HELP_STRING([--enable-fatal-warnings], [-W -Wall -Werror])])
+    [AS_HELP_STRING([--enable-fatal-warnings], [-W -Werror])])
 AS_IF([test "x$enable_fatal_warnings" = "xyes"], [
-	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
+	HAVE_FATAL_WARNINGS="-W -Werror"
 ])
 
 BUSYBOX_WORKAROUND="no"

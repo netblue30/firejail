@@ -48,8 +48,7 @@ include whitelist-usr-share-common.inc
 #private-bin bash,dbus-launch,dbus-send,env,firefox,sh,which
 # Fedora uses shell scripts to launch firefox - add the next line to your firefox.local to enable private-bin.
 #private-bin basename,bash,cat,dirname,expr,false,firefox,firefox-wayland,getenforce,ln,mkdir,pidof,restorecon,rm,rmdir,sed,sh,tclsh,true,uname
-# Add the next line to your firefox.local to enable private-etc support - note that this must be enabled in your firefox-common.local too.
-#private-etc firefox
+private-etc firefox
 
 dbus-user filter
 dbus-user.own org.mozilla.*

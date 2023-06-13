@@ -1479,8 +1479,11 @@ int ascii_isxdigit(unsigned char c) {
 // allow strict ASCII letters and numbers; names with only numbers are rejected; spaces are rejected
 int invalid_name(const char *name) {
 	const char *c = name;
-
 	int only_numbers = 1;
+
+	if (strlen(name) > 253)
+		return 1;
+
 	while (*c) {
 		if (!ascii_isalnum(*c))
 			return 1;
@@ -1489,10 +1492,6 @@ int invalid_name(const char *name) {
 		++c;
 	}
 	if (only_numbers)
-		return 1;
-
-	// restrict name to 64 chars max
-	if (strlen(name) > 64)
 		return 1;
 
 	return 0;

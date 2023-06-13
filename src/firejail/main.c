@@ -2190,7 +2190,7 @@ int main(int argc, char **argv, char **envp) {
 				fprintf(stderr, "Error: please provide a name for sandbox\n");
 				return 1;
 			}
-			if (invalid_name(cfg.name) || has_cntrl_chars(cfg.name)) {
+			if (invalid_name(cfg.name)) {
 				fprintf(stderr, "Error: invalid sandbox name\n");
 				return 1;
 			}

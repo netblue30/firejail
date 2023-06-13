@@ -2837,6 +2837,10 @@ int main(int argc, char **argv, char **envp) {
 				fprintf(stderr, "Error: invalid sandbox name: cannot be empty\n");
 				return 1;
 			}
+			if (invalid_name(cfg.name)) {
+				fprintf(stderr, "Error: invalid sandbox name\n");
+				return 1;
+			}
 		}
 		else if (strcmp(argv[i], "--deterministic-exit-code") == 0) {
 			arg_deterministic_exit_code = 1;

@@ -1156,6 +1156,14 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// hostname
 	if (strncmp(ptr, "hostname ", 9) == 0) {
 		cfg.hostname = ptr + 9;
+		if (strlen(cfg.hostname) == 0) {
+			fprintf(stderr, "Error: invalid hostname: cannot be empty\n");
+			exit(1);
+		}
+		if (invalid_name(cfg.hostname)) {
+			fprintf(stderr, "Error: invalid hostname\n");
+			exit(1);
+		}
 		return 0;
 	}
 
@@ -1639,6 +1647,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.name = ptr + 14;
 			if (strlen(cfg.name) == 0) {
 				fprintf(stderr, "Error: invalid sandbox name: cannot be empty\n");
+				exit(1);
+			}
+			if (invalid_name(cfg.name)) {
+				fprintf(stderr, "Error: invalid sandbox name\n");
 				exit(1);
 			}
 		}

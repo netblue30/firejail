@@ -12,14 +12,12 @@ build_ubuntu_package:
         - apt-get update -qq
         - >
             DEBIAN_FRONTEND=noninteractive apt-get install -y -qq
-            build-essential lintian libapparmor-dev pkg-config python3 gawk
+            build-essential lintian libapparmor-dev pkg-config gawk
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
         - make deb
         - dpkg -i firejail*.deb
         - command -V firejail && firejail --version
-        # - python3 --version
-        # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_debian_package:
     image: debian:buster
@@ -55,22 +53,18 @@ build_fedora_package:
         - make rpms
         - rpm -i firejail*.rpm
         - command -V firejail && firejail --version
-        # - python3 --version
-        # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_src_package:
     image: alpine:latest
     script:
         - apk update
         - apk upgrade
-        - apk add build-base linux-headers python3 gawk
+        - apk add build-base linux-headers gawk
         - ./ci/printenv.sh
         - ./configure --prefix=/usr || (cat config.log; exit 1)
         - make
         - make install-strip
         - command -V firejail && firejail --version
-        # - python3 --version
-        # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_no_apparmor:
     image: ubuntu:latest

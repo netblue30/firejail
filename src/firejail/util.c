@@ -1476,6 +1476,8 @@ int ascii_isxdigit(unsigned char c) {
 	return ret;
 }
 
+// Note: Keep this in sync with NAME VALIDATION in src/man/firejail.txt.
+//
 // Allow only ASCII letters, digits and a few special characters; names with
 // only numbers are rejected; spaces and control characters are rejected.
 int invalid_name(const char *name) {

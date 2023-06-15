@@ -380,36 +380,45 @@ $(TEST_TARGETS):
 
 
 # extract some data about the testing setup: kernel, network connectivity, user
+.PHONY: lab-setup
 lab-setup:; uname -r; ldd --version | grep GLIBC; pwd; whoami; ip addr show; cat /etc/resolv.conf; cat /etc/hosts; ls /etc
 
+.PHONY: test
 test: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-private-etc test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-seccomp-extra
 	echo "TEST COMPLETE"
 
+.PHONY: test-noprofiles
 test-noprofiles: lab-setup test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"
 
 # not included in "make dist" and "make test"
+.PHONY: test-appimage
 test-appimage:
 	$(MAKE) -C test $(subst test-,,$@)
 
 # using sudo; not included in "make dist" and "make test"
+.PHONY: test-chroot
 test-chroot:
 	$(MAKE) -C test $(subst test-,,$@)
 
 # using sudo; not included in "make dist" and "make test"
+.PHONY: test-network
 test-network:
 	$(MAKE) -C test $(subst test-,,$@)
 
 # using sudo; not included in "make dist" and "make test"
+.PHONY: test-apparmor
 test-apparmor:
 	$(MAKE) -C test $(subst test-,,$@)
 
 # using sudo; not included in "make dist" and "make test"
+.PHONY: test-firecfg
 test-firecfg:
 	$(MAKE) -C test $(subst test-,,$@)
 
 
 # old gihub test; the new test is driven directly from .github/workflows/build.yml
+.PHONY: test-github
 test-github: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
 	echo "TEST COMPLETE"
 
@@ -419,6 +428,7 @@ test-github: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-uti
 # with them you will need to restart your computer.
 ##########################################
 # private-lib is disabled by default in /etc/firejail/firejail.config
+.PHONY: test-private-lib
 test-private-lib:
 	$(MAKE) -C test $(subst test-,,$@)
 

@@ -18,7 +18,7 @@ firejail (0.9.73) baseline; urgency=low
   * bugfix: fix --hostname and --hosts-file commands
   * bugfix: arp.c: ensure positive timeout on select(2) (#5806)
   * build: auto-generate syntax files (#5627)
-  * build: mark most phony targets as such (#5637)
+  * build: mark all phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
   * build: deb: enable apparmor by default & remove deb-apparmor (#5668)
   * build: Fix whitespace and add .editorconfig (#5674)

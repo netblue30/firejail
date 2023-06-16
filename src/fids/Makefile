@@ -2,6 +2,7 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+MOD_DIR = src/fids
 PROG = fids
 TARGET = $(PROG)
 

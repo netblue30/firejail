@@ -2,6 +2,7 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+MOD_DIR = src/jailcheck
 PROG = jailcheck
 TARGET = $(PROG)
 

@@ -5,6 +5,6 @@ ROOT = ../..
 PROG = fbuilder
 TARGET = $(PROG)
 
-MOD_HDRS = ../include/common.h ../include/syscall.h
+EXTRA_HDRS = ../include/common.h ../include/syscall.h
 
 include $(ROOT)/src/prog.mk

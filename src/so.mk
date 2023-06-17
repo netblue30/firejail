@@ -3,11 +3,11 @@
 # Note: $(ROOT)/config.mk must be included before this file.
 #
 # The includer should probably define SO and TARGET and may also want to define
-# MOD_HDRS, MOD_OBJS, TOCLEAN and TODISTCLEAN.
+# EXTRA_HDRS, EXTRA_OBJS, TOCLEAN and TODISTCLEAN.
 
-HDRS := $(sort $(wildcard *.h)) $(MOD_HDRS)
+HDRS := $(sort $(wildcard *.h)) $(EXTRA_HDRS)
 SRCS := $(sort $(wildcard *.c))
-OBJS := $(SRCS:.c=.o) $(MOD_OBJS)
+OBJS := $(SRCS:.c=.o) $(EXTRA_OBJS)
 
 SO_CFLAGS = \
 	-ggdb -O2 -DVERSION='"$(VERSION)"' \

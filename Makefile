@@ -358,7 +358,7 @@ cppcheck: clean
 
 .PHONY: scan-build
 scan-build: clean
-	NO_EXTRA_CFLAGS="yes" scan-build make
+	scan-build make
 
 .PHONY: codespell
 codespell: clean

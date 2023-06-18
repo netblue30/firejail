@@ -25,10 +25,6 @@ AX_CHECK_COMPILE_FLAG([-mindirect-branch=thunk], [
 	HAVE_SPECTRE="yes"
 	EXTRA_CFLAGS="$EXTRA_CFLAGS -mindirect-branch=thunk"
 ])
-AX_CHECK_COMPILE_FLAG([-mretpoline], [
-	HAVE_SPECTRE="yes"
-	EXTRA_CFLAGS="$EXTRA_CFLAGS -mretpoline"
-])
 AX_CHECK_COMPILE_FLAG([-fstack-clash-protection], [
 	HAVE_SPECTRE="yes"
 	EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-clash-protection"

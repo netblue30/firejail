@@ -3,7 +3,7 @@
 # Note: $(ROOT)/config.mk must be included before this file.
 #
 # The includer should probably define PROG and TARGET and may also want to
-# define EXTRA_HDRS, EXTRA_OBJS, TOCLEAN and TODISTCLEAN.
+# define EXTRA_HDRS, EXTRA_OBJS, CLEANFILES and DISTCLEANFILES.
 
 HDRS := $(sort $(wildcard *.h)) $(EXTRA_HDRS)
 SRCS := $(sort $(wildcard *.c))
@@ -33,7 +33,7 @@ $(PROG): $(OBJS) $(ROOT)/config.mk
 	$(CC) $(PROG_LDFLAGS) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
 
 .PHONY: clean
-clean:; rm -fr *.o $(PROG) *.gcov *.gcda *.gcno *.plist $(TOCLEAN)
+clean:; rm -fr *.o $(PROG) *.gcov *.gcda *.gcno *.plist $(CLEANFILES)
 
 .PHONY: distclean
-distclean: clean; rm -fr $(TODISTCLEAN)
+distclean: clean; rm -fr $(DISTCLEANFILES)

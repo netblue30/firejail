@@ -3,7 +3,7 @@
 # Note: $(ROOT)/config.mk must be included before this file.
 #
 # The includer should probably define SO and TARGET and may also want to define
-# EXTRA_HDRS, EXTRA_OBJS, CLEANFILES and DISTCLEANFILES.
+# EXTRA_HDRS and EXTRA_OBJS and extend CLEANFILES.
 
 HDRS := $(sort $(wildcard *.h)) $(EXTRA_HDRS)
 SRCS := $(sort $(wildcard *.c))
@@ -28,7 +28,7 @@ $(SO): $(OBJS) $(ROOT)/config.mk
 	$(CC) $(SO_LDFLAGS) -shared -fPIC -z relro $(LDFLAGS) -o $@ $(OBJS) -ldl
 
 .PHONY: clean
-clean:; rm -fr $(OBJS) $(SO) *.plist $(CLEANFILES)
+clean:; rm -fr $(SO) $(CLEANFILES)
 
 .PHONY: distclean
-distclean: clean; rm -fr $(DISTCLEANFILES)
+distclean: clean

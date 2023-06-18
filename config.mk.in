@@ -64,3 +64,5 @@ LIBS=@LIBS@
 
 EXTRA_CFLAGS +=@EXTRA_CFLAGS@
 EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
+
+CLEANFILES = *.o *.gcov *.gcda *.gcno *.plist

@@ -3,10 +3,10 @@
 # Note: $(ROOT)/config.mk must be included before this file.
 #
 # The includer should probably define SO and TARGET and may also want to define
-# MOD_HDRS, MOD_SRCS, MOD_OBJS, TOCLEAN and TODISTCLEAN.
+# MOD_HDRS, MOD_OBJS, TOCLEAN and TODISTCLEAN.
 
 HDRS := $(sort $(wildcard *.h)) $(MOD_HDRS)
-SRCS := $(sort $(wildcard *.c)) $(MOD_SRCS)
+SRCS := $(sort $(wildcard *.c))
 OBJS := $(SRCS:.c=.o) $(MOD_OBJS)
 
 SO_CFLAGS = \

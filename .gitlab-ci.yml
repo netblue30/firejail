@@ -8,28 +8,32 @@
 
 build_ubuntu_package:
     image: ubuntu:rolling
+    variables:
+        DEBIAN_FRONTEND: noninteractive
     script:
-        - apt-get update -qq
+        - apt-get update -qy
         - >
-            DEBIAN_FRONTEND=noninteractive apt-get install -y -qq
-            build-essential lintian libapparmor-dev pkg-config python3 gawk
+            apt-get install --no-install-recommends -qy
+            build-essential fakeroot lintian libapparmor-dev pkg-config gawk
+            | grep -Ev '^(Selecting|Preparing to unpack|Unpacking)'
         - ./ci/printenv.sh
-        - ./configure
+        - ./configure || (cat config.log; exit 1)
         - make deb
         - dpkg -i firejail*.deb
         - command -V firejail && firejail --version
-        # - python3 --version
-        # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_debian_package:
     image: debian:buster
+    variables:
+        DEBIAN_FRONTEND: noninteractive
     script:
-        - apt-get update -qq
+        - apt-get update -qy
         - >
-            apt-get install -y -qq
-            build-essential lintian libapparmor-dev pkg-config gawk
+            apt-get install --no-install-recommends -qy
+            build-essential fakeroot lintian libapparmor-dev pkg-config gawk
+            | grep -Ev '^(Selecting|Preparing to unpack|Unpacking)'
         - ./ci/printenv.sh
-        - ./configure
+        - ./configure || (cat config.log; exit 1)
         - make deb
         - dpkg -i firejail*.deb
         - command -V firejail && firejail --version
@@ -40,7 +44,7 @@ build_redhat_package:
         - dnf update -y
         - dnf install -y rpm-build gcc make
         - ./ci/printenv.sh
-        - ./configure --prefix=/usr
+        - ./configure --prefix=/usr || (cat config.log; exit 1)
         - make rpms
         - rpm -i firejail*.rpm
         - command -V firejail && firejail --version
@@ -51,36 +55,35 @@ build_fedora_package:
         - dnf update -y
         - dnf install -y rpm-build gcc make
         - ./ci/printenv.sh
-        - ./configure --prefix=/usr
+        - ./configure --prefix=/usr || (cat config.log; exit 1)
         - make rpms
         - rpm -i firejail*.rpm
         - command -V firejail && firejail --version
-        # - python3 --version
-        # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_src_package:
     image: alpine:latest
     script:
         - apk update
         - apk upgrade
-        - apk add build-base linux-headers python3 gawk
+        - apk add build-base linux-headers gawk
         - ./ci/printenv.sh
-        - ./configure --prefix=/usr
+        - ./configure --prefix=/usr || (cat config.log; exit 1)
         - make
         - make install-strip
         - command -V firejail && firejail --version
-        # - python3 --version
-        # - python3 contrib/sort.py etc/profile-*/*.profile etc/inc/*.inc
 
 build_no_apparmor:
     image: ubuntu:latest
+    variables:
+        DEBIAN_FRONTEND: noninteractive
     script:
-        - apt-get update -qq
+        - apt-get update -qy
         - >
-            DEBIAN_FRONTEND=noninteractive apt-get install -y -qq
-            build-essential lintian pkg-config gawk
+            apt-get install --no-install-recommends -qy
+            build-essential fakeroot lintian pkg-config gawk
+            | grep -Ev '^(Selecting|Preparing to unpack|Unpacking)'
         - ./ci/printenv.sh
-        - ./configure
+        - ./configure || (cat config.log; exit 1)
         - make dist
         - ./mkdeb.sh --disable-apparmor
         - dpkg -i firejail*.deb
@@ -92,6 +95,7 @@ debian_ci:
     variables:
         DEBFULLNAME: "$GITLAB_USER_NAME"
         DEBEMAIL: "$GITLAB_USER_EMAIL"
+        DEBIAN_FRONTEND: noninteractive
     before_script:
         - git checkout -B ci_build "$CI_COMMIT_SHA"
         - gitlab-ci-enable-sid
@@ -101,7 +105,7 @@ debian_ci:
             deb-src http://deb.debian.org/debian sid main
             deb-src http://deb.debian.org/debian experimental main
             EOF
-        - apt-get update
+        - apt-get update -qy
         - git config user.name "$DEBFULLNAME"
         - git config user.email "$DEBEMAIL"
         - |
@@ -122,7 +126,7 @@ debian_ci:
         - git commit -m 'add debian/'
         - export CI_COMMIT_SHA="$(git rev-parse HEAD)"
     script:
-        - apt-get --no-install-recommends install -y -qq gawk
+        - apt-get install --no-install-recommends -qy gawk
         - ./ci/printenv.sh
         - gitlab-ci-git-buildpackage
         - gitlab-ci-lintian

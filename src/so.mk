@@ -9,15 +9,6 @@ HDRS := $(sort $(wildcard *.h)) $(EXTRA_HDRS)
 SRCS := $(sort $(wildcard *.c))
 OBJS := $(SRCS:.c=.o) $(EXTRA_OBJS)
 
-SO_CFLAGS = \
-	-ggdb -O2 -DVERSION='"$(VERSION)"' \
-	-Wall -Wextra $(HAVE_FATAL_WARNINGS) \
-	-Wformat -Wformat-security \
-	-fstack-protector-all -D_FORTIFY_SOURCE=2 \
-	-fPIC
-
-SO_LDFLAGS = -Wl,-z,relro -Wl,-z,now -fPIC
-
 .PHONY: all
 all: $(TARGET)
 

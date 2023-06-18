@@ -9,20 +9,6 @@ HDRS := $(sort $(wildcard *.h)) $(EXTRA_HDRS)
 SRCS := $(sort $(wildcard *.c))
 OBJS := $(SRCS:.c=.o) $(EXTRA_OBJS)
 
-PROG_CFLAGS = \
-	-ggdb -O2 -DVERSION='"$(VERSION)"' \
-	-Wall -Wextra $(HAVE_FATAL_WARNINGS) \
-	-Wformat -Wformat-security \
-	-fstack-protector-all -D_FORTIFY_SOURCE=2 \
-	-DPREFIX='"$(prefix)"' -DSYSCONFDIR='"$(sysconfdir)/firejail"' \
-	-DLIBDIR='"$(libdir)"' -DBINDIR='"$(bindir)"' \
-	-DVARDIR='"/var/lib/firejail"' \
-	$(HAVE_GCOV) $(MANFLAGS) \
-	$(EXTRA_CFLAGS) \
-	-fPIE
-
-PROG_LDFLAGS = -Wl,-z,relro -Wl,-z,now -fPIE -pie $(EXTRA_LDFLAGS)
-
 .PHONY: all
 all: $(TARGET)
 

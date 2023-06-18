@@ -16,7 +16,7 @@ SO_CFLAGS = \
 	-fstack-protector-all -D_FORTIFY_SOURCE=2 \
 	-fPIC
 
-SO_LDFLAGS = -pie -fPIE -Wl,-z,relro -Wl,-z,now
+SO_LDFLAGS = -fPIC -Wl,-z,relro -Wl,-z,now
 
 .PHONY: all
 all: $(TARGET)
@@ -25,7 +25,7 @@ all: $(TARGET)
 	$(CC) $(SO_CFLAGS) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(SO): $(OBJS) $(ROOT)/config.mk
-	$(CC) $(SO_LDFLAGS) -shared -fPIC -z relro $(LDFLAGS) -o $@ $(OBJS) -ldl
+	$(CC) $(SO_LDFLAGS) -shared $(LDFLAGS) -o $@ $(OBJS) -ldl
 
 .PHONY: clean
 clean:; rm -fr $(SO) $(CLEANFILES)

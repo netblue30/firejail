@@ -120,7 +120,7 @@ int check_kernel_procs(void) {
 
 		// read file
 		char buf[100];
-		if (fgets(buf, 10, fp) == NULL) {
+		if (fgets(buf, 100, fp) == NULL) {
 			fwarning("cannot read %s\n", fname);
 			fclose(fp);
 			free(fname);

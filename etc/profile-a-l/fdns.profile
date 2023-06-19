@@ -21,6 +21,7 @@ include disable-xdg.inc
 #include whitelist-usr-share-common.inc
 #include whitelist-var-common.inc
 
+apparmor /usr/bin/fdns
 caps.keep kill,net_bind_service,setgid,setuid,sys_admin,sys_chroot
 ipc-namespace
 # netfilter /etc/firejail/webserver.net
@@ -47,4 +48,3 @@ private-etc @tls-ca,fdns
 private-tmp
 
 memory-deny-write-execute
-restrict-namespaces

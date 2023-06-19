@@ -1,3 +1,4 @@
+.SUFFIXES:
 ROOT = .
 -include config.mk
 

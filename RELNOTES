@@ -22,6 +22,7 @@ firejail (0.9.73) baseline; urgency=low
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
   * build: deb: enable apparmor by default & remove deb-apparmor (#5668)
   * build: Fix whitespace and add .editorconfig (#5674)
+  * build: enable compiler warnings by default (#5842)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
@@ -29,6 +30,8 @@ firejail (0.9.73) baseline; urgency=low
   * ci: formatting and misc improvements (#5802)
   * ci: run for every branch instead of just master (#5815)
   * ci: upgrade debian:stretch to debian:buster (#5818)
+  * ci: standardize apt-get update/install & misc improvements (#5857)
+  * contrib/vim: match profile files more broadly (#5850)
   * test: split individual test groups in github workflows
   * test: add chroot, appimage and network tests in github workflows
   * docs: remove apparmor options in --help when building without apparmor

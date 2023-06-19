@@ -1476,23 +1476,46 @@ int ascii_isxdigit(unsigned char c) {
 	return ret;
 }
 
-// allow strict ASCII letters and numbers; names with only numbers are rejected; spaces are rejected
+// Note: Keep this in sync with NAME VALIDATION in src/man/firejail.txt.
+//
+// Allow only ASCII letters, digits and a few special characters; names with
+// only numbers are rejected; spaces and control characters are rejected.
 int invalid_name(const char *name) {
 	const char *c = name;
-
 	int only_numbers = 1;
-	while (*c) {
-		if (!ascii_isalnum(*c))
-			return 1;
-		if (!ascii_isdigit(*c))
-			only_numbers = 0;
-		++c;
-	}
-	if (only_numbers)
+
+	if (strlen(name) > 253)
 		return 1;
 
-	// restrict name to 64 chars max
-	if (strlen(name) > 64)
+	// must start with alnum
+	if (!ascii_isalnum(*c))
+		return 1;
+	if (!ascii_isdigit(*c))
+		only_numbers = 0;
+	++c;
+
+	while (*c) {
+		switch (*c) {
+		case '-':
+		case '.':
+		case '_':
+			only_numbers = 0;
+			break;
+		default:
+			if (!ascii_isalnum(*c))
+				return 1;
+			if (!ascii_isdigit(*c))
+				only_numbers = 0;
+		}
+		++c;
+	}
+
+	// must end with alnum
+	--c;
+	if (!ascii_isalnum(*c))
+		return 1;
+
+	if (only_numbers)
 		return 1;
 
 	return 0;

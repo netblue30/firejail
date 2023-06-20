@@ -320,7 +320,7 @@ DISTFILES_TEST = test/Makefile test/apps test/apps-x11 test/apps-x11-xorg test/c
 dist: config.mk
 	mv config.sh config.sh.old
 	mv config.status config.status.old
-	make distclean
+	$(MAKE) distclean
 	mv config.status.old config.status
 	mv config.sh.old config.sh
 	rm -fr $(TARNAME)-$(VERSION) $(TARNAME)-$(VERSION).tar.xz
@@ -358,7 +358,7 @@ cppcheck: clean
 
 .PHONY: scan-build
 scan-build: clean
-	scan-build make
+	scan-build $(MAKE)
 
 .PHONY: codespell
 codespell: clean

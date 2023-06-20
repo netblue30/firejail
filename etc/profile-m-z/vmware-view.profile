@@ -1,5 +1,5 @@
 # Firejail profile for vmware-view
-# Description: VMware Horizon Client
+# Description: VMware Horizon Client, used as a remote desktop client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include vmware-view.local

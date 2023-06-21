@@ -11,7 +11,7 @@ noblacklist ${HOME}/.vmware
 noblacklist /usr/lib/vmware
 
 include disable-common.inc
-include disable-devel.inc
+#include disable-devel.inc # gcc is used to compile kernel modules
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc

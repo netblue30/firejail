@@ -1,8 +1,11 @@
-.PHONY: all
-all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-profile.man firemon.man jailcheck.man
+.SUFFIXES:
+MAKEFLAGS += -r
 
 ROOT = ../..
 -include $(ROOT)/config.mk
+
+.PHONY: all
+all: firecfg.man firejail.man firejail-login.man firejail-users.man firejail-profile.man firemon.man jailcheck.man
 
 %.man: %.txt $(ROOT)/config.mk
 	gawk -f ./preproc.awk -- $(MANFLAGS) < $< > $@

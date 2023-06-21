@@ -1,3 +1,6 @@
+.SUFFIXES:
+MAKEFLAGS += -r
+
 ROOT = .
 -include config.mk
 

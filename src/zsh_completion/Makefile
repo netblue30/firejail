@@ -1,8 +1,11 @@
-.PHONY: all
-all: _firejail
+.SUFFIXES:
+MAKEFLAGS += -r
 
 ROOT = ../..
 -include $(ROOT)/config.mk
+
+.PHONY: all
+all: _firejail
 
 _firejail: _firejail.in $(ROOT)/config.mk
 	gawk -f ../man/preproc.awk -- $(MANFLAGS) < $< > $@.tmp

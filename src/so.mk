@@ -16,7 +16,7 @@ SO_CFLAGS = \
 	-fstack-protector-all -D_FORTIFY_SOURCE=2 \
 	-fPIC
 
-SO_LDFLAGS = -fPIC -Wl,-z,relro -Wl,-z,now
+SO_LDFLAGS = -Wl,-z,relro -Wl,-z,now -fPIC
 
 .PHONY: all
 all: $(TARGET)

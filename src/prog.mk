@@ -14,14 +14,14 @@ PROG_CFLAGS = \
 	-Wall -Wextra $(HAVE_FATAL_WARNINGS) \
 	-Wformat -Wformat-security \
 	-fstack-protector-all -D_FORTIFY_SOURCE=2 \
-	-fPIE \
 	-DPREFIX='"$(prefix)"' -DSYSCONFDIR='"$(sysconfdir)/firejail"' \
 	-DLIBDIR='"$(libdir)"' -DBINDIR='"$(bindir)"' \
 	-DVARDIR='"/var/lib/firejail"' \
 	$(HAVE_GCOV) $(MANFLAGS) \
-	$(EXTRA_CFLAGS)
+	$(EXTRA_CFLAGS) \
+	-fPIE
 
-PROG_LDFLAGS = -pie -fPIE -Wl,-z,relro -Wl,-z,now $(EXTRA_LDFLAGS)
+PROG_LDFLAGS = -Wl,-z,relro -Wl,-z,now -fPIE -pie $(EXTRA_LDFLAGS)
 
 .PHONY: all
 all: $(TARGET)

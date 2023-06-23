@@ -1,5 +1,5 @@
 # Firejail profile for vmware
-# Description: The industry standard for running multiple operating systems as virtual machines on a single Linux PC.
+# Description: VMWare Workstation Player, used for running virtual machines
 # This file is overwritten after every install/update
 # Persistent local customizations
 include vmware.local
@@ -11,7 +11,7 @@ noblacklist ${HOME}/.vmware
 noblacklist /usr/lib/vmware
 
 include disable-common.inc
-include disable-devel.inc
+#include disable-devel.inc # gcc is used to compile kernel modules
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc

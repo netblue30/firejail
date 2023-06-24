@@ -6,6 +6,7 @@
 # Note: Do not define any targets on this file, as that could potentially end
 # up overriding the includer's intended default target (which by default is the
 # first target encountered).
+MAKEFLAGS += -r
 
 NAME=@PACKAGE_NAME@
 TARNAME=@PACKAGE_TARNAME@

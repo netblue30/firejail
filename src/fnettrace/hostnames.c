@@ -28,6 +28,10 @@ static char buf[MAXBUF];
 char *retrieve_hostname(uint32_t ip) {
 	if (geoip_not_found)
 		return NULL;
+	if (access("/usr/bin/geoiplookup", X_OK)) {
+		geoip_not_found = 1;
+		return NULL;
+	}
 	geoip_calls++;
 
 	char *rv = NULL;

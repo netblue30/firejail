@@ -351,8 +351,10 @@ static void hnode_print(unsigned bw) {
 				bwline = print_bw(ptr->bytes / bwunit);
 
 			const char *protocol = NULL;
-			if (ptr->port_src == 443)
+			if (ptr->port_src == 443 && ptr->protocol == 0x06) // TCP
 				protocol = "(TLS)";
+			else if (ptr->port_src == 443 && ptr->protocol == 0x11) // UDP
+				protocol = "(QUIC)";
 			else if (ptr->port_src == 53)
 				protocol = "(DNS)";
 			else if (ptr->port_src == 853) {
@@ -367,6 +369,8 @@ static void hnode_print(unsigned bw) {
 				;
 			else if (ptr->protocol == 0x11)
 				protocol = "(UDP)";
+			else if (ptr->protocol == 0x06)
+				protocol = "(TCP)";
 
 			if (protocol == NULL)
 				protocol = "";

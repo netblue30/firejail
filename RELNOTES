@@ -5,6 +5,7 @@ firejail (0.9.73) baseline; urgency=low
   * feature: a random hostname is assigned to each sandbox unless
     overwritten using --hostname command
   * feature: add IPv6 support for --net.print option
+  * feature: QUIC (HTTP/3) support in --nettrace
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)

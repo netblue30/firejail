@@ -81,7 +81,7 @@ CFLAGS=@CFLAGS@
 LDFLAGS=@LDFLAGS@
 
 # Project variables
-EXTRA_CFLAGS +=@EXTRA_CFLAGS@
+EXTRA_CFLAGS  =@EXTRA_CFLAGS@
 COMMON_CFLAGS = \
 	-ggdb -O2 -DVERSION='"$(VERSION)"' \
 	-Wall -Wextra $(HAVE_FATAL_WARNINGS) \
@@ -101,9 +101,9 @@ SO_CFLAGS = \
 	$(COMMON_CFLAGS) \
 	-fPIC
 
-EXTRA_LDFLAGS +=@EXTRA_LDFLAGS@
-PROG_LDFLAGS   = -Wl,-z,relro -Wl,-z,now -fPIE -pie $(EXTRA_LDFLAGS)
-SO_LDFLAGS     = -Wl,-z,relro -Wl,-z,now -fPIC
+EXTRA_LDFLAGS =@EXTRA_LDFLAGS@
+PROG_LDFLAGS  = -Wl,-z,relro -Wl,-z,now -fPIE -pie $(EXTRA_LDFLAGS)
+SO_LDFLAGS    = -Wl,-z,relro -Wl,-z,now -fPIC
 LIBS =@LIBS@
 
 CLEANFILES = *.o *.gcov *.gcda *.gcno *.plist

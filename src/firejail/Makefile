@@ -5,7 +5,7 @@ ROOT = ../..
 PROG = firejail
 TARGET = $(PROG)
 
-MOD_HDRS = \
+EXTRA_HDRS = \
 ../include/rundefs.h \
 ../include/common.h \
 ../include/ldd_utils.h \
@@ -18,7 +18,7 @@ MOD_HDRS = \
 ../include/etc_groups.h
 
 
-MOD_OBJS = \
+EXTRA_OBJS = \
 ../lib/common.o \
 ../lib/ldd_utils.o \
 ../lib/firejail_user.o \

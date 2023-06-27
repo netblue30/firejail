@@ -5,6 +5,6 @@ ROOT = ../..
 SO = libtracelog.so
 TARGET = $(SO)
 
-MOD_HDRS = ../include/rundefs.h
+EXTRA_HDRS = ../include/rundefs.h
 
 include $(ROOT)/src/so.mk

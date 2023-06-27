@@ -46,11 +46,13 @@
 
 #  huge address ranges
 4.0.0.0/9 Level 3
+4.128.0.0/9 Microsoft
 6.0.0.0/8 US Army
 7.0.0.0/8 US Army
 8.0.0.0/9 Level 3
 9.0.0.0/8 IBM
 11.0.0.0/8 US Army
+12.0.0.0/8 AT&T
 17.0.0.0/8 Apple
 19.0.0.0/8 Ford
 21.0.0.0/8 US Army
@@ -60,9 +62,12 @@
 29.0.0.0/8 US Army
 30.0.0.0/8 US Army
 33.0.0.0/8 US Army
+38.0.0.0/8 Cogent Communications
 48.0.0.0/8 Prudential US
 55.0.0.0/8 US Army
 56.0.0.0/8 US Postal Service
+73.0.0.0/8 Comcast
+205.0.0.0/8 US Army
 214.0.0.0/8 	US Army
 215.0.0.0/8 US Army
 
@@ -183,6 +188,7 @@
 208.75.76.0/22 Netflix
 208.78.164.0/22 Steam
 208.80.152.0/22 Wikipedia
+209.244.0.0/14 Level 3
 
 # WholeSale Internet
 69.30.192.0/18 WholeSale Internet

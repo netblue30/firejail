@@ -5,7 +5,7 @@ ROOT = ../..
 PROG = fcopy
 TARGET = $(PROG)
 
-MOD_HDRS = ../include/common.h ../include/syscall.h
-MOD_OBJS = ../lib/common.o
+EXTRA_HDRS = ../include/common.h ../include/syscall.h
+EXTRA_OBJS = ../lib/common.o
 
 include $(ROOT)/src/prog.mk

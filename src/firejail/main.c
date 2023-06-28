@@ -512,7 +512,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strncmp(argv[i], "--icmptrace=", 12) == 0) {
 		if (checkcfg(CFG_NETWORK)) {
 			if (getuid() != 0) {
-				fprintf(stderr, "Error: -icmptrace is only available to root user\n");
+				fprintf(stderr, "Error: --icmptrace is only available to root user\n");
 				exit(1);
 			}
 			pid_t pid = require_pid(argv[i] + 12);

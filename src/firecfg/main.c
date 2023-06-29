@@ -20,6 +20,8 @@
 
 #include "firecfg.h"
 #include "../include/firejail_user.h"
+#include <glob.h>
+
 int arg_debug = 0;
 char *arg_bindir = "/usr/local/bin";
 int arg_guide = 0;
@@ -209,6 +211,29 @@ static void set_links_firecfg(const char *cfgfile) {
 	}
 
 	fclose(fp);
+	printf("\n");
+}
+
+// parse all config files matching pattern
+static void set_links_firecfg_glob(const char *pattern) {
+	printf("Looking for config files in %s\n", pattern);
+
+	glob_t globbuf;
+	int globerr = glob(pattern, 0, NULL, &globbuf);
+	if (globerr == GLOB_NOMATCH) {
+		fprintf(stderr, "No matches for glob pattern %s\n", pattern);
+		goto out;
+	} else if (globerr != 0) {
+		fprintf(stderr, "Warning: Failed to match glob pattern %s: %s\n",
+		        pattern, strerror(errno));
+		goto out;
+	}
+
+	size_t i;
+	for (i = 0; i < globbuf.gl_pathc; i++)
+		set_links_firecfg(globbuf.gl_pathv[i]);
+out:
+	globfree(&globbuf);
 }
 
 // parse ~/.config/firejail/ directory
@@ -450,12 +475,15 @@ int main(int argc, char **argv) {
 	// clear all symlinks
 	clean();
 
+	// set new symlinks based on .conf files
+	set_links_firecfg_glob(FIRECFG_CONF_GLOB);
+
 	// set new symlinks based on firecfg.config
 	set_links_firecfg(FIRECFG_CFGFILE);
 
 	if (getuid() == 0) {
 		// add user to firejail access database - only for root
-		printf("\nAdding user %s to Firejail access database in %s/firejail.users\n", user, SYSCONFDIR);
+		printf("Adding user %s to Firejail access database in %s/firejail.users\n", user, SYSCONFDIR);
 		// temporarily set the umask, access database must be world-readable
 		mode_t orig_umask = umask(022);
 		firejail_user_add(user);

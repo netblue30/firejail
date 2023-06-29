@@ -143,6 +143,40 @@ static void clean(void) {
 	printf("\n");
 }
 
+#define ignorelist_maxlen 2048
+static const char *ignorelist[ignorelist_maxlen];
+static int ignorelist_len = 0;
+
+static int append_ignorelist(const char *const str) {
+	assert(str);
+	if (ignorelist_len >= ignorelist_maxlen) {
+		fprintf(stderr, "Warning: Ignore list is full (%d/%d), skipping %s\n",
+			ignorelist_len, ignorelist_maxlen, str);
+		return 0;
+	}
+
+	printf("   ignoring '%s'\n", str);
+	const char *const dup = strdup(str);
+	if (!dup)
+		errExit("strdup");
+
+	ignorelist[ignorelist_len] = dup;
+	ignorelist_len++;
+
+	return 1;
+}
+
+static int in_ignorelist(const char *const str) {
+	assert(str);
+	int i;
+	for (i = 0; i < ignorelist_len; i++) {
+		if (strcmp(str, ignorelist[i]) == 0)
+			return 1;
+	}
+
+	return 0;
+}
+
 static void set_file(const char *name, const char *firejail_exec) {
 	if (which(name) == 0)
 		return;
@@ -206,8 +240,17 @@ static void set_links_firecfg(const char *cfgfile) {
 		if (*start == '\0')
 			continue;
 
+		// handle ignore command
+		if (*start == '!') {
+			append_ignorelist(start + 1);
+			continue;
+		}
+
 		// set link
-		set_file(start, FIREJAIL_EXEC);
+		if (!in_ignorelist(start))
+			set_file(start, FIREJAIL_EXEC);
+		else
+			printf("   %s ignored\n", start);
 	}
 
 	fclose(fp);

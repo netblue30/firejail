@@ -37,6 +37,12 @@
 #include "../include/common.h"
 #define MAX_BUF 4096
 
+#define FIRECFG_CFGFILE SYSCONFDIR "/firecfg.config"
+#define FIREJAIL_EXEC PREFIX "/bin/firejail"
+#define FIREJAIL_WELCOME_SH LIBDIR "/firejail/firejail-welcome.sh"
+#define FZENITY_EXEC        LIBDIR "/firejail/fzenity"
+#define ZENITY_EXEC "/usr/bin/zenity"
+#define SUDO_EXEC "sudo"
 
 // main.c
 extern int arg_debug;

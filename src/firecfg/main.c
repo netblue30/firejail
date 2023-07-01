@@ -165,12 +165,11 @@ static void set_file(const char *name, const char *firejail_exec) {
 		if (rv) {
 			fprintf(stderr, "Error: cannot create %s symbolic link\n", fname);
 			perror("symlink");
-		}
-		else
+		} else {
 			printf("   %s created\n", name);
-	}
-	else {
-	  fprintf(stderr, "Warning: cannot create %s - already exists! Skipping...\n", fname);
+		}
+	} else {
+		fprintf(stderr, "Warning: cannot create %s - already exists! Skipping...\n", fname);
 	}
 
 	free(fname);
@@ -260,6 +259,7 @@ static void set_links_homedir(const char *homedir) {
 		free(dirname);
 		return;
 	}
+	free(dirname);
 
 	struct dirent *entry;
 	while ((entry = readdir(dir))) {

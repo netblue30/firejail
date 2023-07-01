@@ -2,6 +2,7 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+MOD_DIR = src/etc-cleanup
 PROG = etc-cleanup
 TARGET = $(PROG)
 

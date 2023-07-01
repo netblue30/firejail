@@ -148,10 +148,8 @@ static int is_dir(const char *fname) {
 		rv = stat(fname, &s);
 	else {
 		char *tmp;
-		if (asprintf(&tmp, "%s/", fname) == -1) {
-			fprintf(stderr, "Error: cannot allocate memory, %s:%d\n", __FILE__, __LINE__);
-			exit(1);
-		}
+		if (asprintf(&tmp, "%s/", fname) == -1)
+			errExit("asprintf");
 		rv = stat(tmp, &s);
 		free(tmp);
 	}

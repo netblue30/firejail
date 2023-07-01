@@ -83,7 +83,7 @@ LDFLAGS=@LDFLAGS@
 # Project variables
 EXTRA_CFLAGS  =@EXTRA_CFLAGS@
 COMMON_CFLAGS = \
-	-ggdb -O2 -DVERSION='"$(VERSION)"' \
+	-ggdb -O2 -DVERSION='"$(VERSION)"' -DMOD_DIR='"$(MOD_DIR)"' \
 	-Wall -Wextra $(HAVE_FATAL_WARNINGS) \
 	-Wformat -Wformat-security \
 	-fstack-protector-all -D_FORTIFY_SOURCE=2 \

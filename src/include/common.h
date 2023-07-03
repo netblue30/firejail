@@ -41,8 +41,8 @@
 
 #define errExit(msg) do { \
 	char msgout[500]; \
-	snprintf(msgout, 500, "Error %s/%s:%d: %s: %s", \
-	         MOD_DIR, __FILE__, __LINE__, __func__, msg); \
+	snprintf(msgout, 500, "Error %s:%d: %s: %s", \
+	         __FILE__, __LINE__, __func__, msg); \
 	perror(msgout); \
 	exit(1); \
 } while (0)

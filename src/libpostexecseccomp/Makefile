@@ -2,8 +2,9 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
-MOD_DIR = src/libpostexecseccomp
-SO = libpostexecseccomp.so
+MOD = libpostexecseccomp
+MOD_DIR = $(ROOT)/src/$(MOD)
+SO = $(MOD_DIR)/$(MOD).so
 TARGET = $(SO)
 
 EXTRA_HDRS = ../include/seccomp.h ../include/rundefs.h

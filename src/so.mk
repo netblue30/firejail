@@ -5,8 +5,8 @@
 # The includer should probably define SO and TARGET and may also want to define
 # EXTRA_HDRS and EXTRA_OBJS and extend CLEANFILES.
 
-HDRS := $(sort $(wildcard *.h)) $(EXTRA_HDRS)
-SRCS := $(sort $(wildcard *.c))
+HDRS := $(sort $(wildcard $(MOD_DIR)/*.h)) $(EXTRA_HDRS)
+SRCS := $(sort $(wildcard $(MOD_DIR)/*.c))
 OBJS := $(SRCS:.c=.o) $(EXTRA_OBJS)
 
 .PHONY: all

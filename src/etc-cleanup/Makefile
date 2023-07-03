@@ -2,8 +2,9 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
-MOD_DIR = src/etc-cleanup
-PROG = etc-cleanup
+MOD = etc-cleanup
+MOD_DIR = $(ROOT)/src/$(MOD)
+PROG = $(MOD_DIR)/$(MOD)
 TARGET = $(PROG)
 
 EXTRA_HDRS = ../include/etc_groups.h

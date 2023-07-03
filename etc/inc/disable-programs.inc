@@ -329,12 +329,12 @@ blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Quotient
+blacklist ${HOME}/.config/RSS Guard 4
 blacklist ${HOME}/.config/Rambox
 blacklist ${HOME}/.config/Riot
 blacklist ${HOME}/.config/Rocket.Chat
 blacklist ${HOME}/.config/RogueLegacy
 blacklist ${HOME}/.config/RogueLegacyStorageContainer
-blacklist ${HOME}/.config/RSS Guard*
 blacklist ${HOME}/.config/Seafile
 blacklist ${HOME}/.config/Signal
 blacklist ${HOME}/.config/Sinew Software Systems

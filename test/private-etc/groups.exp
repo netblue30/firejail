@@ -1,0 +1,132 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --private-etc ls -l /etc\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Private /etc installed in"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"cron" {puts "TESTING ERROR 2\n"; exit}
+	"shadow" {puts "TESTING ERROR 3\n"; exit}
+	"ssl" {puts "TESTING ERROR 4\n"; exit}
+	"ld.so.cache"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"cron" {puts "TESTING ERROR 2\n"; exit}
+	"shadow" {puts "TESTING ERROR 3\n"; exit}
+	"ssl" {puts "TESTING ERROR 4\n"; exit}
+	"nsswitch.conf"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"cron" {puts "TESTING ERROR 2\n"; exit}
+	"shadow" {puts "TESTING ERROR 3\n"; exit}
+	"ssl" {puts "TESTING ERROR 4\n"; exit}
+	"resolv.conf"
+}
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"cron" {puts "TESTING ERROR 2\n"; exit}
+	"shadow" {puts "TESTING ERROR 3\n"; exit}
+	"xdg" {puts "TESTING ERROR 4\n"; exit}
+	"Parent is shutting down"
+}
+after 500
+
+
+send -- "firejail --private-etc=@tls-ca ls -l /etc\r"
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"Private /etc installed in"
+}
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"cron" {puts "TESTING ERROR 12\n"; exit}
+	"shadow" {puts "TESTING ERROR 13\n"; exit}
+	"ca-certificates"
+}
+expect {
+	timeout {puts "TESTING ERROR 14\n";exit}
+	"cron" {puts "TESTING ERROR 12\n"; exit}
+	"shadow" {puts "TESTING ERROR 13\n"; exit}
+	"nsswitch.conf"
+}
+expect {
+	timeout {puts "TESTING ERROR 15\n";exit}
+	"cron" {puts "TESTING ERROR 12\n"; exit}
+	"shadow" {puts "TESTING ERROR 13\n"; exit}
+	"resolv.conf"
+}
+expect {
+	timeout {puts "TESTING ERROR 16\n";exit}
+	"cron" {puts "TESTING ERROR 12\n"; exit}
+	"shadow" {puts "TESTING ERROR 13\n"; exit}
+	"ssl"
+}
+after 500
+
+
+send -- "firejail --private-etc --nosound ls -l /etc\r"
+expect {
+	timeout {puts "TESTING ERROR 20\n";exit}
+	"Private /etc installed in"
+}
+expect {
+	timeout {puts "TESTING ERROR 21\n";exit}
+	"cron" {puts "TESTING ERROR 22\n"; exit}
+	"shadow" {puts "TESTING ERROR 23\n"; exit}
+	"machine-id" {puts "TESTING ERROR 24\n"; exit}
+	"nsswitch.conf"
+}
+expect {
+	timeout {puts "TESTING ERROR 25\n";exit}
+	"Parent is shutting down"
+}
+after 500
+
+send -- "firejail --private-etc --net=none ls -l /etc\r"
+expect {
+	timeout {puts "TESTING ERROR 30\n";exit}
+	"Private /etc installed in"
+}
+expect {
+	timeout {puts "TESTING ERROR 31\n";exit}
+	"cron" {puts "TESTING ERROR 32\n"; exit}
+	"shadow" {puts "TESTING ERROR 33\n"; exit}
+	"nsswitch.conf"
+}
+expect {
+	timeout {puts "TESTING ERROR 34\n";exit}
+	"resolv.conf" {puts "TESTING ERROR 35\n"; exit}
+	"Parent is shutting down"
+}
+after 500
+
+send -- "firejail --private-etc=@x11 ls -l /etc\r"
+expect {
+	timeout {puts "TESTING ERROR 40\n";exit}
+	"Private /etc installed in"
+}
+expect {
+	timeout {puts "TESTING ERROR 41\n";exit}
+	"cron" {puts "TESTING ERROR 42\n"; exit}
+	"shadow" {puts "TESTING ERROR 43\n"; exit}
+	"nsswitch.conf"
+}
+expect {
+	timeout {puts "TESTING ERROR 44\n";exit}
+	"xdg"
+}
+after 100
+
+
+puts "\nall done\n"

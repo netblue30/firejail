@@ -78,3 +78,4 @@ private-dev
 private-tmp
 
 read-only ${HOME}/.ssh
+restrict-namespaces

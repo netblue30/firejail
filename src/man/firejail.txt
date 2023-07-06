@@ -11,7 +11,7 @@ firejail [OPTIONS] [program and arguments]
 Start an AppImage program:
 .PP
 .RS
-firejail [OPTIONS] --appimage [appimage-file and arguments]
+firejail [OPTIONS] --appimage [OPTIONS] [appimage-file and arguments]
 .RE
 .PP
 #ifdef HAVE_FILE_TRANSFER
@@ -166,13 +166,20 @@ Example:
 .br
 $ firejail --appimage --profile=krita krita-3.0-x86_64.appimage
 .br
-$ firejail --appimage --private --profile=krita krita-3.0-x86_64.appimage
+$ firejail --quiet --appimage --private --profile=krita krita-3.0-x86_64.appimage
 .br
 #ifdef HAVE_X11
 $ firejail --appimage --net=none --x11 --profile=krita krita-3.0-x86_64.appimage
 #endif
-.TP
+.br
+
+.br
+Note: When using both \fB--appimage\fR and \fB--profile\fR, it is recommended
+to always specify the former before the latter, so that any \fB?HAS_APPIMAGE\fR
+conditionals inside of the profile evaluate to true (see \fB?CONDITIONAL\fR in
+firejail-profile(5)).
 #ifdef HAVE_NETWORK
+.TP
 \fB\-\-bandwidth=name|pid
 Set bandwidth limits for the sandbox identified by name or PID, see \fBTRAFFIC SHAPING\fR section for more details.
 #endif
@@ -193,7 +200,7 @@ Blacklist directory or file. File globbing is supported, see \fBFILE GLOBBING\fR
 .br
 Symbolic link handling: Blacklisting a path that is a symbolic link will also
 blacklist the path that it points to.
-For example, if ~/foo is blacklisted and it points to /foo, then /foo will also
+For example, if ~/foo is blacklisted and it points to /bar, then /bar will also
 be blacklisted.
 .br
 
@@ -330,6 +337,11 @@ $ firejail \-\-chroot=/media/ubuntu warzone2100
 .br
 For automatic mounting of X11 and PulseAudio sockets set environment variables
 FIREJAIL_CHROOT_X11 and FIREJAIL_CHROOT_PULSE.
+.br
+
+.br
+Note: Support for this command is controlled in firejail.config with the
+\fBchroot\fR option.
 #endif
 .TP
 \fB\-\-cpu=cpu-number,cpu-number,cpu-number
@@ -672,9 +684,11 @@ Print all recognized error numbers in the current Firejail software build and ex
 Example:
 .br
 $ firejail \-\-debug-errnos
+#ifdef HAVE_PRIVATE_LIB
 .TP
 \fB\-\-debug-private-lib
 Debug messages for --private-lib option.
+#endif
 .TP
 \fB\-\-debug-protocols
 Print all recognized protocols in the current Firejail software build and exit.
@@ -774,6 +788,48 @@ $ firejail \-\-list
 .br
 $ firejail \-\-dns.print=3272
 
+#ifdef HAVE_NETWORK
+.TP
+\fB\-\-dnstrace[=name|pid]
+Monitor DNS queries. The sandbox can be specified by name or pid. Only networked sandboxes
+created with \-\-net are supported. This option is only available when running the sandbox as root.
+.br
+
+.br
+Without a name/pid, Firejail will monitor the main system network namespace.
+.br
+
+.br
+Example:
+.br
+$ sudo firejail --dnstrace
+.br
+11:31:43  9.9.9.9        linux.com (type 1)
+.br
+11:31:45  9.9.9.9        fonts.googleapis.com (type 1) NXDOMAIN
+.br
+11:31:45  9.9.9.9        js.hs-scripts.com (type 1) NXDOMAIN
+.br
+11:31:45  9.9.9.9        www.linux.com (type 1)
+.br
+11:31:45  9.9.9.9        fonts.googleapis.com (type 1) NXDOMAIN
+.br
+11:31:52  9.9.9.9        js.hs-scripts.com (type 1) NXDOMAIN
+.br
+11:32:05  9.9.9.9        secure.gravatar.com (type 1)
+.br
+11:32:06  9.9.9.9        secure.gravatar.com (type 1)
+.br
+11:32:08  9.9.9.9        taikai.network (type 1)
+.br
+11:32:08  9.9.9.9        cdn.jsdelivr.net (type 1)
+.br
+11:32:08  9.9.9.9        taikai.azureedge.net (type 1)
+.br
+11:32:08  9.9.9.9        www.youtube.com (type 1)
+.br
+#endif
+
 .TP
 \fB\-\-env=name=value
 Set environment variable in the new sandbox.
@@ -819,6 +875,8 @@ Print options end exit.
 .TP
 \fB\-\-hostname=name
 Set sandbox hostname.
+.br
+For valid names, see the \fBNAME VALIDATION\fR section.
 .br
 
 .br
@@ -866,10 +924,38 @@ Ignore command in profile file.
 .br
 Example:
 .br
-$ firejail \-\-ignore=shell --ignore=seccomp firefox
+$ firejail --ignore=seccomp --ignore=caps firefox
 #ifdef HAVE_NETWORK
 .br
 $ firejail \-\-ignore="net eth0" firefox
+#endif
+
+#ifdef HAVE_NETWORK
+.TP
+\fB\-\-icmptrace[=name|pid]
+Monitor ICMP traffic. The sandbox can be specified by name or pid. Only networked sandboxes
+created with \-\-net are supported. This option is only available when running the sandbox as root.
+.br
+
+.br
+Without a name/pid, Firejail will monitor the main system network namespace.
+.br
+
+.br
+Example
+.br
+$ sudo firejail --icmptrace
+.br
+20:53:54  192.168.1.60 -> 142.250.65.174 - 98 bytes - Echo request/0
+.br
+20:53:54  142.250.65.174 -> 192.168.1.60 - 98 bytes - Echo reply/0
+.br
+20:53:55  192.168.1.60 -> 142.250.65.174 - 98 bytes - Echo request/0
+.br
+20:53:55  142.250.65.174 -> 192.168.1.60 - 98 bytes - Echo reply/0
+.br
+20:53:55  192.168.1.60 -> 1.1.1.1 - 154 bytes - Destination unreachable/Port unreachable
+.br
 #endif
 
 .TP
@@ -1096,7 +1182,9 @@ Switching to pid 1932, the first child process inside the sandbox
 .TP
 \fB\-\-join-or-start=name
 Join the sandbox identified by name or start a new one.
-Same as "firejail --join=name" if sandbox with specified name exists, otherwise same as "firejail --name=name ..."
+Same as "firejail --join=name" if sandbox with specified name exists, otherwise
+same as "firejail --name=name ...".
+See \fB\-\-name\fR for details.
 .br
 Note that in contrary to other join options there is respective profile option.
 
@@ -1142,6 +1230,14 @@ Example:
 $ firejail --keep-fd=3,4,5
 
 .TP
+\fB\-\-keep-shell-rc
+By default, when using a private home directory, firejail copies files from the
+system's user home template (/etc/skel) into it, which overrides attempts to
+whitelist the original files (such as ~/.bashrc and ~/.zshrc).
+This option disables this feature, and enables the user to whitelist the
+original files.
+
+.TP
 \fB\-\-keep-var-tmp
 /var/tmp directory is untouched.
 .br
@@ -1150,41 +1246,6 @@ $ firejail --keep-fd=3,4,5
 Example:
 .br
 $ firejail --keep-var-tmp
-
-#ifdef HAVE_LANDLOCK
-.TP
-\fB\-\-landlock
-Create a Landlock ruleset (if it doesn't already exist) and add basic access rules to it. See \fBLANDLOCK\fR section for more information.
-.br
-.TP
-\fB\-\-landlock.proc=no|ro|rw
-Add an access rule for /proc directory (read-only if set to \fBro\fR and read-write if set to \fBrw\fR). The access rule for /proc is added after this directory is set up in the sandbox. Access rules for /proc set up with other Landlock-related command-line options have no effect.
-.br
-.TP
-\fB\-\-landlock.read=path
-Create a Landlock ruleset (if it doesn't already exist) and add a read access rule for path.
-.br
-
-.TP
-\fB\-\-landlock.write=path
-Create a Landlock ruleset (if it doesn't already exist) and add a write access rule for path. 
-.br
-
-.TP
-\fB\-\-landlock.special=path
-Create a Landlock ruleset (if it doesn't already exist) and add a permission rule to create FIFO pipes, Unix domain sockets and block devices beneath given path.
-.br
-
-.TP
-\fB\-\-landlock.execute=path
-Create a Landlock ruleset (if it doesn't already exist) and add an execution permission rule for path.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-landlock.read=/ \-\-landlock.write=/home \-\-landlock.execute=/usr
-#endif
 
 .TP
 \fB\-\-list
@@ -1283,7 +1344,13 @@ $ firejail \-\-net=eth0 \-\-mtu=1492
 \fB\-\-name=name
 Set sandbox name. Several options, such as \-\-join and \-\-shutdown, can use
 this name to identify a sandbox.
+The name cannot contain only digits, as that is treated as a PID in the other
+options, such as in \-\-join.
+.br
+For valid names, see the \fBNAME VALIDATION\fR section.
+.br
 
+.br
 In case the name supplied by the user is already in use by another sandbox, Firejail will assign a
 new name as "name-PID", where PID is the process ID of the sandbox. This functionality
 can be disabled at run time in /etc/firejail/firejail.config file, by setting "name-change" flag to "no".
@@ -1303,7 +1370,6 @@ $ firejail --list
 .br
 1312:netblue:browser-1312:firejail --name=browser --private firefox --no-remote
 .br
-
 #ifdef HAVE_NETWORK
 .TP
 \fB\-\-net=bridge_interface
@@ -1579,7 +1645,7 @@ PID  User    RX(KB/s) TX(KB/s) Command
 7383 netblue 9.045    0.112    firejail \-\-net=eth0 transmission
 .TP
 \fB\-\-nettrace[=name|pid]
-Monitor TCP and UDP traffic coming into the sandbox specified by name or pid. Only networked sandboxes
+Monitor received TCP. UDP, and ICMP traffic. The sandbox can be specified by name or pid. Only networked sandboxes
 created with \-\-net are supported. This option is only available when running the sandbox as root.
 .br
 
@@ -1588,9 +1654,9 @@ Without a name/pid, Firejail will monitor the main system network namespace.
 .br
 
 .br
- $ sudo firejail --nettrace=browser
+Example:
 .br
-
+$ sudo firejail --nettrace
 .br
                         95 KB/s  geoip 457, IP database 4436
 .br
@@ -1607,8 +1673,8 @@ Without a name/pid, Firejail will monitor the main system network namespace.
 
 .br
 If /usr/bin/geoiplookup is installed (geoip-bin package in Debian),
-the country the IP address originates from is added to the trace.
-We also use the static IP map in /etc/firejail/hostnames
+the country the traffic originates from is added to the trace.
+We also use the static IP map in /usr/lib/firejail/static-ip-map
 to print the domain names for some of the more common websites and cloud platforms.
 No external services are contacted for reverse IP lookup.
 #endif
@@ -2081,22 +2147,32 @@ cdrom  cdrw  dri  dvd  dvdrw  full  log  null  ptmx  pts  random  shm  snd  sr0 
 .br
 $
 .TP
-\fB\-\-private-etc=file,directory
-Build a new /etc in a temporary
-filesystem, and copy the files and directories in the list.
-The files and directories in the list must be expressed as relative to
-the /etc directory (e.g., /etc/foo must be expressed as foo).
-If no listed file is found, /etc directory will be empty.
-All modifications are discarded when the sandbox is closed.
-Multiple private-etc commands are allowed and they accumulate.
-.br
+\fB\-\-private-etc, \-\-private-etc=file,directory,@group
+The files installed by \-\-private-etc are copies of the original system files from /etc directory.
+By default, the command brings in a skeleton of files and directories used by most console tools:
 
-.br
-Example:
-.br
-$ firejail --private-etc=group,hostname,localtime, \\
-.br
-nsswitch.conf,passwd,resolv.conf
+$ firejail --private-etc dig debian.org
+
+For X11/GTK/QT/Gnome/KDE  programs add @x11 group as a parameter. Example:
+
+$ firejail --private-etc=@x11,gcrypt,python* gimp
+
+gcrypt and /etc/python* directories are not part of the generic @x11 group.
+File globbing is supported.
+
+For games, add @games group:
+
+$ firejail --private-etc=@games,@x11 warzone2100
+
+Sound and networking files are included automatically, unless \-\-nosound or \-\-net=none are specified.
+Files for encrypted TLS/SSL protocol are in @tls-ca group.
+
+$ firejail --private-etc=@tls-ca,wgetrc wget https://debian.org
+
+
+Note: The easiest way to extract the list of /etc files accessed by your program is using strace utility:
+
+$ strace /usr/bin/transmission-qt 2>&1 | grep open | grep etc
 #ifdef HAVE_PRIVATE_HOME
 .TP
 \fB\-\-private-home=file,directory
@@ -2114,6 +2190,7 @@ Example:
 .br
 $ firejail \-\-private-home=.mozilla firefox
 #endif
+#ifdef HAVE_PRIVATE_LIB
 .TP
 \fB\-\-private-lib=file,directory
 This feature is currently under heavy development. Only amd64 platforms are supported at this moment.
@@ -2166,6 +2243,10 @@ $ ps
 $
 .br
 
+.br
+Note: Support for this command is controlled in firejail.config with the
+\fBprivate-lib\fR option.
+#endif
 .TP
 \fB\-\-private-opt=file,directory
 Build a new /opt in a temporary
@@ -2489,7 +2570,7 @@ filters.
 .br
 Example:
 .br
-$ firejail \-\-noprofile \-\-shell=none \-\-seccomp=execve sh
+$ firejail \-\-noprofile \-\-seccomp=execve sh
 .br
 Parent pid 32751, child pid 32752
 .br
@@ -2566,7 +2647,7 @@ additional filter for 32 bit system calls can be installed with
 .br
 Example:
 .br
-$ firejail \-\-shell=none \-\-seccomp.keep=poll,select,[...] transmission-gtk
+$ firejail \-\-seccomp.keep=poll,select,[...] transmission-gtk
 
 .TP
 \fB\-\-seccomp.print=name|pid
@@ -2748,25 +2829,6 @@ call.
 .br
 
 .TP
-\fB\-\-shell=none
-Run the program directly, without a user shell.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-shell=none script.sh
-.TP
-\fB\-\-shell=program
-Set default user shell. Use this shell to run the application using \-c shell option.
-For example "firejail \-\-shell=/bin/dash firefox" will start Mozilla Firefox as "/bin/dash \-c firefox".
-By default the user's preferred shell is used.
-.br
-
-.br
-Example:
-$firejail \-\-shell=/bin/dash script.sh
-.TP
 \fB\-\-shutdown=name|pid
 Shutdown the sandbox identified by name or PID.
 .br
@@ -2787,6 +2849,51 @@ $ firejail \-\-list
 3272:netblue::firejail \-\-private firefox
 .br
 $ firejail \-\-shutdown=3272
+
+#ifdef HAVE_NETWORK
+.TP
+\fB\-\-snitrace[=name|pid]
+Monitor Server Name Indication (TLS/SNI). The sandbox can be specified by name or pid. Only networked sandboxes
+created with \-\-net are supported. This option is only available when running the sandbox as root.
+.br
+
+.br
+Without a name/pid, Firejail will monitor the main system network namespace.
+.br
+
+.br
+Example:
+.br
+$ sudo firejail --snitrace
+.br
+07:49:51  23.185.0.3       linux.com
+.br
+07:49:51  23.185.0.3       www.linux.com
+.br
+07:50:05  192.0.73.2       secure.gravatar.com
+.br
+07:52:35  172.67.68.93     www.howtoforge.com
+.br
+07:52:37  13.225.103.59    sf.ezoiccdn.com
+.br
+07:52:42  142.250.176.3    www.gstatic.com
+.br
+07:53:03  173.236.250.32   www.linuxlinks.com
+.br
+07:53:05  192.0.77.37      c0.wp.com
+.br
+07:53:08  192.0.78.32      jetpack.wordpress.com
+.br
+07:53:09  192.0.77.32      s0.wp.com
+.br
+07:53:09  192.0.77.2       i0.wp.com
+.br
+07:53:10  192.0.77.2       i0.wp.com
+.br
+07:53:11  192.0.73.2       1.gravatar.com
+.br
+#endif
+
 .TP
 \fB\-\-tab
 Enable shell tab completion in sandboxes using private or whitelisted home directories.
@@ -2873,6 +2980,11 @@ Dec  3 11:43:25 debian firejail[70]: blacklist violation - sandbox 26370, exe fi
 Dec  3 11:46:17 debian firejail[70]: blacklist violation - sandbox 26370, exe firefox, syscall opendir, path /boot
 .br
 [...]
+.br
+
+.br
+Note: Support for this command is controlled in firejail.config with the
+\fBtracelog\fR option.
 .TP
 \fB\-\-tree
 Print a tree of all sandboxed processes, see \fBMONITORING\fR section for more details.
@@ -2984,7 +3096,7 @@ Example:
 .br
 $ firejail \-\-noprofile \-\-whitelist=~/.mozilla
 .br
-$ firejail \-\-whitelist=/tmp/.X11-unix --whitelist=/dev/null
+$ firejail \-\-whitelist=/tmp/.X11-unix \-\-whitelist=/dev/null
 .br
 $ firejail "\-\-whitelist=/home/username/My Virtual Machines"
 .br
@@ -3193,6 +3305,17 @@ Example:
 $ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 firefox
 .br
 #endif
+.\" Note: Keep this in sync with invalid_name() in src/firejail/util.c.
+.SH NAME VALIDATION
+For simplicity, the same name validation is used for multiple options.
+Rules:
+.PP
+The name must be 1-253 characters long.
+The name can only contain ASCII letters, digits and the special characters
+"-._" (that is, the name cannot contain spaces or control characters).
+The name cannot contain only digits.
+The first and last characters must be an ASCII letter or digit and the name
+may contain special characters in the middle.
 #ifdef HAVE_APPARMOR
 .SH APPARMOR
 .TP
@@ -3237,34 +3360,7 @@ To enable AppArmor confinement on top of your current Firejail security features
 .br
 $ firejail --apparmor firefox
 #endif
-#ifdef HAVE_LANDLOCK
-.SH LANDLOCK
-.TP
-Landlock is a Linux security module first introduced in the 5.13 version of Linux kernel. It allows unprivileged processes to restrict their access to the filesystem. Once imposed, these restrictions can never be removed, and all child processes created by a Landlock-restricted processes inherit these restrictions. Firejail supports Landlock as an additional sandboxing feature. It can be used to ensure that a sandboxed application can only access files and directories that it was explicitly allowed to access. Firejail supports populating the ruleset with both basic set of rules and with custom set of rules. Basic set of rules allows read-only access to /bin, /dev, /etc, /lib, /opt, /proc, /usr and /var, read-write access to the home directory, and allows execution of binaries located in /bin, /opt and /usr.
-.br
 
-.TP
-Important notes:
-.br
-
-.br
-- A process can install a Landlock ruleset only if it has either \fBCAP_SYS_ADMIN\fR in its effective capability set, or the "No New Privileges" restriction enabled. Because of this, enabling the Landlock feature will also cause Firejail to enable the "No New Privileges" restriction, regardless of the profile or the \fB\-\-no\-new\-privs\fR command line option.
-.br
-
-.br
-- Access to the /proc directory is managed through the \fB\-\-landlock.proc\fR command line option.
-
-.br
-- Access to the /etc directory is automatically allowed. To override this, use the \fB\-\-writable\-etc\fR command line option. You can also use the \fB\-\-private\-etc\fR option to restrict access to the /etc directory.
-.br
-
-.TP
-To enable Landlock self-restriction on top of your current Firejail security features, pass \fB\-\-landlock\fR flag to Firejail command line. You can also use \fB\-\-landlock.read\fR, \fB\-\-landlock.write\fR, \fB\-\-landlock.special\fR and \fB\-\-landlock.execute\fR options together with \fB\-\-landlock\fR or instead of it. Example:
-.br
-
-.br
-$ firejail --landlock --landlock.read=/media --landlock.proc=ro mc
-#endif
 .SH DESKTOP INTEGRATION
 A symbolic link to /usr/bin/firejail under the name of a program, will start the program in Firejail sandbox.
 The symbolic link should be placed in the first $PATH position. On most systems, a good place

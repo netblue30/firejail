@@ -43,8 +43,10 @@ private-bin hyperrogue
 private-cache
 private-cwd
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
+private-etc
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

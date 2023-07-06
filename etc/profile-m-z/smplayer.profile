@@ -52,3 +52,5 @@ private-tmp
 # problems with KDE
 # dbus-user none
 # dbus-system none
+
+restrict-namespaces

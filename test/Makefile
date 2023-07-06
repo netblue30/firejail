@@ -1,3 +1,7 @@
+.SUFFIXES:
+ROOT = ..
+-include $(ROOT)/config.mk
+
 TESTS=$(patsubst %/,%,$(wildcard */))
 
 .PHONY: $(TESTS)

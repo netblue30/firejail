@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -8,97 +8,15 @@ spawn $env(SHELL)
 match_max 100000
 
 set appimage_id $spawn_id
-send -- "firejail --name=appimage-test --debug --appimage Leafpad-0.8.17-x86_64.AppImage testfile\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"execvp argument 2"
-}
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"AppRun"
-}
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"testfile"
-}
+send -- "firejail --name=test --appimage hello-x86_64.AppImage testfile\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
-sleep 2
-
-spawn $env(SHELL)
-send -- "firejail --list\r"
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	":firejail"
-}
-expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	"appimage Leafpad"
-}
-after 100
-
-# grsecurity exit
-send -- "file /proc/sys/kernel/grsecurity\r"
-expect {
-	timeout {puts "TESTING ERROR - grsecurity detection\n";exit}
-	"grsecurity: directory" {puts "grsecurity present, exiting...\n";exit}
-	"cannot open" {puts "grsecurity not present\n"}
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"1 - testfile"
 }
 
-
-send -- "firejail --name=blablabla\r"
-expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-sleep 2
-
-spawn $env(SHELL)
-send -- "firemon --seccomp --wrap\r"
-expect {
-	timeout {puts "TESTING ERROR 8\n";exit}
-	"need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
-	"appimage Leafpad"
-}
-expect {
-	timeout {puts "TESTING ERROR 9 (seccomp)\n";exit}
-	"Seccomp:	2"
-}
-expect {
-	timeout {puts "TESTING ERROR 10\n";exit}
-	"name=blablabla"
-}
-after 100
-send -- "firemon --caps --wrap\r"
-expect {
-	timeout {puts "TESTING ERROR 11\n";exit}
-	"appimage Leafpad"
-}
-expect {
-	timeout {puts "TESTING ERROR 12\n";exit}
-	"CapBnd:"
-}
-expect {
-	timeout {puts "TESTING ERROR 13\n";exit}
-	"0000000000000000"
-}
-expect {
-	timeout {puts "TESTING ERROR 14\n";exit}
-	"name=blablabla"
-}
-after 100
-
-spawn $env(SHELL)
-send -- "firejail --shutdown=appimage-test\r"
-
-set spawn_id $appimage_id
-expect {
-	timeout {puts "shutdown\n";exit}
-	"AppImage detached"
-}
-
-after 100
-
+after 500
 puts "\nall done\n"

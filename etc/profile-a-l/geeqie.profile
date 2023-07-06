@@ -1,5 +1,5 @@
 # Firejail profile for geeqie
-# Description: Image viewer using GTK+
+# Description: Image viewer using GTK
 # This file is overwritten after every install/update
 # Persistent local customizations
 include geeqie.local
@@ -9,6 +9,9 @@ include globals.local
 noblacklist ${HOME}/.cache/geeqie
 noblacklist ${HOME}/.config/geeqie
 noblacklist ${HOME}/.local/share/geeqie
+
+# Allow perl (blacklisted by disable-interpreters.inc)
+include allow-perl.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -31,3 +34,5 @@ seccomp
 
 # private-bin geeqie
 private-dev
+
+restrict-namespaces

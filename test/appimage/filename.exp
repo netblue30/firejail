@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -24,7 +24,7 @@ after 100
 send -- "firejail --appimage appimage.sh\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Error mounting appimage"
+	-re "Error .*mounting appimage"
 }
 after 100
 

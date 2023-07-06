@@ -50,7 +50,7 @@ disable-mnt
 private-bin sh
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
+private-etc @tls-ca
 # Add the next line to your links-common.local to allow external media players.
 # private-etc alsa,asound.conf,machine-id,openal,pulse
 private-tmp
@@ -59,3 +59,4 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

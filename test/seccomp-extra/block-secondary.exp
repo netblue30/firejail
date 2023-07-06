@@ -1,0 +1,43 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+
+# 64 bit architecture - seccomp.block-secondary
+send --  "firejail --debug --seccomp.block-secondary pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 2\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 4\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp seccomp filter"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 6\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.protocol seccomp filter"
+}
+after 500
+
+# 64 bit architecture - seccomp.block-secondary, profile
+send --  "firejail --debug --profile=block-secondary.profile pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 8\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 10\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp seccomp filter"
+}
+after 500
+puts "all done\n"

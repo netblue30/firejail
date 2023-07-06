@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -89,6 +89,7 @@
 #define RUN_ASOUNDRC_FILE		RUN_MNT_DIR "/.asoundrc"
 #define RUN_HOSTNAME_FILE		RUN_MNT_DIR "/hostname"
 #define RUN_HOSTS_FILE			RUN_MNT_DIR "/hosts"
+#define RUN_HOSTS_FILE2			RUN_MNT_DIR "/hosts2"
 #define RUN_MACHINEID			RUN_MNT_DIR "/machine-id"
 #define RUN_LDPRELOAD_FILE		RUN_MNT_DIR "/ld.so.preload"
 #define RUN_UTMP_FILE			RUN_MNT_DIR "/utmp"
@@ -99,5 +100,7 @@
 #define RUN_UMASK_FILE			RUN_MNT_DIR "/umask"
 #define RUN_JOIN_FILE	 		RUN_MNT_DIR "/join"
 #define RUN_OVERLAY_ROOT		RUN_MNT_DIR "/oroot"
+#define RUN_RESOLVCONF_FILE		RUN_MNT_DIR "/resolv.conf"
+
 
 #endif

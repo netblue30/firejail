@@ -40,5 +40,7 @@ private-bin awk,cut,dbus-send,egrep,file,grep,head,python*,readlink,sed,sh,udisk
 # private-bin thunar
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg
+private-etc @x11,mime.types
 private-tmp
+
+restrict-namespaces

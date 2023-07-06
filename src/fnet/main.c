@@ -1,5 +1,5 @@
- /*
- * Copyright (C) 2014-2022 Firejail Authors
+/*
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -35,19 +35,21 @@ void fmessage(char* fmt, ...) { // TODO: this function is duplicated in src/fire
 	fflush(0);
 }
 
+static const char *const usage_str =
+	"Usage:\n"
+	"\tfnet create veth dev1 dev2 bridge child\n"
+	"\tfnet create macvlan dev parent child\n"
+	"\tfnet moveif dev proc\n"
+	"\tfnet printif\n"
+	"\tfnet printif scan\n"
+	"\tfnet config interface dev ip mask mtu\n"
+	"\tfnet config mac addr\n"
+	"\tfnet config ipv6 dev ip\n"
+	"\tfnet ifup dev\n"
+	"\tfnet waitll dev\n";
 
 static void usage(void) {
-	printf("Usage:\n");
-	printf("\tfnet create veth dev1 dev2 bridge child\n");
-	printf("\tfnet create macvlan dev parent child\n");
-	printf("\tfnet moveif dev proc\n");
-	printf("\tfnet printif\n");
-	printf("\tfnet printif scan\n");
-	printf("\tfnet config interface dev ip mask mtu\n");
-	printf("\tfnet config mac addr\n");
-	printf("\tfnet config ipv6 dev ip\n");
-	printf("\tfnet ifup dev\n");
-  printf("\tfnet waitll dev\n");
+	puts(usage_str);
 }
 
 int main(int argc, char **argv) {
@@ -87,7 +89,7 @@ printf("\n");
 	else if (argc == 7 && strcmp(argv[1], "create") == 0 && strcmp(argv[2], "veth") == 0) {
 		// create veth pair and move one end in the the namespace
 		net_create_veth(argv[3], argv[4], atoi(argv[6]));
-		// connect the ohter veth end to the bridge ...
+		// connect the other veth end to the bridge ...
 		net_bridge_add_interface(argv[5], argv[3]);
 		// ... and bring it  up
 		net_if_up(argv[3]);
@@ -144,9 +146,9 @@ printf("\n");
 	else if (argc == 5 && strcmp(argv[1], "config") == 0 && strcmp(argv[2], "ipv6") == 0) {
 		net_if_ip6(argv[3], argv[4]);
 	}
-  else if (argc == 3 && strcmp(argv[1], "waitll") == 0) {
-    net_if_waitll(argv[2]);
-  }
+	else if (argc == 3 && strcmp(argv[1], "waitll") == 0) {
+		net_if_waitll(argv[2]);
+	}
 	else {
 		fprintf(stderr, "Error fnet: invalid arguments\n");
 		return 1;

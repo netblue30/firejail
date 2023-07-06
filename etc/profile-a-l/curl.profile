@@ -54,7 +54,10 @@ tracelog
 private-cache
 private-dev
 # private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl
+private-etc @tls-ca
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

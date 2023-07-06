@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @make_input@ -->
+<!-- vim: set ts=2 sts=2 sw=2 et: -->
+<!--
+  https://gitlab.gnome.org/GNOME/gtksourceview/-/blob/master/docs/lang-tutorial.md
+  https://gitlab.gnome.org/GNOME/gtksourceview/-/blob/master/docs/lang-reference.md
+-->
+<language id="firejail-profile" name="Firejail Profile" version="2.0" _section="Other">
+  <metadata>
+    <property name="mimetypes">text/plain;text/x-firejail-profile</property>
+    <property name="globs">*.profile;*.local;*.inc</property>
+    <property name="line-comment-start">#</property>
+  </metadata>
+
+  <styles>
+    <style id="comment" name="Comment" map-to="def:comment"/>
+    <style id="condition" name="Condition" map-to="def:preprocessor"/>
+    <style id="command" name="Command" map-to="def:keyword"/>
+    <style id="invalid" name="Invalid" map-to="def:error"/>
+  </styles>
+
+  <definitions>
+    <define-regex id="commands-with-arguments" extended="true">
+      (@FJ_PROFILE_COMMANDS_ARG1@)
+    </define-regex>
+
+    <define-regex id="commands-without-arguments" extended="true">
+      (@FJ_PROFILE_COMMANDS_ARG0@)
+    </define-regex>
+
+    <define-regex id="conditions" extended="true">
+      (@FJ_PROFILE_CONDITIONALS@)
+    </define-regex>
+
+    <context id="conditional-line">
+      <match>\?(?P&lt;condition&gt;\%{conditions}): </match>
+      <include>
+        <context sub-pattern="condition" style-ref="condition"/>
+      </include>
+    </context>
+
+    <context id="command-with-args">
+      <match>(?P&lt;command&gt;\%{commands-with-arguments}) (?P&lt;args&gt;.+)</match>
+      <include>
+        <context sub-pattern="command" style-ref="command"/>
+      </include>
+    </context>
+
+    <context id="command-without-args">
+      <match dupnames="true">(?P&lt;command&gt;\%{commands-without-arguments})</match>
+      <include>
+        <context sub-pattern="command" style-ref="command"/>
+      </include>
+    </context>
+
+    <context id="invalid" style-ref="invalid">
+      <match>.+</match>
+    </context>
+
+    <context id="firejail-profile" class="no-spell-check">
+      <include>
+        <context ref="def:shell-like-comment"/>
+        <context ref="conditional-line"/>
+        <context ref="command-with-args"/>
+        <context ref="command-without-args"/>
+        <context ref="invalid"/>
+      </include>
+    </context>
+  </definitions>
+</language>

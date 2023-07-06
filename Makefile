@@ -1,3 +1,5 @@
+.SUFFIXES:
+ROOT = .
 -include config.mk
 
 ifneq ($(HAVE_MAN),no)
@@ -5,25 +7,47 @@ MAN_TARGET = man
 MAN_SRC = src/man
 endif
 
+ifneq ($(HAVE_CONTRIB_INSTALL),no)
+CONTRIB_TARGET = contrib
+endif
+
 COMPLETIONDIRS = src/zsh_completion src/bash_completion
 
-.PHONY: all
-all: all_items mydirs $(MAN_TARGET) filters
-APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailcheck/jailcheck
+APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailcheck/jailcheck src/etc-cleanup/etc-cleanup
 SBOX_APPS = src/fbuilder/fbuilder src/ftee/ftee src/fids/fids
 SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter src/fzenity/fzenity
 SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
 SBOX_APPS_NON_DUMPABLE += src/fnettrace/fnettrace src/fnettrace-dns/fnettrace-dns src/fnettrace-sni/fnettrace-sni
+SBOX_APPS_NON_DUMPABLE += src/fnettrace-icmp/fnettrace-icmp
 MYDIRS = src/lib $(MAN_SRC) $(COMPLETIONDIRS)
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 COMPLETIONS = src/zsh_completion/_firejail src/bash_completion/firejail.bash_completion
-MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5 jailcheck.1
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
+MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5 jailcheck.1
+
+SYSCALL_HEADERS := $(sort $(wildcard src/include/syscall*.h))
+
+# Lists of keywords used in profiles; used for generating syntax files.
+SYNTAX_LISTS = \
+	contrib/syntax/lists/profile_commands_arg0.list \
+	contrib/syntax/lists/profile_commands_arg1.list \
+	contrib/syntax/lists/profile_conditionals.list \
+	contrib/syntax/lists/profile_macros.list \
+	contrib/syntax/lists/syscall_groups.list \
+	contrib/syntax/lists/syscalls.list \
+	contrib/syntax/lists/system_errnos.list
+
+SYNTAX_FILES_IN := $(sort $(wildcard contrib/syntax/files/*.in))
+SYNTAX_FILES := $(SYNTAX_FILES_IN:.in=)
+
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
 
+.PHONY: all
+all: all_items mydirs filters $(MAN_TARGET) $(CONTRIB_TARGET)
+
 config.mk config.sh:
-	printf 'run ./configure to generate %s\n' "$@" >&2
-	false
+	@printf 'error: run ./configure to generate %s\n' "$@" >&2
+	@false
 
 .PHONY: all_items $(ALL_ITEMS)
 all_items: $(ALL_ITEMS)
@@ -35,11 +59,7 @@ mydirs: $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
 
-$(MANPAGES): src/man config.mk
-	./mkman.sh $(VERSION) src/man/$(basename $@).man $@
-
-man: $(MANPAGES)
-
+.PHONY: filters
 filters: $(SECCOMP_FILTERS) $(SBOX_APPS_NON_DUMPABLE)
 seccomp: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
 	src/fseccomp/fseccomp default seccomp
@@ -62,14 +82,84 @@ seccomp.mdwx: src/fseccomp/fseccomp
 seccomp.mdwx.32: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp memory-deny-write-execute.32 seccomp.mdwx.32
 
+$(MANPAGES): src/man config.mk
+	./mkman.sh $(VERSION) src/man/$(basename $@).man $@
+
+.PHONY: man
+man: $(MANPAGES)
+
+# Makes all targets in contrib/
+.PHONY: contrib
+contrib: syntax
+
+.PHONY: syntax
+syntax: $(SYNTAX_FILES)
+
+# TODO: include/rlimit are false positives
+contrib/syntax/lists/profile_commands_arg0.list: src/firejail/profile.c
+	@sed -En 's/.*strn?cmp\(ptr, "([^ "]*[^ ])".*/\1/p' $< | \
+	grep -Ev '^(include|rlimit)$$' | sed 's/\./\\./' | LC_ALL=C sort -u >$@
+
+# TODO: private-lib is special-cased in the code and doesn't match the regex
+contrib/syntax/lists/profile_commands_arg1.list: src/firejail/profile.c
+	@{ sed -En 's/.*strn?cmp\(ptr, "([^"]+) ".*/\1/p' $<; echo private-lib; } | \
+	LC_ALL=C sort -u >$@
+
+contrib/syntax/lists/profile_conditionals.list: src/firejail/profile.c
+	@awk -- 'BEGIN {process=0;} /^Cond conditionals\[\] = \{$$/ {process=1;} \
+		/\t*\{"[^"]+".*/ \
+		{ if (process) {print gensub(/^\t*\{"([^"]+)".*$$/, "\\1", 1);} } \
+		/^\t\{ NULL, NULL \}$$/ {process=0;}' \
+		$< | LC_ALL=C sort -u >$@
+
+contrib/syntax/lists/profile_macros.list: src/firejail/macros.c
+	@sed -En 's/.*\$$\{([^}]+)\}.*/\1/p' $< | LC_ALL=C sort -u >$@
+
+contrib/syntax/lists/syscall_groups.list: src/lib/syscall.c
+	@sed -En 's/.*"@([^",]+).*/\1/p' $< | LC_ALL=C sort -u >$@
+
+contrib/syntax/lists/syscalls.list: $(SYSCALL_HEADERS)
+	@sed -n 's/{\s\+"\([^"]\+\)",.*},/\1/p' $(SYSCALL_HEADERS) | \
+	LC_ALL=C sort -u >$@
+
+contrib/syntax/lists/system_errnos.list: src/lib/errno.c
+	@sed -En 's/.*"(E[^"]+).*/\1/p' $< | LC_ALL=C sort -u >$@
+
+pipe_fromlf = { tr '\n' '|' | sed 's/|$$//'; }
+space_fromlf = { tr '\n' ' ' | sed 's/ $$//'; }
+edit_syntax_file = sed \
+	-e "s/@make_input@/$$(basename $@).  Generated from $$(basename $<) by make./" \
+	-e "s/@FJ_PROFILE_COMMANDS_ARG0@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_commands_arg0.list)/" \
+	-e "s/@FJ_PROFILE_COMMANDS_ARG1@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_commands_arg1.list)/" \
+	-e "s/@FJ_PROFILE_CONDITIONALS@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_conditionals.list)/" \
+	-e "s/@FJ_PROFILE_MACROS@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_macros.list)/" \
+	-e "s/@FJ_SYSCALLS@/$$($(space_fromlf) <contrib/syntax/lists/syscalls.list)/" \
+	-e "s/@FJ_SYSCALL_GROUPS@/$$($(pipe_fromlf) <contrib/syntax/lists/syscall_groups.list)/" \
+	-e "s/@FJ_SYSTEM_ERRNOS@/$$($(pipe_fromlf) <contrib/syntax/lists/system_errnos.list)/"
+
+contrib/syntax/files/example: contrib/syntax/files/example.in $(SYNTAX_LISTS)
+	@printf 'Generating %s from %s\n' $@ $<
+	@$(edit_syntax_file) $< >$@
+
+# gtksourceview language-specs
+contrib/syntax/files/%.lang: contrib/syntax/files/%.lang.in $(SYNTAX_LISTS)
+	@printf 'Generating %s from %s\n' $@ $<
+	@$(edit_syntax_file) $< >$@
+
+# vim syntax files
+contrib/syntax/files/%.vim: contrib/syntax/files/%.vim.in $(SYNTAX_LISTS)
+	@printf 'Generating %s from %s\n' $@ $<
+	@$(edit_syntax_file) $< >$@
+
 .PHONY: clean
 clean:
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
 		$(MAKE) -C $$dir clean; \
 	done
 	$(MAKE) -C test clean
-	rm -f $(MANPAGES) $(MANPAGES:%=%.gz) firejail*.rpm
 	rm -f $(SECCOMP_FILTERS)
+	rm -f $(MANPAGES) $(MANPAGES:%=%.gz) firejail*.rpm
+	rm -f $(SYNTAX_FILES)
 	rm -f test/utils/index.html*
 	rm -f test/utils/wget-log
 	rm -f test/utils/firejail-test-file*
@@ -91,6 +181,7 @@ distclean: clean
 	$(MAKE) -C test distclean
 	rm -fr autom4te.cache config.log config.mk config.sh config.status
 
+.PHONY: realinstall
 realinstall: config.mk
 	# firejail executable
 	install -m 0755 -d $(DESTDIR)$(bindir)
@@ -110,6 +201,7 @@ endif
 	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS)
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS)
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/profstats/profstats
+	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/etc-cleanup/etc-cleanup
 	# plugins w/o read permission (non-dumpable)
 	install -m 0711 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
 	install -m 0711 -t $(DESTDIR)$(libdir)/firejail src/fshaper/fshaper.sh
@@ -121,7 +213,10 @@ ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	install -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect
 	install -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
 	install -m 0644 contrib/vim/ftdetect/firejail.vim $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect
-	install -m 0644 contrib/vim/syntax/firejail.vim $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
+	install -m 0644 contrib/syntax/files/firejail.vim $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
+	# gtksourceview language-specs
+	install -m 0755 -d $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs
+	install -m 0644 contrib/syntax/files/firejail-profile.lang $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs
 endif
 	# documents
 	install -m 0755 -d $(DESTDIR)$(docdir)
@@ -129,8 +224,11 @@ endif
 	# profiles and settings
 	install -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail
 	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config
-	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config etc/ids.config
+	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config
 	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
+ifeq ($(HAVE_IDS),-DHAVE_IDS)
+	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/ids.config
+endif
 ifeq ($(BUSYBOX_WORKAROUND),yes)
 	./mketc.sh $(DESTDIR)$(sysconfdir)/firejail/disable-common.inc
 endif
@@ -168,13 +266,16 @@ endif
 	install -m 0755 -d $(DESTDIR)$(datarootdir)/zsh/site-functions
 	install -m 0644 src/zsh_completion/_firejail $(DESTDIR)$(datarootdir)/zsh/site-functions/
 
+.PHONY: install
 install: all
 	$(MAKE) realinstall
 
+.PHONY: install-strip
 install-strip: all
 	strip $(ALL_ITEMS)
 	$(MAKE) realinstall
 
+.PHONY: uninstall
 uninstall: config.mk
 	rm -f $(DESTDIR)$(bindir)/firejail
 	rm -f $(DESTDIR)$(bindir)/firemon
@@ -192,6 +293,7 @@ uninstall: config.mk
 	rm -f $(DESTDIR)$(datarootdir)/zsh/site-functions/_firejail
 	rm -f $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect/firejail.vim
 	rm -f $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax/firejail.vim
+	rm -f $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs/firejail-profile.lang
 	@echo "If you want to install a different version of firejail, you might also need to run 'rm -fr $(DESTDIR)$(sysconfdir)/firejail', see #2038."
 
 DISTFILES = \
@@ -213,8 +315,9 @@ mkman.sh \
 platform \
 src
 
-DISTFILES_TEST = test/Makefile test/apps test/apps-x11 test/apps-x11-xorg test/root test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils test/chroot
+DISTFILES_TEST = test/Makefile test/apps test/apps-x11 test/apps-x11-xorg test/capabilities test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils
 
+.PHONY: dist
 dist: config.mk
 	mv config.sh config.sh.old
 	mv config.status config.status.old
@@ -230,15 +333,15 @@ dist: config.mk
 	tar -cJvf $(TARNAME)-$(VERSION).tar.xz $(TARNAME)-$(VERSION)
 	rm -fr $(TARNAME)-$(VERSION)
 
+.PHONY: asc
 asc: config.mk
 	./mkasc.sh $(VERSION)
 
+.PHONY: deb
 deb: dist config.sh
 	./mkdeb.sh
 
-deb-apparmor: dist config.sh
-	./mkdeb.sh -apparmor --enable-apparmor
-
+.PHONY: test-compile
 test-compile: dist config.mk
 	cd test/compile; ./compile.sh $(TARNAME)-$(VERSION)
 
@@ -246,32 +349,78 @@ test-compile: dist config.mk
 rpms: src/man config.mk
 	./platform/rpm/mkrpm.sh $(TARNAME) $(VERSION)
 
+.PHONY: extras
 extras: all
 	$(MAKE) -C extras/firetools
 
+.PHONY: cppcheck
 cppcheck: clean
 	cppcheck --force --error-exitcode=1 --enable=warning,performance .
 
+.PHONY: scan-build
 scan-build: clean
-	NO_EXTRA_CFLAGS="yes" scan-build make
+	scan-build make
+
+.PHONY: codespell
+codespell: clean
+	codespell --ignore-regex "UE|creat|shotcut|ether" src test
+
+.PHONY: print-env
+print-env:
+	./ci/printenv.sh
 
 #
 # make test
 #
 
-TESTS=profiles private-lib apps apps-x11 apps-x11-xorg sysutils utils environment filters fs fcopy fnetfilter
+TESTS=profiles capabilities apps apps-x11 apps-x11-xorg sysutils utils environment filters fs fcopy fnetfilter private-etc seccomp-extra
 TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 
 $(TEST_TARGETS):
 	$(MAKE) -C test $(subst test-,,$@)
 
-test: test-profiles test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
+
+# extract some data about the testing setup: kernel, network connectivity, user
+.PHONY: lab-setup
+lab-setup:; uname -r; ldd --version | grep GLIBC; pwd; whoami; ip addr show; cat /etc/resolv.conf; cat /etc/hosts; ls /etc
+
+.PHONY: test
+test: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-private-etc test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-seccomp-extra
 	echo "TEST COMPLETE"
 
-test-noprofiles: test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
+.PHONY: test-noprofiles
+test-noprofiles: lab-setup test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
 	echo "TEST COMPLETE"
 
-test-github: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
+# not included in "make dist" and "make test"
+.PHONY: test-appimage
+test-appimage:
+	$(MAKE) -C test $(subst test-,,$@)
+
+# using sudo; not included in "make dist" and "make test"
+.PHONY: test-chroot
+test-chroot:
+	$(MAKE) -C test $(subst test-,,$@)
+
+# using sudo; not included in "make dist" and "make test"
+.PHONY: test-network
+test-network:
+	$(MAKE) -C test $(subst test-,,$@)
+
+# using sudo; not included in "make dist" and "make test"
+.PHONY: test-apparmor
+test-apparmor:
+	$(MAKE) -C test $(subst test-,,$@)
+
+# using sudo; not included in "make dist" and "make test"
+.PHONY: test-firecfg
+test-firecfg:
+	$(MAKE) -C test $(subst test-,,$@)
+
+
+# old gihub test; the new test is driven directly from .github/workflows/build.yml
+.PHONY: test-github
+test-github: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
 	echo "TEST COMPLETE"
 
 ##########################################
@@ -279,37 +428,12 @@ test-github: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sy
 # The tests are very intrusive, by the time you are done
 # with them you will need to restart your computer.
 ##########################################
-
-# a firejail-test account is required, public/private key setup
-test-ssh:
-	$(MAKE) -C test $(subst test-,,$@)
-
-# requires root access
-test-chroot:
-	$(MAKE) -C test $(subst test-,,$@)
-
-# Huge appimage files, not included in "make dist" archive
-test-appimage:
+# private-lib is disabled by default in /etc/firejail/firejail.config
+.PHONY: test-private-lib
+test-private-lib:
 	$(MAKE) -C test $(subst test-,,$@)
 
 # Root access, network devices are created before the test
 # restart your computer to get rid of these devices
-test-network:
-	$(MAKE) -C test $(subst test-,,$@)
-
-# requires the same setup as test-network
-test-stress:
-	$(MAKE) -C test $(subst test-,,$@)
-
-# Tests running a root user
-test-root:
-	$(MAKE) -C test $(subst test-,,$@)
-
-# OverlayFS is not available on all platforms
-test-overlay:
-	$(MAKE) -C test $(subst test-,,$@)
 
 # For testing hidepid system, the command to set it up is "mount -o remount,rw,hidepid=2 /proc"
-
-test-all: test-root test-chroot test-network test-appimage test-overlay
-	echo "TEST COMPLETE"

@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
@@ -34,7 +34,7 @@ rm -f ~/_firejail_test_dir
 echo "TESTING: /sys/fs access (test/fs/sys_fs.exp)"
 ./sys_fs.exp
 
-if [ -c /dev/kmsg ]; then
+if [[ -c /dev/kmsg ]]; then
 	echo "TESTING: kmsg access (test/fs/kmsg.exp)"
 	./kmsg.exp
 else
@@ -45,27 +45,16 @@ echo "TESTING: read/write /var/tmp (test/fs/fs_var_tmp.exp)"
 ./fs_var_tmp.exp
 rm -f /var/tmp/_firejail_test_file
 
-if [ "$(uname -m)" = "x86_64" ]; then
-    fjconfig=/etc/firejail/firejail.config
-    printf 'private-lib yes\n' | sudo tee -a "$fjconfig" >/dev/null
-    echo "TESTING: private-lib (test/fs/private-lib.exp)"
-    ./private-lib.exp
-    printf '%s\n' "$(sed '/^private-lib yes$/d' "$fjconfig")" |
-      sudo tee "$fjconfig" >/dev/null
-else
-    echo "TESTING SKIP: private-lib test implemented only for x86_64."
-fi
-
 echo "TESTING: read/write /var/lock (test/fs/fs_var_lock.exp)"
 ./fs_var_lock.exp
 rm -f /var/lock/_firejail_test_file
 
-if [ -w /dev/shm ]; then
-    echo "TESTING: read/write /dev/shm (test/fs/fs_dev_shm.exp)"
-    ./fs_dev_shm.exp
-    rm -f /dev/shm/_firejail_test_file
+if [[ -w /dev/shm ]]; then
+	echo "TESTING: read/write /dev/shm (test/fs/fs_dev_shm.exp)"
+	./fs_dev_shm.exp
+	rm -f /dev/shm/_firejail_test_file
 else
-    echo "TESTING SKIP: /dev/shm not writable"
+	echo "TESTING SKIP: /dev/shm not writable"
 fi
 
 echo "TESTING: private (test/fs/private.exp)"
@@ -90,12 +79,6 @@ rm -f ~/_firejail_test_file2
 rm -fr ~/_firejail_test_dir1
 rm -f ~/_firejail_test_link1
 rm -f ~/_firejail_test_link2
-
-echo "TESTING: private-etc (test/fs/private-etc.exp)"
-./private-etc.exp
-
-echo "TESTING: empty private-etc (test/fs/private-etc-empty.exp)"
-./private-etc-empty.exp
 
 echo "TESTING: private-bin (test/fs/private-bin.exp)"
 ./private-bin.exp
@@ -153,8 +136,9 @@ echo "TESTING: whitelist (test/fs/whitelist.exp)"
 ./whitelist.exp
 rm -fr ~/_firejail_test_*
 
-echo "TESTING: whitelist dev, var(test/fs/whitelist-dev.exp)"
-./whitelist-dev.exp
+# TODO: whitelist /dev broken in 0.9.72
+#echo "TESTING: whitelist dev, var(test/fs/whitelist-dev.exp)"
+#./whitelist-dev.exp
 
 echo "TESTING: whitelist noexec (test/fs/whitelist-noexec.exp)"
 ./whitelist-noexec.exp

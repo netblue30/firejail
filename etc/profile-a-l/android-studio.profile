@@ -40,3 +40,4 @@ private-cache
 
 # noexec /tmp breaks 'Android Profiler'
 #noexec /tmp
+restrict-namespaces

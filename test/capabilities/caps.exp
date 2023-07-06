@@ -1,0 +1,115 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --caps.keep=chown,fowner --noprofile cat /proc/self/status\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"CapBnd:	0000000000000009"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"Seccomp:"
+}
+after 500
+
+send -- "firejail --caps.drop=all --noprofile cat /proc/self/status\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"CapBnd:	0000000000000000"
+}
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"Seccomp:"
+}
+after 500
+
+send -- "firejail --caps.drop=chown,dac_override,dac_read_search,fowner --noprofile cat /proc/self/status\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"CapBnd:"
+}
+expect {
+	timeout {puts "TESTING ERROR 9\n";exit}
+	"fffffff0"
+}
+expect {
+	timeout {puts "TESTING ERROR 10\n";exit}
+	"Seccomp:"
+}
+after 500
+
+send -- "firejail --profile=caps1.profile --debug ls\r"
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"Drop CAP_SYS_MODULE"
+}
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	"Drop CAP_SYS_ADMIN"
+}
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"Drop CAP_" {puts "TESTING ERROR 14\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+after 500
+
+## tofix: possible problem with caps.keep in profile files
+##send -- "firejail --caps.keep=chown,fowner --noprofile\r"
+#send -- "firejail --profile=caps2.profile\r"
+#expect {
+#	timeout {puts "TESTING ERROR 15\n";exit}
+#	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+#}
+#after 100
+#
+#send -- "cat /proc/self/status\r"
+#expect {
+#	timeout {puts "TESTING ERROR 16\n";exit}
+#	"CapBnd:	0000000000000009"
+#}
+#expect {
+#	timeout {puts "TESTING ERROR 17\n";exit}
+#	"Seccomp:"
+#}
+#send -- "exit\r"
+#sleep 1
+
+#send -- "firejail --caps.drop=chown,dac_override,dac_read_search,fowner --noprofile\r"
+send -- "firejail --profile=caps3.profile cat /proc/self/status\r"
+expect {
+	timeout {puts "TESTING ERROR 18\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 19\n";exit}
+	"CapBnd:"
+}
+expect {
+	timeout {puts "TESTING ERROR 20\n";exit}
+	"fffffff0"
+}
+expect {
+	timeout {puts "TESTING ERROR 21\n";exit}
+	"Seccomp:"
+}
+after 500
+puts "\nall done\n"

@@ -47,7 +47,7 @@ tracelog
 disable-mnt
 private-bin bash,convert,ffmpeg,firejail,fish,peek,sh,which,zsh
 private-dev
-private-etc alternatives,dconf,firejail,fonts,gtk-3.0,ld.so.cache,ld.so.preload,login.defs,pango,passwd,X11
+private-etc @x11,firejail
 private-tmp
 
 dbus-user filter
@@ -59,3 +59,4 @@ dbus-user.talk org.gnome.Shell.Screencast
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

@@ -59,3 +59,4 @@ private-opt Enpass
 private-tmp
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)
+restrict-namespaces

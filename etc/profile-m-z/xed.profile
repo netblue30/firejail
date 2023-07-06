@@ -51,3 +51,4 @@ private-tmp
 
 # xed uses python plugins, memory-deny-write-execute breaks python
 # memory-deny-write-execute
+restrict-namespaces

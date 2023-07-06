@@ -56,3 +56,5 @@ dbus-user.talk org.freedesktop.secrets
 #dbus-user.talk org.freedesktop.Notifications
 #dbus-user.talk org.gnome.OnlineAccounts
 dbus-system none
+
+restrict-namespaces

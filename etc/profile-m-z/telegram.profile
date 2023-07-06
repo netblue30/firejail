@@ -46,7 +46,7 @@ disable-mnt
 private-bin bash,sh,telegram,Telegram,telegram-desktop,xdg-open
 private-cache
 private-dev
-private-etc alsa,alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.preload,localtime,machine-id,os-release,passwd,pki,pulse,resolv.conf,ssl,xdg
+private-etc @tls-ca,@x11,os-release
 private-tmp
 
 dbus-user filter
@@ -56,3 +56,5 @@ dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.gnome.Mutter.IdleMonitor
 dbus-user.talk org.freedesktop.ScreenSaver
 dbus-system none
+
+restrict-namespaces

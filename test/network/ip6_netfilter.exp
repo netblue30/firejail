@@ -1,0 +1,31 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+# check default netfilter on br0
+send -- "firejail --name=test --net=br0 --netfilter6=ip6_netfilter.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 2
+spawn $env(SHELL)
+
+# check default netfilter no new network
+send -- "firejail --netfilter6.print=test\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"DROP"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"2001:db8:1f0a:3ec::2"
+}
+
+after 500
+puts "all done\n"

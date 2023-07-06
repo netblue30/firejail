@@ -51,3 +51,4 @@ dbus-system none
 
 # mdwe can break modules/plugins
 memory-deny-write-execute
+restrict-namespaces

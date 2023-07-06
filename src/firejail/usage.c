@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -19,7 +19,7 @@
 */
 #include "firejail.h"
 
-static char *usage_str =
+static const char *const usage_str =
 	"Firejail is a SUID sandbox program that reduces the risk of security breaches by\n"
 	"restricting the running environment of untrusted applications using Linux\n"
 	"namespaces.\n"
@@ -30,10 +30,12 @@ static char *usage_str =
 	"    -- - signal the end of options and disables further option processing.\n"
 	"    --allow-debuggers - allow tools such as strace and gdb inside the sandbox.\n"
 	"    --allusers - all user home directories are visible inside the sandbox.\n"
+#ifdef HAVE_APPARMOR
 	"    --apparmor - enable AppArmor confinement with the default profile.\n"
 	"    --apparmor=profile_name - enable AppArmor confinement with a\n"
 	"\tcustom profile.\n"
 	"    --apparmor.print=name|pid - print apparmor status.\n"
+#endif
 	"    --appimage - sandbox an AppImage application.\n"
 #ifdef HAVE_NETWORK
 	"    --bandwidth=name|pid - set bandwidth limits.\n"
@@ -79,7 +81,9 @@ static char *usage_str =
 	"    --debug-blacklists - debug blacklisting.\n"
 	"    --debug-caps - print all recognized capabilities.\n"
 	"    --debug-errnos - print all recognized error numbers.\n"
+#ifdef HAVE_PRIVATE_LIB
 	"    --debug-private-lib - debug for --private-lib option.\n"
+#endif
 	"    --debug-protocols - print all recognized protocols.\n"
 	"    --debug-syscalls - print all recognized system calls.\n"
 	"    --debug-syscalls32 - print all recognized 32 bit system calls.\n"
@@ -91,6 +95,9 @@ static char *usage_str =
 	"    --deterministic-shutdown - terminate orphan processes.\n"
 	"    --dns=address - set DNS server.\n"
 	"    --dns.print=name|pid - print DNS configuration.\n"
+#ifdef HAVE_NETWORK
+	"    --dnstrace - monitor DNS queries.\n"
+#endif
 	"    --env=name=value - set environment variable.\n"
 	"    --fs.print=name|pid - print the filesystem log.\n"
 #ifdef HAVE_FILE_TRANSFER
@@ -99,6 +106,9 @@ static char *usage_str =
 	"    --help, -? - this help screen.\n"
 	"    --hostname=name - set sandbox hostname.\n"
 	"    --hosts-file=file - use file as /etc/hosts.\n"
+#ifdef HAVE_NETWORK
+	"    --icmptrace - monitor Server Name Indiication (TLS/SNI).\n"
+#endif
 	"    --ids-check - verify file system.\n"
 	"    --ids-init - initialize IDS database.\n"
 	"    --ignore=command - ignore command in profile files.\n"
@@ -121,13 +131,8 @@ static char *usage_str =
 	"    --keep-config-pulse - disable automatic ~/.config/pulse init.\n"
 	"    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
 	"    --keep-fd - inherit open file descriptors to sandbox.\n"
+	"    --keep-shell-rc - do not copy shell rc files from /etc/skel\n"
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
-	"    --landlock - add basic rules to the Landlock ruleset.\n"
-	"    --landlock.proc=no|ro|rw - add an access rule for /proc to the Landlock ruleset.\n"
-	"    --landlock.read=path - add a read access rule for the path to the Landlock ruleset.\n"
-	"    --landlock.write=path - add a write access rule for the path to the Landlock ruleset.\n"
-	"    --landlock.special=path - add an access rule for creating FIFO pipes, Unix domain sockets and block devices for the path to the Landlock ruleset.\n"
-	"    --landlock.execute=path - add an execution-permitting rule for the path to the Landlock ruleset.\n"
 	"    --list - list all sandboxes.\n"
 #ifdef HAVE_FILE_TRANSFER
 	"    --ls=name|pid dir_or_filename - list files in sandbox container.\n"
@@ -159,7 +164,7 @@ static char *usage_str =
 	"\tparent interfaces.\n"
 	"    --netns=name - Run the program in a named, persistent network namespace.\n"
 	"    --netstats - monitor network statistics.\n"
-	"    --nettrace - monitor TCP and UDP traffic coming into the sandbox.\n"
+	"    --nettrace - monitor received TCP, UDP and ICMP traffic.\n"
 #endif
 	"    --nice=value - set nice value.\n"
 	"    --no3d - disable 3D hardware acceleration.\n"
@@ -197,14 +202,17 @@ static char *usage_str =
 	"    --private=directory - use directory as user home.\n"
 	"    --private-cache - temporary ~/.cache directory.\n"
 	"    --private-home=file,directory - build a new user home in a temporary\n"
-	"\tfilesystem, and copy the files and directories in the list in\n"
-	"\tthe new home.\n"
+	"\tfilesystem, and copy the files and directories in the list in the\n"
+	"\tnew home.\n"
 	"    --private-bin=file,file - build a new /bin in a temporary filesystem,\n"
 	"\tand copy the programs in the list.\n"
 	"    --private-dev - create a new /dev directory with a small number of\n"
 	"\tcommon device files.\n"
 	"    --private-etc=file,directory - build a new /etc in a temporary\n"
 	"\tfilesystem, and copy the files and directories in the list.\n"
+#ifdef HAVE_PRIVATE_LIB
+	"    --private-lib - create a private /lib directory\n"
+#endif
 	"    --private-tmp - mount a tmpfs on top of /tmp directory.\n"
 	"    --private-cwd - do not inherit working directory inside jail.\n"
 	"    --private-cwd=directory - set working directory inside jail.\n"
@@ -212,7 +220,6 @@ static char *usage_str =
 	"    --private-srv=file,directory - build a new /srv in a temporary filesystem.\n"
 	"    --profile=filename|profile_name - use a custom profile.\n"
 	"    --profile.print=name|pid - print the name of profile file.\n"
-	"    --profile-path=directory - use this directory to look for profile files.\n"
 	"    --protocol=protocol,protocol,protocol - enable protocol filter.\n"
 	"    --protocol.print=name|pid - print the protocol filter.\n"
 #ifdef HAVE_FILE_TRANSFER
@@ -304,11 +311,18 @@ static char *usage_str =
 	"\tlist all running sandboxes\n"
 	"\n"
 	"License GPL version 2 or later\n"
-	"Homepage: https://firejail.wordpress.com\n"
-	"\n";
+	"Homepage: https://firejail.wordpress.com\n";
 
+void print_version(void) {
+	printf("firejail version %s\n\n", VERSION);
+}
+
+void print_version_full(void) {
+	print_version();
+	print_compiletime_support();
+}
 
 void usage(void) {
-	printf("firejail - version %s\n\n", VERSION);
+	print_version();
 	puts(usage_str);
 }

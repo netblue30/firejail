@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -92,7 +92,7 @@ static void selinux_relabel_path(const char *path, const char *inside_path) {
 			printf("Cannot relabel %s: %s\n", path, strerror(errno));
 	}
 	freecon(fcon);
- close:
+close:
 	close(fd);
 #else
 	(void) path;
@@ -236,7 +236,7 @@ void copy_link(const char *target, const char *linkpath, mode_t mode, uid_t uid,
 	// if the link is already there, don't create it
 	struct stat s;
 	if (lstat(linkpath, &s) == 0)
-	       return;
+		return;
 
 	char *rp = proc_pid_to_self(target);
 	if (rp) {
@@ -416,17 +416,18 @@ static void duplicate_link(const char *src, const char *dest, struct stat *s) {
 	free(rdest);
 }
 
+static const char *const usage_str =
+	"Usage: fcopy [--follow-link] src dest\n"
+	"\n"
+	"Copy SRC to DEST/SRC. SRC may be a file, directory, or symbolic link.\n"
+	"If SRC is a directory it is copied recursively.  If it is a symlink,\n"
+	"the link itself is duplicated, unless --follow-link is given,\n"
+	"in which case the destination of the link is copied.\n"
+	"DEST must already exist and must be a directory.\n";
 
 static void usage(void) {
-	fputs("Usage: fcopy [--follow-link] src dest\n"
-		"\n"
-		"Copy SRC to DEST/SRC. SRC may be a file, directory, or symbolic link.\n"
-		"If SRC is a directory it is copied recursively.  If it is a symlink,\n"
-		"the link itself is duplicated, unless --follow-link is given,\n"
-		"in which case the destination of the link is copied.\n"
-		"DEST must already exist and must be a directory.\n", stderr);
+	fputs(usage_str, stderr);
 }
-
 
 int main(int argc, char **argv) {
 #if 0

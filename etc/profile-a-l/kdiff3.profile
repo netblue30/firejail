@@ -52,6 +52,9 @@ disable-mnt
 private-bin kdiff3
 private-cache
 private-dev
+private-etc @x11
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

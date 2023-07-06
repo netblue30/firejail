@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -185,20 +185,10 @@ static int store_asoundrc(void) {
 		errExit("asprintf");
 
 	struct stat s;
-	if (lstat(src, &s) == 0) {
-		if (S_ISLNK(s.st_mode)) {
-			// make sure the real path of the file is inside the home directory
-			/* coverity[toctou] */
-			char *rp = realpath(src, NULL);
-			if (!rp) {
-				fprintf(stderr, "Error: Cannot access %s\n", src);
-				exit(1);
-			}
-			if (strncmp(rp, cfg.homedir, strlen(cfg.homedir)) != 0 || rp[strlen(cfg.homedir)] != '/') {
-				fprintf(stderr, "Error: .asoundrc is a symbolic link pointing to a file outside home directory\n");
-				exit(1);
-			}
-			free(rp);
+	if (stat(src, &s) == 0) {
+		if (s.st_uid != getuid()) {
+			fwarning(".asoundrc is not owned by the current user, skipping...\n");
+			return 0;
 		}
 
 		// create an empty file as root, and change ownership to user
@@ -361,7 +351,8 @@ void fs_private_homedir(void) {
 	}
 	EUID_USER();
 
-	skel(homedir);
+	if (!arg_keep_shell_rc)
+		skel(homedir);
 	if (xflag)
 		copy_xauthority();
 	if (aflag)
@@ -430,7 +421,8 @@ void fs_private(void) {
 		selinux_relabel_path(homedir, homedir);
 	}
 
-	skel(homedir);
+	if (!arg_keep_shell_rc)
+		skel(homedir);
 	if (xflag)
 		copy_xauthority();
 	if (aflag)
@@ -682,7 +674,8 @@ void fs_private_home_list(void) {
 		errExit("mounting tmpfs");
 	EUID_USER();
 
-	skel(homedir);
+	if (!arg_keep_shell_rc)
+		skel(homedir);
 	if (xflag)
 		copy_xauthority();
 	if (aflag)

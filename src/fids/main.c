@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -318,10 +318,11 @@ static void process_config(const char *fname) {
 	include_level--;
 }
 
-
+static const char *const usage_str =
+	"Usage: fids [--help|-h|-?] --init|--check homedir\n";
 
 void usage(void) {
-	printf("Usage: fids [--help|-h|-?] --init|--check homedir\n");
+	puts(usage_str);
 }
 
 int main(int argc, char **argv) {

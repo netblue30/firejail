@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -19,7 +19,7 @@
 */
 #include "firemon.h"
 
-static char *help_str =
+static const char *const usage_str =
 	"Usage: firemon [OPTIONS] [PID]\n\n"
 	"Monitor processes started in a Firejail sandbox. Without any PID specified,\n"
 	"all processes started by Firejail are monitored. Descendants of these processes\n"
@@ -75,10 +75,13 @@ static char *help_str =
 	"\tUser - The owner of the sandbox.\n"
 	"\n"
 	"License GPL version 2 or later\n"
-	"Homepage: https://firejail.wordpress.com\n"
-	"\n";
+	"Homepage: https://firejail.wordpress.com\n";
+
+void print_version(void) {
+	printf("firemon version %s\n\n", VERSION);
+}
 
 void usage(void) {
-	printf("firemon - version %s\n", VERSION);
-	puts(help_str);
+	print_version();
+	puts(usage_str);
 }

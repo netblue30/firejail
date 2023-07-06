@@ -21,7 +21,7 @@ mkdir ${HOME}/.config/Jitsi Meet
 whitelist ${HOME}/.config/Jitsi Meet
 
 private-bin bash,electron,electron[0-9],electron[0-9][0-9],jitsi-meet-desktop,sh
-private-etc alsa,alternatives,asound.conf,bumblebee,ca-certificates,crypto-policies,drirc,fonts,glvnd,group,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,nvidia,pango,passwd,pki,protocols,pulse,resolv.conf,rpc,services,ssl,X11,xdg
+private-etc @tls-ca,@x11,bumblebee,glvnd,host.conf,mime.types,rpc,services
 
 # Redirect
-include electron.profile
+include electron-common.profile

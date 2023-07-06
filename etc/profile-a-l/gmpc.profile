@@ -43,7 +43,7 @@ tracelog
 disable-mnt
 #private-bin gmpc
 private-cache
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload
+private-etc
 private-tmp
 writable-run-user
 
@@ -51,3 +51,4 @@ writable-run-user
 # dbus-system none
 
 # memory-deny-write-execute - breaks on Arch
+restrict-namespaces

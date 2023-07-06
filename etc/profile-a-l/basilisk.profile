@@ -22,5 +22,8 @@ ignore seccomp
 #private-etc basilisk
 #private-opt basilisk
 
+restrict-namespaces
+ignore restrict-namespaces
+
 # Redirect
 include firefox-common.profile

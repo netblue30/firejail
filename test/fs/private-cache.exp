@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -8,10 +8,10 @@ spawn $env(SHELL)
 match_max 100000
 
 send -- "mkdir --mode=700 ~/.cache\r"
-after 100
+after 500
 
 send -- "touch ~/.cache/abcdefg\r"
-after 100
+after 500
 
 if { ! [file exists ~/.cache/abcdefg] } {
 	puts "TESTING ERROR 0\n"

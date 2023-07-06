@@ -40,3 +40,5 @@ protocol unix,inet,inet6
 #seccomp
 
 private-tmp
+
+#restrict-namespaces

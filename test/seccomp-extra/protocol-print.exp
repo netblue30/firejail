@@ -1,0 +1,59 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --name=test0\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 2
+
+
+spawn $env(SHELL)
+send -- "firejail --name=test1 --profile=protocol1.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 2
+
+spawn $env(SHELL)
+send -- "firejail --name=test2 --profile=protocol2.profile\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 2
+
+spawn $env(SHELL)
+send -- "firejail --protocol.print=test0\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"packet" {puts "TESTING ERROR 4\n";exit}
+	"unix,inet,inet6"
+}
+after 500
+
+send -- "firejail --protocol.print=test1\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"inet" {puts "TESTING ERROR 6\n";exit}
+	"unix"
+}
+after 500
+
+send -- "firejail --protocol.print=test2\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"unix" {puts "TESTING ERROR 8\n";exit}
+	"inet6,packet"
+}
+after 500
+
+puts "\nall done\n"

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -67,11 +67,8 @@ static void disable_file(OPERATION op, const char *filename) {
 		// they don't seem to like a uid of 0
 		// force mounting
 		int fd = open(filename, O_PATH|O_CLOEXEC);
-		if (fd < 0) {
-			if (arg_debug)
-				printf("Warning (blacklisting): cannot open %s: %s\n", filename, strerror(errno));
+		if (fd < 0)
 			return;
-		}
 
 		EUID_ROOT();
 		int err = bind_mount_path_to_fd(RUN_RO_DIR, fd);
@@ -126,8 +123,8 @@ static void disable_file(OPERATION op, const char *filename) {
 	if (op == BLACKLIST_FILE || op == BLACKLIST_NOLOG) {
 		// some distros put all executables under /usr/bin and make /bin a symbolic link
 		if ((strcmp(fname, "/bin") == 0 || strcmp(fname, "/usr/bin") == 0) &&
-		      is_link(filename) &&
-		      S_ISDIR(s.st_mode)) {
+		    is_link(filename) &&
+		    S_ISDIR(s.st_mode)) {
 			fwarning("%s directory link was not blacklisted\n", filename);
 		}
 		else {

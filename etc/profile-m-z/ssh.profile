@@ -51,3 +51,4 @@ dbus-system none
 
 deterministic-shutdown
 memory-deny-write-execute
+restrict-namespaces

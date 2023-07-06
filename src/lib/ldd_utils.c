@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -23,6 +23,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#ifdef HAVE_PRIVATE_LIB
 // todo: resolve overlap with masked_lib_dirs[] array from fs_lib.c
 const char * const default_lib_paths[] = {
 	"/usr/lib/x86_64-linux-gnu",	// Debian & friends
@@ -63,3 +64,4 @@ doexit:
 	close(fd);
 	return retval;
 }
+#endif

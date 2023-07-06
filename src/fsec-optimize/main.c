@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -22,9 +22,12 @@
 
 int arg_seccomp_error_action = SECCOMP_RET_ERRNO | EPERM; // error action: errno, log or kill
 
+static const char *const usage_str =
+	"Usage:\n"
+	"\tfsec-optimize file - optimize seccomp filter\n";
+
 static void usage(void) {
-	printf("Usage:\n");
-	printf("\tfsec-optimize file - optimize seccomp filter\n");
+	puts(usage_str);
 }
 
 int main(int argc, char **argv) {
@@ -33,7 +36,7 @@ int main(int argc, char **argv) {
 //system("cat /proc/self/status");
 int i;
 for (i = 0; i < argc; i++)
-        printf("*%s* ", argv[i]);
+	printf("*%s* ", argv[i]);
 printf("\n");
 }
 #endif

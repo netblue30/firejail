@@ -29,3 +29,5 @@ seccomp
 
 private-bin xmms
 private-dev
+
+restrict-namespaces

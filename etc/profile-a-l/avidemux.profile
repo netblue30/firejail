@@ -1,10 +1,12 @@
 # Firejail profile for Avidemux
 # Description: Avidemux is a free video editor designed for simple cutting, filtering and encoding tasks.
+# This file is overwritten after every install/update
 # Persistent local customizations
 include avidemux.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.avidemux3
 noblacklist ${HOME}/.avidemux6
 noblacklist ${HOME}/.config/avidemux3_qt5rc
 noblacklist ${VIDEOS}
@@ -17,8 +19,10 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.avidemux3
 mkdir ${HOME}/.avidemux6
 mkdir ${HOME}/.config/avidemux3_qt5rc
+whitelist ${HOME}/.avidemux3
 whitelist ${HOME}/.avidemux6
 whitelist ${HOME}/.config/avidemux3_qt5rc
 whitelist ${VIDEOS}
@@ -51,3 +55,5 @@ private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

@@ -27,4 +27,4 @@ mkdir ${HOME}/.config/Rocket.Chat
 whitelist ${HOME}/.config/Rocket.Chat
 
 # Redirect
-include electron.profile
+include electron-common.profile

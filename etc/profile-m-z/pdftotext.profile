@@ -48,8 +48,10 @@ x11 none
 private-bin pdftotext
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

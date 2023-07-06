@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -28,6 +28,10 @@ static char buf[MAXBUF];
 char *retrieve_hostname(uint32_t ip) {
 	if (geoip_not_found)
 		return NULL;
+	if (access("/usr/bin/geoiplookup", X_OK)) {
+		geoip_not_found = 1;
+		return NULL;
+	}
 	geoip_calls++;
 
 	char *rv = NULL;
@@ -121,4 +125,3 @@ errexit:
 	fprintf(stderr, "Error: invalid line %d in file %s\n", line, fname);
 	exit(1);
 }
-

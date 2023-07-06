@@ -11,10 +11,10 @@ noblacklist ${HOME}/.config/1Password
 mkdir ${HOME}/.config/1Password
 whitelist ${HOME}/.config/1Password
 
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,machine-id,nsswitch.conf,pki,resolv.conf,ssl
+private-etc @tls-ca
 
 # Needed for keychain things, talking to Firefox, possibly other things?  Not sure how to narrow down
 ignore dbus-user none
 
 # Redirect
-include electron.profile
+include electron-common.profile

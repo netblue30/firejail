@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -119,6 +119,11 @@ void fs_chroot(const char *rootdir) {
 	int parentfd = safer_openat(-1, rootdir, O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);
 	if (parentfd == -1)
 		errExit("safer_openat");
+
+	if (faccessat(parentfd, ".", X_OK, 0) != 0) {
+		fprintf(stderr, "Error: no search permission on chroot directory\n");
+		exit(1);
+	}
 	// rootdir has to be owned by root and is not allowed to be generally writable,
 	// this also excludes /tmp and friends
 	struct stat s;
@@ -275,7 +280,7 @@ void fs_chroot(const char *rootdir) {
 	//		fs_dev_shm();
 	fs_var_lock();
 	if (!arg_keep_var_tmp)
-	        fs_var_tmp();
+		fs_var_tmp();
 	if (!arg_writable_var_log)
 		fs_var_log();
 

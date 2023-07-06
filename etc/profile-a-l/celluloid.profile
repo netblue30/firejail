@@ -1,5 +1,5 @@
 # Firejail profile for celluloid
-# Description: Simple GTK+ frontend for mpv
+# Description: Simple GTK frontend for mpv
 # This file is overwritten after every install/update
 # Persistent local customizations
 include celluloid.local
@@ -52,7 +52,7 @@ tracelog
 
 private-bin celluloid,env,gnome-mpv,python*,youtube-dl
 private-cache
-private-etc alternatives,ca-certificates,crypto-policies,dconf,drirc,fonts,gtk-3.0,hosts,ld.so.cache,ld.so.preload,libva.conf,localtime,machine-id,pkcs11,pki,resolv.conf,selinux,ssl,xdg
+private-etc @tls-ca,@x11,libva.conf,pkcs11
 private-dev
 private-tmp
 
@@ -64,3 +64,4 @@ dbus-system none
 
 read-only ${HOME}
 read-write ${HOME}/.config/celluloid
+restrict-namespaces

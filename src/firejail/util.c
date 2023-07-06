@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -56,7 +56,8 @@ long long unsigned parse_arg_size(char *str) {
 	}
 
 	/* checks for is value valid positive number */
-	for (int i = 0; i < len; i++) {
+	int i;
+	for (i = 0; i < len; i++) {
 		if (!isdigit(*(str+i))) {
 			return 0;
 		}
@@ -255,7 +256,6 @@ static void clean_supplementary_groups(gid_t gid) {
 	return;
 
 clean_all:
-	fwarning("cleaning all supplementary groups\n");
 	if (setgroups(0, NULL) < 0)
 		errExit("setgroups");
 }
@@ -559,10 +559,8 @@ int is_dir(const char *fname) {
 		rv = stat_as_user(fname, &s);
 	else {
 		char *tmp;
-		if (asprintf(&tmp, "%s/", fname) == -1) {
-			fprintf(stderr, "Error: cannot allocate memory, %s:%d\n", __FILE__, __LINE__);
+		if (asprintf(&tmp, "%s/", fname) == -1)
 			errExit("asprintf");
-		}
 		rv = stat_as_user(tmp, &s);
 		free(tmp);
 	}
@@ -1102,7 +1100,7 @@ void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid) {
 	if (mkdir(fname, mode) == -1 ||
 	    chmod(fname, mode) == -1 ||
 	    chown(fname, uid, gid)) {
-	    	fprintf(stderr, "Error: failed to create %s directory\n", fname);
+		fprintf(stderr, "Error: failed to create %s directory\n", fname);
 		errExit("mkdir/chmod");
 	}
 
@@ -1324,7 +1322,7 @@ void close_all(int *keep_list, size_t sz) {
 		if (fd == dirfd(dir))
 			continue; // just postponed
 
-		// dont't close file descriptors in keep list
+		// don't close file descriptors in keep list
 		int keep = 0;
 		if (keep_list) {
 			size_t i;
@@ -1338,10 +1336,6 @@ void close_all(int *keep_list, size_t sz) {
 		if (keep)
 			continue;
 
-		// don't close the file descriptor of the Landlock ruleset -- it will be automatically closed by the landlock_restrict_self wrapper function
-#ifdef HAVE_LANDLOCK
-		if (fd == arg_landlock) continue;
-#endif
 		close(fd);
 	}
 	closedir(dir);
@@ -1452,6 +1446,79 @@ static int has_link(const char *dir) {
 		return 1;
 	return 0;
 }
+
+int ascii_isalnum(unsigned char c) {
+	return (ascii_isalpha(c) || ascii_isdigit(c));
+}
+
+int ascii_isalpha(unsigned char c) {
+	return (ascii_islower(c) || ascii_isupper(c));
+}
+
+int ascii_isdigit(unsigned char c) {
+	return (c >= '0' && c <= '9');
+}
+
+int ascii_islower(unsigned char c) {
+	return (c >= 'a' && c <= 'z');
+}
+
+int ascii_isupper(unsigned char c) {
+	return (c >= 'A' && c <= 'Z');
+}
+
+int ascii_isxdigit(unsigned char c) {
+	int ret = (ascii_isdigit(c) ||
+	          (c >= 'a' && c <= 'f') ||
+	          (c >= 'A' && c <= 'F'));
+	return ret;
+}
+
+// Note: Keep this in sync with NAME VALIDATION in src/man/firejail.txt.
+//
+// Allow only ASCII letters, digits and a few special characters; names with
+// only numbers are rejected; spaces and control characters are rejected.
+int invalid_name(const char *name) {
+	const char *c = name;
+	int only_numbers = 1;
+
+	if (strlen(name) > 253)
+		return 1;
+
+	// must start with alnum
+	if (!ascii_isalnum(*c))
+		return 1;
+	if (!ascii_isdigit(*c))
+		only_numbers = 0;
+	++c;
+
+	while (*c) {
+		switch (*c) {
+		case '-':
+		case '.':
+		case '_':
+			only_numbers = 0;
+			break;
+		default:
+			if (!ascii_isalnum(*c))
+				return 1;
+			if (!ascii_isdigit(*c))
+				only_numbers = 0;
+		}
+		++c;
+	}
+
+	// must end with alnum
+	--c;
+	if (!ascii_isalnum(*c))
+		return 1;
+
+	if (only_numbers)
+		return 1;
+
+	return 0;
+}
+
 
 void check_homedir(const char *dir) {
 	assert(dir);

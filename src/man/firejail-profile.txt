@@ -14,7 +14,7 @@ Using a specific profile:
 .br
 Example:
 .br
-$ firejail --profile=/etc/firejail/kdenlive.profile --appimage kdenlive.appimage
+$ firejail --appimage --profile=/etc/firejail/kdenlive.profile kdenlive.appimage
 .br
 
 .br
@@ -25,7 +25,7 @@ $ firejail --profile=/etc/firejail/kdenlive.profile --appimage kdenlive.appimage
 .br
 Example:
 .br
-$ firejail --profile=kdenlive --appimage kdenlive.appimage
+$ firejail --appimage --profile=kdenlive kdenlive.appimage
 .br
 
 .br
@@ -179,6 +179,11 @@ can be enabled or disabled globally in Firejail's configuration file.
 
 The profile line may be any profile line that you would normally use in a profile \fBexcept\fR for "quiet" and "include" lines.
 
+Note: When using one or more conditionals and \fB--profile\fR, it is
+recommended that the relevant option(s) (such as \fB--appimage\fR) be specified
+before \fB--profile\fR, so that their respective conditional(s) (such as
+\fB?HAS_APPIMAGE\fR) inside of the profile evaluate to true.
+
 .TP
 \fBinclude other.profile
 Include other.profile file.
@@ -282,6 +287,9 @@ pulse servers or non-standard socket paths.
 .TP
 \fBkeep-dev-shm
 /dev/shm directory is untouched (even with private-dev).
+.TP
+\fBkeep-shell-rc
+Do not copy shell rc files (such as ~/.bashrc and ~/.zshrc) from /etc/skel.
 .TP
 \fBkeep-var-tmp
 /var/tmp directory is untouched.
@@ -399,12 +407,14 @@ the current user's home directory.
 All modifications are discarded when the sandbox is
 closed.
 #endif
+#ifdef HAVE_PRIVATE_LIB
 .TP
 \fBprivate-lib file,directory
 Build a new /lib directory and bring in the libraries required by the application to run.
 The files and directories in the list must be expressed as relative to
 the /lib directory.
 This feature is still under development, see \fBman 1 firejail\fR for some examples.
+#endif
 .TP
 \fBprivate-opt file,directory
 Build a new /opt in a temporary
@@ -497,35 +507,6 @@ Blacklist all Linux capabilities.
 .TP
 \fBcaps.keep capability,capability,capability
 Whitelist given Linux capabilities.
-#ifdef HAVE_LANDLOCK
-.TP
-\fBlandlock
-Create a Landlock ruleset (if it doesn't already exist) and add basic access rules to it.
-.br
-.TP
-\fBlandlock.proc no|ro|rw
-Add an access rule for /proc directory (read-only if set to \fBro\fR and read-write if set to \fBrw\fR). The access rule for /proc is added after this directory is set up in the sandbox. Access rules for /proc set up with other Landlock-related profile options have no effect.
-.br
-.TP
-\fBlandlock.read path
-Create a Landlock ruleset (if it doesn't already exist) and add a read access rule for path.
-.br
-
-.TP
-\fBlandlock.write path
-Create a Landlock ruleset (if it doesn't already exist) and add a write access rule for path.
-.br
-
-.TP
-\fBlandlock.special path
-Create a Landlock ruleset (if it doesn't already exist) and add an access rule for creation of FIFO pipes, Unix-domain sockets and block devices beneath given path.
-.br
-
-.TP
-\fBlandlock.execute path
-Create a Landlock ruleset (if it doesn't already exist) and add an execution permission rule for path.
-.br
-#endif
 .TP
 \fBmemory-deny-write-execute
 Install a seccomp filter to block attempts to create memory mappings
@@ -1000,6 +981,10 @@ If a new network namespace is created, enabled default network filter.
 .TP
 \fBnetfilter filename
 If a new network namespace is created, enabled the network filter in filename.
+
+.TP
+\fBnetlock
+Generate a custom network filter and enable it.
 
 
 .TP

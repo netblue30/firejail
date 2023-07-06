@@ -24,3 +24,5 @@ seccomp
 
 private-cache
 private-tmp
+
+restrict-namespaces

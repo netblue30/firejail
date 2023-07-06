@@ -41,3 +41,4 @@ private-tmp
 
 # doesn't work - maybe all Tcl/Tk programs have this problem
 # memory-deny-write-execute
+restrict-namespaces

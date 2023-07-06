@@ -1,5 +1,5 @@
 # Firejail profile for vmware-player
-# Description: The industry standard for running multiple operating systems as virtual machines on a single Linux PC.
+# Description: VMWare Workstation Player, used for running virtual machines
 # This file is overwritten after every install/update
 # Persistent local customizations
 include vmware-player.local

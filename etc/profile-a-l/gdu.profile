@@ -26,7 +26,7 @@ nosound
 notv
 nou2f
 novideo
-# block the socket syscall to simulate an be empty protocol line, see #639
+# block socket syscall to simulate empty protocol option (see #639)
 seccomp socket
 seccomp.block-secondary
 x11 none
@@ -37,6 +37,7 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces
 
 # gdu has built-in delete (d), empty (e) dir/file support and shell spawning (b) features.
 # Depending on workflow and use case the sandbox can be hardened by adding the

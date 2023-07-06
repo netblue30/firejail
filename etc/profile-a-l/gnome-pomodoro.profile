@@ -43,7 +43,7 @@ disable-mnt
 private-bin gnome-pomodoro
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,localtime,machine-id
+private-etc @x11
 private-tmp
 
 dbus-user filter
@@ -56,3 +56,4 @@ dbus-system none
 
 read-only ${HOME}
 read-write ${HOME}/.local/share/gnome-pomodoro
+restrict-namespaces

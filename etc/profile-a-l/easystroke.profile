@@ -44,7 +44,7 @@ disable-mnt
 #private-bin bash,easystroke,sh
 private-cache
 private-dev
-private-etc alternatives,fonts,group,ld.so.cache,ld.so.preload,passwd
+private-etc
 # breaks custom shell command functionality
 #private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
@@ -53,3 +53,4 @@ private-tmp
 # dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

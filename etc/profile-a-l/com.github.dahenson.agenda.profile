@@ -51,7 +51,7 @@ disable-mnt
 private-bin com.github.dahenson.agenda
 private-cache
 private-dev
-private-etc alternatives,dconf,fonts,gtk-3.0,ld.so.cache,ld.so.preload
+private-etc @x11
 private-tmp
 
 dbus-user filter
@@ -63,3 +63,4 @@ read-only ${HOME}
 read-write ${HOME}/.cache/agenda
 read-write ${HOME}/.config/agenda
 read-write ${HOME}/.local/share/agenda
+restrict-namespaces

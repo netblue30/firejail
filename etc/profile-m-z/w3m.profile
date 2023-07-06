@@ -61,10 +61,12 @@ disable-mnt
 private-bin perl,sh,w3m
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,mailcap,nsswitch.conf,pki,resolv.conf,ssl
+private-etc @tls-ca,mailcap
 private-tmp
 
 dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+read-write ${HOME}/.w3m
+restrict-namespaces

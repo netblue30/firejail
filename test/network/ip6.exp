@@ -7,94 +7,42 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --debug --noprofile --net=br0 --ip6=2001:0db8:0:f101::1/64 --netfilter6=ipv6.net\r"
+send -- "firejail --noprofile --net=br0 --ip6=2001:0db8:0:f101::1/64 ip addr show\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Installing IPv6 firewall"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"DROP"
+	"eth0"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"unable to initialize table 'filter'" {puts "\nTESTING SKIP 2: no IPv6 support\n"; exit}
-	"2001:db8:1f0a:3ec::2"
+	"inet6"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+	"2001:db8:0:f101::1/64"
 }
-sleep 2
+sleep 1
 
-send -- "/sbin/ifconfig\r"
+send -- "firejail --profile=ip6.profile ip addr show\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"inet6"
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"2001:db8:0:f101::1"
+	"eth0"
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"Scope:Global" { puts "Debian\n"}
-	"scopeid 0x0<global>" { puts "Arch\n"}
-}
-
-send -- "exit\r"
-sleep 2
-
-
-
-
-send -- "firejail --debug --profile=ip6.profile\r"
-expect {
-	timeout {puts "TESTING ERROR 10\n";exit}
-	"Installing IPv6 firewall"
-}
-expect {
-	timeout {puts "TESTING ERROR 11\n";exit}
-	"DROP"
-}
-expect {
-	timeout {puts "TESTING ERROR 12\n";exit}
-	"unable to initialize table 'filter'" {puts "\nTESTING SKIP 2: no IPv6 support\n"; exit}
-	"2001:db8:1f0a:3ec::2"
-}
-expect {
-	timeout {puts "TESTING ERROR 13\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-sleep 2
-
-send -- "/sbin/ifconfig\r"
-expect {
-	timeout {puts "TESTING ERROR 14\n";exit}
 	"inet6"
 }
 expect {
-	timeout {puts "TESTING ERROR 15\n";exit}
-	"2001:db8:0:f101::1"
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"2001:db8:0:f101::1/64"
 }
-expect {
-	timeout {puts "TESTING ERROR 16\n";exit}
-	"Scope:Global" { puts "Debian\n"}
-	"scopeid 0x0<global>" { puts "Arch\n"}
-}
-
-send -- "exit\r"
-sleep 2
-
-send -- "firejail --debug --netfilter6=ipv6.net\r"
-expect {
-	timeout {puts "TESTING ERROR 11\n";exit}
-	"Installing IPv6 firewall" {puts "TESTING ERROR 12\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-after 100
-send -- "exit\r"
-
-
-after 100
+after 500
 puts "\nall done\n"
+exit

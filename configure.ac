@@ -12,7 +12,7 @@
 #
 
 AC_PREREQ([2.68])
-AC_INIT([firejail], [0.9.71], [netblue30@protonmail.com], [],
+AC_INIT([firejail], [0.9.73], [netblue30@protonmail.com], [],
     [https://firejail.wordpress.com])
 
 AC_CONFIG_SRCDIR([src/firejail/main.c])
@@ -21,22 +21,18 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_PROG_CC
 
 HAVE_SPECTRE="no"
-AX_CHECK_COMPILE_FLAG(
-    [-mindirect-branch=thunk],
-    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -mindirect-branch=thunk"]
-)
-AX_CHECK_COMPILE_FLAG(
-    [-mretpoline],
-    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -mretpoline"]
-)
-AX_CHECK_COMPILE_FLAG(
-    [-fstack-clash-protection],
-    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-clash-protection"]
-)
-AX_CHECK_COMPILE_FLAG(
-    [-fstack-protector-strong],
-    [HAVE_SPECTRE="yes" && EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-protector-strong"]
-)
+AX_CHECK_COMPILE_FLAG([-mindirect-branch=thunk], [
+	HAVE_SPECTRE="yes"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -mindirect-branch=thunk"
+])
+AX_CHECK_COMPILE_FLAG([-fstack-clash-protection], [
+	HAVE_SPECTRE="yes"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-clash-protection"
+])
+AX_CHECK_COMPILE_FLAG([-fstack-protector-strong], [
+	HAVE_SPECTRE="yes"
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -fstack-protector-strong"
+])
 
 AC_ARG_ENABLE([analyzer],
     [AS_HELP_STRING([--enable-analyzer], [enable GCC static analyzer])])
@@ -45,14 +41,16 @@ AS_IF([test "x$enable_analyzer" = "xyes"], [
 ])
 
 AC_ARG_ENABLE([sanitizer],
-    [AS_HELP_STRING([--enable-sanitizer=@<:@address | memory | undefined@:>@], [enable a compiler-based sanitizer (debug)])],
-    [], [enable_sanitizer=no])
-AS_IF([test "x$enable_sanitizer" != "xno" ],
-	[AX_CHECK_COMPILE_FLAG([-fsanitize=$enable_sanitizer], [
+    [AS_HELP_STRING([--enable-sanitizer=@<:@address | memory | undefined@:>@],
+        [enable a compiler-based sanitizer (debug)])],
+    [],
+    [enable_sanitizer=no])
+AS_IF([test "x$enable_sanitizer" != "xno" ], [
+	AX_CHECK_COMPILE_FLAG([-fsanitize=$enable_sanitizer], [
 		EXTRA_CFLAGS="$EXTRA_CFLAGS -fsanitize=$enable_sanitizer -fno-omit-frame-pointer"
 		EXTRA_LDFLAGS="$EXTRA_LDFLAGS -fsanitize=$enable_sanitizer"
-	], [AC_MSG_ERROR([sanitizer not supported: $enable_sanitizer])]
-)])
+	], [AC_MSG_ERROR([sanitizer not supported: $enable_sanitizer])])
+])
 
 HAVE_IDS=""
 AC_SUBST([HAVE_IDS])
@@ -68,8 +66,10 @@ AC_ARG_ENABLE([apparmor],
     [AS_HELP_STRING([--enable-apparmor], [enable apparmor])])
 AS_IF([test "x$enable_apparmor" = "xyes"], [
 	HAVE_APPARMOR="-DHAVE_APPARMOR"
-	PKG_CHECK_MODULES([AA], [libapparmor],
-	    [EXTRA_CFLAGS="$EXTRA_CFLAGS $AA_CFLAGS" && EXTRA_LDFLAGS="$EXTRA_LDFLAGS $AA_LIBS"])
+	PKG_CHECK_MODULES([AA], [libapparmor], [
+		EXTRA_CFLAGS="$EXTRA_CFLAGS $AA_CFLAGS"
+		LIBS="$LIBS $AA_LIBS"
+	])
 ])
 
 HAVE_SELINUX=""
@@ -78,16 +78,7 @@ AC_ARG_ENABLE([selinux],
     [AS_HELP_STRING([--enable-selinux], [SELinux labeling support])])
 AS_IF([test "x$enable_selinux" = "xyes"], [
 	HAVE_SELINUX="-DHAVE_SELINUX"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lselinux"
-])
-
-HAVE_LANDLOCK=""
-AC_SUBST([HAVE_LANDLOCK])
-AC_ARG_ENABLE([landlock])
-    [AS_HELP_STRING([--enable-landlock], [Landlock self-restriction support])]
-AS_IF([test "x$enable_landlock" = "xyes"], [
-	HAVE_LANDLOCK="-DHAVE_LANDLOCK"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS"
+	LIBS="$LIBS -lselinux"
 ])
 
 AC_SUBST([EXTRA_CFLAGS])
@@ -152,6 +143,14 @@ AS_IF([test "x$enable_private_home" != "xno"], [
 	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
 ])
 
+HAVE_PRIVATE_LIB=""
+AC_SUBST([HAVE_PRIVATE_LIB])
+AC_ARG_ENABLE([private-lib],
+    [AS_HELP_STRING([--disable-private-lib], [disable private lib feature])])
+AS_IF([test "x$enable_private_lib" = "xyes"], [
+	HAVE_PRIVATE_LIB="-DHAVE_PRIVATE_LIB"
+])
+
 HAVE_CHROOT=""
 AC_SUBST([HAVE_CHROOT])
 AC_ARG_ENABLE([chroot],
@@ -212,9 +211,9 @@ AS_IF([test "x$enable_suid" != "xno"], [
 HAVE_FATAL_WARNINGS=""
 AC_SUBST([HAVE_FATAL_WARNINGS])
 AC_ARG_ENABLE([fatal_warnings],
-    [AS_HELP_STRING([--enable-fatal-warnings], [-W -Wall -Werror])])
+    [AS_HELP_STRING([--enable-fatal-warnings], [-W -Werror])])
 AS_IF([test "x$enable_fatal_warnings" = "xyes"], [
-	HAVE_FATAL_WARNINGS="-W -Wall -Werror"
+	HAVE_FATAL_WARNINGS="-W -Werror"
 ])
 
 BUSYBOX_WORKAROUND="no"
@@ -225,14 +224,14 @@ AS_IF([test "x$enable_busybox_workaround" = "xyes"], [
 	BUSYBOX_WORKAROUND="yes"
 ])
 
-
 HAVE_GCOV=""
 AC_SUBST([HAVE_GCOV])
 AC_ARG_ENABLE([gcov],
     [AS_HELP_STRING([--enable-gcov], [Gcov instrumentation])])
 AS_IF([test "x$enable_gcov" = "xyes"], [
 	HAVE_GCOV="--coverage -DHAVE_GCOV"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS -lgcov --coverage"
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS --coverage"
+	LIBS="$LIBS -lgcov"
 ])
 
 HAVE_CONTRIB_INSTALL="yes"
@@ -240,7 +239,7 @@ AC_SUBST([HAVE_CONTRIB_INSTALL])
 AC_ARG_ENABLE([contrib-install],
     [AS_HELP_STRING([--enable-contrib-install], [install contrib scripts])])
 AS_IF([test "x$enable_contrib_install" = "xno"], [
-       HAVE_CONTRIB_INSTALL="no"
+	HAVE_CONTRIB_INSTALL="no"
 ])
 
 HAVE_FORCE_NONEWPRIVS=""
@@ -256,7 +255,7 @@ AC_SUBST([HAVE_ONLY_SYSCFG_PROFILES])
 AC_ARG_ENABLE([only-syscfg-profiles],
     [AS_HELP_STRING([--enable-only-syscfg-profiles], [disable profiles in $HOME/.config/firejail])])
 AS_IF([test "x$enable_only_syscfg_profiles" = "xyes"], [
-    HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
+	HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
 ])
 
 HAVE_LTS=""
@@ -273,6 +272,7 @@ AS_IF([test "x$enable_lts" = "xyes"], [
 	HAVE_MAN="-DHAVE_MAN"
 	HAVE_FIRETUNNEL=""
 	HAVE_PRIVATE_HOME=""
+	HAVE_PRIVATE_LIB=""
 	HAVE_CHROOT=""
 	HAVE_GLOBALCFG=""
 	HAVE_USERNS=""
@@ -280,10 +280,11 @@ AS_IF([test "x$enable_lts" = "xyes"], [
 	HAVE_FILE_TRANSFER=""
 	HAVE_SUID="-DHAVE_SUID"
 	BUSYBOX_WORKAROUND="no"
-	HAVE_CONTRIB_INSTALL="no",
+	HAVE_CONTRIB_INSTALL="no"
 ])
 
-AC_CHECK_HEADER([linux/seccomp.h], [], AC_MSG_ERROR([*** SECCOMP support is not installed (/usr/include/linux/seccomp.h missing) ***]))
+AC_CHECK_HEADER([linux/seccomp.h], [],
+    [AC_MSG_ERROR([*** SECCOMP support is not installed (/usr/include/linux/seccomp.h missing) ***])])
 
 # set sysconfdir
 if test "$prefix" = /usr; then
@@ -296,8 +297,12 @@ AC_OUTPUT
 cat <<EOF
 
 Compile options:
+   CC: $CC
+   CFLAGS: $CFLAGS
+   LDFLAGS: $LDFLAGS
    EXTRA_CFLAGS: $EXTRA_CFLAGS
    EXTRA_LDFLAGS: $EXTRA_LDFLAGS
+   LIBS: $LIBS
    fatal warnings: $HAVE_FATAL_WARNINGS
    gcov instrumentation: $HAVE_GCOV
    install as a SUID executable: $HAVE_SUID
@@ -324,6 +329,7 @@ Features:
    network: $HAVE_NETWORK
    overlayfs support: $HAVE_OVERLAYFS
    private home support: $HAVE_PRIVATE_HOME
+   private lib support: $HAVE_PRIVATE_LIB
    SELinux labeling support: $HAVE_SELINUX
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11
@@ -332,13 +338,10 @@ EOF
 
 if test "$HAVE_LTS" = -DHAVE_LTS; then
 	cat <<\EOF
-
-
 *********************************************************
 *    Warning: Long-term support (LTS) was enabled!      *
-*    Most compile-time options have bean rewritten!     *
+*    Most compile-time options have been rewritten!     *
 *********************************************************
-
 
 EOF
 fi

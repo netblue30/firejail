@@ -1,9 +1,10 @@
-# This file is overwritten during software install.
-# Persistent customizations should go in a .local file.
+# Firejail profile alias for blink-common-hardened.inc
+# This file is overwritten after every install/update
+# Persistent local customizations
 include chromium-common-hardened.inc.local
+# Persistent global definitions
+# added by caller profile
+#include globals.local
 
-caps.drop all
-nonewprivs
-noroot
-protocol unix,inet,inet6,netlink
-seccomp !chroot
+# Redirect
+include blink-common-hardened.inc.profile

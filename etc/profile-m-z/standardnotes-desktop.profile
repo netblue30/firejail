@@ -18,6 +18,10 @@ mkdir ${HOME}/Standard Notes Backups
 mkdir ${HOME}/.config/Standard Notes
 whitelist ${HOME}/Standard Notes Backups
 whitelist ${HOME}/.config/Standard Notes
+include whitelist-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
@@ -38,7 +42,9 @@ seccomp !chroot
 disable-mnt
 private-dev
 private-tmp
-private-etc alternatives,ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,pki,resolv.conf,ssl,xdg
+private-etc @tls-ca,@x11,host.conf
 
 dbus-user none
 dbus-system none
+
+# restrict-namespaces

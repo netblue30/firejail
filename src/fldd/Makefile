@@ -1,17 +1,12 @@
-.PHONY: all
-all: fldd
-
+.SUFFIXES:
 ROOT = ../..
-include $(ROOT)/src/common.mk
+-include $(ROOT)/config.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/syscall.h ../include/ldd_utils.h $(ROOT)/config.mk
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+MOD_DIR = src/fldd
+PROG = fldd
+TARGET = $(PROG)
 
-fldd: $(OBJS) ../lib/common.o ../lib/ldd_utils.o $(ROOT)/config.mk
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/ldd_utils.o $(LIBS) $(EXTRA_LDFLAGS)
+EXTRA_HDRS = ../include/common.h ../include/syscall.h ../include/ldd_utils.h
+EXTRA_OBJS = ../lib/common.o ../lib/ldd_utils.o
 
-.PHONY: clean
-clean:; rm -fr *.o fldd *.gcov *.gcda *.gcno *.plist
-
-.PHONY: distclean
-distclean: clean
+include $(ROOT)/src/prog.mk

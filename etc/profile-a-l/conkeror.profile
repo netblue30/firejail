@@ -34,3 +34,5 @@ protocol unix,inet,inet6
 seccomp
 
 disable-mnt
+
+restrict-namespaces

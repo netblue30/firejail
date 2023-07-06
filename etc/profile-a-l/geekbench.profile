@@ -25,7 +25,6 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-hostname geekbench
 ipc-namespace
 machine-id
 netfilter
@@ -47,7 +46,7 @@ disable-mnt
 #private-bin bash,geekbench*,sh -- #4576
 private-cache
 private-dev
-private-etc alternatives,group,ld.so.cache,ld.so.preload,lsb-release,passwd
+private-etc lsb-release
 private-tmp
 
 dbus-user none
@@ -55,3 +54,4 @@ dbus-system none
 
 read-only ${HOME}
 read-write ${HOME}/.geekbench5
+restrict-namespaces

@@ -46,5 +46,7 @@ disable-mnt
 private-bin xiphos
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.preload,pki,resolv.conf,ssli,sword,sword.conf
+private-etc @tls-ca,sword,sword.conf
 private-tmp
+
+restrict-namespaces

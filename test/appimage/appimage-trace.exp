@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -8,61 +8,24 @@ spawn $env(SHELL)
 match_max 100000
 set appimage_id $spawn_id
 
-send -- "firejail --trace --timeout=00:00:05 --appimage Leafpad-0.8.17-x86_64.AppImage\r"
+send -- "firejail --trace --timeout=00:00:05 --appimage hello-x86_64.AppImage\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"leafpad:socket"
+	"AppRun:exec"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"leafpad:connect"
+	"AppRun:opendir"
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"X11-unix/X0"
+	"Hello, World!"
 }
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"Parent is shutting down, bye"
-}
-expect {
-	timeout {puts "shutdown\n"}
-	"AppImage detached"
-}
-sleep 1
 
-send -- "firejail --trace --timeout=00:00:05 --appimage Leafpad-0.8.18.1.glibc2.4-x86_64.AppImage\r"
-expect {
-	timeout {puts "TESTING ERROR 11\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 12\n";exit}
-	"leafpad:socket"
-}
-expect {
-	timeout {puts "TESTING ERROR 13\n";exit}
-	"leafpad:connect"
-}
-expect {
-	timeout {puts "TESTING ERROR 14\n";exit}
-	"X11-unix/X0"
-}
-expect {
-	timeout {puts "TESTING ERROR 15\n";exit}
-	"Parent is shutting down, bye"
-}
-expect {
-	timeout {puts "shutdown\n"}
-	"AppImage detached"
-}
-sleep 1
-
-
-after 100
+after 500
 
 puts "\nall done\n"

@@ -33,3 +33,4 @@ private-bin sayonara
 private-dev
 private-tmp
 
+restrict-namespaces

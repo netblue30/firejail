@@ -1,0 +1,37 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+
+
+# memory-deny-write-execute
+send --  "firejail --debug --memory-deny-write-execute pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.mdwx seccomp filter"
+}
+after 500
+
+send --  "firejail --debug --profile=mrwx.profile pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"Installing /run/firejail/mnt/seccomp/seccomp.mdwx seccomp filter"
+}
+after 500
+
+
+after 500
+puts "all done\n"

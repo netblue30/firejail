@@ -48,7 +48,7 @@ private
 private-bin gapplication
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-tmp
 
 # Add the next line to your gapplication.local to filter D-Bus names.
@@ -70,3 +70,4 @@ dbus-system none
 
 memory-deny-write-execute
 read-only ${HOME}
+restrict-namespaces

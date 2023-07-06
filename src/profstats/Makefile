@@ -1,17 +1,11 @@
-.PHONY: all
-all: profstats
-
+.SUFFIXES:
 ROOT = ../..
-include $(ROOT)/src/common.mk
+-include $(ROOT)/config.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h $(ROOT)/config.mk
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+MOD_DIR = src/profstats
+PROG = profstats
+TARGET = $(PROG)
 
-profstats: $(OBJS) $(ROOT)/config.mk
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(EXTRA_LDFLAGS)
+EXTRA_HDRS = ../include/common.h
 
-.PHONY: clean
-clean:; rm -fr *.o profstats *.gcov *.gcda *.gcno *.plist
-
-.PHONY: distclean
-distclean: clean
+include $(ROOT)/src/prog.mk

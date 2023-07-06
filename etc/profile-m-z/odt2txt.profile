@@ -37,10 +37,11 @@ x11 none
 private-bin odt2txt
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-tmp
 
 dbus-user none
 dbus-system none
 
 read-only ${HOME}
+restrict-namespaces

@@ -14,9 +14,13 @@ include globals.local
 # https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions#how-do-i-run-two-instances-of-firefox
 # https://github.com/netblue30/firejail/issues/4206#issuecomment-824806968
 
+# (Ignore entry from disable-common.inc)
+ignore read-only ${HOME}/.mozilla/firefox/profiles.ini
+
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
 noblacklist ${RUNUSER}/*firefox*
+noblacklist ${RUNUSER}/psd/*firefox*
 
 blacklist /usr/libexec
 
@@ -37,18 +41,17 @@ whitelist /usr/share/gtk-doc/html
 whitelist /usr/share/mozilla
 whitelist /usr/share/webext
 whitelist ${RUNUSER}/*firefox*
+whitelist ${RUNUSER}/psd/*firefox*
 include whitelist-usr-share-common.inc
 
 # firefox requires a shell to launch on Arch - add the next line to your firefox.local to enable private-bin.
 #private-bin bash,dbus-launch,dbus-send,env,firefox,sh,which
 # Fedora uses shell scripts to launch firefox - add the next line to your firefox.local to enable private-bin.
 #private-bin basename,bash,cat,dirname,expr,false,firefox,firefox-wayland,getenforce,ln,mkdir,pidof,restorecon,rm,rmdir,sed,sh,tclsh,true,uname
-# Add the next line to your firefox.local to enable private-etc support - note that this must be enabled in your firefox-common.local too.
-#private-etc firefox
+private-etc firefox
 
 dbus-user filter
-dbus-user.own org.mozilla.Firefox.*
-dbus-user.own org.mozilla.firefox.*
+dbus-user.own org.mozilla.*
 dbus-user.own org.mpris.MediaPlayer2.firefox.*
 # Add the next line to your firefox.local to enable native notifications.
 #dbus-user.talk org.freedesktop.Notifications

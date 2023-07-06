@@ -16,15 +16,18 @@ ignore dbus-system none
 # If you use such a system, add 'ignore nogroups' to your zoom.local.
 #ignore nogroups
 
+noblacklist ${HOME}/.config/zoom.conf
 noblacklist ${HOME}/.config/zoomus.conf
 noblacklist ${HOME}/.zoom
 
 nowhitelist ${DOWNLOADS}
 
 mkdir ${HOME}/.cache/zoom
+mkfile ${HOME}/.config/zoom.conf
 mkfile ${HOME}/.config/zoomus.conf
 mkdir ${HOME}/.zoom
 whitelist ${HOME}/.cache/zoom
+whitelist ${HOME}/.config/zoom.conf
 whitelist ${HOME}/.config/zoomus.conf
 whitelist ${HOME}/.zoom
 
@@ -32,4 +35,4 @@ whitelist ${HOME}/.zoom
 #private-etc alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl
 
 # Redirect
-include electron.profile
+include electron-common.profile

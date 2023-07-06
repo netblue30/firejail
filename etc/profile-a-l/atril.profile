@@ -41,7 +41,7 @@ tracelog
 
 private-bin 7z,7za,7zr,atril,atril-previewer,atril-thumbnailer,sh,tar,unrar,unzip,zipnote
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload
+private-etc
 # atril uses webkit gtk to display epub files
 # waiting for globbing support in private-lib; for now hardcoding it to webkit2gtk-4.0
 #private-lib webkit2gtk-4.0 - problems on Arch with the new version of WebKit
@@ -49,3 +49,4 @@ private-tmp
 
 # webkit gtk killed by memory-deny-write-execute
 #memory-deny-write-execute
+restrict-namespaces

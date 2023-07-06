@@ -23,7 +23,6 @@ include disable-shell.inc
 
 apparmor
 caps.drop all
-hostname archiver
 ipc-namespace
 machine-id
 net none
@@ -44,8 +43,10 @@ x11 none
 
 private-cache
 private-dev
+private-etc
 
 dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

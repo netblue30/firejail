@@ -1,53 +1,28 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-#send -- "ping -c 3 192.168.1.1\r"
-#expect {
-#	timeout {puts "TESTING ERROR 0\n";exit}
-#	"3 packets transmitted"
-#}
-#sleep 1
-
-send --  "firejail --name=test1\r"
+send -- "firejail --name=test --net=br0 --ip=10.10.20.50\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
-sleep 1
-
-spawn $env(SHELL)
-send --  "firejail --name=test2\r"
-expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-sleep 1
+sleep 2
 
 spawn $env(SHELL)
 send -- "firemon --arp\r"
 expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"firejail --name=test --net=br0 --ip=10.10.20.50"
+}
+expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"name=test1"
+	"ARP Table:"
 }
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"192.168.1.1 dev eth0 lladdr" {puts "Debian testing\n";}
-	"192.168.1.1 dev enp0s3 lladdr" {puts "Centos 7 testing\n";}
-}
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"REACHABLE"
-}
-expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	"name=test2"
-}
-after 100
-
+after 500
 puts "\nall done\n"

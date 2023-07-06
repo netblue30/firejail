@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -35,17 +35,15 @@
 #include "../include/rundefs.h"
 
 #define tprintf(fp, args...) \
-    do { \
-        if (!fp)\
-            init(); \
-        fprintf(fp, args); \
-    } while(0)
+	do { \
+		if (!fp)\
+			init(); \
+		fprintf(fp, args); \
+	} while(0)
 
 // break recursivity on fopen call
 typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);
 static orig_fopen_t orig_fopen = NULL;
-typedef FILE *(*orig_fopen64_t)(const char *pathname, const char *mode);
-static orig_fopen64_t orig_fopen64 = NULL;
 typedef int (*orig_access_t)(const char *pathname, int mode);
 static orig_access_t orig_access = NULL;
 
@@ -341,7 +339,9 @@ FILE *fopen(const char *pathname, const char *mode) {
 	return rv;
 }
 
-#ifdef __GLIBC__
+#ifndef fopen64
+typedef FILE *(*orig_fopen64_t)(const char *pathname, const char *mode);
+static orig_fopen64_t orig_fopen64 = NULL;
 FILE *fopen64(const char *pathname, const char *mode) {
 	if (!orig_fopen64)
 		orig_fopen64 = (orig_fopen_t)dlsym(RTLD_NEXT, "fopen64");
@@ -350,7 +350,7 @@ FILE *fopen64(const char *pathname, const char *mode) {
 	tprintf(ftty, "%u:%s:fopen64 %s:%p\n", mypid, myname, pathname, rv);
 	return rv;
 }
-#endif /* __GLIBC__ */
+#endif
 
 
 // freopen
@@ -365,7 +365,7 @@ FILE *freopen(const char *pathname, const char *mode, FILE *stream) {
 	return rv;
 }
 
-#ifdef __GLIBC__
+#ifndef freopen64
 typedef FILE *(*orig_freopen64_t)(const char *pathname, const char *mode, FILE *stream);
 static orig_freopen64_t orig_freopen64 = NULL;
 FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
@@ -376,7 +376,7 @@ FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
 	tprintf(ftty, "%u:%s:freopen64 %s:%p\n", mypid, myname, pathname, rv);
 	return rv;
 }
-#endif /* __GLIBC__ */
+#endif
 
 // unlink
 typedef int (*orig_unlink_t)(const char *pathname);
@@ -447,7 +447,7 @@ int stat(const char *pathname, struct stat *statbuf) {
 	return rv;
 }
 
-#ifdef __GLIBC__
+#ifndef stat64
 typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *statbuf);
 static orig_stat64_t orig_stat64 = NULL;
 int stat64(const char *pathname, struct stat64 *statbuf) {
@@ -458,7 +458,7 @@ int stat64(const char *pathname, struct stat64 *statbuf) {
 	tprintf(ftty, "%u:%s:stat64 %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
-#endif /* __GLIBC__ */
+#endif
 
 // lstat
 typedef int (*orig_lstat_t)(const char *pathname, struct stat *statbuf);
@@ -472,7 +472,7 @@ int lstat(const char *pathname, struct stat *statbuf) {
 	return rv;
 }
 
-#ifdef __GLIBC__
+#ifndef lstat64
 typedef int (*orig_lstat64_t)(const char *pathname, struct stat64 *statbuf);
 static orig_lstat64_t orig_lstat64 = NULL;
 int lstat64(const char *pathname, struct stat64 *statbuf) {
@@ -483,7 +483,7 @@ int lstat64(const char *pathname, struct stat64 *statbuf) {
 	tprintf(ftty, "%u:%s:lstat64 %s:%d\n", mypid, myname, pathname, rv);
 	return rv;
 }
-#endif /* __GLIBC__ */
+#endif
 
 // opendir
 typedef DIR *(*orig_opendir_t)(const char *pathname);
@@ -515,7 +515,7 @@ int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
 	if (!orig_connect)
 		orig_connect = (orig_connect_t)dlsym(RTLD_NEXT, "connect");
 
- 	int rv = orig_connect(sockfd, addr, addrlen);
+	int rv = orig_connect(sockfd, addr, addrlen);
 	print_sockaddr(sockfd, "connect", addr, rv);
 
 	return rv;

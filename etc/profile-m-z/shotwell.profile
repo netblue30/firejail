@@ -48,7 +48,7 @@ tracelog
 private-bin shotwell
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
+private-etc
 private-opt none
 private-tmp
 
@@ -57,3 +57,5 @@ dbus-user.own org.gnome.Shotwell
 dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.gtk.vfs.UDisks2VolumeMonitor
 dbus-system none
+
+restrict-namespaces

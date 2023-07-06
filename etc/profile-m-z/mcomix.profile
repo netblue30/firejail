@@ -57,7 +57,7 @@ private-bin 7z,lha,mcomix,mutool,python*,rar,sh,unrar,unzip
 private-cache
 private-dev
 # mcomix <= 1.2 uses gtk-2.0
-private-etc alternatives,dconf,fonts,gconf,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,pango,passwd,X11,xdg
+private-etc @x11,gconf,mime.types
 private-tmp
 
 dbus-user none
@@ -70,3 +70,4 @@ read-write ${HOME}/.local/share/mcomix
 read-write ${HOME}/.local/share
 # used by mcomix <= 1.2, tip, make a symbolic link to .cache/thumbnails
 read-write ${HOME}/.thumbnails
+restrict-namespaces

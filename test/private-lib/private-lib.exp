@@ -1,0 +1,48 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --private-lib --private-bin=sh,bash,dash,ps,grep,ls,find,echo,stty \r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+after 100
+send -- "stty -echo\r"
+after 100
+
+send -- "cd /bin; find .\; echo done\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+#	"grep" {puts "TESTING ERROR 3\n";exit}
+	"rm" {puts "TESTING ERROR 3\n";exit}
+	"cp" {puts "TESTING ERROR 4\n";exit}
+	"done"
+}
+after 100
+
+send -- "cd /lib; find .\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"./modules" {puts "TESTING ERROR 6\n";exit}
+	"./firmware" {puts "TESTING ERROR 7\n";exit}
+	"libc.so"
+}
+after 100
+
+send -- "cd /usr/lib; find .\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"grub" {puts "TESTING ERROR 9\n";exit}
+	"mozilla" {puts "TESTING ERROR 10\n";exit}
+	"libdl.so"
+}
+after 100
+
+puts "\nall done\n"

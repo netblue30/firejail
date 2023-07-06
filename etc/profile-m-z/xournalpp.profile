@@ -28,7 +28,7 @@ include whitelist-runuser-common.inc
 #include whitelist-common.inc
 
 private-bin kpsewhich,pdflatex,xournalpp
-private-etc alternatives,latexmk.conf,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,texlive
+private-etc latexmk.conf,texlive
 
 # Redirect
 include xournal.profile

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -36,6 +36,7 @@ typedef struct liblist_t {
 	int len;
 } LibList;
 
+#ifdef HAVE_PRIVATE_LIB
 static LibList libc_list[] = {
 	{ "libselinux.so.", 0 },
 	{ "libpcre2-8.so.", 0 },
@@ -356,3 +357,4 @@ void fslib_install_system(void) {
 		ptr++;
 	}
 }
+#endif

@@ -23,6 +23,7 @@ noblacklist ${HOME}/.mail
 noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.msmtprc
 noblacklist ${HOME}/.mutt
+noblacklist ${HOME}/.mutthistory
 noblacklist ${HOME}/.muttrc
 noblacklist ${HOME}/.nanorc
 noblacklist ${HOME}/.signature
@@ -51,29 +52,18 @@ include disable-programs.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.Mail
-mkdir ${HOME}/.bogofilter
 mkdir ${HOME}/.cache/mutt
 mkdir ${HOME}/.config/mutt
-mkdir ${HOME}/.config/nano
-mkdir ${HOME}/.elinks
-mkdir ${HOME}/.emacs.d
 mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.mail
 mkdir ${HOME}/.mutt
-mkdir ${HOME}/.vim
-mkdir ${HOME}/.w3m
 mkdir ${HOME}/Mail
 mkdir ${HOME}/mail
 mkdir ${HOME}/postponed
 mkdir ${HOME}/sent
-mkfile ${HOME}/.emacs
 mkfile ${HOME}/.mailcap
-mkfile ${HOME}/.msmtprc
 mkfile ${HOME}/.muttrc
-mkfile ${HOME}/.nanorc
 mkfile ${HOME}/.signature
-mkfile ${HOME}/.viminfo
-mkfile ${HOME}/.vimrc
 whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.Mail
@@ -89,6 +79,7 @@ whitelist ${HOME}/.mail
 whitelist ${HOME}/.mailcap
 whitelist ${HOME}/.msmtprc
 whitelist ${HOME}/.mutt
+whitelist ${HOME}/.mutthistory
 whitelist ${HOME}/.muttrc
 whitelist ${HOME}/.nanorc
 whitelist ${HOME}/.signature
@@ -133,7 +124,7 @@ tracelog
 # disable-mnt
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,gai.conf,gcrypt,gnupg,gnutls,hostname,hosts,hosts.conf,ld.so.cache,ld.so.preload,mail,mailname,Mutt,Muttrc,Muttrc.d,nntpserver,nsswitch.conf,passwd,pki,resolv.conf,ssl,terminfo,xdg
+private-etc @tls-ca,@x11,Mutt,Muttrc,Muttrc.d,gai.conf,gnupg,gnutls,hosts.conf,mail,mailname,nntpserver,terminfo
 private-tmp
 writable-run-user
 writable-var
@@ -142,7 +133,5 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
-read-only ${HOME}/.elinks
-read-only ${HOME}/.nanorc
 read-only ${HOME}/.signature
-read-only ${HOME}/.w3m
+restrict-namespaces

@@ -1,12 +1,87 @@
-firejail (0.9.71) baseline; urgency=low
+firejail (0.9.73) baseline; urgency=low
   * work in progress
+  * feature: Add "keep-shell-rc" command and option (#1127 #5634)
+  * feature: Print the argument when failing with "too long arguments" (#5677)
+  * feature: a random hostname is assigned to each sandbox unless
+    overwritten using --hostname command
+  * feature: add IPv6 support for --net.print option
+  * feature: QUIC (HTTP/3) support in --nettrace
+  * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
+  * modif: Prevent sandbox name (--name=) and host name (--hostname=)
+    from containing only digits (#5578 #5741)
+  * modif: Escape control characters of the command line (#5613)
+  * modif: Allow mostly only ASCII letters and digits for sandbox name
+    (--name=) and host name (--hostname=) (#5708 #5856)
+  * modif: remove firemon --interface option (duplicating --net.print option)
+  * modif: make private-lib a configure-time option, disabled by default (see
+    --enable-private-lib) (#5727 #5732)
+  * modif: Improve --version/--help & print version on startup (#5829)
+  * bugfix: qutebrowser: links will not open in the existing instance (#5601
+    #5618)
+  * bugfix: fix --hostname and --hosts-file commands
+  * bugfix: arp.c: ensure positive timeout on select(2) (#5806)
+  * build: auto-generate syntax files (#5627)
+  * build: mark all phony targets as such (#5637)
+  * build: mkdeb.sh: pass all arguments to ./configure (#5654)
+  * build: deb: enable apparmor by default & remove deb-apparmor (#5668)
+  * build: Fix whitespace and add .editorconfig (#5674)
+  * build: enable compiler warnings by default (#5842)
+  * build: remove -mretpoline and NO_EXTRA_CFLAGS (#5859)
+  * build: disable all built-in implicit make rules (#5864)
+  * build: organize and standardize make vars and targets (#5866)
+  * ci: always update the package db before installing packages (#5742)
+  * ci: fix codeql unable to download its own bundle (#5783)
+  * ci: split configure/build/install commands on gitlab (#5784)
+  * ci: fix swapped name/email arguments in debian_ci (#5795)
+  * ci: formatting and misc improvements (#5802)
+  * ci: run for every branch instead of just master (#5815)
+  * ci: upgrade debian:stretch to debian:buster (#5818)
+  * ci: standardize apt-get update/install & misc improvements (#5857)
+  * contrib/vim: match profile files more broadly (#5850)
+  * test: split individual test groups in github workflows
+  * test: add chroot, appimage and network tests in github workflows
+  * docs: remove apparmor options in --help when building without apparmor
+    support (#5589)
+  * docs: fix typos (#5693)
+  * docs: markdown formatting and misc improvements (#5757)
+  * docs: add uninstall instructions to README.md (#5812)
+  * legal: selinux.c: Split Copyright notice & use same license as upstream
+    (#5667)
+  * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
+ -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
+
+firejail (0.9.72) baseline; urgency=low
   * feature: On failing to remount a fuse filesystem, give warning instead of
     erroring out (#5240 #5242)
-  * feature: restrict namespaces (--restrict-namespaces) implemented as
-    a seccomp filter for both 64 and 32 bit architectures (#4939 #5259)
-  * feature: support for custom AppArmor profiles (--apparmor=) (#5274 #5316
-    #5317)
+  * feature: Update syscall tables and seccomp groups (#5188)
+  * feature: improve force-nonewprivs security guarantees (#5217 #5271)
+  * feature: add support for restricting the creation of Linux namespaces
+    (--restrict-namespaces, --restrict-namespaces=), implemented as a seccomp
+    filter for both 64 and 32 bit architectures (#4939 #5259)
+  * feature: add support for custom AppArmor profiles (--apparmor=) (#5274
+    #5316 #5317 #5475)
+  * feature: add support for ICMP in nettrace
+  * feature: add --dnstrace, --icmptrace, and --snitrace commands
+  * feature: Add basic gtksourceview language-spec (file type detection/syntax
+    highlighting for profiles) (#5502)
+  * feature: add restrict-namespaces to (almost) all applicable profiles (#5440
+    #5537)
+  * feature: add support for netlock in profile files
+  * modif: removed --cgroup= command (#5190 #5200)
+  * modif: set --shell=none as the default (#5190)
+  * modif: removed --shell= command (#5190 #5196 #5209)
+  * modif: disabled firetunnel by default in configure.ac (#5190)
+  * modif: disabled chroot by default in /etc/firejail/firejail.config (#5190)
+  * modif: disabled private-lib by default in /etc/firejail/firejail.config
+    (#5190 #5216)
+  * modif: disabled tracelog by default in /etc/firejail/firejail.config
+    (#5190)
+  * modif: removed grsecurity support
+  * modif: stop hiding blacklisted files in /etc by default and add a new
+    etc-hide-blacklisted option to firejail.config that enables the previous
+    behavior (disabled by default) (#5010 #5230 #5591 #5595)
   * bugfix: Flood of seccomp audit log entries (#5207)
+  * bugfix: --netlock does not work (Error: no valid sandbox) (#5312)
   * build: deduplicate configure-time vars into new config files (#5140 #5284)
   * build: fix file mode of shell scripts (644 -> 755) (#5206)
   * build: reduce autoconf input files from 32 to 2 (#5219)
@@ -14,11 +89,38 @@ firejail (0.9.71) baseline; urgency=low
   * build: add autoconf auto-generation comment to input files (#5251)
   * build: Add files make uninstall forgot to remove (#5283)
   * build: add and use TARNAME instead of NAME for paths (#5310)
+  * build: only install ids.config when --enable-ids is set (#5356 #5357)
+  * build: Remove deprecated syntax and modernize shell test scripts (#5370)
+  * build: Fix musl warnings (#5421 #5431)
+  * build: sort.py improvements (#5429)
+  * build: deduplicate makefiles (#5478)
+  * build: fix formatting and misc in configure (#5488)
+  * build: actually set LDFLAGS/LIBS & stop overriding CFLAGS/LDFLAGS (#5504)
+  * build: make shell commands more portable in firejail.vim (#5577)
+  * ci: bump ubuntu to 22.04 and use newer compilers / analyzers (#5275)
   * ci: ignore git-related paths and the project license (#5249)
+  * ci: Harden GitHub Actions (StepSecurity) (#5439)
+  * ci: sort and ignore more paths (#5481)
+  * ci: whitelist needed endpoints and block access to sudo (#5485)
+  * docs: fix typos (#5189 #5349)
   * docs: mention risk of SUID binaries and also firejail-users(5) (#5288
     #5290)
   * docs: set vim filetype on man pages for syntax highlighting (#5296)
- -- netblue30 <netblue30@yahoo.com>  Sat, 11 Jun 2022 09:00:00 -0500
+  * docs: note that blacklist/whitelist follow symlinks (#5344)
+  * docs: Add IRC channel info to README.md (#5361)
+  * docs: man: Note that some commands can be disabled in firejail.config
+    (#5366)
+  * docs: Add gist note to bug_report.md (#5398)
+  * docs: clarify that --appimage should appear before --profile (#5402 #5451)
+  * docs: add more Firefox examples to the firejail-local AppArmor profile
+    (#5493)
+  * docs: Fix broken Restrict-DBus wiki link on profile.template (#5554)
+  * docs: Remove invalid --profile-path from --help (#5585 #5586)
+  * new profiles: gdu, makedeb, gtk-lbry-viewer, lbry-viewer, tuir, chafa,
+  * new profiles: godot3, cinelerra-gg, tesseract, avidemux3_qt5,
+  * new profiles: avidemux3_cli, avidemux3_jobs_qt5, ssmtp, chatterino,
+  * new profiles: linuxqq, qq, electron-hardened.inc.profile,
+ -- netblue30 <netblue30@yahoo.com>  Mon, 16 Jan 2023 09:00:00 -0500
 
 firejail (0.9.70) baseline; urgency=low
   * security: CVE-2022-31214 - root escalation in --join logic
@@ -248,7 +350,7 @@ firejail (0.9.62) baseline; urgency=low
   * compiler flags autodetection
   * move chroot entirely from path based to file descriptor based mounts
   * whitelisting /usr/share in a large number of profiles
-  * new scripts in conrib: gdb-firejail.sh and sort.py
+  * new scripts in contrib: gdb-firejail.sh and sort.py
   * enhancement: whitelist /usr/share in some profiles
   * added signal mediation ot apparmor profile
   * new conditions: HAS_X11, HAS_NET

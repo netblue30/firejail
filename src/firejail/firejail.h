@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -22,9 +22,6 @@
 #include "../include/common.h"
 #include "../include/euid_common.h"
 #include "../include/rundefs.h"
-#ifdef HAVE_LANDLOCK
-#include <linux/landlock.h>
-#endif
 #include <linux/limits.h> // Note: Plain limits.h may break ARG_MAX (see #4583)
 #include <stdarg.h>
 #include <sys/stat.h>
@@ -32,25 +29,7 @@
 // debug restricted shell
 //#define DEBUG_RESTRICTED_SHELL
 
-#ifdef HAVE_LANDLOCK
 
-extern int landlock_create_ruleset(struct landlock_ruleset_attr *rsattr,size_t size,__u32 flags);
-
-extern int landlock_add_rule(int fd,enum landlock_rule_type t,void *attr,__u32 flags);
-
-extern int landlock_restrict_self(int fd,__u32 flags);
-
-extern int create_full_ruleset();
-
-extern int add_read_access_rule_by_path(int rset_fd,char *allowed_path);
-
-extern int add_write_access_rule_by_path(int rset_fd,char *allowed_path);
-
-extern int add_create_special_rule_by_path(int rset_fd,char *allowed_path);
-
-extern int add_execute_rule_by_path(int rset_fd,char *allowed_path);
-
-#endif
 
 // profiles
 #define DEFAULT_USER_PROFILE	"default"
@@ -287,7 +266,7 @@ static inline int any_ip6_dhcp(void) {
 }
 
 static inline int any_dhcp(void) {
-  return any_ip_dhcp() || any_ip6_dhcp();
+	return any_ip_dhcp() || any_ip6_dhcp();
 }
 
 extern int arg_private;		// mount private /home
@@ -306,11 +285,6 @@ extern int arg_seccomp;	// enable default seccomp filter
 extern int arg_seccomp32;	// enable default seccomp filter for 32 bit arch
 extern int arg_seccomp_postexec;	// need postexec ld.preload library?
 extern int arg_seccomp_block_secondary;	// block any secondary architectures
-
-#ifdef HAVE_LANDLOCK
-extern int arg_landlock; // Landlock ruleset file descriptor
-extern int arg_landlock_proc;				// Landlock rule for accessing /proc (0 for no access, 1 for read-only and 2 for read-write)
-#endif
 
 extern int arg_caps_default_filter;	// enable default capabilities filter
 extern int arg_caps_drop;		// drop list
@@ -358,6 +332,7 @@ extern int arg_nice;		// nice value configured
 extern int arg_ipc;		// enable ipc namespace
 extern int arg_writable_etc;	// writable etc
 extern int arg_keep_config_pulse;	// disable automatic ~/.config/pulse init
+extern int arg_keep_shell_rc;	// do not copy shell configuration from /etc/skel
 extern int arg_writable_var;	// writable var
 extern int arg_keep_var_tmp; // don't overwrite /var/tmp
 extern int arg_writable_run_user;	// writable /run/user
@@ -365,6 +340,7 @@ extern int arg_writable_var_log; // writable /var/log
 extern int arg_appimage;	// appimage
 extern int arg_apparmor;	// apparmor
 extern char *apparmor_profile;	// apparmor profile
+extern bool apparmor_replace; // whether apparmor should replace the profile (legacy behavior)
 extern int arg_allow_debuggers;	// allow debuggers
 extern int arg_x11_block;	// block X11
 extern int arg_x11_xorg;	// use X11 security extension
@@ -380,6 +356,7 @@ extern int arg_noinput;	// --noinput
 extern int arg_deterministic_exit_code;	// always exit with first child's exit status
 extern int arg_deterministic_shutdown;	// shut down the sandbox if first child dies
 extern int arg_keep_fd_all;	// inherit all file descriptors to sandbox
+extern int arg_netlock;	// netlocker
 
 typedef enum {
 	DBUS_POLICY_ALLOW,	// Allow unrestricted access to the bus
@@ -500,6 +477,8 @@ void tree(void);
 void top(void);
 
 // usage.c
+void print_version(void);
+void print_version_full(void);
 void usage(void);
 
 // process.c
@@ -603,6 +582,13 @@ int has_handler(pid_t pid, int signal);
 void enter_network_namespace(pid_t pid);
 int read_pid(const char *name, pid_t *pid);
 pid_t require_pid(const char *name);
+int ascii_isalnum(unsigned char c);
+int ascii_isalpha(unsigned char c);
+int ascii_isdigit(unsigned char c);
+int ascii_islower(unsigned char c);
+int ascii_isupper(unsigned char c);
+int ascii_isxdigit(unsigned char c);
+int invalid_name(const char *name);
 void check_homedir(const char *dir);
 
 // Get info regarding the last kernel mount operation from /proc/self/mountinfo
@@ -628,7 +614,6 @@ void fs_var_run(void);
 void fs_var_lock(void);
 void fs_var_tmp(void);
 void fs_var_utmp(void);
-void dbg_test_dir(const char *dir);
 
 // fs_dev.c
 void fs_dev_shm(void);
@@ -682,7 +667,7 @@ void fs_tracefile(void);
 void fs_trace(void);
 
 // fs_hostname.c
-void fs_hostname(const char *hostname);
+void fs_hostname(void);
 char *fs_check_hosts_file(const char *fname);
 void fs_store_hosts_file(void);
 void fs_mount_hosts_file(void);
@@ -701,7 +686,7 @@ void check_output(int argc, char **argv);
 
 // netfilter.c
 void netfilter_netlock(pid_t pid);
-void netfilter_trace(pid_t pid);
+void netfilter_trace(pid_t pid, const char *cmd);
 void check_netfilter_file(const char *fname);
 void netfilter(const char *fname);
 void netfilter6(const char *fname);
@@ -717,11 +702,12 @@ void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, in
 void network_set_run_file(pid_t pid);
 
 // fs_etc.c
+char *fs_etc_build(char *str);
+void fs_resolvconf(void);
 void fs_machineid(void);
 void fs_private_dir_copy(const char *private_dir, const char *private_run_dir, const char *private_list);
 void fs_private_dir_mount(const char *private_dir, const char *private_run_dir);
 void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list);
-void fs_rebuild_etc(void);
 
 // no_sandbox.c
 int check_namespace_virt(void);
@@ -857,6 +843,7 @@ enum {
 	// CFG_FILE_COPY_LIMIT - file copy limit handled using setenv/getenv
 	CFG_ALLOW_TRAY,
 	CFG_SECCOMP_LOG,
+	CFG_TRACELOG,
 	CFG_MAX // this should always be the last entry
 };
 extern char *xephyr_screen;
@@ -871,7 +858,6 @@ extern char *config_seccomp_filter_add;
 extern char **whitelist_reject_topdirs;
 
 int checkcfg(int val);
-void print_version(void);
 void print_compiletime_support(void);
 
 // appimage.c

@@ -1,0 +1,17 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail  --chroot=/tmp/chroot\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"feature is disabled"
+}
+sleep 1
+
+puts "all done\n"

@@ -34,3 +34,5 @@ private-bin natron,Natron,NatronRenderer
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

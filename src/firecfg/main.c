@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -24,7 +24,7 @@ int arg_debug = 0;
 char *arg_bindir = "/usr/local/bin";
 int arg_guide = 0;
 
-static char *usage_str =
+static const char *const usage_str =
 	"Firecfg is the desktop configuration utility for Firejail software. The utility\n"
 	"creates several symbolic links to firejail executable. This allows the user to\n"
 	"sandbox applications automatically, just by clicking on a regular desktop\n"
@@ -57,13 +57,16 @@ static char *usage_str =
 	"   [...]\n"
 	"\n"
 	"License GPL version 2 or later\n"
-	"Homepage: https://firejail.wordpress.com\n\n";
+	"Homepage: https://firejail.wordpress.com\n";
 
-static void usage(void) {
-	printf("firecfg - version %s\n\n", VERSION);
-	puts(usage_str);
+static void print_version(void) {
+	printf("firecfg version %s\n\n", VERSION);
 }
 
+static void usage(void) {
+	print_version();
+	puts(usage_str);
+}
 
 static void list(void) {
 	DIR *dir = opendir(arg_bindir);
@@ -364,7 +367,7 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--debug") == 0)
 			arg_debug = 1;
 		else if (strcmp(argv[i], "--version") == 0) {
-			printf("firecfg version %s\n\n", VERSION);
+			print_version();
 			return 0;
 		}
 		else if (strcmp(argv[i], "--clean") == 0) {
@@ -410,6 +413,7 @@ int main(int argc, char **argv) {
 		}
 	}
 
+	print_version();
 	if (arg_debug)
 		printf("%s %d %d %d %d\n", user, getuid(), getgid(), geteuid(), getegid());
 

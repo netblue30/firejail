@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 export MALLOC_CHECK_=3
@@ -37,11 +37,11 @@ echo "TESTING: profile read-only links (test/profiles/profile_readonly.exp)"
 echo "TESTING: profile no permissions (test/profiles/profile_noperm.exp)"
 ./profile_noperm.exp
 
-PROFILES=`ls /etc/firejail/*.profile`
+profiles=( /etc/firejail/*.profile )
 echo "TESTING: default profiles installed in /etc"
 
-for PROFILE in $PROFILES
+for profile in "${profiles[@]}"
 do
-	echo "TESTING: $PROFILE"
-	./test-profile.exp $PROFILE
+	echo "TESTING: $profile"
+	./test-profile.exp "$profile"
 done

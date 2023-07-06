@@ -45,7 +45,7 @@ disable-mnt
 private-bin gtk-update-icon-cache
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-lib
 private-tmp
 
@@ -53,3 +53,4 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

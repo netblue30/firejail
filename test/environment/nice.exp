@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -21,7 +21,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"bash"
+	"sh"
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
@@ -50,7 +50,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
-	"bash"
+	"sh"
 }
 expect {
 	timeout {puts "TESTING ERROR 15\n";exit}
@@ -81,7 +81,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 20\n";exit}
-	"bash"
+	"sh"
 }
 expect {
 	timeout {puts "TESTING ERROR 22\n";exit}

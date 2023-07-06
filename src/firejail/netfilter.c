@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -91,16 +91,12 @@ void netfilter_netlock(pid_t pid) {
 	// it will never get here!!
 }
 
-void netfilter_trace(pid_t pid) {
+void netfilter_trace(pid_t pid, const char *cmd) {
 	EUID_ASSERT();
 
 	// a pid of 0 means the main system network namespace
 	if (pid)
 		enter_network_namespace(pid);
-
-	char *cmd;
-	if (asprintf(&cmd, "%s/firejail/fnettrace", LIBDIR) == -1)
-		errExit("asprintf");
 
 	//************************
 	// build command
@@ -108,7 +104,7 @@ void netfilter_trace(pid_t pid) {
 	char *arg[4];
 	arg[0] = "/bin/sh";
 	arg[1] = "-c";
-	arg[2] = cmd;
+	arg[2] = (char *) cmd;
 	arg[3] = NULL;
 
 	clearenv();
@@ -252,5 +248,5 @@ void netfilter_print(pid_t pid, int ipv6) {
 		exit(1);
 	}
 
-	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, iptables, "-vL");
+	sbox_run(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, 2, iptables, "-nvL");
 }

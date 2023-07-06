@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -39,8 +39,6 @@
 // break recursivity on fopen call
 typedef FILE *(*orig_fopen_t)(const char *pathname, const char *mode);
 static orig_fopen_t orig_fopen = NULL;
-typedef FILE *(*orig_fopen64_t)(const char *pathname, const char *mode);
-static orig_fopen64_t orig_fopen64 = NULL;
 
 //
 // blacklist storage
@@ -405,7 +403,9 @@ FILE *fopen(const char *pathname, const char *mode) {
 	return rv;
 }
 
-#ifdef __GLIBC__
+#ifndef fopen64
+typedef FILE *(*orig_fopen64_t)(const char *pathname, const char *mode);
+static orig_fopen64_t orig_fopen64 = NULL;
 FILE *fopen64(const char *pathname, const char *mode) {
 #ifdef DEBUG
 	printf("%s %s\n", __FUNCTION__, pathname);
@@ -420,7 +420,7 @@ FILE *fopen64(const char *pathname, const char *mode) {
 	FILE *rv = orig_fopen64(pathname, mode);
 	return rv;
 }
-#endif /* __GLIBC__ */
+#endif
 
 
 // freopen
@@ -441,7 +441,7 @@ FILE *freopen(const char *pathname, const char *mode, FILE *stream) {
 	return rv;
 }
 
-#ifdef __GLIBC__
+#ifndef freopen64
 typedef FILE *(*orig_freopen64_t)(const char *pathname, const char *mode, FILE *stream);
 static orig_freopen64_t orig_freopen64 = NULL;
 FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
@@ -458,7 +458,7 @@ FILE *freopen64(const char *pathname, const char *mode, FILE *stream) {
 	FILE *rv = orig_freopen64(pathname, mode, stream);
 	return rv;
 }
-#endif /* __GLIBC__ */
+#endif
 
 // unlink
 typedef int (*orig_unlink_t)(const char *pathname);
@@ -565,7 +565,7 @@ int stat(const char *pathname, struct stat *buf) {
 	return rv;
 }
 
-#ifdef __GLIBC__
+#ifndef stat64
 typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *buf);
 static orig_stat64_t orig_stat64 = NULL;
 int stat64(const char *pathname, struct stat64 *buf) {
@@ -582,7 +582,7 @@ int stat64(const char *pathname, struct stat64 *buf) {
 	int rv = orig_stat64(pathname, buf);
 	return rv;
 }
-#endif /* __GLIBC__ */
+#endif
 
 typedef int (*orig_lstat_t)(const char *pathname, struct stat *buf);
 static orig_lstat_t orig_lstat = NULL;
@@ -601,7 +601,7 @@ int lstat(const char *pathname, struct stat *buf) {
 	return rv;
 }
 
-#ifdef __GLIBC__
+#ifndef lstat64
 typedef int (*orig_lstat64_t)(const char *pathname, struct stat64 *buf);
 static orig_lstat64_t orig_lstat64 = NULL;
 int lstat64(const char *pathname, struct stat64 *buf) {
@@ -618,7 +618,7 @@ int lstat64(const char *pathname, struct stat64 *buf) {
 	int rv = orig_lstat64(pathname, buf);
 	return rv;
 }
-#endif /* __GLIBC__ */
+#endif
 
 // access
 typedef int (*orig_access_t)(const char *pathname, int mode);

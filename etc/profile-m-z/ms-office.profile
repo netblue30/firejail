@@ -34,9 +34,11 @@ tracelog
 
 disable-mnt
 private-bin bash,env,fonts,jak,ms-office,python*,sh
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,pki,resolv.conf,ssl
+private-etc @tls-ca
 private-dev
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

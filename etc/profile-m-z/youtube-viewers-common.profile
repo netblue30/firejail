@@ -8,6 +8,7 @@ include youtube-viewers-common.local
 #include globals.local
 
 noblacklist ${HOME}/.cache/youtube-dl
+noblacklist ${HOME}/.config/mpv
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -28,7 +29,9 @@ include disable-xdg.inc
 
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
+whitelist ${HOME}/.config/mpv
 include whitelist-common.inc
+include whitelist-run-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -49,11 +52,12 @@ seccomp
 tracelog
 
 disable-mnt
-private-bin bash,ffmpeg,ffprobe,firefox,mpv,perl,python*,sh,smplayer,stty,wget,wget2,which,xterm,youtube-dl,yt-dlp
+private-bin bash,ffmpeg,ffprobe,mpv,perl,python*,sh,smplayer,stty,wget,wget2,which,youtube-dl,yt-dlp
 private-cache
 private-dev
-private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,machine-id,mime.types,nsswitch.conf,passwd,pki,pulse,resolv.conf,ssl,X11,xdg
+private-etc @tls-ca,@x11,host.conf,mime.types
 private-tmp
 
-dbus-user none
 dbus-system none
+
+restrict-namespaces

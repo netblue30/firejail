@@ -214,13 +214,15 @@ include globals.local
 #  - In order to make dconf work (when used by the app) you need to allow
 #    'ca.desrt.dconf' even when not allowed by flatpak.
 # Notes and policies about addresses can be found at
-# <https://github.com/netblue30/firejail/wiki/Restrict-D-Bus>
+# <https://github.com/netblue30/firejail/wiki/Restrict-DBus>
 #dbus-user filter
 #dbus-user.own com.github.netblue30.firejail
 #dbus-user.talk ca.desrt.dconf
 #dbus-user.talk org.freedesktop.Notifications
 #dbus-system none
 
+# Note: read-only entries should usually go in disable-common.inc (especially
+# entries for configuration files that allow arbitrary command execution).
 ##deterministic-shutdown
 ##env VAR=VALUE
 ##join-or-start NAME

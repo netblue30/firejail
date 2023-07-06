@@ -18,6 +18,7 @@ blacklist-nolog ${HOME}/.histfile
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.kde/share/apps/klipper
 blacklist-nolog ${HOME}/.kde4/share/apps/klipper
+blacklist-nolog ${HOME}/.lesshst
 blacklist-nolog ${HOME}/.local/share/fish/fish_history
 blacklist-nolog ${HOME}/.local/share/ibus-typing-booster
 blacklist-nolog ${HOME}/.local/share/klipper
@@ -25,10 +26,9 @@ blacklist-nolog ${HOME}/.local/share/nvim
 blacklist-nolog ${HOME}/.local/state/nvim
 blacklist-nolog ${HOME}/.macromedia
 blacklist-nolog ${HOME}/.mupdf.history
+blacklist-nolog ${HOME}/.mutthistory
 blacklist-nolog ${HOME}/.python-history
-blacklist-nolog ${HOME}/.python_history
 blacklist-nolog ${HOME}/.pythonhist
-blacklist-nolog ${HOME}/.lesshst
 blacklist-nolog ${HOME}/.viminfo
 blacklist-nolog /tmp/clipmenu*
 
@@ -69,6 +69,9 @@ blacklist ${HOME}/.xsessionrc
 blacklist /etc/X11/Xsession.d
 blacklist /etc/xdg/autostart
 read-only ${HOME}/.Xauthority
+read-only ${HOME}/.config/awesome/autorun.sh
+read-only ${HOME}/.config/openbox/autostart
+read-only ${HOME}/.config/openbox/environment
 
 # Session manager
 # see #3358
@@ -123,6 +126,7 @@ read-only ${HOME}/.config/kio_httprc
 read-only ${HOME}/.config/kiorc
 read-only ${HOME}/.config/kioslaverc
 read-only ${HOME}/.config/ksslcablacklist
+read-only ${HOME}/.config/lxqt
 read-only ${HOME}/.kde/share/apps/konsole
 read-only ${HOME}/.kde/share/apps/kssl
 read-only ${HOME}/.kde/share/config/*notifyrc
@@ -168,8 +172,10 @@ blacklist ${HOME}/.local/share/systemd
 blacklist ${PATH}/systemctl
 blacklist ${PATH}/systemd-run
 blacklist ${RUNUSER}/systemd
+blacklist /etc/credstore*
 blacklist /etc/systemd/network
 blacklist /etc/systemd/system
+blacklist /run/credentials
 blacklist /var/lib/systemd
 # creates problems on Arch where /etc/resolv.conf is a symlink to /var/run/systemd/resolve/resolv.conf
 #blacklist /var/run/systemd
@@ -327,12 +333,16 @@ read-only ${HOME}/.ssh/config.d
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc
 read-only ${HOME}/.cargo/env
+read-only ${HOME}/.config/mpv
+read-only ${HOME}/.config/nano
 read-only ${HOME}/.config/nvim
 read-only ${HOME}/.config/pkcs11
 read-only ${HOME}/.dotfiles
+read-only ${HOME}/.elinks
 read-only ${HOME}/.emacs
 read-only ${HOME}/.emacs.d
 read-only ${HOME}/.exrc
+read-only ${HOME}/.gnupg/gpg.conf
 read-only ${HOME}/.gvimrc
 read-only ${HOME}/.homesick
 read-only ${HOME}/.iscreenrc
@@ -341,10 +351,12 @@ read-only ${HOME}/.local/share/cool-retro-term
 read-only ${HOME}/.local/share/nvim
 read-only ${HOME}/.local/state/nvim
 read-only ${HOME}/.mailcap
+read-only ${HOME}/.mozilla/firefox/profiles.ini
 read-only ${HOME}/.msmtprc
 read-only ${HOME}/.mutt/muttrc
 read-only ${HOME}/.muttrc
 read-only ${HOME}/.nano
+read-only ${HOME}/.nanorc
 read-only ${HOME}/.npmrc
 read-only ${HOME}/.pythonrc.py
 read-only ${HOME}/.reportbugrc
@@ -352,6 +364,7 @@ read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.vim
 read-only ${HOME}/.viminfo
 read-only ${HOME}/.vimrc
+read-only ${HOME}/.w3m
 read-only ${HOME}/.xmonad
 read-only ${HOME}/.xscreensaver
 read-only ${HOME}/.yarnrc
@@ -359,6 +372,10 @@ read-only ${HOME}/_exrc
 read-only ${HOME}/_gvimrc
 read-only ${HOME}/_vimrc
 read-only ${HOME}/dotfiles
+
+# System package managers and AUR helpers
+blacklist ${HOME}/.config/cower
+read-only ${HOME}/.config/cower/config
 
 # Make directories commonly found in $PATH read-only
 read-only ${HOME}/.bin
@@ -384,6 +401,11 @@ read-only ${HOME}/.config/mimeapps.list
 read-only ${HOME}/.config/user-dirs.dirs
 read-only ${HOME}/.config/user-dirs.locale
 read-only ${HOME}/.local/share/mime
+
+# Configuration files that do not allow arbitrary command execution but that
+# are intended to be modified manually (in a text editor and/or by a program
+# dedicated to managing them)
+read-only ${HOME}/.config/MangoHud
 
 # Write-protection for thumbnailer dir
 read-only ${HOME}/.local/share/thumbnailers
@@ -446,6 +468,9 @@ blacklist ${HOME}/.vaults
 blacklist /run/timeshift
 blacklist /var/backup
 
+# dm-crypt / LUKS
+blacklist /crypto_keyfile.bin
+
 # Remove environment variables with auth tokens.
 # Note however that the sandbox might still have access to the
 # files where these variables are set.
@@ -479,6 +504,7 @@ blacklist ${PATH}/chage
 blacklist ${PATH}/chfn
 blacklist ${PATH}/chsh
 blacklist ${PATH}/crontab
+blacklist ${PATH}/doas
 blacklist ${PATH}/evtest
 blacklist ${PATH}/expiry
 blacklist ${PATH}/fusermount
@@ -546,6 +572,7 @@ blacklist ${PATH}/ss
 blacklist ${PATH}/traceroute
 
 # other SUID binaries
+blacklist /opt/microsoft/msedge*/msedge-sandbox
 blacklist /usr/lib/virtualbox
 blacklist /usr/lib64/virtualbox
 
@@ -557,6 +584,7 @@ blacklist /tmp/tmux-*
 # disable terminals running as server resulting in sandbox escape
 blacklist ${PATH}/gnome-terminal
 blacklist ${PATH}/gnome-terminal.wrapper
+blacklist ${PATH}/kgx
 # blacklist ${PATH}/konsole
 # konsole doesn't seem to have this problem - last tested on Ubuntu 16.04
 blacklist ${PATH}/lilyterm
@@ -618,7 +646,7 @@ blacklist ${HOME}/mail
 blacklist ${HOME}/postponed
 blacklist ${HOME}/sent
 
-# kernel configuration
+# kernel configuration - keep this here although it's also in disable-proc.inc
 blacklist /proc/config.gz
 
 # prevent DNS malware attempting to communicate with the server using regular DNS tools

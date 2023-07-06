@@ -1,17 +1,12 @@
-.PHONY: all
-all: fseccomp
-
+.SUFFIXES:
 ROOT = ../..
-include $(ROOT)/src/common.mk
+-include $(ROOT)/config.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/syscall.h $(ROOT)/config.mk
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+MOD_DIR = src/fseccomp
+PROG = fseccomp
+TARGET = $(PROG)
 
-fseccomp: $(OBJS) ../lib/common.o ../lib/errno.o ../lib/syscall.o $(ROOT)/config.mk
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/errno.o ../lib/syscall.o $(LIBS) $(EXTRA_LDFLAGS)
+EXTRA_HDRS = ../include/common.h ../include/syscall.h
+EXTRA_OBJS = ../lib/common.o ../lib/errno.o ../lib/syscall.o
 
-.PHONY: clean
-clean:; rm -fr *.o fseccomp *.gcov *.gcda *.gcno *.plist
-
-.PHONY: distclean
-distclean: clean
+include $(ROOT)/src/prog.mk

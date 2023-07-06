@@ -24,7 +24,6 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-hostname unf
 ipc-namespace
 machine-id
 net none
@@ -48,7 +47,7 @@ private-bin unf
 private-cache
 ?HAS_APPIMAGE: ignore private-dev
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-lib gcc/*/*/libgcc_s.so.*
 private-tmp
 
@@ -56,3 +55,4 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

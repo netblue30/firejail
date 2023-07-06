@@ -35,3 +35,5 @@ novideo
 
 private-dev
 # private-tmp
+
+# restrict-namespaces - breaks privileged helpers

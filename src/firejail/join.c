@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -501,10 +501,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		}
 
 		// set nonewprivs
-#ifndef HAVE_FORCE_NONEWPRIVS
-		if (arg_nonewprivs == 1)	// not available for uid 0
-#endif
-		{
+		if (arg_nonewprivs == 1) {
 			if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) != 0)
 				errExit("prctl");
 			if (arg_debug)
@@ -545,7 +542,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			dbus_set_system_bus_env();
 #endif
 
-		start_application(0, shfd, NULL);
+		start_application(arg_join_network || arg_join_filesystem, shfd, NULL);
 
 		__builtin_unreachable();
 	}

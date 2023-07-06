@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -133,7 +133,8 @@ void deny_ns(const char *fname, const char *list) {
 		RETURN_ALLOW
 #endif
 	};
-	write_to_file(fd, filter, sizeof(filter));
+	if (sizeof(filter))
+		write_to_file(fd, filter, sizeof(filter));
 
 	filter_end_blacklist(fd);
 
@@ -188,7 +189,21 @@ void deny_ns_32(const char *fname, const char *list) {
 		RETURN_ALLOW
 #endif
 	};
-	write_to_file(fd, filter, sizeof(filter));
+
+	// For Debian 10 and older, the size of the filter[] array will be 0.
+	// The following filter will end up being generated:
+	//
+	//     FILE: /run/firejail/mnt/seccomp/seccomp.namespaces.32
+	//       line OP JT JF K
+	//     =================================
+	//       0000: 20 00 00 00000004 ld data.architecture
+	//       0001: 15 01 00 40000003 jeq ARCH_32 0003 (false 0002)
+	//       0002: 06 00 00 7fff0000 ret ALLOW
+	//       0003: 20 00 00 00000000 ld data.syscall-number
+	//       0004: 06 00 00 7fff0000 ret ALLOW
+	//
+	if (sizeof(filter))
+		write_to_file(fd, filter, sizeof(filter));
 
 	filter_end_blacklist(fd);
 

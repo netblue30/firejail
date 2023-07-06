@@ -46,10 +46,11 @@ tracelog
 
 private-bin kbuildsycoca4,kdeinit4,kwrite
 private-dev
-private-etc alternatives,fonts,kde4rc,kde5rc,ld.so.cache,ld.so.preload,machine-id,pulse,xdg
+private-etc @x11
 private-tmp
 
 # dbus-user none
 # dbus-system none
 
+restrict-namespaces
 join-or-start kwrite

@@ -23,8 +23,8 @@ no3d
 nosound
 
 ?HAS_APPIMAGE: ignore private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,hosts,ld.so.cache,ld.so.preload,nsswitch.conf,pki,resolv.conf,ssl
+private-etc @tls-ca
 private-opt Bitwarden
 
 # Redirect
-include electron.profile
+include electron-common.profile

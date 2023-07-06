@@ -33,3 +33,5 @@ writable-run-user
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

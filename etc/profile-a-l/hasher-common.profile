@@ -48,6 +48,7 @@ x11 none
 # Add the next line to your hasher-common.local if you don't need to hash files in ~/.cache.
 #private-cache
 private-dev
+private-etc
 # Add the next line to your hasher-common.local if you don't need to hash files in /tmp.
 #private-tmp
 
@@ -56,3 +57,4 @@ dbus-system none
 
 memory-deny-write-execute
 read-only ${HOME}
+restrict-namespaces

@@ -21,7 +21,6 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-hostname mdr
 ipc-namespace
 machine-id
 net none
@@ -44,7 +43,7 @@ disable-mnt
 private-bin mdr
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-lib
 private-tmp
 
@@ -52,3 +51,4 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

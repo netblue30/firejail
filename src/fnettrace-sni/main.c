@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -22,7 +22,11 @@
 #include <time.h>
 #include <linux/filter.h>
 #include <linux/if_ether.h>
+#include <sys/prctl.h>
+#include <signal.h>
 #define MAX_BUF_SIZE (64 * 1024)
+
+static char last[512] = {'\0'};
 
 // pkt - start of TLS layer
 static void print_tls(uint32_t ip_dest, unsigned char *pkt, unsigned len) {
@@ -67,37 +71,49 @@ static void print_tls(uint32_t ip_dest, unsigned char *pkt, unsigned len) {
 		i++;
 	}
 
-	if (name)
-		printf("%02d:%02d:%02d  %15s  %s\n", t->tm_hour, t->tm_min, t->tm_sec, ip, name);
+	if (name) {
+		// filter output
+		char tmp[sizeof(last)];
+		snprintf(tmp, sizeof(last), "%02d:%02d:%02d  %-15s  %s", t->tm_hour, t->tm_min, t->tm_sec, ip, name);
+		if (strcmp(tmp, last)) {
+			printf("%s\n", tmp);
+			fflush(0);
+			strcpy(last, tmp);
+		}
+	}
 	else
 		goto nosni;
 	return;
 
 errout:
-	printf("%02d:%02d:%02d  %15s  Error: invalid TLS packet\n", t->tm_hour, t->tm_min, t->tm_sec, ip);
+	printf("%02d:%02d:%02d  %-15s  Error: invalid TLS packet\n", t->tm_hour, t->tm_min, t->tm_sec, ip);
+	fflush(0);
 	return;
 
 nosni:
-	printf("%02d:%02d:%02d  %15s  no SNI\n", t->tm_hour, t->tm_min, t->tm_sec, ip);
+	printf("%02d:%02d:%02d  %-15s  no SNI\n", t->tm_hour, t->tm_min, t->tm_sec, ip);
 	return;
 }
 
 // https://www.kernel.org/doc/html/latest/networking/filter.html
 static void custom_bpf(int sock) {
 	struct sock_filter code[] = {
-		// sudo tcpdump "tcp port 443 and (tcp[((tcp[12] & 0xf0) >>2)] = 0x16) && (tcp[((tcp[12] & 0xf0) >>2)+5] = 0x01)" -dd
+		// ports: 443 (regular TLS), 853 (DoT)
+		// sudo tcpdump "tcp port (443 or 853) and (tcp[((tcp[12] & 0xf0) >>2)] = 0x16) && (tcp[((tcp[12] & 0xf0) >>2)+5] = 0x01)" -dd
 		{ 0x28, 0, 0, 0x0000000c },
-		{ 0x15, 27, 0, 0x000086dd },
-		{ 0x15, 0, 26, 0x00000800 },
+		{ 0x15, 29, 0, 0x000086dd },
+		{ 0x15, 0, 28, 0x00000800 },
 		{ 0x30, 0, 0, 0x00000017 },
-		{ 0x15, 0, 24, 0x00000006 },
+		{ 0x15, 0, 26, 0x00000006 },
 		{ 0x28, 0, 0, 0x00000014 },
-		{ 0x45, 22, 0, 0x00001fff },
+		{ 0x45, 24, 0, 0x00001fff },
 		{ 0xb1, 0, 0, 0x0000000e },
 		{ 0x48, 0, 0, 0x0000000e },
-		{ 0x15, 2, 0, 0x000001bb },
+		{ 0x15, 4, 0, 0x000001bb },
+		{ 0x15, 3, 0, 0x00000355 },
 		{ 0x48, 0, 0, 0x00000010 },
-		{ 0x15, 0, 17, 0x000001bb },
+		{ 0x15, 1, 0, 0x000001bb },
+		{ 0x15, 0, 17, 0x00000355 },
 		{ 0x50, 0, 0, 0x0000001a },
 		{ 0x54, 0, 0, 0x000000f0 },
 		{ 0x74, 0, 0, 0x00000002 },
@@ -130,26 +146,44 @@ static void custom_bpf(int sock) {
 	}
 }
 
+static void print_date(void) {
+	static int day = -1;
+	time_t now = time(NULL);
+	struct tm *t = localtime(&now);
+
+	if (day != t->tm_yday) {
+		printf("\nSNI trace for %s", ctime(&now));
+		day = t->tm_yday;
+	}
+
+	fflush(0);
+}
+
 static void run_trace(void) {
-	// grab all Ethernet packets and use a custom BPF filter to get only UDP from source port 53
+	// grab all Ethernet packets and use a custom BPF filter to get TLS/SNI packets
 	int s = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 	if (s < 0)
 		errExit("socket");
 	custom_bpf(s);
 
+	struct timeval tv;
+	tv.tv_sec = 10;
+	tv.tv_usec = 0;
 	unsigned char buf[MAX_BUF_SIZE];
 	while (1) {
 		fd_set rfds;
 		FD_ZERO(&rfds);
 		FD_SET(s, &rfds);
-		struct timeval tv;
-		tv.tv_sec = 1;
-		tv.tv_usec = 0;
 		int rv = select(s + 1, &rfds, NULL, NULL, &tv);
 		if (rv < 0)
 			errExit("select");
-		else if (rv == 0)
+		else if (rv == 0) {
+			print_date();
+			tv.tv_sec = 10;
+			tv.tv_usec = 0;
 			continue;
+		}
+
 		unsigned bytes = recvfrom(s, buf, MAX_BUF_SIZE, 0, NULL, NULL);
 
 		if (bytes >= (14 + 20 + 20)) { // size of  MAC + IP + TCP headers
@@ -157,27 +191,26 @@ static void run_trace(void) {
 			uint16_t port_dest;
 			memcpy(&port_dest, buf + 14 + ip_hlen + 2, 2);
 			port_dest = ntohs(port_dest);
-			uint8_t protocol = buf[14 + 9];
 			uint32_t ip_dest;
 			memcpy(&ip_dest, buf + 14 + 16, 4);
 			ip_dest = ntohl(ip_dest);
 			uint8_t tcp_hlen = (buf[14 + ip_hlen + 12] & 0xf0) >> 2;
 
-			// if TLS packet, extract SNI
-			if (port_dest == 443 && protocol == 6) // TCP protocol
-				print_tls(ip_dest, buf + 14 + ip_hlen + tcp_hlen, bytes - 14 - ip_hlen - tcp_hlen); // IP and TCP header len
+			// extract SNI
+			print_tls(ip_dest, buf + 14 + ip_hlen + tcp_hlen, bytes - 14 - ip_hlen - tcp_hlen); // IP and TCP header len
 		}
 	}
 
 	close(s);
 }
 
+static const char *const usage_str =
+	"Usage: fnettrace-sni [OPTIONS]\n"
+	"Options:\n"
+	"   --help, -? - this help screen\n";
 
 static void usage(void) {
-	printf("Usage: fnettrace-sni [OPTIONS]\n");
-	printf("Options:\n");
-	printf("   --help, -? - this help screen\n");
-	printf("\n");
+	puts(usage_str);
 }
 
 int main(int argc, char **argv) {
@@ -199,8 +232,10 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 
-	time_t now = time(NULL);
-	printf("SNI trace for %s\n", ctime(&now));
+	// kill the process if the parent died
+	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
+
+	print_date();
 	run_trace();
 
 	return 0;

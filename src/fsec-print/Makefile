@@ -1,17 +1,12 @@
-.PHONY: all
-all: fsec-print
-
+.SUFFIXES:
 ROOT = ../..
-include $(ROOT)/src/common.mk
+-include $(ROOT)/config.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/seccomp.h ../include/syscall.h $(ROOT)/config.mk
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+MOD_DIR = src/fsec-print
+PROG = fsec-print
+TARGET = $(PROG)
 
-fsec-print: $(OBJS) ../lib/common.o ../lib/libnetlink.o ../lib/errno.o ../lib/syscall.o $(ROOT)/config.mk
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/errno.o ../lib/syscall.o $(LIBS) $(EXTRA_LDFLAGS)
+EXTRA_HDRS = ../include/common.h ../include/seccomp.h ../include/syscall.h
+EXTRA_OBJS = ../lib/common.o ../lib/errno.o ../lib/syscall.o
 
-.PHONY: clean
-clean:; rm -fr *.o fsec-print *.gcov *.gcda *.gcno *.plist
-
-.PHONY: distclean
-distclean: clean
+include $(ROOT)/src/prog.mk

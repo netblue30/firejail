@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -140,7 +140,7 @@ static void print_file_or_dir(const char *path, const char *fname) {
 		}
 	}
 
-	// print grup name, 8 chars maximum
+	// print group name, 8 chars maximum
 	len = strlen(groupname);
 	if (len > 8) {
 		groupname[8] = '\0';
@@ -178,7 +178,7 @@ static void print_directory(const char *path) {
 
 	n = scandir(path, &namelist, 0, alphasort);
 	if (n < 0)
-        		errExit("scandir");
+		errExit("scandir");
 	else {
 		for (i = 0; i < n; i++)
 			print_file_or_dir(path, namelist[i]->d_name);
@@ -381,7 +381,7 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) {
 			errExit("ftruncate");
 
 		if (copy_file_by_fd(src, dest) != 0)
-			fwarning("an error occured during copying\n");
+			fwarning("an error occurred during copying\n");
 		close(src);
 		close(dest);
 	}

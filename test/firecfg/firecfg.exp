@@ -1,0 +1,31 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "file /usr/local/bin/ping\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"ping: symbolic link to /usr/bin/firejail"
+}
+after 100
+
+send --  "file /tmp/ttt/ping\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"ping: symbolic link to /usr/bin/firejail"
+}
+after 100
+
+send -- "firecfg --list\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"/usr/local/bin/ping"
+}
+after 100
+
+puts "\nall done\n"

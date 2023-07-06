@@ -1,0 +1,25 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "rm -f /tmp/t\r"
+after 500
+
+send -- "firejail man firejail > /tmp/t\r"
+sleep 1
+
+send -- "cat /tmp/t\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"NAME"
+}
+after 100
+
+send -- "rm -f /tmp/t\r"
+after 500
+puts "\nall done\n"

@@ -36,3 +36,5 @@ tracelog
 # private-bin tracker
 # private-dev
 # private-tmp
+
+restrict-namespaces

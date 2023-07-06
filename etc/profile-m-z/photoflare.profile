@@ -42,8 +42,10 @@ disable-mnt
 private-bin photoflare
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,locale,locale.alias,locale.conf,mime.types,X11
+private-etc @x11,mime.types
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

@@ -17,7 +17,7 @@ include disable-shell.inc
 mkdir ${HOME}/.config/Mattermost
 whitelist ${HOME}/.config/Mattermost
 
-private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl
+private-etc @tls-ca
 
 # Not tested
 #dbus-user filter
@@ -26,4 +26,4 @@ private-etc alternatives,ca-certificates,crypto-policies,fonts,ld.so.cache,ld.so
 #dbus-system none
 
 # Redirect
-include electron.profile
+include electron-common.profile

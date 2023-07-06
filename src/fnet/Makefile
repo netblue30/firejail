@@ -1,17 +1,12 @@
-.PHONY: all
-all: fnet
-
+.SUFFIXES:
 ROOT = ../..
-include $(ROOT)/src/common.mk
+-include $(ROOT)/config.mk
 
-%.o : %.c $(H_FILE_LIST) ../include/common.h ../include/libnetlink.h $(ROOT)/config.mk
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
+MOD_DIR = src/fnet
+PROG = fnet
+TARGET = $(PROG)
 
-fnet: $(OBJS) ../lib/common.o ../lib/libnetlink.o $(ROOT)/config.mk
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/libnetlink.o $(LIBS) $(EXTRA_LDFLAGS)
+EXTRA_HDRS = ../include/common.h ../include/libnetlink.h
+EXTRA_OBJS = ../lib/common.o ../lib/libnetlink.o
 
-.PHONY: clean
-clean:; rm -fr *.o fnet *.gcov *.gcda *.gcno *.plist
-
-.PHONY: distclean
-distclean: clean
+include $(ROOT)/src/prog.mk

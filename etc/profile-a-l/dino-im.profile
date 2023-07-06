@@ -1,5 +1,5 @@
 # Firejail profile for dino-im
-# Description: Modern XMPP Chat Client using GTK+/Vala, Ubuntu specific bin name
+# Description: Modern XMPP Chat Client using GTK/Vala, Ubuntu specific bin name
 # This file is overwritten after every install/update
 # Persistent local customizations
 include dino-im.local

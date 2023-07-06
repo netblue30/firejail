@@ -4,7 +4,8 @@
 
 | Version | Supported by us    | EOL                | Supported by distribution                                                         |
 | ------- | ------------------ | ------------------ | --------------------------------------------------------------------------------- |
-| 0.9.70  | :heavy_check_mark: |                    |                                                                                   |
+| 0.9.72  | :heavy_check_mark: |                    |                                                                                   |
+| 0.9.70  | :x:                |                    |                                                                                   |
 | 0.9.68  | :x:                |                    |                                                                                   |
 | 0.9.66  | :x:                |                    | :white_check_mark: Debian 11 **backports**, Debian 12 (testing/unstable)          |
 | 0.9.64  | :x:                |                    | :white_check_mark: Debian 10 **backports**, Debian 11, Ubuntu 21.10               |
@@ -25,4 +26,8 @@
 
 ## Security vulnerabilities
 
-We take security bugs very seriously. If you believe you have found one, please report it by emailing us at netblue30@@protonmail.com
+We take security bugs very seriously.
+
+If you believe you have found one, please report it to:
+
+* <netblue30@protonmail.com>

@@ -1,8 +1,9 @@
-.PHONY: all
-all: firejail.bash_completion
-
+.SUFFIXES:
 ROOT = ../..
 -include $(ROOT)/config.mk
+
+.PHONY: all
+all: firejail.bash_completion
 
 firejail.bash_completion: firejail.bash_completion.in $(ROOT)/config.mk
 	gawk -f ../man/preproc.awk -- $(MANFLAGS) < $< > $@.tmp

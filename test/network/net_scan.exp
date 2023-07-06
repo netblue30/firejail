@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -8,14 +8,14 @@ spawn $env(SHELL)
 match_max 100000
 
 #
-send -- "firejail --net=br1 --ip=10.10.30.50\r"
+send -- "firejail --net=br0 --ip=10.10.20.50\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"eth0"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"10.10.30.50"
+	"10.10.20.50"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
@@ -28,14 +28,14 @@ expect {
 sleep 1
 
 spawn $env(SHELL)
-send -- "firejail --net=br1 --ip=10.10.30.51\r"
+send -- "firejail --net=br0 --ip=10.10.20.60\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	"eth0"
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"10.10.30.51"
+	"10.10.20.60"
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
@@ -48,27 +48,23 @@ expect {
 sleep 1
 
 spawn $env(SHELL)
-send -- "firejail --net=br1 --scan\r"
+send -- "firejail --net=br0 --scan\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
 	"eth0"
 }
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
-	"10.10.30.50"
+	"10.10.20.50"
 }
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
-	"10.10.30.51"
+	"10.10.20.60"
 }
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
-
-
-
-after 100
 
 puts "\nall done\n"

@@ -42,7 +42,7 @@ protocol unix,inet,inet6
 seccomp
 tracelog
 
-# private-bin gpg,gpg-agent
+# private-bin gpg
 private-cache
 private-dev
 
@@ -51,3 +51,4 @@ private-dev
 # installing/upgrading archlinux-keyring extremely slow.
 read-write /etc/pacman.d/gnupg
 read-write /usr/share/pacman/keyrings
+restrict-namespaces

@@ -2,10 +2,16 @@ name: Build CI
 
 on:
   push:
-    branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
+      - .github/pull_request_template.md
+      - .github/workflows/build-extra.yml
+      - .github/workflows/codeql-analysis.yml
+      - .github/workflows/profile-checks.yml
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README
@@ -13,10 +19,16 @@ on:
       - RELNOTES
       - SECURITY.md
   pull_request:
-    branches: [ master ]
     paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
       - .git-blame-ignore-revs
+      - .github/dependabot.yml
+      - .github/pull_request_template.md
+      - .github/workflows/build-extra.yml
+      - .github/workflows/codeql-analysis.yml
+      - .github/workflows/profile-checks.yml
       - .gitignore
+      - .gitlab-ci.yml
       - CONTRIBUTING.md
       - COPYING
       - README
@@ -24,22 +36,65 @@ on:
       - RELNOTES
       - SECURITY.md
 
+permissions:  # added using https://github.com/step-security/secure-workflows
+  contents: read
+
 jobs:
   build_and_test:
     runs-on: ubuntu-22.04
+    env:
+      SHELL: /bin/bash
     steps:
-    - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+    - name: Harden Runner
+      uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845
+      with:
+        egress-policy: block
+        allowed-endpoints: >
+          1.1.1.1:1025
+          azure.archive.ubuntu.com:80
+          debian.org:80
+          dns.quad9.net:53
+          github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+          whois.pir.org:43
+          www.debian.org:443
+          www.debian.org:80
+          yahoo.com:1025
+    - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
     - name: update package information
-      run: sudo apt-get update
+      run: sudo apt-get update -qy
     - name: install dependencies
-      run: sudo apt-get install gcc-12 libapparmor-dev libselinux1-dev expect xzdec
+      run: >
+        sudo apt-get install -qy
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois
+        bridge-utils
+    - name: print env
+      run: ./ci/printenv.sh
     - name: configure
-      run: CC=gcc-12 ./configure --enable-fatal-warnings --enable-analyzer --enable-apparmor --enable-selinux --prefix=/usr
+      run: >
+        CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings
+        --enable-analyzer --enable-apparmor --enable-selinux
+        || (cat config.log; exit 1)
     - name: make
       run: make
     - name: make install
       run: sudo make install
-    - name: print version
+    - name: print firejail version
       run: command -V firejail && firejail --version
-    - name: run tests
-      run: SHELL=/bin/bash make test-github
+    - run: make lab-setup
+    - run: make test-seccomp-extra
+    - run: make test-firecfg
+    - run: make test-capabilities
+    - run: make test-apparmor
+    - run: make test-appimage
+    - run: make test-chroot
+    - run: make test-sysutils
+    - run: make test-private-etc
+    - run: make test-profiles
+    - run: make test-fcopy
+    - run: make test-fnetfilter
+    - run: make test-fs
+    - run: make test-utils
+    - run: make test-environment
+    - run: make test-network

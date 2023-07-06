@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -20,6 +20,7 @@
 
 #include "../include/common.h"
 #include "../include/ldd_utils.h"
+#ifdef HAVE_PRIVATE_LIB
 
 #include <fcntl.h>
 #include <sys/mman.h>
@@ -193,9 +194,9 @@ static void parse_elf(const char *exe) {
 	}
 	goto close;
 
- error_close:
+error_close:
 	perror("copy libs");
- close:
+close:
 	if (base)
 		munmap(base, s.st_size);
 
@@ -281,12 +282,13 @@ static void walk_directory(const char *dirname) {
 	}
 }
 
-
+static const char *const usage_str =
+	"Usage: fldd program_or_directory [file]\n"
+	"Print a list of libraries used by program or store it in the file.\n"
+	"Print a list of libraries used by all .so files in a directory or store it in the file.\n";
 
 static void usage(void) {
-	printf("Usage: fldd program_or_directory [file]\n");
-	printf("Print a list of libraries used by program or store it in the file.\n");
-	printf("Print a list of libraries used by all .so files in a directory or store it in the file.\n");
+	puts(usage_str);
 }
 
 int main(int argc, char **argv) {
@@ -295,7 +297,7 @@ int main(int argc, char **argv) {
 //system("cat /proc/self/status");
 int i;
 for (i = 0; i < argc; i++)
-        printf("*%s* ", argv[i]);
+	printf("*%s* ", argv[i]);
 printf("\n");
 }
 #endif
@@ -357,3 +359,9 @@ printf("\n");
 		close(fd);
 	return 0;
 }
+#else
+int main(void) {
+	printf("Sorry, private lib is disabled in this build\n");
+	return 0;
+}
+#endif

@@ -55,7 +55,7 @@ disable-mnt
 private-bin spectacle
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
+private-etc
 private-tmp
 
 dbus-user filter
@@ -65,3 +65,5 @@ dbus-user.talk org.freedesktop.FileManager1
 #dbus-user.talk org.kde.JobViewServer
 #dbus-user.talk org.kde.kglobalaccel
 dbus-system none
+
+restrict-namespaces

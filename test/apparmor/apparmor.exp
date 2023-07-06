@@ -1,0 +1,59 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send --  "firejail --name=test1 --apparmor\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 1
+
+spawn $env(SHELL)
+send --  "firejail --name=test2 --apparmor\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 1
+
+spawn $env(SHELL)
+send --  "firemon --apparmor\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"test1:firejail --name=test1 --apparmor"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"AppArmor: firejail-default//&unconfined enforce"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"test2:firejail --name=test2 --apparmor"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"AppArmor: firejail-default//&unconfined enforce"
+}
+after 100
+
+send -- "firejail --apparmor.print=test1\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"AppArmor: firejail-default//&unconfined enforce"
+}
+after 100
+
+send -- "firejail --apparmor.print=test2\r"
+expect {
+	timeout {puts "TESTING ERROR 7\n";exit}
+	"AppArmor: firejail-default//&unconfined enforce"
+}
+after 500
+
+puts "\nall done\n"

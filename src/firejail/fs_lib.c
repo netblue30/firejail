@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -31,35 +31,6 @@
 extern void fslib_install_stdc(void);
 extern void fslib_install_firejail(void);
 extern void fslib_install_system(void);
-
-static int lib_cnt = 0;
-static int dir_cnt = 0;
-
-static const char *masked_lib_dirs[] = {
-	"/usr/lib64",
-	"/lib64",
-	"/usr/lib",
-	"/lib",
-	"/usr/local/lib64",
-	"/usr/local/lib",
-	NULL,
-};
-
-// return 1 if the file is in masked_lib_dirs[]
-static int valid_full_path(const char *full_path) {
-	if (strstr(full_path, ".."))
-		return 0;
-
-	int i = 0;
-	while (masked_lib_dirs[i]) {
-		size_t len = strlen(masked_lib_dirs[i]);
-		if (strncmp(full_path, masked_lib_dirs[i], len) == 0 &&
-		    full_path[len] == '/')
-			return 1;
-		i++;
-	}
-	return 0;
-}
 
 // return 1 if symlink to firejail executable
 int is_firejail_link(const char *fname) {
@@ -114,6 +85,36 @@ char *find_in_path(const char *program) {
 
 	free(dup);
 	return NULL;
+}
+
+#ifdef HAVE_PRIVATE_LIB
+static int lib_cnt = 0;
+static int dir_cnt = 0;
+
+static const char *masked_lib_dirs[] = {
+	"/usr/lib64",
+	"/lib64",
+	"/usr/lib",
+	"/lib",
+	"/usr/local/lib64",
+	"/usr/local/lib",
+	NULL,
+};
+
+// return 1 if the file is in masked_lib_dirs[]
+static int valid_full_path(const char *full_path) {
+	if (strstr(full_path, ".."))
+		return 0;
+
+	int i = 0;
+	while (masked_lib_dirs[i]) {
+		size_t len = strlen(masked_lib_dirs[i]);
+		if (strncmp(full_path, masked_lib_dirs[i], len) == 0 &&
+		    full_path[len] == '/')
+			return 1;
+		i++;
+	}
+	return 0;
 }
 
 static char *build_dest_dir(const char *full_path) {
@@ -465,3 +466,4 @@ void fs_private_lib(void) {
 	// mount lib filesystem
 	mount_directories();
 }
+#endif

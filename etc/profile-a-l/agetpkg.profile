@@ -28,7 +28,6 @@ include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
-hostname agetpkg
 ipc-namespace
 machine-id
 netfilter
@@ -49,10 +48,11 @@ tracelog
 private-bin agetpkg,python3
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.preload,pki,resolv.conf,ssl
+private-etc @tls-ca
 private-tmp
 
 dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -21,9 +21,12 @@
 int arg_debug = 0;
 int arg_appimage = 0;
 
+static const char *const usage_str =
+	"Firejail profile builder\n"
+	"Usage: firejail [--debug] --build[=profile-file] program-and-arguments\n";
+
 static void usage(void) {
-	printf("Firejail profile builder\n");
-	printf("Usage: firejail [--debug] --build[=profile-file] program-and-arguments\n");
+	puts(usage_str);
 }
 
 int main(int argc, char **argv) {
@@ -32,7 +35,7 @@ int main(int argc, char **argv) {
 system("cat /proc/self/status");
 int i;
 for (i = 0; i < argc; i++)
-        printf("*%s* ", argv[i]);
+	printf("*%s* ", argv[i]);
 printf("\n");
 }
 #endif

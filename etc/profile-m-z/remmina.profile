@@ -1,5 +1,5 @@
 # Firejail profile for remmina
-# Description: GTK+ Remote Desktop Client
+# Description: GTK Remote Desktop Client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include remmina.local
@@ -42,3 +42,4 @@ private-cache
 private-dev
 private-tmp
 
+restrict-namespaces

@@ -17,3 +17,5 @@ netfilter
 noroot
 protocol unix,inet,inet6
 seccomp
+
+restrict-namespaces

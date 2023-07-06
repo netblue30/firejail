@@ -39,7 +39,7 @@ disable-mnt
 private-bin gnome-logs
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,localtime,machine-id
+private-etc
 private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
 writable-var-log
@@ -51,3 +51,4 @@ dbus-system none
 
 # Add 'ignore read-only ${HOME}' to your gnome-logs.local if you export logs to a file under your ${HOME}.
 read-only ${HOME}
+restrict-namespaces

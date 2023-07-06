@@ -1,5 +1,5 @@
 # Firejail profile for deadbeef
-# Description: A GTK+ audio player for GNU/Linux
+# Description: A GTK audio player for GNU/Linux
 # This file is overwritten after every install/update
 # Persistent local customizations
 include deadbeef.local
@@ -32,3 +32,4 @@ seccomp
 private-dev
 private-tmp
 
+restrict-namespaces

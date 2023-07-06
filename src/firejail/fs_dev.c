@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -177,7 +177,6 @@ static void mount_dev_shm(void) {
 	int rv = mount(RUN_DEV_DIR "/shm", "/dev/shm", "none", MS_BIND, "mode=01777,gid=0");
 	if (rv == -1) {
 		fwarning("cannot mount the old /dev/shm in private-dev\n");
-		dbg_test_dir(RUN_DEV_DIR "/shm");
 		empty_dev_shm();
 		return;
 	}

@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 # build a very small chroot
@@ -8,7 +8,7 @@ ROOTDIR="/tmp/chroot"			# default chroot directory
 DEFAULT_FILES="/bin/bash /bin/sh "	# basic chroot files
 DEFAULT_FILES+="/etc/passwd /etc/nsswitch.conf /etc/group "
 DEFAULT_FILES+=`find /lib -name libnss*`	# files required by glibc
-DEFAULT_FILES+=" /bin/cp /bin/ls /bin/cat /bin/ps /bin/netstat /bin/ping /sbin/ifconfig /usr/bin/touch /bin/ip /bin/hostname /bin/grep /usr/bin/dig /usr/bin/openssl /usr/bin/id /usr/bin/getent /usr/bin/whoami /usr/bin/wc /usr/bin/wget /bin/umount"
+DEFAULT_FILES+=" /bin/cp /bin/ls /bin/cat /bin/ps /bin/ping /usr/bin/touch /bin/grep"
 
 rm -fr $ROOTDIR
 mkdir -p $ROOTDIR/{root,bin,lib,lib64,usr,home,etc,dev/shm,tmp,var/run,var/tmp,var/lock,var/log,proc,sys}
@@ -18,6 +18,10 @@ mkdir -p $ROOTDIR/home/netblue/.config/firejail
 chown netblue:netblue $ROOTDIR/home/netblue
 chown netblue:netblue $ROOTDIR/home/netblue/.config
 cp /home/netblue/.Xauthority $ROOTDIR/home/netblue/.
+mkdir -p $ROOTDIR/home/runner/.config/firejail
+chown runner:runner $ROOTDIR/home/runner
+chown runner:runner $ROOTDIR/home/runner/.config
+
 cp -a /etc/skel $ROOTDIR/etc/.
 mkdir $ROOTDIR/home/someotheruser
 mkdir $ROOTDIR/boot
@@ -27,8 +31,6 @@ cp /etc/group $ROOTDIR/etc/.
 cp /etc/hosts $ROOTDIR/etc/.
 cp /etc/hostname $ROOTDIR/etc/.
 mkdir -p $ROOTDIR/usr/lib/x86_64-linux-gnu
-cp -a /usr/lib/x86_64-linux-gnu/openssl-1.0.0 $ROOTDIR/usr/lib/x86_64-linux-gnu/.
-cp -a /usr/lib/ssl $ROOTDIR/usr/lib/.
 touch $ROOTDIR/var/log/syslog
 touch $ROOTDIR/var/tmp/somefile
 SORTED=`for FILE in $* $DEFAULT_FILES; do echo " $FILE "; ldd $FILE | grep -v dynamic | cut -d " " -f 3; done | sort -u`
@@ -41,7 +43,7 @@ cp --parents /lib/ld-linux.so.2 $ROOTDIR
 cp unchroot $ROOTDIR/.
 touch $ROOTDIR/this-is-my-chroot
 
-cd $ROOTDIR; find .
+cd $ROOTDIR;
 mkdir -p usr/lib/firejail/
 cp /usr/lib/firejail/libtrace.so usr/lib/firejail/.
 

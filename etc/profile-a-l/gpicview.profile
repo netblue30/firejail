@@ -40,7 +40,7 @@ tracelog
 private-bin gpicview
 private-cache
 private-dev
-private-etc alternatives,fonts,group,ld.so.cache,ld.so.preload,passwd
+private-etc
 private-lib
 private-tmp
 
@@ -48,3 +48,4 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

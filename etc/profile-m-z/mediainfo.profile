@@ -42,10 +42,11 @@ x11 none
 private-bin mediainfo
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload
+private-etc
 private-tmp
 
 dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

@@ -1,5 +1,5 @@
 # Firejail profile for corebird
-# Description: Native Gtk+ Twitter client for the Linux desktop
+# Description: Native GTK Twitter client for the Linux desktop
 # This file is overwritten after every install/update
 # Persistent local customizations
 include corebird.local
@@ -35,3 +35,4 @@ private-bin corebird
 private-dev
 private-tmp
 
+restrict-namespaces

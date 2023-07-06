@@ -44,10 +44,11 @@ seccomp !chroot
 private-bin drawio
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload
+private-etc
 private-tmp
 
 dbus-user none
 dbus-system none
 
 # memory-deny-write-execute - breaks on Arch
+# restrict-namespaces

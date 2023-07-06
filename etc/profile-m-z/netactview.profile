@@ -44,7 +44,7 @@ disable-mnt
 private-bin netactview,netactview_polkit
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload
+private-etc
 private-lib
 private-tmp
 
@@ -52,3 +52,4 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

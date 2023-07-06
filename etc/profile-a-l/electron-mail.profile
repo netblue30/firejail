@@ -1,55 +1,42 @@
-# Firejail profile for electron-mail
-# Description: Unofficial desktop app for several E2E encrypted email providers
+# Firejail profile for ElectronMail
+# Description: Unofficial desktop app for the Proton Mail E2E encrypted email provider
 # This file is overwritten after every install/update
 # Persistent local customizations
 include electron-mail.local
 # Persistent global definitions
 include globals.local
 
+ignore dbus-user none
+ignore disable-mnt
+
 noblacklist ${HOME}/.config/electron-mail
 
-include disable-common.inc
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
-include disable-programs.inc
+# sh is needed to allow Firefox to open links
+include allow-bin-sh.inc
+
 include disable-shell.inc
-include disable-xdg.inc
 
 mkdir ${HOME}/.config/electron-mail
 whitelist ${HOME}/.config/electron-mail
-whitelist ${DOWNLOADS}
 
-include whitelist-common.inc
-include whitelist-runuser-common.inc
-include whitelist-usr-share-common.inc
-include whitelist-var-common.inc
+# The lines below are needed to find the default Firefox profile name, to allow
+# opening links in an existing instance of Firefox (note that it still fails if
+# there isn't a Firefox instance running with the default profile; see #5352)
+noblacklist ${HOME}/.mozilla
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
 
-apparmor
-caps.drop all
-netfilter
-no3d
-nodvd
-nogroups
-noinput
-nonewprivs
-noroot
-notv
-nou2f
-novideo
-protocol unix,inet,inet6,netlink
-seccomp !chroot
-# tracelog - breaks on Arch
+machine-id
+nosound
 
-private-bin electron-mail
-private-cache
-private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,gtk-2.0,gtk-3.0,ld.so.cache,ld.so.preload,nsswitch.conf,pki,resolv.conf,selinux,ssl,xdg
+private-etc @tls-ca,@x11
 private-opt ElectronMail
-private-tmp
 
-# breaks tray functionality
-# dbus-user none
-dbus-system none
+dbus-user filter
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.gnome.keyring.SystemPrompter
+# allow D-Bus communication with firefox for opening links
+dbus-user.talk org.mozilla.*
 
-# memory-deny-write-execute - breaks on Arch
+# Redirect
+include electron-common.profile

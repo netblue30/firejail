@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2022 Firejail Authors
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -328,6 +328,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "name ", 5) == 0) {
 		cfg.name = ptr + 5;
 		if (strlen(cfg.name) == 0) {
+			fprintf(stderr, "Error: invalid sandbox name: cannot be empty\n");
+			exit(1);
+		}
+		if (invalid_name(cfg.name)) {
 			fprintf(stderr, "Error: invalid sandbox name\n");
 			exit(1);
 		}
@@ -372,7 +376,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "tracelog") == 0) {
-		arg_tracelog = 1;
+		if (checkcfg(CFG_TRACELOG))
+			arg_tracelog = 1;
+		// no warning, we have tracelog in over 400 profiles
 		return 0;
 	}
 	else if (strcmp(ptr, "private") == 0) {
@@ -647,6 +653,16 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			if (!arg_netfilter6_file)
 				errExit("strdup");
 			check_netfilter_file(arg_netfilter6_file);
+		}
+		else
+			warning_feature_disabled("networking");
+#endif
+		return 0;
+	}
+	else if (strcmp(ptr, "netlock") == 0) {
+#ifdef HAVE_NETWORK
+		if (checkcfg(CFG_NETWORK)) {
+			arg_netlock = 1;
 		}
 		else
 			warning_feature_disabled("networking");
@@ -954,6 +970,22 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "apparmor-replace") == 0) {
+#ifdef HAVE_APPARMOR
+		arg_apparmor = 1;
+		apparmor_replace = true;
+#endif
+		return 0;
+	}
+
+	if (strcmp(ptr, "apparmor-stack") == 0) {
+#ifdef HAVE_APPARMOR
+		arg_apparmor = 1;
+		apparmor_replace = false;
+#endif
+		return 0;
+	}
+
 	if (strncmp(ptr, "protocol ", 9) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			const char *add = ptr + 9;
@@ -1045,90 +1077,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-#ifdef HAVE_LANDLOCK
-	// Landlock ruleset paths
-	if (strcmp(ptr, "landlock") == 0) {
-		if (arg_landlock == -1) arg_landlock = create_full_ruleset();
-		const char *home_dir = env_get("HOME");
-		int home_fd = open(home_dir,O_PATH | O_CLOEXEC);
-		struct landlock_path_beneath_attr target;
-		target.parent_fd = home_fd;
-		target.allowed_access = LANDLOCK_ACCESS_FS_READ_FILE | LANDLOCK_ACCESS_FS_READ_DIR | LANDLOCK_ACCESS_FS_WRITE_FILE | LANDLOCK_ACCESS_FS_REMOVE_FILE | LANDLOCK_ACCESS_FS_REMOVE_DIR | LANDLOCK_ACCESS_FS_MAKE_CHAR | LANDLOCK_ACCESS_FS_MAKE_DIR | LANDLOCK_ACCESS_FS_MAKE_REG | LANDLOCK_ACCESS_FS_MAKE_SYM;
-		if (landlock_add_rule(arg_landlock,LANDLOCK_RULE_PATH_BENEATH,&target,0)) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		close(home_fd);
-		if (add_read_access_rule_by_path(arg_landlock, "/bin/")) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		if (add_execute_rule_by_path(arg_landlock, "/bin/")) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		if (add_read_access_rule_by_path(arg_landlock, "/dev/")) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		if (add_read_access_rule_by_path(arg_landlock, "/etc/")) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		if (add_read_access_rule_by_path(arg_landlock, "/lib/")) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		if (add_execute_rule_by_path(arg_landlock, "/lib/")) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		if (add_read_access_rule_by_path(arg_landlock, "/opt/")) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		if (add_execute_rule_by_path(arg_landlock, "/opt/")) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		if (add_read_access_rule_by_path(arg_landlock, "/usr/")) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		if (add_execute_rule_by_path(arg_landlock, "/usr/")) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		if (add_read_access_rule_by_path(arg_landlock, "/var/")) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		return 0;
-	}
-	if (strncmp(ptr, "landlock.proc ", 14) == 0) {
-			if (strncmp(ptr+14, "no", 2) == 0) arg_landlock_proc = 0;
-			else if (strncmp(ptr+14, "ro", 2) == 0) arg_landlock_proc = 1;
-			else if (strncmp(ptr+14, "rw", 2) == 0) arg_landlock_proc = 2;
-			return 0;
-		}
-	if (strncmp(ptr, "landlock.read ", 14) == 0) {
-		if (arg_landlock == -1) arg_landlock = create_full_ruleset();
-		if (add_read_access_rule_by_path(arg_landlock, ptr+14)) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		return 0;
-	}
-	if (strncmp(ptr, "landlock.write ", 15) == 0) {
-		if (arg_landlock == -1) arg_landlock = create_full_ruleset();
-		if (add_write_access_rule_by_path(arg_landlock, ptr+15)) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		return 0;
-	}
-	if (strncmp(ptr, "landlock.special ", 26) == 0) {
-		if (arg_landlock == -1) arg_landlock = create_full_ruleset();
-		if (add_create_special_rule_by_path(arg_landlock, ptr+26)) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		return 0;
-	}
-	if (strncmp(ptr, "landlock.execute ", 17) == 0) {
-		if (arg_landlock == -1) arg_landlock = create_full_ruleset();
-		if (add_execute_rule_by_path(arg_landlock, ptr+17)) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
-		return 0;
-	}
-#endif
-
 	// memory deny write&execute
 	if (strcmp(ptr, "memory-deny-write-execute") == 0) {
 		if (checkcfg(CFG_SECCOMP))
@@ -1208,6 +1156,14 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	// hostname
 	if (strncmp(ptr, "hostname ", 9) == 0) {
 		cfg.hostname = ptr + 9;
+		if (strlen(cfg.hostname) == 0) {
+			fprintf(stderr, "Error: invalid hostname: cannot be empty\n");
+			exit(1);
+		}
+		if (invalid_name(cfg.hostname)) {
+			fprintf(stderr, "Error: invalid hostname\n");
+			exit(1);
+		}
 		return 0;
 	}
 
@@ -1275,6 +1231,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	if (strcmp(ptr, "keep-config-pulse") == 0) {
 		arg_keep_config_pulse = 1;
+		return 0;
+	}
+
+	if (strcmp(ptr, "keep-shell-rc") == 0) {
+		arg_keep_shell_rc = 1;
 		return 0;
 	}
 
@@ -1422,6 +1383,20 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	// private /etc without a list of files and directories
+	if (strcmp(ptr, "private-etc") == 0) {
+		if (checkcfg(CFG_PRIVATE_ETC)) {
+			if (arg_writable_etc) {
+				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
+				exit(1);
+			}
+			arg_private_etc = 1;
+		}
+		else
+			warning_feature_disabled("private-etc");
+		return 0;
+	}
+
 	// private /opt list of files and directories
 	if (strncmp(ptr, "private-opt ", 12) == 0) {
 		if (checkcfg(CFG_PRIVATE_OPT)) {
@@ -1500,11 +1475,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
 			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-				exit(1);
-			}
 			arg_overlay = 1;
 			arg_overlay_keep = 1;
 			arg_overlay_reuse = 1;
@@ -1537,11 +1507,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
 				exit(1);
 			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-				exit(1);
-			}
 			arg_overlay = 1;
 		}
 		else
@@ -1556,11 +1521,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 			if (cfg.chrootdir) {
 				fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-				exit(1);
-			}
-			struct stat s;
-			if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-				fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
 				exit(1);
 			}
 			arg_overlay = 1;
@@ -1686,6 +1646,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			// set sandbox name and start normally
 			cfg.name = ptr + 14;
 			if (strlen(cfg.name) == 0) {
+				fprintf(stderr, "Error: invalid sandbox name: cannot be empty\n");
+				exit(1);
+			}
+			if (invalid_name(cfg.name)) {
 				fprintf(stderr, "Error: invalid sandbox name\n");
 				exit(1);
 			}

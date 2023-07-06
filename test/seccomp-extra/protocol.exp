@@ -1,0 +1,87 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2023 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --noprofile --protocol=unix --debug pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"0009: 20 00 00 00000000"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"000f: 20 00 00 00000010"
+}
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"0010: 15 00 01 00000001"
+}
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"0011: 06 00 00 7fff0000"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"0012: 06 00 00 0005005f"
+}
+
+after 500
+
+send -- "firejail --noprofile --protocol=bluetooth --debug pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 11\n";exit}
+	"0009: 20 00 00 00000000"
+}
+expect {
+	timeout {puts "TESTING ERROR 12\n";exit}
+	"000f: 20 00 00 00000010"
+}
+expect {
+	timeout {puts "TESTING ERROR 13\n";exit}
+	"0010: 15 00 01 0000001f"
+}
+expect {
+	timeout {puts "TESTING ERROR 14\n";exit}
+	"0011: 06 00 00 7fff0000"
+}
+expect {
+	timeout {puts "TESTING ERROR1 5\n";exit}
+	"0012: 06 00 00 0005005f"
+}
+after 500
+
+send -- "firejail --noprofile --protocol=inet,inet6 --debug pwd\r"
+expect {
+	timeout {puts "TESTING ERROR 31\n";exit}
+	"0009: 20 00 00 00000000"
+}
+expect {
+	timeout {puts "TESTING ERROR 32\n";exit}
+	"000f: 20 00 00 00000010"
+}
+expect {
+	timeout {puts "TESTING ERROR 33\n";exit}
+	"0010: 15 00 01 00000002"
+}
+expect {
+	timeout {puts "TESTING ERROR 34\n";exit}
+	"0011: 06 00 00 7fff0000"
+}
+expect {
+	timeout {puts "TESTING ERROR1 35\n";exit}
+	"0012: 15 00 01 0000000a"
+}
+expect {
+	timeout {puts "TESTING ERROR 36\n";exit}
+	"0013: 06 00 00 7fff0000"
+}
+expect {
+	timeout {puts "TESTING ERROR 37\n";exit}
+	"0014: 06 00 00 0005005f"
+}
+after 500
+puts "\nall done\n"

@@ -1,5 +1,5 @@
- /*
- * Copyright (C) 2014-2022 Firejail Authors
+/*
+ * Copyright (C) 2014-2023 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -57,7 +57,7 @@ void net_bridge_add_interface(const char *bridge, const char *dev) {
 
 	int sock;
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-              	errExit("socket");
+		errExit("socket");
 
 	memset(&ifr, 0, sizeof(ifr));
 	strncpy(ifr.ifr_name, bridge, IFNAMSIZ - 1);
@@ -213,6 +213,23 @@ void net_ifprint(int scan) {
 			fmessage("%-17.17s%-19.19s%-17.17s%-17.17s%-6.6s\n",
 				ifa->ifa_name, macstr, ipstr, maskstr, status);
 
+			// print ipv6 address
+			if (!scan) {
+				struct ifaddrs *ptr = ifa->ifa_next;
+				while (ptr) {
+					if (ptr->ifa_addr->sa_family == AF_INET6 && strcmp(ifa->ifa_name, ptr->ifa_name) == 0) {
+						struct sockaddr_in6 *s6 = (struct sockaddr_in6 *)ptr->ifa_addr;
+						struct in6_addr *in_addr = &s6->sin6_addr;
+						char buf[64];
+						if(inet_ntop(ptr->ifa_addr->sa_family, in_addr, buf, sizeof(buf))) {
+							fmessage("%-35.35s %s\n", " ", buf);
+							break;
+						}
+					}
+					ptr = ptr->ifa_next;
+				}
+			}
+
 			// network scanning
 			if (!scan)				// scanning disabled
 				continue;
@@ -237,7 +254,7 @@ int net_get_mac(const char *ifname, unsigned char mac[6]) {
 	int sock;
 
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-              	errExit("socket");
+		errExit("socket");
 
 	memset(&ifr, 0, sizeof(ifr));
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);
@@ -291,7 +308,7 @@ int net_if_mac(const char *ifname, const unsigned char mac[6]) {
 	int sock;
 
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-              	errExit("socket");
+		errExit("socket");
 
 	memset(&ifr, 0, sizeof(ifr));
 	strncpy(ifr.ifr_name, ifname, IFNAMSIZ - 1);

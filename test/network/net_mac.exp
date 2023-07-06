@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2022 Firejail Authors
+# Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -8,7 +8,7 @@ spawn $env(SHELL)
 match_max 100000
 
 # check ip address
-send -- "firejail --net=br0 --ip=10.10.20.5 --mac=00:11:22:33:44:55\r"
+send -- "firejail --net=br0 --ip=10.10.20.5 --mac=00:11:22:33:44:55 cat /proc/1/net/dev\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"eth0"
@@ -23,7 +23,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"255.255.255.248"
+	"255.255.255.0"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
@@ -33,7 +33,6 @@ expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
-send -- "exit\r"
 after 100
 
 puts "\nall done\n"

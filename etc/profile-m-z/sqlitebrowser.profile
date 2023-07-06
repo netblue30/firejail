@@ -41,7 +41,7 @@ seccomp.block-secondary
 private-bin sqlitebrowser
 private-cache
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.preload,machine-id,passwd,pki,ssl
+private-etc @tls-ca
 private-tmp
 
 # breaks proxy creation
@@ -49,3 +49,4 @@ private-tmp
 # dbus-system none
 
 #memory-deny-write-execute - breaks on Arch (see issue #1803)
+restrict-namespaces

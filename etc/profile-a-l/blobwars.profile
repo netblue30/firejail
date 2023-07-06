@@ -42,8 +42,10 @@ disable-mnt
 private-bin blobwars
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload,machine-id
+private-etc
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

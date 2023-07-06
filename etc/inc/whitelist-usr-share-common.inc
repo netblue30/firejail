@@ -29,6 +29,7 @@ whitelist /usr/share/gtk-engines
 whitelist /usr/share/gtksourceview-3.0
 whitelist /usr/share/gtksourceview-4
 whitelist /usr/share/hunspell
+whitelist /usr/share/hyphen
 whitelist /usr/share/hwdata
 whitelist /usr/share/icons
 whitelist /usr/share/icu
@@ -55,6 +56,7 @@ whitelist /usr/share/qt
 whitelist /usr/share/qt4
 whitelist /usr/share/qt5
 whitelist /usr/share/qt5ct
+whitelist /usr/share/qt6
 whitelist /usr/share/qt6ct
 whitelist /usr/share/sounds
 whitelist /usr/share/tcl8.6

@@ -42,7 +42,7 @@ disable-mnt
 private-bin gnome-system-log
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,localtime,machine-id
+private-etc
 private-lib
 private-tmp
 writable-var-log
@@ -53,3 +53,4 @@ writable-var-log
 memory-deny-write-execute
 # Add 'ignore read-only ${HOME}' to your gnome-system-log.local if you export logs to a file under your ${HOME}.
 read-only ${HOME}
+restrict-namespaces

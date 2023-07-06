@@ -61,6 +61,7 @@ blacklist /usr/lib64/ruby
 
 # Programs using python: deluge, firefox addons, filezilla, cherrytree, xchat, hexchat, libreoffice, scribus
 # Python 2
+blacklist ${HOME}/.local/lib/python2*
 blacklist ${PATH}/python2*
 blacklist /usr/include/python2*
 blacklist /usr/lib/python2*
@@ -70,6 +71,7 @@ blacklist /usr/share/python2*
 # You will want to add noblacklist for python3 stuff in the firefox and/or chromium profiles if you use the Gnome connector (see Issue #2026)
 
 # Python 3
+blacklist ${HOME}/.local/lib/python3*
 blacklist ${PATH}/python3*
 blacklist /usr/include/python3*
 blacklist /usr/lib/python3*

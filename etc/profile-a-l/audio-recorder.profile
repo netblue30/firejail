@@ -43,7 +43,7 @@ tracelog
 disable-mnt
 # private-bin audio-recorder
 private-cache
-private-etc alternatives,fonts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload
+private-etc
 private-tmp
 
 dbus-user filter
@@ -51,3 +51,4 @@ dbus-user.talk ca.desrt.dconf
 dbus-system none
 
 # memory-deny-write-execute - breaks on Arch
+restrict-namespaces

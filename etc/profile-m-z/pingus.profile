@@ -24,6 +24,7 @@ include disable-xdg.inc
 mkdir ${HOME}/.pingus
 whitelist ${HOME}/.pingus
 whitelist /usr/share/pingus
+whitelist /usr/share/games/pingus      # Debian keeps games data under /usr/share/games
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -49,8 +50,10 @@ disable-mnt
 private-bin pingus,pingus.bin,sh
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.preload,machine-id
+private-etc
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

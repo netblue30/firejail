@@ -54,7 +54,7 @@ disable-mnt
 private-bin artha,enchant,notify-send
 private-cache
 private-dev
-private-etc alternatives,fonts,ld.so.cache,ld.so.preload,machine-id
+private-etc
 private-lib libnotify.so.*
 private-tmp
 
@@ -65,3 +65,4 @@ dbus-user.talk org.freedesktop.Notifications
 dbus-system none
 
 memory-deny-write-execute
+restrict-namespaces

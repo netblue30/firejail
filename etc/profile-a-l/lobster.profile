@@ -9,6 +9,7 @@ include lobster.local
 #include globals.local
 
 ignore private-dev
+ignore read-only ${HOME}/.local/share/applications
 
 noblacklist ${HOME}/.cache/ueberzugpp
 noblacklist ${HOME}/.config/lobster

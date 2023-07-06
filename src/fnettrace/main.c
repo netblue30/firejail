@@ -677,7 +677,9 @@ static const char *const usage_str =
 	"Options:\n"
 	"   --help, -? - this help screen\n"
 	"   --log=filename - netlocker logfile\n"
-	"   --netfilter - build the firewall rules and commit them.\n"
+	"   --netfilter - build the firewall rules and commit them\n"
+	"   --print-map - print IP map\n"
+	"   --squash-map - compress IP map\n"
 	"   --tail - \"tail -f\" functionality\n"
 	"Examples:\n"
 	"   # fnettrace                              - traffic trace\n"
@@ -708,6 +710,36 @@ int main(int argc, char **argv) {
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-?") == 0) {
 			usage();
+			return 0;
+		}
+		else if (strcmp(argv[i], "--print-map") == 0) {
+			char *fname = "static-ip-map.txt";
+			load_hostnames(fname);
+			radix_print();
+			return 0;
+		}
+		else if (strncmp(argv[i], "--squash-map=", 13) == 0) {
+			if (i !=(argc - 1)) {
+				fprintf(stderr, "Error: please provide a map file\n");
+				return 1;
+			}
+			load_hostnames(argv[i] + 13);
+			int in = radix_nodes;
+			radix_squash();
+			radix_squash();
+			radix_squash();
+			radix_squash();
+			radix_squash();
+
+			printf("#\n");
+			printf("# This file is part of firejail project\n");
+			printf("# The following list of addresses was compiled from various public sources.\n");
+			printf("# License GPLv2\n");
+			printf("#\n");
+
+			radix_print();
+			printf("\n#\n#\n# input %d, output %d\n#\n#\n", in, radix_nodes);
+			fprintf(stderr, "static ip map: input %d, output %d\n", in, radix_nodes);
 			return 0;
 		}
 		else if (strcmp(argv[i], "--netfilter") == 0)

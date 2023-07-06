@@ -74,7 +74,6 @@
 55.0.0.0/8 US Army
 56.0.0.0/8 US Postal Service
 73.0.0.0/8 Comcast
-205.0.0.0/8 US Army
 214.0.0.0/8 US Army
 215.0.0.0/8 US Army
 
@@ -174,6 +173,7 @@
 185.125.188.0/22 Ubuntu One
 185.199.108.0/22 GitHub
 185.205.69.0/24 Tutanota
+185.238.113.0/24 Bitchute
 188.64.224.0/21 Twitter
 190.217.33.0/24 Steam
 192.0.64.0/18 Wordpress
@@ -196,6 +196,30 @@
 208.75.76.0/22 Netflix
 208.78.164.0/22 Steam
 208.80.152.0/22 Wikipedia
+
+# Level 3
+205.128.0.0/14 Level 3
+205.180.0.0/14 Level 3
+205.184.0.0/19 Level 3
+205.184.32.0/20 Level 3
+205.184.96.0/19 Level 3
+205.184.128.0/18 Level 3
+205.184.192.0/20 Level 3
+205.184.240.0/20 Level 3
+205.128.0.0/14 Level 3
+205.180.0.0/14 Level 3
+205.184.0.0/19 Level 3
+205.184.32.0/20 Level 3
+205.184.96.0/19 Level 3
+205.184.128.0/18 Level 3
+205.184.192.0/20 Level 3
+205.184.240.0/20 Level 3
+205.187.32.0/20 Level 3
+205.187.80.0/20 Level 3
+205.187.128.0/19 Level 3
+205.187.176.0/20 Level 3
+205.187.192.0/18 Level 3
+205.224.0.0/14 Level 3
 209.244.0.0/14 Level 3
 
 # WholeSale Internet
@@ -212,6 +236,28 @@
 69.16.174.0/23 StackPath
 69.16.176.0/20 StackPath
 151.139.0.0/16 StackPath
+205.185.194.0/23 StackPath
+205.185.196.0/23 StackPath
+205.185.198.0/24 StackPath
+205.185.200.0/21 StackPath
+205.185.212.0/23 StackPath
+205.185.215.0/24 StackPath
+205.185.216.0/23 StackPath
+205.185.219.0/24 StackPath
+205.185.220.0/24 StackPath
+205.185.215.0/24 StackPath
+205.185.216.0/23 StackPath
+205.185.219.0/24 StackPath
+205.185.220.0/24 StackPath
+205.185.194.0/23 StackPath
+205.185.196.0/23 StackPath
+205.185.198.0/24 StackPath
+205.185.200.0/21 StackPath
+205.185.212.0/23 StackPath
+205.185.215.0/24 StackPath
+205.185.216.0/23 StackPath
+205.185.219.0/24 StackPath
+205.185.220.0/24 StackPath
 
 # Linode
 103.29.68.0/22 Linode
@@ -322,6 +368,7 @@
 96.6.0.0/15 Akamai
 96.16.0.0/15 Akamai
 104.64.0.0/10 Akamai
+173.222.0.0/15 Akamai
 184.24.0.0/13 Akamai
 184.50.0.0/15 Akamai
 184.84.0.0/14 Akamai
@@ -379,6 +426,13 @@
 192.229.128.0/17 MCI
 
 # Microsoft
+20.40.0.0/13 Microsoft
+20.64.0.0/10 Microsoft
+20.48.0.0/12 Microsoft
+20.128.0.0/16 Microsoft
+20.33.0.0/16 Microsoft
+20.36.0.0/14 Microsoft
+20.34.0.0/15 Microsoft
 40.76.0.0/14 Microsoft
 40.96.0.0/12 Microsoft
 40.112.0.0/13 Microsoft
@@ -5415,3 +5469,74 @@
 209.97.144.0/20 Digital Ocean
 209.97.160.0/20 Digital Ocean
 209.97.176.0/20 Digital Ocean
+
+# Leaseweb
+185.28.70.0/24 Leaseweb
+108.177.128.0/22 Leaseweb
+108.177.216.0/22 Leaseweb
+108.177.244.0/22 Leaseweb
+108.62.152.0/21 Leaseweb
+108.62.192.0/22 Leaseweb
+108.62.197.0/24 Leaseweb
+108.62.199.0/24 Leaseweb
+108.62.220.0/22 Leaseweb
+108.62.5.0/24 Leaseweb
+108.62.56.0/21 Leaseweb
+142.234.104.0/21 Leaseweb
+142.234.168.0/21 Leaseweb
+142.234.180.0/22 Leaseweb
+142.234.188.0/22 Leaseweb
+142.234.232.0/21 Leaseweb
+142.234.248.0/22 Leaseweb
+142.91.116.0/22 Leaseweb
+142.91.208.0/22 Leaseweb
+142.91.88.0/21 Leaseweb
+147.255.224.0/21 Leaseweb
+172.241.120.0/22 Leaseweb
+172.241.136.0/22 Leaseweb
+172.241.156.0/22 Leaseweb
+172.241.200.0/22 Leaseweb
+173.208.118.0/24 Leaseweb
+173.208.32.0/21 Leaseweb
+173.234.180.0/22 Leaseweb
+173.234.80.0/22 Leaseweb
+173.234.88.0/23 Leaseweb
+174.34.144.0/24 Leaseweb
+174.34.145.0/24 Leaseweb
+216.6.228.0/24 Leaseweb
+216.6.236.0/24 Leaseweb
+23.105.64.0/19 Leaseweb
+23.106.0.0/19 Leaseweb
+23.106.192.0/19 Leaseweb
+23.108.128.0/19 Leaseweb
+23.108.224.0/19 Leaseweb
+23.19.104.0/22 Leaseweb
+23.19.124.0/22 Leaseweb
+23.19.128.0/22 Leaseweb
+23.19.168.0/22 Leaseweb
+23.19.216.0/22 Leaseweb
+23.19.248.0/22 Leaseweb
+23.19.32.0/21 Leaseweb
+23.19.80.0/21 Leaseweb
+23.81.0.0/21 Leaseweb
+23.81.136.0/21 Leaseweb
+23.81.208.0/21 Leaseweb
+23.82.144.0/21 Leaseweb
+23.82.192.0/20 Leaseweb
+23.82.208.0/21 Leaseweb
+23.82.216.0/21 Leaseweb
+23.82.224.0/21 Leaseweb
+23.82.240.0/21 Leaseweb
+23.82.32.0/21 Leaseweb
+23.82.72.0/21 Leaseweb
+64.120.106.0/24 Leaseweb
+64.120.123.0/24 Leaseweb
+64.120.16.0/22 Leaseweb
+64.120.2.0/24 Leaseweb
+64.120.4.0/22 Leaseweb
+64.120.48.0/22 Leaseweb
+64.120.65.0/24 Leaseweb
+64.120.68.0/24 Leaseweb
+64.120.69.0/24 Leaseweb
+69.147.236.0/24 Leaseweb
+70.32.34.0/24 Leaseweb

@@ -55,10 +55,14 @@ static RNode *rmalloc(void) {
 static inline char *duplicate_name(const char *name) {
 	assert(name);
 
-	if (strcmp(name, "United States") == 0)
-		return "United States";
-	else if (strcmp(name, "Amazon") == 0)
+	if (strcmp(name, "Amazon") == 0)
 		return "Amazon";
+	else if (strcmp(name, "Digital Ocean") == 0)
+		return "Digital Ocean";
+	else if (strcmp(name, "Linode") == 0)
+		return "Linode";
+	else if (strcmp(name, "Google") == 0)
+		return "Google";
 	return strdup(name);
 }
 
@@ -151,4 +155,87 @@ char *radix_longest_prefix_match(uint32_t ip) {
 	}
 
 	return (rv)? rv->name: NULL;
+}
+
+static uint32_t sum;
+static void print(RNode *ptr, int level) {
+	if (!ptr)
+		return;
+	if (ptr->name) {
+		printf("%d.%d.%d.%d/%d ", PRINT_IP(sum << (32 - level)), level);
+		printf("%s\n", ptr->name);
+	}
+
+	if (ptr->zero == NULL && ptr->one == NULL)
+		return;
+
+	level++;
+	sum <<= 1;
+	print(ptr->zero, level);
+	sum++;
+	print(ptr->one, level);
+	sum--;
+	sum >>= 1;
+}
+
+void radix_print(void) {
+	if (!head)
+		return;
+	printf("\n");
+	sum = 0;
+	print(head->zero, 1);
+	assert(sum == 0);
+	sum = 1;
+	print(head->one, 1);
+	assert(sum == 1);
+}
+
+static inline int strnullcmp(const char *a, const char *b) {
+	if (!a || !b)
+		return -1;
+	return strcmp(a, b);
+}
+
+void squash(RNode *ptr, int level) {
+	if (!ptr)
+		return;
+
+	if (ptr->name == NULL &&
+	    ptr->zero && ptr->one &&
+	    strnullcmp(ptr->zero->name, ptr->one->name) == 0 &&
+	    !ptr->zero->zero && !ptr->zero->one &&
+	    !ptr->one->zero && !ptr->one->one) {
+	    	ptr->name = ptr->one->name;
+//		fprintf(stderr, "squashing %d.%d.%d.%d/%d ", PRINT_IP(sum << (32 - level)), level);
+//		fprintf(stderr, "%s\n", ptr->name);
+		ptr->zero = NULL;
+		ptr->one = NULL;
+		radix_nodes--;
+		return;
+	}
+
+	if (ptr->zero == NULL && ptr->one == NULL)
+		return;
+
+	level++;
+	sum <<= 1;
+	squash(ptr->zero, level);
+	sum++;
+	squash(ptr->one, level);
+	sum--;
+	sum >>= 1;
+}
+
+// using stderr for printing
+void radix_squash(void) {
+	if (!head)
+		return;
+
+	sum = 0;
+	squash(head->zero, 1);
+	assert(sum == 0);
+	sum = 1;
+	squash(head->one, 1);
+	assert(sum == 1);
+
 }

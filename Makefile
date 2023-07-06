@@ -160,6 +160,7 @@ clean:
 	rm -f $(SECCOMP_FILTERS)
 	rm -f $(MANPAGES) $(MANPAGES:%=%.gz) firejail*.rpm
 	rm -f $(SYNTAX_FILES)
+	rm -f src/fnettrace/static-ip-map
 	rm -f test/utils/index.html*
 	rm -f test/utils/wget-log
 	rm -f test/utils/firejail-test-file*

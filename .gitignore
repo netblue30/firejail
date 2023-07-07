@@ -65,3 +65,11 @@ aclocal.m4
 __pycache__
 *.pyc
 *.pyo
+src/fnettrace/static-ip-map
+src/man/firecfg.1.gz
+src/man/firejail-login.5.gz
+src/man/firejail-profile.5.gz
+src/man/firejail-users.5.gz
+src/man/firejail.1.gz
+src/man/firemon.1.gz
+src/man/jailcheck.1.gz

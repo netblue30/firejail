@@ -2,11 +2,6 @@
 ROOT = .
 -include config.mk
 
-ifneq ($(HAVE_MAN),no)
-MAN_TARGET = man
-MAN_SRC = src/man
-endif
-
 ifneq ($(HAVE_CONTRIB_INSTALL),no)
 CONTRIB_TARGET = contrib
 endif
@@ -19,11 +14,10 @@ SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfil
 SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
 SBOX_APPS_NON_DUMPABLE += src/fnettrace/fnettrace src/fnettrace-dns/fnettrace-dns src/fnettrace-sni/fnettrace-sni
 SBOX_APPS_NON_DUMPABLE += src/fnettrace-icmp/fnettrace-icmp
-MYDIRS = src/lib $(MAN_SRC) $(COMPLETIONDIRS)
+MYDIRS = src/lib src/man $(COMPLETIONDIRS)
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 COMPLETIONS = src/zsh_completion/_firejail src/bash_completion/firejail.bash_completion
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
-MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5 jailcheck.1
 
 SYSCALL_HEADERS := $(sort $(wildcard src/include/syscall*.h))
 
@@ -43,7 +37,7 @@ SYNTAX_FILES := $(SYNTAX_FILES_IN:.in=)
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
 
 .PHONY: all
-all: all_items mydirs filters $(MAN_TARGET) $(CONTRIB_TARGET)
+all: all_items mydirs filters $(CONTRIB_TARGET)
 
 config.mk config.sh:
 	@printf 'error: run ./configure to generate %s\n' "$@" >&2
@@ -81,12 +75,6 @@ seccomp.mdwx: src/fseccomp/fseccomp
 
 seccomp.mdwx.32: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp memory-deny-write-execute.32 seccomp.mdwx.32
-
-$(MANPAGES): src/man config.mk
-	./mkman.sh $(VERSION) src/man/$(basename $@).man $@
-
-.PHONY: man
-man: $(MANPAGES)
 
 # Makes all targets in contrib/
 .PHONY: contrib
@@ -158,7 +146,7 @@ clean:
 	done
 	$(MAKE) -C test clean
 	rm -f $(SECCOMP_FILTERS)
-	rm -f $(MANPAGES) $(MANPAGES:%=%.gz) firejail*.rpm
+	rm -f firejail*.rpm
 	rm -f $(SYNTAX_FILES)
 	rm -f src/fnettrace/static-ip-map
 	rm -f test/utils/index.html*
@@ -248,15 +236,13 @@ endif
 ifneq ($(HAVE_MAN),no)
 	# man pages
 	install -m 0755 -d $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man5
-	for man in $(MANPAGES); do \
-		rm -f $$man.gz; \
-		gzip -9n $$man; \
-		case "$$man" in \
-			*.1) install -m 0644 $$man.gz $(DESTDIR)$(mandir)/man1/; ;; \
-			*.5) install -m 0644 $$man.gz $(DESTDIR)$(mandir)/man5/; ;; \
-		esac; \
-	done
-	rm -f $(MANPAGES) $(MANPAGES:%=%.gz)
+	install -m 0644 src/man/firejail.1.gz $(DESTDIR)$(mandir)/man1/
+	install -m 0644 src/man/firemon.1.gz $(DESTDIR)$(mandir)/man1/
+	install -m 0644 src/man/firecfg.1.gz $(DESTDIR)$(mandir)/man1/
+	install -m 0644 src/man/jailcheck.1.gz $(DESTDIR)$(mandir)/man1/
+	install -m 0644 src/man/firejail-login.5.gz $(DESTDIR)$(mandir)/man5/
+	install -m 0644 src/man/firejail-users.5.gz $(DESTDIR)$(mandir)/man5/
+	install -m 0644 src/man/firejail-profile.5.gz $(DESTDIR)$(mandir)/man5/
 endif
 	# bash completion
 	install -m 0755 -d $(DESTDIR)$(datarootdir)/bash-completion/completions

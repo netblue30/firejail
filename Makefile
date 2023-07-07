@@ -37,7 +37,7 @@ SYNTAX_FILES := $(SYNTAX_FILES_IN:.in=)
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
 
 .PHONY: all
-all: all_items mydirs filters $(CONTRIB_TARGET)
+all: all_items mydirs $(CONTRIB_TARGET)
 
 config.mk config.sh:
 	@printf 'error: run ./configure to generate %s\n' "$@" >&2
@@ -53,28 +53,19 @@ mydirs: $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
 
-.PHONY: filters
-filters: $(SECCOMP_FILTERS) $(SBOX_APPS_NON_DUMPABLE)
-seccomp: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
+define build_filters
 	src/fseccomp/fseccomp default seccomp
 	src/fsec-optimize/fsec-optimize seccomp
-
-seccomp.debug: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
 	src/fseccomp/fseccomp default seccomp.debug allow-debuggers
 	src/fsec-optimize/fsec-optimize seccomp.debug
-
-seccomp.32: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
 	src/fseccomp/fseccomp secondary 32 seccomp.32
 	src/fsec-optimize/fsec-optimize seccomp.32
-
-seccomp.block_secondary: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp secondary block seccomp.block_secondary
-
-seccomp.mdwx: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp memory-deny-write-execute seccomp.mdwx
-
-seccomp.mdwx.32: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp memory-deny-write-execute.32 seccomp.mdwx.32
+endef
+
+
 
 # Makes all targets in contrib/
 .PHONY: contrib
@@ -187,6 +178,7 @@ endif
 	# libraries and plugins
 	install -m 0755 -d $(DESTDIR)$(libdir)/firejail
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/firecfg/firejail-welcome.sh
+	$(call build_filters)
 	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS)
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS)
 	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/profstats/profstats

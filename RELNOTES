@@ -20,6 +20,8 @@ firejail (0.9.73) baseline; urgency=low
     #5618)
   * bugfix: fix --hostname and --hosts-file commands
   * bugfix: arp.c: ensure positive timeout on select(2) (#5806)
+  * bugfix: makefiles fixes: seccomp filters and man pages are build every
+     time when running make
   * build: auto-generate syntax files (#5627)
   * build: mark all phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)

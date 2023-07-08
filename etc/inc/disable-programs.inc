@@ -178,6 +178,7 @@ blacklist ${HOME}/.cache/ms-outlook-online
 blacklist ${HOME}/.cache/ms-powerpoint-online
 blacklist ${HOME}/.cache/ms-skype-online
 blacklist ${HOME}/.cache/ms-word-online
+blacklist ${HOME}/.cache/mullvad/mullvadbrowser
 blacklist ${HOME}/.cache/mutt
 blacklist ${HOME}/.cache/mypaint
 blacklist ${HOME}/.cache/netsurf
@@ -550,6 +551,7 @@ blacklist ${HOME}/.config/mpDris2
 blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mps-youtube
 blacklist ${HOME}/.config/mpv
+blacklist ${HOME}/.config/mullvad-browser-flags.conf
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/mutt
 blacklist ${HOME}/.config/mutter
@@ -977,6 +979,7 @@ blacklist ${HOME}/.local/share/meld
 blacklist ${HOME}/.local/share/midori
 blacklist ${HOME}/.local/share/minder
 blacklist ${HOME}/.local/share/mirage
+blacklist ${HOME}/.local/share/mullvad-browser
 blacklist ${HOME}/.local/share/multimc
 blacklist ${HOME}/.local/share/multimc5
 blacklist ${HOME}/.local/share/mupen64plus
@@ -1063,6 +1066,7 @@ blacklist ${HOME}/.mpd
 blacklist ${HOME}/.mpdconf
 blacklist ${HOME}/.mplayer
 blacklist ${HOME}/.msmtprc
+blacklist ${HOME}/.mullvad/mullvadbrowser
 blacklist ${HOME}/.multimc5
 blacklist ${HOME}/.nanorc
 blacklist ${HOME}/.netactview
@@ -1196,6 +1200,7 @@ blacklist ${HOME}/SoftMaker
 blacklist ${HOME}/Standard Notes Backups
 blacklist ${HOME}/TeamSpeak3-Client-linux_amd64
 blacklist ${HOME}/TeamSpeak3-Client-linux_x86
+blacklist ${HOME}/UpdateInfo
 blacklist ${HOME}/hyperrogue.ini
 blacklist ${HOME}/i2p
 blacklist ${HOME}/mps

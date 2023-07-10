@@ -987,11 +987,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// hosts and hostname
 	//****************************
-//	if (cfg.hostname)
 	fs_hostname();
-
-//	if (cfg.hosts_file)
-//		fs_mount_hosts_file();
 
 	//****************************
 	// /etc overrides from the network namespace

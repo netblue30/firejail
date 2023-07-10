@@ -359,6 +359,7 @@
 172.105.128.0/23 Linode
 
 # Akamai
+2.16.0.0/13 Akamai
 23.0.0.0/12 Akamai
 23.32.0.0/11 Akamai
 23.64.0.0/14 Akamai

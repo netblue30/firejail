@@ -152,7 +152,7 @@ void fs_mount_hosts_file(void) {
 	// check /etc/hosts file
 	struct stat s;
 	if (stat("/etc/hosts", &s) == -1)
-		goto errexit;
+		return;
 	// owned by root
 	if (s.st_uid != 0)
 		goto errexit;

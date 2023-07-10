@@ -290,7 +290,6 @@ install.sh \
 m4 \
 mkdeb.sh \
 mketc.sh \
-mkman.sh \
 platform \
 src
 

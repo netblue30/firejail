@@ -31,7 +31,7 @@
 #   MKDIRS
 #   WHITELISTS
 #   WHITELIST INCLUDES
-#   OPTIONS (caps*, net*, no*, protocol, seccomp*, shell none, tracelog)
+#   OPTIONS (caps*, net*, no*, protocol, seccomp*, tracelog)
 #   PRIVATE OPTIONS (disable-mnt, private-*, writable-*)
 #   DBUS FILTER
 #   SPECIAL OPTIONS (mdwx, noexec, read-only, join-or-start)
@@ -172,7 +172,6 @@ include globals.local
 ##seccomp.drop SYSCALLS (see syscalls.txt)
 #seccomp.block-secondary
 ##seccomp-error-action log (only for debugging seccomp issues)
-#shell none
 #tracelog
 # Prefer 'x11 none' instead of 'disable-X11.inc' if 'net none' is set
 ##x11 none

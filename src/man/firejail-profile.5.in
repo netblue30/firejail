@@ -799,11 +799,6 @@ Disable video capture devices.
 .TP
 \fBmachine-id
 Spoof id number in /etc/machine-id file - a new random id is generated inside the sandbox.
-.TP
-\fBshell none
-Run the program directly, without a shell.
-
-
 #ifdef HAVE_NETWORK
 .SH Networking
 Networking features available in profile files.

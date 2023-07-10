@@ -82,10 +82,6 @@ _firejail()
             _filedir
             return 0
             ;;
-        --shell)
-            _filedir
-            return 0
-            ;;
         --net)
             comps=$(__interfaces)
             COMPREPLY=( $(compgen -W '$comps' -- "$cur") )

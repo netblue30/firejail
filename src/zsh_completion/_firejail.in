@@ -160,8 +160,6 @@ _firejail_args=(
     '*--seccomp.32.keep=-[enable seccomp filter, and whitelist the 32 bit syscalls specified by the command]: :'
     # FIXME: Add errnos
     '--seccomp-error-action=-[change error code, kill process or log the attempt]: :(kill log)'
-    '--shell=none[run the program directly without a user shell]'
-    '--shell=-[set default user shell]: :_values $(cat /etc/shells)'
     '--timeout=-[kill the sandbox automatically after the time has elapsed]: :'
     #'(--tracelog)--trace[trace open, access and connect system calls]'
     '(--tracelog)--trace=-[trace open, access and connect system calls]: :_files'

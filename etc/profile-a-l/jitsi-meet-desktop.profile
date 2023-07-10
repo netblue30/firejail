@@ -9,7 +9,6 @@ include globals.local
 # Disabled until someone reported positive feedback
 ignore nou2f
 ignore novideo
-ignore shell none
 
 ignore noexec /tmp
 

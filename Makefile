@@ -2,6 +2,10 @@
 ROOT = .
 -include config.mk
 
+ifneq ($(HAVE_MAN),no)
+MAN_TARGET = man
+endif
+
 ifneq ($(HAVE_CONTRIB_INSTALL),no)
 CONTRIB_TARGET = contrib
 endif
@@ -14,10 +18,15 @@ SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfil
 SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
 SBOX_APPS_NON_DUMPABLE += src/fnettrace/fnettrace src/fnettrace-dns/fnettrace-dns src/fnettrace-sni/fnettrace-sni
 SBOX_APPS_NON_DUMPABLE += src/fnettrace-icmp/fnettrace-icmp
-MYDIRS = src/lib src/man $(COMPLETIONDIRS)
+MYDIRS = src/lib $(COMPLETIONDIRS)
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 COMPLETIONS = src/zsh_completion/_firejail src/bash_completion/firejail.bash_completion
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32 seccomp.namespaces seccomp.namespaces.32
+
+MANPAGES1_IN := $(sort $(wildcard src/man/*.1.in))
+MANPAGES5_IN := $(sort $(wildcard src/man/*.5.in))
+MANPAGES1_GZ := $(MANPAGES1_IN:.in=.gz)
+MANPAGES5_GZ := $(MANPAGES5_IN:.in=.gz)
 
 SYSCALL_HEADERS := $(sort $(wildcard src/include/syscall*.h))
 
@@ -37,7 +46,7 @@ SYNTAX_FILES := $(SYNTAX_FILES_IN:.in=)
 ALL_ITEMS = $(APPS) $(SBOX_APPS) $(SBOX_APPS_NON_DUMPABLE) $(MYLIBS)
 
 .PHONY: all
-all: all_items mydirs filters $(CONTRIB_TARGET)
+all: all_items mydirs filters $(MAN_TARGET) $(CONTRIB_TARGET)
 
 config.mk config.sh:
 	@printf 'error: run ./configure to generate %s\n' "$@" >&2
@@ -81,6 +90,10 @@ seccomp.namespaces: src/fseccomp/fseccomp
 
 seccomp.namespaces.32: src/fseccomp/fseccomp
 	src/fseccomp/fseccomp restrict-namespaces seccomp.namespaces.32 cgroup,ipc,net,mnt,pid,time,user,uts
+
+.PHONY: man
+man:
+	$(MAKE) -C src/man
 
 # Makes all targets in contrib/
 .PHONY: contrib
@@ -150,6 +163,7 @@ clean:
 	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
 		$(MAKE) -C $$dir clean; \
 	done
+	$(MAKE) -C src/man clean
 	$(MAKE) -C test clean
 	rm -f $(SECCOMP_FILTERS)
 	rm -f firejail*.rpm
@@ -242,13 +256,8 @@ endif
 ifneq ($(HAVE_MAN),no)
 	# man pages
 	install -m 0755 -d $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man5
-	install -m 0644 src/man/firejail.1.gz $(DESTDIR)$(mandir)/man1/
-	install -m 0644 src/man/firemon.1.gz $(DESTDIR)$(mandir)/man1/
-	install -m 0644 src/man/firecfg.1.gz $(DESTDIR)$(mandir)/man1/
-	install -m 0644 src/man/jailcheck.1.gz $(DESTDIR)$(mandir)/man1/
-	install -m 0644 src/man/firejail-login.5.gz $(DESTDIR)$(mandir)/man5/
-	install -m 0644 src/man/firejail-users.5.gz $(DESTDIR)$(mandir)/man5/
-	install -m 0644 src/man/firejail-profile.5.gz $(DESTDIR)$(mandir)/man5/
+	install -m 0644 $(MANPAGES1_GZ) $(DESTDIR)$(mandir)/man1/
+	install -m 0644 $(MANPAGES5_GZ) $(DESTDIR)$(mandir)/man5/
 endif
 	# bash completion
 	install -m 0755 -d $(DESTDIR)$(datarootdir)/bash-completion/completions
@@ -276,10 +285,8 @@ uninstall: config.mk
 	rm -f $(DESTDIR)$(bindir)/jailcheck
 	rm -fr $(DESTDIR)$(libdir)/firejail
 	rm -fr $(DESTDIR)$(datarootdir)/doc/firejail
-	for man in $(MANPAGES); do \
-		rm -f $(DESTDIR)$(mandir)/man5/$$man*; \
-		rm -f $(DESTDIR)$(mandir)/man1/$$man*; \
-	done
+	rm -f $(addprefix $(DESTDIR)$(mandir)/man1/,$(notdir $(MANPAGES1_GZ)))
+	rm -f $(addprefix $(DESTDIR)$(mandir)/man5/,$(notdir $(MANPAGES5_GZ)))
 	rm -f $(DESTDIR)$(datarootdir)/bash-completion/completions/firejail
 	rm -f $(DESTDIR)$(datarootdir)/bash-completion/completions/firemon
 	rm -f $(DESTDIR)$(datarootdir)/bash-completion/completions/firecfg

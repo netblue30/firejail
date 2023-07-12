@@ -21,8 +21,6 @@ firejail (0.9.73) baseline; urgency=low
     #5618)
   * bugfix: fix --hostname and --hosts-file commands
   * bugfix: arp.c: ensure positive timeout on select(2) (#5806)
-  * build: fixed problem with seccomp filters and man pages built every
-     time when running make
   * build: auto-generate syntax files (#5627)
   * build: mark all phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
@@ -32,6 +30,9 @@ firejail (0.9.73) baseline; urgency=low
   * build: remove -mretpoline and NO_EXTRA_CFLAGS (#5859)
   * build: disable all built-in implicit make rules (#5864)
   * build: organize and standardize make vars and targets (#5866)
+  * build: fix seccomp filters and man pages always being rebuilt when running
+    make
+  * build: simplify code related to man pages (#5898)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)

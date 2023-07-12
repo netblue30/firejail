@@ -432,6 +432,7 @@ blacklist ${HOME}/.config/equalx
 blacklist ${HOME}/.config/evince
 blacklist ${HOME}/.config/evolution
 blacklist ${HOME}/.config/falkon
+blacklist ${HOME}/.config/feh
 blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.config/flameshot
 blacklist ${HOME}/.config/flaska.net

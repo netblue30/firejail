@@ -165,6 +165,7 @@ int arg_tab = 0;
 int login_shell = 0;
 int just_run_the_shell = 0;
 int arg_netlock = 0;
+int arg_restrict_namespaces = 0;
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -1508,8 +1509,10 @@ int main(int argc, char **argv, char **envp) {
 				exit_err_feature("seccomp");
 		}
 		else if (strcmp(argv[i], "--restrict-namespaces") == 0) {
-			if (checkcfg(CFG_SECCOMP))
+			if (checkcfg(CFG_SECCOMP)) {
+				arg_restrict_namespaces = 1;
 				profile_list_augment(&cfg.restrict_namespaces, "cgroup,ipc,net,mnt,pid,time,user,uts");
+			}
 			else
 				exit_err_feature("seccomp");
 		}

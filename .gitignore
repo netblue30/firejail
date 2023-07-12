@@ -61,6 +61,8 @@ seccomp.64
 seccomp.block_secondary
 seccomp.mdwx
 seccomp.mdwx.32
+seccomp.namespaces
+seccomp.namespaces.32
 aclocal.m4
 __pycache__
 *.pyc

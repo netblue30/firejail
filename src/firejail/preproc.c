@@ -96,12 +96,16 @@ void preproc_mount_mnt_dir(void) {
 		if (set_perms(RUN_SECCOMP_PROTOCOL, getuid(), getgid(), 0644))
 			errExit("set_perms");
 		if (cfg.restrict_namespaces) {
+			copy_file(PATH_SECCOMP_NAMESPACES, RUN_SECCOMP_NS, getuid(), getgid(), 0644); // root needed
+			copy_file(PATH_SECCOMP_NAMESPACES_32, RUN_SECCOMP_NS_32, getuid(), getgid(), 0644); // root needed
+#if 0
 			create_empty_file_as_root(RUN_SECCOMP_NS, 0644);
 			if (set_perms(RUN_SECCOMP_NS, getuid(), getgid(), 0644))
 				errExit("set_perms");
 			create_empty_file_as_root(RUN_SECCOMP_NS_32, 0644);
 			if (set_perms(RUN_SECCOMP_NS_32, getuid(), getgid(), 0644))
 				errExit("set_perms");
+#endif
 		}
 		create_empty_file_as_root(RUN_SECCOMP_POSTEXEC, 0644);
 		if (set_perms(RUN_SECCOMP_POSTEXEC, getuid(), getgid(), 0644))

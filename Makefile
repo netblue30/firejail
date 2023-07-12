@@ -17,7 +17,7 @@ SBOX_APPS_NON_DUMPABLE += src/fnettrace-icmp/fnettrace-icmp
 MYDIRS = src/lib src/man $(COMPLETIONDIRS)
 MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
 COMPLETIONS = src/zsh_completion/_firejail src/bash_completion/firejail.bash_completion
-SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32
+SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32 seccomp.namespaces seccomp.namespaces.32
 
 SYSCALL_HEADERS := $(sort $(wildcard src/include/syscall*.h))
 
@@ -63,6 +63,8 @@ define build_filters
 	src/fseccomp/fseccomp secondary block seccomp.block_secondary
 	src/fseccomp/fseccomp memory-deny-write-execute seccomp.mdwx
 	src/fseccomp/fseccomp memory-deny-write-execute.32 seccomp.mdwx.32
+	src/fseccomp/fseccomp restrict-namespaces seccomp.namespaces cgroup,ipc,net,mnt,pid,time,user,uts
+	src/fseccomp/fseccomp restrict-namespaces seccomp.namespaces.32 cgroup,ipc,net,mnt,pid,time,user,uts
 endef
 
 

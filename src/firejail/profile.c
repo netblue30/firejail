@@ -1088,8 +1088,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// restrict-namespaces
 	if (strcmp(ptr, "restrict-namespaces") == 0) {
-		if (checkcfg(CFG_SECCOMP))
+		if (checkcfg(CFG_SECCOMP)) {
+			arg_restrict_namespaces = 1;
 			profile_list_augment(&cfg.restrict_namespaces, "cgroup,ipc,net,mnt,pid,time,user,uts");
+		}
 		else
 			warning_feature_disabled("seccomp");
 		return 0;

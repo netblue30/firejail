@@ -38,7 +38,6 @@ firemon.1.gz: firemon.txt
 jailcheck.1.gz: jailcheck.txt
 	$(call build,jailcheck.txt,jailcheck.1)
 
-
 .PHONY: clean
 clean:; rm -fr *.1 *.5 *.gz
 

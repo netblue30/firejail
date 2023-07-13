@@ -329,6 +329,7 @@ blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Quotient
+blacklist ${HOME}/.config/RSS Guard 4
 blacklist ${HOME}/.config/Rambox
 blacklist ${HOME}/.config/Riot
 blacklist ${HOME}/.config/Rocket.Chat

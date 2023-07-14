@@ -120,6 +120,7 @@ int main(int argc, char **argv) {
 	// basic sysfiles
 	sysfiles_setup("/etc/shadow");
 	sysfiles_setup("/etc/gshadow");
+	sysfiles_setup("/usr/bin/doas");
 	sysfiles_setup("/usr/bin/mount");
 	sysfiles_setup("/usr/bin/su");
 	sysfiles_setup("/usr/bin/ksu");

@@ -24,9 +24,8 @@ them from inside the sandbox.
 \fB5. Seccomp test
 .TP
 \fB6. Networking test
-.TP
-The program is started as root using sudo.
-
+.PP
+The program should be started using \fBsudo\fR or \fBdoas\fR.
 .SH OPTIONS
 .TP
 \fB\-\-debug

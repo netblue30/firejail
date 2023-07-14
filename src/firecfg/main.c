@@ -289,7 +289,10 @@ static void set_links_homedir(const char *homedir) {
 }
 
 static const char *get_sudo_user(void) {
-	const char *user = getenv("SUDO_USER");
+	const char *doas_user = getenv("DOAS_USER");
+	const char *sudo_user = getenv("SUDO_USER");
+	const char *user = doas_user ? doas_user : sudo_user;
+
 	if (!user) {
 		user = getpwuid(getuid())->pw_name;
 		if (!user) {

@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
 
 	// user setup
 	if (getuid() != 0) {
-		fprintf(stderr, "Error: you need to be root (via sudo) to run this program\n");
+		fprintf(stderr, "Error: you need to be root (via sudo or doas) to run this program\n");
 		exit(1);
 	}
 	user_name = get_sudo_user();

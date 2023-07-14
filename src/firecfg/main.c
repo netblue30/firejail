@@ -288,7 +288,7 @@ static void set_links_homedir(const char *homedir) {
 	free(firejail_exec);
 }
 
-static char *get_user(void) {
+static char *get_sudo_user(void) {
 	char *user = getenv("SUDO_USER");
 	if (!user) {
 		user = getpwuid(getuid())->pw_name;
@@ -326,7 +326,7 @@ int main(int argc, char **argv) {
 	int bindir_set = 0;
 
 	// user setup
-	char *user = get_user();
+	char *user = get_sudo_user();
 	assert(user);
 	uid_t uid;
 	gid_t gid;

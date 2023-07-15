@@ -23,5 +23,7 @@
 extern int radix_nodes;
 char *radix_longest_prefix_match(uint32_t ip);
 char *radix_add(uint32_t ip, uint32_t mask, char *name);
+void radix_print(void);
+void radix_squash(void);
 
 #endif

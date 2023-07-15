@@ -329,6 +329,7 @@ blacklist ${HOME}/.config/Qlipper
 blacklist ${HOME}/.config/QuiteRss
 blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Quotient
+blacklist ${HOME}/.config/RSS Guard 4
 blacklist ${HOME}/.config/Rambox
 blacklist ${HOME}/.config/Riot
 blacklist ${HOME}/.config/Rocket.Chat
@@ -432,6 +433,7 @@ blacklist ${HOME}/.config/equalx
 blacklist ${HOME}/.config/evince
 blacklist ${HOME}/.config/evolution
 blacklist ${HOME}/.config/falkon
+blacklist ${HOME}/.config/feh
 blacklist ${HOME}/.config/filezilla
 blacklist ${HOME}/.config/flameshot
 blacklist ${HOME}/.config/flaska.net

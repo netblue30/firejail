@@ -6,6 +6,7 @@ firejail (0.9.73) baseline; urgency=low
     overwritten using --hostname command
   * feature: add IPv6 support for --net.print option
   * feature: QUIC (HTTP/3) support in --nettrace
+  * feature: use seccomp filters build at install time for --restrict-namespaces
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)
@@ -29,6 +30,9 @@ firejail (0.9.73) baseline; urgency=low
   * build: remove -mretpoline and NO_EXTRA_CFLAGS (#5859)
   * build: disable all built-in implicit make rules (#5864)
   * build: organize and standardize make vars and targets (#5866)
+  * build: fix seccomp filters and man pages always being rebuilt when running
+    make
+  * build: simplify code related to man pages (#5898)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)

@@ -13,6 +13,3 @@ _firejail: _firejail.in $(ROOT)/config.mk
 .PHONY: clean
 clean:
 	rm -fr _firejail
-
-.PHONY: distclean
-distclean: clean

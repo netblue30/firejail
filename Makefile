@@ -184,10 +184,6 @@ clean:
 
 .PHONY: distclean
 distclean: clean
-	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
-		$(MAKE) -C $$dir distclean; \
-	done
-	$(MAKE) -C test distclean
 	rm -fr autom4te.cache config.log config.mk config.sh config.status
 
 .PHONY: realinstall

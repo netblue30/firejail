@@ -13,6 +13,3 @@ firejail.bash_completion: firejail.bash_completion.in $(ROOT)/config.mk
 .PHONY: clean
 clean:
 	rm -fr firejail.bash_completion
-
-.PHONY: distclean
-distclean: clean

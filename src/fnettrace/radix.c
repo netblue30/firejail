@@ -25,12 +25,6 @@
 #include "radix.h"
 #include "fnettrace.h"
 
-typedef struct rnode_t {
-	struct rnode_t *zero;
-	struct rnode_t *one;
-	char *name;
-} RNode;
-
 RNode *head = 0;
 int radix_nodes = 0;
 
@@ -100,8 +94,7 @@ static inline RNode *addZero(RNode *ptr, char *name) {
 
 
 // add to radix tree
-char *radix_add(uint32_t ip, uint32_t mask, char *name) {
-	assert(name);
+RNode *radix_add(uint32_t ip, uint32_t mask, char *name) {
 	uint32_t m = 0x80000000;
 	uint32_t lastm = 0;
 	if (head == 0) {
@@ -124,17 +117,17 @@ char *radix_add(uint32_t ip, uint32_t mask, char *name) {
 			ptr = addZero(ptr, (valid)? name: NULL);
 	}
 	assert(ptr);
-	if (!ptr->name) {
+	if (name && !ptr->name) {
 		ptr->name = duplicate_name(name);
 		if (!ptr->name)
 			errExit("duplicate_name");
 	}
 
-	return ptr->name;
+	return ptr;
 }
 
 // find last match
-char *radix_longest_prefix_match(uint32_t ip) {
+RNode *radix_longest_prefix_match(uint32_t ip) {
 	if (!head)
 		return NULL;
 
@@ -154,7 +147,7 @@ char *radix_longest_prefix_match(uint32_t ip) {
 			rv = ptr;
 	}
 
-	return (rv)? rv->name: NULL;
+	return rv;
 }
 
 static uint32_t sum;

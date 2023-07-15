@@ -33,13 +33,16 @@ typedef struct hnode_t {
 	struct hnode_t *hnext;	// used for hash table and unused linked list
 	struct hnode_t *dnext;	// used to display streams on the screen
 	uint32_t ip_src;
+	RNode *rnode;	// radix tree entry
+
+	// stats
 	uint32_t  bytes;	// number of bytes received in the last display interval
 	uint16_t port_src;
 	uint8_t protocol;
+
 	// the firewall is build based on source address, and in the linked list
-	// we have elements with the same address but different ports
+	// we could have elements with the same address but different ports
 	uint8_t ip_instance;
-	char *hostname;
 	int ttl;
 } HNode;
 
@@ -89,6 +92,8 @@ static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint
 			ip_instance++;
 			if (ptr->port_src == port_src && ptr->protocol == protocol) {
 				ptr->bytes += bytes;
+				assert(ptr->rnode);
+				ptr->rnode->pkts++;
 				return;
 			}
 		}
@@ -100,7 +105,6 @@ static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint
 #endif
 	HNode *hnew = hmalloc();
 	assert(hnew);
-	hnew->hostname = NULL;
 	hnew->ip_src = ip_src;
 	hnew->port_src = port_src;
 	hnew->protocol = protocol;
@@ -125,6 +129,11 @@ static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint
 			ptr = ptr->dnext;
 		ptr->dnext = hnew;
 	}
+
+	hnew->rnode = radix_longest_prefix_match(hnew->ip_src);
+	if (!hnew->rnode)
+		hnew->rnode = radix_add(hnew->ip_src, 0xffffffff, NULL);
+	hnew->rnode->pkts++;
 
 	if (arg_netfilter)
 		logprintf(" %d.%d.%d.%d ", PRINT_IP(hnew->ip_src));
@@ -242,15 +251,15 @@ static PortType ports[] = {
 	{110, "(POP3)"},
 	{113, "(IRC)"},
 	{123, "(NTP)"},
-	{161, "(SNP)"},
-	{162, "(SNP)"},
+	{161, "(SNMP)"},
+	{162, "(SNMP)"},
 	{194, "(IRC)"},
 	{0, NULL},
 };
 
 
 static inline const char *common_port(uint16_t port) {
-	if (port >= 6660 && port <= 9150) {
+	if (port >= 6660 && port <= 10162) {
 		if (port >= 6660 && port <= 6669)
 			return "(IRC)";
 		else if (port == 6679)
@@ -269,6 +278,10 @@ static inline const char *common_port(uint16_t port) {
 			return "(Tor)";
 		else if (port == 9150)
 			return "(Tor)";
+		else if (port == 10161)
+			return "(secure SNMP)";
+		else if (port == 10162)
+			return "(secure SNMP)";
 		return NULL;
 	}
 
@@ -317,7 +330,8 @@ static void hnode_print(unsigned bw) {
 		sprintf(stats, "%u MB/s ", bw / (1024 * 1024 * DISPLAY_INTERVAL));
 	else
 		sprintf(stats, "%u KB/s ", bw / (1024 * DISPLAY_INTERVAL));
-	int len = snprintf(line, LINE_MAX, "%32s geoip %d, IP database %d\n", stats, geoip_calls, radix_nodes);
+//	int len = snprintf(line, LINE_MAX, "%32s geoip %d, IP database %d\n", stats, geoip_calls, radix_nodes);
+	int len = snprintf(line, LINE_MAX, "%32s address:port (protocol) host (packets)\n", stats);
 	adjust_line(line, len, cols);
 	printf("%s", line);
 
@@ -336,12 +350,11 @@ static void hnode_print(unsigned bw) {
 			else
 				snprintf(bytes, 11, "%u B/s ", (unsigned) (ptr->bytes / DISPLAY_INTERVAL));
 
-			if (!ptr->hostname)
-				ptr->hostname = radix_longest_prefix_match(ptr->ip_src);
-			if (!ptr->hostname)
-				ptr->hostname = retrieve_hostname(ptr->ip_src);
-			if (!ptr->hostname)
-				ptr->hostname = " ";
+			if (!ptr->rnode->name)
+				ptr->rnode->name = retrieve_hostname(ptr->ip_src);
+			if (!ptr->rnode->name)
+				ptr->rnode->name = " ";
+			assert(ptr->rnode->name);
 
 			unsigned bwunit = bw / DISPLAY_BW_UNITS;
 			char *bwline;
@@ -376,11 +389,16 @@ static void hnode_print(unsigned bw) {
 				protocol = "";
 			if (ptr->port_src == 0)
 				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d (ICMP) %s\n",
-					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->hostname);
+					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->rnode->name);
+			else if (ptr->rnode->pkts > 1000000)
+				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s (%.01fM)\n",
+					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->rnode->name, ((double) ptr->rnode->pkts) / 1000000);
+			else if (ptr->rnode->pkts > 1000)
+				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s (%.01fK)\n",
+					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->rnode->name, ((double) ptr->rnode->pkts) / 1000);
 			else
-				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s\n",
-					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->hostname);
-
+				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s (%u)\n",
+					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->rnode->name, ptr->rnode->pkts);
 			adjust_line(line, len, cols);
 			printf("%s", line);
 

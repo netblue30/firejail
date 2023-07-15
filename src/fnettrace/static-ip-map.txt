@@ -88,6 +88,7 @@
 8.8.8.0/24 Google DNS
 9.9.9.0/24 Quad9 DNS
 45.90.28.0/22 NextDNS
+94.140.14.0/23 Adguard DNS
 149.112.112.0/24 Quad9 DNS
 149.112.120.0/21 CIRA DNS Canada
 146.255.56.96/29 Applied Privacy
@@ -96,6 +97,7 @@
 208.67.216.0/21 OpenDNS
 
 # whois
+192.0.32.0/20 ICANN
 193.0.0.0/21 whois.ripe.net Netherlands
 199.5.26.0/24 whois.arin.net US
 199.15.80.0/21 whois.publicinterestregistry.net Canada
@@ -106,6 +108,7 @@
 201.159.220.0/22 whois.lacnic.net Ecuador
 
 # some popular websites
+5.255.255.0/24 Yandex
 23.160.0.0/24 Twitch
 23.246.0.0/18 Netflix
 31.13.24.0/21 Facebook
@@ -121,9 +124,18 @@
 64.63.0.0/18 Twitter
 64.112.13.0/24 Dropbox
 64.120.128.0/17 Netflix
+66.111.48.0/22 WhatsApp
+66.187.208.0/20 Cisco Systems, Inc
+66.187.224.0/20 Red Hat, Inc
 66.197.128.0/17 Netflix
+66.211.160.0/21 eBay
+66.211.168.0/22 PayPal
+66.211.172.0/22 eBay
+66.211.176.0/20 eBay
+66.220.144.0/20 Facebook
 69.53.224.0/19 Netflix
 69.171.224.0/19 Facebook
+87.250.254.0/24 Yandex
 91.105.192.0/23 Telegram
 91.108.4.0/22 Telegram
 91.108.8.0/21 Telegram
@@ -162,6 +174,7 @@
 162.213.32.0/22 Ubuntu One
 162.254.192.0/21 Steam
 172.98.56.0/22 Rumble
+178.154.131.0/24 Yandex
 185.2.220.0/22 Netflix
 185.9.188.0/22 Netflix
 185.25.182.0/23 Steam
@@ -192,12 +205,24 @@
 205.185.194.0/24 Steam
 205.196.6.0/24 Steam
 207.45.72.0/22 Netflix
+207.241.224.0/20 Internet Archive
 208.64.200.0/22 Steam
 208.75.76.0/22 Netflix
 208.78.164.0/22 Steam
 208.80.152.0/22 Wikipedia
+209.140.128.0/18 eBay
 
 # Level 3
+66.114.192.0/18 Level 3
+66.147.128.0/18 Level 3
+66.147.192.0/19 Level 3
+66.162.0.0/16 Level 3
+66.170.128.0/20 Level 3
+66.192.0.0/14 Level 3
+66.199.0.0/19 Level 3
+66.243.0.0/17 Level 3
+66.243.128.0/18 Level 3
+66.251.192.0/19 Level 3
 205.128.0.0/14 Level 3
 205.180.0.0/14 Level 3
 205.184.0.0/19 Level 3
@@ -260,6 +285,7 @@
 205.185.220.0/24 StackPath
 
 # Linode
+66.175.208.0/20 Linode
 103.29.68.0/22 Linode
 104.200.16.0/21 Linode
 104.200.24.0/22 Linode
@@ -427,13 +453,17 @@
 192.229.128.0/17 MCI
 
 # Microsoft
+13.64.0.0/11 Microsoft
+13.104.0.0/14 Microsoft
+13.96.0.0/13 Microsoft
+20.33.0.0/16 Microsoft
+20.36.0.0/14 Microsoft
+20.34.0.0/15 Microsoft
 20.40.0.0/13 Microsoft
 20.64.0.0/10 Microsoft
 20.48.0.0/12 Microsoft
 20.128.0.0/16 Microsoft
-20.33.0.0/16 Microsoft
-20.36.0.0/14 Microsoft
-20.34.0.0/15 Microsoft
+20.192.0.0/10 Microsoft
 40.76.0.0/14 Microsoft
 40.96.0.0/12 Microsoft
 40.112.0.0/13 Microsoft
@@ -455,6 +485,8 @@
 69.147.64.0/18 Yahoo
 76.13.0.0/16 Yahoo
 98.136.0.0/14 Yahoo
+182.22.0.0/17 Yahoo Japan
+183.79.0.0/16 Yahoo Japan
 206.190.32.0/19 Yahoo
 209.73.160.0/19 Yahoo
 209.191.64.0/18 Yahoo
@@ -3505,6 +3537,10 @@
 65.8.0.0/16 Amazon
 65.9.0.0/17 Amazon
 65.9.128.0/18 Amazon
+66.34.0.0/16 Amazon
+66.157.0.0/16 Amazon
+66.165.64.0/18 Amazon
+66.221.0.0/16 Amazon
 67.202.0.0/18 Amazon
 67.220.224.0/20 Amazon
 67.220.240.0/20 Amazon

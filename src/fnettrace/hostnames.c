@@ -50,12 +50,13 @@ char *retrieve_hostname(uint32_t ip) {
 				ptr = buf + 22;
 				if (*ptr == ' ' && *(ptr + 3) == ',' &&  *(ptr + 4) == ' ') {
 					rv = ptr + 5;
-					rv = radix_add(ip, 0xffffffff, rv);
+					if (strcmp(rv, "United States") == 0)
+						rv = "US";
 				}
 			}
 		}
 		pclose(fp);
-		return rv;
+		return strdup(rv);
 	}
 	else
 		geoip_not_found = 1;

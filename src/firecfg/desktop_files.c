@@ -108,7 +108,7 @@ static int have_profile(const char *filename, const char *homedir) {
 	return rv;
 }
 
-void fix_desktop_files(char *homedir) {
+void fix_desktop_files(const char *homedir) {
 	assert(homedir);
 	struct stat sb;
 

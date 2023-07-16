@@ -288,8 +288,11 @@ static void set_links_homedir(const char *homedir) {
 	free(firejail_exec);
 }
 
-static char *get_user(void) {
-	char *user = getenv("SUDO_USER");
+static const char *get_sudo_user(void) {
+	const char *doas_user = getenv("DOAS_USER");
+	const char *sudo_user = getenv("SUDO_USER");
+	const char *user = doas_user ? doas_user : sudo_user;
+
 	if (!user) {
 		user = getpwuid(getuid())->pw_name;
 		if (!user) {
@@ -301,13 +304,13 @@ static char *get_user(void) {
 	return user;
 }
 
-static char *get_homedir(const char *user, uid_t *uid, gid_t *gid) {
+static const char *get_homedir(const char *user, uid_t *uid, gid_t *gid) {
 	// find home directory
 	struct passwd *pw = getpwnam(user);
 	if (!pw)
 		goto errexit;
 
-	char *home = pw->pw_dir;
+	const char *home = pw->pw_dir;
 	if (!home)
 		goto errexit;
 
@@ -326,12 +329,11 @@ int main(int argc, char **argv) {
 	int bindir_set = 0;
 
 	// user setup
-	char *user = get_user();
+	const char *user = get_sudo_user();
 	assert(user);
 	uid_t uid;
 	gid_t gid;
-	char *home = get_homedir(user, &uid, &gid);
-
+	const char *home = get_homedir(user, &uid, &gid);
 
 	// check for --bindir
 	for (i = 1; i < argc; i++) {

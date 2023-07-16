@@ -23,7 +23,9 @@ The integration covers:
 - programs started by clicking on file icons in file manager - only Cinnamon, KDE, LXDE/LXQT, MATE and XFCE
 desktop managers are supported in this moment
 .RE
-
+.PP
+Note: The examples use \fBsudo\fR, but \fBdoas\fR is also supported.
+.PP
 To set it up, run "sudo firecfg" after installing Firejail software.
 The same command should also be run after
 installing new programs. If the program is supported by Firejail, the symbolic link in /usr/local/bin

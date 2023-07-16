@@ -1252,6 +1252,8 @@ York Zhao (https://github.com/YorkZ)
 	- allow telegram to open hyperlinks
 Ypnose (https://github.com/Ypnose)
 	- disable-shell.inc: add mksh shell
+ydididodat (https://github.com/ydididodat)
+	- bleachbit.profile: allow erasing Trash contents
 yumkam (https://github.com/yumkam)
 	- add compile-time option to restrict --net= to root only
 	- man page fixes

@@ -108,7 +108,7 @@ void netfilter_trace(pid_t pid, const char *cmd) {
 	arg[3] = NULL;
 
 	clearenv();
-	sbox_exec_v(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP, arg);
+	sbox_exec_v(SBOX_ROOT | SBOX_CAPS_NETWORK | SBOX_SECCOMP | SBOX_ALLOW_STDIN, arg);
 	// it will never get here!!
 }
 

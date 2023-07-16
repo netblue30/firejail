@@ -70,4 +70,9 @@ char* retrieve_hostname(uint32_t ip);
 // tail.c
 void tail(const char *logfile);
 
+// terminal.c
+void terminal_handler(int s);
+void terminal_set(void);
+void terminal_restore(void);
+
 #endif

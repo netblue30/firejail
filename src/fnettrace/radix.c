@@ -151,12 +151,22 @@ RNode *radix_longest_prefix_match(uint32_t ip) {
 }
 
 static uint32_t sum;
-static void print(RNode *ptr, int level) {
+static void print(RNode *ptr, int level, int pkts) {
 	if (!ptr)
 		return;
 	if (ptr->name) {
-		printf("%d.%d.%d.%d/%d ", PRINT_IP(sum << (32 - level)), level);
-		printf("%s\n", ptr->name);
+		if (pkts) {
+			if (ptr->pkts) {
+				printf("   %d.%d.%d.%d/%d ", PRINT_IP(sum << (32 - level)), level);
+				printf("%s", ptr->name);
+				printf(" (%u)\n", ptr->pkts);
+			}
+		}
+		else {
+			printf("%d.%d.%d.%d/%d ", PRINT_IP(sum << (32 - level)), level);
+			printf("%s", ptr->name);
+			printf("\n");
+		}
 	}
 
 	if (ptr->zero == NULL && ptr->one == NULL)
@@ -164,22 +174,21 @@ static void print(RNode *ptr, int level) {
 
 	level++;
 	sum <<= 1;
-	print(ptr->zero, level);
+	print(ptr->zero, level, pkts);
 	sum++;
-	print(ptr->one, level);
+	print(ptr->one, level, pkts);
 	sum--;
 	sum >>= 1;
 }
 
-void radix_print(void) {
+void radix_print(int pkts) {
 	if (!head)
 		return;
-	printf("\n");
 	sum = 0;
-	print(head->zero, 1);
+	print(head->zero, 1, pkts);
 	assert(sum == 0);
 	sum = 1;
-	print(head->one, 1);
+	print(head->one, 1, pkts);
 	assert(sum == 1);
 }
 

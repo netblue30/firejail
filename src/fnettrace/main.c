@@ -29,6 +29,11 @@ static int arg_netfilter = 0;
 static int arg_tail = 0;
 static char *arg_log = NULL;
 
+uint32_t stats_pkts = 0;
+uint32_t stats_icmp = 0;
+uint32_t stats_dns = 0;
+
+
 typedef struct hnode_t {
 	struct hnode_t *hnext;	// used for hash table and unused linked list
 	struct hnode_t *dnext;	// used to display streams on the screen
@@ -331,7 +336,7 @@ static void hnode_print(unsigned bw) {
 	else
 		sprintf(stats, "%u KB/s ", bw / (1024 * DISPLAY_INTERVAL));
 //	int len = snprintf(line, LINE_MAX, "%32s geoip %d, IP database %d\n", stats, geoip_calls, radix_nodes);
-	int len = snprintf(line, LINE_MAX, "%32s address:port (protocol) host (packets)\n", stats);
+	int len = snprintf(line, LINE_MAX, "%32s address:port (protocol) network (packets)\n", stats);
 	adjust_line(line, len, cols);
 	printf("%s", line);
 
@@ -418,6 +423,7 @@ static void hnode_print(unsigned bw) {
 
 		ptr = next;
 	}
+	printf("press any key to access stats\n");
 
 #ifdef DEBUG
 	{
@@ -430,6 +436,14 @@ static void hnode_print(unsigned bw) {
 		printf("hnode unused %d\n", cnt);
 	}
 #endif
+}
+
+
+void print_stats(void) {
+	printf("\nIP table: %d entries, %d unknown\n", radix_nodes, geoip_calls);
+	printf("   address network (packets)\n");
+	radix_print(1);
+	printf("Packets: %u total, ICMP %u, DNS %u\n", stats_pkts, stats_icmp, stats_dns);
 }
 
 // trace rx traffic coming in
@@ -449,6 +463,7 @@ static void run_trace(void) {
 	unsigned last_print_remaining = 0;
 	unsigned char buf[MAX_BUF_SIZE];
 	unsigned bw = 0; // bandwidth calculations
+
 	while (1) {
 		unsigned end = time(NULL);
 		if (arg_netfilter && end - start >= NETLOCK_INTERVAL)
@@ -470,6 +485,8 @@ static void run_trace(void) {
 		FD_SET(s1, &rfds);
 		FD_SET(s2, &rfds);
 		FD_SET(s3, &rfds);
+		if (!arg_netfilter)
+			FD_SET(0, &rfds);
 		int maxfd = (s1 > s2) ? s1 : s2;
 		maxfd = (s3 > maxfd) ? s3 : maxfd;
 		maxfd++;
@@ -484,9 +501,20 @@ static void run_trace(void) {
 		else if (rv == 0)
 			continue;
 
-		int icmp = 0;
+
+		// rx tcp traffic by default
 		int sock = s1;
-		if (FD_ISSET(s2, &rfds))
+		int icmp = 0;
+
+		if (FD_ISSET(0, &rfds)) {
+			getchar();
+			print_stats();
+			printf("press any key to continue...");
+			fflush(0);
+			getchar();
+			continue;
+		}
+		else if (FD_ISSET(s2, &rfds))
 			sock = s2;
 		else if (FD_ISSET(s3, &rfds)) {
 			sock = s3;
@@ -516,22 +544,32 @@ static void run_trace(void) {
 				ip_src = ntohl(ip_src);
 
 				uint8_t hlen = (buf[0] & 0x0f) * 4;
+				uint16_t port_src = 0;
 				if (icmp)
 					hnode_add(ip_src, 0, 0, bytes + 14);
 				else {
-					uint16_t port_src;
 					memcpy(&port_src, buf + hlen, 2);
 					port_src = ntohs(port_src);
 
 					uint8_t protocol = buf[9];
 					hnode_add(ip_src, protocol, port_src, bytes + 14);
 				}
+
+				// stats
+				stats_pkts++;
+				if (icmp)
+					stats_icmp++;
+				if (port_src == 53)
+					stats_dns++;
+
 			}
 		}
 	}
 
 	close(s1);
 	close(s2);
+	close(s3);
+	print_stats();
 }
 
 static char *filter_start =
@@ -733,7 +771,7 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--print-map") == 0) {
 			char *fname = "static-ip-map.txt";
 			load_hostnames(fname);
-			radix_print();
+			radix_print(0);
 			return 0;
 		}
 		else if (strncmp(argv[i], "--squash-map=", 13) == 0) {
@@ -755,7 +793,7 @@ int main(int argc, char **argv) {
 			printf("# License GPLv2\n");
 			printf("#\n");
 
-			radix_print();
+			radix_print(0);
 			printf("\n#\n#\n# input %d, output %d\n#\n#\n", in, radix_nodes);
 			fprintf(stderr, "static ip map: input %d, output %d\n", in, radix_nodes);
 			return 0;
@@ -789,6 +827,12 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "Error: you need to be root to run this program\n");
 		return 1;
 	}
+
+	terminal_set();
+	// handle CTRL-C
+	signal (SIGINT, terminal_handler);
+	signal (SIGTERM, terminal_handler);
+	atexit(terminal_restore);
 
 	// kill the process if the parent died
 	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);

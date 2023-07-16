@@ -49,6 +49,6 @@ int is_link(const char *fname);
 void sound(void);
 
 // desktop_files.c
-void fix_desktop_files(char *homedir);
+void fix_desktop_files(const char *homedir);
 
 #endif

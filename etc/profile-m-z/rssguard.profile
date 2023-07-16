@@ -1,13 +1,14 @@
-# Firejail profile for feh
-# Description: imlib2 based image viewer
+# Firejail profile for rssguard
+# Description: Simple (yet powerful) Qt feed reader
 # This file is overwritten after every install/update
-quiet
 # Persistent local customizations
-include feh.local
+include rssguard.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/feh
+noblacklist ${HOME}/.config/RSS Guard 4
+
+include allow-nodejs.inc
 
 include disable-common.inc
 include disable-devel.inc
@@ -16,38 +17,39 @@ include disable-interpreters.inc
 include disable-proc.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-xdg.inc
 
+mkdir ${HOME}/.config/RSS Guard 4
+whitelist ${HOME}/.config/RSS Guard 4
+whitelist ${DOWNLOADS}
+include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc
-
-# Add the next line to your feh.local to enable network access.
-#include feh-network.inc.profile
+include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
-machine-id
-net none
-no3d
+netfilter
+# no3d
 nodvd
 nogroups
 noinput
 nonewprivs
-noprinters
 noroot
-nosound
+# nosound
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,inet,inet6,netlink
 seccomp
 seccomp.block-secondary
 tracelog
 
-private-bin feh,jpegexiforient,jpegtran
-private-cache
+disable-mnt
+private-bin node,rssguard
 private-dev
-private-etc feh
+private-etc @network,@sound,@tls-ca,@x11,mime.types
 private-tmp
 
 dbus-user none

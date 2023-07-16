@@ -7,6 +7,9 @@ include bleachbit.local
 # Persistent global definitions
 include globals.local
 
+# Necessary for BleachBit to erase Trash contents.
+noblacklist ${HOME}/.local/share/Trash
+
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc

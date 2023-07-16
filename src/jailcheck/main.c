@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
 
 	// user setup
 	if (getuid() != 0) {
-		fprintf(stderr, "Error: you need to be root (via sudo) to run this program\n");
+		fprintf(stderr, "Error: you need to be root (via sudo or doas) to run this program\n");
 		exit(1);
 	}
 	user_name = get_sudo_user();
@@ -120,6 +120,7 @@ int main(int argc, char **argv) {
 	// basic sysfiles
 	sysfiles_setup("/etc/shadow");
 	sysfiles_setup("/etc/gshadow");
+	sysfiles_setup("/usr/bin/doas");
 	sysfiles_setup("/usr/bin/mount");
 	sysfiles_setup("/usr/bin/su");
 	sysfiles_setup("/usr/bin/ksu");

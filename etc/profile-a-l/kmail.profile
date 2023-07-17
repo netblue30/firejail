@@ -63,3 +63,6 @@ private-dev
 writable-run-user
 
 # restrict-namespaces
+
+# enable desktop notifications
+dbus-user.talk org.freedesktop.Notifications

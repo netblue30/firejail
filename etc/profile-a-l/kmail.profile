@@ -49,7 +49,6 @@ nogroups
 noinput
 nonewprivs
 noroot
-nosound
 notv
 nou2f
 novideo

@@ -66,7 +66,7 @@ private-dev
 # writable-run-user is needed for signing and encrypting emails
 writable-run-user
 
-# restrict-namespaces
-
 # enable notifications
 dbus-user.talk org.freedesktop.Notifications
+
+# restrict-namespaces

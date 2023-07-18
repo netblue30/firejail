@@ -15,8 +15,8 @@ private-bin transmission-qt
 #dbus-user.own com.transmissionbt.Transmission.*
 #dbus-user.talk org.freedesktop.Notifications
 
-# If you need system tray support, add this line to your transmission-qt.local
-#?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
+# System tray support
+?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 
 ignore memory-deny-write-execute
 

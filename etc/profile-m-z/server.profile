@@ -70,7 +70,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink,packet
 seccomp
-# shell none
 tab # allow tab completion
 
 disable-mnt

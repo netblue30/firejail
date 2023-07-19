@@ -35,7 +35,6 @@ notv
 nou2f
 novideo
 #seccomp
-#shell none
 
 disable-mnt
 private

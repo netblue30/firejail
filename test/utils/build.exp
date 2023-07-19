@@ -57,10 +57,6 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
-	"shell none"
-}
-expect {
-	timeout {puts "TESTING ERROR 11\n";exit}
 	"private-bin cat,"
 }
 expect {

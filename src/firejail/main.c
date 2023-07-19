@@ -2806,7 +2806,7 @@ int main(int argc, char **argv, char **envp) {
 			// already handled
 		}
 		else if (strncmp(argv[i], "--shell=", 8) == 0) {
-			fprintf(stderr, "Warning: --shell feature has been deprecated\n");
+			fprintf(stderr, "Error: \"shell none\" is done by default now; the \"shell\" command has been removed\n");
 			exit(1);
 		}
 		else if (strcmp(argv[i], "-c") == 0) {

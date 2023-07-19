@@ -1015,6 +1015,7 @@ blacklist ${HOME}/.local/share/signal-cli
 blacklist ${HOME}/.local/share/sink
 blacklist ${HOME}/.local/share/smuxi
 blacklist ${HOME}/.local/share/spotify
+blacklist ${HOME}/.local/share/sqlitebrowser
 blacklist ${HOME}/.local/share/steam
 blacklist ${HOME}/.local/share/strawberry
 blacklist ${HOME}/.local/share/supertux2

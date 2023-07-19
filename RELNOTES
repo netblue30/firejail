@@ -6,7 +6,7 @@ firejail (0.9.73) baseline; urgency=low
     overwritten using --hostname command
   * feature: add IPv6 support for --net.print option
   * feature: QUIC (HTTP/3) support in --nettrace
-  * feature: use seccomp filters build at install time for --restrict-namespaces
+  * feature: add seccomp filters for --restrict-namespaces
   * feature: stats support for --nettrace
   * feature: add doas support in firecfg and jailcheck
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)

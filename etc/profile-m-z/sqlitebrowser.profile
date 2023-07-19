@@ -7,6 +7,7 @@ include sqlitebrowser.local
 include globals.local
 
 noblacklist ${HOME}/.config/sqlitebrowser
+noblacklist ${HOME}/.local/share/sqlitebrowser
 noblacklist ${DOCUMENTS}
 
 include disable-common.inc

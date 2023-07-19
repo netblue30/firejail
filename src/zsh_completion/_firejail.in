@@ -167,6 +167,7 @@ _firejail_args=(
     '(--tracelog)--trace=-[trace open, access and connect system calls]: :_files'
     '(--trace)--tracelog[add a syslog message for every access to files or directories blacklisted by the security profile]'
     '(--private-etc)--writable-etc[/etc directory is mounted read-write]'
+    '--tab[enable shell tab completion in sandboxes using private or whitelisted home directories]'
     '--writable-run-user[allow access to /run/user/$UID/systemd and /run/user/$UID/gnupg]'
     '--writable-var[/var directory is mounted read-write]'
     '--writable-var-log[use the real /var/log directory, not a clone]'

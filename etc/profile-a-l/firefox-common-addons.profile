@@ -74,7 +74,6 @@ whitelist ${HOME}/.zotero
 whitelist ${HOME}/dwhelper
 whitelist /usr/share/lua
 whitelist /usr/share/lua*
-whitelist /usr/share/vulkan
 
 # GNOME Shell integration (chrome-gnome-shell) needs dbus and python
 noblacklist ${HOME}/.local/share/gnome-shell

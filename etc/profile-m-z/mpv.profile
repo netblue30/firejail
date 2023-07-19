@@ -60,7 +60,6 @@ whitelist ${HOME}/yt-dlp.conf
 whitelist ${HOME}/yt-dlp.conf.txt
 whitelist /usr/share/lua
 whitelist /usr/share/lua*
-whitelist /usr/share/vulkan
 include whitelist-common.inc
 include whitelist-player-common.inc
 include whitelist-usr-share-common.inc

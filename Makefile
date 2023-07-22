@@ -184,10 +184,6 @@ clean:
 
 .PHONY: distclean
 distclean: clean
-	for dir in $$(dirname $(ALL_ITEMS)) $(MYDIRS); do \
-		$(MAKE) -C $$dir distclean; \
-	done
-	$(MAKE) -C test distclean
 	rm -fr autom4te.cache config.log config.mk config.sh config.status
 
 .PHONY: realinstall
@@ -320,7 +316,7 @@ DISTFILES_TEST = test/Makefile test/apps test/apps-x11 test/apps-x11-xorg test/c
 dist: config.mk
 	mv config.sh config.sh.old
 	mv config.status config.status.old
-	make distclean
+	$(MAKE) distclean
 	mv config.status.old config.status
 	mv config.sh.old config.sh
 	rm -fr $(TARNAME)-$(VERSION) $(TARNAME)-$(VERSION).tar.xz
@@ -358,7 +354,7 @@ cppcheck: clean
 
 .PHONY: scan-build
 scan-build: clean
-	scan-build make
+	scan-build $(MAKE)
 
 .PHONY: codespell
 codespell: clean

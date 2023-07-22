@@ -12,6 +12,3 @@ $(TESTS):
 .PHONY: clean
 clean:
 	for test in $(TESTS); do rm -f "$$test/$$test.log"; done
-
-.PHONY: distclean
-distclean: clean

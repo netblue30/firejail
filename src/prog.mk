@@ -20,6 +20,3 @@ $(PROG): $(OBJS) $(ROOT)/config.mk
 
 .PHONY: clean
 clean:; rm -fr $(PROG) $(CLEANFILES)
-
-.PHONY: distclean
-distclean: clean

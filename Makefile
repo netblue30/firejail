@@ -316,17 +316,17 @@ DISTFILES_TEST = \
 	test/apps-x11 \
 	test/apps-x11-xorg \
 	test/capabilities \
-	test/private-lib \
-	test/fnetfilter \
-	test/fcopy \
-	test/environment \
-	test/profiles \
-	test/utils \
 	test/compile \
+	test/environment \
+	test/fcopy \
 	test/filters \
-	test/network \
+	test/fnetfilter \
 	test/fs \
-	test/sysutils
+	test/network \
+	test/private-lib \
+	test/profiles \
+	test/sysutils \
+	test/utils
 
 .PHONY: dist
 dist: config.mk

@@ -293,24 +293,40 @@ uninstall: config.mk
 	@echo "If you want to install a different version of firejail, you might also need to run 'rm -fr $(DESTDIR)$(sysconfdir)/firejail', see #2038."
 
 DISTFILES = \
-COPYING \
-Makefile \
-README \
-RELNOTES \
-config.mk.in \
-config.sh.in \
-configure \
-configure.ac \
-contrib \
-etc \
-install.sh \
-m4 \
-mkdeb.sh \
-mketc.sh \
-platform \
-src
+	COPYING \
+	Makefile \
+	README \
+	RELNOTES \
+	config.mk.in \
+	config.sh.in \
+	configure \
+	configure.ac \
+	contrib \
+	etc \
+	install.sh \
+	m4 \
+	mkdeb.sh \
+	mketc.sh \
+	platform \
+	src
 
-DISTFILES_TEST = test/Makefile test/apps test/apps-x11 test/apps-x11-xorg test/capabilities test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils
+DISTFILES_TEST = \
+	test/Makefile \
+	test/apps \
+	test/apps-x11 \
+	test/apps-x11-xorg \
+	test/capabilities \
+	test/private-lib \
+	test/fnetfilter \
+	test/fcopy \
+	test/environment \
+	test/profiles \
+	test/utils \
+	test/compile \
+	test/filters \
+	test/network \
+	test/fs \
+	test/sysutils
 
 .PHONY: dist
 dist: config.mk

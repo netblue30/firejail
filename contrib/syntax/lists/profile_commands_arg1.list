@@ -68,6 +68,7 @@ seccomp.32.drop
 seccomp.32.keep
 seccomp.drop
 seccomp.keep
+shell
 timeout
 tmpfs
 veth-name

@@ -23,12 +23,7 @@ whitelist ${HOME}/.librewolf
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 
-whitelist /usr/share/doc
-whitelist /usr/share/gtk-doc/html
 whitelist /usr/share/librewolf
-whitelist /usr/share/mozilla
-whitelist /usr/share/webext
-include whitelist-usr-share-common.inc
 
 # Add the next line to your librewolf.local to enable private-bin (Arch Linux).
 #private-bin dbus-launch,dbus-send,librewolf,sh

@@ -12,6 +12,7 @@ mkdir ${HOME}/.cache/mozilla/abrowser
 mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/abrowser
 whitelist ${HOME}/.mozilla
+whitelist /usr/share/abrowser
 
 # private-etc must first be enabled in firefox-common.profile
 #private-etc abrowser

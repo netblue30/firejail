@@ -339,8 +339,8 @@ dist: clean config.mk
 	rm -fr $(TARNAME)-$(VERSION)
 
 .PHONY: asc
-asc: config.mk
-	./mkasc.sh $(VERSION)
+asc: config.sh
+	./mkasc.sh
 
 .PHONY: deb
 deb: dist config.sh

@@ -329,12 +329,7 @@ DISTFILES_TEST = \
 	test/utils
 
 .PHONY: dist
-dist: config.mk
-	mv config.sh config.sh.old
-	mv config.status config.status.old
-	$(MAKE) distclean
-	mv config.status.old config.status
-	mv config.sh.old config.sh
+dist: clean config.mk
 	rm -fr $(TARNAME)-$(VERSION) $(TARNAME)-$(VERSION).tar.xz
 	mkdir -p $(TARNAME)-$(VERSION)/test
 	cp -a $(DISTFILES) $(TARNAME)-$(VERSION)

@@ -8,9 +8,17 @@ include globals.local
 
 ignore include whitelist-runuser-common.inc
 
-# writable-run-user and dbus are needed by enigmail
+# TB stopped supporting enigmail in 2020 (v78) - let's harden D-Bus
+# https://support.mozilla.org/en-US/kb/openpgp-thunderbird-howto-and-faq
 ignore dbus-user none
-ignore dbus-system none
+dbus-user filter
+dbus-user.own org.mozilla.thunderbird.*
+dbus-user.talk ca.desrt.dconf
+dbus-user.talk org.freedesktop.Notifications
+# allow D-Bus communication with firefox for opening links
+dbus-user.talk org.mozilla.*
+# e2ee email needs writable-run-user
+# https://support.mozilla.org/en-US/kb/introduction-to-e2e-encryption
 writable-run-user
 
 # If you want to read local mail stored in /var/mail edit /etc/apparmor.d/firejail-default accordingly

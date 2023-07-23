@@ -86,15 +86,41 @@
 4.2.2.4/32 Level3 DNS
 8.8.4.0/24 Google DNS
 8.8.8.0/24 Google DNS
+8.20.247.20 Comodo DNS
+8.26.56.26 Comodo DNS
 9.9.9.0/24 Quad9 DNS
 45.90.28.0/22 NextDNS
+45.11.45.0/24 DNS-SB
+64.6.64.6/32 Neustar DNS
+64.6.65.6/32 Neustar DNS
+69.197.138.24/29 BitChute
+74.82.42.42/32 Hurricane Electric DNS
+76.76.2.0/24 ControlD DNS
+76.76.10.0/24 ControlD DNS
+76.76.19.0/24 Alternate DNS
+76.223.122.150/32 Alternate DNS
+77.88.8.8/32 Yandex DNS
+77.88.8.1/32 Yandex DNS
+80.80.80.0/24 Freenom DNS Cloud
+80.80.81.0/24 Freenom DNS Cloud
+84.200.69.80/32 DSN Watch
+84.200.70.40/32 DNS Watch
 94.140.14.0/23 Adguard DNS
 149.112.112.0/24 Quad9 DNS
 149.112.120.0/21 CIRA DNS Canada
 146.255.56.96/29 Applied Privacy
 176.103.128.0/19 Adguard DNS
+185.222.222.0/24 DNS-SB
 185.228.168.0/24 Cleanbrowsing DNS
+185.236.104.0/24 FlashStart DNS
+185.236.105.0/24 FlashStart DNS
+185.253.5.0/24 NextDNS
+193.110.81.0/24 NextDNS
+205.171.3.66/32 CentyrLink DNS
+205.171.202.166/32 CentyrLink DNS
 208.67.216.0/21 OpenDNS
+216.146.35.35/32 Dyn DNS
+216.146.36.36/32 Dyn DNS
 
 # whois
 192.0.32.0/20 ICANN
@@ -106,6 +132,7 @@
 199.212.0.0/24 whois.arin.net US
 200.3.12.0/22 whois.lacnic.net Uruguay
 201.159.220.0/22 whois.lacnic.net Ecuador
+203.119.100.0/22 apnic.net Australia
 
 # some popular websites
 5.255.255.0/24 Yandex
@@ -132,9 +159,14 @@
 66.211.168.0/22 PayPal
 66.211.172.0/22 eBay
 66.211.176.0/20 eBay
+66.218.64.0/19 Yahoo
 66.220.144.0/20 Facebook
+69.30.200.200/29 BitChute
 69.53.224.0/19 Netflix
 69.171.224.0/19 Facebook
+69.197.182.184/29 BitChute
+74.6.0.0/16 Yahoo
+74.91.29.208/29 BitChute
 87.250.254.0/24 Yandex
 91.105.192.0/23 Telegram
 91.108.4.0/22 Telegram
@@ -147,14 +179,20 @@
 91.189.94.0/24 Ubuntu One
 95.161.64.0/20 Telegram
 99.181.64.0/18 Twitch
-103.53.48.0/23 Twitch
-104.244.40.0/21 Twitter
 103.10.124.0/23 Steam
 103.28.54.0/24 Steam
+103.53.48.0/23 Twitch
+104.244.40.0/21 Twitter
+107.150.32.0/19 BitChute
+107.150.35.192/29 BitChute
+107.150.45.120/29 BitChute
 108.160.160.0/20 Dropbox
 108.175.32.0/20 Netflix
 129.134.0.0/16 Facebook
 140.82.112.0/20 GitHub
+142.54.180.104/29 BitChute
+142.54.181.184/29 BitChute
+142.54.189.192/29 BitChute
 143.55.64.0/20 Github
 146.66.152.0/24 Steam
 146.66.155.0/24 Steam
@@ -174,6 +212,9 @@
 162.213.32.0/22 Ubuntu One
 162.254.192.0/21 Steam
 172.98.56.0/22 Rumble
+173.208.154.8/29 BitChute
+173.208.185.200/29 BitChute
+173.208.219.112/29 BitChute
 178.154.131.0/24 Yandex
 185.2.220.0/22 Netflix
 185.9.188.0/22 Netflix
@@ -195,22 +236,30 @@
 192.69.96.0/22 Steam
 192.108.239.0/24 Twitch
 192.173.64.0/18 Netflix
+192.187.97.88/29 BitChute
+192.187.123.112/29 BitChute
 192.189.200.0/23 Dropbox
 194.169.254.0/24 Ubuntu One
 198.38.96.0/19 Netflix
 198.45.48.0/20 Netflix
+198.204.226.120/29 BitChute
+198.204.245.88/29 BitChute
+198.252.206.0/24 Stack Exchange
 199.9.248.0/21 Twitch
 199.16.156.0/22 Twitter
 199.59.148.0/22 Twitter
 199.168.96.24/29 BitChute
+204.12.194.176/29 BitChute
 205.185.194.0/24 Steam
 205.196.6.0/24 Steam
 207.45.72.0/22 Netflix
 207.241.224.0/20 Internet Archive
+208.82.236.0/22 Creiglist
 208.64.200.0/22 Steam
 208.75.76.0/22 Netflix
 208.78.164.0/22 Steam
 208.80.152.0/22 Wikipedia
+208.110.68.56/29 BitChute
 209.140.128.0/18 eBay
 
 # Imperva
@@ -261,15 +310,6 @@
 205.224.0.0/14 Level 3
 209.244.0.0/14 Level 3
 
-# WholeSale Internet
-69.30.192.0/18 WholeSale Internet
-69.197.128.0/18 WholeSale Internet
-173.208.128.0/17 WholeSale Internet
-204.12.192.0/18 WholeSale Internet
-208.67.0.0/21 WholeSale Internet
-208.110.64.0/19 WholeSale Internet
-208.110.91.0/24 WholeSale Internet
-
 # StackPath
 69.16.173.0/24 StackPath
 69.16.174.0/23 StackPath
@@ -299,6 +339,8 @@
 205.185.220.0/24 StackPath
 
 # Linode
+45.79.0.0/16 Linode
+50.116.0.0/18 Linode
 66.175.208.0/20 Linode
 103.29.68.0/22 Linode
 104.200.16.0/21 Linode
@@ -397,6 +439,7 @@
 172.105.0.0/19 Linode
 172.105.112.0/20 Linode
 172.105.128.0/23 Linode
+173.255.192.0/18 Linode
 
 # Akamai
 2.16.0.0/13 Akamai
@@ -576,7 +619,7 @@
 103.21.244.0/22 Cloudflare
 103.22.200.0/22 Cloudflare
 103.31.4.0/22 Cloudflare
-104.16.0.0/13 Cloudflare
+104.16.0.0/12 Cloudflare
 104.24.0.0/14 Cloudflare
 108.162.192.0/18 Cloudflare
 131.0.72.0/22 Cloudflare
@@ -684,6 +727,7 @@
 3.136.0.0/13 Amazon
 3.144.0.0/13 Amazon
 3.152.0.0/13 Amazon
+3.160.0.0/14 Amazon
 3.208.0.0/12 Amazon
 3.224.0.0/12 Amazon
 3.240.0.0/13 Amazon

@@ -30,7 +30,7 @@ static int arg_tail = 0;
 static char *arg_log = NULL;
 
 uint32_t stats_pkts = 0;
-uint32_t stats_icmp = 0;
+uint32_t stats_icmp_echo = 0;
 uint32_t stats_dns = 0;
 
 
@@ -291,7 +291,7 @@ static inline const char *common_port(uint16_t port) {
 	}
 
 	if (port <= 194) {
-		PortType *ptr =&ports[0];
+		PortType *ptr = &ports[0];
 		while(ptr->service != NULL) {
 			if (ptr->port == port)
 				return ptr->service;
@@ -440,10 +440,9 @@ static void hnode_print(unsigned bw) {
 
 
 void print_stats(void) {
-	printf("\nIP table: %d entries, %d unknown\n", radix_nodes, geoip_calls);
-	printf("   address network (packets)\n");
+	printf("\nIP table: %d entries - address network (packets)\n", radix_nodes);
 	radix_print(1);
-	printf("Packets: %u total, ICMP %u, DNS %u\n", stats_pkts, stats_icmp, stats_dns);
+	printf("Packets: %u total, PING %u, DNS %u\n", stats_pkts, stats_icmp_echo, stats_dns);
 }
 
 // trace rx traffic coming in
@@ -557,9 +556,11 @@ static void run_trace(void) {
 
 				// stats
 				stats_pkts++;
-				if (icmp)
-					stats_icmp++;
-				if (port_src == 53)
+				if (icmp)  {
+					if (*(buf + hlen) == 0 || *(buf + hlen) == 8)
+						stats_icmp_echo++;
+				}
+				else if (port_src == 53)
 					stats_dns++;
 
 			}
@@ -775,7 +776,7 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 		else if (strncmp(argv[i], "--squash-map=", 13) == 0) {
-			if (i !=(argc - 1)) {
+			if (i != (argc - 1)) {
 				fprintf(stderr, "Error: please provide a map file\n");
 				return 1;
 			}

@@ -340,7 +340,6 @@ dist: config.mk
 	cp -a $(DISTFILES) $(TARNAME)-$(VERSION)
 	cp -a $(DISTFILES_TEST) $(TARNAME)-$(VERSION)/test
 	rm -rf $(TARNAME)-$(VERSION)/src/tools
-	find $(TARNAME)-$(VERSION) -name .svn -delete
 	tar -cJvf $(TARNAME)-$(VERSION).tar.xz $(TARNAME)-$(VERSION)
 	rm -fr $(TARNAME)-$(VERSION)
 

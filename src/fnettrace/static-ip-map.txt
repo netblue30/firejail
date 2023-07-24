@@ -38,14 +38,19 @@
 #
 
 
-# local network addresses
-192.168.0.0/16 local network
-10.0.0.0/8 local network
-172.16.0.0/16 local network
-169.254.0.0/16 local link
+# local network addresses (based on https://en.wikipedia.org/wiki/Reserved_IP_addresses)
+10.0.0.0/8 Local network
+100.64.0.0/10 Carrier-grade NAT
+127.0.0.0/8 Local host
+169.254.0.0/16 Local link
+172.16.0.0/12 Local network
+192.0.2.0/24 Documentation
+192.168.0.0/16 Local network
+198.51.100.0/24 Documentation
+203.0.113.0/24 Documentation
 
 # multicast
-224.0.0.0/4 multicast
+224.0.0.0/4 Multicast
 224.0.0.9/32 RIPv2
 224.0.0.5/32 OSPF
 224.0.0.6/32 OSPF
@@ -86,8 +91,8 @@
 4.2.2.4/32 Level3 DNS
 8.8.4.0/24 Google DNS
 8.8.8.0/24 Google DNS
-8.20.247.20 Comodo DNS
-8.26.56.26 Comodo DNS
+8.20.247.20/32 Comodo DNS
+8.26.56.26/32 Comodo DNS
 9.9.9.0/24 Quad9 DNS
 45.90.28.0/22 NextDNS
 45.11.45.0/24 DNS-SB
@@ -139,7 +144,7 @@
 23.160.0.0/24 Twitch
 23.246.0.0/18 Netflix
 31.13.24.0/21 Facebook
-31.13.64.0/18 Facebook
+31.13.64.0/17 Facebook
 37.77.184.0/21 Netflix
 45.57.0.0/17 Netflix
 45.58.64.0/20 Dropbox
@@ -235,6 +240,7 @@
 192.30.252.0/22 GitHub
 192.69.96.0/22 Steam
 192.108.239.0/24 Twitch
+192.151.158.136/29 BitChute
 192.173.64.0/18 Netflix
 192.187.97.88/29 BitChute
 192.187.123.112/29 BitChute

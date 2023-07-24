@@ -75,4 +75,7 @@ void terminal_handler(int s);
 void terminal_set(void);
 void terminal_restore(void);
 
+// runprog.c
+int runprog(const char *program);
+
 #endif

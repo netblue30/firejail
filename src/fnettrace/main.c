@@ -29,11 +29,60 @@ static int arg_netfilter = 0;
 static int arg_tail = 0;
 static char *arg_log = NULL;
 
+//*****************************************************************
+// packet stats
+//*****************************************************************
 uint32_t stats_pkts = 0;
 uint32_t stats_icmp_echo = 0;
 uint32_t stats_dns = 0;
+uint32_t stats_dns_dot = 0;
+uint32_t stats_dns_doh = 0;
+uint32_t stats_dns_doq = 0;
+uint32_t stats_tls = 0;
+uint32_t stats_quic = 0;
+uint32_t stats_tor = 0;
+uint32_t stats_http = 0;
 
+//*****************************************************************
+// sni/dns log storage
+//*****************************************************************
+typedef struct lognode_t {
+#define LOG_RECORD_LEN 255
+	char record[LOG_RECORD_LEN + 1];
+} LogNode;
+// circular list of SNI log records
+#define SNIMAX 64
+LogNode sni_table[SNIMAX] = {0};
+int sni_index = 0;
 
+// circular list of SNI log records
+#define DNSMAX 64
+LogNode dns_table[SNIMAX] = {0};
+int dns_index = 0;
+
+static void print_sni(void) {
+	int i;
+	for (i = sni_index; i < SNIMAX; i++)
+		if (*sni_table[i].record)
+			printf("   %s", sni_table[i].record);
+	for (i = 0; i < sni_index; i++)
+		if (*sni_table[i].record)
+			printf("   %s", sni_table[i].record);
+}
+
+static void print_dns(void) {
+	int i;
+	for (i = dns_index; i < DNSMAX; i++)
+		if (*dns_table[i].record)
+			printf("   %s", dns_table[i].record);
+	for (i = 0; i < dns_index; i++)
+		if (*dns_table[i].record)
+			printf("   %s", dns_table[i].record);
+}
+
+//*****************************************************************
+// traffic trace storage - hash table for fast access + linked list for display purposes
+//*****************************************************************
 typedef struct hnode_t {
 	struct hnode_t *hnext;	// used for hash table and unused linked list
 	struct hnode_t *dnext;	// used to display streams on the screen
@@ -42,6 +91,7 @@ typedef struct hnode_t {
 
 	// stats
 	uint32_t  bytes;	// number of bytes received in the last display interval
+	uint32_t pkts;	// number of packets received in the last display interval
 	uint16_t port_src;
 	uint8_t protocol;
 
@@ -97,6 +147,7 @@ static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint
 			ip_instance++;
 			if (ptr->port_src == port_src && ptr->protocol == protocol) {
 				ptr->bytes += bytes;
+				ptr->pkts++;
 				assert(ptr->rnode);
 				ptr->rnode->pkts++;
 				return;
@@ -115,6 +166,7 @@ static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint
 	hnew->protocol = protocol;
 	hnew->hnext = NULL;
 	hnew->bytes = bytes;
+	hnew->pkts = 1;
 	hnew->ip_instance = ip_instance + 1;
 	hnew->ttl = DISPLAY_TTL;
 	if (htable[h] == NULL)
@@ -369,22 +421,41 @@ static void hnode_print(unsigned bw) {
 				bwline = print_bw(ptr->bytes / bwunit);
 
 			const char *protocol = NULL;
-			if (ptr->port_src == 443 && ptr->protocol == 0x06) // TCP
+			if (ptr->port_src == 443 && ptr->protocol == 0x06) { // TCP
 				protocol = "(TLS)";
-			else if (ptr->port_src == 443 && ptr->protocol == 0x11) // UDP
+				stats_tls += ptr->pkts;
+			}
+			else if (ptr->port_src == 443 && ptr->protocol == 0x11) { // UDP
 				protocol = "(QUIC)";
-			else if (ptr->port_src == 53)
-				protocol = "(DNS)";
-			else if (ptr->port_src == 853) {
+				stats_quic +=  ptr->pkts;
+			}
+			else if (ptr->port_src == 53) {
+				stats_dns += ptr->pkts;
 				if (ptr->protocol == 0x06)
-					protocol = "(DoT)";
+					protocol = "(TCP/DNS)";
 				else if (ptr->protocol == 0x11)
-					protocol = "(DoQ)";
+					protocol = "(UDP/DNS)";
 				else
 					protocol = NULL;
 			}
-			else if ((protocol = common_port(ptr->port_src)) != NULL)
-				;
+			else if (ptr->port_src == 853) {
+				if (ptr->protocol == 0x06) {
+					protocol = "(DoT)";
+					stats_dns_dot += ptr->pkts;
+				}
+				else if (ptr->protocol == 0x11) {
+					protocol = "(DoQ)";
+					stats_dns_doq += ptr->pkts;
+				}
+				else
+					protocol = NULL;
+			}
+			else if ((protocol = common_port(ptr->port_src)) != NULL) {
+				if (strcmp(protocol, "(HTTP)") == 0)
+					stats_http += ptr->pkts;
+				else if (strcmp(protocol, "(Tor)") == 0)
+					stats_tor += ptr->pkts;
+			}
 			else if (ptr->protocol == 0x11)
 				protocol = "(UDP)";
 			else if (ptr->protocol == 0x06)
@@ -410,6 +481,7 @@ static void hnode_print(unsigned bw) {
 			if (ptr->bytes)
 				ptr->ttl = DISPLAY_TTL;
 			ptr->bytes = 0;
+			ptr->pkts = 0;
 			prev = ptr;
 		}
 		else {
@@ -440,9 +512,6 @@ static void hnode_print(unsigned bw) {
 
 
 void print_stats(void) {
-	printf("\nIP table: %d entries - address network (packets)\n", radix_nodes);
-	radix_print(1);
-	printf("Packets: %u total, PING %u, DNS %u\n", stats_pkts, stats_icmp_echo, stats_dns);
 }
 
 // trace rx traffic coming in
@@ -457,6 +526,18 @@ static void run_trace(void) {
 	if (s1 < 0 || s2 < 0 || s3 < 0)
 		errExit("socket");
 
+
+	int p1 = -1;
+	if (!arg_netfilter)
+		p1 = runprog(LIBDIR "/firejail/fnettrace-sni");
+	if (p1 != -1)
+		printf("loading snitrace...");
+
+	int p2 = -1;
+	if (!arg_netfilter)
+		p2 = runprog(LIBDIR "/firejail/fnettrace-dns --nolocal");
+	if (p2 != -1)
+		printf("loading dnstrace...");
 	unsigned start = time(NULL);
 	unsigned last_print_traces = 0;
 	unsigned last_print_remaining = 0;
@@ -480,14 +561,26 @@ static void run_trace(void) {
 		}
 
 		fd_set rfds;
+
 		FD_ZERO(&rfds);
+		if (!arg_netfilter)
+			FD_SET(0, &rfds);
+
 		FD_SET(s1, &rfds);
 		FD_SET(s2, &rfds);
 		FD_SET(s3, &rfds);
-		if (!arg_netfilter)
-			FD_SET(0, &rfds);
 		int maxfd = (s1 > s2) ? s1 : s2;
 		maxfd = (s3 > maxfd) ? s3 : maxfd;
+
+		if (p1 != -1) {
+			FD_SET(p1, &rfds);
+			maxfd = (p1 > maxfd) ? p1 : maxfd;
+		}
+
+		if (p2 != -1) {
+			FD_SET(p2, &rfds);
+			maxfd = (p2 > maxfd) ? p2 : maxfd;
+		}
 		maxfd++;
 
 		struct timeval tv;
@@ -505,12 +598,80 @@ static void run_trace(void) {
 		int sock = s1;
 		int icmp = 0;
 
-		if (FD_ISSET(0, &rfds)) {
+		if (!arg_netfilter && FD_ISSET(0, &rfds)) {
 			getchar();
-			print_stats();
+			printf("\n\nStats: %u packets\n", stats_pkts);
+			printf("   encrypted: TLS %u, QUIC %u, Tor %u\n",
+				stats_tls, stats_quic, stats_tor);
+			printf("   unencrypted: HTTP %u\n", stats_http);
+			printf("   C&C backchannel: PING %u, DNS %u, DoH %u, DoT %u, DoQ %u\n",
+				stats_icmp_echo, stats_dns, stats_dns_doh, stats_dns_dot, stats_dns_doq);
 			printf("press any key to continue...");
 			fflush(0);
+
 			getchar();
+			printf("\n\nSNI log - time server-address SNI\n");
+			print_sni();
+			printf("press any key to continue...");
+			fflush(0);
+
+			getchar();
+			printf("\n\nDNS log - time server-address domain\n");
+			print_dns();
+			printf("press any key to continue...");
+			fflush(0);
+
+			getchar();
+			printf("\n\nIP table: %d addresses - server-address network (packets)\n", radix_nodes);
+			radix_print(1);
+			printf("press any key to continue...");
+			fflush(0);
+
+			getchar();
+			continue;
+		}
+		else if (!arg_netfilter && FD_ISSET(p1, &rfds)) {
+			char buf[1024];
+			ssize_t sz = read(p1, buf, 1024 - 1);
+			if (sz == -1)
+				errExit("error reading snitrace");
+			if (sz == 0) {
+				fprintf(stderr, "Error: snitrace EOF!!!\n");
+				p1 = -1;
+			}
+			if (strncmp(buf, "SNI trace", 9) == 0)
+				continue;
+
+			if (sz > LOG_RECORD_LEN)
+				sz = LOG_RECORD_LEN;
+			buf[sz] = '\0';
+			strcpy(sni_table[sni_index].record, buf);
+			if (++sni_index >= SNIMAX) {
+				sni_index = 0;
+				*sni_table[sni_index].record = '\0';
+			}
+			continue;
+		}
+		else if (!arg_netfilter && FD_ISSET(p2, &rfds)) {
+			char buf[1024];
+			ssize_t sz = read(p2, buf, 1024 - 1);
+			if (sz == -1)
+				errExit("error reading dnstrace");
+			if (sz == 0) {
+				fprintf(stderr, "Error: dnstrace EOF!!!\n");
+				p2 = -1;
+			}
+			if (strncmp(buf, "DNS trace", 9) == 0)
+				continue;
+
+			if (sz > LOG_RECORD_LEN)
+				sz = LOG_RECORD_LEN;
+			buf[sz] = '\0';
+			strcpy(dns_table[dns_index].record, buf);
+			if (++dns_index >= DNSMAX) {
+				dns_index = 0;
+				*dns_table[dns_index].record = '\0';
+			}
 			continue;
 		}
 		else if (FD_ISSET(s2, &rfds))
@@ -560,8 +721,6 @@ static void run_trace(void) {
 					if (*(buf + hlen) == 0 || *(buf + hlen) == 8)
 						stats_icmp_echo++;
 				}
-				else if (port_src == 53)
-					stats_dns++;
 
 			}
 		}

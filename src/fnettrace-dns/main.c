@@ -26,6 +26,7 @@
 #include <signal.h>
 #define MAX_BUF_SIZE (64 * 1024)
 
+static int arg_nolocal = 0;
 static char last[512] = {'\0'};
 
 // pkt - start of DNS layer
@@ -116,7 +117,7 @@ static void print_date(void) {
 	struct tm *t = localtime(&now);
 
 	if (day != t->tm_yday) {
-		printf("\nDNS trace for %s", ctime(&now));
+		printf("DNS trace for %s", ctime(&now));
 		day = t->tm_yday;
 	}
 	fflush(0);
@@ -159,6 +160,14 @@ static void run_trace(void) {
 			memcpy(&ip_src, buf + 14 + 12, 4);
 			ip_src = ntohl(ip_src);
 
+			if (arg_nolocal) {
+				if ((ip_src & 0xff000000) == 0x7f000000 ||	// 127.0.0.0/8
+				    (ip_src & 0xff000000) == 0x0a000000 ||	// 10.0.0.0/8
+				    (ip_src & 0xffff0000) == 0xc0a80000 ||	// 192.168.0.0/16
+				    (ip_src & 0xfff00000) == 0xac100000)	// 172.16.0.0/12
+					continue;
+			}
+
 			// if DNS packet, extract the query
 			if (port_src == 53 && protocol == 0x11) // UDP protocol
 				print_dns(ip_src, buf + 14 + ip_hlen + 8); // IP and UDP header len
@@ -170,7 +179,8 @@ static void run_trace(void) {
 static const char *const usage_str =
 	"Usage: fnettrace-dns [OPTIONS]\n"
 	"Options:\n"
-	"   --help, -? - this help screen\n";
+	"   --help, -? - this help screen\n"
+	"   --nolocal\n";
 
 static void usage(void) {
 	puts(usage_str);
@@ -184,6 +194,8 @@ int main(int argc, char **argv) {
 			usage();
 			return 0;
 		}
+		else if (strcmp(argv[i], "--nolocal") == 0)
+			arg_nolocal = 1;
 		else {
 			fprintf(stderr, "Error: invalid argument\n");
 			return 1;

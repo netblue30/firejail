@@ -152,7 +152,7 @@ static void print_date(void) {
 	struct tm *t = localtime(&now);
 
 	if (day != t->tm_yday) {
-		printf("\nSNI trace for %s", ctime(&now));
+		printf("SNI trace for %s", ctime(&now));
 		day = t->tm_yday;
 	}
 

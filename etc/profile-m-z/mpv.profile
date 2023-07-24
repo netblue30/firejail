@@ -86,6 +86,6 @@ private-bin env,mpv,python*,waf,youtube-dl,yt-dlp
 private-dev
 
 dbus-user none
-dbus-system none
+dbus-system filter
 
 restrict-namespaces

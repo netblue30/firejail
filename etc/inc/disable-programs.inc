@@ -547,6 +547,7 @@ blacklist ${HOME}/.config/midori
 blacklist ${HOME}/.config/mirage
 blacklist ${HOME}/.config/monero-project
 blacklist ${HOME}/.config/mono
+blacklist ${HOME}/.config/mov-cli
 blacklist ${HOME}/.config/mpDris2
 blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mps-youtube

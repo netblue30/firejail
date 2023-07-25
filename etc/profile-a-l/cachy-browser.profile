@@ -13,6 +13,7 @@ mkdir ${HOME}/.cache/cachy
 mkdir ${HOME}/.cachy
 whitelist ${HOME}/.cache/cachy
 whitelist ${HOME}/.cachy
+whitelist /usr/share/cachy-browser
 
 # Add the next lines to your cachy-browser.local if you want to use the migration wizard.
 #noblacklist ${HOME}/.mozilla
@@ -22,12 +23,6 @@ whitelist ${HOME}/.cachy
 # NOTE: start KeePassXC before CachyBrowser and keep it open to allow communication between them.
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
-
-whitelist /usr/share/doc
-whitelist /usr/share/gtk-doc/html
-whitelist /usr/share/mozilla
-whitelist /usr/share/webext
-include whitelist-usr-share-common.inc
 
 # Add the next line to your cachy-browser.local to enable private-bin (Arch Linux).
 #private-bin dbus-launch,dbus-send,cachy-browser,sh

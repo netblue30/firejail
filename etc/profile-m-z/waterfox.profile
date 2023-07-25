@@ -12,6 +12,7 @@ mkdir ${HOME}/.cache/waterfox
 mkdir ${HOME}/.waterfox
 whitelist ${HOME}/.cache/waterfox
 whitelist ${HOME}/.waterfox
+whitelist /usr/share/waterfox
 
 # Add the next lines to your watefox.local if you want to use the migration wizard.
 #noblacklist ${HOME}/.mozilla

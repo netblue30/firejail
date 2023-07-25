@@ -13,6 +13,7 @@ mkdir ${HOME}/.cache/firedragon
 mkdir ${HOME}/.firedragon
 whitelist ${HOME}/.cache/firedragon
 whitelist ${HOME}/.firedragon
+whitelist /usr/share/firedragon
 
 # Add the next lines to your firedragon.local if you want to use the migration wizard.
 #noblacklist ${HOME}/.mozilla

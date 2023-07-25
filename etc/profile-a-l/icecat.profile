@@ -12,6 +12,7 @@ mkdir ${HOME}/.cache/mozilla/icecat
 mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/icecat
 whitelist ${HOME}/.mozilla
+whitelist /usr/share/icecat
 
 # private-etc must first be enabled in firefox-common.profile
 #private-etc icecat

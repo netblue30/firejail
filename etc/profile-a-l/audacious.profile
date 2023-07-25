@@ -27,6 +27,7 @@ netfilter
 nogroups
 noinput
 nonewprivs
+noprinters
 noroot
 notv
 nou2f

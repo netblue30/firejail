@@ -294,23 +294,23 @@ typedef struct port_type_t {
 	char *service;
 } PortType;
 static PortType ports[] = {
-	{20, "(FTP)"},
-	{21, "(FTP)"},
-	{22, "(SSH)"},
-	{23, "(telnet)"},
-	{25, "(SMTP)"},
-	{43, "(WHOIS)"},
-	{67, "(DHCP)"},
-	{68, "(DHCP)"},
-	{69, "(TFTP)"},
-	{80, "(HTTP)"},
-	{109, "(POP2)"},
-	{110, "(POP3)"},
-	{113, "(IRC)"},
-	{123, "(NTP)"},
-	{161, "(SNMP)"},
-	{162, "(SNMP)"},
-	{194, "(IRC)"},
+	{20, "FTP"},
+	{21, "FTP"},
+	{22, "SSH"},
+	{23, "telnet"},
+	{25, "SMTP"},
+	{43, "WHOIS"},
+	{67, "DHCP"},
+	{68, "DHCP"},
+	{69, "TFTP"},
+	{80, "HTTP"},
+	{109, "POP2"},
+	{110, "POP3"},
+	{113, "IRC"},
+	{123, "NTP"},
+	{161, "SNMP"},
+	{162, "SNMP"},
+	{194, "IRC"},
 	{0, NULL},
 };
 
@@ -318,27 +318,27 @@ static PortType ports[] = {
 static inline const char *common_port(uint16_t port) {
 	if (port >= 6660 && port <= 10162) {
 		if (port >= 6660 && port <= 6669)
-			return "(IRC)";
+			return "IRC";
 		else if (port == 6679)
-			return "(IRC)";
+			return "IRC";
 		else if (port == 6771)
-			return "(BitTorrent)";
+			return "BitTorrent";
 		else if (port >= 6881 && port <= 6999)
-			return "(BitTorrent)";
+			return "BitTorrent";
 		else if (port == 9001)
-			return "(Tor)";
+			return "Tor";
 		else if (port == 9030)
-			return "(Tor)";
+			return "Tor";
 		else if (port == 9050)
-			return "(Tor)";
+			return "Tor";
 		else if (port == 9051)
-			return "(Tor)";
+			return "Tor";
 		else if (port == 9150)
-			return "(Tor)";
+			return "Tor";
 		else if (port == 10161)
-			return "(secure SNMP)";
+			return "secure SNMP";
 		else if (port == 10162)
-			return "(secure SNMP)";
+			return "secure SNMP";
 		return NULL;
 	}
 
@@ -388,7 +388,7 @@ static void hnode_print(unsigned bw) {
 	else
 		sprintf(stats, "%u KB/s ", bw / (1024 * DISPLAY_INTERVAL));
 //	int len = snprintf(line, LINE_MAX, "%32s geoip %d, IP database %d\n", stats, geoip_calls, radix_nodes);
-	int len = snprintf(line, LINE_MAX, "%32s address:port (protocol) network (packets)\n", stats);
+	int len = snprintf(line, LINE_MAX, "%32s address:port (protocol) network\n", stats);
 	adjust_line(line, len, cols);
 	printf("%s", line);
 
@@ -422,59 +422,57 @@ static void hnode_print(unsigned bw) {
 
 			const char *protocol = NULL;
 			if (ptr->port_src == 443 && ptr->protocol == 0x06) { // TCP
-				protocol = "(TLS)";
+				protocol = "TLS";
 				stats_tls += ptr->pkts;
+				if (strstr(ptr->rnode->name, "DNS")) {
+					protocol = "DoH";
+					stats_dns_doh += ptr->pkts;
+				}
+
 			}
 			else if (ptr->port_src == 443 && ptr->protocol == 0x11) { // UDP
-				protocol = "(QUIC)";
+				protocol = "QUIC";
 				stats_quic +=  ptr->pkts;
+				if (strstr(ptr->rnode->name, "DNS")) {
+					protocol = "DoQ";
+					stats_dns_doq += ptr->pkts;
+				}
 			}
 			else if (ptr->port_src == 53) {
+				protocol = "DNS";
 				stats_dns += ptr->pkts;
-				if (ptr->protocol == 0x06)
-					protocol = "(TCP/DNS)";
-				else if (ptr->protocol == 0x11)
-					protocol = "(UDP/DNS)";
-				else
-					protocol = NULL;
 			}
 			else if (ptr->port_src == 853) {
 				if (ptr->protocol == 0x06) {
-					protocol = "(DoT)";
+					protocol = "DoT";
 					stats_dns_dot += ptr->pkts;
 				}
 				else if (ptr->protocol == 0x11) {
-					protocol = "(DoQ)";
+					protocol = "DoQ";
 					stats_dns_doq += ptr->pkts;
 				}
 				else
 					protocol = NULL;
 			}
 			else if ((protocol = common_port(ptr->port_src)) != NULL) {
-				if (strcmp(protocol, "(HTTP)") == 0)
+				if (strcmp(protocol, "HTTP") == 0)
 					stats_http += ptr->pkts;
-				else if (strcmp(protocol, "(Tor)") == 0)
+				else if (strcmp(protocol, "Tor") == 0)
 					stats_tor += ptr->pkts;
 			}
 			else if (ptr->protocol == 0x11)
-				protocol = "(UDP)";
+				protocol = "UDP";
 			else if (ptr->protocol == 0x06)
-				protocol = "(TCP)";
+				protocol = "TCP";
 
 			if (protocol == NULL)
 				protocol = "";
 			if (ptr->port_src == 0)
 				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d (ICMP) %s\n",
 					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->rnode->name);
-			else if (ptr->rnode->pkts > 1000000)
-				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s (%.01fM)\n",
-					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->rnode->name, ((double) ptr->rnode->pkts) / 1000000);
-			else if (ptr->rnode->pkts > 1000)
-				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s (%.01fK)\n",
-					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->rnode->name, ((double) ptr->rnode->pkts) / 1000);
 			else
-				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s (%u)\n",
-					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->rnode->name, ptr->rnode->pkts);
+				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u (%s) %s\n",
+					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->rnode->name);
 			adjust_line(line, len, cols);
 			printf("%s", line);
 

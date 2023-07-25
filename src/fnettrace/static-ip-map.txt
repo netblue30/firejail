@@ -98,7 +98,6 @@
 45.11.45.0/24 DNS-SB
 64.6.64.6/32 Neustar DNS
 64.6.65.6/32 Neustar DNS
-69.197.138.24/29 BitChute
 74.82.42.42/32 Hurricane Electric DNS
 76.76.2.0/24 ControlD DNS
 76.76.10.0/24 ControlD DNS
@@ -113,7 +112,7 @@
 94.140.14.0/23 Adguard DNS
 149.112.112.0/24 Quad9 DNS
 149.112.120.0/21 CIRA DNS Canada
-146.255.56.96/29 Applied Privacy
+146.255.56.96/29 Applied Privacy DNS
 176.103.128.0/19 Adguard DNS
 185.222.222.0/24 DNS-SB
 185.228.168.0/24 Cleanbrowsing DNS
@@ -184,6 +183,7 @@
 91.189.94.0/24 Ubuntu One
 95.161.64.0/20 Telegram
 99.181.64.0/18 Twitch
+69.197.138.24/29 BitChute
 103.10.124.0/23 Steam
 103.28.54.0/24 Steam
 103.53.48.0/23 Twitch

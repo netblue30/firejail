@@ -19,7 +19,7 @@ whitelist ${HOME}/.librewolf
 #whitelist ${HOME}/.mozilla
 
 # To enable KeePassXC Plugin add one of the following lines to your librewolf.local.
-# NOTE: start KeePassXC before Librewolf and keep it open to allow communication between them.
+# Note: Start KeePassXC before Librewolf and keep it open to allow communication between them.
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 
@@ -28,7 +28,7 @@ whitelist /usr/share/librewolf
 # Add the next line to your librewolf.local to enable private-bin (Arch Linux).
 #private-bin dbus-launch,dbus-send,librewolf,sh
 # Add the next line to your librewolf.local to enable private-etc.
-# NOTE: private-etc must first be enabled in firefox-common.local.
+# Note: private-etc must first be enabled in firefox-common.local.
 #private-etc librewolf
 
 dbus-user filter

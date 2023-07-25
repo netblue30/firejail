@@ -20,14 +20,14 @@ whitelist /usr/share/cachy-browser
 #whitelist ${HOME}/.mozilla
 
 # To enable KeePassXC Plugin add one of the following lines to your cachy-browser.local.
-# NOTE: start KeePassXC before CachyBrowser and keep it open to allow communication between them.
+# Note: Start KeePassXC before CachyBrowser and keep it open to allow communication between them.
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 
 # Add the next line to your cachy-browser.local to enable private-bin (Arch Linux).
 #private-bin dbus-launch,dbus-send,cachy-browser,sh
 # Add the next line to your cachy-browser.local to enable private-etc.
-# NOTE: private-etc must first be enabled in firefox-common.local.
+# Note: private-etc must first be enabled in firefox-common.local.
 #private-etc cachy-browser
 
 dbus-user filter

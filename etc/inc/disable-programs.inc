@@ -623,6 +623,7 @@ blacklist ${HOME}/.config/slimjet
 blacklist ${HOME}/.config/smplayer
 blacklist ${HOME}/.config/smtube
 blacklist ${HOME}/.config/smuxi
+blacklist ${HOME}/.config/sniffnet
 blacklist ${HOME}/.config/snox
 blacklist ${HOME}/.config/sound-juicer
 blacklist ${HOME}/.config/specialmailcollectionsrc

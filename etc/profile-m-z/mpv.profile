@@ -9,7 +9,7 @@ include globals.local
 
 # In order to save screenshots to a persistent location,
 # edit ~/.config/mpv/foobar.conf:
-#    screenshot-directory=~/Pictures
+# screenshot-directory=~/Pictures
 
 # mpv has a powerful Lua API and some of the Lua scripts interact with
 # external resources which are blocked by firejail. In such cases you need to

@@ -24,8 +24,8 @@ include disable-xdg.inc
 mkdir ${HOME}/.tin
 mkfile ${HOME}/.newsrc
 # Note: files/directories directly in ${HOME} can't be whitelisted, as
-#       tin saves .newsrc by renaming a temporary file, which is not possible for
-#       bind-mounted files.
+# tin saves .newsrc by renaming a temporary file, which is not possible for
+# bind-mounted files.
 #whitelist ${HOME}/.newsrc
 #whitelist ${HOME}/.tin
 #include whitelist-common.inc

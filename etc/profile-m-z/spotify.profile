@@ -16,6 +16,7 @@ include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
+include disable-proc.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.cache/spotify
@@ -34,6 +35,7 @@ nodvd
 nogroups
 noinput
 nonewprivs
+noprinters
 noroot
 notv
 nou2f
@@ -50,8 +52,11 @@ private-opt spotify
 private-srv none
 private-tmp
 
-# dbus needed for MPRIS
-# dbus-user none
-# dbus-system none
+dbus-user filter
+dbus-user.own org.mpris.MediaPlayer2.spotify
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.mpris.MediaPlayer2.Player
+dbus-system none
 
 restrict-namespaces

@@ -8,9 +8,13 @@ include mov-cli.local
 # added by included profile
 #include globals.local
 
+noblacklist ${HOME}/.config/mov-cli
+
 include disable-proc.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/mov-cli
+whitelist ${HOME}/.config/mov-cli
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc
 

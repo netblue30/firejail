@@ -133,9 +133,9 @@ whitelist ${HOME}/.steampid
 include whitelist-common.inc
 include whitelist-var-common.inc
 
-# NOTE: The following were intentionally left out as they are alternative
+# Note: The following were intentionally left out as they are alternative
 # (i.e.: unnecessary and/or legacy) paths whose existence may potentially
-# clobber other paths (see #4225).  If you use any, either add the entry to
+# clobber other paths (see #4225). If you use any, either add the entry to
 # steam.local or move the contents to a path listed above (or open an issue if
 # it's missing above).
 #mkdir ${HOME}/.config/RogueLegacyStorageContainer

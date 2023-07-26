@@ -44,8 +44,7 @@ blacklist /usr/share/perl*
 # it is needed so that Firefox can run applications with Terminal=true in
 # their .desktop file (depending on what is installed). The reason is that
 # this is done via glib, which currently uses a hardcoded list of terminal
-# emulators:
-#   https://gitlab.gnome.org/GNOME/glib/-/issues/338
+# emulators: https://gitlab.gnome.org/GNOME/glib/-/issues/338.
 # And in this list, rxvt comes before xterm.
 blacklist ${PATH}/rxvt
 

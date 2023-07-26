@@ -6,7 +6,7 @@ include firefox.local
 # Persistent global definitions
 include globals.local
 
-# NOTE: sandboxing web browsers is as important as it is complex. Users might be
+# Note: Sandboxing web browsers is as important as it is complex. Users might be
 # interested in creating custom profiles depending on use case (e.g. one for
 # general browsing, another for banking, ...). Consult our FAQ/issue tracker for more
 # info. Here are a few links to get you going.
@@ -30,19 +30,14 @@ whitelist ${HOME}/.cache/mozilla/firefox
 whitelist ${HOME}/.mozilla
 
 # Add one of the following whitelist options to your firefox.local to enable KeePassXC Plugin support.
-# NOTE: start KeePassXC before Firefox and keep it open to allow communication between them.
+# Note: Start KeePassXC before Firefox and keep it open to allow communication between them.
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 
-whitelist /usr/share/doc
 whitelist /usr/share/firefox
 whitelist /usr/share/gnome-shell/search-providers/firefox-search-provider.ini
-whitelist /usr/share/gtk-doc/html
-whitelist /usr/share/mozilla
-whitelist /usr/share/webext
 whitelist ${RUNUSER}/*firefox*
 whitelist ${RUNUSER}/psd/*firefox*
-include whitelist-usr-share-common.inc
 
 # firefox requires a shell to launch on Arch - add the next line to your firefox.local to enable private-bin.
 #private-bin bash,dbus-launch,dbus-send,env,firefox,sh,which

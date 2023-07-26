@@ -29,9 +29,14 @@ mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.local/share/pki
 whitelist ${HOME}/.pki
+whitelist /usr/share/doc
+whitelist /usr/share/gtk-doc/html
+whitelist /usr/share/mozilla
+whitelist /usr/share/webext
 include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor

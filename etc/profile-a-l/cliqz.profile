@@ -15,6 +15,7 @@ mkdir ${HOME}/.config/cliqz
 whitelist ${HOME}/.cache/cliqz
 whitelist ${HOME}/.cliqz
 whitelist ${HOME}/.config/cliqz
+whitelist /usr/share/cliqz
 
 # private-etc must first be enabled in firefox-common.profile
 #private-etc cliqz

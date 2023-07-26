@@ -25,8 +25,6 @@
 #include <signal.h>
 #define MAX_BUF_SIZE (64 * 1024)
 
-static int arg_netfilter = 0;
-static int arg_tail = 0;
 static char *arg_log = NULL;
 
 //*****************************************************************
@@ -42,6 +40,7 @@ uint32_t stats_tls = 0;
 uint32_t stats_quic = 0;
 uint32_t stats_tor = 0;
 uint32_t stats_http = 0;
+uint32_t stats_ssh = 0;
 
 //*****************************************************************
 // sni/dns log storage
@@ -191,9 +190,6 @@ static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint
 	if (!hnew->rnode)
 		hnew->rnode = radix_add(hnew->ip_src, 0xffffffff, NULL);
 	hnew->rnode->pkts++;
-
-	if (arg_netfilter)
-		logprintf(" %d.%d.%d.%d ", PRINT_IP(hnew->ip_src));
 }
 
 static void hnode_free(HNode *elem) {
@@ -357,7 +353,6 @@ static inline const char *common_port(uint16_t port) {
 
 
 static void hnode_print(unsigned bw) {
-	assert(!arg_netfilter);
 	bw = (bw < 1024 * DISPLAY_INTERVAL) ? 1024 * DISPLAY_INTERVAL : bw;
 #ifdef DEBUG
 	printf("*********************\n");
@@ -459,6 +454,8 @@ static void hnode_print(unsigned bw) {
 					stats_http += ptr->pkts;
 				else if (strcmp(protocol, "Tor") == 0)
 					stats_tor += ptr->pkts;
+				else if (strcmp(protocol, "SSH") == 0)
+					stats_ssh += ptr->pkts;
 			}
 			else if (ptr->protocol == 0x11)
 				protocol = "UDP";
@@ -514,9 +511,6 @@ void print_stats(void) {
 
 // trace rx traffic coming in
 static void run_trace(void) {
-	if (arg_netfilter)
-		logprintf("accumulating traffic for %d seconds\n", NETLOCK_INTERVAL);
-
 	// trace only rx ipv4 tcp and upd
 	int s1 = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
 	int s2 = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
@@ -525,44 +519,28 @@ static void run_trace(void) {
 		errExit("socket");
 
 
-	int p1 = -1;
-	if (!arg_netfilter)
-		p1 = runprog(LIBDIR "/firejail/fnettrace-sni");
+	int p1 = runprog(LIBDIR "/firejail/fnettrace-sni");
 	if (p1 != -1)
 		printf("loading snitrace...");
 
-	int p2 = -1;
-	if (!arg_netfilter)
-		p2 = runprog(LIBDIR "/firejail/fnettrace-dns --nolocal");
+	int p2 = runprog(LIBDIR "/firejail/fnettrace-dns --nolocal");
 	if (p2 != -1)
 		printf("loading dnstrace...");
-	unsigned start = time(NULL);
 	unsigned last_print_traces = 0;
-	unsigned last_print_remaining = 0;
 	unsigned char buf[MAX_BUF_SIZE];
 	unsigned bw = 0; // bandwidth calculations
 
 	while (1) {
 		unsigned end = time(NULL);
-		if (arg_netfilter && end - start >= NETLOCK_INTERVAL)
-			break;
 		if (end % DISPLAY_INTERVAL == 1 && last_print_traces != end) { // first print after 1 second
-			if (!arg_netfilter)
-				hnode_print(bw);
+			hnode_print(bw);
 			last_print_traces = end;
 			bw = 0;
 		}
-		if (arg_netfilter && last_print_remaining != end) {
-			logprintf(".");
-			fflush(0);
-			last_print_remaining = end;
-		}
 
 		fd_set rfds;
-
 		FD_ZERO(&rfds);
-		if (!arg_netfilter)
-			FD_SET(0, &rfds);
+		FD_SET(0, &rfds);
 
 		FD_SET(s1, &rfds);
 		FD_SET(s2, &rfds);
@@ -596,11 +574,11 @@ static void run_trace(void) {
 		int sock = s1;
 		int icmp = 0;
 
-		if (!arg_netfilter && FD_ISSET(0, &rfds)) {
+		if (FD_ISSET(0, &rfds)) {
 			getchar();
 			printf("\n\nStats: %u packets\n", stats_pkts);
-			printf("   encrypted: TLS %u, QUIC %u, Tor %u\n",
-				stats_tls, stats_quic, stats_tor);
+			printf("   encrypted: TLS %u, QUIC %u, SSH %u, Tor %u\n",
+				stats_tls, stats_quic, stats_ssh, stats_tor);
 			printf("   unencrypted: HTTP %u\n", stats_http);
 			printf("   C&C backchannel: PING %u, DNS %u, DoH %u, DoT %u, DoQ %u\n",
 				stats_icmp_echo, stats_dns, stats_dns_doh, stats_dns_dot, stats_dns_doq);
@@ -628,7 +606,7 @@ static void run_trace(void) {
 			getchar();
 			continue;
 		}
-		else if (!arg_netfilter && FD_ISSET(p1, &rfds)) {
+		else if (FD_ISSET(p1, &rfds)) {
 			char buf[1024];
 			ssize_t sz = read(p1, buf, 1024 - 1);
 			if (sz == -1)
@@ -650,7 +628,7 @@ static void run_trace(void) {
 			}
 			continue;
 		}
-		else if (!arg_netfilter && FD_ISSET(p2, &rfds)) {
+		else if (FD_ISSET(p2, &rfds)) {
 			char buf[1024];
 			ssize_t sz = read(p2, buf, 1024 - 1);
 			if (sz == -1)
@@ -730,142 +708,6 @@ static void run_trace(void) {
 	print_stats();
 }
 
-static char *filter_start =
-	"*filter\n"
-	":INPUT DROP [0:0]\n"
-	":FORWARD DROP [0:0]\n"
-	":OUTPUT DROP [0:0]\n";
-
-// return 1 if error
-static int print_filter(FILE *fp) {
-	if (dlist == NULL)
-		return 1;
-	fprintf(fp, "%s\n", filter_start);
-	fprintf(fp, "-A INPUT -s 127.0.0.0/8 -j ACCEPT\n");
-	fprintf(fp, "-A OUTPUT -d 127.0.0.0/8 -j ACCEPT\n");
-	fprintf(fp, "\n");
-
-	int i;
-	for (i = 0; i < HMAX; i++) {
-		HNode *ptr = htable[i];
-		while (ptr) {
-			// filter rules are targeting ip address, the port number is disregarded,
-			// so we look only at the first instance of an address
-			if (ptr->ip_instance == 1) {
-				char *protocol = (ptr->protocol == 6) ? "tcp" : "udp";
-				fprintf(fp, "-A INPUT -s %d.%d.%d.%d -p %s  -j ACCEPT\n",
-					PRINT_IP(ptr->ip_src),
-					protocol);
-				fprintf(fp, "-A OUTPUT -d %d.%d.%d.%d -p %s  -j ACCEPT\n",
-					PRINT_IP(ptr->ip_src),
-					protocol);
-				fprintf(fp, "\n");
-			}
-			ptr = ptr->hnext;
-		}
-	}
-	fprintf(fp, "COMMIT\n");
-
-	return 0;
-}
-
-static char *flush_rules[] = {
-	"-P INPUT ACCEPT",
-//	"-P FORWARD DENY",
-	"-P OUTPUT ACCEPT",
-	"-F",
-	"-X",
-//	"-t nat -F",
-//	"-t nat -X",
-//	"-t mangle -F",
-//	"-t mangle -X",
-//	"iptables -t raw -F",
-//	"-t raw -X",
-	NULL
-};
-
-static void deploy_netfilter(void) {
-	int rv;
-	char *cmd;
-	int i;
-
-	if (dlist == NULL) {
-		logprintf("Sorry, no network traffic was detected. The firewall was not configured.\n");
-		return;
-	}
-	// find iptables command
-	char *iptables = NULL;
-	char *iptables_restore = NULL;
-	if (access("/sbin/iptables", X_OK) == 0) {
-		iptables = "/sbin/iptables";
-		iptables_restore = "/sbin/iptables-restore";
-	}
-	else if (access("/usr/sbin/iptables", X_OK) == 0) {
-		iptables = "/usr/sbin/iptables";
-		iptables_restore = "/usr/sbin/iptables-restore";
-	}
-	if (iptables == NULL || iptables_restore == NULL) {
-		fprintf(stderr, "Error: iptables command not found, netfilter not configured\n");
-		exit(1);
-	}
-
-	// flush all netfilter rules
-	i = 0;
-	while (flush_rules[i]) {
-		char *cmd;
-		if (asprintf(&cmd, "%s %s", iptables, flush_rules[i]) == -1)
-			errExit("asprintf");
-		int rv = system(cmd);
-		(void) rv;
-		free(cmd);
-		i++;
-	}
-
-	// create temporary file
-	char fname[] = "/tmp/firejail-XXXXXX";
-	int fd = mkstemp(fname);
-	if (fd == -1) {
-		fprintf(stderr, "Error: cannot create temporary configuration file\n");
-		exit(1);
-	}
-
-	FILE *fp = fdopen(fd, "w");
-	if (!fp) {
-		rv = unlink(fname);
-		(void) rv;
-		fprintf(stderr, "Error: cannot create temporary configuration file\n");
-		exit(1);
-	}
-	print_filter(fp);
-	fclose(fp);
-
-	logprintf("\n\n");
-	logprintf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
-	if (asprintf(&cmd, "cat %s >> %s", fname, arg_log) == -1)
-		errExit("asprintf");
-	rv = system(cmd);
-	(void) rv;
-	free(cmd);
-
-	if (asprintf(&cmd, "cat %s", fname) == -1)
-		errExit("asprintf");
-	rv = system(cmd);
-	(void) rv;
-	free(cmd);
-	logprintf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
-
-	// configuring
-	if (asprintf(&cmd, "%s %s", iptables_restore, fname) == -1)
-		errExit("asprintf");
-	rv = system(cmd);
-	if (rv)
-		fprintf(stdout, "Warning: possible netfilter problem!");
-	free(cmd);
-
-	rv = unlink(fname);
-	(void) rv;
-	logprintf("\nfirewall deployed\n");
-}
 
 void logprintf(char *fmt, ...) {
 	if (!arg_log)
@@ -891,14 +733,8 @@ static const char *const usage_str =
 	"Options:\n"
 	"   --help, -? - this help screen\n"
 	"   --log=filename - netlocker logfile\n"
-	"   --netfilter - build the firewall rules and commit them\n"
 	"   --print-map - print IP map\n"
-	"   --squash-map - compress IP map\n"
-	"   --tail - \"tail -f\" functionality\n"
-	"Examples:\n"
-	"   # fnettrace                              - traffic trace\n"
-	"   # fnettrace --netfilter --log=logfile    - netlocker, dump output in logfile\n"
-	"   # fnettrace --tail --log=logifile        - similar to \"tail -f logfile\"\n";
+	"   --squash-map - compress IP map\n";
 
 static void usage(void) {
 	puts(usage_str);
@@ -956,29 +792,12 @@ int main(int argc, char **argv) {
 			fprintf(stderr, "static ip map: input %d, output %d\n", in, radix_nodes);
 			return 0;
 		}
-		else if (strcmp(argv[i], "--netfilter") == 0)
-			arg_netfilter = 1;
-		else if (strcmp(argv[i], "--tail") == 0)
-			arg_tail = 1;
 		else if (strncmp(argv[i], "--log=", 6) == 0)
 			arg_log = argv[i] + 6;
 		else {
 			fprintf(stderr, "Error: invalid argument\n");
 			return 1;
 		}
-	}
-
-	// tail
-	if (arg_tail) {
-		if (!arg_log) {
-			fprintf(stderr, "Error: no log file\n");
-			usage();
-			exit(1);
-		}
-
-		tail(arg_log);
-		sleep(5);
-		exit(0);
 	}
 
 	if (getuid() != 0) {
@@ -996,25 +815,10 @@ int main(int argc, char **argv) {
 	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
 
 	ansi_clrscr();
-	if (arg_netfilter)
-		logprintf("starting network lockdown\n");
-	else  {
-		char *fname = LIBDIR "/firejail/static-ip-map";
-		load_hostnames(fname);
-	}
+	char *fname = LIBDIR "/firejail/static-ip-map";
+	load_hostnames(fname);
 
 	run_trace();
-	if (arg_netfilter) {
-		// TCP path MTU discovery will not work properly since the firewall drops all ICMP packets
-		// Instead, we use iPacketization Layer PMTUD (RFC 4821) support in Linux kernel
-		int rv = system("echo 1 > /proc/sys/net/ipv4/tcp_mtu_probing");
-		(void) rv;
-
-		deploy_netfilter();
-		sleep(3);
-		if (arg_log)
-			unlink(arg_log);
-	}
 
 	return 0;
 }

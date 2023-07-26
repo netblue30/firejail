@@ -141,6 +141,7 @@
 # some popular websites
 5.255.255.0/24 Yandex
 23.160.0.0/24 Twitch
+23.229.128.0/17 GoDaddy
 23.246.0.0/18 Netflix
 31.13.24.0/21 Facebook
 31.13.64.0/17 Facebook
@@ -218,6 +219,7 @@
 162.254.192.0/21 Steam
 172.98.56.0/22 Rumble
 173.208.154.8/29 BitChute
+173.208.154.160/29 BitChute
 173.208.185.200/29 BitChute
 173.208.219.112/29 BitChute
 178.154.131.0/24 Yandex
@@ -243,6 +245,7 @@
 192.151.158.136/29 BitChute
 192.173.64.0/18 Netflix
 192.187.97.88/29 BitChute
+192.187.114.96/29 BitChute
 192.187.123.112/29 BitChute
 192.189.200.0/23 Dropbox
 194.169.254.0/24 Ubuntu One
@@ -325,6 +328,7 @@
 205.185.196.0/23 StackPath
 205.185.198.0/24 StackPath
 205.185.200.0/21 StackPath
+205.185.208.0/24 StackPath
 205.185.212.0/23 StackPath
 205.185.215.0/24 StackPath
 205.185.216.0/23 StackPath

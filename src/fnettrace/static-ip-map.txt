@@ -127,6 +127,7 @@
 216.146.36.36/32 Dyn DNS
 
 # whois
+45.88.202.0/24 Anonymize Inc WHOIS Privacy Service
 192.0.32.0/20 ICANN
 193.0.0.0/21 whois.ripe.net Netherlands
 199.5.26.0/24 whois.arin.net US
@@ -247,6 +248,7 @@
 192.187.97.88/29 BitChute
 192.187.114.96/29 BitChute
 192.187.123.112/29 BitChute
+192.187.126.0/29 BitChute
 192.189.200.0/23 Dropbox
 194.169.254.0/24 Ubuntu One
 198.38.96.0/19 Netflix
@@ -544,6 +546,8 @@
 52.152.0.0/13 Microsoft
 52.146.0.0/15 Microsoft
 52.160.0.0/11 Microsoft
+168.61.0.0/16 Microsoft
+168.62.0.0/15 Microsoft
 
 # Yahoo
 63.250.192.0/19 Yahoo
@@ -569,7 +573,7 @@
 34.64.0.0/10 Google
 34.128.0.0/10 Google
 35.184.0.0/13 Google
-35.192.0.0/14 Google
+35.192.0.0/12 Google
 35.196.0.0/15 Google
 35.198.0.0/16 Google
 35.199.0.0/17 Google

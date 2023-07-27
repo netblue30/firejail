@@ -293,44 +293,54 @@ uninstall: config.mk
 	@echo "If you want to install a different version of firejail, you might also need to run 'rm -fr $(DESTDIR)$(sysconfdir)/firejail', see #2038."
 
 DISTFILES = \
-COPYING \
-Makefile \
-README \
-RELNOTES \
-config.mk.in \
-config.sh.in \
-configure \
-configure.ac \
-contrib \
-etc \
-install.sh \
-m4 \
-mkdeb.sh \
-mketc.sh \
-platform \
-src
+	COPYING \
+	Makefile \
+	README \
+	RELNOTES \
+	config.mk.in \
+	config.sh.in \
+	configure \
+	configure.ac \
+	contrib \
+	etc \
+	install.sh \
+	m4 \
+	mkdeb.sh \
+	mketc.sh \
+	platform \
+	src
 
-DISTFILES_TEST = test/Makefile test/apps test/apps-x11 test/apps-x11-xorg test/capabilities test/private-lib test/fnetfilter test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/fs test/sysutils
+DISTFILES_TEST = \
+	test/Makefile \
+	test/apps \
+	test/apps-x11 \
+	test/apps-x11-xorg \
+	test/capabilities \
+	test/compile \
+	test/environment \
+	test/fcopy \
+	test/filters \
+	test/fnetfilter \
+	test/fs \
+	test/network \
+	test/private-lib \
+	test/profiles \
+	test/sysutils \
+	test/utils
 
 .PHONY: dist
-dist: config.mk
-	mv config.sh config.sh.old
-	mv config.status config.status.old
-	$(MAKE) distclean
-	mv config.status.old config.status
-	mv config.sh.old config.sh
+dist: clean config.mk
 	rm -fr $(TARNAME)-$(VERSION) $(TARNAME)-$(VERSION).tar.xz
 	mkdir -p $(TARNAME)-$(VERSION)/test
 	cp -a $(DISTFILES) $(TARNAME)-$(VERSION)
 	cp -a $(DISTFILES_TEST) $(TARNAME)-$(VERSION)/test
 	rm -rf $(TARNAME)-$(VERSION)/src/tools
-	find $(TARNAME)-$(VERSION) -name .svn -delete
 	tar -cJvf $(TARNAME)-$(VERSION).tar.xz $(TARNAME)-$(VERSION)
 	rm -fr $(TARNAME)-$(VERSION)
 
 .PHONY: asc
-asc: config.mk
-	./mkasc.sh $(VERSION)
+asc: config.sh
+	./mkasc.sh
 
 .PHONY: deb
 deb: dist config.sh

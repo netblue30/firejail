@@ -79,7 +79,7 @@ echo "$DIST"
 tar -xJvf ../../"$DIST.tar.xz"
 mv "$DIST" firejail
 
-cd firejail
+cd firejail || exit 1
 ./configure --prefix=/usr --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
 cd ..
@@ -95,7 +95,7 @@ rm output-configure output-make
 # - disable dbus proxy configuration
 #*****************************************************************
 print_title "${arr[2]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-dbusproxy --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -112,7 +112,7 @@ rm output-configure output-make
 # - disable chroot configuration
 #*****************************************************************
 print_title "${arr[3]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-chroot --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -129,7 +129,7 @@ rm output-configure output-make
 # - disable firetunnel configuration
 #*****************************************************************
 print_title "${arr[4]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-firetunnel --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -146,7 +146,7 @@ rm output-configure output-make
 # - disable user namespace configuration
 #*****************************************************************
 print_title "${arr[5]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-userns --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -164,7 +164,7 @@ rm output-configure output-make
 # - check compilation
 #*****************************************************************
 print_title "${arr[6]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-network --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -181,7 +181,7 @@ rm output-configure output-make
 # - disable X11 support
 #*****************************************************************
 print_title "${arr[7]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-x11 --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -198,7 +198,7 @@ rm output-configure output-make
 # - enable selinux
 #*****************************************************************
 print_title "${arr[8]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --enable-selinux --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -215,7 +215,7 @@ rm output-configure output-make
 # - disable file transfer
 #*****************************************************************
 print_title "${arr[9]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-file-transfer --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -232,7 +232,7 @@ rm output-configure output-make
 # - disable whitelist
 #*****************************************************************
 print_title "${arr[10]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-whitelist --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -249,7 +249,7 @@ rm output-configure output-make
 # - disable global config
 #*****************************************************************
 print_title "${arr[11]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-globalcfg --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -266,7 +266,7 @@ rm output-configure output-make
 # - enable apparmor
 #*****************************************************************
 print_title "${arr[12]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --enable-apparmor --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -283,7 +283,7 @@ rm output-configure output-make
 # - enable busybox workaround
 #*****************************************************************
 print_title "${arr[13]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --enable-busybox-workaround --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -300,7 +300,7 @@ rm output-configure output-make
 # - disable overlayfs
 #*****************************************************************
 print_title "${arr[14]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-overlayfs --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -317,7 +317,7 @@ rm output-configure output-make
 # - disable private home
 #*****************************************************************
 print_title "${arr[15]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-private-home --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -334,7 +334,7 @@ rm output-configure output-make
 # - disable manpages
 #*****************************************************************
 print_title "${arr[16]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-man --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -351,7 +351,7 @@ rm output-configure output-make
 # - disable tmpfs as regular user"
 #*****************************************************************
 print_title "${arr[17]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-usertmpfs --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -368,7 +368,7 @@ rm output-configure output-make
 # - disable private home feature
 #*****************************************************************
 print_title "${arr[18]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-private-home --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make
@@ -385,7 +385,7 @@ rm output-configure output-make
 # - enable ids
 #*****************************************************************
 print_title "${arr[19]}"
-cd firejail
+cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --enable-ids --enable-fatal-warnings 2>&1 | tee ../output-configure
 make -j4 2>&1 | tee ../output-make

@@ -11,7 +11,8 @@
 #                          install contrib scripts
 #  --enable-analyzer       enable GCC 10 static analyzer
 
-
+# shellcheck source=config.sh
+. "$(dirname "$0")/../../config.sh" || exit 1
 
 arr[1]="TEST 1: standard compilation"
 arr[2]="TEST 2: compile dbus proxy disabled"
@@ -51,7 +52,7 @@ print_title() {
 	echo "**************************************************"
 }
 
-DIST="$1"
+DIST="$(TARNAME)-$(VERSION)"
 while [[ $# -gt 0 ]]; do    # Until you run out of parameters . . .
 	case "$1" in
 	--clean)

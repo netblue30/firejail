@@ -3,15 +3,18 @@
 # Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 #
-# Usage: ./platform/rpm/mkrpm.sh firejail <version> "<config options>"
+# Usage: ./platform/rpm/mkrpm.sh <config options>
 #
 # Builds rpms in a temporary directory then places the result in the
 # current working directory.
 
-name="$1"
+# shellcheck source=config.sh
+. "$(dirname "$0")/../../config.sh" || exit 1
+
+name="$TARNAME"
 # Strip any trailing prefix from the version like -rc1 etc
-version="$(printf '%s\n' "$2" | sed 's/\-.*//g')"
-config_opt="$3"
+version="$(printf '%s\n' "$VERSION" | sed 's/\-.*//g')"
+config_opt="$*"
 
 if [[ ! -f "platform/rpm/${name}.spec" ]]; then
     printf 'error: spec file not found for name %s\n' "${name}" >&2

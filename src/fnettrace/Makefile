@@ -7,6 +7,8 @@ MOD_DIR = $(ROOT)/src/$(MOD)
 PROG = $(MOD_DIR)/$(MOD)
 TARGET = $(PROG)
 
+CLEANFILES += static-ip-map
+
 include $(ROOT)/src/prog.mk
 
 all: $(TARGET) static-ip-map

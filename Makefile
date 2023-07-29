@@ -175,17 +175,6 @@ clean:
 	rm -f $(SECCOMP_FILTERS)
 	rm -f $(SYNTAX_FILES)
 	rm -f firejail*.rpm
-	rm -f src/fnettrace/static-ip-map
-	rm -fr test/environment/-testdir
-	rm -f test/environment/index.html*
-	rm -f test/environment/logfile*
-	rm -f test/environment/wget-log*
-	rm -f test/sysutils/firejail_t*
-	rm -f test/utils/firejail-test-file*
-	rm -f test/utils/index.html*
-	rm -f test/utils/lstesting
-	rm -f test/utils/wget-log
-	cd test/compile; ./compile.sh --clean; cd ../..
 
 .PHONY: distclean
 distclean: clean

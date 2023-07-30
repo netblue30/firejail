@@ -347,12 +347,12 @@ deb: dist config.sh
 	./mkdeb.sh
 
 .PHONY: test-compile
-test-compile: dist config.mk
-	cd test/compile; ./compile.sh $(TARNAME)-$(VERSION)
+test-compile: dist config.sh
+	cd test/compile; ./compile.sh
 
 .PHONY: rpms
-rpms: src/man config.mk
-	./platform/rpm/mkrpm.sh $(TARNAME) $(VERSION)
+rpms: src/man config.sh
+	./platform/rpm/mkrpm.sh
 
 .PHONY: extras
 extras: all

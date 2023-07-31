@@ -6,6 +6,7 @@ include gramps.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/gramps
 noblacklist ${HOME}/.gramps
 
 # Allow python (blacklisted by disable-interpreters.inc)
@@ -19,7 +20,9 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.config/gramps
 mkdir ${HOME}/.gramps
+whitelist ${HOME}/.config/gramps
 whitelist ${HOME}/.gramps
 include whitelist-common.inc
 include whitelist-var-common.inc

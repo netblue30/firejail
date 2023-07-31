@@ -6,7 +6,7 @@ include reader.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc
@@ -44,7 +44,6 @@ protocol inet
 seccomp
 seccomp.block-secondary
 tracelog
-x11 none
 
 disable-mnt
 private

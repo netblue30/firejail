@@ -15,7 +15,6 @@ include disable-interpreters.inc
 include disable-proc.inc
 include disable-programs.inc
 include disable-shell.inc
-include disable-X11.inc
 include disable-xdg.inc
 
 include whitelist-common.inc
@@ -44,6 +43,7 @@ protocol inet
 seccomp
 seccomp.block-secondary
 tracelog
+x11 none
 
 disable-mnt
 private

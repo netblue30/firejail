@@ -28,6 +28,7 @@ noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.config/yt-dlp
 noblacklist ${HOME}/.config/yt-dlp.conf
+noblacklist ${HOME}/.local/state/mpv
 noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/yt-dlp.conf
 noblacklist ${HOME}/yt-dlp.conf.txt
@@ -50,11 +51,13 @@ include disable-shell.inc
 
 read-only ${DESKTOP}
 mkdir ${HOME}/.config/mpv
+mkdir ${HOME}/.local/state/mpv
 mkfile ${HOME}/.netrc
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.config/yt-dlp
 whitelist ${HOME}/.config/yt-dlp.conf
+whitelist ${HOME}/.local/state/mpv
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/yt-dlp.conf
 whitelist ${HOME}/yt-dlp.conf.txt

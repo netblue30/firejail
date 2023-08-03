@@ -32,8 +32,6 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/mps-youtube
-mkdir ${HOME}/.config/mpv
-mkdir ${HOME}/.config/youtube-dl
 mkdir ${HOME}/.mplayer
 mkdir ${HOME}/mps
 whitelist ${HOME}/.config/mps-youtube

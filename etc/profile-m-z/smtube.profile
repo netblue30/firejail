@@ -6,12 +6,14 @@ include smtube.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/mpv
+noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/smplayer
 noblacklist ${HOME}/.config/smtube
-noblacklist ${HOME}/.config/mpv
-noblacklist ${HOME}/.mplayer
 noblacklist ${HOME}/.config/vlc
 noblacklist ${HOME}/.local/share/vlc
+noblacklist ${HOME}/.local/state/mpv
+noblacklist ${HOME}/.mplayer
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
 

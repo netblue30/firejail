@@ -171,6 +171,7 @@ blacklist ${HOME}/.cache/mirage
 blacklist ${HOME}/.cache/moonchild productions/basilisk
 blacklist ${HOME}/.cache/moonchild productions/pale moon
 blacklist ${HOME}/.cache/mozilla
+blacklist ${HOME}/.cache/mpv
 blacklist ${HOME}/.cache/ms-excel-online
 blacklist ${HOME}/.cache/ms-office-online
 blacklist ${HOME}/.cache/ms-onenote-online

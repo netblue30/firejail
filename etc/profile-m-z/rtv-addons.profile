@@ -11,13 +11,17 @@ ignore nosound
 ignore private-bin
 ignore dbus-user none
 
+noblacklist ${HOME}/.cache/mpv
 noblacklist ${HOME}/.config/mpv
+noblacklist ${HOME}/.local/state/mpv
 noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/.w3m
 
+whitelist ${HOME}/.cache/mpv
 whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
 whitelist ${HOME}/.config/mpv
+whitelist ${HOME}/.local/state/mpv
 whitelist ${HOME}/.mailcap
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/.w3m

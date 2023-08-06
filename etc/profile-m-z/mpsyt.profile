@@ -6,9 +6,11 @@ include mpsyt.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/mpv
 noblacklist ${HOME}/.config/mps-youtube
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/youtube-dl
+noblacklist ${HOME}/.local/state/mpv
 noblacklist ${HOME}/.mplayer
 noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/mps
@@ -32,13 +34,13 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/mps-youtube
-mkdir ${HOME}/.config/mpv
-mkdir ${HOME}/.config/youtube-dl
 mkdir ${HOME}/.mplayer
 mkdir ${HOME}/mps
+whitelist ${HOME}/.cache/mpv
 whitelist ${HOME}/.config/mps-youtube
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/youtube-dl
+whitelist ${HOME}/.local/state/mpv
 whitelist ${HOME}/.mplayer
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/mps

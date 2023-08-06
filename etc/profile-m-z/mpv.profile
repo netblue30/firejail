@@ -24,6 +24,7 @@ include globals.local
 #include allow-bin-sh.inc
 #private-bin sh
 
+noblacklist ${HOME}/.cache/mpv
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.config/yt-dlp
@@ -50,9 +51,11 @@ include disable-programs.inc
 include disable-shell.inc
 
 read-only ${DESKTOP}
+mkdir ${HOME}/.cache/mpv
 mkdir ${HOME}/.config/mpv
 mkdir ${HOME}/.local/state/mpv
 mkfile ${HOME}/.netrc
+whitelist ${HOME}/.cache/mpv
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.config/yt-dlp

@@ -10,6 +10,9 @@ noblacklist ${HOME}/.cache/0ad
 noblacklist ${HOME}/.config/0ad
 noblacklist ${HOME}/.local/share/0ad
 
+# Allow gjs (blacklisted by disable-interpreters.inc)
+include allow-gjs.inc
+
 blacklist /usr/libexec
 
 include disable-common.inc

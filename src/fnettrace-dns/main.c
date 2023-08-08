@@ -66,7 +66,7 @@ void print_dns(uint32_t ip_src, unsigned char *pkt) {
 
 	// filter output
 	char tmp[sizeof(last)];
-	snprintf(tmp, sizeof(last), "%02d:%02d:%02d  %-15s  %s (type %u)%s",
+	snprintf(tmp, sizeof(last), "%02d:%02d:%02d  %-15s  DNS %s (type %u)%s",
 		t->tm_hour, t->tm_min, t->tm_sec, ip, pkt + 12 + 1,
 		type, (nxdomain)? " NXDOMAIN": "");
 	if (strcmp(tmp, last)) {

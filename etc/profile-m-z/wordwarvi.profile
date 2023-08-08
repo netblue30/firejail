@@ -40,7 +40,6 @@ seccomp
 tracelog
 
 disable-mnt
-private
 private-bin wordwarvi
 private-cache
 private-dev

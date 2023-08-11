@@ -28,11 +28,11 @@ include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 # Due to the nature of parsec, the following directives will not work:
-# - no3d
-# - noinput (it does remote passthrough stuff for gamepads)
-# - nosound
-# - novideo
-# - private-dev (same as noinput)
+# no3d
+# noinput (it does remote passthrough stuff for gamepads)
+# nosound
+# novideo
+# private-dev (same as noinput)
 apparmor
 caps.drop all
 nodvd

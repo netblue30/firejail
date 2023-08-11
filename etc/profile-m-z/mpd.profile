@@ -41,4 +41,8 @@ private-cache
 private-dev
 private-tmp
 
+dbus-user filter
+dbus-user.talk org.mpris.MediaPlayer2.mpd
+dbus-system none
+
 restrict-namespaces

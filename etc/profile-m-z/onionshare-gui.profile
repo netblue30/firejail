@@ -50,7 +50,7 @@ novideo
 protocol unix,inet,inet6
 seccomp
 seccomp.block-secondary
-#tracelog - may cause issues, see #1930
+#tracelog # may cause issues, see #1930
 
 disable-mnt
 private-bin onionshare,onionshare-cli,onionshare-gui,python*,tor*

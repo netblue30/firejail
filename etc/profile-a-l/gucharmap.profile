@@ -22,7 +22,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 machine-id
-#net none - breaks dbus
+#net none # breaks dbus
 no3d
 nodvd
 nogroups
@@ -46,8 +46,7 @@ private-etc @x11,dbus-1,gconf,mime.types
 private-lib
 private-tmp
 
-# breaks state saving
-# dbus-user none
+# dbus-user none # breaks state saving
 # dbus-system none
 
 read-only ${HOME}

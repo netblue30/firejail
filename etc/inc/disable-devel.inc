@@ -8,8 +8,7 @@ include disable-devel.local
 blacklist ${PATH}/clang*
 blacklist ${PATH}/lldb*
 blacklist ${PATH}/llvm*
-# see issue #2106 - it disables hardware acceleration in Firefox on Radeon GPU
-# blacklist /usr/lib/llvm*
+#blacklist /usr/lib/llvm* # breaks hardware acceleration in Firefox on Radeon GPU (see #2106)
 
 # GCC
 blacklist ${PATH}/as
@@ -26,8 +25,7 @@ blacklist ${PATH}/*-gcc*
 blacklist ${PATH}/*-g++*
 blacklist ${PATH}/*-gcc*
 blacklist ${PATH}/*-g++*
-# seems to create problems on Gentoo
-#blacklist /usr/lib/gcc
+#blacklist /usr/lib/gcc # seems to create problems on Gentoo
 
 #Go
 blacklist ${PATH}/gccgo

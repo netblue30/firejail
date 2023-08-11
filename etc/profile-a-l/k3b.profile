@@ -24,16 +24,16 @@ caps.keep chown,dac_override,ipc_lock,net_bind_service,sys_admin,sys_nice,sys_ra
 # net none
 netfilter
 no3d
-# nonewprivs - breaks privileged helpers
+#nonewprivs # breaks privileged helpers
 noinput
-# noroot - breaks privileged helpers
+#noroot # breaks privileged helpers
 nosound
 notv
 novideo
-# protocol unix - breaks privileged helpers
-# seccomp - breaks privileged helpers
+#protocol unix # breaks privileged helpers
+#seccomp # breaks privileged helpers
 
 private-dev
 # private-tmp
 
-# restrict-namespaces - breaks privileged helpers
+#restrict-namespaces # breaks privileged helpers

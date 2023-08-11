@@ -22,7 +22,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 machine-id
-# net none - breaks on older Ubuntu versions
+#net none # breaks on older Ubuntu versions
 netfilter
 no3d
 nodvd

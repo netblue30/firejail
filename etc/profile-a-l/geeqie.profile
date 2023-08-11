@@ -32,7 +32,7 @@ novideo
 protocol unix,inet,inet6
 seccomp
 
-# private-bin geeqie
+#private-bin geeqie
 private-dev
 
 restrict-namespaces

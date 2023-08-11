@@ -564,7 +564,7 @@ blacklist ${PATH}/bmon
 blacklist ${PATH}/fping
 blacklist ${PATH}/fping6
 blacklist ${PATH}/hostname
-# blacklist ${PATH}/ip - breaks --ip=dhcp
+#blacklist ${PATH}/ip # breaks --ip=dhcp
 blacklist ${PATH}/mtr
 blacklist ${PATH}/mtr-packet
 blacklist ${PATH}/netstat

@@ -44,7 +44,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 machine-id
-# net none
+#net none
 netfilter
 nodvd
 nogroups
@@ -65,10 +65,10 @@ private-etc @x11,cups
 # on KDE we need access to the real /tmp for data exchange with email clients
 #private-tmp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
-# memory-deny-write-execute
+#memory-deny-write-execute
 
 restrict-namespaces
 join-or-start okular

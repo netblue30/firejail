@@ -26,11 +26,11 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6
-# seccomp
+#seccomp
 
-# private-bin amarok
+#private-bin amarok
 private-dev
-# private-etc alternatives,asound.conf,ca-certificates,crypto-policies,machine-id,pki,pulse,resolv.conf,ssl
+#private-etc alternatives,asound.conf,ca-certificates,crypto-policies,machine-id,pki,pulse,resolv.conf,ssl
 private-tmp
 
 dbus-user filter
@@ -45,4 +45,4 @@ dbus-user.talk org.freedesktop.Notifications
 #dbus-user.talk org.kde.knotify
 dbus-system none
 
-# restrict-namespaces
+#restrict-namespaces

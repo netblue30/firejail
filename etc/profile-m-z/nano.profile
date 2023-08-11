@@ -41,7 +41,7 @@ seccomp
 tracelog
 x11 none
 
-# disable-mnt
+#disable-mnt
 private-bin nano,rnano
 private-cache
 private-dev

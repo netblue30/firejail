@@ -43,7 +43,7 @@ seccomp !chroot
 #private-etc alternatives,ca-certificates,crypto-policies,pki,ssl
 private-tmp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
-# restrict-namespaces
+#restrict-namespaces

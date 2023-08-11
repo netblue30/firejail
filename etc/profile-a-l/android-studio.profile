@@ -36,7 +36,7 @@ protocol unix,inet,inet6
 seccomp
 
 private-cache
-# private-tmp
+#private-tmp
 
 # noexec /tmp breaks 'Android Profiler'
 #noexec /tmp

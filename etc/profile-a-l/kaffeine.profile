@@ -36,7 +36,7 @@ novideo
 protocol unix,inet,inet6
 seccomp
 
-# private-bin kaffeine
+#private-bin kaffeine
 private-dev
 private-tmp
 

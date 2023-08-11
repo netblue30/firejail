@@ -50,10 +50,10 @@ protocol inet,inet6
 seccomp
 tracelog
 
-# private-bin curl
+#private-bin curl
 private-cache
 private-dev
-# private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl
+#private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl
 private-etc @tls-ca
 private-tmp
 

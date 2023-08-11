@@ -34,11 +34,11 @@ protocol unix,inet,inet6,netlink
 seccomp
 
 disable-mnt
-# private-bin unknown-horizons
+#private-bin unknown-horizons
 private-dev
-# private-etc alternatives,ca-certificates,crypto-policies,pki,ssl
+#private-etc alternatives,ca-certificates,crypto-policies,pki,ssl
 private-tmp
 
 # doesn't work - maybe all Tcl/Tk programs have this problem
-# memory-deny-write-execute
+#memory-deny-write-execute
 restrict-namespaces

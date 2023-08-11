@@ -15,10 +15,10 @@ noblacklist ${HOME}/.config/catfish
 include allow-python2.inc
 include allow-python3.inc
 
-# include disable-common.inc
-# include disable-devel.inc
+#include disable-common.inc
+#include disable-devel.inc
 include disable-interpreters.inc
-# include disable-programs.inc
+#include disable-programs.inc
 
 whitelist /var/lib/mlocate
 include whitelist-var-common.inc
@@ -40,9 +40,9 @@ tracelog
 
 # These options work but are disabled in case
 # a users wants to search in these directories.
-# private-bin bash,catfish,env,locate,ls,mlocate,python*
-# private-dev
-# private-tmp
+#private-bin bash,catfish,env,locate,ls,mlocate,python*
+#private-dev
+#private-tmp
 
 dbus-user none
 dbus-system none

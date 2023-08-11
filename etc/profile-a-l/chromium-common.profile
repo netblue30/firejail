@@ -33,7 +33,7 @@ include whitelist-run-common.inc
 ?BROWSER_DISABLE_U2F: nou2f
 
 ?BROWSER_DISABLE_U2F: private-dev
-#private-tmp - issues when using multiple browser sessions
+#private-tmp # issues when using multiple browser sessions
 
 blacklist ${PATH}/curl
 blacklist ${PATH}/wget

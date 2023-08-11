@@ -19,9 +19,9 @@ include disable-shell.inc
 
 include whitelist-var-common.inc
 
-# apparmor - makes settings immutable
+#apparmor # makes settings immutable
 caps.drop all
-# net none - makes settings immutable
+#net none # makes settings immutable
 no3d
 nodvd
 nogroups
@@ -42,8 +42,8 @@ private-lib
 private-tmp
 
 # makes settings immutable
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 memory-deny-write-execute
 restrict-namespaces

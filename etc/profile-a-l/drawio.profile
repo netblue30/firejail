@@ -39,7 +39,7 @@ nou2f
 novideo
 protocol unix
 seccomp !chroot
-# tracelog - breaks on Arch
+#tracelog # breaks on Arch
 
 private-bin drawio
 private-cache
@@ -50,5 +50,5 @@ private-tmp
 dbus-user none
 dbus-system none
 
-# memory-deny-write-execute - breaks on Arch
-# restrict-namespaces
+#memory-deny-write-execute # breaks on Arch
+#restrict-namespaces

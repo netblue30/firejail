@@ -16,7 +16,7 @@ include disable-exec.inc
 
 caps.drop all
 ipc-namespace
-# net none - breaks dbus
+#net none # breaks dbus
 no3d
 nodvd
 nogroups

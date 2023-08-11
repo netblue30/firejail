@@ -41,7 +41,7 @@ seccomp
 tracelog
 
 disable-mnt
-# private-bin frozen-bubble
+#private-bin frozen-bubble
 private-dev
 private-etc @games,@x11
 private-tmp

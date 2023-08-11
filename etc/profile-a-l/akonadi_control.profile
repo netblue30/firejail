@@ -34,7 +34,7 @@ include whitelist-var-common.inc
 # disabled options below are not compatible with the apparmor profile for mysqld-akonadi.
 # this affects ubuntu and debian currently
 
-# apparmor
+#apparmor
 caps.drop all
 ipc-namespace
 netfilter
@@ -42,17 +42,17 @@ no3d
 nodvd
 nogroups
 noinput
-# nonewprivs
+#nonewprivs
 noroot
 nosound
 notv
 nou2f
 novideo
-# protocol unix,inet,inet6,netlink
-# seccomp !io_destroy,!io_getevents,!io_setup,!io_submit,!ioprio_set
+#protocol unix,inet,inet6,netlink
+#seccomp !io_destroy,!io_getevents,!io_setup,!io_submit,!ioprio_set
 tracelog
 
 private-dev
-# private-tmp - breaks programs that depend on akonadi
+#private-tmp # breaks programs that depend on akonadi
 
-# restrict-namespaces
+#restrict-namespaces

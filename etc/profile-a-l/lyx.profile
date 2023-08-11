@@ -31,7 +31,7 @@ include whitelist-usr-share-common.inc
 apparmor
 machine-id
 
-# private-bin atril,dvilualatex,env,latex,lua*,luatex,lyx,lyxclient,okular,pdf2latex,pdflatex,pdftex,perl*,python*,qpdf,qpdfview,sh,tex2lyx,texmf,xelatex
+#private-bin atril,dvilualatex,env,latex,lua*,luatex,lyx,lyxclient,okular,pdf2latex,pdflatex,pdftex,perl*,python*,qpdf,qpdfview,sh,tex2lyx,texmf,xelatex
 private-etc @x11,lyx,mime.types,texmf
 
 # Redirect

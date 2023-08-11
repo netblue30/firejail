@@ -22,7 +22,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-# apparmor
+#apparmor
 caps.drop all
 ipc-namespace
 netfilter
@@ -34,7 +34,7 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 
-# private-etc alternatives,drirc,fonts,gcrypt,hosts,kde5rc,mpd.conf,passwd,samba,ssl,xdg
+#private-etc alternatives,drirc,fonts,gcrypt,hosts,kde5rc,mpd.conf,passwd,samba,ssl,xdg
 private-bin cantata,mpd,perl
 private-dev
 

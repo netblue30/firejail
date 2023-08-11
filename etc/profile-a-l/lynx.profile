@@ -34,10 +34,10 @@ protocol unix,inet,inet6
 seccomp
 tracelog
 
-# private-bin lynx
+#private-bin lynx
 private-cache
 private-dev
-# private-etc alternatives,ca-certificates,crypto-policies,pki,ssl
+#private-etc alternatives,ca-certificates,crypto-policies,pki,ssl
 private-tmp
 
 restrict-namespaces

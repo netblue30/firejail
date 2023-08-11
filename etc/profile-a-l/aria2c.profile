@@ -39,7 +39,7 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 
-# disable-mnt
+#disable-mnt
 # Add your custom event hook commands to 'private-bin' in your aria2c.local.
 private-bin aria2c,gzip
 # Add 'private-cache' to your aria2c.local if you don't use Lutris/winetricks (see issue #2772).

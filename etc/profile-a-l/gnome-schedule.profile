@@ -46,7 +46,7 @@ apparmor
 caps.keep chown,dac_override,setgid,setuid
 ipc-namespace
 machine-id
-#net none - breaks on Ubuntu
+#net none # breaks on Ubuntu
 no3d
 nodvd
 nogroups

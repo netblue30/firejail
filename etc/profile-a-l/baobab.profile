@@ -6,13 +6,13 @@ include baobab.local
 # Persistent global definitions
 include globals.local
 
-# include disable-common.inc
+#include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
-# include disable-programs.inc
+#include disable-programs.inc
 include disable-shell.inc
-# include disable-xdg.inc
+#include disable-xdg.inc
 
 include whitelist-runuser-common.inc
 
@@ -37,8 +37,8 @@ private-bin baobab
 private-dev
 private-tmp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 read-only ${HOME}
 restrict-namespaces

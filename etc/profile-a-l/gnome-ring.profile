@@ -27,7 +27,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 
 disable-mnt
-# private-dev
+#private-dev
 private-tmp
 
 restrict-namespaces

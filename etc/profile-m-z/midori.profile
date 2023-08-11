@@ -13,8 +13,8 @@ noblacklist ${HOME}/.cache/midori
 noblacklist ${HOME}/.config/midori
 noblacklist ${HOME}/.local/share/midori
 noblacklist ${HOME}/.local/share/pki
-# noblacklist ${HOME}/.local/share/webkit
-# noblacklist ${HOME}/.local/share/webkitgtk
+#noblacklist ${HOME}/.local/share/webkit
+#noblacklist ${HOME}/.local/share/webkitgtk
 noblacklist ${HOME}/.pki
 
 noblacklist ${HOME}/.cache/gnome-mplayer
@@ -54,7 +54,7 @@ caps.drop all
 netfilter
 nodvd
 nonewprivs
-# noroot - problems on Ubuntu 14.04
+#noroot # problems on Ubuntu 14.04
 notv
 protocol unix,inet,inet6,netlink
 seccomp

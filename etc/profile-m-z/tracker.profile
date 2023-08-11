@@ -33,8 +33,8 @@ protocol unix
 seccomp
 tracelog
 
-# private-bin tracker
-# private-dev
-# private-tmp
+#private-bin tracker
+#private-dev
+#private-tmp
 
 restrict-namespaces

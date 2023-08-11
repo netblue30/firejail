@@ -54,7 +54,7 @@ private-etc @x11
 private-tmp
 
 # problems on Fedora 27
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 restrict-namespaces

@@ -31,13 +31,13 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-# no3d
+#no3d
 nodvd
 nogroups
 noinput
 nonewprivs
 noroot
-# nosound
+#nosound
 notv
 nou2f
 novideo

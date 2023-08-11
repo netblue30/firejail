@@ -48,7 +48,7 @@ protocol unix,inet,inet6,netlink
 seccomp !chroot
 
 disable-mnt
-# private-bin bibletime
+#private-bin bibletime
 private-cache
 private-dev
 private-etc @tls-ca,sword,sword.conf
@@ -57,4 +57,4 @@ private-tmp
 dbus-user none
 dbus-system none
 
-# restrict-namespaces
+#restrict-namespaces

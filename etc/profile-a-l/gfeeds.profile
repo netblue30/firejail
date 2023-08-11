@@ -58,7 +58,7 @@ tracelog
 
 disable-mnt
 private-bin gfeeds,python3*
-# private-cache -- feeds are stored in ~/.cache
+#private-cache # feeds are stored in ~/.cache
 private-dev
 private-etc @tls-ca,@x11,dbus-1,gconf,host.conf,mime.types,rpc,services
 private-tmp

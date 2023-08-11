@@ -21,13 +21,13 @@ apparmor
 caps.drop all
 ipc-namespace
 net none
-# no3d
+#no3d
 nodvd
 nogroups
 noinput
 nonewprivs
 noroot
-# nosound
+#nosound
 notv
 nou2f
 novideo
@@ -43,5 +43,5 @@ private-tmp
 dbus-user none
 dbus-system none
 
-# memory-deny-write-execute
+#memory-deny-write-execute
 restrict-namespaces

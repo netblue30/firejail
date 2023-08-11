@@ -38,9 +38,9 @@ protocol unix,inet,inet6
 seccomp
 tracelog
 
-# private-bin gjs,gnome-books,gnome-documents,gnome-maps,gnome-photos,gnome-weather
+#private-bin gjs,gnome-books,gnome-documents,gnome-maps,gnome-photos,gnome-weather
 private-dev
-# private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl
+#private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl
 private-tmp
 
 restrict-namespaces

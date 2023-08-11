@@ -36,8 +36,8 @@ tracelog
 
 private-bin awk,cut,dbus-send,egrep,file,grep,head,python*,readlink,sed,sh,udiskie,uname,which,xdg-mime,xdg-open,xprop
 # add your configured file browser in udiskie.local, e. g.
-# private-bin nautilus
-# private-bin thunar
+#private-bin nautilus
+#private-bin thunar
 private-cache
 private-dev
 private-etc @x11,mime.types

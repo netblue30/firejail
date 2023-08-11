@@ -43,7 +43,7 @@ seccomp
 tracelog
 
 disable-mnt
-#private-bin bash,geekbench*,sh -- #4576
+#private-bin bash,geekbench*,sh # #4576
 private-cache
 private-dev
 private-etc lsb-release

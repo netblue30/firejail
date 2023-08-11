@@ -25,14 +25,14 @@ include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 apparmor
-# caps.drop all
+#caps.drop all
 caps.keep dac_override,dac_read_search,net_admin,net_raw
 netfilter
 no3d
-# nogroups - breaks network traffic capture for unprivileged users
+#nogroups # breaks network traffic capture for unprivileged users
 noinput
-# nonewprivs - breaks network traffic capture for unprivileged users
-# noroot
+#nonewprivs # breaks network traffic capture for unprivileged users
+#noroot
 nodvd
 nosound
 notv
@@ -43,12 +43,12 @@ novideo
 #seccomp
 tracelog
 
-# private-bin wireshark
+#private-bin wireshark
 private-cache
 # private-dev prevents (some) interfaces from being shown.
 # Add the below line to your wirehsark.local if you only want to inspect pcap files.
 #private-dev
-# private-etc alternatives,ca-certificates,crypto-policies,fonts,group,hosts,machine-id,passwd,pki,resolv.conf,ssl
+#private-etc alternatives,ca-certificates,crypto-policies,fonts,group,hosts,machine-id,passwd,pki,resolv.conf,ssl
 private-tmp
 
 dbus-user none

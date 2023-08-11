@@ -22,7 +22,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 ipc-namespace
-# net none - breaks dbus
+#net none # breaks dbus
 no3d
 nodvd
 # When using 'volatile' storage (https://www.freedesktop.org/software/systemd/man/journald.conf.html),
@@ -47,8 +47,8 @@ private-lib
 private-tmp
 writable-var-log
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 memory-deny-write-execute
 # Add 'ignore read-only ${HOME}' to your gnome-system-log.local if you export logs to a file under your ${HOME}.

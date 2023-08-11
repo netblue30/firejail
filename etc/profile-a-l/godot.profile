@@ -34,7 +34,7 @@ seccomp
 tracelog
 
 
-# private-bin godot
+#private-bin godot
 private-cache
 private-dev
 private-etc @games,@tls-ca,@x11,mono

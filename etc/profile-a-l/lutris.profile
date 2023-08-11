@@ -13,7 +13,7 @@ noblacklist ${HOME}/.cache/wine
 noblacklist ${HOME}/.cache/winetricks
 noblacklist ${HOME}/.config/lutris
 noblacklist ${HOME}/.local/share/lutris
-# noblacklist ${HOME}/.wine
+#noblacklist ${HOME}/.wine
 noblacklist /tmp/.wine-*
 # Don't block access to /sbin and /usr/sbin to allow using ldconfig. Otherwise
 # Lutris won't even start.
@@ -39,7 +39,7 @@ mkdir ${HOME}/.cache/wine
 mkdir ${HOME}/.cache/winetricks
 mkdir ${HOME}/.config/lutris
 mkdir ${HOME}/.local/share/lutris
-# mkdir ${HOME}/.wine
+#mkdir ${HOME}/.wine
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/Games
 whitelist ${HOME}/.cache/lutris
@@ -47,7 +47,7 @@ whitelist ${HOME}/.cache/wine
 whitelist ${HOME}/.cache/winetricks
 whitelist ${HOME}/.config/lutris
 whitelist ${HOME}/.local/share/lutris
-# whitelist ${HOME}/.wine
+#whitelist ${HOME}/.wine
 whitelist /usr/share/lutris
 whitelist /usr/share/wine
 include whitelist-common.inc
@@ -55,11 +55,11 @@ include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
-# allow-debuggers
-# apparmor
+#allow-debuggers
+#apparmor
 caps.drop all
 ipc-namespace
-# net none
+#net none
 netfilter
 nodvd
 nogroups

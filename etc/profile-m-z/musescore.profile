@@ -37,7 +37,7 @@ protocol unix,inet,inet6
 seccomp !chroot
 tracelog
 
-# private-bin musescore,mscore
+#private-bin musescore,mscore
 private-tmp
 
-# restrict-namespaces
+#restrict-namespaces

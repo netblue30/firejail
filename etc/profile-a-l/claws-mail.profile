@@ -18,7 +18,7 @@ whitelist ${HOME}/.claws-mail
 
 whitelist /usr/share/doc/claws-mail
 
-# private-bin claws-mail,curl,gpg,gpg2,gpg-agent,gpgsm,gpgme-config,pinentry,pinentry-gtk-2
+#private-bin claws-mail,curl,gpg,gpg2,gpg-agent,gpgsm,gpgme-config,pinentry,pinentry-gtk-2
 
 # Redirect
 include email-common.profile

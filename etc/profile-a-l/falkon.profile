@@ -41,17 +41,17 @@ nou2f
 protocol unix,inet,inet6,netlink
 # blacklisting of chroot system calls breaks falkon
 seccomp !chroot
-# tracelog
+#tracelog
 
 disable-mnt
-# private-bin falkon
+#private-bin falkon
 private-cache
 private-dev
 private-etc @tls-ca,@x11,adobe,mailcap,mime.types
 private-tmp
 
-# dbus-user filter
-# dbus-user.own org.kde.Falkon
+#dbus-user filter
+#dbus-user.own org.kde.Falkon
 dbus-system none
 
-# restrict-namespaces
+#restrict-namespaces

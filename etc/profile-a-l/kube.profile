@@ -65,7 +65,7 @@ protocol unix,inet,inet6
 seccomp
 tracelog
 
-# disable-mnt
+#disable-mnt
 # Add "gpg,gpg2,gpg-agent,pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg
 private-bin kube,sink_synchronizer
 private-cache

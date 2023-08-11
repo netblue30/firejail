@@ -26,7 +26,7 @@ apparmor
 caps.drop all
 netfilter
 no3d
-# nogroups
+#nogroups
 noinput
 nonewprivs
 noroot
@@ -44,5 +44,5 @@ dbus-user none
 dbus-system none
 
 # mdwe is disabled due to breaking hardware accelerated decoding
-# memory-deny-write-execute
+#memory-deny-write-execute
 restrict-namespaces

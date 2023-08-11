@@ -36,8 +36,8 @@ x11 none
 
 # The user can have a custom coloring script configured in ${HOME}/.lessfilter.
 # Enable private-bin and private-lib if you are not using any filter.
-# private-bin less
-# private-lib
+#private-bin less
+#private-lib
 private-cache
 private-dev
 writable-var-log

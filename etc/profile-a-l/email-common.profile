@@ -75,7 +75,7 @@ seccomp
 seccomp.block-secondary
 tracelog
 
-# disable-mnt
+#disable-mnt
 private-cache
 private-dev
 private-etc @tls-ca,@x11,bogofilter,bogofilter.cf,gnupg,hosts.conf,mailname,timezone

@@ -22,7 +22,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-# net none
+#net none
 netfilter
 nodvd
 nogroups
@@ -42,7 +42,7 @@ private-bin 7z,ark,bash,lrzip,lsar,lz4,lzop,p7zip,rar,sh,tclsh,unar,unrar,unzip,
 private-dev
 private-tmp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 restrict-namespaces

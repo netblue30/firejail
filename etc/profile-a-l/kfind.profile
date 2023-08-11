@@ -9,21 +9,21 @@ include globals.local
 # searching in blacklisted or masked paths fails silently
 # adjust filesystem restrictions as necessary
 
-# noblacklist ${HOME}/.cache/kfind - disable-programs.inc is disabled, see below
-# noblacklist ${HOME}/.config/kfindrc
-# noblacklist ${HOME}/.kde/share/config/kfindrc
-# noblacklist ${HOME}/.kde4/share/config/kfindrc
+#noblacklist ${HOME}/.cache/kfind # disable-programs.inc is disabled, see below
+#noblacklist ${HOME}/.config/kfindrc
+#noblacklist ${HOME}/.kde/share/config/kfindrc
+#noblacklist ${HOME}/.kde4/share/config/kfindrc
 
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
-# include disable-programs.inc
+#include disable-programs.inc
 
 apparmor
 caps.drop all
 machine-id
-# net none
+#net none
 netfilter
 no3d
 nodvd
@@ -38,11 +38,11 @@ novideo
 protocol unix
 seccomp
 
-# private-bin kbuildsycoca4,kdeinit4,kfind
+#private-bin kbuildsycoca4,kdeinit4,kfind
 private-dev
 private-tmp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 restrict-namespaces

@@ -31,7 +31,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 ipc-namespace
-# net none - breaks on Ubuntu
+#net none # breaks on Ubuntu
 no3d
 nodvd
 nogroups
@@ -52,5 +52,5 @@ private-dev
 private-etc dbus-1
 private-tmp
 
-#memory-deny-write-execute - breaks on Arch (see issue #1803)
+#memory-deny-write-execute # breaks on Arch (see issue #1803)
 restrict-namespaces

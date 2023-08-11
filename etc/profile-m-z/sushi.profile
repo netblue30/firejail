@@ -13,7 +13,7 @@ include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
-# include disable-programs.inc
+#include disable-programs.inc
 include disable-shell.inc
 
 include whitelist-runuser-common.inc

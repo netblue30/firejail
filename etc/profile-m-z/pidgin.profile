@@ -40,7 +40,7 @@ protocol unix,inet,inet6,netlink
 seccomp
 tracelog
 
-# private-bin pidgin
+#private-bin pidgin
 private-cache
 private-dev
 private-tmp

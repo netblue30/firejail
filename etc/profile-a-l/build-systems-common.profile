@@ -39,7 +39,7 @@ include whitelist-var-common.inc
 caps.drop all
 ipc-namespace
 machine-id
-# net none
+#net none
 netfilter
 no3d
 nodvd

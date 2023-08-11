@@ -17,7 +17,7 @@ whitelist ${HOME}/.config/chromium
 whitelist ${HOME}/.config/chromium-flags.conf
 whitelist /usr/share/chromium
 
-# private-bin chromium,chromium-browser,chromedriver
+#private-bin chromium,chromium-browser,chromedriver
 
 # Redirect
 include chromium-common.profile

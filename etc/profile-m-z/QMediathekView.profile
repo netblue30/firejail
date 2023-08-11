@@ -57,7 +57,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-# no3d
+#no3d
 nodvd
 nogroups
 noinput
@@ -81,5 +81,5 @@ private-tmp
 dbus-user none
 dbus-system none
 
-#memory-deny-write-execute - breaks on Arch (see issue #1803)
+#memory-deny-write-execute # breaks on Arch (see issue #1803)
 restrict-namespaces

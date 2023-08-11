@@ -28,9 +28,9 @@ protocol unix,inet,inet6
 seccomp
 tracelog
 
-# private-bin goobox
+#private-bin goobox
 private-dev
-# private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,machine-id,pki,pulse,ssl
-# private-tmp
+#private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,machine-id,pki,pulse,ssl
+#private-tmp
 
 restrict-namespaces

@@ -31,7 +31,7 @@ novideo
 protocol unix
 seccomp
 
-# private-bin bash,bless,mono,sh
+#private-bin bash,bless,mono,sh
 private-cache
 private-dev
 private-etc mono

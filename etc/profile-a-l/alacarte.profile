@@ -49,7 +49,7 @@ seccomp.block-secondary
 tracelog
 
 disable-mnt
-# private-bin alacarte,bash,python*,sh
+#private-bin alacarte,bash,python*,sh
 private-cache
 private-dev
 private-etc @tls-ca,@x11,mime.types

@@ -22,7 +22,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-# net none - breaks application on older versions
+#net none # breaks application on older versions
 no3d
 nodvd
 nogroups

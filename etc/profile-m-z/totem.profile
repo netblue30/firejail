@@ -35,7 +35,7 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-# apparmor - makes settings immutable
+#apparmor # makes settings immutable
 caps.drop all
 netfilter
 nogroups
@@ -55,7 +55,7 @@ private-etc @tls-ca,@x11,python*
 private-tmp
 
 # makes settings immutable
-# dbus-user none
+#dbus-user none
 dbus-system none
 
 restrict-namespaces

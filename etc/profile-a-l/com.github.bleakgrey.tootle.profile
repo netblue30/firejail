@@ -48,9 +48,9 @@ private-etc @tls-ca,@x11,host.conf,mime.types
 private-tmp
 
 # Settings are immutable
-# dbus-user filter
-# dbus-user.own com.github.bleakgrey.tootle
-# dbus-user.talk ca.desrt.dconf
+#dbus-user filter
+#dbus-user.own com.github.bleakgrey.tootle
+#dbus-user.talk ca.desrt.dconf
 dbus-system none
 
 restrict-namespaces

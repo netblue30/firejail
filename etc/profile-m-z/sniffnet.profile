@@ -29,7 +29,7 @@ netfilter
 nodvd
 nogroups
 noinput
-# nonewprivs - breaks network traffic capture for unprivileged users
+#nonewprivs # breaks network traffic capture for unprivileged users
 # noroot
 notv
 nou2f
@@ -38,8 +38,8 @@ novideo
 tracelog
 
 disable-mnt
-#private-bin sniffnet
-# private-dev prevents (some) interfaces from being shown.
+# private-bin sniffnet
+#private-dev # prevents (some) interfaces from being shown
 private-etc @network,@tls-ca
 private-tmp
 

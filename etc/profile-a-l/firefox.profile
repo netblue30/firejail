@@ -39,9 +39,9 @@ whitelist /usr/share/gnome-shell/search-providers/firefox-search-provider.ini
 whitelist ${RUNUSER}/*firefox*
 whitelist ${RUNUSER}/psd/*firefox*
 
-# firefox requires a shell to launch on Arch - add the next line to your firefox.local to enable private-bin.
+# Firefox requires a shell to launch on Arch. Add the next line to your firefox.local to enable private-bin.
 #private-bin bash,dbus-launch,dbus-send,env,firefox,sh,which
-# Fedora uses shell scripts to launch firefox - add the next line to your firefox.local to enable private-bin.
+# Fedora uses shell scripts to launch Firefox. Add the next line to your firefox.local to enable private-bin.
 #private-bin basename,bash,cat,dirname,expr,false,firefox,firefox-wayland,getenforce,ln,mkdir,pidof,restorecon,rm,rmdir,sed,sh,tclsh,true,uname
 private-etc firefox
 

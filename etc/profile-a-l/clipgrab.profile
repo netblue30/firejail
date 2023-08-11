@@ -45,7 +45,7 @@ private-cache
 private-dev
 private-tmp
 
-# 'dbus-user none' breaks tray menu - add 'dbus-user none' to your clipgrab.local if you don't need it.
+# 'dbus-user none' breaks tray menu. Add 'dbus-user none' to your clipgrab.local if you don't need it.
 # dbus-user none
 # dbus-system none
 

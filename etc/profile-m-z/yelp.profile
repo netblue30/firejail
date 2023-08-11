@@ -33,7 +33,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-# machine-id breaks sound - add the next line to your yelp.local if you don't need sound support.
+# Add 'machine-id' and 'nosound' to your yelp.local if you don't need sound support.
 #machine-id
 net none
 nodvd
@@ -41,7 +41,6 @@ nogroups
 noinput
 nonewprivs
 noroot
-# nosound - add the next line to your yelp.local if you don't need sound support.
 #nosound
 notv
 nou2f
@@ -64,13 +63,13 @@ dbus-user.talk ca.desrt.dconf
 dbus-system none
 
 # read-only ${HOME} breaks some features:
-#  1. yelp --editor-mode
-#  2. saving the window geometry
-# add 'ignore read-only ${HOME}' to your yelp.local if you need these features.
+# 1. yelp --editor-mode
+# 2. saving the window geometry
+# Add 'ignore read-only ${HOME}' to your yelp.local if you need these features.
 read-only ${HOME}
 read-write ${HOME}/.cache
-#  3. printing to PDF in ${DOCUMENTS}
-# additionally add 'noblacklist ${DOCUMENTS}' and 'whitelist ${DOCUMENTS}' to
+# 3. printing to PDF in ${DOCUMENTS}
+# Add 'noblacklist ${DOCUMENTS}' and 'whitelist ${DOCUMENTS}' to
 # your yelp.local if you need PDF printing support.
 #noblacklist ${DOCUMENTS}
 #whitelist ${DOCUMENTS}

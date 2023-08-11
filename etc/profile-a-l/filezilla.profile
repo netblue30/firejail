@@ -37,7 +37,7 @@ novideo
 protocol unix,inet,inet6
 seccomp
 
-# private-bin breaks --join if the user has zsh set as $SHELL - adding zsh on private-bin
+# private-bin breaks --join if the user has zsh set as $SHELL
 private-bin bash,filezilla,fzputtygen,fzsftp,lsb_release,python*,sh,uname,zsh
 private-dev
 private-tmp

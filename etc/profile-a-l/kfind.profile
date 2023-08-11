@@ -9,7 +9,7 @@ include globals.local
 # searching in blacklisted or masked paths fails silently
 # adjust filesystem restrictions as necessary
 
-# noblacklist ${HOME}/.cache/kfind - disable-programs.inc is disabled, see below
+# noblacklist ${HOME}/.cache/kfind # disable-programs.inc is disabled, see below
 # noblacklist ${HOME}/.config/kfindrc
 # noblacklist ${HOME}/.kde/share/config/kfindrc
 # noblacklist ${HOME}/.kde4/share/config/kfindrc

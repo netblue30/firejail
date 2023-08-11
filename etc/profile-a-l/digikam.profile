@@ -37,7 +37,7 @@ protocol unix,inet,inet6,netlink
 # QtWebengine needs chroot to set up its own sandbox
 seccomp !chroot
 
-# private-dev - prevents libdc1394 loading; this lib is used to connect to a camera device
+#private-dev # prevents libdc1394 loading; this lib is used to connect to a camera device
 # private-etc alternatives,ca-certificates,crypto-policies,pki,ssl
 private-tmp
 

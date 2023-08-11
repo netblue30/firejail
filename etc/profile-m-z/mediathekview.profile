@@ -6,6 +6,7 @@ include mediathekview.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.cache/mpv
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/smplayer
 noblacklist ${HOME}/.config/totem
@@ -13,6 +14,7 @@ noblacklist ${HOME}/.config/vlc
 noblacklist ${HOME}/.config/xplayer
 noblacklist ${HOME}/.local/share/totem
 noblacklist ${HOME}/.local/share/xplayer
+noblacklist ${HOME}/.local/state/mpv
 noblacklist ${HOME}/.mediathek3
 noblacklist ${HOME}/.mplayer
 noblacklist ${VIDEOS}

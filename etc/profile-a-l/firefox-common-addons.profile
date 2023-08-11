@@ -11,6 +11,7 @@ ignore include whitelist-runuser-common.inc
 
 ignore private-cache
 
+noblacklist ${HOME}/.cache/mpv
 noblacklist ${HOME}/.cache/youtube-dl
 noblacklist ${HOME}/.config/kgetrc
 noblacklist ${HOME}/.config/mpv
@@ -32,9 +33,11 @@ noblacklist ${HOME}/.local/share/kget
 noblacklist ${HOME}/.local/share/kxmlgui5/okular
 noblacklist ${HOME}/.local/share/okular
 noblacklist ${HOME}/.local/share/qpdfview
+noblacklist ${HOME}/.local/state/mpv
 noblacklist ${HOME}/.netrc
 
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
+whitelist ${HOME}/.cache/mpv
 whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
 whitelist ${HOME}/.config/gnome-mplayer
 whitelist ${HOME}/.config/kgetrc
@@ -62,6 +65,7 @@ whitelist ${HOME}/.local/share/kxmlgui5/okular
 whitelist ${HOME}/.local/share/okular
 whitelist ${HOME}/.local/share/qpdfview
 whitelist ${HOME}/.local/share/tridactyl
+whitelist ${HOME}/.local/state/mpv
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/.pentadactyl
 whitelist ${HOME}/.pentadactylrc

@@ -39,7 +39,6 @@ seccomp
 tracelog
 
 disable-mnt
-private
 private-bin mirrormagic
 private-cache
 private-dev

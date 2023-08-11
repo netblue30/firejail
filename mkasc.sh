@@ -3,7 +3,7 @@
 # Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
-. "$(dirname "$0")/config.sh"
+. "$(dirname "$0")/config.sh" || exit 1
 
 printf 'Calculating SHA256 for all files in /transfer - %s version %s' "$TARNAME" "$VERSION"
 

@@ -1,2 +1,5 @@
 #!/bin/sh
-tail -n +4 "$1" | sed 's/^# /#/' | LC_ALL=C sort -c -d
+# See ../../../src/firecfg/firecfg.config
+
+sed -E -e '/^#$/d' -e '/^# /d' -e 's/^#([^ ])/\1/' "$1" |
+LC_ALL=C sort -c -u

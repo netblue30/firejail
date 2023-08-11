@@ -17,7 +17,7 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-include whitelist-common.inc
+#include whitelist-common.inc # see #903
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

@@ -38,6 +38,8 @@ firejail (0.9.73) baseline; urgency=low
     make
   * build: simplify code related to man pages (#5898)
   * build: fix hardcoded make & remove unnecessary distclean targets (#5911)
+  * build: dist and asc improvements (#5916)
+  * build: fix some shellcheck issues & use config.sh in more scripts (#5927)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)

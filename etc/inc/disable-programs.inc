@@ -142,6 +142,7 @@ blacklist ${HOME}/.cache/inkscape
 blacklist ${HOME}/.cache/inox
 blacklist ${HOME}/.cache/io.github.lainsce.Notejot
 blacklist ${HOME}/.cache/iridium
+blacklist ${HOME}/.cache/journal-viewer
 blacklist ${HOME}/.cache/kcmshell5
 blacklist ${HOME}/.cache/kdenlive
 blacklist ${HOME}/.cache/keepassxc
@@ -171,6 +172,7 @@ blacklist ${HOME}/.cache/mirage
 blacklist ${HOME}/.cache/moonchild productions/basilisk
 blacklist ${HOME}/.cache/moonchild productions/pale moon
 blacklist ${HOME}/.cache/mozilla
+blacklist ${HOME}/.cache/mpv
 blacklist ${HOME}/.cache/ms-excel-online
 blacklist ${HOME}/.cache/ms-office-online
 blacklist ${HOME}/.cache/ms-onenote-online
@@ -472,6 +474,7 @@ blacklist ${HOME}/.config/google-chrome
 blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
 blacklist ${HOME}/.config/gpicview
+blacklist ${HOME}/.config/gramps
 blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/gummi
 blacklist ${HOME}/.config/guvcview2
@@ -899,6 +902,7 @@ blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/chatterino
 blacklist ${HOME}/.local/share/clipit
 blacklist ${HOME}/.local/share/com.github.johnfactotum.Foliate
+blacklist ${HOME}/.local/share/com.vmingueza.journal-viewer
 blacklist ${HOME}/.local/share/contacts
 blacklist ${HOME}/.local/share/cor-games
 blacklist ${HOME}/.local/share/data/Mendeley Ltd.
@@ -1046,6 +1050,7 @@ blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.local/state/ani-cli
 blacklist ${HOME}/.local/state/audacity
+blacklist ${HOME}/.local/state/mpv
 blacklist ${HOME}/.local/state/pipewire
 blacklist ${HOME}/.lv2
 blacklist ${HOME}/.lyx

@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.config/QMediathekView
 noblacklist ${HOME}/.local/share/QMediathekView
 
+noblacklist ${HOME}/.cache/mpv
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/smplayer
 noblacklist ${HOME}/.config/totem
@@ -16,6 +17,7 @@ noblacklist ${HOME}/.config/vlc
 noblacklist ${HOME}/.config/xplayer
 noblacklist ${HOME}/.local/share/totem
 noblacklist ${HOME}/.local/share/xplayer
+noblacklist ${HOME}/.local/state/mpv
 noblacklist ${HOME}/.mplayer
 noblacklist ${VIDEOS}
 
@@ -35,6 +37,7 @@ whitelist ${HOME}/.local/share/QMediathekView
 whitelist ${DOWNLOADS}
 whitelist ${VIDEOS}
 
+whitelist ${HOME}/.cache/mpv
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/smplayer
 whitelist ${HOME}/.config/totem
@@ -42,6 +45,7 @@ whitelist ${HOME}/.config/vlc
 whitelist ${HOME}/.config/xplayer
 whitelist ${HOME}/.local/share/totem
 whitelist ${HOME}/.local/share/xplayer
+whitelist ${HOME}/.local/state/mpv
 whitelist ${HOME}/.mplayer
 whitelist /usr/share/qtchooser
 include whitelist-common.inc

@@ -7,8 +7,10 @@ include youtube-viewers-common.local
 # added by caller profile
 #include globals.local
 
+noblacklist ${HOME}/.cache/mpv
 noblacklist ${HOME}/.cache/youtube-dl
 noblacklist ${HOME}/.config/mpv
+noblacklist ${HOME}/.local/state/mpv
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc

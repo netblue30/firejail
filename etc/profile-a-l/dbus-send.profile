@@ -19,7 +19,7 @@ include disable-shell.inc
 include disable-write-mnt.inc
 include disable-xdg.inc
 
-include whitelist-common.inc
+#include whitelist-common.inc # see #903
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -28,8 +28,7 @@ apparmor
 caps.drop all
 ipc-namespace
 machine-id
-# Breaks abstract sockets
-#net none
+#net none # breaks abstract sockets
 netfilter
 no3d
 nodvd

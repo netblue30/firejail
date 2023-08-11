@@ -34,7 +34,7 @@ notv
 nou2f
 protocol unix
 seccomp
-# x11 xorg - problems on kubuntu 17.04
+#x11 xorg # problems on kubuntu 17.04
 
 private-bin display,python*
 private-dev

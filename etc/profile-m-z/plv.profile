@@ -53,7 +53,7 @@ writable-var-log
 dbus-user none
 dbus-system none
 
-#memory-deny-write-execute - breaks opening file-chooser
+#memory-deny-write-execute # breaks opening file-chooser
 read-only ${HOME}
 read-write ${HOME}/.config/PacmanLogViewer
 read-only /var/log/pacman.log

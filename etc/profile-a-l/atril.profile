@@ -44,7 +44,7 @@ private-dev
 private-etc
 # atril uses webkit gtk to display epub files
 # waiting for globbing support in private-lib; for now hardcoding it to webkit2gtk-4.0
-#private-lib webkit2gtk-4.0 - problems on Arch with the new version of WebKit
+#private-lib webkit2gtk-4.0 # problems on Arch with the new version of WebKit
 private-tmp
 
 # webkit gtk killed by memory-deny-write-execute

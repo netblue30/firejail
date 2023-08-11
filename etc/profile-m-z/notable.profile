@@ -24,7 +24,7 @@ dbus-user filter
 dbus-user.talk ca.desrt.dconf
 ignore dbus-user none
 
-# Notable keeps claiming it is started for the first time when whitelisting - see #4812.
+# Notable keeps claiming it is started for the first time when whitelisting (see #4812).
 ignore whitelist ${DOWNLOADS}
 ignore whitelist ${HOME}/.config/Electron
 ignore whitelist ${HOME}/.config/electron*-flag*.conf

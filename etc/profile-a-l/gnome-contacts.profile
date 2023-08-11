@@ -21,7 +21,7 @@ include whitelist-var-common.inc
 
 caps.drop all
 netfilter
-#no3d - breaks on Arch
+#no3d # breaks on Arch
 nodvd
 noinput
 nonewprivs

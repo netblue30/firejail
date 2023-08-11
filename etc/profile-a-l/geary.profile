@@ -53,7 +53,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-#ipc-namespace - may cause issues with X11
+#ipc-namespace # may cause issues with X11
 #machine-id
 netfilter
 no3d

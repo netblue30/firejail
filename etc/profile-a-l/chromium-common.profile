@@ -39,7 +39,9 @@ blacklist ${PATH}/curl
 blacklist ${PATH}/wget
 blacklist ${PATH}/wget2
 
-#dbus-user none - prevents access to passwords saved in GNOME Keyring and KWallet, also breaks Gnome connector.
+# This prevents access to passwords saved in GNOME Keyring and KWallet, also
+# breaks Gnome connector.
+#dbus-user none
 
 # The file dialog needs to work without d-bus.
 ?HAS_NODBUS: env NO_CHROME_KDE_FILE_DIALOG=1

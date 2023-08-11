@@ -62,7 +62,8 @@ tracelog
 private-bin kbuildsycoca4,kdeinit4,lpr,okular,unar,unrar
 private-dev
 private-etc @x11,cups
-# private-tmp - on KDE we need access to the real /tmp for data exchange with email clients
+# on KDE we need access to the real /tmp for data exchange with email clients
+#private-tmp
 
 # dbus-user none
 # dbus-system none

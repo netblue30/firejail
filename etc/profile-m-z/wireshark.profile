@@ -38,7 +38,8 @@ nosound
 notv
 nou2f
 novideo
-# protocol unix,inet,inet6,netlink,packet,bluetooth - commented out in case they bring in new protocols
+# commented out in case they bring in new protocols
+#protocol unix,inet,inet6,netlink,packet,bluetooth
 #seccomp
 tracelog
 

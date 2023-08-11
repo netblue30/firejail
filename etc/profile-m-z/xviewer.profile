@@ -19,9 +19,9 @@ include disable-shell.inc
 
 include whitelist-var-common.inc
 
-# apparmor - makes settings immutable
+#apparmor # makes settings immutable
 caps.drop all
-# net none - makes settings immutable
+#net none # makes settings immutable
 no3d
 nodvd
 nogroups

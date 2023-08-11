@@ -53,5 +53,5 @@ dbus-user.own org.xfce.xfce4-mixer
 dbus-user.talk org.xfce.Xfconf
 dbus-system none
 
-# memory-deny-write-execute - breaks on Arch
+#memory-deny-write-execute # breaks on Arch
 restrict-namespaces

@@ -53,5 +53,5 @@ private-tmp
 dbus-user none
 dbus-system none
 
-#memory-deny-write-execute # breaks old versions of ffmpeg
+#memory-deny-write-execute # breaks older versions
 restrict-namespaces

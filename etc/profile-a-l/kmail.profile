@@ -7,7 +7,7 @@ include kmail.local
 include globals.local
 
 # kmail has problems launching akonadi in debian and ubuntu.
-# one solution is to have akonadi already running when kmail is started
+# One solution is to have akonadi already running when kmail is started.
 
 noblacklist ${HOME}/.cache/akonadi*
 noblacklist ${HOME}/.cache/kmail2
@@ -59,7 +59,7 @@ seccomp !chroot,!io_getevents,!io_setup,!io_submit,!ioprio_set
 # tracelog
 
 private-dev
-# private-tmp - interrupts connection to akonadi, breaks opening of email attachments
+#private-tmp # interrupts connection to akonadi, breaks opening of email attachments
 # writable-run-user is needed for signing and encrypting emails
 writable-run-user
 

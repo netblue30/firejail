@@ -21,10 +21,10 @@ include disable-programs.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
-# apparmor - makes settings immutable
+#apparmor # makes settings immutable
 caps.drop all
 machine-id
-# net none - makes settings immutable
+#net none # makes settings immutable
 no3d
 nodvd
 nogroups
@@ -46,8 +46,7 @@ private-dev
 #private-lib aspell,gconv,gedit,libgspell-1.so.*,libgtksourceview-*,libpeas-gtk-1.0.so.*,libreadline.so.*,libtinfo.so.*
 private-tmp
 
-# makes settings immutable
-# dbus-user none
+#dbus-user none # makes settings immutable
 # dbus-system none
 
 restrict-namespaces

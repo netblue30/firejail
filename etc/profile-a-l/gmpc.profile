@@ -50,5 +50,5 @@ writable-run-user
 # dbus-user none
 # dbus-system none
 
-# memory-deny-write-execute - breaks on Arch
+#memory-deny-write-execute # breaks on Arch
 restrict-namespaces

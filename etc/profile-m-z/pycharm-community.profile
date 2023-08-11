@@ -34,8 +34,7 @@ nou2f
 novideo
 tracelog
 
-# private-etc alternatives,fonts,passwd - minimal required to run but will probably break
-# program!
+#private-etc alternatives,fonts,passwd # minimal required to run but probably breaks program!
 private-dev
 private-tmp
 

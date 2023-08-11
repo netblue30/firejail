@@ -15,7 +15,7 @@ include disable-interpreters.inc
 include disable-proc.inc
 include disable-programs.inc
 include disable-shell.inc
-#include disable-X11.inc - x11 none
+#include disable-X11.inc # x11 none
 include disable-xdg.inc
 
 include whitelist-common.inc
@@ -47,7 +47,6 @@ tracelog
 x11 none
 
 disable-mnt
-private
 private-bin daisy
 private-cache
 private-dev

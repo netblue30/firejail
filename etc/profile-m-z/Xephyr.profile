@@ -16,7 +16,7 @@ include globals.local
 #
 
 whitelist /var/lib/xkb
-include whitelist-common.inc
+#include whitelist-common.inc # see #903
 
 caps.drop all
 # Xephyr needs to be allowed access to the abstract Unix socket namespace.

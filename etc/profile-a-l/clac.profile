@@ -16,10 +16,10 @@ include disable-interpreters.inc
 include disable-proc.inc
 include disable-programs.inc
 include disable-shell.inc
-#include disable-X11.inc - x11 none
+#include disable-X11.inc # x11 none
 include disable-xdg.inc
 
-#include whitelist-common.inc - see #903
+#include whitelist-common.inc # see #903
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

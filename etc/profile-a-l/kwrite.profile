@@ -36,7 +36,7 @@ nogroups
 noinput
 nonewprivs
 noroot
-# nosound - KWrite is using ALSA!
+#nosound # KWrite is using ALSA!
 notv
 nou2f
 novideo

@@ -33,7 +33,7 @@ blacklist-nolog ${HOME}/.viminfo
 blacklist-nolog /tmp/clipmenu*
 
 # X11 session autostart
-# blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs
+#blacklist ${HOME}/.xpra # this will kill --x11=xpra cmdline option for all programs
 blacklist ${HOME}/.Xsession
 blacklist ${HOME}/.blackbox
 blacklist ${HOME}/.config/autostart
@@ -241,8 +241,9 @@ blacklist /var/lib/mysql/mysql.sock
 blacklist /var/lib/mysqld/mysql.sock
 blacklist /var/lib/pacman
 blacklist /var/lib/upower
-# blacklist /var/log - a virtual /var/log directory (mostly empty) is build up by default for
-# every sandbox, unless --writable-var-log switch is activated
+# A virtual /var/log directory (mostly empty) is build up by default for
+# every sandbox, unless --writable-var-log switch is activated.
+#blacklist /var/log
 blacklist /var/mail
 blacklist /var/opt
 blacklist /var/run/acpid.socket
@@ -560,7 +561,7 @@ blacklist ${PATH}/bmon
 blacklist ${PATH}/fping
 blacklist ${PATH}/fping6
 blacklist ${PATH}/hostname
-# blacklist ${PATH}/ip - breaks --ip=dhcp
+#blacklist ${PATH}/ip # breaks --ip=dhcp
 blacklist ${PATH}/mtr
 blacklist ${PATH}/mtr-packet
 blacklist ${PATH}/netstat
@@ -588,8 +589,7 @@ blacklist /tmp/tmux-*
 blacklist ${PATH}/gnome-terminal
 blacklist ${PATH}/gnome-terminal.wrapper
 blacklist ${PATH}/kgx
-# blacklist ${PATH}/konsole
-# konsole doesn't seem to have this problem - last tested on Ubuntu 16.04
+#blacklist ${PATH}/konsole # doesn't seem to have this problem (last tested on Ubuntu 16.04)
 blacklist ${PATH}/lilyterm
 blacklist ${PATH}/lxterminal
 blacklist ${PATH}/mate-terminal

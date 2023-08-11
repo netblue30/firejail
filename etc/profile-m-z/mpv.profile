@@ -14,11 +14,11 @@ include globals.local
 # mpv has a powerful Lua API and some of the Lua scripts interact with
 # external resources which are blocked by firejail. In such cases you need to
 # allow these resources by:
-#  - noblacklisting additional paths
-#  - whitelisting additional paths
-#  - adding additional binaries to private-bin
-#  - changing/weakening the D-Bus policy
-#  - ...
+# noblacklisting additional paths
+# whitelisting additional paths
+# adding additional binaries to private-bin
+# changing/weakening the D-Bus policy
+# ...
 #
 # Often these scripts require a shell:
 #include allow-bin-sh.inc
@@ -87,7 +87,7 @@ tracelog
 # mpv links to libluajit, so no need to reference "lua*" in private-bin:
 # https://github.com/netblue30/firejail/pull/5711#discussion_r1125622615
 private-bin env,mpv,python*,waf,youtube-dl,yt-dlp
-# private-cache causes slow OSD, see #2838
+#private-cache # causes slow OSD, see #2838
 #private-cache
 private-dev
 

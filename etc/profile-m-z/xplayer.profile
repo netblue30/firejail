@@ -27,7 +27,7 @@ include whitelist-common.inc
 include whitelist-player-common.inc
 include whitelist-var-common.inc
 
-# apparmor - makes settings immutable
+#apparmor # makes settings immutable
 caps.drop all
 netfilter
 nogroups

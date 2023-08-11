@@ -54,7 +54,7 @@ caps.drop all
 netfilter
 nodvd
 nonewprivs
-# noroot - problems on Ubuntu 14.04
+#noroot # problems on Ubuntu 14.04
 notv
 protocol unix,inet,inet6,netlink
 seccomp

@@ -52,7 +52,7 @@ print_title() {
 	echo "**************************************************"
 }
 
-DIST="$(TARNAME)-$(VERSION)"
+DIST="$TARNAME-$VERSION"
 while [[ $# -gt 0 ]]; do    # Until you run out of parameters . . .
 	case "$1" in
 	--clean)

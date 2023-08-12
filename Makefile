@@ -366,12 +366,16 @@ cppcheck: clean
 scan-build: clean
 	scan-build $(MAKE)
 
+# TODO: Old codespell versions (such as v2.1.0 in CI) have issues with
+# contrib/syscalls.sh
 .PHONY: codespell
 codespell:
 	@printf 'Running %s...\n' $@
-	@codespell --ignore-regex "UE|creat|doas|ether|isplay|shotcut" \
+	@codespell --ignore-regex 'UE|als|chage|creat|doas|ether|isplay|readby|[Ss]hotcut' \
 	  -S *.gz,*.o,*.so \
-	  src test
+	  -S COPYING,m4 \
+	  -S ./contrib/syscalls.sh \
+	  .
 
 .PHONY: print-env
 print-env:

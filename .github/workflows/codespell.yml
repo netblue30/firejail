@@ -2,13 +2,13 @@ name: Codespell
 
 on:
   push:
-    paths:
-      - 'src/**'
-      - 'test/**'
+    paths-ignore:
+      - 'm4/**'
+      - COPYING
   pull_request:
-    paths:
-      - 'src/**'
-      - 'test/**'
+    paths-ignore:
+      - 'm4/**'
+      - COPYING
 
 permissions:  # added using https://github.com/step-security/secure-workflows
   contents: read

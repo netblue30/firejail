@@ -41,7 +41,7 @@ private-tmp
 quiet
 restrict-namespaces
 seccomp
-seccomp\.block-secondary
+seccomp.block-secondary
 tab
 tracelog
 writable-etc

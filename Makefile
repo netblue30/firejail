@@ -106,13 +106,13 @@ syntax: $(SYNTAX_FILES)
 contrib/syntax/lists/profile_commands_arg0.list: src/firejail/profile.c Makefile
 	@printf 'Generating %s from %s\n' $@ $<
 	@sed -En 's/.*strn?cmp\(ptr, "([^ "]*[^ ])".*/\1/p' $< | \
-	grep -Ev '^(include|rlimit)$$' | sed 's/\./\\./' | LC_ALL=C sort -u >$@
+	grep -Ev '^(include|rlimit)$$' | LC_ALL=C sort -u >$@
 
 # TODO: private-lib is special-cased in the code and doesn't match the regex
 contrib/syntax/lists/profile_commands_arg1.list: src/firejail/profile.c Makefile
 	@printf 'Generating %s from %s\n' $@ $<
-	@{ sed -En 's/.*strn?cmp\(ptr, "([^"]+) ".*/\1/p' $<; echo private-lib; } | \
-	LC_ALL=C sort -u >$@
+	@{ sed -En 's/.*strn?cmp\(ptr, "([^"]+) ".*/\1/p' $<; \
+	   echo private-lib; } | LC_ALL=C sort -u >$@
 
 contrib/syntax/lists/profile_conditionals.list: src/firejail/profile.c Makefile
 	@printf 'Generating %s from %s\n' $@ $<
@@ -139,17 +139,17 @@ contrib/syntax/lists/system_errnos.list: src/lib/errno.c Makefile
 	@printf 'Generating %s from %s\n' $@ $<
 	@sed -En 's/.*"(E[^"]+).*/\1/p' $< | LC_ALL=C sort -u >$@
 
-pipe_fromlf = { tr '\n' '|' | sed 's/|$$//'; }
-space_fromlf = { tr '\n' ' ' | sed 's/ $$//'; }
+regex_fromlf = { tr '\n' '|' | sed -e 's/|$$//' -e 's/\./\\\\./g'; }
+space_fromlf = { tr '\n' ' ' | sed -e 's/ $$//'; }
 edit_syntax_file = sed \
 	-e "s/@make_input@/$$(basename $@).  Generated from $$(basename $<) by make./" \
-	-e "s/@FJ_PROFILE_COMMANDS_ARG0@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_commands_arg0.list)/" \
-	-e "s/@FJ_PROFILE_COMMANDS_ARG1@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_commands_arg1.list)/" \
-	-e "s/@FJ_PROFILE_CONDITIONALS@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_conditionals.list)/" \
-	-e "s/@FJ_PROFILE_MACROS@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_macros.list)/" \
+	-e "s/@FJ_PROFILE_COMMANDS_ARG0@/$$($(regex_fromlf) <contrib/syntax/lists/profile_commands_arg0.list)/" \
+	-e "s/@FJ_PROFILE_COMMANDS_ARG1@/$$($(regex_fromlf) <contrib/syntax/lists/profile_commands_arg1.list)/" \
+	-e "s/@FJ_PROFILE_CONDITIONALS@/$$($(regex_fromlf) <contrib/syntax/lists/profile_conditionals.list)/" \
+	-e "s/@FJ_PROFILE_MACROS@/$$($(regex_fromlf) <contrib/syntax/lists/profile_macros.list)/" \
 	-e "s/@FJ_SYSCALLS@/$$($(space_fromlf) <contrib/syntax/lists/syscalls.list)/" \
-	-e "s/@FJ_SYSCALL_GROUPS@/$$($(pipe_fromlf) <contrib/syntax/lists/syscall_groups.list)/" \
-	-e "s/@FJ_SYSTEM_ERRNOS@/$$($(pipe_fromlf) <contrib/syntax/lists/system_errnos.list)/"
+	-e "s/@FJ_SYSCALL_GROUPS@/$$($(regex_fromlf) <contrib/syntax/lists/syscall_groups.list)/" \
+	-e "s/@FJ_SYSTEM_ERRNOS@/$$($(regex_fromlf) <contrib/syntax/lists/system_errnos.list)/"
 
 contrib/syntax/files/example: contrib/syntax/files/example.in $(SYNTAX_LISTS) Makefile
 	@printf 'Generating %s from %s\n' $@ $<

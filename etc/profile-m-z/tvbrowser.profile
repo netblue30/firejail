@@ -1,5 +1,5 @@
 # Firejail profile for tvbrowser
-# Description: java tv programm form tvbrowser.org
+# Description: java tv program form tvbrowser.org
 # This file is overwritten after every install/update
 # Persistent local customizations
 include tvbrowser.local

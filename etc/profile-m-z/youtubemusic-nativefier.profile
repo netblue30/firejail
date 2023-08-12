@@ -1,5 +1,5 @@
 # Firejail profile for youtubemusic-nativefier
-# Description: Unofficial electron based desktop warpper for YouTube Music
+# Description: Unofficial electron based desktop wrapper for YouTube Music
 # This file is overwritten after every install/update
 # Persistent local customizations
 include youtube.local

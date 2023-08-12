@@ -13,6 +13,7 @@ on:
       - .github/pull_request_template.md
       - .github/workflows/build.yml
       - .github/workflows/codeql-analysis.yml
+      - .github/workflows/codespell.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
@@ -35,6 +36,7 @@ on:
       - .github/pull_request_template.md
       - .github/workflows/build.yml
       - .github/workflows/codeql-analysis.yml
+      - .github/workflows/codespell.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
@@ -163,25 +165,3 @@ jobs:
     - run: cppcheck --version
     - name: cppcheck
       run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
-  codespell:
-    runs-on: ubuntu-22.04
-    steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09
-      with:
-        egress-policy: block
-        allowed-endpoints: >
-          archive.ubuntu.com:80
-          azure.archive.ubuntu.com:80
-          github.com:443
-          packages.microsoft.com:443
-          ppa.launchpadcontent.net:443
-          security.ubuntu.com:80
-    - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
-    - name: update package information
-      run: sudo apt-get update -qy
-    - name: install dependencies
-      run: sudo apt-get install -qy codespell
-    - run: codespell --version
-    - name: codespell
-      run: make codespell

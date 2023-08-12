@@ -75,14 +75,16 @@ jobs:
 
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@cba0d00b1fc9a034e1e642ea0f1103c282990604
+      uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09
       with:
         disable-sudo: true
         egress-policy: block
         allowed-endpoints: >
           api.github.com:443
+          files.pythonhosted.org:443
           github.com:443
           objects.githubusercontent.com:443
+          pypi.org:443
           uploads.github.com:443
 
     - name: Checkout repository

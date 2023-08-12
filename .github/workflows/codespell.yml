@@ -33,6 +33,8 @@ jobs:
       run: sudo apt-get update -qy
     - name: install dependencies
       run: sudo apt-get install -qy codespell
+    - name: configure
+      run: ./configure || (cat config.log; exit 1)
     - run: codespell --version
     - name: codespell
       run: make codespell

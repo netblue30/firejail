@@ -58,8 +58,12 @@ jobs:
       with:
         egress-policy: block
         allowed-endpoints: >
+          archive.ubuntu.com:80
           azure.archive.ubuntu.com:80
           github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+          security.ubuntu.com:80
     - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
     - name: update package information
       run: sudo apt-get update -qy
@@ -88,8 +92,12 @@ jobs:
       with:
         egress-policy: block
         allowed-endpoints: >
+          archive.ubuntu.com:80
           azure.archive.ubuntu.com:80
           github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+          security.ubuntu.com:80
     - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
     - name: update package information
       run: sudo apt-get update -qy
@@ -114,8 +122,12 @@ jobs:
       with:
         egress-policy: block
         allowed-endpoints: >
+          archive.ubuntu.com:80
           azure.archive.ubuntu.com:80
           github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+          security.ubuntu.com:80
     - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
     - name: update package information
       run: sudo apt-get update -qy
@@ -136,8 +148,13 @@ jobs:
       with:
         egress-policy: block
         allowed-endpoints: >
+          archive.ubuntu.com:80
           azure.archive.ubuntu.com:80
           github.com:443
+          packages.microsoft.com:443
+          ppa.launchpad.net:80
+          ppa.launchpadcontent.net:443
+          security.ubuntu.com:80
     - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
     - name: update package information
       run: sudo apt-get update -qy
@@ -154,8 +171,12 @@ jobs:
       with:
         egress-policy: block
         allowed-endpoints: >
+          archive.ubuntu.com:80
           azure.archive.ubuntu.com:80
           github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+          security.ubuntu.com:80
     - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
     - name: update package information
       run: sudo apt-get update -qy

@@ -7,7 +7,7 @@ on:
       - 'contrib/syntax/**'
       - 'contrib/vim/**'
       - 'etc/**'
-      - 'src/man/*.txt'
+      - 'src/man/*.in'
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md
@@ -29,7 +29,7 @@ on:
       - 'contrib/syntax/**'
       - 'contrib/vim/**'
       - 'etc/**'
-      - 'src/man/*.txt'
+      - 'src/man/*.in'
       - .git-blame-ignore-revs
       - .github/dependabot.yml
       - .github/pull_request_template.md

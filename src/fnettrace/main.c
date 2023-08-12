@@ -27,7 +27,7 @@
 
 static char *arg_log = NULL;
 
-// only 0 or negative values; postive values as defiend in RFCsq
+// only 0 or negative values; positive values as defined in RFC
 #define PROTOCOL_ICMP 0
 #define PROTOCOL_SSH -1
 

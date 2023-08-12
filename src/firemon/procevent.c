@@ -185,7 +185,7 @@ static int procevent_netlink_setup(void) {
 		if (getsockopt(sock, SOL_SOCKET, SO_RCVBUF, &bsize, &blen) == -1)
 			fprintf(stderr, "Error: cannot read rx buffer size\n");
 		else
-			printf("rx buffer size %d\n", bsize / 2); // the value returned is duble the real one, see man 7 socket
+			printf("rx buffer size %d\n", bsize / 2); // the value returned is double the real one, see man 7 socket
 	}
 
 	// send monitoring message

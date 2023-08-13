@@ -52,6 +52,10 @@ private-etc
 private-lib libdbus-1.so.*,libdbus-glib-1.so.*,libgirepository-1.0.so.*,libnotify.so.*,libpython*,python2*,python3*
 private-tmp
 
+dbus-user filter
+dbus-user.own org.mpris.MediaPlayer2.mpd
+dbus-system none
+
 #memory-deny-write-execute - breaks on Arch (see issue #1803)
 
 read-only ${HOME}

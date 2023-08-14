@@ -64,31 +64,31 @@ $(MYDIRS):
 
 .PHONY: filters
 filters: $(SECCOMP_FILTERS)
-seccomp: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
+seccomp: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize Makefile
 	src/fseccomp/fseccomp default seccomp
 	src/fsec-optimize/fsec-optimize seccomp
 
-seccomp.debug: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
+seccomp.debug: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize Makefile
 	src/fseccomp/fseccomp default seccomp.debug allow-debuggers
 	src/fsec-optimize/fsec-optimize seccomp.debug
 
-seccomp.32: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize
+seccomp.32: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize Makefile
 	src/fseccomp/fseccomp secondary 32 seccomp.32
 	src/fsec-optimize/fsec-optimize seccomp.32
 
-seccomp.block_secondary: src/fseccomp/fseccomp
+seccomp.block_secondary: src/fseccomp/fseccomp Makefile
 	src/fseccomp/fseccomp secondary block seccomp.block_secondary
 
-seccomp.mdwx: src/fseccomp/fseccomp
+seccomp.mdwx: src/fseccomp/fseccomp Makefile
 	src/fseccomp/fseccomp memory-deny-write-execute seccomp.mdwx
 
-seccomp.mdwx.32: src/fseccomp/fseccomp
+seccomp.mdwx.32: src/fseccomp/fseccomp Makefile
 	src/fseccomp/fseccomp memory-deny-write-execute.32 seccomp.mdwx.32
 
-seccomp.namespaces: src/fseccomp/fseccomp
+seccomp.namespaces: src/fseccomp/fseccomp Makefile
 	src/fseccomp/fseccomp restrict-namespaces seccomp.namespaces cgroup,ipc,net,mnt,pid,time,user,uts
 
-seccomp.namespaces.32: src/fseccomp/fseccomp
+seccomp.namespaces.32: src/fseccomp/fseccomp Makefile
 	src/fseccomp/fseccomp restrict-namespaces seccomp.namespaces.32 cgroup,ipc,net,mnt,pid,time,user,uts
 
 .PHONY: man
@@ -103,58 +103,65 @@ contrib: syntax
 syntax: $(SYNTAX_FILES)
 
 # TODO: include/rlimit are false positives
-contrib/syntax/lists/profile_commands_arg0.list: src/firejail/profile.c
+contrib/syntax/lists/profile_commands_arg0.list: src/firejail/profile.c Makefile
+	@printf 'Generating %s from %s\n' $@ $<
 	@sed -En 's/.*strn?cmp\(ptr, "([^ "]*[^ ])".*/\1/p' $< | \
-	grep -Ev '^(include|rlimit)$$' | sed 's/\./\\./' | LC_ALL=C sort -u >$@
+	grep -Ev '^(include|rlimit)$$' | LC_ALL=C sort -u >$@
 
 # TODO: private-lib is special-cased in the code and doesn't match the regex
-contrib/syntax/lists/profile_commands_arg1.list: src/firejail/profile.c
-	@{ sed -En 's/.*strn?cmp\(ptr, "([^"]+) ".*/\1/p' $<; echo private-lib; } | \
-	LC_ALL=C sort -u >$@
+contrib/syntax/lists/profile_commands_arg1.list: src/firejail/profile.c Makefile
+	@printf 'Generating %s from %s\n' $@ $<
+	@{ sed -En 's/.*strn?cmp\(ptr, "([^"]+) ".*/\1/p' $<; \
+	   echo private-lib; } | LC_ALL=C sort -u >$@
 
-contrib/syntax/lists/profile_conditionals.list: src/firejail/profile.c
+contrib/syntax/lists/profile_conditionals.list: src/firejail/profile.c Makefile
+	@printf 'Generating %s from %s\n' $@ $<
 	@awk -- 'BEGIN {process=0;} /^Cond conditionals\[\] = \{$$/ {process=1;} \
 		/\t*\{"[^"]+".*/ \
 		{ if (process) {print gensub(/^\t*\{"([^"]+)".*$$/, "\\1", 1);} } \
 		/^\t\{ NULL, NULL \}$$/ {process=0;}' \
 		$< | LC_ALL=C sort -u >$@
 
-contrib/syntax/lists/profile_macros.list: src/firejail/macros.c
+contrib/syntax/lists/profile_macros.list: src/firejail/macros.c Makefile
+	@printf 'Generating %s from %s\n' $@ $<
 	@sed -En 's/.*\$$\{([^}]+)\}.*/\1/p' $< | LC_ALL=C sort -u >$@
 
-contrib/syntax/lists/syscall_groups.list: src/lib/syscall.c
+contrib/syntax/lists/syscall_groups.list: src/lib/syscall.c Makefile
+	@printf 'Generating %s from %s\n' $@ $<
 	@sed -En 's/.*"@([^",]+).*/\1/p' $< | LC_ALL=C sort -u >$@
 
-contrib/syntax/lists/syscalls.list: $(SYSCALL_HEADERS)
+contrib/syntax/lists/syscalls.list: $(SYSCALL_HEADERS) Makefile
+	@printf 'Generating %s\n' $@
 	@sed -n 's/{\s\+"\([^"]\+\)",.*},/\1/p' $(SYSCALL_HEADERS) | \
 	LC_ALL=C sort -u >$@
 
-contrib/syntax/lists/system_errnos.list: src/lib/errno.c
+contrib/syntax/lists/system_errnos.list: src/lib/errno.c Makefile
+	@printf 'Generating %s from %s\n' $@ $<
 	@sed -En 's/.*"(E[^"]+).*/\1/p' $< | LC_ALL=C sort -u >$@
 
-pipe_fromlf = { tr '\n' '|' | sed 's/|$$//'; }
-space_fromlf = { tr '\n' ' ' | sed 's/ $$//'; }
+regex_fromlf = { tr '\n' '|' | sed -e 's/|$$//' -e 's/\./\\\\./g'; }
+space_fromlf = { tr '\n' ' ' | sed -e 's/ $$//'; }
 edit_syntax_file = sed \
 	-e "s/@make_input@/$$(basename $@).  Generated from $$(basename $<) by make./" \
-	-e "s/@FJ_PROFILE_COMMANDS_ARG0@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_commands_arg0.list)/" \
-	-e "s/@FJ_PROFILE_COMMANDS_ARG1@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_commands_arg1.list)/" \
-	-e "s/@FJ_PROFILE_CONDITIONALS@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_conditionals.list)/" \
-	-e "s/@FJ_PROFILE_MACROS@/$$($(pipe_fromlf) <contrib/syntax/lists/profile_macros.list)/" \
+	-e "s/@FJ_PROFILE_COMMANDS_ARG0@/$$($(regex_fromlf) <contrib/syntax/lists/profile_commands_arg0.list)/" \
+	-e "s/@FJ_PROFILE_COMMANDS_ARG1@/$$($(regex_fromlf) <contrib/syntax/lists/profile_commands_arg1.list)/" \
+	-e "s/@FJ_PROFILE_CONDITIONALS@/$$($(regex_fromlf) <contrib/syntax/lists/profile_conditionals.list)/" \
+	-e "s/@FJ_PROFILE_MACROS@/$$($(regex_fromlf) <contrib/syntax/lists/profile_macros.list)/" \
 	-e "s/@FJ_SYSCALLS@/$$($(space_fromlf) <contrib/syntax/lists/syscalls.list)/" \
-	-e "s/@FJ_SYSCALL_GROUPS@/$$($(pipe_fromlf) <contrib/syntax/lists/syscall_groups.list)/" \
-	-e "s/@FJ_SYSTEM_ERRNOS@/$$($(pipe_fromlf) <contrib/syntax/lists/system_errnos.list)/"
+	-e "s/@FJ_SYSCALL_GROUPS@/$$($(regex_fromlf) <contrib/syntax/lists/syscall_groups.list)/" \
+	-e "s/@FJ_SYSTEM_ERRNOS@/$$($(regex_fromlf) <contrib/syntax/lists/system_errnos.list)/"
 
-contrib/syntax/files/example: contrib/syntax/files/example.in $(SYNTAX_LISTS)
+contrib/syntax/files/example: contrib/syntax/files/example.in $(SYNTAX_LISTS) Makefile
 	@printf 'Generating %s from %s\n' $@ $<
 	@$(edit_syntax_file) $< >$@
 
 # gtksourceview language-specs
-contrib/syntax/files/%.lang: contrib/syntax/files/%.lang.in $(SYNTAX_LISTS)
+contrib/syntax/files/%.lang: contrib/syntax/files/%.lang.in $(SYNTAX_LISTS) Makefile
 	@printf 'Generating %s from %s\n' $@ $<
 	@$(edit_syntax_file) $< >$@
 
 # vim syntax files
-contrib/syntax/files/%.vim: contrib/syntax/files/%.vim.in $(SYNTAX_LISTS)
+contrib/syntax/files/%.vim: contrib/syntax/files/%.vim.in $(SYNTAX_LISTS) Makefile
 	@printf 'Generating %s from %s\n' $@ $<
 	@$(edit_syntax_file) $< >$@
 

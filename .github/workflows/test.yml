@@ -1,66 +1,62 @@
-name: Build
+name: Test
 
-# Note: Keep this list in sync with DISTFILES in ../../Makefile.
 on:
   push:
     paths:
-      - 'contrib/**'
-      - 'etc/**'
       - 'm4/**'
-      - 'platform/**'
-      - 'src/**'
+      - 'src/**.c'
+      - 'src/**.h'
+      - 'src/**.mk'
+      - 'src/**Makefile'
       - 'test/**'
-      - .github/workflows/build.yml
-      - COPYING
+      - .github/workflows/test.yml
       - Makefile
-      - README
-      - RELNOTES
-      - ci/printenv.sh
       - config.mk.in
       - config.sh.in
       - configure
       - configure.ac
-      - install.sh
-      - mkdeb.sh
-      - mketc.sh
+      - src/firecfg/firecfg.config
   pull_request:
     paths:
-      - 'contrib/**'
-      - 'etc/**'
       - 'm4/**'
-      - 'platform/**'
-      - 'src/**'
+      - 'src/**.c'
+      - 'src/**.h'
+      - 'src/**.mk'
+      - 'src/**Makefile'
       - 'test/**'
-      - .github/workflows/build.yml
-      - COPYING
+      - .github/workflows/test.yml
       - Makefile
-      - README
-      - RELNOTES
-      - ci/printenv.sh
       - config.mk.in
       - config.sh.in
       - configure
       - configure.ac
-      - install.sh
-      - mkdeb.sh
-      - mketc.sh
+      - src/firecfg/firecfg.config
 
 permissions:  # added using https://github.com/step-security/secure-workflows
   contents: read
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-22.04
+    env:
+      SHELL: /bin/bash
     steps:
     - name: Harden Runner
       uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09
       with:
         egress-policy: block
         allowed-endpoints: >
+          1.1.1.1:1025
           azure.archive.ubuntu.com:80
+          debian.org:80
+          dns.quad9.net:53
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
+          whois.pir.org:43
+          www.debian.org:443
+          www.debian.org:80
+          yahoo.com:1025
     - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
     - name: update package information
       run: sudo apt-get update -qy
@@ -82,3 +78,19 @@ jobs:
       run: sudo make install
     - name: print firejail version
       run: command -V firejail && firejail --version
+    - run: make lab-setup
+    - run: make test-seccomp-extra
+    - run: make test-firecfg
+    - run: make test-capabilities
+    - run: make test-apparmor
+    - run: make test-appimage
+    - run: make test-chroot
+    - run: make test-sysutils
+    - run: make test-private-etc
+    - run: make test-profiles
+    - run: make test-fcopy
+    - run: make test-fnetfilter
+    - run: make test-fs
+    - run: make test-utils
+    - run: make test-environment
+    - run: make test-network

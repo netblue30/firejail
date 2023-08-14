@@ -1,5 +1,5 @@
 # Firejail profile for twitch
-# Description: Unofficial electron based desktop warpper for Twitch
+# Description: Unofficial electron based desktop wrapper for Twitch
 # This file is overwritten after every install/update
 # Persistent local customizations
 include twitch.local

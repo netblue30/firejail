@@ -151,8 +151,8 @@ def run_firejail(program, all_args):
         if arg:
             myargs.insert(-1, arg)
         subprocess.call(myargs)
-        ans = input('Did %s run correctly? [y]/n ' % program)
-        if ans in ['n', 'N']:
+        answer = input('Did %s run correctly? [y]/n ' % program)
+        if answer in ['n', 'N']:
             bad_args.append(arg)
         elif arg:
             good_args.insert(-1, arg)

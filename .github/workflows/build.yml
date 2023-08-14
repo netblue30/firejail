@@ -9,6 +9,7 @@ on:
       - .github/pull_request_template.md
       - .github/workflows/build-extra.yml
       - .github/workflows/codeql-analysis.yml
+      - .github/workflows/codespell.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml
@@ -26,6 +27,7 @@ on:
       - .github/pull_request_template.md
       - .github/workflows/build-extra.yml
       - .github/workflows/codeql-analysis.yml
+      - .github/workflows/codespell.yml
       - .github/workflows/profile-checks.yml
       - .gitignore
       - .gitlab-ci.yml

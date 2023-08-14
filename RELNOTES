@@ -363,7 +363,7 @@ firejail (0.9.62) baseline; urgency=low
   * whitelisting /usr/share in a large number of profiles
   * new scripts in contrib: gdb-firejail.sh and sort.py
   * enhancement: whitelist /usr/share in some profiles
-  * added signal mediation ot apparmor profile
+  * added signal mediation to apparmor profile
   * new conditions: HAS_X11, HAS_NET
   * new profiles: qgis, klatexformula, klatexformula_cmdl, links, xlinks
   * new profiles: pandoc, teams-for-linux, OpenArena, gnome-sound-recorder
@@ -758,7 +758,7 @@ firejail (0.9.44.4) baseline; urgency=low
 
 firejail (0.9.44.2) baseline; urgency=low
   * security: overwrite /etc/resolv.conf found by Martin Carpenter (CVE-2016-10118)
-  * secuirty: TOCTOU exploit for --get and --put found by Daniel Hodson
+  * security: TOCTOU exploit for --get and --put found by Daniel Hodson
   * security: invalid environment exploit found by Martin Carpenter (CVE-2016-10122)
   * security: several security enhancements
   * bugfix: crashing VLC by pressing Ctrl-O

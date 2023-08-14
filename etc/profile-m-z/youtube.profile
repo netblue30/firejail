@@ -1,5 +1,5 @@
 # Firejail profile for youtube
-# Description: Unofficial electron based desktop warpper for YouTube
+# Description: Unofficial electron based desktop wrapper for YouTube
 # This file is overwritten after every install/update
 # Persistent local customizations
 include youtube.local

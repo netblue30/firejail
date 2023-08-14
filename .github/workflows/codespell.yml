@@ -1,0 +1,40 @@
+name: Codespell
+
+on:
+  push:
+    paths-ignore:
+      - 'm4/**'
+      - COPYING
+  pull_request:
+    paths-ignore:
+      - 'm4/**'
+      - COPYING
+
+permissions:  # added using https://github.com/step-security/secure-workflows
+  contents: read
+
+jobs:
+  codespell:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09
+      with:
+        egress-policy: block
+        allowed-endpoints: >
+          archive.ubuntu.com:80
+          azure.archive.ubuntu.com:80
+          github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+          security.ubuntu.com:80
+    - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+    - name: update package information
+      run: sudo apt-get update -qy
+    - name: install dependencies
+      run: sudo apt-get install -qy codespell
+    - name: configure
+      run: ./configure || (cat config.log; exit 1)
+    - run: codespell --version
+    - name: codespell
+      run: make codespell

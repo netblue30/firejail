@@ -1,4 +1,4 @@
-name: Build-extra CI
+name: Build-extra
 
 on:
   push:

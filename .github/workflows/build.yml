@@ -1,4 +1,4 @@
-name: Build CI
+name: Build
 
 # Note: Keep this list in sync with DISTFILES in ../../Makefile.
 on:

@@ -2,51 +2,33 @@ name: Build-extra CI
 
 on:
   push:
-    paths-ignore:
-      - '.github/ISSUE_TEMPLATE/*'
-      - 'contrib/syntax/**'
-      - 'contrib/vim/**'
-      - 'etc/**'
-      - 'src/man/*.in'
-      - .git-blame-ignore-revs
-      - .github/dependabot.yml
-      - .github/pull_request_template.md
-      - .github/workflows/build.yml
-      - .github/workflows/codeql-analysis.yml
-      - .github/workflows/codespell.yml
-      - .github/workflows/profile-checks.yml
-      - .gitignore
-      - .gitlab-ci.yml
-      - CONTRIBUTING.md
-      - COPYING
-      - README
-      - README.md
-      - RELNOTES
-      - SECURITY.md
-      - src/firecfg/firecfg.config
+    paths:
+      - 'm4/**'
+      - 'src/**.c'
+      - 'src/**.h'
+      - 'src/**.mk'
+      - 'src/**Makefile'
+      - .github/workflows/build-extra.yml
+      - Makefile
+      - ci/printenv.sh
+      - config.mk.in
+      - config.sh.in
+      - configure
+      - configure.ac
   pull_request:
-    paths-ignore:
-      - '.github/ISSUE_TEMPLATE/*'
-      - 'contrib/syntax/**'
-      - 'contrib/vim/**'
-      - 'etc/**'
-      - 'src/man/*.in'
-      - .git-blame-ignore-revs
-      - .github/dependabot.yml
-      - .github/pull_request_template.md
-      - .github/workflows/build.yml
-      - .github/workflows/codeql-analysis.yml
-      - .github/workflows/codespell.yml
-      - .github/workflows/profile-checks.yml
-      - .gitignore
-      - .gitlab-ci.yml
-      - CONTRIBUTING.md
-      - COPYING
-      - README
-      - README.md
-      - RELNOTES
-      - SECURITY.md
-      - src/firecfg/firecfg.config
+    paths:
+      - 'm4/**'
+      - 'src/**.c'
+      - 'src/**.h'
+      - 'src/**.mk'
+      - 'src/**Makefile'
+      - .github/workflows/build-extra.yml
+      - Makefile
+      - ci/printenv.sh
+      - config.mk.in
+      - config.sh.in
+      - configure
+      - configure.ac
 
 permissions:  # added using https://github.com/step-security/secure-workflows
   contents: read

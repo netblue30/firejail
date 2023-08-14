@@ -6,6 +6,7 @@ on:
       - 'ci/check/profiles/**'
       - 'etc/**'
       - .github/workflows/profile-checks.yml
+      - ci/printenv.sh
       - contrib/sort.py
       - src/firecfg/firecfg.config
   pull_request:
@@ -13,6 +14,7 @@ on:
       - 'ci/check/profiles/**'
       - 'etc/**'
       - .github/workflows/profile-checks.yml
+      - ci/printenv.sh
       - contrib/sort.py
       - src/firecfg/firecfg.config
 

@@ -44,14 +44,6 @@ jobs:
     name: Analyze
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'cpp', 'python' ]
-        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python' ]
-        # Learn more:
-        # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
-
     steps:
     - name: Harden Runner
       uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09
@@ -60,10 +52,8 @@ jobs:
         egress-policy: block
         allowed-endpoints: >
           api.github.com:443
-          files.pythonhosted.org:443
           github.com:443
           objects.githubusercontent.com:443
-          pypi.org:443
           uploads.github.com:443
 
     - name: Checkout repository
@@ -76,7 +66,7 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@5b6282e01c62d02e720b81eb8a51204f527c3624
       with:
-        languages: ${{ matrix.language }}
+        languages: cpp
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)

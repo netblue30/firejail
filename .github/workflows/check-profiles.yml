@@ -1,11 +1,11 @@
-name: Profile Checks
+name: Check-Profiles
 
 on:
   push:
     paths:
       - 'ci/check/profiles/**'
       - 'etc/**'
-      - .github/workflows/profile-checks.yml
+      - .github/workflows/check-profiles.yml
       - ci/printenv.sh
       - contrib/sort.py
       - src/firecfg/firecfg.config
@@ -13,7 +13,7 @@ on:
     paths:
       - 'ci/check/profiles/**'
       - 'etc/**'
-      - .github/workflows/profile-checks.yml
+      - .github/workflows/check-profiles.yml
       - ci/printenv.sh
       - contrib/sort.py
       - src/firecfg/firecfg.config

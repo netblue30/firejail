@@ -2,7 +2,7 @@
 
 [![Build (GitLab)](https://gitlab.com/Firejail/firejail_ci/badges/master/pipeline.svg)](https://gitlab.com/Firejail/firejail_ci/pipelines)
 [![Build (GitHub)](https://github.com/netblue30/firejail/workflows/Build/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ABuild)
-[![CodeQL](https://github.com/netblue30/firejail/workflows/CodeQL/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACodeQL)
+[![Check-C](https://github.com/netblue30/firejail/workflows/Check-C/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACheck-C)
 [![Packaging status (Repology)](https://repology.org/badge/tiny-repos/firejail.svg)](https://repology.org/project/firejail/versions)
 
 Firejail is a SUID sandbox program that reduces the risk of security breaches

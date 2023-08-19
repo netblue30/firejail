@@ -1,3 +1,5 @@
+# Checks that the tests are passing.
+
 name: Test
 
 on:

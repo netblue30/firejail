@@ -1,3 +1,5 @@
+# Checks for potential issues in the source code.
+
 name: Check-C
 
 on:

@@ -1,3 +1,5 @@
+# Lints and checks for potential issues in the profiles.
+
 name: Check-Profiles
 
 on:

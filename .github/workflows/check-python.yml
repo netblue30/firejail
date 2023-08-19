@@ -1,3 +1,5 @@
+# Lints and checks for potential issues in Python files.
+
 name: Check-Python
 
 on:

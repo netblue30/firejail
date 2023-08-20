@@ -878,7 +878,8 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// appimage
 	//****************************
-	appimage_mount();
+	if (arg_appimage)
+		appimage_mount();
 
 	//****************************
 	// private mode

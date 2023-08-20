@@ -319,16 +319,10 @@ read-only ${HOME}/.zshenv
 read-only ${HOME}/.zshrc
 read-only ${HOME}/.zshrc.local
 
-# Remote access
+# Remote access - ${HOME}/.ssh directory blacklisted in top secret section below
 blacklist ${HOME}/.rhosts
 blacklist ${HOME}/.shosts
-blacklist ${HOME}/.ssh/authorized_keys
-blacklist ${HOME}/.ssh/authorized_keys2
-blacklist ${HOME}/.ssh/environment
-blacklist ${HOME}/.ssh/rc
 blacklist /etc/hosts.equiv
-read-only ${HOME}/.ssh/config
-read-only ${HOME}/.ssh/config.d
 
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc
@@ -536,7 +530,6 @@ blacklist ${PATH}/umount
 blacklist ${PATH}/unix_chkpwd
 blacklist ${PATH}/xev
 blacklist ${PATH}/xinput
-# from 0.9.67
 blacklist /usr/lib/openssh
 blacklist /usr/lib/ssh
 blacklist /usr/libexec/openssh
@@ -672,7 +665,7 @@ blacklist ${PATH}/unbound-host
 
 # prevent an intruder to guess passwords using regular network tools
 blacklist ${PATH}/ftp
-blacklist ${PATH}/ssh
+blacklist ${PATH}/ssh*
 blacklist ${PATH}/telnet
 
 # rest of ${RUNUSER}

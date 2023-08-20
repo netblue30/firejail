@@ -566,6 +566,7 @@ blacklist ${PATH}/nmtui-hostname
 blacklist ${PATH}/networkctl
 blacklist ${PATH}/ss
 blacklist ${PATH}/traceroute
+blacklist ${PATH}/dpkg*
 
 # other SUID binaries
 blacklist /opt/microsoft/msedge*/msedge-sandbox

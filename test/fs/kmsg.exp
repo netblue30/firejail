@@ -17,6 +17,7 @@ sleep 1
 send -- "cat /dev/kmsg\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
+	"No such file or directory" # FIXME: Needed in CI
 	"Permission denied"
 }
 after 100

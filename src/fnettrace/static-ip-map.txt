@@ -6078,6 +6078,12 @@
 # Shopify
 23.227.32.0/19 Shopify
 
+# Sucuri
+66.248.200.0/22 Sucuri
+185.93.228.0/22 Sucuri
+192.88.134.0/23 Sucuri
+192.124.249.0/24 Sucuri
+192.161.0.0/24 Sucuri
 
 # HostGator
 # Bluehost

@@ -4,12 +4,42 @@ include disable-devel.local
 
 # development tools
 
+# autoconf/automake
+blacklist ${PATH}/autoconf
+blacklist ${PATH}/autoheader
+blacklist ${PATH}/autom4te
+blacklist ${PATH}/autoreconf
+blacklist ${PATH}/autoscan
+blacklist ${PATH}/autoupdate
+blacklist ${PATH}/ifnames
+blacklist ${PATH}/aclocal*
+blacklist ${PATH}/automake*
+blacklist ${PATH}/dh_*
+blacklist ${PATH}/m4
+
+# patch
+blacklist ${PATH}/patch
+blacklist ${PATH}/patchview
+blacklist ${PATH}/espdiff
+blacklist ${PATH}/elfedit
+
+# expect
+blacklist ${PATH}/expect*
+blacklist ${PATH}/autoexpect
+
 # clang/llvm
 blacklist ${PATH}/clang*
 blacklist ${PATH}/lldb*
 blacklist ${PATH}/llvm*
 # see issue #2106 - it disables hardware acceleration in Firefox on Radeon GPU
 # blacklist /usr/lib/llvm*
+blacklist ${PATH}/scan-build
+blacklist ${PATH}/analyze-build*
+blacklist ${PATH}/asan_symbolize*
+blacklist ${PATH}/bugpoint*
+blacklist ${PATH}/c-index-test*
+blacklist ${PATH}/llc*
+blacklist ${PATH}/lli*
 
 # GCC
 blacklist ${PATH}/as
@@ -28,6 +58,12 @@ blacklist ${PATH}/*-gcc*
 blacklist ${PATH}/*-g++*
 # seems to create problems on Gentoo
 #blacklist /usr/lib/gcc
+blacklist ${PATH}/elfedit
+blacklist ${PATH}/gcov*
+blacklist ${PATH}/gmake
+blacklist ${PATH}/make
+blacklist ${PATH}/make-first-existing-target
+blacklist ${PATH}/x86_64-linux-gnu-*
 
 #Go
 blacklist ${PATH}/gccgo

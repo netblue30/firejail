@@ -319,9 +319,13 @@ read-only ${HOME}/.zshenv
 read-only ${HOME}/.zshrc
 read-only ${HOME}/.zshrc.local
 
-# Remote access - ${HOME}/.ssh directory blacklisted in top secret section below
+# Remote access (used only by sshd; should always be blacklisted)
 blacklist ${HOME}/.rhosts
 blacklist ${HOME}/.shosts
+blacklist ${HOME}/.ssh/authorized_keys
+blacklist ${HOME}/.ssh/authorized_keys2
+blacklist ${HOME}/.ssh/environment
+blacklist ${HOME}/.ssh/rc
 blacklist /etc/hosts.equiv
 
 # Initialization files that allow arbitrary command execution
@@ -354,6 +358,8 @@ read-only ${HOME}/.nanorc
 read-only ${HOME}/.npmrc
 read-only ${HOME}/.pythonrc.py
 read-only ${HOME}/.reportbugrc
+read-only ${HOME}/.ssh/config
+read-only ${HOME}/.ssh/config.d
 read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.vim
 read-only ${HOME}/.viminfo

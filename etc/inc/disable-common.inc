@@ -170,7 +170,7 @@ blacklist ${RUNUSER}/gsconnect
 blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd
 blacklist ${PATH}/systemctl
-blacklist ${PATH}/systemd-run
+blacklist ${PATH}/systemd*
 blacklist ${RUNUSER}/systemd
 blacklist /etc/credstore*
 blacklist /etc/systemd/network
@@ -518,7 +518,10 @@ blacklist ${PATH}/kdesudo
 blacklist ${PATH}/ksu
 blacklist ${PATH}/mount
 blacklist ${PATH}/mount.ecryptfs_private
+blacklist ${PATH}/mountpoint
 blacklist ${PATH}/nc
+blacklist ${PATH}/nc.traditional
+blacklist ${PATH}/nc.openbsd
 blacklist ${PATH}/ncat
 blacklist ${PATH}/nmap
 blacklist ${PATH}/newgidmap
@@ -572,7 +575,28 @@ blacklist ${PATH}/nmtui-hostname
 blacklist ${PATH}/networkctl
 blacklist ${PATH}/ss
 blacklist ${PATH}/traceroute
+# since firejail version 0.9.73
 blacklist ${PATH}/dpkg*
+blacklist ${PATH}/fakeroot*
+blacklist ${PATH}/apt*
+blacklist ${PATH}/dumpcap
+blacklist ${PATH}/efibootdump
+blacklist ${PATH}/efibootmgr
+blacklist ${PATH}/passmass
+blacklist ${PATH}/proxy
+blacklist ${PATH}/aa-*
+blacklist ${PATH}/airscan-discover
+blacklist ${PATH}/avahi*
+blacklist ${PATH}/dbus-*
+blacklist ${PATH}/debconf*
+blacklist ${PATH}/grub-*
+blacklist ${PATH}/kernel-install  # from systemd package
+
+# binaries installed by firejail
+blacklist ${PATH}/firemon
+blacklist ${PATH}/firecfg
+blacklist ${PATH}/jailcheck
+blacklist ${PATH}/firetools
 
 # other SUID binaries
 blacklist /opt/microsoft/msedge*/msedge-sandbox
@@ -653,10 +677,13 @@ blacklist ${HOME}/sent
 blacklist /proc/config.gz
 
 # prevent DNS malware attempting to communicate with the server using regular DNS tools
+blacklist ${PATH}/delv
 blacklist ${PATH}/dig
 blacklist ${PATH}/dlint
 blacklist ${PATH}/dns2tcp
 blacklist ${PATH}/dnssec-*
+blacklist ${PATH}/dnstap-read
+blacklist ${PATH}/mdig
 blacklist ${PATH}/dnswalk
 blacklist ${PATH}/drill
 blacklist ${PATH}/host
@@ -667,6 +694,8 @@ blacklist ${PATH}/knsupdate
 blacklist ${PATH}/ldns-*
 blacklist ${PATH}/ldnsd
 blacklist ${PATH}/nslookup
+blacklist ${PATH}/nsupdate
+blacklist ${PATH}/nstat
 blacklist ${PATH}/resolvectl
 blacklist ${PATH}/unbound-host
 

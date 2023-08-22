@@ -43,6 +43,16 @@ int appimage_find_profile(const char *archive) {
 	assert(archive);
 	assert(strlen(archive));
 
+	// extract the name of the appimage from a full path
+	// example: archive = /opt/kdenlive-20.12.2-x86_64.appimage
+	const char *arc = strrchr(archive, '/');
+	if (arc)
+		arc++;
+	else
+		arc = archive;
+	if (arg_debug)
+		printf("Looking for a %s profile\n", arc);
+
 	// try to match the name of the archive with the list of programs in /etc/firejail/firecfg.config
 	FILE *fp = fopen(SYSCONFDIR "/firecfg.config", "r");
 	if (!fp) {
@@ -56,8 +66,8 @@ int appimage_find_profile(const char *archive) {
 		char *ptr = strchr(buf, '\n');
 		if (ptr)
 			*ptr = '\0';
-		char *found = strcasestr(archive, buf);
-		if (found == archive) {
+		char *found = strcasestr(arc, buf);
+		if (found == arc) {
 			fclose(fp);
 			return profile_find_firejail(buf, 1);
 		}

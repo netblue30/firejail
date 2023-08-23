@@ -1,18 +1,22 @@
-name: Profile Checks
+# Lints and checks for potential issues in the profiles.
+
+name: Check-Profiles
 
 on:
   push:
     paths:
       - 'ci/check/profiles/**'
       - 'etc/**'
-      - .github/workflows/profile-checks.yml
+      - .github/workflows/check-profiles.yml
+      - ci/printenv.sh
       - contrib/sort.py
       - src/firecfg/firecfg.config
   pull_request:
     paths:
       - 'ci/check/profiles/**'
       - 'etc/**'
-      - .github/workflows/profile-checks.yml
+      - .github/workflows/check-profiles.yml
+      - ci/printenv.sh
       - contrib/sort.py
       - src/firecfg/firecfg.config
 

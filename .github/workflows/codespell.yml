@@ -1,3 +1,5 @@
+# Checks the spelling on all non-third-party files.
+
 name: Codespell
 
 on:

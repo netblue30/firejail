@@ -1,8 +1,13 @@
 # Firejail
 
-[![Build CI (GitLab)](https://gitlab.com/Firejail/firejail_ci/badges/master/pipeline.svg)](https://gitlab.com/Firejail/firejail_ci/pipelines)
-[![Build CI (GitHub)](https://github.com/netblue30/firejail/workflows/Build%20CI/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3A%22Build+CI%22)
-[![CodeQL CI](https://github.com/netblue30/firejail/workflows/CodeQL/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACodeQL)
+[![Build (GitLab)](https://gitlab.com/Firejail/firejail_ci/badges/master/pipeline.svg)](https://gitlab.com/Firejail/firejail_ci/pipelines)
+[![Build (GitHub)](https://github.com/netblue30/firejail/workflows/Build/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ABuild)
+[![Build-extra](https://github.com/netblue30/firejail/workflows/Build-extra/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ABuild-extra)
+[![Test](https://github.com/netblue30/firejail/workflows/Test/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ATest)
+[![Check-C](https://github.com/netblue30/firejail/workflows/Check-C/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACheck-C)
+[![Check-Profiles](https://github.com/netblue30/firejail/workflows/Check-Profiles/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACheck-Profiles)
+[![Check-Python](https://github.com/netblue30/firejail/workflows/Check-Python/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACheck-Python)
+[![Codespell](https://github.com/netblue30/firejail/workflows/Codespell/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACodespell)
 [![Packaging status (Repology)](https://repology.org/badge/tiny-repos/firejail.svg)](https://repology.org/project/firejail/versions)
 
 Firejail is a SUID sandbox program that reduces the risk of security breaches

@@ -1,68 +1,69 @@
-name: Build CI
+# Checks that `make dist` works and builds the project with the default
+# configuration.
 
+name: Build
+
+# Note: Keep this list in sync with DISTFILES in ../../Makefile.
 on:
   push:
-    paths-ignore:
-      - '.github/ISSUE_TEMPLATE/*'
-      - .git-blame-ignore-revs
-      - .github/dependabot.yml
-      - .github/pull_request_template.md
-      - .github/workflows/build-extra.yml
-      - .github/workflows/codeql-analysis.yml
-      - .github/workflows/codespell.yml
-      - .github/workflows/profile-checks.yml
-      - .gitignore
-      - .gitlab-ci.yml
-      - CONTRIBUTING.md
+    paths:
+      - 'contrib/**'
+      - 'etc/**'
+      - 'm4/**'
+      - 'platform/**'
+      - 'src/**'
+      - 'test/**'
+      - .github/workflows/build.yml
       - COPYING
+      - Makefile
       - README
-      - README.md
       - RELNOTES
-      - SECURITY.md
+      - ci/printenv.sh
+      - config.mk.in
+      - config.sh.in
+      - configure
+      - configure.ac
+      - install.sh
+      - mkdeb.sh
+      - mketc.sh
   pull_request:
-    paths-ignore:
-      - '.github/ISSUE_TEMPLATE/*'
-      - .git-blame-ignore-revs
-      - .github/dependabot.yml
-      - .github/pull_request_template.md
-      - .github/workflows/build-extra.yml
-      - .github/workflows/codeql-analysis.yml
-      - .github/workflows/codespell.yml
-      - .github/workflows/profile-checks.yml
-      - .gitignore
-      - .gitlab-ci.yml
-      - CONTRIBUTING.md
+    paths:
+      - 'contrib/**'
+      - 'etc/**'
+      - 'm4/**'
+      - 'platform/**'
+      - 'src/**'
+      - 'test/**'
+      - .github/workflows/build.yml
       - COPYING
+      - Makefile
       - README
-      - README.md
       - RELNOTES
-      - SECURITY.md
+      - ci/printenv.sh
+      - config.mk.in
+      - config.sh.in
+      - configure
+      - configure.ac
+      - install.sh
+      - mkdeb.sh
+      - mketc.sh
 
 permissions:  # added using https://github.com/step-security/secure-workflows
   contents: read
 
 jobs:
-  build_and_test:
+  build:
     runs-on: ubuntu-22.04
-    env:
-      SHELL: /bin/bash
     steps:
     - name: Harden Runner
       uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09
       with:
         egress-policy: block
         allowed-endpoints: >
-          1.1.1.1:1025
           azure.archive.ubuntu.com:80
-          debian.org:80
-          dns.quad9.net:53
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
-          whois.pir.org:43
-          www.debian.org:443
-          www.debian.org:80
-          yahoo.com:1025
     - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
     - name: update package information
       run: sudo apt-get update -qy
@@ -84,19 +85,3 @@ jobs:
       run: sudo make install
     - name: print firejail version
       run: command -V firejail && firejail --version
-    - run: make lab-setup
-    - run: make test-seccomp-extra
-    - run: make test-firecfg
-    - run: make test-capabilities
-    - run: make test-apparmor
-    - run: make test-appimage
-    - run: make test-chroot
-    - run: make test-sysutils
-    - run: make test-private-etc
-    - run: make test-profiles
-    - run: make test-fcopy
-    - run: make test-fnetfilter
-    - run: make test-fs
-    - run: make test-utils
-    - run: make test-environment
-    - run: make test-network

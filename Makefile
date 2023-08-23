@@ -299,6 +299,7 @@ uninstall: config.mk
 	rm -f $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs/firejail-profile.lang
 	@echo "If you want to install a different version of firejail, you might also need to run 'rm -fr $(DESTDIR)$(sysconfdir)/firejail', see #2038."
 
+# Note: Keep this list in sync with `paths` in .github/workflows/build.yml.
 DISTFILES = \
 	COPYING \
 	Makefile \

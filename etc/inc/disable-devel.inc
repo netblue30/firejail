@@ -13,8 +13,6 @@ blacklist ${PATH}/automake*
 blacklist ${PATH}/autoreconf
 blacklist ${PATH}/autoscan
 blacklist ${PATH}/autoupdate
-blacklist ${PATH}/dh_*
-blacklist ${PATH}/fakeroot*
 blacklist ${PATH}/ifnames
 blacklist ${PATH}/m4
 
@@ -23,6 +21,10 @@ blacklist ${PATH}/elfedit
 blacklist ${PATH}/espdiff
 blacklist ${PATH}/patch
 blacklist ${PATH}/patchview
+
+# packaging
+blacklist ${PATH}/dh_*
+blacklist ${PATH}/fakeroot*
 
 # expect
 blacklist ${PATH}/autoexpect

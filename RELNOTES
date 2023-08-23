@@ -40,6 +40,9 @@ firejail (0.9.73) baseline; urgency=low
   * build: fix hardcoded make & remove unnecessary distclean targets (#5911)
   * build: dist and asc improvements (#5916)
   * build: fix some shellcheck issues & use config.sh in more scripts (#5927)
+  * build: firecfg.config sorting improvements (#5942)
+  * build: codespell improvements (#5955)
+  * build: add missing makefile dep & syntax improvements (#5956)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
@@ -48,6 +51,7 @@ firejail (0.9.73) baseline; urgency=low
   * ci: run for every branch instead of just master (#5815)
   * ci: upgrade debian:stretch to debian:buster (#5818)
   * ci: standardize apt-get update/install & misc improvements (#5857)
+  * ci: whitelist paths, reorganize workflows & speed-up tests (#5960)
   * contrib/vim: match profile files more broadly (#5850)
   * test: split individual test groups in github workflows
   * test: add chroot, appimage and network tests in github workflows

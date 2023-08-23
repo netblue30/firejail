@@ -37,3 +37,4 @@ noblacklist ${HOME}/.bundle
 
 # Rust
 noblacklist ${HOME}/.cargo
+noblacklist ${HOME}/.rustup

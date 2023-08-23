@@ -1129,6 +1129,7 @@ blacklist ${HOME}/.repo_.gitconfig.json
 blacklist ${HOME}/.repoconfig
 blacklist ${HOME}/.retroshare
 blacklist ${HOME}/.ripperXrc
+blacklist ${HOME}/.rustup
 blacklist ${HOME}/.sbt
 blacklist ${HOME}/.scorched3d
 blacklist ${HOME}/.scribus

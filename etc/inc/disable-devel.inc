@@ -92,7 +92,6 @@ blacklist ${PATH}/openssl
 blacklist ${PATH}/openssl-1.0
 
 # Rust
-blacklist ${HOME}/.rustup
 blacklist ${PATH}/rust-gdb
 blacklist ${PATH}/rust-lldb
 blacklist ${PATH}/rustc

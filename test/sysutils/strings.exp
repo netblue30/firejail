@@ -13,7 +13,7 @@ sleep 1
 send -- "firejail /usr/bin/strings /usr/bin/firejail > firejail_t2\r"
 sleep 1
 
-send -- "diff -s firejail_t1 firejail_t2\r"
+send -- "diff -s firejail_t1 firejail_t2 | head\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"firejail_t1 and firejail_t2 are identical"

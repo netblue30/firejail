@@ -15,6 +15,7 @@ blacklist ${PATH}/ifnames
 blacklist ${PATH}/aclocal*
 blacklist ${PATH}/automake*
 blacklist ${PATH}/dh_*
+blacklist ${PATH}/fakeroot*
 blacklist ${PATH}/m4
 
 # patch

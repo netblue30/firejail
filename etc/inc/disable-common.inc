@@ -577,7 +577,6 @@ blacklist ${PATH}/ss
 blacklist ${PATH}/traceroute
 # since firejail version 0.9.73
 blacklist ${PATH}/dpkg*
-blacklist ${PATH}/fakeroot*
 blacklist ${PATH}/apt*
 blacklist ${PATH}/dumpcap
 blacklist ${PATH}/efibootdump

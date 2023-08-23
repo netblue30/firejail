@@ -17,6 +17,7 @@ on:
       - config.sh.in
       - configure
       - configure.ac
+      - etc/profile-a-l/default.profile
       - src/firecfg/firecfg.config
   pull_request:
     paths:
@@ -32,6 +33,7 @@ on:
       - config.sh.in
       - configure
       - configure.ac
+      - etc/profile-a-l/default.profile
       - src/firecfg/firecfg.config
 
 permissions:  # added using https://github.com/step-security/secure-workflows

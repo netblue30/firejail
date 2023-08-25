@@ -10,6 +10,7 @@ include ani-cli.local
 
 noblacklist ${HOME}/.cache/ani-cli
 noblacklist ${HOME}/.local/state/ani-cli
+noblacklist ${PATH}/patch
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc

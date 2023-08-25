@@ -17,6 +17,7 @@ noblacklist ${HOME}/.config/ueberzugpp
 noblacklist ${HOME}/.local/share/applications/lobster
 noblacklist ${HOME}/.local/share/lobster
 noblacklist ${PATH}/openssl
+noblacklist ${PATH}/patch
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc

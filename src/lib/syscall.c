@@ -1104,13 +1104,13 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_pciconfig_write
 	  "pciconfig_write,"
 #endif
-#ifdef SYS_s390_mmio_read
-	  "s390_mmio_read,"
+#ifdef SYS_s390_pci_mmio_read
+	  "s390_pci_mmio_read,"
 #endif
-#ifdef SYS_s390_mmio_write
-	  "s390_mmio_write"
+#ifdef SYS_s390_pci_mmio_write
+	  "s390_pci_mmio_write"
 #endif
-#if !defined(SYS_ioperm) && !defined(SYS_iopl) && !defined(SYS_pciconfig_iobase) && !defined(SYS_pciconfig_read) && !defined(SYS_pciconfig_write) && !defined(SYS_s390_mmio_read) && !defined(SYS_s390_mmio_write)
+#if !defined(SYS_ioperm) && !defined(SYS_iopl) && !defined(SYS_pciconfig_iobase) && !defined(SYS_pciconfig_read) && !defined(SYS_pciconfig_write) && !defined(SYS_s390_pci_mmio_read) && !defined(SYS_s390_pci_mmio_write)
 	  "__dummy_syscall__" // workaround for s390x which doesn't have any of above defined and empty syscall lists are not allowed
 #endif
 	},

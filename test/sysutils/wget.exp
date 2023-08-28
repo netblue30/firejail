@@ -3,7 +3,7 @@
 # Copyright (C) 2014-2023 Firejail Authors
 # License GPL v2
 
-set timeout 10
+set timeout 30
 spawn $env(SHELL)
 match_max 100000
 

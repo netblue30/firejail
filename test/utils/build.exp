@@ -94,6 +94,9 @@ expect {
 }
 after 100
 
+# increase the timeout for remote services
+set timeout 30
+
 send -- "firejail --build wget --output-document=~ debian.org\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}

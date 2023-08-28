@@ -40,6 +40,7 @@ whitelist /usr/share/kxmlgui5
 whitelist /usr/share/libdrm
 whitelist /usr/share/libthai
 whitelist /usr/share/locale
+whitelist /usr/share/locale-langpack
 whitelist /usr/share/mime
 whitelist /usr/share/misc
 whitelist /usr/share/Modules

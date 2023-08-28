@@ -4,6 +4,8 @@ name: Check-Profiles
 
 on:
   push:
+    branches-ignore:
+      - 'dependabot/**'
     paths:
       - 'ci/check/profiles/**'
       - 'etc/**'

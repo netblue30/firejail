@@ -4,6 +4,8 @@ name: Check-Python
 
 on:
   push:
+    branches-ignore:
+      - 'dependabot/**'
     paths:
       - '**.py'
       - .github/workflows/check-python.yml

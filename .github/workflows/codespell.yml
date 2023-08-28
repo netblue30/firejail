@@ -4,6 +4,8 @@ name: Codespell
 
 on:
   push:
+    branches-ignore:
+      - 'dependabot/**'
     paths-ignore:
       - 'm4/**'
       - COPYING

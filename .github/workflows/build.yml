@@ -6,6 +6,8 @@ name: Build
 # Note: Keep this list in sync with DISTFILES in ../../Makefile.
 on:
   push:
+    branches-ignore:
+      - 'dependabot/**'
     paths:
       - 'contrib/**'
       - 'etc/**'

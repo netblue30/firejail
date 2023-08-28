@@ -52,7 +52,7 @@ jobs:
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
           security.ubuntu.com:80
-    - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+    - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
     - name: update package information
       run: sudo apt-get update -qy
     - name: install clang-tools-14 and dependencies
@@ -83,7 +83,7 @@ jobs:
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
           security.ubuntu.com:80
-    - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+    - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
     - name: update package information
       run: sudo apt-get update -qy
     - name: install cppcheck
@@ -111,7 +111,7 @@ jobs:
           ppa.launchpad.net:80
           ppa.launchpadcontent.net:443
           security.ubuntu.com:80
-    - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+    - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
     - name: update package information
       run: sudo apt-get update -qy
     - name: install cppcheck
@@ -140,7 +140,7 @@ jobs:
           uploads.github.com:443
 
     - name: Checkout repository
-      uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+      uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
 
     - name: print env
       run: ./ci/printenv.sh

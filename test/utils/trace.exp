@@ -73,6 +73,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 8.6\n";exit}
+	"wget:stat64 index.html" {puts "OK\n";}
 	"wget:fopen64 index.html" {puts "OK\n";}
 	"wget:fopen index.html" {puts "OK\n";}
 	"Parent is shutting down" {puts "OK\n";}

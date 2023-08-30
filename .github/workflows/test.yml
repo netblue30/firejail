@@ -4,6 +4,8 @@ name: Test
 
 on:
   push:
+    branches-ignore:
+      - 'dependabot/**'
     paths:
       - 'm4/**'
       - 'src/**.c'

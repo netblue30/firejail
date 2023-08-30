@@ -25,6 +25,8 @@ firejail (0.9.73) baseline; urgency=low
     #5618)
   * bugfix: fix --hostname and --hosts-file commands
   * bugfix: arp.c: ensure positive timeout on select(2) (#5806)
+  * bugfix: Wrong syscall names for s390_pci_mmio_read and s390_pci_mmio_write
+    (#5965 #5976)
   * build: auto-generate syntax files (#5627)
   * build: mark all phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
@@ -52,6 +54,7 @@ firejail (0.9.73) baseline; urgency=low
   * ci: upgrade debian:stretch to debian:buster (#5818)
   * ci: standardize apt-get update/install & misc improvements (#5857)
   * ci: whitelist paths, reorganize workflows & speed-up tests (#5960)
+  * ci: fix dependabot duplicated workflow runs (#5984)
   * contrib/vim: match profile files more broadly (#5850)
   * test: split individual test groups in github workflows
   * test: add chroot, appimage and network tests in github workflows

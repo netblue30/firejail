@@ -5,11 +5,13 @@ blacklist-nolog
 caps.drop
 caps.keep
 cpu
+dbus-system
 dbus-system.broadcast
 dbus-system.call
 dbus-system.own
 dbus-system.see
 dbus-system.talk
+dbus-user
 dbus-user.broadcast
 dbus-user.call
 dbus-user.own
@@ -74,4 +76,5 @@ tmpfs
 veth-name
 whitelist
 whitelist-ro
+x11
 xephyr-screen

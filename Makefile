@@ -111,7 +111,7 @@ contrib/syntax/lists/profile_commands_arg0.list: src/firejail/profile.c Makefile
 # TODO: private-lib is special-cased in the code and doesn't match the regex
 contrib/syntax/lists/profile_commands_arg1.list: src/firejail/profile.c Makefile
 	@printf 'Generating %s from %s\n' $@ $<
-	@{ sed -En 's/.*strn?cmp\(ptr, "([^"]+) ".*/\1/p' $<; \
+	@{ sed -En 's/.*strn?cmp\(ptr, "([^"]+) .*/\1/p' $<; \
 	   echo private-lib; } | LC_ALL=C sort -u >$@
 
 contrib/syntax/lists/profile_conditionals.list: src/firejail/profile.c Makefile

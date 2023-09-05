@@ -484,7 +484,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
-	else if (strncmp("dbus-user ", ptr, 10) == 0) {
+	else if (strncmp(ptr, "dbus-user ", 10) == 0) {
 #ifdef HAVE_DBUSPROXY
 		ptr += 10;
 		if (strcmp("filter", ptr) == 0) {
@@ -551,7 +551,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 1;
 	}
-	else if (strncmp("dbus-system ", ptr, 12) == 0) {
+	else if (strncmp(ptr, "dbus-system ", 12) == 0) {
 #ifdef HAVE_DBUSPROXY
 		ptr += 12;
 		if (strcmp("filter", ptr) == 0) {

@@ -207,6 +207,8 @@ static void clean_supplementary_groups(gid_t gid) {
 	if (!arg_nosound) {
 		copy_group_ifcont("audio", groups, ngroups,
 		                  new_groups, &new_ngroups, MAX_GROUPS);
+		copy_group_ifcont("pipewire", groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
 	}
 
 	if (!arg_novideo) {

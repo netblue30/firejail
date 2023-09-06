@@ -3217,9 +3217,14 @@ int main(int argc, char **argv, char **envp) {
 
 		gid_t g;
 		if (!arg_nogroups || !check_can_drop_all_groups()) {
-			// add audio group
+			// add audio groups
 			if (!arg_nosound) {
 				g = get_group_id("audio");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
+				g = get_group_id("pipewire");
 				if (g) {
 					sprintf(ptr, "%d %d 1\n", g, g);
 					ptr += strlen(ptr);

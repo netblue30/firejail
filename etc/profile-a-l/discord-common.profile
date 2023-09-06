@@ -7,15 +7,7 @@ include discord-common.local
 #include globals.local
 
 # Disabled until someone reported positive feedback
-ignore include disable-interpreters.inc
-ignore include disable-xdg.inc
-ignore include whitelist-runuser-common.inc
-ignore include whitelist-usr-share-common.inc
 ignore apparmor
-ignore disable-mnt
-ignore private-cache
-ignore dbus-user none
-ignore dbus-system none
 
 ignore noexec ${HOME}
 ignore novideo
@@ -25,6 +17,11 @@ whitelist ${HOME}/.local/share/betterdiscordctl
 
 private-bin awk,bash,cut,echo,egrep,electron,electron[0-9],electron[0-9][0-9],fish,grep,head,sed,sh,tclsh,tr,which,xdg-mime,xdg-open,zsh
 private-etc @tls-ca
+
+# allow D-Bus notifications
+dbus-user filter
+dbus-user.talk org.freedesktop.Notifications
+ignore dbus-user none
 
 join-or-start discord
 

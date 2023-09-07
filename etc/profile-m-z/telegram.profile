@@ -7,6 +7,7 @@ include globals.local
 
 noblacklist ${HOME}/.TelegramDesktop
 noblacklist ${HOME}/.local/share/TelegramDesktop
+noblacklist ${HOME}/.local/share/telegram-desktop
 
 # Allow opening hyperlinks
 include allow-bin-sh.inc
@@ -21,8 +22,10 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.TelegramDesktop
 mkdir ${HOME}/.local/share/TelegramDesktop
+mkdir ${HOME}/.local/share/telegram-desktop
 whitelist ${HOME}/.TelegramDesktop
 whitelist ${HOME}/.local/share/TelegramDesktop
+whitelist ${HOME}/.local/share/telegram-desktop
 whitelist ${DOWNLOADS}
 whitelist /usr/share/TelegramDesktop
 include whitelist-common.inc

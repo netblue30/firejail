@@ -35,7 +35,7 @@ nosound
 # Disabling noexec ${HOME} for now since it will
 # probably interfere with running some programmes
 # in VS Code
-# noexec ${HOME}
+#noexec ${HOME}
 noexec /tmp
 
 # Redirect

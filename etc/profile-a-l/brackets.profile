@@ -32,4 +32,4 @@ seccomp !chroot,!ioperm
 private-cache
 private-dev
 
-# restrict-namespaces
+#restrict-namespaces

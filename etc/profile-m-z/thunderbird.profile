@@ -35,7 +35,7 @@ whitelist ${HOME}/.mozilla/firefox/profiles.ini
 
 noblacklist ${HOME}/.cache/thunderbird
 noblacklist ${HOME}/.gnupg
-# noblacklist ${HOME}/.icedove
+#noblacklist ${HOME}/.icedove
 noblacklist ${HOME}/.thunderbird
 
 include disable-xdg.inc
@@ -46,11 +46,11 @@ include disable-xdg.inc
 # See https://github.com/netblue30/firejail/issues/2357
 mkdir ${HOME}/.cache/thunderbird
 mkdir ${HOME}/.gnupg
-# mkdir ${HOME}/.icedove
+#mkdir ${HOME}/.icedove
 mkdir ${HOME}/.thunderbird
 whitelist ${HOME}/.cache/thunderbird
 whitelist ${HOME}/.gnupg
-# whitelist ${HOME}/.icedove
+#whitelist ${HOME}/.icedove
 whitelist ${HOME}/.thunderbird
 
 whitelist /usr/share/gnupg

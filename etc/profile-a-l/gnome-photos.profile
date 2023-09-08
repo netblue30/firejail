@@ -36,7 +36,7 @@ seccomp
 seccomp.block-secondary
 tracelog
 
-# private-bin gjs,gnome-photos
+#private-bin gjs,gnome-photos
 private-dev
 private-tmp
 

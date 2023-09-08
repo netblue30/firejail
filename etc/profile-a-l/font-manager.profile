@@ -33,7 +33,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 machine-id
-# net none - issues on older versions
+#net none # issues on older versions
 no3d
 nodvd
 nogroups
@@ -53,5 +53,5 @@ private-bin font-manager,python*,yelp
 private-dev
 private-tmp
 
-#memory-deny-write-execute - breaks on Arch (see issue #1803)
+#memory-deny-write-execute # breaks on Arch (see issue #1803)
 restrict-namespaces

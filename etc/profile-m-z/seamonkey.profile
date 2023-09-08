@@ -55,7 +55,7 @@ seccomp
 tracelog
 
 disable-mnt
-# private-etc adobe,alternatives,asound.conf,ca-certificates,crypto-policies,firefox,fonts,group,gtk-2.0,hostname,hosts,iceweasel,localtime,machine-id,mailcap,mime.types,nsswitch.conf,pango,passwd,pki,pulse,resolv.conf,ssl
+#private-etc adobe,alternatives,asound.conf,ca-certificates,crypto-policies,firefox,fonts,group,gtk-2.0,hostname,hosts,iceweasel,localtime,machine-id,mailcap,mime.types,nsswitch.conf,pango,passwd,pki,pulse,resolv.conf,ssl
 writable-run-user
 
 restrict-namespaces

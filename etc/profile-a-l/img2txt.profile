@@ -41,7 +41,7 @@ seccomp
 tracelog
 x11 none
 
-# private-bin img2txt
+#private-bin img2txt
 private-cache
 private-dev
 private-tmp

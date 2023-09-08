@@ -21,10 +21,10 @@ include disable-shell.inc
 
 include whitelist-var-common.inc
 
-# apparmor - makes settings immutable
+#apparmor # makes settings immutable
 caps.drop all
 machine-id
-# net none - makes settings immutable
+#net none # makes settings immutable
 no3d
 nodvd
 nogroups
@@ -45,8 +45,8 @@ private-lib aspell,gconv,libgspell-1.so.*,libreadline.so.*,libtinfo.so.*,pluma
 private-tmp
 
 # makes settings immutable
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 restrict-namespaces
 join-or-start pluma

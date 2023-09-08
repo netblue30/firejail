@@ -20,23 +20,23 @@ include disable-devel.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
-# whitelist /usr/share/wine
-# include whitelist-usr-share-common.inc
+#whitelist /usr/share/wine
+#include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 # Some applications don't need allow-debuggers. Add 'ignore allow-debuggers' to your wine.local if you want to override this.
 allow-debuggers
 caps.drop all
-# net none
+#net none
 netfilter
 nodvd
 nogroups
 noinput
 nonewprivs
 noroot
-# nosound
+#nosound
 notv
-# novideo
+#novideo
 seccomp
 
 private-dev

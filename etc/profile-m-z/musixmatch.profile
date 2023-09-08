@@ -35,4 +35,4 @@ disable-mnt
 private-dev
 private-etc @tls-ca
 
-# restrict-namespaces
+#restrict-namespaces

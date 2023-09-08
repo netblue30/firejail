@@ -28,17 +28,17 @@ noblacklist ${HOME}/.local/share/kxmlgui5/katesearch
 include allow-common-devel.inc
 
 include disable-common.inc
-# include disable-devel.inc
+#include disable-devel.inc
 include disable-exec.inc
-# include disable-interpreters.inc
+#include disable-interpreters.inc
 include disable-programs.inc
 
 include whitelist-run-common.inc
 include whitelist-var-common.inc
 
-# apparmor
+#apparmor
 caps.drop all
-# net none
+#net none
 netfilter
 nodvd
 nogroups
@@ -52,13 +52,13 @@ novideo
 protocol unix
 seccomp
 
-# private-bin kate,kbuildsycoca4,kdeinit4
+#private-bin kate,kbuildsycoca4,kdeinit4
 private-dev
-# private-etc alternatives,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
+#private-etc alternatives,fonts,kde4rc,kde5rc,ld.so.cache,machine-id,xdg
 private-tmp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 restrict-namespaces
 join-or-start kate

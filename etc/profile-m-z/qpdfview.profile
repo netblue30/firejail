@@ -41,7 +41,7 @@ private-dev
 private-tmp
 
 # needs D-Bus when started from a file manager
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 restrict-namespaces

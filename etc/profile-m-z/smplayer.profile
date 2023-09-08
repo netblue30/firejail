@@ -36,7 +36,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 netfilter
-# nogroups
+#nogroups
 noinput
 nonewprivs
 noroot
@@ -49,7 +49,7 @@ private-dev
 private-tmp
 
 # problems with KDE
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 restrict-namespaces

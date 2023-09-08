@@ -24,7 +24,7 @@ include disable-xdg.inc
 apparmor /usr/bin/fdns
 caps.keep kill,net_bind_service,setgid,setuid,sys_admin,sys_chroot
 ipc-namespace
-# netfilter /etc/firejail/webserver.net
+#netfilter /etc/firejail/webserver.net
 no3d
 nodvd
 nogroups
@@ -43,7 +43,7 @@ private-bin bash,fdns,sh
 private-cache
 #private-dev
 private-etc @tls-ca,fdns
-# private-lib
+#private-lib
 private-tmp
 
 memory-deny-write-execute

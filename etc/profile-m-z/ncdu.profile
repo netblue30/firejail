@@ -29,7 +29,7 @@ seccomp
 x11 none
 
 private-dev
-# private-tmp
+#private-tmp
 
 dbus-user none
 dbus-system none

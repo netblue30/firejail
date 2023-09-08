@@ -61,7 +61,7 @@ tracelog
 
 disable-mnt
 private-bin gjs,gnome-maps
-# private-cache -- gnome-maps cache all maps/satelite-images
+#private-cache # gnome-maps cache all maps/satelite-images
 private-dev
 private-etc @tls-ca,@x11,clutter-1.0,gconf,host.conf,mime.types,pkcs11,rpc,services
 private-tmp

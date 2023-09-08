@@ -52,7 +52,7 @@ private-cache
 private-dev
 private-etc @tls-ca
 # Add the next line to your links-common.local to allow external media players.
-# private-etc alsa,asound.conf,machine-id,openal,pulse
+#private-etc alsa,asound.conf,machine-id,openal,pulse
 private-tmp
 
 dbus-user none

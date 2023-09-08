@@ -67,5 +67,5 @@ dbus-user.talk org.mozilla.*
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-system none
 
-# memory-deny-write-execute - breaks on Arch
+#memory-deny-write-execute # breaks on Arch
 restrict-namespaces

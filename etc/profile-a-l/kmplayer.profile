@@ -33,7 +33,7 @@ nou2f
 protocol unix,inet,inet6,netlink
 seccomp
 
-# private-bin kmplayer,mplayer
+#private-bin kmplayer,mplayer
 private-cache
 private-dev
 private-tmp

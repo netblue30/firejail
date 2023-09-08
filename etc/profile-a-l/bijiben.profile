@@ -48,7 +48,7 @@ tracelog
 
 disable-mnt
 private-bin bijiben
-# private-cache -- access to .cache/tracker is required
+#private-cache # access to .cache/tracker is required
 private-dev
 private-etc @x11
 private-tmp

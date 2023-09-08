@@ -32,7 +32,7 @@ include whitelist-common.inc
 include whitelist-var-common.inc
 
 caps.drop all
-#machine-id -- breaks sound
+#machine-id # breaks sound
 netfilter
 no3d
 nodvd
@@ -51,8 +51,8 @@ disable-mnt
 # debug note: private-bin requires perl, python, etc on some systems
 private-bin hexchat,python*,sh
 private-dev
-#private-lib - python problems
+#private-lib # python problems
 private-tmp
 
-# memory-deny-write-execute - breaks python
+#memory-deny-write-execute # breaks python
 restrict-namespaces

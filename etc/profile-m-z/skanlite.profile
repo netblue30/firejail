@@ -22,16 +22,16 @@ nonewprivs
 noroot
 nosound
 notv
-# novideo
+#novideo
 protocol unix,inet,inet6,netlink
 # blacklisting of ioperm system calls breaks skanlite
 seccomp !ioperm
 
-# private-bin kbuildsycoca4,kdeinit4,skanlite
-# private-dev
-# private-tmp
+#private-bin kbuildsycoca4,kdeinit4,skanlite
+#private-dev
+#private-tmp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 restrict-namespaces

@@ -29,8 +29,8 @@ netfilter
 nodvd
 nogroups
 noinput
-# nonewprivs - breaks network traffic capture for unprivileged users
-# noroot
+#nonewprivs # breaks network traffic capture for unprivileged users
+#noroot
 notv
 nou2f
 novideo

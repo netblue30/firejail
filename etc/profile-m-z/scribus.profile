@@ -55,7 +55,7 @@ protocol unix
 seccomp
 tracelog
 
-# private-bin gimp*,gs,scribus
+#private-bin gimp*,gs,scribus
 private-dev
 private-tmp
 

@@ -28,7 +28,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 machine-id
-# net none
+#net none
 netfilter
 nodvd
 no3d
@@ -55,5 +55,5 @@ private-tmp
 dbus-user none
 dbus-system none
 
-# memory-deny-write-execute
+#memory-deny-write-execute
 restrict-namespaces

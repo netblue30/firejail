@@ -15,7 +15,7 @@ include disable-programs.inc
 
 caps.drop all
 ipc-namespace
-# net none
+#net none
 netfilter
 nodvd
 nogroups
@@ -32,9 +32,9 @@ seccomp.block-secondary
 private-bin calligra,calligraauthor,calligraconverter,calligraflow,calligragemini,calligraplan,calligraplanwork,calligrasheets,calligrastage,calligrawords,dbus-launch,kbuildsycoca4,kdeinit4
 private-dev
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
-# noexec ${HOME}
+#noexec ${HOME}
 noexec /tmp
 restrict-namespaces

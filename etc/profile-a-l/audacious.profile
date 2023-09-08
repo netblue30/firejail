@@ -36,7 +36,7 @@ protocol unix,inet,inet6
 seccomp
 tracelog
 
-# private-bin audacious
+#private-bin audacious
 private-cache
 private-dev
 private-tmp

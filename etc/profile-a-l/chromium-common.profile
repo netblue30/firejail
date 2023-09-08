@@ -33,13 +33,15 @@ include whitelist-run-common.inc
 ?BROWSER_DISABLE_U2F: nou2f
 
 ?BROWSER_DISABLE_U2F: private-dev
-#private-tmp - issues when using multiple browser sessions
+#private-tmp # issues when using multiple browser sessions
 
 blacklist ${PATH}/curl
 blacklist ${PATH}/wget
 blacklist ${PATH}/wget2
 
-#dbus-user none - prevents access to passwords saved in GNOME Keyring and KWallet, also breaks Gnome connector.
+# This prevents access to passwords saved in GNOME Keyring and KWallet, also
+# breaks Gnome connector.
+#dbus-user none
 
 # The file dialog needs to work without d-bus.
 ?HAS_NODBUS: env NO_CHROME_KDE_FILE_DIALOG=1

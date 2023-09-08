@@ -26,7 +26,7 @@ noblacklist ${HOME}/.config/Atom
 # Allows files commonly used by IDEs
 include allow-common-devel.inc
 
-# net none
+#net none
 nosound
 
 # Redirect

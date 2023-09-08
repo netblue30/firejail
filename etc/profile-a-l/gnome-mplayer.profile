@@ -26,7 +26,7 @@ nou2f
 protocol unix,inet,inet6
 seccomp
 
-# private-bin gnome-mplayer,mplayer
+#private-bin gnome-mplayer,mplayer
 private-cache
 private-dev
 private-tmp

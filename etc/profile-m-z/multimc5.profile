@@ -41,12 +41,12 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6
-# seccomp
+#seccomp
 
 disable-mnt
 # private-bin works, but causes weirdness
-# private-bin apt-file,awk,bash,chmod,dirname,dnf,grep,java,kdialog,ldd,mkdir,multimc5,pfl,pkgfile,readlink,sort,valgrind,which,yum,zenity,zypper
+#private-bin apt-file,awk,bash,chmod,dirname,dnf,grep,java,kdialog,ldd,mkdir,multimc5,pfl,pkgfile,readlink,sort,valgrind,which,yum,zenity,zypper
 private-dev
 private-tmp
 
-# restrict-namespaces
+#restrict-namespaces

@@ -57,4 +57,4 @@ private-tmp
 
 dbus-system none
 
-# restrict-namespaces
+#restrict-namespaces

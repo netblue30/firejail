@@ -121,7 +121,7 @@ seccomp
 seccomp.block-secondary
 tracelog
 
-# disable-mnt
+#disable-mnt
 private-cache
 private-dev
 private-etc @tls-ca,@x11,Mutt,Muttrc,Muttrc.d,gai.conf,gnupg,gnutls,hosts.conf,mail,mailname,nntpserver,terminfo

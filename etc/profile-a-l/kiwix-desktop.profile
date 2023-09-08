@@ -27,13 +27,13 @@ apparmor
 caps.drop all
 ipc-namespace
 netfilter
-# no3d
+#no3d
 nodvd
 nogroups
 noinput
 nonewprivs
 noroot
-# nosound
+#nosound
 notv
 nou2f
 novideo
@@ -49,4 +49,4 @@ private-tmp
 dbus-user none
 dbus-system none
 
-# restrict-namespaces
+#restrict-namespaces

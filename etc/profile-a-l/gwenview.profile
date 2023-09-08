@@ -30,7 +30,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-# net none
+#net none
 netfilter
 nodvd
 nogroups
@@ -42,14 +42,14 @@ nou2f
 novideo
 protocol unix
 seccomp
-# tracelog
+#tracelog
 
 private-bin gimp*,gwenview,kbuildsycoca4,kdeinit4
 private-dev
 private-etc @x11,gimp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
-# memory-deny-write-execute
+#memory-deny-write-execute
 restrict-namespaces

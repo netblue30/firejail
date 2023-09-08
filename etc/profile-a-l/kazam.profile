@@ -45,7 +45,7 @@ seccomp
 tracelog
 
 disable-mnt
-# private-bin kazam,python*
+#private-bin kazam,python*
 private-cache
 private-dev
 private-etc @x11

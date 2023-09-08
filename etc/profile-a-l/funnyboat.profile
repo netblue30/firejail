@@ -16,7 +16,7 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
-# include disable-shell.inc
+#include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.funnyboat
@@ -41,7 +41,7 @@ notv
 novideo
 protocol unix,inet,inet6
 seccomp
-# tracelog
+#tracelog
 
 disable-mnt
 private-cache

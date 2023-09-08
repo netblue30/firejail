@@ -35,4 +35,4 @@ private-bin awk,bash,dig,sh,Viber
 private-etc @tls-ca,@x11,mailcap,proxychains.conf
 private-tmp
 
-# restrict-namespaces
+#restrict-namespaces

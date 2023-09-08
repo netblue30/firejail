@@ -35,7 +35,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 ipc-namespace
-# net none - breaks on Ubuntu
+#net none # breaks on Ubuntu
 no3d
 nodvd
 nogroups

@@ -55,7 +55,7 @@ tracelog
 
 disable-mnt
 private
-#private-bin ping - has mammoth problems with execvp: "No such file or directory"
+#private-bin ping # has mammoth problems with execvp: "No such file or directory"
 private-cache
 private-dev
 private-etc @tls-ca

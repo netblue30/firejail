@@ -17,8 +17,8 @@ include disable-interpreters.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.config/Google Play Music Desktop Player
-# whitelist ${HOME}/.config/pulse
-# whitelist ${HOME}/.pulse
+#whitelist ${HOME}/.config/pulse
+#whitelist ${HOME}/.pulse
 whitelist ${HOME}/.config/Google Play Music Desktop Player
 include whitelist-common.inc
 

@@ -24,9 +24,9 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-# net none - mplayer can be used for streaming.
+#net none # mplayer can be used for streaming.
 netfilter
-# nogroups
+#nogroups
 noinput
 nonewprivs
 noroot

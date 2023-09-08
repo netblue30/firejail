@@ -22,7 +22,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 machine-id
-# net none - breaks on older Ubuntu versions
+#net none # breaks on older Ubuntu versions
 netfilter
 no3d
 nodvd
@@ -44,7 +44,7 @@ private-bin 7z,7za,7zr,ar,arj,atool,bash,brotli,bsdtar,bzip2,compress,cp,cpio,dp
 private-cache
 private-dev
 private-etc @x11
-# private-tmp
+#private-tmp
 
 dbus-user filter
 dbus-user.own org.gnome.ArchiveManager1

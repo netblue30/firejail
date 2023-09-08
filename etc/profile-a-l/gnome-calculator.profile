@@ -24,7 +24,7 @@ apparmor
 caps.drop all
 ipc-namespace
 machine-id
-#net none -- breaks currency conversion
+#net none # breaks currency conversion
 netfilter
 no3d
 nodvd

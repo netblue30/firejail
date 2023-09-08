@@ -36,7 +36,7 @@ apparmor
 caps.drop all
 ipc-namespace
 # Add the next line to your dolphin-emu.local if you do not need NetPlay support.
-# net none
+#net none
 netfilter
 # Add the next line to your dolphin-emu.local if you do not need disc support.
 #nodvd

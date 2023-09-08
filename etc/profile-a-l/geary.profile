@@ -53,7 +53,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-#ipc-namespace - may cause issues with X11
+#ipc-namespace # may cause issues with X11
 #machine-id
 netfilter
 no3d
@@ -71,7 +71,7 @@ seccomp
 seccomp.block-secondary
 tracelog
 
-# disable-mnt
+#disable-mnt
 #private-bin geary,sh
 private-cache
 private-dev

@@ -43,7 +43,7 @@ private-dev
 private-etc @x11,gconf
 private-tmp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 restrict-namespaces

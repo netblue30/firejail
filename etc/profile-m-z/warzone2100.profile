@@ -15,7 +15,7 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
-#include disable-shell.inc - problems on Debian 11
+#include disable-shell.inc # problems on Debian 11
 
 mkdir ${HOME}/.local/share/warzone2100
 mkdir ${HOME}/.local/share/warzone2100-3.3.0

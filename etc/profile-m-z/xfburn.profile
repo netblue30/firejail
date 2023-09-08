@@ -25,8 +25,8 @@ protocol unix
 seccomp
 tracelog
 
-# private-bin xfburn
-# private-dev
-# private-tmp
+#private-bin xfburn
+#private-dev
+#private-tmp
 
 restrict-namespaces

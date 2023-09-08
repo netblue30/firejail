@@ -35,7 +35,7 @@ nou2f
 novideo
 protocol unix,netlink
 seccomp !chroot
-# tracelog
+#tracelog
 
 disable-mnt
 private-bin kalgebra,kalgebramobile
@@ -47,4 +47,4 @@ private-tmp
 dbus-user none
 dbus-system none
 
-# restrict-namespaces
+#restrict-namespaces

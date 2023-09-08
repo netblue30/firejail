@@ -52,8 +52,8 @@ private-etc @x11,gconf,mime.types
 private-tmp
 
 # Add the next lines to your gnome-characters.local if you don't need access to recently used chars.
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 read-only ${HOME}
 restrict-namespaces

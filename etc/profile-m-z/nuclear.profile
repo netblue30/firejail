@@ -17,7 +17,7 @@ whitelist ${HOME}/.config/nuclear
 
 no3d
 
-# private-bin nuclear
+#private-bin nuclear
 private-etc @tls-ca,@x11,host.conf,mime.types
 private-opt nuclear
 

@@ -29,14 +29,14 @@ noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.git-credentials
 
-# no3d
+#no3d
 nosound
 
-# private-bin github-desktop
+#private-bin github-desktop
 ?HAS_APPIMAGE: ignore private-dev
-# private-lib
+#private-lib
 
-# memory-deny-write-execute
+#memory-deny-write-execute
 
 # Redirect
 include electron-common.profile

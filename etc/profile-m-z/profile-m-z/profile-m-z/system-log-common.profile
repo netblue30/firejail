@@ -28,7 +28,7 @@ apparmor
 caps.drop all
 ipc-namespace
 net none
-#no3d
+no3d
 nodvd
 #nogroups
 noinput

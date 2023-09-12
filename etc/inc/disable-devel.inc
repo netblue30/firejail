@@ -25,6 +25,7 @@ blacklist ${PATH}/patchview
 # packaging
 blacklist ${PATH}/dh_*
 blacklist ${PATH}/fakeroot*
+blacklist ${PATH}/lintian
 
 # expect
 blacklist ${PATH}/autoexpect

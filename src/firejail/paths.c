@@ -47,6 +47,16 @@ static void init_paths(void) {
 		errExit("calloc");
 	memset(paths, 0, path_cnt * sizeof(char *)); // get rid of false positive error from GCC static analyzer
 
+	// lots of distros set /bin as a symlink to /usr/bin;
+	// we remove /bin form the path to speed up path-based operations such as blacklist
+	int bin_symlink = 0;
+	p = realpath("/bin", NULL);
+	if (p) {
+		if (strcmp(p, "/usr/bin") == 0)
+			bin_symlink = 1;
+	}
+	free(p);
+
 	// fill in 'paths' with pointers to elements of 'path'
 	unsigned int i = 0, j;
 	unsigned int len;
@@ -61,6 +71,14 @@ static void init_paths(void) {
 			elt[--len] = '\0';
 		if (len == 0)
 			goto skip;
+
+		//deal with /bin - /usr/bin symlink
+		if (bin_symlink > 0) {
+			if (strcmp(elt, "/bin") == 0 || strcmp(elt, "/usr/bin") == 0)
+				bin_symlink++;
+			if (bin_symlink == 3)
+				goto skip;
+		}
 
 		// filter out duplicate entries
 		for (j = 0; j < i; j++)

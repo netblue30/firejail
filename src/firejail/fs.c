@@ -281,6 +281,8 @@ void fs_blacklist(void) {
 	if (!entry)
 		return;
 
+	timetrace_start();
+
 	size_t noblacklist_c = 0;
 	size_t noblacklist_m = 32;
 	char **noblacklist = calloc(noblacklist_m, sizeof(*noblacklist));
@@ -463,6 +465,8 @@ void fs_blacklist(void) {
 	for (i = 0; i < noblacklist_c; i++)
 		free(noblacklist[i]);
 	free(noblacklist);
+
+	fmessage("Base filesystem installed in %0.2f ms\n", timetrace_end());
 }
 
 //***********************************************

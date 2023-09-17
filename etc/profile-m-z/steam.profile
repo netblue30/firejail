@@ -12,6 +12,7 @@ noblacklist ${HOME}/.config/MangoHud
 noblacklist ${HOME}/.config/ModTheSpire
 noblacklist ${HOME}/.config/RogueLegacy
 noblacklist ${HOME}/.config/RogueLegacyStorageContainer
+noblacklist ${HOME}/.factorio
 noblacklist ${HOME}/.killingfloor
 noblacklist ${HOME}/.klei
 noblacklist ${HOME}/.local/share/3909/PapersPlease
@@ -64,6 +65,7 @@ mkdir ${HOME}/.config/MangoHud
 mkdir ${HOME}/.config/ModTheSpire
 mkdir ${HOME}/.config/RogueLegacy
 mkdir ${HOME}/.config/unity3d
+mkdir ${HOME}/.factorio
 mkdir ${HOME}/.killingfloor
 mkdir ${HOME}/.klei
 mkdir ${HOME}/.local/share/3909/PapersPlease
@@ -100,6 +102,7 @@ whitelist ${HOME}/.config/ModTheSpire
 whitelist ${HOME}/.config/RogueLegacy
 whitelist ${HOME}/.config/RogueLegacyStorageContainer
 whitelist ${HOME}/.config/unity3d
+whitelist ${HOME}/.factorio
 whitelist ${HOME}/.killingfloor
 whitelist ${HOME}/.klei
 whitelist ${HOME}/.local/share/3909/PapersPlease

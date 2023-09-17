@@ -715,6 +715,7 @@ blacklist ${HOME}/.emacs.d
 blacklist ${HOME}/.equalx
 blacklist ${HOME}/.ethereum
 blacklist ${HOME}/.etr
+blacklist ${HOME}/.factorio
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.firedragon
 blacklist ${HOME}/.flowblade

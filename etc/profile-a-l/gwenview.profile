@@ -14,6 +14,7 @@ noblacklist ${HOME}/.kde/share/apps/gwenview
 noblacklist ${HOME}/.kde/share/config/gwenviewrc
 noblacklist ${HOME}/.kde4/share/apps/gwenview
 noblacklist ${HOME}/.kde4/share/config/gwenviewrc
+noblacklist ${HOME}/.local/share/Trash
 noblacklist ${HOME}/.local/share/gwenview
 noblacklist ${HOME}/.local/share/kxmlgui5/gwenview
 noblacklist ${HOME}/.local/share/org.kde.gwenview

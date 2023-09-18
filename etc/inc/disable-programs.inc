@@ -1030,6 +1030,7 @@ blacklist ${HOME}/.local/share/strawberry
 blacklist ${HOME}/.local/share/supertux2
 blacklist ${HOME}/.local/share/supertuxkart
 blacklist ${HOME}/.local/share/swell-foop
+blacklist ${HOME}/.local/share/telegram-desktop
 blacklist ${HOME}/.local/share/telepathy
 blacklist ${HOME}/.local/share/terasology
 blacklist ${HOME}/.local/share/torbrowser

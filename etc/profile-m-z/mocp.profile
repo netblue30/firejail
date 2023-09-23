@@ -41,7 +41,7 @@ tracelog
 private-bin mocp
 private-cache
 private-dev
-private-etc @tls-ca
+private-etc @network,@tls-ca
 private-tmp
 
 dbus-user none

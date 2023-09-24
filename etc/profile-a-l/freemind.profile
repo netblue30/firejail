@@ -9,6 +9,9 @@ include globals.local
 noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.freemind
 
+# Allow dpkg (blacklisted by disable-common.inc)
+noblacklist ${PATH}/dpkg*
+
 # Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
 
@@ -40,7 +43,7 @@ seccomp
 tracelog
 
 disable-mnt
-private-bin bash,cp,dirname,dpkg,echo,freemind,grep,java,lsb_release,mkdir,readlink,rpm,sed,sh,uname,which
+private-bin bash,cp,dirname,dpkg*,echo,freemind,grep,java,lsb_release,mkdir,readlink,rpm,sed,sh,uname,which
 private-cache
 private-dev
 #private-etc alternatives,fonts,java*

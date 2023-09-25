@@ -49,7 +49,6 @@ private-bin shotwell
 private-cache
 private-dev
 private-etc
-private-opt none
 private-tmp
 
 dbus-user filter

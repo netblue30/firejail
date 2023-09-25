@@ -2263,6 +2263,18 @@ All modifications are discarded when the sandbox is closed.
 Example:
 .br
 $ firejail --private-opt=firefox /opt/firefox/firefox
+.br
+
+.br
+Note: Program installations in /opt tend to be relatively large and private-opt
+copies the entire path(s) into RAM, which may significantly increase RAM usage
+and break \fBfile-copy-limit\fR in firejail.config.
+Therefore, in general it is recommended to use "whitelist /opt/PATH" instead of
+"private-opt PATH".
+For details, see
+.UR https://github.com/netblue30/firejail/discussions/5307
+#5307
+.UE
 
 .TP
 \fB\-\-private-srv=file,directory

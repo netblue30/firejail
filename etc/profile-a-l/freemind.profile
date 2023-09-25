@@ -9,7 +9,6 @@ include globals.local
 noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.freemind
 
-# Allow dpkg (blacklisted by disable-common.inc)
 noblacklist ${PATH}/dpkg*
 
 # Allow java (blacklisted by disable-devel.inc)

@@ -40,7 +40,6 @@ private-cache
 private-dev
 #private-etc alternatives,asound.conf,ca-certificates,crypto-policies,fonts,gtk-3.0,host.conf,hostname,hosts,machine-id,pki,pulse,resolv.conf,ssl,X11,xdg
 #private-lib
-private-opt none
 private-srv none
 private-tmp
 

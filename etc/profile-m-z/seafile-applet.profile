@@ -54,7 +54,6 @@ private-bin seaf-cli,seaf-daemon,seafile-applet
 private-cache
 private-dev
 private-etc @tls-ca,host.conf,rpc,services
-#private-opt none
 private-tmp
 
 dbus-user none

@@ -50,7 +50,6 @@ private-dev
 # see /usr/share/doc/firejail/profile.template for more common private-etc paths.
 #private-etc alternatives,fonts,machine-id
 #private-lib
-#private-opt none
 private-tmp
 
 #dbus-user none

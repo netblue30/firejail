@@ -80,7 +80,6 @@ private-dev
 # see /usr/share/doc/firejail/profile.template for more common private-etc paths.
 #private-etc alternatives
 #private-lib
-#private-opt none
 private-tmp
 #writable-run-user
 #writable-var

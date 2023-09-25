@@ -610,6 +610,8 @@ blacklist /tmp/.lxterminal-socket*
 blacklist /tmp/tmux-*
 
 # disable terminals running as server resulting in sandbox escape
+blacklist ${PATH}/foot
+blacklist ${PATH}/footserver
 blacklist ${PATH}/gnome-terminal
 blacklist ${PATH}/gnome-terminal.wrapper
 blacklist ${PATH}/kgx

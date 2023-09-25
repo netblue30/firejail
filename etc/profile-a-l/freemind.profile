@@ -45,7 +45,6 @@ private-cache
 private-dev
 #private-etc alternatives,fonts,java*
 private-tmp
-private-opt none
 private-srv none
 
 dbus-user none

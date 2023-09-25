@@ -55,7 +55,6 @@ private-cache
 # Add the next line to your dolphin-emu.local if you do not need controller support.
 #private-dev
 private-etc @tls-ca,@x11,bumblebee,gconf,glvnd,host.conf,mime.types,rpc,services
-private-opt none
 private-tmp
 
 dbus-user none

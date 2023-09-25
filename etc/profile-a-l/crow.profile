@@ -39,7 +39,6 @@ disable-mnt
 private-bin crow
 private-dev
 private-etc @tls-ca,@x11
-private-opt none
 private-tmp
 private-srv none
 

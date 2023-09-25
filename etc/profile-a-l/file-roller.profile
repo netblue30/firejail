@@ -6,7 +6,6 @@ include file-roller.local
 # Persistent global definitions
 include globals.local
 
-# Allow dpkg (blacklisted by disable-common.inc)
 noblacklist ${PATH}/dpkg*
 
 include disable-common.inc

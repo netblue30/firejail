@@ -51,7 +51,6 @@ private-dev
 # empty etc directory
 private-etc
 private-lib
-private-opt none
 private-tmp
 
 dbus-user none

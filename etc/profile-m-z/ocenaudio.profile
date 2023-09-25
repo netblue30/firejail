@@ -25,6 +25,7 @@ whitelist ${HOME}/.cache/ocenaudio
 whitelist ${HOME}/.local/share/ocenaudio
 whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
+whitelist /opt/ocenaudio
 include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc
@@ -54,7 +55,6 @@ private-bin ocenaudio,ocenvst
 private-cache
 private-dev
 private-etc @tls-ca,@x11,mime.types
-private-opt ocenaudio
 private-tmp
 
 dbus-user none

@@ -18,6 +18,7 @@ mkdir ${HOME}/.config/Google
 mkdir ${HOME}/.googleearth
 whitelist ${HOME}/.config/Google
 whitelist ${HOME}/.googleearth
+whitelist /opt/google
 include whitelist-common.inc
 
 caps.drop all
@@ -37,6 +38,5 @@ seccomp
 disable-mnt
 private-bin bash,dirname,google-earth,grep,ls,sed,sh
 private-dev
-private-opt google
 
 restrict-namespaces

@@ -12,6 +12,7 @@ mkdir ${HOME}/.cache/moonchild productions/pale moon
 mkdir ${HOME}/.moonchild productions
 whitelist ${HOME}/.cache/moonchild productions/pale moon
 whitelist ${HOME}/.moonchild productions
+whitelist /opt/palemoon
 whitelist /usr/share/moonchild productions
 whitelist /usr/share/palemoon
 
@@ -22,7 +23,6 @@ ignore seccomp
 #private-bin palemoon
 # private-etc must first be enabled in firefox-common.profile
 #private-etc palemoon
-#private-opt palemoon
 
 restrict-namespaces
 ignore restrict-namespaces

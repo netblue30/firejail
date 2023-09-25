@@ -17,6 +17,7 @@ mkdir ${HOME}/.config/QQ
 whitelist ${HOME}/.config/QQ
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${DESKTOP}
+whitelist /opt/QQ
 
 ignore apparmor
 noprinters
@@ -24,7 +25,6 @@ noprinters
 # If you don't need/want to save anything to disk you can add `private` to your linuxqq.local.
 #private
 private-etc @tls-ca,@x11,host.conf,os-release
-private-opt QQ
 
 dbus-user filter
 dbus-user.talk org.freedesktop.Notifications

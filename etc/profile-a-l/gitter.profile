@@ -18,6 +18,7 @@ mkdir ${HOME}/.config/Gitter
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/autostart
 whitelist ${HOME}/.config/Gitter
+whitelist /opt/Gitter
 include whitelist-var-common.inc
 
 caps.drop all
@@ -37,7 +38,6 @@ seccomp
 disable-mnt
 private-bin bash,env,gitter
 private-etc @tls-ca
-private-opt Gitter
 private-dev
 private-tmp
 

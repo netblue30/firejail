@@ -6,7 +6,7 @@ include thunderbird-beta.local
 # added by included profile
 #include globals.local
 
-private-opt thunderbird-beta
+whitelist /opt/thunderbird-beta
 
 # Redirect
 include thunderbird.profile

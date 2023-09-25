@@ -52,7 +52,6 @@ private-cache
 private-dev
 private-etc @network,@tls-ca
 private-lib
-private-opt none
 private-tmp
 
 dbus-user none

@@ -45,7 +45,6 @@ private-bin nyx,python*
 private-cache
 private-dev
 private-etc tor
-private-opt none
 private-srv none
 private-tmp
 

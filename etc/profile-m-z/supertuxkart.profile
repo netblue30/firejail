@@ -55,7 +55,6 @@ private-cache
 #private-dev
 private-etc @games,@tls-ca,@x11
 private-tmp
-private-opt none
 private-srv none
 
 dbus-user none

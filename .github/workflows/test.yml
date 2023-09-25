@@ -60,7 +60,7 @@ jobs:
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
-    - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac
+    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies
@@ -107,7 +107,7 @@ jobs:
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
-    - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac
+    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies
@@ -145,7 +145,7 @@ jobs:
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
-    - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac
+    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies
@@ -186,7 +186,7 @@ jobs:
           ppa.launchpadcontent.net:443
           www.debian.org:443
           www.debian.org:80
-    - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac
+    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies
@@ -230,7 +230,7 @@ jobs:
           www.debian.org:443
           www.debian.org:80
           yahoo.com:1025
-    - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac
+    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies

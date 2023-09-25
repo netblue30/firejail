@@ -43,7 +43,6 @@ disable-mnt
 private-bin mate-calc,mate-calculator
 private-etc @x11
 private-dev
-private-opt none
 private-tmp
 
 dbus-user none

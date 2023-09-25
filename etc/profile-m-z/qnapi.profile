@@ -47,7 +47,6 @@ private-bin 7z,qnapi
 private-cache
 private-dev
 private-etc
-private-opt none
 private-tmp
 
 dbus-user none

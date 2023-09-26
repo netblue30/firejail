@@ -2,7 +2,7 @@
 # Description: Unofficial electron based desktop wrapper for YouTube Music
 # This file is overwritten after every install/update
 # Persistent local customizations
-include youtube.local
+include youtubemusic-nativefier.local
 # Persistent global definitions
 include globals.local
 

@@ -3,6 +3,7 @@
 name: Test
 
 on:
+  workflow_dispatch:
   push:
     branches-ignore:
       - 'dependabot/**'

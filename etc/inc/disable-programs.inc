@@ -157,6 +157,7 @@ blacklist ${HOME}/.cache/ksplashqml
 blacklist ${HOME}/.cache/kube
 blacklist ${HOME}/.cache/kwin
 blacklist ${HOME}/.cache/lbry-viewer
+blacklist ${HOME}/.cache/lettura
 blacklist ${HOME}/.cache/libgweather
 blacklist ${HOME}/.cache/librewolf
 blacklist ${HOME}/.cache/liferea
@@ -406,6 +407,7 @@ blacklist ${HOME}/.config/cliqz
 blacklist ${HOME}/.config/cmus
 blacklist ${HOME}/.config/cointop
 blacklist ${HOME}/.config/com.github.bleakgrey.tootle
+blacklist ${HOME}/.config/com.lettura.dev
 blacklist ${HOME}/.config/corebird
 blacklist ${HOME}/.config/coyim
 blacklist ${HOME}/.config/d-feet
@@ -833,6 +835,7 @@ blacklist ${HOME}/.klatexformula
 blacklist ${HOME}/.klei
 blacklist ${HOME}/.kodi
 blacklist ${HOME}/.lastpass
+blacklist ${HOME}/.lettura
 blacklist ${HOME}/.librewolf
 blacklist ${HOME}/.lincity-ng
 blacklist ${HOME}/.links
@@ -903,6 +906,7 @@ blacklist ${HOME}/.local/share/cdprojektred
 blacklist ${HOME}/.local/share/chatterino
 blacklist ${HOME}/.local/share/clipit
 blacklist ${HOME}/.local/share/com.github.johnfactotum.Foliate
+blacklist ${HOME}/.local/share/com.lettura.dev
 blacklist ${HOME}/.local/share/com.vmingueza.journal-viewer
 blacklist ${HOME}/.local/share/contacts
 blacklist ${HOME}/.local/share/cor-games

@@ -719,8 +719,8 @@ blacklist ${HOME}/.etr
 blacklist ${HOME}/.factorio
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.firedragon
-blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.floorp
+blacklist ${HOME}/.flowblade
 blacklist ${HOME}/.fltk
 blacklist ${HOME}/.fossamail
 blacklist ${HOME}/.fpm

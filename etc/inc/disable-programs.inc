@@ -112,6 +112,7 @@ blacklist ${HOME}/.cache/falkon
 blacklist ${HOME}/.cache/feedreader
 blacklist ${HOME}/.cache/firedragon
 blacklist ${HOME}/.cache/flaska.net/trojita
+blacklist ${HOME}/.cache/floorp
 blacklist ${HOME}/.cache/folks
 blacklist ${HOME}/.cache/font-manager
 blacklist ${HOME}/.cache/fossamail
@@ -719,6 +720,7 @@ blacklist ${HOME}/.factorio
 blacklist ${HOME}/.filezilla
 blacklist ${HOME}/.firedragon
 blacklist ${HOME}/.flowblade
+blacklist ${HOME}/.floorp
 blacklist ${HOME}/.fltk
 blacklist ${HOME}/.fossamail
 blacklist ${HOME}/.fpm

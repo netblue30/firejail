@@ -386,6 +386,7 @@ blacklist ${HOME}/.config/borg
 blacklist ${HOME}/.config/brasero
 blacklist ${HOME}/.config/brave
 blacklist ${HOME}/.config/brave-flags.conf
+blacklist ${HOME}/.config/breezy
 blacklist ${HOME}/.config/caja
 blacklist ${HOME}/.config/calibre
 blacklist ${HOME}/.config/cantata

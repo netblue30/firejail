@@ -57,7 +57,7 @@ private-cache
 private-dev
 private-tmp
 
-dbus-user none
+dbus-user filter
 dbus-user.own org.nicotine_plus.Nicotine
 dbus-user.talk ca.desrt.dconf
 dbus-system none

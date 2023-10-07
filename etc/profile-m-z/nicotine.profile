@@ -43,7 +43,6 @@ noinput
 nonewprivs
 noprinters
 noroot
-nosound
 notv
 nou2f
 novideo

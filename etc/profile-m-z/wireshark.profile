@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.config/wireshark
 noblacklist ${HOME}/.wireshark
 noblacklist ${DOCUMENTS}
+noblacklist ${PATH}/dumpcap
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc

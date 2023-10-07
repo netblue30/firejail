@@ -7,5 +7,8 @@ include tshark.local
 # added by included profile
 #include globals.local
 
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}
+
 # Redirect
 include wireshark.profile

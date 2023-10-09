@@ -9,8 +9,9 @@ include pavucontrol-qt.local
 
 noblacklist ${HOME}/.config/pavucontrol-qt
 
-mkdir ${HOME}/.config/pavucontrol-qt
-whitelist ${HOME}/.config/pavucontrol-qt
+# whitelisting in ${HOME} is broken, see #3112
+#mkdir ${HOME}/.config/pavucontrol-qt
+#whitelist ${HOME}/.config/pavucontrol-qt
 
 private-bin pavucontrol-qt
 ignore private-lib

@@ -515,16 +515,17 @@ blacklist ${PATH}/evtest
 blacklist ${PATH}/expiry
 blacklist ${PATH}/fping
 blacklist ${PATH}/fping6
-blacklist ${PATH}/fusermount
+blacklist ${PATH}/fusermount*
 blacklist ${PATH}/gksu
 blacklist ${PATH}/gksudo
 blacklist ${PATH}/gpasswd
+blacklist ${PATH}/groupmems
 blacklist ${PATH}/hostname
 #blacklist ${PATH}/ip # breaks --ip=dhcp
 blacklist ${PATH}/kdesudo
 blacklist ${PATH}/ksu
 blacklist ${PATH}/mount
-blacklist ${PATH}/mount.ecryptfs_private
+blacklist ${PATH}/mount.*
 blacklist ${PATH}/mountpoint
 blacklist ${PATH}/mtr
 blacklist ${PATH}/mtr-packet
@@ -563,6 +564,8 @@ blacklist ${PATH}/tcpdump
 blacklist ${PATH}/traceroute
 blacklist ${PATH}/umount
 blacklist ${PATH}/unix_chkpwd
+blacklist ${PATH}/wall
+blacklist ${PATH}/write
 blacklist ${PATH}/wshowkeys
 blacklist ${PATH}/xev
 blacklist ${PATH}/xinput

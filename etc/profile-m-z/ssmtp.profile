@@ -16,6 +16,7 @@ noblacklist /sbin
 noblacklist /usr/sbin
 
 noblacklist ${DOCUMENTS}
+noblacklist ${PATH}/ssmtp
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

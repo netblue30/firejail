@@ -526,13 +526,16 @@ blacklist ${PATH}/nc.traditional
 blacklist ${PATH}/nc.openbsd
 blacklist ${PATH}/ncat
 blacklist ${PATH}/nmap
+blacklist ${PATH}/netns-exec
 blacklist ${PATH}/newgidmap
 blacklist ${PATH}/newgrp
 blacklist ${PATH}/newuidmap
 blacklist ${PATH}/ntfs-3g
 blacklist ${PATH}/pkexec
+blacklist ${PATH}/plocate
 blacklist ${PATH}/procmail
 blacklist ${PATH}/sg
+blacklist ${PATH}/ssmtp
 blacklist ${PATH}/strace
 blacklist ${PATH}/su
 blacklist ${PATH}/sudo

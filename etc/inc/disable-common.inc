@@ -549,6 +549,7 @@ blacklist ${PATH}/ntfs-3g
 blacklist ${PATH}/passwd
 blacklist ${PATH}/physlock
 blacklist ${PATH}/pkexec
+blacklist ${PATH}/plocate
 blacklist ${PATH}/pmount
 blacklist ${PATH}/procmail
 blacklist ${PATH}/pumount
@@ -556,6 +557,7 @@ blacklist ${PATH}/schroot
 blacklist ${PATH}/sg
 blacklist ${PATH}/slock
 blacklist ${PATH}/ss
+blacklist ${PATH}/ssmtp
 blacklist ${PATH}/strace
 blacklist ${PATH}/su
 blacklist ${PATH}/sudo

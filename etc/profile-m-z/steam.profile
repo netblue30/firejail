@@ -17,6 +17,7 @@ noblacklist ${HOME}/.killingfloor
 noblacklist ${HOME}/.klei
 noblacklist ${HOME}/.local/share/3909/PapersPlease
 noblacklist ${HOME}/.local/share/aspyr-media
+noblacklist ${HOME}/.local/share/Baba_Is_You
 noblacklist ${HOME}/.local/share/bohemiainteractive
 noblacklist ${HOME}/.local/share/cdprojektred
 noblacklist ${HOME}/.local/share/Colossal Order
@@ -70,6 +71,7 @@ mkdir ${HOME}/.killingfloor
 mkdir ${HOME}/.klei
 mkdir ${HOME}/.local/share/3909/PapersPlease
 mkdir ${HOME}/.local/share/aspyr-media
+mkdir ${HOME}/.local/share/Baba_Is_You
 mkdir ${HOME}/.local/share/bohemiainteractive
 mkdir ${HOME}/.local/share/cdprojektred
 mkdir ${HOME}/.local/share/Colossal Order
@@ -107,6 +109,7 @@ whitelist ${HOME}/.killingfloor
 whitelist ${HOME}/.klei
 whitelist ${HOME}/.local/share/3909/PapersPlease
 whitelist ${HOME}/.local/share/aspyr-media
+whitelist ${HOME}/.local/share/Baba_Is_You
 whitelist ${HOME}/.local/share/bohemiainteractive
 whitelist ${HOME}/.local/share/cdprojektred
 whitelist ${HOME}/.local/share/Colossal Order

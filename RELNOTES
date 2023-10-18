@@ -56,6 +56,7 @@ firejail (0.9.73) baseline; urgency=low
   * ci: standardize apt-get update/install & misc improvements (#5857)
   * ci: whitelist paths, reorganize workflows & speed-up tests (#5960)
   * ci: fix dependabot duplicated workflow runs (#5984)
+  * ci: allow running workflows manually (#6026)
   * contrib/vim: match profile files more broadly (#5850)
   * test: split individual test groups in github workflows
   * test: add chroot, appimage and network tests in github workflows

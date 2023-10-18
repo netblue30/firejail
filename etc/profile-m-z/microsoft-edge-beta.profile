@@ -14,10 +14,7 @@ mkdir ${HOME}/.cache/microsoft-edge-beta
 mkdir ${HOME}/.config/microsoft-edge-beta
 whitelist ${HOME}/.cache/microsoft-edge-beta
 whitelist ${HOME}/.config/microsoft-edge-beta
-
 whitelist /opt/microsoft/msedge-beta
-# private-opt might break the file-copy-limit, see #5307
-#private-opt microsoft
 
 # Redirect
 include chromium-common.profile

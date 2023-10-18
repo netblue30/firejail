@@ -17,6 +17,7 @@ include disable-shell.inc
 
 mkdir ${HOME}/.config/Bitwarden
 whitelist ${HOME}/.config/Bitwarden
+whitelist /opt/Bitwarden
 
 machine-id
 no3d
@@ -24,7 +25,6 @@ nosound
 
 ?HAS_APPIMAGE: ignore private-dev
 private-etc @tls-ca
-private-opt Bitwarden
 
 # Redirect
 include electron-common.profile

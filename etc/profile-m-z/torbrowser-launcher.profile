@@ -62,7 +62,6 @@ disable-mnt
 private-bin bash,cat,cp,cut,dirname,env,expr,file,gpg,grep,gxmessage,id,kdialog,ln,mkdir,mv,python*,rm,sed,sh,tail,tar,tclsh,test,tor-browser,tor-browser-en,torbrowser-launcher,update-desktop-database,xmessage,xz,zenity
 private-dev
 private-etc @tls-ca
-#private-opt tor-browser # can cause slow startup
 private-tmp
 
 dbus-user none

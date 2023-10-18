@@ -79,7 +79,6 @@ disable-mnt
 private-bin bash,cat,cp,cut,dirname,env,expr,file,gpg,grep,gxmessage,id,kdialog,ln,mkdir,mullvad-browser,mv,python*,rm,sed,sh,tail,tar,tclsh,test,update-desktop-database,xmessage,xz,zenity
 private-dev
 private-etc @tls-ca
-#private-opt mullvad-browser # can cause slow startup
 private-tmp
 
 blacklist ${PATH}/curl

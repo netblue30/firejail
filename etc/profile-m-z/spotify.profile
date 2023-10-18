@@ -26,6 +26,7 @@ whitelist ${HOME}/.cache/spotify
 whitelist ${HOME}/.config/spotify
 whitelist ${HOME}/.config/spotify-adblock
 whitelist ${HOME}/.local/share/spotify
+whitelist /opt/spotify
 include whitelist-common.inc
 include whitelist-var-common.inc
 
@@ -48,7 +49,6 @@ private-bin bash,cat,dirname,find,grep,head,rm,sh,spotify,tclsh,touch,zenity
 private-dev
 # If you want to see album covers or want to use the radio, add 'ignore private-etc' to your spotify.local.
 private-etc @tls-ca,host.conf,spotify-adblock
-private-opt spotify
 private-srv none
 private-tmp
 

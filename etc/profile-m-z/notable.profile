@@ -14,11 +14,12 @@ include globals.local
 noblacklist ${HOME}/.config/Notable
 noblacklist ${HOME}/.notable
 
+whitelist /opt/Notable
+
 net none
 nosound
 
 ?HAS_APPIMAGE: ignore private-dev
-private-opt Notable
 
 dbus-user filter
 dbus-user.talk ca.desrt.dconf

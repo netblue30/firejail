@@ -9,9 +9,10 @@ noblacklist ${HOME}/.config/discordptb
 
 mkdir ${HOME}/.config/discordptb
 whitelist ${HOME}/.config/discordptb
+whitelist /opt/DiscordPTB
+whitelist /opt/discord
 
 private-bin discord-ptb,DiscordPTB
-private-opt discord-ptb,DiscordPTB
 
 # Redirect
 include discord-common.profile

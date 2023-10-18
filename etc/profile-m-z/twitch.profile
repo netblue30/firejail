@@ -16,10 +16,10 @@ include disable-shell.inc
 
 mkdir ${HOME}/.config/Twitch
 whitelist ${HOME}/.config/Twitch
+whitelist /opt/Twitch
 
 private-bin electron,electron[0-9],electron[0-9][0-9],twitch
 private-etc @tls-ca,@x11,bumblebee,host.conf,mime.types
-private-opt Twitch
 
 # Redirect
 include electron-common.profile

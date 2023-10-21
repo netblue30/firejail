@@ -7,7 +7,7 @@
 -->
 <language id="firejail-profile" name="Firejail Profile" version="2.0" _section="Other">
   <metadata>
-    <property name="mimetypes">text/plain;text/x-firejail-profile</property>
+    <property name="mimetypes">text/x-firejail-profile</property>
     <property name="globs">*.profile;*.local;*.inc</property>
     <property name="line-comment-start">#</property>
   </metadata>

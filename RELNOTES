@@ -67,7 +67,7 @@ firejail (0.9.73) baseline; urgency=low
   * docs: add uninstall instructions to README.md (#5812)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
-  * profiles: fix commented code and eol comments (#5987)
+  * profiles: standardize commented code and eol comments (#5987)
   * profiles: replace private-opt with whitelist & document private-opt issues
     (#6021)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater

@@ -125,7 +125,6 @@ blacklist ${HOME}/.cache/geeqie
 blacklist ${HOME}/.cache/gegl-0.4
 blacklist ${HOME}/.cache/gfeeds
 blacklist ${HOME}/.cache/gimp
-blacklist ${HOME}/.cache/gnome-boxes
 blacklist ${HOME}/.cache/gnome-builder
 blacklist ${HOME}/.cache/gnome-control-center
 blacklist ${HOME}/.cache/gnome-recipes

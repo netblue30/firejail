@@ -192,6 +192,7 @@ blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/VirtualBox VMs
 
 # GNOME Boxes
+blacklist ${HOME}/.cache/gnome-boxes
 blacklist ${HOME}/.config/gnome-boxes
 blacklist ${HOME}/.local/share/gnome-boxes
 

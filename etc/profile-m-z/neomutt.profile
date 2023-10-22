@@ -10,6 +10,7 @@ include globals.local
 noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.Mail
 noblacklist ${HOME}/.bogofilter
+noblacklist ${HOME}/.config/msmtp
 noblacklist ${HOME}/.config/mutt
 noblacklist ${HOME}/.config/nano
 noblacklist ${HOME}/.config/neomutt
@@ -34,6 +35,7 @@ noblacklist ${HOME}/Mail
 noblacklist ${HOME}/mail
 noblacklist ${HOME}/postponed
 noblacklist ${HOME}/sent
+noblacklist /etc/msmtprc
 noblacklist /var/mail
 noblacklist /var/spool/mail
 
@@ -59,6 +61,7 @@ whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.Mail
 whitelist ${HOME}/.bogofilter
+whitelist ${HOME}/.config/msmtp
 whitelist ${HOME}/.config/mutt
 whitelist ${HOME}/.config/nano
 whitelist ${HOME}/.config/neomutt
@@ -116,7 +119,7 @@ tracelog
 #disable-mnt
 private-cache
 private-dev
-private-etc @tls-ca,@x11,Mutt,Muttrc,Muttrc.d,gnupg,hosts.conf,mail,mailname,neomuttrc,neomuttrc.d,nntpserver
+private-etc @tls-ca,@x11,msmtprc,Mutt,Muttrc,Muttrc.d,gnupg,hosts.conf,mail,mailname,neomuttrc,neomuttrc.d,nntpserver
 private-tmp
 writable-run-user
 writable-var

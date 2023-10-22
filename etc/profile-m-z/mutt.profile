@@ -13,6 +13,7 @@ noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.Mail
 noblacklist ${HOME}/.bogofilter
 noblacklist ${HOME}/.cache/mutt
+noblacklist ${HOME}/.config/msmtp
 noblacklist ${HOME}/.config/mutt
 noblacklist ${HOME}/.config/nano
 noblacklist ${HOME}/.elinks
@@ -35,6 +36,7 @@ noblacklist ${HOME}/Mail
 noblacklist ${HOME}/mail
 noblacklist ${HOME}/postponed
 noblacklist ${HOME}/sent
+noblacklist /etc/msmtprc
 
 blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
@@ -69,6 +71,7 @@ whitelist ${DOWNLOADS}
 whitelist ${HOME}/.Mail
 whitelist ${HOME}/.bogofilter
 whitelist ${HOME}/.cache/mutt
+whitelist ${HOME}/.config/msmtp
 whitelist ${HOME}/.config/mutt
 whitelist ${HOME}/.config/nano
 whitelist ${HOME}/.elinks
@@ -124,7 +127,7 @@ tracelog
 #disable-mnt
 private-cache
 private-dev
-private-etc @tls-ca,@x11,Mutt,Muttrc,Muttrc.d,gai.conf,gnupg,gnutls,hosts.conf,mail,mailname,nntpserver,terminfo
+private-etc @tls-ca,@x11,msmtprc,Mutt,Muttrc,Muttrc.d,gai.conf,gnupg,gnutls,hosts.conf,mail,mailname,nntpserver,terminfo
 private-tmp
 writable-run-user
 writable-var

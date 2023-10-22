@@ -559,6 +559,7 @@ blacklist ${HOME}/.config/mpDris2
 blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mps-youtube
 blacklist ${HOME}/.config/mpv
+blacklist ${HOME}/.config/msmtp
 blacklist ${HOME}/.config/mullvad-browser-flags.conf
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/mutt
@@ -1232,6 +1233,7 @@ blacklist ${RUNUSER}/*firefox*
 blacklist ${RUNUSER}/akonadi
 blacklist ${RUNUSER}/psd/*firefox*
 blacklist ${RUNUSER}/qutebrowser
+blacklist /etc/msmtprc
 blacklist /etc/ssmtp
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*

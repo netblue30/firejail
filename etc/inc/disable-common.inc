@@ -334,6 +334,7 @@ blacklist /etc/hosts.equiv
 read-only ${HOME}/.caffrc
 read-only ${HOME}/.cargo/env
 read-only ${HOME}/.config/mpv
+read-only ${HOME}/.config/msmtp
 read-only ${HOME}/.config/nano
 read-only ${HOME}/.config/nvim
 read-only ${HOME}/.config/pkcs11
@@ -424,6 +425,7 @@ blacklist /etc/group-
 blacklist /etc/gshadow
 blacklist /etc/gshadow+
 blacklist /etc/gshadow-
+blacklist /etc/msmtprc
 blacklist /etc/passwd+
 blacklist /etc/passwd-
 blacklist /etc/shadow
@@ -446,6 +448,7 @@ blacklist ${HOME}/.cargo/credentials.toml
 blacklist ${HOME}/.cert
 blacklist ${HOME}/.config/hub
 blacklist ${HOME}/.config/keybase
+blacklist ${HOME}/.config/msmtp
 blacklist ${HOME}/.davfs2/secrets
 blacklist ${HOME}/.ecryptfs
 blacklist ${HOME}/.fetchmailrc

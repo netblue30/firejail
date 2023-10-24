@@ -1014,6 +1014,7 @@ blacklist ${HOME}/.local/share/orage
 blacklist ${HOME}/.local/share/org.kde.gwenview
 blacklist ${HOME}/.local/share/pix
 blacklist ${HOME}/.local/share/plasma_notes
+blacklist ${HOME}/.local/share/pnpm
 blacklist ${HOME}/.local/share/profanity
 blacklist ${HOME}/.local/share/psi
 blacklist ${HOME}/.local/share/psi+

@@ -12,7 +12,7 @@
 #
 
 AC_PREREQ([2.68])
-AC_INIT([firejail], [0.9.73], [netblue30@protonmail.com], [],
+AC_INIT([firejail], [0.9.73-landlock], [netblue30@protonmail.com], [],
     [https://firejail.wordpress.com])
 
 AC_CONFIG_SRCDIR([src/firejail/main.c])
@@ -79,6 +79,16 @@ AC_ARG_ENABLE([selinux],
 AS_IF([test "x$enable_selinux" = "xyes"], [
 	HAVE_SELINUX="-DHAVE_SELINUX"
 	LIBS="$LIBS -lselinux"
+])
+
+HAVE_LANDLOCK=""
+AC_SUBST([HAVE_LANDLOCK])
+AC_ARG_ENABLE([landlock],
+    [AS_HELP_STRING([--enable-landlock], [Landlock self-restriction support])])
+AS_IF([test "x$enable_landlock" = "xyes"], [
+	AC_CHECK_HEADER([linux/landlock.h], [], AC_MSG_ERROR([*** LANDLOCK support is not installed (/usr/include/linux/landlock.h missing) ***]))
+	HAVE_LANDLOCK="-DHAVE_LANDLOCK"
+	EXTRA_LDFLAGS="$EXTRA_LDFLAGS"
 ])
 
 AC_SUBST([EXTRA_CFLAGS])
@@ -324,6 +334,7 @@ Features:
    firetunnel support: $HAVE_FIRETUNNEL
    global config: $HAVE_GLOBALCFG
    IDS support: $HAVE_IDS
+   Landlock support: $HAVE_LANDLOCK
    LTS: $HAVE_LTS
    manpage support: $HAVE_MAN
    network: $HAVE_NETWORK

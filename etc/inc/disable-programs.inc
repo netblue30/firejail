@@ -22,7 +22,6 @@ blacklist ${HOME}/.Steampid
 blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.VSCodium
 blacklist ${HOME}/.ViberPC
-blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/.WebStorm*
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.ZAP
@@ -125,7 +124,6 @@ blacklist ${HOME}/.cache/geeqie
 blacklist ${HOME}/.cache/gegl-0.4
 blacklist ${HOME}/.cache/gfeeds
 blacklist ${HOME}/.cache/gimp
-blacklist ${HOME}/.cache/gnome-boxes
 blacklist ${HOME}/.cache/gnome-builder
 blacklist ${HOME}/.cache/gnome-control-center
 blacklist ${HOME}/.cache/gnome-recipes
@@ -350,7 +348,6 @@ blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/Twitch
 blacklist ${HOME}/.config/Unknown Organization
 blacklist ${HOME}/.config/VSCodium
-blacklist ${HOME}/.config/VirtualBox
 blacklist ${HOME}/.config/Whalebird
 blacklist ${HOME}/.config/Wire
 blacklist ${HOME}/.config/Youtube
@@ -559,7 +556,6 @@ blacklist ${HOME}/.config/mpDris2
 blacklist ${HOME}/.config/mpd
 blacklist ${HOME}/.config/mps-youtube
 blacklist ${HOME}/.config/mpv
-blacklist ${HOME}/.config/msmtp
 blacklist ${HOME}/.config/mullvad-browser-flags.conf
 blacklist ${HOME}/.config/mupen64plus
 blacklist ${HOME}/.config/mutt
@@ -939,7 +935,6 @@ blacklist ${HOME}/.local/share/geeqie
 blacklist ${HOME}/.local/share/ghostwriter
 blacklist ${HOME}/.local/share/gitg
 blacklist ${HOME}/.local/share/gnome-2048
-blacklist ${HOME}/.local/share/gnome-boxes
 blacklist ${HOME}/.local/share/gnome-builder
 blacklist ${HOME}/.local/share/gnome-chess
 blacklist ${HOME}/.local/share/gnome-klotski
@@ -1084,7 +1079,6 @@ blacklist ${HOME}/.mp3splt-gtk
 blacklist ${HOME}/.mpd
 blacklist ${HOME}/.mpdconf
 blacklist ${HOME}/.mplayer
-blacklist ${HOME}/.msmtprc
 blacklist ${HOME}/.mullvad/mullvadbrowser
 blacklist ${HOME}/.multimc5
 blacklist ${HOME}/.nanorc
@@ -1233,7 +1227,6 @@ blacklist ${RUNUSER}/*firefox*
 blacklist ${RUNUSER}/akonadi
 blacklist ${RUNUSER}/psd/*firefox*
 blacklist ${RUNUSER}/qutebrowser
-blacklist /etc/msmtprc
 blacklist /etc/ssmtp
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*

@@ -188,6 +188,7 @@
 104.244.40.0/21 Twitter
 108.160.160.0/20 Dropbox
 108.175.32.0/20 Netflix
+129.144.0.0/12 Oracle
 129.134.0.0/16 Facebook
 140.82.112.0/20 GitHub
 143.55.64.0/20 GitHub
@@ -221,7 +222,6 @@
 185.125.188.0/22 Ubuntu One
 185.199.108.0/22 GitHub
 185.205.69.0/24 Tutanota
-185.238.113.0/24 Bitchute
 188.64.224.0/21 Twitter
 190.217.33.0/24 Steam
 192.0.64.0/18 Wordpress
@@ -253,7 +253,11 @@
 63.141.247.168/29 BitChute
 63.141.247.240/29 BitChute
 69.30.200.200/29 BitChute
+69.30.230.64/29 BitChute
+69.30.241.40/29 BitChute
 69.30.241.48/29 BitChute
+69.30.243.168/29 BitChute
+69.30.245.232/29 BitChute
 69.30.253.16/29 BitChute
 69.197.182.184/29 BitChute
 74.91.28.208/29 BitChute
@@ -264,6 +268,7 @@
 107.150.45.120/29 BitChute
 142.54.180.104/29 BitChute
 142.54.181.184/29 BitChute
+142.54.188.112/29 BitChute
 142.54.189.192/29 BitChute
 173.208.154.8/29 BitChute
 173.208.154.160/29 BitChute
@@ -275,19 +280,27 @@
 173.208.216.40/29 BitChute
 173.208.219.112/29 BitChute
 173.208.246.160/29 BitChute
+185.238.113.0/24 BitChute
+192.151.147.16/29 BitChute
 192.151.158.136/29 BitChute
 192.187.97.88/29 BitChute
 192.187.114.16/29 BitChute
 192.187.114.96/29 BitChute
+192.187.118.168/29 BitChute
+192.187.121.208/29 BitChute
 192.187.123.112/29 BitChute
 192.187.126.0/29 BitChute
 198.204.226.120/29 BitChute
 198.204.228.48/29 BitChute
+198.204.235.88/29 BitChute
 198.204.235.216/29 BitChute
 198.204.245.32/29 BitChute
 198.204.245.88/29 BitChute
 198.204.250.208/29 BitChute
+198.204.253.64/29 BitChute
+198.204.253.184/29 BitChute
 199.168.96.24/29 BitChute
+199.168.96.64/29 BitChute
 204.12.220.136/29 BitChute
 204.12.194.176/29 BitChute
 204.12.194.248/29 BitChute
@@ -297,7 +310,7 @@
 # WholeSale Internet
 69.30.192.0/18 WholeSale Internet
 69.197.128.0/18 WholeSale Internet
-
+142.54.160.0/19 WholeSale Internet
 173.208.128.0/17 WholeSale Internet
 204.12.192.0/18 WholeSale Internet
 208.67.0.0/21 WholeSale Internet
@@ -625,6 +638,7 @@
 206.190.32.0/19 Yahoo
 209.73.160.0/19 Yahoo
 209.191.64.0/18 Yahoo
+212.82.100.0/22 Yahoo
 216.115.96.0/20 Yahoo
 
 # Google
@@ -634,6 +648,18 @@
 8.35.192.0/20 Google
 23.236.48.0/20 Google
 23.251.128.0/19 Google
+34.4.16.0/20 Google
+34.4.64.0/18 Google
+34.4.6.0/23 Google
+34.16.0.0/12 Google
+34.32.0.0/11 Google
+34.4.128.0/17 Google
+34.8.0.0/13 Google
+34.4.8.0/21 Google
+34.5.0.0/16 Google
+34.6.0.0/15 Google
+34.4.32.0/19 Google
+34.4.5.0/24 Google
 34.64.0.0/10 Google
 34.128.0.0/10 Google
 35.184.0.0/13 Google
@@ -1884,6 +1910,7 @@
 34.192.0.0/12 Amazon
 34.208.0.0/12 Amazon
 34.224.0.0/12 Amazon
+34.225.127.72/10 Amazon
 34.240.0.0/13 Amazon
 34.248.0.0/13 Amazon
 35.71.64.0/22 Amazon
@@ -3432,7 +3459,7 @@
 54.93.0.0/16 Amazon
 54.94.0.0/16 Amazon
 54.95.0.0/16 Amazon
-54.144.0.0/14 Amazon
+54.144.0.0/12 Amazon
 54.148.0.0/15 Amazon
 54.150.0.0/16 Amazon
 54.151.0.0/17 Amazon
@@ -3443,7 +3470,7 @@
 54.154.0.0/16 Amazon
 54.155.0.0/16 Amazon
 54.156.0.0/14 Amazon
-54.160.0.0/13 Amazon
+54.160.0.0/11 Amazon
 54.168.0.0/16 Amazon
 54.169.0.0/16 Amazon
 54.170.0.0/15 Amazon
@@ -3456,7 +3483,7 @@
 54.182.0.0/16 Amazon
 54.183.0.0/16 Amazon
 54.184.0.0/13 Amazon
-54.192.0.0/16 Amazon
+54.192.0.0/12 Amazon
 54.193.0.0/16 Amazon
 54.194.0.0/15 Amazon
 54.196.0.0/15 Amazon
@@ -3467,12 +3494,12 @@
 54.204.0.0/15 Amazon
 54.206.0.0/16 Amazon
 54.207.0.0/16 Amazon
-54.208.0.0/15 Amazon
+54.208.0.0/13 Amazon
 54.210.0.0/15 Amazon
 54.212.0.0/15 Amazon
 54.214.0.0/16 Amazon
 54.215.0.0/16 Amazon
-54.216.0.0/15 Amazon
+54.216.0.0/14 Amazon
 54.218.0.0/16 Amazon
 54.219.0.0/16 Amazon
 54.220.0.0/16 Amazon

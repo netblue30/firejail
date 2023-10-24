@@ -308,6 +308,8 @@ static inline const char *common_port(uint16_t port) {
 			return "Tor";
 		else if (port == 9030)
 			return "Tor";
+		else if (port == 9040)
+			return "Tor";
 		else if (port == 9050)
 			return "Tor";
 		else if (port == 9051)
@@ -506,16 +508,16 @@ static void print_stats(FILE *fp) {
 
 	fprintf(fp, "\n\nIP map");
 	if (fp == stdout)
-		ansi_faint("  - server-address network (packets)\n");
+		ansi_faint("  - network (packets)\n");
 	else
-		fprintf(fp, "  - server-address network (packets)\n");
+		fprintf(fp, "  - network (packets)\n");
 	radix_print(fp, 1);
 
 	fprintf(fp, "\n\nEvents %d", ev_cnt);
 	if (fp == stdout)
-		ansi_faint(" - time address:port data\n");
+		ansi_faint(" - time address data\n");
 	else
-		fprintf(fp, " - time address:port data\n");
+		fprintf(fp, " - time address data\n");
 	ev_print(fp);
 
 }

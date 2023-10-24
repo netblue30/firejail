@@ -420,7 +420,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit_err_feature("x11");
 	}
 #endif
-#ifdef HAVE_NETWORK
 	else if (strcmp(argv[i], "--nettrace") == 0) {
 		if (checkcfg(CFG_NETWORK)) {
 			if (getuid() != 0) {
@@ -524,8 +523,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 	}
 
-
-
+#ifdef HAVE_NETWORK
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
 		if (checkcfg(CFG_NETWORK)) {
 			logargs(argc, argv);

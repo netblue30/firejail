@@ -788,7 +788,6 @@ $ firejail \-\-list
 .br
 $ firejail \-\-dns.print=3272
 
-#ifdef HAVE_NETWORK
 .TP
 \fB\-\-dnstrace[=name|pid]
 Monitor DNS queries. The sandbox can be specified by name or pid. Only networked sandboxes
@@ -828,7 +827,6 @@ $ sudo firejail --dnstrace
 .br
 11:32:08  9.9.9.9        www.youtube.com (type 1)
 .br
-#endif
 
 .TP
 \fB\-\-env=name=value
@@ -930,7 +928,6 @@ $ firejail --ignore=seccomp --ignore=caps firefox
 $ firejail \-\-ignore="net eth0" firefox
 #endif
 
-#ifdef HAVE_NETWORK
 .TP
 \fB\-\-icmptrace[=name|pid]
 Monitor ICMP traffic. The sandbox can be specified by name or pid. Only networked sandboxes
@@ -956,7 +953,6 @@ $ sudo firejail --icmptrace
 .br
 20:53:55  192.168.1.60 -> 1.1.1.1 - 154 bytes - Destination unreachable/Port unreachable
 .br
-#endif
 
 .TP
 \fB\-\-\include=file.profile
@@ -1643,6 +1639,7 @@ PID  User    RX(KB/s) TX(KB/s) Command
 1294 netblue 53.355   1.473    firejail \-\-net=eth0 firefox
 .br
 7383 netblue 9.045    0.112    firejail \-\-net=eth0 transmission
+#endif
 .TP
 \fB\-\-nettrace[=name|pid]
 Monitor received TCP. UDP, and ICMP traffic. The sandbox can be specified by name or pid. Only networked sandboxes
@@ -1658,17 +1655,15 @@ Example:
 .br
 $ sudo firejail --nettrace
 .br
-                        95 KB/s  geoip 457, IP database 4436
+                       93 KB/s  address:port (protocol) network
 .br
-   52 KB/s ***********           64.222.84.207:443 United States
+  14 B/s  **                    104.24.8.4:443(QUIC) Cloudflare
 .br
-   33 KB/s *******               89.147.74.105:63930 Hungary
+  80 KB/s *****************     192.187.97.90:443(TLS) BitChute
 .br
-    0 B/s                        45.90.28.0:443 NextDNS
+   1 B/s                        149.56.228.45:443(DoH) Canada
 .br
-    0 B/s                        94.70.122.176:52309(UDP) Greece
-.br
-  339 B/s                        104.26.7.35:443 Cloudflare
+(D)isplay, (S)ave, (C)lear, e(X)it
 .br
 
 .br
@@ -1677,7 +1672,6 @@ the country the traffic originates from is added to the trace.
 We also use the static IP map in /usr/lib/firejail/static-ip-map
 to print the domain names for some of the more common websites and cloud platforms.
 No external services are contacted for reverse IP lookup.
-#endif
 .TP
 \fB\-\-nice=value
 Set nice value for all processes running inside the sandbox.
@@ -2862,7 +2856,6 @@ $ firejail \-\-list
 .br
 $ firejail \-\-shutdown=3272
 
-#ifdef HAVE_NETWORK
 .TP
 \fB\-\-snitrace[=name|pid]
 Monitor Server Name Indication (TLS/SNI). The sandbox can be specified by name or pid. Only networked sandboxes
@@ -2904,7 +2897,6 @@ $ sudo firejail --snitrace
 .br
 07:53:11  192.0.73.2       1.gravatar.com
 .br
-#endif
 
 .TP
 \fB\-\-tab

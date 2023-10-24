@@ -675,6 +675,7 @@ HAVE_OVERLAYFS
 HAVE_DBUSPROXY
 EXTRA_LDFLAGS
 EXTRA_CFLAGS
+HAVE_LANDLOCK
 HAVE_SELINUX
 AA_LIBS
 AA_CFLAGS
@@ -737,6 +738,7 @@ enable_sanitizer
 enable_ids
 enable_apparmor
 enable_selinux
+enable_landlock
 enable_dbusproxy
 enable_output
 enable_usertmpfs
@@ -1396,6 +1398,7 @@ Optional Features:
   --enable-ids            enable ids
   --enable-apparmor       enable apparmor
   --enable-selinux        SELinux labeling support
+  --enable-landlock       Landlock self-restriction support
   --disable-dbusproxy     disable dbus proxy
   --disable-output        disable --output logging
   --disable-usertmpfs     disable tmpfs as regular user
@@ -3739,6 +3742,58 @@ then :
 
 fi
 
+HAVE_LANDLOCK=""
+
+# Check whether --enable-landlock was given.
+if test ${enable_landlock+y}
+then :
+  enableval=$enable_landlock;
+fi
+
+ac_header= ac_cache=
+for ac_item in $ac_header_c_list
+do
+  if test $ac_cache; then
+    ac_fn_c_check_header_compile "$LINENO" $ac_header ac_cv_header_$ac_cache "$ac_includes_default"
+    if eval test \"x\$ac_cv_header_$ac_cache\" = xyes; then
+      printf "%s\n" "#define $ac_item 1" >> confdefs.h
+    fi
+    ac_header= ac_cache=
+  elif test $ac_header; then
+    ac_cache=$ac_item
+  else
+    ac_header=$ac_item
+  fi
+done
+
+
+
+
+
+
+
+
+if test $ac_cv_header_stdlib_h = yes && test $ac_cv_header_string_h = yes
+then :
+
+printf "%s\n" "#define STDC_HEADERS 1" >>confdefs.h
+
+fi
+if test "x$enable_landlock" != "xno"
+then :
+
+	ac_fn_c_check_header_compile "$LINENO" "linux/landlock.h" "ac_cv_header_linux_landlock_h" "$ac_includes_default"
+if test "x$ac_cv_header_linux_landlock_h" = xyes
+then :
+  HAVE_LANDLOCK="-DHAVE_LANDLOCK"
+else $as_nop
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: header not found: linux/landlock.h, building without Landlock support" >&5
+printf "%s\n" "$as_me: WARNING: header not found: linux/landlock.h, building without Landlock support" >&2;}
+fi
+
+
+fi
+
 
 
 
@@ -4112,6 +4167,7 @@ if test "x$enable_lts" = "xyes"
 then :
 
 	HAVE_LTS="-DHAVE_LTS"
+	HAVE_LANDLOCK=""
 	HAVE_IDS=""
 	HAVE_DBUSPROXY=""
 	HAVE_OVERLAYFS=""
@@ -4132,35 +4188,6 @@ then :
 
 fi
 
-ac_header= ac_cache=
-for ac_item in $ac_header_c_list
-do
-  if test $ac_cache; then
-    ac_fn_c_check_header_compile "$LINENO" $ac_header ac_cv_header_$ac_cache "$ac_includes_default"
-    if eval test \"x\$ac_cv_header_$ac_cache\" = xyes; then
-      printf "%s\n" "#define $ac_item 1" >> confdefs.h
-    fi
-    ac_header= ac_cache=
-  elif test $ac_header; then
-    ac_cache=$ac_item
-  else
-    ac_header=$ac_item
-  fi
-done
-
-
-
-
-
-
-
-
-if test $ac_cv_header_stdlib_h = yes && test $ac_cv_header_string_h = yes
-then :
-
-printf "%s\n" "#define STDC_HEADERS 1" >>confdefs.h
-
-fi
 ac_fn_c_check_header_compile "$LINENO" "linux/seccomp.h" "ac_cv_header_linux_seccomp_h" "$ac_includes_default"
 if test "x$ac_cv_header_linux_seccomp_h" = xyes
 then :
@@ -5360,6 +5387,7 @@ Features:
    firetunnel support: $HAVE_FIRETUNNEL
    global config: $HAVE_GLOBALCFG
    IDS support: $HAVE_IDS
+   Landlock support: $HAVE_LANDLOCK
    LTS: $HAVE_LTS
    manpage support: $HAVE_MAN
    network: $HAVE_NETWORK

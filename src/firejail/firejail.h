@@ -281,6 +281,9 @@ extern int arg_overlay;		// overlay option
 extern int arg_overlay_keep;	// place overlay diff in a known directory
 extern int arg_overlay_reuse;	// allow the reuse of overlays
 
+extern int arg_landlock;		// add basic Landlock rules
+extern int arg_landlock_proc;		// 0 - no access; 1 -read-only; 2 - read-write
+
 extern int arg_seccomp;	// enable default seccomp filter
 extern int arg_seccomp32;	// enable default seccomp filter for 32 bit arch
 extern int arg_seccomp_postexec;	// need postexec ld.preload library?
@@ -949,5 +952,24 @@ void run_ids(int argc, char **argv);
 
 // oom.c
 void oom_set(const char *oom_string);
+
+// landlock.c
+#ifdef HAVE_LANDLOCK
+int ll_get_fd(void);
+int ll_read(const char *allowed_path);
+int ll_write(const char *allowed_path);
+int ll_special(const char *allowed_path);
+int ll_exec(const char *allowed_path);
+int ll_basic_system(void);
+int ll_restrict(__u32 flags);
+#else
+static inline int ll_get_fd(void) { return -1; }
+static inline int ll_read(...) { return 0; }
+static inline int ll_write(...) { return 0; }
+static inline int ll_special(...) { return 0; }
+static inline int ll_exec(...) { return 0; }
+static inline int ll_basic_system(void) { return 0; }
+static inline int ll_restrict(...) { return 0; }
+#endif /* HAVE_LANDLOCK */
 
 #endif

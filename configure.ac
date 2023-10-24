@@ -81,6 +81,16 @@ AS_IF([test "x$enable_selinux" = "xyes"], [
 	LIBS="$LIBS -lselinux"
 ])
 
+HAVE_LANDLOCK=""
+AC_SUBST([HAVE_LANDLOCK])
+AC_ARG_ENABLE([landlock],
+    [AS_HELP_STRING([--enable-landlock], [Landlock self-restriction support])])
+AS_IF([test "x$enable_landlock" != "xno"], [
+	AC_CHECK_HEADER([linux/landlock.h],
+	    [HAVE_LANDLOCK="-DHAVE_LANDLOCK"],
+	    [AC_MSG_WARN([header not found: linux/landlock.h, building without Landlock support])])
+])
+
 AC_SUBST([EXTRA_CFLAGS])
 AC_SUBST([EXTRA_LDFLAGS])
 
@@ -264,6 +274,7 @@ AC_ARG_ENABLE([lts],
     [AS_HELP_STRING([--enable-lts], [enable long-term support software version (LTS)])])
 AS_IF([test "x$enable_lts" = "xyes"], [
 	HAVE_LTS="-DHAVE_LTS"
+	HAVE_LANDLOCK=""
 	HAVE_IDS=""
 	HAVE_DBUSPROXY=""
 	HAVE_OVERLAYFS=""
@@ -324,6 +335,7 @@ Features:
    firetunnel support: $HAVE_FIRETUNNEL
    global config: $HAVE_GLOBALCFG
    IDS support: $HAVE_IDS
+   Landlock support: $HAVE_LANDLOCK
    LTS: $HAVE_LTS
    manpage support: $HAVE_MAN
    network: $HAVE_NETWORK

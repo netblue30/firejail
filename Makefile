@@ -247,7 +247,7 @@ endif
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail/firecfg.d
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config
-	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile*/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config
 	sh -c "if [ ! -f $(DESTDIR)$(sysconfdir)/firejail/login.users ]; then \
 		$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/login.users; \
 	fi"

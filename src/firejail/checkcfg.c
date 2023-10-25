@@ -363,6 +363,13 @@ static const char *const compiletime_support =
 		"disabled"
 #endif
 
+	"\n\t- Landlock support is "
+#ifdef HAVE_LANDLOCK
+		"enabled"
+#else
+		"disabled"
+#endif
+
 	"\n\t- networking support is "
 #ifdef HAVE_NETWORK
 		"enabled"

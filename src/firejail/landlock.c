@@ -27,6 +27,12 @@
 #include <linux/prctl.h>
 #include <linux/landlock.h>
 
+int rset_fd = -1;
+
+int ll_get_fd(void) {
+	return rset_fd;
+}
+
 int ll_create_ruleset(struct landlock_ruleset_attr *rsattr,size_t size,__u32 flags) {
 	return syscall(__NR_landlock_create_ruleset,rsattr,size,flags);
 }
@@ -35,12 +41,16 @@ int ll_add_rule(int fd,enum landlock_rule_type t,void *attr,__u32 flags) {
 	return syscall(__NR_landlock_add_rule,fd,t,attr,flags);
 }
 
-int ll_restrict_self(int fd,__u32 flags) {
+int ll_restrict_self(__u32 flags) {
+	if (rset_fd == -1)
+		return 0;
+
+
 	prctl(PR_SET_NO_NEW_PRIVS,1,0,0,0);
-	int result = syscall(__NR_landlock_restrict_self,fd,flags);
+	int result = syscall(__NR_landlock_restrict_self, rset_fd, flags);
 	if (result!=0) return result;
 	else {
-		close(fd);
+		close(rset_fd);
 		return 0;
 	}
 }
@@ -54,7 +64,10 @@ int ll_create_full_ruleset() {
 	return ll_create_ruleset(&attr,sizeof(attr),0);
 }
 
-int ll_add_read_access_rule_by_path(int rset_fd,char *allowed_path) {
+int ll_add_read_access_rule_by_path(char *allowed_path) {
+	if (rset_fd == -1)
+		rset_fd = ll_create_full_ruleset();
+
 	int result;
 	int allowed_fd = open(allowed_path,O_PATH | O_CLOEXEC);
 	struct landlock_path_beneath_attr target;
@@ -65,7 +78,10 @@ int ll_add_read_access_rule_by_path(int rset_fd,char *allowed_path) {
 	return result;
 }
 
-int ll_add_write_access_rule_by_path(int rset_fd,char *allowed_path) {
+int ll_add_write_access_rule_by_path(char *allowed_path) {
+	if (rset_fd == -1)
+		rset_fd = ll_create_full_ruleset();
+
 	int result;
 	int allowed_fd = open(allowed_path,O_PATH | O_CLOEXEC);
 	struct landlock_path_beneath_attr target;
@@ -78,7 +94,10 @@ int ll_add_write_access_rule_by_path(int rset_fd,char *allowed_path) {
 	return result;
 }
 
-int ll_add_create_special_rule_by_path(int rset_fd,char *allowed_path) {
+int ll_add_create_special_rule_by_path(char *allowed_path) {
+	if (rset_fd == -1)
+		rset_fd = ll_create_full_ruleset();
+
 	int result;
 	int allowed_fd = open(allowed_path,O_PATH | O_CLOEXEC);
 	struct landlock_path_beneath_attr target;
@@ -89,7 +108,10 @@ int ll_add_create_special_rule_by_path(int rset_fd,char *allowed_path) {
 	return result;
 }
 
-int ll_add_execute_rule_by_path(int rset_fd,char *allowed_path) {
+int ll_add_execute_rule_by_path(char *allowed_path) {
+	if (rset_fd == -1)
+		rset_fd = ll_create_full_ruleset();
+
 	int result;
 	int allowed_fd = open(allowed_path,O_PATH | O_CLOEXEC);
 	struct landlock_path_beneath_attr target;
@@ -101,8 +123,8 @@ int ll_add_execute_rule_by_path(int rset_fd,char *allowed_path) {
 }
 
 void ll_basic_system(void) {
-	if (arg_landlock == -1)
-		arg_landlock = ll_create_full_ruleset();
+	if (rset_fd == -1)
+		rset_fd = ll_create_full_ruleset();
 
 	const char *home_dir = env_get("HOME");
 	int home_fd = open(home_dir,O_PATH | O_CLOEXEC);
@@ -113,25 +135,23 @@ void ll_basic_system(void) {
 			      LANDLOCK_ACCESS_FS_REMOVE_DIR | LANDLOCK_ACCESS_FS_MAKE_CHAR |
 			      LANDLOCK_ACCESS_FS_MAKE_DIR | LANDLOCK_ACCESS_FS_MAKE_REG |
 			      LANDLOCK_ACCESS_FS_MAKE_SYM;
-	if (ll_add_rule(arg_landlock,LANDLOCK_RULE_PATH_BENEATH,&target,0)) {
-		fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-	}
+	if (ll_add_rule(rset_fd, LANDLOCK_RULE_PATH_BENEATH,&target,0))
+		fprintf(stderr,"Error: cannot set the basic Landlock filesystem\n");
 	close(home_fd);
 
-	if (ll_add_read_access_rule_by_path(arg_landlock, "/bin/") ||
-	    ll_add_execute_rule_by_path(arg_landlock, "/bin/") ||
-	    ll_add_read_access_rule_by_path(arg_landlock, "/dev/") ||
-	    ll_add_write_access_rule_by_path(arg_landlock, "/dev/") ||
-//	    ll_add_execute_rule_by_path(arg_landlock, "/dev/") ||
-	    ll_add_read_access_rule_by_path(arg_landlock, "/etc/") ||
-	    ll_add_read_access_rule_by_path(arg_landlock, "/lib/") ||
-	    ll_add_execute_rule_by_path(arg_landlock, "/lib/") ||
-	    ll_add_read_access_rule_by_path(arg_landlock, "/opt/") ||
-	    ll_add_execute_rule_by_path(arg_landlock, "/opt/") ||
-	    ll_add_read_access_rule_by_path(arg_landlock, "/usr/") ||
-	    ll_add_execute_rule_by_path(arg_landlock, "/usr/") ||
-	    ll_add_read_access_rule_by_path(arg_landlock, "/var/"))
-		fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+	if (ll_add_read_access_rule_by_path("/bin/") ||
+	    ll_add_execute_rule_by_path("/bin/") ||
+	    ll_add_read_access_rule_by_path("/dev/") ||
+	    ll_add_write_access_rule_by_path("/dev/") ||
+	    ll_add_read_access_rule_by_path("/etc/") ||
+	    ll_add_read_access_rule_by_path("/lib/") ||
+	    ll_add_execute_rule_by_path("/lib/") ||
+	    ll_add_read_access_rule_by_path("/opt/") ||
+	    ll_add_execute_rule_by_path("/opt/") ||
+	    ll_add_read_access_rule_by_path("/usr/") ||
+	    ll_add_execute_rule_by_path("/usr/") ||
+	    ll_add_read_access_rule_by_path("/var/"))
+		fprintf(stderr,"Error: cannot set the basic Landlock filesystem\n");
 }
 
 #endif

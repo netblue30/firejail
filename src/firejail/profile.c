@@ -1090,31 +1090,23 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			return 0;
 	}
 	if (strncmp(ptr, "landlock.read ", 14) == 0) {
-		if (arg_landlock == -1) arg_landlock = ll_create_full_ruleset();
-		if (ll_add_read_access_rule_by_path(arg_landlock, ptr+14)) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
+		if (ll_add_read_access_rule_by_path(ptr+14))
+			fprintf(stderr,"Error: cannot add Landlock rule, file %s, line %d\n", fname, lineno);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.write ", 15) == 0) {
-		if (arg_landlock == -1) arg_landlock = ll_create_full_ruleset();
-		if (ll_add_write_access_rule_by_path(arg_landlock, ptr+15)) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
+		if (ll_add_write_access_rule_by_path(ptr+15))
+			fprintf(stderr,"Error: cannot add Landlock rule, file %s, line %d\n", fname, lineno);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.special ", 26) == 0) {
-		if (arg_landlock == -1) arg_landlock = ll_create_full_ruleset();
-		if (ll_add_create_special_rule_by_path(arg_landlock, ptr+26)) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
+		if (ll_add_create_special_rule_by_path(ptr+26))
+			fprintf(stderr,"Error: cannot add Landlock rule, file %s, line %d\n", fname, lineno);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.execute ", 17) == 0) {
-		if (arg_landlock == -1) arg_landlock = ll_create_full_ruleset();
-		if (ll_add_execute_rule_by_path(arg_landlock, ptr+17)) {
-			fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
-		}
+		if (ll_add_execute_rule_by_path(ptr+17))
+			fprintf(stderr,"Error: cannot add Landlock rule, file %s, line %d\n", fname, lineno);
 		return 0;
 	}
 #endif

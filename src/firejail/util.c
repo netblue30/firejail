@@ -1340,7 +1340,8 @@ void close_all(int *keep_list, size_t sz) {
 
 		// don't close the file descriptor of the Landlock ruleset -- it will be automatically closed by the landlock_restrict_self wrapper function
 #ifdef HAVE_LANDLOCK
-		if (fd == arg_landlock) continue;
+		if (fd == ll_get_fd())
+			continue;
 #endif
 		close(fd);
 	}

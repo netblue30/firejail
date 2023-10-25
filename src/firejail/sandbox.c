@@ -517,12 +517,24 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	}
 
 #ifdef HAVE_LANDLOCK
-	// set Landlock
-	if (arg_landlock >= 0) {
-		if (ll_restrict_self(arg_landlock,0)) {
-			fprintf(stderr,"An error has occured while enabling Landlock self-restriction. Exiting...\n");
-			exit(1); // it isn't safe to continue if Landlock self-restriction was enabled and the "landlock_restrict_self" syscall has failed
-		}
+	//****************************
+	// Configure Landlock
+	//****************************
+	if (arg_landlock)
+		ll_basic_system();
+
+#ifdef HAVE_LANDLOCK
+	if (ll_get_fd() != -1) {
+		if (arg_landlock_proc >= 1)
+			ll_add_read_access_rule_by_path("/proc/");
+		if (arg_landlock_proc == 2)
+			ll_add_write_access_rule_by_path("/proc/");
+	}
+#endif
+
+	if (ll_restrict_self(0)) {
+		fprintf(stderr,"An error has occured while enabling Landlock self-restriction. Exiting...\n");
+		exit(1); // it isn't safe to continue if Landlock self-restriction was enabled and the "landlock_restrict_self" syscall has failed
 	}
 #endif
 
@@ -1011,17 +1023,6 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	fs_proc_sys_dev_boot();
 
-	//****************************
-	// Allow access to /proc
-	//****************************
-#ifdef HAVE_LANDLOCK
-	if (arg_landlock > -1) {
-		if (arg_landlock_proc >= 1)
-			ll_add_read_access_rule_by_path(arg_landlock, "/proc/");
-		if (arg_landlock_proc == 2)
-			ll_add_write_access_rule_by_path(arg_landlock, "/proc/");
-	}
-#endif
 	//****************************
 	// handle /mnt and /media
 	//****************************

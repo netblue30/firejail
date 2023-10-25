@@ -519,7 +519,7 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 #ifdef HAVE_LANDLOCK
 	// set Landlock
 	if (arg_landlock >= 0) {
-		if (landlock_restrict_self(arg_landlock,0)) {
+		if (ll_restrict_self(arg_landlock,0)) {
 			fprintf(stderr,"An error has occured while enabling Landlock self-restriction. Exiting...\n");
 			exit(1); // it isn't safe to continue if Landlock self-restriction was enabled and the "landlock_restrict_self" syscall has failed
 		}
@@ -1017,9 +1017,9 @@ int sandbox(void* sandbox_arg) {
 #ifdef HAVE_LANDLOCK
 	if (arg_landlock > -1) {
 		if (arg_landlock_proc >= 1)
-			add_read_access_rule_by_path(arg_landlock, "/proc/");
+			ll_add_read_access_rule_by_path(arg_landlock, "/proc/");
 		if (arg_landlock_proc == 2)
-			add_write_access_rule_by_path(arg_landlock, "/proc/");
+			ll_add_write_access_rule_by_path(arg_landlock, "/proc/");
 	}
 #endif
 	//****************************

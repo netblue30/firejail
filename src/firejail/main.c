@@ -166,6 +166,8 @@ int login_shell = 0;
 int just_run_the_shell = 0;
 int arg_netlock = 0;
 int arg_restrict_namespaces = 0;
+int arg_landlock = -1;
+int arg_landlock_proc = 0;
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -1500,6 +1502,83 @@ int main(int argc, char **argv, char **envp) {
 			else
 				exit_err_feature("seccomp");
 		}
+#ifdef HAVE_LANDLOCK
+		else if (strcmp(argv[i], "--landlock") == 0) {
+			if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+			const char *home_dir = env_get("HOME");
+			int home_fd = open(home_dir,O_PATH | O_CLOEXEC);
+			struct landlock_path_beneath_attr target;
+			target.parent_fd = home_fd;
+			target.allowed_access = LANDLOCK_ACCESS_FS_READ_FILE | LANDLOCK_ACCESS_FS_READ_DIR | LANDLOCK_ACCESS_FS_WRITE_FILE | LANDLOCK_ACCESS_FS_REMOVE_FILE | LANDLOCK_ACCESS_FS_REMOVE_DIR | LANDLOCK_ACCESS_FS_MAKE_CHAR | LANDLOCK_ACCESS_FS_MAKE_DIR | LANDLOCK_ACCESS_FS_MAKE_REG | LANDLOCK_ACCESS_FS_MAKE_SYM;
+			if (landlock_add_rule(arg_landlock,LANDLOCK_RULE_PATH_BENEATH,&target,0)) {
+				fprintf(stderr,"12An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+			close(home_fd);
+
+			if (add_read_access_rule_by_path(arg_landlock, "/bin/")) {
+				fprintf(stderr,"34An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+			if (add_execute_rule_by_path(arg_landlock, "/bin/")) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+			if (add_read_access_rule_by_path(arg_landlock, "/dev/")) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+			if (add_read_access_rule_by_path(arg_landlock, "/etc/")) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+			if (add_read_access_rule_by_path(arg_landlock, "/lib/")) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+			if (add_execute_rule_by_path(arg_landlock, "/lib/")) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+			if (add_read_access_rule_by_path(arg_landlock, "/opt/")) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+			if (add_execute_rule_by_path(arg_landlock, "/opt/")) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+			if (add_read_access_rule_by_path(arg_landlock, "/usr/")) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+			if (add_execute_rule_by_path(arg_landlock, "/usr/")) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+			if (add_read_access_rule_by_path(arg_landlock, "/var/")) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+		}
+		else if (strncmp(argv[i], "--landlock.proc=", 16) == 0) {
+			if (strncmp(argv[i]+16, "no", 2) == 0) arg_landlock_proc = 0;
+			else if (strncmp(argv[i]+16, "ro", 2) == 0) arg_landlock_proc = 1;
+			else if (strncmp(argv[i]+16, "rw", 2) == 0) arg_landlock_proc = 2;
+		}
+		else if (strncmp(argv[i], "--landlock.read=", 16) == 0) {
+			if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+			if (add_read_access_rule_by_path(arg_landlock, argv[i]+16)) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+		}
+		else if (strncmp(argv[i], "--landlock.write=", 17) == 0) {
+			if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+			if (add_write_access_rule_by_path(arg_landlock, argv[i]+17)) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+		}
+		else if (strncmp(argv[i], "--landlock.special=", 17) == 0) {
+			if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+			if (add_create_special_rule_by_path(arg_landlock, argv[i]+17)) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+		}
+		else if (strncmp(argv[i], "--landlock.execute=", 19) == 0) {
+			if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+			if (add_execute_rule_by_path(arg_landlock, argv[i]+19)) {
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
+			}
+		}
+#endif
 		else if (strcmp(argv[i], "--memory-deny-write-execute") == 0) {
 			if (checkcfg(CFG_SECCOMP))
 				arg_memory_deny_write_execute = 1;

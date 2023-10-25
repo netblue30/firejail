@@ -289,10 +289,8 @@ extern int arg_seccomp32;	// enable default seccomp filter for 32 bit arch
 extern int arg_seccomp_postexec;	// need postexec ld.preload library?
 extern int arg_seccomp_block_secondary;	// block any secondary architectures
 
-#ifdef HAVE_LANDLOCK
 extern int arg_landlock; // Landlock ruleset file descriptor
 extern int arg_landlock_proc;				// Landlock rule for accessing /proc (0 for no access, 1 for read-only and 2 for read-write)
-#endif
 
 extern int arg_caps_default_filter;	// enable default capabilities filter
 extern int arg_caps_drop;		// drop list

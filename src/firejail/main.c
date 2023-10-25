@@ -1505,18 +1505,23 @@ int main(int argc, char **argv, char **envp) {
 #ifdef HAVE_LANDLOCK
 		else if (strcmp(argv[i], "--landlock") == 0) {
 			if (arg_landlock == -1) arg_landlock = create_full_ruleset();
+
 			const char *home_dir = env_get("HOME");
 			int home_fd = open(home_dir,O_PATH | O_CLOEXEC);
 			struct landlock_path_beneath_attr target;
 			target.parent_fd = home_fd;
-			target.allowed_access = LANDLOCK_ACCESS_FS_READ_FILE | LANDLOCK_ACCESS_FS_READ_DIR | LANDLOCK_ACCESS_FS_WRITE_FILE | LANDLOCK_ACCESS_FS_REMOVE_FILE | LANDLOCK_ACCESS_FS_REMOVE_DIR | LANDLOCK_ACCESS_FS_MAKE_CHAR | LANDLOCK_ACCESS_FS_MAKE_DIR | LANDLOCK_ACCESS_FS_MAKE_REG | LANDLOCK_ACCESS_FS_MAKE_SYM;
+			target.allowed_access = LANDLOCK_ACCESS_FS_READ_FILE | LANDLOCK_ACCESS_FS_READ_DIR |
+					      LANDLOCK_ACCESS_FS_WRITE_FILE | LANDLOCK_ACCESS_FS_REMOVE_FILE |
+					      LANDLOCK_ACCESS_FS_REMOVE_DIR | LANDLOCK_ACCESS_FS_MAKE_CHAR |
+					      LANDLOCK_ACCESS_FS_MAKE_DIR | LANDLOCK_ACCESS_FS_MAKE_REG |
+					      LANDLOCK_ACCESS_FS_MAKE_SYM;
 			if (landlock_add_rule(arg_landlock,LANDLOCK_RULE_PATH_BENEATH,&target,0)) {
-				fprintf(stderr,"12An error has occured while adding a rule to the Landlock ruleset.\n");
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
 			}
 			close(home_fd);
 
 			if (add_read_access_rule_by_path(arg_landlock, "/bin/")) {
-				fprintf(stderr,"34An error has occured while adding a rule to the Landlock ruleset.\n");
+				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");
 			}
 			if (add_execute_rule_by_path(arg_landlock, "/bin/")) {
 				fprintf(stderr,"An error has occured while adding a rule to the Landlock ruleset.\n");

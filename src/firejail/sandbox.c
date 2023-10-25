@@ -1015,10 +1015,12 @@ int sandbox(void* sandbox_arg) {
 	// Allow access to /proc
 	//****************************
 #ifdef HAVE_LANDLOCK
-	if (arg_landlock>-1) {
-		if (arg_landlock_proc >= 1) add_read_access_rule_by_path(arg_landlock, "/proc/");
-		if (arg_landlock_proc == 2) add_write_access_rule_by_path(arg_landlock, "/proc/");
-}
+	if (arg_landlock > -1) {
+		if (arg_landlock_proc >= 1)
+			add_read_access_rule_by_path(arg_landlock, "/proc/");
+		if (arg_landlock_proc == 2)
+			add_write_access_rule_by_path(arg_landlock, "/proc/");
+	}
 #endif
 	//****************************
 	// handle /mnt and /media

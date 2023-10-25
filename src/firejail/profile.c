@@ -1080,7 +1080,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_LANDLOCK
 	// Landlock ruleset paths
 	if (strcmp(ptr, "landlock") == 0) {
-		ll_basic_system();
+		arg_landlock = 1;
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.proc ", 14) == 0) {

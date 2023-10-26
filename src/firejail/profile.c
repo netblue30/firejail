@@ -1090,23 +1090,19 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			return 0;
 	}
 	if (strncmp(ptr, "landlock.read ", 14) == 0) {
-		if (ll_add_read_access_rule_by_path(ptr+14))
-			fprintf(stderr,"Error: cannot add Landlock rule, file %s, line %d\n", fname, lineno);
+		ll_add_profile(ptr);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.write ", 15) == 0) {
-		if (ll_add_write_access_rule_by_path(ptr+15))
-			fprintf(stderr,"Error: cannot add Landlock rule, file %s, line %d\n", fname, lineno);
+		ll_add_profile(ptr);
 		return 0;
 	}
-	if (strncmp(ptr, "landlock.special ", 26) == 0) {
-		if (ll_add_create_special_rule_by_path(ptr+26))
-			fprintf(stderr,"Error: cannot add Landlock rule, file %s, line %d\n", fname, lineno);
+	if (strncmp(ptr, "landlock.special ", 17) == 0) {
+		ll_add_profile(ptr);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.execute ", 17) == 0) {
-		if (ll_add_execute_rule_by_path(ptr+17))
-			fprintf(stderr,"Error: cannot add Landlock rule, file %s, line %d\n", fname, lineno);
+		ll_add_profile(ptr);
 		return 0;
 	}
 #endif

@@ -1511,22 +1511,14 @@ int main(int argc, char **argv, char **envp) {
 			else if (strncmp(argv[i]+16, "ro", 2) == 0) arg_landlock_proc = 1;
 			else if (strncmp(argv[i]+16, "rw", 2) == 0) arg_landlock_proc = 2;
 		}
-		else if (strncmp(argv[i], "--landlock.read=", 16) == 0) {
-			if (ll_add_read_access_rule_by_path(argv[i]+16))
-				fprintf(stderr,"Error: cannot add Landlock rule\n");
-		}
-		else if (strncmp(argv[i], "--landlock.write=", 17) == 0) {
-			if (ll_add_write_access_rule_by_path(argv[i]+17))
-				fprintf(stderr,"Error: cannot add Landlock rule\n");
-		}
-		else if (strncmp(argv[i], "--landlock.special=", 17) == 0) {
-			if (ll_add_create_special_rule_by_path(argv[i]+17))
-				fprintf(stderr,"Error: cannot add Landlock rule\n");
-		}
-		else if (strncmp(argv[i], "--landlock.execute=", 19) == 0) {
-			if (ll_add_execute_rule_by_path(argv[i]+19))
-				fprintf(stderr,"Error: cannot add Landlock rule\n");
-		}
+		else if (strncmp(argv[i], "--landlock.read=", 16) == 0)
+			ll_add_profile(argv[i] + 2);
+		else if (strncmp(argv[i], "--landlock.write=", 17) == 0)
+			ll_add_profile(argv[i] + 2);
+		else if (strncmp(argv[i], "--landlock.special=", 17) == 0)
+			ll_add_profile(argv[i] + 2);
+		else if (strncmp(argv[i], "--landlock.execute=", 19) == 0)
+			ll_add_profile(argv[i] + 2);
 #endif
 		else if (strcmp(argv[i], "--memory-deny-write-execute") == 0) {
 			if (checkcfg(CFG_SECCOMP))

@@ -153,6 +153,11 @@ typedef struct profile_entry_t {
 
 } ProfileEntry;
 
+typedef struct landlock_entry_t {
+	struct landlock_entry_t *next;
+	char *data;
+} LandlockEntry;
+
 typedef struct config_t {
 	// user data
 	char *username;
@@ -162,6 +167,7 @@ typedef struct config_t {
 	// filesystem
 	ProfileEntry *profile;
 	ProfileEntry *profile_rebuild_etc;	// blacklist files in /etc directory used by fs_rebuild_etc()
+	LandlockEntry *lprofile;
 
 #define MAX_PROFILE_IGNORE 32
 	char *profile_ignore[MAX_PROFILE_IGNORE];
@@ -968,6 +974,7 @@ int ll_add_write_access_rule_by_path(char *allowed_path);
 int ll_add_create_special_rule_by_path(char *allowed_path);
 int ll_add_execute_rule_by_path(char *allowed_path);
 void ll_basic_system(void);
+void ll_add_profile(const char *data);
 #endif
 
 #endif

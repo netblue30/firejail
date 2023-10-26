@@ -1098,19 +1098,19 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			return 0;
 	}
 	if (strncmp(ptr, "landlock.read ", 14) == 0) {
-		ll_read(ptr + 14);
+		ll_add_profile(ptr);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.write ", 15) == 0) {
-		ll_write(ptr + 15);
+		ll_add_profile(ptr);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.special ", 17) == 0) {
-		ll_special(ptr + 17);
+		ll_add_profile(ptr);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.execute ", 17) == 0) {
-		ll_exec(ptr + 17);
+		ll_add_profile(ptr);
 		return 0;
 	}
 #endif

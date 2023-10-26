@@ -1520,13 +1520,13 @@ int main(int argc, char **argv, char **envp) {
 			}
 		}
 		else if (strncmp(argv[i], "--landlock.read=", 16) == 0)
-			ll_read(argv[i] + 16);
+			ll_add_profile(argv[i] + 2);
 		else if (strncmp(argv[i], "--landlock.write=", 17) == 0)
-			ll_write(argv[i] + 17);
+			ll_add_profile(argv[i] + 2);
 		else if (strncmp(argv[i], "--landlock.special=", 19) == 0)
-			ll_special(argv[i] + 19);
+			ll_add_profile(argv[i] + 2);
 		else if (strncmp(argv[i], "--landlock.execute=", 19) == 0)
-			ll_exec(argv[i] + 19);
+			ll_add_profile(argv[i] + 2);
 #endif
 		else if (strcmp(argv[i], "--memory-deny-write-execute") == 0) {
 			if (checkcfg(CFG_SECCOMP))

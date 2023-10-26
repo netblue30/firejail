@@ -278,4 +278,16 @@ out:
 	return error;
 }
 
+void ll_add_profile(const char *data) {
+	LandlockEntry *ptr = malloc(sizeof(LandlockEntry));
+	if (!ptr)
+		errExit("malloc");
+	memset(ptr, 0, sizeof(LandlockEntry));
+	ptr->data = strdup(data);
+	if (!ptr->data)
+		errExit("strdup");
+	ptr->next = cfg.lprofile;
+	cfg.lprofile = ptr;
+}
+
 #endif /* HAVE_LANDLOCK */

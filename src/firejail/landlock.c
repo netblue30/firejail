@@ -33,21 +33,32 @@ int ll_get_fd(void) {
 	return rset_fd;
 }
 
+#ifndef landlock_create_ruleset
 int ll_create_ruleset(struct landlock_ruleset_attr *rsattr,size_t size,__u32 flags) {
 	return syscall(__NR_landlock_create_ruleset,rsattr,size,flags);
 }
+#endif
 
+#ifndef landlock_add_rule
 int ll_add_rule(int fd,enum landlock_rule_type t,void *attr,__u32 flags) {
 	return syscall(__NR_landlock_add_rule,fd,t,attr,flags);
 }
+#endif
 
-int ll_restrict_self(__u32 flags) {
+#ifndef landlock_restrict_self
+static inline int landlock_restrict_self(const int ruleset_fd,
+					 const __u32 flags)
+{
+	return syscall(__NR_landlock_restrict_self, ruleset_fd, flags);
+}
+#endif
+
+int ll_restrict(__u32 flags) {
 	if (rset_fd == -1)
 		return 0;
 
-
 	prctl(PR_SET_NO_NEW_PRIVS,1,0,0,0);
-	int result = syscall(__NR_landlock_restrict_self, rset_fd, flags);
+	int result = landlock_restrict_self(rset_fd, flags);
 	if (result!=0) return result;
 	else {
 		close(rset_fd);
@@ -126,8 +137,8 @@ void ll_basic_system(void) {
 	if (rset_fd == -1)
 		rset_fd = ll_create_full_ruleset();
 
-	const char *home_dir = env_get("HOME");
-	int home_fd = open(home_dir,O_PATH | O_CLOEXEC);
+	assert(cfg.homedir);
+	int home_fd = open(cfg.homedir,O_PATH | O_CLOEXEC);
 	struct landlock_path_beneath_attr target;
 	target.parent_fd = home_fd;
 	target.allowed_access = LANDLOCK_ACCESS_FS_READ_FILE | LANDLOCK_ACCESS_FS_READ_DIR |

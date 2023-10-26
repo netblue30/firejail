@@ -1935,8 +1935,7 @@ void profile_read(const char *fname) {
 	fclose(fp);
 }
 
-char *profile_list_normalize(char *list)
-{
+char *profile_list_normalize(char *list) {
 	/* Remove redundant commas.
 	 *
 	 * As result is always shorter than original,

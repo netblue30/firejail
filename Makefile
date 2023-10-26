@@ -410,6 +410,10 @@ print-env:
 installcheck: config.mk
 	command -V $(TARNAME) && $(TARNAME) --version
 
+.PHONY: sort-profiles
+sort-profiles: $(PROFILES_INC) $(PROFILES_PRO)
+	@./ci/check/profiles/sort.py $(PROFILES_INC) $(PROFILES_PRO)
+
 #
 # make test
 #

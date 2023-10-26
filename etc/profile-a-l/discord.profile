@@ -12,7 +12,7 @@ whitelist ${HOME}/.config/discord
 whitelist /opt/Discord
 whitelist /opt/discord
 
-private-bin discord,Discord
+private-bin Discord,discord
 
 # Redirect
 include discord-common.profile

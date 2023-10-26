@@ -72,7 +72,7 @@ seccomp
 tracelog
 
 disable-mnt
-private-bin mplayer,mpv,QMediathekView,smplayer,totem,vlc,xplayer
+private-bin QMediathekView,mplayer,mpv,smplayer,totem,vlc,xplayer
 private-cache
 private-dev
 private-etc @tls-ca

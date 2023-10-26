@@ -46,7 +46,7 @@ seccomp
 seccomp.block-secondary
 
 disable-mnt
-private-bin bash,sh,telegram,Telegram,telegram-desktop,xdg-open
+private-bin Telegram,bash,sh,telegram,telegram-desktop,xdg-open
 private-cache
 private-dev
 private-etc @tls-ca,@x11,os-release

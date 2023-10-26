@@ -30,7 +30,7 @@ nou2f
 protocol unix
 seccomp
 
-private-bin natron,Natron,NatronRenderer
+private-bin Natron,NatronRenderer,natron
 
 dbus-user none
 dbus-system none

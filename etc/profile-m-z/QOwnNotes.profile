@@ -47,7 +47,7 @@ seccomp
 tracelog
 
 disable-mnt
-private-bin gio,QOwnNotes
+private-bin QOwnNotes,gio
 private-dev
 private-etc @tls-ca,host.conf
 private-tmp

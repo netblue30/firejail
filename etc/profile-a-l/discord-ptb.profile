@@ -12,7 +12,7 @@ whitelist ${HOME}/.config/discordptb
 whitelist /opt/DiscordPTB
 whitelist /opt/discord
 
-private-bin discord-ptb,DiscordPTB
+private-bin DiscordPTB,discord-ptb
 
 # Redirect
 include discord-common.profile

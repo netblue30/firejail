@@ -37,6 +37,10 @@ MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so s
 COMPLETIONS = src/zsh_completion/_firejail src/bash_completion/firejail.bash_completion
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32 seccomp.namespaces seccomp.namespaces.32
 
+PROFILES_INC := $(sort $(wildcard etc/inc/*.inc))
+PROFILES_NET := $(sort $(wildcard etc/net/*.net))
+PROFILES_PRO := $(sort $(wildcard etc/profile*/*.profile))
+
 MANPAGES1_IN := $(sort $(wildcard src/man/*.1.in))
 MANPAGES5_IN := $(sort $(wildcard src/man/*.5.in))
 MANPAGES1_GZ := $(MANPAGES1_IN:.in=.gz)
@@ -247,7 +251,9 @@ endif
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail/firecfg.d
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config
-	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile*/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/firejail.config
+	@printf 'Installing profiles...\n'
+	@$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail $(PROFILES_INC) $(PROFILES_NET) $(PROFILES_PRO)
 	sh -c "if [ ! -f $(DESTDIR)$(sysconfdir)/firejail/login.users ]; then \
 		$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/login.users; \
 	fi"

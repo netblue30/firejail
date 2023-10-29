@@ -11,6 +11,7 @@ mkdir ${HOME}/.config/discord
 whitelist ${HOME}/.config/discord
 whitelist /opt/Discord
 whitelist /opt/discord
+whitelist /usr/share/discord
 
 private-bin discord,Discord
 

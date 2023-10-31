@@ -26,8 +26,30 @@
 #include <sys/prctl.h>
 #include <linux/prctl.h>
 #include <linux/landlock.h>
+#include <sys/utsname.h>
 
-int rset_fd = -1;
+static int rset_fd = -1;
+
+// return 1 if the kernel is older than 6.1
+static int old_kernel(void) {
+	struct utsname u;
+	int rv = uname(&u);
+	if (rv != 0)
+		errExit("uname");
+	unsigned major;
+	unsigned minor;
+	if (2 != sscanf(u.release, "%u.%u", &major, &minor)) {
+		fprintf(stderr, "Error: cannot extract Linux kernel version: %s\n", u.version);
+		exit(1);
+	}
+
+return 1;
+	unsigned version = (major << 8) + minor;
+	if (version < ((6 << 8) + 1))
+		return 1;
+
+	return 0;
+}
 
 int ll_get_fd(void) {
 	return rset_fd;
@@ -52,7 +74,7 @@ static inline int landlock_restrict_self(const int ruleset_fd,
 }
 #endif
 
-int ll_create_full_ruleset() {
+static int ll_create_full_ruleset() {
 	struct landlock_ruleset_attr attr;
 	attr.handled_access_fs = LANDLOCK_ACCESS_FS_READ_FILE | LANDLOCK_ACCESS_FS_READ_DIR | LANDLOCK_ACCESS_FS_WRITE_FILE |
 				 LANDLOCK_ACCESS_FS_REMOVE_FILE | LANDLOCK_ACCESS_FS_REMOVE_DIR | LANDLOCK_ACCESS_FS_MAKE_CHAR | LANDLOCK_ACCESS_FS_MAKE_DIR |
@@ -62,6 +84,11 @@ int ll_create_full_ruleset() {
 }
 
 int ll_add_read_access_rule_by_path(char *allowed_path) {
+	if (old_kernel()) {
+		fprintf(stderr, "Warning: Landlock not enabled, a 6.1 or newer Linux kernel is required\n");
+		return 1;
+	}
+
 	if (rset_fd == -1)
 		rset_fd = ll_create_full_ruleset();
 
@@ -76,6 +103,11 @@ int ll_add_read_access_rule_by_path(char *allowed_path) {
 }
 
 int ll_add_write_access_rule_by_path(char *allowed_path) {
+	if (old_kernel()) {
+		fprintf(stderr, "Warning: Landlock not enabled, a 6.1 or newer Linux kernel is required\n");
+		return 1;
+	}
+
 	if (rset_fd == -1)
 		rset_fd = ll_create_full_ruleset();
 
@@ -91,7 +123,12 @@ int ll_add_write_access_rule_by_path(char *allowed_path) {
 	return result;
 }
 
-int ll_add_create_special_rule_by_path(char *allowed_path) {
+static int ll_add_create_special_rule_by_path(char *allowed_path) {
+	if (old_kernel()) {
+		fprintf(stderr, "Warning: Landlock not enabled, a 6.1 or newer Linux kernel is required\n");
+		return 1;
+	}
+
 	if (rset_fd == -1)
 		rset_fd = ll_create_full_ruleset();
 
@@ -105,7 +142,12 @@ int ll_add_create_special_rule_by_path(char *allowed_path) {
 	return result;
 }
 
-int ll_add_execute_rule_by_path(char *allowed_path) {
+static int ll_add_execute_rule_by_path(char *allowed_path) {
+	if (old_kernel()) {
+		fprintf(stderr, "Warning: Landlock not enabled, a 6.1 or newer Linux kernel is required\n");
+		return 1;
+	}
+
 	if (rset_fd == -1)
 		rset_fd = ll_create_full_ruleset();
 
@@ -120,6 +162,11 @@ int ll_add_execute_rule_by_path(char *allowed_path) {
 }
 
 void ll_basic_system(void) {
+	if (old_kernel()) {
+		fprintf(stderr, "Warning: Landlock not enabled, a 6.1 or newer Linux kernel is required\n");
+		return;
+	}
+
 	if (rset_fd == -1)
 		rset_fd = ll_create_full_ruleset();
 
@@ -152,6 +199,11 @@ void ll_basic_system(void) {
 }
 
 int ll_restrict(__u32 flags) {
+	if (old_kernel()) {
+		fprintf(stderr, "Warning: Landlock not enabled, a 6.1 or newer Linux kernel is required\n");
+		return 0;
+	}
+
 	LandlockEntry *ptr = cfg.lprofile;
 	while (ptr) {
 		if (strncmp(ptr->data, "landlock.read", 13) == 0) {
@@ -187,6 +239,8 @@ int ll_restrict(__u32 flags) {
 }
 
 void ll_add_profile(const char *data) {
+	if (old_kernel())
+		return;
 	LandlockEntry *ptr = malloc(sizeof(LandlockEntry));
 	if (!ptr)
 		errExit("malloc");
@@ -198,7 +252,4 @@ void ll_add_profile(const char *data) {
 	cfg.lprofile=ptr;
 }
 
-
-#if 0
-#endif
 #endif

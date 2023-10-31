@@ -738,7 +738,6 @@ enable_sanitizer
 enable_ids
 enable_apparmor
 enable_selinux
-enable_landlock
 enable_dbusproxy
 enable_output
 enable_usertmpfs
@@ -1398,7 +1397,6 @@ Optional Features:
   --enable-ids            enable ids
   --enable-apparmor       enable apparmor
   --enable-selinux        SELinux labeling support
-  --enable-landlock       Landlock self-restriction support
   --disable-dbusproxy     disable dbus proxy
   --disable-output        disable --output logging
   --disable-usertmpfs     disable tmpfs as regular user
@@ -3744,7 +3742,6 @@ fi
 
 HAVE_LANDLOCK=""
 
-
 ac_header= ac_cache=
 for ac_item in $ac_header_c_list
 do
@@ -3786,29 +3783,6 @@ printf "%s\n" "$as_me: WARNING: *** Landlock support is not installed (/usr/incl
 
 fi
 
-
-
-
-# Check whether --enable-landlock was given.
-if test ${enable_landlock+y}
-then :
-  enableval=$enable_landlock;
-fi
-
-if test "x$enable_landlock" = "xyes"
-then :
-
-	ac_fn_c_check_header_compile "$LINENO" "linux/landlock.h" "ac_cv_header_linux_landlock_h" "$ac_includes_default"
-if test "x$ac_cv_header_linux_landlock_h" = xyes
-then :
-
-else $as_nop
-  as_fn_error $? "*** LANDLOCK support is not installed (/usr/include/linux/landlock.h missing) ***" "$LINENO" 5
-fi
-
-	HAVE_LANDLOCK="-DHAVE_LANDLOCK"
-
-fi
 
 
 

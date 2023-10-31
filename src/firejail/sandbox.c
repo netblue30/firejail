@@ -531,7 +531,7 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	}
 
 	if (ll_restrict(0)) {
-		fprintf(stderr,"An error has occured while enabling Landlock self-restriction. Exiting...\n");
+		fprintf(stderr,"An error has occurred while enabling Landlock self-restriction. Exiting...\n");
 		exit(1); // it isn't safe to continue if Landlock self-restriction was enabled and the "landlock_restrict_self" syscall has failed
 	}
 #endif

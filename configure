@@ -3744,11 +3744,6 @@ fi
 
 HAVE_LANDLOCK=""
 
-# Check whether --enable-landlock was given.
-if test ${enable_landlock+y}
-then :
-  enableval=$enable_landlock;
-fi
 
 ac_header= ac_cache=
 for ac_item in $ac_header_c_list
@@ -3779,6 +3774,27 @@ then :
 printf "%s\n" "#define STDC_HEADERS 1" >>confdefs.h
 
 fi
+ac_fn_c_check_header_compile "$LINENO" "linux/landlock.h" "ac_cv_header_linux_landlock_h" "$ac_includes_default"
+if test "x$ac_cv_header_linux_landlock_h" = xyes
+then :
+
+	HAVE_LANDLOCK="-DHAVE_LANDLOCK"
+
+else $as_nop
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: *** Landlock support is not installed (/usr/include/linux/landlock.h missing) ***" >&5
+printf "%s\n" "$as_me: WARNING: *** Landlock support is not installed (/usr/include/linux/landlock.h missing) ***" >&2;}
+
+fi
+
+
+
+
+# Check whether --enable-landlock was given.
+if test ${enable_landlock+y}
+then :
+  enableval=$enable_landlock;
+fi
+
 if test "x$enable_landlock" = "xyes"
 then :
 
@@ -3791,7 +3807,6 @@ else $as_nop
 fi
 
 	HAVE_LANDLOCK="-DHAVE_LANDLOCK"
-	EXTRA_LDFLAGS="$EXTRA_LDFLAGS"
 
 fi
 

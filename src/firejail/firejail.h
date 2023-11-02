@@ -155,6 +155,12 @@ typedef struct profile_entry_t {
 
 typedef struct landlock_entry_t {
 	struct landlock_entry_t *next;
+#define LL_READ 0
+#define LL_WRITE 1
+#define LL_EXEC 2
+#define LL_SPECIAL 3
+#define LL_MAX 4
+	int type;
 	char *data;
 } LandlockEntry;
 
@@ -970,7 +976,7 @@ int ll_restrict(__u32 flags);
 int ll_read(char *allowed_path);
 int ll_write(char *allowed_path);
 void ll_basic_system(void);
-void ll_add_profile(const char *data);
+void ll_add_profile(int type, const char *data);
 #endif
 
 #endif

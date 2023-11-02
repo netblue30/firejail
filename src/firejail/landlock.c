@@ -225,38 +225,22 @@ int ll_restrict(__u32 flags) {
 		return 0;
 	}
 
+	int (*fnc[])(char *) = {
+		ll_read,
+		ll_write,
+		ll_exec,
+		ll_special,
+		NULL
+	};
 	LandlockEntry *ptr = cfg.lprofile;
 	while (ptr) {
-		char *fname = NULL;
-		int (*fnc)(char *) = NULL;
-
-		if (strncmp(ptr->data, "landlock.read", 13) == 0) {
-			fname = ptr->data + 14;
-			fnc = ll_read;
-		}
-		else if (strncmp(ptr->data, "landlock.write", 14) == 0) {
-			fname = ptr->data + 15;
-			fnc = ll_write;
-		}
-		else if (strncmp(ptr->data, "landlock.special", 16) == 0) {
-			fname = ptr->data + 17;
-			fnc = ll_special;
-		}
-		else if (strncmp(ptr->data, "landlock.execute", 16) == 0) {
-			fname = ptr->data + 17;
-			fnc = ll_exec;
-		}
-		else
-			assert(0);
-
-		if (access(fname, F_OK) == 0) {
-			if (fnc(fname))
-				fprintf(stderr,"Error: failed to add Landlock rule for %s\n", fname);
+		if (access(ptr->data, F_OK) == 0) {
+			if (fnc[ptr->type](ptr->data))
+				fprintf(stderr,"Error: failed to add Landlock rule for %s\n", ptr->data);
 		}
 
 		ptr = ptr->next;
 	}
-
 
 	if (rset_fd == -1)
 		return 0;
@@ -270,19 +254,25 @@ int ll_restrict(__u32 flags) {
 	}
 }
 
-void ll_add_profile(const char *data) {
+void ll_add_profile(int type, const char *data) {
+	assert(data);
+	assert(type < LL_MAX);
 	if (old_kernel())
 		return;
+	const char *str = data;
+	while (*str == ' ' || *str == '\t')
+		str++;	
+	
 	LandlockEntry *ptr = malloc(sizeof(LandlockEntry));
 	if (!ptr)
 		errExit("malloc");
 	memset(ptr, 0, sizeof(LandlockEntry));
-	ptr->data = strdup(data);
+	ptr->type = type;
+	ptr->data = strdup(str);
 	if (!ptr->data)
        		errExit("strdup");
-//printf("add profile #%s#\n", ptr->data);
 	ptr->next = cfg.lprofile;
-	cfg.lprofile=ptr;
+	cfg.lprofile = ptr;
 }
 
 #endif

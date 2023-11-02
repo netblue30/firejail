@@ -520,12 +520,9 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	//****************************
 	// Configure Landlock
 	//****************************
-	if (arg_landlock) {
-printf("set basic system\n"); fflush(0);
+	if (arg_landlock)
 		ll_basic_system();
-}
 	if (ll_get_fd() != -1) {
-printf("proc = %d\n", arg_landlock_proc);
 		if (arg_landlock_proc >= 1)
 			ll_read("/proc/");
 		if (arg_landlock_proc == 2)

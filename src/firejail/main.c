@@ -1504,7 +1504,6 @@ int main(int argc, char **argv, char **envp) {
 		}
 #ifdef HAVE_LANDLOCK
 		else if (strcmp(argv[i], "--landlock") == 0)
-//			ll_basic_system();
 			arg_landlock = 1;
 		else if (strncmp(argv[i], "--landlock.proc=", 16) == 0) {
 			if (strncmp(argv[i]+16, "no", 2) == 0) arg_landlock_proc = 0;
@@ -1512,13 +1511,13 @@ int main(int argc, char **argv, char **envp) {
 			else if (strncmp(argv[i]+16, "rw", 2) == 0) arg_landlock_proc = 2;
 		}
 		else if (strncmp(argv[i], "--landlock.read=", 16) == 0)
-			ll_add_profile(argv[i] + 2);
+			ll_add_profile(LL_READ, argv[i] + 16);
 		else if (strncmp(argv[i], "--landlock.write=", 17) == 0)
-			ll_add_profile(argv[i] + 2);
+			ll_add_profile(LL_WRITE, argv[i] + 17);
 		else if (strncmp(argv[i], "--landlock.special=", 17) == 0)
-			ll_add_profile(argv[i] + 2);
+			ll_add_profile(LL_SPECIAL, argv[i] + 17);
 		else if (strncmp(argv[i], "--landlock.execute=", 19) == 0)
-			ll_add_profile(argv[i] + 2);
+			ll_add_profile(LL_EXEC, argv[i] + 19);
 #endif
 		else if (strcmp(argv[i], "--memory-deny-write-execute") == 0) {
 			if (checkcfg(CFG_SECCOMP))

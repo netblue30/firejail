@@ -211,28 +211,46 @@ int ll_basic_system(void) {
 	if (ll_ruleset_fd == -1)
 		ll_ruleset_fd = ll_create_full_ruleset();
 
-	int error =
-		ll_read("/bin/") ||
-		ll_read("/dev/") ||
-		ll_read("/etc/") ||
-		ll_read("/lib/") ||
-		ll_read("/opt/") ||
-		ll_read("/usr/") ||
-		ll_read("/var/") ||
-		ll_read(cfg.homedir) ||
+	int error;
+	char *rundir;
+	if (asprintf(&rundir, "/run/user/%d", getuid()) == -1)
+		errExit("asprintf");
 
-		ll_write("/dev/") ||
+	error =
+		ll_read("/") ||       // whole system read
+		ll_special("/") ||    // sockets etc.
+
+		ll_write("/tmp") ||   // write access
+		ll_write("/dev") ||
+		ll_write("/run/shm") ||
 		ll_write(cfg.homedir) ||
+		ll_write(rundir) ||
 
-		ll_exec("/bin/") ||
-		ll_exec("/lib/") ||
-		ll_exec("/opt/") ||
-		ll_exec("/usr/");
+		ll_exec("/opt") ||    // exec access
+		ll_exec("/bin") ||
+		ll_exec("/sbin") ||
+		ll_exec("/lib") ||
+		ll_exec("/lib32") ||
+		ll_exec("/libx32") ||
+		ll_exec("/lib64") ||
+		ll_exec("/usr/bin") ||
+		ll_exec("/usr/sbin") ||
+		ll_exec("/usr/games") ||
+		ll_exec("/usr/lib") ||
+		ll_exec("/usr/lib32") ||
+		ll_exec("/usr/libx32") ||
+		ll_exec("/usr/lib64") ||
+		ll_exec("/usr/local/bin") ||
+		ll_exec("/usr/local/sbin") ||
+		ll_exec("/usr/local/games") ||
+		ll_exec("/usr/local/lib") ||
+		ll_exec("/run/firejail"); // appimage and various firejail features
 
 	if (error) {
 		fprintf(stderr, "Error: %s: failed to set --landlock rules\n",
 		        __func__);
 	}
+	free(rundir);
 	return error;
 }
 

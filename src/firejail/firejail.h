@@ -965,12 +965,10 @@ void oom_set(const char *oom_string);
 // landlock.c
 #ifdef HAVE_LANDLOCK
 int ll_get_fd(void);
-int ll_create_ruleset(struct landlock_ruleset_attr *rsattr,size_t size,__u32 flags);
 int ll_add_rule(int fd,enum landlock_rule_type t,void *attr,__u32 flags);
 int ll_restrict(__u32 flags);
-//int ll_create_full_ruleset();
-int ll_add_read_access_rule_by_path(char *allowed_path);
-int ll_add_write_access_rule_by_path(char *allowed_path);
+int ll_read(char *allowed_path);
+int ll_write(char *allowed_path);
 void ll_basic_system(void);
 void ll_add_profile(const char *data);
 #endif

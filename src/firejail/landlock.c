@@ -43,7 +43,6 @@ static int old_kernel(void) {
 		exit(1);
 	}
 
-return 1;
 	unsigned version = (major << 8) + minor;
 	if (version < ((6 << 8) + 1))
 		return 1;
@@ -83,7 +82,7 @@ static int ll_create_full_ruleset() {
 	return ll_create_ruleset(&attr, sizeof(attr), 0);
 }
 
-int ll_add_read_access_rule_by_path(char *allowed_path) {
+int ll_read(char *allowed_path) {
 	if (old_kernel()) {
 		fprintf(stderr, "Warning: Landlock not enabled, a 6.1 or newer Linux kernel is required\n");
 		return 1;
@@ -102,7 +101,7 @@ int ll_add_read_access_rule_by_path(char *allowed_path) {
 	return result;
 }
 
-int ll_add_write_access_rule_by_path(char *allowed_path) {
+int ll_write(char *allowed_path) {
 	if (old_kernel()) {
 		fprintf(stderr, "Warning: Landlock not enabled, a 6.1 or newer Linux kernel is required\n");
 		return 1;
@@ -123,7 +122,7 @@ int ll_add_write_access_rule_by_path(char *allowed_path) {
 	return result;
 }
 
-static int ll_add_create_special_rule_by_path(char *allowed_path) {
+static int ll_special(char *allowed_path) {
 	if (old_kernel()) {
 		fprintf(stderr, "Warning: Landlock not enabled, a 6.1 or newer Linux kernel is required\n");
 		return 1;
@@ -142,7 +141,7 @@ static int ll_add_create_special_rule_by_path(char *allowed_path) {
 	return result;
 }
 
-static int ll_add_execute_rule_by_path(char *allowed_path) {
+static int ll_exec(char *allowed_path) {
 	if (old_kernel()) {
 		fprintf(stderr, "Warning: Landlock not enabled, a 6.1 or newer Linux kernel is required\n");
 		return 1;
@@ -183,19 +182,41 @@ void ll_basic_system(void) {
 		fprintf(stderr, "Error: cannot set the basic Landlock filesystem\n");
 	close(home_fd);
 
-	if (ll_add_read_access_rule_by_path("/bin/") ||
-	    ll_add_execute_rule_by_path("/bin/") ||
-	    ll_add_read_access_rule_by_path("/dev/") ||
-	    ll_add_write_access_rule_by_path("/dev/") ||
-	    ll_add_read_access_rule_by_path("/etc/") ||
-	    ll_add_read_access_rule_by_path("/lib/") ||
-	    ll_add_execute_rule_by_path("/lib/") ||
-	    ll_add_read_access_rule_by_path("/opt/") ||
-	    ll_add_execute_rule_by_path("/opt/") ||
-	    ll_add_read_access_rule_by_path("/usr/") ||
-	    ll_add_execute_rule_by_path("/usr/") ||
-	    ll_add_read_access_rule_by_path("/var/"))
+	char *rundir;
+	if (asprintf(&rundir, "/run/user/%d", getuid()) == -1)
+		errExit("asprintf");
+
+	if (ll_read("/") ||	// whole system read
+	    ll_special("/") ||	// sockets etc.
+
+	    ll_write("/tmp") ||    // write access
+	    ll_write("/dev") ||
+	    ll_write("/run/shm") ||
+	    ll_write(rundir) ||
+
+	    ll_exec("/opt") ||    // exec access
+	    ll_exec("/bin") ||
+	    ll_exec("/sbin") ||
+	    ll_exec("/bin") ||
+	    ll_exec("/lib") ||
+	    ll_exec("/lib32") ||
+	    ll_exec("/libx32") ||
+	    ll_exec("/lib64") ||
+	    ll_exec("/usr/bin") ||
+	    ll_exec("/usr/sbin") ||
+	    ll_exec("/usr/games") ||
+	    ll_exec("/usr/lib") ||
+	    ll_exec("/usr/lib32") ||
+	    ll_exec("/usr/libx32") ||
+	    ll_exec("/usr/lib64") ||
+	    ll_exec("/usr/local/bin") ||
+	    ll_exec("/usr/local/sbin") ||
+	    ll_exec("/usr/local/games") ||
+	    ll_exec("/usr/local/lib") ||
+	    ll_exec("/run/firejail")) // appimage and various firejail features
 		fprintf(stderr, "Error: cannot set the basic Landlock filesystem\n");
+
+	free(rundir);
 }
 
 int ll_restrict(__u32 flags) {
@@ -206,22 +227,33 @@ int ll_restrict(__u32 flags) {
 
 	LandlockEntry *ptr = cfg.lprofile;
 	while (ptr) {
+		char *fname = NULL;
+		int (*fnc)(char *) = NULL;
+
 		if (strncmp(ptr->data, "landlock.read", 13) == 0) {
-			if (ll_add_read_access_rule_by_path(ptr->data + 14))
-				fprintf(stderr,"Error: cannot add Landlock rule\n");
+			fname = ptr->data + 14;
+			fnc = ll_read;
 		}
 		else if (strncmp(ptr->data, "landlock.write", 14) == 0) {
-			if (ll_add_write_access_rule_by_path(ptr->data + 15))
-				fprintf(stderr,"Error: cannot add Landlock rule\n");
+			fname = ptr->data + 15;
+			fnc = ll_write;
 		}
 		else if (strncmp(ptr->data, "landlock.special", 16) == 0) {
-			if (ll_add_create_special_rule_by_path(ptr->data + 17))
-				fprintf(stderr,"Error: cannot add Landlock rule\n");
+			fname = ptr->data + 17;
+			fnc = ll_special;
 		}
 		else if (strncmp(ptr->data, "landlock.execute", 16) == 0) {
-			if (ll_add_execute_rule_by_path(ptr->data + 17))
-				fprintf(stderr,"Error: cannot add Landlock rule\n");
+			fname = ptr->data + 17;
+			fnc = ll_exec;
 		}
+		else
+			assert(0);
+
+		if (access(fname, F_OK) == 0) {
+			if (fnc(fname))
+				fprintf(stderr,"Error: failed to add Landlock rule for %s\n", fname);
+		}
+
 		ptr = ptr->next;
 	}
 
@@ -248,6 +280,7 @@ void ll_add_profile(const char *data) {
 	ptr->data = strdup(data);
 	if (!ptr->data)
        		errExit("strdup");
+//printf("add profile #%s#\n", ptr->data);
 	ptr->next = cfg.lprofile;
 	cfg.lprofile=ptr;
 }

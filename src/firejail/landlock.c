@@ -255,6 +255,20 @@ int ll_basic_system(void) {
 }
 
 int ll_restrict(__u32 flags) {
+	int (*fnc[])(const char *) = {
+		ll_read,
+		ll_write,
+		ll_special,
+		ll_exec,
+		NULL
+	};
+
+	LandlockEntry *ptr = cfg.lprofile;
+	while (ptr) {
+		fnc[ptr->type](ptr->data);
+		ptr = ptr->next;
+	}
+
 	if (ll_ruleset_fd == -1)
 		return 0;
 
@@ -278,12 +292,21 @@ out:
 	return error;
 }
 
-void ll_add_profile(const char *data) {
+void ll_add_profile(int type, const char *data) {
+	assert(type >= 0);
+	assert(type < LL_MAX);
+	assert(data);
+
+	const char *str = data;
+	while (*str == ' ' || *str == '\t')
+		str++;
+
 	LandlockEntry *ptr = malloc(sizeof(LandlockEntry));
 	if (!ptr)
 		errExit("malloc");
 	memset(ptr, 0, sizeof(LandlockEntry));
-	ptr->data = strdup(data);
+	ptr->type = type;
+	ptr->data = strdup(str);
 	if (!ptr->data)
 		errExit("strdup");
 	ptr->next = cfg.lprofile;

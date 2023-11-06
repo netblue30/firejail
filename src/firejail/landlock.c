@@ -28,6 +28,7 @@
 #include <fcntl.h>
 
 static int ll_ruleset_fd = -1;
+static int ll_abi = -1;
 
 int ll_get_fd(void) {
 	return ll_ruleset_fd;
@@ -59,7 +60,30 @@ landlock_restrict_self(const int ruleset_fd, const __u32 flags) {
 }
 #endif
 
+int ll_is_supported(void) {
+	if (ll_abi != -1)
+		goto out;
+
+	ll_abi = landlock_create_ruleset(NULL, 0,
+	                                 LANDLOCK_CREATE_RULESET_VERSION);
+	if (ll_abi < 1) {
+		ll_abi = 0;
+		fprintf(stderr, "Warning: Landlock is disabled or not supported: %s, "
+		                "ignoring landlock commands\n",
+			strerror(errno));
+		goto out;
+	}
+	if (arg_debug) {
+		printf("Detected Landlock ABI version %d\n", ll_abi);
+	}
+out:
+	return ll_abi;
+}
+
 static int ll_create_full_ruleset() {
+	if (!ll_is_supported())
+		return -1;
+
 	struct landlock_ruleset_attr attr;
 	attr.handled_access_fs =
 		LANDLOCK_ACCESS_FS_EXECUTE |
@@ -85,6 +109,9 @@ static int ll_create_full_ruleset() {
 }
 
 int ll_read(const char *allowed_path) {
+	if (!ll_is_supported())
+		return 0;
+
 	if (ll_ruleset_fd == -1)
 		ll_ruleset_fd = ll_create_full_ruleset();
 
@@ -114,6 +141,9 @@ int ll_read(const char *allowed_path) {
 }
 
 int ll_write(const char *allowed_path) {
+	if (!ll_is_supported())
+		return 0;
+
 	if (ll_ruleset_fd == -1)
 		ll_ruleset_fd = ll_create_full_ruleset();
 
@@ -147,6 +177,9 @@ int ll_write(const char *allowed_path) {
 }
 
 int ll_special(const char *allowed_path) {
+	if (!ll_is_supported())
+		return 0;
+
 	if (ll_ruleset_fd == -1)
 		ll_ruleset_fd = ll_create_full_ruleset();
 
@@ -178,6 +211,9 @@ int ll_special(const char *allowed_path) {
 }
 
 int ll_exec(const char *allowed_path) {
+	if (!ll_is_supported())
+		return 0;
+
 	if (ll_ruleset_fd == -1)
 		ll_ruleset_fd = ll_create_full_ruleset();
 
@@ -207,6 +243,9 @@ int ll_exec(const char *allowed_path) {
 
 int ll_basic_system(void) {
 	assert(cfg.homedir);
+
+	if (!ll_is_supported())
+		return 0;
 
 	if (ll_ruleset_fd == -1)
 		ll_ruleset_fd = ll_create_full_ruleset();
@@ -255,6 +294,9 @@ int ll_basic_system(void) {
 }
 
 int ll_restrict(__u32 flags) {
+	if (!ll_is_supported())
+		return 0;
+
 	int (*fnc[])(const char *) = {
 		ll_read,
 		ll_write,
@@ -296,6 +338,9 @@ void ll_add_profile(int type, const char *data) {
 	assert(type >= 0);
 	assert(type < LL_MAX);
 	assert(data);
+
+	if (!ll_is_supported())
+		return;
 
 	const char *str = data;
 	while (*str == ' ' || *str == '\t')

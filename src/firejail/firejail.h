@@ -968,6 +968,7 @@ void oom_set(const char *oom_string);
 // landlock.c
 #ifdef HAVE_LANDLOCK
 int ll_get_fd(void);
+int ll_is_supported(void);
 int ll_read(const char *allowed_path);
 int ll_write(const char *allowed_path);
 int ll_special(const char *allowed_path);

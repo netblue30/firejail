@@ -108,7 +108,8 @@ static int ll_create_full_ruleset(void) {
 	return ruleset_fd;
 }
 
-int ll_read(const char *allowed_path) {
+static int ll_fs(const char *allowed_path, const __u64 allowed_access,
+                 const char *caller) {
 	if (!ll_is_supported())
 		return 0;
 
@@ -120,45 +121,34 @@ int ll_read(const char *allowed_path) {
 	if (allowed_fd < 0) {
 		if (arg_debug) {
 			fprintf(stderr, "%s: failed to open %s: %s\n",
-			        __func__, allowed_path, strerror(errno));
+			        caller, allowed_path, strerror(errno));
 		}
 		return 0;
 	}
+
 	struct landlock_path_beneath_attr target;
 	target.parent_fd = allowed_fd;
-	target.allowed_access =
-		LANDLOCK_ACCESS_FS_READ_DIR |
-		LANDLOCK_ACCESS_FS_READ_FILE;
-
+	target.allowed_access = allowed_access;
 	error = landlock_add_rule(ll_ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,
 	                          &target, 0);
 	if (error) {
 		fprintf(stderr, "Error: %s: failed to add Landlock rule for %s: %s\n",
-		        __func__, allowed_path, strerror(errno));
+		        caller, allowed_path, strerror(errno));
 	}
 	close(allowed_fd);
 	return error;
 }
 
+int ll_read(const char *allowed_path) {
+	__u64 allowed_access =
+		LANDLOCK_ACCESS_FS_READ_DIR |
+		LANDLOCK_ACCESS_FS_READ_FILE;
+
+	return ll_fs(allowed_path, allowed_access, __func__);
+}
+
 int ll_write(const char *allowed_path) {
-	if (!ll_is_supported())
-		return 0;
-
-	if (ll_ruleset_fd == -1)
-		ll_ruleset_fd = ll_create_full_ruleset();
-
-	int error;
-	int allowed_fd = open(allowed_path, O_PATH | O_CLOEXEC);
-	if (allowed_fd < 0) {
-		if (arg_debug) {
-			fprintf(stderr, "%s: failed to open %s: %s\n",
-			        __func__, allowed_path, strerror(errno));
-		}
-		return 0;
-	}
-	struct landlock_path_beneath_attr target;
-	target.parent_fd = allowed_fd;
-	target.allowed_access =
+	__u64 allowed_access =
 		LANDLOCK_ACCESS_FS_MAKE_DIR |
 		LANDLOCK_ACCESS_FS_MAKE_REG |
 		LANDLOCK_ACCESS_FS_MAKE_SYM |
@@ -166,79 +156,24 @@ int ll_write(const char *allowed_path) {
 		LANDLOCK_ACCESS_FS_REMOVE_FILE |
 		LANDLOCK_ACCESS_FS_WRITE_FILE;
 
-	error = landlock_add_rule(ll_ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,
-	                          &target, 0);
-	if (error) {
-		fprintf(stderr, "Error: %s: failed to add Landlock rule for %s: %s\n",
-		        __func__, allowed_path, strerror(errno));
-	}
-	close(allowed_fd);
-	return error;
+	return ll_fs(allowed_path, allowed_access, __func__);
 }
 
 int ll_special(const char *allowed_path) {
-	if (!ll_is_supported())
-		return 0;
-
-	if (ll_ruleset_fd == -1)
-		ll_ruleset_fd = ll_create_full_ruleset();
-
-	int error;
-	int allowed_fd = open(allowed_path, O_PATH | O_CLOEXEC);
-	if (allowed_fd < 0) {
-		if (arg_debug) {
-			fprintf(stderr, "%s: failed to open %s: %s\n",
-			        __func__, allowed_path, strerror(errno));
-		}
-		return 0;
-	}
-	struct landlock_path_beneath_attr target;
-	target.parent_fd = allowed_fd;
-	target.allowed_access =
+	__u64 allowed_access =
 		LANDLOCK_ACCESS_FS_MAKE_BLOCK |
 		LANDLOCK_ACCESS_FS_MAKE_CHAR |
 		LANDLOCK_ACCESS_FS_MAKE_FIFO |
 		LANDLOCK_ACCESS_FS_MAKE_SOCK;
 
-	error = landlock_add_rule(ll_ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,
-	                          &target, 0);
-	if (error) {
-		fprintf(stderr, "Error: %s: failed to add Landlock rule for %s: %s\n",
-		        __func__, allowed_path, strerror(errno));
-	}
-	close(allowed_fd);
-	return error;
+	return ll_fs(allowed_path, allowed_access, __func__);
 }
 
 int ll_exec(const char *allowed_path) {
-	if (!ll_is_supported())
-		return 0;
-
-	if (ll_ruleset_fd == -1)
-		ll_ruleset_fd = ll_create_full_ruleset();
-
-	int error;
-	int allowed_fd = open(allowed_path, O_PATH | O_CLOEXEC);
-	if (allowed_fd < 0) {
-		if (arg_debug) {
-			fprintf(stderr, "%s: failed to open %s: %s\n",
-			        __func__, allowed_path, strerror(errno));
-		}
-		return 0;
-	}
-	struct landlock_path_beneath_attr target;
-	target.parent_fd = allowed_fd;
-	target.allowed_access =
+	__u64 allowed_access =
 		LANDLOCK_ACCESS_FS_EXECUTE;
 
-	error = landlock_add_rule(ll_ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,
-	                          &target, 0);
-	if (error) {
-		fprintf(stderr, "Error: %s: failed to add Landlock rule for %s: %s\n",
-		        __func__, allowed_path, strerror(errno));
-	}
-	close(allowed_fd);
-	return error;
+	return ll_fs(allowed_path, allowed_access, __func__);
 }
 
 int ll_basic_system(void) {

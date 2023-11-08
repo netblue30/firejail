@@ -68,14 +68,16 @@ int ll_is_supported(void) {
 	                                 LANDLOCK_CREATE_RULESET_VERSION);
 	if (ll_abi < 1) {
 		ll_abi = 0;
-		fprintf(stderr, "Warning: Landlock is disabled or not supported: %s, "
+		fprintf(stderr, "Warning: %s: Landlock is disabled or not supported: %s, "
 		                "ignoring landlock commands\n",
-		        strerror(errno));
+		        __func__, strerror(errno));
 		goto out;
 	}
 
-	if (arg_debug)
-		printf("Detected Landlock ABI version %d\n", ll_abi);
+	if (arg_debug) {
+		fprintf(stderr, "%s: Detected Landlock ABI version %d\n",
+		        __func__, ll_abi);
+	}
 out:
 	return ll_abi;
 }
@@ -100,9 +102,16 @@ static int ll_create_full_ruleset(void) {
 		LANDLOCK_ACCESS_FS_REMOVE_FILE |
 		LANDLOCK_ACCESS_FS_WRITE_FILE;
 
+	if (arg_debug) {
+		fprintf(stderr, "%s: Creating Landlock ruleset (abi=%d fs=%llx)\n",
+		        __func__, ll_abi, attr.handled_access_fs);
+	}
+
 	int ruleset_fd = landlock_create_ruleset(&attr, sizeof(attr), 0);
 	if (ruleset_fd < 0) {
-		fprintf(stderr, "Error: failed to create a Landlock ruleset: %s\n",
+		fprintf(stderr, "%s: Error: failed to create Landlock ruleset "
+		                "(abi=%d fs=%llx): %s\n",
+		        __func__, ll_abi, attr.handled_access_fs,
 		        strerror(errno));
 	}
 	return ruleset_fd;
@@ -115,6 +124,11 @@ static int ll_fs(const char *allowed_path, const __u64 allowed_access,
 
 	if (ll_ruleset_fd == -1)
 		ll_ruleset_fd = ll_create_full_ruleset();
+
+	if (arg_debug) {
+		fprintf(stderr, "%s: Adding Landlock rule (abi=%d fs=%llx) for %s\n",
+		        caller, ll_abi, allowed_access, allowed_path);
+	}
 
 	int error;
 	int allowed_fd = open(allowed_path, O_PATH | O_CLOEXEC);
@@ -132,8 +146,10 @@ static int ll_fs(const char *allowed_path, const __u64 allowed_access,
 	error = landlock_add_rule(ll_ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,
 	                          &target, 0);
 	if (error) {
-		fprintf(stderr, "Error: %s: failed to add Landlock rule for %s: %s\n",
-		        caller, allowed_path, strerror(errno));
+		fprintf(stderr, "Error: %s: failed to add Landlock rule "
+		                "(abi=%d fs=%llx) for %s: %s\n",
+		        caller, ll_abi, allowed_access, allowed_path,
+		        strerror(errno));
 	}
 	close(allowed_fd);
 	return error;
@@ -232,6 +248,9 @@ int ll_restrict(__u32 flags) {
 	if (!ll_is_supported())
 		return 0;
 
+	if (arg_debug)
+		fprintf(stderr, "%s: Starting Landlock restrict\n", __func__);
+
 	int (*fnc[])(const char *) = {
 		ll_read,
 		ll_write,
@@ -263,7 +282,7 @@ int ll_restrict(__u32 flags) {
 		goto out;
 	}
 	if (arg_debug)
-		printf("%s: Enforcing Landlock\n", __func__);
+		fprintf(stderr, "%s: Enforcing Landlock\n", __func__);
 out:
 	close(ll_ruleset_fd);
 	return error;

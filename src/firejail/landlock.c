@@ -100,12 +100,12 @@ static int ll_create_full_ruleset(void) {
 		LANDLOCK_ACCESS_FS_REMOVE_FILE |
 		LANDLOCK_ACCESS_FS_WRITE_FILE;
 
-	ll_ruleset_fd = landlock_create_ruleset(&attr, sizeof(attr), 0);
-	if (ll_ruleset_fd < 0) {
+	int ruleset_fd = landlock_create_ruleset(&attr, sizeof(attr), 0);
+	if (ruleset_fd < 0) {
 		fprintf(stderr, "Error: failed to create a Landlock ruleset: %s\n",
 		        strerror(errno));
 	}
-	return ll_ruleset_fd;
+	return ruleset_fd;
 }
 
 int ll_read(const char *allowed_path) {

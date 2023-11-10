@@ -80,7 +80,7 @@ out:
 	return ll_abi;
 }
 
-static int ll_create_full_ruleset() {
+static int ll_create_full_ruleset(void) {
 	if (!ll_is_supported())
 		return -1;
 

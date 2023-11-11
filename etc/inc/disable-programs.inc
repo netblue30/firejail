@@ -221,6 +221,7 @@ blacklist ${HOME}/.cache/supertuxkart
 blacklist ${HOME}/.cache/systemsettings
 blacklist ${HOME}/.cache/telepathy
 blacklist ${HOME}/.cache/thunderbird
+blacklist ${HOME}/.cache/tiny-rdm
 blacklist ${HOME}/.cache/torbrowser
 blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/ueberzugpp
@@ -345,6 +346,7 @@ blacklist ${HOME}/.config/Slack
 blacklist ${HOME}/.config/Standard Notes
 blacklist ${HOME}/.config/SubDownloader
 blacklist ${HOME}/.config/Thunar
+blacklist ${HOME}/.config/TinyRDM
 blacklist ${HOME}/.config/Twitch
 blacklist ${HOME}/.config/Unknown Organization
 blacklist ${HOME}/.config/VSCodium

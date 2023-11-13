@@ -1164,7 +1164,6 @@ void x11_start(int argc, char **argv) {
 }
 #endif
 
-
 void x11_xorg(void) {
 #ifdef HAVE_X11
 
@@ -1175,31 +1174,38 @@ void x11_xorg(void) {
 		exit(1);
 	}
 
+	char *xauth_bin = find_in_path("xauth");
+
 	// check xauth utility is present in the system
-	struct stat s;
-	if (stat("/usr/bin/xauth", &s) == -1) {
-		fprintf(stderr, "Error: xauth utility not found in /usr/bin. Please install it:\n");
+	if (!xauth_bin) {
+		fprintf(stderr, "Error: xauth utility not found in PATH. Please install it:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xauth\n");
 		fprintf(stderr, "   Arch: sudo pacman -S xorg-xauth\n");
 		fprintf(stderr, "   Fedora: sudo dnf install xorg-x11-xauth\n");
 		exit(1);
 	}
+
+	struct stat s;
+	if (stat(xauth_bin, &s) == -1) {
+		fprintf(stderr, "Error: %s: %s\n", xauth_bin, strerror(errno));
+		exit(1);
+	}
 	if ((s.st_uid != 0 && s.st_gid != 0) || (s.st_mode & S_IWOTH)) {
-		fprintf(stderr, "Error: invalid /usr/bin/xauth executable\n");
+		fprintf(stderr, "Error: invalid %s executable\n", xauth_bin);
 		exit(1);
 	}
 	if (s.st_size > 1024 * 1024) {
-		fprintf(stderr, "Error: /usr/bin/xauth executable is too large\n");
+		fprintf(stderr, "Error: %s executable is too large\n", xauth_bin);
 		exit(1);
 	}
-	// copy /usr/bin/xauth in the sandbox and set mode to 0711
+	// copy xauth in the sandbox and set mode to 0711
 	// users are not able to trace the running xauth this way
 	if (arg_debug)
-		printf("Copying /usr/bin/xauth to %s\n", RUN_XAUTH_FILE);
-	if (copy_file("/usr/bin/xauth", RUN_XAUTH_FILE, 0, 0, 0711)) {
-		fprintf(stderr, "Error: cannot copy /usr/bin/xauth executable\n");
-		exit(1);
-	}
+		printf("Copying %s to %s\n", xauth_bin, RUN_XAUTH_FILE);
+
+	copy_file_from_user_to_root(xauth_bin, RUN_XAUTH_FILE, 0, 0, 0711);
+
+	free(xauth_bin);
 
 	fmessage("Generating a new .Xauthority file\n");
 	mkdir_attr(RUN_XAUTHORITY_SEC_DIR, 0700, getuid(), getgid());

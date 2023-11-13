@@ -166,8 +166,12 @@ void fslib_install_firejail(void) {
 		fslib_mount_libs(RUN_MNT_DIR "/dhclient", 1); // parse as user
 
 	// bring in xauth libraries
+
+	char *xauth_bin = find_in_path("xauth");
 	if (arg_x11_xorg)
-		fslib_mount_libs("/usr/bin/xauth", 1); // parse as user
+		fslib_mount_libs(xauth_bin, 1); // parse as user
+
+	free(xauth_bin);
 
 	fmessage("Firejail libraries installed in %0.2f ms\n", timetrace_end());
 }

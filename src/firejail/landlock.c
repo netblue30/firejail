@@ -280,16 +280,24 @@ void ll_add_profile(int type, const char *data) {
 	while (*data == ' ' || *data == '\t')
 		data++;
 
-	LandlockEntry *ptr = malloc(sizeof(LandlockEntry));
-	if (!ptr)
+	LandlockEntry *entry = malloc(sizeof(LandlockEntry));
+	if (!entry)
 		errExit("malloc");
-	memset(ptr, 0, sizeof(LandlockEntry));
-	ptr->type = type;
-	ptr->data = strdup(data);
-	if (!ptr->data)
+	memset(entry, 0, sizeof(LandlockEntry));
+	entry->type = type;
+	entry->data = strdup(data);
+	if (!entry->data)
 		errExit("strdup");
-	ptr->next = cfg.lprofile;
-	cfg.lprofile = ptr;
+
+	// add entry to the list
+	if (cfg.lprofile == NULL) {
+		cfg.lprofile = entry;
+		return;
+	}
+	LandlockEntry *ptr = cfg.lprofile;
+	while (ptr->next != NULL)
+		ptr = ptr->next;
+	ptr->next = entry;
 }
 
 #endif /* HAVE_LANDLOCK */

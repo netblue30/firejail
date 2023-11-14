@@ -277,16 +277,15 @@ void ll_add_profile(int type, const char *data) {
 	if (!ll_is_supported())
 		return;
 
-	const char *str = data;
-	while (*str == ' ' || *str == '\t')
-		str++;
+	while (*data == ' ' || *data == '\t')
+		data++;
 
 	LandlockEntry *ptr = malloc(sizeof(LandlockEntry));
 	if (!ptr)
 		errExit("malloc");
 	memset(ptr, 0, sizeof(LandlockEntry));
 	ptr->type = type;
-	ptr->data = strdup(str);
+	ptr->data = strdup(data);
 	if (!ptr->data)
 		errExit("strdup");
 	ptr->next = cfg.lprofile;

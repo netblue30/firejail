@@ -106,11 +106,14 @@ _firejail_args=(
     '--keep-fd[inherit open file descriptors to sandbox]: :'
     '--keep-shell-rc[do not copy shell rc files from /etc/skel]'
     '--keep-var-tmp[/var/tmp directory is untouched]'
+#ifdef HAVE_LANDLOCK
+    '--landlock[add basic rules to the Landlock ruleset]'
     '--landlock.proc=-[add an access rule for /proc to the Landlock ruleset]: :(no ro rw)'
     '--landlock.read=-[add a read access rule for the path to the Landlock ruleset]: :_files'
     '--landlock.write=-[add a write access rule for the path to the Landlock ruleset]: :_files'
     '--landlock.special=-[add an access rule for the path to the Landlock ruleset for creating block/char devices, named pipes and sockets]: :_files'
     '--landlock.execute=-[add an execute access rule for the path to the Landlock ruleset]: :_files'
+#endif
     '--machine-id[spoof /etc/machine-id with a random id]'
     '--memory-deny-write-execute[seccomp filter to block attempts to create memory mappings that are both writable and executable]'
     '*--mkdir=-[create a directory]:'

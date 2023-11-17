@@ -1074,24 +1074,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 #ifdef HAVE_LANDLOCK
-	// Landlock ruleset paths
-	if (strcmp(ptr, "landlock") == 0) {
-		arg_landlock = 1;
+	if (strncmp(ptr, "landlock.enforce", 16) == 0) {
+		arg_landlock_enforce = 1;
 		return 0;
-	}
-	if (strncmp(ptr, "landlock.proc ", 14) == 0) {
-			if (strncmp(ptr + 14, "no", 2) == 0)
-				arg_landlock_proc = 0;
-			else if (strncmp(ptr + 14, "ro", 2) == 0)
-				arg_landlock_proc = 1;
-			else if (strncmp(ptr + 14, "rw", 2) == 0)
-				arg_landlock_proc = 2;
-			else {
-				fprintf(stderr, "Error: invalid landlock.proc value: %s\n",
-				        ptr + 14);
-				exit(1);
-			}
-			return 0;
 	}
 	if (strncmp(ptr, "landlock.read ", 14) == 0) {
 		ll_add_profile(LL_READ, ptr + 14);

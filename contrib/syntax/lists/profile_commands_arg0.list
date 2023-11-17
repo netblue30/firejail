@@ -12,7 +12,7 @@ keep-config-pulse
 keep-dev-shm
 keep-shell-rc
 keep-var-tmp
-landlock
+landlock.enforce
 machine-id
 memory-deny-write-execute
 netfilter

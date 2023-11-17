@@ -42,7 +42,7 @@ _firejail()
             _filedir -d
             return 0
             ;;
-        --landlock)
+        --landlock.enforce)
             return 0
             ;;
         --landlock.read)

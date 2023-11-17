@@ -520,21 +520,14 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	//****************************
 	// Configure Landlock
 	//****************************
-	if (arg_landlock)
-		ll_basic_system();
-
-	if (ll_get_fd() != -1) {
-		if (arg_landlock_proc >= 1)
-			ll_read("/proc/");
-		if (arg_landlock_proc == 2)
-			ll_write("/proc/");
-	}
-
-	if (ll_restrict(0)) {
+	if (arg_landlock_enforce && ll_restrict(0)) {
 		// It isn't safe to continue if Landlock self-restriction was
 		// enabled and the "landlock_restrict_self" syscall has failed.
 		fprintf(stderr, "Error: ll_restrict() failed, exiting...\n");
 		exit(1);
+	} else {
+		if (arg_debug)
+			fprintf(stderr, "Not enforcing Landlock\n");
 	}
 #endif
 

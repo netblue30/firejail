@@ -293,8 +293,7 @@ extern int arg_overlay;		// overlay option
 extern int arg_overlay_keep;	// place overlay diff in a known directory
 extern int arg_overlay_reuse;	// allow the reuse of overlays
 
-extern int arg_landlock;		// add basic Landlock rules
-extern int arg_landlock_proc;		// 0 - no access; 1 -read-only; 2 - read-write
+extern int arg_landlock_enforce;	// enforce the Landlock ruleset
 
 extern int arg_seccomp;	// enable default seccomp filter
 extern int arg_seccomp32;	// enable default seccomp filter for 32 bit arch
@@ -973,7 +972,6 @@ int ll_read(const char *allowed_path);
 int ll_write(const char *allowed_path);
 int ll_special(const char *allowed_path);
 int ll_exec(const char *allowed_path);
-int ll_basic_system(void);
 int ll_restrict(uint32_t flags);
 void ll_add_profile(int type, const char *data);
 #endif /* HAVE_LANDLOCK */

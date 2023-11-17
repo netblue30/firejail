@@ -107,8 +107,7 @@ _firejail_args=(
     '--keep-shell-rc[do not copy shell rc files from /etc/skel]'
     '--keep-var-tmp[/var/tmp directory is untouched]'
 #ifdef HAVE_LANDLOCK
-    '--landlock[add basic rules to the Landlock ruleset]'
-    '--landlock.proc=-[add an access rule for /proc to the Landlock ruleset]: :(no ro rw)'
+    '--landlock.enforce[enforce the Landlock ruleset]'
     '--landlock.read=-[add a read access rule for the path to the Landlock ruleset]: :_files'
     '--landlock.write=-[add a write access rule for the path to the Landlock ruleset]: :_files'
     '--landlock.special=-[add an access rule for the path to the Landlock ruleset for creating block/char devices, named pipes and sockets]: :_files'

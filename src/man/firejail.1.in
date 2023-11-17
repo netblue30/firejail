@@ -1245,30 +1245,14 @@ $ firejail --keep-var-tmp
 
 #ifdef HAVE_LANDLOCK
 .TP
-\fB\-\-landlock
-Create a Landlock ruleset (if it doesn't already exist) and add basic access
-rules to it.
-The basic set of rules applies the following access permissions:
+\fB\-\-landlock.enforce
+Enforce the Landlock ruleset.
 .PP
-.RS
-- read:  /bin, /dev, /etc, /lib, /opt, /proc, /usr, /var
-.br
-- write: /dev, /proc
-.br
-- exec:  /bin, /lib, /opt, /usr
-.RE
+Without it, the other Landlock commands have no effect.
 .PP
 .RS
 See the \fBLANDLOCK\fR section for more information.
 .RE
-.TP
-\fB\-\-landlock.proc=no|ro|rw
-Add an access rule for /proc directory (read-only if set to \fBro\fR and
-read-write if set to \fBrw\fR).
-The access rule for /proc is added after this directory is set up in the
-sandbox.
-Access rules for /proc set up with other Landlock-related command-line options
-have no effect.
 .TP
 \fB\-\-landlock.read=path
 Create a Landlock ruleset (if it doesn't already exist) and add a read access
@@ -1291,7 +1275,9 @@ permission rule for path.
 .br
 Example:
 .br
-$ firejail \-\-landlock.read=/ \-\-landlock.write=/home \-\-landlock.execute=/usr
+$ firejail \-\-landlock.read=/ \-\-landlock.write=/home
+\-\-landlock.execute=/usr \-\-landlock.enforce
+.PP
 #endif
 .TP
 \fB\-\-list
@@ -3426,7 +3412,7 @@ Firejail supports Landlock as an additional sandboxing feature.
 It can be used to ensure that a sandboxed application can only access files and
 directories that it was explicitly allowed to access.
 Firejail supports populating the ruleset with both a basic set of rules (see
-\fB\-\-landlock\fR) and with a custom set of rules.
+landlock-common.inc) and with a custom set of rules.
 .TP
 Important notes:
 .PP
@@ -3438,9 +3424,6 @@ Because of this, enabling the Landlock feature will also cause Firejail to
 enable the "No New Privileges" restriction, regardless of the profile or the
 \fB\-\-nonewprivs\fR command line option.
 .PP
-- Access to the /proc directory is managed through the \fB\-\-landlock.proc\fR
-command line option.
-.PP
 - Access to the /etc directory is automatically allowed.
 To override this, use the \fB\-\-writable\-etc\fR command line option.
 You can also use the \fB\-\-private\-etc\fR option to restrict access to the
@@ -3448,13 +3431,13 @@ You can also use the \fB\-\-private\-etc\fR option to restrict access to the
 .RE
 .PP
 To enable Landlock self-restriction on top of your current Firejail security
-features, pass \fB\-\-landlock\fR flag to Firejail command line.
-You can also use \fB\-\-landlock.read\fR, \fB\-\-landlock.write\fR,
-\fB\-\-landlock.special\fR and \fB\-\-landlock.execute\fR options together with
-\fB\-\-landlock\fR or instead of it.
+features, pass \fB\-\-landlock.enforce\fR flag to Firejail command line.
+Without it, the other Landlock commands have no effect.
 Example:
 .PP
-$ firejail \-\-landlock \-\-landlock.read=/media \-\-landlock.proc=ro mc
+$ firejail \-\-landlock.enforce \-\-landlock.read=/media mc
+.PP
+To disable Landlock self-restriction, use \fB\-\-ignore=landlock.enforce\fR.
 #endif
 .SH DESKTOP INTEGRATION
 A symbolic link to /usr/bin/firejail under the name of a program, will start the program in Firejail sandbox.

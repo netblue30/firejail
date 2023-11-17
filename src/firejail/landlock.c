@@ -202,56 +202,6 @@ int ll_exec(const char *allowed_path) {
 	return ll_fs(allowed_path, allowed_access, __func__);
 }
 
-int ll_basic_system(void) {
-	if (!ll_is_supported())
-		return 0;
-
-	if (ll_ruleset_fd == -1)
-		ll_ruleset_fd = ll_create_full_ruleset();
-
-	int error =
-		ll_read("/") ||       // whole system read
-		ll_special("/") ||    // sockets etc.
-
-		// write access
-		ll_write("${HOME}") ||
-		ll_write("${RUNUSER}") ||
-		ll_write("/dev") ||
-		ll_write("/run/shm") ||
-		ll_write("/tmp") ||
-
-		// exec access
-		/// misc
-		ll_exec("/opt") ||
-		ll_exec("/run/firejail") || // appimage and various firejail features
-		/// bin
-		ll_exec("/bin") ||
-		ll_exec("/sbin") ||
-		ll_exec("/usr/bin") ||
-		ll_exec("/usr/sbin") ||
-		ll_exec("/usr/games") ||
-		ll_exec("/usr/local/bin") ||
-		ll_exec("/usr/local/sbin") ||
-		ll_exec("/usr/local/games") ||
-		/// lib
-		ll_exec("/lib") ||
-		ll_exec("/lib32") ||
-		ll_exec("/libx32") ||
-		ll_exec("/lib64") ||
-		ll_exec("/usr/lib") ||
-		ll_exec("/usr/lib32") ||
-		ll_exec("/usr/libx32") ||
-		ll_exec("/usr/lib64") ||
-		ll_exec("/usr/local/lib");
-
-	if (error) {
-		fprintf(stderr, "Error: %s: failed to set --landlock rules\n",
-		        __func__);
-	}
-
-	return error;
-}
-
 int ll_restrict(uint32_t flags) {
 	if (!ll_is_supported())
 		return 0;

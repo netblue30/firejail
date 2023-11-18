@@ -70,12 +70,12 @@ int ll_is_supported(void) {
 		ll_abi = 0;
 		fprintf(stderr, "Warning: Landlock is disabled or not supported: %s, "
 		                "ignoring landlock commands\n",
-			strerror(errno));
+		        strerror(errno));
 		goto out;
 	}
-	if (arg_debug) {
+
+	if (arg_debug)
 		printf("Detected Landlock ABI version %d\n", ll_abi);
-	}
 out:
 	return ll_abi;
 }

@@ -53,7 +53,7 @@ jobs:
       SHELL: /bin/bash
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423
+      uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -100,7 +100,7 @@ jobs:
       SHELL: /bin/bash
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423
+      uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -138,7 +138,7 @@ jobs:
       SHELL: /bin/bash
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423
+      uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -176,7 +176,7 @@ jobs:
       SHELL: /bin/bash
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423
+      uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -216,7 +216,7 @@ jobs:
       SHELL: /bin/bash
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423
+      uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
       with:
         egress-policy: block
         allowed-endpoints: >

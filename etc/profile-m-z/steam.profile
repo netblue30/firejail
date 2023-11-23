@@ -12,6 +12,7 @@ noblacklist ${HOME}/.config/MangoHud
 noblacklist ${HOME}/.config/ModTheSpire
 noblacklist ${HOME}/.config/RogueLegacy
 noblacklist ${HOME}/.config/RogueLegacyStorageContainer
+noblacklist ${HOME}/.config/unity3d
 noblacklist ${HOME}/.factorio
 noblacklist ${HOME}/.killingfloor
 noblacklist ${HOME}/.klei

@@ -92,7 +92,7 @@
 8.8.4.0/24 Google DNS
 8.8.8.0/24 Google DNS
 8.20.247.20/32 Comodo DNS
-8.26.56.26/32 Comodo DNS
+8.26.56.0/24 Comodo DNS
 9.9.9.0/24 Quad9 DNS
 45.90.28.0/22 NextDNS
 45.11.45.0/24 DNS-SB
@@ -103,8 +103,7 @@
 76.76.10.0/24 ControlD DNS
 76.76.19.0/24 Alternate DNS
 76.223.122.150/32 Alternate DNS
-77.88.8.8/32 Yandex DNS
-77.88.8.1/32 Yandex DNS
+77.88.8.0/24 Yandex DNS
 80.80.80.0/24 Freenom DNS Cloud
 80.80.81.0/24 Freenom DNS Cloud
 84.200.69.80/32 DSN Watch
@@ -123,8 +122,7 @@
 205.171.3.66/32 CentyrLink DNS
 205.171.202.166/32 CentyrLink DNS
 208.67.216.0/21 OpenDNS
-216.146.35.35/32 Dyn DNS
-216.146.36.36/32 Dyn DNS
+216.146.32.0/20 Dyn DNS
 
 # whois
 45.88.202.0/24 Anonymize Inc WHOIS Privacy Service
@@ -288,6 +286,7 @@
 192.187.114.96/29 BitChute
 192.187.118.168/29 BitChute
 192.187.121.208/29 BitChute
+192.187.122.72/29 BitChute
 192.187.123.112/29 BitChute
 192.187.126.0/29 BitChute
 198.204.226.120/29 BitChute

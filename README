@@ -125,6 +125,7 @@ Aleksey Manevich (https://github.com/manevich)
 Alexander Gerasiov (https://github.com/gerasiov)
 	- read-only ~/.ssh/authorized_keys
 	- profile updates
+	- fcopy: Use lstat when copy directory
 Alexander Stein (https://github.com/ajstein)
 	- added profile for qutebrowser
 alkim0 (https://github.com/alkim0)
@@ -169,6 +170,8 @@ aoand (https://github.com/aoand)
 	- seccomp fix: allow numeric syscalls
 Arne Welzel (https://github.com/awelzel)
 	- ignore SIGTTOU during flush_stdin()
+archaon616 (https://github.com/archaon616)
+	- steam.profile: Allow Factorio
 Atrate (https://github.com/Atrate)
 	- BetterDiscord support
 Austin Morton (https://github.com/apmorton)
@@ -283,6 +286,8 @@ Christian Stadelmann (https://github.com/genodeftest)
 	- evolution profile fix
 Clayton Williams (https://github.com/gosre)
 	- addition of RLIMIT_AS
+CodeWithMa (https://github.com/CodeWithMa)
+	- mpv.profile: add new XDG_STATE_HOME path
 corecontingency (https://https://github.com/corecontingency)
 	- tighten private-bin and etc for torbrowser-launcher.profile
 	- added i2prouter profile
@@ -349,6 +354,10 @@ David Hyrule (https://github.com/Svaag)
 	- remove nou2f in ssh profile
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)
 	- added xpdf profile
+DefaultUser (https://github.com/DefaultUser)
+	- neochat: Allow netlink
+Denis Subbotin (https://github.com/mr-tron)
+	- telegram.profile: allow ~/.local/share/telegram-desktop
 Denys Havrysh (https://github.com/vutny)
 	- update SkypeForLinux profile for latest version
 	- removed outdated Skype profile
@@ -371,6 +380,7 @@ dmfreemon (https://github.com/dmfreemon)
 	- handle malloc() failures; use gnu_basename() instead of basenaem()
 Dmitriy Chestnykh (https://github.com/chestnykh)
 	- add ability to disable user profiles at compile time
+	- lookup xauth in PATH
 Dpeta (https://github.com/Dpeta)
 	- add Chatterino profile
 dshmgh (https://github.com/dshmgh)
@@ -465,6 +475,9 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Catfish profile
 Frederik Olesen (https://github.com/Freso)
 	- added many vim profiles
+Frostbyte4664 (https://github.com/Frostbyte4664)
+	- steam.profile: Allow Baba Is You
+	- blender-3.6 redirect
 g3ngr33n (https://github.com/g3ngr33n)
 	- fix musl compilation
 G4JC (https://sourceforge.net/u/gaming4jc/profile/)
@@ -497,6 +510,8 @@ glitsj16 (https://github.com/glitsj16)
 	- new profiles: lzip, artha, nitroshare, nitroshare-cli, nitroshare-nmh
 	- new profiles: nirtoshare-send, nitroshare-ui, mencoder, gnome-pie
 	- new profiles: masterpdfeditor
+glu8716 (https://github.com/glu8716)
+	- nicotine: support Fcitx and dconf via dbus-user filter
 gm10 (https://github.com/gm10)
 	- get_user() do not use the unreliable getlogin()
 GovanifY (https://github.com/GovanifY)
@@ -514,6 +529,7 @@ GSI (https://github.com/GSI)
 	- added Uzbl browser profile
 haarp (https://github.com/haarp)
 	- Allow sound for hexchat
+	- discord-common.profile: harden & allow notifications 
 hamzadis (https://github.com/hamzadis)
 	- added --overlay-named=name and --overlay-path=path
 Hans-Christoph Steiner (https://github.com/eighthave)
@@ -642,6 +658,8 @@ jrabe (https://github.com/jrabe)
 	- Polari profile
 	- qTox profile
 	- X11 fixes
+jtrv (https://github.com/jtrv)
+	- tidal-hifi profile
 juan (https://github.com/nyancat18)
 	- fixed Kdenlive, Shotcut profiles
 	- new profiles for Cinelerra, Cliqz, Bluefish
@@ -690,6 +708,8 @@ kuesji koesnu (https://github.com/kuesji)
 	- better parser for size strings
 Kunal Mehta (https://github.com/legoktm)
 	- converted all links to https in manpages
+kzsa (https://github.com/kzsa)
+	- wusc: add /usr/share/locale-langpack (LC_MESSAGES)
 laniakea64 (https://github.com/laniakea64)
 	- added fj-mkdeb.py script to build deb packages
 Lari Rauno (https://github.com/tuutti)
@@ -705,6 +725,8 @@ layderv (https://github.com/layderv)
 lecso7 (https://github.com/lecso7)
 	- added goldendict profile
 	- allow evince to read .cbz file format
+leukimi (https://github.com/leukimi)
+	- 0ad.profile: fix libmozjs error on OpenSUSE Tumbleweed
 Loïc Damien (https://github.com/dzamlo)
 	- small fixes
 Liorst4 (https://github.com/Liorst4)
@@ -729,12 +751,15 @@ Madura A (https://github.com/manushanga)
 mahdi1234 (https://github.com/mahdi1234)
 	- cherrytree profile
 	- Seamonkey profiles
+mammo0 (https://github.com/mammo0)
+	- remove 'text/plain' from firejail-profile.lang.in
 Manuel Dipolt (https://github.com/xeniter)
 	- stack alignment for the ARM Architecture
 Marek Küthe (https://github.com/marek22k)
 	- allow loading plugins in gajim
 	- allow bsfilter in email-common.profile
 	- email-common.profile: allow clamav plugin for claws-mail
+	- VSCodium: Fix developing Arduino
 Martin Carpenter (https://github.com/mcarpenter)
 	- security audit and bug fixes
 	- Centos 6.x support
@@ -823,6 +848,9 @@ Nikos Chantziaras (https://github.com/realnc)
 	- fix audio support for Discord
 nolanl (https://github.com/nolanl)
 	- added localtime to signal-desktop's profile
+nutta-git (https://github.com/nutta-git)
+	- steam.profile: allow process_vm_readv syscall
+	- lutris.profile: allow more syscalls
 nyancat18 (https://github.com/nyancat18)
 	- added ardour4, dooble, karbon, krita profiles
 nya1 (https://github.com/nya1)
@@ -1193,6 +1221,9 @@ Vadim A. Misbakh-Soloviov (https://github.com/msva)
 ValdikSS (https://github.com/ValdikSS)
 	- Psi+, Corebird, Konversation profiles
 	- various profile fixes
+Varun Sharma (https://github.com/varunsh-coder)
+	- update allowed endpoints
+	- build(deps): bump step-security/harden-runner from 2.5.0 to 2.5.1 
 Vasya Novikov (https://github.com/vn971)
 	- Wesnoth profile
 	- Hedegewars profile

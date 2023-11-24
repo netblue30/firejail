@@ -69,7 +69,7 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6,netlink
-seccomp !modify_ldt
+seccomp !clone3,modify_ldt,!process_vm_readv,!ptrace
 seccomp.32 !modify_ldt
 
 # Add the next line to your lutris.local if you do not need controller support.

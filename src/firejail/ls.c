@@ -154,7 +154,7 @@ static void print_file_or_dir(const char *path, const char *fname) {
 
 	// file size
 	char *sz;
-	if (asprintf(&sz, "%d", (int) s.st_size) == -1)
+	if (asprintf(&sz, "%jd", (intmax_t) s.st_size) == -1)
 		errExit("asprintf");
 
 	// file name

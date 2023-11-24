@@ -31,7 +31,7 @@ protocol unix,inet,inet6
 seccomp !chroot
 
 disable-mnt
-private-bin awk,bash,dig,sh,Viber
+private-bin Viber,awk,bash,dig,sh
 private-etc @tls-ca,@x11,mailcap,proxychains.conf
 private-tmp
 

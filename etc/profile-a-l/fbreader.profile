@@ -33,7 +33,7 @@ novideo
 protocol unix,inet,inet6
 seccomp
 
-private-bin fbreader,FBReader
+private-bin FBReader,fbreader
 private-dev
 private-tmp
 

@@ -13,7 +13,7 @@ whitelist /opt/Discord
 whitelist /opt/discord
 whitelist /usr/share/discord
 
-private-bin discord,Discord
+private-bin Discord,discord
 
 # Redirect
 include discord-common.profile

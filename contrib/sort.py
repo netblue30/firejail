@@ -38,7 +38,7 @@ Exit Codes:
 
 def sort_alphabetical(original_items):
     items = original_items.split(",")
-    items.sort(key=str.casefold)
+    items.sort()
     return ",".join(items)
 
 

@@ -49,7 +49,7 @@ private-bin geoiplookup,geoiplookup6,transgui
 private-cache
 private-dev
 private-etc @network,@tls-ca,@x11
-private-lib libgdk_pixbuf-2.0.so.*,libGeoIP.so*,libgthread-2.0.so.*,libgtk-x11-2.0.so.*,libX11.so.*
+private-lib libGeoIP.so*,libX11.so.*,libgdk_pixbuf-2.0.so.*,libgthread-2.0.so.*,libgtk-x11-2.0.so.*
 private-tmp
 
 dbus-user none

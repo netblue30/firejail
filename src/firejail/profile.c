@@ -635,9 +635,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
 			arg_netfilter = 1;
-			arg_netfilter_file = strdup(ptr + 10);
-			if (!arg_netfilter_file)
-				errExit("strdup");
+			arg_netfilter_file = expand_macros(ptr + 10);
 			check_netfilter_file(arg_netfilter_file);
 		}
 		else
@@ -649,9 +647,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
 			arg_netfilter6 = 1;
-			arg_netfilter6_file = strdup(ptr + 11);
-			if (!arg_netfilter6_file)
-				errExit("strdup");
+			arg_netfilter6_file = expand_macros(ptr + 11);
 			check_netfilter_file(arg_netfilter6_file);
 		}
 		else

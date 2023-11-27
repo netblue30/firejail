@@ -1572,7 +1572,7 @@ int main(int argc, char **argv, char **envp) {
 			arg_trace = 1;
 		else if (strncmp(argv[i], "--trace=", 8) == 0) {
 			arg_trace = 1;
-			arg_tracefile = argv[i] + 8;
+			arg_tracefile = expand_macros(argv[i] + 8);
 			if (*arg_tracefile == '\0') {
 				fprintf(stderr, "Error: invalid trace option\n");
 				exit(1);
@@ -1581,13 +1581,6 @@ int main(int argc, char **argv, char **envp) {
 			if (strstr(arg_tracefile, "..") || has_cntrl_chars(arg_tracefile)) {
 				fprintf(stderr, "Error: invalid file name %s\n", arg_tracefile);
 				exit(1);
-			}
-			// if the filename starts with ~, expand the home directory
-			if (*arg_tracefile == '~') {
-				char *tmp;
-				if (asprintf(&tmp, "%s%s", cfg.homedir, arg_tracefile + 1) == -1)
-					errExit("asprintf");
-				arg_tracefile = tmp;
 			}
 		}
 		else if (strcmp(argv[i], "--tracelog") == 0) {
@@ -1953,20 +1946,13 @@ int main(int argc, char **argv, char **envp) {
 				}
 
 				// extract chroot dirname
-				cfg.chrootdir = argv[i] + 9;
+				cfg.chrootdir = expand_macros(argv[i] + 9);
 				if (*cfg.chrootdir == '\0') {
 					fprintf(stderr, "Error: invalid chroot option\n");
 					exit(1);
 				}
 				invalid_filename(cfg.chrootdir, 0); // no globbing
 
-				// if the directory starts with ~, expand the home directory
-				if (*cfg.chrootdir == '~') {
-					char *tmp;
-					if (asprintf(&tmp, "%s%s", cfg.homedir, cfg.chrootdir + 1) == -1)
-						errExit("asprintf");
-					cfg.chrootdir = tmp;
-				}
 				// check chroot directory
 				fs_check_chroot_dir();
 			}
@@ -2748,16 +2734,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--netfilter=", 12) == 0) {
 			if (checkcfg(CFG_NETWORK)) {
 				arg_netfilter = 1;
-				arg_netfilter_file = argv[i] + 12;
-
-				// expand tilde
-				if (*arg_netfilter_file == '~') {
-					char *tmp;
-					if (asprintf(&tmp, "%s%s", cfg.homedir, arg_netfilter_file + 1) == -1)
-						errExit("asprintf");
-					arg_netfilter_file = tmp;
-				}
-
+				arg_netfilter_file = expand_macros(argv[i] + 12);
 				check_netfilter_file(arg_netfilter_file);
 			}
 			else
@@ -2767,16 +2744,7 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--netfilter6=", 13) == 0) {
 			if (checkcfg(CFG_NETWORK)) {
 				arg_netfilter6 = 1;
-				arg_netfilter6_file = argv[i] + 13;
-
-				// expand tilde
-				if (*arg_netfilter6_file == '~') {
-					char *tmp;
-					if (asprintf(&tmp, "%s%s", cfg.homedir, arg_netfilter6_file + 1) == -1)
-						errExit("asprintf");
-					arg_netfilter6_file = tmp;
-				}
-
+				arg_netfilter6_file = expand_macros(argv[i] + 13);
 				check_netfilter_file(arg_netfilter6_file);
 			}
 			else

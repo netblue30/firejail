@@ -48,12 +48,10 @@ jobs:
       with:
         egress-policy: block
         allowed-endpoints: >
-          archive.ubuntu.com:80
           azure.archive.ubuntu.com:80
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
-          security.ubuntu.com:80
     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
     - name: update package information
       run: sudo apt-get update -qy

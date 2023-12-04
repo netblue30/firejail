@@ -20,6 +20,8 @@
 
 #include "firecfg.h"
 #include "../include/firejail_user.h"
+#include <glob.h>
+
 int arg_debug = 0;
 char *arg_bindir = "/usr/local/bin";
 int arg_guide = 0;
@@ -76,10 +78,6 @@ static void list(void) {
 		exit(1);
 	}
 
-	char *firejail_exec;
-	if (asprintf(&firejail_exec, "%s/bin/firejail", PREFIX) == -1)
-		errExit("asprintf");
-
 	struct dirent *entry;
 	while ((entry = readdir(dir)) != NULL) {
 		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
@@ -92,7 +90,7 @@ static void list(void) {
 		if (is_link(fullname)) {
 			char* fname = realpath(fullname, NULL);
 			if (fname) {
-				if (strcmp(fname, firejail_exec) == 0)
+				if (strcmp(fname, FIREJAIL_EXEC) == 0)
 					printf("%s\n", fullname);
 				free(fname);
 			}
@@ -101,7 +99,6 @@ static void list(void) {
 	}
 
 	closedir(dir);
-	free(firejail_exec);
 }
 
 static void clean(void) {
@@ -114,10 +111,6 @@ static void clean(void) {
 		exit(1);
 	}
 
-	char *firejail_exec;
-	if (asprintf(&firejail_exec, "%s/bin/firejail", PREFIX) == -1)
-		errExit("asprintf");
-
 	struct dirent *entry;
 	while ((entry = readdir(dir)) != NULL) {
 		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
@@ -130,7 +123,7 @@ static void clean(void) {
 		if (is_link(fullname)) {
 			char* fname = realpath(fullname, NULL);
 			if (fname) {
-				if (strcmp(fname, firejail_exec) == 0) {
+				if (strcmp(fname, FIREJAIL_EXEC) == 0) {
 					char *ptr = strrchr(fullname, '/');
 					assert(ptr);
 					ptr++;
@@ -147,8 +140,41 @@ static void clean(void) {
 	}
 
 	closedir(dir);
-	free(firejail_exec);
 	printf("\n");
+}
+
+#define ignorelist_maxlen 2048
+static const char *ignorelist[ignorelist_maxlen];
+static int ignorelist_len = 0;
+
+static int append_ignorelist(const char *const str) {
+	assert(str);
+	if (ignorelist_len >= ignorelist_maxlen) {
+		fprintf(stderr, "Warning: Ignore list is full (%d/%d), skipping %s\n",
+			ignorelist_len, ignorelist_maxlen, str);
+		return 0;
+	}
+
+	printf("   ignoring '%s'\n", str);
+	const char *const dup = strdup(str);
+	if (!dup)
+		errExit("strdup");
+
+	ignorelist[ignorelist_len] = dup;
+	ignorelist_len++;
+
+	return 1;
+}
+
+static int in_ignorelist(const char *const str) {
+	assert(str);
+	int i;
+	for (i = 0; i < ignorelist_len; i++) {
+		if (strcmp(str, ignorelist[i]) == 0)
+			return 1;
+	}
+
+	return 0;
 }
 
 static void set_file(const char *name, const char *firejail_exec) {
@@ -165,35 +191,26 @@ static void set_file(const char *name, const char *firejail_exec) {
 		if (rv) {
 			fprintf(stderr, "Error: cannot create %s symbolic link\n", fname);
 			perror("symlink");
-		}
-		else
+		} else {
 			printf("   %s created\n", name);
-	}
-	else {
-	  fprintf(stderr, "Warning: cannot create %s - already exists! Skipping...\n", fname);
+		}
+	} else {
+		fprintf(stderr, "Warning: cannot create %s - already exists! Skipping...\n", fname);
 	}
 
 	free(fname);
 }
 
-// parse /etc/firejail/firecfg.config file
-static void set_links_firecfg(void) {
-	char *cfgfile;
-	if (asprintf(&cfgfile, "%s/firecfg.config", SYSCONFDIR) == -1)
-		errExit("asprintf");
+// parse a single config file
+static void set_links_firecfg(const char *cfgfile) {
+	printf("Configuring symlinks in %s based on %s\n", arg_bindir, cfgfile);
 
-	char *firejail_exec;
-	if (asprintf(&firejail_exec, "%s/bin/firejail", PREFIX) == -1)
-		errExit("asprintf");
-
-	// parse /etc/firejail/firecfg.config file
 	FILE *fp = fopen(cfgfile, "r");
 	if (!fp) {
 		perror("fopen");
 		fprintf(stderr, "Error: cannot open %s\n", cfgfile);
 		exit(1);
 	}
-	printf("Configuring symlinks in %s based on firecfg.config\n", arg_bindir);
 
 	char buf[MAX_BUF];
 	int lineno = 0;
@@ -223,13 +240,43 @@ static void set_links_firecfg(void) {
 		if (*start == '\0')
 			continue;
 
+		// handle ignore command
+		if (*start == '!') {
+			append_ignorelist(start + 1);
+			continue;
+		}
+
 		// set link
-		set_file(start, firejail_exec);
+		if (!in_ignorelist(start))
+			set_file(start, FIREJAIL_EXEC);
+		else
+			printf("   %s ignored\n", start);
 	}
 
 	fclose(fp);
-	free(cfgfile);
-	free(firejail_exec);
+	printf("\n");
+}
+
+// parse all config files matching pattern
+static void set_links_firecfg_glob(const char *pattern) {
+	printf("Looking for config files in %s\n", pattern);
+
+	glob_t globbuf;
+	int globerr = glob(pattern, 0, NULL, &globbuf);
+	if (globerr == GLOB_NOMATCH) {
+		fprintf(stderr, "No matches for glob pattern %s\n", pattern);
+		goto out;
+	} else if (globerr != 0) {
+		fprintf(stderr, "Warning: Failed to match glob pattern %s: %s\n",
+		        pattern, strerror(errno));
+		goto out;
+	}
+
+	size_t i;
+	for (i = 0; i < globbuf.gl_pathc; i++)
+		set_links_firecfg(globbuf.gl_pathv[i]);
+out:
+	globfree(&globbuf);
 }
 
 // parse ~/.config/firejail/ directory
@@ -246,10 +293,6 @@ static void set_links_homedir(const char *homedir) {
 		return;
 	}
 
-	char *firejail_exec;
-	if (asprintf(&firejail_exec, "%s/bin/firejail", PREFIX) == -1)
-		errExit("asprintf");
-
 	// parse ~/.config/firejail/ directory
 	printf("\nConfiguring symlinks in %s based on local firejail config directory\n", arg_bindir);
 
@@ -260,6 +303,7 @@ static void set_links_homedir(const char *homedir) {
 		free(dirname);
 		return;
 	}
+	free(dirname);
 
 	struct dirent *entry;
 	while ((entry = readdir(dir))) {
@@ -280,12 +324,10 @@ static void set_links_homedir(const char *homedir) {
 		}
 
 		*ptr = '\0';
-		set_file(exec, firejail_exec);
+		set_file(exec, FIREJAIL_EXEC);
 		free(exec);
 	}
 	closedir(dir);
-
-	free(firejail_exec);
 }
 
 static const char *get_sudo_user(void) {
@@ -449,18 +491,20 @@ int main(int argc, char **argv) {
 	}
 
 	if (arg_guide) {
+		const char *zenity_exec;
+		if (arg_debug)
+			zenity_exec = FZENITY_EXEC;
+		else
+			zenity_exec = ZENITY_EXEC;
+
 		char *cmd;
-if (arg_debug) {
-		if (asprintf(&cmd, "sudo %s/firejail/firejail-welcome.sh /usr/lib/firejail/fzenity %s %s", LIBDIR, SYSCONFDIR, user) == -1)
+		if (asprintf(&cmd, "%s %s %s %s %s",
+			     SUDO_EXEC, FIREJAIL_WELCOME_SH, zenity_exec, SYSCONFDIR, user) == -1)
 			errExit("asprintf");
-}
-else {
-		if (asprintf(&cmd, "sudo %s/firejail/firejail-welcome.sh /usr/bin/zenity %s %s", LIBDIR, SYSCONFDIR, user) == -1)
-			errExit("asprintf");
-}
+
 		int status = system(cmd);
 		if (status == -1) {
-			fprintf(stderr, "Error: cannot run firejail-welcome.sh\n");
+			fprintf(stderr, "Error: cannot run %s\n", FIREJAIL_WELCOME_SH);
 			exit(1);
 		}
 		free(cmd);
@@ -474,12 +518,15 @@ else {
 	// clear all symlinks
 	clean();
 
-	// set new symlinks based on /etc/firejail/firecfg.config
-	set_links_firecfg();
+	// set new symlinks based on .conf files
+	set_links_firecfg_glob(FIRECFG_CONF_GLOB);
+
+	// set new symlinks based on firecfg.config
+	set_links_firecfg(FIRECFG_CFGFILE);
 
 	if (getuid() == 0) {
 		// add user to firejail access database - only for root
-		printf("\nAdding user %s to Firejail access database in %s/firejail.users\n", user, SYSCONFDIR);
+		printf("Adding user %s to Firejail access database in %s/firejail.users\n", user, SYSCONFDIR);
 		// temporarily set the umask, access database must be world-readable
 		mode_t orig_umask = umask(022);
 		firejail_user_add(user);

@@ -200,7 +200,8 @@ avoidr (https://github.com/avoidr)
 	- fixed mpv profile
 	- various other fixes
 Азалия Смарагдова/ChrysoliteAzalea (https://github.com/ChrysoliteAzalea)
-	-  add support for custom AppArmor profiles (--apparmor=)
+	- add support for custom AppArmor profiles (--apparmor=)
+	- add Landlock support
 backspac (https://github.com/backspac)
 	- firecfg fixes
 	- add steam-runtime alias

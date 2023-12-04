@@ -1338,6 +1338,13 @@ void close_all(int *keep_list, size_t sz) {
 		if (keep)
 			continue;
 
+#ifdef HAVE_LANDLOCK
+		// Don't close the file descriptor of the Landlock ruleset; it
+		// will be automatically closed by the "ll_restrict" wrapper
+		// function.
+		if (fd == ll_get_fd())
+			continue;
+#endif
 		close(fd);
 	}
 	closedir(dir);

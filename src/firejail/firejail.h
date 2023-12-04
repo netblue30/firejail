@@ -150,6 +150,17 @@ typedef struct profile_entry_t {
 
 } ProfileEntry;
 
+typedef struct landlock_entry_t {
+	struct landlock_entry_t *next;
+#define LL_READ 0
+#define LL_WRITE 1
+#define LL_SPECIAL 2
+#define LL_EXEC 3
+#define LL_MAX 4
+	int type;
+	char *data;
+} LandlockEntry;
+
 typedef struct config_t {
 	// user data
 	char *username;
@@ -159,6 +170,7 @@ typedef struct config_t {
 	// filesystem
 	ProfileEntry *profile;
 	ProfileEntry *profile_rebuild_etc;	// blacklist files in /etc directory used by fs_rebuild_etc()
+	LandlockEntry *lprofile;
 
 #define MAX_PROFILE_IGNORE 32
 	char *profile_ignore[MAX_PROFILE_IGNORE];
@@ -280,6 +292,9 @@ extern int arg_command;	// -c
 extern int arg_overlay;		// overlay option
 extern int arg_overlay_keep;	// place overlay diff in a known directory
 extern int arg_overlay_reuse;	// allow the reuse of overlays
+
+extern int arg_landlock;		// add basic Landlock rules
+extern int arg_landlock_proc;		// 0 - no access; 1 -read-only; 2 - read-write
 
 extern int arg_seccomp;	// enable default seccomp filter
 extern int arg_seccomp32;	// enable default seccomp filter for 32 bit arch
@@ -949,5 +964,27 @@ void run_ids(int argc, char **argv);
 
 // oom.c
 void oom_set(const char *oom_string);
+
+// landlock.c
+#ifdef HAVE_LANDLOCK
+int ll_get_fd(void);
+int ll_is_supported(void);
+int ll_read(const char *allowed_path);
+int ll_write(const char *allowed_path);
+int ll_special(const char *allowed_path);
+int ll_exec(const char *allowed_path);
+int ll_basic_system(void);
+int ll_restrict(__u32 flags);
+void ll_add_profile(int type, const char *data);
+#else
+static inline int ll_get_fd(void) { return -1; }
+static inline int ll_read(...) { return 0; }
+static inline int ll_write(...) { return 0; }
+static inline int ll_special(...) { return 0; }
+static inline int ll_exec(...) { return 0; }
+static inline int ll_basic_system(void) { return 0; }
+static inline int ll_restrict(...) { return 0; }
+static inline void ll_add_profile(...) { return; }
+#endif /* HAVE_LANDLOCK */
 
 #endif

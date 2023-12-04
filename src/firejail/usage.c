@@ -133,6 +133,14 @@ static const char *const usage_str =
 	"    --keep-fd - inherit open file descriptors to sandbox.\n"
 	"    --keep-shell-rc - do not copy shell rc files from /etc/skel\n"
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
+#ifdef HAVE_LANDLOCK
+	"    --landlock - add basic rules to the Landlock ruleset.\n"
+	"    --landlock.proc=no|ro|rw - add an access rule for /proc to the Landlock ruleset.\n"
+	"    --landlock.read=path - add a read access rule for the path to the Landlock ruleset.\n"
+	"    --landlock.write=path - add a write access rule for the path to the Landlock ruleset.\n"
+	"    --landlock.special=path - add an access rule for the path to the Landlock ruleset for creating block/char devices, named pipes and sockets.\n"
+	"    --landlock.execute=path - add an execute access rule for the path to the Landlock ruleset.\n"
+#endif
 	"    --list - list all sandboxes.\n"
 #ifdef HAVE_FILE_TRANSFER
 	"    --ls=name|pid dir_or_filename - list files in sandbox container.\n"

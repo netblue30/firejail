@@ -29,6 +29,11 @@ ip6
 iprange
 join-or-start
 keep-fd
+landlock.execute
+landlock.proc
+landlock.read
+landlock.special
+landlock.write
 mac
 mkdir
 mkfile

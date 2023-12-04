@@ -311,6 +311,50 @@ Discussion:
 
 * [private-etc rework](https://github.com/netblue30/firejail/discussions/5610)
 
+### Landlock support
+* re-merged from #5315 ChrysoliteAzalea/landlock
+* Compile time detection based on /usr/include/kernel/landlock.h - if the file is present in the filesystem, the feature is compiled in.
+* Run-time detection of kernels 6.1 (debian stable) or newer.
+
+```text
+LANDLOCK
+       Landlock is a Linux security module first introduced in version 5.13 of
+       the  Linux  kernel.  It allows unprivileged processes to restrict their
+       access to the filesystem.  Once imposed, these restrictions  can  never
+       be  removed,  and  all child processes created by a Landlock-restricted
+       processes inherit these restrictions.  Firejail supports Landlock as an
+       additional  sandboxing  feature.  It can be used to ensure that a sand‐
+       boxed application can only access files and directories that it was ex‐
+       plicitly  allowed  to access.  Firejail supports populating the ruleset
+       with both a basic set of rules (see --landlock) and with a  custom  set
+       of rules.
+
+       Important notes:
+
+              - A process can install a Landlock ruleset only if it has either
+              CAP_SYS_ADMIN in its effective capability set, or  the  "No  New
+              Privileges"  restriction enabled.  Because of this, enabling the
+              Landlock feature will also cause Firejail to enable the "No  New
+              Privileges"  restriction,  regardless  of  the  profile  or  the
+              --no-new-privs command line option.
+
+              - Access to the /proc directory is managed through  the  --land‐
+              lock.proc command line option.
+
+              -  Access  to  the  /etc directory is automatically allowed.  To
+              override this, use the --writable-etc command line option.   You
+              can  also use the --private-etc option to restrict access to the
+              /etc directory.
+
+       To enable Landlock self-restriction on top of your current Firejail se‐
+       curity  features,  pass  --landlock flag to Firejail command line.  You
+       can also use --landlock.read, --landlock.write, --landlock.special  and
+       --landlock.execute  options  together with --landlock or instead of it.
+       Example:
+
+       $ firejail --landlock --landlock.read=/media --landlock.proc=ro mc
+```
+
 ### Profile Statistics
 
 A small tool to print profile statistics.  Compile and install as usual.  The
@@ -321,33 +365,35 @@ Run it over the profiles in /etc/profiles:
 ```console
 $ /usr/lib/firejail/profstats /etc/firejail/*.profile
 No include .local found in /etc/firejail/noprofile.profile
+Warning: multiple caps in /etc/firejail/tidal-hifi.profile
 Warning: multiple caps in /etc/firejail/transmission-daemon.profile
 
 Stats:
-    profiles			1209
-    include local profile	1208   (include profile-name.local)
-    include globals		1181   (include globals.local)
-    blacklist ~/.ssh		1079   (include disable-common.inc)
-    seccomp			1096
-    capabilities		1202
-    noexec			1087   (include disable-exec.inc)
-    noroot			1003
-    memory-deny-write-execute	272
-    restrict-namespaces		958
-    apparmor			753
-    private-bin			704
-    private-dev			1058
-    private-etc			550
-    private-lib			71
-    private-tmp			932
-    whitelist home directory	585
-    whitelist var		870   (include whitelist-var-common.inc)
-    whitelist run/user		1176   (include whitelist-runuser-common.inc
+    profiles			1249
+    include local profile	1248   (include profile-name.local)
+    include globals		1217   (include globals.local)
+    blacklist ~/.ssh		1117   (include disable-common.inc)
+    seccomp			1127
+    capabilities		1242
+    noexec			1125   (include disable-exec.inc)
+    noroot			1030
+    memory-deny-write-execute	285
+    restrict-namespaces		981
+    apparmor			788
+    private-bin			750
+    private-dev			1090
+    private-etc			763
+    private-lib			78
+    private-tmp			959
+    whitelist home directory	609
+    whitelist var		907   (include whitelist-var-common.inc)
+    whitelist run/user		1214   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		640   (include whitelist-usr-share-common.inc
-    net none			410
-    dbus-user none 		679
-    dbus-user filter 		141
-    dbus-system none 		851
-    dbus-system filter 		12
+    whitelist usr/share		690   (include whitelist-usr-share-common.inc
+    net none			420
+    dbus-user none 		705
+    dbus-user filter 		164
+    dbus-system none 		889
+    dbus-system filter 		13
+
 ```

@@ -1258,7 +1258,9 @@ The basic set of rules applies the following access permissions:
 - exec:  /bin, /lib, /opt, /usr
 .RE
 .PP
+.RS
 See the \fBLANDLOCK\fR section for more information.
+.RE
 .TP
 \fB\-\-landlock.proc=no|ro|rw
 Add an access rule for /proc directory (read-only if set to \fBro\fR and
@@ -1284,9 +1286,11 @@ and Unix domain sockets beneath given path.
 \fB\-\-landlock.execute=path
 Create a Landlock ruleset (if it doesn't already exist) and add an execution
 permission rule for path.
-.PP
+.br
+
+.br
 Example:
-.PP
+.br
 $ firejail \-\-landlock.read=/ \-\-landlock.write=/home \-\-landlock.execute=/usr
 #endif
 .TP

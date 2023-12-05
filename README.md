@@ -312,9 +312,12 @@ Discussion:
 * [private-etc rework](https://github.com/netblue30/firejail/discussions/5610)
 
 ### Landlock support
-* re-merged from #5315 ChrysoliteAzalea/landlock
-* Compile time detection based on /usr/include/kernel/landlock.h - if the file is present in the filesystem, the feature is compiled in.
-* Run-time detection of kernels 6.1 (debian stable) or newer.
+
+* Added on #6078, which is based on #5315 from ChrysoliteAzalea/landlock
+* Compile-time detection based on linux/landlock.h - if the header is found,
+  the feature is compiled in
+* Runtime detection based on whether Landlock is supported by the kernel and is
+  enabled on the system
 
 ```text
 LANDLOCK

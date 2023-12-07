@@ -976,16 +976,6 @@ int ll_exec(const char *allowed_path);
 int ll_basic_system(void);
 int ll_restrict(__u32 flags);
 void ll_add_profile(int type, const char *data);
-#else
-static inline int ll_get_fd(void) { return -1; }
-static inline int ll_is_supported(void) { return 0; }
-static inline int ll_read(...) { return 0; }
-static inline int ll_write(...) { return 0; }
-static inline int ll_special(...) { return 0; }
-static inline int ll_exec(...) { return 0; }
-static inline int ll_basic_system(void) { return 0; }
-static inline int ll_restrict(...) { return 0; }
-static inline void ll_add_profile(...) { return; }
 #endif /* HAVE_LANDLOCK */
 
 #endif

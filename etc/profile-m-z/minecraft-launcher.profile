@@ -56,6 +56,7 @@ private-etc @tls-ca,@x11,host.conf,java*,mime.types,services,timezone
 private-opt minecraft-launcher
 private-tmp
 
+dbus-user filter
 dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.gnome.keyring.*
 dbus-user.talk org.gnome.seahorse.*

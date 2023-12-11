@@ -44,6 +44,7 @@ noblacklist ${HOME}/.prey
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.steampath
 noblacklist ${HOME}/.steampid
+noblacklist ${HOME}/Zomboid
 # needed for STEAM_RUNTIME_PREFER_HOST_LIBRARIES=1 to work
 noblacklist /sbin
 noblacklist /usr/sbin
@@ -95,6 +96,7 @@ mkdir ${HOME}/.paradoxinteractive
 mkdir ${HOME}/.paradoxlauncher
 mkdir ${HOME}/.prey
 mkdir ${HOME}/.steam
+mkdir ${HOME}/Zomboid
 mkfile ${HOME}/.steampath
 mkfile ${HOME}/.steampid
 whitelist ${HOME}/.config/Epic
@@ -136,6 +138,7 @@ whitelist ${HOME}/.prey
 whitelist ${HOME}/.steam
 whitelist ${HOME}/.steampath
 whitelist ${HOME}/.steampid
+whitelist ${HOME}/Zomboid
 include whitelist-common.inc
 include whitelist-var-common.inc
 

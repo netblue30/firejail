@@ -1219,6 +1219,7 @@ blacklist ${HOME}/Standard Notes Backups
 blacklist ${HOME}/TeamSpeak3-Client-linux_amd64
 blacklist ${HOME}/TeamSpeak3-Client-linux_x86
 blacklist ${HOME}/UpdateInfo
+blacklist ${HOME}/Zomboid
 blacklist ${HOME}/hyperrogue.ini
 blacklist ${HOME}/i2p
 blacklist ${HOME}/mps

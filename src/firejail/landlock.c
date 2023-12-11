@@ -301,9 +301,6 @@ void ll_add_profile(int type, const char *data) {
 	assert(type < LL_MAX);
 	assert(data);
 
-	if (!ll_is_supported())
-		return;
-
 	while (*data == ' ' || *data == '\t')
 		data++;
 

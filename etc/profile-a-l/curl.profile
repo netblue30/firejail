@@ -7,6 +7,7 @@ include curl.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/curlrc # since curl 7.73.0
 # curl 7.74.0 introduces experimental support for HSTS cache
 # https://daniel.haxx.se/blog/2020/11/03/hsts-your-curl/
 # Technically this file can be anywhere but let's assume users have it in ${HOME}/.curl-hsts.

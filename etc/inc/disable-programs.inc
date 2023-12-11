@@ -411,6 +411,7 @@ blacklist ${HOME}/.config/com.github.bleakgrey.tootle
 blacklist ${HOME}/.config/com.lettura.dev
 blacklist ${HOME}/.config/corebird
 blacklist ${HOME}/.config/coyim
+blacklist ${HOME}/.config/curlrc
 blacklist ${HOME}/.config/d-feet
 blacklist ${HOME}/.config/darktable
 blacklist ${HOME}/.config/deadbeef

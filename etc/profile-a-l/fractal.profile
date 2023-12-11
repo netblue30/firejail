@@ -23,6 +23,7 @@ include disable-xdg.inc
 mkdir ${HOME}/.cache/fractal
 whitelist ${HOME}/.cache/fractal
 whitelist ${DOWNLOADS}
+whitelist /usr/share/fractal
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

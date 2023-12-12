@@ -244,7 +244,7 @@ int ll_basic_system(void) {
 	return error;
 }
 
-int ll_restrict(__u32 flags) {
+int ll_restrict(uint32_t flags) {
 	if (!ll_is_supported())
 		return 0;
 

@@ -974,7 +974,7 @@ int ll_write(const char *allowed_path);
 int ll_special(const char *allowed_path);
 int ll_exec(const char *allowed_path);
 int ll_basic_system(void);
-int ll_restrict(__u32 flags);
+int ll_restrict(uint32_t flags);
 void ll_add_profile(int type, const char *data);
 #endif /* HAVE_LANDLOCK */
 

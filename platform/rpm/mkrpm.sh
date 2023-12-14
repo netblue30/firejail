@@ -38,9 +38,9 @@ trap cleanup EXIT
 
 # Create the spec file
 tmp_spec_file="${tmpdir}/SPECS/${name}.spec"
-sed -e "s/__NAME__/${name}/g" \
-    -e "s/__VERSION__/${version}/g" \
-    -e "s/__CONFIG_OPT__/${config_opt}/g" \
+sed -e "s|__NAME__|${name}|g" \
+    -e "s|__VERSION__|${version}|g" \
+    -e "s|__CONFIG_OPT__|${config_opt}|g" \
     "platform/rpm/${name}.spec" >"${tmp_spec_file}"
 # FIXME: We could parse RELNOTES and create a %changelog section here
 

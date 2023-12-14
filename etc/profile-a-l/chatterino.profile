@@ -42,6 +42,7 @@ whitelist-ro ${HOME}/.config/mpv
 whitelist-ro ${HOME}/.config/pulse
 whitelist-ro ${HOME}/.config/vlc
 whitelist-ro ${HOME}/.local/share/vlc
+whitelist-ro /usr/share/mpv
 include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc

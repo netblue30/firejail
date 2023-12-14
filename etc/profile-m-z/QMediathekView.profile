@@ -47,6 +47,7 @@ whitelist ${HOME}/.local/share/totem
 whitelist ${HOME}/.local/share/xplayer
 whitelist ${HOME}/.local/state/mpv
 whitelist ${HOME}/.mplayer
+whitelist /usr/share/mpv
 whitelist /usr/share/qtchooser
 include whitelist-common.inc
 include whitelist-run-common.inc

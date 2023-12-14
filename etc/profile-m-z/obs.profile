@@ -10,6 +10,9 @@ noblacklist ${MUSIC}
 noblacklist ${PICTURES}
 noblacklist ${VIDEOS}
 
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
+
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc

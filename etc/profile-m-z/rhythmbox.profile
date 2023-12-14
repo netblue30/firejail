@@ -26,7 +26,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 whitelist /usr/share/rhythmbox
-whitelist /usr/share/lua
+whitelist /usr/share/lua*
 whitelist /usr/share/libquvi-scripts
 whitelist /usr/share/tracker
 include whitelist-runuser-common.inc

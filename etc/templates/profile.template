@@ -137,6 +137,13 @@ include globals.local
 #include whitelist-usr-share-common.inc
 #include whitelist-var-common.inc
 
+# Landlock commands
+##landlock.read PATH
+##landlock.write PATH
+##landlock.special PATH
+##landlock.execute PATH
+#include landlock-common.inc
+
 ##allusers
 #apparmor
 #caps.drop all

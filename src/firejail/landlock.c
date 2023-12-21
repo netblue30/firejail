@@ -117,8 +117,8 @@ static int ll_create_full_ruleset(void) {
 	return ruleset_fd;
 }
 
-static int ll_fs(const char *allowed_path, const __u64 allowed_access,
-                 const char *caller) {
+static int _ll_fs(const char *allowed_path, const __u64 allowed_access,
+                  const char *caller) {
 	if (!ll_is_supported())
 		return 0;
 
@@ -152,6 +152,16 @@ static int ll_fs(const char *allowed_path, const __u64 allowed_access,
 		        strerror(errno));
 	}
 	close(allowed_fd);
+	return error;
+}
+
+// TODO: Add support for the ${PATH} macro.
+static int ll_fs(const char *allowed_path, const __u64 allowed_access,
+                 const char *caller) {
+	char *expanded_path = expand_macros(allowed_path);
+	int error = _ll_fs(expanded_path, allowed_access, caller);
+
+	free(expanded_path);
 	return error;
 }
 
@@ -190,58 +200,6 @@ int ll_exec(const char *allowed_path) {
 		LANDLOCK_ACCESS_FS_EXECUTE;
 
 	return ll_fs(allowed_path, allowed_access, __func__);
-}
-
-int ll_basic_system(void) {
-	assert(cfg.homedir);
-
-	if (!ll_is_supported())
-		return 0;
-
-	if (ll_ruleset_fd == -1)
-		ll_ruleset_fd = ll_create_full_ruleset();
-
-	int error;
-	char *rundir;
-	if (asprintf(&rundir, "/run/user/%d", getuid()) == -1)
-		errExit("asprintf");
-
-	error =
-		ll_read("/") ||       // whole system read
-		ll_special("/") ||    // sockets etc.
-
-		ll_write("/tmp") ||   // write access
-		ll_write("/dev") ||
-		ll_write("/run/shm") ||
-		ll_write(cfg.homedir) ||
-		ll_write(rundir) ||
-
-		ll_exec("/opt") ||    // exec access
-		ll_exec("/bin") ||
-		ll_exec("/sbin") ||
-		ll_exec("/lib") ||
-		ll_exec("/lib32") ||
-		ll_exec("/libx32") ||
-		ll_exec("/lib64") ||
-		ll_exec("/usr/bin") ||
-		ll_exec("/usr/sbin") ||
-		ll_exec("/usr/games") ||
-		ll_exec("/usr/lib") ||
-		ll_exec("/usr/lib32") ||
-		ll_exec("/usr/libx32") ||
-		ll_exec("/usr/lib64") ||
-		ll_exec("/usr/local/bin") ||
-		ll_exec("/usr/local/sbin") ||
-		ll_exec("/usr/local/games") ||
-		ll_exec("/usr/local/lib") ||
-		ll_exec("/run/firejail"); // appimage and various firejail features
-
-	if (error) {
-		fprintf(stderr, "Error: %s: failed to set --landlock rules\n",
-		        __func__);
-	}
-	free(rundir);
-	return error;
 }
 
 int ll_restrict(uint32_t flags) {
@@ -292,9 +250,6 @@ void ll_add_profile(int type, const char *data) {
 	assert(type >= 0);
 	assert(type < LL_MAX);
 	assert(data);
-
-	if (!ll_is_supported())
-		return;
 
 	while (*data == ' ' || *data == '\t')
 		data++;

@@ -22,6 +22,8 @@ include disable-programs.inc
 #include whitelist-usr-share-common.inc
 #include whitelist-var-common.inc
 
+include landlock-common.inc
+
 #apparmor
 caps.drop all
 #ipc-namespace

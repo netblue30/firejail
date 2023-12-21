@@ -75,8 +75,7 @@ int arg_overlay = 0;				// overlay option
 int arg_overlay_keep = 0;			// place overlay diff in a known directory
 int arg_overlay_reuse = 0;			// allow the reuse of overlays
 
-int arg_landlock = 0;			// add basic Landlock rules
-int arg_landlock_proc = 2;		// 0 - no access; 1 -read-only; 2 - read-write
+int arg_landlock_enforce = 0;		// enforce the Landlock ruleset
 
 int arg_seccomp = 0;				// enable default seccomp filter
 int arg_seccomp32 = 0;				// enable default seccomp filter for 32 bit arch
@@ -1504,21 +1503,8 @@ int main(int argc, char **argv, char **envp) {
 				exit_err_feature("seccomp");
 		}
 #ifdef HAVE_LANDLOCK
-		else if (strcmp(argv[i], "--landlock") == 0)
-			arg_landlock = 1;
-		else if (strncmp(argv[i], "--landlock.proc=", 16) == 0) {
-			if (strncmp(argv[i] + 16, "no", 2) == 0)
-				arg_landlock_proc = 0;
-			else if (strncmp(argv[i] + 16, "ro", 2) == 0)
-				arg_landlock_proc = 1;
-			else if (strncmp(argv[i] + 16, "rw", 2) == 0)
-				arg_landlock_proc = 2;
-			else {
-				fprintf(stderr, "Error: invalid landlock.proc value: %s\n",
-				        argv[i] + 16);
-				exit(1);
-			}
-		}
+		else if (strncmp(argv[i], "--landlock.enforce", 18) == 0)
+			arg_landlock_enforce = 1;
 		else if (strncmp(argv[i], "--landlock.read=", 16) == 0)
 			ll_add_profile(LL_READ, argv[i] + 16);
 		else if (strncmp(argv[i], "--landlock.write=", 17) == 0)

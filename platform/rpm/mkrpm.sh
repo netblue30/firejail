@@ -14,7 +14,7 @@
 name="$TARNAME"
 # Strip any trailing prefix from the version like -rc1 etc
 version="$(printf '%s\n' "$VERSION" | sed 's/\-.*//g')"
-config_opt="$*"
+config_opt="--disable-userns --disable-contrib-install $*"
 
 if [[ ! -f "platform/rpm/${name}.spec" ]]; then
     printf 'error: spec file not found for name %s\n' "${name}" >&2
@@ -24,10 +24,6 @@ fi
 if [[ -z "${version}" ]]; then
     printf 'error: version must be given\n' >&2
     exit 1
-fi
-
-if [[ -z "${config_opt}" ]]; then
-    config_opt="--disable-userns --disable-contrib-install"
 fi
 
 # Make a temporary directory and arrange to clean up on exit

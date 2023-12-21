@@ -530,7 +530,7 @@ GSI (https://github.com/GSI)
 	- added Uzbl browser profile
 haarp (https://github.com/haarp)
 	- Allow sound for hexchat
-	- discord-common.profile: harden & allow notifications 
+	- discord-common.profile: harden & allow notifications
 hamzadis (https://github.com/hamzadis)
 	- added --overlay-named=name and --overlay-path=path
 Hans-Christoph Steiner (https://github.com/eighthave)
@@ -829,6 +829,7 @@ NetSysFire (https://github.com/NetSysFire)
 	- update weechat profile
 	- update megaglest profile
 	- added parsecd profile
+	- fix minecraft-launcher.profile
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory
@@ -1224,7 +1225,7 @@ ValdikSS (https://github.com/ValdikSS)
 	- various profile fixes
 Varun Sharma (https://github.com/varunsh-coder)
 	- update allowed endpoints
-	- build(deps): bump step-security/harden-runner from 2.5.0 to 2.5.1 
+	- build(deps): bump step-security/harden-runner from 2.5.0 to 2.5.1
 Vasya Novikov (https://github.com/vn971)
 	- Wesnoth profile
 	- Hedegewars profile

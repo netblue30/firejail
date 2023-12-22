@@ -60,7 +60,7 @@ landlock_restrict_self(const int ruleset_fd, const __u32 flags) {
 }
 #endif
 
-int ll_is_supported(void) {
+static int ll_is_supported(void) {
 	if (ll_abi != -1)
 		goto out;
 
@@ -83,9 +83,6 @@ out:
 }
 
 static int ll_create_full_ruleset(void) {
-	if (!ll_is_supported())
-		return -1;
-
 	struct landlock_ruleset_attr attr;
 	attr.handled_access_fs =
 		LANDLOCK_ACCESS_FS_EXECUTE |
@@ -117,11 +114,8 @@ static int ll_create_full_ruleset(void) {
 	return ruleset_fd;
 }
 
-static int _ll_fs(const char *allowed_path, const __u64 allowed_access,
+static void _ll_fs(const char *allowed_path, const __u64 allowed_access,
                   const char *caller) {
-	if (!ll_is_supported())
-		return 0;
-
 	if (ll_ruleset_fd == -1)
 		ll_ruleset_fd = ll_create_full_ruleset();
 
@@ -130,20 +124,19 @@ static int _ll_fs(const char *allowed_path, const __u64 allowed_access,
 		        caller, ll_abi, allowed_access, allowed_path);
 	}
 
-	int error;
 	int allowed_fd = open(allowed_path, O_PATH | O_CLOEXEC);
 	if (allowed_fd < 0) {
 		if (arg_debug) {
 			fprintf(stderr, "%s: failed to open %s: %s\n",
 			        caller, allowed_path, strerror(errno));
 		}
-		return 0;
+		return;
 	}
 
 	struct landlock_path_beneath_attr target;
 	target.parent_fd = allowed_fd;
 	target.allowed_access = allowed_access;
-	error = landlock_add_rule(ll_ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,
+	int error = landlock_add_rule(ll_ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,
 	                          &target, 0);
 	if (error) {
 		fprintf(stderr, "Error: %s: failed to add Landlock rule "
@@ -152,28 +145,44 @@ static int _ll_fs(const char *allowed_path, const __u64 allowed_access,
 		        strerror(errno));
 	}
 	close(allowed_fd);
-	return error;
 }
 
-// TODO: Add support for the ${PATH} macro.
-static int ll_fs(const char *allowed_path, const __u64 allowed_access,
+static void ll_fs(const char *allowed_path, const __u64 allowed_access,
                  const char *caller) {
-	char *expanded_path = expand_macros(allowed_path);
-	int error = _ll_fs(expanded_path, allowed_access, caller);
+	char *expanded_path;
 
+	// ${PATH} macro is not included by default in expand_macros()
+	if (strncmp(allowed_path, "${PATH}", 7) == 0) {
+		char **paths = build_paths();
+		int i = 0;
+		while (paths[i] != NULL) {
+			if (asprintf(&expanded_path, "%s%s", paths[i], allowed_path + 7) == -1)
+				errExit("asprintf");
+			if (arg_debug)
+				fprintf(stderr, "landlock expand path %s\n", expanded_path);
+
+			_ll_fs(expanded_path, allowed_access, caller);
+			free(expanded_path);
+			i++;
+		}
+		return;
+	}
+
+
+	expanded_path = expand_macros(allowed_path);
+	_ll_fs(expanded_path, allowed_access, caller);
 	free(expanded_path);
-	return error;
 }
 
-int ll_read(const char *allowed_path) {
+static void ll_read(const char *allowed_path) {
 	__u64 allowed_access =
 		LANDLOCK_ACCESS_FS_READ_DIR |
 		LANDLOCK_ACCESS_FS_READ_FILE;
 
-	return ll_fs(allowed_path, allowed_access, __func__);
+	ll_fs(allowed_path, allowed_access, __func__);
 }
 
-int ll_write(const char *allowed_path) {
+static void ll_write(const char *allowed_path) {
 	__u64 allowed_access =
 		LANDLOCK_ACCESS_FS_MAKE_DIR |
 		LANDLOCK_ACCESS_FS_MAKE_REG |
@@ -182,24 +191,24 @@ int ll_write(const char *allowed_path) {
 		LANDLOCK_ACCESS_FS_REMOVE_FILE |
 		LANDLOCK_ACCESS_FS_WRITE_FILE;
 
-	return ll_fs(allowed_path, allowed_access, __func__);
+	ll_fs(allowed_path, allowed_access, __func__);
 }
 
-int ll_special(const char *allowed_path) {
+static void ll_special(const char *allowed_path) {
 	__u64 allowed_access =
 		LANDLOCK_ACCESS_FS_MAKE_BLOCK |
 		LANDLOCK_ACCESS_FS_MAKE_CHAR |
 		LANDLOCK_ACCESS_FS_MAKE_FIFO |
 		LANDLOCK_ACCESS_FS_MAKE_SOCK;
 
-	return ll_fs(allowed_path, allowed_access, __func__);
+	ll_fs(allowed_path, allowed_access, __func__);
 }
 
-int ll_exec(const char *allowed_path) {
+static void ll_exec(const char *allowed_path) {
 	__u64 allowed_access =
 		LANDLOCK_ACCESS_FS_EXECUTE;
 
-	return ll_fs(allowed_path, allowed_access, __func__);
+	ll_fs(allowed_path, allowed_access, __func__);
 }
 
 int ll_restrict(uint32_t flags) {
@@ -211,7 +220,7 @@ int ll_restrict(uint32_t flags) {
 	if (arg_debug)
 		fprintf(stderr, "%s: Starting Landlock restrict\n", __func__);
 
-	int (*fnc[])(const char *) = {
+	void (*fnc[])(const char *) = {
 		ll_read,
 		ll_write,
 		ll_special,

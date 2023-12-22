@@ -206,6 +206,8 @@ int ll_restrict(uint32_t flags) {
 	if (!ll_is_supported())
 		return 0;
 
+	timetrace_start();
+
 	if (arg_debug)
 		fprintf(stderr, "%s: Starting Landlock restrict\n", __func__);
 
@@ -218,7 +220,9 @@ int ll_restrict(uint32_t flags) {
 	};
 
 	LandlockEntry *ptr = cfg.lprofile;
+	int rules = 0;
 	while (ptr) {
+		rules++;
 		fnc[ptr->type](ptr->data);
 		ptr = ptr->next;
 	}
@@ -239,8 +243,8 @@ int ll_restrict(uint32_t flags) {
 		        __func__, strerror(errno));
 		goto out;
 	}
-	if (arg_debug)
-		fprintf(stderr, "%s: Enforcing Landlock\n", __func__);
+	fmessage("%d Landlock rules initialized in %0.2f ms\n", rules, timetrace_end());
+
 out:
 	close(ll_ruleset_fd);
 	return error;

@@ -1247,12 +1247,8 @@ $ firejail --keep-var-tmp
 .TP
 \fB\-\-landlock.enforce
 Enforce the Landlock ruleset.
-.PP
 Without it, the other Landlock commands have no effect.
-.PP
-.RS
 See the \fBLANDLOCK\fR section for more information.
-.RE
 .TP
 \fB\-\-landlock.read=path
 Create a Landlock ruleset (if it doesn't already exist) and add a read access

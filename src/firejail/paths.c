@@ -76,8 +76,12 @@ static void init_paths(void) {
 		if (bin_symlink > 0) {
 			if (strcmp(elt, "/bin") == 0 || strcmp(elt, "/usr/bin") == 0)
 				bin_symlink++;
-			if (bin_symlink == 3)
+			if (bin_symlink == 3) {
+				bin_symlink = 0;
+				if (arg_debug)
+					printf("...skip path %s\n", elt);
 				goto skip;
+			}
 		}
 
 		// filter out duplicate entries
@@ -85,14 +89,19 @@ static void init_paths(void) {
 			if (strcmp(elt, paths[j]) == 0)
 				goto skip;
 
+		if (arg_debug)
+			printf("Add path entry %s\n", elt);
 		paths[i++] = elt;
 		if (len > longest_path_elt)
 			longest_path_elt = len;
 
-		skip:;
+skip:;
 	}
-
 	assert(paths[i] == NULL);
+	path_cnt = i;
+	if (arg_debug)
+		printf("Number of path entries: %d\n", path_cnt);
+
 	// path_cnt may be too big now, if entries were skipped above
 	path_cnt = i+1;
 }

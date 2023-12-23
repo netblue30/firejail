@@ -42,15 +42,6 @@ Miscellaneous:
 firejail {\-? | \-\-debug-caps | \-\-debug-errnos | \-\-debug-syscalls | \-\-debug-syscalls32 | \-\-debug-protocols | \-\-help | \-\-version}
 .RE
 .SH DESCRIPTION
-#ifdef HAVE_LTS
-This is Firejail long-term support (LTS), an enterprise focused version of the software,
-LTS is usually supported for two or three years.
-During this time only bugs and the occasional documentation problems are fixed.
-The attack surface of the SUID executable was greatly reduced by removing some of the features.
-.br
-
-.br
-#endif
 Firejail is a SUID sandbox program that reduces the risk of security breaches by
 restricting the running environment of untrusted applications using Linux
 namespaces, seccomp-bpf and Linux capabilities.
@@ -3043,28 +3034,6 @@ $ firejail \-\-tree
 .br
   11970:netblue:transmission-gtk
 
-#ifdef HAVE_FIRETUNNEL
-.TP
-\fB\-\-tunnel[=devname]
-Connect the sandbox to a network overlay/VPN tunnel created by firetunnel utility. This options
-tries first the client side of the tunnel. If this fails, it tries the server side. If multiple tunnels are active,
-please specify the tunnel device using \-\-tunnel=devname.
-.br
-
-.br
-The available tunnel devices are listed in /etc/firetunnel directory, one file for each device.
-The files are regular firejail profile files containing the network configuration,
-and are created and managed by firetunnel utility.
-By default ftc is the client-side device and fts is the server-side device. For more information
-please see man 1 firetunnel.
-.br
-
-.br
-Example:
-.br
-$ firejail --tunnel firefox
-.br
-#endif
 .TP
 \fB\-\-version
 Print program version/compile time support and exit.

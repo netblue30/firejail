@@ -137,14 +137,6 @@ AS_IF([test "x$enable_man" != "xno"], [
 	AS_IF([test "x$HAVE_GAWK" != "xyes"], [AC_MSG_ERROR([*** gawk not found ***])])
 ])
 
-HAVE_FIRETUNNEL=""
-AC_SUBST([HAVE_FIRETUNNEL])
-AC_ARG_ENABLE([firetunnel],
-    [AS_HELP_STRING([--enable-firetunnel], [enable firetunnel])])
-AS_IF([test "x$enable_firetunnel" = "xyes"], [
-	HAVE_FIRETUNNEL="-DHAVE_FIRETUNNEL"
-])
-
 HAVE_PRIVATE_HOME=""
 AC_SUBST([HAVE_PRIVATE_HOME])
 AC_ARG_ENABLE([private-home],
@@ -268,32 +260,6 @@ AS_IF([test "x$enable_only_syscfg_profiles" = "xyes"], [
 	HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
 ])
 
-HAVE_LTS=""
-AC_SUBST([HAVE_LTS])
-AC_ARG_ENABLE([lts],
-    [AS_HELP_STRING([--enable-lts], [enable long-term support software version (LTS)])])
-AS_IF([test "x$enable_lts" = "xyes"], [
-	HAVE_LTS="-DHAVE_LTS"
-	HAVE_LANDLOCK=""
-	HAVE_IDS=""
-	HAVE_DBUSPROXY=""
-	HAVE_OVERLAYFS=""
-	HAVE_OUTPUT=""
-	HAVE_USERTMPFS=""
-	HAVE_MAN="-DHAVE_MAN"
-	HAVE_FIRETUNNEL=""
-	HAVE_PRIVATE_HOME=""
-	HAVE_PRIVATE_LIB=""
-	HAVE_CHROOT=""
-	HAVE_GLOBALCFG=""
-	HAVE_USERNS=""
-	HAVE_X11=""
-	HAVE_FILE_TRANSFER=""
-	HAVE_SUID="-DHAVE_SUID"
-	BUSYBOX_WORKAROUND="no"
-	HAVE_CONTRIB_INSTALL="no"
-])
-
 AC_CHECK_HEADER([linux/seccomp.h], [],
     [AC_MSG_ERROR([*** SECCOMP support is not installed (/usr/include/linux/seccomp.h missing) ***])])
 
@@ -332,11 +298,9 @@ Features:
    disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
    enable --output logging: $HAVE_OUTPUT
    file transfer support: $HAVE_FILE_TRANSFER
-   firetunnel support: $HAVE_FIRETUNNEL
    global config: $HAVE_GLOBALCFG
    IDS support: $HAVE_IDS
    Landlock support: $HAVE_LANDLOCK
-   LTS: $HAVE_LTS
    manpage support: $HAVE_MAN
    network: $HAVE_NETWORK
    overlayfs support: $HAVE_OVERLAYFS
@@ -347,13 +311,3 @@ Features:
    X11 sandboxing support: $HAVE_X11
 
 EOF
-
-if test "$HAVE_LTS" = -DHAVE_LTS; then
-	cat <<\EOF
-*********************************************************
-*    Warning: Long-term support (LTS) was enabled!      *
-*    Most compile-time options have been rewritten!     *
-*********************************************************
-
-EOF
-fi

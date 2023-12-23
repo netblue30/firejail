@@ -349,13 +349,6 @@ static const char *const compiletime_support =
 		"disabled"
 #endif
 
-	"\n\t- firetunnel support is "
-#ifdef HAVE_FIRETUNNEL
-		"enabled"
-#else
-		"disabled"
-#endif
-
 	"\n\t- IDS support is "
 #ifdef HAVE_IDS
 		"enabled"

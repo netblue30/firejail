@@ -213,10 +213,6 @@ _firejail_args=(
     '--ls=-[list files in sandbox container name|pid]: :_all_firejails'
 #endif
 
-#ifdef HAVE_FIRETUNNEL
-    '--tunnel=-[connect the sandbox to a tunnel created by firetunnel utility]: :'
-#endif
-
 #ifdef HAVE_NETWORK
     '--bandwidth=-[set bandwidth limits name|pid]: :_all_firejails'
     '--defaultgw=[configure default gateway]: :'

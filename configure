@@ -650,7 +650,6 @@ ac_includes_default="\
 ac_header_c_list=
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
-HAVE_LTS
 HAVE_ONLY_SYSCFG_PROFILES
 HAVE_FORCE_NONEWPRIVS
 HAVE_CONTRIB_INSTALL
@@ -666,7 +665,6 @@ HAVE_GLOBALCFG
 HAVE_CHROOT
 HAVE_PRIVATE_LIB
 HAVE_PRIVATE_HOME
-HAVE_FIRETUNNEL
 HAVE_GAWK
 HAVE_MAN
 HAVE_USERTMPFS
@@ -743,7 +741,6 @@ enable_dbusproxy
 enable_output
 enable_usertmpfs
 enable_man
-enable_firetunnel
 enable_private_home
 enable_private_lib
 enable_chroot
@@ -759,7 +756,6 @@ enable_gcov
 enable_contrib_install
 enable_force_nonewprivs
 enable_only_syscfg_profiles
-enable_lts
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1403,7 +1399,6 @@ Optional Features:
   --disable-output        disable --output logging
   --disable-usertmpfs     disable tmpfs as regular user
   --disable-man           disable man pages
-  --enable-firetunnel     enable firetunnel
   --disable-private-home  disable private home feature
   --disable-private-lib   disable private lib feature
   --disable-chroot        disable chroot
@@ -1424,7 +1419,6 @@ Optional Features:
                           enable force nonewprivs
   --enable-only-syscfg-profiles
                           disable profiles in $HOME/.config/firejail
-  --enable-lts            enable long-term support software version (LTS)
 
 Some influential environment variables:
   CC          C compiler command
@@ -3913,21 +3907,6 @@ fi
 
 fi
 
-HAVE_FIRETUNNEL=""
-
-# Check whether --enable-firetunnel was given.
-if test ${enable_firetunnel+y}
-then :
-  enableval=$enable_firetunnel;
-fi
-
-if test "x$enable_firetunnel" = "xyes"
-then :
-
-	HAVE_FIRETUNNEL="-DHAVE_FIRETUNNEL"
-
-fi
-
 HAVE_PRIVATE_HOME=""
 
 # Check whether --enable-private-home was given.
@@ -4152,39 +4131,6 @@ if test "x$enable_only_syscfg_profiles" = "xyes"
 then :
 
 	HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
-
-fi
-
-HAVE_LTS=""
-
-# Check whether --enable-lts was given.
-if test ${enable_lts+y}
-then :
-  enableval=$enable_lts;
-fi
-
-if test "x$enable_lts" = "xyes"
-then :
-
-	HAVE_LTS="-DHAVE_LTS"
-	HAVE_LANDLOCK=""
-	HAVE_IDS=""
-	HAVE_DBUSPROXY=""
-	HAVE_OVERLAYFS=""
-	HAVE_OUTPUT=""
-	HAVE_USERTMPFS=""
-	HAVE_MAN="-DHAVE_MAN"
-	HAVE_FIRETUNNEL=""
-	HAVE_PRIVATE_HOME=""
-	HAVE_PRIVATE_LIB=""
-	HAVE_CHROOT=""
-	HAVE_GLOBALCFG=""
-	HAVE_USERNS=""
-	HAVE_X11=""
-	HAVE_FILE_TRANSFER=""
-	HAVE_SUID="-DHAVE_SUID"
-	BUSYBOX_WORKAROUND="no"
-	HAVE_CONTRIB_INSTALL="no"
 
 fi
 
@@ -5384,11 +5330,9 @@ Features:
    disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
    enable --output logging: $HAVE_OUTPUT
    file transfer support: $HAVE_FILE_TRANSFER
-   firetunnel support: $HAVE_FIRETUNNEL
    global config: $HAVE_GLOBALCFG
    IDS support: $HAVE_IDS
    Landlock support: $HAVE_LANDLOCK
-   LTS: $HAVE_LTS
    manpage support: $HAVE_MAN
    network: $HAVE_NETWORK
    overlayfs support: $HAVE_OVERLAYFS
@@ -5399,14 +5343,4 @@ Features:
    X11 sandboxing support: $HAVE_X11
 
 EOF
-
-if test "$HAVE_LTS" = -DHAVE_LTS; then
-	cat <<\EOF
-*********************************************************
-*    Warning: Long-term support (LTS) was enabled!      *
-*    Most compile-time options have been rewritten!     *
-*********************************************************
-
-EOF
-fi
 

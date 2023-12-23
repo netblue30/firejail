@@ -100,7 +100,7 @@ skip:;
 	assert(paths[i] == NULL);
 	path_cnt = i;
 	if (arg_debug)
-		printf("Number of path entries: %d\n", path_cnt);
+		printf("Number of path entries: %u\n", path_cnt);
 
 	// path_cnt may be too big now, if entries were skipped above
 	path_cnt = i+1;

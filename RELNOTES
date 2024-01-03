@@ -50,6 +50,7 @@ firejail (0.9.73) baseline; urgency=low
   * build: codespell improvements (#5955)
   * build: add missing makefile dep & syntax improvements (#5956)
   * build: sort.py: use case-sensitive sorting (#6070)
+  * build: mkrpm.sh: append instead of override configure args (#6126)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
@@ -61,6 +62,7 @@ firejail (0.9.73) baseline; urgency=low
   * ci: whitelist paths, reorganize workflows & speed-up tests (#5960)
   * ci: fix dependabot duplicated workflow runs (#5984)
   * ci: allow running workflows manually (#6026)
+  * ci: re-enable sort.py (#6104)
   * contrib/syntax: remove 'text/plain' from firejail-profile.lang.in (#6057
     #6059)
   * contrib/vim: match profile files more broadly (#5850)

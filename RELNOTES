@@ -1,6 +1,5 @@
 firejail (0.9.73) baseline; urgency=low
   * work in progress
-  * removed LTS and FIRETUNNEL support
   * feature: Add "keep-shell-rc" command and option (#1127 #5634)
   * feature: Print the argument when failing with "too long arguments" (#5677)
   * feature: a random hostname is assigned to each sandbox unless
@@ -24,6 +23,7 @@ firejail (0.9.73) baseline; urgency=low
   * modif: drop deprecated 'shell' option references (#5894)
   * modif: keep pipewire group unless nosound is used (#5992 #5993)
   * modif: Lookup xauth in PATH (#6006 #6087)
+  * removal: LTS and FIRETUNNEL support
   * bugfix: qutebrowser: links will not open in the existing instance (#5601
     #5618)
   * bugfix: fix --hostname and --hosts-file commands

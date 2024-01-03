@@ -22,7 +22,6 @@ firejail (0.9.73) baseline; urgency=low
   * modif: improve errExit error messages (#5871)
   * modif: drop deprecated 'shell' option references (#5894)
   * modif: keep pipewire group unless nosound is used (#5992 #5993)
-  * modif: Lookup xauth in PATH (#6006 #6087)
   * removal: LTS and FIRETUNNEL support
   * bugfix: qutebrowser: links will not open in the existing instance (#5601
     #5618)

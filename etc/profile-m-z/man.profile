@@ -12,6 +12,9 @@ blacklist ${RUNUSER}
 noblacklist ${HOME}/.local/share/man
 noblacklist ${HOME}/.rustup
 
+# Allow perl (blacklisted by disable-interpreters.inc)
+include allow-perl.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

@@ -1162,6 +1162,7 @@ int main(int argc, char **argv, char **envp) {
 		fprintf(stderr, "Error: Firejail needs to be SUID.\n");
 		fprintf(stderr, "Assuming firejail is installed in /usr/bin, execute the following command as root:\n");
 		fprintf(stderr, "  chmod u+s /usr/bin/firejail\n");
+		exit(1);
 	}
 #endif
 

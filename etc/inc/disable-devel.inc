@@ -47,8 +47,6 @@ blacklist ${PATH}/scan-build
 
 # GCC
 blacklist ${PATH}/*-g++*
-blacklist ${PATH}/*-g++*
-blacklist ${PATH}/*-gcc*
 blacklist ${PATH}/*-gcc*
 blacklist ${PATH}/as
 blacklist ${PATH}/c++*

@@ -314,17 +314,19 @@ static void set_links_homedir(const char *homedir) {
 		if (!exec)
 			errExit("strdup");
 		char *ptr = strrchr(exec, '.');
-		if (!ptr) {
-			free(exec);
-			continue;
-		}
-		if (strcmp(ptr, ".profile") != 0) {
-			free(exec);
-			continue;
-		}
+		if (!ptr)
+			goto next;
+		if (strcmp(ptr, ".profile") != 0)
+			goto next;
 
 		*ptr = '\0';
+		if (in_ignorelist(exec)) {
+			printf("   %s ignored\n", exec);
+			goto next;
+		}
+
 		set_file(exec, FIREJAIL_EXEC);
+next:
 		free(exec);
 	}
 	closedir(dir);

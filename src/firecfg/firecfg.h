@@ -50,6 +50,8 @@
 
 // main.c
 extern int arg_debug;
+int in_ignorelist(const char *const str);
+void parse_config_all(int do_symlink);
 
 // util.c
 int which(const char *program);

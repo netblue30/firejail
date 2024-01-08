@@ -25,6 +25,7 @@
 int arg_debug = 0;
 char *arg_bindir = "/usr/local/bin";
 int arg_guide = 0;
+int done_config = 0;
 
 static const char *const usage_str =
 	"Firecfg is the desktop configuration utility for Firejail software. The utility\n"
@@ -166,7 +167,7 @@ static int append_ignorelist(const char *const str) {
 	return 1;
 }
 
-static int in_ignorelist(const char *const str) {
+int in_ignorelist(const char *const str) {
 	assert(str);
 	int i;
 	for (i = 0; i < ignorelist_len; i++) {
@@ -202,8 +203,11 @@ static void set_file(const char *name, const char *firejail_exec) {
 }
 
 // parse a single config file
-static void set_links_firecfg(const char *cfgfile) {
-	printf("Configuring symlinks in %s based on %s\n", arg_bindir, cfgfile);
+static void parse_config_file(const char *cfgfile, int do_symlink) {
+	if (do_symlink)
+		printf("Configuring symlinks in %s\n", arg_bindir);
+
+	printf("Parsing %s\n", cfgfile);
 
 	FILE *fp = fopen(cfgfile, "r");
 	if (!fp) {
@@ -246,11 +250,15 @@ static void set_links_firecfg(const char *cfgfile) {
 			continue;
 		}
 
-		// set link
-		if (!in_ignorelist(start))
-			set_file(start, FIREJAIL_EXEC);
-		else
+		// skip ignored programs
+		if (in_ignorelist(start)) {
 			printf("   %s ignored\n", start);
+			continue;
+		}
+
+		// set link
+		if (do_symlink)
+			set_file(start, FIREJAIL_EXEC);
 	}
 
 	fclose(fp);
@@ -258,7 +266,7 @@ static void set_links_firecfg(const char *cfgfile) {
 }
 
 // parse all config files matching pattern
-static void set_links_firecfg_glob(const char *pattern) {
+static void parse_config_glob(const char *pattern, int do_symlink) {
 	printf("Looking for config files in %s\n", pattern);
 
 	glob_t globbuf;
@@ -274,9 +282,21 @@ static void set_links_firecfg_glob(const char *pattern) {
 
 	size_t i;
 	for (i = 0; i < globbuf.gl_pathc; i++)
-		set_links_firecfg(globbuf.gl_pathv[i]);
+		parse_config_file(globbuf.gl_pathv[i], do_symlink);
 out:
 	globfree(&globbuf);
+}
+
+// parse all config files
+// do_symlink 0 just builds the ignorelist, 1 creates the symlinks
+void parse_config_all(int do_symlink) {
+	if (done_config)
+		return;
+
+	parse_config_glob(FIRECFG_CONF_GLOB, do_symlink);
+	parse_config_file(FIRECFG_CFGFILE, do_symlink);
+
+	done_config = 1;
 }
 
 // parse ~/.config/firejail/ directory
@@ -520,11 +540,8 @@ int main(int argc, char **argv) {
 	// clear all symlinks
 	clean();
 
-	// set new symlinks based on .conf files
-	set_links_firecfg_glob(FIRECFG_CONF_GLOB);
-
-	// set new symlinks based on firecfg.config
-	set_links_firecfg(FIRECFG_CFGFILE);
+	// set new symlinks based on config files
+	parse_config_all(1);
 
 	if (getuid() == 0) {
 		// add user to firejail access database - only for root

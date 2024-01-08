@@ -168,7 +168,7 @@ Configuration file syntax:
 A line that starts with \fB#\fR is considered a comment.
 .br
 A line that starts with \fB!PROGRAM\fR means to ignore "PROGRAM" when creating
-symlinks.
+symlinks and fixing .desktop files.
 .br
 A line that starts with anything else is considered to be the name of an
 executable and firecfg will attempt to create a symlink for it.

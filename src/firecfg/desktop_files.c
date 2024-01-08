@@ -118,6 +118,9 @@ void fix_desktop_files(const char *homedir) {
 		exit(1);
 	}
 
+	// build ignorelist
+	parse_config_all(0);
+
 	// destination
 	// create ~/.local/share/applications directory if necessary
 	char *user_apps_dir;
@@ -173,8 +176,25 @@ void fix_desktop_files(const char *homedir) {
 			continue;
 
 		// skip if not .desktop file
-		if (strstr(filename, ".desktop") != (filename + strlen(filename) - 8))
+		char *exec = strdup(filename);
+		if (!exec)
+			errExit("strdup");
+		char *ptr = strstr(exec, ".desktop");
+		if (ptr == NULL || *(ptr + 8) != '\0') {
+			printf("   %s skipped (not a .desktop file)\n", exec);
+			free(exec);
 			continue;
+		}
+
+		// skip if program is in ignorelist
+		*ptr = '\0';
+		if (in_ignorelist(exec)) {
+			printf("   %s ignored\n", exec);
+			free(exec);
+			continue;
+		}
+
+		free(exec);
 
 		// skip links - Discord on Arch #4235 seems to be a symlink to /opt directory
 //		if (is_link(filename))
@@ -220,7 +240,7 @@ void fix_desktop_files(const char *homedir) {
 		}
 
 		// get executable name
-		char *ptr = strstr(buf,"\nExec=");
+		ptr = strstr(buf,"\nExec=");
 		if (!ptr || strlen(ptr) < 7) {
 			if (arg_debug)
 				printf("   %s - skipped: wrong format?\n", filename);

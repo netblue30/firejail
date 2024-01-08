@@ -163,7 +163,8 @@ void fix_desktop_files(const char *homedir) {
 	// copy
 	struct dirent *entry;
 	while ((entry = readdir(dir)) != NULL) {
-		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+		const char *filename = entry->d_name;
+		if (strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0)
 			continue;
 
 		// skip if not regular file or link
@@ -172,10 +173,8 @@ void fix_desktop_files(const char *homedir) {
 			continue;
 
 		// skip if not .desktop file
-		if (strstr(entry->d_name,".desktop") != (entry->d_name+strlen(entry->d_name)-8))
+		if (strstr(filename, ".desktop") != (filename + strlen(filename) - 8))
 			continue;
-
-		char *filename = entry->d_name;
 
 		// skip links - Discord on Arch #4235 seems to be a symlink to /opt directory
 //		if (is_link(filename))

@@ -7,7 +7,7 @@ This is the Debian/Ubuntu prepackaged version of firejail.
     and networking stack isolation, and it runs on any recent Linux system. It
     includes a sandbox profile for Mozilla Firefox.
 
-    Copyright (C) 2014-2023 Firejail Authors (see README file for more details)
+    Copyright (C) 2014-2024 Firejail Authors (see README file for more details)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

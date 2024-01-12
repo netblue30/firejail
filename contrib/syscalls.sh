@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2023 Firejail Authors
+# Copyright (C) 2014-2024 Firejail Authors
 # License GPL v2
 
 STRACE_OUTPUT_FILE="$(pwd)/strace_output.txt"

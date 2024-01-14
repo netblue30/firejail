@@ -41,7 +41,7 @@
 
 #define errExit(msg) do { \
 	char msgout[500]; \
-	snprintf(msgout, 500, "Error %s/%s:%d %s(): %s", \
+	snprintf(msgout, 500, "Error %s/%s:%d: %s: %s", \
 	         MOD_DIR, __FILE__, __LINE__, __func__, msg); \
 	perror(msgout); \
 	exit(1); \

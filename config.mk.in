@@ -76,6 +76,7 @@ MANFLAGS = \
 # https://www.gnu.org/software/automake/manual/1.16.5/html_node/User-Variables.html
 CC=@CC@
 CFLAGS=@CFLAGS@
+CPPFLAGS=@CPPFLAGS@
 LDFLAGS=@LDFLAGS@
 
 # Project variables

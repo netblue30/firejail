@@ -13,7 +13,7 @@ OBJS := $(SRCS:.c=.o) $(EXTRA_OBJS)
 all: $(TARGET)
 
 %.o : %.c $(HDRS) $(ROOT)/config.mk
-	$(CC) $(PROG_CFLAGS) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(PROG_CFLAGS) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 $(PROG): $(OBJS) $(ROOT)/config.mk
 	$(CC) $(PROG_LDFLAGS) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)

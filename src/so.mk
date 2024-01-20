@@ -13,7 +13,7 @@ OBJS := $(SRCS:.c=.o) $(EXTRA_OBJS)
 all: $(TARGET)
 
 %.o : %.c $(HDRS) $(ROOT)/config.mk
-	$(CC) $(SO_CFLAGS) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(SO_CFLAGS) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 $(SO): $(OBJS) $(ROOT)/config.mk
 	$(CC) $(SO_LDFLAGS) -shared $(LDFLAGS) -o $@ $(OBJS) -ldl

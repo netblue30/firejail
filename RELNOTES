@@ -9,7 +9,8 @@ firejail (0.9.73) baseline; urgency=low
   * feature: add seccomp filters for --restrict-namespaces
   * feature: stats support for --nettrace
   * feature: add doas support in firecfg and jailcheck (#5899 #5900)
-  * feature: firecfg: add firecfg.d & add ignore command (#2097 #5876)
+  * feature: firecfg: add firecfg.d & add ignore command (#2097 #5245 #5876
+    #6153)
   * feature: expand simple macros in more commands (--chroot= --netfilter=
     --netfilter6= --trace=) (#6032 #6109)
   * feature: add Landlock support (#6078 #6115 #6125)
@@ -55,6 +56,8 @@ firejail (0.9.73) baseline; urgency=low
   * build: add missing makefile dep & syntax improvements (#5956)
   * build: sort.py: use case-sensitive sorting (#6070)
   * build: mkrpm.sh: append instead of override configure args (#6126)
+  * build: use CPPFLAGS instead of INCLUDE in compile targets (#6159)
+  * build: use full paths on compile/link targets (#6158)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)

@@ -2,8 +2,9 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
-MOD_DIR = src/fnetlock
-PROG = fnetlock
+MOD = fnetlock
+MOD_DIR = $(ROOT)/src/$(MOD)
+PROG = $(MOD_DIR)/$(MOD)
 TARGET = $(PROG)
 
 include $(ROOT)/src/prog.mk

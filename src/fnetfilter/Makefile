@@ -2,8 +2,9 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
-MOD_DIR = src/fnetfilter
-PROG = fnetfilter
+MOD = fnetfilter
+MOD_DIR = $(ROOT)/src/$(MOD)
+PROG = $(MOD_DIR)/$(MOD)
 TARGET = $(PROG)
 
 EXTRA_HDRS = ../include/common.h ../include/syscall.h

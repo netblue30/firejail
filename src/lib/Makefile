@@ -2,7 +2,8 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
-MOD_DIR = src/lib
+MOD = lib
+MOD_DIR = $(ROOT)/src/$(MOD)
 TARGET = lib
 
 include $(ROOT)/src/prog.mk

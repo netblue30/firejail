@@ -2,8 +2,9 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
-MOD_DIR = src/jailcheck
-PROG = jailcheck
+MOD = jailcheck
+MOD_DIR = $(ROOT)/src/$(MOD)
+PROG = $(MOD_DIR)/$(MOD)
 TARGET = $(PROG)
 
 EXTRA_HDRS = ../include/common.h ../include/pid.h

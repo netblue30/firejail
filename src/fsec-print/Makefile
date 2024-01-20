@@ -2,8 +2,9 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
-MOD_DIR = src/fsec-print
-PROG = fsec-print
+MOD = fsec-print
+MOD_DIR = $(ROOT)/src/$(MOD)
+PROG = $(MOD_DIR)/$(MOD)
 TARGET = $(PROG)
 
 EXTRA_HDRS = ../include/common.h ../include/seccomp.h ../include/syscall.h

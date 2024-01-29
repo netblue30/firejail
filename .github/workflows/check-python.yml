@@ -56,3 +56,5 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@b7bf0a3ed3ecfa44160715d7c442788f65f0f923
+      with:
+        category: "/language:python"

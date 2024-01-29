@@ -8,6 +8,7 @@
 
 build_ubuntu_package:
     image: ubuntu:rolling
+    timeout: 10 minutes
     variables:
         DEBIAN_FRONTEND: noninteractive
     script:
@@ -24,6 +25,7 @@ build_ubuntu_package:
 
 build_debian_package:
     image: debian:buster
+    timeout: 10 minutes
     variables:
         DEBIAN_FRONTEND: noninteractive
     script:
@@ -40,6 +42,7 @@ build_debian_package:
 
 build_redhat_package:
     image: almalinux:latest
+    timeout: 10 minutes
     script:
         - dnf update -y
         - dnf install -y rpm-build gcc make
@@ -51,6 +54,7 @@ build_redhat_package:
 
 build_fedora_package:
     image: fedora:latest
+    timeout: 10 minutes
     script:
         - dnf update -y
         - dnf install -y rpm-build gcc make
@@ -62,6 +66,7 @@ build_fedora_package:
 
 build_src_package:
     image: alpine:latest
+    timeout: 10 minutes
     script:
         - apk update
         - apk upgrade
@@ -74,6 +79,7 @@ build_src_package:
 
 build_no_apparmor:
     image: ubuntu:latest
+    timeout: 10 minutes
     variables:
         DEBIAN_FRONTEND: noninteractive
     script:
@@ -92,6 +98,7 @@ build_no_apparmor:
 
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest
+    timeout: 10 minutes
     variables:
         DEBFULLNAME: "$GITLAB_USER_NAME"
         DEBEMAIL: "$GITLAB_USER_EMAIL"

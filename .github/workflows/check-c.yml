@@ -43,6 +43,7 @@ permissions:  # added using https://github.com/step-security/secure-workflows
 jobs:
   scan-build:
     runs-on: ubuntu-22.04
+    timeout-minutes: 10
     steps:
     - name: Harden Runner
       uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
@@ -74,6 +75,7 @@ jobs:
 
   cppcheck:
     runs-on: ubuntu-22.04
+    timeout-minutes: 10
     steps:
     - name: Harden Runner
       uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
@@ -101,6 +103,7 @@ jobs:
   # scan all files also with older cppcheck version from ubuntu 20.04.
   cppcheck_old:
     runs-on: ubuntu-20.04
+    timeout-minutes: 10
     steps:
     - name: Harden Runner
       uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895
@@ -129,6 +132,7 @@ jobs:
       contents: read
       security-events: write
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
     - name: Harden Runner

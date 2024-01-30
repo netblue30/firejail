@@ -7,7 +7,6 @@ MOD_DIR = $(ROOT)/src/$(MOD)
 PROG = $(MOD_DIR)/$(MOD)
 TARGET = $(PROG)
 
-EXTRA_HDRS = ../include/common.h ../include/libnetlink.h
 EXTRA_OBJS = ../lib/common.o ../lib/libnetlink.o
 
 include $(ROOT)/src/prog.mk

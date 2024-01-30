@@ -81,6 +81,7 @@ LDFLAGS=@LDFLAGS@
 
 # Project variables
 EXTRA_CFLAGS  =@EXTRA_CFLAGS@
+DEPS_CFLAGS   =@DEPS_CFLAGS@
 COMMON_CFLAGS = \
 	-ggdb -O2 -DVERSION='"$(VERSION)"' \
 	-Wall -Wextra $(HAVE_FATAL_WARNINGS) \
@@ -88,16 +89,18 @@ COMMON_CFLAGS = \
 	-fstack-protector-all -D_FORTIFY_SOURCE=2 \
 	-DPREFIX='"$(prefix)"' -DSYSCONFDIR='"$(sysconfdir)/firejail"' \
 	-DLIBDIR='"$(libdir)"' -DBINDIR='"$(bindir)"' \
-	-DVARDIR='"/var/lib/firejail"' \
+	-DVARDIR='"/var/lib/firejail"'
 
 PROG_CFLAGS = \
 	$(COMMON_CFLAGS) \
 	$(HAVE_GCOV) $(MANFLAGS) \
 	$(EXTRA_CFLAGS) \
+	$(DEPS_CFLAGS) \
 	-fPIE
 
 SO_CFLAGS = \
 	$(COMMON_CFLAGS) \
+	$(DEPS_CFLAGS) \
 	-fPIC
 
 EXTRA_LDFLAGS =@EXTRA_LDFLAGS@
@@ -105,4 +108,4 @@ PROG_LDFLAGS  = -Wl,-z,relro -Wl,-z,now -fPIE -pie $(EXTRA_LDFLAGS)
 SO_LDFLAGS    = -Wl,-z,relro -Wl,-z,now -fPIC
 LIBS =@LIBS@
 
-CLEANFILES = *.o *.gcov *.gcda *.gcno *.plist
+CLEANFILES = *.d *.o *.gcov *.gcda *.gcno *.plist

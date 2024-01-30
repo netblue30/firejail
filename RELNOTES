@@ -13,7 +13,7 @@ firejail (0.9.73) baseline; urgency=low
     #6153)
   * feature: expand simple macros in more commands (--chroot= --netfilter=
     --netfilter6= --trace=) (#6032 #6109)
-  * feature: add Landlock support (#6078 #6115 #6125)
+  * feature: add Landlock support (#5269 #6078 #6115 #6125)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)
@@ -58,6 +58,7 @@ firejail (0.9.73) baseline; urgency=low
   * build: mkrpm.sh: append instead of override configure args (#6126)
   * build: use CPPFLAGS instead of INCLUDE in compile targets (#6159)
   * build: use full paths on compile/link targets (#6158)
+  * build: automatically generate header dependencies (#6164)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)

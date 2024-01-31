@@ -1,6 +1,7 @@
 # Firejail profile for tesseract
 # Description: An OCR program
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include tesseract.local
 # Persistent global definitions

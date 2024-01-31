@@ -5,6 +5,7 @@
 *.swp
 *.deb
 *.rpm
+*.tar.xz
 *.gcda
 *.gcno
 *.gz
@@ -20,7 +21,6 @@ config.status
 contrib/syntax/files/example
 contrib/syntax/files/firejail-profile.lang
 contrib/syntax/files/firejail.vim
-firejail-*.tar.xz
 src/fnettrace-dns/fnettrace-dns
 src/fnettrace-sni/fnettrace-sni
 src/fnettrace-icmp/fnettrace-icmp

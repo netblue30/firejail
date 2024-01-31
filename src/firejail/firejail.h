@@ -492,7 +492,7 @@ void tree(void);
 void top(void);
 
 // usage.c
-void print_version(void);
+void print_version(FILE *stream);
 void print_version_full(void);
 void usage(void);
 

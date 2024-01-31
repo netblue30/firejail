@@ -320,16 +320,16 @@ static const char *const usage_str =
 	"License GPL version 2 or later\n"
 	"Homepage: https://firejail.wordpress.com\n";
 
-void print_version(void) {
-	printf("firejail version %s\n\n", VERSION);
+void print_version(FILE *stream) {
+	fprintf(stream, "firejail version %s\n\n", VERSION);
 }
 
 void print_version_full(void) {
-	print_version();
+	print_version(stdout);
 	print_compiletime_support();
 }
 
 void usage(void) {
-	print_version();
+	print_version(stdout);
 	puts(usage_str);
 }

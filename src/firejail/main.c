@@ -2957,10 +2957,10 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
-	// Note: Only attempt to print non-debug information to stdout after
-	// all profiles have been loaded (because a profile may set arg_quiet)
+	// Note: Only attempt to print non-debug information after all profiles
+	// have been loaded (because a profile may set arg_quiet)
 	if (!arg_quiet)
-		print_version();
+		print_version(stderr);
 
 	// block X11 sockets
 	if (arg_x11_block)

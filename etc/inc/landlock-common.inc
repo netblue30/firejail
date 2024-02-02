@@ -4,7 +4,7 @@ include landlock-common.local
 
 landlock.read /          # whole system read
 landlock.read /proc
-landlock.special /       # sockets etc.
+landlock.makeipc /       # sockets etc.
 
 # write access
 landlock.write ${HOME}

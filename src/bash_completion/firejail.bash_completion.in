@@ -53,7 +53,11 @@ _firejail()
             _filedir
             return 0
             ;;
-        --landlock.special)
+        --landlock.makeipc)
+            _filedir
+            return 0
+            ;;
+        --landlock.makedev)
             _filedir
             return 0
             ;;

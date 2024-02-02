@@ -381,7 +381,7 @@ scan-build: clean
 codespell:
 	@printf 'Running %s...\n' $@
 	@codespell --ignore-regex 'UE|als|chage|creat|doas|ether|isplay|readby|[Ss]hotcut' \
-	  -S *.gz,*.o,*.so \
+	  -S *.d,*.gz,*.o,*.so \
 	  -S COPYING,m4 \
 	  -S ./contrib/syscalls.sh \
 	  .

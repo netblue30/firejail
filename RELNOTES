@@ -266,7 +266,7 @@ firejail (0.9.68) baseline; urgency=low
  -- netblue30 <netblue30@yahoo.com>  Sun, 6 Feb 2022 09:00:00 -0500
 
 firejail (0.9.66) baseline; urgency=low
-  * deprecated --audit options, relpaced by jailcheck utility
+  * deprecated --audit options, replaced by jailcheck utility
   * deprecated follow-symlink-as-user from firejail.config
   * new firejail.config settings: private-bin, private-etc
   * new firejail.config settings: private-opt, private-srv

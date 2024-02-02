@@ -57,7 +57,7 @@ static int check_profile(const char *name, const char *homedir) {
 }
 
 
-// look for a profile file in /etc/firejail diectory and in homedir/.config/firejail directory
+// look for a profile file in /etc/firejail and ~/.config/firejail
 static int have_profile(const char *filename, const char *homedir) {
 	assert(filename);
 	assert(homedir);

@@ -380,7 +380,7 @@ scan-build: clean
 .PHONY: codespell
 codespell:
 	@printf 'Running %s...\n' $@
-	@codespell --ignore-regex 'UE|als|chage|creat|doas|ether|isplay|readby|[Ss]hotcut' \
+	@codespell --ignore-regex 'Manuel|UE|als|chage|creat|doas|ether|isplay|readby|[Ss]hotcut' \
 	  -S *.d,*.gz,*.o,*.so \
 	  -S COPYING,m4 \
 	  -S ./contrib/syscalls.sh \

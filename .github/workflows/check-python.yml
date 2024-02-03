@@ -27,6 +27,7 @@ jobs:
       contents: read
       security-events: write
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
     - name: Harden Runner

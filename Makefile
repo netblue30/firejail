@@ -173,21 +173,10 @@ clean:
 	$(MAKE) -C src/man clean
 	$(MAKE) -C test clean
 	rm -f $(SECCOMP_FILTERS)
-	rm -f firejail*.rpm
 	rm -f $(SYNTAX_FILES)
-	rm -f src/fnettrace/static-ip-map
-	rm -f test/utils/index.html*
-	rm -f test/utils/wget-log
-	rm -f test/utils/firejail-test-file*
-	rm -f test/utils/lstesting
-	rm -f test/environment/index.html*
-	rm -f test/environment/wget-log*
-	rm -fr test/environment/-testdir
-	rm -f test/environment/logfile*
-	rm -f test/environment/index.html
-	rm -f test/environment/wget-log
-	rm -f test/sysutils/firejail_t*
-	cd test/compile; ./compile.sh --clean; cd ../..
+	rm -fr $(TARNAME)-$(VERSION) $(TARNAME)-$(VERSION).tar.xz
+	rm -f $(TARNAME)*.deb
+	rm -f $(TARNAME)*.rpm
 
 .PHONY: distclean
 distclean: clean
@@ -339,7 +328,6 @@ DISTFILES_TEST = \
 
 .PHONY: dist
 dist: clean config.mk
-	rm -fr $(TARNAME)-$(VERSION) $(TARNAME)-$(VERSION).tar.xz
 	mkdir -p $(TARNAME)-$(VERSION)/test
 	cp -a $(DISTFILES) $(TARNAME)-$(VERSION)
 	cp -a $(DISTFILES_TEST) $(TARNAME)-$(VERSION)/test

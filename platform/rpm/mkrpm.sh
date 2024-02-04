@@ -8,6 +8,8 @@
 # Builds rpms in a temporary directory then places the result in the
 # current working directory.
 
+set -e
+
 # shellcheck source=config.sh
 . "$(dirname "$0")/../../config.sh" || exit 1
 

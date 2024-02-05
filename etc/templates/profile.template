@@ -140,7 +140,8 @@ include globals.local
 # Landlock commands
 ##landlock.read PATH
 ##landlock.write PATH
-##landlock.special PATH
+##landlock.makeipc PATH
+##landlock.makedev PATH
 ##landlock.execute PATH
 #include landlock-common.inc
 

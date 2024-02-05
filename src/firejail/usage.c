@@ -137,7 +137,8 @@ static const char *const usage_str =
 	"    --landlock.enforce - enforce the Landlock ruleset.\n"
 	"    --landlock.read=path - add a read access rule for the path to the Landlock ruleset.\n"
 	"    --landlock.write=path - add a write access rule for the path to the Landlock ruleset.\n"
-	"    --landlock.special=path - add an access rule for the path to the Landlock ruleset for creating block/char devices, named pipes and sockets.\n"
+	"    --landlock.makeipc=path - add an access rule for the path to the Landlock ruleset for creating named pipes and sockets.\n"
+	"    --landlock.makedev=path - add an access rule for the path to the Landlock ruleset for creating block/char devices.\n"
 	"    --landlock.execute=path - add an execute access rule for the path to the Landlock ruleset.\n"
 #endif
 	"    --list - list all sandboxes.\n"

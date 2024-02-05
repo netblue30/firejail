@@ -1086,8 +1086,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		ll_add_profile(LL_WRITE, ptr + 15);
 		return 0;
 	}
-	if (strncmp(ptr, "landlock.special ", 17) == 0) {
-		ll_add_profile(LL_SPECIAL, ptr + 17);
+	if (strncmp(ptr, "landlock.makeipc ", 17) == 0) {
+		ll_add_profile(LL_MAKEIPC, ptr + 17);
+		return 0;
+	}
+	if (strncmp(ptr, "landlock.makedev ", 17) == 0) {
+		ll_add_profile(LL_MAKEDEV, ptr + 17);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.execute ", 17) == 0) {

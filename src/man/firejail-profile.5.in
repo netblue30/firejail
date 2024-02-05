@@ -522,10 +522,15 @@ rule for path.
 Create a Landlock ruleset (if it doesn't already exist) and add a write access
 rule for path.
 .TP
-\fBlandlock.special path
+\fBlandlock.makeipc path
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
-allows the creation of block devices, character devices, named pipes (FIFOs)
-and Unix domain sockets beneath given path.
+allows the creation of named pipes (FIFOs) and Unix domain sockets beneath
+the given path.
+.TP
+\fBlandlock.makedev path
+Create a Landlock ruleset (if it doesn't already exist) and add a rule that
+allows the creation of block devices and character devices beneath the given
+path.
 .TP
 \fBlandlock.execute path
 Create a Landlock ruleset (if it doesn't already exist) and add an execution

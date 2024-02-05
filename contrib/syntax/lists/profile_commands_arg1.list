@@ -30,8 +30,9 @@ iprange
 join-or-start
 keep-fd
 landlock.execute
+landlock.makedev
+landlock.makeipc
 landlock.read
-landlock.special
 landlock.write
 mac
 mkdir

@@ -1,5 +1,6 @@
 firejail (0.9.73) baseline; urgency=low
   * work in progress
+  * security: fix sscanf rv checks (CodeQL) (#6184)
   * feature: Add "keep-shell-rc" command and option (#1127 #5634)
   * feature: Print the argument when failing with "too long arguments" (#5677)
   * feature: a random hostname is assigned to each sandbox unless
@@ -13,7 +14,7 @@ firejail (0.9.73) baseline; urgency=low
     #6153)
   * feature: expand simple macros in more commands (--chroot= --netfilter=
     --netfilter6= --trace=) (#6032 #6109)
-  * feature: add Landlock support (#5269 #6078 #6115 #6125)
+  * feature: add Landlock support (#5269 #6078 #6115 #6125 #6187)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)
@@ -23,7 +24,7 @@ firejail (0.9.73) baseline; urgency=low
   * modif: remove firemon --interface option (duplicating --net.print option)
   * modif: make private-lib a configure-time option, disabled by default (see
     --enable-private-lib) (#5727 #5732)
-  * modif: Improve --version/--help & print version on startup (#5829)
+  * modif: Improve --version/--help & print version on startup (#5829 #6172)
   * modif: improve errExit error messages (#5871)
   * modif: drop deprecated 'shell' option references (#5894)
   * modif: keep pipewire group unless nosound is used (#5992 #5993)
@@ -59,6 +60,7 @@ firejail (0.9.73) baseline; urgency=low
   * build: use CPPFLAGS instead of INCLUDE in compile targets (#6159)
   * build: use full paths on compile/link targets (#6158)
   * build: automatically generate header dependencies (#6164)
+  * build: improve main clean target (#6186)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
@@ -71,6 +73,7 @@ firejail (0.9.73) baseline; urgency=low
   * ci: fix dependabot duplicated workflow runs (#5984)
   * ci: allow running workflows manually (#6026)
   * ci: re-enable sort.py (#6104)
+  * ci: add timeout limits (#6178)
   * contrib/syntax: remove 'text/plain' from firejail-profile.lang.in (#6057
     #6059)
   * contrib/vim: match profile files more broadly (#5850)

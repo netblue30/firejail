@@ -115,7 +115,7 @@ static int ll_create_full_ruleset(void) {
 }
 
 static void _ll_fs(const char *allowed_path, const __u64 allowed_access,
-                  const char *caller) {
+                   const char *caller) {
 	if (ll_ruleset_fd == -1)
 		ll_ruleset_fd = ll_create_full_ruleset();
 
@@ -148,7 +148,7 @@ static void _ll_fs(const char *allowed_path, const __u64 allowed_access,
 }
 
 static void ll_fs(const char *allowed_path, const __u64 allowed_access,
-                 const char *caller) {
+                  const char *caller) {
 	char *expanded_path;
 
 	// ${PATH} macro is not included by default in expand_macros()

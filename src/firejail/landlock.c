@@ -106,7 +106,7 @@ static int ll_create_full_ruleset(void) {
 
 	int ruleset_fd = landlock_create_ruleset(&attr, sizeof(attr), 0);
 	if (ruleset_fd < 0) {
-		fprintf(stderr, "%s: Error: failed to create Landlock ruleset "
+		fprintf(stderr, "Error: %s: failed to create Landlock ruleset "
 		                "(abi=%d fs=%llx): %s\n",
 		        __func__, ll_abi, attr.handled_access_fs,
 		        strerror(errno));

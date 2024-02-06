@@ -47,7 +47,7 @@ build_redhat_package:
         - dnf update -y
         - dnf install -y rpm-build gcc make
         - ./ci/printenv.sh
-        - ./configure --prefix=/usr || (cat config.log; exit 1)
+        - ./configure || (cat config.log; exit 1)
         - make rpms
         - rpm -i firejail*.rpm
         - command -V firejail && firejail --version
@@ -59,7 +59,7 @@ build_fedora_package:
         - dnf update -y
         - dnf install -y rpm-build gcc make
         - ./ci/printenv.sh
-        - ./configure --prefix=/usr || (cat config.log; exit 1)
+        - ./configure || (cat config.log; exit 1)
         - make rpms
         - rpm -i firejail*.rpm
         - command -V firejail && firejail --version

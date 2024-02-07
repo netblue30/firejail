@@ -21,4 +21,4 @@ clean:
 	rm -f utils/index.html*
 	rm -f utils/lstesting
 	rm -f utils/wget-log
-	cd compile && ./compile.sh --clean
+	cd compile && (./compile.sh --clean || true)

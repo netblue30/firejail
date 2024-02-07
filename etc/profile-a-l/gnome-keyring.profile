@@ -1,7 +1,6 @@
 # Firejail profile for gnome-keyring
 # Description: Stores passwords and encryption keys
 # This file is overwritten after every install/update
-quiet
 # Persistent local customizations
 include gnome-keyring.local
 # Persistent global definitions
@@ -9,11 +8,15 @@ include globals.local
 
 noblacklist ${HOME}/.gnupg
 
+blacklist /tmp/.X11-unix
+blacklist ${RUNUSER}/wayland-*
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
+#include disable-X11.inc # x11 none
 include disable-xdg.inc
 
 mkdir ${HOME}/.gnupg
@@ -47,6 +50,7 @@ protocol unix,inet,inet6
 seccomp
 seccomp.block-secondary
 tracelog
+x11 none
 
 disable-mnt
 #private-bin gnome-keyrin*,secret-tool

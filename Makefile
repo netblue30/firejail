@@ -174,9 +174,9 @@ clean:
 	$(MAKE) -C test clean
 	rm -f $(SECCOMP_FILTERS)
 	rm -f $(SYNTAX_FILES)
-	rm -fr $(TARNAME)-$(VERSION) $(TARNAME)-$(VERSION).tar.xz
-	rm -f $(TARNAME)*.deb
-	rm -f $(TARNAME)*.rpm
+	rm -fr ./$(TARNAME)-$(VERSION) ./$(TARNAME)-$(VERSION).tar.xz
+	rm -f ./$(TARNAME)*.deb
+	rm -f ./$(TARNAME)*.rpm
 
 .PHONY: distclean
 distclean: clean

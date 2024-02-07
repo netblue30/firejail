@@ -47,7 +47,7 @@ tar --exclude='./.git*' --transform "s/^./${name}-${version}/" \
     -czf "${tmpdir}/SOURCES/${name}-${version}.tar.gz" .
 
 # Build the files (rpm, debug rpm and source rpm)
-rpmbuild --quiet --define "_topdir ${tmpdir}" -ba "${tmp_spec_file}"
+rpmbuild --define "_topdir ${tmpdir}" -ba "${tmp_spec_file}"
 
 # Copy the results to cwd
 mv "${tmpdir}/SRPMS"/*.rpm "${tmpdir}/RPMS"/*/*rpm .

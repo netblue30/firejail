@@ -1241,24 +1241,6 @@ Enforce the Landlock ruleset.
 Without it, the other Landlock commands have no effect.
 See the \fBLANDLOCK\fR section for more information.
 .TP
-\fB\-\-landlock.read=path
-Create a Landlock ruleset (if it doesn't already exist) and add a read access
-rule for path.
-.TP
-\fB\-\-landlock.write=path
-Create a Landlock ruleset (if it doesn't already exist) and add a write access
-rule for path.
-.TP
-\fB\-\-landlock.makeipc=path
-Create a Landlock ruleset (if it doesn't already exist) and add a rule that
-allows the creation of named pipes (FIFOs) and Unix domain sockets beneath
-the given path.
-.TP
-\fB\-\-landlock.makedev=path
-Create a Landlock ruleset (if it doesn't already exist) and add a rule that
-allows the creation of block devices and character devices beneath the given
-path.
-.TP
 \fB\-\-landlock.execute=path
 Create a Landlock ruleset (if it doesn't already exist) and add an execution
 permission rule for path.
@@ -1270,6 +1252,24 @@ Example:
 $ firejail \-\-landlock.read=/ \-\-landlock.write=/home
 \-\-landlock.execute=/usr \-\-landlock.enforce
 .PP
+.TP
+\fB\-\-landlock.makedev=path
+Create a Landlock ruleset (if it doesn't already exist) and add a rule that
+allows the creation of block devices and character devices beneath the given
+path.
+.TP
+\fB\-\-landlock.makeipc=path
+Create a Landlock ruleset (if it doesn't already exist) and add a rule that
+allows the creation of named pipes (FIFOs) and Unix domain sockets beneath
+the given path.
+.TP
+\fB\-\-landlock.read=path
+Create a Landlock ruleset (if it doesn't already exist) and add a read access
+rule for path.
+.TP
+\fB\-\-landlock.write=path
+Create a Landlock ruleset (if it doesn't already exist) and add a write access
+rule for path.
 #endif
 .TP
 \fB\-\-list

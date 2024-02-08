@@ -514,6 +514,20 @@ Enforce the Landlock ruleset.
 .PP
 Without it, the other Landlock commands have no effect.
 .TP
+\fBlandlock.execute path
+Create a Landlock ruleset (if it doesn't already exist) and add an execution
+permission rule for path.
+.TP
+\fBlandlock.makedev path
+Create a Landlock ruleset (if it doesn't already exist) and add a rule that
+allows the creation of block devices and character devices beneath the given
+path.
+.TP
+\fBlandlock.makeipc path
+Create a Landlock ruleset (if it doesn't already exist) and add a rule that
+allows the creation of named pipes (FIFOs) and Unix domain sockets beneath
+the given path.
+.TP
 \fBlandlock.read path
 Create a Landlock ruleset (if it doesn't already exist) and add a read access
 rule for path.
@@ -521,20 +535,6 @@ rule for path.
 \fBlandlock.write path
 Create a Landlock ruleset (if it doesn't already exist) and add a write access
 rule for path.
-.TP
-\fBlandlock.makeipc path
-Create a Landlock ruleset (if it doesn't already exist) and add a rule that
-allows the creation of named pipes (FIFOs) and Unix domain sockets beneath
-the given path.
-.TP
-\fBlandlock.makedev path
-Create a Landlock ruleset (if it doesn't already exist) and add a rule that
-allows the creation of block devices and character devices beneath the given
-path.
-.TP
-\fBlandlock.execute path
-Create a Landlock ruleset (if it doesn't already exist) and add an execution
-permission rule for path.
 #endif
 .TP
 \fBmemory-deny-write-execute

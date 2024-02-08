@@ -83,7 +83,7 @@ out:
 }
 
 static int ll_create_full_ruleset(void) {
-	struct landlock_ruleset_attr attr;
+	struct landlock_ruleset_attr attr = {0};
 	attr.handled_access_fs =
 		LANDLOCK_ACCESS_FS_EXECUTE |
 		LANDLOCK_ACCESS_FS_MAKE_BLOCK |
@@ -133,7 +133,7 @@ static void _ll_fs(const char *allowed_path, const __u64 allowed_access,
 		return;
 	}
 
-	struct landlock_path_beneath_attr target;
+	struct landlock_path_beneath_attr target = {0};
 	target.parent_fd = allowed_fd;
 	target.allowed_access = allowed_access;
 	int error = landlock_add_rule(ll_ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,

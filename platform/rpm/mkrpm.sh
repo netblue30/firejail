@@ -8,6 +8,8 @@
 # Builds rpms in a temporary directory then places the result in the
 # current working directory.
 
+set -e
+
 # shellcheck source=config.sh
 . "$(dirname "$0")/../../config.sh" || exit 1
 
@@ -36,9 +38,9 @@ trap cleanup EXIT
 
 # Create the spec file
 tmp_spec_file="${tmpdir}/SPECS/${name}.spec"
-sed -e "s/__NAME__/${name}/g" \
-    -e "s/__VERSION__/${version}/g" \
-    -e "s/__CONFIG_OPT__/${config_opt}/g" \
+sed -e "s|__NAME__|${name}|g" \
+    -e "s|__VERSION__|${version}|g" \
+    -e "s|__CONFIG_OPT__|${config_opt}|g" \
     "platform/rpm/${name}.spec" >"${tmp_spec_file}"
 # FIXME: We could parse RELNOTES and create a %changelog section here
 
@@ -47,7 +49,7 @@ tar --exclude='./.git*' --transform "s/^./${name}-${version}/" \
     -czf "${tmpdir}/SOURCES/${name}-${version}.tar.gz" .
 
 # Build the files (rpm, debug rpm and source rpm)
-rpmbuild --quiet --define "_topdir ${tmpdir}" -ba "${tmp_spec_file}"
+rpmbuild --define "_topdir ${tmpdir}" -ba "${tmp_spec_file}"
 
 # Copy the results to cwd
 mv "${tmpdir}/SRPMS"/*.rpm "${tmpdir}/RPMS"/*/*rpm .

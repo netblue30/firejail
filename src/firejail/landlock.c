@@ -174,7 +174,7 @@ static void ll_fs(const char *allowed_path, const __u64 allowed_access,
 	free(expanded_path);
 }
 
-static void ll_read(const char *allowed_path) {
+static void ll_fs_read(const char *allowed_path) {
 	__u64 allowed_access =
 		LANDLOCK_ACCESS_FS_READ_DIR |
 		LANDLOCK_ACCESS_FS_READ_FILE;
@@ -182,7 +182,7 @@ static void ll_read(const char *allowed_path) {
 	ll_fs(allowed_path, allowed_access, __func__);
 }
 
-static void ll_write(const char *allowed_path) {
+static void ll_fs_write(const char *allowed_path) {
 	__u64 allowed_access =
 		LANDLOCK_ACCESS_FS_MAKE_DIR |
 		LANDLOCK_ACCESS_FS_MAKE_REG |
@@ -194,7 +194,7 @@ static void ll_write(const char *allowed_path) {
 	ll_fs(allowed_path, allowed_access, __func__);
 }
 
-static void ll_makeipc(const char *allowed_path) {
+static void ll_fs_makeipc(const char *allowed_path) {
 	__u64 allowed_access =
 		LANDLOCK_ACCESS_FS_MAKE_FIFO |
 		LANDLOCK_ACCESS_FS_MAKE_SOCK;
@@ -202,7 +202,7 @@ static void ll_makeipc(const char *allowed_path) {
 	ll_fs(allowed_path, allowed_access, __func__);
 }
 
-static void ll_makedev(const char *allowed_path) {
+static void ll_fs_makedev(const char *allowed_path) {
 	__u64 allowed_access =
 		LANDLOCK_ACCESS_FS_MAKE_BLOCK |
 		LANDLOCK_ACCESS_FS_MAKE_CHAR;
@@ -210,7 +210,7 @@ static void ll_makedev(const char *allowed_path) {
 	ll_fs(allowed_path, allowed_access, __func__);
 }
 
-static void ll_exec(const char *allowed_path) {
+static void ll_fs_exec(const char *allowed_path) {
 	__u64 allowed_access =
 		LANDLOCK_ACCESS_FS_EXECUTE;
 
@@ -227,11 +227,11 @@ int ll_restrict(uint32_t flags) {
 		fprintf(stderr, "%s: Starting Landlock restrict\n", __func__);
 
 	void (*fnc[])(const char *) = {
-		ll_read,
-		ll_write,
-		ll_makeipc,
-		ll_makedev,
-		ll_exec,
+		ll_fs_read,
+		ll_fs_write,
+		ll_fs_makeipc,
+		ll_fs_makedev,
+		ll_fs_exec,
 		NULL
 	};
 

@@ -1079,23 +1079,23 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.read ", 14) == 0) {
-		ll_add_profile(LL_READ, ptr + 14);
+		ll_add_profile(LL_FS_READ, ptr + 14);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.write ", 15) == 0) {
-		ll_add_profile(LL_WRITE, ptr + 15);
+		ll_add_profile(LL_FS_WRITE, ptr + 15);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.makeipc ", 17) == 0) {
-		ll_add_profile(LL_MAKEIPC, ptr + 17);
+		ll_add_profile(LL_FS_MAKEIPC, ptr + 17);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.makedev ", 17) == 0) {
-		ll_add_profile(LL_MAKEDEV, ptr + 17);
+		ll_add_profile(LL_FS_MAKEDEV, ptr + 17);
 		return 0;
 	}
 	if (strncmp(ptr, "landlock.execute ", 17) == 0) {
-		ll_add_profile(LL_EXEC, ptr + 17);
+		ll_add_profile(LL_FS_EXEC, ptr + 17);
 		return 0;
 	}
 #endif

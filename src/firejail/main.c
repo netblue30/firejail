@@ -1506,15 +1506,15 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--landlock.enforce", 18) == 0)
 			arg_landlock_enforce = 1;
 		else if (strncmp(argv[i], "--landlock.read=", 16) == 0)
-			ll_add_profile(LL_READ, argv[i] + 16);
+			ll_add_profile(LL_FS_READ, argv[i] + 16);
 		else if (strncmp(argv[i], "--landlock.write=", 17) == 0)
-			ll_add_profile(LL_WRITE, argv[i] + 17);
+			ll_add_profile(LL_FS_WRITE, argv[i] + 17);
 		else if (strncmp(argv[i], "--landlock.makeipc=", 19) == 0)
-			ll_add_profile(LL_MAKEIPC, argv[i] + 19);
+			ll_add_profile(LL_FS_MAKEIPC, argv[i] + 19);
 		else if (strncmp(argv[i], "--landlock.makedev=", 19) == 0)
-			ll_add_profile(LL_MAKEDEV, argv[i] + 19);
+			ll_add_profile(LL_FS_MAKEDEV, argv[i] + 19);
 		else if (strncmp(argv[i], "--landlock.execute=", 19) == 0)
-			ll_add_profile(LL_EXEC, argv[i] + 19);
+			ll_add_profile(LL_FS_EXEC, argv[i] + 19);
 #endif
 		else if (strcmp(argv[i], "--memory-deny-write-execute") == 0) {
 			if (checkcfg(CFG_SECCOMP))

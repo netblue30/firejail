@@ -135,11 +135,11 @@ static const char *const usage_str =
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
 #ifdef HAVE_LANDLOCK
 	"    --landlock.enforce - enforce the Landlock ruleset.\n"
-	"    --landlock.read=path - add a read access rule for the path to the Landlock ruleset.\n"
-	"    --landlock.write=path - add a write access rule for the path to the Landlock ruleset.\n"
-	"    --landlock.makeipc=path - add an access rule for the path to the Landlock ruleset for creating named pipes and sockets.\n"
-	"    --landlock.makedev=path - add an access rule for the path to the Landlock ruleset for creating block/char devices.\n"
-	"    --landlock.execute=path - add an execute access rule for the path to the Landlock ruleset.\n"
+	"    --landlock.fs.read=path - add a read access rule for the path to the Landlock ruleset.\n"
+	"    --landlock.fs.write=path - add a write access rule for the path to the Landlock ruleset.\n"
+	"    --landlock.fs.makeipc=path - add an access rule for the path to the Landlock ruleset for creating named pipes and sockets.\n"
+	"    --landlock.fs.makedev=path - add an access rule for the path to the Landlock ruleset for creating block/char devices.\n"
+	"    --landlock.fs.execute=path - add an execute access rule for the path to the Landlock ruleset.\n"
 #endif
 	"    --list - list all sandboxes.\n"
 #ifdef HAVE_FILE_TRANSFER

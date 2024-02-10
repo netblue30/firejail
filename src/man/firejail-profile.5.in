@@ -514,25 +514,25 @@ Enforce the Landlock ruleset.
 .PP
 Without it, the other Landlock commands have no effect.
 .TP
-\fBlandlock.read path
+\fBlandlock.fs.read path
 Create a Landlock ruleset (if it doesn't already exist) and add a read access
 rule for path.
 .TP
-\fBlandlock.write path
+\fBlandlock.fs.write path
 Create a Landlock ruleset (if it doesn't already exist) and add a write access
 rule for path.
 .TP
-\fBlandlock.makeipc path
+\fBlandlock.fs.makeipc path
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
 allows the creation of named pipes (FIFOs) and Unix domain sockets beneath
 the given path.
 .TP
-\fBlandlock.makedev path
+\fBlandlock.fs.makedev path
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
 allows the creation of block devices and character devices beneath the given
 path.
 .TP
-\fBlandlock.execute path
+\fBlandlock.fs.execute path
 Create a Landlock ruleset (if it doesn't already exist) and add an execution
 permission rule for path.
 #endif

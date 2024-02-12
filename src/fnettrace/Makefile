@@ -13,4 +13,4 @@ include $(ROOT)/src/prog.mk
 
 all: $(TARGET) static-ip-map
 static-ip-map: static-ip-map.txt $(PROG)
-	./$(PROG) --squash-map=static-ip-map.txt > static-ip-map
+	./$(PROG) --squash-map=static-ip-map.txt 2>&1 >static-ip-map

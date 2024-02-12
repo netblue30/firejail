@@ -16,6 +16,8 @@ set -e
 name="$TARNAME"
 # Strip any trailing prefix from the version like -rc1 etc
 version="$(printf '%s\n' "$VERSION" | sed 's/\-.*//g')"
+
+# Note: rpmbuild itself already passes --prefix=/usr to ./configure
 config_opt="--disable-userns --disable-contrib-install $*"
 
 if [[ ! -f "platform/rpm/${name}.spec" ]]; then

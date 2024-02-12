@@ -79,8 +79,9 @@ jobs:
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings
-        --enable-analyzer --enable-apparmor --enable-selinux
+        ./configure CC=gcc-12
+        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
       run: make

@@ -22,7 +22,8 @@ build_ubuntu_package:
             | grep -Ev '^(Selecting|Preparing to unpack|Unpacking)'
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
-        - make deb
+        - make dist
+        - ./mkdeb.sh --enable-fatal-warnings
         - dpkg -i ./*.deb
         - make print-version
 
@@ -39,7 +40,8 @@ build_debian_package:
             | grep -Ev '^(Selecting|Preparing to unpack|Unpacking)'
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
-        - make deb
+        - make dist
+        - ./mkdeb.sh --enable-fatal-warnings
         - dpkg -i ./*.deb
         - make print-version
 
@@ -57,7 +59,9 @@ build_no_apparmor:
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
         - make dist
-        - ./mkdeb.sh --disable-apparmor
+        - >
+            ./mkdeb.sh --enable-fatal-warnings
+            --disable-apparmor
         - dpkg -i ./*.deb
         - make print-version
         - make print-version | grep -F 'AppArmor support is disabled'
@@ -70,7 +74,8 @@ build_redhat_package:
         - dnf install -y rpm-build gcc make
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
-        - make rpms
+        - make dist
+        - ./platform/rpm/mkrpm.sh --enable-fatal-warnings
         - rpm -i ./*.rpm
         - make print-version
 
@@ -82,7 +87,8 @@ build_fedora_package:
         - dnf install -y rpm-build gcc make
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
-        - make rpms
+        - make dist
+        - ./platform/rpm/mkrpm.sh --enable-fatal-warnings
         - rpm -i ./*.rpm
         - make print-version
 
@@ -94,7 +100,11 @@ build_src_package:
         - apk upgrade
         - apk add build-base linux-headers gawk
         - ./ci/printenv.sh
-        - ./configure --prefix=/usr || (cat config.log; exit 1)
+        # Note: Do not use ` --enable-fatal-warnings` because the build
+        # currently produces warnings on Alpine (see #6224).
+        - >
+            ./configure --prefix=/usr
+            || (cat config.log; exit 1)
         - make
         - make install-strip
         - make print-version

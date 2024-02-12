@@ -63,8 +63,9 @@ jobs:
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor
-        --enable-selinux
+        ./configure CC=clang-14
+        --prefix=/usr --enable-fatal-warnings
+        --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
       run: make

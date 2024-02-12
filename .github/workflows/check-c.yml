@@ -68,7 +68,8 @@ jobs:
     - name: configure
       run: >
         ./configure CC=clang-14 SCAN_BUILD=scan-build-14
-        --enable-fatal-warnings --enable-apparmor --enable-selinux
+        --prefix=/usr --enable-fatal-warnings
+        --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: scan-build
       run: make scan-build

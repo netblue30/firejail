@@ -1269,7 +1269,6 @@ Example:
 .br
 $ firejail \-\-landlock.read=/ \-\-landlock.write=/home
 \-\-landlock.execute=/usr \-\-landlock.enforce
-.PP
 #endif
 .TP
 \fB\-\-list

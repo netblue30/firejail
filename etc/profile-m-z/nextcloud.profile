@@ -67,7 +67,7 @@ private-tmp
 
 # IMPORTANT: create ~/.local/share/dbus-1/services/com.nextcloudgmbh.Nextcloud.service
 # referencing the firejailed /usr/local/bin/nextcloud to keep nextcloud running sandboxed
-# even when started via systemd user service
+# even when its dbus name gets activated
 # see https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions#how-do-i-sandbox-systemd-started-applications
 dbus-user filter 
 dbus-user.own com.nextcloudgmbh.Nextcloud

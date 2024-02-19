@@ -45,7 +45,7 @@ private-bin electron-cash,python*
 private-cache
 ?HAS_APPIMAGE: ignore private-dev
 private-dev
-private-etc alternatives,ca-certificates,crypto-policies,dconf,fonts,ld.so.cache,ld.so.preload,machine-id,pki,resolv.conf,ssl
+private-etc @network,@tls-ca,@x11
 private-tmp
 
 # dbus-user none

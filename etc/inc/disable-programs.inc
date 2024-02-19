@@ -78,6 +78,7 @@ blacklist ${HOME}/.cache/PawelStolowski
 blacklist ${HOME}/.cache/Psi
 blacklist ${HOME}/.cache/QuiteRss
 blacklist ${HOME}/.cache/Quotient/quaternion
+blacklist ${HOME}/.cache/RawTherapee
 blacklist ${HOME}/.cache/Shortwave
 blacklist ${HOME}/.cache/Tox
 blacklist ${HOME}/.cache/Zeal
@@ -335,6 +336,7 @@ blacklist ${HOME}/.config/QuiteRssrc
 blacklist ${HOME}/.config/Quotient
 blacklist ${HOME}/.config/RSS Guard 4
 blacklist ${HOME}/.config/Rambox
+blacklist ${HOME}/.config/RawTherapee
 blacklist ${HOME}/.config/Riot
 blacklist ${HOME}/.config/Rocket.Chat
 blacklist ${HOME}/.config/RogueLegacy

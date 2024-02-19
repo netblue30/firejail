@@ -714,6 +714,7 @@ blacklist ${HOME}/.dosbox
 blacklist ${HOME}/.dropbox*
 blacklist ${HOME}/.easystroke
 blacklist ${HOME}/.electron-cache
+blacklist ${HOME}/.electron-cash
 blacklist ${HOME}/.electrum*
 blacklist ${HOME}/.elinks
 blacklist ${HOME}/.emacs

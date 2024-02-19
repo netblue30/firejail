@@ -65,7 +65,12 @@ private-etc @tls-ca,@x11,Nextcloud,host.conf,os-release
 private-dev
 private-tmp
 
-dbus-user filter
+# IMPORTANT: create ~/.local/share/dbus-1/services/com.nextcloudgmbh.Nextcloud.service
+# referencing the firejailed /usr/local/bin/nextcloud to keep nextcloud running sandboxed
+# even when its dbus name gets activated
+# see https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions#how-do-i-sandbox-applications-started-via-systemd-or-d-bus-services
+dbus-user filter 
+dbus-user.own com.nextcloudgmbh.Nextcloud
 dbus-user.talk org.freedesktop.secrets
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-system none

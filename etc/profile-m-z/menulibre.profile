@@ -20,7 +20,6 @@ include disable-xdg.inc
 # Whitelist your system icon directory,varies by distro
 whitelist /usr/share/app-info
 whitelist /usr/share/desktop-directories
-whitelist /usr/share/icons
 whitelist /usr/share/menulibre
 whitelist /var/lib/app-info/icons
 whitelist /var/lib/flatpak/exports/share/applications

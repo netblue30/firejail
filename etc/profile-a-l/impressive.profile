@@ -23,7 +23,6 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.cache/mesa_shader_cache
 whitelist /usr/share/opengl-games-utils
-whitelist /usr/share/zenity
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

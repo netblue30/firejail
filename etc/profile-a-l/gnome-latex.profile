@@ -19,7 +19,6 @@ include disable-interpreters.inc
 include disable-programs.inc
 
 whitelist /usr/share/gnome-latex
-whitelist /usr/share/texlive
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 # May cause issues.

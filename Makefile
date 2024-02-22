@@ -364,6 +364,12 @@ extras: all
 
 .PHONY: cppcheck
 cppcheck: clean
+	$(CPPCHECK) --force --error-exitcode=1 --enable=warning,performance \
+	  -i src/firejail/checkcfg.c -i src/firejail/main.c .
+
+# For cppcheck 1.x; see .github/workflows/check-c.yml
+.PHONY: cppcheck-old
+cppcheck-old: clean
 	$(CPPCHECK) --force --error-exitcode=1 --enable=warning,performance .
 
 .PHONY: scan-build

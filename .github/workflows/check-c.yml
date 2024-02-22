@@ -93,11 +93,13 @@ jobs:
       run: sudo apt-get update -qy
     - name: install cppcheck
       run: sudo apt-get install -qy cppcheck
+    - name: configure
+      run: >
+        ./configure CPPCHECK='cppcheck -q'
+        || (cat config.log; exit 1)
     - run: cppcheck --version
     - name: cppcheck
-      run: >
-        cppcheck -q --force --error-exitcode=1 --enable=warning,performance
-        -i src/firejail/checkcfg.c -i src/firejail/main.c .
+      run: make cppcheck
 
   # new cppcheck version currently chokes on checkcfg.c and main.c, therefore
   # scan all files also with older cppcheck version from ubuntu 20.04.
@@ -122,9 +124,13 @@ jobs:
       run: sudo apt-get update -qy
     - name: install cppcheck
       run: sudo apt-get install -qy cppcheck
+    - name: configure
+      run: >
+        ./configure CPPCHECK='cppcheck -q'
+        || (cat config.log; exit 1)
     - run: cppcheck --version
-    - name: cppcheck
-      run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
+    - name: cppcheck-old
+      run: make cppcheck-old
 
   codeql-cpp:
     permissions:

@@ -21,7 +21,7 @@ build_ubuntu_package:
         - ./configure || (cat config.log; exit 1)
         - make deb
         - dpkg -i ./*.deb
-        - command -V firejail && firejail --version
+        - make print-version
 
 build_debian_package:
     image: debian:buster
@@ -38,7 +38,7 @@ build_debian_package:
         - ./configure || (cat config.log; exit 1)
         - make deb
         - dpkg -i ./*.deb
-        - command -V firejail && firejail --version
+        - make print-version
 
 build_redhat_package:
     image: almalinux:latest
@@ -50,7 +50,7 @@ build_redhat_package:
         - ./configure || (cat config.log; exit 1)
         - make rpms
         - rpm -i ./*.rpm
-        - command -V firejail && firejail --version
+        - make print-version
 
 build_fedora_package:
     image: fedora:latest
@@ -62,7 +62,7 @@ build_fedora_package:
         - ./configure || (cat config.log; exit 1)
         - make rpms
         - rpm -i ./*.rpm
-        - command -V firejail && firejail --version
+        - make print-version
 
 build_src_package:
     image: alpine:latest
@@ -75,7 +75,7 @@ build_src_package:
         - ./configure --prefix=/usr || (cat config.log; exit 1)
         - make
         - make install-strip
-        - command -V firejail && firejail --version
+        - make print-version
 
 build_no_apparmor:
     image: ubuntu:latest
@@ -93,8 +93,8 @@ build_no_apparmor:
         - make dist
         - ./mkdeb.sh --disable-apparmor
         - dpkg -i ./*.deb
-        - command -V firejail && firejail --version
-        - firejail --version | grep -F 'AppArmor support is disabled'
+        - make print-version
+        - make print-version | grep -F 'AppArmor support is disabled'
 
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest

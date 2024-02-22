@@ -19,7 +19,7 @@ gcov_generate() {
 
 make distclean && ./configure --prefix=/usr --enable-apparmor --enable-gcov --enable-fatal-warnings && make -j4 && sudo make install
 rm -fr gcov-dir gcov-file
-firejail --version
+make print-version
 gcov_generate
 
 make test-firecfg | grep TESTING

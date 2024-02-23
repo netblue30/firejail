@@ -665,7 +665,6 @@ HAVE_GLOBALCFG
 HAVE_CHROOT
 HAVE_PRIVATE_LIB
 HAVE_PRIVATE_HOME
-HAVE_GAWK
 HAVE_MAN
 HAVE_USERTMPFS
 HAVE_OUTPUT
@@ -683,6 +682,10 @@ PKG_CONFIG
 HAVE_APPARMOR
 HAVE_IDS
 DEPS_CFLAGS
+SCAN_BUILD
+GAWK
+CPPCHECK
+CODESPELL
 OBJEXT
 EXEEXT
 ac_ct_CC
@@ -3270,6 +3273,194 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
+for ac_prog in codespell
+do
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+set dummy $ac_prog; ac_word=$2
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+printf %s "checking for $ac_word... " >&6; }
+if test ${ac_cv_prog_CODESPELL+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test -n "$CODESPELL"; then
+  ac_cv_prog_CODESPELL="$CODESPELL" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  case $as_dir in #(((
+    '') as_dir=./ ;;
+    */) ;;
+    *) as_dir=$as_dir/ ;;
+  esac
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
+    ac_cv_prog_CODESPELL="$ac_prog"
+    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+CODESPELL=$ac_cv_prog_CODESPELL
+if test -n "$CODESPELL"; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $CODESPELL" >&5
+printf "%s\n" "$CODESPELL" >&6; }
+else
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+fi
+
+
+  test -n "$CODESPELL" && break
+done
+
+for ac_prog in cppcheck
+do
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+set dummy $ac_prog; ac_word=$2
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+printf %s "checking for $ac_word... " >&6; }
+if test ${ac_cv_prog_CPPCHECK+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test -n "$CPPCHECK"; then
+  ac_cv_prog_CPPCHECK="$CPPCHECK" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  case $as_dir in #(((
+    '') as_dir=./ ;;
+    */) ;;
+    *) as_dir=$as_dir/ ;;
+  esac
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
+    ac_cv_prog_CPPCHECK="$ac_prog"
+    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+CPPCHECK=$ac_cv_prog_CPPCHECK
+if test -n "$CPPCHECK"; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $CPPCHECK" >&5
+printf "%s\n" "$CPPCHECK" >&6; }
+else
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+fi
+
+
+  test -n "$CPPCHECK" && break
+done
+
+for ac_prog in gawk
+do
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+set dummy $ac_prog; ac_word=$2
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+printf %s "checking for $ac_word... " >&6; }
+if test ${ac_cv_prog_GAWK+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test -n "$GAWK"; then
+  ac_cv_prog_GAWK="$GAWK" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  case $as_dir in #(((
+    '') as_dir=./ ;;
+    */) ;;
+    *) as_dir=$as_dir/ ;;
+  esac
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
+    ac_cv_prog_GAWK="$ac_prog"
+    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+GAWK=$ac_cv_prog_GAWK
+if test -n "$GAWK"; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $GAWK" >&5
+printf "%s\n" "$GAWK" >&6; }
+else
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+fi
+
+
+  test -n "$GAWK" && break
+done
+
+for ac_prog in scan-build
+do
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+set dummy $ac_prog; ac_word=$2
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+printf %s "checking for $ac_word... " >&6; }
+if test ${ac_cv_prog_SCAN_BUILD+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if test -n "$SCAN_BUILD"; then
+  ac_cv_prog_SCAN_BUILD="$SCAN_BUILD" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  case $as_dir in #(((
+    '') as_dir=./ ;;
+    */) ;;
+    *) as_dir=$as_dir/ ;;
+  esac
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
+    ac_cv_prog_SCAN_BUILD="$ac_prog"
+    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+fi
+fi
+SCAN_BUILD=$ac_cv_prog_SCAN_BUILD
+if test -n "$SCAN_BUILD"; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $SCAN_BUILD" >&5
+printf "%s\n" "$SCAN_BUILD" >&6; }
+else
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+fi
+
+
+  test -n "$SCAN_BUILD" && break
+done
+
 
 DEPS_CFLAGS=""
 
@@ -3901,50 +4092,7 @@ if test "x$enable_man" != "xno"
 then :
 
 	HAVE_MAN="-DHAVE_MAN"
-	# Extract the first word of "gawk", so it can be a program name with args.
-set dummy gawk; ac_word=$2
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-printf %s "checking for $ac_word... " >&6; }
-if test ${ac_cv_prog_HAVE_GAWK+y}
-then :
-  printf %s "(cached) " >&6
-else $as_nop
-  if test -n "$HAVE_GAWK"; then
-  ac_cv_prog_HAVE_GAWK="$HAVE_GAWK" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  case $as_dir in #(((
-    '') as_dir=./ ;;
-    */) ;;
-    *) as_dir=$as_dir/ ;;
-  esac
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
-    ac_cv_prog_HAVE_GAWK="yes"
-    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-  test -z "$ac_cv_prog_HAVE_GAWK" && ac_cv_prog_HAVE_GAWK="no"
-fi
-fi
-HAVE_GAWK=$ac_cv_prog_HAVE_GAWK
-if test -n "$HAVE_GAWK"; then
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $HAVE_GAWK" >&5
-printf "%s\n" "$HAVE_GAWK" >&6; }
-else
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-fi
-
-
-	if test "x$HAVE_GAWK" != "xyes"
+	if test "x$GAWK" = "x"
 then :
   as_fn_error $? "*** gawk not found ***" "$LINENO" 5
 fi

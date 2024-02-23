@@ -19,6 +19,10 @@ AC_CONFIG_SRCDIR([src/firejail/main.c])
 AC_CONFIG_MACRO_DIR([m4])
 
 AC_PROG_CC
+AC_CHECK_PROGS([CODESPELL], [codespell])
+AC_CHECK_PROGS([CPPCHECK], [cppcheck])
+AC_CHECK_PROGS([GAWK], [gawk])
+AC_CHECK_PROGS([SCAN_BUILD], [scan-build])
 
 DEPS_CFLAGS=""
 AC_SUBST([DEPS_CFLAGS])
@@ -139,8 +143,7 @@ AC_ARG_ENABLE([man],
     [AS_HELP_STRING([--disable-man], [disable man pages])])
 AS_IF([test "x$enable_man" != "xno"], [
 	HAVE_MAN="-DHAVE_MAN"
-	AC_CHECK_PROG([HAVE_GAWK], [gawk], [yes], [no])
-	AS_IF([test "x$HAVE_GAWK" != "xyes"], [AC_MSG_ERROR([*** gawk not found ***])])
+	AS_IF([test "x$GAWK" = "x"], [AC_MSG_ERROR([*** gawk not found ***])])
 ])
 
 HAVE_PRIVATE_HOME=""

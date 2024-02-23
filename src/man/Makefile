@@ -13,7 +13,7 @@ all: $(TARGET)
 # foo.1: foo.1.in
 $(MOD_DIR)/%: $(MOD_DIR)/%.in $(ROOT)/config.mk
 	@printf 'Generating %s from %s\n' $@ $<
-	@gawk -f $(MOD_DIR)/preproc.awk -- $(MANFLAGS) <$< | \
+	@$(GAWK) -f $(MOD_DIR)/preproc.awk -- $(MANFLAGS) <$< | \
 	  $(MOD_DIR)/mkman.sh $(VERSION) >$@
 
 # foo.1.gz: foo.1

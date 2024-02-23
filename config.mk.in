@@ -75,6 +75,11 @@ MANFLAGS = \
 # the user building the package); see the following for details:
 # https://www.gnu.org/software/automake/manual/1.16.5/html_node/User-Variables.html
 CC=@CC@
+CODESPELL=@CODESPELL@
+CPPCHECK=@CPPCHECK@
+GAWK=@GAWK@
+SCAN_BUILD=@SCAN_BUILD@
+
 CFLAGS=@CFLAGS@
 CPPFLAGS=@CPPFLAGS@
 LDFLAGS=@LDFLAGS@

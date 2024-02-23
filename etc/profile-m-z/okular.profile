@@ -33,7 +33,6 @@ whitelist /usr/share/config.kcfg/okular.kcfg
 whitelist /usr/share/config.kcfg/okular_core.kcfg
 whitelist /usr/share/ghostscript
 whitelist /usr/share/kconf_update/okular.upd
-whitelist /usr/share/kxmlgui5/okular
 whitelist /usr/share/okular
 whitelist /usr/share/poppler
 include whitelist-run-common.inc

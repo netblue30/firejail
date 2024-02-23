@@ -21,7 +21,6 @@ include disable-xdg.inc
 whitelist /usr/share/alacarte
 whitelist /usr/share/app-info
 whitelist /usr/share/desktop-directories
-whitelist /usr/share/icons
 whitelist /var/lib/app-info/icons
 whitelist /var/lib/flatpak/exports/share/applications
 whitelist /var/lib/flatpak/exports/share/icons

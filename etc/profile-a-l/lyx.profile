@@ -23,7 +23,6 @@ include allow-python3.inc
 
 whitelist /usr/share/lyx
 whitelist /usr/share/texinfo
-whitelist /usr/share/texlive
 whitelist /usr/share/texmf-dist
 whitelist /usr/share/tlpkg
 include whitelist-usr-share-common.inc

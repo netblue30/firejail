@@ -23,7 +23,6 @@ include disable-xdg.inc
 
 whitelist /usr/share/ghostwriter
 whitelist /usr/share/mozilla-dicts
-whitelist /usr/share/texlive
 whitelist /usr/share/pandoc*
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

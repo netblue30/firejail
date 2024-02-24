@@ -374,7 +374,7 @@ cppcheck-old: clean
 
 .PHONY: scan-build
 scan-build: clean
-	$(SCAN_BUILD) $(MAKE)
+	$(SCAN_BUILD) --status-bugs $(MAKE)
 
 # TODO: Old codespell versions (such as v2.1.0 in CI) have issues with
 # contrib/syscalls.sh

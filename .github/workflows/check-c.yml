@@ -67,11 +67,11 @@ jobs:
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor
-        --enable-selinux
+        ./configure CC=clang-14 SCAN_BUILD=scan-build-14
+        --enable-fatal-warnings --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: scan-build
-      run: scan-build-14 --status-bugs make
+      run: make scan-build
 
   cppcheck:
     runs-on: ubuntu-22.04

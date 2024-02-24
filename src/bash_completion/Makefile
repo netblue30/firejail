@@ -3,6 +3,7 @@ ROOT = ../..
 -include $(ROOT)/config.mk
 
 GAWK ?= gawk
+RM ?= rm -f
 
 .PHONY: all
 all: firejail.bash_completion
@@ -10,8 +11,8 @@ all: firejail.bash_completion
 firejail.bash_completion: firejail.bash_completion.in $(ROOT)/config.mk
 	$(GAWK) -f ../man/preproc.awk -- $(MANFLAGS) < $< > $@.tmp
 	sed "s|_SYSCONFDIR_|$(sysconfdir)|" < $@.tmp > $@
-	rm $@.tmp
+	$(RM) $@.tmp
 
 .PHONY: clean
 clean:
-	rm -fr firejail.bash_completion
+	$(RM) -r firejail.bash_completion

@@ -6,6 +6,7 @@
 # define EXTRA_OBJS and extend CLEANFILES.
 
 CC ?= cc
+RM ?= rm -f
 
 HDRS :=
 SRCS := $(sort $(wildcard $(MOD_DIR)/*.c))
@@ -27,4 +28,4 @@ $(PROG): $(OBJS) $(EXTRA_OBJS) $(ROOT)/config.mk
 	$(CC) $(PROG_LDFLAGS) $(LDFLAGS) -o $@ $(OBJS) $(EXTRA_OBJS) $(LIBS)
 
 .PHONY: clean
-clean:; rm -fr $(PROG) $(CLEANFILES)
+clean:; $(RM) -r $(PROG) $(CLEANFILES)

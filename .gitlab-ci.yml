@@ -1,10 +1,13 @@
-# Basic notes: builds firejail on 5 different systems for 2 package systems:
-# 1. Debian-based systems. Use debian:jessie to ensure reasonable backwards
-# compat and ubuntu:rolling for new setups
-# 2. Redhat-based systems. Use centos:latest for reasonable backwards compat
-# and fedora:latest for new setups
-# 3. Alpine for installing directly from source
-# Also builds apparmor package for Ubuntu LTS
+# Builds on multiple systems using different package managers:
+#
+# - Debian-based systems: Use oldest working/supported debian image for
+# reasonable backwards compatibility and ubuntu:rolling for new setups.
+# Additionally, ensure that the package works without apparmor.
+#
+# - Redhat-based systems: Use a centos-like distribution for reasonable
+# backwards compatibility and fedora:latest for new setups.
+#
+# - Alpine: Use it for installing directly from source.
 
 build_ubuntu_package:
     image: ubuntu:rolling

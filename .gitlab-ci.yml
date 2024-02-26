@@ -20,7 +20,7 @@ build_ubuntu_package:
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
         - make deb
-        - dpkg -i firejail*.deb
+        - dpkg -i ./*.deb
         - command -V firejail && firejail --version
 
 build_debian_package:
@@ -37,7 +37,7 @@ build_debian_package:
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
         - make deb
-        - dpkg -i firejail*.deb
+        - dpkg -i ./*.deb
         - command -V firejail && firejail --version
 
 build_redhat_package:
@@ -49,7 +49,7 @@ build_redhat_package:
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
         - make rpms
-        - rpm -i firejail*.rpm
+        - rpm -i ./*.rpm
         - command -V firejail && firejail --version
 
 build_fedora_package:
@@ -61,7 +61,7 @@ build_fedora_package:
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
         - make rpms
-        - rpm -i firejail*.rpm
+        - rpm -i ./*.rpm
         - command -V firejail && firejail --version
 
 build_src_package:
@@ -92,7 +92,7 @@ build_no_apparmor:
         - ./configure || (cat config.log; exit 1)
         - make dist
         - ./mkdeb.sh --disable-apparmor
-        - dpkg -i firejail*.deb
+        - dpkg -i ./*.deb
         - command -V firejail && firejail --version
         - firejail --version | grep -F 'AppArmor support is disabled'
 

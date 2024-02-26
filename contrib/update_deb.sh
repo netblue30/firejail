@@ -16,7 +16,7 @@ sed -i "s/# restricted-network .*/restricted-network yes/" \
     etc/firejail.config
 
 make deb
-sudo dpkg -i firejail*.deb
+sudo dpkg -i ./*.deb
 echo "Firejail updated."
 cd ..
 rm -rf firejail

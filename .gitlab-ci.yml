@@ -40,6 +40,25 @@ build_debian_package:
         - dpkg -i ./*.deb
         - make print-version
 
+build_no_apparmor:
+    image: ubuntu:latest
+    timeout: 10 minutes
+    variables:
+        DEBIAN_FRONTEND: noninteractive
+    script:
+        - apt-get update -qy
+        - >
+            apt-get install --no-install-recommends -qy
+            build-essential fakeroot lintian pkg-config gawk
+            | grep -Ev '^(Selecting|Preparing to unpack|Unpacking)'
+        - ./ci/printenv.sh
+        - ./configure || (cat config.log; exit 1)
+        - make dist
+        - ./mkdeb.sh --disable-apparmor
+        - dpkg -i ./*.deb
+        - make print-version
+        - make print-version | grep -F 'AppArmor support is disabled'
+
 build_redhat_package:
     image: almalinux:latest
     timeout: 10 minutes
@@ -76,25 +95,6 @@ build_src_package:
         - make
         - make install-strip
         - make print-version
-
-build_no_apparmor:
-    image: ubuntu:latest
-    timeout: 10 minutes
-    variables:
-        DEBIAN_FRONTEND: noninteractive
-    script:
-        - apt-get update -qy
-        - >
-            apt-get install --no-install-recommends -qy
-            build-essential fakeroot lintian pkg-config gawk
-            | grep -Ev '^(Selecting|Preparing to unpack|Unpacking)'
-        - ./ci/printenv.sh
-        - ./configure || (cat config.log; exit 1)
-        - make dist
-        - ./mkdeb.sh --disable-apparmor
-        - dpkg -i ./*.deb
-        - make print-version
-        - make print-version | grep -F 'AppArmor support is disabled'
 
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest

@@ -8,9 +8,9 @@ on:
     branches-ignore:
       - 'dependabot/**'
     paths:
+      - '**.c'
+      - '**.h'
       - 'm4/**'
-      - 'src/**.c'
-      - 'src/**.h'
       - 'src/**.mk'
       - 'src/**Makefile'
       - .github/workflows/check-c.yml
@@ -22,9 +22,9 @@ on:
       - configure.ac
   pull_request:
     paths:
+      - '**.c'
+      - '**.h'
       - 'm4/**'
-      - 'src/**.c'
-      - 'src/**.h'
       - 'src/**.mk'
       - 'src/**Makefile'
       - .github/workflows/check-c.yml

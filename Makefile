@@ -2,6 +2,13 @@
 ROOT = .
 -include config.mk
 
+# Default programs
+CC ?= cc
+CODESPELL ?= codespell
+CPPCHECK ?= cppcheck
+GAWK ?= gawk
+SCAN_BUILD ?= scan-build
+
 ifneq ($(HAVE_MAN),no)
 MAN_TARGET = man
 endif
@@ -357,18 +364,24 @@ extras: all
 
 .PHONY: cppcheck
 cppcheck: clean
-	cppcheck --force --error-exitcode=1 --enable=warning,performance .
+	$(CPPCHECK) --force --error-exitcode=1 --enable=warning,performance \
+	  -i src/firejail/checkcfg.c -i src/firejail/main.c .
+
+# For cppcheck 1.x; see .github/workflows/check-c.yml
+.PHONY: cppcheck-old
+cppcheck-old: clean
+	$(CPPCHECK) --force --error-exitcode=1 --enable=warning,performance .
 
 .PHONY: scan-build
 scan-build: clean
-	scan-build $(MAKE)
+	$(SCAN_BUILD) --status-bugs $(MAKE)
 
 # TODO: Old codespell versions (such as v2.1.0 in CI) have issues with
 # contrib/syscalls.sh
 .PHONY: codespell
 codespell:
 	@printf 'Running %s...\n' $@
-	@codespell --ignore-regex 'Manuel|UE|als|chage|creat|doas|ether|isplay|readby|[Ss]hotcut' \
+	@$(CODESPELL) --ignore-regex 'Manuel|UE|als|chage|creat|doas|ether|isplay|readby|[Ss]hotcut' \
 	  -S *.d,*.gz,*.o,*.so \
 	  -S COPYING,m4 \
 	  -S ./contrib/syscalls.sh \

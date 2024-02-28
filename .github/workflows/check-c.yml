@@ -67,11 +67,11 @@ jobs:
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor
-        --enable-selinux
+        ./configure CC=clang-14 SCAN_BUILD=scan-build-14
+        --enable-fatal-warnings --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: scan-build
-      run: scan-build-14 --status-bugs make
+      run: make scan-build
 
   cppcheck:
     runs-on: ubuntu-22.04
@@ -93,11 +93,13 @@ jobs:
       run: sudo apt-get update -qy
     - name: install cppcheck
       run: sudo apt-get install -qy cppcheck
+    - name: configure
+      run: >
+        ./configure CPPCHECK='cppcheck -q'
+        || (cat config.log; exit 1)
     - run: cppcheck --version
     - name: cppcheck
-      run: >
-        cppcheck -q --force --error-exitcode=1 --enable=warning,performance
-        -i src/firejail/checkcfg.c -i src/firejail/main.c .
+      run: make cppcheck
 
   # new cppcheck version currently chokes on checkcfg.c and main.c, therefore
   # scan all files also with older cppcheck version from ubuntu 20.04.
@@ -122,9 +124,13 @@ jobs:
       run: sudo apt-get update -qy
     - name: install cppcheck
       run: sudo apt-get install -qy cppcheck
+    - name: configure
+      run: >
+        ./configure CPPCHECK='cppcheck -q'
+        || (cat config.log; exit 1)
     - run: cppcheck --version
-    - name: cppcheck
-      run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
+    - name: cppcheck-old
+      run: make cppcheck-old
 
   codeql-cpp:
     permissions:

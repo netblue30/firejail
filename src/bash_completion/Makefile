@@ -6,7 +6,7 @@ ROOT = ../..
 all: firejail.bash_completion
 
 firejail.bash_completion: firejail.bash_completion.in $(ROOT)/config.mk
-	gawk -f ../man/preproc.awk -- $(MANFLAGS) < $< > $@.tmp
+	$(GAWK) -f ../man/preproc.awk -- $(MANFLAGS) < $< > $@.tmp
 	sed "s|_SYSCONFDIR_|$(sysconfdir)|" < $@.tmp > $@
 	rm $@.tmp
 

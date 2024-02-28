@@ -82,7 +82,7 @@ mv "$DIST" firejail
 
 cd firejail || exit 1
 ./configure --prefix=/usr --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test1
 grep Error output-configure output-make >> ./report-test1
@@ -99,7 +99,7 @@ print_title "${arr[2]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-dbusproxy --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test2
 grep Error output-configure output-make >> ./report-test2
@@ -116,7 +116,7 @@ print_title "${arr[3]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-chroot --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test3
 grep Error output-configure output-make >> ./report-test3
@@ -133,7 +133,7 @@ print_title "${arr[4]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-firetunnel --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test4
 grep Error output-configure output-make >> ./report-test4
@@ -150,7 +150,7 @@ print_title "${arr[5]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-userns --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test5
 grep Error output-configure output-make >> ./report-test5
@@ -168,7 +168,7 @@ print_title "${arr[6]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-network --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test6
 grep Error output-configure output-make >> ./report-test6
@@ -185,7 +185,7 @@ print_title "${arr[7]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-x11 --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test7
 grep Error output-configure output-make >> ./report-test7
@@ -202,7 +202,7 @@ print_title "${arr[8]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --enable-selinux --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test8
 grep Error output-configure output-make >> ./report-test8
@@ -219,7 +219,7 @@ print_title "${arr[9]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-file-transfer --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test9
 grep Error output-configure output-make >> ./report-test9
@@ -236,7 +236,7 @@ print_title "${arr[10]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-whitelist --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test10
 grep Error output-configure output-make >> ./report-test10
@@ -253,7 +253,7 @@ print_title "${arr[11]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-globalcfg --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test11
 grep Error output-configure output-make >> ./report-test11
@@ -270,7 +270,7 @@ print_title "${arr[12]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --enable-apparmor --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test12
 grep Error output-configure output-make >> ./report-test12
@@ -287,7 +287,7 @@ print_title "${arr[13]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --enable-busybox-workaround --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test13
 grep Error output-configure output-make >> ./report-test13
@@ -304,7 +304,7 @@ print_title "${arr[14]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-overlayfs --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test14
 grep Error output-configure output-make >> ./report-test14
@@ -321,7 +321,7 @@ print_title "${arr[15]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-private-home --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test15
 grep Error output-configure output-make >> ./report-test15
@@ -338,7 +338,7 @@ print_title "${arr[16]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-man --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test16
 grep Error output-configure output-make >> ./report-test16
@@ -355,7 +355,7 @@ print_title "${arr[17]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-usertmpfs --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test17
 grep Error output-configure output-make >> ./report-test17
@@ -372,7 +372,7 @@ print_title "${arr[18]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --disable-private-home --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test18
 grep Error output-configure output-make >> ./report-test18
@@ -389,7 +389,7 @@ print_title "${arr[19]}"
 cd firejail || exit 1
 make distclean
 ./configure --prefix=/usr --enable-ids --enable-fatal-warnings 2>&1 | tee ../output-configure
-make -j4 2>&1 | tee ../output-make
+make -j "$(nproc)" 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test19
 grep Error output-configure output-make >> ./report-test19

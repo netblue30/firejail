@@ -23,7 +23,7 @@ gcov_generate() {
 make distclean &&
 ./configure --prefix=/usr --enable-fatal-warnings \
   --enable-apparmor --enable-gcov &&
-make -j4 &&
+make -j "$(nproc)" &&
 sudo make install
 
 rm -fr gcov-dir gcov-file

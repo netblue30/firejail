@@ -44,5 +44,5 @@ mv $DIRFIRETOOLS $DIRFIREJAIL/extras/firetools
 
 # build
 cd $DIRFIREJAIL
-cov-build --dir cov-int make -j 4 extras
+cov-build --dir cov-int make -j "$(nproc)" extras
 tar czvf myproject.tgz cov-int

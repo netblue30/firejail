@@ -73,15 +73,16 @@ jobs:
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings
-        --enable-analyzer --enable-apparmor --enable-selinux
+        ./configure CC=gcc-12
+        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
       run: make -j "$(nproc)"
     - name: make install
       run: sudo make install
-    - name: print firejail version
-      run: command -V firejail && firejail --version
+    - name: print version
+      run: make print-version
     - run: make lab-setup
     - run: make test-seccomp-extra
     - run: make test-firecfg
@@ -121,15 +122,16 @@ jobs:
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings
-        --enable-analyzer --enable-apparmor --enable-selinux
+        ./configure CC=gcc-12
+        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
       run: make -j "$(nproc)"
     - name: make install
       run: sudo make install
-    - name: print firejail version
-      run: command -V firejail && firejail --version
+    - name: print version
+      run: make print-version
     - run: make lab-setup
     - run: make test-private-etc
     - run: make test-fs
@@ -160,15 +162,16 @@ jobs:
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings
-        --enable-analyzer --enable-apparmor --enable-selinux
+        ./configure CC=gcc-12
+        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
       run: make -j "$(nproc)"
     - name: make install
       run: sudo make install
-    - name: print firejail version
-      run: command -V firejail && firejail --version
+    - name: print version
+      run: make print-version
     - run: make lab-setup
     - run: make test-environment
     - run: make test-profiles
@@ -202,15 +205,16 @@ jobs:
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings
-        --enable-analyzer --enable-apparmor --enable-selinux
+        ./configure CC=gcc-12
+        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
       run: make -j "$(nproc)"
     - name: make install
       run: sudo make install
-    - name: print firejail version
-      run: command -V firejail && firejail --version
+    - name: print version
+      run: make print-version
     - run: make lab-setup
     - run: make test-utils
 
@@ -248,15 +252,16 @@ jobs:
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings
-        --enable-analyzer --enable-apparmor --enable-selinux
+        ./configure CC=gcc-12
+        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
       run: make -j "$(nproc)"
     - name: make install
       run: sudo make install
-    - name: print firejail version
-      run: command -V firejail && firejail --version
+    - name: print version
+      run: make print-version
     - run: make lab-setup
     - run: make test-fnetfilter
     - run: make test-sysutils

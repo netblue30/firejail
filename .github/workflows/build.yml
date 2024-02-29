@@ -74,18 +74,18 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt-get install -qy
-        gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois
-        bridge-utils
+        gcc-12 libapparmor-dev libselinux1-dev
     - name: print env
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        CC=gcc-12 ./configure --prefix=/usr --enable-fatal-warnings
-        --enable-analyzer --enable-apparmor --enable-selinux
+        ./configure CC=gcc-12
+        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
       run: make
     - name: make install
       run: sudo make install
-    - name: print firejail version
-      run: command -V firejail && firejail --version
+    - name: print version
+      run: make print-version

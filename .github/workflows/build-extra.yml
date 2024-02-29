@@ -48,12 +48,10 @@ jobs:
       with:
         egress-policy: block
         allowed-endpoints: >
-          archive.ubuntu.com:80
           azure.archive.ubuntu.com:80
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
-          security.ubuntu.com:80
     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
     - name: update package information
       run: sudo apt-get update -qy
@@ -65,12 +63,13 @@ jobs:
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        CC=clang-14 ./configure --enable-fatal-warnings --enable-apparmor
-        --enable-selinux
+        ./configure CC=clang-14
+        --prefix=/usr --enable-fatal-warnings
+        --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
       run: make
     - name: make install
       run: sudo make install
     - name: print version
-      run: command -V firejail && firejail --version
+      run: make print-version

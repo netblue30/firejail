@@ -227,6 +227,7 @@ blacklist ${HOME}/.cache/torbrowser
 blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/ueberzugpp
 blacklist ${HOME}/.cache/ungoogled-chromium
+blacklist ${HOME}/.cache/virt-manager
 blacklist ${HOME}/.cache/vivaldi
 blacklist ${HOME}/.cache/vivaldi-snapshot
 blacklist ${HOME}/.cache/vlc

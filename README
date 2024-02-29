@@ -413,6 +413,8 @@ fenuks (https://github.com/fenuks)
 	- allow /opt/tor-browser for Tor Browser profile
 fkrone (https://github.com/fkrone)
 	- fix Zoom profile
+Fidel Ramos (https://github.com/haplo)
+	- Ledger Live profile
 Florian Begusch (https://github.com/florianbegusch)
 	- (la)tex profiles
 	- fixed transmission-common.profile
@@ -935,6 +937,8 @@ PizzaDude (https://github.com/pizzadude)
 	- fix welcome.sh
 polyzen (https://github.com/polyzen)
 	- fixed wusc issue with mpv/Vulkan
+powerjungle (https://github.com/powerjungle)
+	- fixed multimc
 probonopd (https://github.com/probonopd)
 	- automatic build on Travis CI
 pshpsh (https://github.com/pshpsh)

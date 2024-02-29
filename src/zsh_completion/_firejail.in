@@ -108,11 +108,11 @@ _firejail_args=(
     '--keep-var-tmp[/var/tmp directory is untouched]'
 #ifdef HAVE_LANDLOCK
     '--landlock.enforce[enforce the Landlock ruleset]'
-    '--landlock.read=-[add a read access rule for the path to the Landlock ruleset]: :_files'
-    '--landlock.write=-[add a write access rule for the path to the Landlock ruleset]: :_files'
-    '--landlock.makeipc=-[add an access rule for the path to the Landlock ruleset for creating named pipes and sockets]: :_files'
-    '--landlock.makedev=-[add an access rule for the path to the Landlock ruleset for creating block/char devices]: :_files'
-    '--landlock.execute=-[add an execute access rule for the path to the Landlock ruleset]: :_files'
+    '--landlock.fs.read=-[add a read access rule for the path to the Landlock ruleset]: :_files'
+    '--landlock.fs.write=-[add a write access rule for the path to the Landlock ruleset]: :_files'
+    '--landlock.fs.makeipc=-[add an access rule for the path to the Landlock ruleset for creating named pipes and sockets]: :_files'
+    '--landlock.fs.makedev=-[add an access rule for the path to the Landlock ruleset for creating block/char devices]: :_files'
+    '--landlock.fs.execute=-[add an execute access rule for the path to the Landlock ruleset]: :_files'
 #endif
     '--machine-id[spoof /etc/machine-id with a random id]'
     '--memory-deny-write-execute[seccomp filter to block attempts to create memory mappings that are both writable and executable]'

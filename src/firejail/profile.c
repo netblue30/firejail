@@ -1078,24 +1078,24 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_landlock_enforce = 1;
 		return 0;
 	}
-	if (strncmp(ptr, "landlock.read ", 14) == 0) {
-		ll_add_profile(LL_READ, ptr + 14);
+	if (strncmp(ptr, "landlock.fs.read ", 17) == 0) {
+		ll_add_profile(LL_FS_READ, ptr + 17);
 		return 0;
 	}
-	if (strncmp(ptr, "landlock.write ", 15) == 0) {
-		ll_add_profile(LL_WRITE, ptr + 15);
+	if (strncmp(ptr, "landlock.fs.write ", 18) == 0) {
+		ll_add_profile(LL_FS_WRITE, ptr + 18);
 		return 0;
 	}
-	if (strncmp(ptr, "landlock.makeipc ", 17) == 0) {
-		ll_add_profile(LL_MAKEIPC, ptr + 17);
+	if (strncmp(ptr, "landlock.fs.makeipc ", 20) == 0) {
+		ll_add_profile(LL_FS_MAKEIPC, ptr + 20);
 		return 0;
 	}
-	if (strncmp(ptr, "landlock.makedev ", 17) == 0) {
-		ll_add_profile(LL_MAKEDEV, ptr + 17);
+	if (strncmp(ptr, "landlock.fs.makedev ", 20) == 0) {
+		ll_add_profile(LL_FS_MAKEDEV, ptr + 20);
 		return 0;
 	}
-	if (strncmp(ptr, "landlock.execute ", 17) == 0) {
-		ll_add_profile(LL_EXEC, ptr + 17);
+	if (strncmp(ptr, "landlock.fs.execute ", 20) == 0) {
+		ll_add_profile(LL_FS_EXEC, ptr + 20);
 		return 0;
 	}
 #endif

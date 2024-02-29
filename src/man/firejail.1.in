@@ -1241,25 +1241,25 @@ Enforce the Landlock ruleset.
 Without it, the other Landlock commands have no effect.
 See the \fBLANDLOCK\fR section for more information.
 .TP
-\fB\-\-landlock.read=path
+\fB\-\-landlock.fs.read=path
 Create a Landlock ruleset (if it doesn't already exist) and add a read access
 rule for path.
 .TP
-\fB\-\-landlock.write=path
+\fB\-\-landlock.fs.write=path
 Create a Landlock ruleset (if it doesn't already exist) and add a write access
 rule for path.
 .TP
-\fB\-\-landlock.makeipc=path
+\fB\-\-landlock.fs.makeipc=path
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
 allows the creation of named pipes (FIFOs) and Unix domain sockets beneath
 the given path.
 .TP
-\fB\-\-landlock.makedev=path
+\fB\-\-landlock.fs.makedev=path
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
 allows the creation of block devices and character devices beneath the given
 path.
 .TP
-\fB\-\-landlock.execute=path
+\fB\-\-landlock.fs.execute=path
 Create a Landlock ruleset (if it doesn't already exist) and add an execution
 permission rule for path.
 .br
@@ -1267,8 +1267,8 @@ permission rule for path.
 .br
 Example:
 .br
-$ firejail \-\-landlock.read=/ \-\-landlock.write=/home
-\-\-landlock.execute=/usr \-\-landlock.enforce
+$ firejail \-\-landlock.fs.read=/ \-\-landlock.fs.write=/home
+\-\-landlock.fs.execute=/usr \-\-landlock.enforce
 #endif
 .TP
 \fB\-\-list
@@ -3404,7 +3404,7 @@ features, pass \fB\-\-landlock.enforce\fR flag to Firejail command line.
 Without it, the other Landlock commands have no effect.
 Example:
 .PP
-$ firejail \-\-landlock.enforce \-\-landlock.read=/media mc
+$ firejail \-\-landlock.enforce \-\-landlock.fs.read=/media mc
 .PP
 To disable Landlock self-restriction, use \fB\-\-ignore=landlock.enforce\fR.
 #endif

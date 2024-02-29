@@ -152,11 +152,11 @@ typedef struct profile_entry_t {
 
 typedef struct landlock_entry_t {
 	struct landlock_entry_t *next;
-#define LL_READ 0
-#define LL_WRITE 1
-#define LL_MAKEIPC 2
-#define LL_MAKEDEV 3
-#define LL_EXEC 4
+#define LL_FS_READ 0
+#define LL_FS_WRITE 1
+#define LL_FS_MAKEIPC 2
+#define LL_FS_MAKEDEV 3
+#define LL_FS_EXEC 4
 #define LL_MAX 5
 	int type;
 	char *data;

@@ -138,11 +138,11 @@ include globals.local
 #include whitelist-var-common.inc
 
 # Landlock commands
-##landlock.read PATH
-##landlock.write PATH
-##landlock.makeipc PATH
-##landlock.makedev PATH
-##landlock.execute PATH
+##landlock.fs.read PATH
+##landlock.fs.write PATH
+##landlock.fs.makeipc PATH
+##landlock.fs.makedev PATH
+##landlock.fs.execute PATH
 #include landlock-common.inc
 
 ##allusers

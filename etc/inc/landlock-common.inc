@@ -16,17 +16,9 @@ landlock.fs.write /tmp
 
 # exec access
 ## misc
+landlock.fs.execute ${PATH}
 landlock.fs.execute /opt
 landlock.fs.execute /run/firejail # appimage and various firejail features
-## bin
-landlock.fs.execute /bin
-landlock.fs.execute /sbin
-landlock.fs.execute /usr/bin
-landlock.fs.execute /usr/sbin
-landlock.fs.execute /usr/games
-landlock.fs.execute /usr/local/bin
-landlock.fs.execute /usr/local/sbin
-landlock.fs.execute /usr/local/games
 ## lib
 landlock.fs.execute /lib
 landlock.fs.execute /lib32

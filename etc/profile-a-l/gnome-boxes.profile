@@ -6,6 +6,10 @@ include gnome-boxes.local
 # Persistent global definitions
 include globals.local
 
+noblacklist /usr/libexec/gnome-boxes-search-provider
+noblacklist /usr/libexec/spice-client-glib-usb-acl-helper
+blacklist /usr/libexec/*
+
 noblacklist ${HOME}/.cache/gnome-boxes
 noblacklist ${HOME}/.config/gnome-boxes
 noblacklist ${HOME}/.local/share/gnome-boxes

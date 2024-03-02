@@ -596,6 +596,7 @@ blacklist ${HOME}/.config/org.gabmus.gfeeds.json
 blacklist ${HOME}/.config/org.gabmus.gfeeds.saved_articles
 blacklist ${HOME}/.config/org.kde.gwenviewrc
 blacklist ${HOME}/.config/otter
+blacklist ${HOME}/.config/pacseek
 blacklist ${HOME}/.config/pavucontrol-qt
 blacklist ${HOME}/.config/pavucontrol.ini
 blacklist ${HOME}/.config/pcmanfm

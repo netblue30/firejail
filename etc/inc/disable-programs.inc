@@ -660,6 +660,7 @@ blacklist ${HOME}/.config/tuir
 blacklist ${HOME}/.config/tuta_integration
 blacklist ${HOME}/.config/tutanota-desktop
 blacklist ${HOME}/.config/tvbrowser
+blacklist ${HOME}/.config/tvnamer
 blacklist ${HOME}/.config/uGet
 blacklist ${HOME}/.config/ueberzugpp
 blacklist ${HOME}/.config/ungoogled-chromium

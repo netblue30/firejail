@@ -6,10 +6,7 @@ include virt-manager.local
 # Persistent global definitions
 include globals.local
 
-noblacklist /usr/libexec/ayatana-indicator-application
-noblacklist /usr/libexec/netplan
-noblacklist /usr/libexec/spice-client-glib-usb-acl-helper
-blacklist /usr/libexec/*
+blacklist /usr/libexec
 
 noblacklist ${HOME}/.cache/virt-manager
 noblacklist ${RUNUSER}/libvirt

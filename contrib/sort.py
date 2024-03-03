@@ -38,7 +38,8 @@ Exit Codes:
 
 def sort_alphabetical(original_items):
     items = original_items.split(",")
-    items.sort()
+    items = filter(None, set(items))
+    items = sorted(items)
     return ",".join(items)
 
 

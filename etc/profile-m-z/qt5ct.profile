@@ -4,7 +4,6 @@
 # Persistent local customizations
 include qt5ct.local
 # Persistent global definitions
-ignore dns
 include globals.local
 
 blacklist /usr/libexec

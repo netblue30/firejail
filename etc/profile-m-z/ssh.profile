@@ -18,6 +18,7 @@ include disable-common.inc
 include disable-exec.inc
 include disable-programs.inc
 
+whitelist ${RUNUSER}/gcr/ssh
 whitelist ${RUNUSER}/gnupg/S.gpg-agent.ssh
 whitelist ${RUNUSER}/keyring/ssh
 include whitelist-usr-share-common.inc

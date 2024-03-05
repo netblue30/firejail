@@ -614,6 +614,7 @@ blacklist ${HOME}/.config/qBittorrentrc
 blacklist ${HOME}/.config/qnapi.ini
 blacklist ${HOME}/.config/qpdfview
 blacklist ${HOME}/.config/qt5ct
+blacklist ${HOME}/.config/qt6ct
 blacklist ${HOME}/.config/quodlibet
 blacklist ${HOME}/.config/qupzilla
 blacklist ${HOME}/.config/qutebrowser
@@ -1029,6 +1030,7 @@ blacklist ${HOME}/.local/share/psi+
 blacklist ${HOME}/.local/share/qBittorrent
 blacklist ${HOME}/.local/share/qpdfview
 blacklist ${HOME}/.local/share/qt5ct
+blacklist ${HOME}/.local/share/qt6ct
 blacklist ${HOME}/.local/share/quadrapassel
 blacklist ${HOME}/.local/share/qutebrowser
 blacklist ${HOME}/.local/share/remmina

@@ -43,7 +43,7 @@ x11 none
 
 private-cache
 private-dev
-private-etc
+private-etc mkinitcpio*
 
 dbus-user none
 dbus-system none

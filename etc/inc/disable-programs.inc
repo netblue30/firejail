@@ -482,6 +482,7 @@ blacklist ${HOME}/.config/google-chrome-beta
 blacklist ${HOME}/.config/google-chrome-unstable
 blacklist ${HOME}/.config/gpicview
 blacklist ${HOME}/.config/gramps
+blacklist ${HOME}/.config/green-recorder
 blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/gummi
 blacklist ${HOME}/.config/guvcview2

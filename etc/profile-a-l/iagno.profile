@@ -14,11 +14,10 @@ include disable-programs.inc
 include disable-shell.inc
 
 whitelist ${HOME}/.local/share/glib-2.0/schemas
-include whitelist-common.inc
-
-include whitelist-runuser-common.inc
-whitelist /usr/share/iagno
 whitelist /usr/share/gdm
+whitelist /usr/share/iagno
+include whitelist-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

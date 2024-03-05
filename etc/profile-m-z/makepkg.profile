@@ -35,8 +35,8 @@ include disable-exec.inc
 include disable-programs.inc
 
 caps.drop all
-machine-id
 ipc-namespace
+machine-id
 netfilter
 no3d
 nodvd

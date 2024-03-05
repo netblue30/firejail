@@ -6,6 +6,8 @@ include virt-manager.local
 # Persistent global definitions
 include globals.local
 
+blacklist /usr/libexec
+
 noblacklist ${HOME}/.cache/virt-manager
 noblacklist ${RUNUSER}/libvirt
 

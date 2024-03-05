@@ -8,7 +8,6 @@ include unrar.local
 include globals.local
 
 private-bin unrar
-private-etc
 private-tmp
 
 # Redirect

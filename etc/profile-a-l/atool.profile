@@ -12,8 +12,6 @@ include allow-perl.inc
 
 noroot
 
-# without login.defs atool complains and uses UID/GID 1000 by default
-private-etc
 private-tmp
 
 # Redirect

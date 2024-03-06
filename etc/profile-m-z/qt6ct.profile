@@ -8,9 +8,6 @@ include globals.local
 
 blacklist /usr/libexec
 
-noblacklist ${HOME}/.config/qt6ct
-noblacklist ${HOME}/.local/share/qt6ct
-
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

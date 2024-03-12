@@ -55,7 +55,9 @@ private-dev
 private-etc dbus-1,machine-id
 private-tmp
 
-dbus-user none
+dbus-user filter
+dbus-user.talk org.freedesktop.portal.Desktop
+dbus-user.talk org.freedesktop.portal.Settings
 dbus-system none
 
 memory-deny-write-execute

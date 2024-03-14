@@ -11,11 +11,11 @@ firejail (0.9.73) baseline; urgency=low
   * feature: stats support for --nettrace
   * feature: add doas support in firecfg and jailcheck (#5899 #5900)
   * feature: firecfg: add firecfg.d & add ignore command (#2097 #5245 #5876
-    #6153)
+    #6153 #6268)
   * feature: expand simple macros in more commands (--chroot= --netfilter=
     --netfilter6= --trace=) (#6032 #6109)
   * feature: add Landlock support (#5269 #6078 #6115 #6125 #6187 #6195 #6200
-    #6228)
+    #6228 #6260)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)
@@ -66,6 +66,7 @@ firejail (0.9.73) baseline; urgency=low
   * build: move errExit macro into inline function (#6217)
   * build: allow overriding certain tools & sync targets with CI (#6222)
   * build: reduce hardcoding and inconsistencies (#6230)
+  * build: sort.py: filter empty and duplicate items (#6261)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)

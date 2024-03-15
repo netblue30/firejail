@@ -418,6 +418,7 @@ blacklist ${HOME}/.config/curlrc
 blacklist ${HOME}/.config/d-feet
 blacklist ${HOME}/.config/darktable
 blacklist ${HOME}/.config/deadbeef
+blacklist ${HOME}/.config/deadlink
 blacklist ${HOME}/.config/deluge
 blacklist ${HOME}/.config/devilspie2
 blacklist ${HOME}/.config/digikam

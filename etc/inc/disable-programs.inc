@@ -527,6 +527,7 @@ blacklist ${HOME}/.config/kmplayerrc
 blacklist ${HOME}/.config/knotesrc
 blacklist ${HOME}/.config/konversation.notifyrc
 blacklist ${HOME}/.config/konversationrc
+blacklist ${HOME}/.config/koreader
 blacklist ${HOME}/.config/kritarc
 blacklist ${HOME}/.config/ktorrentrc
 blacklist ${HOME}/.config/ktouch2rc

@@ -988,6 +988,7 @@ blacklist ${HOME}/.local/share/liferea
 blacklist ${HOME}/.local/share/linphone
 blacklist ${HOME}/.local/share/lobster
 blacklist ${HOME}/.local/share/local-mail
+blacklist ${HOME}/.local/share/localsend_app
 blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/love
 blacklist ${HOME}/.local/share/lugaru

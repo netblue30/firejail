@@ -654,6 +654,7 @@ blacklist ${HOME}/.config/synfig
 blacklist ${HOME}/.config/teams
 blacklist ${HOME}/.config/teams-for-linux
 blacklist ${HOME}/.config/telepathy-account-widgets
+blacklist ${HOME}/.config/textroom
 blacklist ${HOME}/.config/torbrowser
 blacklist ${HOME}/.config/totem
 blacklist ${HOME}/.config/tox

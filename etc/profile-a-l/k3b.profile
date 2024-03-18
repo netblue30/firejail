@@ -24,6 +24,7 @@ caps.keep chown,dac_override,ipc_lock,net_bind_service,sys_admin,sys_nice,sys_ra
 #net none
 netfilter
 no3d
+#nodvd
 #nonewprivs # breaks privileged helpers
 noinput
 #noroot # breaks privileged helpers
@@ -33,7 +34,7 @@ novideo
 #protocol unix # breaks privileged helpers
 #seccomp # breaks privileged helpers
 
-private-dev
+#private-dev # breaks detection of dvd drives (see #6279)
 #private-tmp
 
 #restrict-namespaces # breaks privileged helpers

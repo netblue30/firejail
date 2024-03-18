@@ -68,7 +68,7 @@ jobs:
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
-    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+    - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies

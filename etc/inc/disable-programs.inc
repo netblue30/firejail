@@ -343,6 +343,7 @@ blacklist ${HOME}/.config/Rocket.Chat
 blacklist ${HOME}/.config/RogueLegacy
 blacklist ${HOME}/.config/RogueLegacyStorageContainer
 blacklist ${HOME}/.config/Seafile
+blacklist ${HOME}/.config/Session
 blacklist ${HOME}/.config/Signal
 blacklist ${HOME}/.config/Sinew Software Systems
 blacklist ${HOME}/.config/Slack

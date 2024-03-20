@@ -6,8 +6,8 @@ include tvnamer.local
 # Persistent global definitions
 include globals.local
 
-blacklist /usr/libexec
 blacklist ${RUNUSER}
+blacklist /usr/libexec
 
 noblacklist ${HOME}/.config/tvnamer
 noblacklist ${VIDEOS}

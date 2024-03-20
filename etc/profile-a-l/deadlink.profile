@@ -6,8 +6,8 @@ include deadlink.local
 # Persistent global definitions
 include globals.local
 
-blacklist /usr/libexec
 blacklist ${RUNUSER}
+blacklist /usr/libexec
 
 noblacklist ${HOME}/.config/deadlink
 

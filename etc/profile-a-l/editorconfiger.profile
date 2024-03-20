@@ -6,8 +6,8 @@ include editorconfiger.local
 # Persistent global definitions
 include globals.local
 
-blacklist /usr/libexec
 blacklist ${RUNUSER}
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

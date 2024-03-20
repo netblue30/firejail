@@ -6,8 +6,8 @@ include textroom.local
 # Persistent global definitions
 include globals.local
 
-blacklist /usr/libexec
 blacklist ${RUNUSER}/wayland-*
+blacklist /usr/libexec
 
 noblacklist ${HOME}/.config/textroom
 

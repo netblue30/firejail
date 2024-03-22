@@ -7,7 +7,6 @@ include dnscrypt-proxy.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 noblacklist /sbin
@@ -18,6 +17,7 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
+include disable-X11.inc
 include disable-xdg.inc
 
 whitelist /usr/share/dnscrypt-proxy

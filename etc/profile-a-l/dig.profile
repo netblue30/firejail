@@ -10,7 +10,6 @@ include globals.local
 noblacklist ${HOME}/.digrc
 noblacklist ${PATH}/dig
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 include disable-common.inc
@@ -18,6 +17,7 @@ include disable-common.inc
 include disable-exec.inc
 #include disable-interpreters.inc
 include disable-programs.inc
+include disable-X11.inc
 include disable-xdg.inc
 
 #mkfile ${HOME}/.digrc # see #903

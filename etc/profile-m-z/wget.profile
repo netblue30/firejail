@@ -15,7 +15,6 @@ noblacklist ${HOME}/.wgetrc
 #ignore read-only ${HOME}/.nvm
 #noblacklist ${HOME}/.nvm
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 include disable-common.inc
@@ -24,6 +23,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-X11.inc
 # Depending on workflow you can add the next line to your wget.local.
 #include disable-xdg.inc
 

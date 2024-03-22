@@ -7,9 +7,8 @@ include erd.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
-
 include disable-exec.inc
+#include disable-X11.inc # x11 none
 
 apparmor
 caps.drop all

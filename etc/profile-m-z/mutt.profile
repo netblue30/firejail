@@ -38,7 +38,6 @@ noblacklist ${HOME}/postponed
 noblacklist ${HOME}/sent
 noblacklist /etc/msmtprc
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 # Add the next lines to your mutt.local for oauth.py,S/MIME support.
@@ -51,6 +50,7 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
+include disable-X11.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.Mail

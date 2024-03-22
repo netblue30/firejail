@@ -7,13 +7,13 @@ include lynx.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
 include disable-programs.inc
+include disable-X11.inc
 include disable-xdg.inc
 
 include whitelist-runuser-common.inc

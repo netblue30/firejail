@@ -39,7 +39,6 @@ noblacklist /etc/msmtprc
 noblacklist /var/mail
 noblacklist /var/spool/mail
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 include allow-lua.inc
@@ -49,6 +48,7 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
+include disable-X11.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.Mail

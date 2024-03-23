@@ -55,6 +55,7 @@ dbus-user.own org.mpris.MediaPlayer2.firefox.*
 # Add the next lines to your firefox.local for plasma browser integration.
 #dbus-user.own org.mpris.MediaPlayer2.plasma-browser-integration
 #dbus-user.talk org.kde.JobViewServer
+#dbus-user.talk org.kde.kdeconnect
 #dbus-user.talk org.kde.kuiserver
 # Add the next line to your firefox.local to allow screen sharing under wayland.
 #dbus-user.talk org.freedesktop.portal.Desktop

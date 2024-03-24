@@ -16,7 +16,6 @@ noblacklist ${HOME}/.config/curlrc # since curl 7.73.0
 noblacklist ${HOME}/.curl-hsts
 noblacklist ${HOME}/.curlrc
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 # If you use nvm, add the below lines to your curl.local
@@ -26,6 +25,7 @@ blacklist ${RUNUSER}
 include disable-common.inc
 include disable-exec.inc
 include disable-programs.inc
+include disable-X11.inc
 # Depending on workflow you can add 'include disable-xdg.inc' to your curl.local.
 #include disable-xdg.inc
 

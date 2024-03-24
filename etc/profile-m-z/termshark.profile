@@ -8,8 +8,9 @@ include termshark.local
 # added by included profile
 #include globals.local
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
+
+include disable-X11.inc
 
 # Redirect
 include wireshark.profile

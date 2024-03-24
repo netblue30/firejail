@@ -7,7 +7,6 @@ include makepkg.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 # Note: see this Arch forum discussion https://bbs.archlinux.org/viewtopic.php?pid=1743138
@@ -33,6 +32,7 @@ noblacklist /var/lib/pacman
 include disable-common.inc
 include disable-exec.inc
 include disable-programs.inc
+include disable-X11.inc
 
 caps.drop all
 ipc-namespace

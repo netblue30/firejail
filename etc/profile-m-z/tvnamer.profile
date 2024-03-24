@@ -6,7 +6,6 @@ include tvnamer.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
 blacklist /usr/libexec
 blacklist ${RUNUSER}
 
@@ -24,6 +23,7 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-proc.inc
 include disable-shell.inc
+include disable-X11.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/tvnamer

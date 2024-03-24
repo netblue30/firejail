@@ -7,7 +7,6 @@ include dbus-send.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
@@ -17,6 +16,7 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
 include disable-write-mnt.inc
+include disable-X11.inc
 include disable-xdg.inc
 
 #include whitelist-common.inc # see #903

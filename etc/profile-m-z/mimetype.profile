@@ -7,11 +7,11 @@ include mimetype.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 include disable-exec.inc
 include disable-proc.inc
+include disable-X11.inc
 
 apparmor
 caps.drop all

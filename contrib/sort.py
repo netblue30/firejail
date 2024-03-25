@@ -11,7 +11,7 @@ from sys import argv, exit as sys_exit, stderr
 __doc__ = f"""\
 Sort the arguments of commands in profiles.
 
-Usage: {path.basename(argv[0])} [/path/to/profile ...]
+Usage: {path.basename(argv[0])} [-i] [/path/to/profile ...]
 
 The following commands are supported:
 
@@ -20,13 +20,14 @@ The following commands are supported:
 
 Note that this is only applicable to commands that support multiple arguments.
 
-Keep in mind that this will overwrite your profile(s).
+Options:
+    -i  Edit the profile file(s) in-place.
 
 Examples:
-    $ {argv[0]} MyAwesomeProfile.profile
-    $ {argv[0]} new_profile.profile second_new_profile.profile
-    $ {argv[0]} ~/.config/firejail/*.{{profile,inc,local}}
-    $ sudo {argv[0]} /etc/firejail/*.{{profile,inc,local}}
+    $ {argv[0]} -i MyAwesomeProfile.profile
+    $ {argv[0]} -i new_profile.profile second_new_profile.profile
+    $ {argv[0]} -i ~/.config/firejail/*.{{profile,inc,local}}
+    $ sudo {argv[0]} -i /etc/firejail/*.{{profile,inc,local}}
 
 Exit Codes:
   0: Success: No profiles needed fixing.
@@ -62,7 +63,7 @@ def sort_protocol(original_protocols):
     return fixed_protocols[:-1]
 
 
-def fix_profile(filename):
+def check_profile(filename, overwrite):
     with open(filename, "r+") as profile:
         lines = profile.read().split("\n")
         was_fixed = False
@@ -87,17 +88,24 @@ def fix_profile(filename):
                     f"{filename}:{lineno}:+{fixed_line}"
                 )
             fixed_profile.append(fixed_line)
+
         if was_fixed:
-            profile.seek(0)
-            profile.truncate()
-            profile.write("\n".join(fixed_profile))
-            profile.flush()
-            print(f"[ Fixed ] {filename}")
+            if overwrite:
+                profile.seek(0)
+                profile.truncate()
+                profile.write("\n".join(fixed_profile))
+                profile.flush()
+                print(f"[ Fixed ] {filename}")
             return 101
         return 0
 
 
 def main(args):
+    overwrite = False
+    if len(args) > 0 and args[0] == "-i":
+        overwrite = True
+        args.pop(0)
+
     if len(args) < 1:
         print(__doc__, file=stderr)
         return 2
@@ -108,9 +116,9 @@ def main(args):
     for filename in args:
         try:
             if exit_code not in (1, 101):
-                exit_code = fix_profile(filename)
+                exit_code = check_profile(filename, overwrite)
             else:
-                fix_profile(filename)
+                check_profile(filename, overwrite)
         except FileNotFoundError as err:
             print(f"[ Error ] {err}", file=stderr)
             exit_code = 1

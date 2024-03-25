@@ -6,22 +6,5 @@ include qemu-system-x86_64.local
 # Persistent global definitions
 include globals.local
 
-include disable-common.inc
-include disable-programs.inc
-
-caps.drop all
-netfilter
-nodvd
-nogroups
-nonewprivs
-noroot
-notv
-protocol unix,inet,inet6
-seccomp
-tracelog
-
-private-cache
-private-tmp
-
-noexec /tmp
-restrict-namespaces
+# Redirect
+include qemu-common.profile

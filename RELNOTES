@@ -94,9 +94,17 @@ firejail (0.9.73) baseline; urgency=low
   * docs: add uninstall instructions to README.md (#5812)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
+  * profiles: clarify userns comments (#5686)
+  * profiles: bulk rename electron to electron-common (#5700)
+  * profiles: streamline seccomp socket comment (#5735)
+  * profiles: drop hostname option from all profiles (#5702)
+  * profiles: move read-only config entries to disable-common.inc (#5763)
+  * profiles: standardize on just "GTK" on comments (#5794)
+  * profiles: improvements to profiles using private (#5946)
   * profiles: standardize commented code and eol comments (#5987)
   * profiles: replace private-opt with whitelist & document private-opt issues
     (#6021)
+  * profiles: drop paths already in wusc (#6218)
   * profiles: deny access to ~/.config/autostart (#6257)
   * profiles: replace x11 socket blacklist with disable-X11.inc (#6286)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater

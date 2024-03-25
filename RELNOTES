@@ -67,6 +67,8 @@ firejail (0.9.73) baseline; urgency=low
   * build: allow overriding certain tools & sync targets with CI (#6222)
   * build: reduce hardcoding and inconsistencies (#6230)
   * build: sort.py: filter empty and duplicate items (#6261)
+  * build: fix "warning: "_FORTIFY_SOURCE" redefined" (#6282 #6283)
+  * build: sort.py: add and require -i to edit in-place (#6290)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
@@ -95,6 +97,8 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: standardize commented code and eol comments (#5987)
   * profiles: replace private-opt with whitelist & document private-opt issues
     (#6021)
+  * profiles: deny access to ~/.config/autostart (#6257)
+  * profiles: replace x11 socket blacklist with disable-X11.inc (#6286)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

@@ -3506,7 +3506,46 @@ else $as_nop
 fi
 
 
-as_CACHEVAR=`printf "%s\n" "ax_cv_check_cflags_$CFLAGS $CPPFLAGS -Werror_-D_FORTIFY_SOURCE=2" | $as_tr_sh`
+as_CACHEVAR=`printf "%s\n" "ax_cv_check_cflags_$CFLAGS $CPPFLAGS -Werror_-D_FORTIFY_SOURCE=3" | $as_tr_sh`
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether C compiler accepts -D_FORTIFY_SOURCE=3" >&5
+printf %s "checking whether C compiler accepts -D_FORTIFY_SOURCE=3... " >&6; }
+if eval test \${$as_CACHEVAR+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+
+  ax_check_save_flags=$CFLAGS
+  CFLAGS="$CFLAGS $CFLAGS $CPPFLAGS -Werror -D_FORTIFY_SOURCE=3"
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main (void)
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"
+then :
+  eval "$as_CACHEVAR=yes"
+else $as_nop
+  eval "$as_CACHEVAR=no"
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext
+  CFLAGS=$ax_check_save_flags
+fi
+eval ac_res=\$$as_CACHEVAR
+	       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
+printf "%s\n" "$ac_res" >&6; }
+if eval test \"x\$"$as_CACHEVAR"\" = x"yes"
+then :
+
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -D_FORTIFY_SOURCE=3"
+
+else $as_nop
+  as_CACHEVAR=`printf "%s\n" "ax_cv_check_cflags_$CFLAGS $CPPFLAGS -Werror_-D_FORTIFY_SOURCE=2" | $as_tr_sh`
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether C compiler accepts -D_FORTIFY_SOURCE=2" >&5
 printf %s "checking whether C compiler accepts -D_FORTIFY_SOURCE=2... " >&6; }
 if eval test \${$as_CACHEVAR+y}
@@ -3546,6 +3585,8 @@ then :
 
 else $as_nop
   :
+fi
+
 fi
 
 

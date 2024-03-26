@@ -44,7 +44,7 @@ include disable-common.inc
 #include disable-interpreters.inc
 include disable-programs.inc
 include disable-write-mnt.inc
-include disable-X11.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 #include whitelist-runuser-common.inc

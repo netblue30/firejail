@@ -14,8 +14,8 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
-#include disable-X11.inc # x11 none
-include disable-X11.inc
+#include disable-x11.inc # x11 none
+include disable-x11.inc
 include disable-xdg.inc
 
 whitelist ${RUNUSER}/gnupg

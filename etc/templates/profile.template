@@ -120,7 +120,7 @@ include globals.local
 #include disable-programs.inc
 #include disable-shell.inc
 #include disable-write-mnt.inc
-#include disable-X11.inc
+#include disable-x11.inc
 #include disable-xdg.inc
 
 # This section often mirrors noblacklist section above. The idea is
@@ -181,7 +181,7 @@ include globals.local
 #seccomp.block-secondary
 ##seccomp-error-action log (only for debugging seccomp issues)
 #tracelog
-# Prefer 'x11 none' instead of 'disable-X11.inc' if 'net none' is set
+# Prefer 'x11 none' instead of 'disable-x11.inc' if 'net none' is set
 ##x11 none
 
 #disable-mnt

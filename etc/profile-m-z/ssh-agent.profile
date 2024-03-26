@@ -13,7 +13,7 @@ blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-programs.inc
-include disable-X11.inc
+include disable-x11.inc
 
 include whitelist-usr-share-common.inc
 

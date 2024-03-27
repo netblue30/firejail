@@ -25,7 +25,7 @@ blacklist ${RUNUSER}
 include disable-common.inc
 include disable-exec.inc
 include disable-programs.inc
-include disable-X11.inc
+include disable-x11.inc
 # Depending on workflow you can add 'include disable-xdg.inc' to your curl.local.
 #include disable-xdg.inc
 

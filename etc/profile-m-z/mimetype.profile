@@ -11,7 +11,7 @@ blacklist ${RUNUSER}/wayland-*
 
 include disable-exec.inc
 include disable-proc.inc
-include disable-X11.inc
+include disable-x11.inc
 
 apparmor
 caps.drop all

@@ -9,7 +9,7 @@ include tshark.local
 
 blacklist ${RUNUSER}
 
-include disable-X11.inc
+include disable-x11.inc
 
 # Redirect
 include wireshark.profile

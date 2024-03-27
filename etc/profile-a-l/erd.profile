@@ -8,7 +8,7 @@ include erd.local
 include globals.local
 
 include disable-exec.inc
-#include disable-X11.inc # x11 none
+#include disable-x11.inc # x11 none
 
 apparmor
 caps.drop all

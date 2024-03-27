@@ -16,7 +16,7 @@ include disable-interpreters.inc
 include disable-proc.inc
 include disable-programs.inc
 include disable-shell.inc
-#include disable-X11.inc # x11 none
+#include disable-x11.inc # x11 none
 include disable-xdg.inc
 
 #include whitelist-common.inc # see #903

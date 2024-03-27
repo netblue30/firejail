@@ -13,7 +13,7 @@ include disable-interpreters.inc
 # Additional noblacklist files/directories (blacklisted in disable-programs.inc)
 # used as associated programs can be added in your links-common.local.
 include disable-programs.inc
-include disable-X11.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 whitelist ${DOWNLOADS}

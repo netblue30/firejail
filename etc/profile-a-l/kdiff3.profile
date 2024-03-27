@@ -12,8 +12,8 @@ noblacklist ${HOME}/.config/kdiff3rc
 # Add the next line to your kdiff3.local if you don't need to compare files in disable-common.inc.
 # By default we deny access only to .ssh and .gnupg.
 #include disable-common.inc
-blacklist ${HOME}/.ssh
 blacklist ${HOME}/.gnupg
+blacklist ${HOME}/.ssh
 
 include disable-devel.inc
 include disable-exec.inc

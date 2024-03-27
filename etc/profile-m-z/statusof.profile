@@ -7,8 +7,8 @@ include statusof.local
 # Persistent global definitions
 include globals.local
 
-blacklist /usr/libexec
 blacklist ${RUNUSER}
+blacklist /usr/libexec
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc

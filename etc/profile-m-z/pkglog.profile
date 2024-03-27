@@ -6,6 +6,8 @@ include pkglog.local
 # Persistent global definitions
 include globals.local
 
+blacklist ${RUNUSER}
+
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
@@ -14,6 +16,7 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
+#include disable-x11.inc # x11 none
 include disable-xdg.inc
 
 whitelist /var/log/apt/history.log
@@ -37,6 +40,7 @@ nou2f
 novideo
 seccomp
 tracelog
+x11 none
 
 disable-mnt
 private

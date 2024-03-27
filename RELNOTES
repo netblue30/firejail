@@ -29,6 +29,7 @@ firejail (0.9.73) baseline; urgency=low
   * modif: improve errExit error messages (#5871)
   * modif: drop deprecated 'shell' option references (#5894)
   * modif: keep pipewire group unless nosound is used (#5992 #5993)
+  * modif: fcopy: Use lstat when copying directory (#5957)
   * removal: LTS and FIRETUNNEL support
   * bugfix: qutebrowser: links will not open in the existing instance (#5601
     #5618)
@@ -77,6 +78,7 @@ firejail (0.9.73) baseline; urgency=low
   * ci: run for every branch instead of just master (#5815)
   * ci: upgrade debian:stretch to debian:buster (#5818)
   * ci: standardize apt-get update/install & misc improvements (#5857)
+  * ci: Update step-security/harden-runner and update allowed endpoints (#5953)
   * ci: whitelist paths, reorganize workflows & speed-up tests (#5960)
   * ci: fix dependabot duplicated workflow runs (#5984)
   * ci: allow running workflows manually (#6026)

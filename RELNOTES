@@ -34,6 +34,7 @@ firejail (0.9.73) baseline; urgency=low
   * bugfix: qutebrowser: links will not open in the existing instance (#5601
     #5618)
   * bugfix: fix --hostname and --hosts-file commands
+  * bugfix: fix examples in firejail-local AppArmor profile (#5717)
   * bugfix: arp.c: ensure positive timeout on select(2) (#5806)
   * bugfix: Wrong syscall names for s390_pci_mmio_read and s390_pci_mmio_write
     (#5965 #5976)
@@ -104,6 +105,7 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: standardize on just "GTK" on comments (#5794)
   * profiles: improvements to profiles using private (#5946)
   * profiles: standardize commented code and eol comments (#5987)
+  * profiles: disable-common: add more suid programs (#6049 #6051 #6052)
   * profiles: replace private-opt with whitelist & document private-opt issues
     (#6021)
   * profiles: drop paths already in wusc (#6218)

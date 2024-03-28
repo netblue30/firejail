@@ -35,12 +35,6 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-# The lines below are needed to find the default Firefox profile name, to allow
-# opening links in an existing instance of Firefox (note that it still fails if
-# there isn't a Firefox instance running with the default profile; see #5352)
-noblacklist ${HOME}/.mozilla
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
-
 apparmor
 caps.drop all
 netfilter
@@ -60,7 +54,7 @@ seccomp.block-secondary
 tracelog
 
 disable-mnt
-private-bin lettura
+private-bin fireurl,lettura
 private-cache
 private-dev
 private-etc @network,@sound,@tls-ca,@x11,mime.types
@@ -69,8 +63,6 @@ private-tmp
 dbus-user filter
 dbus-user.talk org.freedesktop.Notifications
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
-# allow D-Bus communication with firefox for opening links
-dbus-user.talk org.mozilla.*
 dbus-system none
 
 restrict-namespaces

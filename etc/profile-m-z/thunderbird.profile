@@ -6,8 +6,6 @@ include thunderbird.local
 # Persistent global definitions
 include globals.local
 
-ignore include whitelist-runuser-common.inc
-
 # TB stopped supporting enigmail in 2020 (v78) - let's harden D-Bus
 # https://support.mozilla.org/en-US/kb/openpgp-thunderbird-howto-and-faq
 ignore dbus-user none
@@ -15,8 +13,6 @@ dbus-user filter
 dbus-user.own org.mozilla.thunderbird.*
 dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.freedesktop.Notifications
-# allow D-Bus communication with firefox for opening links
-dbus-user.talk org.mozilla.*
 # e2ee email needs writable-run-user
 # https://support.mozilla.org/en-US/kb/introduction-to-e2e-encryption
 writable-run-user
@@ -28,10 +24,6 @@ writable-run-user
 #whitelist /var/mail
 #whitelist /var/spool/mail
 #writable-var
-
-# These lines are needed to allow Firefox to load your profile when clicking a link in an email
-noblacklist ${HOME}/.mozilla
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
 
 noblacklist ${HOME}/.cache/thunderbird
 noblacklist ${HOME}/.gnupg

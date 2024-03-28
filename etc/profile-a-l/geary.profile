@@ -14,7 +14,6 @@ noblacklist ${HOME}/.config/geary
 noblacklist ${HOME}/.local/share/evolution
 noblacklist ${HOME}/.local/share/geary
 noblacklist ${HOME}/.local/share/pki
-noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.pki
 
 include allow-bin-sh.inc
@@ -43,7 +42,6 @@ whitelist ${HOME}/.config/geary
 whitelist ${HOME}/.local/share/evolution
 whitelist ${HOME}/.local/share/geary
 whitelist ${HOME}/.local/share/pki
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${HOME}/.pki
 whitelist /usr/share/geary
 include whitelist-common.inc
@@ -72,7 +70,7 @@ seccomp.block-secondary
 tracelog
 
 #disable-mnt
-#private-bin geary,sh
+#private-bin fireurl,geary,sh
 private-cache
 private-dev
 private-etc @tls-ca,@x11,mailcap,mime.types
@@ -88,7 +86,6 @@ dbus-user.talk org.gnome.OnlineAccounts
 dbus-user.talk org.gnome.evolution.dataserver.AddressBook10
 dbus-user.talk org.gnome.evolution.dataserver.Sources5
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
-dbus-user.talk org.mozilla.*
 dbus-system none
 
 restrict-namespaces

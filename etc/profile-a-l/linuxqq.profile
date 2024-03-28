@@ -15,7 +15,6 @@ include disable-shell.inc
 
 mkdir ${HOME}/.config/QQ
 whitelist ${HOME}/.config/QQ
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${DESKTOP}
 whitelist /opt/QQ
 
@@ -34,7 +33,6 @@ dbus-user.talk org.freedesktop.portal.IBus
 dbus-user.talk org.freedesktop.ScreenSaver
 dbus-user.talk org.gnome.Mutter.IdleMonitor
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
-dbus-user.talk org.mozilla.*
 ignore dbus-user none
 
 # Redirect

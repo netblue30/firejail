@@ -9,14 +9,6 @@ include gtk-youtube-viewers-common.local
 
 ignore quiet
 
-# The lines below are needed to find the default Firefox profile name, to allow
-# opening links in an existing instance of Firefox (note that it still fails if
-# there isn't a Firefox instance running with the default profile; see #5352)
-noblacklist ${HOME}/.mozilla
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
-
-private-bin firefox,xterm
+private-bin fireurl,xterm
 
 dbus-user filter
-# allow D-Bus communication with firefox for opening links
-dbus-user.talk org.mozilla.*

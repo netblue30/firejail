@@ -8,7 +8,10 @@ include globals.local
 
 noblacklist ${HOME}/.xonotic
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
+
+# Allow opengl-game wrapper script (distribution-specific)
 include allow-opengl-game.inc
 
 include disable-common.inc

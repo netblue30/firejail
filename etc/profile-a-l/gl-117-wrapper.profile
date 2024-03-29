@@ -6,6 +6,7 @@ include gl-117-wrapper.local
 # added by included profile
 #include globals.local
 
+# Allow opengl-game wrapper script (distribution-specific)
 include allow-opengl-game.inc
 
 private-bin gl-117-wrapper

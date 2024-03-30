@@ -31,8 +31,6 @@ firejail (0.9.73) baseline; urgency=low
   * modif: keep pipewire group unless nosound is used (#5992 #5993)
   * modif: fcopy: Use lstat when copying directory (#5957)
   * removal: LTS and FIRETUNNEL support
-  * bugfix: qutebrowser: links will not open in the existing instance (#5601
-    #5618)
   * bugfix: fix --hostname and --hosts-file commands
   * bugfix: fix examples in firejail-local AppArmor profile (#5717)
   * bugfix: arp.c: ensure positive timeout on select(2) (#5806)
@@ -97,6 +95,8 @@ firejail (0.9.73) baseline; urgency=low
   * docs: add uninstall instructions to README.md (#5812)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
+  * profiles: qutebrowser: fix links not opening in the existing instance
+    (#5601 #5618)
   * profiles: clarify userns comments (#5686)
   * profiles: bulk rename electron to electron-common (#5700)
   * profiles: streamline seccomp socket comment (#5735)

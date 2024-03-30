@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/RSS Guard 4
 
+# Allow nodejs (blacklisted by disable-interpreters.inc)
 include allow-nodejs.inc
 
 include disable-common.inc

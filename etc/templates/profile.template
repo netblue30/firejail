@@ -88,6 +88,9 @@ include globals.local
 # Allow lua (blacklisted by disable-interpreters.inc)
 #include allow-lua.inc
 
+# Allow nodejs (blacklisted by disable-interpreters.inc)
+#include allow-nodejs.inc
+
 # Allow perl (blacklisted by disable-interpreters.inc)
 #include allow-perl.inc
 

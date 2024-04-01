@@ -10,7 +10,6 @@ include email-common.local
 noblacklist ${HOME}/.bogofilter
 noblacklist ${HOME}/.bsfilter
 noblacklist ${HOME}/.gnupg
-noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.signature
 # when storing mail outside the default ${HOME}/Mail path, 'noblacklist' the custom path in your email-common.local
 # and 'blacklist' it in your disable-common.local too so it is kept hidden from other applications
@@ -38,7 +37,6 @@ whitelist ${HOME}/.bogofilter
 whitelist ${HOME}/.bsfilter
 whitelist ${HOME}/.config/mimeapps.list
 whitelist ${HOME}/.gnupg
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${HOME}/.signature
 whitelist ${DOCUMENTS}
 whitelist ${DOWNLOADS}
@@ -48,7 +46,7 @@ whitelist ${RUNUSER}/gnupg
 whitelist /usr/share/bogofilter
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
-whitelist /var/lib/clamav 
+whitelist /var/lib/clamav
 whitelist /var/mail
 whitelist /var/spool/mail
 include whitelist-common.inc
@@ -90,7 +88,6 @@ dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.gnome.keyring.*
 dbus-user.talk org.gnome.seahorse.*
-dbus-user.talk org.mozilla.*
 dbus-system none
 
 read-only ${HOME}/.signature

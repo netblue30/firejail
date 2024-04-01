@@ -19,11 +19,6 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-# Allow zeal to open links in Firefox browsers.
-# This also requires dbus-user filtering (see below).
-noblacklist ${HOME}/.mozilla
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
-
 mkdir ${HOME}/.cache/Zeal
 mkdir ${HOME}/.config/Zeal
 mkdir ${HOME}/.local/share/Zeal
@@ -56,14 +51,13 @@ seccomp.block-secondary
 tracelog
 
 disable-mnt
-private-bin zeal
+private-bin fireurl,zeal
 private-cache
 private-dev
 private-etc @tls-ca,@x11,host.conf,mime.types,rpc,services
 private-tmp
 
 dbus-user filter
-dbus-user.talk org.mozilla.*
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
 dbus-system none
 

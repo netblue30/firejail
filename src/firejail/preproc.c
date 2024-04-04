@@ -109,7 +109,10 @@ void preproc_unlock_firejail_network_dir(void) {
 }
 
 // build /run/firejail directory
-void preproc_build_firejail_dir(void) {
+//
+// Note: This creates the base directory of the rundir lockfile;
+// it should be called before preproc_lock_firejail_dir().
+void preproc_build_firejail_dir_unlocked(void) {
 	struct stat s;
 
 	// CentOS 6 doesn't have /run directory
@@ -118,6 +121,14 @@ void preproc_build_firejail_dir(void) {
 	}
 
 	create_empty_dir_as_root(RUN_FIREJAIL_DIR, 0755);
+}
+
+// build directory hierarchy under /run/firejail
+//
+// Note: Remounts have timing hazards. This function should
+// only be called after acquiring the directory lock via
+// preproc_lock_firejail_dir().
+void preproc_build_firejail_dir_locked(void) {
 	create_empty_dir_as_root(RUN_FIREJAIL_NETWORK_DIR, 0755);
 	create_empty_dir_as_root(RUN_FIREJAIL_BANDWIDTH_DIR, 0755);
 	create_empty_dir_as_root(RUN_FIREJAIL_NAME_DIR, 0755);

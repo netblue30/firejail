@@ -435,7 +435,8 @@ void preproc_lock_firejail_dir(void);
 void preproc_unlock_firejail_dir(void);
 void preproc_lock_firejail_network_dir(void);
 void preproc_unlock_firejail_network_dir(void);
-void preproc_build_firejail_dir(void);
+void preproc_build_firejail_dir_unlocked(void);
+void preproc_build_firejail_dir_locked(void);
 void preproc_mount_mnt_dir(void);
 void preproc_clean_run(void);
 

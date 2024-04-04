@@ -1166,13 +1166,13 @@ int main(int argc, char **argv, char **envp) {
 #endif
 
 	// build /run/firejail directory structure
-	preproc_build_firejail_dir();
+	preproc_build_firejail_dir_unlocked();
+	preproc_lock_firejail_dir();
+	preproc_build_firejail_dir_locked();
 	const char *container_name = env_get("container");
-	if (!container_name || strcmp(container_name, "firejail")) {
-		preproc_lock_firejail_dir();
+	if (!container_name || strcmp(container_name, "firejail"))
 		preproc_clean_run();
-		preproc_unlock_firejail_dir();
-	}
+	preproc_unlock_firejail_dir();
 
 	delete_run_files(getpid());
 	atexit(clear_atexit);

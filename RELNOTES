@@ -113,6 +113,9 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: replace x11 socket blacklist with disable-X11.inc (#6286)
   * profiles: sort blacklist sections (#6289)
   * profiles: rename disable-X11.inc to disable-x11.inc (#6294)
+  * profiles: add allow-nodejs.inc to profile.template (#6298)
+  * profiles: add allow-php.inc to profile.template (#6299)
+  * profiles: clarify and add opengl-game to profile.template (#6300)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

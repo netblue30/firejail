@@ -91,6 +91,9 @@ include globals.local
 # Allow nodejs (blacklisted by disable-interpreters.inc)
 #include allow-nodejs.inc
 
+# Allow opengl-game wrapper script (distribution-specific)
+#include allow-opengl-game.inc
+
 # Allow perl (blacklisted by disable-interpreters.inc)
 #include allow-perl.inc
 

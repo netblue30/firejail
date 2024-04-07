@@ -294,4 +294,10 @@ void ll_add_profile(int type, const char *data) {
 	ptr->next = entry;
 }
 
+#else
+void ll_add_profile(int type, const char *data) {
+	(void) type;
+	(void) data;
+}
+
 #endif /* HAVE_LANDLOCK */

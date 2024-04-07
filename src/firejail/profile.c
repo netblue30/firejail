@@ -1073,7 +1073,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-#ifdef HAVE_LANDLOCK
+//#ifdef HAVE_LANDLOCK
+// landlock_connon.inc included by derfault in landlock.profile
+// all landlcok functions are empty in case landlock is not available in the kernel
 	if (strncmp(ptr, "landlock.enforce", 16) == 0) {
 		arg_landlock_enforce = 1;
 		return 0;
@@ -1098,7 +1100,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		ll_add_profile(LL_FS_EXEC, ptr + 20);
 		return 0;
 	}
-#endif
+//#endif
 
 	// memory deny write&execute
 	if (strcmp(ptr, "memory-deny-write-execute") == 0) {

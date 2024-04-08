@@ -18,7 +18,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
-#ifdef HAVE_LANDLOCK
 #include "firejail.h"
 #include <linux/landlock.h>
 #include <sys/prctl.h>
@@ -26,6 +25,8 @@
 #include <sys/types.h>
 #include <errno.h>
 #include <fcntl.h>
+
+#ifdef HAVE_LANDLOCK
 
 static int ll_ruleset_fd = -1;
 static int ll_abi = -1;
@@ -295,6 +296,17 @@ void ll_add_profile(int type, const char *data) {
 }
 
 #else
+
+int ll_get_fd(void) {
+	return -1;
+}
+
+int ll_restrict(uint32_t flags) {
+	(void) flags;
+
+	return 0;
+}
+
 void ll_add_profile(int type, const char *data) {
 	(void) type;
 	(void) data;

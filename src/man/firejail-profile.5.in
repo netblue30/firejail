@@ -509,30 +509,30 @@ Blacklist all Linux capabilities.
 Whitelist given Linux capabilities.
 #ifdef HAVE_LANDLOCK
 .TP
-\fBlandlock.enforce
+\fBlandlock.enforce (experimental)
 Enforce the Landlock ruleset.
 .PP
 Without it, the other Landlock commands have no effect.
 .TP
-\fBlandlock.fs.read path
+\fBlandlock.fs.read path (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a read access
 rule for path.
 .TP
-\fBlandlock.fs.write path
+\fBlandlock.fs.write path (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a write access
 rule for path.
 .TP
-\fBlandlock.fs.makeipc path
+\fBlandlock.fs.makeipc path (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
 allows the creation of named pipes (FIFOs) and Unix domain sockets beneath
 the given path.
 .TP
-\fBlandlock.fs.makedev path
+\fBlandlock.fs.makedev path (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
 allows the creation of block devices and character devices beneath the given
 path.
 .TP
-\fBlandlock.fs.execute path
+\fBlandlock.fs.execute path (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add an execution
 permission rule for path.
 #endif

@@ -1236,30 +1236,30 @@ $ firejail --keep-var-tmp
 
 #ifdef HAVE_LANDLOCK
 .TP
-\fB\-\-landlock.enforce
+\fB\-\-landlock.enforce (experimental)
 Enforce the Landlock ruleset.
 Without it, the other Landlock commands have no effect.
 See the \fBLANDLOCK\fR section for more information.
 .TP
-\fB\-\-landlock.fs.read=path
+\fB\-\-landlock.fs.read=path (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a read access
 rule for path.
 .TP
-\fB\-\-landlock.fs.write=path
+\fB\-\-landlock.fs.write=path (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a write access
 rule for path.
 .TP
-\fB\-\-landlock.fs.makeipc=path
+\fB\-\-landlock.fs.makeipc=path (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
 allows the creation of named pipes (FIFOs) and Unix domain sockets beneath
 the given path.
 .TP
-\fB\-\-landlock.fs.makedev=path
+\fB\-\-landlock.fs.makedev=path (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
 allows the creation of block devices and character devices beneath the given
 path.
 .TP
-\fB\-\-landlock.fs.execute=path
+\fB\-\-landlock.fs.execute=path (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add an execution
 permission rule for path.
 .br
@@ -3372,6 +3372,21 @@ $ firejail --apparmor firefox
 
 #ifdef HAVE_LANDLOCK
 .SH LANDLOCK
+Warning: Landlock support in firejail is considered experimental and unstable.
+The contents of landlock-common.inc are likely to change and the feature is
+still being expanded upon in the Linux kernel.
+Also, note that its functionality overlaps with existing firejail features,
+such as the \fBblacklist\fR, \fBread-only\fR and \fBread-write\fR commands.
+Its filesystem access rules can currently only restrict direct access to paths;
+it is not able to make only select paths appear in the sandbox such as with the
+\fBwhitelist\fR and \fBprivate-etc\fR commands (see also unveil(2) on OpenBSD).
+Lastly, note that depending on the Linux kernel version, Landlock may not
+protect all of the relevant syscalls (see the kernel's Landlock documentation
+for details).
+Therefore, it is recommended to treat Landlock as an extra layer of protection,
+to be used together with other firejail features (rather than as a bulletproof
+mechanism by itself).
+.PP
 Landlock is a Linux security module first introduced in version 5.13 of the
 Linux kernel.
 It allows unprivileged processes to restrict their access to the filesystem.
@@ -3386,6 +3401,11 @@ landlock-common.inc) and with a custom set of rules.
 Important notes:
 .PP
 .RS
+- Currently only Landlock ABI version 1 is supported.
+.PP
+- If "lsm=" is used in the kernel command line, it should contain "landlock"
+(such as "lsm=apparmor,landlock"), or else it will be disabled.
+.PP
 - A process can install a Landlock ruleset only if it has either
 \fBCAP_SYS_ADMIN\fR in its effective capability set, or the "No New
 Privileges" restriction enabled.

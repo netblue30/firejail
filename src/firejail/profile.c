@@ -1074,8 +1074,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 
 //#ifdef HAVE_LANDLOCK
-// landlock_connon.inc included by derfault in landlock.profile
-// all landlcok functions are empty in case landlock is not available in the kernel
+// landlock-common.inc is included by default.profile, so the entries of the
+// former should be processed or ignored instead of aborting.
+// Note that all landlock functions are empty when building without landlock
+// support.
 	if (strncmp(ptr, "landlock.enforce", 16) == 0) {
 		arg_landlock_enforce = 1;
 		return 0;

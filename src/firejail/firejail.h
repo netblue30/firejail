@@ -966,10 +966,8 @@ void run_ids(int argc, char **argv);
 void oom_set(const char *oom_string);
 
 // landlock.c
-#ifdef HAVE_LANDLOCK
 int ll_get_fd(void);
 int ll_restrict(uint32_t flags);
 void ll_add_profile(int type, const char *data);
-#endif /* HAVE_LANDLOCK */
 
 #endif

@@ -68,29 +68,17 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt-get install -qy
-        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils ninja-build meson
     - name: print env
       run: ./ci/printenv.sh
-    - name: configure
-      run: >
-        ./configure CC=gcc-12
-        --prefix=/usr --enable-fatal-warnings --enable-analyzer
-        --enable-apparmor --enable-selinux
-        || (cat config.log; exit 1)
-    - name: make
-      run: make -j "$(nproc)"
-    - name: make install
-      run: sudo make install
-    - name: print version
-      run: make print-version
-    - run: make lab-setup
-    - run: make test-seccomp-extra
-    - run: make test-firecfg
-    - run: make test-capabilities
-    - run: make test-apparmor
-    - run: make test-appimage
-    - run: make test-chroot
-    - run: make test-fcopy
+    - name: meson setup
+      run: CC=gcc-12 meson setup _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
+    - name: meson compile
+      run: meson compile -C _builddir
+    - name: meson install
+      run: sudo -E meson install -C _builddir
+    - name: test main
+      run: meson test -C _builddir seccomp-extra firecfg capabilities apparmor appimage chroot fcopy
 
 #
 # Slower tests
@@ -117,24 +105,17 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt-get install -qy
-        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils ninja-build meson
     - name: print env
       run: ./ci/printenv.sh
-    - name: configure
-      run: >
-        ./configure CC=gcc-12
-        --prefix=/usr --enable-fatal-warnings --enable-analyzer
-        --enable-apparmor --enable-selinux
-        || (cat config.log; exit 1)
-    - name: make
-      run: make -j "$(nproc)"
-    - name: make install
-      run: sudo make install
-    - name: print version
-      run: make print-version
-    - run: make lab-setup
-    - run: make test-private-etc
-    - run: make test-fs
+    - name: meson setup
+      run: CC=gcc-12 meson setup _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
+    - name: meson compile
+      run: meson compile -C _builddir
+    - name: meson install
+      run: sudo -E meson install -C _builddir
+    - name: test fs
+      run: meson test -C _builddir private-etc fs
 
   test-environment:
     runs-on: ubuntu-22.04
@@ -157,24 +138,17 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt-get install -qy
-        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils ninja-build meson
     - name: print env
       run: ./ci/printenv.sh
-    - name: configure
-      run: >
-        ./configure CC=gcc-12
-        --prefix=/usr --enable-fatal-warnings --enable-analyzer
-        --enable-apparmor --enable-selinux
-        || (cat config.log; exit 1)
-    - name: make
-      run: make -j "$(nproc)"
-    - name: make install
-      run: sudo make install
-    - name: print version
-      run: make print-version
-    - run: make lab-setup
-    - run: make test-environment
-    - run: make test-profiles
+    - name: meson setup
+      run: CC=gcc-12 meson setup _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
+    - name: meson compile
+      run: meson compile -C _builddir
+    - name: meson install
+      run: sudo -E meson install -C _builddir
+    - name: test environment
+      run: meson test -C _builddir environment profiles
 
   test-utils:
     runs-on: ubuntu-22.04
@@ -200,23 +174,17 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt-get install -qy
-        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils ninja-build meson
     - name: print env
       run: ./ci/printenv.sh
-    - name: configure
-      run: >
-        ./configure CC=gcc-12
-        --prefix=/usr --enable-fatal-warnings --enable-analyzer
-        --enable-apparmor --enable-selinux
-        || (cat config.log; exit 1)
-    - name: make
-      run: make -j "$(nproc)"
-    - name: make install
-      run: sudo make install
-    - name: print version
-      run: make print-version
-    - run: make lab-setup
-    - run: make test-utils
+    - name: meson setup
+      run: CC=gcc-12 meson setup _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
+    - name: meson compile
+      run: meson compile -C _builddir
+    - name: meson install
+      run: sudo -E meson install -C _builddir
+    - name: test utils
+      run: meson test -C _builddir utils
 
   test-network:
     runs-on: ubuntu-22.04
@@ -247,22 +215,14 @@ jobs:
       run: >
         sudo apt-get install -qy
         gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois
-        bridge-utils
+        bridge-utils ninja-build meson
     - name: print env
       run: ./ci/printenv.sh
-    - name: configure
-      run: >
-        ./configure CC=gcc-12
-        --prefix=/usr --enable-fatal-warnings --enable-analyzer
-        --enable-apparmor --enable-selinux
-        || (cat config.log; exit 1)
-    - name: make
-      run: make -j "$(nproc)"
-    - name: make install
-      run: sudo make install
-    - name: print version
-      run: make print-version
-    - run: make lab-setup
-    - run: make test-fnetfilter
-    - run: make test-sysutils
-    - run: make test-network
+    - name: meson setup
+      run: CC=gcc-12 meson setup _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
+    - name: meson compile
+      run: meson compile -C _builddir
+    - name: meson install
+      run: sudo -E meson install -C _builddir
+    - name: test network
+      run: meson test -C _builddir fnetfilter sysutils network

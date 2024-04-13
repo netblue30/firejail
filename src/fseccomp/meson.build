@@ -1,6 +1,7 @@
 fseccomp_sources = [
   'main.c',
   'protocol.c',
+  'namespaces.c',
   'seccomp.c',
   'seccomp_file.c',
   'seccomp_secondary.c',

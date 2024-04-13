@@ -74,18 +74,12 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt-get install -qy
-        gcc-12 libapparmor-dev libselinux1-dev expect ninja-build xzdec
+        gcc-12 libapparmor-dev libselinux1-dev ninja-build meson
     - name: print env
       run: ./ci/printenv.sh
-    - name: Install meson
-      run: pip install meson
     - name: meson setup
-      run: CC=gcc-11 meson _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
+      run: CC=gcc-12 meson setup _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
     - name: meson compile
-      run: ninja -C _builddir
+      run: meson compile -C _builddir
     - name: meson install
-      run: sudo -E ninja -C _builddir install
-    # TODO: Why do we run this for profile changes?
-    # TODO: meson test
-    #- name: meson test
-    #  run: SHELL=/bin/bash meson test
+      run: sudo -E meson install -C _builddir

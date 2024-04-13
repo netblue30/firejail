@@ -1,4 +1,4 @@
-# @configure_input@
+# configure_input
 #
 # shellcheck shell=sh
 # shellcheck disable=SC2034

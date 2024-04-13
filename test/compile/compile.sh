@@ -12,7 +12,8 @@
 #  --enable-analyzer       enable GCC 10 static analyzer
 
 # shellcheck source=config.sh
-. "$(dirname "$0")/../../config.sh" || exit 1
+echo PWD: $PWD
+. "$BUILD_ROOT/config.sh" || exit 1
 
 arr[1]="TEST 1: standard compilation"
 arr[2]="TEST 2: compile dbus proxy disabled"
@@ -77,14 +78,15 @@ cleanup
 #*****************************************************************
 print_title "${arr[1]}"
 echo "$DIST"
-tar -xJvf ../../"$DIST.tar.xz"
+(cd "$BUILD_ROOT" && meson dist --allow-dirty --no-tests)
+tar -xJvf "$BUILD_ROOT"/meson-dist/"$DIST.tar.xz"
 mv "$DIST" firejail
 
 cd firejail || exit 1
-./configure --prefix=/usr --enable-fatal-warnings \
+meson setup _builddir --prefix=/usr --werror \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test1
 grep Error output-configure output-make >> ./report-test1
@@ -99,12 +101,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[2]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-dbusproxy \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Ddbusproxy=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test2
 grep Error output-configure output-make >> ./report-test2
@@ -119,12 +121,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[3]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-chroot \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dchroot=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test3
 grep Error output-configure output-make >> ./report-test3
@@ -139,12 +141,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[4]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-firetunnel \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dfiretunnel=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test4
 grep Error output-configure output-make >> ./report-test4
@@ -159,12 +161,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[5]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-userns \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Duserns=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test5
 grep Error output-configure output-make >> ./report-test5
@@ -180,12 +182,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[6]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-network \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dnetwork=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test6
 grep Error output-configure output-make >> ./report-test6
@@ -200,12 +202,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[7]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-x11 \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dx11=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test7
 grep Error output-configure output-make >> ./report-test7
@@ -220,12 +222,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[8]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --enable-selinux \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dselinux=true \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test8
 grep Error output-configure output-make >> ./report-test8
@@ -240,12 +242,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[9]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-file-transfer \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dfile-transfer=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test9
 grep Error output-configure output-make >> ./report-test9
@@ -260,12 +262,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[10]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-whitelist \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dwhitelist=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test10
 grep Error output-configure output-make >> ./report-test10
@@ -280,12 +282,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[11]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-globalcfg \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dglobalcfg=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test11
 grep Error output-configure output-make >> ./report-test11
@@ -300,12 +302,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[12]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --enable-apparmor \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dapparmor=true \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test12
 grep Error output-configure output-make >> ./report-test12
@@ -320,12 +322,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[13]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --enable-busybox-workaround \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dbusybox-workaround=true \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test13
 grep Error output-configure output-make >> ./report-test13
@@ -340,12 +342,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[14]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-overlayfs \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Doverlayfs=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test14
 grep Error output-configure output-make >> ./report-test14
@@ -360,12 +362,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[15]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-private-home \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dprivate-home=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test15
 grep Error output-configure output-make >> ./report-test15
@@ -380,12 +382,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[16]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-man \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dmanpage=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test16
 grep Error output-configure output-make >> ./report-test16
@@ -400,12 +402,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[17]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-usertmpfs \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dusertmpfs=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test17
 grep Error output-configure output-make >> ./report-test17
@@ -420,12 +422,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[18]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-private-home \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dprivate-home=false \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test18
 grep Error output-configure output-make >> ./report-test18
@@ -440,12 +442,12 @@ rm output-configure output-make
 #*****************************************************************
 print_title "${arr[19]}"
 cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --enable-ids \
+rm -rf _builddir
+meson setup --reconfigure _builddir --prefix=/usr --werror \
+  -Dids=true \
   2>&1 | tee ../output-configure
 
-make -j "$(nproc)" 2>&1 | tee ../output-make
+ninja -C _builddir 2>&1 | tee ../output-make
 cd ..
 grep Warning output-configure output-make > ./report-test19
 grep Error output-configure output-make >> ./report-test19

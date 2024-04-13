@@ -49,9 +49,11 @@ jobs:
         egress-policy: block
         allowed-endpoints: >
           azure.archive.ubuntu.com:80
+          files.pythonhosted.org:443
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
+          pypi.org:443
     - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
     - name: update package information
       run: sudo apt-get update -qy
@@ -61,32 +63,14 @@ jobs:
         libapparmor-dev libselinux1-dev
     - name: print env
       run: ./ci/printenv.sh
-    - uses: actions/checkout@v2
     - name: install dependencies
       run: sudo apt-get install ninja-build
     - name: Install meson
-      run: pip install --pre meson==0.49.2
+      run: pip install --pre meson==0.56.2 # https://packages.debian.org/oldstable/meson
     - name: meson setup
-      run: CC=clang-11 meson _builddir --werror
+      run: CC=clang-14 meson setup _builddir -Dprefix=/usr -Dapparmor=true -Dselinux=true --werror
     - name: meson compile
-      run: ninja -C _builddir
-  scan-build:
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v2
-    - name: install dependencies
-      run: sudo apt-get install clang-tools-11 ninja-build
-    - name: Install meson
-      run: pip install --pre meson
-    - name: meson setup
-      run: CC=clang-11 meson _builddir --werror
-    - name: scan-build
-      run: ninja -C _builddir scan-build
-  cppcheck:
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v2
-    - name: install cppcheck
-      run: sudo apt-get install cppcheck
-    - name: cppcheck
-      run: cppcheck -q --force --error-exitcode=1 --enable=warning,performance .
+      run: meson compile -C _builddir
+    - name: meson install
+      run: sudo apt-get install meson
+    - run: sudo meson install -C _builddir

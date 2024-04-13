@@ -17,10 +17,14 @@ option('force-nonewprivs', type: 'boolean', value: true,
        description: 'force nonewprivs')
 option('globalcfg', type: 'boolean', value: true,
        description: 'Abort execution if the global config is not present')
+option('ids', type: 'boolean', value: false,
+       description: 'IDS support')
 option('network', type: 'boolean', value: true,
        description: 'network')
 option('output', type: 'boolean', value: true,
        description: '--output logging')
+option('overlayfs', type: 'boolean', value: true,
+       description: 'overlayfs support')
 option('private-home', type: 'boolean', value: true,
        description: 'private home feature')
 option('selinux', type: 'boolean', value: false,
@@ -31,6 +35,8 @@ option('userns', type: 'boolean', value: true,
        description: 'user namespace')
 option('usertmpfs', type: 'boolean', value: true,
        description: 'tmpfs as regular user')
+option('whitelist', type: 'boolean', value: true,
+       description: 'whitelist support')
 option('x11', type: 'boolean', value: true,
        description: 'X11 sandboxing support')
 

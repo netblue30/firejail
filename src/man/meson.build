@@ -23,7 +23,7 @@ foreach manpage : manpages
   section = manpage.split('.')[1]
   configured_manpage = configure_file(
     configuration: manconf,
-    input: manpage.split('.')[0] + '.txt',
+    input: manpage + '.in',
     output: '@PLAINNAME@',
   )
   custom_target(manpage,

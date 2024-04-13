@@ -21,7 +21,9 @@ subdir('profstats')
 
 # SBOX_APPS
 subdir('fbuilder')
-subdir('fids')
+if get_option('ids')
+  subdir('fids')
+endif
 subdir('ftee')
 
 # SBOX_APPS_NON_DUMPABLE

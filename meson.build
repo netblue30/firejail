@@ -7,8 +7,8 @@ project('firejail', 'c',
     'b_pie=true',
   ],
   # https://packages.debian.org/oldstable/meson
-  meson_version: '>=0.49.2',
-  version: '0.9.67',
+  meson_version: '>=0.56.2',
+  version: '0.9.73',
 )
 
 # # # # # # # # # #
@@ -75,14 +75,17 @@ foreach option, flag : {
     'firetunnel': '-DHAVE_FIRETUNNEL',
     'force-nonewprivs': '-DHAVE_FORCE_NONEWPRIVS',
     'globalcfg': '-DHAVE_GLOBALCFG',
+    'ids': '-DHAVE_IDS',
     'lts': '-DHAVE_LTS',
     'network': '-DHAVE_NETWORK',
     'output': '-DHAVE_OUTPUT',
+#    'overlayfs': '-DHAVE_OVERLAYFS',
     'private-home': '-DHAVE_PRIVATE_HOME',
     'selinux': '-DHAVE_SELINUX',
     'suid': '-DHAVE_SUID',
     'userns': '-DHAVE_USERNS',
     'usertmpfs': '-DHAVE_USERTMPFS',
+#    'whitelist': '-DHAVE_WHITELIST',
     'x11': '-DHAVE_X11',
   }
 
@@ -148,13 +151,16 @@ if show_summary and meson.version().version_compare('>=0.53.0')
   summary('firetunnel', get_option('firetunnel'), section: 'Facilities')
   summary('force-nonewprivs', get_option('force-nonewprivs'), section: 'Facilities')
   summary('globalcfg', get_option('globalcfg'), section: 'Facilities')
+  summary('ids', get_option('ids'), section: 'Facilities')
   summary('network', get_option('network'), section: 'Facilities')
   summary('output', get_option('output'), section: 'Facilities')
+  summary('overlayfs', get_option('overlayfs'), section: 'Facilities')
   summary('private-home', get_option('private-home'), section: 'Facilities')
   summary('selinux', get_option('selinux'), section: 'Facilities')
   summary('suid', get_option('suid'), section: 'Facilities')
   summary('userns', get_option('userns'), section: 'Facilities')
   summary('usertmpfs', get_option('usertmpfs'), section: 'Facilities')
+  summary('whitelist', get_option('whitelist'), section: 'Facilities')
   summary('x11', get_option('x11'), section: 'Facilities')
 
   summary('lts', get_option('lts'), section: 'LTS')
@@ -163,3 +169,17 @@ if show_summary and meson.version().version_compare('>=0.53.0')
   summary('contrib', get_option('contrib'), section: 'Misc')
   summary('manpage', get_option('manpage'), section: 'Misc')
 endif
+
+conf = configuration_data()
+conf.set('PACKAGE_BUGREPORT', 'netblue30@protonmail.com')
+conf.set('PACKAGE_NAME', 'firejail')
+conf.set('PACKAGE_STRING', 'firejail ' + meson.project_version())
+conf.set('PACKAGE_TARNAME', 'firejail')
+conf.set('PACKAGE_VERSION', meson.project_version())
+conf.set_quoted('PACKAGE_URL', 'https://firejail.wordpress.com')
+
+test_config_sh = configure_file(
+  configuration: conf,
+  input: 'config.sh.in',
+  output: '@BASENAME@',
+)

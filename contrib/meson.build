@@ -1,5 +1,4 @@
 contrib_scripts = [
-  'firejail-welcome.sh',
   'fix_private-bin.py',
   'fjclip.py',
   'fjdisplay.py',
@@ -19,6 +18,6 @@ install_data(contrib_scripts,
 install_data('vim/ftdetect/firejail.vim',
   install_dir: datadir / 'vim' / 'vimfiles' / 'ftdetect',
 )
-install_data('vim/syntax/firejail.vim',
+install_data('syntax/files/firejail.vim.in',
   install_dir: datadir / 'vim' / 'vimfiles' / 'syntax',
 )

@@ -63,6 +63,8 @@ gid_t firejail_gid = 0;
 static char child_stack[STACK_SIZE] __attribute__((aligned(STACK_ALIGNMENT)));		// space for child's stack
 
 Config cfg;					// configuration
+int lockfd_directory = -1;
+int lockfd_network = -1;
 int arg_private = 0;				// mount private /home and /tmp directoryu
 int arg_private_cache = 0;		// mount private home/.cache
 int arg_debug = 0;				// print debug messages
@@ -1056,8 +1058,6 @@ static int check_postexec(const char *list) {
 int main(int argc, char **argv, char **envp) {
 	int i;
 	int prog_index = -1;		// index in argv where the program command starts
-	int lockfd_network = -1;
-	int lockfd_directory = -1;
 	int custom_profile = 0;		// custom profile loaded
 	int arg_caps_cmdline = 0;	// caps requested on command line (used to break out of --chroot)
 	char **ptr;

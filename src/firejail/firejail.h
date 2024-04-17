@@ -282,6 +282,8 @@ static inline int any_dhcp(void) {
 	return any_ip_dhcp() || any_ip6_dhcp();
 }
 
+extern int lockfd_directory;
+extern int lockfd_network;
 extern int arg_private;		// mount private /home
 extern int arg_private_cache;	// private home/.cache
 extern int arg_debug;		// print debug messages

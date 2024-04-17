@@ -431,6 +431,10 @@ int net_get_mac(const char *ifname, unsigned char mac[6]);
 void net_config_interface(const char *dev, uint32_t ip, uint32_t mask, int mtu);
 
 // preproc.c
+void preproc_lock_firejail_dir(void);
+void preproc_unlock_firejail_dir(void);
+void preproc_lock_firejail_network_dir(void);
+void preproc_unlock_firejail_network_dir(void);
 void preproc_build_firejail_dir(void);
 void preproc_mount_mnt_dir(void);
 void preproc_clean_run(void);

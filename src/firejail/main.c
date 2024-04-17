@@ -1169,15 +1169,9 @@ int main(int argc, char **argv, char **envp) {
 	preproc_build_firejail_dir();
 	const char *container_name = env_get("container");
 	if (!container_name || strcmp(container_name, "firejail")) {
-		lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
-		if (lockfd_directory != -1) {
-			int rv = fchown(lockfd_directory, 0, 0);
-			(void) rv;
-			flock(lockfd_directory, LOCK_EX);
-		}
+		preproc_lock_firejail_dir();
 		preproc_clean_run();
-		flock(lockfd_directory, LOCK_UN);
-		close(lockfd_directory);
+		preproc_unlock_firejail_dir();
 	}
 
 	delete_run_files(getpid());
@@ -2990,12 +2984,7 @@ int main(int argc, char **argv, char **envp) {
 	// check and assign an IP address - for macvlan it will be done again in the sandbox!
 	if (any_bridge_configured()) {
 		EUID_ROOT();
-		lockfd_network = open(RUN_NETWORK_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
-		if (lockfd_network != -1) {
-			int rv = fchown(lockfd_network, 0, 0);
-			(void) rv;
-			flock(lockfd_network, LOCK_EX);
-		}
+		preproc_lock_firejail_network_dir();
 
 		if (cfg.bridge0.configured && cfg.bridge0.arg_ip_none == 0)
 			check_network(&cfg.bridge0);
@@ -3024,21 +3013,13 @@ int main(int argc, char **argv, char **envp) {
 
 	// set name and x11 run files
 	EUID_ROOT();
-	lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
-	if (lockfd_directory != -1) {
-		int rv = fchown(lockfd_directory, 0, 0);
-		(void) rv;
-		flock(lockfd_directory, LOCK_EX);
-	}
+	preproc_lock_firejail_dir();
 	if (cfg.name)
 		set_name_run_file(sandbox_pid);
 	int display = x11_display();
 	if (display > 0)
 		set_x11_run_file(sandbox_pid, display);
-	if (lockfd_directory != -1) {
-		flock(lockfd_directory, LOCK_UN);
-		close(lockfd_directory);
-	}
+	preproc_unlock_firejail_dir();
 	EUID_USER();
 
 #ifdef HAVE_DBUSPROXY
@@ -3276,10 +3257,7 @@ int main(int argc, char **argv, char **envp) {
 	close(parent_to_child_fds[1]);
 
 	EUID_ROOT();
-	if (lockfd_network != -1) {
-		flock(lockfd_network, LOCK_UN);
-		close(lockfd_network);
-	}
+	preproc_unlock_firejail_network_dir();
 	EUID_USER();
 
 	// lock netfilter firewall

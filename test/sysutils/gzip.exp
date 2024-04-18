@@ -7,9 +7,6 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "rm index.html*\r"
-after 500
-
 send -- "firejail gzip -c ../../mkdeb.sh | firejail gunzip -c\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

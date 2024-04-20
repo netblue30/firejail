@@ -74,18 +74,12 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt-get install -qy
-        gcc-12 libapparmor-dev libselinux1-dev
+        gcc-12 libapparmor-dev libselinux1-dev ninja-build meson
     - name: print env
       run: ./ci/printenv.sh
-    - name: configure
-      run: >
-        ./configure CC=gcc-12
-        --prefix=/usr --enable-fatal-warnings --enable-analyzer
-        --enable-apparmor --enable-selinux
-        || (cat config.log; exit 1)
-    - name: make
-      run: make
-    - name: make install
-      run: sudo make install
-    - name: print version
-      run: make print-version
+    - name: meson setup
+      run: CC=gcc-12 meson setup _builddir --werror --prefix=/usr -Danalyzer=true -Dapparmor=true -Dselinux=true
+    - name: meson compile
+      run: meson compile -C _builddir
+    - name: meson install
+      run: sudo -E meson install -C _builddir

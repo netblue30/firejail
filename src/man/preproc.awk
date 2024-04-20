@@ -25,8 +25,8 @@ BEGIN {
 	for (arg in ARGV) {
 		if (ARGV[arg] ~ /^-D[A-Z0-9_]+$/) {
 			macros[length(macros) + 1] = substr(ARGV[arg], 3)
+			ARGV[arg] = ""
 		}
-		ARGV[arg] = ""
 	}
 
 	include = 1

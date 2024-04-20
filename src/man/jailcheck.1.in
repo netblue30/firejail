@@ -1,4 +1,4 @@
-.TH JAILCHECK 1 "MONTH YEAR" "VERSION" "JAILCHECK man page"
+.TH JAILCHECK 1 "@MONTH@ @YEAR@" "@VERSION@" "JAILCHECK man page"
 .SH NAME
 jailcheck \- Simple utility program to test running sandboxes
 .SH SYNOPSIS

@@ -1,0 +1,51 @@
+option('analyzer', type: 'boolean', value: false,
+       description: 'Enable gcc\'s Static Analyzer')
+# sanitizer: Use -Db_sanitize=<none|address|thread|undefined|memory|address,undefined>
+# gcov: TODO
+
+option('apparmor', type: 'boolean', value: false,
+       description: 'AppArmor support')
+option('chroot', type: 'boolean', value: true,
+       description: 'chroot')
+option('dbusproxy', type: 'boolean', value: true,
+       description: 'D-Bus proxy support')
+option('file-transfer', type: 'boolean', value: true,
+       description: 'file transfer')
+option('firetunnel', type: 'boolean', value: true,
+       description: 'firetunnel')
+option('force-nonewprivs', type: 'boolean', value: true,
+       description: 'force nonewprivs')
+option('globalcfg', type: 'boolean', value: true,
+       description: 'Abort execution if the global config is not present')
+option('ids', type: 'boolean', value: false,
+       description: 'IDS support')
+option('network', type: 'boolean', value: true,
+       description: 'network')
+option('output', type: 'boolean', value: true,
+       description: '--output logging')
+option('overlayfs', type: 'boolean', value: true,
+       description: 'overlayfs support')
+option('private-home', type: 'boolean', value: true,
+       description: 'private home feature')
+option('selinux', type: 'boolean', value: false,
+       description: 'SELinux labeling support')
+option('suid', type: 'boolean', value: true,
+       description: 'Install firejail as SUID executable')
+option('userns', type: 'boolean', value: true,
+       description: 'user namespace')
+option('usertmpfs', type: 'boolean', value: true,
+       description: 'tmpfs as regular user')
+option('whitelist', type: 'boolean', value: true,
+       description: 'whitelist support')
+option('x11', type: 'boolean', value: true,
+       description: 'X11 sandboxing support')
+
+option('lts', type: 'boolean', value: false,
+       description: 'LTS')
+
+option('busybox-workaround', type: 'boolean', value: false,
+       description: 'busybox workaround')
+option('contrib', type: 'boolean', value: true,
+       description: 'Install contrib files')
+option('manpage', type: 'boolean', value: true,
+       description: 'Manpages')

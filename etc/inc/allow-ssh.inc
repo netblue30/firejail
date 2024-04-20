@@ -6,6 +6,7 @@ noblacklist ${HOME}/.ssh
 noblacklist /etc/ssh
 noblacklist /etc/ssh/ssh_config
 noblacklist /etc/ssh/ssh_config.d
+noblacklist /etc/ssh/ssh_revoked_hosts # RevokedHostKeys on Gentoo
 noblacklist ${PATH}/ssh*
 noblacklist /tmp/ssh-*
 # Arch Linux and derivatives

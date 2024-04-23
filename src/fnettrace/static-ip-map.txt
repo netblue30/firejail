@@ -44,10 +44,15 @@
 127.0.0.0/8 Local host
 169.254.0.0/16 Local link
 172.16.0.0/12 Local network
+192.0.0.0/24 DS-Lite
 192.0.2.0/24 Documentation
 192.168.0.0/16 Local network
+198.18.0.0/15 Testing
 198.51.100.0/24 Documentation
+192.88.99.0/24 Reserved
 203.0.113.0/24 Documentation
+233.252.0.0/24 Documentation
+240.0.0.0/4 Reserved
 
 # multicast
 224.0.0.0/4 Multicast
@@ -252,8 +257,10 @@
 63.141.247.240/29 BitChute
 69.30.200.200/29 BitChute
 69.30.230.64/29 BitChute
+69.30.230.96/29 BitChute
 69.30.241.40/29 BitChute
 69.30.241.48/29 BitChute
+69.30.243.152/29 BitChute
 69.30.243.168/29 BitChute
 69.30.245.232/29 BitChute
 69.30.253.16/29 BitChute

@@ -20,4 +20,5 @@ protocol unix,inet,inet6
 private-bin bash,basename,cat,cut,electron28,gawk,grep,obsidian,realpath,tr
 private-etc @network,@tls-ca,@x11,gnutls,libva.conf
 
+# Redirect
 include electron-common.profile

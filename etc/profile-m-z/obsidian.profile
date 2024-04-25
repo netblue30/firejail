@@ -18,8 +18,7 @@ protocol unix,inet,inet6
 #net none
 
 private-bin bash,basename,cat,cut,electron28,gawk,grep,obsidian,realpath,tr
-private-etc @network,@tls-ca,gnutls,nsswitch.conf,
-private-etc @x11,fonts,libva.conf
+private-etc @network,@tls-ca,@x11,gnutls,libva.conf
 
 read-only ${HOME}/.config/kdedefaults
 read-only ${HOME}/.config/vulkan

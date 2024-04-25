@@ -11,16 +11,6 @@ noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.config/obsidian
 noblacklist ${HOME}/.gitconfig
 
-whitelist ${HOME}/.cache/AMD
-whitelist ${HOME}/.cache/mesa_shader_cache
-whitelist ${HOME}/.cache/nvidia
-whitelist ${HOME}/.local/share/applnk
-whitelist ${HOME}/.local/share/vulkan
-whitelist ${HOME}/.local/share/vulkan
-whitelist ${HOME}/.config/kdedefaults
-whitelist ${HOME}/.config/obsidian
-whitelist ${HOME}/.config/vulkan
-
 ipc-namespace
 nonewprivs
 noroot

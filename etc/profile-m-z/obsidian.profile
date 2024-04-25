@@ -7,45 +7,36 @@ include obsidian-wayland.local
 include globals.local
 
 noblacklist ${HOME}/.cache/AMD
-noblacklist ${HOME}/.cache/nvidia
 noblacklist ${HOME}/.cache/mesa_shader_cache
+noblacklist ${HOME}/.cache/nvidia
 noblacklist ${HOME}/.local/share/applnk
 noblacklist ${HOME}/.local/share/vulkan
 noblacklist ${HOME}/.local/share/vulkan
-noblacklist ${HOME}/.config/vulkan
 noblacklist ${HOME}/.config/kdedefaults
 noblacklist ${HOME}/.config/obsidian
+noblacklist ${HOME}/.config/vulkan
 
 whitelist ${HOME}/.cache/AMD
-whitelist ${HOME}/.cache/nvidia
 whitelist ${HOME}/.cache/mesa_shader_cache
+whitelist ${HOME}/.cache/nvidia
 whitelist ${HOME}/.local/share/applnk
 whitelist ${HOME}/.local/share/vulkan
 whitelist ${HOME}/.local/share/vulkan
-whitelist ${HOME}/.config/vulkan
 whitelist ${HOME}/.config/kdedefaults
 whitelist ${HOME}/.config/obsidian
+whitelist ${HOME}/.config/vulkan
 
 ipc-namespace
 nonewprivs
 noroot
+protocol unix,inet,inet6
+#net none
 
-protocol unix,inet,inet6,netlink,
+private-bin bash,basename,cat,cut,electron28,gawk,grep,obsidian,realpath,tr
+private-etc @network,@tls-ca,gnutls,nsswitch.conf,
+private-etc @x11,fonts,libva.conf
 
-# If you need net disable "net none" and uncomment the rest in this block
-net none
-#
-#noblacklist ${HOME}/.pki/nssdb
-#whitelist ${HOME}/.pki/nssdb
-#
-#private-etc ca-certificates,nsswitch.conf,hosts,gnutls,
-
-private-bin cat,gawk,tr,realpath,cut,grep,basename,bash,obsidian,electron28,
-private-etc libva.conf,vulkan,ati,xdg,gtk-3.0,drirc,fonts,
-
-?HAS_APPIMAGE: private-lib
-
-read-only ${HOME}/.config/vulkan
 read-only ${HOME}/.config/kdedefaults
+read-only ${HOME}/.config/vulkan
 
 include electron-common.profile

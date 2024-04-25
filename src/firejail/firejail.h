@@ -282,6 +282,8 @@ static inline int any_dhcp(void) {
 	return any_ip_dhcp() || any_ip6_dhcp();
 }
 
+extern int lockfd_directory;
+extern int lockfd_network;
 extern int arg_private;		// mount private /home
 extern int arg_private_cache;	// private home/.cache
 extern int arg_debug;		// print debug messages
@@ -429,7 +431,12 @@ int net_get_mac(const char *ifname, unsigned char mac[6]);
 void net_config_interface(const char *dev, uint32_t ip, uint32_t mask, int mtu);
 
 // preproc.c
-void preproc_build_firejail_dir(void);
+void preproc_lock_firejail_dir(void);
+void preproc_unlock_firejail_dir(void);
+void preproc_lock_firejail_network_dir(void);
+void preproc_unlock_firejail_network_dir(void);
+void preproc_build_firejail_dir_unlocked(void);
+void preproc_build_firejail_dir_locked(void);
 void preproc_mount_mnt_dir(void);
 void preproc_clean_run(void);
 

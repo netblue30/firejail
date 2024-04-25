@@ -6,15 +6,10 @@ include obsidian-wayland.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/AMD
-noblacklist ${HOME}/.cache/mesa_shader_cache
-noblacklist ${HOME}/.cache/nvidia
-noblacklist ${HOME}/.local/share/applnk
-noblacklist ${HOME}/.local/share/vulkan
-noblacklist ${HOME}/.local/share/vulkan
-noblacklist ${HOME}/.config/kdedefaults
+noblacklist ${DOCUMENTS}
+noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.config/obsidian
-noblacklist ${HOME}/.config/vulkan
+noblacklist ${HOME}/.gitconfig
 
 whitelist ${HOME}/.cache/AMD
 whitelist ${HOME}/.cache/mesa_shader_cache

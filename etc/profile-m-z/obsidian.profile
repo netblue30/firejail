@@ -17,7 +17,7 @@ noroot
 protocol unix,inet,inet6
 #net none
 
-private-bin bash,basename,cat,cut,electron28,gawk,grep,obsidian,realpath,tr
+private-bin basename,bash,cat,cut,electron,electron[0-9],electron[0-9][0-9],gawk,grep,obsidian,realpath,tr
 private-etc @network,@tls-ca,@x11,gnutls,libva.conf
 
 # Redirect

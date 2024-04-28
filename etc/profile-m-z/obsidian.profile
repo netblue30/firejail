@@ -1,15 +1,13 @@
-# Firejail profile for obsidian-wayland
+# Firejail profile for obsidian
 # Description: Personal knowledge base and note-taking with Markdown files.
 # This file is overwritten after every install/update
 # Persistent local customizations
-include obsidian-wayland.local
+include obsidian.local
 # Persistent global definitions
 include globals.local
 
 noblacklist ${DOCUMENTS}
-noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.config/obsidian
-noblacklist ${HOME}/.gitconfig
 
 ipc-namespace
 nonewprivs

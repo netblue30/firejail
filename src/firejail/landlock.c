@@ -19,7 +19,6 @@
 */
 
 #include "firejail.h"
-#include <linux/landlock.h>
 #include <sys/prctl.h>
 #include <sys/syscall.h>
 #include <sys/types.h>
@@ -27,6 +26,8 @@
 #include <fcntl.h>
 
 #ifdef HAVE_LANDLOCK
+
+#include <linux/landlock.h>
 
 static int ll_ruleset_fd = -1;
 static int ll_abi = -1;

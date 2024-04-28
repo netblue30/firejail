@@ -6,10 +6,9 @@ include audacity.local
 # Persistent global definitions
 include globals.local
 
-# Add the below lines to your audacity.local if you need online plugins.
-#ignore net none
-#netfilter
-#protocol inet6
+# To disable networking, add the following lines to audacity.local:
+#ignore netfilter
+#net none
 
 noblacklist ${HOME}/.audacity-data
 noblacklist ${HOME}/.cache/audacity
@@ -34,7 +33,7 @@ allow-debuggers
 ## Enabling App Armor appears to break some Fedora / Arch installs
 #apparmor
 caps.drop all
-net none
+netfilter
 no3d
 nodvd
 nogroups
@@ -44,13 +43,13 @@ noroot
 notv
 nou2f
 novideo
-protocol unix,inet
+protocol unix,inet,inet6
 seccomp
 tracelog
 
 private-bin audacity
 private-dev
-private-etc @x11
+private-etc @network,@sound,@tls-ca,@x11
 private-tmp
 
 # problems on Fedora 27

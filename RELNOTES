@@ -15,7 +15,7 @@ firejail (0.9.73) baseline; urgency=low
   * feature: expand simple macros in more commands (--chroot= --netfilter=
     --netfilter6= --trace=) (#6032 #6109)
   * feature: add Landlock support (#5269 #6078 #6115 #6125 #6187 #6195 #6200
-    #6228 #6260)
+    #6228 #6260 #6302 #6305)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)
@@ -30,6 +30,7 @@ firejail (0.9.73) baseline; urgency=low
   * modif: drop deprecated 'shell' option references (#5894)
   * modif: keep pipewire group unless nosound is used (#5992 #5993)
   * modif: fcopy: Use lstat when copying directory (#5957)
+  * modif: populate /run/firejail while holding flock (#6307)
   * removal: LTS and FIRETUNNEL support
   * bugfix: fix --hostname and --hosts-file commands
   * bugfix: fix examples in firejail-local AppArmor profile (#5717)
@@ -116,6 +117,7 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: add allow-nodejs.inc to profile.template (#6298)
   * profiles: add allow-php.inc to profile.template (#6299)
   * profiles: clarify and add opengl-game to profile.template (#6300)
+  * profiles: allow-ssh: allow /etc/ssh/ssh_revoked_hosts (#6308 #6309)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

@@ -63,6 +63,8 @@ gid_t firejail_gid = 0;
 static char child_stack[STACK_SIZE] __attribute__((aligned(STACK_ALIGNMENT)));		// space for child's stack
 
 Config cfg;					// configuration
+int lockfd_directory = -1;
+int lockfd_network = -1;
 int arg_private = 0;				// mount private /home and /tmp directoryu
 int arg_private_cache = 0;		// mount private home/.cache
 int arg_debug = 0;				// print debug messages
@@ -1056,8 +1058,6 @@ static int check_postexec(const char *list) {
 int main(int argc, char **argv, char **envp) {
 	int i;
 	int prog_index = -1;		// index in argv where the program command starts
-	int lockfd_network = -1;
-	int lockfd_directory = -1;
 	int custom_profile = 0;		// custom profile loaded
 	int arg_caps_cmdline = 0;	// caps requested on command line (used to break out of --chroot)
 	char **ptr;
@@ -1166,19 +1166,13 @@ int main(int argc, char **argv, char **envp) {
 #endif
 
 	// build /run/firejail directory structure
-	preproc_build_firejail_dir();
+	preproc_build_firejail_dir_unlocked();
+	preproc_lock_firejail_dir();
+	preproc_build_firejail_dir_locked();
 	const char *container_name = env_get("container");
-	if (!container_name || strcmp(container_name, "firejail")) {
-		lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
-		if (lockfd_directory != -1) {
-			int rv = fchown(lockfd_directory, 0, 0);
-			(void) rv;
-			flock(lockfd_directory, LOCK_EX);
-		}
+	if (!container_name || strcmp(container_name, "firejail"))
 		preproc_clean_run();
-		flock(lockfd_directory, LOCK_UN);
-		close(lockfd_directory);
-	}
+	preproc_unlock_firejail_dir();
 
 	delete_run_files(getpid());
 	atexit(clear_atexit);
@@ -2990,12 +2984,7 @@ int main(int argc, char **argv, char **envp) {
 	// check and assign an IP address - for macvlan it will be done again in the sandbox!
 	if (any_bridge_configured()) {
 		EUID_ROOT();
-		lockfd_network = open(RUN_NETWORK_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
-		if (lockfd_network != -1) {
-			int rv = fchown(lockfd_network, 0, 0);
-			(void) rv;
-			flock(lockfd_network, LOCK_EX);
-		}
+		preproc_lock_firejail_network_dir();
 
 		if (cfg.bridge0.configured && cfg.bridge0.arg_ip_none == 0)
 			check_network(&cfg.bridge0);
@@ -3024,21 +3013,13 @@ int main(int argc, char **argv, char **envp) {
 
 	// set name and x11 run files
 	EUID_ROOT();
-	lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT | O_CLOEXEC, S_IRUSR | S_IWUSR);
-	if (lockfd_directory != -1) {
-		int rv = fchown(lockfd_directory, 0, 0);
-		(void) rv;
-		flock(lockfd_directory, LOCK_EX);
-	}
+	preproc_lock_firejail_dir();
 	if (cfg.name)
 		set_name_run_file(sandbox_pid);
 	int display = x11_display();
 	if (display > 0)
 		set_x11_run_file(sandbox_pid, display);
-	if (lockfd_directory != -1) {
-		flock(lockfd_directory, LOCK_UN);
-		close(lockfd_directory);
-	}
+	preproc_unlock_firejail_dir();
 	EUID_USER();
 
 #ifdef HAVE_DBUSPROXY
@@ -3276,10 +3257,7 @@ int main(int argc, char **argv, char **envp) {
 	close(parent_to_child_fds[1]);
 
 	EUID_ROOT();
-	if (lockfd_network != -1) {
-		flock(lockfd_network, LOCK_UN);
-		close(lockfd_network);
-	}
+	preproc_unlock_firejail_network_dir();
 	EUID_USER();
 
 	// lock netfilter firewall

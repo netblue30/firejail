@@ -31,7 +31,7 @@ void process_home(const char *fname, char *home, int home_len) {
 	// process trace file
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
-		fprintf(stderr, "Error: cannot open %s\n", fname);
+		fprintf(stderr, "Error fbuilder: cannot open %s\n", fname);
 		exit(1);
 	}
 

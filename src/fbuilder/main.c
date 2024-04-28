@@ -66,21 +66,21 @@ printf("\n");
 
 			// don't run if the file exists
 			if (access(argv[i] + 8, F_OK) == 0) {
-				fprintf(stderr, "Error: the profile file already exists. Please use a different file name.\n");
+				fprintf(stderr, "Error fbuilder: the profile file already exists. Please use a different file name.\n");
 				exit(1);
 			}
 
 			// check file access
 			fp = fopen(argv[i] + 8, "w");
 			if (!fp) {
-				fprintf(stderr, "Error: cannot open profile file.\n");
+				fprintf(stderr, "Error fbuilder: cannot open profile file.\n");
 				exit(1);
 			}
 			prof_file = argv[i] + 8;
 		}
 		else {
 			if (*argv[i] == '-') {
-				fprintf(stderr, "Error: invalid program\n");
+				fprintf(stderr, "Error fbuilder: invalid program\n");
 				usage();
 				exit(1);
 			}
@@ -90,7 +90,7 @@ printf("\n");
 	}
 
 	if (prog_index == 0) {
-		fprintf(stderr, "Error : program and arguments required\n");
+		fprintf(stderr, "Error fbuilder: program and arguments required\n");
 		usage();
 		if (prof_file) {
 			fclose(fp);

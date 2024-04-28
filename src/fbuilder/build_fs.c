@@ -31,7 +31,7 @@ static void process_file(const char *fname, const char *dir, void (*callback)(ch
 	// process trace file
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
-		fprintf(stderr, "Error: cannot open %s\n", fname);
+		fprintf(stderr, "Error fbuilder: cannot open %s\n", fname);
 		exit(1);
 	}
 

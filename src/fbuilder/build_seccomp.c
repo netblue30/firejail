@@ -27,7 +27,7 @@ void build_seccomp(const char *fname, FILE *fp) {
 
 	FILE *fp2 = fopen(fname, "r");
 	if (!fp2) {
-		fprintf(stderr, "Error: cannot open %s\n", fname);
+		fprintf(stderr, "Error fbuilder: cannot open %s\n", fname);
 		exit(1);
 	}
 
@@ -54,7 +54,7 @@ void build_seccomp(const char *fname, FILE *fp) {
 		}
 		else if (line == 2) {
 			if (*buf != '-') {
-				fprintf(stderr, "Error: invalid strace output\n%s\n", buf);
+				fprintf(stderr, "Error fbuilder: invalid strace output\n%s\n", buf);
 				exit(1);
 			}
 		}
@@ -96,7 +96,7 @@ static void process_protocol(const char *fname) {
 	// process trace file
 	FILE *fp = fopen(fname, "r");
 	if (!fp) {
-		fprintf(stderr, "Error: cannot open %s\n", fname);
+		fprintf(stderr, "Error fbuilder: cannot open %s\n", fname);
 		exit(1);
 	}
 

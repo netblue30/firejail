@@ -12,11 +12,10 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+whitelist /usr/share/games/geki3
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc
-whitelist /usr/share/games/geki3
 include whitelist-usr-share-common.inc
-writable-var 	# game scores stored under /var/games
 include whitelist-var-common.inc
 
 apparmor
@@ -39,8 +38,9 @@ disable-mnt
 private
 private-bin geki3
 private-dev
-private-etc @x11,@sound,@games
+private-etc @games,@sound,@x11
 private-tmp
+writable-var # game scores are stored under /var/games
 
 dbus-user none
 dbus-system none

@@ -14,16 +14,16 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
-mkfile ${HOME}/.alienblaster_highscore
-whitelist ${HOME}/.alienblaster_highscore
 mkdir ${HOME}/.alienblaster
+mkfile ${HOME}/.alienblaster_highscore
 whitelist ${HOME}/.alienblaster
-include whitelist-common.inc
-include whitelist-run-common.inc
+whitelist ${HOME}/.alienblaster_highscore
 whitelist ${RUNUSER}/pulse
-include whitelist-runuser-common.inc
 whitelist /usr/share/games/alienblaster
 whitelist /usr/share/timidity
+include whitelist-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
@@ -45,7 +45,7 @@ tracelog
 
 disable-mnt
 private-dev
-private-etc @x11,@sound,@games
+private-etc @games,@sound,@x11
 private-tmp
 
 dbus-user none

@@ -18,16 +18,14 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.lbreakouthd
 whitelist ${HOME}/.lbreakouthd
-include whitelist-common.inc
-
-whitelist /run/udev/control
-whitelist /run/host/container-manager
-include whitelist-run-common.inc
 whitelist ${RUNUSER}/pulse
-include whitelist-runuser-common.inc
+whitelist /run/host/container-manager
+whitelist /run/udev/control
 whitelist /usr/share/games/lbreakouthd
+include whitelist-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
-writable-var 	# game scores stored under /var/games
 include whitelist-var-common.inc
 
 apparmor
@@ -49,8 +47,9 @@ tracelog
 disable-mnt
 private-bin lbreakouthd
 private-dev
-private-etc @x11,@sound,@games
+private-etc @games,@sound,@x11
 private-tmp
+writable-var # game scores are stored under /var/games
 
 dbus-user none
 dbus-system none

@@ -4,7 +4,8 @@ include typespeed.local
 # Persistent global definitions
 include globals.local
 
-# Note: this profile requires the current user to be a member of games group
+# Note: This profile requires the current user to be a member of the games
+# group.
 
 include disable-common.inc
 include disable-devel.inc
@@ -13,11 +14,10 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+whitelist /usr/share/typespeed
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc
-whitelist /usr/share/typespeed
 include whitelist-usr-share-common.inc
-writable-var 	# game scores stored under /var/games
 include whitelist-var-common.inc
 
 apparmor
@@ -38,8 +38,9 @@ tracelog
 disable-mnt
 private
 private-dev
-private-etc @x11,@sound,@games
+private-etc @games,@sound,@x11
 private-tmp
+writable-var # game scores are stored under /var/games
 
 dbus-user none
 dbus-system none

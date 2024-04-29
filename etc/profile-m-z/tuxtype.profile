@@ -16,15 +16,12 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.tuxtype
 whitelist ${HOME}/.tuxtype
-include whitelist-common.inc
-
-
-include whitelist-run-common.inc
 whitelist ${RUNUSER}/pulse
-include whitelist-runuser-common.inc
 whitelist /usr/share/tuxtype
+include whitelist-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
-writable-var 	# game scores stored under /var/games
 include whitelist-var-common.inc
 
 apparmor
@@ -46,8 +43,9 @@ tracelog
 disable-mnt
 private-bin tuxtype
 private-dev
-private-etc @x11,@sound,@games,tuxtype
+private-etc @games,@sound,@x11,tuxtype
 private-tmp
+writable-var # game scores are stored under /var/games
 
 dbus-user none
 dbus-system none

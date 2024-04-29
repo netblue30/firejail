@@ -28,6 +28,8 @@ blacklist ${HOME}/.ZAP
 blacklist ${HOME}/.aMule
 blacklist ${HOME}/.abook
 blacklist ${HOME}/.addressbook
+blacklist ${HOME}/.alienblaster
+blacklist ${HOME}/.alienblaster_highscore
 blacklist ${HOME}/.alpine-smime
 blacklist ${HOME}/.ammonite
 blacklist ${HOME}/.android
@@ -851,6 +853,7 @@ blacklist ${HOME}/.klatexformula
 blacklist ${HOME}/.klei
 blacklist ${HOME}/.kodi
 blacklist ${HOME}/.lastpass
+blacklist ${HOME}/.lbreakouthd
 blacklist ${HOME}/.lettura
 blacklist ${HOME}/.librewolf
 blacklist ${HOME}/.lincity-ng
@@ -1187,6 +1190,7 @@ blacklist ${HOME}/.torcs
 blacklist ${HOME}/.tremulous
 blacklist ${HOME}/.ts3client
 blacklist ${HOME}/.tuxguitar*
+blacklist ${HOME}/.tuxtype
 blacklist ${HOME}/.tvbrowser
 blacklist ${HOME}/.unknown-horizons
 blacklist ${HOME}/.viking

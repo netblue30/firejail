@@ -16,6 +16,7 @@ firejail (0.9.73) baseline; urgency=low
     --netfilter6= --trace=) (#6032 #6109)
   * feature: add Landlock support (#5269 #6078 #6115 #6125 #6187 #6195 #6200
     #6228 #6260 #6302 #6305)
+  * feature: add support for comm, coredump, and prctl procevents in firemon
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)

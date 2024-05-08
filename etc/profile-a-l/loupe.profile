@@ -10,7 +10,9 @@ noblacklist ${HOME}/.local/share/Trash
 noblacklist ${HOME}/.Steam
 noblacklist ${HOME}/.steam
 
-#include disable-common.inc
+noblacklist ${PATH}/bwrap
+
+include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
@@ -22,7 +24,7 @@ include whitelist-runuser-common.inc
 #include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-apparmor
+#apparmor
 caps.drop all
 ipc-namespace
 machine-id
@@ -44,7 +46,13 @@ protocol unix,netlink
 seccomp.block-secondary
 tracelog
 
+private-bin bwrap,loupe
 private-cache
 private-dev
 private-etc @x11
 private-tmp
+
+dbus-user none
+dbus-system none
+
+#read-only ${HOME} # breaks "Move to trash" and "Set as background"

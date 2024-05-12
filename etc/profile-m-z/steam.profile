@@ -159,7 +159,8 @@ nonewprivs
 noroot
 notv
 nou2f
-# For VR support add 'ignore novideo' to your steam.local.
+# To allow VR and camera-based motion tracking, add 'ignore novideo' to your
+# steam.local.
 novideo
 protocol unix,inet,inet6,netlink
 # seccomp sometimes causes issues (see #2951, #3267).

@@ -11,7 +11,7 @@ from sys import argv, exit as sys_exit, stderr
 __doc__ = f"""\
 Sort the arguments of commands in profiles.
 
-Usage: {path.basename(argv[0])} [-i] [/path/to/profile ...]
+Usage: {path.basename(argv[0])} [-i] [-n] [/path/to/profile ...]
 
 The following commands are supported:
 
@@ -21,13 +21,14 @@ The following commands are supported:
 Note that this is only applicable to commands that support multiple arguments.
 
 Options:
-    -i  Edit the profile file(s) in-place.
+    -i  Edit the profile file(s) in-place (this is the default).
+    -n  Do not edit the profile file(s) in-place.
 
 Examples:
-    $ {argv[0]} -i MyAwesomeProfile.profile
-    $ {argv[0]} -i new_profile.profile second_new_profile.profile
-    $ {argv[0]} -i ~/.config/firejail/*.{{profile,inc,local}}
-    $ sudo {argv[0]} -i /etc/firejail/*.{{profile,inc,local}}
+    $ {argv[0]} MyAwesomeProfile.profile
+    $ {argv[0]} new_profile.profile second_new_profile.profile
+    $ {argv[0]} ~/.config/firejail/*.{{profile,inc,local}}
+    $ sudo {argv[0]} /etc/firejail/*.{{profile,inc,local}}
 
 Exit Codes:
   0: Success: No profiles needed fixing.
@@ -101,10 +102,16 @@ def check_profile(filename, overwrite):
 
 
 def main(args):
-    overwrite = False
-    if len(args) > 0 and args[0] == "-i":
-        overwrite = True
-        args.pop(0)
+    overwrite = True
+    while len(args) > 0:
+        if args[0] == "-i":
+            overwrite = True
+            args.pop(0)
+        elif args[0] == "-n":
+            overwrite = False
+            args.pop(0)
+        else:
+            break
 
     if len(args) < 1:
         print(__doc__, file=stderr)

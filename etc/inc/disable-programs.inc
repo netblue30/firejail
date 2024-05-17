@@ -189,6 +189,7 @@ blacklist ${HOME}/.cache/mutt
 blacklist ${HOME}/.cache/mypaint
 blacklist ${HOME}/.cache/netsurf
 blacklist ${HOME}/.cache/nheko
+blacklist ${HOME}/.cache/nhex
 blacklist ${HOME}/.cache/nvim
 blacklist ${HOME}/.cache/ocenaudio
 blacklist ${HOME}/.cache/okular
@@ -936,6 +937,7 @@ blacklist ${HOME}/.local/share/data/MusE
 blacklist ${HOME}/.local/share/data/MuseScore
 blacklist ${HOME}/.local/share/data/nomacs
 blacklist ${HOME}/.local/share/data/qBittorrent
+blacklist ${HOME}/.local/share/dev.nhex
 blacklist ${HOME}/.local/share/dino
 blacklist ${HOME}/.local/share/dolphin
 blacklist ${HOME}/.local/share/dolphin-emu

@@ -69,6 +69,10 @@ mydirs: $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
 
+.PHONY: strip
+strip: all
+	strip $(ALL_ITEMS)
+
 .PHONY: filters
 filters: $(SECCOMP_FILTERS)
 seccomp: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize Makefile
@@ -273,8 +277,7 @@ install: all
 	$(MAKE) realinstall
 
 .PHONY: install-strip
-install-strip: all
-	strip $(ALL_ITEMS)
+install-strip: strip
 	$(MAKE) realinstall
 
 .PHONY: uninstall

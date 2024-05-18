@@ -5,6 +5,8 @@
 # The includer should probably define PROG and TARGET and may also want to
 # define EXTRA_OBJS and extend CLEANFILES.
 
+CC ?= cc
+
 HDRS :=
 SRCS := $(sort $(wildcard $(MOD_DIR)/*.c))
 OBJS := $(SRCS:.c=.o)

@@ -2,6 +2,8 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+GAWK ?= gawk
+
 .PHONY: all
 all: _firejail
 

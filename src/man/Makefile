@@ -2,6 +2,8 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+GAWK ?= gawk
+
 MOD_DIR := $(ROOT)/src/man
 MANPAGES_IN := $(sort $(wildcard $(MOD_DIR)/*.in))
 MANPAGES_GZ := $(MANPAGES_IN:.in=.gz)

@@ -8,6 +8,9 @@ include globals.local
 
 noblacklist ${HOME}/.config/yelp
 
+# sh is needed to allow Firefox to open links
+include allow-bin-sh.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -15,6 +18,12 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
+
+# The lines below are needed to find the default Firefox profile name, to allow
+# opening links in an existing instance of Firefox (note that it still fails if
+# there isn't a Firefox instance running with the default profile; see #5352)
+noblacklist ${HOME}/.mozilla
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
 
 mkdir ${HOME}/.config/yelp
 whitelist ${HOME}/.config/yelp
@@ -59,6 +68,8 @@ private-tmp
 dbus-user filter
 dbus-user.own org.gnome.Yelp
 dbus-user.talk ca.desrt.dconf
+# Allow D-Bus communication with Firefox for opening links
+dbus-user.talk org.mozilla.*
 dbus-system none
 
 # read-only ${HOME} breaks some features:

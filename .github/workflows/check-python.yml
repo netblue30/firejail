@@ -44,7 +44,7 @@ jobs:
           uploads.github.com:443
 
     - name: Checkout repository
-      uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b
+      uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
 
     - name: print env
       run: ./ci/printenv.sh

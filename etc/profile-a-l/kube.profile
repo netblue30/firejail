@@ -13,6 +13,9 @@ noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.local/share/kube
 noblacklist ${HOME}/.local/share/sink
 
+# sh is needed to allow Firefox to open links
+include allow-bin-sh.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -78,7 +81,7 @@ dbus-user filter
 dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.freedesktop.Notifications
-# allow D-Bus communication with firefox for opening links
+# Allow D-Bus communication with Firefox for opening links
 dbus-user.talk org.mozilla.*
 dbus-system none
 

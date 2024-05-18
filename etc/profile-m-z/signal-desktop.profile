@@ -5,6 +5,9 @@ include signal-desktop.local
 # Persistent global definitions
 include globals.local
 
+# sh is needed to allow Firefox to open links
+include allow-bin-sh.inc
+
 ignore novideo
 
 ignore noexec /tmp
@@ -25,7 +28,7 @@ private-etc @tls-ca
 dbus-user filter
 # allow D-Bus notifications
 dbus-user.talk org.freedesktop.Notifications
-# allow D-Bus communication with firefox for opening links
+# Allow D-Bus communication with Firefox for opening links
 dbus-user.talk org.mozilla.*
 
 ignore dbus-user none

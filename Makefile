@@ -69,6 +69,10 @@ mydirs: $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
 
+.PHONY: strip
+strip: all
+	strip $(ALL_ITEMS)
+
 .PHONY: filters
 filters: $(SECCOMP_FILTERS)
 seccomp: src/fseccomp/fseccomp src/fsec-optimize/fsec-optimize Makefile
@@ -189,8 +193,8 @@ clean:
 distclean: clean
 	rm -fr autom4te.cache config.log config.mk config.sh config.status
 
-.PHONY: realinstall
-realinstall: config.mk
+.PHONY: install
+install: all config.mk
 	# firejail executable
 	install -m 0755 -d $(DESTDIR)$(bindir)
 	install -m 0755 src/firejail/firejail $(DESTDIR)$(bindir)
@@ -268,14 +272,8 @@ endif
 	install -m 0755 -d $(DESTDIR)$(datarootdir)/zsh/site-functions
 	install -m 0644 src/zsh_completion/_firejail $(DESTDIR)$(datarootdir)/zsh/site-functions/
 
-.PHONY: install
-install: all
-	$(MAKE) realinstall
-
 .PHONY: install-strip
-install-strip: all
-	strip $(ALL_ITEMS)
-	$(MAKE) realinstall
+install-strip: strip install
 
 .PHONY: uninstall
 uninstall: config.mk

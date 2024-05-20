@@ -40,7 +40,7 @@ dbus-user filter
 dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.gnome.keyring.SystemPrompter
-# allow D-Bus communication with firefox for opening links
+# Allow D-Bus communication with Firefox for opening links
 dbus-user.talk org.mozilla.*
 
 # Redirect

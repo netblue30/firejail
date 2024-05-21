@@ -269,9 +269,6 @@ ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 		  $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default; \
 	fi"
 	# install apparmor base abstraction drop-in
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions ]; then \
-		$(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions; \
-	fi"
 	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions/base.d ]; then \
 		$(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions/base.d; \
 	fi"

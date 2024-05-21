@@ -230,8 +230,8 @@ ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail contrib/*.py contrib/*.sh
 	# vim syntax
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect
-	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect contrib/vim/ftdetect/firejail.vim
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax contrib/syntax/files/firejail.vim
 	# gtksourceview language-specs
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs
@@ -269,8 +269,9 @@ ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 endif
 ifneq ($(HAVE_MAN),no)
 	# man pages
-	$(INSTALL) -m 0755 -d $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man5
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(mandir)/man1
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(mandir)/man1 $(MANPAGES1_GZ)
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(mandir)/man5
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(mandir)/man5 $(MANPAGES5_GZ)
 endif
 	# bash completion

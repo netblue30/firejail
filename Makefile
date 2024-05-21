@@ -256,21 +256,15 @@ ifeq ($(BUSYBOX_WORKAROUND),yes)
 endif
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile
-	sh -c "if [ ! -d $(DESTDIR)$(sysconfdir)/apparmor.d ]; then \
-		$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d; \
-	fi"
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d
 	$(INSTALL) -m 0644 etc/apparmor/firejail-default $(DESTDIR)$(sysconfdir)/apparmor.d
 	# install apparmor profile customization file
-	sh -c "if [ ! -d $(DESTDIR)$(sysconfdir)/apparmor.d/local ]; then \
-		$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/local; \
-	fi"
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/local
 	sh -c "if [ ! -f $(DESTDIR)$(sysconfdir)/apparmor.d/local/firejail-default ]; then \
 		$(INSTALL) -m 0644 etc/apparmor/firejail-local $(DESTDIR)$(sysconfdir)/apparmor.d/local/firejail-default; \
 	fi"
 	# install apparmor base abstraction drop-in
-	sh -c "if [ ! -d $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d ]; then \
-		$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d; \
-	fi"
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d
 	$(INSTALL) -m 0644 etc/apparmor/firejail-base $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d
 endif
 ifneq ($(HAVE_MAN),no)

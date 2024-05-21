@@ -245,7 +245,9 @@ endif
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail/firecfg.d
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config
-	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then $(INSTALL) -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
+	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then \
+		$(INSTALL) -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; \
+	fi"
 ifeq ($(HAVE_IDS),-DHAVE_IDS)
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/ids.config
 endif
@@ -254,14 +256,25 @@ ifeq ($(BUSYBOX_WORKAROUND),yes)
 endif
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d ]; then $(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d; fi;"
+	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d ]; then \
+		$(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d; \
+	fi"
 	$(INSTALL) -m 0644 etc/apparmor/firejail-default $(DESTDIR)$(sysconfdir)/apparmor.d
 	# install apparmor profile customization file
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/local ]; then $(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/local; fi;"
-	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default ]; then $(INSTALL) -c -m 0644 etc/apparmor/firejail-local $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default; fi;"
+	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/local ]; then \
+		$(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/local; \
+	fi"
+	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default ]; then \
+		$(INSTALL) -c -m 0644 etc/apparmor/firejail-local \
+		  $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default; \
+	fi"
 	# install apparmor base abstraction drop-in
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions ]; then $(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions; fi;"
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions/base.d ]; then $(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions/base.d; fi;"
+	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions ]; then \
+		$(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions; \
+	fi"
+	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions/base.d ]; then \
+		$(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions/base.d; \
+	fi"
 	$(INSTALL) -m 0644 etc/apparmor/firejail-base $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d
 endif
 ifneq ($(HAVE_MAN),no)

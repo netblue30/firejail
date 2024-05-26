@@ -95,7 +95,12 @@ $ firejail [OPTIONS]                # starting the program specified in $SHELL, 
 $ firejail [OPTIONS] firefox        # starting Mozilla Firefox
 .PP
 # sudo firejail [OPTIONS] /etc/init.d/nginx start
-
+.PP
+When an option is specified multiple times (whether in a profile, on the
+command line, or both) or conflicts with a related option, the
+precedence/behavior is option-specific and usually documented in the
+\fBOPTIONS\fR section below. Note that an option specified in a profile can
+generally be disabled on the command line using \fB--ignore\fR.
 .SH OPTIONS
 .TP
 \fB\-\-
@@ -1729,6 +1734,16 @@ See --keep-config-pulse.
 Disable blacklist for this directory or file.
 .br
 
+Note that blacklist entries containing ${PATH} can not currently be partially
+disabled for individual expanded paths. Only the whole unexpanded path
+including ${PATH} can be disabled, which then applies to all expansions.
+This limitation does not apply to expansions of other variables or wildcards.
+For details, see
+.UR https://github.com/netblue30/firejail/issues/6360
+#6360
+.UE
+.br
+
 .br
 Example:
 .br
@@ -1743,6 +1758,14 @@ $ exit
 
 .br
 $ firejail --noblacklist=/bin/nc
+.br
+bash: /bin/nc: Permission denied
+.br
+$ exit
+.br
+
+.br
+$ firejail --noblacklist='${PATH}/nc'
 .br
 $ nc dict.org 2628
 .br

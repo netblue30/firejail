@@ -167,6 +167,10 @@ blacklist ${RUNUSER}/gnome-session-leader-fifo
 blacklist ${RUNUSER}/gnome-shell
 blacklist ${RUNUSER}/gsconnect
 
+# i3 IPC socket (allows arbitrary shell script execution)
+blacklist ${RUNUSER}/i3/ipc-socket.*
+blacklist /tmp/i3-*/ipc-socket.*
+
 # systemd
 blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd

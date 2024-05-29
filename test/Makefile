@@ -2,6 +2,8 @@
 ROOT = ..
 -include $(ROOT)/config.mk
 
+RM ?= rm -f
+
 TESTS=$(patsubst %/,%,$(wildcard */))
 
 .PHONY: $(TESTS)
@@ -11,14 +13,14 @@ $(TESTS):
 
 .PHONY: clean
 clean:
-	for test in $(TESTS); do rm -f "$$test/$$test.log"; done
-	rm -fr environment/-testdir
-	rm -f environment/index.html*
-	rm -f environment/logfile*
-	rm -f environment/wget-log*
-	rm -f sysutils/firejail_t*
-	rm -f utils/firejail-test-file*
-	rm -f utils/index.html*
-	rm -f utils/lstesting
-	rm -f utils/wget-log
+	for test in $(TESTS); do $(RM) "$$test/$$test.log"; done
+	$(RM) -r environment/-testdir
+	$(RM) environment/index.html*
+	$(RM) environment/logfile*
+	$(RM) environment/wget-log*
+	$(RM) sysutils/firejail_t*
+	$(RM) utils/firejail-test-file*
+	$(RM) utils/index.html*
+	$(RM) utils/lstesting
+	$(RM) utils/wget-log
 	cd compile && (./compile.sh --clean || true)

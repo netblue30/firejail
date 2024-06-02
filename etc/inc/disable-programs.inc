@@ -259,6 +259,7 @@ blacklist ${HOME}/.clonk
 blacklist ${HOME}/.config/0ad
 blacklist ${HOME}/.config/1Password
 blacklist ${HOME}/.config/2048-qt
+blacklist ${HOME}/.config/ArmCord
 blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/Audaciousrc
 blacklist ${HOME}/.config/Authenticator

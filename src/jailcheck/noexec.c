@@ -55,6 +55,7 @@ void noexec_setup(void) {
 			execfile_len = s.st_size;
 			close(fd);
 		}
+		free(self);
 	}
 }
 
@@ -110,4 +111,5 @@ void noexec_test(const char *path) {
 	wait(&status);
 	int rv = unlink(fname);
 	(void) rv;
+	free(fname);
 }

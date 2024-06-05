@@ -300,6 +300,7 @@ void fix_desktop_files(const char *homedir) {
 
 		if (stat(outname, &sb) == 0) {
 			printf("   %s skipped: file exists\n", filename);
+			free(outname);
 			if (change_exec)
 				free(change_exec);
 			continue;
@@ -308,6 +309,7 @@ void fix_desktop_files(const char *homedir) {
 		FILE *fpin = fopen(filename, "r");
 		if (!fpin) {
 			fprintf(stderr, "Warning: cannot open /usr/share/applications/%s\n", filename);
+			free(outname);
 			if (change_exec)
 				free(change_exec);
 			continue;
@@ -317,6 +319,7 @@ void fix_desktop_files(const char *homedir) {
 		if (!fpout) {
 			fprintf(stderr, "Warning: cannot open ~/.local/share/applications/%s\n", outname);
 			fclose(fpin);
+			free(outname);
 			if (change_exec)
 				free(change_exec);
 			continue;

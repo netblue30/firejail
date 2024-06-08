@@ -1251,11 +1251,13 @@ blacklist ${HOME}/yt-dlp.conf
 blacklist ${HOME}/yt-dlp.conf.txt
 blacklist ${RUNUSER}/*firefox*
 blacklist ${RUNUSER}/akonadi
+blacklist ${RUNUSER}/i3
 blacklist ${RUNUSER}/psd/*firefox*
 blacklist ${RUNUSER}/qutebrowser
 blacklist /etc/ssmtp
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*
+blacklist /tmp/i3-*
 blacklist /tmp/lwjgl_*
 blacklist /var/games/nethack
 blacklist /var/games/slashem

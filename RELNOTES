@@ -40,6 +40,8 @@ firejail (0.9.73) baseline; urgency=low
     (#5965 #5976)
   * bugfix: firejail --ls reports wrong file sizes for large files (#5982
     #6086)
+  * bugfix: fix various resource leaks (#6367)
+  * bugfix: profstats: fix restrict-namespaces max count (#6369)
   * build: auto-generate syntax files (#5627)
   * build: mark all phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
@@ -73,6 +75,8 @@ firejail (0.9.73) baseline; urgency=low
   * build: sort.py: add -i/-n/-- options (#6290 #6339)
   * build: add strip target and simplify install targets (#6342)
   * build: remove clean dependency from cppcheck targets (#6343)
+  * build: allow overriding common tools (#6354)
+  * build: standardize install commands (#6366)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
@@ -98,6 +102,8 @@ firejail (0.9.73) baseline; urgency=low
   * docs: fix typos (#5693)
   * docs: markdown formatting and misc improvements (#5757)
   * docs: add uninstall instructions to README.md (#5812)
+  * docs: add precedence info to manpage & fix noblacklist example (#6358
+    #6359)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
   * profiles: qutebrowser: fix links not opening in the existing instance
@@ -122,6 +128,8 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: add allow-php.inc to profile.template (#6299)
   * profiles: clarify and add opengl-game to profile.template (#6300)
   * profiles: allow-ssh: allow /etc/ssh/ssh_revoked_hosts (#6308 #6309)
+  * profiles: libreoffice: support signing documents with GPG (#6352 #6353)
+  * profiles: blacklist i3 IPC socket & dir except for i3 itself (#6361)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

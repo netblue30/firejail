@@ -204,16 +204,16 @@ distclean: clean
 install: all config.mk
 	# firejail executable
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(bindir)
-	$(INSTALL) -m 0755 src/firejail/firejail $(DESTDIR)$(bindir)
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(bindir) src/firejail/firejail
 ifeq ($(HAVE_SUID),-DHAVE_SUID)
 	chmod u+s $(DESTDIR)$(bindir)/firejail
 endif
 	# firemon executable
-	$(INSTALL) -m 0755 src/firemon/firemon $(DESTDIR)$(bindir)
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(bindir) src/firemon/firemon
 	# firecfg executable
-	$(INSTALL) -m 0755 src/firecfg/firecfg $(DESTDIR)$(bindir)
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(bindir) src/firecfg/firecfg
 	# jailcheck executable
-	$(INSTALL) -m 0755 src/jailcheck/jailcheck $(DESTDIR)$(bindir)
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(bindir) src/jailcheck/jailcheck
 	# libraries and plugins
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(libdir)/firejail
 	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail src/firecfg/firejail-welcome.sh
@@ -230,12 +230,12 @@ ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail contrib/*.py contrib/*.sh
 	# vim syntax
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect contrib/vim/ftdetect/firejail.vim
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
-	$(INSTALL) -m 0644 contrib/vim/ftdetect/firejail.vim $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect
-	$(INSTALL) -m 0644 contrib/syntax/files/firejail.vim $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax contrib/syntax/files/firejail.vim
 	# gtksourceview language-specs
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs
-	$(INSTALL) -m 0644 contrib/syntax/files/firejail-profile.lang $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs contrib/syntax/files/firejail-profile.lang
 endif
 	# documents
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(docdir)
@@ -245,7 +245,9 @@ endif
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail/firecfg.d
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config
-	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then $(INSTALL) -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
+	sh -c "if [ ! -f $(DESTDIR)$(sysconfdir)/firejail/login.users ]; then \
+		$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/login.users; \
+	fi"
 ifeq ($(HAVE_IDS),-DHAVE_IDS)
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/ids.config
 endif
@@ -254,21 +256,23 @@ ifeq ($(BUSYBOX_WORKAROUND),yes)
 endif
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d ]; then $(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d; fi;"
-	$(INSTALL) -m 0644 etc/apparmor/firejail-default $(DESTDIR)$(sysconfdir)/apparmor.d
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/apparmor.d etc/apparmor/firejail-default
 	# install apparmor profile customization file
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/local ]; then $(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/local; fi;"
-	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default ]; then $(INSTALL) -c -m 0644 etc/apparmor/firejail-local $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default; fi;"
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/local
+	sh -c "if [ ! -f $(DESTDIR)$(sysconfdir)/apparmor.d/local/firejail-default ]; then \
+		$(INSTALL) -m 0644 etc/apparmor/firejail-local $(DESTDIR)$(sysconfdir)/apparmor.d/local/firejail-default; \
+	fi"
 	# install apparmor base abstraction drop-in
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions ]; then $(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions; fi;"
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions/base.d ]; then $(INSTALL) -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions/base.d; fi;"
-	$(INSTALL) -m 0644 etc/apparmor/firejail-base $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d etc/apparmor/firejail-base
 endif
 ifneq ($(HAVE_MAN),no)
 	# man pages
-	$(INSTALL) -m 0755 -d $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man5
-	$(INSTALL) -m 0644 $(MANPAGES1_GZ) $(DESTDIR)$(mandir)/man1/
-	$(INSTALL) -m 0644 $(MANPAGES5_GZ) $(DESTDIR)$(mandir)/man5/
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(mandir)/man1
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(mandir)/man1 $(MANPAGES1_GZ)
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(mandir)/man5
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(mandir)/man5 $(MANPAGES5_GZ)
 endif
 	# bash completion
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/bash-completion/completions
@@ -277,7 +281,7 @@ endif
 	$(INSTALL) -m 0644 src/bash_completion/firecfg.bash_completion $(DESTDIR)$(datarootdir)/bash-completion/completions/firecfg
 	# zsh completion
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/zsh/site-functions
-	$(INSTALL) -m 0644 src/zsh_completion/_firejail $(DESTDIR)$(datarootdir)/zsh/site-functions/
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(datarootdir)/zsh/site-functions src/zsh_completion/_firejail
 
 .PHONY: install-strip
 install-strip: strip install

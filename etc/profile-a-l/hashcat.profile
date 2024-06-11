@@ -9,7 +9,9 @@ include globals.local
 
 blacklist ${RUNUSER}/wayland-*
 
+noblacklist ${HOME}/.cache/hashcat
 noblacklist ${HOME}/.hashcat
+noblacklist ${HOME}/.local/share/hashcat
 noblacklist /usr/include
 noblacklist ${DOCUMENTS}
 

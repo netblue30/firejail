@@ -140,6 +140,7 @@ blacklist ${HOME}/.cache/google-chrome-beta
 blacklist ${HOME}/.cache/google-chrome-unstable
 blacklist ${HOME}/.cache/gradio
 blacklist ${HOME}/.cache/gummi
+blacklist ${HOME}/.cache/hashcat
 blacklist ${HOME}/.cache/icedove
 blacklist ${HOME}/.cache/inkscape
 blacklist ${HOME}/.cache/inox
@@ -974,6 +975,7 @@ blacklist ${HOME}/.local/share/gnote
 blacklist ${HOME}/.local/share/godot
 blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
+blacklist ${HOME}/.local/share/hashcat
 blacklist ${HOME}/.local/share/i2p
 blacklist ${HOME}/.local/share/io.github.lainsce.Notejot
 blacklist ${HOME}/.local/share/jami

@@ -21,9 +21,16 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
+whitelist ${HOME}/.config/ghostwriter
+whitelist ${HOME}/.local/share/ghostwriter
+whitelist ${DOCUMENTS}
+whitelist ${DOWNLOADS}
+whitelist ${PICTURES}
 whitelist /usr/share/ghostwriter
+whitelist /usr/share/mathjax
 whitelist /usr/share/mozilla-dicts
 whitelist /usr/share/pandoc*
+include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -46,11 +53,11 @@ seccomp !chroot
 seccomp.block-secondary
 #tracelog # breaks
 
-private-bin context,gettext,ghostwriter,latex,mktexfmt,pandoc,pdflatex,pdfroff,prince,weasyprint,wkhtmltopdf
+private-bin affixcompress,analyze,chmorph,cmark,context,gettext,ghostwriter,hunspell,hunzip,hzip,latex,makealias,mktexfmt,munch,multimarkdown,pandoc,pdflatex,pdfroff,prince,unmunch,weasyprint,wkhtmltopdf,wordforms,wordlist2hunspell
 private-cache
 private-dev
 # passwd,login.defs,firejail are a temporary workaround for #2877 and can be removed once it is fixed
-private-etc @tls-ca,@x11,dbus-1,firejail,gconf,host.conf,mime.types,rpc,services,texlive
+private-etc @tls-ca,@x11,dbus-1,gconf,host.conf,mime.types,rpc,services,texlive
 private-tmp
 
 dbus-user filter

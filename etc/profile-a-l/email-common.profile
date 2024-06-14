@@ -52,7 +52,7 @@ whitelist ${RUNUSER}/gnupg
 whitelist /usr/share/bogofilter
 whitelist /usr/share/gnupg
 whitelist /usr/share/gnupg2
-whitelist /var/lib/clamav 
+whitelist /var/lib/clamav
 whitelist /var/mail
 whitelist /var/spool/mail
 include whitelist-common.inc

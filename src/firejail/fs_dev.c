@@ -52,7 +52,8 @@ typedef struct {
 
 static DevEntry dev[] = {
 	{"/dev/snd", RUN_DEV_DIR "/snd", DEV_SOUND},	// sound device
-	{"/dev/dri", RUN_DEV_DIR "/dri", DEV_3D},		// 3d device
+	{"/dev/dri", RUN_DEV_DIR "/dri", DEV_3D},		// 3d devices
+	{"/dev/kfd", RUN_DEV_DIR "/kfd", DEV_3D},
 	{"/dev/nvidia0", RUN_DEV_DIR "/nvidia0", DEV_3D},
 	{"/dev/nvidia1", RUN_DEV_DIR "/nvidia1", DEV_3D},
 	{"/dev/nvidia2", RUN_DEV_DIR "/nvidia2", DEV_3D},

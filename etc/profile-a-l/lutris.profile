@@ -66,7 +66,6 @@ netfilter
 nodvd
 nogroups
 nonewprivs
-noroot
 notv
 nou2f
 novideo
@@ -76,7 +75,6 @@ seccomp.32 !modify_ldt
 
 # Add the next line to your lutris.local if you do not need controller support.
 #private-dev
-private-tmp
 
 dbus-user filter
 dbus-user.own net.lutris.Lutris

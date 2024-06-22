@@ -46,5 +46,11 @@ blacklist ${PATH}/wget2
 # The file dialog needs to work without d-bus.
 ?HAS_NODBUS: env NO_CHROME_KDE_FILE_DIALOG=1
 
+# Add one of the following whitelist options to your chromium-common.local to enable KeePassXC Plugin support.
+# Note: Start KeePassXC before chromium or google-chrome and keep it open to allow communication between them.
+#whitelist ${RUNUSER}/kpxc_server
+#whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
+#noblacklist ${RUNUSER}/app
+
 # Redirect
 include blink-common.profile

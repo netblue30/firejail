@@ -39,6 +39,7 @@ typedef enum {
 	DEV_VIDEO,
 	DEV_TV,
 	DEV_DVD,
+	DEV_TPM,
 	DEV_U2F,
 	DEV_INPUT
 } DEV_TYPE;
@@ -79,6 +80,12 @@ static DevEntry dev[] = {
 	{"/dev/video9", RUN_DEV_DIR "/video9", DEV_VIDEO},
 	{"/dev/dvb", RUN_DEV_DIR "/dvb", DEV_TV}, // DVB (Digital Video Broadcasting) - TV device
 	{"/dev/sr0", RUN_DEV_DIR "/sr0", DEV_DVD}, // for DVD and audio CD players
+	{"/dev/tpm0", RUN_DEV_DIR "/tpm0", DEV_TPM}, // TPM (Trusted Platform Module) devices
+	{"/dev/tpm1", RUN_DEV_DIR "/tpm1", DEV_TPM},
+	{"/dev/tpm2", RUN_DEV_DIR "/tpm2", DEV_TPM},
+	{"/dev/tpm3", RUN_DEV_DIR "/tpm3", DEV_TPM},
+	{"/dev/tpm4", RUN_DEV_DIR "/tpm4", DEV_TPM},
+	{"/dev/tpm5", RUN_DEV_DIR "/tpm5", DEV_TPM},
 	{"/dev/hidraw0", RUN_DEV_DIR "/hidraw0", DEV_U2F},
 	{"/dev/hidraw1", RUN_DEV_DIR "/hidraw1", DEV_U2F},
 	{"/dev/hidraw2", RUN_DEV_DIR "/hidraw2", DEV_U2F},
@@ -105,6 +112,7 @@ static void deventry_mount(void) {
 			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
 			    (dev[i].type == DEV_TV && arg_notv == 0) ||
 			    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
+			    (dev[i].type == DEV_TPM && arg_notpm == 0) ||
 			    (dev[i].type == DEV_U2F && arg_nou2f == 0) ||
 			    (dev[i].type == DEV_INPUT && arg_noinput == 0)) {
 
@@ -379,6 +387,15 @@ void fs_dev_disable_dvd(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
 		if (dev[i].type == DEV_DVD)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
+}
+
+void fs_dev_disable_tpm(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].type == DEV_TPM)
 			disable_file_or_dir(dev[i].dev_fname);
 		i++;
 	}

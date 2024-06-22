@@ -618,6 +618,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 1;
 	}
+	else if (strcmp(ptr, "notpm") == 0) {
+		arg_notpm = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "nou2f") == 0) {
 		arg_nou2f = 1;
 		return 0;

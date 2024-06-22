@@ -153,6 +153,7 @@ int arg_allow_private_blacklist = 0;		// blacklist things in private directories
 int arg_disable_mnt = 0;			// disable /mnt and /media
 int arg_noprofile = 0; // use default.profile if none other found/specified
 int arg_memory_deny_write_execute = 0;		// block writable and executable memory
+int arg_notpm = 0; // --notpm
 int arg_notv = 0;	// --notv
 int arg_nodvd = 0; // --nodvd
 int arg_nou2f = 0; // --nou2f
@@ -2205,6 +2206,8 @@ int main(int argc, char **argv, char **envp) {
 			profile_add("blacklist /dev/lp*");
 			profile_add("blacklist /run/cups/cups.sock");
 		}
+		else if (strcmp(argv[i], "--notpm") == 0)
+			arg_notpm = 1;
 		else if (strcmp(argv[i], "--notv") == 0)
 			arg_notv = 1;
 		else if (strcmp(argv[i], "--nodvd") == 0)

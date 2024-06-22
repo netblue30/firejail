@@ -175,6 +175,7 @@ include globals.local
 #noprinters
 #noroot
 #nosound
+#notpm
 #notv
 #nou2f
 #novideo

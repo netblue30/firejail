@@ -451,6 +451,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_keep_config_pulse = 1;
 		return 0;
 	}
+	else if (strcmp(ptr, "notpm") == 0) {
+		arg_notpm = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "notv") == 0) {
 		arg_notv = 1;
 		return 0;

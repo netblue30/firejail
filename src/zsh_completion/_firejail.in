@@ -134,6 +134,7 @@ _firejail_args=(
     '--nonewprivs[sets the NO_NEW_PRIVS prctl]'
     '--noprinters[disable printers]'
     '--nosound[disable sound system]'
+    '--notpm[disable TPM devices]'
     '--nou2f[disable U2F devices]'
     '--novideo[disable video devices]'
     '--private[temporary home directory]'

@@ -190,8 +190,9 @@ static const char *const usage_str =
 #endif
 	"    --nosound - disable sound system.\n"
 	"    --noautopulse - disable automatic ~/.config/pulse init.\n"
-	"    --novideo - disable video devices.\n"
+	"    --notpm - disable TPM devices.\n"
 	"    --nou2f - disable U2F devices.\n"
+	"    --novideo - disable video devices.\n"
 	"    --nowhitelist=filename - disable whitelist for file or directory.\n"
 	"    --oom=value - configure OutOfMemory killer for the sandbox\n"
 #ifdef HAVE_OUTPUT

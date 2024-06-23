@@ -22,6 +22,7 @@ whitelist ${HOME}/.librewolf
 # Note: Start KeePassXC before Librewolf and keep it open to allow communication between them.
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
+#noblacklist ${RUNUSER}/app
 
 whitelist /usr/share/librewolf
 

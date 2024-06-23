@@ -7,6 +7,7 @@ include fractal.local
 include globals.local
 
 noblacklist ${HOME}/.cache/fractal
+noblacklist ${HOME}/.local/share/fractal
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -21,7 +22,9 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.cache/fractal
+mkdir ${HOME}/.local/share/fractal
 whitelist ${HOME}/.cache/fractal
+whitelist ${HOME}/.local/share/fractal
 whitelist ${DOWNLOADS}
 whitelist /usr/share/fractal
 include whitelist-common.inc

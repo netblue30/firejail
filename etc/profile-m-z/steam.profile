@@ -157,6 +157,7 @@ nodvd
 nogroups
 nonewprivs
 noroot
+notpm
 notv
 nou2f
 # To allow VR and camera-based motion tracking, add 'ignore novideo' to your

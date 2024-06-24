@@ -17,6 +17,7 @@ nogroups
 noinput
 nonewprivs
 nosound
+notpm
 notv
 nou2f
 novideo

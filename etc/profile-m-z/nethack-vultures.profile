@@ -28,6 +28,7 @@ nogroups
 noinput
 #nonewprivs
 #noroot
+notpm
 notv
 novideo
 #protocol unix,netlink

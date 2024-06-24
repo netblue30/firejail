@@ -34,6 +34,7 @@ nodvd
 nogroups
 nonewprivs
 noroot
+notpm
 notv
 nou2f
 # If you need access to cameras, add `ignore novideo` to retroarch.local

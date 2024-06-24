@@ -36,6 +36,7 @@ nogroups
 noinput
 nonewprivs
 noroot
+notpm
 notv
 nou2f
 # Add 'ignore novideo' to your vmware-view.local if you need your webcam.

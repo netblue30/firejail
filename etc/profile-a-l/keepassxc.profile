@@ -77,6 +77,7 @@ noinput
 nonewprivs
 noroot
 nosound
+notpm
 notv
 novideo
 protocol unix

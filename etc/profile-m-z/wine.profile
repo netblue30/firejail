@@ -35,6 +35,7 @@ noinput
 nonewprivs
 noroot
 #nosound
+notpm
 notv
 #novideo
 seccomp

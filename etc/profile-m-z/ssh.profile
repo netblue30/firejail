@@ -35,6 +35,7 @@ noinput
 nonewprivs
 #noroot # see issue #1543
 nosound
+notpm
 notv
 #nou2f # OpenSSH >= 8.2 supports U2F
 novideo

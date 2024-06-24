@@ -24,6 +24,7 @@ nodvd
 noinput
 nonewprivs
 noroot
+notpm
 notv
 nou2f
 protocol unix,inet,inet6,netlink

@@ -26,6 +26,7 @@ nonewprivs
 noroot
 nou2f
 novideo
+notpm
 notv
 protocol unix,inet,inet6,netlink
 seccomp

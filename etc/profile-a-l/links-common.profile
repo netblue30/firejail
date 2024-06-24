@@ -38,6 +38,7 @@ noroot
 # Add 'ignore nosound' to your links-common.local if you want to restrict access to
 # the user-configured associated media player.
 nosound
+notpm
 notv
 nou2f
 novideo

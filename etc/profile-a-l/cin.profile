@@ -20,6 +20,7 @@ nodvd
 #nogroups
 noinput
 nonewprivs
+notpm
 notv
 nou2f
 noroot

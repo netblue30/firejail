@@ -57,6 +57,7 @@ nogroups
 noinput
 nonewprivs
 noroot
+notpm
 notv
 novideo
 nou2f

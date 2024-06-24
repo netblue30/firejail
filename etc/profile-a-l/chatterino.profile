@@ -58,6 +58,7 @@ nogroups
 nonewprivs
 noprinters
 noroot
+notpm
 notv
 nou2f
 # Netlink is required for streamlink integration.

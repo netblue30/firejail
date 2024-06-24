@@ -31,6 +31,7 @@ nogroups
 noinput
 nonewprivs
 noroot
+notpm
 nou2f
 novideo
 protocol unix,inet,inet6

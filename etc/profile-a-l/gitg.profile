@@ -42,6 +42,7 @@ noinput
 nonewprivs
 noroot
 nosound
+notpm
 notv
 nou2f
 novideo

@@ -50,6 +50,7 @@ nonewprivs
 noprinters
 #noroot breaks app
 nosound
+notpm
 notv
 nou2f
 novideo

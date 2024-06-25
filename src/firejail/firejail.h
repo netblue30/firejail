@@ -647,8 +647,8 @@ void fs_dev_disable_3d(void);
 void fs_dev_disable_video(void);
 void fs_dev_disable_tv(void);
 void fs_dev_disable_dvd(void);
-void fs_dev_disable_u2f(void);
 void fs_dev_disable_tpm(void);
+void fs_dev_disable_u2f(void);
 void fs_dev_disable_input(void);
 
 // fs_home.c

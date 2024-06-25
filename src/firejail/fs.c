@@ -743,10 +743,20 @@ void fs_proc_sys_dev_boot(void) {
 
 	disable_file(BLACKLIST_FILE, "/sys/firmware");
 	disable_file(BLACKLIST_FILE, "/sys/hypervisor");
-	{ // allow user access to some directories in /sys/ by specifying 'noblacklist' option
-		profile_add("blacklist /sys/fs");
+
+	// Soft-block some paths in /sys/ (can be undone in profiles).
+	profile_add("blacklist /sys/fs");
+
+	// Hardware acceleration with the nvidia proprietary driver may fail
+	// without access to these paths (see #6372).
+	if (access("/dev/nvidiactl", R_OK) == 0 && arg_no3d == 0) {
+		profile_add("whitelist /sys/module/nvidia*");
+		profile_add("read-only /sys/module/nvidia*");
+	}
+	else {
 		profile_add("blacklist /sys/module");
 	}
+
 	disable_file(BLACKLIST_FILE, "/sys/power");
 	disable_file(BLACKLIST_FILE, "/sys/kernel/debug");
 	disable_file(BLACKLIST_FILE, "/sys/kernel/vmcoreinfo");

@@ -15,6 +15,8 @@
 
 noblacklist /sys/fs
 noblacklist /sys/module
+nowhitelist /sys/module/nvidia*
+ignore read-only /sys/module/nvidia*
 
 allow-debuggers
 allusers

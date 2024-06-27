@@ -100,6 +100,7 @@ blacklist ${HOME}/.cache/cantata
 blacklist ${HOME}/.cache/champlain
 blacklist ${HOME}/.cache/chromium
 blacklist ${HOME}/.cache/chromium-dev
+blacklist ${HOME}/.cache/claws-mail
 blacklist ${HOME}/.cache/cliqz
 blacklist ${HOME}/.cache/com.github.johnfactotum.Foliate
 blacklist ${HOME}/.cache/darktable

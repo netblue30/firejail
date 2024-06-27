@@ -11,9 +11,12 @@ include globals.local
 # adding the following line to claws-mail.local:
 #ignore no3d
 
+noblacklist ${HOME}/.cache/claws-mail
 noblacklist ${HOME}/.claws-mail
 
+mkdir ${HOME}/.cache/claws-mail
 mkdir ${HOME}/.claws-mail
+whitelist ${HOME}/.cache/claws-mail
 whitelist ${HOME}/.claws-mail
 
 # Add the below lines to your claws-mail.local if you use python-based plugins.

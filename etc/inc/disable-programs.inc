@@ -951,6 +951,7 @@ blacklist ${HOME}/.local/share/feedreader
 blacklist ${HOME}/.local/share/feral-interactive
 blacklist ${HOME}/.local/share/five-or-more
 blacklist ${HOME}/.local/share/fluffychat
+blacklist ${HOME}/.local/share/fractal
 blacklist ${HOME}/.local/share/freecol
 blacklist ${HOME}/.local/share/gajim
 blacklist ${HOME}/.local/share/gdfuse

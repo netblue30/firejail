@@ -1095,6 +1095,9 @@ int sandbox(void* sandbox_arg) {
 	if (arg_no3d)
 		fs_dev_disable_3d();
 
+	if (arg_notpm)
+		fs_dev_disable_tpm();
+
 	if (arg_notv)
 		fs_dev_disable_tv();
 

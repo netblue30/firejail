@@ -15,6 +15,7 @@ whitelist ${HOME}/.config/electron*-flag*.conf
 # can add the next line to your electron-common.local.
 #include electron-common-hardened.inc.profile
 
+notpm
 nou2f
 novideo
 

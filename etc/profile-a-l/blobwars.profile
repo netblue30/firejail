@@ -31,6 +31,7 @@ nodvd
 nogroups
 nonewprivs
 noroot
+notpm
 notv
 nou2f
 novideo

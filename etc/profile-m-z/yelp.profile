@@ -50,6 +50,7 @@ noinput
 nonewprivs
 noroot
 #nosound # add this to your yelp.local if you don't need sound support.
+notpm
 notv
 nou2f
 novideo

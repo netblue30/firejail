@@ -27,6 +27,7 @@ nonewprivs
 # In noroot mode, Xephyr cannot create a socket in the real /tmp/.X11-unix.
 #noroot
 nosound
+notpm
 notv
 nou2f
 protocol unix

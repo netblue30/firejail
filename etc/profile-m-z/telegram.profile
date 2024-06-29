@@ -40,6 +40,7 @@ nodvd
 noinput
 nonewprivs
 noroot
+notpm
 notv
 protocol unix,inet,inet6,netlink
 seccomp

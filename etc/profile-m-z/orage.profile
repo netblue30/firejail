@@ -25,6 +25,7 @@ noinput
 nonewprivs
 noroot
 #nosound # calendar application, It must be able to play sound to wake you up.
+notpm
 notv
 nou2f
 novideo

@@ -37,6 +37,7 @@ nonewprivs
 # In noroot mode, xpra cannot create a socket in the real /tmp/.X11-unix.
 #noroot
 nosound
+notpm
 notv
 nou2f
 novideo

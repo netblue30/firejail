@@ -29,6 +29,7 @@ nodvd
 nogroups
 noinput
 nosound
+notpm
 notv
 nou2f
 novideo

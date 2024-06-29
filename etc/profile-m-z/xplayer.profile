@@ -34,6 +34,7 @@ nogroups
 noinput
 nonewprivs
 noroot
+notpm
 nou2f
 protocol unix,inet,inet6
 seccomp

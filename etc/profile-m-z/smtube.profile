@@ -33,6 +33,7 @@ apparmor
 caps.drop all
 netfilter
 nodvd
+notpm
 notv
 nou2f
 novideo

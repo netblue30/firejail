@@ -51,6 +51,7 @@ nonewprivs
 # Add 'ignore noroot' to your sysprof.local if you run one of these.
 noroot
 nosound
+notpm
 notv
 nou2f
 novideo

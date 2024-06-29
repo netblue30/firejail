@@ -37,6 +37,7 @@ nodvd
 nogroups
 nonewprivs
 noroot
+notpm
 notv
 novideo
 protocol unix,inet,inet6

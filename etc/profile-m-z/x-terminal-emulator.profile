@@ -11,6 +11,7 @@ net none
 nogroups
 noinput
 noroot
+notpm
 nou2f
 protocol unix
 seccomp

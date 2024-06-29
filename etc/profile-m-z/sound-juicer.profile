@@ -28,6 +28,7 @@ nonewprivs
 noroot
 nosound
 nou2f
+notpm
 notv
 novideo
 protocol unix,inet,inet6,netlink

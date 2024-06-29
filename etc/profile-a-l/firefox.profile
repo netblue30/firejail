@@ -31,6 +31,8 @@ whitelist ${HOME}/.mozilla
 
 # Add one of the following whitelist options to your firefox.local to enable KeePassXC Plugin support.
 # Note: Start KeePassXC before Firefox and keep it open to allow communication between them.
+#noblacklist ${RUNUSER}/app
+#whitelist ${RUNUSER}/app/org.keepassxc.KeePassXC
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 

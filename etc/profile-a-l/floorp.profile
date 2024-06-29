@@ -22,6 +22,7 @@ whitelist ${HOME}/.floorp
 # Note: Start KeePassXC before floorp and keep it open to allow communication between them.
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
+#noblacklist ${RUNUSER}/app
 
 dbus-user filter
 dbus-user.own org.mozilla.floorp.*

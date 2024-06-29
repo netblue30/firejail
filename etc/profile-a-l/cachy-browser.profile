@@ -23,6 +23,7 @@ whitelist /usr/share/cachy-browser
 # Note: Start KeePassXC before CachyBrowser and keep it open to allow communication between them.
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
+#noblacklist ${RUNUSER}/app
 
 # Add the next line to your cachy-browser.local to enable private-bin (Arch Linux).
 #private-bin dbus-launch,dbus-send,cachy-browser,sh

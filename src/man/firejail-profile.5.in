@@ -382,9 +382,11 @@ Set working directory inside jail to the home directory, and failing that, the r
 Set working directory inside the jail. Full directory path is required. Symbolic links are not allowed.
 .TP
 \fBprivate-dev
-Create a new /dev directory. Only disc, dri, dvb, hidraw, null, full, zero, tty, pts, ptmx,
-random, snd, urandom, video, log, shm and usb devices are available.
-Use the options no3d, nodvd, nosound, notv, nou2f and novideo for additional restrictions.
+Create a new /dev directory.
+Only disc, dri, dvb, full, hidraw, log, null, ptmx, pts, random, shm, snd, tty,
+urandom, usb, video and zero devices are available.
+Use the options no3d, nodvd, nosound, notv, nou2f and novideo for additional
+restrictions.
 
 .TP
 \fBprivate-etc file,directory

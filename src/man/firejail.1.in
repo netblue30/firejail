@@ -2108,7 +2108,7 @@ File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br
 Example:
 .br
-$ firejail \-\-private-bin=bash,sed,ls,cat
+$ firejail \-\-private-bin=bash,cat,ls,sed
 .br
 Parent pid 20841, child pid 20842
 .br
@@ -2172,8 +2172,11 @@ $ pwd
 
 .TP
 \fB\-\-private-dev
-Create a new /dev directory. Only disc, dri, dvb, hidraw, null, full, zero, tty, pts, ptmx, random, snd, urandom, video, log, shm and usb devices are available.
-Use the options --no3d, --nodvd, --nosound, --notv, --nou2f and --novideo for additional restrictions.
+Create a new /dev directory.
+Only disc, dri, dvb, full, hidraw, log, null, ptmx, pts, random, shm, snd, tty,
+urandom, usb, video and zero devices are available.
+Use the options \-\-no3d, \-\-nodvd, \-\-nosound, \-\-notv, \-\-nou2f and
+\-\-novideo for additional restrictions.
 .br
 
 .br
@@ -2191,7 +2194,7 @@ cdrom  cdrw  dri  dvd  dvdrw  full  log  null  ptmx  pts  random  shm  snd  sr0 
 .br
 $
 .TP
-\fB\-\-private-etc, \-\-private-etc=file,directory,@group
+\fB\-\-private-etc, \-\-private-etc=@group,file,directory
 The files installed by \-\-private-etc are copies of the original system files from /etc directory.
 By default, the command brings in a skeleton of files and directories used by most console tools:
 

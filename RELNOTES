@@ -17,6 +17,7 @@ firejail (0.9.73) baseline; urgency=low
   * feature: add Landlock support (#5269 #6078 #6115 #6125 #6187 #6195 #6200
     #6228 #6260 #6302 #6305)
   * feature: add support for comm, coredump, and prctl procevents in firemon
+  * feature: add notpm command & keep tpm devices in private-dev (#6379 #6390)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)
@@ -32,6 +33,8 @@ firejail (0.9.73) baseline; urgency=low
   * modif: keep pipewire group unless nosound is used (#5992 #5993)
   * modif: fcopy: Use lstat when copying directory (#5957)
   * modif: populate /run/firejail while holding flock (#6307)
+  * modif: private-dev: keep /dev/kfd unless no3d is used (#6380)
+  * modif: keep /sys/module/nvidia* if prop driver and no no3d (#6372 #6387)
   * removal: LTS and FIRETUNNEL support
   * bugfix: fix --hostname and --hosts-file commands
   * bugfix: fix examples in firejail-local AppArmor profile (#5717)
@@ -104,6 +107,8 @@ firejail (0.9.73) baseline; urgency=low
   * docs: add uninstall instructions to README.md (#5812)
   * docs: add precedence info to manpage & fix noblacklist example (#6358
     #6359)
+  * docs: bug_report.md: use absolute path in 'steps to reproduce' (#6382)
+  * docs: man: format and sort some private- items (#6398)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
   * profiles: qutebrowser: fix links not opening in the existing instance

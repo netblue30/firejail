@@ -155,6 +155,7 @@ int arg_noprofile = 0; // use default.profile if none other found/specified
 int arg_memory_deny_write_execute = 0;		// block writable and executable memory
 int arg_notv = 0;	// --notv
 int arg_nodvd = 0; // --nodvd
+int arg_notpm = 0; // --notpm
 int arg_nou2f = 0; // --nou2f
 int arg_noinput = 0; // --noinput
 int arg_deterministic_exit_code = 0;	// always exit with first child's exit status
@@ -2209,6 +2210,8 @@ int main(int argc, char **argv, char **envp) {
 			arg_notv = 1;
 		else if (strcmp(argv[i], "--nodvd") == 0)
 			arg_nodvd = 1;
+		else if (strcmp(argv[i], "--notpm") == 0)
+			arg_notpm = 1;
 		else if (strcmp(argv[i], "--nou2f") == 0)
 			arg_nou2f = 1;
 		else if (strcmp(argv[i], "--noinput") == 0)

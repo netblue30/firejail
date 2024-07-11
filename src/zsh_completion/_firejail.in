@@ -124,7 +124,6 @@ _firejail_args=(
     # many would enjoy getting a list from -20..20
     '--nice=-[set nice value]: :(1 10 15 20)'
     '--no3d[disable 3D hardware acceleration]'
-    '--noautopulse[disable automatic ~/.config/pulse init]'
     '--noblacklist=-[disable blacklist for file or directory]: :_files'
     '--nodbus[disable D-Bus access]'
     '--nodvd[disable DVD and audio CD devices]'

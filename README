@@ -171,7 +171,7 @@ aoand (https://github.com/aoand)
 Arne Welzel (https://github.com/awelzel)
 	- ignore SIGTTOU during flush_stdin()
 archaon616 (https://github.com/archaon616)
-	- steam.profile: Allow Factorio
+	- steam.profile: allow Factorio, Zomboid
 Atrate (https://github.com/Atrate)
 	- BetterDiscord support
 Austin Morton (https://github.com/apmorton)
@@ -326,6 +326,8 @@ curiosityseeker (https://github.com/curiosityseeker - new)
 	- fixed conky profile
 	- thunderbird.profile: harden and enable the rules necessary to make
 	  Firefox open links
+D357R0Y3R (https://github.com/D357R0Y3R)
+	- added floorp to firejail.config
 da2x (https://github.com/da2x)
 	- matched RPM license tag
 Daan Bakker (https://github.com/dbakker)
@@ -371,6 +373,8 @@ DiGitHubCap (https://github.com/DiGitHubCap)
 	- fix qt5ct colour schemes and QSS
 Dieter Plaetinck (https://github.com/Dieterbe)
 	- qutebrowser: update MPRIS name for qutebrowser-qt6
+	- fix email-common.profile
+	- fix claws-mail profile
 Disconnect3d (https://github.com/disconnect3d)
 	- code cleanup
 dm9pZCAq (https://github.com/dm9pZCAq)
@@ -408,13 +412,18 @@ Fabian Würfl (https://github.com/BafDyce)
 	- Liferea profile
 Felipe Barriga Richards (https://github.com/fbarriga)
 	- --private-etc fix
+Felix Pehla (https://github.com/FelixPehla)
+	- fix fractal profile
 fenuks (https://github.com/fenuks)
 	- fix sound in games using FMOD
 	- allow /opt/tor-browser for Tor Browser profile
 fkrone (https://github.com/fkrone)
 	- fix Zoom profile
 Fidel Ramos (https://github.com/haplo)
-	- Ledger Live profile
+	- added Ledger Live profile
+	- fixed geeqie profile
+	- added rawtherapee profile
+	- added electron-cache profile
 Florian Begusch (https://github.com/florianbegusch)
 	- (la)tex profiles
 	- fixed transmission-common.profile
@@ -567,6 +576,9 @@ Haowei Yu (https://github.com/sfc-gh-hyu)
 Icaro Perseo (https://github.com/icaroperseo)
 	- Icecat profile
 	- several profile fixes
+Ilya Pankratov (https://github.com/i-pankrat)
+	- profstats fix
+	- fix various memory resource leaks
 Igor Bukanov (https://github.com/ibukanov)
 	- found/fiixed privilege escalation in --hosts-file option
 iiotx (https://github.com/iiotx)
@@ -739,6 +751,8 @@ Liorst4 (https://github.com/Liorst4)
 	- minetest fixes
 Lockdis (https://github.com/Lockdis)
 	- Added crow, nyx, and google-earth-pro profiles
+luca0N (https://github.com/luca0N)
+	- fixed crawl profile
 Lukáš Krejčí (https://github.com/lskrejci)
 	- fixed parsing of --keep-var-tmp
 luzpaz (https://github.com/luzpaz)
@@ -794,6 +808,8 @@ Michael Haas (https://github.com/mhaas)
 	- bugfixes
 Michael Hoffmann (https://github.com/brisad)
 	- added support for subdirs in private-etc
+Michele Sorcinelli (https://github.com/michelesr)
+	- fix ssh profile
 Mike Frysinger (vapier@gentoo.org)
 	- Gentoo compile patch
 minus7 (https://github.com/minus7)
@@ -855,6 +871,7 @@ nolanl (https://github.com/nolanl)
 nutta-git (https://github.com/nutta-git)
 	- steam.profile: allow process_vm_readv syscall
 	- lutris.profile: allow more syscalls
+	- steam.profile: update novideo comment for webcam motion trackers
 nyancat18 (https://github.com/nyancat18)
 	- added ardour4, dooble, karbon, krita profiles
 nya1 (https://github.com/nya1)
@@ -949,6 +966,8 @@ pszxzsd (https://github.com/pszxzsd)
 	-uGet profile
 pwnage-pineapple (https://github.com/pwnage-pineapple)
 	- update Okular profile
+qdii (https://github.com/qdii)
+	- added notpm command & keep tpm devices in private-dev
 Quentin Retornaz (https://github.com/qretornaz-adapei42)
 	- microsoft-edge profiles fixes
 Quentin Minster (https://github.com/laomaiweng)
@@ -1003,6 +1022,8 @@ rootalc (https://github.com/rootalc)
 	- add nolocal6.net filter
 Ruan (https://github.com/ruany)
 	- fixed hexchat profile
+RundownRhino (https://github.com/RundownRhino)
+	- firefox profile fix
 rusty-snake (https://github.com/rusty-snake)
 	- added profiles: thunderbird-wayland, supertuxkart, ghostwriter
 	- added profiles: klavaro, mypaint, mypaint-ora-thumbnailer, nano
@@ -1040,18 +1061,17 @@ Serphentas (https://github.com/Serphentas)
 	- add Paradox Launcher to Steam profile
 Slava Monich (https://github.com/monich)
 	- added configure option to disable man pages
-Tobias Schmidl (https://github.com/schtobia)
-	- added profile for webui-aria2
 Simon Peter (https://github.com/probonopd)
 	- set $APPIMAGE and $APPDIR environment variables
 	- AppImage version detection
 	- Leafppad type v1 and v2 appimage packages in test/appimage
 	- GitHub/Travis CI integration
+Simo Piiroinen (https://github.com/spiiroin)
+	- Jolla/SailfishOS patches
+	- fix startup race condition for /run/firejail directory
 sinkuu (https://github.com/sinkuu)
 	- blacklisting kwalletd
 	- fix symlink invocation for programs placing symlinks in $PATH
-Simo Piiroinen (https://github.com/spiiroin)
-	- Jolla/SailfishOS patches
 slowpeek (https://github.com/slowpeek)
 	- refine appimage example in docs
 	- allow resolution of .local names with avahi-daemon in the apparmor profile
@@ -1059,6 +1079,9 @@ slowpeek (https://github.com/slowpeek)
 	- make appimage examples consistent with --appimage option short description
 	- blacklist google-drive-ocamlfuse config
 	- blacklist sendgmail config
+Shahriar Heidrich (https://github.com/smheidrich)
+	- fix manpages
+	- fix i3 profile and disable-programs.profile
 smitsohu (https://github.com/smitsohu)
 	- read-only kde4 services directory
 	- enhanced mediathekview profile
@@ -1187,6 +1210,8 @@ Tomasz Jan Góralczyk (https://github.com/tjg)
 	- fixed Steam profile
 Tomi Leppänen (https://github.com/Tomin1)
 	- Jolla/SailfishOS patches
+Tobias Schmidl (https://github.com/schtobia)
+	- added profile for webui-aria2
 Topi Miettinen (https://github.com/topimiettinen)
 	- improved seccomp printing
 	- improve mount handling, fix /run/user handling
@@ -1201,6 +1226,8 @@ Ted Robertson (https://github.com/tredondo)
 	- various documentation fixes
 	- blacklist Exodus wallet
 	- blacklist monero-project directory
+tools200ms (https://github.com/tools200ms)
+	- fixed allow-ssh.inc
 Tus1688 (https://github.com/Tus1688)
 	- added neovim profile
 user1024 (user1024@tut.by)

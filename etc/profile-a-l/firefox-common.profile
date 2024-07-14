@@ -17,6 +17,10 @@ include firefox-common.local
 noblacklist ${HOME}/.local/share/pki
 noblacklist ${HOME}/.pki
 
+blacklist ${PATH}/curl
+blacklist ${PATH}/wget
+blacklist ${PATH}/wget2
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -65,10 +69,6 @@ disable-mnt
 # private-etc below works fine on most distributions. There could be some problems on CentOS.
 private-etc @tls-ca,@x11,mailcap,mime.types,os-release
 private-tmp
-
-blacklist ${PATH}/curl
-blacklist ${PATH}/wget
-blacklist ${PATH}/wget2
 
 # 'dbus-user none' breaks various desktop integration features like global menus, native notifications,
 # Gnome connector, KDE connect and power management on KDE Plasma.

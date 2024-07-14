@@ -17,6 +17,10 @@ noblacklist /usr/lib/chromium/chrome-sandbox
 # to have access to Gnome extensions (extensions.gnome.org) via browser connector
 #include allow-python3.inc
 
+blacklist ${PATH}/curl
+blacklist ${PATH}/wget
+blacklist ${PATH}/wget2
+
 mkdir ${HOME}/.local/share/pki
 mkdir ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
@@ -34,10 +38,6 @@ include whitelist-run-common.inc
 
 ?BROWSER_DISABLE_U2F: private-dev
 #private-tmp # issues when using multiple browser sessions
-
-blacklist ${PATH}/curl
-blacklist ${PATH}/wget
-blacklist ${PATH}/wget2
 
 # This prevents access to passwords saved in GNOME Keyring and KWallet, also
 # breaks Gnome connector.

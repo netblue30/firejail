@@ -1,5 +1,5 @@
-# Firejail profile for Cachy-Browser
-# Description: Librewolf fork based on enhanced privacy with gentoo patchset
+# Firejail profile for cachy-browser
+# Description: Librewolf fork based on enhanced privacy with Gentoo patchset
 # This file is overwritten after every install/update
 # Persistent local customizations
 include cachy-browser.local
@@ -15,7 +15,7 @@ whitelist ${HOME}/.cache/cachy
 whitelist ${HOME}/.cachy
 whitelist /usr/share/cachy-browser
 
-# Add the next line to your cachy-browser.local to enable private-bin (Arch Linux).
+# Add the next line to cachy-browser.local to enable private-bin.
 #private-bin dbus-launch,dbus-send,cachy-browser,sh
 private-etc cachy-browser
 

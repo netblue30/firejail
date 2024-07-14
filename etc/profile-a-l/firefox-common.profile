@@ -23,7 +23,8 @@ include firefox-common.local
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 
-# Add the next line to your firefox-common.local to allow access to common programs/addons/plugins.
+# Add the next line to firefox-common.local to allow access to common
+# programs/addons/plugins.
 #include firefox-common-addons.profile
 
 noblacklist ${HOME}/.local/share/pki
@@ -59,31 +60,37 @@ apparmor
 # Fixme!
 apparmor-replace
 caps.drop all
-# machine-id breaks pulse audio; add it to your firefox-common.local if sound is not required.
+# Note: machine-id breaks pulseaudio; add it to firefox-common.local if sound
+# is not required.
 #machine-id
 netfilter
 nodvd
 nogroups
 noinput
 nonewprivs
-# noroot breaks GTK_USE_PORTAL=1 usage, see https://github.com/netblue30/firejail/issues/2506.
+# Note: noroot breaks GTK_USE_PORTAL=1 usage; see
+# https://github.com/netblue30/firejail/issues/2506.
 noroot
 notv
 ?BROWSER_DISABLE_U2F: nou2f
 protocol unix,inet,inet6,netlink
-# The below seccomp configuration still permits chroot syscall. See https://github.com/netblue30/firejail/issues/2506 for possible workarounds.
+# Note: The seccomp line below still permits the chroot syscall; see
+# https://github.com/netblue30/firejail/issues/2506 for possible workarounds.
 seccomp !chroot
-# Disable tracelog, it breaks or causes major issues with many firefox based browsers, see https://github.com/netblue30/firejail/issues/1930.
+# Note: tracelog may break or cause major issues with many Firefox-based
+# browsers; see https://github.com/netblue30/firejail/issues/1930.
 #tracelog
 
 disable-mnt
 ?BROWSER_DISABLE_U2F: private-dev
-# private-etc below works fine on most distributions. There could be some problems on CentOS.
+# Note: The private-etc line below works fine on most distributions but it
+# could cause problems on CentOS.
 private-etc @tls-ca,@x11,mailcap,mime.types,os-release
 private-tmp
 
-# 'dbus-user none' breaks various desktop integration features like global menus, native notifications,
-# Gnome connector, KDE connect and power management on KDE Plasma.
+# Note: `dbus-user none` breaks various desktop integration features like
+# global menus, native notifications, Gnome connector, KDE Connect and power
+# management on KDE Plasma.
 dbus-user none
 dbus-system none
 

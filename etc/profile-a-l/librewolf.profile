@@ -1,4 +1,4 @@
-# Firejail profile for Librewolf
+# Firejail profile for librewolf
 # Description: Firefox fork based on privacy
 # This file is overwritten after every install/update
 # Persistent local customizations
@@ -16,7 +16,7 @@ whitelist ${HOME}/.librewolf
 
 whitelist /usr/share/librewolf
 
-# Add the next line to your librewolf.local to enable private-bin (Arch Linux).
+# Add the next line to librewolf.local to enable private-bin.
 #private-bin dbus-launch,dbus-send,librewolf,sh
 private-etc librewolf
 

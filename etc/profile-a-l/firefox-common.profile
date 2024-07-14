@@ -87,4 +87,20 @@ private-tmp
 dbus-user none
 dbus-system none
 
+# Add the next line to firefox-common.local to enable native notifications.
+#dbus-user.talk org.freedesktop.Notifications
+# Add the next line to firefox-common.local to allow inhibiting screensavers.
+#dbus-user.talk org.freedesktop.ScreenSaver
+# Add the next lines to firefox-common.local for plasma browser integration.
+#dbus-user.own org.mpris.MediaPlayer2.plasma-browser-integration
+#dbus-user.talk org.kde.JobViewServer
+#dbus-user.talk org.kde.kdeconnect
+#dbus-user.talk org.kde.kuiserver
+# Add the next line to firefox-common.local to allow screensharing under
+# Wayland.
+#dbus-user.talk org.freedesktop.portal.Desktop
+# Also add the next line to firefox-common.local if screensharing does not work
+# with the above lines (depends on the portal implementation).
+#ignore noroot
+
 #restrict-namespaces

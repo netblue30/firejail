@@ -100,6 +100,7 @@ blacklist ${HOME}/.cache/cantata
 blacklist ${HOME}/.cache/champlain
 blacklist ${HOME}/.cache/chromium
 blacklist ${HOME}/.cache/chromium-dev
+blacklist ${HOME}/.cache/claws-mail
 blacklist ${HOME}/.cache/cliqz
 blacklist ${HOME}/.cache/com.github.johnfactotum.Foliate
 blacklist ${HOME}/.cache/darktable
@@ -140,6 +141,7 @@ blacklist ${HOME}/.cache/google-chrome-beta
 blacklist ${HOME}/.cache/google-chrome-unstable
 blacklist ${HOME}/.cache/gradio
 blacklist ${HOME}/.cache/gummi
+blacklist ${HOME}/.cache/hashcat
 blacklist ${HOME}/.cache/icedove
 blacklist ${HOME}/.cache/inkscape
 blacklist ${HOME}/.cache/inox
@@ -189,6 +191,7 @@ blacklist ${HOME}/.cache/mutt
 blacklist ${HOME}/.cache/mypaint
 blacklist ${HOME}/.cache/netsurf
 blacklist ${HOME}/.cache/nheko
+blacklist ${HOME}/.cache/nhex
 blacklist ${HOME}/.cache/nvim
 blacklist ${HOME}/.cache/ocenaudio
 blacklist ${HOME}/.cache/okular
@@ -258,6 +261,7 @@ blacklist ${HOME}/.clonk
 blacklist ${HOME}/.config/0ad
 blacklist ${HOME}/.config/1Password
 blacklist ${HOME}/.config/2048-qt
+blacklist ${HOME}/.config/ArmCord
 blacklist ${HOME}/.config/Atom
 blacklist ${HOME}/.config/Audaciousrc
 blacklist ${HOME}/.config/Authenticator
@@ -936,6 +940,7 @@ blacklist ${HOME}/.local/share/data/MusE
 blacklist ${HOME}/.local/share/data/MuseScore
 blacklist ${HOME}/.local/share/data/nomacs
 blacklist ${HOME}/.local/share/data/qBittorrent
+blacklist ${HOME}/.local/share/dev.nhex
 blacklist ${HOME}/.local/share/dino
 blacklist ${HOME}/.local/share/dolphin
 blacklist ${HOME}/.local/share/dolphin-emu
@@ -946,6 +951,7 @@ blacklist ${HOME}/.local/share/feedreader
 blacklist ${HOME}/.local/share/feral-interactive
 blacklist ${HOME}/.local/share/five-or-more
 blacklist ${HOME}/.local/share/fluffychat
+blacklist ${HOME}/.local/share/fractal
 blacklist ${HOME}/.local/share/freecol
 blacklist ${HOME}/.local/share/gajim
 blacklist ${HOME}/.local/share/gdfuse
@@ -971,6 +977,7 @@ blacklist ${HOME}/.local/share/gnote
 blacklist ${HOME}/.local/share/godot
 blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
+blacklist ${HOME}/.local/share/hashcat
 blacklist ${HOME}/.local/share/i2p
 blacklist ${HOME}/.local/share/io.github.lainsce.Notejot
 blacklist ${HOME}/.local/share/jami
@@ -1248,11 +1255,13 @@ blacklist ${HOME}/yt-dlp.conf
 blacklist ${HOME}/yt-dlp.conf.txt
 blacklist ${RUNUSER}/*firefox*
 blacklist ${RUNUSER}/akonadi
+blacklist ${RUNUSER}/i3
 blacklist ${RUNUSER}/psd/*firefox*
 blacklist ${RUNUSER}/qutebrowser
 blacklist /etc/ssmtp
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*
+blacklist /tmp/i3-*
 blacklist /tmp/lwjgl_*
 blacklist /var/games/nethack
 blacklist /var/games/slashem

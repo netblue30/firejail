@@ -9,6 +9,16 @@ include globals.local
 noblacklist /usr/local/sbin
 noblacklist ${HOME}/.config/libreoffice
 
+# libreoffice can sign documents with GPG
+noblacklist ${HOME}/.gnupg
+read-only ${HOME}/.gnupg/trustdb.gpg
+read-only ${HOME}/.gnupg/pubring.kbx
+blacklist ${HOME}/.gnupg/crls.d
+blacklist ${HOME}/.gnupg/openpgp-revocs.d
+blacklist ${HOME}/.gnupg/private-keys-v1.d
+blacklist ${HOME}/.gnupg/pubring.kbx~
+blacklist ${HOME}/.gnupg/random_seed
+
 # libreoffice uses java for some functionality.
 # Add 'ignore include allow-java.inc' to your libreoffice.local if you don't need that functionality.
 # Allow java (blacklisted by disable-devel.inc)

@@ -1392,6 +1392,7 @@ void enter_network_namespace(pid_t pid) {
 		fprintf(stderr, "Error: the sandbox doesn't use a new network namespace\n");
 		exit(1);
 	}
+	free(name);
 
 	// join the namespace
 	EUID_ROOT();

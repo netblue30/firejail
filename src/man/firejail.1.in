@@ -95,7 +95,12 @@ $ firejail [OPTIONS]                # starting the program specified in $SHELL, 
 $ firejail [OPTIONS] firefox        # starting Mozilla Firefox
 .PP
 # sudo firejail [OPTIONS] /etc/init.d/nginx start
-
+.PP
+When an option is specified multiple times (whether in a profile, on the
+command line, or both) or conflicts with a related option, the
+precedence/behavior is option-specific and usually documented in the
+\fBOPTIONS\fR section below. Note that an option specified in a profile can
+generally be disabled on the command line using \fB--ignore\fR.
 .SH OPTIONS
 .TP
 \fB\-\-
@@ -1729,6 +1734,16 @@ See --keep-config-pulse.
 Disable blacklist for this directory or file.
 .br
 
+Note that blacklist entries containing ${PATH} can not currently be partially
+disabled for individual expanded paths. Only the whole unexpanded path
+including ${PATH} can be disabled, which then applies to all expansions.
+This limitation does not apply to expansions of other variables or wildcards.
+For details, see
+.UR https://github.com/netblue30/firejail/issues/6360
+#6360
+.UE
+.br
+
 .br
 Example:
 .br
@@ -1743,6 +1758,14 @@ $ exit
 
 .br
 $ firejail --noblacklist=/bin/nc
+.br
+bash: /bin/nc: Permission denied
+.br
+$ exit
+.br
+
+.br
+$ firejail --noblacklist='${PATH}/nc'
 .br
 $ nc dict.org 2628
 .br
@@ -1894,6 +1917,16 @@ Disable sound system.
 Example:
 .br
 $ firejail \-\-nosound firefox
+
+.TP
+\fB\-\-notpm
+Disable Trusted Platform Module (TPM) devices.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-notpm
 
 .TP
 \fB\-\-notv
@@ -2085,7 +2118,7 @@ File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br
 Example:
 .br
-$ firejail \-\-private-bin=bash,sed,ls,cat
+$ firejail \-\-private-bin=bash,cat,ls,sed
 .br
 Parent pid 20841, child pid 20842
 .br
@@ -2149,8 +2182,11 @@ $ pwd
 
 .TP
 \fB\-\-private-dev
-Create a new /dev directory. Only disc, dri, dvb, hidraw, null, full, zero, tty, pts, ptmx, random, snd, urandom, video, log, shm and usb devices are available.
-Use the options --no3d, --nodvd, --nosound, --notv, --nou2f and --novideo for additional restrictions.
+Create a new /dev directory.
+Only disc, dri, dvb, full, hidraw, log, null, ptmx, pts, random, shm, snd, tpm,
+tty, urandom, usb, video and zero devices are available.
+Use the options \-\-no3d, \-\-nodvd, \-\-nosound, \-\-notpm, \-\-notv,
+\-\-nou2f and \-\-novideo for additional restrictions.
 .br
 
 .br
@@ -2168,7 +2204,7 @@ cdrom  cdrw  dri  dvd  dvdrw  full  log  null  ptmx  pts  random  shm  snd  sr0 
 .br
 $
 .TP
-\fB\-\-private-etc, \-\-private-etc=file,directory,@group
+\fB\-\-private-etc, \-\-private-etc=@group,file,directory
 The files installed by \-\-private-etc are copies of the original system files from /etc directory.
 By default, the command brings in a skeleton of files and directories used by most console tools:
 

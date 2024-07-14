@@ -2,6 +2,10 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+GAWK ?= gawk
+GZIP ?= gzip
+RM ?= rm -f
+
 MOD_DIR := $(ROOT)/src/man
 MANPAGES_IN := $(sort $(wildcard $(MOD_DIR)/*.in))
 MANPAGES_GZ := $(MANPAGES_IN:.in=.gz)
@@ -19,8 +23,8 @@ $(MOD_DIR)/%: $(MOD_DIR)/%.in $(ROOT)/config.mk
 # foo.1.gz: foo.1
 $(MOD_DIR)/%.gz: $(MOD_DIR)/%
 	@printf 'Generating %s from %s\n' $@ $<
-	@rm -f $@
-	@gzip -n9 $<
+	@$(RM) $@
+	@$(GZIP) -n9 $<
 
 .PHONY: clean
-clean:; rm -f *.1 *.5 *.gz
+clean:; $(RM) *.1 *.5 *.gz

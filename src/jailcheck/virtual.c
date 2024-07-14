@@ -49,6 +49,7 @@ void virtual_setup(const char *directory) {
 	FILE *fp = fopen(test_file, "w");
 	if (!fp) {
 		printf("Warning: I cannot create test file in directory %s, skipping...\n", directory);
+		free(test_file);
 		return;
 	}
 	fprintf(fp, "this file was created by firetest utility, you can safely delete it\n");

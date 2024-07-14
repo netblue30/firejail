@@ -80,10 +80,13 @@ void access_setup(const char *directory) {
 	FILE *fp = fopen(test_file, "w");
 	if (!fp) {
 		printf("Warning: I cannot create test file in directory %s, skipping...\n", directory);
+		free(test_file);
+		free(path);
 		return;
 	}
 	fprintf(fp, "this file was created by firetest utility, you can safely delete it\n");
 	fclose(fp);
+	free(path);
 	int rv = chown(test_file, user_uid, user_gid);
 	if (rv)
 		errExit("chown");

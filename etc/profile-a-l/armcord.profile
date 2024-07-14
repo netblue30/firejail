@@ -1,24 +1,16 @@
-# Firejail profile for ElectronMail
-# Description: Unofficial desktop app for the Proton Mail E2E encrypted email provider
+# Firejail profile for armcord
+# Description: Standalone Discord client
 # This file is overwritten after every install/update
 # Persistent local customizations
-include electron-mail.local
+include armcord.local
 # Persistent global definitions
 include globals.local
 
-ignore dbus-user none
-ignore disable-mnt
-
-noblacklist ${HOME}/.config/electron-mail
-
-# sh is needed to allow Firefox to open links
-include allow-bin-sh.inc
-
-include disable-shell.inc
-
-mkdir ${HOME}/.config/electron-mail
-whitelist ${HOME}/.config/electron-mail
-whitelist /opt/ElectronMail
+# Modules might depend on nodejs.
+# Add the below lines to your armcord.local if you need this.
+# Allow node (disabled by disable-interpreters.inc)
+#include allow-nodejs.inc
+#private-bin node
 
 # The lines below are needed to find the default Firefox profile name, to allow
 # opening links in an existing instance of Firefox (note that it still fails if
@@ -26,17 +18,23 @@ whitelist /opt/ElectronMail
 noblacklist ${HOME}/.mozilla
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
 
-machine-id
-nosound
+noblacklist ${HOME}/.config/ArmCord
 
-private-etc @tls-ca,@x11
+mkdir ${HOME}/.config/ArmCord
+whitelist ${HOME}/.config/ArmCord
+whitelist /opt/armcord
+whitelist /usr/share/armcord
+
+ignore novideo
+private-bin armcord
 
 dbus-user filter
 dbus-user.talk org.freedesktop.Notifications
-dbus-user.talk org.freedesktop.secrets
-dbus-user.talk org.gnome.keyring.SystemPrompter
 # Allow D-Bus communication with Firefox for opening links
 dbus-user.talk org.mozilla.*
+ignore dbus-user none
+
+join-or-start armcord
 
 # Redirect
 include electron-common.profile

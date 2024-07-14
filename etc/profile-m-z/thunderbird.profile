@@ -15,7 +15,7 @@ dbus-user filter
 dbus-user.own org.mozilla.thunderbird.*
 dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.freedesktop.Notifications
-# allow D-Bus communication with firefox for opening links
+# Allow D-Bus communication with Firefox for opening links
 dbus-user.talk org.mozilla.*
 # e2ee email needs writable-run-user
 # https://support.mozilla.org/en-US/kb/introduction-to-e2e-encryption

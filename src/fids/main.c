@@ -106,9 +106,9 @@ static void file_checksum(const char *fname) {
 	}
 	else {
 		content = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
-		close(fd);
 		mmapped = 1;
 	}
+	close(fd);
 
 	unsigned char checksum[KEY_SIZE / 8];
 	blake2b(checksum, sizeof(checksum), content, size);

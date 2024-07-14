@@ -2,14 +2,17 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
+GAWK ?= gawk
+RM ?= rm -f
+
 .PHONY: all
 all: _firejail
 
 _firejail: _firejail.in $(ROOT)/config.mk
 	$(GAWK) -f ../man/preproc.awk -- $(MANFLAGS) < $< > $@.tmp
 	sed "s|_SYSCONFDIR_|$(sysconfdir)|" < $@.tmp > $@
-	rm $@.tmp
+	$(RM) $@.tmp
 
 .PHONY: clean
 clean:
-	rm -fr _firejail
+	$(RM) -r _firejail

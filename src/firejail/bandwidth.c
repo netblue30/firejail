@@ -198,6 +198,8 @@ static void read_bandwidth_file(pid_t pid) {
 
 		fclose(fp);
 	}
+
+	free(fname);
 }
 
 static void write_bandwidth_file(pid_t pid) {
@@ -217,6 +219,7 @@ static void write_bandwidth_file(pid_t pid) {
 			ptr = ptr->next;
 		}
 		fclose(fp);
+		free(fname);
 	}
 	else
 		goto errout;

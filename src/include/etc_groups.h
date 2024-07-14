@@ -70,6 +70,7 @@ static char *etc_group_sound[] = {
 	"alsa",
 	"asound.conf",
 	"machine-id", // required by PulseAudio
+	"pipewire",
 	"pulse",
 	NULL
 };

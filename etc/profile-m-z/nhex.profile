@@ -1,63 +1,62 @@
-# Firejail profile for fractal
-# Description: Desktop client for Matrix
+# Firejail profile for nhex
+# Description: Tauri-based IRC client inspired by HexChat
 # This file is overwritten after every install/update
 # Persistent local customizations
-include fractal.local
+include nhex.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.cache/fractal
-noblacklist ${HOME}/.local/share/fractal
+noblacklist ${HOME}/.cache/nhex
+noblacklist ${HOME}/.local/share/dev.nhex
 
-# Allow python (blacklisted by disable-interpreters.inc)
-include allow-python2.inc
-include allow-python3.inc
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
+include disable-proc.inc
 include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.cache/fractal
-mkdir ${HOME}/.local/share/fractal
-whitelist ${HOME}/.cache/fractal
-whitelist ${HOME}/.local/share/fractal
+mkdir ${HOME}/.cache/nhex
+mkdir ${HOME}/.local/share/dev.nhex
 whitelist ${DOWNLOADS}
-whitelist /usr/share/fractal
+whitelist ${HOME}/.cache/nhex
+whitelist ${HOME}/.local/share/dev.nhex
 include whitelist-common.inc
+include whitelist-run-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
-apparmor
 caps.drop all
+machine-id
 netfilter
+no3d
 nodvd
 nogroups
 noinput
 nonewprivs
+noprinters
 noroot
+nosound
 notv
 nou2f
+novideo
 protocol unix,inet,inet6
 seccomp
+seccomp.block-secondary
 tracelog
 
 disable-mnt
-private-bin fractal
+private-bin nhex
 private-cache
 private-dev
-private-etc @tls-ca,@x11,host.conf,mime.types
 private-tmp
 
-dbus-user filter
-dbus-user.own org.gnome.Fractal
-dbus-user.talk ca.desrt.dconf
-dbus-user.talk org.freedesktop.Notifications
-dbus-user.talk org.freedesktop.secrets
+dbus-user none
 dbus-system none
 
 restrict-namespaces

@@ -22,7 +22,7 @@ _Describe the bug_
 
 _Steps to reproduce the behavior_
 
-1. Run in bash `LC_ALL=C firejail PROGRAM` (`LC_ALL=C` to get a consistent
+1. Run in bash `LC_ALL=C firejail /path/to/program` (`LC_ALL=C` to get a consistent
    output in English that can be understood by everybody)
 2. Click on '....'
 3. Scroll down to '....'

@@ -10,6 +10,9 @@ noblacklist ${HOME}/.abook
 noblacklist ${HOME}/.cache/flaska.net/trojita
 noblacklist ${HOME}/.config/flaska.net
 
+# sh is needed to allow Firefox to open links
+include allow-bin-sh.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -61,7 +64,7 @@ private-tmp
 
 dbus-user filter
 dbus-user.talk org.freedesktop.secrets
-# allow D-Bus communication with firefox for opening links
+# Allow D-Bus communication with Firefox for opening links
 dbus-user.talk org.mozilla.*
 dbus-system none
 

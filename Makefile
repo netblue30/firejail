@@ -2,12 +2,19 @@
 ROOT = .
 -include config.mk
 
-# Default programs
+# Default programs (in configure.ac).
 CC ?= cc
 CODESPELL ?= codespell
 CPPCHECK ?= cppcheck
 GAWK ?= gawk
+GZIP ?= gzip
 SCAN_BUILD ?= scan-build
+STRIP ?= strip
+TAR ?= tar
+
+# Default programs (not in configure.ac).
+INSTALL ?= install
+RM ?= rm -f
 
 ifneq ($(HAVE_MAN),no)
 MAN_TARGET = man
@@ -68,6 +75,10 @@ $(ALL_ITEMS): $(MYDIRS)
 mydirs: $(MYDIRS)
 $(MYDIRS):
 	$(MAKE) -C $@
+
+.PHONY: strip
+strip: all
+	$(STRIP) $(ALL_ITEMS)
 
 .PHONY: filters
 filters: $(SECCOMP_FILTERS)
@@ -179,121 +190,119 @@ clean:
 	done
 	$(MAKE) -C src/man clean
 	$(MAKE) -C test clean
-	rm -f $(SECCOMP_FILTERS)
-	rm -f $(SYNTAX_FILES)
-	rm -fr ./$(TARNAME)-$(VERSION) ./$(TARNAME)-$(VERSION).tar.xz
-	rm -f ./$(TARNAME)*.deb
-	rm -f ./$(TARNAME)*.rpm
+	$(RM) $(SECCOMP_FILTERS)
+	$(RM) $(SYNTAX_FILES)
+	$(RM) -r ./$(TARNAME)-$(VERSION) ./$(TARNAME)-$(VERSION).tar.xz
+	$(RM) ./$(TARNAME)*.deb
+	$(RM) ./$(TARNAME)*.rpm
 
 .PHONY: distclean
 distclean: clean
-	rm -fr autom4te.cache config.log config.mk config.sh config.status
+	$(RM) -r autom4te.cache config.log config.mk config.sh config.status
 
-.PHONY: realinstall
-realinstall: config.mk
+.PHONY: install
+install: all config.mk
 	# firejail executable
-	install -m 0755 -d $(DESTDIR)$(bindir)
-	install -m 0755 src/firejail/firejail $(DESTDIR)$(bindir)
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(bindir)
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(bindir) src/firejail/firejail
 ifeq ($(HAVE_SUID),-DHAVE_SUID)
 	chmod u+s $(DESTDIR)$(bindir)/firejail
 endif
 	# firemon executable
-	install -m 0755 src/firemon/firemon $(DESTDIR)$(bindir)
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(bindir) src/firemon/firemon
 	# firecfg executable
-	install -m 0755 src/firecfg/firecfg $(DESTDIR)$(bindir)
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(bindir) src/firecfg/firecfg
 	# jailcheck executable
-	install -m 0755 src/jailcheck/jailcheck $(DESTDIR)$(bindir)
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(bindir) src/jailcheck/jailcheck
 	# libraries and plugins
-	install -m 0755 -d $(DESTDIR)$(libdir)/firejail
-	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/firecfg/firejail-welcome.sh
-	install -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS)
-	install -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS)
-	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/profstats/profstats
-	install -m 0755 -t $(DESTDIR)$(libdir)/firejail src/etc-cleanup/etc-cleanup
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(libdir)/firejail
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail src/firecfg/firejail-welcome.sh
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS)
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS)
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail src/profstats/profstats
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail src/etc-cleanup/etc-cleanup
 	# plugins w/o read permission (non-dumpable)
-	install -m 0711 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
-	install -m 0711 -t $(DESTDIR)$(libdir)/firejail src/fshaper/fshaper.sh
-	install -m 0644 -t $(DESTDIR)$(libdir)/firejail src/fnettrace/static-ip-map
+	$(INSTALL) -m 0711 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
+	$(INSTALL) -m 0711 -t $(DESTDIR)$(libdir)/firejail src/fshaper/fshaper.sh
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(libdir)/firejail src/fnettrace/static-ip-map
 ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	# contrib scripts
-	install -m 0755 -t $(DESTDIR)$(libdir)/firejail contrib/*.py contrib/*.sh
+	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail contrib/*.py contrib/*.sh
 	# vim syntax
-	install -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect
-	install -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
-	install -m 0644 contrib/vim/ftdetect/firejail.vim $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect
-	install -m 0644 contrib/syntax/files/firejail.vim $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect contrib/vim/ftdetect/firejail.vim
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax contrib/syntax/files/firejail.vim
 	# gtksourceview language-specs
-	install -m 0755 -d $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs
-	install -m 0644 contrib/syntax/files/firejail-profile.lang $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs contrib/syntax/files/firejail-profile.lang
 endif
 	# documents
-	install -m 0755 -d $(DESTDIR)$(docdir)
-	install -m 0644 -t $(DESTDIR)$(docdir) COPYING README RELNOTES etc/templates/*
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(docdir)
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(docdir) COPYING README RELNOTES etc/templates/*
 	# profiles and settings
-	install -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail
-	install -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail/firecfg.d
-	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config
-	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config
-	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/firejail/firecfg.d
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail src/firecfg/firecfg.config
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/profile-a-l/*.profile etc/profile-m-z/*.profile etc/inc/*.inc etc/net/*.net etc/firejail.config
+	sh -c "if [ ! -f $(DESTDIR)$(sysconfdir)/firejail/login.users ]; then \
+		$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/login.users; \
+	fi"
 ifeq ($(HAVE_IDS),-DHAVE_IDS)
-	install -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/ids.config
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/ids.config
 endif
 ifeq ($(BUSYBOX_WORKAROUND),yes)
 	./mketc.sh $(DESTDIR)$(sysconfdir)/firejail/disable-common.inc
 endif
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d; fi;"
-	install -m 0644 etc/apparmor/firejail-default $(DESTDIR)$(sysconfdir)/apparmor.d
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/apparmor.d etc/apparmor/firejail-default
 	# install apparmor profile customization file
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/local ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/local; fi;"
-	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default ]; then install -c -m 0644 etc/apparmor/firejail-local $(DESTDIR)/$(sysconfdir)/apparmor.d/local/firejail-default; fi;"
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/local
+	sh -c "if [ ! -f $(DESTDIR)$(sysconfdir)/apparmor.d/local/firejail-default ]; then \
+		$(INSTALL) -m 0644 etc/apparmor/firejail-local $(DESTDIR)$(sysconfdir)/apparmor.d/local/firejail-default; \
+	fi"
 	# install apparmor base abstraction drop-in
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions; fi;"
-	sh -c "if [ ! -d $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions/base.d ]; then install -d -m 755 $(DESTDIR)/$(sysconfdir)/apparmor.d/abstractions/base.d; fi;"
-	install -m 0644 etc/apparmor/firejail-base $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d etc/apparmor/firejail-base
 endif
 ifneq ($(HAVE_MAN),no)
 	# man pages
-	install -m 0755 -d $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man5
-	install -m 0644 $(MANPAGES1_GZ) $(DESTDIR)$(mandir)/man1/
-	install -m 0644 $(MANPAGES5_GZ) $(DESTDIR)$(mandir)/man5/
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(mandir)/man1
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(mandir)/man1 $(MANPAGES1_GZ)
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(mandir)/man5
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(mandir)/man5 $(MANPAGES5_GZ)
 endif
 	# bash completion
-	install -m 0755 -d $(DESTDIR)$(datarootdir)/bash-completion/completions
-	install -m 0644 src/bash_completion/firejail.bash_completion $(DESTDIR)$(datarootdir)/bash-completion/completions/firejail
-	install -m 0644 src/bash_completion/firemon.bash_completion $(DESTDIR)$(datarootdir)/bash-completion/completions/firemon
-	install -m 0644 src/bash_completion/firecfg.bash_completion $(DESTDIR)$(datarootdir)/bash-completion/completions/firecfg
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/bash-completion/completions
+	$(INSTALL) -m 0644 src/bash_completion/firejail.bash_completion $(DESTDIR)$(datarootdir)/bash-completion/completions/firejail
+	$(INSTALL) -m 0644 src/bash_completion/firemon.bash_completion $(DESTDIR)$(datarootdir)/bash-completion/completions/firemon
+	$(INSTALL) -m 0644 src/bash_completion/firecfg.bash_completion $(DESTDIR)$(datarootdir)/bash-completion/completions/firecfg
 	# zsh completion
-	install -m 0755 -d $(DESTDIR)$(datarootdir)/zsh/site-functions
-	install -m 0644 src/zsh_completion/_firejail $(DESTDIR)$(datarootdir)/zsh/site-functions/
-
-.PHONY: install
-install: all
-	$(MAKE) realinstall
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/zsh/site-functions
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(datarootdir)/zsh/site-functions src/zsh_completion/_firejail
 
 .PHONY: install-strip
-install-strip: all
-	strip $(ALL_ITEMS)
-	$(MAKE) realinstall
+install-strip: strip install
 
 .PHONY: uninstall
 uninstall: config.mk
-	rm -f $(DESTDIR)$(bindir)/firejail
-	rm -f $(DESTDIR)$(bindir)/firemon
-	rm -f $(DESTDIR)$(bindir)/firecfg
-	rm -f $(DESTDIR)$(bindir)/jailcheck
-	rm -fr $(DESTDIR)$(libdir)/firejail
-	rm -fr $(DESTDIR)$(datarootdir)/doc/firejail
-	rm -f $(addprefix $(DESTDIR)$(mandir)/man1/,$(notdir $(MANPAGES1_GZ)))
-	rm -f $(addprefix $(DESTDIR)$(mandir)/man5/,$(notdir $(MANPAGES5_GZ)))
-	rm -f $(DESTDIR)$(datarootdir)/bash-completion/completions/firejail
-	rm -f $(DESTDIR)$(datarootdir)/bash-completion/completions/firemon
-	rm -f $(DESTDIR)$(datarootdir)/bash-completion/completions/firecfg
-	rm -f $(DESTDIR)$(datarootdir)/zsh/site-functions/_firejail
-	rm -f $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect/firejail.vim
-	rm -f $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax/firejail.vim
-	rm -f $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs/firejail-profile.lang
+	$(RM) $(DESTDIR)$(bindir)/firejail
+	$(RM) $(DESTDIR)$(bindir)/firemon
+	$(RM) $(DESTDIR)$(bindir)/firecfg
+	$(RM) $(DESTDIR)$(bindir)/jailcheck
+	$(RM) -r $(DESTDIR)$(libdir)/firejail
+	$(RM) -r $(DESTDIR)$(datarootdir)/doc/firejail
+	$(RM) $(addprefix $(DESTDIR)$(mandir)/man1/,$(notdir $(MANPAGES1_GZ)))
+	$(RM) $(addprefix $(DESTDIR)$(mandir)/man5/,$(notdir $(MANPAGES5_GZ)))
+	$(RM) $(DESTDIR)$(datarootdir)/bash-completion/completions/firejail
+	$(RM) $(DESTDIR)$(datarootdir)/bash-completion/completions/firemon
+	$(RM) $(DESTDIR)$(datarootdir)/bash-completion/completions/firecfg
+	$(RM) $(DESTDIR)$(datarootdir)/zsh/site-functions/_firejail
+	$(RM) $(DESTDIR)$(datarootdir)/vim/vimfiles/ftdetect/firejail.vim
+	$(RM) $(DESTDIR)$(datarootdir)/vim/vimfiles/syntax/firejail.vim
+	$(RM) $(DESTDIR)$(datarootdir)/gtksourceview-5/language-specs/firejail-profile.lang
 	@echo "If you want to install a different version of firejail, you might also need to run 'rm -fr $(DESTDIR)$(sysconfdir)/firejail', see #2038."
 
 # Note: Keep this list in sync with `paths` in .github/workflows/build.yml.
@@ -338,9 +347,9 @@ dist: clean config.mk
 	mkdir -p $(TARNAME)-$(VERSION)/test
 	cp -a $(DISTFILES) $(TARNAME)-$(VERSION)
 	cp -a $(DISTFILES_TEST) $(TARNAME)-$(VERSION)/test
-	rm -rf $(TARNAME)-$(VERSION)/src/tools
-	tar -cJvf $(TARNAME)-$(VERSION).tar.xz $(TARNAME)-$(VERSION)
-	rm -fr $(TARNAME)-$(VERSION)
+	$(RM) -r $(TARNAME)-$(VERSION)/src/tools
+	$(TAR) -cJvf $(TARNAME)-$(VERSION).tar.xz $(TARNAME)-$(VERSION)
+	$(RM) -r $(TARNAME)-$(VERSION)
 
 .PHONY: asc
 asc: config.sh
@@ -363,13 +372,13 @@ extras: all
 	$(MAKE) -C extras/firetools
 
 .PHONY: cppcheck
-cppcheck: clean
+cppcheck:
 	$(CPPCHECK) --force --error-exitcode=1 --enable=warning,performance \
 	  -i src/firejail/checkcfg.c -i src/firejail/main.c .
 
 # For cppcheck 1.x; see .github/workflows/check-c.yml
 .PHONY: cppcheck-old
-cppcheck-old: clean
+cppcheck-old:
 	$(CPPCHECK) --force --error-exitcode=1 --enable=warning,performance .
 
 .PHONY: scan-build

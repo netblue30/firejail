@@ -139,7 +139,7 @@ static void _ll_fs(const char *allowed_path, const __u64 allowed_access,
 	target.parent_fd = allowed_fd;
 	target.allowed_access = allowed_access;
 	int error = landlock_add_rule(ll_ruleset_fd, LANDLOCK_RULE_PATH_BENEATH,
-	                          &target, 0);
+	                              &target, 0);
 	if (error) {
 		fprintf(stderr, "Error: %s: failed to add Landlock rule "
 		                "(abi=%d fs=%llx) for %s: %s\n",
@@ -169,7 +169,6 @@ static void ll_fs(const char *allowed_path, const __u64 allowed_access,
 		}
 		return;
 	}
-
 
 	expanded_path = expand_macros(allowed_path);
 	_ll_fs(expanded_path, allowed_access, caller);

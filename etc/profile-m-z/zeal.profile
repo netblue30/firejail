@@ -10,6 +10,9 @@ noblacklist ${HOME}/.cache/Zeal
 noblacklist ${HOME}/.config/Zeal
 noblacklist ${HOME}/.local/share/Zeal
 
+# sh is needed to allow Firefox to open links
+include allow-bin-sh.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -19,8 +22,9 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-# Allow zeal to open links in Firefox browsers.
-# This also requires dbus-user filtering (see below).
+# The lines below are needed to find the default Firefox profile name, to allow
+# opening links in an existing instance of Firefox (note that it still fails if
+# there isn't a Firefox instance running with the default profile; see #5352)
 noblacklist ${HOME}/.mozilla
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
 
@@ -63,8 +67,9 @@ private-etc @tls-ca,@x11,host.conf,mime.types,rpc,services
 private-tmp
 
 dbus-user filter
-dbus-user.talk org.mozilla.*
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
+# Allow D-Bus communication with Firefox for opening links
+dbus-user.talk org.mozilla.*
 dbus-system none
 
 #memory-deny-write-execute # breaks on Arch

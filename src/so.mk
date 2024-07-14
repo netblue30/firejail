@@ -5,6 +5,9 @@
 # The includer should probably define SO and TARGET and may also want to define
 # EXTRA_OBJS and extend CLEANFILES.
 
+CC ?= cc
+RM ?= rm -f
+
 HDRS :=
 SRCS := $(sort $(wildcard $(MOD_DIR)/*.c))
 OBJS := $(SRCS:.c=.o)
@@ -25,4 +28,4 @@ $(SO): $(OBJS) $(EXTRA_OBJS) $(ROOT)/config.mk
 	$(CC) $(SO_LDFLAGS) -shared $(LDFLAGS) -o $@ $(OBJS) $(EXTRA_OBJS) -ldl
 
 .PHONY: clean
-clean:; rm -fr $(SO) $(CLEANFILES)
+clean:; $(RM) -r $(SO) $(CLEANFILES)

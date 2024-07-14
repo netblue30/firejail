@@ -1,6 +1,7 @@
 firejail (0.9.73) baseline; urgency=low
   * work in progress
   * security: fix sscanf rv checks (CodeQL) (#6184)
+  * feature: added noptm and keep-tpm commands to private-dev (#6390)
   * feature: Add "keep-shell-rc" command and option (#1127 #5634)
   * feature: Print the argument when failing with "too long arguments" (#5677)
   * feature: a random hostname is assigned to each sandbox unless
@@ -17,6 +18,7 @@ firejail (0.9.73) baseline; urgency=low
   * feature: add Landlock support (#5269 #6078 #6115 #6125 #6187 #6195 #6200
     #6228 #6260 #6302 #6305)
   * feature: add support for comm, coredump, and prctl procevents in firemon
+  * feature: add notpm command & keep tpm devices in private-dev (#6379 #6390)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)
@@ -32,7 +34,10 @@ firejail (0.9.73) baseline; urgency=low
   * modif: keep pipewire group unless nosound is used (#5992 #5993)
   * modif: fcopy: Use lstat when copying directory (#5957)
   * modif: populate /run/firejail while holding flock (#6307)
+  * modif: private-dev: keep /dev/kfd unless no3d is used (#6380)
+  * modif: keep /sys/module/nvidia* if prop driver and no no3d (#6372 #6387)
   * removal: LTS and FIRETUNNEL support
+  * bugfix: fix startup race condition for /run/firejail directory (#6307, #6307)
   * bugfix: fix --hostname and --hosts-file commands
   * bugfix: fix examples in firejail-local AppArmor profile (#5717)
   * bugfix: arp.c: ensure positive timeout on select(2) (#5806)
@@ -40,6 +45,8 @@ firejail (0.9.73) baseline; urgency=low
     (#5965 #5976)
   * bugfix: firejail --ls reports wrong file sizes for large files (#5982
     #6086)
+  * bugfix: fix various resource leaks (#6367)
+  * bugfix: profstats: fix restrict-namespaces max count (#6369)
   * build: auto-generate syntax files (#5627)
   * build: mark all phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
@@ -70,7 +77,11 @@ firejail (0.9.73) baseline; urgency=low
   * build: reduce hardcoding and inconsistencies (#6230)
   * build: sort.py: filter empty and duplicate items (#6261)
   * build: fix "warning: "_FORTIFY_SOURCE" redefined" (#6282 #6283)
-  * build: sort.py: add and require -i to edit in-place (#6290)
+  * build: sort.py: add -i/-n/-- options (#6290 #6339)
+  * build: add strip target and simplify install targets (#6342)
+  * build: remove clean dependency from cppcheck targets (#6343)
+  * build: allow overriding common tools (#6354)
+  * build: standardize install commands (#6366)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
@@ -85,6 +96,7 @@ firejail (0.9.73) baseline; urgency=low
   * ci: allow running workflows manually (#6026)
   * ci: re-enable sort.py (#6104)
   * ci: add timeout limits (#6178)
+  * ci: make dependabot updates monthly and bump PR limit (#6338)
   * contrib/syntax: remove 'text/plain' from firejail-profile.lang.in (#6057
     #6059)
   * contrib/vim: match profile files more broadly (#5850)
@@ -95,6 +107,10 @@ firejail (0.9.73) baseline; urgency=low
   * docs: fix typos (#5693)
   * docs: markdown formatting and misc improvements (#5757)
   * docs: add uninstall instructions to README.md (#5812)
+  * docs: add precedence info to manpage & fix noblacklist example (#6358
+    #6359)
+  * docs: bug_report.md: use absolute path in 'steps to reproduce' (#6382)
+  * docs: man: format and sort some private- items (#6398)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
   * profiles: qutebrowser: fix links not opening in the existing instance
@@ -119,6 +135,8 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: add allow-php.inc to profile.template (#6299)
   * profiles: clarify and add opengl-game to profile.template (#6300)
   * profiles: allow-ssh: allow /etc/ssh/ssh_revoked_hosts (#6308 #6309)
+  * profiles: libreoffice: support signing documents with GPG (#6352 #6353)
+  * profiles: blacklist i3 IPC socket & dir except for i3 itself (#6361)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

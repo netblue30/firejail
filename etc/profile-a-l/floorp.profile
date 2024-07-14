@@ -18,11 +18,6 @@ whitelist ${HOME}/.floorp
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.mozilla
 
-# To enable KeePassXC Plugin add one of the following lines to your floorp.local.
-# Note: Start KeePassXC before floorp and keep it open to allow communication between them.
-#whitelist ${RUNUSER}/kpxc_server
-#whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
-
 dbus-user filter
 dbus-user.own org.mozilla.floorp.*
 # Add the next line to your floorp.local to enable native notifications.

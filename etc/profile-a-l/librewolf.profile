@@ -18,11 +18,6 @@ whitelist ${HOME}/.librewolf
 #noblacklist ${HOME}/.mozilla
 #whitelist ${HOME}/.mozilla
 
-# To enable KeePassXC Plugin add one of the following lines to your librewolf.local.
-# Note: Start KeePassXC before Librewolf and keep it open to allow communication between them.
-#whitelist ${RUNUSER}/kpxc_server
-#whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
-
 whitelist /usr/share/librewolf
 
 # Add the next line to your librewolf.local to enable private-bin (Arch Linux).

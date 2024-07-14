@@ -9,6 +9,13 @@ include chromium-common.local
 # noexec ${HOME} breaks DRM binaries.
 ?BROWSER_ALLOW_DRM: ignore noexec ${HOME}
 
+# To enable support for the KeePassXC extension, add the following lines to
+# chromium-common.local.
+# Note: Start KeePassXC before the web browser and keep it open to allow
+# communication between them.
+#whitelist ${RUNUSER}/kpxc_server
+#whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
+
 noblacklist ${HOME}/.local/share/pki
 noblacklist ${HOME}/.pki
 noblacklist /usr/lib/chromium/chrome-sandbox

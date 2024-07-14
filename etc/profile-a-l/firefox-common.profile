@@ -11,6 +11,13 @@ include firefox-common.local
 # noexec ${RUNUSER} breaks DRM binaries when using profile-sync-daemon.
 ?BROWSER_ALLOW_DRM: ignore noexec ${RUNUSER}
 
+# To enable support for the KeePassXC extension, add the following lines to
+# firefox-common.local.
+# Note: Start KeePassXC before the web browser and keep it open to allow
+# communication between them.
+#whitelist ${RUNUSER}/kpxc_server
+#whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
+
 # Add the next line to your firefox-common.local to allow access to common programs/addons/plugins.
 #include firefox-common-addons.profile
 

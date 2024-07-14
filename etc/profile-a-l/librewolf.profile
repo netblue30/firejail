@@ -14,10 +14,6 @@ mkdir ${HOME}/.librewolf
 whitelist ${HOME}/.cache/librewolf
 whitelist ${HOME}/.librewolf
 
-# Add the next lines to your librewolf.local if you want to use the migration wizard.
-#noblacklist ${HOME}/.mozilla
-#whitelist ${HOME}/.mozilla
-
 whitelist /usr/share/librewolf
 
 # Add the next line to your librewolf.local to enable private-bin (Arch Linux).

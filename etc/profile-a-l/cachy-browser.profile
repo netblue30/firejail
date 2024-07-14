@@ -15,10 +15,6 @@ whitelist ${HOME}/.cache/cachy
 whitelist ${HOME}/.cachy
 whitelist /usr/share/cachy-browser
 
-# Add the next lines to your cachy-browser.local if you want to use the migration wizard.
-#noblacklist ${HOME}/.mozilla
-#whitelist ${HOME}/.mozilla
-
 # Add the next line to your cachy-browser.local to enable private-bin (Arch Linux).
 #private-bin dbus-launch,dbus-send,cachy-browser,sh
 private-etc cachy-browser

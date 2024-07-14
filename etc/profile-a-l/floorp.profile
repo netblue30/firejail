@@ -14,10 +14,6 @@ mkdir ${HOME}/.floorp
 whitelist ${HOME}/.cache/floorp
 whitelist ${HOME}/.floorp
 
-# Add the next lines to your floorp.local if you want to use the migration wizard.
-#noblacklist ${HOME}/.mozilla
-#whitelist ${HOME}/.mozilla
-
 dbus-user filter
 dbus-user.own org.mozilla.floorp.*
 # Add the next line to your floorp.local to enable native notifications.

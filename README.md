@@ -88,6 +88,10 @@ Debian stable (bullseye): We recommend to use the
 
 ### Ubuntu
 
+Note: The PPA recommendation is mainly for firejail itself; it should be fine
+to install firetools and firejail-related tools directly from the distribution
+if they are not in the PPA as they tend to be updated less frequently.
+
 For Ubuntu 18.04+ and derivatives (such as Linux Mint), users are **strongly
 advised** to use the
 [PPA](https://launchpad.net/~deki/+archive/ubuntu/firejail).

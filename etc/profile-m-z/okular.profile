@@ -58,7 +58,7 @@ protocol unix
 seccomp
 tracelog
 
-private-bin kbuildsycoca4,kdeinit4,lpr,okular,unar,unrar
+private-bin kbuildsycoca4,kdeinit4,lpr,okular,ps2pdf,unar,unrar
 private-dev
 private-etc @x11,cups
 # on KDE we need access to the real /tmp for data exchange with email clients

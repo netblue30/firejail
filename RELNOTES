@@ -17,6 +17,7 @@ firejail (0.9.73) baseline; urgency=low
   * feature: add Landlock support (#5269 #6078 #6115 #6125 #6187 #6195 #6200
     #6228 #6260 #6302 #6305)
   * feature: add support for comm, coredump, and prctl procevents in firemon
+    (#6414 #6415)
   * feature: add notpm command & keep tpm devices in private-dev (#6379 #6390)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
@@ -45,6 +46,7 @@ firejail (0.9.73) baseline; urgency=low
   * bugfix: fix startup race condition for /run/firejail directory (#6307)
   * bugfix: fix various resource leaks (#6367)
   * bugfix: profstats: fix restrict-namespaces max count (#6369)
+  * bugfix: remove --noautopulse from --help and zsh comp (#6401)
   * build: auto-generate syntax files (#5627)
   * build: mark all phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
@@ -80,6 +82,7 @@ firejail (0.9.73) baseline; urgency=low
   * build: remove clean dependency from cppcheck targets (#6343)
   * build: allow overriding common tools (#6354)
   * build: standardize install commands (#6366)
+  * build: improve reliability/portability of date command usage (#6403 #6404)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)

@@ -59,5 +59,8 @@ dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.freedesktop.Tracker1
 dbus-system none
 
-env WEBKIT_FORCE_SANDBOX=0
+# Warning: Disabling the webkit sandbox may be needed to make firejail work
+# with webkit2gtk, but this is not recommended (see #2995).
+# Add the following line to bijiben.local at your own risk:
+#env WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS=1
 restrict-namespaces

@@ -207,7 +207,7 @@ $ firejail \-\-blacklist=/sbin \-\-blacklist=/usr/sbin
 .br
 $ firejail \-\-blacklist=~/.mozilla
 .br
-$ firejail "\-\-blacklist=/home/username/My Virtual Machines"
+$ firejail \-\-blacklist="/home/username/My Virtual Machines"
 .br
 $ firejail \-\-blacklist=/home/username/My\\ Virtual\\ Machines
 .TP
@@ -3143,7 +3143,9 @@ $ firejail \-\-noprofile \-\-whitelist=~/.mozilla
 .br
 $ firejail \-\-whitelist=/tmp/.X11-unix \-\-whitelist=/dev/null
 .br
-$ firejail "\-\-whitelist=/home/username/My Virtual Machines"
+$ firejail \-\-whitelist="/home/username/My Virtual Machines"
+.br
+$ firejail \-\-whitelist=/home/username/My\\ Virtual\\ Machines
 .br
 $ firejail \-\-whitelist=~/work* \-\-whitelist=/var/backups*
 

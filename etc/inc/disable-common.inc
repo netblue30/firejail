@@ -171,6 +171,10 @@ blacklist ${RUNUSER}/gsconnect
 blacklist ${RUNUSER}/i3/ipc-socket.*
 blacklist /tmp/i3-*/ipc-socket.*
 
+# sway IPC socket (allows arbitrary shell script execution)
+blacklist ${RUNUSER}/sway-ipc.*
+blacklist /tmp/sway-ipc.*
+
 # systemd
 blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd

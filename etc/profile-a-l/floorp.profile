@@ -20,6 +20,8 @@ whitelist ${HOME}/.floorp
 
 # To enable KeePassXC Plugin add one of the following lines to your floorp.local.
 # Note: Start KeePassXC before floorp and keep it open to allow communication between them.
+#noblacklist ${RUNUSER}/app
+#whitelist ${RUNUSER}/app/org.keepassxc.KeePassXC
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 

@@ -19,6 +19,7 @@ firejail (0.9.73) baseline; urgency=low
   * feature: add support for comm, coredump, and prctl procevents in firemon
     (#6414 #6415)
   * feature: add notpm command & keep tpm devices in private-dev (#6379 #6390)
+  * feature: fshaper.sh: support tc on NixOS (#6426 #6431)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)
@@ -112,6 +113,8 @@ firejail (0.9.73) baseline; urgency=low
     #6359)
   * docs: bug_report.md: use absolute path in 'steps to reproduce' (#6382)
   * docs: man: format and sort some private- items (#6398)
+  * docs: man: improve blacklist/whitelist examples with spaces (#6425)
+  * docs: add build_issue.md issue template (#6423)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
   * profiles: qutebrowser: fix links not opening in the existing instance

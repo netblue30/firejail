@@ -21,9 +21,7 @@ whitelist /usr/share/waterfox
 # waterfox requires a shell to launch on Arch. We can possibly remove sh though.
 # Add the next line to your waterfox.local to enable private-bin.
 #private-bin bash,dbus-launch,dbus-send,env,sh,waterfox,waterfox-classic,waterfox-current,which
-# Add the next line to your waterfox.local to enable private-etc. Note that private-etc must first be
-# enabled in your firefox-common.local.
-#private-etc waterfox
+private-etc waterfox
 
 # Redirect
 include firefox-common.profile

@@ -425,6 +425,12 @@ static const char *const compiletime_support =
 #else
 		"disabled"
 #endif
+	"\n\t- wayland security context support is "
+#ifdef HAVE_WAYLAND_SECURITY_CONTEXT
+		"enabled"
+#else
+		"disabled"
+#endif
 	"\n";
 
 void print_compiletime_support(void) {

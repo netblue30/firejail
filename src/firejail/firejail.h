@@ -376,6 +376,7 @@ extern int arg_deterministic_shutdown;	// shut down the sandbox if first child d
 extern int arg_keep_fd_all;	// inherit all file descriptors to sandbox
 extern int arg_netlock;	// netlocker
 extern int arg_restrict_namespaces;
+extern int arg_wayland;	// filter wayland socket
 
 typedef enum {
 	DBUS_POLICY_ALLOW,	// Allow unrestricted access to the bus

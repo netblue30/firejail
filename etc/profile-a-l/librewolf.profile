@@ -27,9 +27,7 @@ whitelist /usr/share/librewolf
 
 # Add the next line to your librewolf.local to enable private-bin (Arch Linux).
 #private-bin dbus-launch,dbus-send,librewolf,sh
-# Add the next line to your librewolf.local to enable private-etc.
-# Note: private-etc must first be enabled in firefox-common.local.
-#private-etc librewolf
+private-etc librewolf
 
 dbus-user filter
 dbus-user.own io.gitlab.librewolf.*

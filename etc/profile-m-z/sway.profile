@@ -10,6 +10,10 @@ include globals.local
 noblacklist ${HOME}/.config/sway
 # sway uses ~/.config/i3 as fallback if there is no ~/.config/sway
 noblacklist ${HOME}/.config/i3
+# allow creation of IPC socket
+noblacklist ${RUNUSER}/sway-ipc.*
+noblacklist /tmp/sway-ipc.*
+
 include disable-common.inc
 
 caps.drop all

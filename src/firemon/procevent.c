@@ -396,6 +396,8 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 					sprintf(lineptr, " sid ");
 					break;
 
+// Note: PROC_EVENT_COREDUMP only exists since Linux 3.10 (see #6414).
+#ifdef PROC_EVENT_COREDUMP
 				case PROC_EVENT_COREDUMP:
 					pid = proc_ev->event_data.coredump.process_tgid;
 #ifdef DEBUG_PRCTL
@@ -403,6 +405,7 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 #endif
 					sprintf(lineptr, " coredump ");
 					break;
+#endif /* PROC_EVENT_COREDUMP */
 
 				case PROC_EVENT_COMM:
 					pid = proc_ev->event_data.comm.process_tgid;

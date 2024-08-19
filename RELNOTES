@@ -1,7 +1,6 @@
 firejail (0.9.73) baseline; urgency=low
   * work in progress
   * security: fix sscanf rv checks (CodeQL) (#6184)
-  * feature: added noptm and keep-tpm commands to private-dev (#6390)
   * feature: Add "keep-shell-rc" command and option (#1127 #5634)
   * feature: Print the argument when failing with "too long arguments" (#5677)
   * feature: a random hostname is assigned to each sandbox unless
@@ -18,7 +17,9 @@ firejail (0.9.73) baseline; urgency=low
   * feature: add Landlock support (#5269 #6078 #6115 #6125 #6187 #6195 #6200
     #6228 #6260 #6302 #6305)
   * feature: add support for comm, coredump, and prctl procevents in firemon
+    (#6414 #6415)
   * feature: add notpm command & keep tpm devices in private-dev (#6379 #6390)
+  * feature: fshaper.sh: support tc on NixOS (#6426 #6431)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)
@@ -33,11 +34,9 @@ firejail (0.9.73) baseline; urgency=low
   * modif: drop deprecated 'shell' option references (#5894)
   * modif: keep pipewire group unless nosound is used (#5992 #5993)
   * modif: fcopy: Use lstat when copying directory (#5957)
-  * modif: populate /run/firejail while holding flock (#6307)
   * modif: private-dev: keep /dev/kfd unless no3d is used (#6380)
   * modif: keep /sys/module/nvidia* if prop driver and no no3d (#6372 #6387)
   * removal: LTS and FIRETUNNEL support
-  * bugfix: fix startup race condition for /run/firejail directory (#6307, #6307)
   * bugfix: fix --hostname and --hosts-file commands
   * bugfix: fix examples in firejail-local AppArmor profile (#5717)
   * bugfix: arp.c: ensure positive timeout on select(2) (#5806)
@@ -45,8 +44,10 @@ firejail (0.9.73) baseline; urgency=low
     (#5965 #5976)
   * bugfix: firejail --ls reports wrong file sizes for large files (#5982
     #6086)
+  * bugfix: fix startup race condition for /run/firejail directory (#6307)
   * bugfix: fix various resource leaks (#6367)
   * bugfix: profstats: fix restrict-namespaces max count (#6369)
+  * bugfix: remove --noautopulse from --help and zsh comp (#6401)
   * build: auto-generate syntax files (#5627)
   * build: mark all phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
@@ -82,6 +83,7 @@ firejail (0.9.73) baseline; urgency=low
   * build: remove clean dependency from cppcheck targets (#6343)
   * build: allow overriding common tools (#6354)
   * build: standardize install commands (#6366)
+  * build: improve reliability/portability of date command usage (#6403 #6404)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
@@ -111,6 +113,8 @@ firejail (0.9.73) baseline; urgency=low
     #6359)
   * docs: bug_report.md: use absolute path in 'steps to reproduce' (#6382)
   * docs: man: format and sort some private- items (#6398)
+  * docs: man: improve blacklist/whitelist examples with spaces (#6425)
+  * docs: add build_issue.md issue template (#6423)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
   * profiles: qutebrowser: fix links not opening in the existing instance

@@ -46,7 +46,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6
+      uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -79,7 +79,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6
+      uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -109,7 +109,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6
+      uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -143,7 +143,7 @@ jobs:
 
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@17d0e2bd7d51742c71671bd19fa12bdc9d40a3d6
+      uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c
       with:
         disable-sudo: true
         egress-policy: block
@@ -161,7 +161,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@b611370bb5703a7efb587f9d136a52ea24c5c38c
+      uses: github/codeql-action/init@afb54ba388a7dca6ecae48f608c4ff05ff4cc77a
       with:
         languages: cpp
 
@@ -172,4 +172,4 @@ jobs:
       run: make -j "$(nproc)"
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@b611370bb5703a7efb587f9d136a52ea24c5c38c
+      uses: github/codeql-action/analyze@afb54ba388a7dca6ecae48f608c4ff05ff4cc77a

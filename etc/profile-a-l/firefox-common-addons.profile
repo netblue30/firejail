@@ -92,8 +92,7 @@ include allow-python3.inc
 #private-bin keepassxc-proxy
 
 # Flash plugin
-# private-etc must first be enabled in firefox-common.profile and in profiles including it.
-#private-etc adobe
+private-etc adobe
 
 # ff2mpv
 #ignore noexec ${HOME}

@@ -26,9 +26,7 @@ whitelist /usr/share/cachy-browser
 
 # Add the next line to your cachy-browser.local to enable private-bin (Arch Linux).
 #private-bin dbus-launch,dbus-send,cachy-browser,sh
-# Add the next line to your cachy-browser.local to enable private-etc.
-# Note: private-etc must first be enabled in firefox-common.local.
-#private-etc cachy-browser
+private-etc cachy-browser
 
 dbus-user filter
 dbus-user.own org.mozilla.cachybrowser.*

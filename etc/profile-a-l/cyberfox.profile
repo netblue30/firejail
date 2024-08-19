@@ -16,8 +16,7 @@ whitelist /usr/share/8pecxstudios
 whitelist /usr/share/cyberfox
 
 #private-bin cyberfox,dbus-launch,dbus-send,env,sh,which
-# private-etc must first be enabled in firefox-common.profile
-#private-etc cyberfox
+private-etc cyberfox
 
 # Redirect
 include firefox-common.profile

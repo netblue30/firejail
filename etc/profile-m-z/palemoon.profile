@@ -21,8 +21,7 @@ seccomp
 ignore seccomp
 
 #private-bin palemoon
-# private-etc must first be enabled in firefox-common.profile
-#private-etc palemoon
+private-etc palemoon
 
 restrict-namespaces
 ignore restrict-namespaces

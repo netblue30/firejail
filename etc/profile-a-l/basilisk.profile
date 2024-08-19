@@ -19,8 +19,7 @@ seccomp
 ignore seccomp
 
 #private-bin basilisk
-# private-etc must first be enabled in firefox-common.profile
-#private-etc basilisk
+private-etc basilisk
 #private-opt basilisk
 
 restrict-namespaces

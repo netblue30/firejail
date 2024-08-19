@@ -44,9 +44,6 @@ private-tmp
 
 dbus-user filter
 dbus-user.talk org.kde.*
-dbus-user.talk org.freedesktop.DBus
-dbus-user.talk org.freedesktop.portal.Settings
-dbus-user.talk org.freedesktop.portal.Desktop
 dbus-user.talk org.kde.KWin
 dbus-user.talk org.kde.StatusNotifierItem
 dbus-system none

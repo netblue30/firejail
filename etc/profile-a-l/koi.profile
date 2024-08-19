@@ -6,10 +6,7 @@ include koi.local
 # Persistent global definitions
 include globals.local
 
-noexec ${HOME}
-noexec /tmp
-
-# Restriction below breaks the program on Arch.
+# Restriction below breaks program on Arch.
 #include disable-common.inc
 
 include disable-devel.inc
@@ -17,18 +14,13 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-proc.inc
 include disable-programs.inc
-#include disable-shell.inc
-#include disable-x11.inc
 include disable-xdg.inc
 
 apparmor
 caps.drop all
-#ipc-namespace
+ipc-namespace
 machine-id
-
-# Uncomment the restriction below if you don't use Sunset/Sunrise feature.
-#net none
-
+# Add 'net none' to your koi.local if you don't use Sunset/Sunrise feature.
 no3d
 nodvd
 nogroups
@@ -45,12 +37,18 @@ seccomp
 seccomp.block-secondary
 
 disable-mnt
-#private
 private-cache
 private-dev
-private-etc alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg
+private-etc @network,@tls-ca,@X11,mime.types
 private-tmp
 
+dbus-user filter
+dbus-user.talk org.kde.*
+dbus-user.talk org.freedesktop.DBus
+dbus-user.talk org.freedesktop.portal.Settings
+dbus-user.talk org.freedesktop.portal.Desktop
+dbus-user.talk org.kde.KWin
+dbus-user.talk org.kde.StatusNotifierItem
 dbus-system none
 
 deterministic-shutdown

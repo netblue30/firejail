@@ -101,6 +101,11 @@
 #define SECCOMP_RET_LOG		0x7ffc0000U
 #endif
 
+// Note: AUDIT_ARCH_AARCH64 only exists since Linux 3.17; see #6440 and
+// https://github.com/torvalds/linux/commit/875cbf3e4614cfdcc7f65033e25292aec80f09c0
+#ifndef AUDIT_ARCH_AARCH64
+#define AUDIT_ARCH_AARCH64	(EM_AARCH64|__AUDIT_ARCH_64BIT|__AUDIT_ARCH_LE)
+#endif
 
 #if defined(__i386__)
 # define ARCH_NR	AUDIT_ARCH_I386

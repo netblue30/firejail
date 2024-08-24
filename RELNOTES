@@ -58,8 +58,7 @@ firejail (0.9.73) baseline; urgency=low
   * build: disable all built-in implicit make rules (#5864)
   * build: organize and standardize make vars and targets (#5866)
   * build: fix seccomp filters and man pages always being rebuilt when running
-    make
-  * build: simplify code related to man pages (#5898)
+    make (#5156 #5898)
   * build: fix hardcoded make & remove unnecessary distclean targets (#5911)
   * build: dist and asc improvements (#5916)
   * build: fix some shellcheck issues & use config.sh in more scripts (#5927)

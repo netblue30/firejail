@@ -3353,16 +3353,6 @@ $ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 firefox
 .br
 #endif
 .\" Note: Keep this in sync with invalid_name() in src/firejail/util.c.
-.SH NAME VALIDATION
-For simplicity, the same name validation is used for multiple options.
-Rules:
-.PP
-The name must be 1-253 characters long.
-The name can only contain ASCII letters, digits and the special characters
-"-._" (that is, the name cannot contain spaces or control characters).
-The name cannot contain only digits.
-The first and last characters must be an ASCII letter or digit and the name
-may contain special characters in the middle.
 #ifdef HAVE_APPARMOR
 .SH APPARMOR
 .TP
@@ -3770,6 +3760,17 @@ Sandbox running time in hours:minutes:seconds format.
 .TP
 USER
 The owner of the sandbox.
+
+.SH NAME VALIDATION
+For simplicity, the same name validation is used for multiple options.
+Rules:
+.PP
+The name must be 1-253 characters long.
+The name can only contain ASCII letters, digits and the special characters
+"-._" (that is, the name cannot contain spaces or control characters).
+The name cannot contain only digits.
+The first and last characters must be an ASCII letter or digit and the name
+may contain special characters in the middle.
 
 .SH RESTRICTED SHELL
 To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in

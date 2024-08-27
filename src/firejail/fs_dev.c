@@ -106,46 +106,47 @@ static void deventry_mount(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
 		struct stat s;
-		if (stat(dev[i].run_fname, &s) == 0) {
-			// check device type and subsystem configuration
-			if ((dev[i].type == DEV_SOUND && arg_nosound == 0) ||
-			    (dev[i].type == DEV_3D && arg_no3d == 0) ||
-			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
-			    (dev[i].type == DEV_TV && arg_notv == 0) ||
-			    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
-			    (dev[i].type == DEV_TPM && arg_keep_dev_tpm == 1) ||
-			    (dev[i].type == DEV_U2F && arg_nou2f == 0) ||
-			    (dev[i].type == DEV_INPUT && arg_noinput == 0) ||
-			    (dev[i].type == DEV_NTSYNC && arg_keep_dev_ntsync == 1)) {
+		if (stat(source, &s) == -1)
+			goto next;
 
-				int dir = is_dir(dev[i].run_fname);
+		// check device type and subsystem configuration
+		if ((dev[i].type == DEV_SOUND && arg_nosound == 0) ||
+		    (dev[i].type == DEV_3D && arg_no3d == 0) ||
+		    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
+		    (dev[i].type == DEV_TV && arg_notv == 0) ||
+		    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
+		    (dev[i].type == DEV_TPM && arg_keep_dev_tpm == 1) ||
+		    (dev[i].type == DEV_U2F && arg_nou2f == 0) ||
+		    (dev[i].type == DEV_INPUT && arg_noinput == 0) ||
+		    (dev[i].type == DEV_NTSYNC && arg_keep_dev_ntsync == 1)) {
+			goto next;
+		}
+
+		int dir = is_dir(dev[i].run_fname);
+		if (arg_debug)
+			printf("mounting %s %s\n", dev[i].run_fname, (dir) ? "directory" : "file");
+		if (dir) {
+			mkdir_attr(dev[i].dev_fname, 0755, 0, 0);
+		}
+		else {
+			struct stat s;
+			if (stat(dev[i].run_fname, &s) == -1) {
 				if (arg_debug)
-					printf("mounting %s %s\n", dev[i].run_fname, (dir) ? "directory" : "file");
-				if (dir) {
-					mkdir_attr(dev[i].dev_fname, 0755, 0, 0);
-				}
-				else {
-					struct stat s;
-					if (stat(dev[i].run_fname, &s) == -1) {
-						if (arg_debug)
-							fwarning("cannot stat %s file\n", dev[i].run_fname);
-						i++;
-						continue;
-					}
-					FILE *fp = fopen(dev[i].dev_fname, "we");
-					if (fp) {
-						fprintf(fp, "\n");
-						SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
-						fclose(fp);
-					}
-				}
-
-				if (mount(dev[i].run_fname, dev[i].dev_fname, NULL, MS_BIND|MS_REC, NULL) < 0)
-					errExit("mounting dev file");
-				fs_logger2("whitelist", dev[i].dev_fname);
+					fwarning("cannot stat %s file\n", dev[i].run_fname);
+				goto next;
+			}
+			FILE *fp = fopen(dev[i].dev_fname, "we");
+			if (fp) {
+				fprintf(fp, "\n");
+				SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
+				fclose(fp);
 			}
 		}
 
+		if (mount(dev[i].run_fname, dev[i].dev_fname, NULL, MS_BIND|MS_REC, NULL) < 0)
+			errExit("mounting dev file");
+		fs_logger2("whitelist", dev[i].dev_fname);
+next:
 		i++;
 	}
 }

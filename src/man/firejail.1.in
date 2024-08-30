@@ -951,7 +951,7 @@ $ firejail \-\-ignore="net eth0" firefox
 #endif
 
 .TP
-\fB\-\-\include=file.profile
+\fB\-\-include=file.profile
 Include a profile file before the regular profiles are used.
 .br
 
@@ -1018,7 +1018,7 @@ in case you intend to start an external DHCP client in the sandbox.
 .br
 Example:
 .br
-$ firejail \-\-net=eth0 \-\-\ip=none
+$ firejail \-\-net=eth0 \-\-ip=none
 .br
 
 .br
@@ -1070,7 +1070,7 @@ default gateway is assigned by default.
 .br
 Example:
 .br
-$ firejail \-\-net=eth0 \-\-\iprange=192.168.1.100,192.168.1.150
+$ firejail \-\-net=eth0 \-\-iprange=192.168.1.100,192.168.1.150
 
 .TP
 \fB\-\-ipc-namespace
@@ -3453,37 +3453,37 @@ $ firejail --tree
       1221:netblue:/usr/lib/firefox/firefox
 .RE
 
-We provide a tool that automates all this integration, please see \&\flfirecfg\fR\|(1) for more details.
+We provide a tool that automates all this integration, please see \fBfirecfg\fR(1) for more details.
 
 .SH EXAMPLES
 .TP
-\f\firejail
+\fBfirejail
 Sandbox a regular shell session.
 .TP
-\f\firejail firefox
+\fBfirejail firefox
 Start Mozilla Firefox.
 .TP
-\f\firejail \-\-debug firefox
+\fBfirejail \-\-debug firefox
 Debug Firefox sandbox.
 .TP
-\f\firejail \-\-private firefox
+\fBfirejail \-\-private firefox
 Start Firefox with a new, empty home directory.
 .TP
-\f\firejail --net=none vlc
+\fBfirejail --net=none vlc
 Start VLC in an unconnected network namespace.
 #ifdef HAVE_NETWORK
 .TP
-\f\firejail \-\-net=eth0 firefox
+\fBfirejail \-\-net=eth0 firefox
 Start Firefox in a new network namespace. An IP address is
 assigned automatically.
 .TP
-\f\firejail \-\-net=br0 \-\-ip=10.10.20.5 \-\-net=br1 \-\-net=br2
+\fBfirejail \-\-net=br0 \-\-ip=10.10.20.5 \-\-net=br1 \-\-net=br2
 Start a shell session in a new network namespace and connect it
 to br0, br1, and br2 host bridge devices. IP addresses are assigned
 automatically for the interfaces connected to br1 and b2
 #endif
 .TP
-\f\firejail \-\-list
+\fBfirejail \-\-list
 List all sandboxed processes.
 
 .SH FILE GLOBBING

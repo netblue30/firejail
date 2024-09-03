@@ -9,6 +9,7 @@ include globals.local
 
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
+noblacklist ${HOME}/.dvdcss
 
 include disable-common.inc
 include disable-devel.inc

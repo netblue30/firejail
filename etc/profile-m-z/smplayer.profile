@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/smplayer
 noblacklist ${HOME}/.config/youtube-dl
+noblacklist ${HOME}/.dvdcss
 noblacklist ${HOME}/.mplayer
 
 # Allow lua (blacklisted by disable-interpreters.inc)

@@ -7,6 +7,7 @@ include handbrake.local
 include globals.local
 
 noblacklist ${HOME}/.config/ghb
+noblacklist ${HOME}/.dvdcss
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
 

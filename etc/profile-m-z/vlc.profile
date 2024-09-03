@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.cache/vlc
 noblacklist ${HOME}/.config/vlc
 noblacklist ${HOME}/.config/aacs
+noblacklist ${HOME}/.dvdcss
 noblacklist ${HOME}/.local/share/vlc
 
 include disable-common.inc
@@ -24,6 +25,7 @@ mkdir ${HOME}/.local/share/vlc
 whitelist ${HOME}/.cache/vlc
 whitelist ${HOME}/.config/vlc
 whitelist ${HOME}/.config/aacs
+whitelist ${HOME}/.dvdcss
 whitelist ${HOME}/.local/share/vlc
 include whitelist-common.inc
 include whitelist-player-common.inc

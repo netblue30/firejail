@@ -14,6 +14,7 @@ include allow-lua.inc
 include allow-python3.inc
 
 noblacklist ${HOME}/.config/totem
+noblacklist ${HOME}/.dvdcss
 noblacklist ${HOME}/.local/share/totem
 
 include disable-common.inc
@@ -27,6 +28,7 @@ read-only ${DESKTOP}
 mkdir ${HOME}/.config/totem
 mkdir ${HOME}/.local/share/totem
 whitelist ${HOME}/.config/totem
+whitelist ${HOME}/.dvdcss
 whitelist ${HOME}/.local/share/totem
 whitelist /usr/share/totem
 include whitelist-common.inc

@@ -641,6 +641,7 @@ blacklist ${HOME}/.config/scribus
 blacklist ${HOME}/.config/scribusrc
 blacklist ${HOME}/.config/sendgmail
 blacklist ${HOME}/.config/sinew.in
+blacklist ${HOME}/.config/singularity
 blacklist ${HOME}/.config/sink
 blacklist ${HOME}/.config/skypeforlinux
 blacklist ${HOME}/.config/slimjet
@@ -1056,6 +1057,7 @@ blacklist ${HOME}/.local/share/rtv
 blacklist ${HOME}/.local/share/scribus
 blacklist ${HOME}/.local/share/shotwell
 blacklist ${HOME}/.local/share/signal-cli
+blacklist ${HOME}/.local/share/singularity
 blacklist ${HOME}/.local/share/sink
 blacklist ${HOME}/.local/share/smuxi
 blacklist ${HOME}/.local/share/spotify

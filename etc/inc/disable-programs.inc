@@ -1261,6 +1261,7 @@ blacklist ${RUNUSER}/qutebrowser
 blacklist /etc/ssmtp
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*
+blacklist /tmp/evolution-*
 blacklist /tmp/i3-*
 blacklist /tmp/lwjgl_*
 blacklist /var/games/nethack

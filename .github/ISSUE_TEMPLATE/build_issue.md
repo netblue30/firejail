@@ -64,9 +64,9 @@ _(Optional) Any other detail that may help to understand/debug the problem_
 
 ### Environment
 
-- Name/version/arch of the Linux kernel (e.g. the output of `uname -srm`)
-- Name/version of the Linux distribution (e.g. "Ubuntu 20.04" or "Arch Linux")
-- Name/version of the C compiler (e.g. "gcc 14.1.1-1")
-- Name/version of the libc (e.g. "glibc 2.40-1")
-- Version of the Linux API headers (e.g. "linux-api-headers 6.10-1" on Arch Linux)
-- Version of the source code being built (e.g. the output of `git rev-parse HEAD`)
+- Name/version/arch of the Linux kernel (`uname -srm`):
+- Name/version of the Linux distribution (e.g. "Ubuntu 20.04" or "Arch Linux"):
+- Name/version of the C compiler (e.g. "gcc 14.1.1-1"):
+- Name/version of the libc (e.g. "glibc 2.40-1"):
+- Version of the Linux API headers (e.g. "linux-api-headers 6.10-1" on Arch Linux):
+- Version of the source code being built (`git rev-parse HEAD`):

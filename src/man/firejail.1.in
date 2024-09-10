@@ -611,21 +611,6 @@ Example:
 $ firejail --dbus-user=filter --dbus-user.own=org.gnome.ghex.*
 
 .TP
-\fB\-\-dbus-user.talk=name
-Allows the application to talk to the specified well-known name on the session DBus.
-The name may have a .* suffix to match all names underneath it, including itself
-(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
-not "foobar").
-.br
-
-.br
-Example:
-.br
-$ firejail --dbus-user=filter --dbus-user.talk=\\
-.br
-org.freedesktop.Notifications
-
-.TP
 \fB\-\-dbus-user.see=name
 Allows the application to see, but not talk to the specified well-known name on
 the session DBus.
@@ -638,6 +623,21 @@ not "foobar").
 Example:
 .br
 $ firejail --dbus-user=filter --dbus-user.see=\\
+.br
+org.freedesktop.Notifications
+
+.TP
+\fB\-\-dbus-user.talk=name
+Allows the application to talk to the specified well-known name on the session DBus.
+The name may have a .* suffix to match all names underneath it, including itself
+(e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
+not "foobar").
+.br
+
+.br
+Example:
+.br
+$ firejail --dbus-user=filter --dbus-user.talk=\\
 .br
 org.freedesktop.Notifications
 #endif
@@ -888,6 +888,32 @@ Example:
 .br
 $ firejail \-\-hosts-file=~/myhosts firefox
 
+.TP
+\fB\-\-icmptrace[=name|pid]
+Monitor ICMP traffic. The sandbox can be specified by name or pid. Only networked sandboxes
+created with \-\-net are supported. This option is only available when running the sandbox as root.
+.br
+
+.br
+Without a name/pid, Firejail will monitor the main system network namespace.
+.br
+
+.br
+Example
+.br
+$ sudo firejail --icmptrace
+.br
+20:53:54  192.168.1.60 -> 142.250.65.174 - 98 bytes - Echo request/0
+.br
+20:53:54  142.250.65.174 -> 192.168.1.60 - 98 bytes - Echo reply/0
+.br
+20:53:55  192.168.1.60 -> 142.250.65.174 - 98 bytes - Echo request/0
+.br
+20:53:55  142.250.65.174 -> 192.168.1.60 - 98 bytes - Echo reply/0
+.br
+20:53:55  192.168.1.60 -> 1.1.1.1 - 154 bytes - Destination unreachable/Port unreachable
+.br
+
 #ifdef HAVE_IDS
 .TP
 \fB\-\-ids-check
@@ -925,32 +951,6 @@ $ firejail \-\-ignore="net eth0" firefox
 #endif
 
 .TP
-\fB\-\-icmptrace[=name|pid]
-Monitor ICMP traffic. The sandbox can be specified by name or pid. Only networked sandboxes
-created with \-\-net are supported. This option is only available when running the sandbox as root.
-.br
-
-.br
-Without a name/pid, Firejail will monitor the main system network namespace.
-.br
-
-.br
-Example
-.br
-$ sudo firejail --icmptrace
-.br
-20:53:54  192.168.1.60 -> 142.250.65.174 - 98 bytes - Echo request/0
-.br
-20:53:54  142.250.65.174 -> 192.168.1.60 - 98 bytes - Echo reply/0
-.br
-20:53:55  192.168.1.60 -> 142.250.65.174 - 98 bytes - Echo request/0
-.br
-20:53:55  142.250.65.174 -> 192.168.1.60 - 98 bytes - Echo reply/0
-.br
-20:53:55  192.168.1.60 -> 1.1.1.1 - 154 bytes - Destination unreachable/Port unreachable
-.br
-
-.TP
 \fB\-\-\include=file.profile
 Include a profile file before the regular profiles are used.
 .br
@@ -984,23 +984,6 @@ Example:
 $ firejail \-\-net=eth0 \-\-ip=10.10.20.56 firefox
 
 .TP
-\fB\-\-ip=none
-No IP address and no default gateway are configured for the last interface
-defined by a \-\-net option. Use this option
-in case you intend to start an external DHCP client in the sandbox.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-net=eth0 \-\-\ip=none
-.br
-
-.br
-If the corresponding interface doesn't have an IP address configured, this
-option is enabled by default.
-
-.TP
 \fB\-\-ip=dhcp
 Acquire an IP address and default gateway for the last interface defined by a
 \-\-net option, as well as set the DNS servers according to the DHCP response.
@@ -1024,6 +1007,23 @@ The DHCP client will NOT release the DHCP lease when the sandbox terminates.
 If your DHCP server requires leases to be explicitly released, consider running
 a DHCP client and releasing the lease manually in conjunction with the
 \-\-net=none option.
+
+.TP
+\fB\-\-ip=none
+No IP address and no default gateway are configured for the last interface
+defined by a \-\-net option. Use this option
+in case you intend to start an external DHCP client in the sandbox.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-net=eth0 \-\-\ip=none
+.br
+
+.br
+If the corresponding interface doesn't have an IP address configured, this
+option is enabled by default.
 
 .TP
 \fB\-\-ip6=address
@@ -1324,6 +1324,21 @@ Example:
 $ firejail \-\-machine-id
 
 .TP
+\fB\-\-memory-deny-write-execute
+Install a seccomp filter to block attempts to create memory mappings
+that are both writable and executable, to change mappings to be
+executable, or to create executable shared memory. The filter examines
+the arguments of mmap, mmap2, mprotect, pkey_mprotect, memfd_create
+and shmat system calls and returns error EPERM to the process (or
+kills it or log the attempt, see \-\-seccomp-error-action below) if necessary.
+.br
+
+.br
+Note: shmat is not implemented
+as a system call on some platforms including i386, and it cannot be
+handled by seccomp-bpf.
+
+.TP
 \fB\-\-mkdir=dirname
 Create a directory in user home. Parent directories are created as needed.
 .br
@@ -1343,20 +1358,6 @@ Example:
 .br
 $ firejail --mkfile=~/work/project/readme
 
-.TP
-\fB\-\-memory-deny-write-execute
-Install a seccomp filter to block attempts to create memory mappings
-that are both writable and executable, to change mappings to be
-executable, or to create executable shared memory. The filter examines
-the arguments of mmap, mmap2, mprotect, pkey_mprotect, memfd_create
-and shmat system calls and returns error EPERM to the process (or
-kills it or log the attempt, see \-\-seccomp-error-action below) if necessary.
-.br
-
-.br
-Note: shmat is not implemented
-as a system call on some platforms including i386, and it cannot be
-handled by seccomp-bpf.
 #ifdef HAVE_NETWORK
 .TP
 \fB\-\-mtu=number
@@ -1792,15 +1793,6 @@ Example:
 .br
 $ firejail \-\-nodvd
 .TP
-\fB\-\-noinput
-Disable input devices.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-noinput
-.TP
 \fB\-\-noexec=dirname_or_filename
 Remount directory or file noexec, nodev and nosuid. File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br
@@ -1843,6 +1835,16 @@ $ id
 uid=1000(netblue) gid=1000(netblue) groups=1000(netblue)
 .br
 $
+
+.TP
+\fB\-\-noinput
+Disable input devices.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-noinput
 
 .TP
 \fB\-\-nonewprivs

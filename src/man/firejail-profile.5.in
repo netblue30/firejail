@@ -511,30 +511,30 @@ Blacklist all Linux capabilities.
 Whitelist given Linux capabilities.
 #ifdef HAVE_LANDLOCK
 .TP
-\fBlandlock.enforce (experimental)
+\fBlandlock.enforce\fR (experimental)
 Enforce the Landlock ruleset.
 .PP
 Without it, the other Landlock commands have no effect.
 .TP
-\fBlandlock.fs.read path (experimental)
+\fBlandlock.fs.read path\fR (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a read access
 rule for path.
 .TP
-\fBlandlock.fs.write path (experimental)
+\fBlandlock.fs.write path\fR (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a write access
 rule for path.
 .TP
-\fBlandlock.fs.makeipc path (experimental)
+\fBlandlock.fs.makeipc path\fR (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
 allows the creation of named pipes (FIFOs) and Unix domain sockets beneath
 the given path.
 .TP
-\fBlandlock.fs.makedev path (experimental)
+\fBlandlock.fs.makedev path\fR (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
 allows the creation of block devices and character devices beneath the given
 path.
 .TP
-\fBlandlock.fs.execute path (experimental)
+\fBlandlock.fs.execute path\fR (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add an execution
 permission rule for path.
 #endif
@@ -704,7 +704,7 @@ Allow the application to see but not talk to the name org.freedesktop.Notificati
 \fBdbus-user.talk org.freedesktop.Notifications
 Allow the application to talk to the name org.freedesktop.Notifications on the session DBus.
 .TP
-\fBnodbus \fR(deprecated)
+\fBnodbus\fR (deprecated)
 Disable D-Bus access (both system and session buses). Equivalent to dbus-system none and dbus-user none.
 .TP
 .br
@@ -804,7 +804,7 @@ name browser
 \fBno3d
 Disable 3D hardware acceleration.
 .TP
-\fBnoautopulse \fR(deprecated)
+\fBnoautopulse\fR (deprecated)
 See keep-config-pulse.
 .TP
 \fBnodvd

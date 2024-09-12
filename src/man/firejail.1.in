@@ -1241,30 +1241,30 @@ $ firejail --keep-var-tmp
 
 #ifdef HAVE_LANDLOCK
 .TP
-\fB\-\-landlock.enforce (experimental)
+\fB\-\-landlock.enforce\fR (experimental)
 Enforce the Landlock ruleset.
 Without it, the other Landlock commands have no effect.
 See the \fBLANDLOCK\fR section for more information.
 .TP
-\fB\-\-landlock.fs.read=path (experimental)
+\fB\-\-landlock.fs.read=path\fR (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a read access
 rule for path.
 .TP
-\fB\-\-landlock.fs.write=path (experimental)
+\fB\-\-landlock.fs.write=path\fR (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a write access
 rule for path.
 .TP
-\fB\-\-landlock.fs.makeipc=path (experimental)
+\fB\-\-landlock.fs.makeipc=path\fR (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
 allows the creation of named pipes (FIFOs) and Unix domain sockets beneath
 the given path.
 .TP
-\fB\-\-landlock.fs.makedev=path (experimental)
+\fB\-\-landlock.fs.makedev=path\fR (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add a rule that
 allows the creation of block devices and character devices beneath the given
 path.
 .TP
-\fB\-\-landlock.fs.execute=path (experimental)
+\fB\-\-landlock.fs.execute=path\fR (experimental)
 Create a Landlock ruleset (if it doesn't already exist) and add an execution
 permission rule for path.
 .br
@@ -1727,7 +1727,7 @@ Example:
 $ firejail --no3d firefox
 
 .TP
-\fB\-\-noautopulse \fR(deprecated)
+\fB\-\-noautopulse\fR (deprecated)
 See --keep-config-pulse.
 
 .TP
@@ -1773,7 +1773,7 @@ $ nc dict.org 2628
 220 pan.alephnull.com dictd 1.12.1/rf on Linux 3.14-1-amd64
 .br
 .TP
-\fB\-\-nodbus \fR(deprecated)
+\fB\-\-nodbus\fR (deprecated)
 #ifdef HAVE_DBUSPROXY
 Disable D-Bus access (both system and session buses). Equivalent to --dbus-system=none --dbus-user=none.
 .br

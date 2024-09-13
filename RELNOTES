@@ -114,6 +114,10 @@ firejail (0.9.73) baseline; urgency=low
   * docs: man: format and sort some private- items (#6398)
   * docs: man: improve blacklist/whitelist examples with spaces (#6425)
   * docs: add build_issue.md issue template (#6423)
+  * docs: man: sort commands (firejail.1) (#6451)
+  * docs: man: fix bold in command TPs (#6472)
+  * docs: man: fix wrong escapes (#6474)
+  * docs: github: streamline environment in issue templates (#6471)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
   * profiles: qutebrowser: fix links not opening in the existing instance
@@ -140,6 +144,7 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: allow-ssh: allow /etc/ssh/ssh_revoked_hosts (#6308 #6309)
   * profiles: libreoffice: support signing documents with GPG (#6352 #6353)
   * profiles: blacklist i3 IPC socket & dir except for i3 itself (#6361)
+  * profiles: librewolf: add new dbus name (io.gitlab.firefox) (#6413 #6473)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

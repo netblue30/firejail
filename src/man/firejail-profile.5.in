@@ -243,7 +243,7 @@ host filesystem. Each line describes a file/directory that is inaccessible
 a tmpfs mounted on top of an existing directory (\fBtmpfs\fR),
 or mount-bind a directory or file on top of another directory or file (\fBbind\fR).
 Use \fBprivate\fR to set private mode.  File globbing is supported, and PATH and
-HOME directories are searched, see the \fBfirejail\f(1) \fBFILE GLOBBING\fR section
+HOME directories are searched, see the \fBfirejail\fR(1) \fBFILE GLOBBING\fR section
 for more details.
 Examples:
 .TP

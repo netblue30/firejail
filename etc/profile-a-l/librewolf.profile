@@ -30,6 +30,7 @@ whitelist /usr/share/librewolf
 private-etc librewolf
 
 dbus-user filter
+dbus-user.own io.gitlab.firefox.*
 dbus-user.own io.gitlab.librewolf.*
 dbus-user.own org.mozilla.librewolf.*
 # Add the next line to your librewolf.local to enable native notifications.

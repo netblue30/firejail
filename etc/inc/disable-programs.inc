@@ -728,6 +728,7 @@ blacklist ${HOME}/.dillo
 blacklist ${HOME}/.dooble
 blacklist ${HOME}/.dosbox
 blacklist ${HOME}/.dropbox*
+blacklist ${HOME}/.dvdcss
 blacklist ${HOME}/.easystroke
 blacklist ${HOME}/.electron-cache
 blacklist ${HOME}/.electron-cash

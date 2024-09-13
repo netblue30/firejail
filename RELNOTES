@@ -26,7 +26,6 @@ firejail (0.9.73) baseline; urgency=low
   * modif: Escape control characters of the command line (#5613)
   * modif: Allow mostly only ASCII letters and digits for sandbox name
     (--name=) and host name (--hostname=) (#5708 #5856)
-  * modif: remove firemon --interface option (duplicating --net.print option)
   * modif: make private-lib a configure-time option, disabled by default (see
     --enable-private-lib) (#5727 #5732)
   * modif: Improve --version/--help & print version on startup (#5829 #6172)
@@ -36,6 +35,7 @@ firejail (0.9.73) baseline; urgency=low
   * modif: fcopy: Use lstat when copying directory (#5957)
   * modif: private-dev: keep /dev/kfd unless no3d is used (#6380)
   * modif: keep /sys/module/nvidia* if prop driver and no no3d (#6372 #6387)
+  * removal: remove firemon --interface option (duplicating --net.print option)
   * removal: LTS and FIRETUNNEL support
   * bugfix: fix --hostname and --hosts-file commands
   * bugfix: fix examples in firejail-local AppArmor profile (#5717)

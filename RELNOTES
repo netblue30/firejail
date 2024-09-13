@@ -35,8 +35,9 @@ firejail (0.9.73) baseline; urgency=low
   * modif: fcopy: Use lstat when copying directory (#5957)
   * modif: private-dev: keep /dev/kfd unless no3d is used (#6380)
   * modif: keep /sys/module/nvidia* if prop driver and no no3d (#6372 #6387)
-  * removal: remove firemon --interface option (duplicating --net.print option)
-  * removal: LTS and FIRETUNNEL support
+  * removal: firemon: remove --interface option (it duplicates the firejail
+    --net.print= option) (0e48f9933)
+  * removal: remove support for LTS and firetunnel (db09546f2)
   * bugfix: fix --hostname and --hosts-file commands
   * bugfix: fix examples in firejail-local AppArmor profile (#5717)
   * bugfix: arp.c: ensure positive timeout on select(2) (#5806)

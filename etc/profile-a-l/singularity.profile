@@ -9,6 +9,9 @@ include globals.local
 noblacklist ${HOME}/.config/singularity
 noblacklist ${HOME}/.local/share/singularity
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
+include allow-bin-sh.inc
+
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
@@ -18,6 +21,8 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-proc.inc
 include disable-programs.inc
+include disable-shell.inc
+include disable-xdg.inc
 
 mkdir ${HOME}/.config/singularity
 mkdir ${HOME}/.local/share/singularity
@@ -34,14 +39,28 @@ caps.drop all
 net none
 #no3d
 nodvd
+nogroups
+noinput
+nonewprivs
+noprinters
 noroot
 #nosound
+notpm
+notv
 nou2f
+novideo
+seccomp
+seccomp.block-secondary
+tracelog
 
 disable-mnt
+#private-bin dirname,git,python*,singularity,sh
 private-cache
 private-dev
+private-etc @games,@x11
 private-tmp
 
 dbus-user none
 dbus-system none
+
+restrict-namespaces

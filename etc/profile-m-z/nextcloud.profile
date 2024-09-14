@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.config/Nextcloud
 noblacklist ${HOME}/.local/share/Nextcloud
 noblacklist ${HOME}/Nextcloud
+noblacklist ${HOME}/Nextcloud/Notes
 # Add the next lines to your nextcloud.local to allow sync in more directories.
 #noblacklist ${DOCUMENTS}
 #noblacklist ${MUSIC}

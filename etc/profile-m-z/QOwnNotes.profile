@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.config/PBE
 noblacklist ${HOME}/.local/share/PBE
+noblacklist ${HOME}/Nextcloud
 noblacklist ${HOME}/Nextcloud/Notes
 
 include disable-common.inc

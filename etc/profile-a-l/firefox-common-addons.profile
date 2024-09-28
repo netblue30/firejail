@@ -4,6 +4,7 @@ include firefox-common-addons.local
 
 # Prevent whitelisting in ${RUNUSER}
 ignore whitelist ${RUNUSER}/*firefox*
+ignore whitelist ${RUNUSER}/app/org.keepassxc.KeePassXC
 ignore whitelist ${RUNUSER}/psd/*firefox*
 ignore whitelist ${RUNUSER}/kpxc_server
 ignore whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer

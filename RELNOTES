@@ -54,6 +54,8 @@ firejail (0.9.73) baseline; urgency=low
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
   * build: deb: enable apparmor by default & remove deb-apparmor (#5668)
   * build: Fix whitespace and add .editorconfig (#5674)
+  * build: remove for loop initial declarations to fix building with old
+    compilers (#5778)
   * build: enable compiler warnings by default (#5842)
   * build: remove -mretpoline and NO_EXTRA_CFLAGS (#5859)
   * build: disable all built-in implicit make rules (#5864)

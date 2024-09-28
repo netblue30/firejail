@@ -129,6 +129,7 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: drop hostname option from all profiles (#5702)
   * profiles: move read-only config entries to disable-common.inc (#5763)
   * profiles: standardize on just "GTK" on comments (#5794)
+  * profiles: bleachbit: allow erasing Trash contents (#5337 #5902)
   * profiles: improvements to profiles using private (#5946)
   * profiles: standardize commented code and eol comments (#5987)
   * profiles: disable-common: add more suid programs (#6049 #6051 #6052)
@@ -149,6 +150,8 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: nextcloud: fix access to ~/Nextcloud (#5877 #6478)
   * profiles: ssh: add ${RUNUSER}/gvfsd-sftp (#5816 #6479)
   * profiles: firecfg: disable text editors (#6002 #6477)
+  * profiles: browsers: centralize/sync/improve comments (#6486)
+  * profiles: keepassxc: add new socket location (#5447 #6391)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

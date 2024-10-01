@@ -30,6 +30,8 @@ dbus-user filter
 dbus-user.talk org.freedesktop.Notifications
 # Allow D-Bus communication with Firefox for opening links
 dbus-user.talk org.mozilla.*
+# Allow D-Bus communication with Freedesktop.org secrets API to decrypt local key
+dbus-user.talk org.freedesktop.secrets
 
 ignore dbus-user none
 

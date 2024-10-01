@@ -79,8 +79,8 @@ writable-run-user
 
 dbus-user filter
 dbus-user.talk ca.desrt.dconf
-dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
 # Allow D-Bus communication with Firefox for opening links
 dbus-user.talk org.mozilla.*
 dbus-system none

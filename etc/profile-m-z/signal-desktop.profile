@@ -28,10 +28,10 @@ private-etc @tls-ca
 dbus-user filter
 # allow D-Bus notifications
 dbus-user.talk org.freedesktop.Notifications
-# Allow D-Bus communication with Firefox for opening links
-dbus-user.talk org.mozilla.*
 # Allow D-Bus communication with Freedesktop.org secrets API to decrypt local key
 dbus-user.talk org.freedesktop.secrets
+# Allow D-Bus communication with Firefox for opening links
+dbus-user.talk org.mozilla.*
 
 ignore dbus-user none
 

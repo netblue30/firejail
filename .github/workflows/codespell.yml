@@ -34,7 +34,7 @@ jobs:
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
           security.ubuntu.com:80
-    - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+    - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies

@@ -96,6 +96,8 @@ private-tmp
 dbus-user none
 dbus-system none
 
+# Allow drag and drop
+dbus-user.talk org.freedesktop.portal.Documents
 # Add the next line to firefox-common.local to enable native notifications.
 #dbus-user.talk org.freedesktop.Notifications
 # Add the next line to firefox-common.local to allow inhibiting screensavers.

@@ -1,6 +1,9 @@
 firejail (0.9.73) baseline; urgency=low
   * work in progress
   * security: fix sscanf rv checks (CodeQL) (#6184)
+  * feature: private-etc rework: improve handling of /etc/resolv.conf and add
+    private-etc groups (#6400 #5518 #5608 #5609 #5629 #5638 #5641 #5642 #5643
+    #5650 #5681 #5737 #5844 #5989 #6016 #6104 #5655)
   * feature: Add "keep-shell-rc" command and option (#1127 #5634)
   * feature: Print the argument when failing with "too long arguments" (#5677)
   * feature: a random hostname is assigned to each sandbox unless
@@ -98,7 +101,6 @@ firejail (0.9.73) baseline; urgency=low
   * ci: whitelist paths, reorganize workflows & speed-up tests (#5960)
   * ci: fix dependabot duplicated workflow runs (#5984)
   * ci: allow running workflows manually (#6026)
-  * ci: re-enable sort.py (#6104)
   * ci: add timeout limits (#6178)
   * ci: make dependabot updates monthly and bump PR limit (#6338)
   * contrib/syntax: remove 'text/plain' from firejail-profile.lang.in (#6057

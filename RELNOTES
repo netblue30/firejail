@@ -154,6 +154,8 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: firecfg: disable text editors (#6002 #6477)
   * profiles: browsers: centralize/sync/improve comments (#6486)
   * profiles: keepassxc: add new socket location (#5447 #6391)
+  * profiles: signal-desktop: allow org.freedesktop.secrets (#6498)
+  * profiles: firefox-common: allow org.freedesktop.portal.Documents (#6444 #6499)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

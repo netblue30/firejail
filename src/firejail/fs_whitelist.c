@@ -341,6 +341,11 @@ static void tmpfs_topdirs(const TopDir * const topdirs) {
 			continue;
 		}
 
+		// Check whether bind mount of tmpfs on topdirs[i].path will affect delayed links
+		// Bind mount of tmpfs on topdirs[i].path has the same meaning that blacklisting topdirs[i].path)
+		// exсept that whitelisted entries will be restored inside topdirs[i].path later.
+		remove_blacklisted_delayed_links(topdirs[i].path, true);
+
 		// special case /run
 		// open /run/firejail, so it can be restored right after mounting the tmpfs
 		int fd = -1;

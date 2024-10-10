@@ -1759,6 +1759,122 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	return 1;
 }
 
+bool does_whitelist_entry_save_file(const char *file, const char *whitelisted_file) {
+	bool is_whitelisted = false;
+	if (!is_dir(whitelisted_file))
+		is_whitelisted = strcmp(whitelisted_file, file) == 0;
+	else
+		is_whitelisted = dir_contains(whitelisted_file, file);
+
+	return is_whitelisted;
+}
+
+bool does_whitelist_save_file(const char *file) {
+	ProfileEntry *entry = cfg.profile;
+	bool is_whitelisted = false;
+
+	while (entry) {
+		if (entry->wparam) {
+			char *wfile = entry->wparam->file;
+			char *wlink = entry->wparam->link;
+
+			is_whitelisted = does_whitelist_entry_save_file(file, wfile);
+			if (!is_whitelisted && wlink) {
+				is_whitelisted = does_whitelist_entry_save_file(file, wlink);
+			}
+
+			if (is_whitelisted)
+				return true;
+		}
+
+		entry = entry->next;
+	}
+
+	return false;
+}
+
+bool is_link_blacklisted(DelayedLinkEntry *link, const char *rblacklist_path, bool can_whitelist_save) {
+	for (int i = 0; i < link->size; i++) {
+		bool is_blacklisted = false;
+
+		if (!is_dir(rblacklist_path))
+			is_blacklisted = strcmp(link->link_filenames[i], rblacklist_path) == 0;
+		else
+			is_blacklisted = dir_contains(rblacklist_path, link->link_filenames[i]);
+
+		if (is_blacklisted) {
+			// used to check whether whitelist will save link
+			if (!can_whitelist_save || can_whitelist_save && !does_whitelist_save_file(link->link_filenames[i]))
+				return true;
+		}
+	}
+
+	return false;
+}
+
+void remove_blacklisted_delayed_links(const char *blacklist_path, bool can_whitelist_save) {
+	char *rblacklist_path = realpath(blacklist_path, NULL);
+	if (rblacklist_path == NULL)
+		errExit("realpath");
+
+	DelayedLinkEntry *prev = NULL;
+	DelayedLinkEntry *ptr = cfg.delayed_links;
+
+	while (ptr) {
+		if (is_link_blacklisted(ptr, rblacklist_path, can_whitelist_save)) {
+
+			fprintf(stderr, "***\n");
+			fprintf(stderr, "*** Warning: cannot create delayed link %s\n", ptr->link_filenames[0]);
+			fprintf(stderr, "*** One of the intermediate links or the final file blacklisted by path %s\n", rblacklist_path);
+			fprintf(stderr, "***\n");
+
+			// Remove link from the delayed links
+			if (prev)
+				prev->next = ptr->next;
+			else
+				cfg.delayed_links = ptr->next;
+
+			DelayedLinkEntry *tmp = ptr;
+			ptr = ptr->next;
+			free(tmp);
+		} else {
+			prev = ptr;
+			ptr = ptr->next;
+		}
+	}
+}
+
+// Accept normalized absolute path
+void delayed_links_add(char *src, char *dst) {
+	char link_point[PATH_MAX];
+	DelayedLinkEntry *link = malloc(sizeof(DelayedLinkEntry));
+
+	if (link == NULL)
+		errExit("malloc");
+
+	link->size = 0;
+	char *link_src = link->link_filenames[link->size++];
+	strncpy(link_src, src, PATH_MAX);
+	link_src[PATH_MAX - 1] = '\0';
+	strncpy(link->dst, dst, PATH_MAX);
+	link->dst[PATH_MAX - 1] = '\0';
+
+	char *cur_absolute = src;
+	size_t link_point_len = 0;
+
+	while ((link_point_len = readlink(cur_absolute, link_point, PATH_MAX)) != (size_t)-1) {
+		if (link->size == MAX_LINKS_LEVEL)
+			errExit("too many intermediate links");
+
+		link_point[link_point_len] = '\0';
+		normalize_link_path(cur_absolute, link_point, link->link_filenames[link->size]);
+		cur_absolute = link->link_filenames[link->size++];
+	}
+
+	link->next = cfg.delayed_links;
+	cfg.delayed_links = link;
+}
+
 // add a profile entry in cfg.profile list; use str to populate the list
 void profile_add(char *str) {
 	EUID_ASSERT();

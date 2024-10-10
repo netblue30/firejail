@@ -121,6 +121,8 @@ static void disable_file(OPERATION op, const char *filename) {
 
 	// modify the file
 	if (op == BLACKLIST_FILE || op == BLACKLIST_NOLOG) {
+		remove_blacklisted_delayed_links(fname, false);
+
 		// some distros put all executables under /usr/bin and make /bin a symbolic link
 		if ((strcmp(fname, "/bin") == 0 || strcmp(fname, "/usr/bin") == 0) &&
 		    is_link(filename) &&

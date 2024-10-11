@@ -359,6 +359,7 @@ blacklist ${HOME}/.config/SubDownloader
 blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/TinyRDM
 blacklist ${HOME}/.config/Twitch
+blacklist ${HOME}/.config/UNDERTALE
 blacklist ${HOME}/.config/Unknown Organization
 blacklist ${HOME}/.config/VSCodium
 blacklist ${HOME}/.config/Whalebird

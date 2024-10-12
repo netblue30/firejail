@@ -36,6 +36,7 @@
 #define DEFAULT_ROOT_PROFILE	"server"
 #define MAX_INCLUDE_LEVEL 16		// include levels in profile files
 
+#define MAX_LINKS_LEVEL 5 // maximum link depth
 
 #define ASSERT_PERMS(file, uid, gid, mode) \
 	do { \
@@ -162,6 +163,13 @@ typedef struct landlock_entry_t {
 	char *data;
 } LandlockEntry;
 
+typedef struct delayed_link_entry_t {
+	struct delayed_link_entry_t *next;
+	char link_filenames[MAX_LINKS_LEVEL][PATH_MAX]; // contains all links from initial file to final one
+	char dst[PATH_MAX];
+	int size; // size of link_filenames
+} DelayedLinkEntry;
+
 typedef struct config_t {
 	// user data
 	char *username;
@@ -172,6 +180,7 @@ typedef struct config_t {
 	ProfileEntry *profile;
 	ProfileEntry *profile_rebuild_etc;	// blacklist files in /etc directory used by fs_rebuild_etc()
 	LandlockEntry *lprofile;
+	DelayedLinkEntry *delayed_links;	// delay links until we can copy them correctly
 
 #define MAX_PROFILE_IGNORE 32
 	char *profile_ignore[MAX_PROFILE_IGNORE];
@@ -495,6 +504,10 @@ char *profile_list_normalize(char *list);
 char *profile_list_compress(char *list);
 void profile_list_augment(char **list, const char *items);
 
+void fs_create_delayed_links();
+void remove_blacklisted_delayed_links(const char *blacklist_path, bool can_whitelist_save);
+void delayed_links_add(char *src, char *dst);
+
 // list.c
 void list(void);
 void tree(void);
@@ -614,6 +627,8 @@ int ascii_isupper(unsigned char c);
 int ascii_isxdigit(unsigned char c);
 int invalid_name(const char *name);
 void check_homedir(const char *dir);
+void normalize_link_path(const char *link_src, const char *link_dst, char *res);
+bool dir_contains(const char *directory, const char *item);
 
 // Get info regarding the last kernel mount operation from /proc/self/mountinfo
 // The return value points to a static area, and will be overwritten by subsequent calls.

@@ -61,6 +61,8 @@ whitelist /usr/share/thunderbird
 #machine-id
 novideo
 
+private-etc thunderbird
+
 # We need the real /tmp for data exchange when xdg-open handles email attachments on KDE
 ignore private-tmp
 

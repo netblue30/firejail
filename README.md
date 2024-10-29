@@ -10,13 +10,16 @@
 [![Codespell](https://github.com/netblue30/firejail/workflows/Codespell/badge.svg)](https://github.com/netblue30/firejail/actions?query=workflow%3ACodespell)
 [![Packaging status (Repology)](https://repology.org/badge/tiny-repos/firejail.svg)](https://repology.org/project/firejail/versions)
 
-Firejail is a SUID sandbox program that reduces the risk of security breaches
-by restricting the running environment of untrusted applications using Linux
-namespaces, seccomp-bpf and Linux capabilities.  It allows a process and all
-its descendants to have their own private view of the globally shared kernel
-resources, such as the network stack, process table, mount table.  Firejail can
-work in a SELinux or AppArmor environment, and it is integrated with Linux
-Control Groups.
+Firejail is a lightweight security tool intended to protect a Linux system by
+setting up a restricted environment for running (potentially untrusted)
+applications.
+
+More specifically, it is an SUID sandbox program that reduces the risk of
+security breaches by using Linux namespaces, seccomp-bpf and Linux
+capabilities.  It allows a process and all its descendants to have their own
+private view of the globally shared kernel resources, such as the network
+stack, process table and mount table.  Firejail can work in an SELinux or
+AppArmor environment, and it is integrated with Linux Control Groups.
 
 Written in C with virtually no dependencies, the software runs on any Linux
 computer with a 3.x kernel version or newer.  It can sandbox any type of
@@ -148,7 +151,9 @@ The version can be checked with `firejail --version` after installing.
 You can also install one of the [released
 packages](https://github.com/netblue30/firejail/releases).
 
-Or clone the source code from our git repository and build manually:
+## Building
+
+You can clone the source code from this git repository and build manually:
 
 ```sh
 git clone https://github.com/netblue30/firejail.git
@@ -156,16 +161,19 @@ cd firejail
 ./configure && make && sudo make install-strip
 ```
 
-On Debian/Ubuntu you will need to install git and gcc.  AppArmor development
-libraries and pkg-config are required when using the `--enable-apparmor`
-./configure option:
+On Debian/Ubuntu you will need to install git and gcc.
+
+To build with AppArmor support (which is usually used on Debian, Ubuntu,
+openSUSE and derivatives), install the AppArmor development libraries and
+pkg-config and use the `--enable-apparmor` ./configure option:
 
 ```sh
 sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 ```
 
-For the `--enable-selinux` option, add libselinux1-dev (libselinux-devel for
-Fedora).
+To build with SELinux support (which is usually used on Fedora, RHEL and
+derivatives), install libselinux1-dev (libselinux-devel on Fedora) and use the
+`--enable-selinux` ./configure option.
 
 Detailed information on using firejail from git is available on the
 [wiki](https://github.com/netblue30/firejail/wiki/Using-firejail-from-git).

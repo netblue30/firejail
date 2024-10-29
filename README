@@ -28,14 +28,17 @@ Compile and install the mainline version from GitHub:
     cd firejail
     ./configure && make && sudo make install-strip
 
-On Debian/Ubuntu you will need to install git and gcc.  AppArmor development
-libraries and pkg-config are required when using the --enable-apparmor
-./configure option:
+On Debian/Ubuntu you will need to install git and gcc.
+
+To build with AppArmor support (which is usually used on Debian, Ubuntu,
+openSUSE and derivatives), install the AppArmor development libraries and
+pkg-config and use the `--enable-apparmor` ./configure option:
 
     sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 
-For the --enable-selinux option, add libselinux1-dev (libselinux-devel for
-Fedora).
+To build with SELinux support (which is usually used on Fedora, RHEL and
+derivatives), install libselinux1-dev (libselinux-devel on Fedora) and use the
+`--enable-selinux` ./configure option.
 
 We build our release firejail.tar.xz and firejail.deb packages using the
 following commands:

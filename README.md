@@ -164,7 +164,8 @@ libraries and pkg-config are required when using the `--enable-apparmor`
 sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 ```
 
-For `--selinux` option, add libselinux1-dev (libselinux-devel for Fedora).
+For the `--enable-selinux` option, add libselinux1-dev (libselinux-devel for
+Fedora).
 
 Detailed information on using firejail from git is available on the
 [wiki](https://github.com/netblue30/firejail/wiki/Using-firejail-from-git).

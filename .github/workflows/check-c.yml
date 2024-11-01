@@ -161,7 +161,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@e2b3eafc8d227b0241d48be5f425d47c2d750a13
+      uses: github/codeql-action/init@662472033e021d55d94146f66f6058822b0b39fd
       with:
         languages: cpp
 
@@ -172,4 +172,4 @@ jobs:
       run: make -j "$(nproc)"
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@e2b3eafc8d227b0241d48be5f425d47c2d750a13
+      uses: github/codeql-action/analyze@662472033e021d55d94146f66f6058822b0b39fd

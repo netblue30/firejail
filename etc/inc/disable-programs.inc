@@ -1260,6 +1260,7 @@ blacklist ${RUNUSER}/akonadi
 blacklist ${RUNUSER}/i3
 blacklist ${RUNUSER}/psd/*firefox*
 blacklist ${RUNUSER}/qutebrowser
+blacklist /etc/clamav
 blacklist /etc/ssmtp
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*

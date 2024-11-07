@@ -161,7 +161,7 @@ nogroups
 nonewprivs
 noroot
 notv
-nou2f
+#nou2f # may break gamepads in certain games (see #6523)
 # To allow VR and camera-based motion tracking, add 'ignore novideo' to your
 # steam.local.
 novideo

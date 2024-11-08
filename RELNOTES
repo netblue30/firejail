@@ -35,7 +35,7 @@ firejail (0.9.73) baseline; urgency=low
   * modif: improve errExit error messages (#5871)
   * modif: drop deprecated 'shell' option references (#5894)
   * modif: keep pipewire group unless nosound is used (#5992 #5993)
-  * modif: fcopy: Use lstat when copying directory (#5957)
+  * modif: fcopy: use lstat when copying directory (#5378 #5957)
   * modif: private-dev: keep /dev/kfd unless no3d is used (#6380)
   * modif: keep /sys/module/nvidia* if prop driver and no no3d (#6372 #6387)
   * removal: firemon: remove --interface option (it duplicates the firejail

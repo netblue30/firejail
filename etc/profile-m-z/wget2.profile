@@ -9,7 +9,6 @@ include wget2.local
 #include globals.local
 
 noblacklist ${HOME}/.config/wget
-noblacklist ${HOME}/.local/share/wget
 ignore noblacklist ${HOME}/.wgetrc
 
 private-bin wget2

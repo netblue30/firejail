@@ -7,6 +7,7 @@ include wget.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.local/share/wget
 noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/.wget-hsts
 noblacklist ${HOME}/.wgetrc

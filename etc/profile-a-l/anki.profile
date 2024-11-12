@@ -46,7 +46,7 @@ protocol unix,inet,inet6
 seccomp !chroot
 
 disable-mnt
-private-bin anki,python*
+private-bin anki,mplayer,mpv,python*
 private-cache
 private-dev
 private-etc @tls-ca,@x11

@@ -9,6 +9,8 @@ include globals.local
 # Add the following to anki.local if you don't need media playing/recording
 # (lua is needed by mpv):
 #ignore include allow-lua.inc
+#machine-id
+#nosound
 
 noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.config/mpv
@@ -40,7 +42,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-machine-id
+#machine-id
 netfilter
 no3d
 nodvd
@@ -48,7 +50,7 @@ nogroups
 noinput
 nonewprivs
 noroot
-nosound
+#nosound
 notv
 nou2f
 novideo

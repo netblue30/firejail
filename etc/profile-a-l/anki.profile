@@ -6,10 +6,17 @@ include anki.local
 # Persistent global definitions
 include globals.local
 
+# Add the following to anki.local if you don't need media playing/recording
+# (lua is needed by mpv):
+#ignore include allow-lua.inc
+
 noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.local/share/Anki2
 noblacklist ${HOME}/.mplayer
+
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

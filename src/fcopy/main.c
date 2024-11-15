@@ -368,9 +368,12 @@ static char *check(const char *src) {
 	if (s.st_uid == user) {
 		// ok
 	}
-	// on systems with systemd-resolved installed /etc/resolve.conf is a symlink to
-	//    /run/systemd/resolve/resolv.conf; this file is owned by systemd-resolve user
-	else if (user == 0 && strncmp(rsrc, "/run/systemd/resolve/", 21) == 0) {
+	// On systems using systemd-resolved, /etc/resolve.conf may be owned by
+	// the "systemd-resolve" user and may be a regular file or a symlink to
+	// /run/systemd/resolve/resolv.conf (see #4545).
+	else if (user == 0 &&
+			((strcmp(rsrc, "/etc/resolv.conf") == 0) ||
+			(strncmp(rsrc, "/run/systemd/resolve/", 21) == 0))) {
 		// check user systemd-resolve
 		struct passwd *p = getpwnam("systemd-resolve");
 		if (!p)

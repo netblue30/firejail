@@ -203,6 +203,8 @@ avoidr (https://github.com/avoidr)
 	- added mcabber profile
 	- fixed mpv profile
 	- various other fixes
+ayham (https://github.com/ayham-1)
+	- allow custom homedir support for gpgagent
 Азалия Смарагдова/ChrysoliteAzalea (https://github.com/ChrysoliteAzalea)
 	- add support for custom AppArmor profiles (--apparmor=)
 	- add Landlock support
@@ -261,6 +263,8 @@ bymoz089 (https://github.com/bymoz089)
 	- add timezone access to make libical functional
 BytesTuner (https://github.com/BytesTuner)
 	- provided keepassxc profile
+Caleb McCombs (https://github.com/squatched)
+	- Zoom profile fixes
 caoliver (https://github.com/caoliver)
 	- network system fixes
 Carlo Abelli (https://github.com/carloabelli)
@@ -274,6 +278,8 @@ Cat (https://github.com/ecat3)
 cayday (https://github.com/caydey)
 	- added ~/Private blacklist in disable-common.inc
 	- added quiet to some CLI profiles
+celenityy (https://github.com/celenityy)
+	- Thunderbird profile fix
 Christian Pinedo (https://github.com/chrpinedo)
 	- added nicotine profile
 	- allow python3 in totem profile
@@ -418,6 +424,7 @@ Felipe Barriga Richards (https://github.com/fbarriga)
 	- --private-etc fix
 Felix Pehla (https://github.com/FelixPehla)
 	- fix fractal profile
+	- blacklist sway IPC socket globally
 fenuks (https://github.com/fenuks)
 	- fix sound in games using FMOD
 	- allow /opt/tor-browser for Tor Browser profile
@@ -437,6 +444,8 @@ floxo (https://github.com/floxo)
 	- fixed qml disk cache issue
 Foemass (https://github.com/Foemass)
 	- documentation
+Foxreef (https://github.com/Foxreef)
+	- steam profile fixes
 Franco (nextime) Lanza (https://github.com/nextime)
 	- added --private-template/--private-home
 František Polášek (https://github.com/fandaa)
@@ -501,6 +510,8 @@ G4JC (https://sourceforge.net/u/gaming4jc/profile/)
 	- profile fixes
 Gaman Gabriel (https://github.com/stelariusinfinitek)
 	- inox profile
+Gabriel (https://github.com/gcb)
+	- okular profile fix
 geg2048 (https://github.com/geg2048)
 	- kwallet profile fixes
 glitsj16 (https://github.com/glitsj16)
@@ -1230,6 +1241,7 @@ Ted Robertson (https://github.com/tredondo)
 	- various documentation fixes
 	- blacklist Exodus wallet
 	- blacklist monero-project directory
+	- serveral README file fixes
 tools200ms (https://github.com/tools200ms)
 	- fixed allow-ssh.inc
 Tus1688 (https://github.com/Tus1688)
@@ -1325,6 +1337,8 @@ ydididodat (https://github.com/ydididodat)
 yumkam (https://github.com/yumkam)
 	- add compile-time option to restrict --net= to root only
 	- man page fixes
+Yves-Alexis Perez (https://github.com/corsac-s)
+	- signal-desktop profile fix
 Zack Weinberg (https://github.com/zackw)
 	- added support for joining a persistent, named network namespace
 	- removed libconnect

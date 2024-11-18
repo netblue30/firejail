@@ -139,29 +139,6 @@ $ sudo firecfg --clean
 /usr/local/bin/vlc removed
 .br
 [...]
-.SH FILES
-.PP
-Configuration files are searched for and parsed in the following paths:
-.PP
-.RS
-1. /etc/firejail/firecfg.d/*.conf (in alphabetical order)
-.br
-2. /etc/firejail/firecfg.config
-.RE
-.PP
-The programs that are supported by default are listed in
-/etc/firejail/firecfg.config.
-It is recommended to leave it as is and put all customizations inside
-/etc/firejail/firecfg.d/.
-.PP
-Profile files are also searched in the user configuration directory:
-.PP
-.RS
-3. ~/.config/firejail/*.profile
-.RE
-.PP
-For every \fBPROGRAM.profile\fR file found, firecfg attempts to create a
-symlink for "PROGRAM", as if "PROGRAM" was listed in a configuration file.
 .SH SYNTAX
 Configuration file syntax:
 .PP
@@ -200,6 +177,29 @@ following lines can to be used to ignore both:
 .br
 !spectacle
 .RE
+.SH FILES
+.PP
+Configuration files are searched for and parsed in the following paths:
+.PP
+.RS
+1. /etc/firejail/firecfg.d/*.conf (in alphabetical order)
+.br
+2. /etc/firejail/firecfg.config
+.RE
+.PP
+The programs that are supported by default are listed in
+/etc/firejail/firecfg.config.
+It is recommended to leave it as is and put all customizations inside
+/etc/firejail/firecfg.d/.
+.PP
+Profile files are also searched in the user configuration directory:
+.PP
+.RS
+3. ~/.config/firejail/*.profile
+.RE
+.PP
+For every \fBPROGRAM.profile\fR file found, firecfg attempts to create a
+symlink for "PROGRAM", as if "PROGRAM" was listed in a configuration file.
 .SH LICENSE
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 .PP

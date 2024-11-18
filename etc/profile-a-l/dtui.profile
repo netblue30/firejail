@@ -1,12 +1,15 @@
-# Firejail profile for d-spy
-# Description: D-Bus debugger for GNOME
+# Firejail profile for dtui
+# Description: TUI D-Bus debugger
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
-include d-spy.local
+include dtui.local
 # Persistent global definitions
 include globals.local
 
-private-bin d-spy
+private-bin dtui
+
+memory-deny-write-execute
 
 # Redirect
 include dbus-debug-common.profile

@@ -68,7 +68,7 @@ nogroups
 nonewprivs
 noroot
 notv
-nou2f
+#nou2f # may break gamepads in certain games (see #6523)
 novideo
 protocol unix,inet,inet6,netlink
 seccomp !clone3,!modify_ldt,!process_vm_readv,!ptrace

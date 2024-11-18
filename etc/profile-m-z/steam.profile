@@ -12,6 +12,7 @@ noblacklist ${HOME}/.config/MangoHud
 noblacklist ${HOME}/.config/ModTheSpire
 noblacklist ${HOME}/.config/RogueLegacy
 noblacklist ${HOME}/.config/RogueLegacyStorageContainer
+noblacklist ${HOME}/.config/UNDERTALE
 noblacklist ${HOME}/.factorio
 noblacklist ${HOME}/.killingfloor
 noblacklist ${HOME}/.klei
@@ -66,6 +67,7 @@ mkdir ${HOME}/.config/Loop_Hero
 mkdir ${HOME}/.config/MangoHud
 mkdir ${HOME}/.config/ModTheSpire
 mkdir ${HOME}/.config/RogueLegacy
+mkdir ${HOME}/.config/UNDERTALE
 mkdir ${HOME}/.config/unity3d
 mkdir ${HOME}/.factorio
 mkdir ${HOME}/.killingfloor
@@ -105,6 +107,7 @@ whitelist ${HOME}/.config/MangoHud
 whitelist ${HOME}/.config/ModTheSpire
 whitelist ${HOME}/.config/RogueLegacy
 whitelist ${HOME}/.config/RogueLegacyStorageContainer
+whitelist ${HOME}/.config/UNDERTALE
 whitelist ${HOME}/.config/unity3d
 whitelist ${HOME}/.factorio
 whitelist ${HOME}/.killingfloor
@@ -158,7 +161,7 @@ nogroups
 nonewprivs
 noroot
 notv
-nou2f
+#nou2f # may break gamepads in certain games (see #6523)
 # To allow VR and camera-based motion tracking, add 'ignore novideo' to your
 # steam.local.
 novideo

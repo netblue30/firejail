@@ -19,10 +19,12 @@ include disable-exec.inc
 include disable-programs.inc
 
 whitelist ${RUNUSER}/gcr/ssh
-whitelist ${RUNUSER}/gnupg/S.gpg-agent.ssh
+whitelist ${RUNUSER}/gnupg/*/S.gpg-agent.ssh # custom gpg homedir setup
+whitelist ${RUNUSER}/gnupg/S.gpg-agent.ssh # default gpg homedir setup
+whitelist ${RUNUSER}/gvfsd-sftp
 whitelist ${RUNUSER}/keyring/ssh
-include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
+include whitelist-usr-share-common.inc
 
 apparmor
 caps.drop all

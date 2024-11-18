@@ -8,5 +8,7 @@ include firefox-esr.local
 
 whitelist /usr/share/firefox-esr
 
+private-etc firefox-esr
+
 # Redirect
 include firefox.profile

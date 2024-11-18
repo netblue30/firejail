@@ -4,6 +4,7 @@ include firefox-common-addons.local
 
 # Prevent whitelisting in ${RUNUSER}
 ignore whitelist ${RUNUSER}/*firefox*
+ignore whitelist ${RUNUSER}/app/org.keepassxc.KeePassXC
 ignore whitelist ${RUNUSER}/psd/*firefox*
 ignore whitelist ${RUNUSER}/kpxc_server
 ignore whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
@@ -79,7 +80,7 @@ whitelist ${HOME}/dwhelper
 whitelist /usr/share/lua*
 whitelist /usr/share/mpv
 
-# GNOME Shell integration (chrome-gnome-shell) needs dbus and python
+# GNOME Shell integration (chrome-gnome-shell) needs dbus and python.
 noblacklist ${HOME}/.local/share/gnome-shell
 whitelist ${HOME}/.local/share/gnome-shell
 dbus-user.talk ca.desrt.dconf
@@ -92,8 +93,7 @@ include allow-python3.inc
 #private-bin keepassxc-proxy
 
 # Flash plugin
-# private-etc must first be enabled in firefox-common.profile and in profiles including it.
-#private-etc adobe
+private-etc adobe
 
 # ff2mpv
 #ignore noexec ${HOME}

@@ -6,6 +6,7 @@ include mplayer.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.dvdcss
 noblacklist ${HOME}/.mplayer
 
 include disable-common.inc
@@ -16,6 +17,7 @@ include disable-programs.inc
 
 read-only ${DESKTOP}
 mkdir ${HOME}/.mplayer
+whitelist ${HOME}/.dvdcss
 whitelist ${HOME}/.mplayer
 include whitelist-common.inc
 include whitelist-player-common.inc

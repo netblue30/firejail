@@ -6,12 +6,12 @@ include bitwarden.local
 # Persistent global definitions
 include globals.local
 
-# Disabled until someone reported positive feedback
-ignore include whitelist-usr-share-common.inc
-
 ignore noexec /tmp
 
 noblacklist ${HOME}/.config/Bitwarden
+
+# Allow /bin/sh (blacklisted by disable-shell.inc)
+include allow-bin-sh.inc
 
 include disable-shell.inc
 

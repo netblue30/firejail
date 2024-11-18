@@ -29,6 +29,7 @@ noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/youtube-dl
 noblacklist ${HOME}/.config/yt-dlp
 noblacklist ${HOME}/.config/yt-dlp.conf
+noblacklist ${HOME}/.dvdcss
 noblacklist ${HOME}/.local/state/mpv
 noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/yt-dlp.conf
@@ -60,6 +61,7 @@ whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.config/yt-dlp
 whitelist ${HOME}/.config/yt-dlp.conf
+whitelist ${HOME}/.dvdcss
 whitelist ${HOME}/.local/state/mpv
 whitelist ${HOME}/.netrc
 whitelist ${HOME}/yt-dlp.conf

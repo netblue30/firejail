@@ -19,6 +19,7 @@ ignore dbus-system none
 noblacklist ${HOME}/.config/zoom.conf
 noblacklist ${HOME}/.config/zoomus.conf
 noblacklist ${HOME}/.zoom
+noblacklist ${DOCUMENTS}
 
 nowhitelist ${DOWNLOADS}
 
@@ -26,10 +27,12 @@ mkdir ${HOME}/.cache/zoom
 mkfile ${HOME}/.config/zoom.conf
 mkfile ${HOME}/.config/zoomus.conf
 mkdir ${HOME}/.zoom
+mkdir ${HOME}/Documents/Zoom
 whitelist ${HOME}/.cache/zoom
 whitelist ${HOME}/.config/zoom.conf
 whitelist ${HOME}/.config/zoomus.conf
 whitelist ${HOME}/.zoom
+whitelist ${HOME}/Documents/Zoom
 
 # Disable for now, see https://github.com/netblue30/firejail/issues/3726
 #private-etc alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl

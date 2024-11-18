@@ -359,6 +359,7 @@ blacklist ${HOME}/.config/SubDownloader
 blacklist ${HOME}/.config/Thunar
 blacklist ${HOME}/.config/TinyRDM
 blacklist ${HOME}/.config/Twitch
+blacklist ${HOME}/.config/UNDERTALE
 blacklist ${HOME}/.config/Unknown Organization
 blacklist ${HOME}/.config/VSCodium
 blacklist ${HOME}/.config/Whalebird
@@ -728,6 +729,7 @@ blacklist ${HOME}/.dillo
 blacklist ${HOME}/.dooble
 blacklist ${HOME}/.dosbox
 blacklist ${HOME}/.dropbox*
+blacklist ${HOME}/.dvdcss
 blacklist ${HOME}/.easystroke
 blacklist ${HOME}/.electron-cache
 blacklist ${HOME}/.electron-cash
@@ -1261,6 +1263,7 @@ blacklist ${RUNUSER}/qutebrowser
 blacklist /etc/ssmtp
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*
+blacklist /tmp/evolution-*
 blacklist /tmp/i3-*
 blacklist /tmp/lwjgl_*
 blacklist /var/games/nethack

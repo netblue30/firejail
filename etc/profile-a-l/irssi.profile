@@ -6,7 +6,7 @@ include irssi.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.irssi
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc
@@ -15,13 +15,13 @@ include disable-interpreters.inc
 include disable-proc.inc
 include disable-programs.inc
 include disable-shell.inc
-include disable-write-mnt.inc
 include disable-X11.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.irssi
-whitelist ${HOME}/.irssi
+mkdir ${HOME}/.irssi/
+whitelist ${HOME}/.irssi/
 
+include whitelist-common.inc
 #include whitelist-usr-share-common.inc
 #include whitelist-var-common.inc
 
@@ -45,11 +45,10 @@ seccomp
 #shell none
 #tracelog
 disable-mnt
+private-cache
+private-dev
 ##private-opt NAME
 #private-tmp
-##writable-run-user
-##writable-var
-##writable-var-log
 
 dbus-user none
 dbus-system none

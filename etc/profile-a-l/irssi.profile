@@ -6,7 +6,7 @@ include irssi.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.irssi/
+noblacklist ${HOME}/.irssi
 
 include disable-common.inc
 include disable-devel.inc

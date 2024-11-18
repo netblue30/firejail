@@ -7,7 +7,9 @@ include anki.local
 include globals.local
 
 noblacklist ${DOCUMENTS}
+noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.local/share/Anki2
+noblacklist ${HOME}/.mplayer
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
@@ -23,7 +25,9 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/Anki2
 whitelist ${DOCUMENTS}
+whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.local/share/Anki2
+whitelist ${HOME}/.mplayer
 include whitelist-common.inc
 include whitelist-var-common.inc
 

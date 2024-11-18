@@ -22,8 +22,8 @@ mkdir ${HOME}/.irssi/
 whitelist ${HOME}/.irssi/
 
 include whitelist-common.inc
-#include whitelist-usr-share-common.inc
-#include whitelist-var-common.inc
+include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 netfilter
@@ -53,7 +53,7 @@ private-dev
 dbus-user none
 dbus-system none
 
-# NOTE: almost sure this thing uses perl, but all seems to work without allowing it.
+# NOTE: almost sure irssi uses perl, but all seems to work without allowing it.
 
 ##deterministic-shutdown
 ##env VAR=VALUE

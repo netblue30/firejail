@@ -39,27 +39,16 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-# NOTE: comments here are things that can be improved, if you can spare the time.
-##seccomp.drop SYSCALLS (see syscalls.txt)
-##seccomp-error-action log (only for debugging seccomp issues)
-#shell none
-#tracelog
+seccomp.block-secondary
+
 disable-mnt
 private-cache
 private-dev
-##private-opt NAME
-#private-tmp
+private-tmp
 
 dbus-user none
 dbus-system none
 
 # NOTE: almost sure irssi uses perl, but all seems to work without allowing it.
 
-##deterministic-shutdown
-##env VAR=VALUE
-##join-or-start NAME
-#memory-deny-write-execute
-##noexec PATH
-##read-only ${HOME}
-##read-write ${HOME}
 restrict-namespaces

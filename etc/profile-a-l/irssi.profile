@@ -19,8 +19,8 @@ include disable-write-mnt.inc
 include disable-X11.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.irssi/
-whitelist ${HOME}/.irssi/
+mkdir ${HOME}/.irssi
+whitelist ${HOME}/.irssi
 
 #include whitelist-usr-share-common.inc
 #include whitelist-var-common.inc

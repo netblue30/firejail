@@ -777,6 +777,7 @@ blacklist ${HOME}/.i2p
 blacklist ${HOME}/.icedove
 blacklist ${HOME}/.imagej
 blacklist ${HOME}/.inkscape
+blacklist ${HOME}/.irssi/
 blacklist ${HOME}/.itch
 blacklist ${HOME}/.ivy2
 blacklist ${HOME}/.jack-server

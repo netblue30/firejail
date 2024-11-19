@@ -6,6 +6,11 @@ include irssi.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.irssi
+
+# add next line to irssi.local if you use perl scripting
+#include allow-perl.inc
+
 blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
@@ -18,9 +23,8 @@ include disable-shell.inc
 include disable-X11.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.irssi/
-whitelist ${HOME}/.irssi/
-
+mkdir ${HOME}/.irssi
+whitelist ${HOME}/.irssi
 include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -50,7 +54,5 @@ private-tmp
 
 dbus-user none
 dbus-system none
-
-# NOTE: almost sure irssi uses perl, but all seems to work without allowing it.
 
 restrict-namespaces

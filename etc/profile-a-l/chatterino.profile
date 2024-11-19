@@ -20,10 +20,12 @@ noblacklist ${HOME}/.local/share/chatterino
 noblacklist ${HOME}/.local/share/vlc
 noblacklist ${HOME}/.local/state/mpv
 
-# Allow Lua for mpv (blacklisted by disable-interpreters.inc)
+# Lua is required by mpv.
+# Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
-# Allow Python for Streamlink integration (blacklisted by disable-interpreters.inc)
+# Python is required for streamlink integration.
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
 include disable-common.inc

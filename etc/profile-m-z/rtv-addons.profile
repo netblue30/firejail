@@ -18,6 +18,9 @@ noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/.w3m
 
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
+
 whitelist ${HOME}/.cache/mpv
 whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
 whitelist ${HOME}/.config/mpv

@@ -57,7 +57,7 @@ private-cache
 private-dev
 private-etc
 #private-lib libtesseract.so.*
-private-tmp
+#private-tmp # breaks ocrmypdf (see #6550)
 
 dbus-user none
 dbus-system none

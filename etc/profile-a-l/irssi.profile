@@ -8,7 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.irssi
 
-# add next line to irssi.local if you use perl scripting
+# Add the next line to irssi.local if you use perl scripting.
 #include allow-perl.inc
 
 blacklist ${RUNUSER}/wayland-*

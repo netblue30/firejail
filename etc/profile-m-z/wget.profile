@@ -7,6 +7,7 @@ include wget.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/wget
 noblacklist ${HOME}/.local/share/wget
 noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/.wget-hsts
@@ -55,7 +56,7 @@ private-bin wget
 private-cache
 private-dev
 # Depending on workflow you can add the next line to your wget.local.
-#private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl,wgetrc
+#private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl,wget2rc,wgetrc
 #private-tmp
 
 dbus-user none

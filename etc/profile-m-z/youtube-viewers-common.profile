@@ -32,6 +32,8 @@ include disable-xdg.inc
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
 whitelist ${HOME}/.config/mpv
+whitelist /usr/share/lua*
+whitelist /usr/share/mpv
 include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc

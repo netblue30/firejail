@@ -1,5 +1,5 @@
 # Firejail profile for irssi
-# Description: IRC client
+# Description: TUI IRC client
 # This file is overwritten after every install/update
 # Persistent local customizations
 include irssi.local

@@ -71,25 +71,25 @@ def check_profile(filename, overwrite):
         lines = profile.read().split("\n")
         was_fixed = False
         fixed_profile = []
-        for lineno, line in enumerate(lines, 1):
-            fixed_line = line
-            if fixed_line[:12] in ("private-bin ", "private-etc ", "private-lib "):
-                fixed_line = f"{fixed_line[:12]}{sort_alphabetical(fixed_line[12:])}"
-            elif fixed_line[:13] in ("seccomp.drop ", "seccomp.keep "):
-                fixed_line = f"{fixed_line[:13]}{sort_alphabetical(fixed_line[13:])}"
-            elif fixed_line[:10] in ("caps.drop ", "caps.keep "):
-                fixed_line = f"{fixed_line[:10]}{sort_alphabetical(fixed_line[10:])}"
-            elif fixed_line[:8] == "protocol":
-                fixed_line = f"protocol {sort_protocol(fixed_line[9:])}"
-            elif fixed_line[:8] == "seccomp ":
-                fixed_line = f"{fixed_line[:8]}{sort_alphabetical(fixed_line[8:])}"
-            if fixed_line != line:
+        for lineno, original_line in enumerate(lines, 1):
+            line = original_line
+            if line[:12] in ("private-bin ", "private-etc ", "private-lib "):
+                line = f"{line[:12]}{sort_alphabetical(line[12:])}"
+            elif line[:13] in ("seccomp.drop ", "seccomp.keep "):
+                line = f"{line[:13]}{sort_alphabetical(line[13:])}"
+            elif line[:10] in ("caps.drop ", "caps.keep "):
+                line = f"{line[:10]}{sort_alphabetical(line[10:])}"
+            elif line[:8] == "protocol":
+                line = f"protocol {sort_protocol(line[9:])}"
+            elif line[:8] == "seccomp ":
+                line = f"{line[:8]}{sort_alphabetical(line[8:])}"
+            if line != original_line:
                 was_fixed = True
                 print(
-                    f"{filename}:{lineno}:-{line}\n"
-                    f"{filename}:{lineno}:+{fixed_line}"
+                    f"{filename}:{lineno}:-{original_line}\n"
+                    f"{filename}:{lineno}:+{line}"
                 )
-            fixed_profile.append(fixed_line)
+            fixed_profile.append(line)
 
         if was_fixed:
             if overwrite:

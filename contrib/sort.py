@@ -72,18 +72,17 @@ def check_profile(filename, overwrite):
         was_fixed = False
         fixed_profile = []
         for lineno, line in enumerate(lines, 1):
-            if line[:12] in ("private-bin ", "private-etc ", "private-lib "):
-                fixed_line = f"{line[:12]}{sort_alphabetical(line[12:])}"
-            elif line[:13] in ("seccomp.drop ", "seccomp.keep "):
-                fixed_line = f"{line[:13]}{sort_alphabetical(line[13:])}"
-            elif line[:10] in ("caps.drop ", "caps.keep "):
-                fixed_line = f"{line[:10]}{sort_alphabetical(line[10:])}"
-            elif line[:8] == "protocol":
-                fixed_line = f"protocol {sort_protocol(line[9:])}"
-            elif line[:8] == "seccomp ":
-                fixed_line = f"{line[:8]}{sort_alphabetical(line[8:])}"
-            else:
-                fixed_line = line
+            fixed_line = line
+            if fixed_line[:12] in ("private-bin ", "private-etc ", "private-lib "):
+                fixed_line = f"{fixed_line[:12]}{sort_alphabetical(fixed_line[12:])}"
+            elif fixed_line[:13] in ("seccomp.drop ", "seccomp.keep "):
+                fixed_line = f"{fixed_line[:13]}{sort_alphabetical(fixed_line[13:])}"
+            elif fixed_line[:10] in ("caps.drop ", "caps.keep "):
+                fixed_line = f"{fixed_line[:10]}{sort_alphabetical(fixed_line[10:])}"
+            elif fixed_line[:8] == "protocol":
+                fixed_line = f"protocol {sort_protocol(fixed_line[9:])}"
+            elif fixed_line[:8] == "seccomp ":
+                fixed_line = f"{fixed_line[:8]}{sort_alphabetical(fixed_line[8:])}"
             if fixed_line != line:
                 was_fixed = True
                 print(

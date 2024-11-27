@@ -171,6 +171,7 @@ int login_shell = 0;
 int just_run_the_shell = 0;
 int arg_netlock = 0;
 int arg_restrict_namespaces = 0;
+int arg_wayland = 0;
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -1646,6 +1647,11 @@ int main(int argc, char **argv, char **envp) {
 				cfg.nice = 0;
 			arg_nice = 1;
 		}
+#ifdef HAVE_WAYLAND_SECURITY_CONTEXT
+		else if (strcmp(argv[1], "--wayland") == 0) {
+			arg_wayland = 1;
+		}
+#endif
 
 		//*************************************
 		// filesystem

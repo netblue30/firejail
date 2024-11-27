@@ -21,7 +21,8 @@ The following commands are supported:
 Note that this is only applicable to commands that support multiple arguments.
 
 Trailing whitespace is removed in all lines (that is, not just in lines
-containing supported commands).
+containing supported commands) and other whitespace is stripped depending on
+the command.
 
 Options:
     -h  Print this message.
@@ -45,7 +46,8 @@ Exit Codes:
 
 def sort_alphabetical(original_items):
     items = original_items.split(",")
-    items = filter(None, set(items))
+    items = set(map(str.strip, items))
+    items = filter(None, items)
     items = sorted(items)
     return ",".join(items)
 
@@ -56,6 +58,9 @@ def sort_protocol(original_protocols):
 
         unix,inet,inet6,netlink,packet,bluetooth
     """
+
+    # remove all whitespace
+    original_protocols = "".join(original_protocols.split())
 
     # shortcut for common protocol lines
     if original_protocols in ("unix", "unix,inet,inet6"):

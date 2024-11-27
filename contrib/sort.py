@@ -9,7 +9,7 @@ from os import path
 from sys import argv, exit as sys_exit, stderr
 
 __doc__ = f"""\
-Sort the arguments of commands in profiles.
+Strip whitespace and sort the arguments of commands in profiles.
 
 Usage: {path.basename(argv[0])} [-h] [-i] [-n] [--] [/path/to/profile ...]
 
@@ -19,6 +19,9 @@ The following commands are supported:
     seccomp.drop, seccomp.keep, protocol
 
 Note that this is only applicable to commands that support multiple arguments.
+
+Trailing whitespace is removed in all lines (that is, not just in lines
+containing supported commands).
 
 Options:
     -h  Print this message.
@@ -72,7 +75,7 @@ def check_profile(filename, overwrite):
         was_fixed = False
         fixed_profile = []
         for lineno, original_line in enumerate(lines, 1):
-            line = original_line
+            line = original_line.rstrip()
             if line[:12] in ("private-bin ", "private-etc ", "private-lib "):
                 line = f"{line[:12]}{sort_alphabetical(line[12:])}"
             elif line[:13] in ("seccomp.drop ", "seccomp.keep "):

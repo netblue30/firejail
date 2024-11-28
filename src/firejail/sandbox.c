@@ -1025,6 +1025,7 @@ int sandbox(void* sandbox_arg) {
 		fs_mnt(0);
 
 	// Install new /etc last, so we can use it as long as possible
+	float time_private_etc = 0;
 	if (arg_private_etc) {
 		if (cfg.chrootdir)
 			fwarning("private-etc feature is disabled in chroot\n");
@@ -1051,17 +1052,8 @@ int sandbox(void* sandbox_arg) {
 			if (umount2("/etc/passwd", MNT_DETACH) == -1)
 				fprintf(stderr, "/etc/passwd: unmount: %s\n", strerror(errno));
 
-			fs_private_dir_mount("/etc", RUN_ETC_DIR);
-			fmessage("Private /etc installed in %0.2f ms\n", timetrace_end());
+			time_private_etc += timetrace_end();
 
-			// create /etc/ld.so.preload file again
-			if (need_preload)
-				fs_trace_touch_preload();
-
-			// openSUSE configuration is split between /etc and /usr/etc
-			// process private-etc a second time
-			if (access("/usr/etc", F_OK) == 0)
-				fs_private_dir_list("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep);
 		}
 	}
 
@@ -1075,6 +1067,23 @@ int sandbox(void* sandbox_arg) {
 	// ... followed by blacklist commands
 	fs_blacklist(); // mkdir and mkfile are processed all over again
 	EUID_ROOT();
+
+	if (arg_private_etc && !cfg.chrootdir && !arg_overlay) {
+		timetrace_start();
+		// create delayed links from etc
+		fs_create_delayed_links();
+		fs_private_dir_mount("/etc", RUN_ETC_DIR);
+		fmessage("Private /etc installed in %0.2f ms\n", timetrace_end());
+
+		// create /etc/ld.so.preload file again
+		if (need_preload)
+			fs_trace_touch_preload();
+
+		// openSUSE configuration is split between /etc and /usr/etc
+		// process private-etc a second time
+		if (access("/usr/etc", F_OK) == 0)
+			fs_private_dir_list("/usr/etc", RUN_USR_ETC_DIR, cfg.etc_private_keep);
+	}
 
 	//****************************
 	// nosound/no3d/notv/novideo and fix for pulseaudio 7.0

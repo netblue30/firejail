@@ -1541,3 +1541,82 @@ void check_homedir(const char *dir) {
 		fmessage("No full support for symbolic links in path of user directory.\n"
 			"Please provide resolved path in password database (/etc/passwd).\n\n");
 }
+
+/*
+ * Normalize link destination path according to link source path
+ *
+ * Examples:
+ * 		Input: /usr/share/timezone/localtime, Europe/Moscow, ...
+ * 		Output: /usr/share/timezone/Europe/Moscow
+ *
+ * 		Input: /usr/share/timezone/localtime, ../../../../////usr/share//././timezone/Europe/Moscow, ...
+ * 		Output: /usr/share/timezone/Europe/Moscow
+ *
+ * 		Input: /usr/share/timezone/localtime, /some/other/location/./Europe/Moscow, ...
+ * 		Output: /some/other/location/Europe/Moscow
+ */
+void normalize_link_path(const char *link_src, const char *link_dst, char *res)
+{
+	size_t res_len = 0;
+	size_t link_dst_len = strlen(link_dst);
+	const char *ptr = link_dst;
+	const char *end = &link_dst[link_dst_len];
+	const char *next;
+
+	if (link_dst[0] != '/') {
+		// relative path
+		size_t link_src_len = strlen(link_src);
+		if (!is_dir(link_src)) {
+			char *slash = strrchr(link_src, '/');
+			if (slash != NULL)
+				link_src_len = slash - link_src;
+		}
+
+		memcpy(res, link_src, link_src_len);
+		res_len = link_src_len;
+	}
+
+	for (ptr = link_dst; ptr < end; ptr = next + 1) {
+		size_t len;
+		next = memchr(ptr, '/', end - ptr);
+		if (next == NULL)
+			next = end;
+		len = next - ptr;
+
+		switch (len) {
+		case 2:
+			if (ptr[0] == '.' && ptr[1] == '.') {
+				const char *slash = memrchr(res, '/', res_len);
+				if (slash != NULL)
+					res_len = slash - res;
+				continue;
+			}
+			break;
+		case 1:
+			if (ptr[0] == '.')
+				continue;
+			break;
+		case 0:
+			continue;
+		}
+		res[res_len++] = '/';
+		memcpy(&res[res_len], ptr, len);
+		res_len += len;
+	}
+
+	if (res_len == 0)
+		res[res_len++] = '/';
+
+	res[res_len] = '\0';
+}
+
+// Checks if the path is a subpath
+// example: /some/path /some/path/some/subpath
+bool dir_contains(const char *directory, const char *item) {
+	char tmp[PATH_MAX];
+	strcpy(tmp, directory);
+	size_t tmp_len = strlen(tmp);
+	tmp[tmp_len++] = '/';
+	tmp[tmp_len] = '\0';
+	return strncmp(tmp, item, tmp_len) == 0;
+}

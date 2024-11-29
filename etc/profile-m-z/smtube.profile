@@ -17,6 +17,9 @@ noblacklist ${HOME}/.mplayer
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
 
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

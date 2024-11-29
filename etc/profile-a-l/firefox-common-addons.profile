@@ -37,6 +37,9 @@ noblacklist ${HOME}/.local/share/qpdfview
 noblacklist ${HOME}/.local/state/mpv
 noblacklist ${HOME}/.netrc
 
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
+
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
 whitelist ${HOME}/.cache/mpv
 whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs

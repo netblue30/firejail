@@ -79,6 +79,7 @@ static char *etc_group_sound[] = {
 static char *etc_group_tls_ca[] = {
 	"ca-certificates",
 	"crypto-policies",
+	"gnutls",
 	"pki",
 	"ssl",
 	NULL

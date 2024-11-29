@@ -163,6 +163,11 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: keepassxc: allow access to ssh-agent socket (#3314 #6531)
   * profiles: firecfg.config: disable dnsmasq (#6533)
   * profiles: game-launchers: disable nou2f (#6534)
+  * profiles: anki: fix opening, allow media & add to firecfg (#6544 #6545)
+  * profiles: wget: allow ~/.local/share/wget (#6542)
+  * profiles: wget: unify wget2 into wget profile (#6551)
+  * profiles: tesseract: disable private-tmp to fix ocrmypdf (#6550 #6552)
+  * profiles: ensure allow-lua where mpv is allowed (#6555)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

@@ -23,7 +23,7 @@ Note that this is only applicable to commands that support multiple arguments.
 Options:
     -i  Edit the profile file(s) in-place (this is the default).
     -n  Do not edit the profile file(s) in-place.
-    --  End of options
+    --  End of options.
 
 Examples:
     $ {argv[0]} MyAwesomeProfile.profile
@@ -34,7 +34,7 @@ Examples:
 Exit Codes:
   0: Success: No profiles needed fixing.
   1: Error: One or more profiles could not be processed correctly.
-  2: Error: Missing arguments.
+  2: Error: Invalid or missing arguments.
   101: Info: One or more profiles were fixed.
 """
 

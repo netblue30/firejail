@@ -1,34 +1,41 @@
-# Custom profile for prismlauncher
+# Firejail profile for PrismLauncher
+# Description: An Open Source Minecraft launcher with the ability to manage multiple instances, accounts and mods.
+# This file is overwritten after every install/update
 
-# file system
-include /etc/firejail/disable-common.inc
-whitelist ~/.local/share/PrismLauncher
-read-only ~/Downloads
-include /etc/firejail/whitelist-common.inc
-private-tmp
-private-dev
-disable-mnt
-blacklist /mnt
-blacklist /media
-blacklist /sbin
+# Persistent local customizations
+include PROFILE.local
+# Persistent global definitions
+include globals.local
 
-# network
-net enp4s0f3u2u1u2
-netfilter
-dns 8.8.8.8
-dns 1.1.1.1
+include allow-java.inc
 
-# multimedia
-nodvd
-novideo
-notv
-notpm
-noprinters
-nodbus
+include disable-common.inc
+include disable-interpreters.inc
+include disable-proc.inc
+include disable-shell.inc
 
-# kernel
-seccomp
-nonewprivs
-caps.drop all
-noroot
+whitelist ${HOME}/.local/share/PrismLauncher
+whitelist ${HOME}/Downloads
+
 apparmor
+caps.drop all
+netfilter
+nodvd
+nogroups
+nonewprivs
+noprinters
+noroot
+notpm
+notv
+nou2f
+protocol unix,inet,inet6
+seccomp
+
+disable-mnt
+private-cache
+private-dev
+private-tmp
+
+dbus-system none
+
+restrict-namespaces

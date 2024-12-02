@@ -11,7 +11,7 @@ from sys import argv, exit as sys_exit, stderr
 __doc__ = f"""\
 Sort the arguments of commands in profiles.
 
-Usage: {path.basename(argv[0])} [-i] [-n] [--] [/path/to/profile ...]
+Usage: {path.basename(argv[0])} [-h] [-i] [-n] [--] [/path/to/profile ...]
 
 The following commands are supported:
 
@@ -21,6 +21,7 @@ The following commands are supported:
 Note that this is only applicable to commands that support multiple arguments.
 
 Options:
+    -h  Print this message.
     -i  Edit the profile file(s) in-place (this is the default).
     -n  Do not edit the profile file(s) in-place.
     --  End of options.
@@ -105,7 +106,10 @@ def check_profile(filename, overwrite):
 def main(args):
     overwrite = True
     while len(args) > 0:
-        if args[0] == "-i":
+        if args[0] == "-h":
+            print(__doc__)
+            return 0
+        elif args[0] == "-i":
             overwrite = True
             args.pop(0)
         elif args[0] == "-n":

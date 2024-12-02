@@ -3,7 +3,7 @@
 # This file is overwritten after every install/update
 
 # Persistent local customizations
-include PROFILE.local
+include prismlauncher.local
 # Persistent global definitions
 include globals.local
 

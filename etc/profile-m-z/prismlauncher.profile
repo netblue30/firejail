@@ -30,6 +30,7 @@ notv
 nou2f
 protocol unix,inet,inet6
 seccomp
+seccomp.block-secondary
 
 disable-mnt
 private-cache

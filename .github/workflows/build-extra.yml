@@ -71,5 +71,5 @@ jobs:
       run: make
     - name: make install
       run: sudo make install
-    - name: print version
-      run: make print-version
+    - name: make installcheck
+      run: make installcheck

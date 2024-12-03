@@ -400,8 +400,8 @@ codespell:
 print-env:
 	./ci/printenv.sh
 
-.PHONY: print-version
-print-version: config.mk
+.PHONY: installcheck
+installcheck: config.mk
 	command -V $(TARNAME) && $(TARNAME) --version
 
 #

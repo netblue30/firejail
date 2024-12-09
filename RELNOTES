@@ -83,12 +83,13 @@ firejail (0.9.73) baseline; urgency=low
   * build: reduce hardcoding and inconsistencies (#6230)
   * build: sort.py: filter empty and duplicate items (#6261)
   * build: fix "warning: "_FORTIFY_SOURCE" redefined" (#6282 #6283)
-  * build: sort.py: add -i/-n/-- options (#6290 #6339)
+  * build: sort.py: add -h/-i/-n/-- options (#6290 #6339 #6562)
   * build: add strip target and simplify install targets (#6342)
   * build: remove clean dependency from cppcheck targets (#6343)
   * build: allow overriding common tools (#6354)
   * build: standardize install commands (#6366)
   * build: improve reliability/portability of date command usage (#6403 #6404)
+  * build: sort.py: strip whitespace in profiles (#6556)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
@@ -168,6 +169,7 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: wget: unify wget2 into wget profile (#6551)
   * profiles: tesseract: disable private-tmp to fix ocrmypdf (#6550 #6552)
   * profiles: ensure allow-lua where mpv is allowed (#6555)
+  * profiles: video-players: add missing /usr/share paths (#6557)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

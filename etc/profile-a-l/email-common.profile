@@ -14,6 +14,7 @@ noblacklist ${HOME}/.signature
 # when storing mail outside the default ${HOME}/Mail path, 'noblacklist' the custom path in your email-common.local
 # and 'blacklist' it in your disable-common.local too so it is kept hidden from other applications
 noblacklist ${HOME}/Mail
+noblacklist /etc/clamav
 noblacklist /var/lib/clamav
 noblacklist /var/mail
 noblacklist /var/spool/mail
@@ -82,7 +83,7 @@ tracelog
 #disable-mnt
 private-cache
 private-dev
-private-etc @tls-ca,@x11,bogofilter,bogofilter.cf,gnupg,hosts.conf,mailname,timezone
+private-etc @tls-ca,@x11,bogofilter,bogofilter.cf,clamav,gnupg,hosts.conf,mailname,timezone
 private-tmp
 # encrypting and signing email
 writable-run-user

@@ -12,8 +12,8 @@
 #
 
 AC_PREREQ([2.68])
-AC_INIT([firejail], [0.9.73], [netblue30@protonmail.com], [],
-    [https://firejail.wordpress.com])
+AC_INIT([firejail], [0.9.73], [https://github.com/netblue30/firejail/issues],
+    [], [https://firejail.wordpress.com])
 
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 AC_CONFIG_MACRO_DIR([m4])

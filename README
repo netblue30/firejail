@@ -863,6 +863,7 @@ NetSysFire (https://github.com/NetSysFire)
 	- update megaglest profile
 	- added parsecd profile
 	- fix minecraft-launcher.profile
+	- singularity profile
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory
@@ -1243,6 +1244,7 @@ Ted Robertson (https://github.com/tredondo)
 	- blacklist Exodus wallet
 	- blacklist monero-project directory
 	- several README file fixes
+	- use GitHub issues as the bug reporting address
 tools200ms (https://github.com/tools200ms)
 	- fixed allow-ssh.inc
 Tus1688 (https://github.com/Tus1688)

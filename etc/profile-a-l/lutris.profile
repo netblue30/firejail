@@ -6,6 +6,11 @@ include lutris.local
 # Persistent global definitions
 include globals.local
 
+# If you use gamescope, add the following to lutris.local to work around a bug
+# (see #6191):
+#ignore noroot
+#ignore private-tmp
+
 noblacklist ${PATH}/llvm*
 noblacklist ${HOME}/Games
 noblacklist ${HOME}/.cache/lutris

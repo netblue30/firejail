@@ -887,6 +887,7 @@ nutta-git (https://github.com/nutta-git)
 	- steam.profile: allow process_vm_readv syscall
 	- lutris.profile: allow more syscalls
 	- steam.profile: update novideo comment for webcam motion trackers
+	- more lutris.profile problems
 nyancat18 (https://github.com/nyancat18)
 	- added ardour4, dooble, karbon, krita profiles
 nya1 (https://github.com/nya1)

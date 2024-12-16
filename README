@@ -280,6 +280,7 @@ cayday (https://github.com/caydey)
 	- added quiet to some CLI profiles
 celenityy (https://github.com/celenityy)
 	- Thunderbird profile fix
+	- wget profile fix
 Christian Pinedo (https://github.com/chrpinedo)
 	- added nicotine profile
 	- allow python3 in totem profile
@@ -985,6 +986,7 @@ pwnage-pineapple (https://github.com/pwnage-pineapple)
 	- update Okular profile
 qdii (https://github.com/qdii)
 	- added notpm command & keep tpm devices in private-dev
+	- keepassxc: add new socket location
 Quentin Retornaz (https://github.com/qretornaz-adapei42)
 	- microsoft-edge profiles fixes
 Quentin Minster (https://github.com/laomaiweng)
@@ -1245,6 +1247,7 @@ Ted Robertson (https://github.com/tredondo)
 	- blacklist monero-project directory
 	- several README file fixes
 	- use GitHub issues as the bug reporting address
+	- fix documentation for selinux
 tools200ms (https://github.com/tools200ms)
 	- fixed allow-ssh.inc
 Tus1688 (https://github.com/Tus1688)
@@ -1342,6 +1345,7 @@ yumkam (https://github.com/yumkam)
 	- man page fixes
 Yves-Alexis Perez (https://github.com/corsac-s)
 	- signal-desktop profile fix
+	- signal: add access to D-Bus freedesktop.org secret API
 Zack Weinberg (https://github.com/zackw)
 	- added support for joining a persistent, named network namespace
 	- removed libconnect

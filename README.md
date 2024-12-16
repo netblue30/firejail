@@ -38,7 +38,15 @@ and available on any Linux computer.
 <tr>
 
 <td>
-<a href="https://odysee.com/@netblue30:9/firefox:c" target="_blank">
+<a href="https://odysee.com/@netblue30:9/install" target="_blank">
+<img src="https://thumbs.odycdn.com/f19bcfa08c2b35658dc18f4e2fd63f3f.webp"
+alt="Quick Start" width="240" height="142" border="10" />
+<br/>Quick Start
+</a>
+</td>
+
+<td>
+<a href="https://odysee.com/@netblue30:9/firefox" target="_blank">
 <img src="https://thumbs.odycdn.com/acf4b1c66737feb97640fb1d28a7daa6.png"
 alt="Advanced Browser Security" width="240" height="142" border="10" />
 <br/>Advanced Browser Security
@@ -46,18 +54,10 @@ alt="Advanced Browser Security" width="240" height="142" border="10" />
 </td>
 
 <td>
-<a href="https://odysee.com/@netblue30:9/nonet:7" target="_blank">
-<img src="https://thumbs.odycdn.com/5be2964201c31689ee8f78cb9f35e89a.png"
-alt="How To Disable Network Access" width="240" height="142" border="10" />
-<br/>How To Disable Network Access
-</a>
-</td>
-
-<td>
-<a href="https://odysee.com/@netblue30:9/divested:2" target="_blank">
-<img src="https://thumbs.odycdn.com/f30ece33a6547af9ae48244f4ba73028.png"
-alt="Deep Dive" width="240" height="142" border="10" />
-<br/>Deep Dive
+<a href="https://odysee.com/@netblue30:9/tor" target="_blank">
+<img src="https://thumbs.odycdn.com/f6aa82bd7b86b2f17caed03ccb870d2b.webp"
+alt="Tor Browser Security" width="240" height="142" border="10" />
+<br/>Tor Browser Security
 </a>
 </td>
 

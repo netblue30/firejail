@@ -50,6 +50,7 @@ seccomp.block-secondary
 disable-mnt
 private-cache
 private-dev
+# private-etc @network,@tls-ca
 private-tmp
 
 dbus-user none

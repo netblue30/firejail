@@ -684,6 +684,10 @@ blacklist /usr/lib/snapd
 blacklist /var/lib/snapd
 blacklist /var/snap
 
+# bubblejail
+blacklist ${HOME}/.config/bubblejail
+blacklist ${HOME}/.local/share/bubblejail
+
 # mail directories used by mutt
 blacklist ${HOME}/.Mail
 blacklist ${HOME}/.mail

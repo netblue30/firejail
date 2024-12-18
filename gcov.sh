@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2023 Firejail Authors
+# Copyright (C) 2014-2024 Firejail Authors
 # License GPL v2
 
 # GCOV test setup
@@ -12,14 +12,22 @@
 gcov_generate() {
 	USER="$(whoami)"
 	find . -exec sudo chown "$USER:$USER" '{}' +
-	lcov -q --capture -d src/firejail -d src/lib -d src/firecfg -d src/firemon \
-		-d src/fnet -d src/fnetfilter -d src/fcopy -d src/fseccomp --output-file gcov-file
+	lcov -q --capture \
+		-d src/firejail -d src/lib -d src/firecfg -d src/firemon \
+		-d src/fnet -d src/fnetfilter -d src/fcopy \
+		-d src/fseccomp --output-file gcov-file
+
 	genhtml -q gcov-file --output-directory gcov-dir
 }
 
-make distclean && ./configure --prefix=/usr --enable-apparmor --enable-gcov --enable-fatal-warnings && make -j4 && sudo make install
+make distclean &&
+./configure --prefix=/usr --enable-fatal-warnings \
+  --enable-apparmor --enable-gcov &&
+make -j "$(nproc)" &&
+sudo make install
+
 rm -fr gcov-dir gcov-file
-firejail --version
+make print-version
 gcov_generate
 
 make test-firecfg | grep TESTING

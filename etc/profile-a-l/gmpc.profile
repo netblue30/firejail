@@ -47,8 +47,9 @@ private-etc
 private-tmp
 writable-run-user
 
-# dbus-user none
-# dbus-system none
+dbus-user filter
+dbus-user.talk org.mpris.MediaPlayer2.mpd
+dbus-system none
 
-# memory-deny-write-execute - breaks on Arch
+#memory-deny-write-execute # breaks on Arch
 restrict-namespaces

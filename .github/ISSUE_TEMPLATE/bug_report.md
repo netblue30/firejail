@@ -22,7 +22,7 @@ _Describe the bug_
 
 _Steps to reproduce the behavior_
 
-1. Run in bash `LC_ALL=C firejail PROGRAM` (`LC_ALL=C` to get a consistent
+1. Run in bash `LC_ALL=C firejail /path/to/program` (`LC_ALL=C` to get a consistent
    output in English that can be understood by everybody)
 2. Click on '....'
 3. Scroll down to '....'
@@ -47,10 +47,11 @@ _Any other detail that may help to understand/debug the problem_
 
 ### Environment
 
-- Linux distribution and version (e.g. "Ubuntu 20.04" or "Arch Linux")
-- Firejail version (`firejail --version`).
+- Name/version/arch of the Linux kernel (`uname -srm`):
+- Name/version of the Linux distribution (e.g. "Ubuntu 20.04" or "Arch Linux"):
+- Version of Firejail (`firejail --version`):
 - If you use a development version of firejail, also the commit from which it
-  was compiled (`git rev-parse HEAD`).
+  was compiled (`git rev-parse HEAD`):
 
 ### Checklist
 

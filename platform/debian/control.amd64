@@ -8,7 +8,7 @@ Suggests: python, python3
 Section: admin
 Priority: optional
 Homepage: https://github.com/netblue30/firejail
-Description: Linux namepaces sandbox program.
+Description: Linux namespaces sandbox program.
  Firejail  is  a  SUID sandbox program that reduces the risk of security
  breaches by restricting the running environment of untrusted applications
  using Linux namespaces and seccmp-bpf. It includes sandbox profiles for

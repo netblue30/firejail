@@ -22,7 +22,7 @@ no3d
 nogroups
 noinput
 nonewprivs
-# nosound - disabled for knotify
+#nosound # disabled for knotify
 noroot
 nou2f
 novideo

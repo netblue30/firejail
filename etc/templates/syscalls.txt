@@ -47,7 +47,7 @@ Definition of groups
 @obsolete=_sysctl,afs_syscall,bdflush,break,create_module,ftime,get_kernel_syms,getpmsg,gtty,idle,lock,mpx,prof,profil,putpmsg,query_module,security,sgetmask,ssetmask,stty,sysfs,tuxcall,ulimit,uselib,ustat,vserver
 @privileged=@chown,@clock,@module,@raw-io,@reboot,@swap,_sysctl,acct,bpf,capset,chroot,fanotify_init,mount,nfsservctl,open_by_handle_at,pivot_root,quotactl,setdomainname,setfsuid,setfsuid32,setgroups,setgroups32,sethostname,setresuid,setresuid32,setreuid,setreuid32,setuid,setuid32,umount2,vhangup
 @process=arch_prctl,capget,clone,clone3,execveat,fork,getrusage,kill,pidfd_open,pidfd_send_signal,prctl,rt_sigqueueinfo,rt_tgsigqueueinfo,setns,swapcontext,tgkill,times,tkill,unshare,vfork,wait4,waitid,waitpid
-@raw-io=ioperm,iopl,pciconfig_iobase,pciconfig_read,pciconfig_write,s390_mmio_read,s390_mmio_write
+@raw-io=ioperm,iopl,pciconfig_iobase,pciconfig_read,pciconfig_write,s390_pci_mmio_read,s390_pci_mmio_write
 @reboot=kexec_load,kexec_file_load,reboot
 @resources=ioprio_set,mbind,migrate_pages,move_pages,nice,sched_setaffinity,sched_setattr,sched_setparam,sched_setscheduler,set_mempolicy
 @setuid=setgid,setgid32,setgroups,setgroups32,setregid,setregid32,setresgid,setresgid32,setresuid,setresuid32,setreuid,setreuid32,setuid,setuid32

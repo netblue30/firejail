@@ -19,7 +19,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 # Add the next line to your bcompare.local if you don't need to compare files in disable-programs.inc.
 #include disable-programs.inc
-#include disable-shell.inc - breaks launch
+#include disable-shell.inc # breaks launch
 include disable-write-mnt.inc
 
 apparmor

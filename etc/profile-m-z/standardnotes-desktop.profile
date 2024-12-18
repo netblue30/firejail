@@ -47,4 +47,4 @@ private-etc @tls-ca,@x11,host.conf
 dbus-user none
 dbus-system none
 
-# restrict-namespaces
+#restrict-namespaces

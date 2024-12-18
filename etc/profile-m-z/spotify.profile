@@ -16,6 +16,7 @@ include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
+include disable-proc.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.cache/spotify
@@ -25,6 +26,7 @@ whitelist ${HOME}/.cache/spotify
 whitelist ${HOME}/.config/spotify
 whitelist ${HOME}/.config/spotify-adblock
 whitelist ${HOME}/.local/share/spotify
+whitelist /opt/spotify
 include whitelist-common.inc
 include whitelist-var-common.inc
 
@@ -34,6 +36,7 @@ nodvd
 nogroups
 noinput
 nonewprivs
+noprinters
 noroot
 notv
 nou2f
@@ -46,12 +49,14 @@ private-bin bash,cat,dirname,find,grep,head,rm,sh,spotify,tclsh,touch,zenity
 private-dev
 # If you want to see album covers or want to use the radio, add 'ignore private-etc' to your spotify.local.
 private-etc @tls-ca,host.conf,spotify-adblock
-private-opt spotify
 private-srv none
 private-tmp
 
-# dbus needed for MPRIS
-# dbus-user none
-# dbus-system none
+dbus-user filter
+dbus-user.own org.mpris.MediaPlayer2.spotify
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.mpris.MediaPlayer2.Player
+dbus-system none
 
 restrict-namespaces

@@ -11,7 +11,6 @@ include globals.local
 # not as a daemon (rsync --daemon) nor to create backups.
 # Usage: firejail --profile=rsync-download_only rsync
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 include disable-common.inc
@@ -20,6 +19,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 # Add the next line to your rsync-download_only.local to enable extra hardening.

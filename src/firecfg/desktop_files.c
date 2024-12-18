@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -57,7 +57,7 @@ static int check_profile(const char *name, const char *homedir) {
 }
 
 
-// look for a profile file in /etc/firejail diectory and in homedir/.config/firejail directory
+// look for a profile file in /etc/firejail and ~/.config/firejail
 static int have_profile(const char *filename, const char *homedir) {
 	assert(filename);
 	assert(homedir);
@@ -118,6 +118,9 @@ void fix_desktop_files(const char *homedir) {
 		exit(1);
 	}
 
+	// build ignorelist
+	parse_config_all(0);
+
 	// destination
 	// create ~/.local/share/applications directory if necessary
 	char *user_apps_dir;
@@ -163,7 +166,8 @@ void fix_desktop_files(const char *homedir) {
 	// copy
 	struct dirent *entry;
 	while ((entry = readdir(dir)) != NULL) {
-		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+		const char *filename = entry->d_name;
+		if (strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0)
 			continue;
 
 		// skip if not regular file or link
@@ -172,10 +176,25 @@ void fix_desktop_files(const char *homedir) {
 			continue;
 
 		// skip if not .desktop file
-		if (strstr(entry->d_name,".desktop") != (entry->d_name+strlen(entry->d_name)-8))
+		char *exec = strdup(filename);
+		if (!exec)
+			errExit("strdup");
+		char *ptr = strstr(exec, ".desktop");
+		if (ptr == NULL || *(ptr + 8) != '\0') {
+			printf("   %s skipped (not a .desktop file)\n", exec);
+			free(exec);
 			continue;
+		}
 
-		char *filename = entry->d_name;
+		// skip if program is in ignorelist
+		*ptr = '\0';
+		if (in_ignorelist(exec)) {
+			printf("   %s ignored\n", exec);
+			free(exec);
+			continue;
+		}
+
+		free(exec);
 
 		// skip links - Discord on Arch #4235 seems to be a symlink to /opt directory
 //		if (is_link(filename))
@@ -221,7 +240,7 @@ void fix_desktop_files(const char *homedir) {
 		}
 
 		// get executable name
-		char *ptr = strstr(buf,"\nExec=");
+		ptr = strstr(buf,"\nExec=");
 		if (!ptr || strlen(ptr) < 7) {
 			if (arg_debug)
 				printf("   %s - skipped: wrong format?\n", filename);
@@ -281,6 +300,7 @@ void fix_desktop_files(const char *homedir) {
 
 		if (stat(outname, &sb) == 0) {
 			printf("   %s skipped: file exists\n", filename);
+			free(outname);
 			if (change_exec)
 				free(change_exec);
 			continue;
@@ -289,6 +309,7 @@ void fix_desktop_files(const char *homedir) {
 		FILE *fpin = fopen(filename, "r");
 		if (!fpin) {
 			fprintf(stderr, "Warning: cannot open /usr/share/applications/%s\n", filename);
+			free(outname);
 			if (change_exec)
 				free(change_exec);
 			continue;
@@ -298,6 +319,7 @@ void fix_desktop_files(const char *homedir) {
 		if (!fpout) {
 			fprintf(stderr, "Warning: cannot open ~/.local/share/applications/%s\n", outname);
 			fclose(fpin);
+			free(outname);
 			if (change_exec)
 				free(change_exec);
 			continue;

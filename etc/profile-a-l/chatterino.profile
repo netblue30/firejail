@@ -12,16 +12,20 @@ include globals.local
 #whitelist ${MUSIC}
 
 # Also allow access to mpv/vlc, they're usable via streamlink.
+noblacklist ${HOME}/.cache/mpv
 noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/pulse
 noblacklist ${HOME}/.config/vlc
 noblacklist ${HOME}/.local/share/chatterino
 noblacklist ${HOME}/.local/share/vlc
+noblacklist ${HOME}/.local/state/mpv
 
-# Allow Lua for mpv (blacklisted by disable-interpreters.inc)
+# Lua is required by mpv.
+# Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
-# Allow Python for Streamlink integration (blacklisted by disable-interpreters.inc)
+# Python is required for streamlink integration.
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
 include disable-common.inc
@@ -40,6 +44,9 @@ whitelist-ro ${HOME}/.config/mpv
 whitelist-ro ${HOME}/.config/pulse
 whitelist-ro ${HOME}/.config/vlc
 whitelist-ro ${HOME}/.local/share/vlc
+whitelist-ro /usr/share/lua*
+whitelist-ro /usr/share/mpv
+whitelist-ro /usr/share/vlc
 include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc

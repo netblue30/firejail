@@ -9,7 +9,7 @@ include seahorse-daemon.local
 #include globals.local
 
 blacklist ${RUNUSER}/wayland-*
-include disable-X11.inc
+include disable-x11.inc
 
 memory-deny-write-execute
 

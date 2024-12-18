@@ -243,7 +243,7 @@ host filesystem. Each line describes a file/directory that is inaccessible
 a tmpfs mounted on top of an existing directory (\fBtmpfs\fR),
 or mount-bind a directory or file on top of another directory or file (\fBbind\fR).
 Use \fBprivate\fR to set private mode.  File globbing is supported, and PATH and
-HOME directories are searched, see the \fBfirejail\f(1) \fBFILE GLOBBING\fR section
+HOME directories are searched, see the \fBfirejail\fR(1) \fBFILE GLOBBING\fR section
 for more details.
 Examples:
 .TP
@@ -382,9 +382,11 @@ Set working directory inside jail to the home directory, and failing that, the r
 Set working directory inside the jail. Full directory path is required. Symbolic links are not allowed.
 .TP
 \fBprivate-dev
-Create a new /dev directory. Only disc, dri, dvb, hidraw, null, full, zero, tty, pts, ptmx,
-random, snd, urandom, video, log, shm and usb devices are available.
-Use the options no3d, nodvd, nosound, notv, nou2f and novideo for additional restrictions.
+Create a new /dev directory.
+Only disc, dri, dvb, full, hidraw, log, null, ptmx, pts, random, shm, snd, tpm,
+tty, urandom, usb, video and zero devices are available.
+Use the options no3d, nodvd, nosound, notpm, notv, nou2f and novideo for
+additional restrictions.
 
 .TP
 \fBprivate-etc file,directory
@@ -507,6 +509,35 @@ Blacklist all Linux capabilities.
 .TP
 \fBcaps.keep capability,capability,capability
 Whitelist given Linux capabilities.
+#ifdef HAVE_LANDLOCK
+.TP
+\fBlandlock.enforce\fR (experimental)
+Enforce the Landlock ruleset.
+.PP
+Without it, the other Landlock commands have no effect.
+.TP
+\fBlandlock.fs.read path\fR (experimental)
+Create a Landlock ruleset (if it doesn't already exist) and add a read access
+rule for path.
+.TP
+\fBlandlock.fs.write path\fR (experimental)
+Create a Landlock ruleset (if it doesn't already exist) and add a write access
+rule for path.
+.TP
+\fBlandlock.fs.makeipc path\fR (experimental)
+Create a Landlock ruleset (if it doesn't already exist) and add a rule that
+allows the creation of named pipes (FIFOs) and Unix domain sockets beneath
+the given path.
+.TP
+\fBlandlock.fs.makedev path\fR (experimental)
+Create a Landlock ruleset (if it doesn't already exist) and add a rule that
+allows the creation of block devices and character devices beneath the given
+path.
+.TP
+\fBlandlock.fs.execute path\fR (experimental)
+Create a Landlock ruleset (if it doesn't already exist) and add an execution
+permission rule for path.
+#endif
 .TP
 \fBmemory-deny-write-execute
 Install a seccomp filter to block attempts to create memory mappings
@@ -637,20 +668,20 @@ Enable filtered access to the system DBus. Filters can be specified with the dbu
 \fBdbus-system none
 Disable access to the system DBus. Once access is disabled, it cannot be relaxed to filtering.
 .TP
-\fBdbus-system.own org.gnome.ghex.*
-Allow the application to own the name org.gnome.ghex and all names underneath in on the system DBus.
-.TP
-\fBdbus-system.talk org.freedesktop.Notifications
-Allow the application to talk to the name org.freedesktop.Notifications on the system DBus.
-.TP
-\fBdbus-system.see org.freedesktop.Notifications
-Allow the application to see but not talk to the name org.freedesktop.Notifications on the system DBus.
+\fBdbus-system.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+Allow the application to receive broadcast signals from the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
 .TP
 \fBdbus-system.call org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 Allow the application to call methods of the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
 .TP
-\fBdbus-system.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
-Allow the application to receive broadcast signals from the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
+\fBdbus-system.own org.gnome.ghex.*
+Allow the application to own the name org.gnome.ghex and all names underneath in on the system DBus.
+.TP
+\fBdbus-system.see org.freedesktop.Notifications
+Allow the application to see but not talk to the name org.freedesktop.Notifications on the system DBus.
+.TP
+\fBdbus-system.talk org.freedesktop.Notifications
+Allow the application to talk to the name org.freedesktop.Notifications on the system DBus.
 .TP
 \fBdbus-user filter
 Enable filtered access to the session DBus. Filters can be specified with the dbus-user.talk and dbus-user.own commands.
@@ -658,22 +689,22 @@ Enable filtered access to the session DBus. Filters can be specified with the db
 \fBdbus-user none
 Disable access to the session DBus. Once access is disabled, it cannot be relaxed to filtering.
 .TP
-\fBdbus-user.own org.gnome.ghex.*
-Allow the application to own the name org.gnome.ghex and all names underneath in on the session DBus.
-.TP
-\fBdbus-user.talk org.freedesktop.Notifications
-Allow the application to talk to the name org.freedesktop.Notifications on the session DBus.
-.TP
-\fBdbus-user.see org.freedesktop.Notifications
-Allow the application to see but not talk to the name org.freedesktop.Notifications on the session DBus.
+\fBdbus-user.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+Allow the application to receive broadcast signals from the the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the session DBus.
 .TP
 \fBdbus-user.call org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 Allow the application to call methods of the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the session DBus.
 .TP
-\fBdbus-user.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
-Allow the application to receive broadcast signals from the the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the session DBus.
+\fBdbus-user.own org.gnome.ghex.*
+Allow the application to own the name org.gnome.ghex and all names underneath in on the session DBus.
 .TP
-\fBnodbus \fR(deprecated)
+\fBdbus-user.see org.freedesktop.Notifications
+Allow the application to see but not talk to the name org.freedesktop.Notifications on the session DBus.
+.TP
+\fBdbus-user.talk org.freedesktop.Notifications
+Allow the application to talk to the name org.freedesktop.Notifications on the session DBus.
+.TP
+\fBnodbus\fR (deprecated)
 Disable D-Bus access (both system and session buses). Equivalent to dbus-system none and dbus-user none.
 .TP
 .br
@@ -773,7 +804,7 @@ name browser
 \fBno3d
 Disable 3D hardware acceleration.
 .TP
-\fBnoautopulse \fR(deprecated)
+\fBnoautopulse\fR (deprecated)
 See keep-config-pulse.
 .TP
 \fBnodvd
@@ -788,6 +819,9 @@ Disable input devices.
 \fBnosound
 Disable sound system.
 .TP
+\fBnotpm
+Disable Trusted Platform Module (TPM) devices.
+.TP
 \fBnotv
 Disable DVB (Digital Video Broadcasting) TV devices.
 .TP
@@ -799,11 +833,6 @@ Disable video capture devices.
 .TP
 \fBmachine-id
 Spoof id number in /etc/machine-id file - a new random id is generated inside the sandbox.
-.TP
-\fBshell none
-Run the program directly, without a shell.
-
-
 #ifdef HAVE_NETWORK
 .SH Networking
 Networking features available in profile files.
@@ -838,20 +867,6 @@ net eth0
 ip 10.10.20.56
 
 .TP
-\fBip none
-No IP address and no default gateway are configured for the last interface
-defined by a net command. Use this option
-in case you intend to start an external DHCP client in the sandbox.
-.br
-
-.br
-Example:
-.br
-net eth0
-.br
-ip none
-
-.TP
 \fBip dhcp
 Acquire an IP address and default gateway for the last interface defined by a
 net command, as well as set the DNS servers according to the DHCP response.
@@ -877,6 +892,20 @@ The DHCP client will NOT release the DHCP lease when the sandbox terminates.
 If your DHCP server requires leases to be explicitly released, consider running
 a DHCP client and releasing the lease manually in conjunction with the
 net none command.
+
+.TP
+\fBip none
+No IP address and no default gateway are configured for the last interface
+defined by a net command. Use this option
+in case you intend to start an external DHCP client in the sandbox.
+.br
+
+.br
+Example:
+.br
+net eth0
+.br
+ip none
 
 .TP
 \fBip6 address

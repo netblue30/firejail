@@ -41,7 +41,7 @@ seccomp.block-secondary
 tracelog
 
 disable-mnt
-# private-bin supertux2
+#private-bin supertux2
 private-cache
 private-etc
 private-dev

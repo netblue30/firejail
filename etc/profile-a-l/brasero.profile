@@ -29,9 +29,9 @@ protocol unix
 seccomp
 tracelog
 
-# private-bin brasero
+#private-bin brasero
 private-cache
-# private-dev
-# private-tmp
+#private-dev
+#private-tmp
 
 restrict-namespaces

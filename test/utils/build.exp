@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2023 Firejail Authors
+# Copyright (C) 2014-2024 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -57,10 +57,6 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
-	"shell none"
-}
-expect {
-	timeout {puts "TESTING ERROR 11\n";exit}
 	"private-bin cat,"
 }
 expect {
@@ -98,15 +94,19 @@ expect {
 }
 after 100
 
-send -- "firejail --build wget --output-document=~ debian.org\r"
-expect {
-	timeout {puts "TESTING ERROR 13\n";exit}
-	"protocol"
-}
-expect {
-	timeout {puts "TESTING ERROR 13.1\n";exit}
-	"inet"
-}
-after 100
+# increase the timeout for remote services
+set timeout 30
+
+# FIXME: Broken in CI
+#send -- "firejail --build wget --output-document=~ debian.org\r"
+#expect {
+#	timeout {puts "TESTING ERROR 13\n";exit}
+#	"protocol"
+#}
+#expect {
+#	timeout {puts "TESTING ERROR 13.1\n";exit}
+#	"inet"
+#}
+#after 100
 
 puts "all done\n"

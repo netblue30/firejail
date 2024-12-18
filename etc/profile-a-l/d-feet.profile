@@ -12,45 +12,16 @@ noblacklist ${HOME}/.config/d-feet
 include allow-python2.inc
 include allow-python3.inc
 
-include disable-common.inc
-include disable-devel.inc
-include disable-exec.inc
-include disable-interpreters.inc
-include disable-programs.inc
-include disable-shell.inc
-include disable-xdg.inc
-
 mkdir ${HOME}/.config/d-feet
 whitelist ${HOME}/.config/d-feet
 whitelist /usr/share/d-feet
-include whitelist-common.inc
-include whitelist-runuser-common.inc
-include whitelist-usr-share-common.inc
-include whitelist-var-common.inc
 
-apparmor
-caps.drop all
-ipc-namespace
-# net none - breaks on Ubuntu
-no3d
-nodvd
-nogroups
-noinput
-nonewprivs
-noroot
-nosound
-notv
-nou2f
-novideo
-protocol unix
-seccomp
+# breaks on Ubuntu
+ignore net none
 
-disable-mnt
 private-bin d-feet,python*
-private-cache
-private-dev
-private-etc dbus-1
-private-tmp
 
-#memory-deny-write-execute - breaks on Arch (see issue #1803)
-restrict-namespaces
+#memory-deny-write-execute # breaks on Arch (see issue #1803)
+
+# Redirect
+include dbus-debug-common.profile

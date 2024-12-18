@@ -18,9 +18,9 @@ include disable-programs.inc
 include disable-xdg.inc
 
 # Breaks xreader on Mint 18.3
-# include whitelist-var-common.inc
+#include whitelist-var-common.inc
 
-# apparmor
+#apparmor
 caps.drop all
 no3d
 nodvd

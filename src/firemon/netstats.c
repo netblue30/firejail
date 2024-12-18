@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -152,10 +152,12 @@ static void print_proc(int index, int itv, int col) {
 	struct stat s;
 	if (stat(name, &s) == -1) {
 		// the sandbox doesn't have a --net= option, don't print
+		free(name);
 		if (cmd)
 			free(cmd);
 		return;
 	}
+	free(name);
 
 	// pid
 	char pidstr[11];

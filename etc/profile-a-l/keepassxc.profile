@@ -13,6 +13,8 @@ noblacklist ${HOME}/.config/keepassxc
 noblacklist ${HOME}/.config/KeePassXCrc
 noblacklist ${HOME}/.keepassxc
 noblacklist ${DOCUMENTS}
+noblacklist ${RUNUSER}/app
+noblacklist /tmp/ssh-*
 
 # Allow browser profiles, required for browser integration.
 noblacklist ${HOME}/.config/BraveSoftware
@@ -62,8 +64,12 @@ include disable-xdg.inc
 #whitelist ${HOME}/.config/KeePassXCrc
 #include whitelist-common.inc
 
+mkdir ${RUNUSER}/app/org.keepassxc.KeePassXC
+whitelist ${RUNUSER}/app/org.keepassxc.KeePassXC
+whitelist /tmp/ssh-*
 whitelist /usr/share/keepassxc
 include whitelist-run-common.inc
+include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

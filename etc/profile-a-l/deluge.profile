@@ -13,7 +13,7 @@ include allow-python2.inc
 include allow-python3.inc
 
 include disable-common.inc
-# include disable-devel.inc
+#include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc

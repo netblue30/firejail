@@ -31,7 +31,7 @@ protocol unix,inet,inet6
 seccomp
 
 disable-mnt
-private-bin cp,sh,XMind
+private-bin XMind,cp,sh
 private-tmp
 private-dev
 

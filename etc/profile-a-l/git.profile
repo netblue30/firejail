@@ -28,12 +28,12 @@ ignore rmenv GITHUB_ENTERPRISE_TOKEN
 # Allow ssh (blacklisted by disable-common.inc)
 include allow-ssh.inc
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-exec.inc
 include disable-programs.inc
+include disable-x11.inc
 
 whitelist /usr/share/git
 whitelist /usr/share/git-core

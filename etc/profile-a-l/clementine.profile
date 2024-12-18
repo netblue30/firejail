@@ -37,6 +37,6 @@ private-dev
 private-tmp
 
 dbus-system none
-# dbus-user none
+#dbus-user none
 
 restrict-namespaces

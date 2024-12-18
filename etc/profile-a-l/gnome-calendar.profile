@@ -15,7 +15,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 whitelist /usr/share/libgweather
-include whitelist-common.inc
+#include whitelist-common.inc # see #903
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -53,7 +53,7 @@ dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.gnome.evolution.dataserver.*
 #dbus-user.talk org.gnome.OnlineAccounts
 #dbus-user.talk org.gnome.ControlCenter
-# NOTE: dbus-system none fails, filter without rules works.
+# Note: dbus-system none fails, filter without rules works.
 dbus-system filter
 #dbus-system.talk org.freedesktop.timedate1
 #dbus-system.talk org.freedesktop.login1

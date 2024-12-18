@@ -31,7 +31,7 @@
 #   MKDIRS
 #   WHITELISTS
 #   WHITELIST INCLUDES
-#   OPTIONS (caps*, net*, no*, protocol, seccomp*, shell none, tracelog)
+#   OPTIONS (caps*, net*, no*, protocol, seccomp*, tracelog)
 #   PRIVATE OPTIONS (disable-mnt, private-*, writable-*)
 #   DBUS FILTER
 #   SPECIAL OPTIONS (mdwx, noexec, read-only, join-or-start)
@@ -88,8 +88,17 @@ include globals.local
 # Allow lua (blacklisted by disable-interpreters.inc)
 #include allow-lua.inc
 
+# Allow nodejs (blacklisted by disable-interpreters.inc)
+#include allow-nodejs.inc
+
+# Allow opengl-game wrapper script (distribution-specific)
+#include allow-opengl-game.inc
+
 # Allow perl (blacklisted by disable-interpreters.inc)
 #include allow-perl.inc
+
+# Allow php (blacklisted by disable-interpreters.inc)
+#include allow-php.inc
 
 # Allow python (blacklisted by disable-interpreters.inc)
 #include allow-python2.inc
@@ -120,7 +129,7 @@ include globals.local
 #include disable-programs.inc
 #include disable-shell.inc
 #include disable-write-mnt.inc
-#include disable-X11.inc
+#include disable-x11.inc
 #include disable-xdg.inc
 
 # This section often mirrors noblacklist section above. The idea is
@@ -136,6 +145,14 @@ include globals.local
 #include whitelist-runuser-common.inc
 #include whitelist-usr-share-common.inc
 #include whitelist-var-common.inc
+
+# Landlock commands
+##landlock.fs.read PATH
+##landlock.fs.write PATH
+##landlock.fs.makeipc PATH
+##landlock.fs.makedev PATH
+##landlock.fs.execute PATH
+#include landlock-common.inc
 
 ##allusers
 #apparmor
@@ -158,6 +175,7 @@ include globals.local
 #noprinters
 #noroot
 #nosound
+#notpm
 #notv
 #nou2f
 #novideo
@@ -172,9 +190,8 @@ include globals.local
 ##seccomp.drop SYSCALLS (see syscalls.txt)
 #seccomp.block-secondary
 ##seccomp-error-action log (only for debugging seccomp issues)
-#shell none
 #tracelog
-# Prefer 'x11 none' instead of 'disable-X11.inc' if 'net none' is set
+# Prefer 'x11 none' instead of 'disable-x11.inc' if 'net none' is set
 ##x11 none
 
 #disable-mnt
@@ -197,6 +214,13 @@ include globals.local
 #    Extra: gai.conf,proxychains.conf
 #  Qt: Trolltech.conf
 ##private-lib LIBS
+## Note: private-opt copies the entire path(s) to RAM, which may break
+## file-copy-limit in firejail.config (see firejail(1)).
+## For sizeable apps (if in doubt, do this):
+##  - never use 'private-opt NAME'
+##  - place 'whitelist /opt/NAME' in the whitelist section above
+## For acceptable apps:
+##  - use 'private-opt NAME'
 ##private-opt NAME
 #private-tmp
 ##writable-etc

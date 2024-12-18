@@ -49,7 +49,7 @@ private-dev
 private-etc @tls-ca,@x11
 private-tmp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 restrict-namespaces

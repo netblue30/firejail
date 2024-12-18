@@ -28,7 +28,7 @@ include disable-xdg.inc
 apparmor
 caps.drop all
 ipc-namespace
-# net none
+#net none
 netfilter
 nodvd
 nogroups
@@ -46,7 +46,7 @@ private-cache
 private-dev
 private-tmp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 restrict-namespaces

@@ -1,18 +1,25 @@
-name: Profile Checks
+# Lints and checks for potential issues in the profiles.
+
+name: Check-Profiles
 
 on:
+  workflow_dispatch:
   push:
+    branches-ignore:
+      - 'dependabot/**'
     paths:
       - 'ci/check/profiles/**'
       - 'etc/**'
-      - .github/workflows/profile-checks.yml
+      - .github/workflows/check-profiles.yml
+      - ci/printenv.sh
       - contrib/sort.py
       - src/firecfg/firecfg.config
   pull_request:
     paths:
       - 'ci/check/profiles/**'
       - 'etc/**'
-      - .github/workflows/profile-checks.yml
+      - .github/workflows/check-profiles.yml
+      - ci/printenv.sh
       - contrib/sort.py
       - src/firecfg/firecfg.config
 
@@ -22,24 +29,26 @@ permissions:  # added using https://github.com/step-security/secure-workflows
 jobs:
   profile-checks:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845
+      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
       with:
         disable-sudo: true
         egress-policy: block
         allowed-endpoints: >
           github.com:443
 
-    - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
     - name: print env
       run: ./ci/printenv.sh
     - run: python3 --version
 
-#   - name: sort.py
-#     run: >
-#       ./ci/check/profiles/sort.py
-#       etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
+    - name: sort.py
+      run: >
+        ./ci/check/profiles/sort.py
+        etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
 # Currently broken (see #5610)
 #   - name: private-etc-always-required.sh
 #     run: >

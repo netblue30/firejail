@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -210,9 +210,9 @@ static void sanitize_passwd(void) {
 			goto errout;
 
 		// process uid
-		int uid;
+		int uid = -1;
 		int rv = sscanf(ptr, "%d:", &uid);
-		if (rv == 0 || uid < 0)
+		if (rv != 1 || uid < 0)
 			goto errout;
 		assert(uid_min);
 		if (uid < uid_min || uid == 65534) { // on Debian platforms user nobody is 65534
@@ -349,9 +349,9 @@ static void sanitize_group(void) {
 			goto errout;
 
 		// process uid
-		int gid;
+		int gid = -1;
 		int rv = sscanf(ptr, "%d:", &gid);
-		if (rv == 0 || gid < 0)
+		if (rv != 1 || gid < 0)
 			goto errout;
 		assert(gid_min);
 		if (gid < gid_min || gid == 65534) { // on Debian platforms 65534 is group nogroup

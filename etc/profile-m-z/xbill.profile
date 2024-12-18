@@ -16,7 +16,7 @@ include disable-xdg.inc
 
 whitelist /usr/share/xbill
 whitelist /var/games/xbill/scores
-include whitelist-common.inc
+#include whitelist-common.inc # see #903
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

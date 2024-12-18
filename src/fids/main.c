@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -106,9 +106,9 @@ static void file_checksum(const char *fname) {
 	}
 	else {
 		content = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
-		close(fd);
 		mmapped = 1;
 	}
+	close(fd);
 
 	unsigned char checksum[KEY_SIZE / 8];
 	blake2b(checksum, sizeof(checksum), content, size);

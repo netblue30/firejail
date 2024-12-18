@@ -7,7 +7,7 @@ include gpg2.local
 # added by included profile
 #include globals.local
 
-# private-bin gpg2
+#private-bin gpg2
 
 # Redirect
 include gpg.profile

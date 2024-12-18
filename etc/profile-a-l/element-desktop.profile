@@ -14,8 +14,7 @@ noblacklist ${HOME}/.config/Element
 mkdir ${HOME}/.config/Element
 whitelist ${HOME}/.config/Element
 whitelist /opt/Element
-
-private-opt Element
+whitelist /usr/share/element
 
 dbus-user filter
 dbus-user.talk org.freedesktop.Notifications

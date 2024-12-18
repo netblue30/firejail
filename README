@@ -28,13 +28,17 @@ Compile and install the mainline version from GitHub:
     cd firejail
     ./configure && make && sudo make install-strip
 
-On Debian/Ubuntu you will need to install git and gcc.  AppArmor development
-libraries and pkg-config are required when using the --enable-apparmor
-./configure option:
+On Debian/Ubuntu you will need to install git and gcc.
+
+To build with AppArmor support (which is usually used on Debian, Ubuntu,
+openSUSE and derivatives), install the AppArmor development libraries and
+pkg-config and use the `--enable-apparmor` ./configure option:
 
     sudo apt-get install git build-essential libapparmor-dev pkg-config gawk
 
-For --selinux option, add libselinux1-dev (libselinux-devel for Fedora).
+To build with SELinux support (which is usually used on Fedora, RHEL and
+derivatives), install libselinux1-dev (libselinux-devel on Fedora) and use the
+`--enable-selinux` ./configure option.
 
 We build our release firejail.tar.xz and firejail.deb packages using the
 following commands:
@@ -59,7 +63,7 @@ Committers:
 - rusty-snake (https://github.com/rusty-snake)
 - smitsohu (https://github.com/smitsohu)
 - SkewedZeppelin (https://github.com/SkewedZeppelin)
-- startx2017 (https://github.com/startx2017) - LTS and *bugfixes branches
+- startx2017 (https://github.com/startx2017)
   maintainer)
 - Topi Miettinen (https://github.com/topimiettinen)
 - veloute (https://github.com/veloute)
@@ -125,6 +129,7 @@ Aleksey Manevich (https://github.com/manevich)
 Alexander Gerasiov (https://github.com/gerasiov)
 	- read-only ~/.ssh/authorized_keys
 	- profile updates
+	- fcopy: Use lstat when copy directory
 Alexander Stein (https://github.com/ajstein)
 	- added profile for qutebrowser
 alkim0 (https://github.com/alkim0)
@@ -169,6 +174,8 @@ aoand (https://github.com/aoand)
 	- seccomp fix: allow numeric syscalls
 Arne Welzel (https://github.com/awelzel)
 	- ignore SIGTTOU during flush_stdin()
+archaon616 (https://github.com/archaon616)
+	- steam.profile: allow Factorio, Zomboid
 Atrate (https://github.com/Atrate)
 	- BetterDiscord support
 Austin Morton (https://github.com/apmorton)
@@ -196,8 +203,11 @@ avoidr (https://github.com/avoidr)
 	- added mcabber profile
 	- fixed mpv profile
 	- various other fixes
+ayham (https://github.com/ayham-1)
+	- allow custom homedir support for gpgagent
 Азалия Смарагдова/ChrysoliteAzalea (https://github.com/ChrysoliteAzalea)
-	-  add support for custom AppArmor profiles (--apparmor=)
+	- add support for custom AppArmor profiles (--apparmor=)
+	- add Landlock support
 backspac (https://github.com/backspac)
 	- firecfg fixes
 	- add steam-runtime alias
@@ -253,6 +263,8 @@ bymoz089 (https://github.com/bymoz089)
 	- add timezone access to make libical functional
 BytesTuner (https://github.com/BytesTuner)
 	- provided keepassxc profile
+Caleb McCombs (https://github.com/squatched)
+	- Zoom profile fixes
 caoliver (https://github.com/caoliver)
 	- network system fixes
 Carlo Abelli (https://github.com/carloabelli)
@@ -266,6 +278,9 @@ Cat (https://github.com/ecat3)
 cayday (https://github.com/caydey)
 	- added ~/Private blacklist in disable-common.inc
 	- added quiet to some CLI profiles
+celenityy (https://github.com/celenityy)
+	- Thunderbird profile fix
+	- wget profile fix
 Christian Pinedo (https://github.com/chrpinedo)
 	- added nicotine profile
 	- allow python3 in totem profile
@@ -283,6 +298,8 @@ Christian Stadelmann (https://github.com/genodeftest)
 	- evolution profile fix
 Clayton Williams (https://github.com/gosre)
 	- addition of RLIMIT_AS
+CodeWithMa (https://github.com/CodeWithMa)
+	- mpv.profile: add new XDG_STATE_HOME path
 corecontingency (https://https://github.com/corecontingency)
 	- tighten private-bin and etc for torbrowser-launcher.profile
 	- added i2prouter profile
@@ -320,6 +337,8 @@ curiosityseeker (https://github.com/curiosityseeker - new)
 	- fixed conky profile
 	- thunderbird.profile: harden and enable the rules necessary to make
 	  Firefox open links
+D357R0Y3R (https://github.com/D357R0Y3R)
+	- added floorp to firejail.config
 da2x (https://github.com/da2x)
 	- matched RPM license tag
 Daan Bakker (https://github.com/dbakker)
@@ -349,6 +368,10 @@ David Hyrule (https://github.com/Svaag)
 	- remove nou2f in ssh profile
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)
 	- added xpdf profile
+DefaultUser (https://github.com/DefaultUser)
+	- neochat: Allow netlink
+Denis Subbotin (https://github.com/mr-tron)
+	- telegram.profile: allow ~/.local/share/telegram-desktop
 Denys Havrysh (https://github.com/vutny)
 	- update SkypeForLinux profile for latest version
 	- removed outdated Skype profile
@@ -361,6 +384,8 @@ DiGitHubCap (https://github.com/DiGitHubCap)
 	- fix qt5ct colour schemes and QSS
 Dieter Plaetinck (https://github.com/Dieterbe)
 	- qutebrowser: update MPRIS name for qutebrowser-qt6
+	- fix email-common.profile
+	- fix claws-mail profile
 Disconnect3d (https://github.com/disconnect3d)
 	- code cleanup
 dm9pZCAq (https://github.com/dm9pZCAq)
@@ -371,6 +396,7 @@ dmfreemon (https://github.com/dmfreemon)
 	- handle malloc() failures; use gnu_basename() instead of basenaem()
 Dmitriy Chestnykh (https://github.com/chestnykh)
 	- add ability to disable user profiles at compile time
+	- lookup xauth in PATH
 Dpeta (https://github.com/Dpeta)
 	- add Chatterino profile
 dshmgh (https://github.com/dshmgh)
@@ -397,11 +423,19 @@ Fabian Würfl (https://github.com/BafDyce)
 	- Liferea profile
 Felipe Barriga Richards (https://github.com/fbarriga)
 	- --private-etc fix
+Felix Pehla (https://github.com/FelixPehla)
+	- fix fractal profile
+	- blacklist sway IPC socket globally
 fenuks (https://github.com/fenuks)
 	- fix sound in games using FMOD
 	- allow /opt/tor-browser for Tor Browser profile
 fkrone (https://github.com/fkrone)
 	- fix Zoom profile
+Fidel Ramos (https://github.com/haplo)
+	- added Ledger Live profile
+	- fixed geeqie profile
+	- added rawtherapee profile
+	- added electron-cache profile
 Florian Begusch (https://github.com/florianbegusch)
 	- (la)tex profiles
 	- fixed transmission-common.profile
@@ -411,6 +445,8 @@ floxo (https://github.com/floxo)
 	- fixed qml disk cache issue
 Foemass (https://github.com/Foemass)
 	- documentation
+Foxreef (https://github.com/Foxreef)
+	- steam profile fixes
 Franco (nextime) Lanza (https://github.com/nextime)
 	- added --private-template/--private-home
 František Polášek (https://github.com/fandaa)
@@ -465,6 +501,9 @@ Fred-Barclay (https://github.com/Fred-Barclay)
 	- added Catfish profile
 Frederik Olesen (https://github.com/Freso)
 	- added many vim profiles
+Frostbyte4664 (https://github.com/Frostbyte4664)
+	- steam.profile: Allow Baba Is You
+	- blender-3.6 redirect
 g3ngr33n (https://github.com/g3ngr33n)
 	- fix musl compilation
 G4JC (https://sourceforge.net/u/gaming4jc/profile/)
@@ -472,6 +511,10 @@ G4JC (https://sourceforge.net/u/gaming4jc/profile/)
 	- profile fixes
 Gaman Gabriel (https://github.com/stelariusinfinitek)
 	- inox profile
+Gabriel (https://github.com/gcb)
+	- okular profile fix
+	- irssi profile
+	- syncthing profile
 geg2048 (https://github.com/geg2048)
 	- kwallet profile fixes
 glitsj16 (https://github.com/glitsj16)
@@ -497,6 +540,8 @@ glitsj16 (https://github.com/glitsj16)
 	- new profiles: lzip, artha, nitroshare, nitroshare-cli, nitroshare-nmh
 	- new profiles: nirtoshare-send, nitroshare-ui, mencoder, gnome-pie
 	- new profiles: masterpdfeditor
+glu8716 (https://github.com/glu8716)
+	- nicotine: support Fcitx and dconf via dbus-user filter
 gm10 (https://github.com/gm10)
 	- get_user() do not use the unreliable getlogin()
 GovanifY (https://github.com/GovanifY)
@@ -514,6 +559,7 @@ GSI (https://github.com/GSI)
 	- added Uzbl browser profile
 haarp (https://github.com/haarp)
 	- Allow sound for hexchat
+	- discord-common.profile: harden & allow notifications
 hamzadis (https://github.com/hamzadis)
 	- added --overlay-named=name and --overlay-path=path
 Hans-Christoph Steiner (https://github.com/eighthave)
@@ -548,6 +594,9 @@ Haowei Yu (https://github.com/sfc-gh-hyu)
 Icaro Perseo (https://github.com/icaroperseo)
 	- Icecat profile
 	- several profile fixes
+Ilya Pankratov (https://github.com/i-pankrat)
+	- profstats fix
+	- fix various memory resource leaks
 Igor Bukanov (https://github.com/ibukanov)
 	- found/fiixed privilege escalation in --hosts-file option
 iiotx (https://github.com/iiotx)
@@ -642,6 +691,8 @@ jrabe (https://github.com/jrabe)
 	- Polari profile
 	- qTox profile
 	- X11 fixes
+jtrv (https://github.com/jtrv)
+	- tidal-hifi profile
 juan (https://github.com/nyancat18)
 	- fixed Kdenlive, Shotcut profiles
 	- new profiles for Cinelerra, Cliqz, Bluefish
@@ -690,6 +741,8 @@ kuesji koesnu (https://github.com/kuesji)
 	- better parser for size strings
 Kunal Mehta (https://github.com/legoktm)
 	- converted all links to https in manpages
+kzsa (https://github.com/kzsa)
+	- wusc: add /usr/share/locale-langpack (LC_MESSAGES)
 laniakea64 (https://github.com/laniakea64)
 	- added fj-mkdeb.py script to build deb packages
 Lari Rauno (https://github.com/tuutti)
@@ -705,6 +758,8 @@ layderv (https://github.com/layderv)
 lecso7 (https://github.com/lecso7)
 	- added goldendict profile
 	- allow evince to read .cbz file format
+leukimi (https://github.com/leukimi)
+	- 0ad.profile: fix libmozjs error on OpenSUSE Tumbleweed
 Loïc Damien (https://github.com/dzamlo)
 	- small fixes
 Liorst4 (https://github.com/Liorst4)
@@ -714,6 +769,8 @@ Liorst4 (https://github.com/Liorst4)
 	- minetest fixes
 Lockdis (https://github.com/Lockdis)
 	- Added crow, nyx, and google-earth-pro profiles
+luca0N (https://github.com/luca0N)
+	- fixed crawl profile
 Lukáš Krejčí (https://github.com/lskrejci)
 	- fixed parsing of --keep-var-tmp
 luzpaz (https://github.com/luzpaz)
@@ -729,12 +786,15 @@ Madura A (https://github.com/manushanga)
 mahdi1234 (https://github.com/mahdi1234)
 	- cherrytree profile
 	- Seamonkey profiles
+mammo0 (https://github.com/mammo0)
+	- remove 'text/plain' from firejail-profile.lang.in
 Manuel Dipolt (https://github.com/xeniter)
 	- stack alignment for the ARM Architecture
 Marek Küthe (https://github.com/marek22k)
 	- allow loading plugins in gajim
 	- allow bsfilter in email-common.profile
 	- email-common.profile: allow clamav plugin for claws-mail
+	- VSCodium: Fix developing Arduino
 Martin Carpenter (https://github.com/mcarpenter)
 	- security audit and bug fixes
 	- Centos 6.x support
@@ -766,6 +826,8 @@ Michael Haas (https://github.com/mhaas)
 	- bugfixes
 Michael Hoffmann (https://github.com/brisad)
 	- added support for subdirs in private-etc
+Michele Sorcinelli (https://github.com/michelesr)
+	- fix ssh profile
 Mike Frysinger (vapier@gentoo.org)
 	- Gentoo compile patch
 minus7 (https://github.com/minus7)
@@ -803,6 +865,8 @@ NetSysFire (https://github.com/NetSysFire)
 	- update weechat profile
 	- update megaglest profile
 	- added parsecd profile
+	- fix minecraft-launcher.profile
+	- singularity profile
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory
@@ -823,6 +887,11 @@ Nikos Chantziaras (https://github.com/realnc)
 	- fix audio support for Discord
 nolanl (https://github.com/nolanl)
 	- added localtime to signal-desktop's profile
+nutta-git (https://github.com/nutta-git)
+	- steam.profile: allow process_vm_readv syscall
+	- lutris.profile: allow more syscalls
+	- steam.profile: update novideo comment for webcam motion trackers
+	- more lutris.profile problems
 nyancat18 (https://github.com/nyancat18)
 	- added ardour4, dooble, karbon, krita profiles
 nya1 (https://github.com/nya1)
@@ -905,6 +974,8 @@ PizzaDude (https://github.com/pizzadude)
 	- fix welcome.sh
 polyzen (https://github.com/polyzen)
 	- fixed wusc issue with mpv/Vulkan
+powerjungle (https://github.com/powerjungle)
+	- fixed multimc
 probonopd (https://github.com/probonopd)
 	- automatic build on Travis CI
 pshpsh (https://github.com/pshpsh)
@@ -915,6 +986,9 @@ pszxzsd (https://github.com/pszxzsd)
 	-uGet profile
 pwnage-pineapple (https://github.com/pwnage-pineapple)
 	- update Okular profile
+qdii (https://github.com/qdii)
+	- added notpm command & keep tpm devices in private-dev
+	- keepassxc: add new socket location
 Quentin Retornaz (https://github.com/qretornaz-adapei42)
 	- microsoft-edge profiles fixes
 Quentin Minster (https://github.com/laomaiweng)
@@ -969,6 +1043,8 @@ rootalc (https://github.com/rootalc)
 	- add nolocal6.net filter
 Ruan (https://github.com/ruany)
 	- fixed hexchat profile
+RundownRhino (https://github.com/RundownRhino)
+	- firefox profile fix
 rusty-snake (https://github.com/rusty-snake)
 	- added profiles: thunderbird-wayland, supertuxkart, ghostwriter
 	- added profiles: klavaro, mypaint, mypaint-ora-thumbnailer, nano
@@ -1006,18 +1082,17 @@ Serphentas (https://github.com/Serphentas)
 	- add Paradox Launcher to Steam profile
 Slava Monich (https://github.com/monich)
 	- added configure option to disable man pages
-Tobias Schmidl (https://github.com/schtobia)
-	- added profile for webui-aria2
 Simon Peter (https://github.com/probonopd)
 	- set $APPIMAGE and $APPDIR environment variables
 	- AppImage version detection
 	- Leafppad type v1 and v2 appimage packages in test/appimage
 	- GitHub/Travis CI integration
+Simo Piiroinen (https://github.com/spiiroin)
+	- Jolla/SailfishOS patches
+	- fix startup race condition for /run/firejail directory
 sinkuu (https://github.com/sinkuu)
 	- blacklisting kwalletd
 	- fix symlink invocation for programs placing symlinks in $PATH
-Simo Piiroinen (https://github.com/spiiroin)
-	- Jolla/SailfishOS patches
 slowpeek (https://github.com/slowpeek)
 	- refine appimage example in docs
 	- allow resolution of .local names with avahi-daemon in the apparmor profile
@@ -1025,6 +1100,9 @@ slowpeek (https://github.com/slowpeek)
 	- make appimage examples consistent with --appimage option short description
 	- blacklist google-drive-ocamlfuse config
 	- blacklist sendgmail config
+Shahriar Heidrich (https://github.com/smheidrich)
+	- fix manpages
+	- fix i3 profile and disable-programs.profile
 smitsohu (https://github.com/smitsohu)
 	- read-only kde4 services directory
 	- enhanced mediathekview profile
@@ -1119,6 +1197,8 @@ startx2017 (https://github.com/startx2017)
 	- kwrite and geary profiles
 StelFux (https://github.com/StelFux)
 	- Fix youtube video in totem
+Syed Muhammad Shuja Haider (https://github.com/xplanthris)
+	- prismlauncher profile
 the-antz (https://github.com/the-antz)
 	- Fix libx265 encoding in ffmpeg profile
 	- Fix Firefox profile
@@ -1153,6 +1233,8 @@ Tomasz Jan Góralczyk (https://github.com/tjg)
 	- fixed Steam profile
 Tomi Leppänen (https://github.com/Tomin1)
 	- Jolla/SailfishOS patches
+Tobias Schmidl (https://github.com/schtobia)
+	- added profile for webui-aria2
 Topi Miettinen (https://github.com/topimiettinen)
 	- improved seccomp printing
 	- improve mount handling, fix /run/user handling
@@ -1167,6 +1249,11 @@ Ted Robertson (https://github.com/tredondo)
 	- various documentation fixes
 	- blacklist Exodus wallet
 	- blacklist monero-project directory
+	- several README file fixes
+	- use GitHub issues as the bug reporting address
+	- fix documentation for selinux
+tools200ms (https://github.com/tools200ms)
+	- fixed allow-ssh.inc
 Tus1688 (https://github.com/Tus1688)
 	- added neovim profile
 user1024 (user1024@tut.by)
@@ -1193,6 +1280,9 @@ Vadim A. Misbakh-Soloviov (https://github.com/msva)
 ValdikSS (https://github.com/ValdikSS)
 	- Psi+, Corebird, Konversation profiles
 	- various profile fixes
+Varun Sharma (https://github.com/varunsh-coder)
+	- update allowed endpoints
+	- build(deps): bump step-security/harden-runner from 2.5.0 to 2.5.1
 Vasya Novikov (https://github.com/vn971)
 	- Wesnoth profile
 	- Hedegewars profile
@@ -1257,6 +1347,9 @@ ydididodat (https://github.com/ydididodat)
 yumkam (https://github.com/yumkam)
 	- add compile-time option to restrict --net= to root only
 	- man page fixes
+Yves-Alexis Perez (https://github.com/corsac-s)
+	- signal-desktop profile fix
+	- signal: add access to D-Bus freedesktop.org secret API
 Zack Weinberg (https://github.com/zackw)
 	- added support for joining a persistent, named network namespace
 	- removed libconnect
@@ -1278,4 +1371,4 @@ Zack Weinberg (https://github.com/zackw)
 zupatisc (https://github.com/zupatisc)
 	- patch-util fix
 
-Copyright (C) 2014-2023 Firejail Authors
+Copyright (C) 2014-2024 Firejail Authors

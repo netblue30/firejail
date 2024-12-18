@@ -39,7 +39,7 @@ protocol unix
 seccomp
 tracelog
 
-# private-bin gjs,gnome-books
+#private-bin gjs,gnome-books
 private-dev
 private-tmp
 

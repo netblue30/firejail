@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -273,7 +273,10 @@ void fs_chroot(const char *rootdir) {
 		errExit("mounting /proc");
 
 	// create all other /run/firejail files and directories
-	preproc_build_firejail_dir();
+	preproc_build_firejail_dir_unlocked();
+	preproc_lock_firejail_dir();
+	preproc_build_firejail_dir_locked();
+	preproc_unlock_firejail_dir();
 
 	// update /var directory in order to support multiple sandboxes running on the same root directory
 	//	if (!arg_private_dev)

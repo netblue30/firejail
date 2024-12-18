@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -516,6 +516,21 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 		printf("LD_PRELOAD=%s\n", getenv("LD_PRELOAD"));
 	}
 
+#ifdef HAVE_LANDLOCK
+	//****************************
+	// Configure Landlock
+	//****************************
+	if (arg_landlock_enforce && ll_restrict(0)) {
+		// It isn't safe to continue if Landlock self-restriction was
+		// enabled and the "landlock_restrict_self" syscall has failed.
+		fprintf(stderr, "Error: ll_restrict() failed, exiting...\n");
+		exit(1);
+	} else {
+		if (arg_debug)
+			fprintf(stderr, "Not enforcing Landlock\n");
+	}
+#endif
+
 	if (just_run_the_shell) {
 		char *arg[2];
 		arg[0] = cfg.usershell;
@@ -878,7 +893,8 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// appimage
 	//****************************
-	appimage_mount();
+	if (arg_appimage)
+		appimage_mount();
 
 	//****************************
 	// private mode
@@ -1084,6 +1100,9 @@ int sandbox(void* sandbox_arg) {
 
 	if (arg_nodvd)
 		fs_dev_disable_dvd();
+
+	if (arg_notpm)
+		fs_dev_disable_tpm();
 
 	if (arg_nou2f)
 		fs_dev_disable_u2f();

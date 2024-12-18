@@ -22,6 +22,7 @@ include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
+include disable-proc.inc
 include disable-programs.inc
 include disable-xdg.inc
 
@@ -33,9 +34,10 @@ whitelist ${HOME}/.local/share/torbrowser
 whitelist /opt/tor-browser
 whitelist /usr/share/torbrowser-launcher
 include whitelist-common.inc
-include whitelist-var-common.inc
+include whitelist-run-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 # Add 'apparmor' to your torbrowser-launcher.local to enable AppArmor support.
 # IMPORTANT: the relevant rule in /etc/apparmor.d/local/firejail-default will need
@@ -53,10 +55,11 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp !chroot
-#tracelog - may cause issues, see #1930
+seccomp.block-secondary
+#tracelog # may cause issues, see #1930
 
 disable-mnt
-private-bin bash,cat,cp,cut,dirname,env,expr,file,gpg,grep,gxmessage,id,kdialog,ln,mkdir,mv,python*,rm,sed,sh,tail,tar,tclsh,test,tor-browser,tor-browser-en,torbrowser-launcher,update-desktop-database,xmessage,xz,zenity
+private-bin bash,cat,cp,cut,dirname,env,execdesktop,expr,file,gpg,grep,gxmessage,id,kdialog,ln,mkdir,mv,python*,rm,sed,sh,tail,tar,tclsh,test,tor-browser,tor-browser-en,torbrowser-launcher,update-desktop-database,xmessage,xz,zenity
 private-dev
 private-etc @tls-ca
 private-tmp

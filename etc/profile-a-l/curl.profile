@@ -7,6 +7,7 @@ include curl.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/curlrc # since curl 7.73.0
 # curl 7.74.0 introduces experimental support for HSTS cache
 # https://daniel.haxx.se/blog/2020/11/03/hsts-your-curl/
 # Technically this file can be anywhere but let's assume users have it in ${HOME}/.curl-hsts.
@@ -15,7 +16,6 @@ include globals.local
 noblacklist ${HOME}/.curl-hsts
 noblacklist ${HOME}/.curlrc
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 # If you use nvm, add the below lines to your curl.local
@@ -25,6 +25,7 @@ blacklist ${RUNUSER}
 include disable-common.inc
 include disable-exec.inc
 include disable-programs.inc
+include disable-x11.inc
 # Depending on workflow you can add 'include disable-xdg.inc' to your curl.local.
 #include disable-xdg.inc
 
@@ -50,10 +51,10 @@ protocol inet,inet6
 seccomp
 tracelog
 
-# private-bin curl
+#private-bin curl
 private-cache
 private-dev
-# private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl
+#private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl
 private-etc @tls-ca
 private-tmp
 

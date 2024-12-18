@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -37,9 +37,21 @@
 #include "../include/common.h"
 #define MAX_BUF 4096
 
+// config files
+#define FIRECFG_CFGFILE SYSCONFDIR "/firecfg.config"
+#define FIRECFG_CONF_GLOB SYSCONFDIR "/firecfg.d/*.conf"
+
+// programs
+#define FIREJAIL_EXEC PREFIX "/bin/firejail"
+#define FIREJAIL_WELCOME_SH LIBDIR "/firejail/firejail-welcome.sh"
+#define FZENITY_EXEC        LIBDIR "/firejail/fzenity"
+#define ZENITY_EXEC "/usr/bin/zenity"
+#define SUDO_EXEC "sudo"
 
 // main.c
 extern int arg_debug;
+int in_ignorelist(const char *const str);
+void parse_config_all(int do_symlink);
 
 // util.c
 int which(const char *program);

@@ -23,7 +23,6 @@ whitelist ${HOME}/.config/equalx
 whitelist ${HOME}/.equalx
 whitelist /usr/share/poppler
 whitelist /usr/share/ghostscript
-whitelist /usr/share/texlive
 whitelist /usr/share/equalx
 whitelist /var/lib/texmf
 include whitelist-common.inc

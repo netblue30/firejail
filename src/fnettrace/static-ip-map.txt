@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2014-2023 Firejail Authors
+# Copyright (C) 2014-2024 Firejail Authors
 #
 # This file is part of firejail project
 #
@@ -38,14 +38,24 @@
 #
 
 
-# local network addresses
-192.168.0.0/16 local network
-10.0.0.0/8 local network
-172.16.0.0/16 local network
-169.254.0.0/16 local link
+# local network addresses (based on https://en.wikipedia.org/wiki/Reserved_IP_addresses)
+10.0.0.0/8 Local network
+100.64.0.0/10 Carrier-grade NAT
+127.0.0.0/8 Local host
+169.254.0.0/16 Local link
+172.16.0.0/12 Local network
+192.0.0.0/24 DS-Lite
+192.0.2.0/24 Documentation
+192.168.0.0/16 Local network
+198.18.0.0/15 Testing
+198.51.100.0/24 Documentation
+192.88.99.0/24 Reserved
+203.0.113.0/24 Documentation
+233.252.0.0/24 Documentation
+240.0.0.0/4 Reserved
 
 # multicast
-224.0.0.0/4 multicast
+224.0.0.0/4 Multicast
 224.0.0.9/32 RIPv2
 224.0.0.5/32 OSPF
 224.0.0.6/32 OSPF
@@ -86,17 +96,41 @@
 4.2.2.4/32 Level3 DNS
 8.8.4.0/24 Google DNS
 8.8.8.0/24 Google DNS
+8.20.247.20/32 Comodo DNS
+8.26.56.0/24 Comodo DNS
 9.9.9.0/24 Quad9 DNS
 45.90.28.0/22 NextDNS
+45.11.45.0/24 DNS-SB
+64.6.64.6/32 Neustar DNS
+64.6.65.6/32 Neustar DNS
+74.82.42.42/32 Hurricane Electric DNS
+76.76.2.0/24 ControlD DNS
+76.76.10.0/24 ControlD DNS
+76.76.19.0/24 Alternate DNS
+76.223.122.150/32 Alternate DNS
+77.88.8.0/24 Yandex DNS
+80.80.80.0/24 Freenom DNS Cloud
+80.80.81.0/24 Freenom DNS Cloud
+84.200.69.80/32 DSN Watch
+84.200.70.40/32 DNS Watch
 94.140.14.0/23 Adguard DNS
 149.112.112.0/24 Quad9 DNS
 149.112.120.0/21 CIRA DNS Canada
-146.255.56.96/29 Applied Privacy
+146.255.56.96/29 Applied Privacy DNS
 176.103.128.0/19 Adguard DNS
+185.222.222.0/24 DNS-SB
 185.228.168.0/24 Cleanbrowsing DNS
+185.236.104.0/24 FlashStart DNS
+185.236.105.0/24 FlashStart DNS
+185.253.5.0/24 NextDNS
+193.110.81.0/24 NextDNS
+205.171.3.66/32 CentyrLink DNS
+205.171.202.166/32 CentyrLink DNS
 208.67.216.0/21 OpenDNS
+216.146.32.0/20 Dyn DNS
 
 # whois
+45.88.202.0/24 Anonymize Inc WHOIS Privacy Service
 192.0.32.0/20 ICANN
 193.0.0.0/21 whois.ripe.net Netherlands
 199.5.26.0/24 whois.arin.net US
@@ -106,13 +140,15 @@
 199.212.0.0/24 whois.arin.net US
 200.3.12.0/22 whois.lacnic.net Uruguay
 201.159.220.0/22 whois.lacnic.net Ecuador
+203.119.100.0/22 apnic.net Australia
 
 # some popular websites
 5.255.255.0/24 Yandex
 23.160.0.0/24 Twitch
+23.229.128.0/17 GoDaddy
 23.246.0.0/18 Netflix
 31.13.24.0/21 Facebook
-31.13.64.0/18 Facebook
+31.13.64.0/17 Facebook
 37.77.184.0/21 Netflix
 45.57.0.0/17 Netflix
 45.58.64.0/20 Dropbox
@@ -132,9 +168,11 @@
 66.211.168.0/22 PayPal
 66.211.172.0/22 eBay
 66.211.176.0/20 eBay
+66.218.64.0/19 Yahoo
 66.220.144.0/20 Facebook
 69.53.224.0/19 Netflix
 69.171.224.0/19 Facebook
+74.6.0.0/16 Yahoo
 87.250.254.0/24 Yandex
 91.105.192.0/23 Telegram
 91.108.4.0/22 Telegram
@@ -147,15 +185,16 @@
 91.189.94.0/24 Ubuntu One
 95.161.64.0/20 Telegram
 99.181.64.0/18 Twitch
-103.53.48.0/23 Twitch
-104.244.40.0/21 Twitter
 103.10.124.0/23 Steam
 103.28.54.0/24 Steam
+103.53.48.0/23 Twitch
+104.244.40.0/21 Twitter
 108.160.160.0/20 Dropbox
 108.175.32.0/20 Netflix
+129.144.0.0/12 Oracle
 129.134.0.0/16 Facebook
 140.82.112.0/20 GitHub
-143.55.64.0/20 Github
+143.55.64.0/20 GitHub
 146.66.152.0/24 Steam
 146.66.155.0/24 Steam
 149.154.160.0/20 Telegram
@@ -186,7 +225,6 @@
 185.125.188.0/22 Ubuntu One
 185.199.108.0/22 GitHub
 185.205.69.0/24 Tutanota
-185.238.113.0/24 Bitchute
 188.64.224.0/21 Twitter
 190.217.33.0/24 Steam
 192.0.64.0/18 Wordpress
@@ -199,19 +237,95 @@
 194.169.254.0/24 Ubuntu One
 198.38.96.0/19 Netflix
 198.45.48.0/20 Netflix
+198.252.206.0/24 Stack Exchange
 199.9.248.0/21 Twitch
 199.16.156.0/22 Twitter
 199.59.148.0/22 Twitter
-199.168.96.24/29 BitChute
 205.185.194.0/24 Steam
 205.196.6.0/24 Steam
 207.45.72.0/22 Netflix
 207.241.224.0/20 Internet Archive
+207.5.192.0/19 Rumble
+208.82.236.0/22 Creiglist
 208.64.200.0/22 Steam
 208.75.76.0/22 Netflix
 208.78.164.0/22 Steam
 208.80.152.0/22 Wikipedia
 209.140.128.0/18 eBay
+
+# BitChute
+63.141.247.168/29 BitChute
+63.141.247.240/29 BitChute
+69.30.200.200/29 BitChute
+69.30.230.64/29 BitChute
+69.30.230.96/29 BitChute
+69.30.241.40/29 BitChute
+69.30.241.48/29 BitChute
+69.30.243.152/29 BitChute
+69.30.243.168/29 BitChute
+69.30.245.232/29 BitChute
+69.30.253.16/29 BitChute
+69.197.182.184/29 BitChute
+74.91.28.208/29 BitChute
+74.91.29.208/29 BitChute
+69.197.138.24/29 BitChute
+107.150.32.0/19 BitChute
+107.150.35.192/29 BitChute
+107.150.45.120/29 BitChute
+142.54.180.104/29 BitChute
+142.54.181.184/29 BitChute
+142.54.188.112/29 BitChute
+142.54.189.192/29 BitChute
+173.208.154.8/29 BitChute
+173.208.154.160/29 BitChute
+173.208.176.128/29 BitChute
+173.208.185.200/29 BitChute
+173.208.203.224/29 BitChute
+173.208.203.248/29 BitChute
+173.208.211.224/29 BitChute
+173.208.216.40/29 BitChute
+173.208.219.112/29 BitChute
+173.208.246.160/29 BitChute
+185.238.113.0/24 BitChute
+192.151.147.16/29 BitChute
+192.151.158.136/29 BitChute
+192.187.97.88/29 BitChute
+192.187.97.232/29 BitChute
+192.187.114.16/29 BitChute
+192.187.114.96/29 BitChute
+192.187.118.168/29 BitChute
+192.187.121.208/29 BitChute
+192.187.122.72/29 BitChute
+192.187.123.112/29 BitChute
+192.187.126.0/29 BitChute
+198.204.226.120/29 BitChute
+198.204.228.48/29 BitChute
+198.204.235.88/29 BitChute
+198.204.235.216/29 BitChute
+198.204.244.112/29 BitChute
+198.204.245.32/29 BitChute
+198.204.245.88/29 BitChute
+198.204.250.208/29 BitChute
+198.204.251.24/29 BitChute
+198.204.253.64/29 BitChute
+198.204.253.184/29 BitChute
+199.168.96.24/29 BitChute
+199.168.96.64/29 BitChute
+204.12.220.136/29 BitChute
+204.12.194.176/29 BitChute
+204.12.194.248/29 BitChute
+204.12.220.232/29 BitChute
+208.110.68.56/29 BitChute
+
+# WholeSale Internet
+69.30.192.0/18 WholeSale Internet
+69.197.128.0/18 WholeSale Internet
+142.54.160.0/19 WholeSale Internet
+173.208.128.0/17 WholeSale Internet
+204.12.192.0/18 WholeSale Internet
+208.67.0.0/21 WholeSale Internet
+208.110.64.0/19 WholeSale Internet
+208.110.91.0/24 WholeSale Internet
 
 # Imperva
 199.83.128.0/21 Imperva
@@ -237,6 +351,7 @@
 66.243.0.0/17 Level 3
 66.243.128.0/18 Level 3
 66.251.192.0/19 Level 3
+74.202.0.0/15 Level 3
 205.128.0.0/14 Level 3
 205.180.0.0/14 Level 3
 205.184.0.0/19 Level 3
@@ -261,24 +376,17 @@
 205.224.0.0/14 Level 3
 209.244.0.0/14 Level 3
 
-# WholeSale Internet
-69.30.192.0/18 WholeSale Internet
-69.197.128.0/18 WholeSale Internet
-173.208.128.0/17 WholeSale Internet
-204.12.192.0/18 WholeSale Internet
-208.67.0.0/21 WholeSale Internet
-208.110.64.0/19 WholeSale Internet
-208.110.91.0/24 WholeSale Internet
-
 # StackPath
 69.16.173.0/24 StackPath
 69.16.174.0/23 StackPath
 69.16.176.0/20 StackPath
+74.209.128.0/20 StackPath
 151.139.0.0/16 StackPath
 205.185.194.0/23 StackPath
 205.185.196.0/23 StackPath
 205.185.198.0/24 StackPath
 205.185.200.0/21 StackPath
+205.185.208.0/24 StackPath
 205.185.212.0/23 StackPath
 205.185.215.0/24 StackPath
 205.185.216.0/23 StackPath
@@ -299,7 +407,10 @@
 205.185.220.0/24 StackPath
 
 # Linode
+45.79.0.0/16 Linode
+50.116.0.0/18 Linode
 66.175.208.0/20 Linode
+74.207.224.0/19 Linode
 103.29.68.0/22 Linode
 104.200.16.0/21 Linode
 104.200.24.0/22 Linode
@@ -397,6 +508,7 @@
 172.105.0.0/19 Linode
 172.105.112.0/20 Linode
 172.105.128.0/23 Linode
+173.255.192.0/18 Linode
 
 # Akamai
 2.16.0.0/13 Akamai
@@ -406,6 +518,8 @@
 23.72.0.0/13 Akamai
 23.192.0.0/11 Akamai
 72.246.0.0/15 Akamai
+74.121.124.0/22 Akamai
+92.122.160.0/20 Akamai
 96.6.0.0/15 Akamai
 96.16.0.0/15 Akamai
 104.64.0.0/10 Akamai
@@ -464,6 +578,8 @@
 108.44.64.0/18 MCI
 108.45.0.0/16 MCI
 108.46.0.0/16 MCI
+152.176.0.0/12 MCI
+152.192.0.0/13 MCI
 192.229.128.0/17 MCI
 
 # Microsoft
@@ -478,6 +594,7 @@
 20.48.0.0/12 Microsoft
 20.128.0.0/16 Microsoft
 20.192.0.0/10 Microsoft
+23.96.0.0/13 Microsoft
 40.76.0.0/14 Microsoft
 40.96.0.0/12 Microsoft
 40.112.0.0/13 Microsoft
@@ -486,11 +603,40 @@
 40.80.0.0/12 Microsoft
 40.120.0.0/14 Microsoft
 40.125.0.0/17 Microsoft
+51.4.0.0/15 Microsoft
+51.8.0.0/16 Microsoft
+51.10.0.0/14 Microsoft
+51.51.0.0/16 Microsoft
+51.53.0.0/16 Microsoft
+51.103.0.0/16 Microsoft
+51.107.0.0/16 Microsoft
+51.116.0.0/16 Microsoft
+51.120.0.0/16 Microsoft
+51.124.0.0/16 Microsoft
+51.132.0.0/16 Microsoft
+51.136.0.0/16 Microsoft
+51.140.0.0/15 Microsoft
+52.96.0.0/12 Microsoft
+52.112.0.0/14 Microsoft
+52.120.0.0/14 Microsoft
+52.125.0.0/16 Microsoft
+52.126.0.0/15 Microsoft
+52.132.0.0/14 Microsoft
+52.136.0.0/13 Microsoft
 52.145.0.0/16 Microsoft
+52.146.0.0/15 Microsoft
 52.148.0.0/14 Microsoft
 52.152.0.0/13 Microsoft
-52.146.0.0/15 Microsoft
 52.160.0.0/11 Microsoft
+52.224.0.0/11 Microsoft
+74.160.0.0/14 Microsoft
+74.176.0.0/14 Microsoft
+74.224.0.0/14 Microsoft
+74.234.0.0/15 Microsoft
+74.240.0.0/14 Microsoft
+74.248.0.0/15 Microsoft
+168.61.0.0/16 Microsoft
+168.62.0.0/15 Microsoft
 
 # Yahoo
 63.250.192.0/19 Yahoo
@@ -504,6 +650,7 @@
 206.190.32.0/19 Yahoo
 209.73.160.0/19 Yahoo
 209.191.64.0/18 Yahoo
+212.82.100.0/22 Yahoo
 216.115.96.0/20 Yahoo
 
 # Google
@@ -513,10 +660,22 @@
 8.35.192.0/20 Google
 23.236.48.0/20 Google
 23.251.128.0/19 Google
+34.4.16.0/20 Google
+34.4.64.0/18 Google
+34.4.6.0/23 Google
+34.16.0.0/12 Google
+34.32.0.0/11 Google
+34.4.128.0/17 Google
+34.8.0.0/13 Google
+34.4.8.0/21 Google
+34.5.0.0/16 Google
+34.6.0.0/15 Google
+34.4.32.0/19 Google
+34.4.5.0/24 Google
 34.64.0.0/10 Google
 34.128.0.0/10 Google
 35.184.0.0/13 Google
-35.192.0.0/14 Google
+35.192.0.0/12 Google
 35.196.0.0/15 Google
 35.198.0.0/16 Google
 35.199.0.0/17 Google
@@ -576,7 +735,7 @@
 103.21.244.0/22 Cloudflare
 103.22.200.0/22 Cloudflare
 103.31.4.0/22 Cloudflare
-104.16.0.0/13 Cloudflare
+104.16.0.0/12 Cloudflare
 104.24.0.0/14 Cloudflare
 108.162.192.0/18 Cloudflare
 131.0.72.0/22 Cloudflare
@@ -684,6 +843,7 @@
 3.136.0.0/13 Amazon
 3.144.0.0/13 Amazon
 3.152.0.0/13 Amazon
+3.160.0.0/14 Amazon
 3.208.0.0/12 Amazon
 3.224.0.0/12 Amazon
 3.240.0.0/13 Amazon
@@ -1762,6 +1922,7 @@
 34.192.0.0/12 Amazon
 34.208.0.0/12 Amazon
 34.224.0.0/12 Amazon
+34.225.127.72/10 Amazon
 34.240.0.0/13 Amazon
 34.248.0.0/13 Amazon
 35.71.64.0/22 Amazon
@@ -3310,7 +3471,7 @@
 54.93.0.0/16 Amazon
 54.94.0.0/16 Amazon
 54.95.0.0/16 Amazon
-54.144.0.0/14 Amazon
+54.144.0.0/12 Amazon
 54.148.0.0/15 Amazon
 54.150.0.0/16 Amazon
 54.151.0.0/17 Amazon
@@ -3321,7 +3482,7 @@
 54.154.0.0/16 Amazon
 54.155.0.0/16 Amazon
 54.156.0.0/14 Amazon
-54.160.0.0/13 Amazon
+54.160.0.0/11 Amazon
 54.168.0.0/16 Amazon
 54.169.0.0/16 Amazon
 54.170.0.0/15 Amazon
@@ -3334,7 +3495,7 @@
 54.182.0.0/16 Amazon
 54.183.0.0/16 Amazon
 54.184.0.0/13 Amazon
-54.192.0.0/16 Amazon
+54.192.0.0/12 Amazon
 54.193.0.0/16 Amazon
 54.194.0.0/15 Amazon
 54.196.0.0/15 Amazon
@@ -3345,12 +3506,12 @@
 54.204.0.0/15 Amazon
 54.206.0.0/16 Amazon
 54.207.0.0/16 Amazon
-54.208.0.0/15 Amazon
+54.208.0.0/13 Amazon
 54.210.0.0/15 Amazon
 54.212.0.0/15 Amazon
 54.214.0.0/16 Amazon
 54.215.0.0/16 Amazon
-54.216.0.0/15 Amazon
+54.216.0.0/14 Amazon
 54.218.0.0/16 Amazon
 54.219.0.0/16 Amazon
 54.220.0.0/16 Amazon
@@ -3610,6 +3771,10 @@
 72.21.192.0/19 Amazon
 72.41.0.0/20 Amazon
 72.44.32.0/19 Amazon
+74.127.0.0/18 Amazon
+74.190.0.0/16 Amazon
+74.230.0.0/16 Amazon
+74.250.0.0/16 Amazon
 75.2.0.0/17 Amazon
 75.101.128.0/17 Amazon
 76.223.0.0/17 Amazon
@@ -5014,22 +5179,7 @@
 164.92.208.0/20 Digital Ocean
 164.92.224.0/20 Digital Ocean
 164.92.240.0/20 Digital Ocean
-165.22.0.0/20 Digital Ocean
-165.22.16.0/20 Digital Ocean
-165.22.32.0/20 Digital Ocean
-165.22.48.0/20 Digital Ocean
-165.22.64.0/20 Digital Ocean
-165.22.80.0/20 Digital Ocean
-165.22.96.0/20 Digital Ocean
-165.22.112.0/20 Digital Ocean
-165.22.128.0/20 Digital Ocean
-165.22.144.0/20 Digital Ocean
-165.22.160.0/20 Digital Ocean
-165.22.176.0/20 Digital Ocean
-165.22.192.0/20 Digital Ocean
-165.22.208.0/20 Digital Ocean
-165.22.224.0/20 Digital Ocean
-165.22.240.0/20 Digital Ocean
+165.22.0.0/16 Digital Ocean
 165.227.0.0/20 Digital Ocean
 165.227.16.0/20 Digital Ocean
 165.227.32.0/20 Digital Ocean
@@ -5591,3 +5741,375 @@
 64.120.69.0/24 Leaseweb
 69.147.236.0/24 Leaseweb
 70.32.34.0/24 Leaseweb
+
+
+
+# GoDaddy
+103.1.172.0/22 GoDaddy
+103.1.172.0/24 GoDaddy
+103.1.174.0/24 GoDaddy
+103.1.175.0/24 GoDaddy
+104.238.64.0/18 GoDaddy
+104.238.64.0/19 GoDaddy
+104.238.64.0/22 GoDaddy
+104.238.64.0/24 GoDaddy
+107.180.0.0/17 GoDaddy
+107.180.0.0/18 GoDaddy
+107.180.100.0/22 GoDaddy
+107.180.104.0/22 GoDaddy
+107.180.108.0/22 GoDaddy
+107.180.120.0/22 GoDaddy
+107.180.64.0/19 GoDaddy
+118.139.160.0/19 GoDaddy
+118.139.160.0/21 GoDaddy
+132.148.0.0/16 GoDaddy
+132.148.16.0/20 GoDaddy
+132.148.16.0/22 GoDaddy
+132.148.164.0/22 GoDaddy
+132.148.184.0/21 GoDaddy
+132.148.192.0/20 GoDaddy
+132.148.20.0/22 GoDaddy
+132.148.24.0/22 GoDaddy
+132.148.32.0/21 GoDaddy
+148.66.128.0/19 GoDaddy
+148.66.128.0/22 GoDaddy
+148.66.136.0/22 GoDaddy
+148.66.140.0/22 GoDaddy
+148.66.144.0/21 GoDaddy
+148.72.0.0/17 GoDaddy
+148.72.16.0/22 GoDaddy
+148.72.204.0/22 GoDaddy
+148.72.204.0/24 GoDaddy
+148.72.206.0/23 GoDaddy
+148.72.208.0/21 GoDaddy
+148.72.220.0/22 GoDaddy
+148.72.224.0/19 GoDaddy
+148.72.224.0/20 GoDaddy
+148.72.240.0/22 GoDaddy
+148.72.244.0/22 GoDaddy
+148.72.32.0/21 GoDaddy
+148.72.32.0/23 GoDaddy
+148.72.34.0/24 GoDaddy
+148.72.36.0/24 GoDaddy
+148.72.4.0/22 GoDaddy
+148.72.44.0/22 GoDaddy
+148.72.88.0/22 GoDaddy
+160.153.32.0/19 GoDaddy
+160.153.64.0/18 GoDaddy
+160.153.64.0/19 GoDaddy
+160.153.96.0/19 GoDaddy
+166.62.0.0/19 GoDaddy
+166.62.0.0/22 GoDaddy
+166.62.0.0/24 GoDaddy
+166.62.100.0/22 GoDaddy
+166.62.10.0/23 GoDaddy
+166.62.1.0/24 GoDaddy
+166.62.112.0/20 GoDaddy
+166.62.116.0/22 GoDaddy
+166.62.120.0/22 GoDaddy
+166.62.12.0/22 GoDaddy
+166.62.12.0/24 GoDaddy
+166.62.13.0/24 GoDaddy
+166.62.15.0/24 GoDaddy
+166.62.16.0/22 GoDaddy
+166.62.17.0/24 GoDaddy
+166.62.20.0/22 GoDaddy
+166.62.2.0/24 GoDaddy
+166.62.23.0/24 GoDaddy
+166.62.24.0/22 GoDaddy
+166.62.24.0/24 GoDaddy
+166.62.25.0/24 GoDaddy
+166.62.26.0/23 GoDaddy
+166.62.28.0/22 GoDaddy
+166.62.3.0/24 GoDaddy
+166.62.32.0/19 GoDaddy
+166.62.32.0/22 GoDaddy
+166.62.36.0/22 GoDaddy
+166.62.40.0/22 GoDaddy
+166.62.4.0/22 GoDaddy
+166.62.4.0/24 GoDaddy
+166.62.44.0/22 GoDaddy
+166.62.5.0/24 GoDaddy
+166.62.52.0/22 GoDaddy
+166.62.56.0/22 GoDaddy
+166.62.60.0/22 GoDaddy
+166.62.6.0/23 GoDaddy
+166.62.64.0/18 GoDaddy
+166.62.64.0/19 GoDaddy
+166.62.80.0/22 GoDaddy
+166.62.8.0/22 GoDaddy
+166.62.8.0/24 GoDaddy
+166.62.84.0/22 GoDaddy
+166.62.88.0/22 GoDaddy
+166.62.9.0/24 GoDaddy
+
+# IBM cloud service
+# https://cloud.ibm.com/docs/cloud-infrastructure?topic=cloud-infrastructure-ibm-cloud-ip-ranges
+# last update Aug 2023
+159.8.198.0/23 IBM
+169.38.118.0/23 IBM
+173.192.118.0/23 IBM
+192.255.18.0/24 IBM
+198.23.118.0/23 IBM
+169.46.118.0/23 IBM
+169.47.118.0/23 IBM
+169.48.118.0/24 IBM
+159.122.118.0/23 IBM
+161.156.118.0/24 IBM
+149.81.118.0/23 IBM
+5.10.118.0/23 IBM
+158.175.127.0/24 IBM
+141.125.118.0/23 IBM
+158.176.118.0/23 IBM
+159.122.138.0/23 IBM
+169.54.118.0/23 IBM
+163.68.118.0/24 IBM
+163.69.118.0/24 IBM
+163.73.118.0/24 IBM
+159.8.118.0/23 IBM
+169.57.138.0/23 IBM
+50.23.118.0/23 IBM
+169.45.118.0/23 IBM
+169.62.118.0/24 IBM
+174.133.118.0/23 IBM
+168.1.18.0/23 IBM
+130.198.118.0/23 IBM
+135.90.118.0/23 IBM
+161.202.118.0/23 IBM
+128.168.118.0/23 IBM
+165.192.118.0/23 IBM
+158.85.118.0/23 IBM
+163.74.118.0/23 IBM
+163.75.118.0/23 IBM
+208.43.118.0/23 IBM
+192.255.38.0/24 IBM
+169.55.118.0/23 IBM
+169.60.118.0/23 IBM
+169.61.118.0/23 IBM
+159.8.197.0/24 IBM
+169.38.117.0/24 IBM
+50.23.203.0/24 IBM
+108.168.157.0/24 IBM
+173.192.117.0/24 IBM
+192.155.205.0/24 IBM
+169.46.187.0/24 IBM
+198.23.117.0/24 IBM
+169.46.117.0/24 IBM
+169.47.117.0/24 IBM
+169.48.117.0/24 IBM
+159.122.117.0/24 IBM
+161.156.117.0/24 IBM
+149.81.117.0/24 IBM
+5.10.117.0/24 IBM
+158.175.117.0/24 IBM
+141.125.117.0/24 IBM
+158.176.117.0/24 IBM
+159.122.137.0/24 IBM
+169.54.117.0/24 IBM
+159.8.117.0/24 IBM
+169.57.137.0/24 IBM
+50.23.117.0/24 IBM
+169.45.117.0/24 IBM
+174.133.117.0/24 IBM
+168.1.17.0/24 IBM
+130.198.117.0/24 IBM
+135.90.117.0/24 IBM
+161.202.117.0/24 IBM
+128.168.117.0/24 IBM
+165.192.117.0/24 IBM
+158.85.117.0/24 IBM
+50.22.248.0/25 IBM
+169.54.27.0/24 IBM
+198.11.250.0/24 IBM
+208.43.117.0/24 IBM
+169.55.117.0/24 IBM
+169.60.117.0/24 IBM
+169.61.117.0/24 IBM
+12.96.160.0/24 IBM
+66.98.240.192/26 IBM
+67.18.139.0/24 IBM
+67.19.0.0/24 IBM
+70.84.160.0/24 IBM
+70.85.125.0/24 IBM
+75.125.126.8/32 IBM
+209.85.4.0/26 IBM
+216.12.193.9/32 IBM
+216.40.193.0/24 IBM
+216.234.234.0/24 IBM
+
+# Hetzner
+116.202.0.0/16 Hetzner
+116.203.0.0/16 Hetzner
+128.140.0.0/17 Hetzner
+135.181.0.0/16 Hetzner
+142.132.128.0/17 Hetzner
+157.90.0.0/16 Hetzner
+159.69.0.0/16 Hetzner
+162.55.0.0/16 Hetzner
+167.233.0.0/16 Hetzner
+167.235.0.0/16 Hetzner
+168.119.0.0/16 Hetzner
+176.9.0.0/16 Hetzner
+178.63.0.0/16 Hetzner
+188.34.128.0/17 Hetzner
+188.40.0.0/16 Hetzner
+195.201.0.0/16 Hetzner
+213.239.192.0/18 Hetzner
+23.88.0.0/17 Hetzner
+37.27.0.0/16 Hetzner
+46.4.0.0/16 Hetzner
+49.12.0.0/16 Hetzner
+49.13.0.0/16 Hetzner
+5.75.128.0/17 Hetzner
+5.9.0.0/16 Hetzner
+65.108.0.0/16 Hetzner
+65.109.0.0/16 Hetzner
+65.21.0.0/16 Hetzner
+78.46.0.0/15 Hetzner
+85.10.192.0/18 Hetzner
+88.198.0.0/16 Hetzner
+88.99.0.0/16 Hetzner
+91.107.128.0/17 Hetzner
+94.130.0.0/16 Hetzner
+95.216.0.0/16 Hetzner
+95.217.0.0/16 Hetzner
+
+# Liquid Web
+159.135.48.0/20 Liquid Web
+162.212.134.0/24 Liquid Web
+162.252.104.0/22 Liquid Web
+172.255.59.0/24 Liquid Web
+173.199.128.0/18 Liquid Web
+184.106.55.0/24 Liquid Web
+192.126.88.0/22 Liquid Web
+192.133.82.0/24 Liquid Web
+192.138.16.0/21 Liquid Web
+192.190.220.0/22 Liquid Web
+192.251.32.0/24 Liquid Web
+199.189.224.0/22 Liquid Web
+199.195.118.0/24 Liquid Web
+205.174.24.0/22 Liquid Web
+207.246.248.0/21 Liquid Web
+208.75.148.0/22 Liquid Web
+208.79.232.0/21 Liquid Web
+208.86.152.0/21 Liquid Web
+209.124.89.0/24 Liquid Web
+209.188.80.0/20 Liquid Web
+209.59.128.0/18 Liquid Web
+50.28.0.0/18 Liquid Web
+50.28.5.0/24 Liquid Web
+50.28.64.0/19 Liquid Web
+50.57.240.0/20 Liquid Web
+64.50.144.0/20 Liquid Web
+64.50.144.0/23 Liquid Web
+64.50.148.0/22 Liquid Web
+64.50.152.0/21 Liquid Web
+64.91.224.0/19 Liquid Web
+67.225.128.0/17 Liquid Web
+67.227.128.0/17 Liquid Web
+67.43.0.0/20 Liquid Web
+68.66.211.0/24 Liquid Web
+69.160.56.0/24 Liquid Web
+69.16.192.0/18 Liquid Web
+69.16.222.0/23 Liquid Web
+69.167.128.0/18 Liquid Web
+72.52.128.0/17 Liquid Web
+96.30.0.0/18 Liquid Web
+
+# OVH
+15.204.0.0/17 OVH
+15.204.128.0/17 OVH
+15.235.0.0/17 OVH
+15.235.128.0/17 OVH
+23.92.224.0/19 OVH
+37.187.0.0/16 OVH
+37.59.0.0/16 OVH
+40.160.0.0/17 OVH
+46.105.0.0/16 OVH
+46.105.198.0/24 OVH
+46.105.199.0/24 OVH
+46.105.200.0/24 OVH
+46.105.201.0/24 OVH
+46.105.202.0/24 OVH
+46.105.203.0/24 OVH
+46.105.204.0/24 OVH
+46.105.206.0/24 OVH
+46.105.207.0/24 OVH
+46.244.32.0/20 OVH
+51.161.0.0/17 OVH
+51.161.128.0/17 OVH
+51.210.0.0/24 OVH
+107.189.64.0/18 OVH
+135.125.0.0/17 OVH
+135.125.128.0/17 OVH
+135.148.0.0/17 OVH
+135.148.128.0/17 OVH
+137.74.0.0/16 OVH
+139.99.0.0/17 OVH
+139.99.128.0/17 OVH
+141.94.0.0/16 OVH
+141.95.0.0/17 OVH
+141.95.128.0/17 OVH
+142.4.192.0/19 OVH
+142.44.128.0/17 OVH
+144.217.0.0/16 OVH
+145.239.0.0/16 OVH
+146.59.0.0/16 OVH
+146.59.0.0/17 OVH
+147.135.0.0/17 OVH
+147.135.128.0/17 OVH
+148.113.0.0/18 OVH
+148.113.128.0/17 OVH
+149.202.0.0/16 OVH
+149.56.0.0/16 OVH
+151.80.0.0/16 OVH
+152.228.128.0/17 OVH
+158.69.0.0/16 OVH
+162.19.0.0/17 OVH
+162.19.128.0/17 OVH
+164.132.0.0/16 OVH
+167.114.0.0/17 OVH
+167.114.128.0/18 OVH
+167.114.192.0/19 OVH
+176.31.0.0/16 OVH
+178.32.0.0/15 OVH
+185.15.68.0/22 OVH
+185.45.160.0/22 OVH
+188.165.0.0/16 OVH
+192.240.152.0/21 OVH
+192.95.0.0/18 OVH
+192.99.0.0/16 OVH
+193.70.0.0/17 OVH
+198.100.144.0/20 OVH
+198.244.128.0/17 OVH
+198.245.48.0/20 OVH
+198.27.64.0/18 OVH
+198.27.92.0/24 OVH
+198.50.128.0/17 OVH
+213.186.32.0/19 OVH
+213.251.128.0/18 OVH
+213.32.0.0/17 OVH
+217.182.0.0/16 OVH
+
+# Ionos
+74.208.0.0/16 Ionos
+
+# WPEngine
+141.193.213.0/24 WPEngine
+
+# Dreamhost
+208.113.128.0/17 Dreamhost
+
+# Shopify
+23.227.32.0/19 Shopify
+
+# Sucuri
+66.248.200.0/22 Sucuri
+185.93.228.0/22 Sucuri
+192.88.134.0/23 Sucuri
+192.124.249.0/24 Sucuri
+192.161.0.0/24 Sucuri
+
+# HostGator
+# Bluehost
+# Squarespace

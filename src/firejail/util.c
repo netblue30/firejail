@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -206,6 +206,8 @@ static void clean_supplementary_groups(gid_t gid) {
 
 	if (!arg_nosound) {
 		copy_group_ifcont("audio", groups, ngroups,
+		                  new_groups, &new_ngroups, MAX_GROUPS);
+		copy_group_ifcont("pipewire", groups, ngroups,
 		                  new_groups, &new_ngroups, MAX_GROUPS);
 	}
 
@@ -1336,6 +1338,13 @@ void close_all(int *keep_list, size_t sz) {
 		if (keep)
 			continue;
 
+#ifdef HAVE_LANDLOCK
+		// Don't close the file descriptor of the Landlock ruleset; it
+		// will be automatically closed by the "ll_restrict" wrapper
+		// function.
+		if (fd == ll_get_fd())
+			continue;
+#endif
 		close(fd);
 	}
 	closedir(dir);
@@ -1383,6 +1392,7 @@ void enter_network_namespace(pid_t pid) {
 		fprintf(stderr, "Error: the sandbox doesn't use a new network namespace\n");
 		exit(1);
 	}
+	free(name);
 
 	// join the namespace
 	EUID_ROOT();
@@ -1474,7 +1484,7 @@ int ascii_isxdigit(unsigned char c) {
 	return ret;
 }
 
-// Note: Keep this in sync with NAME VALIDATION in src/man/firejail.txt.
+// Note: Keep this in sync with NAME VALIDATION in src/man/firejail.1.in.
 //
 // Allow only ASCII letters, digits and a few special characters; names with
 // only numbers are rejected; spaces and control characters are rejected.

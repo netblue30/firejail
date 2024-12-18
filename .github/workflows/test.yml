@@ -1,0 +1,268 @@
+# Checks that the tests are passing.
+
+name: Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+    paths:
+      - 'm4/**'
+      - 'src/**.c'
+      - 'src/**.h'
+      - 'src/**.mk'
+      - 'src/**Makefile'
+      - 'test/**'
+      - .github/workflows/test.yml
+      - Makefile
+      - config.mk.in
+      - config.sh.in
+      - configure
+      - configure.ac
+      - etc/profile-a-l/default.profile
+      - src/firecfg/firecfg.config
+  pull_request:
+    paths:
+      - 'm4/**'
+      - 'src/**.c'
+      - 'src/**.h'
+      - 'src/**.mk'
+      - 'src/**Makefile'
+      - 'test/**'
+      - .github/workflows/test.yml
+      - Makefile
+      - config.mk.in
+      - config.sh.in
+      - configure
+      - configure.ac
+      - etc/profile-a-l/default.profile
+      - src/firecfg/firecfg.config
+
+permissions:  # added using https://github.com/step-security/secure-workflows
+  contents: read
+
+#
+# Faster tests
+#
+
+jobs:
+  test-main:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    env:
+      SHELL: /bin/bash
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+      with:
+        egress-policy: block
+        allowed-endpoints: >
+          azure.archive.ubuntu.com:80
+          github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - name: update package information
+      run: sudo apt-get update -qy
+    - name: install dependencies
+      run: >
+        sudo apt-get install -qy
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils
+    - name: print env
+      run: ./ci/printenv.sh
+    - name: configure
+      run: >
+        ./configure CC=gcc-12
+        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --enable-apparmor --enable-selinux
+        || (cat config.log; exit 1)
+    - name: make
+      run: make -j "$(nproc)"
+    - name: make install
+      run: sudo make install
+    - name: print version
+      run: make print-version
+    - run: make lab-setup
+    - run: make test-seccomp-extra
+    - run: make test-firecfg
+    - run: make test-capabilities
+    - run: make test-apparmor
+    - run: make test-appimage
+    - run: make test-chroot
+    - run: make test-fcopy
+
+#
+# Slower tests
+#
+
+  test-fs:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    env:
+      SHELL: /bin/bash
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+      with:
+        egress-policy: block
+        allowed-endpoints: >
+          azure.archive.ubuntu.com:80
+          github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - name: update package information
+      run: sudo apt-get update -qy
+    - name: install dependencies
+      run: >
+        sudo apt-get install -qy
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils
+    - name: print env
+      run: ./ci/printenv.sh
+    - name: configure
+      run: >
+        ./configure CC=gcc-12
+        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --enable-apparmor --enable-selinux
+        || (cat config.log; exit 1)
+    - name: make
+      run: make -j "$(nproc)"
+    - name: make install
+      run: sudo make install
+    - name: print version
+      run: make print-version
+    - run: make lab-setup
+    - run: make test-private-etc
+    - run: make test-fs
+
+  test-environment:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    env:
+      SHELL: /bin/bash
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+      with:
+        egress-policy: block
+        allowed-endpoints: >
+          azure.archive.ubuntu.com:80
+          github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - name: update package information
+      run: sudo apt-get update -qy
+    - name: install dependencies
+      run: >
+        sudo apt-get install -qy
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils
+    - name: print env
+      run: ./ci/printenv.sh
+    - name: configure
+      run: >
+        ./configure CC=gcc-12
+        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --enable-apparmor --enable-selinux
+        || (cat config.log; exit 1)
+    - name: make
+      run: make -j "$(nproc)"
+    - name: make install
+      run: sudo make install
+    - name: print version
+      run: make print-version
+    - run: make lab-setup
+    - run: make test-environment
+    - run: make test-profiles
+
+  test-utils:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    env:
+      SHELL: /bin/bash
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+      with:
+        egress-policy: block
+        allowed-endpoints: >
+          azure.archive.ubuntu.com:80
+          debian.org:80
+          github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+          www.debian.org:443
+          www.debian.org:80
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - name: update package information
+      run: sudo apt-get update -qy
+    - name: install dependencies
+      run: >
+        sudo apt-get install -qy
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils
+    - name: print env
+      run: ./ci/printenv.sh
+    - name: configure
+      run: >
+        ./configure CC=gcc-12
+        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --enable-apparmor --enable-selinux
+        || (cat config.log; exit 1)
+    - name: make
+      run: make -j "$(nproc)"
+    - name: make install
+      run: sudo make install
+    - name: print version
+      run: make print-version
+    - run: make lab-setup
+    - run: make test-utils
+
+  test-network:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    env:
+      SHELL: /bin/bash
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+      with:
+        egress-policy: block
+        allowed-endpoints: >
+          1.1.1.1:1025
+          azure.archive.ubuntu.com:80
+          debian.org:80
+          dns.quad9.net:53
+          github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+          whois.pir.org:43
+          www.debian.org:443
+          www.debian.org:80
+          yahoo.com:1025
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - name: update package information
+      run: sudo apt-get update -qy
+    - name: install dependencies
+      run: >
+        sudo apt-get install -qy
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois
+        bridge-utils
+    - name: print env
+      run: ./ci/printenv.sh
+    - name: configure
+      run: >
+        ./configure CC=gcc-12
+        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --enable-apparmor --enable-selinux
+        || (cat config.log; exit 1)
+    - name: make
+      run: make -j "$(nproc)"
+    - name: make install
+      run: sudo make install
+    - name: print version
+      run: make print-version
+    - run: make lab-setup
+    - run: make test-fnetfilter
+    - run: make test-sysutils
+    - run: make test-network

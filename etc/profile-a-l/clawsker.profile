@@ -50,5 +50,5 @@ private-tmp
 dbus-user none
 dbus-system none
 
-#memory-deny-write-execute - breaks on Arch (see issue #1803)
+#memory-deny-write-execute # breaks on Arch (see issue #1803)
 restrict-namespaces

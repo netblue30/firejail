@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -30,7 +30,8 @@ typedef struct rnode_t {
 extern int radix_nodes;
 RNode *radix_longest_prefix_match(uint32_t ip);
 RNode*radix_add(uint32_t ip, uint32_t mask, char *name);
-void radix_print(int pkts);
+void radix_print(FILE *fp, int pkts);
 void radix_squash(void);
+void radix_clear_data(void);
 
 #endif

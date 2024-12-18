@@ -61,7 +61,7 @@ protocol unix
 seccomp
 tracelog
 
-# private-bin inkscape,potrace,python* - problems on Debian stretch
+#private-bin inkscape,potrace,python* # problems on Debian stretch
 private-cache
 private-dev
 private-etc @x11,ImageMagick*,python*

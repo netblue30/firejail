@@ -1,5 +1,5 @@
 ignore seccomp
-ignore shell
+ignore name
 private
 seccomp
-shell none
+name test

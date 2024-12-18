@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -42,6 +42,7 @@ static void ids_init(void) {
 	if (dup(fd) != STDOUT_FILENO)
 		errExit("dup");
 	close(fd);
+	free(fname);
 
 	sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 3, PATH_FIDS, "--init", cfg.homedir);
 }
@@ -63,6 +64,7 @@ static void ids_check(void) {
 	if (dup(fd) != STDIN_FILENO)
 		errExit("dup");
 	close(fd);
+	free(fname);
 
 	sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP| SBOX_ALLOW_STDIN, 3, PATH_FIDS, "--check", cfg.homedir);
 }

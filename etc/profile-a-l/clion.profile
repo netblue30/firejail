@@ -37,7 +37,7 @@ seccomp
 
 private-cache
 private-dev
-# private-tmp
+#private-tmp
 
 noexec /tmp
 restrict-namespaces

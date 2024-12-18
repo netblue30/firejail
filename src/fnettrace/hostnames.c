@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -40,30 +40,32 @@ char *retrieve_hostname(uint32_t ip) {
 		errExit("asprintf");
 
 	FILE *fp = popen(cmd, "r");
-	if (fp) {
-		char *ptr;
-		 if (fgets(buf, MAXBUF, fp)) {
-			ptr = strchr(buf, '\n');
-			if (ptr)
-				*ptr = '\0';
-			if (strncmp(buf, "GeoIP Country Edition:", 22) == 0) {
-				ptr = buf + 22;
-				if (*ptr == ' ' && *(ptr + 3) == ',' &&  *(ptr + 4) == ' ') {
-					rv = ptr + 5;
-					if (strcmp(rv, "United States") == 0)
-						rv = "US";
-				}
+	if (!fp) {
+		geoip_not_found = 1;
+		goto out;
+	}
+
+	char *ptr;
+	if (fgets(buf, MAXBUF, fp)) {
+		ptr = strchr(buf, '\n');
+		if (ptr)
+			*ptr = '\0';
+		if (strncmp(buf, "GeoIP Country Edition:", 22) == 0) {
+			ptr = buf + 22;
+			if (*ptr == ' ' && *(ptr + 3) == ',' && *(ptr + 4) == ' ') {
+				rv = ptr + 5;
+				if (strcmp(rv, "United States") == 0)
+					rv = "US";
 			}
 		}
-		pclose(fp);
-		return strdup(rv);
 	}
-	else
-		geoip_not_found = 1;
+	pclose(fp);
+	if (rv)
+		rv = strdup(rv);
 
+out:
 	free(cmd);
-
-	return NULL;
+	return rv;
 }
 
 void load_hostnames(const char *fname) {

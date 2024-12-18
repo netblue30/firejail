@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -277,7 +277,7 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 
 	// don't copy it if we already have the file
 	struct stat s;
-	if (stat(outfname, &s) == 0) {
+	if (lstat(outfname, &s) == 0) {
 		if (first)
 			first = 0;
 		else if (!arg_quiet)
@@ -286,7 +286,7 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 	}
 
 	// extract mode and ownership
-	if (stat(infname, &s) != 0)
+	if (lstat(infname, &s) != 0)
 		goto out;
 
 	uid_t uid = s.st_uid;

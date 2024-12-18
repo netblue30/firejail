@@ -39,7 +39,7 @@ novideo
 protocol unix,netlink
 seccomp
 
-private-bin ppsspp,PPSSPP,PPSSPPQt,PPSSPPSDL
+private-bin PPSSPP,PPSSPPQt,PPSSPPSDL,ppsspp
 # Add the next line to your ppsspp.local if you do not need controller support.
 #private-dev
 private-etc @tls-ca,@x11,host.conf

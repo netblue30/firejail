@@ -7,7 +7,7 @@ include nodejs-common.local
 # added by caller profile
 #include globals.local
 
-# NOTE: gulp, node-gyp, npm, npx, semver and yarn are all node scripts
+# Note: gulp, node-gyp, npm, npx, pnpm, pnpx, semver and yarn are all node scripts
 # using the `#!/usr/bin/env node` shebang. By sandboxing node the full
 # node.js stack will be firejailed. The only exception is nvm, which is implemented
 # as a sourced shell function, not an executable binary. Hence it is not
@@ -22,6 +22,7 @@ ignore read-only ${HOME}/.npmrc
 ignore read-only ${HOME}/.nvm
 ignore read-only ${HOME}/.yarnrc
 
+noblacklist ${HOME}/.local/share/pnpm
 noblacklist ${HOME}/.node-gyp
 noblacklist ${HOME}/.npm
 noblacklist ${HOME}/.npmrc
@@ -38,11 +39,12 @@ include disable-common.inc
 include disable-exec.inc
 include disable-programs.inc
 include disable-shell.inc
-include disable-X11.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 # If you want whitelisting, change ${HOME}/Projects below to your node projects directory
 # and add the next lines to your nodejs-common.local.
+#mkdir ${HOME}/.local/share/pnpm
 #mkdir ${HOME}/.node-gyp
 #mkdir ${HOME}/.npm
 #mkdir ${HOME}/.npm-packages
@@ -52,6 +54,7 @@ include disable-xdg.inc
 #mkdir ${HOME}/.yarn-config
 #mkdir ${HOME}/.yarncache
 #mkfile ${HOME}/.yarnrc
+#whitelist ${HOME}/.local/share/pnpm
 #whitelist ${HOME}/.node-gyp
 #whitelist ${HOME}/.npm
 #whitelist ${HOME}/.npm-packages

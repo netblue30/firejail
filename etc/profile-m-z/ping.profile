@@ -15,10 +15,10 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-proc.inc
 include disable-programs.inc
-include disable-X11.inc
+include disable-x11.inc
 include disable-xdg.inc
 
-include whitelist-common.inc
+#include whitelist-common.inc # see #903
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -55,7 +55,7 @@ tracelog
 
 disable-mnt
 private
-#private-bin ping - has mammoth problems with execvp: "No such file or directory"
+#private-bin ping # has mammoth problems with execvp: "No such file or directory"
 private-cache
 private-dev
 private-etc @tls-ca

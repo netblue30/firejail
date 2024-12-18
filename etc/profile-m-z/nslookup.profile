@@ -7,7 +7,6 @@ include nslookup.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 noblacklist ${PATH}/nslookup
@@ -17,6 +16,7 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 whitelist ${HOME}/.nslookuprc

@@ -7,6 +7,8 @@ include wget.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/wget
+noblacklist ${HOME}/.local/share/wget
 noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/.wget-hsts
 noblacklist ${HOME}/.wgetrc
@@ -15,7 +17,6 @@ noblacklist ${HOME}/.wgetrc
 #ignore read-only ${HOME}/.nvm
 #noblacklist ${HOME}/.nvm
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 include disable-common.inc
@@ -24,6 +25,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-x11.inc
 # Depending on workflow you can add the next line to your wget.local.
 #include disable-xdg.inc
 
@@ -54,7 +56,7 @@ private-bin wget
 private-cache
 private-dev
 # Depending on workflow you can add the next line to your wget.local.
-#private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl,wgetrc
+#private-etc alternatives,ca-certificates,crypto-policies,pki,resolv.conf,ssl,wget2rc,wgetrc
 #private-tmp
 
 dbus-user none

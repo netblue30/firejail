@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -70,6 +70,7 @@ static char *etc_group_sound[] = {
 	"alsa",
 	"asound.conf",
 	"machine-id", // required by PulseAudio
+	"pipewire",
 	"pulse",
 	NULL
 };
@@ -78,6 +79,7 @@ static char *etc_group_sound[] = {
 static char *etc_group_tls_ca[] = {
 	"ca-certificates",
 	"crypto-policies",
+	"gnutls",
 	"pki",
 	"ssl",
 	NULL

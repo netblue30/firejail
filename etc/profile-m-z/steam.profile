@@ -12,10 +12,13 @@ noblacklist ${HOME}/.config/MangoHud
 noblacklist ${HOME}/.config/ModTheSpire
 noblacklist ${HOME}/.config/RogueLegacy
 noblacklist ${HOME}/.config/RogueLegacyStorageContainer
+noblacklist ${HOME}/.config/UNDERTALE
+noblacklist ${HOME}/.factorio
 noblacklist ${HOME}/.killingfloor
 noblacklist ${HOME}/.klei
 noblacklist ${HOME}/.local/share/3909/PapersPlease
 noblacklist ${HOME}/.local/share/aspyr-media
+noblacklist ${HOME}/.local/share/Baba_Is_You
 noblacklist ${HOME}/.local/share/bohemiainteractive
 noblacklist ${HOME}/.local/share/cdprojektred
 noblacklist ${HOME}/.local/share/Colossal Order
@@ -42,6 +45,7 @@ noblacklist ${HOME}/.prey
 noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.steampath
 noblacklist ${HOME}/.steampid
+noblacklist ${HOME}/Zomboid
 # needed for STEAM_RUNTIME_PREFER_HOST_LIBRARIES=1 to work
 noblacklist /sbin
 noblacklist /usr/sbin
@@ -63,11 +67,14 @@ mkdir ${HOME}/.config/Loop_Hero
 mkdir ${HOME}/.config/MangoHud
 mkdir ${HOME}/.config/ModTheSpire
 mkdir ${HOME}/.config/RogueLegacy
+mkdir ${HOME}/.config/UNDERTALE
 mkdir ${HOME}/.config/unity3d
+mkdir ${HOME}/.factorio
 mkdir ${HOME}/.killingfloor
 mkdir ${HOME}/.klei
 mkdir ${HOME}/.local/share/3909/PapersPlease
 mkdir ${HOME}/.local/share/aspyr-media
+mkdir ${HOME}/.local/share/Baba_Is_You
 mkdir ${HOME}/.local/share/bohemiainteractive
 mkdir ${HOME}/.local/share/cdprojektred
 mkdir ${HOME}/.local/share/Colossal Order
@@ -91,6 +98,7 @@ mkdir ${HOME}/.paradoxinteractive
 mkdir ${HOME}/.paradoxlauncher
 mkdir ${HOME}/.prey
 mkdir ${HOME}/.steam
+mkdir ${HOME}/Zomboid
 mkfile ${HOME}/.steampath
 mkfile ${HOME}/.steampid
 whitelist ${HOME}/.config/Epic
@@ -99,11 +107,14 @@ whitelist ${HOME}/.config/MangoHud
 whitelist ${HOME}/.config/ModTheSpire
 whitelist ${HOME}/.config/RogueLegacy
 whitelist ${HOME}/.config/RogueLegacyStorageContainer
+whitelist ${HOME}/.config/UNDERTALE
 whitelist ${HOME}/.config/unity3d
+whitelist ${HOME}/.factorio
 whitelist ${HOME}/.killingfloor
 whitelist ${HOME}/.klei
 whitelist ${HOME}/.local/share/3909/PapersPlease
 whitelist ${HOME}/.local/share/aspyr-media
+whitelist ${HOME}/.local/share/Baba_Is_You
 whitelist ${HOME}/.local/share/bohemiainteractive
 whitelist ${HOME}/.local/share/cdprojektred
 whitelist ${HOME}/.local/share/Colossal Order
@@ -130,12 +141,13 @@ whitelist ${HOME}/.prey
 whitelist ${HOME}/.steam
 whitelist ${HOME}/.steampath
 whitelist ${HOME}/.steampid
+whitelist ${HOME}/Zomboid
 include whitelist-common.inc
 include whitelist-var-common.inc
 
-# NOTE: The following were intentionally left out as they are alternative
+# Note: The following were intentionally left out as they are alternative
 # (i.e.: unnecessary and/or legacy) paths whose existence may potentially
-# clobber other paths (see #4225).  If you use any, either add the entry to
+# clobber other paths (see #4225). If you use any, either add the entry to
 # steam.local or move the contents to a path listed above (or open an issue if
 # it's missing above).
 #mkdir ${HOME}/.config/RogueLegacyStorageContainer
@@ -149,15 +161,16 @@ nogroups
 nonewprivs
 noroot
 notv
-nou2f
-# For VR support add 'ignore novideo' to your steam.local.
+#nou2f # may break gamepads in certain games (see #6523)
+# To allow VR and camera-based motion tracking, add 'ignore novideo' to your
+# steam.local.
 novideo
 protocol unix,inet,inet6,netlink
 # seccomp sometimes causes issues (see #2951, #3267).
 # Add 'ignore seccomp' to your steam.local if you experience this.
 # mount, name_to_handle_at, pivot_root and umount2 are used by Proton >= 5.13
 # (see #4366).
-seccomp !chroot,!mount,!name_to_handle_at,!pivot_root,!ptrace,!umount2
+seccomp !chroot,!mount,!name_to_handle_at,!pivot_root,!process_vm_readv,!ptrace,!umount2
 # process_vm_readv is used by GE-Proton7-18 (see #5185).
 seccomp.32 !process_vm_readv
 # tracelog breaks integrated browser

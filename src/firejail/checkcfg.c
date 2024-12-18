@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -349,15 +349,15 @@ static const char *const compiletime_support =
 		"disabled"
 #endif
 
-	"\n\t- firetunnel support is "
-#ifdef HAVE_FIRETUNNEL
+	"\n\t- IDS support is "
+#ifdef HAVE_IDS
 		"enabled"
 #else
 		"disabled"
 #endif
 
-	"\n\t- IDS support is "
-#ifdef HAVE_IDS
+	"\n\t- Landlock support is "
+#ifdef HAVE_LANDLOCK
 		"enabled"
 #else
 		"disabled"

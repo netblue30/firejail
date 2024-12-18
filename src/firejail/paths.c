@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -47,6 +47,16 @@ static void init_paths(void) {
 		errExit("calloc");
 	memset(paths, 0, path_cnt * sizeof(char *)); // get rid of false positive error from GCC static analyzer
 
+	// lots of distros set /bin as a symlink to /usr/bin;
+	// we remove /bin form the path to speed up path-based operations such as blacklist
+	int bin_symlink = 0;
+	p = realpath("/bin", NULL);
+	if (p) {
+		if (strcmp(p, "/usr/bin") == 0)
+			bin_symlink = 1;
+	}
+	free(p);
+
 	// fill in 'paths' with pointers to elements of 'path'
 	unsigned int i = 0, j;
 	unsigned int len;
@@ -62,19 +72,36 @@ static void init_paths(void) {
 		if (len == 0)
 			goto skip;
 
+		//deal with /bin - /usr/bin symlink
+		if (bin_symlink > 0) {
+			if (strcmp(elt, "/bin") == 0 || strcmp(elt, "/usr/bin") == 0)
+				bin_symlink++;
+			if (bin_symlink == 3) {
+				bin_symlink = 0;
+				if (arg_debug)
+					printf("...skip path %s\n", elt);
+				goto skip;
+			}
+		}
+
 		// filter out duplicate entries
 		for (j = 0; j < i; j++)
 			if (strcmp(elt, paths[j]) == 0)
 				goto skip;
 
+		if (arg_debug)
+			printf("Add path entry %s\n", elt);
 		paths[i++] = elt;
 		if (len > longest_path_elt)
 			longest_path_elt = len;
 
-		skip:;
+skip:;
 	}
-
 	assert(paths[i] == NULL);
+	path_cnt = i;
+	if (arg_debug)
+		printf("Number of path entries: %u\n", path_cnt);
+
 	// path_cnt may be too big now, if entries were skipped above
 	path_cnt = i+1;
 }

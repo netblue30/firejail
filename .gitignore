@@ -1,9 +1,11 @@
+*.d
 *.o
 *.so
 *~
 *.swp
 *.deb
 *.rpm
+*.tar.xz
 *.gcda
 *.gcno
 *.gz
@@ -19,7 +21,6 @@ config.status
 contrib/syntax/files/example
 contrib/syntax/files/firejail-profile.lang
 contrib/syntax/files/firejail.vim
-firejail-*.tar.xz
 src/fnettrace-dns/fnettrace-dns
 src/fnettrace-sni/fnettrace-sni
 src/fnettrace-icmp/fnettrace-icmp
@@ -44,6 +45,7 @@ src/bash_completion/firejail.bash_completion
 src/zsh_completion/_firejail
 src/jailcheck/jailcheck
 src/fnettrace/fnettrace
+src/fnetlock/fnetlock
 src/fzenity/fzenity
 uids.h
 seccomp

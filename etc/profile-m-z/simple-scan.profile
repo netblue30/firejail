@@ -28,15 +28,15 @@ nonewprivs
 noroot
 nosound
 notv
-# novideo
+#novideo
 protocol unix,inet,inet6,netlink
 # blacklisting of ioperm system calls breaks simple-scan
 seccomp !ioperm
 tracelog
 
-# private-bin simple-scan
-# private-dev
-# private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl
-# private-tmp
+#private-bin simple-scan
+#private-dev
+#private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl
+#private-tmp
 
 restrict-namespaces

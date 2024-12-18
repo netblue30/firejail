@@ -12,13 +12,30 @@
 #
 
 AC_PREREQ([2.68])
-AC_INIT([firejail], [0.9.73], [netblue30@protonmail.com], [],
-    [https://firejail.wordpress.com])
+AC_INIT([firejail], [0.9.73], [https://github.com/netblue30/firejail/issues],
+    [], [https://firejail.wordpress.com])
 
 AC_CONFIG_SRCDIR([src/firejail/main.c])
 AC_CONFIG_MACRO_DIR([m4])
 
 AC_PROG_CC
+AC_CHECK_PROGS([CODESPELL], [codespell])
+AC_CHECK_PROGS([CPPCHECK], [cppcheck])
+AC_CHECK_PROGS([GAWK], [gawk])
+AC_CHECK_PROGS([GZIP], [gzip])
+AC_CHECK_PROGS([SCAN_BUILD], [scan-build])
+AC_CHECK_PROGS([STRIP], [strip])
+AC_CHECK_PROGS([TAR], [tar])
+
+DEPS_CFLAGS=""
+AC_SUBST([DEPS_CFLAGS])
+AX_CHECK_COMPILE_FLAG([-MMD -MP], [
+	DEPS_CFLAGS="$DEPS_CFLAGS -MMD -MP"
+])
+
+AX_CHECK_COMPILE_FLAG([-D_FORTIFY_SOURCE=2], [
+	EXTRA_CFLAGS="$EXTRA_CFLAGS -D_FORTIFY_SOURCE=2"
+], [], [$CFLAGS $CPPFLAGS -Werror])
 
 HAVE_SPECTRE="no"
 AX_CHECK_COMPILE_FLAG([-mindirect-branch=thunk], [
@@ -81,6 +98,16 @@ AS_IF([test "x$enable_selinux" = "xyes"], [
 	LIBS="$LIBS -lselinux"
 ])
 
+HAVE_LANDLOCK=""
+AC_SUBST([HAVE_LANDLOCK])
+AC_ARG_ENABLE([landlock],
+    [AS_HELP_STRING([--enable-landlock], [Landlock self-restriction support])])
+AS_IF([test "x$enable_landlock" != "xno"], [
+	AC_CHECK_HEADER([linux/landlock.h],
+	    [HAVE_LANDLOCK="-DHAVE_LANDLOCK"],
+	    [AC_MSG_WARN([header not found: linux/landlock.h, building without Landlock support])])
+])
+
 AC_SUBST([EXTRA_CFLAGS])
 AC_SUBST([EXTRA_LDFLAGS])
 
@@ -123,16 +150,7 @@ AC_ARG_ENABLE([man],
     [AS_HELP_STRING([--disable-man], [disable man pages])])
 AS_IF([test "x$enable_man" != "xno"], [
 	HAVE_MAN="-DHAVE_MAN"
-	AC_CHECK_PROG([HAVE_GAWK], [gawk], [yes], [no])
-	AS_IF([test "x$HAVE_GAWK" != "xyes"], [AC_MSG_ERROR([*** gawk not found ***])])
-])
-
-HAVE_FIRETUNNEL=""
-AC_SUBST([HAVE_FIRETUNNEL])
-AC_ARG_ENABLE([firetunnel],
-    [AS_HELP_STRING([--enable-firetunnel], [enable firetunnel])])
-AS_IF([test "x$enable_firetunnel" = "xyes"], [
-	HAVE_FIRETUNNEL="-DHAVE_FIRETUNNEL"
+	AS_IF([test "x$GAWK" = "x"], [AC_MSG_ERROR([*** gawk not found ***])])
 ])
 
 HAVE_PRIVATE_HOME=""
@@ -258,31 +276,6 @@ AS_IF([test "x$enable_only_syscfg_profiles" = "xyes"], [
 	HAVE_ONLY_SYSCFG_PROFILES="-DHAVE_ONLY_SYSCFG_PROFILES"
 ])
 
-HAVE_LTS=""
-AC_SUBST([HAVE_LTS])
-AC_ARG_ENABLE([lts],
-    [AS_HELP_STRING([--enable-lts], [enable long-term support software version (LTS)])])
-AS_IF([test "x$enable_lts" = "xyes"], [
-	HAVE_LTS="-DHAVE_LTS"
-	HAVE_IDS=""
-	HAVE_DBUSPROXY=""
-	HAVE_OVERLAYFS=""
-	HAVE_OUTPUT=""
-	HAVE_USERTMPFS=""
-	HAVE_MAN="-DHAVE_MAN"
-	HAVE_FIRETUNNEL=""
-	HAVE_PRIVATE_HOME=""
-	HAVE_PRIVATE_LIB=""
-	HAVE_CHROOT=""
-	HAVE_GLOBALCFG=""
-	HAVE_USERNS=""
-	HAVE_X11=""
-	HAVE_FILE_TRANSFER=""
-	HAVE_SUID="-DHAVE_SUID"
-	BUSYBOX_WORKAROUND="no"
-	HAVE_CONTRIB_INSTALL="no"
-])
-
 AC_CHECK_HEADER([linux/seccomp.h], [],
     [AC_MSG_ERROR([*** SECCOMP support is not installed (/usr/include/linux/seccomp.h missing) ***])])
 
@@ -299,8 +292,10 @@ cat <<EOF
 Compile options:
    CC: $CC
    CFLAGS: $CFLAGS
+   CPPFLAGS: $CPPFLAGS
    LDFLAGS: $LDFLAGS
    EXTRA_CFLAGS: $EXTRA_CFLAGS
+   DEPS_CFLAGS: $DEPS_CFLAGS
    EXTRA_LDFLAGS: $EXTRA_LDFLAGS
    LIBS: $LIBS
    fatal warnings: $HAVE_FATAL_WARNINGS
@@ -321,10 +316,9 @@ Features:
    disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
    enable --output logging: $HAVE_OUTPUT
    file transfer support: $HAVE_FILE_TRANSFER
-   firetunnel support: $HAVE_FIRETUNNEL
    global config: $HAVE_GLOBALCFG
    IDS support: $HAVE_IDS
-   LTS: $HAVE_LTS
+   Landlock support: $HAVE_LANDLOCK
    manpage support: $HAVE_MAN
    network: $HAVE_NETWORK
    overlayfs support: $HAVE_OVERLAYFS
@@ -335,13 +329,3 @@ Features:
    X11 sandboxing support: $HAVE_X11
 
 EOF
-
-if test "$HAVE_LTS" = -DHAVE_LTS; then
-	cat <<\EOF
-*********************************************************
-*    Warning: Long-term support (LTS) was enabled!      *
-*    Most compile-time options have been rewritten!     *
-*********************************************************
-
-EOF
-fi

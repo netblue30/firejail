@@ -1,13 +1,17 @@
-# Basic notes: builds firejail on 5 different systems for 2 package systems:
-# 1. Debian-based systems. Use debian:jessie to ensure reasonable backwards
-# compat and ubuntu:rolling for new setups
-# 2. Redhat-based systems. Use centos:latest for reasonable backwards compat
-# and fedora:latest for new setups
-# 3. Alpine for installing directly from source
-# Also builds apparmor package for Ubuntu LTS
+# Builds on multiple systems using different package managers:
+#
+# - Debian-based systems: Use oldest working/supported debian image for
+# reasonable backwards compatibility and ubuntu:rolling for new setups.
+# Additionally, ensure that the package works without apparmor.
+#
+# - Redhat-based systems: Use a centos-like distribution for reasonable
+# backwards compatibility and fedora:latest for new setups.
+#
+# - Alpine: Use it for installing directly from source.
 
 build_ubuntu_package:
     image: ubuntu:rolling
+    timeout: 10 minutes
     variables:
         DEBIAN_FRONTEND: noninteractive
     script:
@@ -18,12 +22,14 @@ build_ubuntu_package:
             | grep -Ev '^(Selecting|Preparing to unpack|Unpacking)'
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
-        - make deb
-        - dpkg -i firejail*.deb
-        - command -V firejail && firejail --version
+        - make dist
+        - ./mkdeb.sh --enable-fatal-warnings
+        - dpkg -i ./*.deb
+        - make print-version
 
 build_debian_package:
     image: debian:buster
+    timeout: 10 minutes
     variables:
         DEBIAN_FRONTEND: noninteractive
     script:
@@ -34,46 +40,14 @@ build_debian_package:
             | grep -Ev '^(Selecting|Preparing to unpack|Unpacking)'
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
-        - make deb
-        - dpkg -i firejail*.deb
-        - command -V firejail && firejail --version
-
-build_redhat_package:
-    image: almalinux:latest
-    script:
-        - dnf update -y
-        - dnf install -y rpm-build gcc make
-        - ./ci/printenv.sh
-        - ./configure --prefix=/usr || (cat config.log; exit 1)
-        - make rpms
-        - rpm -i firejail*.rpm
-        - command -V firejail && firejail --version
-
-build_fedora_package:
-    image: fedora:latest
-    script:
-        - dnf update -y
-        - dnf install -y rpm-build gcc make
-        - ./ci/printenv.sh
-        - ./configure --prefix=/usr || (cat config.log; exit 1)
-        - make rpms
-        - rpm -i firejail*.rpm
-        - command -V firejail && firejail --version
-
-build_src_package:
-    image: alpine:latest
-    script:
-        - apk update
-        - apk upgrade
-        - apk add build-base linux-headers gawk
-        - ./ci/printenv.sh
-        - ./configure --prefix=/usr || (cat config.log; exit 1)
-        - make
-        - make install-strip
-        - command -V firejail && firejail --version
+        - make dist
+        - ./mkdeb.sh --enable-fatal-warnings
+        - dpkg -i ./*.deb
+        - make print-version
 
 build_no_apparmor:
     image: ubuntu:latest
+    timeout: 10 minutes
     variables:
         DEBIAN_FRONTEND: noninteractive
     script:
@@ -85,17 +59,64 @@ build_no_apparmor:
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
         - make dist
-        - ./mkdeb.sh --disable-apparmor
-        - dpkg -i firejail*.deb
-        - command -V firejail && firejail --version
-        - firejail --version | grep -F 'AppArmor support is disabled'
+        - >
+            ./mkdeb.sh --enable-fatal-warnings
+            --disable-apparmor
+        - dpkg -i ./*.deb
+        - make print-version
+        - make print-version | grep -F 'AppArmor support is disabled'
+
+build_redhat_package:
+    image: almalinux:latest
+    timeout: 10 minutes
+    script:
+        - dnf update -y
+        - dnf install -y rpm-build gcc make
+        - ./ci/printenv.sh
+        - ./configure || (cat config.log; exit 1)
+        - make dist
+        - ./platform/rpm/mkrpm.sh --enable-fatal-warnings
+        - rpm -i ./*.rpm
+        - make print-version
+
+build_fedora_package:
+    image: fedora:latest
+    timeout: 10 minutes
+    script:
+        - dnf update -y
+        - dnf install -y rpm-build gcc make
+        - ./ci/printenv.sh
+        - ./configure || (cat config.log; exit 1)
+        - make dist
+        - ./platform/rpm/mkrpm.sh --enable-fatal-warnings
+        - rpm -i ./*.rpm
+        - make print-version
+
+build_src_package:
+    image: alpine:latest
+    timeout: 10 minutes
+    script:
+        - apk update
+        - apk upgrade
+        - apk add build-base linux-headers gawk
+        - ./ci/printenv.sh
+        # Note: Do not use ` --enable-fatal-warnings` because the build
+        # currently produces warnings on Alpine (see #6224).
+        - >
+            ./configure --prefix=/usr
+            || (cat config.log; exit 1)
+        - make
+        - make install-strip
+        - make print-version
 
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest
+    timeout: 10 minutes
     variables:
         DEBFULLNAME: "$GITLAB_USER_NAME"
         DEBEMAIL: "$GITLAB_USER_EMAIL"
         DEBIAN_FRONTEND: noninteractive
+        PKGNAME: firejail
     before_script:
         - git checkout -B ci_build "$CI_COMMIT_SHA"
         - gitlab-ci-enable-sid
@@ -110,17 +131,17 @@ debian_ci:
         - git config user.email "$DEBEMAIL"
         - |
             cd "$CI_PROJECT_DIR/.."
-            apt-get source --download-only -t experimental firejail ||
-            apt-get source --download-only firejail
+            apt-get source --download-only -t experimental "$PKGNAME" ||
+            apt-get source --download-only "$PKGNAME"
         - |
             cd "$CI_PROJECT_DIR"
-            tar xf ../firejail_*.debian.tar.*
+            tar xf "../${PKGNAME}"_*.debian.tar.*
         - rm -rf debian/patches/
         - |
             VERSION="$(grep ^PACKAGE_VERSION= configure | cut -d "'" -f 2)"
             dch -v "${VERSION}-0.1~ci" 'Non-maintainer upload.'
-            git archive -o "../firejail_${VERSION}.orig.tar.gz" HEAD
-            pristine-tar commit "../firejail_${VERSION}.orig.tar.gz" ci_build
+            git archive -o "../${PKGNAME}_${VERSION}.orig.tar.gz" HEAD
+            pristine-tar commit "../${PKGNAME}_${VERSION}.orig.tar.gz" ci_build
             git branch -m pristine-tar origin/pristine-tar
         - git add debian
         - git commit -m 'add debian/'

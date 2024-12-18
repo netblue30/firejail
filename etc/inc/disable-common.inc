@@ -33,7 +33,8 @@ blacklist-nolog ${HOME}/.viminfo
 blacklist-nolog /tmp/clipmenu*
 
 # X11 session autostart
-# blacklist ${HOME}/.xpra - this will kill --x11=xpra cmdline option for all programs
+# this will kill --x11=xpra cmdline option for all programs
+#blacklist ${HOME}/.xpra
 blacklist ${HOME}/.Xsession
 blacklist ${HOME}/.blackbox
 blacklist ${HOME}/.config/autostart
@@ -166,11 +167,19 @@ blacklist ${RUNUSER}/gnome-session-leader-fifo
 blacklist ${RUNUSER}/gnome-shell
 blacklist ${RUNUSER}/gsconnect
 
+# i3 IPC socket (allows arbitrary shell script execution)
+blacklist ${RUNUSER}/i3/ipc-socket.*
+blacklist /tmp/i3-*/ipc-socket.*
+
+# sway IPC socket (allows arbitrary shell script execution)
+blacklist ${RUNUSER}/sway-ipc.*
+blacklist /tmp/sway-ipc.*
+
 # systemd
 blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd
 blacklist ${PATH}/systemctl
-blacklist ${PATH}/systemd-run
+blacklist ${PATH}/systemd*
 blacklist ${RUNUSER}/systemd
 blacklist /etc/credstore*
 blacklist /etc/systemd/network
@@ -191,6 +200,7 @@ blacklist ${HOME}/.VirtualBox
 blacklist ${HOME}/VirtualBox VMs
 
 # GNOME Boxes
+blacklist ${HOME}/.cache/gnome-boxes
 blacklist ${HOME}/.config/gnome-boxes
 blacklist ${HOME}/.local/share/gnome-boxes
 
@@ -241,8 +251,9 @@ blacklist /var/lib/mysql/mysql.sock
 blacklist /var/lib/mysqld/mysql.sock
 blacklist /var/lib/pacman
 blacklist /var/lib/upower
-# blacklist /var/log - a virtual /var/log directory (mostly empty) is build up by default for
-# every sandbox, unless --writable-var-log switch is activated
+# a virtual /var/log directory (mostly empty) is build up by default for every
+# sandbox, unless --writable-var-log switch is activated
+#blacklist /var/log
 blacklist /var/mail
 blacklist /var/opt
 blacklist /var/run/acpid.socket
@@ -319,7 +330,7 @@ read-only ${HOME}/.zshenv
 read-only ${HOME}/.zshrc
 read-only ${HOME}/.zshrc.local
 
-# Remote access
+# Remote access (used only by sshd; should always be blacklisted)
 blacklist ${HOME}/.rhosts
 blacklist ${HOME}/.shosts
 blacklist ${HOME}/.ssh/authorized_keys
@@ -327,13 +338,12 @@ blacklist ${HOME}/.ssh/authorized_keys2
 blacklist ${HOME}/.ssh/environment
 blacklist ${HOME}/.ssh/rc
 blacklist /etc/hosts.equiv
-read-only ${HOME}/.ssh/config
-read-only ${HOME}/.ssh/config.d
 
 # Initialization files that allow arbitrary command execution
 read-only ${HOME}/.caffrc
 read-only ${HOME}/.cargo/env
 read-only ${HOME}/.config/mpv
+read-only ${HOME}/.config/msmtp
 read-only ${HOME}/.config/nano
 read-only ${HOME}/.config/nvim
 read-only ${HOME}/.config/pkcs11
@@ -360,6 +370,8 @@ read-only ${HOME}/.nanorc
 read-only ${HOME}/.npmrc
 read-only ${HOME}/.pythonrc.py
 read-only ${HOME}/.reportbugrc
+read-only ${HOME}/.ssh/config
+read-only ${HOME}/.ssh/config.d
 read-only ${HOME}/.tmux.conf
 read-only ${HOME}/.vim
 read-only ${HOME}/.viminfo
@@ -422,6 +434,7 @@ blacklist /etc/group-
 blacklist /etc/gshadow
 blacklist /etc/gshadow+
 blacklist /etc/gshadow-
+blacklist /etc/msmtprc
 blacklist /etc/passwd+
 blacklist /etc/passwd-
 blacklist /etc/shadow
@@ -444,6 +457,7 @@ blacklist ${HOME}/.cargo/credentials.toml
 blacklist ${HOME}/.cert
 blacklist ${HOME}/.config/hub
 blacklist ${HOME}/.config/keybase
+blacklist ${HOME}/.config/msmtp
 blacklist ${HOME}/.davfs2/secrets
 blacklist ${HOME}/.ecryptfs
 blacklist ${HOME}/.fetchmailrc
@@ -502,6 +516,7 @@ blacklist /usr/sbin
 
 # system management and various SUID executables
 blacklist ${PATH}/at
+blacklist ${PATH}/bmon
 blacklist ${PATH}/busybox
 blacklist ${PATH}/chage
 blacklist ${PATH}/chfn
@@ -510,69 +525,96 @@ blacklist ${PATH}/crontab
 blacklist ${PATH}/doas
 blacklist ${PATH}/evtest
 blacklist ${PATH}/expiry
-blacklist ${PATH}/fusermount
+blacklist ${PATH}/fping
+blacklist ${PATH}/fping6
+blacklist ${PATH}/fusermount*
 blacklist ${PATH}/gksu
 blacklist ${PATH}/gksudo
 blacklist ${PATH}/gpasswd
+blacklist ${PATH}/groupmems
+blacklist ${PATH}/hostname
+#blacklist ${PATH}/ip # breaks --ip=dhcp
 blacklist ${PATH}/kdesudo
 blacklist ${PATH}/ksu
 blacklist ${PATH}/mount
-blacklist ${PATH}/mount.ecryptfs_private
+blacklist ${PATH}/mount.*
+blacklist ${PATH}/mountpoint
+blacklist ${PATH}/mtr
+blacklist ${PATH}/mtr-packet
 blacklist ${PATH}/nc
+blacklist ${PATH}/nc.openbsd
+blacklist ${PATH}/nc.traditional
 blacklist ${PATH}/ncat
-blacklist ${PATH}/nmap
+blacklist ${PATH}/netstat
+blacklist ${PATH}/networkctl
 blacklist ${PATH}/newgidmap
 blacklist ${PATH}/newgrp
 blacklist ${PATH}/newuidmap
-blacklist ${PATH}/ntfs-3g
-blacklist ${PATH}/pkexec
-blacklist ${PATH}/procmail
-blacklist ${PATH}/sg
-blacklist ${PATH}/strace
-blacklist ${PATH}/su
-blacklist ${PATH}/sudo
-blacklist ${PATH}/tcpdump
-blacklist ${PATH}/umount
-blacklist ${PATH}/unix_chkpwd
-blacklist ${PATH}/xev
-blacklist ${PATH}/xinput
-# from 0.9.67
-blacklist /usr/lib/openssh
-blacklist /usr/lib/ssh
-blacklist /usr/libexec/openssh
-blacklist ${PATH}/passwd
-blacklist /usr/lib/xorg/Xorg.wrap
-blacklist /usr/lib/policykit-1/polkit-agent-helper-1
-blacklist /usr/lib/dbus-1.0/dbus-daemon-launch-helper
-blacklist /usr/lib/eject/dmcrypt-get-device
-blacklist /usr/lib/chromium/chrome-sandbox
-blacklist /usr/lib/opera/opera_sandbox
-blacklist /usr/lib/vmware
-blacklist ${PATH}/suexec
-blacklist /usr/lib/squid/basic_pam_auth
-blacklist ${PATH}/slock
-blacklist ${PATH}/physlock
-blacklist ${PATH}/schroot
-blacklist ${PATH}/wshowkeys
-blacklist ${PATH}/pmount
-blacklist ${PATH}/pumount
-blacklist ${PATH}/bmon
-blacklist ${PATH}/fping
-blacklist ${PATH}/fping6
-blacklist ${PATH}/hostname
-# blacklist ${PATH}/ip - breaks --ip=dhcp
-blacklist ${PATH}/mtr
-blacklist ${PATH}/mtr-packet
-blacklist ${PATH}/netstat
 blacklist ${PATH}/nm-online
+blacklist ${PATH}/nmap
 blacklist ${PATH}/nmcli
 blacklist ${PATH}/nmtui
 blacklist ${PATH}/nmtui-connect
 blacklist ${PATH}/nmtui-edit
 blacklist ${PATH}/nmtui-hostname
-blacklist ${PATH}/networkctl
+blacklist ${PATH}/ntfs-3g
+blacklist ${PATH}/passwd
+blacklist ${PATH}/physlock
+blacklist ${PATH}/pkexec
+blacklist ${PATH}/plocate
+blacklist ${PATH}/pmount
+blacklist ${PATH}/procmail
+blacklist ${PATH}/pumount
+blacklist ${PATH}/schroot
+blacklist ${PATH}/sg
+blacklist ${PATH}/slock
 blacklist ${PATH}/ss
+blacklist ${PATH}/ssmtp
+blacklist ${PATH}/strace
+blacklist ${PATH}/su
+blacklist ${PATH}/sudo
+blacklist ${PATH}/suexec
+blacklist ${PATH}/tcpdump
 blacklist ${PATH}/traceroute
+blacklist ${PATH}/umount
+blacklist ${PATH}/unix_chkpwd
+blacklist ${PATH}/wall
+blacklist ${PATH}/write
+blacklist ${PATH}/wshowkeys
+blacklist ${PATH}/xev
+blacklist ${PATH}/xinput
+blacklist /usr/lib/chromium/chrome-sandbox
+blacklist /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+blacklist /usr/lib/eject/dmcrypt-get-device
+blacklist /usr/lib/openssh
+blacklist /usr/lib/opera/opera_sandbox
+blacklist /usr/lib/policykit-1/polkit-agent-helper-1
+blacklist /usr/lib/squid/basic_pam_auth
+blacklist /usr/lib/ssh
+blacklist /usr/lib/vmware
+blacklist /usr/lib/xorg/Xorg.wrap
+blacklist /usr/libexec/openssh
+# since firejail version 0.9.73
+blacklist ${PATH}/dpkg*
+blacklist ${PATH}/apt*
+blacklist ${PATH}/dumpcap
+blacklist ${PATH}/efibootdump
+blacklist ${PATH}/efibootmgr
+blacklist ${PATH}/passmass
+blacklist ${PATH}/proxy
+blacklist ${PATH}/aa-*
+blacklist ${PATH}/airscan-discover
+blacklist ${PATH}/avahi*
+blacklist ${PATH}/dbus-*
+blacklist ${PATH}/debconf*
+blacklist ${PATH}/grub-*
+blacklist ${PATH}/kernel-install  # from systemd package
+
+# binaries installed by firejail
+blacklist ${PATH}/firemon
+blacklist ${PATH}/firecfg
+blacklist ${PATH}/jailcheck
+blacklist ${PATH}/firetools
 
 # other SUID binaries
 blacklist /opt/microsoft/msedge*/msedge-sandbox
@@ -585,11 +627,13 @@ blacklist /tmp/.lxterminal-socket*
 blacklist /tmp/tmux-*
 
 # disable terminals running as server resulting in sandbox escape
+blacklist ${PATH}/foot
+blacklist ${PATH}/footserver
 blacklist ${PATH}/gnome-terminal
 blacklist ${PATH}/gnome-terminal.wrapper
 blacklist ${PATH}/kgx
-# blacklist ${PATH}/konsole
 # konsole doesn't seem to have this problem - last tested on Ubuntu 16.04
+#blacklist ${PATH}/konsole
 blacklist ${PATH}/lilyterm
 blacklist ${PATH}/lxterminal
 blacklist ${PATH}/mate-terminal
@@ -640,6 +684,10 @@ blacklist /usr/lib/snapd
 blacklist /var/lib/snapd
 blacklist /var/snap
 
+# bubblejail
+blacklist ${HOME}/.config/bubblejail
+blacklist ${HOME}/.local/share/bubblejail
+
 # mail directories used by mutt
 blacklist ${HOME}/.Mail
 blacklist ${HOME}/.mail
@@ -653,10 +701,13 @@ blacklist ${HOME}/sent
 blacklist /proc/config.gz
 
 # prevent DNS malware attempting to communicate with the server using regular DNS tools
+blacklist ${PATH}/delv
 blacklist ${PATH}/dig
 blacklist ${PATH}/dlint
 blacklist ${PATH}/dns2tcp
 blacklist ${PATH}/dnssec-*
+blacklist ${PATH}/dnstap-read
+blacklist ${PATH}/mdig
 blacklist ${PATH}/dnswalk
 blacklist ${PATH}/drill
 blacklist ${PATH}/host
@@ -667,12 +718,14 @@ blacklist ${PATH}/knsupdate
 blacklist ${PATH}/ldns-*
 blacklist ${PATH}/ldnsd
 blacklist ${PATH}/nslookup
+blacklist ${PATH}/nsupdate
+blacklist ${PATH}/nstat
 blacklist ${PATH}/resolvectl
 blacklist ${PATH}/unbound-host
 
 # prevent an intruder to guess passwords using regular network tools
 blacklist ${PATH}/ftp
-blacklist ${PATH}/ssh
+blacklist ${PATH}/ssh*
 blacklist ${PATH}/telnet
 
 # rest of ${RUNUSER}

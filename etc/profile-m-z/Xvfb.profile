@@ -19,7 +19,7 @@ include globals.local
 #
 
 whitelist /var/lib/xkb
-include whitelist-common.inc
+#include whitelist-common.inc # see #903
 
 caps.drop all
 # Xvfb needs to be allowed access to the abstract Unix socket namespace.
@@ -39,8 +39,8 @@ seccomp
 disable-mnt
 # using a private home directory
 private
-# private-bin sh,xkbcomp,Xvfb
-# private-bin bash,cat,ls,sh,strace,xkbcomp,Xvfb
+#private-bin sh,xkbcomp,Xvfb
+#private-bin bash,cat,ls,sh,strace,xkbcomp,Xvfb
 private-dev
 private-etc gai.conf,host.conf
 private-tmp

@@ -23,7 +23,6 @@ include disable-xdg.inc
 
 whitelist /usr/share/ghostwriter
 whitelist /usr/share/mozilla-dicts
-whitelist /usr/share/texlive
 whitelist /usr/share/pandoc*
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -45,7 +44,7 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp !chroot
 seccomp.block-secondary
-#tracelog -- breaks
+#tracelog # breaks
 
 private-bin context,gettext,ghostwriter,latex,mktexfmt,pandoc,pdflatex,pdfroff,prince,weasyprint,wkhtmltopdf
 private-cache

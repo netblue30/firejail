@@ -9,7 +9,6 @@ include globals.local
 noblacklist ${HOME}/.newsrc
 noblacklist ${HOME}/.tin
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 blacklist /usr/libexec
 
@@ -19,13 +18,14 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.tin
 mkfile ${HOME}/.newsrc
 # Note: files/directories directly in ${HOME} can't be whitelisted, as
-#       tin saves .newsrc by renaming a temporary file, which is not possible for
-#       bind-mounted files.
+# tin saves .newsrc by renaming a temporary file, which is not possible for
+# bind-mounted files.
 #whitelist ${HOME}/.newsrc
 #whitelist ${HOME}/.tin
 #include whitelist-common.inc

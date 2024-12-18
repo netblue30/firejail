@@ -10,7 +10,7 @@ ignore noexec ${HOME}
 
 noblacklist /sbin
 noblacklist /usr/sbin
-# noblacklist /var/log
+#noblacklist /var/log
 
 include disable-common.inc
 include disable-devel.inc

@@ -1,6 +1,6 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2023 Firejail Authors
+# Copyright (C) 2014-2024 Firejail Authors
 # License GPL v2
 
 set timeout 10
@@ -23,7 +23,7 @@ after 100
 send -- "exit\r"
 sleep 1
 
-send -- "firejail --ignore=seccomp --ignore=shell --profile=ignore.profile \r"
+send -- "firejail --ignore=seccomp --ignore=name --profile=ignore.profile \r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -39,7 +39,7 @@ after 100
 send -- "exit\r"
 sleep 1
 
-send -- "firejail --ignore=private --ignore=shell --profile=ignore.profile \r"
+send -- "firejail --ignore=private --ignore=name --profile=ignore.profile \r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -66,7 +66,7 @@ after 100
 send -- "exit\r"
 sleep 1
 
-send -- "firejail --ignore=quiet --ignore=shell --profile=ignore.profile \r"
+send -- "firejail --ignore=quiet --ignore=name --profile=ignore.profile \r"
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"

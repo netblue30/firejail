@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -344,7 +344,7 @@ int main(int argc, char **argv) {
 		if (cnt_seccomp > (seccomp + 1))
 			cnt_seccomp = seccomp + 1;
 		if (cnt_restrict_namespaces > (restrict_namespaces + 1))
-			cnt_seccomp = restrict_namespaces + 1;
+			cnt_restrict_namespaces = restrict_namespaces + 1;
 		if (cnt_dbus_user_none > (dbususernone + 1))
 			cnt_dbus_user_none = dbususernone + 1;
 		if (cnt_dbus_user_filter > (dbususerfilter + 1))

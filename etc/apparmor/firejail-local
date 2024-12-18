@@ -20,5 +20,8 @@
 # Uncomment to opt-in to apparmor for firefox native-messaging-hosts under ${HOME}
 #owner @{HOME}/.mozilla/native-messaging-hosts/** ix,
 
+# Uncomment to opt-in to apparmor for mullvad-browser under ${HOME}
+#owner @{HOME}/.local/share/mullvad-browser/** ix,
+
 # Uncomment to opt-in to apparmor for torbrowser-launcher
-#owner @{HOME}/.local/share/torbrowser/tbb/{i686,x86_64}/tor-browser_*/Browser/** ix,
+#owner @{HOME}/.local/share/torbrowser/tbb/{i686,x86_64}/tor-browser*/** ix,

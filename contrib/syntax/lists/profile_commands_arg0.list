@@ -12,6 +12,7 @@ keep-config-pulse
 keep-dev-shm
 keep-shell-rc
 keep-var-tmp
+landlock.enforce
 machine-id
 memory-deny-write-execute
 netfilter
@@ -26,6 +27,7 @@ nonewprivs
 noprinters
 noroot
 nosound
+notpm
 notv
 nou2f
 novideo
@@ -41,7 +43,7 @@ private-tmp
 quiet
 restrict-namespaces
 seccomp
-seccomp\.block-secondary
+seccomp.block-secondary
 tab
 tracelog
 writable-etc

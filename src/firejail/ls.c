@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -154,7 +154,7 @@ static void print_file_or_dir(const char *path, const char *fname) {
 
 	// file size
 	char *sz;
-	if (asprintf(&sz, "%d", (int) s.st_size) == -1)
+	if (asprintf(&sz, "%jd", (intmax_t) s.st_size) == -1)
 		errExit("asprintf");
 
 	// file name

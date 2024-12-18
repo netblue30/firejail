@@ -9,17 +9,17 @@ include globals.local
 
 noblacklist ${PATH}/drill
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 include disable-common.inc
-# include disable-devel.inc
+#include disable-devel.inc
 include disable-exec.inc
-# include disable-interpreters.inc
+#include disable-interpreters.inc
 include disable-programs.inc
+include disable-x11.inc
 include disable-xdg.inc
 
-include whitelist-common.inc
+#include whitelist-common.inc # see #903
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 

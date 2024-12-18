@@ -1,0 +1,48 @@
+# Checks the spelling on all non-third-party files.
+
+name: Codespell
+
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+    paths-ignore:
+      - 'm4/**'
+      - COPYING
+  pull_request:
+    paths-ignore:
+      - 'm4/**'
+      - COPYING
+
+permissions:  # added using https://github.com/step-security/secure-workflows
+  contents: read
+
+jobs:
+  codespell:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+      with:
+        egress-policy: block
+        allowed-endpoints: >
+          archive.ubuntu.com:80
+          azure.archive.ubuntu.com:80
+          github.com:443
+          packages.microsoft.com:443
+          ppa.launchpadcontent.net:443
+          security.ubuntu.com:80
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - name: update package information
+      run: sudo apt-get update -qy
+    - name: install dependencies
+      run: sudo apt-get install -qy codespell
+    - name: print env
+      run: ./ci/printenv.sh
+    - name: configure
+      run: ./configure || (cat config.log; exit 1)
+    - run: codespell --version
+    - name: codespell
+      run: make codespell

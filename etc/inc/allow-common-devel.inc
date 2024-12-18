@@ -2,6 +2,10 @@
 # Persistent customizations should go in a .local file.
 include allow-common-devel.local
 
+# Arduino
+noblacklist ${HOME}/.arduino15
+noblacklist ${HOME}/Arduino
+
 # Git
 noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig
@@ -26,6 +30,9 @@ noblacklist ${HOME}/.yarn-config
 noblacklist ${HOME}/.yarncache
 noblacklist ${HOME}/.yarnrc
 
+# PlatformIO
+noblacklist ${HOME}/.platformio
+
 # Python
 noblacklist ${HOME}/.pylint.d
 noblacklist ${HOME}/.python-history
@@ -37,3 +44,4 @@ noblacklist ${HOME}/.bundle
 
 # Rust
 noblacklist ${HOME}/.cargo
+noblacklist ${HOME}/.rustup

@@ -17,7 +17,7 @@ include disable-interpreters.inc
 include disable-proc.inc
 include disable-programs.inc
 include disable-shell.inc
-include disable-X11.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/cointop

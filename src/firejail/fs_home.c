@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -67,8 +67,10 @@ static void skel(const char *homedir) {
 		if (asprintf(&fname, "%s/.zshrc", homedir) == -1)
 			errExit("asprintf");
 		// don't copy it if we already have the file
-		if (access(fname, F_OK) == 0)
+		if (access(fname, F_OK) == 0) {
+			free(fname);
 			return;
+		}
 		if (is_link(fname)) { // access(3) on dangling symlinks fails, try again using lstat
 			fprintf(stderr, "Error: invalid %s file\n", fname);
 			exit(1);
@@ -91,8 +93,10 @@ static void skel(const char *homedir) {
 		if (asprintf(&fname, "%s/.cshrc", homedir) == -1)
 			errExit("asprintf");
 		// don't copy it if we already have the file
-		if (access(fname, F_OK) == 0)
+		if (access(fname, F_OK) == 0) {
+			free(fname);
 			return;
+		}
 		if (is_link(fname)) { // access(3) on dangling symlinks fails, try again using lstat
 			fprintf(stderr, "Error: invalid %s file\n", fname);
 			exit(1);
@@ -115,8 +119,10 @@ static void skel(const char *homedir) {
 		if (asprintf(&fname, "%s/.bashrc", homedir) == -1)
 			errExit("asprintf");
 		// don't copy it if we already have the file
-		if (access(fname, F_OK) == 0)
+		if (access(fname, F_OK) == 0) {
+			free(fname);
 			return;
+		}
 		if (is_link(fname)) { // access(3) on dangling symlinks fails, try again using lstat
 			fprintf(stderr, "Error: invalid %s file\n", fname);
 			exit(1);

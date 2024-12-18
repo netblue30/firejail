@@ -13,3 +13,4 @@ whitelist /var/cache/fontconfig
 whitelist /var/tmp
 whitelist /var/run
 whitelist /var/lock
+whitelist /var/games

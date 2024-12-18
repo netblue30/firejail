@@ -14,11 +14,11 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
-# include disable-shell.inc
+#include disable-shell.inc
 include disable-write-mnt.inc
 include disable-xdg.inc
 
-# include whitelist-common.inc
+#include whitelist-common.inc # see #903
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -26,7 +26,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 ipc-namespace
-# machine-id
+#machine-id
 net none
 netfilter
 no3d
@@ -39,14 +39,14 @@ nosound
 notv
 nou2f
 novideo
-# protocol unix
+#protocol unix
 seccomp
-# tracelog
+#tracelog
 
 disable-mnt
 private
 private-bin bash,ipcalc,ipcalc-ng,perl,sh
-# private-cache
+#private-cache
 private-dev
 # empty etc directory
 private-etc
@@ -57,6 +57,6 @@ private-tmp
 dbus-user none
 dbus-system none
 
-# memory-deny-write-execute
-# read-only ${HOME}
+#memory-deny-write-execute
+#read-only ${HOME}
 restrict-namespaces

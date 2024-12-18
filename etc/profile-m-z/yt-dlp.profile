@@ -29,7 +29,6 @@ noblacklist ${VIDEOS}
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 include disable-common.inc
@@ -38,6 +37,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 include whitelist-usr-share-common.inc

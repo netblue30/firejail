@@ -14,6 +14,7 @@ noblacklist ${HOME}/.kde/share/apps/gwenview
 noblacklist ${HOME}/.kde/share/config/gwenviewrc
 noblacklist ${HOME}/.kde4/share/apps/gwenview
 noblacklist ${HOME}/.kde4/share/config/gwenviewrc
+noblacklist ${HOME}/.local/share/Trash
 noblacklist ${HOME}/.local/share/gwenview
 noblacklist ${HOME}/.local/share/kxmlgui5/gwenview
 noblacklist ${HOME}/.local/share/org.kde.gwenview
@@ -30,7 +31,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-# net none
+#net none
 netfilter
 nodvd
 nogroups
@@ -42,14 +43,14 @@ nou2f
 novideo
 protocol unix
 seccomp
-# tracelog
+#tracelog
 
 private-bin gimp*,gwenview,kbuildsycoca4,kdeinit4
 private-dev
 private-etc @x11,gimp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
-# memory-deny-write-execute
+#memory-deny-write-execute
 restrict-namespaces

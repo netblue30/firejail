@@ -9,7 +9,7 @@ include globals.local
 noblacklist ${HOME}/.VirtualBox
 noblacklist ${HOME}/.config/VirtualBox
 noblacklist ${HOME}/VirtualBox VMs
-# noblacklist /usr/bin/virtualbox
+#noblacklist /usr/bin/virtualbox
 noblacklist /usr/lib/virtualbox
 noblacklist /usr/lib64/virtualbox
 

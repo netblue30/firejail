@@ -41,7 +41,7 @@ private-dev
 private-etc @tls-ca,@x11,host.conf,mime.types
 private-tmp
 
-# dbus-user none
+#dbus-user none
 dbus-system none
 
 restrict-namespaces

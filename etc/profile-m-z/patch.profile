@@ -10,6 +10,7 @@ include globals.local
 blacklist ${RUNUSER}
 
 noblacklist ${DOCUMENTS}
+noblacklist ${PATH}/patch
 
 include disable-common.inc
 include disable-devel.inc

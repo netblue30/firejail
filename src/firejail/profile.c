@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -371,8 +371,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_caps_drop_all = 1;
 		return 0;
 	}
-	else if (strcmp(ptr, "shell none") == 0) {
-		fprintf(stderr, "Warning: \"shell none\" command in the profile file is done by default; the command will be deprecated\n");
+	else if (strcmp(ptr, "shell ") == 0) {
+		fprintf(stderr, "Warning: \"shell none\" is done by default now; the \"shell\" command has been removed\n");
 		return 0;
 	}
 	else if (strcmp(ptr, "tracelog") == 0) {
@@ -484,7 +484,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
-	else if (strncmp("dbus-user ", ptr, 10) == 0) {
+	else if (strncmp(ptr, "dbus-user ", 10) == 0) {
 #ifdef HAVE_DBUSPROXY
 		ptr += 10;
 		if (strcmp("filter", ptr) == 0) {
@@ -551,7 +551,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 1;
 	}
-	else if (strncmp("dbus-system ", ptr, 12) == 0) {
+	else if (strncmp(ptr, "dbus-system ", 12) == 0) {
 #ifdef HAVE_DBUSPROXY
 		ptr += 12;
 		if (strcmp("filter", ptr) == 0) {
@@ -618,6 +618,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 1;
 	}
+	else if (strcmp(ptr, "notpm") == 0) {
+		arg_notpm = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "nou2f") == 0) {
 		arg_nou2f = 1;
 		return 0;
@@ -635,9 +639,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
 			arg_netfilter = 1;
-			arg_netfilter_file = strdup(ptr + 10);
-			if (!arg_netfilter_file)
-				errExit("strdup");
+			arg_netfilter_file = expand_macros(ptr + 10);
 			check_netfilter_file(arg_netfilter_file);
 		}
 		else
@@ -649,9 +651,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
 			arg_netfilter6 = 1;
-			arg_netfilter6_file = strdup(ptr + 11);
-			if (!arg_netfilter6_file)
-				errExit("strdup");
+			arg_netfilter6_file = expand_macros(ptr + 11);
 			check_netfilter_file(arg_netfilter6_file);
 		}
 		else
@@ -1076,6 +1076,37 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			warning_feature_disabled("seccomp");
 		return 0;
 	}
+
+//#ifdef HAVE_LANDLOCK
+// landlock-common.inc is included by default.profile, so the entries of the
+// former should be processed or ignored instead of aborting.
+// Note that all landlock functions are empty when building without landlock
+// support.
+	if (strncmp(ptr, "landlock.enforce", 16) == 0) {
+		arg_landlock_enforce = 1;
+		return 0;
+	}
+	if (strncmp(ptr, "landlock.fs.read ", 17) == 0) {
+		ll_add_profile(LL_FS_READ, ptr + 17);
+		return 0;
+	}
+	if (strncmp(ptr, "landlock.fs.write ", 18) == 0) {
+		ll_add_profile(LL_FS_WRITE, ptr + 18);
+		return 0;
+	}
+	if (strncmp(ptr, "landlock.fs.makeipc ", 20) == 0) {
+		ll_add_profile(LL_FS_MAKEIPC, ptr + 20);
+		return 0;
+	}
+	if (strncmp(ptr, "landlock.fs.makedev ", 20) == 0) {
+		ll_add_profile(LL_FS_MAKEDEV, ptr + 20);
+		return 0;
+	}
+	if (strncmp(ptr, "landlock.fs.execute ", 20) == 0) {
+		ll_add_profile(LL_FS_EXEC, ptr + 20);
+		return 0;
+	}
+//#endif
 
 	// memory deny write&execute
 	if (strcmp(ptr, "memory-deny-write-execute") == 0) {
@@ -1901,8 +1932,7 @@ void profile_read(const char *fname) {
 	fclose(fp);
 }
 
-char *profile_list_normalize(char *list)
-{
+char *profile_list_normalize(char *list) {
 	/* Remove redundant commas.
 	 *
 	 * As result is always shorter than original,

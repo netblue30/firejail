@@ -35,9 +35,9 @@ seccomp
 seccomp.block-secondary
 tracelog
 
-# private-bin engrampa
+#private-bin engrampa
 private-dev
-# private-tmp
+#private-tmp
 
 dbus-user filter
 dbus-user.talk ca.desrt.dconf

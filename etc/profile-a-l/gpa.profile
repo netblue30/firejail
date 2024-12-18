@@ -28,7 +28,7 @@ protocol unix,inet,inet6
 seccomp
 tracelog
 
-# private-bin gpa,gpg
+#private-bin gpa,gpg
 private-dev
 
 restrict-namespaces

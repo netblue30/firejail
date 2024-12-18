@@ -6,6 +6,7 @@ include neverputt-wrapper.local
 # added by included profile
 #include globals.local
 
+# Allow opengl-game wrapper script (distribution-specific)
 include allow-opengl-game.inc
 
 private-bin neverputt-wrapper

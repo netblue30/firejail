@@ -17,6 +17,7 @@ noblacklist ${HOME}/.config/ueberzugpp
 noblacklist ${HOME}/.local/share/applications/lobster
 noblacklist ${HOME}/.local/share/lobster
 noblacklist ${PATH}/openssl
+noblacklist ${PATH}/patch
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
@@ -41,9 +42,9 @@ noprinters
 notv
 
 disable-mnt
-private-bin base64,bash,cat,command,curl,cut,date,dirname,echo,ffmpeg,ffprobe,find,fzf,grep,head,hxunent,ln,lobster,ls,mkdir,mkfifo,nano,nohup,openssl,patch,pgrep,ps,rm,rofi,sed,sh,sleep,socat,tail,tee,tput,tr,ueberzugpp,uname,uuidgen,vim,wc
+private-bin base64,basename,bash,cat,curl,cut,date,dirname,echo,ffmpeg,ffprobe,find,fzf,grep,head,hxunent,ln,lobster,ls,mkdir,mkfifo,nano,nohup,openssl,patch,pgrep,ps,rm,rofi,sed,sh,sleep,socat,tail,tee,tput,tr,ueberzugpp,uname,uuidgen,vim,wc
 #private-cache
-private-etc alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,pki,protocols,pulse,resolv.conf,rpc,services,ssl,X11,xdg
+private-etc X11,alsa,alternatives,asound.conf,ca-certificates,crypto-policies,fonts,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,machine-id,mime.types,nsswitch.conf,pango,pki,protocols,pulse,resolv.conf,rpc,services,ssl,xdg
 private-tmp
 
 # Redirect

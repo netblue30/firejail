@@ -5,13 +5,18 @@ include signal-desktop.local
 # Persistent global definitions
 include globals.local
 
+# sh is needed to allow Firefox to open links
+include allow-bin-sh.inc
+
 ignore novideo
 
 ignore noexec /tmp
 
 noblacklist ${HOME}/.config/Signal
 
-# These lines are needed to allow Firefox to open links
+# The lines below are needed to find the default Firefox profile name, to allow
+# opening links in an existing instance of Firefox (note that it still fails if
+# there isn't a Firefox instance running with the default profile; see #5352)
 noblacklist ${HOME}/.mozilla
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
 
@@ -21,11 +26,11 @@ whitelist ${HOME}/.config/Signal
 private-etc @tls-ca
 
 dbus-user filter
-
 # allow D-Bus notifications
 dbus-user.talk org.freedesktop.Notifications
-
-# allow D-Bus communication with Firefox browsers for opening links
+# Allow D-Bus communication with Freedesktop.org secrets API to decrypt local key
+dbus-user.talk org.freedesktop.secrets
+# Allow D-Bus communication with Firefox for opening links
 dbus-user.talk org.mozilla.*
 
 ignore dbus-user none

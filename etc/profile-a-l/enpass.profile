@@ -52,11 +52,11 @@ protocol unix,inet,inet6,netlink
 seccomp
 tracelog
 
-private-bin dirname,Enpass,importer_enpass,readlink,sh
+private-bin Enpass,dirname,importer_enpass,readlink,sh
 ?HAS_APPIMAGE: ignore private-dev
 private-dev
 private-opt Enpass
 private-tmp
 
-#memory-deny-write-execute - breaks on Arch (see issue #1803)
+#memory-deny-write-execute # breaks on Arch (see issue #1803)
 restrict-namespaces

@@ -14,7 +14,6 @@ include globals.local
 
 noblacklist ${HOME}/.w3m
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
@@ -29,6 +28,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.w3m

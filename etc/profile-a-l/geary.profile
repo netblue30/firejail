@@ -14,9 +14,9 @@ noblacklist ${HOME}/.config/geary
 noblacklist ${HOME}/.local/share/evolution
 noblacklist ${HOME}/.local/share/geary
 noblacklist ${HOME}/.local/share/pki
-noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.pki
 
+# sh is needed to allow Firefox to open links
 include allow-bin-sh.inc
 
 include disable-common.inc
@@ -26,6 +26,12 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
+
+# The lines below are needed to find the default Firefox profile name, to allow
+# opening links in an existing instance of Firefox (note that it still fails if
+# there isn't a Firefox instance running with the default profile; see #5352)
+noblacklist ${HOME}/.mozilla
+whitelist ${HOME}/.mozilla/firefox/profiles.ini
 
 mkdir ${HOME}/.cache/evolution
 mkdir ${HOME}/.cache/folks
@@ -43,7 +49,6 @@ whitelist ${HOME}/.config/geary
 whitelist ${HOME}/.local/share/evolution
 whitelist ${HOME}/.local/share/geary
 whitelist ${HOME}/.local/share/pki
-whitelist ${HOME}/.mozilla/firefox/profiles.ini
 whitelist ${HOME}/.pki
 whitelist /usr/share/geary
 include whitelist-common.inc
@@ -53,7 +58,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-#ipc-namespace - may cause issues with X11
+#ipc-namespace # may cause issues with X11
 #machine-id
 netfilter
 no3d
@@ -71,7 +76,7 @@ seccomp
 seccomp.block-secondary
 tracelog
 
-# disable-mnt
+#disable-mnt
 #private-bin geary,sh
 private-cache
 private-dev
@@ -88,6 +93,7 @@ dbus-user.talk org.gnome.OnlineAccounts
 dbus-user.talk org.gnome.evolution.dataserver.AddressBook10
 dbus-user.talk org.gnome.evolution.dataserver.Sources5
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
+# Allow D-Bus communication with Firefox for opening links
 dbus-user.talk org.mozilla.*
 dbus-system none
 

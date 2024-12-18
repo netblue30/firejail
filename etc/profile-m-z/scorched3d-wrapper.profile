@@ -3,6 +3,7 @@
 # Persistent local customizations
 include scorched3d-wrapper.local
 
+# Allow opengl-game wrapper script (distribution-specific)
 include allow-opengl-game.inc
 
 private-bin scorched3d-wrapper

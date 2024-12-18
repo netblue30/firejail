@@ -2,8 +2,9 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
-MOD_DIR = src/fnettrace-icmp
-PROG = fnettrace-icmp
+MOD = fnettrace-icmp
+MOD_DIR = $(ROOT)/src/$(MOD)
+PROG = $(MOD_DIR)/$(MOD)
 TARGET = $(PROG)
 
 include $(ROOT)/src/prog.mk

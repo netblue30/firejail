@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -49,6 +49,7 @@ void virtual_setup(const char *directory) {
 	FILE *fp = fopen(test_file, "w");
 	if (!fp) {
 		printf("Warning: I cannot create test file in directory %s, skipping...\n", directory);
+		free(test_file);
 		return;
 	}
 	fprintf(fp, "this file was created by firetest utility, you can safely delete it\n");

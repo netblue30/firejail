@@ -29,14 +29,14 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-# net none
+#net none
 netfilter
 nodvd
 nogroups
 noinput
 nonewprivs
 noroot
-# nosound - KWrite is using ALSA!
+#nosound # KWrite is using ALSA!
 notv
 nou2f
 novideo
@@ -49,8 +49,8 @@ private-dev
 private-etc @x11
 private-tmp
 
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 restrict-namespaces
 join-or-start kwrite

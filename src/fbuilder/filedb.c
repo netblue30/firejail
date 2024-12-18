@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -94,7 +94,7 @@ FileDB *filedb_load_whitelist(FileDB *head, const char *fname, const char *prefi
 		errExit("asprintf");
 	FILE *fp = fopen(f, "r");
 	if (!fp) {
-		fprintf(stderr, "Error: cannot open %s\n", f);
+		fprintf(stderr, "Error fbuilder: cannot open %s\n", f);
 		free(f);
 		exit(1);
 	}

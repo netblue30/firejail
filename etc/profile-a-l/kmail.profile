@@ -41,7 +41,7 @@ include disable-programs.inc
 include whitelist-run-common.inc
 include whitelist-var-common.inc
 
-# apparmor
+#apparmor
 caps.drop all
 netfilter
 nodvd
@@ -55,10 +55,10 @@ novideo
 protocol unix,inet,inet6,netlink
 # we need to allow chroot, io_getevents, ioprio_set, io_setup, io_submit system calls
 seccomp !chroot,!io_getevents,!io_setup,!io_submit,!ioprio_set
-# tracelog
+#tracelog
 
 private-dev
-# private-tmp - interrupts connection to akonadi, breaks opening of email attachments
+#private-tmp # interrupts connection to akonadi, breaks opening of email attachments
 # writable-run-user is needed for signing and encrypting emails
 writable-run-user
 
@@ -67,3 +67,4 @@ writable-run-user
 #dbus-user filter
 
 # restrict-namespaces
+

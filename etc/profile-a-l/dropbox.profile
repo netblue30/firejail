@@ -5,7 +5,12 @@ include dropbox.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/autostart
+# To allow the program to autostart, add the following to dropbox.local:
+# Warning: This allows the program to easily escape the sandbox.
+#noblacklist ${HOME}/.config/autostart
+#mkfile ${HOME}/.config/autostart/dropbox.desktop
+#whitelist ${HOME}/.config/autostart/dropbox.desktop
+
 noblacklist ${HOME}/.dropbox
 noblacklist ${HOME}/.dropbox-dist
 
@@ -20,8 +25,6 @@ include disable-programs.inc
 mkdir ${HOME}/.dropbox
 mkdir ${HOME}/.dropbox-dist
 mkdir ${HOME}/Dropbox
-mkfile ${HOME}/.config/autostart/dropbox.desktop
-whitelist ${HOME}/.config/autostart/dropbox.desktop
 whitelist ${HOME}/.dropbox
 whitelist ${HOME}/.dropbox-dist
 whitelist ${HOME}/Dropbox

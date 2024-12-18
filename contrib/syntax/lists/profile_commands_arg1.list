@@ -5,11 +5,13 @@ blacklist-nolog
 caps.drop
 caps.keep
 cpu
+dbus-system
 dbus-system.broadcast
 dbus-system.call
 dbus-system.own
 dbus-system.see
 dbus-system.talk
+dbus-user
 dbus-user.broadcast
 dbus-user.call
 dbus-user.own
@@ -27,6 +29,11 @@ ip6
 iprange
 join-or-start
 keep-fd
+landlock.fs.execute
+landlock.fs.makedev
+landlock.fs.makeipc
+landlock.fs.read
+landlock.fs.write
 mac
 mkdir
 mkfile
@@ -68,9 +75,11 @@ seccomp.32.drop
 seccomp.32.keep
 seccomp.drop
 seccomp.keep
+shell
 timeout
 tmpfs
 veth-name
 whitelist
 whitelist-ro
+x11
 xephyr-screen

@@ -18,5 +18,5 @@ whitelist ${HOME}/.mozilla/firefox/profiles.ini
 private-bin firefox,xterm
 
 dbus-user filter
-# allow D-Bus communication with firefox for opening links
+# Allow D-Bus communication with Firefox for opening links
 dbus-user.talk org.mozilla.*

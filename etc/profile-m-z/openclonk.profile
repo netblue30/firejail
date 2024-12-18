@@ -24,7 +24,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 ipc-namespace
-# net none - networked game
+#net none # networked game
 netfilter
 nodvd
 nogroups

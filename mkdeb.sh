@@ -1,6 +1,6 @@
 #!/bin/sh
 # This file is part of Firejail project
-# Copyright (C) 2014-2023 Firejail Authors
+# Copyright (C) 2014-2024 Firejail Authors
 # License GPL v2
 
 # based on http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/
@@ -26,7 +26,7 @@ tar -xJvf "$CODE_ARCHIVE"
 #mkdir -p "$INSTALL_DIR"
 cd "$CODE_DIR"
 ./configure --prefix=/usr --enable-apparmor "$@"
-make -j2
+make -j "$(nproc)"
 mkdir debian
 DESTDIR=debian make install-strip
 

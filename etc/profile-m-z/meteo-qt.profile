@@ -6,7 +6,11 @@ include meteo-qt.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/autostart
+# To allow the program to autostart, add the following to meteo-qt.local:
+# Warning: This allows the program to easily escape the sandbox.
+#noblacklist ${HOME}/.config/autostart
+#whitelist ${HOME}/.config/autostart
+
 noblacklist ${HOME}/.config/meteo-qt
 
 # Allow python (blacklisted by disable-interpreters.inc)
@@ -21,7 +25,6 @@ include disable-shell.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.config/meteo-qt
-whitelist ${HOME}/.config/autostart
 whitelist ${HOME}/.config/meteo-qt
 include whitelist-common.inc
 include whitelist-var-common.inc

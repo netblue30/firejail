@@ -1,0 +1,59 @@
+# Lints and checks for potential issues in Python files.
+
+name: Check-Python
+
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+    paths:
+      - '**.py'
+      - .github/workflows/check-python.yml
+  pull_request:
+    paths:
+      - '**.py'
+      - .github/workflows/check-python.yml
+  schedule:
+    - cron: '0 7 * * 2'
+
+permissions:  # added using https://github.com/step-security/secure-workflows
+  contents: read
+
+jobs:
+  codeql-python:
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f
+      with:
+        disable-sudo: true
+        egress-policy: block
+        allowed-endpoints: >
+          api.github.com:443
+          files.pythonhosted.org:443
+          github.com:443
+          objects.githubusercontent.com:443
+          pypi.org:443
+          uploads.github.com:443
+
+    - name: Checkout repository
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+    - name: print env
+      run: ./ci/printenv.sh
+
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@f09c1c0a94de965c15400f5634aa42fac8fb8f88
+      with:
+        languages: python
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@f09c1c0a94de965c15400f5634aa42fac8fb8f88

@@ -7,7 +7,6 @@ include googler-common.local
 # added by caller profile
 #include globals.local
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 noblacklist ${HOME}/.w3m
@@ -23,6 +22,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 whitelist ${HOME}/.w3m

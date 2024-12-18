@@ -12,8 +12,8 @@ ignore dbus-user none
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.mozilla
 
-blacklist /usr/libexec
 blacklist /sys/class/net
+blacklist /usr/libexec
 
 mkdir ${HOME}/.cache/mozilla/torbrowser
 mkdir ${HOME}/.mozilla

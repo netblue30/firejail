@@ -1,14 +1,11 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2023 Firejail Authors
+# Copyright (C) 2014-2024 Firejail Authors
 # License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
-
-send -- "rm index.html*\r"
-after 500
 
 send -- "firejail gzip -c ../../mkdeb.sh | firejail gunzip -c\r"
 expect {

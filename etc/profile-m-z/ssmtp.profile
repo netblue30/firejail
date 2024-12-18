@@ -16,6 +16,7 @@ noblacklist /sbin
 noblacklist /usr/sbin
 
 noblacklist ${DOCUMENTS}
+noblacklist ${PATH}/ssmtp
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -23,8 +24,8 @@ include disable-interpreters.inc
 include disable-proc.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-x11.inc
 include disable-xdg.inc
-include disable-X11.inc
 
 mkfile ${HOME}/dead.letter
 whitelist ${HOME}/dead.letter

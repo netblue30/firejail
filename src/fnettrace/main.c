@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -25,15 +25,46 @@
 #include <signal.h>
 #define MAX_BUF_SIZE (64 * 1024)
 
-static int arg_netfilter = 0;
-static int arg_tail = 0;
 static char *arg_log = NULL;
 
+// only 0 or negative values; positive values as defined in RFC
+#define PROTOCOL_ICMP 0
+#define PROTOCOL_SSH -1
+
+
+
+//*****************************************************************
+// packet stats
+//*****************************************************************
 uint32_t stats_pkts = 0;
-uint32_t stats_icmp = 0;
+uint32_t stats_icmp_echo = 0;
 uint32_t stats_dns = 0;
+uint32_t stats_dns_dot = 0;
+uint32_t stats_dns_doh = 0;
+uint32_t stats_dns_doq = 0;
+uint32_t stats_tls = 0;
+uint32_t stats_quic = 0;
+uint32_t stats_tor = 0;
+uint32_t stats_http = 0;
+uint32_t stats_ssh = 0;
 
+static void clear_stats(void) {
+	stats_pkts = 0;
+	stats_icmp_echo = 0;
+	stats_dns = 0;
+	stats_dns_dot = 0;
+	stats_dns_doh = 0;
+	stats_dns_doq = 0;
+	stats_tls = 0;
+	stats_quic = 0;
+	stats_tor = 0;
+	stats_http = 0;
+	stats_ssh = 0;
+}
 
+//*****************************************************************
+// traffic trace storage - hash table for fast access + linked list for display purposes
+//*****************************************************************
 typedef struct hnode_t {
 	struct hnode_t *hnext;	// used for hash table and unused linked list
 	struct hnode_t *dnext;	// used to display streams on the screen
@@ -42,8 +73,9 @@ typedef struct hnode_t {
 
 	// stats
 	uint32_t  bytes;	// number of bytes received in the last display interval
+	uint32_t pkts;	// number of packets received in the last display interval
 	uint16_t port_src;
-	uint8_t protocol;
+	int protocol;
 
 	// the firewall is build based on source address, and in the linked list
 	// we could have elements with the same address but different ports
@@ -86,7 +118,7 @@ void hfree(HNode *ptr) {
 }
 
 // using protocol 0 and port 0 for ICMP
-static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint32_t bytes) {
+static void hnode_add(uint32_t ip_src, int protocol, uint16_t port_src, uint32_t bytes) {
 	uint8_t h = hash(ip_src);
 
 	// find
@@ -97,6 +129,7 @@ static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint
 			ip_instance++;
 			if (ptr->port_src == port_src && ptr->protocol == protocol) {
 				ptr->bytes += bytes;
+				ptr->pkts++;
 				assert(ptr->rnode);
 				ptr->rnode->pkts++;
 				return;
@@ -115,6 +148,7 @@ static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint
 	hnew->protocol = protocol;
 	hnew->hnext = NULL;
 	hnew->bytes = bytes;
+	hnew->pkts = 1;
 	hnew->ip_instance = ip_instance + 1;
 	hnew->ttl = DISPLAY_TTL;
 	if (htable[h] == NULL)
@@ -139,9 +173,6 @@ static void hnode_add(uint32_t ip_src, uint8_t protocol, uint16_t port_src, uint
 	if (!hnew->rnode)
 		hnew->rnode = radix_add(hnew->ip_src, 0xffffffff, NULL);
 	hnew->rnode->pkts++;
-
-	if (arg_netfilter)
-		logprintf(" %d.%d.%d.%d ", PRINT_IP(hnew->ip_src));
 }
 
 static void hnode_free(HNode *elem) {
@@ -242,23 +273,23 @@ typedef struct port_type_t {
 	char *service;
 } PortType;
 static PortType ports[] = {
-	{20, "(FTP)"},
-	{21, "(FTP)"},
-	{22, "(SSH)"},
-	{23, "(telnet)"},
-	{25, "(SMTP)"},
-	{43, "(WHOIS)"},
-	{67, "(DHCP)"},
-	{68, "(DHCP)"},
-	{69, "(TFTP)"},
-	{80, "(HTTP)"},
-	{109, "(POP2)"},
-	{110, "(POP3)"},
-	{113, "(IRC)"},
-	{123, "(NTP)"},
-	{161, "(SNMP)"},
-	{162, "(SNMP)"},
-	{194, "(IRC)"},
+	{20, "FTP"},
+	{21, "FTP"},
+	{22, "SSH"},
+	{23, "telnet"},
+	{25, "SMTP"},
+	{43, "WHOIS"},
+	{67, "DHCP"},
+	{68, "DHCP"},
+	{69, "TFTP"},
+	{80, "HTTP"},
+	{109, "POP2"},
+	{110, "POP3"},
+	{113, "IRC"},
+	{123, "NTP"},
+	{161, "SNMP"},
+	{162, "SNMP"},
+	{194, "IRC"},
 	{0, NULL},
 };
 
@@ -266,32 +297,34 @@ static PortType ports[] = {
 static inline const char *common_port(uint16_t port) {
 	if (port >= 6660 && port <= 10162) {
 		if (port >= 6660 && port <= 6669)
-			return "(IRC)";
+			return "IRC";
 		else if (port == 6679)
-			return "(IRC)";
+			return "IRC";
 		else if (port == 6771)
-			return "(BitTorrent)";
+			return "BitTorrent";
 		else if (port >= 6881 && port <= 6999)
-			return "(BitTorrent)";
+			return "BitTorrent";
 		else if (port == 9001)
-			return "(Tor)";
+			return "Tor";
 		else if (port == 9030)
-			return "(Tor)";
+			return "Tor";
+		else if (port == 9040)
+			return "Tor";
 		else if (port == 9050)
-			return "(Tor)";
+			return "Tor";
 		else if (port == 9051)
-			return "(Tor)";
+			return "Tor";
 		else if (port == 9150)
-			return "(Tor)";
+			return "Tor";
 		else if (port == 10161)
-			return "(secure SNMP)";
+			return "secure SNMP";
 		else if (port == 10162)
-			return "(secure SNMP)";
+			return "secure SNMP";
 		return NULL;
 	}
 
 	if (port <= 194) {
-		PortType *ptr =&ports[0];
+		PortType *ptr = &ports[0];
 		while(ptr->service != NULL) {
 			if (ptr->port == port)
 				return ptr->service;
@@ -305,7 +338,6 @@ static inline const char *common_port(uint16_t port) {
 
 
 static void hnode_print(unsigned bw) {
-	assert(!arg_netfilter);
 	bw = (bw < 1024 * DISPLAY_INTERVAL) ? 1024 * DISPLAY_INTERVAL : bw;
 #ifdef DEBUG
 	printf("*********************\n");
@@ -336,7 +368,9 @@ static void hnode_print(unsigned bw) {
 	else
 		sprintf(stats, "%u KB/s ", bw / (1024 * DISPLAY_INTERVAL));
 //	int len = snprintf(line, LINE_MAX, "%32s geoip %d, IP database %d\n", stats, geoip_calls, radix_nodes);
-	int len = snprintf(line, LINE_MAX, "%32s address:port (protocol) network (packets)\n", stats);
+	char faint1[] = {0x1b, '[', '2', 'm', '\0'};
+	char faint2[] = {0x1b, '[', '0', 'm', '\0'};
+	int len = snprintf(line, LINE_MAX, "%32s %saddress:port (protocol) network%s\n", stats, faint1, faint2);
 	adjust_line(line, len, cols);
 	printf("%s", line);
 
@@ -369,47 +403,71 @@ static void hnode_print(unsigned bw) {
 				bwline = print_bw(ptr->bytes / bwunit);
 
 			const char *protocol = NULL;
-			if (ptr->port_src == 443 && ptr->protocol == 0x06) // TCP
-				protocol = "(TLS)";
-			else if (ptr->port_src == 443 && ptr->protocol == 0x11) // UDP
-				protocol = "(QUIC)";
-			else if (ptr->port_src == 53)
-				protocol = "(DNS)";
+			if (ptr->port_src == 443 && ptr->protocol == 0x06) { // TCP
+				protocol = "TLS";
+				stats_tls += ptr->pkts;
+				if (strstr(ptr->rnode->name, "DNS")) {
+					protocol = "DoH";
+					stats_dns_doh += ptr->pkts;
+				}
+
+			}
+			else if (ptr->port_src == 443 && ptr->protocol == 0x11) { // UDP
+				protocol = "QUIC";
+				stats_quic +=  ptr->pkts;
+				if (strstr(ptr->rnode->name, "DNS")) {
+					protocol = "DoQ";
+					stats_dns_doq += ptr->pkts;
+				}
+			}
+			else if (ptr->port_src == 53) {
+				protocol = "DNS";
+				stats_dns += ptr->pkts;
+			}
 			else if (ptr->port_src == 853) {
-				if (ptr->protocol == 0x06)
-					protocol = "(DoT)";
-				else if (ptr->protocol == 0x11)
-					protocol = "(DoQ)";
+				if (ptr->protocol == 0x06) {
+					protocol = "DoT";
+					stats_dns_dot += ptr->pkts;
+				}
+				else if (ptr->protocol == 0x11) {
+					protocol = "DoQ";
+					stats_dns_doq += ptr->pkts;
+				}
 				else
 					protocol = NULL;
 			}
-			else if ((protocol = common_port(ptr->port_src)) != NULL)
-				;
+			else if ((protocol = common_port(ptr->port_src)) != NULL) {
+				if (strcmp(protocol, "HTTP") == 0)
+					stats_http += ptr->pkts;
+				else if (strcmp(protocol, "Tor") == 0)
+					stats_tor += ptr->pkts;
+				else if (strcmp(protocol, "SSH") == 0)
+					stats_ssh += ptr->pkts;
+			}
 			else if (ptr->protocol == 0x11)
-				protocol = "(UDP)";
+				protocol = "UDP";
 			else if (ptr->protocol == 0x06)
-				protocol = "(TCP)";
+				protocol = "TCP";
+			else if (ptr->protocol == PROTOCOL_SSH) {
+				protocol = "SSH";
+				stats_ssh += ptr->pkts;
+			}
 
 			if (protocol == NULL)
 				protocol = "";
-			if (ptr->port_src == 0)
+			if (ptr->port_src == PROTOCOL_ICMP)
 				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d (ICMP) %s\n",
 					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->rnode->name);
-			else if (ptr->rnode->pkts > 1000000)
-				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s (%.01fM)\n",
-					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->rnode->name, ((double) ptr->rnode->pkts) / 1000000);
-			else if (ptr->rnode->pkts > 1000)
-				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s (%.01fK)\n",
-					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->rnode->name, ((double) ptr->rnode->pkts) / 1000);
 			else
-				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u%s %s (%u)\n",
-					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->rnode->name, ptr->rnode->pkts);
+				len = snprintf(line, LINE_MAX, "%10s %s %d.%d.%d.%d:%u (%s) %s\n",
+					       bytes, bwline, PRINT_IP(ptr->ip_src), ptr->port_src, protocol, ptr->rnode->name);
 			adjust_line(line, len, cols);
 			printf("%s", line);
 
 			if (ptr->bytes)
 				ptr->ttl = DISPLAY_TTL;
 			ptr->bytes = 0;
+			ptr->pkts = 0;
 			prev = ptr;
 		}
 		else {
@@ -423,7 +481,7 @@ static void hnode_print(unsigned bw) {
 
 		ptr = next;
 	}
-	printf("press any key to access stats\n");
+	ansi_faint("(D)isplay, (S)ave, (C)lear, e(X)it\n");
 
 #ifdef DEBUG
 	{
@@ -438,19 +496,36 @@ static void hnode_print(unsigned bw) {
 #endif
 }
 
+static void print_stats(FILE *fp) {
+	assert(fp);
 
-void print_stats(void) {
-	printf("\nIP table: %d entries, %d unknown\n", radix_nodes, geoip_calls);
-	printf("   address network (packets)\n");
-	radix_print(1);
-	printf("Packets: %u total, ICMP %u, DNS %u\n", stats_pkts, stats_icmp, stats_dns);
+	fprintf(fp, "Stats: %u packets\n", stats_pkts);
+	fprintf(fp, "   encrypted: TLS %u, QUIC %u, Tor %u\n",
+		stats_tls, stats_quic, stats_tor);
+	fprintf(fp, "   unencrypted: HTTP %u\n", stats_http);
+	fprintf(fp, "   C&C backchannel: SSH %u, PING %u, DNS %u, DoH %u, DoT %u, DoQ %u\n",
+		stats_ssh, stats_icmp_echo, stats_dns, stats_dns_doh, stats_dns_dot, stats_dns_doq);
+
+	fprintf(fp, "\n\nIP map");
+	if (fp == stdout)
+		ansi_faint("  - network (packets)\n");
+	else
+		fprintf(fp, "  - network (packets)\n");
+	radix_print(fp, 1);
+
+	fprintf(fp, "\n\nEvents %d", ev_cnt);
+	if (fp == stdout)
+		ansi_faint(" - time address data\n");
+	else
+		fprintf(fp, " - time address data\n");
+	ev_print(fp);
+
 }
+
+
 
 // trace rx traffic coming in
 static void run_trace(void) {
-	if (arg_netfilter)
-		logprintf("accumulating traffic for %d seconds\n", NETLOCK_INTERVAL);
-
 	// trace only rx ipv4 tcp and upd
 	int s1 = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
 	int s2 = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
@@ -458,37 +533,45 @@ static void run_trace(void) {
 	if (s1 < 0 || s2 < 0 || s3 < 0)
 		errExit("socket");
 
-	unsigned start = time(NULL);
+
+	int p1 = runprog(LIBDIR "/firejail/fnettrace-sni");
+	if (p1 != -1)
+		printf("loading snitrace...");
+
+	int p2 = runprog(LIBDIR "/firejail/fnettrace-dns");
+	if (p2 != -1)
+		printf("loading dnstrace...");
 	unsigned last_print_traces = 0;
-	unsigned last_print_remaining = 0;
 	unsigned char buf[MAX_BUF_SIZE];
 	unsigned bw = 0; // bandwidth calculations
 
 	while (1) {
 		unsigned end = time(NULL);
-		if (arg_netfilter && end - start >= NETLOCK_INTERVAL)
-			break;
 		if (end % DISPLAY_INTERVAL == 1 && last_print_traces != end) { // first print after 1 second
-			if (!arg_netfilter)
-				hnode_print(bw);
+			hnode_print(bw);
 			last_print_traces = end;
 			bw = 0;
-		}
-		if (arg_netfilter && last_print_remaining != end) {
-			logprintf(".");
-			fflush(0);
-			last_print_remaining = end;
 		}
 
 		fd_set rfds;
 		FD_ZERO(&rfds);
+		FD_SET(0, &rfds);
+
 		FD_SET(s1, &rfds);
 		FD_SET(s2, &rfds);
 		FD_SET(s3, &rfds);
-		if (!arg_netfilter)
-			FD_SET(0, &rfds);
 		int maxfd = (s1 > s2) ? s1 : s2;
 		maxfd = (s3 > maxfd) ? s3 : maxfd;
+
+		if (p1 != -1) {
+			FD_SET(p1, &rfds);
+			maxfd = (p1 > maxfd) ? p1 : maxfd;
+		}
+
+		if (p2 != -1) {
+			FD_SET(p2, &rfds);
+			maxfd = (p2 > maxfd) ? p2 : maxfd;
+		}
 		maxfd++;
 
 		struct timeval tv;
@@ -507,13 +590,97 @@ static void run_trace(void) {
 		int icmp = 0;
 
 		if (FD_ISSET(0, &rfds)) {
-			getchar();
-			print_stats();
-			printf("press any key to continue...");
-			fflush(0);
-			getchar();
+			int c = getchar();
+			if (c == 'c' || c == 'C') {
+				clear_stats();
+				ev_clear();
+				radix_clear_data();
+				continue;
+			}
+			else if (c == 'd' || c == 'D') {
+				printf("\n\n");
+				ansi_bold("__________________________________________________________________________\n");
+				print_stats(stdout);
+				ansi_bold("__________________________________________________________________________\n");
+				ansi_faint("press any key to continue...");
+				fflush(0);
+
+				getchar();
+				continue;
+			}
+			if (c == 's' || c == 'S') {
+				printf("The file is saved in /tmp directory. Please enter the file name: ");
+				fflush(0);
+
+				char buf[LINE_MAX + 5]; // eave some room to add /tmp/
+				strcpy(buf, "/tmp/");
+				terminal_restore();
+				if (fgets(buf + 5, LINE_MAX, stdin) == NULL)
+					errExit("fgets");
+				terminal_set();
+
+				// remove '\n' and open the file
+				char *ptr = strchr(buf, '\n');
+				if (!ptr) { // we should have a '\n'
+					printf("Error: invalid file name\n");
+					sleep(5);
+					continue;
+				}
+				*ptr = '\0';
+
+				FILE *fp = fopen(buf, "w");
+				if (!fp) {
+					printf("Error: cannot open file %s\n", buf);
+					perror("fopen");
+					sleep(5);
+					continue;
+				}
+
+				printf("Saving stats in %s file...\n", buf);
+				print_stats(fp);
+				fclose(fp);
+				int rv = chmod(buf, 0600);
+				(void) rv;
+				sleep(1);
+				continue;
+			}
+			else if (c == 'x' || c == 'X')
+				break;
 			continue;
 		}
+		else if (FD_ISSET(p1, &rfds)) {
+			char buf[LINE_MAX];
+			ssize_t sz = read(p1, buf, LINE_MAX - 1);
+			if (sz == -1)
+				errExit("error reading snitrace");
+			if (sz == 0) {
+				fprintf(stderr, "Error: snitrace EOF!!!\n");
+				p1 = -1;
+			}
+			if (strncmp(buf, "SNI trace", 9) == 0)
+				continue;
+
+			buf[sz] = '\0';
+			ev_add(buf);
+			continue;
+		}
+		else if (FD_ISSET(p2, &rfds)) {
+			char buf[LINE_MAX];
+			ssize_t sz = read(p2, buf, LINE_MAX - 1);
+			if (sz == -1)
+				errExit("error reading dnstrace");
+			if (sz == 0) {
+				fprintf(stderr, "Error: dnstrace EOF!!!\n");
+				p2 = -1;
+			}
+			if (strncmp(buf, "DNS trace", 9) == 0)
+				continue;
+
+			buf[sz] = '\0';
+			ev_add(buf);
+			continue;
+		}
+		// by default we assume TCP
 		else if (FD_ISSET(s2, &rfds))
 			sock = s2;
 		else if (FD_ISSET(s3, &rfds)) {
@@ -522,7 +689,7 @@ static void run_trace(void) {
 		}
 
 		unsigned bytes = recvfrom(sock, buf, MAX_BUF_SIZE, 0, NULL, NULL);
-		if (bytes >= 20) { // size of IP header
+		if (bytes >= 20) { // minimum size of IP packet
 #ifdef DEBUG
 			{
 				uint32_t ip_src;
@@ -546,21 +713,39 @@ static void run_trace(void) {
 				uint8_t hlen = (buf[0] & 0x0f) * 4;
 				uint16_t port_src = 0;
 				if (icmp)
-					hnode_add(ip_src, 0, 0, bytes + 14);
-				else {
+					hnode_add(ip_src, PROTOCOL_ICMP, 0, bytes + 14);
+				else { // itcp or udp
 					memcpy(&port_src, buf + hlen, 2);
 					port_src = ntohs(port_src);
+					int protocol = (int) buf[9];
 
-					uint8_t protocol = buf[9];
+					// detect ssh on a standard or not so standard port (22)
+					if (protocol == 6) { // tcp
+						uint8_t dataoffset = *(buf + hlen + 12);
+						uint8_t tcphlen = (dataoffset >> 2);
+						if (memcmp(buf + hlen + tcphlen, "SSH-", 4) == 0) {
+							time_t seconds = time(NULL);
+							struct tm *t = localtime(&seconds);
+							char ip[30];
+							sprintf(ip, "%d.%d.%d.%d", PRINT_IP(ip_src));
+							char *msg;
+							if (asprintf(&msg, "%02d:%02d:%02d  %-15s  SSH connection",
+								t->tm_hour, t->tm_min, t->tm_sec, ip) == -1)
+								errExit("asprintf");
+							ev_add(msg);
+							free(msg);
+							protocol = PROTOCOL_SSH;
+						}
+					}
 					hnode_add(ip_src, protocol, port_src, bytes + 14);
 				}
 
 				// stats
 				stats_pkts++;
-				if (icmp)
-					stats_icmp++;
-				if (port_src == 53)
-					stats_dns++;
+				if (icmp)  {
+					if (*(buf + hlen) == 0 || *(buf + hlen) == 8)
+						stats_icmp_echo++;
+				}
 
 			}
 		}
@@ -569,145 +754,12 @@ static void run_trace(void) {
 	close(s1);
 	close(s2);
 	close(s3);
-	print_stats();
+	if (p1 != -1)
+		close(p1);
+	if (p2 != -1)
+		close(p2);
 }
 
-static char *filter_start =
-	"*filter\n"
-	":INPUT DROP [0:0]\n"
-	":FORWARD DROP [0:0]\n"
-	":OUTPUT DROP [0:0]\n";
-
-// return 1 if error
-static int print_filter(FILE *fp) {
-	if (dlist == NULL)
-		return 1;
-	fprintf(fp, "%s\n", filter_start);
-	fprintf(fp, "-A INPUT -s 127.0.0.0/8 -j ACCEPT\n");
-	fprintf(fp, "-A OUTPUT -d 127.0.0.0/8 -j ACCEPT\n");
-	fprintf(fp, "\n");
-
-	int i;
-	for (i = 0; i < HMAX; i++) {
-		HNode *ptr = htable[i];
-		while (ptr) {
-			// filter rules are targeting ip address, the port number is disregarded,
-			// so we look only at the first instance of an address
-			if (ptr->ip_instance == 1) {
-				char *protocol = (ptr->protocol == 6) ? "tcp" : "udp";
-				fprintf(fp, "-A INPUT -s %d.%d.%d.%d -p %s  -j ACCEPT\n",
-					PRINT_IP(ptr->ip_src),
-					protocol);
-				fprintf(fp, "-A OUTPUT -d %d.%d.%d.%d -p %s  -j ACCEPT\n",
-					PRINT_IP(ptr->ip_src),
-					protocol);
-				fprintf(fp, "\n");
-			}
-			ptr = ptr->hnext;
-		}
-	}
-	fprintf(fp, "COMMIT\n");
-
-	return 0;
-}
-
-static char *flush_rules[] = {
-	"-P INPUT ACCEPT",
-//	"-P FORWARD DENY",
-	"-P OUTPUT ACCEPT",
-	"-F",
-	"-X",
-//	"-t nat -F",
-//	"-t nat -X",
-//	"-t mangle -F",
-//	"-t mangle -X",
-//	"iptables -t raw -F",
-//	"-t raw -X",
-	NULL
-};
-
-static void deploy_netfilter(void) {
-	int rv;
-	char *cmd;
-	int i;
-
-	if (dlist == NULL) {
-		logprintf("Sorry, no network traffic was detected. The firewall was not configured.\n");
-		return;
-	}
-	// find iptables command
-	char *iptables = NULL;
-	char *iptables_restore = NULL;
-	if (access("/sbin/iptables", X_OK) == 0) {
-		iptables = "/sbin/iptables";
-		iptables_restore = "/sbin/iptables-restore";
-	}
-	else if (access("/usr/sbin/iptables", X_OK) == 0) {
-		iptables = "/usr/sbin/iptables";
-		iptables_restore = "/usr/sbin/iptables-restore";
-	}
-	if (iptables == NULL || iptables_restore == NULL) {
-		fprintf(stderr, "Error: iptables command not found, netfilter not configured\n");
-		exit(1);
-	}
-
-	// flush all netfilter rules
-	i = 0;
-	while (flush_rules[i]) {
-		char *cmd;
-		if (asprintf(&cmd, "%s %s", iptables, flush_rules[i]) == -1)
-			errExit("asprintf");
-		int rv = system(cmd);
-		(void) rv;
-		free(cmd);
-		i++;
-	}
-
-	// create temporary file
-	char fname[] = "/tmp/firejail-XXXXXX";
-	int fd = mkstemp(fname);
-	if (fd == -1) {
-		fprintf(stderr, "Error: cannot create temporary configuration file\n");
-		exit(1);
-	}
-
-	FILE *fp = fdopen(fd, "w");
-	if (!fp) {
-		rv = unlink(fname);
-		(void) rv;
-		fprintf(stderr, "Error: cannot create temporary configuration file\n");
-		exit(1);
-	}
-	print_filter(fp);
-	fclose(fp);
-
-	logprintf("\n\n");
-	logprintf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
-	if (asprintf(&cmd, "cat %s >> %s", fname, arg_log) == -1)
-		errExit("asprintf");
-	rv = system(cmd);
-	(void) rv;
-	free(cmd);
-
-	if (asprintf(&cmd, "cat %s", fname) == -1)
-		errExit("asprintf");
-	rv = system(cmd);
-	(void) rv;
-	free(cmd);
-	logprintf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
-
-	// configuring
-	if (asprintf(&cmd, "%s %s", iptables_restore, fname) == -1)
-		errExit("asprintf");
-	rv = system(cmd);
-	if (rv)
-		fprintf(stdout, "Warning: possible netfilter problem!");
-	free(cmd);
-
-	rv = unlink(fname);
-	(void) rv;
-	logprintf("\nfirewall deployed\n");
-}
 
 void logprintf(char *fmt, ...) {
 	if (!arg_log)
@@ -733,14 +785,8 @@ static const char *const usage_str =
 	"Options:\n"
 	"   --help, -? - this help screen\n"
 	"   --log=filename - netlocker logfile\n"
-	"   --netfilter - build the firewall rules and commit them\n"
 	"   --print-map - print IP map\n"
-	"   --squash-map - compress IP map\n"
-	"   --tail - \"tail -f\" functionality\n"
-	"Examples:\n"
-	"   # fnettrace                              - traffic trace\n"
-	"   # fnettrace --netfilter --log=logfile    - netlocker, dump output in logfile\n"
-	"   # fnettrace --tail --log=logifile        - similar to \"tail -f logfile\"\n";
+	"   --squash-map - compress IP map\n";
 
 static void usage(void) {
 	puts(usage_str);
@@ -771,11 +817,11 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--print-map") == 0) {
 			char *fname = "static-ip-map.txt";
 			load_hostnames(fname);
-			radix_print(0);
+			radix_print(stdout, 0);
 			return 0;
 		}
 		else if (strncmp(argv[i], "--squash-map=", 13) == 0) {
-			if (i !=(argc - 1)) {
+			if (i != (argc - 1)) {
 				fprintf(stderr, "Error: please provide a map file\n");
 				return 1;
 			}
@@ -793,34 +839,17 @@ int main(int argc, char **argv) {
 			printf("# License GPLv2\n");
 			printf("#\n");
 
-			radix_print(0);
+			radix_print(stdout, 0);
 			printf("\n#\n#\n# input %d, output %d\n#\n#\n", in, radix_nodes);
 			fprintf(stderr, "static ip map: input %d, output %d\n", in, radix_nodes);
 			return 0;
 		}
-		else if (strcmp(argv[i], "--netfilter") == 0)
-			arg_netfilter = 1;
-		else if (strcmp(argv[i], "--tail") == 0)
-			arg_tail = 1;
 		else if (strncmp(argv[i], "--log=", 6) == 0)
 			arg_log = argv[i] + 6;
 		else {
 			fprintf(stderr, "Error: invalid argument\n");
 			return 1;
 		}
-	}
-
-	// tail
-	if (arg_tail) {
-		if (!arg_log) {
-			fprintf(stderr, "Error: no log file\n");
-			usage();
-			exit(1);
-		}
-
-		tail(arg_log);
-		sleep(5);
-		exit(0);
 	}
 
 	if (getuid() != 0) {
@@ -838,25 +867,10 @@ int main(int argc, char **argv) {
 	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
 
 	ansi_clrscr();
-	if (arg_netfilter)
-		logprintf("starting network lockdown\n");
-	else  {
-		char *fname = LIBDIR "/firejail/static-ip-map";
-		load_hostnames(fname);
-	}
+	char *fname = LIBDIR "/firejail/static-ip-map";
+	load_hostnames(fname);
 
 	run_trace();
-	if (arg_netfilter) {
-		// TCP path MTU discovery will not work properly since the firewall drops all ICMP packets
-		// Instead, we use iPacketization Layer PMTUD (RFC 4821) support in Linux kernel
-		int rv = system("echo 1 > /proc/sys/net/ipv4/tcp_mtu_probing");
-		(void) rv;
-
-		deploy_netfilter();
-		sleep(3);
-		if (arg_log)
-			unlink(arg_log);
-	}
 
 	return 0;
 }

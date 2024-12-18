@@ -42,6 +42,29 @@ _firejail()
             _filedir -d
             return 0
             ;;
+        --landlock.enforce)
+            return 0
+            ;;
+        --landlock.fs.read)
+            _filedir
+            return 0
+            ;;
+        --landlock.fs.write)
+            _filedir
+            return 0
+            ;;
+        --landlock.fs.makeipc)
+            _filedir
+            return 0
+            ;;
+        --landlock.fs.makedev)
+            _filedir
+            return 0
+            ;;
+        --landlock.fs.execute)
+            _filedir
+            return 0
+            ;;
         --tmpfs)
             _filedir
             return 0
@@ -79,10 +102,6 @@ _firejail()
             return 0
             ;;
         --netfilter)
-            _filedir
-            return 0
-            ;;
-        --shell)
             _filedir
             return 0
             ;;

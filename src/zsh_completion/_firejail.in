@@ -106,6 +106,14 @@ _firejail_args=(
     '--keep-fd[inherit open file descriptors to sandbox]: :'
     '--keep-shell-rc[do not copy shell rc files from /etc/skel]'
     '--keep-var-tmp[/var/tmp directory is untouched]'
+#ifdef HAVE_LANDLOCK
+    '--landlock.enforce[enforce the Landlock ruleset]'
+    '--landlock.fs.read=-[add a read access rule for the path to the Landlock ruleset]: :_files'
+    '--landlock.fs.write=-[add a write access rule for the path to the Landlock ruleset]: :_files'
+    '--landlock.fs.makeipc=-[add an access rule for the path to the Landlock ruleset for creating named pipes and sockets]: :_files'
+    '--landlock.fs.makedev=-[add an access rule for the path to the Landlock ruleset for creating block/char devices]: :_files'
+    '--landlock.fs.execute=-[add an execute access rule for the path to the Landlock ruleset]: :_files'
+#endif
     '--machine-id[spoof /etc/machine-id with a random id]'
     '--memory-deny-write-execute[seccomp filter to block attempts to create memory mappings that are both writable and executable]'
     '*--mkdir=-[create a directory]:'
@@ -116,7 +124,6 @@ _firejail_args=(
     # many would enjoy getting a list from -20..20
     '--nice=-[set nice value]: :(1 10 15 20)'
     '--no3d[disable 3D hardware acceleration]'
-    '--noautopulse[disable automatic ~/.config/pulse init]'
     '--noblacklist=-[disable blacklist for file or directory]: :_files'
     '--nodbus[disable D-Bus access]'
     '--nodvd[disable DVD and audio CD devices]'
@@ -126,6 +133,7 @@ _firejail_args=(
     '--nonewprivs[sets the NO_NEW_PRIVS prctl]'
     '--noprinters[disable printers]'
     '--nosound[disable sound system]'
+    '--notpm[disable TPM devices]'
     '--nou2f[disable U2F devices]'
     '--novideo[disable video devices]'
     '--private[temporary home directory]'
@@ -160,13 +168,12 @@ _firejail_args=(
     '*--seccomp.32.keep=-[enable seccomp filter, and whitelist the 32 bit syscalls specified by the command]: :'
     # FIXME: Add errnos
     '--seccomp-error-action=-[change error code, kill process or log the attempt]: :(kill log)'
-    '--shell=none[run the program directly without a user shell]'
-    '--shell=-[set default user shell]: :_values $(cat /etc/shells)'
     '--timeout=-[kill the sandbox automatically after the time has elapsed]: :'
     #'(--tracelog)--trace[trace open, access and connect system calls]'
     '(--tracelog)--trace=-[trace open, access and connect system calls]: :_files'
     '(--trace)--tracelog[add a syslog message for every access to files or directories blacklisted by the security profile]'
     '(--private-etc)--writable-etc[/etc directory is mounted read-write]'
+    '--tab[enable shell tab completion in sandboxes using private or whitelisted home directories]'
     '--writable-run-user[allow access to /run/user/$UID/systemd and /run/user/$UID/gnupg]'
     '--writable-var[/var directory is mounted read-write]'
     '--writable-var-log[use the real /var/log directory, not a clone]'
@@ -205,10 +212,6 @@ _firejail_args=(
     # --put=name|pid src-filename dest-filename - put a file in sandbox container.
     '--put=-[put a file in sandbox container]: :'
     '--ls=-[list files in sandbox container name|pid]: :_all_firejails'
-#endif
-
-#ifdef HAVE_FIRETUNNEL
-    '--tunnel=-[connect the sandbox to a tunnel created by firetunnel utility]: :'
 #endif
 
 #ifdef HAVE_NETWORK

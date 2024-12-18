@@ -13,7 +13,7 @@ whitelist ${HOME}/.config/1Password
 
 private-etc @tls-ca
 
-# Needed for keychain things, talking to Firefox, possibly other things?  Not sure how to narrow down
+# Needed for keychain things, talking to Firefox, possibly other things?
 ignore dbus-user none
 
 # Redirect

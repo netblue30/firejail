@@ -2,12 +2,15 @@
 ROOT = ../..
 -include $(ROOT)/config.mk
 
-MOD_DIR = src/fnettrace
-PROG = fnettrace
+MOD = fnettrace
+MOD_DIR = $(ROOT)/src/$(MOD)
+PROG = $(MOD_DIR)/$(MOD)
 TARGET = $(PROG)
+
+CLEANFILES += static-ip-map
 
 include $(ROOT)/src/prog.mk
 
 all: $(TARGET) static-ip-map
-static-ip-map: static-ip-map.txt fnettrace
-	./fnettrace --squash-map=static-ip-map.txt > static-ip-map
+static-ip-map: static-ip-map.txt $(PROG)
+	./$(PROG) --squash-map=static-ip-map.txt 2>&1 >static-ip-map

@@ -13,7 +13,7 @@ whitelist ${HOME}/.sylpheed-2.0
 
 whitelist /usr/share/sylpheed
 
-# private-bin curl,gpg,gpg2,gpg-agent,gpgsm,pinentry,pinentry-gtk-2,sylpheed
+#private-bin curl,gpg,gpg2,gpg-agent,gpgsm,pinentry,pinentry-gtk-2,sylpheed
 
 # Redirect
 include email-common.profile

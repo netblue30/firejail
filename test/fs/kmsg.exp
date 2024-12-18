@@ -1,13 +1,13 @@
 #!/usr/bin/expect -f
 # This file is part of Firejail project
-# Copyright (C) 2014-2023 Firejail Authors
+# Copyright (C) 2014-2024 Firejail Authors
 # License GPL v2
 
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail\r"
+send -- "firejail --ignore=private-dev\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"

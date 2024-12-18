@@ -1,3 +1,3 @@
 private
 seccomp
-shell none
+name test

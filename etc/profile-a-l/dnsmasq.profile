@@ -11,13 +11,13 @@ noblacklist /sbin
 noblacklist /usr/sbin
 noblacklist /var/lib/libvirt
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc
 include disable-programs.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 whitelist /var/lib/libvirt/dnsmasq

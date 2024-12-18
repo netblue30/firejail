@@ -9,6 +9,7 @@ include globals.local
 
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
+noblacklist ${HOME}/.dvdcss
 
 include disable-common.inc
 include disable-devel.inc
@@ -53,5 +54,5 @@ private-tmp
 dbus-user none
 dbus-system none
 
-# memory-deny-write-execute - it breaks old versions of ffmpeg
+#memory-deny-write-execute # it breaks old versions of ffmpeg
 restrict-namespaces

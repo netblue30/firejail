@@ -22,7 +22,7 @@ include whitelist-var-common.inc
 apparmor
 caps.drop all
 machine-id
-#net none - breaks dbus
+#net none # breaks dbus
 no3d
 nodvd
 nogroups
@@ -47,8 +47,8 @@ private-lib
 private-tmp
 
 # breaks state saving
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
 read-only ${HOME}
 restrict-namespaces

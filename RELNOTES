@@ -1,40 +1,95 @@
 firejail (0.9.73) baseline; urgency=low
   * work in progress
+  * security: fix sscanf rv checks (CodeQL) (#6184)
+  * feature: private-etc rework: improve handling of /etc/resolv.conf and add
+    private-etc groups (#6400 #5518 #5608 #5609 #5629 #5638 #5641 #5642 #5643
+    #5650 #5681 #5737 #5844 #5989 #6016 #6104 #5655 #6435 #6514 #6515)
   * feature: Add "keep-shell-rc" command and option (#1127 #5634)
   * feature: Print the argument when failing with "too long arguments" (#5677)
   * feature: a random hostname is assigned to each sandbox unless
     overwritten using --hostname command
   * feature: add IPv6 support for --net.print option
   * feature: QUIC (HTTP/3) support in --nettrace
-  * feature: use seccomp filters build at install time for --restrict-namespaces
+  * feature: add seccomp filters for --restrict-namespaces
   * feature: stats support for --nettrace
-  * feature: add doas support in firecfg and jailcheck
+  * feature: add doas support in firecfg and jailcheck (#5899 #5900)
+  * feature: firecfg: add firecfg.d & add ignore command (#2097 #5245 #5876
+    #6153 #6268)
+  * feature: expand simple macros in more commands (--chroot= --netfilter=
+    --netfilter6= --trace=) (#6032 #6109)
+  * feature: add Landlock support (#5269 #6078 #6115 #6125 #6187 #6195 #6200
+    #6228 #6260 #6302 #6305)
+  * feature: add support for comm, coredump, and prctl procevents in firemon
+    (#6414 #6415)
+  * feature: add notpm command & keep tpm devices in private-dev (#6379 #6390)
+  * feature: fshaper.sh: support tc on NixOS (#6426 #6431)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)
   * modif: Escape control characters of the command line (#5613)
   * modif: Allow mostly only ASCII letters and digits for sandbox name
     (--name=) and host name (--hostname=) (#5708 #5856)
-  * modif: remove firemon --interface option (duplicating --net.print option)
   * modif: make private-lib a configure-time option, disabled by default (see
     --enable-private-lib) (#5727 #5732)
-  * modif: Improve --version/--help & print version on startup (#5829)
-  * bugfix: qutebrowser: links will not open in the existing instance (#5601
-    #5618)
+  * modif: Improve --version/--help & print version on startup (#5829 #6172)
+  * modif: improve errExit error messages (#5871)
+  * modif: drop deprecated 'shell' option references (#5894)
+  * modif: keep pipewire group unless nosound is used (#5992 #5993)
+  * modif: fcopy: use lstat when copying directory (#5378 #5957)
+  * modif: private-dev: keep /dev/kfd unless no3d is used (#6380)
+  * modif: keep /sys/module/nvidia* if prop driver and no no3d (#6372 #6387)
+  * removal: firemon: remove --interface option (it duplicates the firejail
+    --net.print= option) (0e48f9933)
+  * removal: remove support for LTS and firetunnel (db09546f2)
   * bugfix: fix --hostname and --hosts-file commands
+  * bugfix: fix examples in firejail-local AppArmor profile (#5717)
   * bugfix: arp.c: ensure positive timeout on select(2) (#5806)
+  * bugfix: Wrong syscall names for s390_pci_mmio_read and s390_pci_mmio_write
+    (#5965 #5976)
+  * bugfix: firejail --ls reports wrong file sizes for large files (#5982
+    #6086)
+  * bugfix: fix startup race condition for /run/firejail directory (#6307)
+  * bugfix: fix various resource leaks (#6367)
+  * bugfix: profstats: fix restrict-namespaces max count (#6369)
+  * bugfix: remove --noautopulse from --help and zsh comp (#6401)
   * build: auto-generate syntax files (#5627)
   * build: mark all phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
   * build: deb: enable apparmor by default & remove deb-apparmor (#5668)
   * build: Fix whitespace and add .editorconfig (#5674)
+  * build: remove for loop initial declarations to fix building with old
+    compilers (#5778)
   * build: enable compiler warnings by default (#5842)
   * build: remove -mretpoline and NO_EXTRA_CFLAGS (#5859)
   * build: disable all built-in implicit make rules (#5864)
   * build: organize and standardize make vars and targets (#5866)
   * build: fix seccomp filters and man pages always being rebuilt when running
-    make
-  * build: simplify code related to man pages (#5898)
+    make (#5156 #5898)
+  * build: fix hardcoded make & remove unnecessary distclean targets (#5911)
+  * build: dist and asc improvements (#5916)
+  * build: fix some shellcheck issues & use config.sh in more scripts (#5927)
+  * build: firecfg.config sorting improvements (#5942)
+  * build: codespell improvements (#5955)
+  * build: add missing makefile dep & syntax improvements (#5956)
+  * build: sort.py: use case-sensitive sorting (#6070)
+  * build: mkrpm.sh: append instead of override configure args (#6126)
+  * build: use CPPFLAGS instead of INCLUDE in compile targets (#6159)
+  * build: use full paths on compile/link targets (#6158)
+  * build: automatically generate header dependencies (#6164)
+  * build: improve main clean target (#6186)
+  * build: mkrpm.sh improvements (#6196)
+  * build: move errExit macro into inline function (#6217)
+  * build: allow overriding certain tools & sync targets with CI (#6222)
+  * build: reduce hardcoding and inconsistencies (#6230)
+  * build: sort.py: filter empty and duplicate items (#6261)
+  * build: fix "warning: "_FORTIFY_SOURCE" redefined" (#6282 #6283)
+  * build: sort.py: add -h/-i/-n/-- options (#6290 #6339 #6562)
+  * build: add strip target and simplify install targets (#6342)
+  * build: remove clean dependency from cppcheck targets (#6343)
+  * build: allow overriding common tools (#6354)
+  * build: standardize install commands (#6366)
+  * build: improve reliability/portability of date command usage (#6403 #6404)
+  * build: sort.py: strip whitespace in profiles (#6556)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
@@ -43,6 +98,14 @@ firejail (0.9.73) baseline; urgency=low
   * ci: run for every branch instead of just master (#5815)
   * ci: upgrade debian:stretch to debian:buster (#5818)
   * ci: standardize apt-get update/install & misc improvements (#5857)
+  * ci: Update step-security/harden-runner and update allowed endpoints (#5953)
+  * ci: whitelist paths, reorganize workflows & speed-up tests (#5960)
+  * ci: fix dependabot duplicated workflow runs (#5984)
+  * ci: allow running workflows manually (#6026)
+  * ci: add timeout limits (#6178)
+  * ci: make dependabot updates monthly and bump PR limit (#6338)
+  * contrib/syntax: remove 'text/plain' from firejail-profile.lang.in (#6057
+    #6059)
   * contrib/vim: match profile files more broadly (#5850)
   * test: split individual test groups in github workflows
   * test: add chroot, appimage and network tests in github workflows
@@ -51,8 +114,62 @@ firejail (0.9.73) baseline; urgency=low
   * docs: fix typos (#5693)
   * docs: markdown formatting and misc improvements (#5757)
   * docs: add uninstall instructions to README.md (#5812)
+  * docs: add precedence info to manpage & fix noblacklist example (#6358
+    #6359)
+  * docs: bug_report.md: use absolute path in 'steps to reproduce' (#6382)
+  * docs: man: format and sort some private- items (#6398)
+  * docs: man: improve blacklist/whitelist examples with spaces (#6425)
+  * docs: add build_issue.md issue template (#6423)
+  * docs: man: sort commands (firejail.1) (#6451)
+  * docs: man: fix bold in command TPs (#6472)
+  * docs: man: fix wrong escapes (#6474)
+  * docs: github: streamline environment in issue templates (#6471)
+  * docs: fix typos of --enable-selinux configure option (#6526)
+  * docs: clarify intro and build section in README (#6524)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
+  * profiles: qutebrowser: fix links not opening in the existing instance
+    (#5601 #5618)
+  * profiles: clarify userns comments (#5686)
+  * profiles: bulk rename electron to electron-common (#5700)
+  * profiles: streamline seccomp socket comment (#5735)
+  * profiles: drop hostname option from all profiles (#5702)
+  * profiles: move read-only config entries to disable-common.inc (#5763)
+  * profiles: standardize on just "GTK" on comments (#5794)
+  * profiles: bleachbit: allow erasing Trash contents (#5337 #5902)
+  * profiles: improvements to profiles using private (#5946)
+  * profiles: standardize commented code and eol comments (#5987)
+  * profiles: disable-common: add more suid programs (#6049 #6051 #6052)
+  * profiles: replace private-opt with whitelist & document private-opt issues
+    (#6021)
+  * profiles: drop paths already in wusc (#6218)
+  * profiles: deny access to ~/.config/autostart (#6257)
+  * profiles: replace x11 socket blacklist with disable-X11.inc (#6286)
+  * profiles: sort blacklist sections (#6289)
+  * profiles: rename disable-X11.inc to disable-x11.inc (#6294)
+  * profiles: add allow-nodejs.inc to profile.template (#6298)
+  * profiles: add allow-php.inc to profile.template (#6299)
+  * profiles: clarify and add opengl-game to profile.template (#6300)
+  * profiles: allow-ssh: allow /etc/ssh/ssh_revoked_hosts (#6308 #6309)
+  * profiles: libreoffice: support signing documents with GPG (#6352 #6353)
+  * profiles: blacklist i3 IPC socket & dir except for i3 itself (#6361)
+  * profiles: librewolf: add new dbus name (io.gitlab.firefox) (#6413 #6473)
+  * profiles: nextcloud: fix access to ~/Nextcloud (#5877 #6478)
+  * profiles: ssh: add ${RUNUSER}/gvfsd-sftp (#5816 #6479)
+  * profiles: firecfg: disable text editors (#6002 #6477)
+  * profiles: browsers: centralize/sync/improve comments (#6486)
+  * profiles: keepassxc: add new socket location (#5447 #6391)
+  * profiles: signal-desktop: allow org.freedesktop.secrets (#6498)
+  * profiles: firefox-common: allow org.freedesktop.portal.Documents (#6444 #6499)
+  * profiles: keepassxc: allow access to ssh-agent socket (#3314 #6531)
+  * profiles: firecfg.config: disable dnsmasq (#6533)
+  * profiles: game-launchers: disable nou2f (#6534)
+  * profiles: anki: fix opening, allow media & add to firecfg (#6544 #6545)
+  * profiles: wget: allow ~/.local/share/wget (#6542)
+  * profiles: wget: unify wget2 into wget profile (#6551)
+  * profiles: tesseract: disable private-tmp to fix ocrmypdf (#6550 #6552)
+  * profiles: ensure allow-lua where mpv is allowed (#6555)
+  * profiles: video-players: add missing /usr/share paths (#6557)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 
@@ -233,7 +350,7 @@ firejail (0.9.68) baseline; urgency=low
  -- netblue30 <netblue30@yahoo.com>  Sun, 6 Feb 2022 09:00:00 -0500
 
 firejail (0.9.66) baseline; urgency=low
-  * deprecated --audit options, relpaced by jailcheck utility
+  * deprecated --audit options, replaced by jailcheck utility
   * deprecated follow-symlink-as-user from firejail.config
   * new firejail.config settings: private-bin, private-etc
   * new firejail.config settings: private-opt, private-srv
@@ -358,7 +475,7 @@ firejail (0.9.62) baseline; urgency=low
   * whitelisting /usr/share in a large number of profiles
   * new scripts in contrib: gdb-firejail.sh and sort.py
   * enhancement: whitelist /usr/share in some profiles
-  * added signal mediation ot apparmor profile
+  * added signal mediation to apparmor profile
   * new conditions: HAS_X11, HAS_NET
   * new profiles: qgis, klatexformula, klatexformula_cmdl, links, xlinks
   * new profiles: pandoc, teams-for-linux, OpenArena, gnome-sound-recorder
@@ -753,7 +870,7 @@ firejail (0.9.44.4) baseline; urgency=low
 
 firejail (0.9.44.2) baseline; urgency=low
   * security: overwrite /etc/resolv.conf found by Martin Carpenter (CVE-2016-10118)
-  * secuirty: TOCTOU exploit for --get and --put found by Daniel Hodson
+  * security: TOCTOU exploit for --get and --put found by Daniel Hodson
   * security: invalid environment exploit found by Martin Carpenter (CVE-2016-10122)
   * security: several security enhancements
   * bugfix: crashing VLC by pressing Ctrl-O

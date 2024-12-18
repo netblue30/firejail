@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -122,6 +122,7 @@ void set_name_run_file(pid_t pid) {
 	// mode and ownership
 	SET_PERMS_STREAM(fp, 0, 0, 0644);
 	fclose(fp);
+	free(fname);
 }
 
 
@@ -141,6 +142,7 @@ void set_x11_run_file(pid_t pid, int display) {
 	// mode and ownership
 	SET_PERMS_STREAM(fp, 0, 0, 0644);
 	fclose(fp);
+	free(fname);
 }
 
 void set_profile_run_file(pid_t pid, const char *fname) {

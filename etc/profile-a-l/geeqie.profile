@@ -10,6 +10,9 @@ noblacklist ${HOME}/.cache/geeqie
 noblacklist ${HOME}/.config/geeqie
 noblacklist ${HOME}/.local/share/geeqie
 
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
+
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
 
@@ -32,7 +35,7 @@ novideo
 protocol unix,inet,inet6
 seccomp
 
-# private-bin geeqie
+#private-bin geeqie
 private-dev
 
 restrict-namespaces

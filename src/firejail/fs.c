@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -281,6 +281,8 @@ void fs_blacklist(void) {
 	if (!entry)
 		return;
 
+	timetrace_start();
+
 	size_t noblacklist_c = 0;
 	size_t noblacklist_m = 32;
 	char **noblacklist = calloc(noblacklist_m, sizeof(*noblacklist));
@@ -463,6 +465,8 @@ void fs_blacklist(void) {
 	for (i = 0; i < noblacklist_c; i++)
 		free(noblacklist[i]);
 	free(noblacklist);
+
+	fmessage("Base filesystem installed in %0.2f ms\n", timetrace_end());
 }
 
 //***********************************************
@@ -739,10 +743,20 @@ void fs_proc_sys_dev_boot(void) {
 
 	disable_file(BLACKLIST_FILE, "/sys/firmware");
 	disable_file(BLACKLIST_FILE, "/sys/hypervisor");
-	{ // allow user access to some directories in /sys/ by specifying 'noblacklist' option
-		profile_add("blacklist /sys/fs");
+
+	// Soft-block some paths in /sys/ (can be undone in profiles).
+	profile_add("blacklist /sys/fs");
+
+	// Hardware acceleration with the nvidia proprietary driver may fail
+	// without access to these paths (see #6372).
+	if (access("/dev/nvidiactl", R_OK) == 0 && arg_no3d == 0) {
+		profile_add("whitelist /sys/module/nvidia*");
+		profile_add("read-only /sys/module/nvidia*");
+	}
+	else {
 		profile_add("blacklist /sys/module");
 	}
+
 	disable_file(BLACKLIST_FILE, "/sys/power");
 	disable_file(BLACKLIST_FILE, "/sys/kernel/debug");
 	disable_file(BLACKLIST_FILE, "/sys/kernel/vmcoreinfo");

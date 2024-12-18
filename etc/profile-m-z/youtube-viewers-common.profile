@@ -7,8 +7,10 @@ include youtube-viewers-common.local
 # added by caller profile
 #include globals.local
 
+noblacklist ${HOME}/.cache/mpv
 noblacklist ${HOME}/.cache/youtube-dl
 noblacklist ${HOME}/.config/mpv
+noblacklist ${HOME}/.local/state/mpv
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
@@ -30,6 +32,8 @@ include disable-xdg.inc
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/youtube-dl/youtube-sigfuncs
 whitelist ${HOME}/.config/mpv
+whitelist /usr/share/lua*
+whitelist /usr/share/mpv
 include whitelist-common.inc
 include whitelist-run-common.inc
 include whitelist-runuser-common.inc

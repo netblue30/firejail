@@ -7,6 +7,7 @@ include globals.local
 
 noblacklist ${HOME}/.TelegramDesktop
 noblacklist ${HOME}/.local/share/TelegramDesktop
+noblacklist ${HOME}/.local/share/telegram-desktop
 
 # Allow opening hyperlinks
 include allow-bin-sh.inc
@@ -21,8 +22,10 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.TelegramDesktop
 mkdir ${HOME}/.local/share/TelegramDesktop
+mkdir ${HOME}/.local/share/telegram-desktop
 whitelist ${HOME}/.TelegramDesktop
 whitelist ${HOME}/.local/share/TelegramDesktop
+whitelist ${HOME}/.local/share/telegram-desktop
 whitelist ${DOWNLOADS}
 whitelist /usr/share/TelegramDesktop
 include whitelist-common.inc
@@ -43,7 +46,7 @@ seccomp
 seccomp.block-secondary
 
 disable-mnt
-private-bin bash,sh,telegram,Telegram,telegram-desktop,xdg-open
+private-bin Telegram,bash,sh,telegram,telegram-desktop,xdg-open
 private-cache
 private-dev
 private-etc @tls-ca,@x11,os-release

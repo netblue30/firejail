@@ -6,6 +6,7 @@ include evolution.local
 # Persistent global definitions
 include globals.local
 
+noblacklist /tmp/evolution-*
 noblacklist /var/mail
 noblacklist /var/spool/mail
 noblacklist ${HOME}/.bogofilter
@@ -41,7 +42,7 @@ protocol unix,inet,inet6
 seccomp
 
 private-dev
-private-tmp
+#private-tmp
 writable-var
 
 restrict-namespaces

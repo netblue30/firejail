@@ -7,22 +7,5 @@ include globals.local
 
 noblacklist ${HOME}/.qemu-launcher
 
-include disable-common.inc
-include disable-programs.inc
-
-caps.drop all
-netfilter
-nodvd
-nogroups
-nonewprivs
-noroot
-notv
-protocol unix,inet,inet6
-seccomp
-tracelog
-
-private-cache
-private-tmp
-
-noexec /tmp
-restrict-namespaces
+# Redirect
+include qemu-common.profile

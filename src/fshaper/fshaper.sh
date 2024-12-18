@@ -1,15 +1,11 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2023 Firejail Authors
+# Copyright (C) 2014-2024 Firejail Authors
 # License GPL v2
 
-TCFILE=""
-if [ -x "/usr/sbin/tc" ]; then
-	TCFILE="/usr/sbin/tc"
-elif [ -x "/sbin/tc" ]; then
-	TCFILE="/sbin/tc";
-else
-	echo "Error: traffic control utility (tc) not found";
+TCFILE="$(PATH=/usr/sbin:/sbin:/run/current-system/sw/bin command -v tc)"
+if [ -z "$TCFILE" ]; then
+	echo "Error: traffic control utility (tc) not found"
 	exit 1
 fi
 

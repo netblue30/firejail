@@ -34,13 +34,13 @@ notv
 nou2f
 protocol unix
 seccomp
-# x11 xorg - problems on kubuntu 17.04
+#x11 xorg # problems on kubuntu 17.04
 
 private-bin display,python*
 private-dev
 # On Debian-based systems, display is a symlink in /etc/alternatives
 private-etc ImageMagick-6,ImageMagick-7
-private-lib gcc/*/*/libgcc_s.so.*,gcc/*/*/libgomp.so.*,ImageMagick*,libfreetype.so.*,libltdl.so.*,libMagickWand-*.so.*,libXext.so.*
+private-lib ImageMagick*,gcc/*/*/libgcc_s.so.*,gcc/*/*/libgomp.so.*,libMagickWand-*.so.*,libXext.so.*,libfreetype.so.*,libltdl.so.*
 private-tmp
 
 dbus-user none

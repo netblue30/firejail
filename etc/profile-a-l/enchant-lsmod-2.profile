@@ -7,4 +7,4 @@ include enchant-lsmod-2.local
 #include globals.local
 
 # Redirect
-include enchant.profile
+include enchant-2.profile

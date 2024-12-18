@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -53,6 +53,27 @@ static inline void ansi_clrscr(void) {
 	fflush(0);
 }
 
+static inline void ansi_bold(const char *str) {
+	char str1[] = {0x1b, '[', '1', 'm', '\0'};
+	char str2[] = {0x1b, '[', '0', 'm', '\0'};
+	printf("%s%s%s", str1, str, str2);
+	fflush(0);
+}
+
+static inline void ansi_faint(const char *str) {
+	char str1[] = {0x1b, '[', '2', 'm', '\0'};
+	char str2[] = {0x1b, '[', '0', 'm', '\0'};
+	printf("%s%s%s", str1, str, str2);
+	fflush(0);
+}
+
+static inline void ansi_red(const char *str) {
+	char str1[] = {0x1b, '[', '9', '1', 'm', '\0'};
+	char str2[] = {0x1b, '[', '0', 'm', '\0'};
+	printf("%s%s%s", str1, str, str2);
+	fflush(0);
+}
+
 static inline uint8_t hash(uint32_t ip) {
 	uint8_t *ptr = (uint8_t *) &ip;
 	// simple byte xor
@@ -74,5 +95,15 @@ void tail(const char *logfile);
 void terminal_handler(int s);
 void terminal_set(void);
 void terminal_restore(void);
+
+// runprog.c
+int runprog(const char *program);
+
+// event.c
+extern int ev_cnt;
+void ev_clear(void);
+void ev_add(char *record);
+void ev_print(FILE *fp);
+
 
 #endif

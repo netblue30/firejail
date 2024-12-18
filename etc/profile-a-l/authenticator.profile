@@ -19,7 +19,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
-# apparmor
+#apparmor
 caps.drop all
 netfilter
 no3d
@@ -31,19 +31,19 @@ noroot
 nosound
 notv
 nou2f
-# novideo
+#novideo
 protocol unix,inet,inet6
 seccomp
 
 disable-mnt
-# private-bin authenticator,python*
+#private-bin authenticator,python*
 private-dev
 private-etc @tls-ca
 private-tmp
 
 # makes settings immutable
-# dbus-user none
-# dbus-system none
+#dbus-user none
+#dbus-system none
 
-#memory-deny-write-execute - breaks on Arch (see issue #1803)
+#memory-deny-write-execute # breaks on Arch (see issue #1803)
 restrict-namespaces

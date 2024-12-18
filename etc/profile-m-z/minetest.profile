@@ -6,8 +6,9 @@ include minetest.local
 # Persistent global definitions
 include globals.local
 
-# In order to save in-game screenshots to a persistent location edit ~/.minetest/minetest.conf:
-#   screenshot_path = /home/<USER>/.minetest/screenshots
+# In order to save in-game screenshots to a persistent location,
+# edit ~/.minetest/minetest.conf:
+# screenshot_path = /home/<USER>/.minetest/screenshots
 
 noblacklist ${HOME}/.cache/minetest
 noblacklist ${HOME}/.minetest

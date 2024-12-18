@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -65,7 +65,7 @@ void netfilter_netlock(pid_t pid) {
 			umask(orig_umask);
 
 			char *cmd;
-			if (asprintf(&cmd, "%s -e \"%s/firejail/fnettrace --tail --log=%s\"", terminal, LIBDIR, flog) == -1)
+			if (asprintf(&cmd, "%s -e \"%s/firejail/fnetlock --tail --log=%s\"", terminal, LIBDIR, flog) == -1)
 				errExit("asprintf");
 			int rv = system(cmd);
 			(void) rv;
@@ -74,7 +74,7 @@ void netfilter_netlock(pid_t pid) {
 	}
 
 	char *cmd;
-	if (asprintf(&cmd, "%s/firejail/fnettrace --netfilter --log=%s", LIBDIR, flog) == -1)
+	if (asprintf(&cmd, "%s/firejail/fnetlock --log=%s", LIBDIR, flog) == -1)
 		errExit("asprintf");
 	free(flog);
 

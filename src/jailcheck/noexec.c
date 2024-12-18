@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -55,6 +55,7 @@ void noexec_setup(void) {
 			execfile_len = s.st_size;
 			close(fd);
 		}
+		free(self);
 	}
 }
 
@@ -110,4 +111,5 @@ void noexec_test(const char *path) {
 	wait(&status);
 	int rv = unlink(fname);
 	(void) rv;
+	free(fname);
 }

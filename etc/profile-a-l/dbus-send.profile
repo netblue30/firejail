@@ -7,7 +7,6 @@ include dbus-send.local
 # Persistent global definitions
 include globals.local
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
@@ -17,9 +16,10 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
 include disable-write-mnt.inc
+include disable-x11.inc
 include disable-xdg.inc
 
-include whitelist-common.inc
+#include whitelist-common.inc # see #903
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -28,8 +28,7 @@ apparmor
 caps.drop all
 ipc-namespace
 machine-id
-# Breaks abstract sockets
-#net none
+#net none # breaks abstract sockets
 netfilter
 no3d
 nodvd

@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2023 Firejail Authors
+# Copyright (C) 2014-2024 Firejail Authors
 # License GPL v2
 
 # unpack firejail archive
@@ -44,5 +44,5 @@ mv $DIRFIRETOOLS $DIRFIREJAIL/extras/firetools
 
 # build
 cd $DIRFIREJAIL
-cov-build --dir cov-int make -j 4 extras
+cov-build --dir cov-int make -j "$(nproc)" extras
 tar czvf myproject.tgz cov-int

@@ -40,7 +40,8 @@ tracelog
 disable-mnt
 private-bin dino
 private-dev
-# private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl -- breaks server connection
+# breaks server connection
+#private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,ssl
 private-tmp
 
 dbus-user filter

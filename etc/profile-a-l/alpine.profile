@@ -30,7 +30,6 @@ noblacklist ${HOME}/.pinercex
 noblacklist ${HOME}/.signature
 noblacklist ${HOME}/mail
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
@@ -39,6 +38,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 #whitelist ${DOCUMENTS}

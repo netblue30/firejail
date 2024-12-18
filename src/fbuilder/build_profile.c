@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -26,7 +26,7 @@
 void build_profile(int argc, char **argv, int index, FILE *fp) {
 	// next index is the application name
 	if (index >= argc) {
-		fprintf(stderr, "Error: application name missing\n");
+		fprintf(stderr, "Error fbuilder: application name missing\n");
 		exit(1);
 	}
 
@@ -138,12 +138,12 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "#noinput\t# disable input devices\n");
 		fprintf(fp, "nonewprivs\n");
 		fprintf(fp, "noroot\n");
+		fprintf(fp, "#notpm\t# disable TPM devices\n");
 		fprintf(fp, "#notv\t# disable DVB TV devices\n");
 		fprintf(fp, "#nou2f\t# disable U2F devices\n");
 		fprintf(fp, "#novideo\t# disable video capture devices\n");
 		build_protocol(trace_output, fp);
 		fprintf(fp, "seccomp !chroot\t# allowing chroot, just in case this is an Electron app\n");
-		fprintf(fp, "shell none\n");
 		fprintf(fp, "#tracelog\t# send blacklist violations to syslog\n");
 		fprintf(fp, "\n");
 
@@ -166,7 +166,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 			unlink(trace_output);
 	}
 	else {
-		fprintf(stderr, "Error: cannot run the sandbox\n");
+		fprintf(stderr, "Error fbuilder: cannot run the sandbox\n");
 		exit(1);
 	}
 }

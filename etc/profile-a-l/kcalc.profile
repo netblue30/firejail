@@ -60,7 +60,7 @@ private-bin kcalc
 private-cache
 private-dev
 private-etc
-# private-lib - problems on Arch
+#private-lib # problems on Arch
 private-tmp
 
 dbus-user none

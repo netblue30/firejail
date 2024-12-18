@@ -9,7 +9,6 @@ include globals.local
 noblacklist /sbin
 noblacklist /usr/sbin
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}
 
 include disable-common.inc
@@ -17,6 +16,7 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 whitelist /usr/share/dns

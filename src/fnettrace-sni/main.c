@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2023 Firejail Authors
+ * Copyright (C) 2014-2024 Firejail Authors
  *
  * This file is part of firejail project
  *
@@ -32,15 +32,14 @@ static char last[512] = {'\0'};
 static void print_tls(uint32_t ip_dest, unsigned char *pkt, unsigned len) {
 	assert(pkt);
 
+	// expecting a handshake packet and client hello
+	if (pkt[0] != 0x16 || pkt[5] != 0x01)
+		return;
+
 	char ip[30];
 	sprintf(ip, "%d.%d.%d.%d", PRINT_IP(ip_dest));
 	time_t seconds = time(NULL);
 	struct tm *t = localtime(&seconds);
-
-	// expecting a handshake packet and client hello
-	if (pkt[0] != 0x16 || pkt[5] != 0x01)
-		goto errout;
-
 
 	// look for server name indication
 	unsigned char *ptr = pkt;
@@ -74,7 +73,7 @@ static void print_tls(uint32_t ip_dest, unsigned char *pkt, unsigned len) {
 	if (name) {
 		// filter output
 		char tmp[sizeof(last)];
-		snprintf(tmp, sizeof(last), "%02d:%02d:%02d  %-15s  %s", t->tm_hour, t->tm_min, t->tm_sec, ip, name);
+		snprintf(tmp, sizeof(last), "%02d:%02d:%02d  %-15s  SNI %s", t->tm_hour, t->tm_min, t->tm_sec, ip, name);
 		if (strcmp(tmp, last)) {
 			printf("%s\n", tmp);
 			fflush(0);
@@ -83,11 +82,6 @@ static void print_tls(uint32_t ip_dest, unsigned char *pkt, unsigned len) {
 	}
 	else
 		goto nosni;
-	return;
-
-errout:
-	printf("%02d:%02d:%02d  %-15s  Error: invalid TLS packet\n", t->tm_hour, t->tm_min, t->tm_sec, ip);
-	fflush(0);
 	return;
 
 nosni:
@@ -152,7 +146,7 @@ static void print_date(void) {
 	struct tm *t = localtime(&now);
 
 	if (day != t->tm_yday) {
-		printf("\nSNI trace for %s", ctime(&now));
+		printf("SNI trace for %s", ctime(&now));
 		day = t->tm_yday;
 	}
 

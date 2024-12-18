@@ -11,7 +11,6 @@ noblacklist ${HOME}/.cache/winetricks # XXX: See #5238
 noblacklist ${HOME}/.config/aria2
 noblacklist ${HOME}/.netrc
 
-blacklist /tmp/.X11-unix
 blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
@@ -19,6 +18,7 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
+include disable-x11.inc
 
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
@@ -39,7 +39,7 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 
-# disable-mnt
+#disable-mnt
 # Add your custom event hook commands to 'private-bin' in your aria2c.local.
 private-bin aria2c,gzip
 # Add 'private-cache' to your aria2c.local if you don't use Lutris/winetricks (see issue #2772).

@@ -596,6 +596,7 @@ blacklist ${HOME}/.config/nomacs
 blacklist ${HOME}/.config/nuclear
 blacklist ${HOME}/.config/nvim
 blacklist ${HOME}/.config/obs-studio
+blacklist ${HOME}/.config/obsidian
 blacklist ${HOME}/.config/okularpartrc
 blacklist ${HOME}/.config/okularrc
 blacklist ${HOME}/.config/onboard

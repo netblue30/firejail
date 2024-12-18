@@ -382,34 +382,35 @@ Run it over the profiles in /etc/profiles:
 $ /usr/lib/firejail/profstats /etc/firejail/*.profile
 No include .local found in /etc/firejail/noprofile.profile
 Warning: multiple caps in /etc/firejail/tidal-hifi.profile
+Warning: multiple caps in /etc/firejail/tqemu.profile
 Warning: multiple caps in /etc/firejail/transmission-daemon.profile
 
 Stats:
-    profiles			1249
-    include local profile	1248   (include profile-name.local)
-    include globals		1217   (include globals.local)
-    blacklist ~/.ssh		1117   (include disable-common.inc)
-    seccomp			1127
-    capabilities		1242
-    noexec			1125   (include disable-exec.inc)
-    noroot			1030
-    memory-deny-write-execute	285
-    restrict-namespaces		981
-    apparmor			788
-    private-bin			750
-    private-dev			1090
-    private-etc			763
-    private-lib			78
-    private-tmp			959
-    whitelist home directory	609
-    whitelist var		907   (include whitelist-var-common.inc)
-    whitelist run/user		1214   (include whitelist-runuser-common.inc
+    profiles			1305
+    include local profile	1304   (include profile-name.local)
+    include globals		1271   (include globals.local)
+    blacklist ~/.ssh		1167   (include disable-common.inc)
+    seccomp			1178
+    capabilities		1298
+    noexec			1178   (include disable-exec.inc)
+    noroot			1077
+    memory-deny-write-execute	309
+    restrict-namespaces		1026
+    apparmor			833
+    private-bin			790
+    private-dev			1140
+    private-etc			811
+    private-lib			85
+    private-tmp			1004
+    whitelist home directory	642
+    whitelist var		950   (include whitelist-var-common.inc)
+    whitelist run/user		1268   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		690   (include whitelist-usr-share-common.inc
-    net none			420
-    dbus-user none 		705
-    dbus-user filter 		164
-    dbus-system none 		889
+    whitelist usr/share		732   (include whitelist-usr-share-common.inc
+    net none			443
+    dbus-user none 		738
+    dbus-user filter 		192
+    dbus-system none 		939
     dbus-system filter 		13
 
 ```

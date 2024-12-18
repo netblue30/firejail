@@ -730,6 +730,8 @@ KOLANICH (https://github.com/KOLANICH)
 	- update fix_private-bin.py
 	- fix meld
 	- temporary fix to the bug caused by apparmor profiles stacking
+Konstantin (https://github.com/konstantin1722)
+	- obsidian profile
 kortewegdevries (https://github.com/kortewegdevries)
 	- a whole bunch of new profiles and fixes
 	- whitelisting evolution, kmail
@@ -771,6 +773,8 @@ Lockdis (https://github.com/Lockdis)
 	- Added crow, nyx, and google-earth-pro profiles
 luca0N (https://github.com/luca0N)
 	- fixed crawl profile
+Lucas (https://github.com/lucasmz-dev)
+	- disable-common: add bubblejail paths
 Lukáš Krejčí (https://github.com/lskrejci)
 	- fixed parsing of --keep-var-tmp
 luzpaz (https://github.com/luzpaz)
@@ -1059,6 +1063,8 @@ rusty-snake (https://github.com/rusty-snake)
 	- some typo fixes
 	- added profile templates
 	- added sort.py to contrib
+Sadoon Al-Bader (https://github.com/Sadoon-AlBader)
+	- fix misc in kmail and transmission-qt & add kontact.profile
 sak96 (https://github.com/sak96)
 	- discord profile fixes
 	- Fix Firefox 'Profile not found' for psd (v6.45)

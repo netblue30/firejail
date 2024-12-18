@@ -15,6 +15,9 @@ private-bin transmission-qt
 #dbus-user.own com.transmissionbt.Transmission.*
 #dbus-user.talk org.freedesktop.Notifications
 
+# System tray support
+?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher
+
 ignore memory-deny-write-execute
 
 # Redirect

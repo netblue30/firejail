@@ -49,7 +49,6 @@ nogroups
 noinput
 nonewprivs
 noroot
-nosound
 notv
 nou2f
 novideo
@@ -63,4 +62,9 @@ private-dev
 # writable-run-user is needed for signing and encrypting emails
 writable-run-user
 
-#restrict-namespaces
+# to enable desktop notifications, add these commented lines to your kmail.local file
+#dbus-user.talk org.freedesktop.Notifications
+#dbus-user filter
+
+# restrict-namespaces
+

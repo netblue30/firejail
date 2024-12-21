@@ -23,6 +23,7 @@ firejail (0.9.73) baseline; urgency=low
     (#6414 #6415)
   * feature: add notpm command & keep tpm devices in private-dev (#6379 #6390)
   * feature: fshaper.sh: support tc on NixOS (#6426 #6431)
+  * feature: add aarch64 syscalls (#5821 #6574)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)
@@ -126,6 +127,8 @@ firejail (0.9.73) baseline; urgency=low
   * docs: github: streamline environment in issue templates (#6471)
   * docs: fix typos of --enable-selinux configure option (#6526)
   * docs: clarify intro and build section in README (#6524)
+  * docs: clarify that other tools may not be in PPA (#6407)
+  * docs: use GitHub issues as the bug reporting address (#6525)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
   * profiles: qutebrowser: fix links not opening in the existing instance
@@ -170,6 +173,9 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: tesseract: disable private-tmp to fix ocrmypdf (#6550 #6552)
   * profiles: ensure allow-lua where mpv is allowed (#6555)
   * profiles: video-players: add missing /usr/share paths (#6557)
+  * profiles: clamav: add /etc/clamav (#6565)
+  * profiles: lutris: add comment for gamescope workaround (#6192)
+  * profiles: disable-common: add bubblejail paths (#6571)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

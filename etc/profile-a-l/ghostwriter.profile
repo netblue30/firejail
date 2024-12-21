@@ -53,7 +53,7 @@ seccomp !chroot
 seccomp.block-secondary
 #tracelog # breaks
 
-private-bin affixcompress,analyze,chmorph,cmark,context,gettext,ghostwriter,hunspell,hunzip,hzip,latex,makealias,mktexfmt,munch,multimarkdown,pandoc,pdflatex,pdfroff,prince,unmunch,weasyprint,wkhtmltopdf,wordforms,wordlist2hunspell
+private-bin affixcompress,analyze,chmorph,cmark,context,gettext,ghostwriter,hunspell,hunzip,hzip,latex,makealias,mktexfmt,multimarkdown,munch,pandoc,pdflatex,pdfroff,prince,unmunch,weasyprint,wkhtmltopdf,wordforms,wordlist2hunspell
 private-cache
 private-dev
 # passwd,login.defs,firejail are a temporary workaround for #2877 and can be removed once it is fixed

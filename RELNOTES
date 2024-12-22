@@ -176,6 +176,8 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: clamav: add /etc/clamav (#6565)
   * profiles: lutris: add comment for gamescope workaround (#6192)
   * profiles: disable-common: add bubblejail paths (#6571)
+  * profiles: fix misc in kmail/transmission-qt & add kontact.profile (#5905)
+  * profiles: misc changes and self-ref fixes in ghostwriter/peek (#5648)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

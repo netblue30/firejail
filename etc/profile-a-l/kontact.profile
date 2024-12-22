@@ -4,7 +4,8 @@
 # Persistent local customizations
 include kontact.local
 # Persistent global definitions
-include globals.local
+# added by included profile
+#include globals.local
 
 # kmail/kontact has problems launching akonadi in debian and ubuntu.
 # one solution is to have akonadi already running when kmail is started

@@ -11,8 +11,8 @@ include kontact.local
 # one solution is to have akonadi already running when kmail is started
 
 noblacklist ${HOME}/.cache/kontact
-noblacklist ${HOME}/.config/kontactrc
 noblacklist ${HOME}/.config/kontact_summaryrc
+noblacklist ${HOME}/.config/kontactrc
 noblacklist ${HOME}/.local/share/kontact
 
 # restrict-namespaces

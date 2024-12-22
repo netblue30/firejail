@@ -62,9 +62,8 @@ private-dev
 # writable-run-user is needed for signing and encrypting emails
 writable-run-user
 
-# to enable desktop notifications, add these commented lines to your kmail.local file
-#dbus-user.talk org.freedesktop.Notifications
+# To harden kmail.profile, add the following lines to kmail.local:
 #dbus-user filter
+#dbus-user.talk org.freedesktop.Notifications
 
-# restrict-namespaces
-
+#restrict-namespaces

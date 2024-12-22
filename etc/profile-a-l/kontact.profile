@@ -7,15 +7,13 @@ include kontact.local
 # added by included profile
 #include globals.local
 
-# kmail/kontact has problems launching akonadi in debian and ubuntu.
-# one solution is to have akonadi already running when kmail is started
+# Note: kmail/kontact have problems launching akonadi on Debian and Ubuntu.
+# One solution is to have akonadi already running when kmail is started.
 
 noblacklist ${HOME}/.cache/kontact
 noblacklist ${HOME}/.config/kontact_summaryrc
 noblacklist ${HOME}/.config/kontactrc
 noblacklist ${HOME}/.local/share/kontact
-
-# restrict-namespaces
 
 # Redirect
 include kmail.profile

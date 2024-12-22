@@ -154,6 +154,7 @@ blacklist ${HOME}/.cache/keepassxc
 blacklist ${HOME}/.cache/kfind
 blacklist ${HOME}/.cache/kinfocenter
 blacklist ${HOME}/.cache/kmail2
+blacklist ${HOME}/.cache/kontact
 blacklist ${HOME}/.cache/krunner
 blacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite*
 blacklist ${HOME}/.cache/kscreenlocker_greet
@@ -536,6 +537,8 @@ blacklist ${HOME}/.config/kmail2rc
 blacklist ${HOME}/.config/kmailsearchindexingrc
 blacklist ${HOME}/.config/kmplayerrc
 blacklist ${HOME}/.config/knotesrc
+blacklist ${HOME}/.config/kontact_summaryrc
+blacklist ${HOME}/.config/kontactrc
 blacklist ${HOME}/.config/konversation.notifyrc
 blacklist ${HOME}/.config/konversationrc
 blacklist ${HOME}/.config/koreader
@@ -998,6 +1001,7 @@ blacklist ${HOME}/.local/share/klavaro
 blacklist ${HOME}/.local/share/kmail2
 blacklist ${HOME}/.local/share/kmplayer
 blacklist ${HOME}/.local/share/knotes
+blacklist ${HOME}/.local/share/kontact
 blacklist ${HOME}/.local/share/krita
 blacklist ${HOME}/.local/share/ktorrent
 blacklist ${HOME}/.local/share/ktorrentrc

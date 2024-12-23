@@ -16,8 +16,8 @@ noblacklist ${HOME}/Sync
 #       So, we try to preemptively set it here:
 nice 2
 
-blacklist ${RUNUSER}/wayland-*
 blacklist ${RUNUSER}
+blacklist ${RUNUSER}/wayland-*
 blacklist /usr/libexec
 
 include disable-common.inc
@@ -29,12 +29,10 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-
 mkdir ${HOME}/.local/state/syncthing
-whitelist ${HOME}/.local/state/syncthing
 mkdir ${HOME}/Sync
+whitelist ${HOME}/.local/state/syncthing
 whitelist ${HOME}/Sync
-
 include whitelist-common.inc
 
 #apparmor

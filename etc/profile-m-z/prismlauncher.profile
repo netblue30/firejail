@@ -6,6 +6,7 @@ include prismlauncher.local
 # Persistent global definitions
 include globals.local
 
+# Allow java (blacklisted by disable-devel.inc)
 include allow-java.inc
 
 include disable-common.inc
@@ -15,6 +16,7 @@ include disable-shell.inc
 
 whitelist ${HOME}/.local/share/PrismLauncher
 whitelist ${HOME}/Downloads
+include whitelist-common.inc
 
 apparmor
 caps.drop all

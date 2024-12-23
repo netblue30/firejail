@@ -1,19 +1,18 @@
 # Firejail profile for syncthing
 # Description: File synchronization using public networks
 # This file is overwritten after every install/update
-
 # Persistent local customizations
 include syncthing.local
 # Persistent global definitions
 include globals.local
 
+# Note: This profile assumes a ~/Sync directory to be shared by default.
+
 noblacklist ${HOME}/.local/state/syncthing
-# NOTE: this assumes a ~/Sync directory to be shared by default. Maybe leave a requirement to edit local file to set dirs?
 noblacklist ${HOME}/Sync
 
-# NOTE: will cause WARNING: Failed to lower process
-#       priority: set I/O priority: operation not permitted
-#       So, we try to preemptively set it here:
+# Note: Will cause "WARNING: Failed to lower process priority: set I/O
+# priority: operation not permitted". So, try to preemptively set it here:
 nice 2
 
 blacklist ${RUNUSER}
@@ -52,22 +51,16 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-##seccomp !chroot
-##seccomp.drop SYSCALLS (see syscalls.txt)
 #seccomp.block-secondary
-##seccomp-error-action log (only for debugging seccomp issues)
 #tracelog
 #x11 none # desirable but too complex to add
 
 disable-mnt
 private-cache
 private-dev
-#private-etc
-#  Networking: ca-certificates,crypto-policies,host.conf,hostname,hosts,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
 #private-tmp
 
 dbus-user none
 dbus-system none
 
 restrict-namespaces
-

@@ -9,6 +9,10 @@ include globals.local
 noblacklist ${DOCUMENTS}
 noblacklist ${HOME}/.config/obsidian
 
+mkdir ${HOME}/.config/obsidian
+whitelist ${DOCUMENTS}
+whitelist ${HOME}/.config/obsidian
+
 ipc-namespace
 nonewprivs
 noroot

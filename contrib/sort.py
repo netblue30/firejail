@@ -99,11 +99,20 @@ def check_profile(filename, overwrite):
                 )
             fixed_profile.append(line)
 
+        fixed_profile_str = "\n".join(fixed_profile)
+        stripped_profile_str = fixed_profile_str.strip() + "\n"
+        while "\n\n\n" in stripped_profile_str:
+            stripped_profile_str = stripped_profile_str.replace("\n\n\n", "\n\n")
+
+        if stripped_profile_str != fixed_profile_str:
+            was_fixed = True
+            print(f"{filename}:(fixed whitespace)")
+
         if was_fixed:
             if overwrite:
                 profile.seek(0)
                 profile.truncate()
-                profile.write("\n".join(fixed_profile))
+                profile.write(stripped_profile_str)
                 profile.flush()
                 print(f"[ Fixed ] {filename}")
             return 101

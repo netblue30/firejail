@@ -50,7 +50,7 @@ seccomp
 tracelog
 
 disable-mnt
-private-bin com.github.johnfactotum.Foliate,gjs
+private-bin com.github.johnfactotum.Foliate,foliate,gjs
 private-cache
 private-dev
 private-etc @x11,gconf

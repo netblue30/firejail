@@ -17,6 +17,8 @@ noblacklist ${HOME}/.config/mpv
 noblacklist ${HOME}/.local/share/Anki2
 noblacklist ${HOME}/.mplayer
 
+# sh and dbus-send are used by aqt/theme.py to query dark mode through org.freedesktop.portal.Desktop
+include allow-bin-sh.inc
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
 
@@ -57,15 +59,22 @@ novideo
 protocol unix,inet,inet6
 # QtWebengine needs chroot to set up its own sandbox
 seccomp !chroot
+seccomp.block-secondary
 
 disable-mnt
-private-bin anki,mplayer,mpv,python*
+# env is required for python scripts on gentoo linux
+# anki uses mpv or mplayer for playing audio and uses lame to record audio.
+# sh and dbus-send are used by aqt/theme.py to query dark mode through org.freedesktop.portal.Desktop
+private-bin anki,dbus-send,env,lame,lua*,mplayer,mpv,python*,sh
 private-cache
 private-dev
 private-etc @tls-ca,@x11
 private-tmp
 
-dbus-user none
+dbus-user filter
+# org.freedesktop.portal.Desktop is queried for dark mode.
+dbus-user.talk org.freedesktop.portal.Desktop
 dbus-system none
 
+deterministic-shutdown
 #restrict-namespaces

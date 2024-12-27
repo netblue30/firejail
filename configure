@@ -674,6 +674,7 @@ PKG_CONFIG_PATH
 PKG_CONFIG
 HAVE_APPARMOR
 HAVE_IDS
+HAVE_SANDBOX_CHECK
 DEPS_CFLAGS
 TAR
 STRIP
@@ -733,6 +734,7 @@ ac_user_opts='
 enable_option_checking
 enable_analyzer
 enable_sanitizer
+enable_sandbox_check
 enable_ids
 enable_apparmor
 enable_selinux
@@ -1391,6 +1393,9 @@ Optional Features:
   --enable-analyzer       enable GCC static analyzer
   --enable-sanitizer=[address | memory | undefined]
                           enable a compiler-based sanitizer (debug)
+  --disable-sandbox-check checking if current instance of firejail is running
+                          within a sandbox is disabled, only use this when
+                          developing firejail inside of a sandbox
   --enable-ids            enable ids
   --enable-apparmor       enable apparmor
   --enable-selinux        SELinux labeling support
@@ -3957,6 +3962,21 @@ fi
 
 fi
 
+HAVE_SANDBOX_CHECK=""
+
+# Check whether --enable-sandbox-check was given.
+if test ${enable_sandbox_check+y}
+then :
+  enableval=$enable_sandbox_check;
+fi
+
+if test "x$enable_sandbox_check" != "xno"
+then :
+
+	HAVE_SANDBOX_CHECK="-DHAVE_SANDBOX_CHECK"
+
+fi
+
 HAVE_IDS=""
 
 # Check whether --enable-ids was given.
@@ -5793,6 +5813,7 @@ Features:
    overlayfs support: $HAVE_OVERLAYFS
    private home support: $HAVE_PRIVATE_HOME
    private lib support: $HAVE_PRIVATE_LIB
+   sandbox check: $HAVE_SANDBOX_CHECK
    SELinux labeling support: $HAVE_SELINUX
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11

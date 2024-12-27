@@ -193,6 +193,7 @@ blacklist ${HOME}/.cache/mypaint
 blacklist ${HOME}/.cache/netsurf
 blacklist ${HOME}/.cache/nheko
 blacklist ${HOME}/.cache/nhex
+blacklist ${HOME}/.cache/nsxiv
 blacklist ${HOME}/.cache/nvim
 blacklist ${HOME}/.cache/ocenaudio
 blacklist ${HOME}/.cache/okular
@@ -598,6 +599,7 @@ blacklist ${HOME}/.config/newsboat
 blacklist ${HOME}/.config/newsflash
 blacklist ${HOME}/.config/nheko
 blacklist ${HOME}/.config/nomacs
+blacklist ${HOME}/.config/nsxiv
 blacklist ${HOME}/.config/nuclear
 blacklist ${HOME}/.config/nvim
 blacklist ${HOME}/.config/obs-studio

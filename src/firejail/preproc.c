@@ -142,8 +142,10 @@ void preproc_build_firejail_dir_locked(void) {
 	// only root should be able to lock files in this directory
 	create_empty_dir_as_root(RUN_FIREJAIL_SANDBOX_DIR, 0700);
 
+#ifdef HAVE_DBUSPROXY
 	create_empty_dir_as_root(RUN_FIREJAIL_DBUS_DIR, 0755);
 	fs_remount(RUN_FIREJAIL_DBUS_DIR, MOUNT_NOEXEC, 0);
+#endif
 
 	create_empty_dir_as_root(RUN_RO_DIR, S_IRUSR);
 	fs_remount(RUN_RO_DIR, MOUNT_READONLY, 0);

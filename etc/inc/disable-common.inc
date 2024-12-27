@@ -345,6 +345,7 @@ read-only ${HOME}/.cargo/env
 read-only ${HOME}/.config/mpv
 read-only ${HOME}/.config/msmtp
 read-only ${HOME}/.config/nano
+read-only ${HOME}/.config/ncmpcpp/config
 read-only ${HOME}/.config/nvim
 read-only ${HOME}/.config/pkcs11
 read-only ${HOME}/.dotfiles

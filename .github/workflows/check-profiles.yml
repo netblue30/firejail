@@ -48,7 +48,9 @@ jobs:
     - name: sort.py
       run: >
         ./ci/check/profiles/sort.py
-        etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
+        etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile;
+        echo;
+        git diff --exit-code
 # Currently broken (see #5610)
 #   - name: private-etc-always-required.sh
 #     run: >

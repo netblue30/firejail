@@ -6,7 +6,6 @@ include gnome-recipes.local
 # Persistent global definitions
 include globals.local
 
-
 noblacklist ${HOME}/.cache/gnome-recipes
 noblacklist ${HOME}/.local/share/gnome-recipes
 

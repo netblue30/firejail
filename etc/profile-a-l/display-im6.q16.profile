@@ -5,6 +5,5 @@ include display-im6.q16.local
 # Persistent global definitions
 include globals.local
 
-
 # Redirect
 include display.profile

@@ -1110,6 +1110,12 @@ int main(int argc, char **argv, char **envp) {
 	if (check_arg(argc, argv, "--quiet", 1) || (env_quiet && strcmp(env_quiet, "yes") == 0))
 		arg_quiet = 1;
 
+	// process --debug
+	if (check_arg(argc, argv, "--debug", 1)) {
+		arg_debug = 1;
+		arg_quiet = 0;
+	}
+
 	// check if the user is allowed to use firejail
 	init_cfg(argc, argv);
 

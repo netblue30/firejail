@@ -94,8 +94,8 @@ def check_profile(filename, overwrite):
             if line != original_line:
                 was_fixed = True
                 print(
-                    f"{filename}:{lineno}:-{original_line}\n"
-                    f"{filename}:{lineno}:+{line}"
+                    f"{filename}:{lineno}:-'{original_line}'\n"
+                    f"{filename}:{lineno}:+'{line}'"
                 )
             fixed_profile.append(line)
 

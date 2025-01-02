@@ -69,6 +69,14 @@ AS_IF([test "x$enable_sanitizer" != "xno" ], [
 	], [AC_MSG_ERROR([sanitizer not supported: $enable_sanitizer])])
 ])
 
+HAVE_SANDBOX_CHECK=""
+AC_SUBST([HAVE_SANDBOX_CHECK])
+AC_ARG_ENABLE([sandbox-check],
+	      [AS_HELP_STRING([--disable-sandbox-check], [checking if current instance of firejail is running within a sandbox is disabled, only use this when developing firejail inside of a sandbox])])
+AS_IF([test "x$enable_sandbox_check" != "xno"], [
+	HAVE_SANDBOX_CHECK="-DHAVE_SANDBOX_CHECK"
+])
+
 HAVE_IDS=""
 AC_SUBST([HAVE_IDS])
 AC_ARG_ENABLE([ids],
@@ -324,6 +332,7 @@ Features:
    overlayfs support: $HAVE_OVERLAYFS
    private home support: $HAVE_PRIVATE_HOME
    private lib support: $HAVE_PRIVATE_LIB
+   sandbox check: $HAVE_SANDBOX_CHECK
    SELinux labeling support: $HAVE_SELINUX
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11

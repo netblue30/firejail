@@ -1130,6 +1130,7 @@ int main(int argc, char **argv, char **envp) {
 	// If LXC is detected, start firejail sandbox
 	// otherwise try to detect a PID namespace by looking under /proc for specific kernel processes and:
 	//	- start the application in a /bin/bash shell
+#ifdef HAVE_SANDBOX_CHECK
 	if (check_namespace_virt() == 0) {
 		EUID_ROOT();
 		int rv = check_kernel_procs();
@@ -1145,6 +1146,7 @@ int main(int argc, char **argv, char **envp) {
 			__builtin_unreachable();
 		}
 	}
+#endif
 
 	// profile builder
 	if (check_arg(argc, argv, "--build", 0)) // supports both --build and --build=filename

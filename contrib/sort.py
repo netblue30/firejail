@@ -76,7 +76,11 @@ def sort_protocol(original_protocols):
 
 def check_profile(filename, overwrite):
     with open(filename, "r+") as profile:
-        lines = profile.read().split("\n")
+        original_profile_str = profile.read()
+        if not original_profile_str:
+            return
+
+        lines = original_profile_str.split("\n")
         was_fixed = False
         fixed_profile = []
         for lineno, original_line in enumerate(lines, 1):

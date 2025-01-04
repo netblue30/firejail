@@ -53,6 +53,8 @@ firejail (0.9.73) baseline; urgency=low
   * bugfix: fix various resource leaks (#6367)
   * bugfix: profstats: fix restrict-namespaces max count (#6369)
   * bugfix: remove --noautopulse from --help and zsh comp (#6401)
+  * bugfix: parse --debug before using it (#6579)
+  * bugfix: fix possible memory leak in fs_home.c (#6598)
   * build: auto-generate syntax files (#5627)
   * build: mark all phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
@@ -91,6 +93,8 @@ firejail (0.9.73) baseline; urgency=low
   * build: standardize install commands (#6366)
   * build: improve reliability/portability of date command usage (#6403 #6404)
   * build: sort.py: strip whitespace in profiles (#6556)
+  * build: sort.py: fix whitespace in entire profile (#6593)
+  * build: sort.py: quote diff lines (#6594)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
@@ -178,6 +182,7 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: disable-common: add bubblejail paths (#6571)
   * profiles: fix misc in kmail/transmission-qt & add kontact.profile (#5905)
   * profiles: misc changes and self-ref fixes in ghostwriter/peek (#5648)
+  * profiles: firecfg: fix sha384sum & add b2sum/cksum (#6578)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

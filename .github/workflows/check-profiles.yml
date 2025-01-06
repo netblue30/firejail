@@ -47,6 +47,7 @@ jobs:
 
     - name: sort.py
       run: >
+        set +e;
         ./ci/check/profiles/sort.py
         etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile;
         echo;

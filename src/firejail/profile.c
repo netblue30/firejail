@@ -1617,12 +1617,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_rlimit_nofile = 1;
 		}
 		else if (strncmp(ptr, "rlimit-cpu ", 11) == 0) {
-			check_unsigned(ptr + 11, "Error: invalid rlimit in profile file: ");
+			check_unsigned(ptr + 11, "Error: invalid rlimit-cpu in profile file: ");
 			sscanf(ptr + 11, "%llu", &cfg.rlimit_cpu);
 			arg_rlimit_cpu = 1;
 		}
 		else if (strncmp(ptr, "rlimit-nproc ", 13) == 0) {
-			check_unsigned(ptr + 13, "Error: invalid rlimit in profile file: ");
+			check_unsigned(ptr + 13, "Error: invalid rlimit-nproc in profile file: ");
 			sscanf(ptr + 13, "%llu", &cfg.rlimit_nproc);
 			arg_rlimit_nproc = 1;
 		}
@@ -1635,7 +1635,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_rlimit_fsize = 1;
 		}
 		else if (strncmp(ptr, "rlimit-sigpending ", 18) == 0) {
-			check_unsigned(ptr + 18, "Error: invalid rlimit in profile file: ");
+			check_unsigned(ptr + 18, "Error: invalid rlimit-sigpending in profile file: ");
 			sscanf(ptr + 18, "%llu", &cfg.rlimit_sigpending);
 			arg_rlimit_sigpending = 1;
 		}
@@ -1795,7 +1795,7 @@ void profile_read(const char *fname) {
 	// check file
 	invalid_filename(fname, 0); // no globbing
 	if (strlen(fname) == 0 || is_dir(fname)) {
-		fprintf(stderr, "Error: invalid profile file\n");
+		fprintf(stderr, "Error: invalid profile file '%s'\n", fname);
 		exit(1);
 	}
 	if (access(fname, R_OK)) {
@@ -1803,10 +1803,16 @@ void profile_read(const char *fname) {
 		// if the file ends in ".local", do not exit
 		const char *base = gnu_basename(fname);
 		char *ptr = strstr(base, ".local");
-		if (ptr && strlen(ptr) == 6 && errsv != EACCES)
+		if (ptr && strlen(ptr) == 6 && errsv != EACCES) {
+			if (arg_debug) {
+				printf("Cannot access .local file %s: %s, skipping...\n",
+				       fname, strerror(errsv));
+			}
 			return;
+		}
 
-		fprintf(stderr, "Error: cannot access profile file: %s\n", fname);
+		fprintf(stderr, "Error: cannot access profile file %s: %s\n",
+		        fname, strerror(errsv));
 		exit(1);
 	}
 
@@ -1832,7 +1838,8 @@ void profile_read(const char *fname) {
 	// open profile file:
 	FILE *fp = fopen(fname, "re");
 	if (fp == NULL) {
-		fprintf(stderr, "Error: cannot open profile file %s\n", fname);
+		fprintf(stderr, "Error: cannot open profile file %s: %s\n",
+		        fname, strerror(errno));
 		exit(1);
 	}
 

@@ -1,6 +1,7 @@
 firejail (0.9.73) baseline; urgency=low
   * work in progress
   * security: fix sscanf rv checks (CodeQL) (#6184)
+  * feature: --disable-sandbox-check configure flag (#6592)
   * feature: private-etc rework: improve handling of /etc/resolv.conf and add
     private-etc groups (#6400 #5518 #5608 #5609 #5629 #5638 #5641 #5642 #5643
     #5650 #5681 #5737 #5844 #5989 #6016 #6104 #5655 #6435 #6514 #6515)

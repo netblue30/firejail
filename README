@@ -137,6 +137,12 @@ alkim0 (https://github.com/alkim0)
 	- Add profile for chafa
 amano-kenji  (https://github.com/amano-kenji)
 	- fix private-etc in qutebrowser profile
+	- refactor com.github.johnfactotum.Foliate profile
+	- added foliate profile
+	- added area2p profile
+	- added buku profile
+	- added monero-wallet-cli profile
+	- added tremc profile
 Amin Vakil (https://github.com/aminvakil)
 	- whois profile fix
 	- added profile for strawberry
@@ -149,6 +155,8 @@ Andreas Hunkeler (https://github.com/Karneades)
 Andrey Alekseenko (https://github.com/al42and)
 	- fixing lintian warnings
 	- fixed Skype profile
+Andrey Skvortsov (https://github.com/AndreySV)
+	- added aarch64 syscalls
 andrew160 (https://github.com/andrew160)
 	- profile and man pages fixes
 Andrew Branson (https://github.com/abranson)
@@ -775,6 +783,8 @@ luca0N (https://github.com/luca0N)
 	- fixed crawl profile
 Lucas (https://github.com/lucasmz-dev)
 	- disable-common: add bubblejail paths
+	- added b3smum (blake3) profile
+	- firecfg: fix sha384sum & add b2sum/cksum
 Lukáš Krejčí (https://github.com/lskrejci)
 	- fixed parsing of --keep-var-tmp
 luzpaz (https://github.com/luzpaz)
@@ -944,6 +954,8 @@ Peter Sanford (https://github.com/psanford)
 	- fix QtWebEngine in zoom
 Petter Reinholdtsen (pere@hungry.com)
 	- Opera profile patch
+Peter Zmanovsky (https://github.com/peter15914)
+	- fix memory leak in fs_home.c
 PharmaceuticalCobweb (https://github.com/PharmaceuticalCobweb)
 	- fix quiterss profile
 	- added profile for gnome-ring
@@ -980,6 +992,8 @@ polyzen (https://github.com/polyzen)
 	- fixed wusc issue with mpv/Vulkan
 powerjungle (https://github.com/powerjungle)
 	- fixed multimc
+	- build: add --disable-sandbox-check configure flag
+	- build: call autoreconf to match new autoconf version
 probonopd (https://github.com/probonopd)
 	- automatic build on Travis CI
 pshpsh (https://github.com/pshpsh)

@@ -33,6 +33,7 @@
 #include <limits.h>
 #include <sched.h>
 #include "../include/common.h"
+#include "../include/rundefs.h"
 
 #include <fcntl.h>
 #ifndef O_PATH
@@ -155,10 +156,9 @@ int name2pid(const char *name, pid_t *pid) {
 			free(comm);
 		}
 
-		// look for the sandbox name in /run/firejail/name/<PID>
-		// todo: use RUN_FIREJAIL_NAME_DIR define from src/firejail/firejail.h
+		// look for the sandbox name
 		char *fname;
-		if (asprintf(&fname, "/run/firejail/name/%d", newpid) == -1)
+		if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_NAME_DIR, newpid) == -1)
 			errExit("asprintf");
 		FILE *fp = fopen(fname, "r");
 		if (fp) {

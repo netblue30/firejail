@@ -25,7 +25,7 @@
 #define RUN_FIREJAIL_DIR		RUN_FIREJAIL_BASEDIR "/firejail"
 #define RUN_FIREJAIL_SANDBOX_DIR	RUN_FIREJAIL_DIR "/sandbox"
 #define RUN_FIREJAIL_APPIMAGE_DIR	RUN_FIREJAIL_DIR "/appimage"
-#define RUN_FIREJAIL_NAME_DIR		RUN_FIREJAIL_DIR "/name" // also used in src/lib/pid.c - todo: move it in a common place
+#define RUN_FIREJAIL_NAME_DIR		RUN_FIREJAIL_DIR "/name"
 #define RUN_FIREJAIL_LIB_DIR		RUN_FIREJAIL_DIR "/lib"
 #define RUN_FIREJAIL_X11_DIR		RUN_FIREJAIL_DIR "/x11"
 #define RUN_FIREJAIL_NETWORK_DIR	RUN_FIREJAIL_DIR "/network"

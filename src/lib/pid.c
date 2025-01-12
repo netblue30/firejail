@@ -20,6 +20,7 @@
 
 #include "../include/common.h"
 #include "../include/pid.h"
+#include "../include/rundefs.h"
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -172,10 +173,6 @@ doexit:
 	free(file);
 	return rv;
 }
-
-// todo: RUN_FIREJAIL_NAME_DIR is borrowed from src/firejail/firejail.h
-// move it in a common place
-#define RUN_FIREJAIL_NAME_DIR	"/run/firejail/name"
 
 static void print_elem(unsigned index, int nowrap) {
 	// get terminal size

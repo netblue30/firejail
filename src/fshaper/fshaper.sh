@@ -1,6 +1,6 @@
 #!/bin/bash
 # This file is part of Firejail project
-# Copyright (C) 2014-2024 Firejail Authors
+# Copyright (C) 2014-2025 Firejail Authors
 # License GPL v2
 
 TCFILE="$(PATH=/usr/sbin:/sbin:/run/current-system/sw/bin command -v tc)"

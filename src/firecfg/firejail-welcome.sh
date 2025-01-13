@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This file is part of Firejail project
-# Copyright (C) 2014-2024 Firejail Authors
+# Copyright (C) 2014-2025 Firejail Authors
 # License GPL v2
 #
 # Usage: firejail-welcome PROGRAM SYSCONFDIR USER_NAME

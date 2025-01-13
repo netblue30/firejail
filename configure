@@ -1400,9 +1400,9 @@ Optional Features:
   --enable-analyzer       enable GCC static analyzer
   --enable-sanitizer=[address | memory | undefined]
                           enable a compiler-based sanitizer (debug)
-  --disable-sandbox-check checking if current instance of firejail is running
-                          within a sandbox is disabled, only use this when
-                          developing firejail inside of a sandbox
+  --disable-sandbox-check disable checking if firejail is running within a
+                          sandbox, only use this when developing firejail
+                          inside of a sandbox
   --enable-ids            enable ids
   --enable-apparmor       enable apparmor
   --enable-selinux        SELinux labeling support

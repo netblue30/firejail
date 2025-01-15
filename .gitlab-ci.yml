@@ -92,22 +92,23 @@ build_fedora_package:
         - rpm -i ./*.rpm
         - make print-version
 
-build_src_package:
-    image: alpine:latest
-    timeout: 10 minutes
-    script:
-        - apk update
-        - apk upgrade
-        - apk add build-base linux-headers gawk
-        - ./ci/printenv.sh
-        # Note: Do not use ` --enable-fatal-warnings` because the build
-        # currently produces warnings on Alpine (see #6224).
-        - >
-            ./configure --prefix=/usr
-            || (cat config.log; exit 1)
-        - make
-        - make install-strip
-        - make print-version
+# FIXME: Cannot build src/libtrace with musl (see #6610).
+#build_src_package:
+#    image: alpine:latest
+#    timeout: 10 minutes
+#    script:
+#        - apk update
+#        - apk upgrade
+#        - apk add build-base linux-headers gawk
+#        - ./ci/printenv.sh
+#        # Note: Do not use ` --enable-fatal-warnings` because the build
+#        # currently produces warnings on Alpine (see #6224).
+#        - >
+#            ./configure --prefix=/usr
+#            || (cat config.log; exit 1)
+#        - make
+#        - make install-strip
+#        - make print-version
 
 debian_ci:
     image: registry.salsa.debian.org/salsa-ci-team/ci-image-git-buildpackage:latest

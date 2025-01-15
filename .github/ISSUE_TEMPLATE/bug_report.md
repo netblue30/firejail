@@ -49,6 +49,8 @@ _Any other detail that may help to understand/debug the problem_
 
 - Name/version/arch of the Linux kernel (`uname -srm`):
 - Name/version of the Linux distribution (e.g. "Ubuntu 20.04" or "Arch Linux"):
+- Name/version of the relevant program(s)/package(s) (e.g. "firefox 134.0-1,
+  mesa 1:24.3.3-2"):
 - Version of Firejail (`firejail --version`):
 - If you use a development version of firejail, also the commit from which it
   was compiled (`git rev-parse HEAD`):

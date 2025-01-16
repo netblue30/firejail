@@ -169,7 +169,8 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: browsers: centralize/sync/improve comments (#6486)
   * profiles: keepassxc: add new socket location (#5447 #6391)
   * profiles: signal-desktop: allow org.freedesktop.secrets (#6498)
-  * profiles: firefox-common: allow org.freedesktop.portal.Documents (#6444 #6499)
+  * profiles: firefox-common: allow org.freedesktop.portal.Documents (#6444
+    #6499)
   * profiles: keepassxc: allow access to ssh-agent socket (#3314 #6531)
   * profiles: firecfg.config: disable dnsmasq (#6533)
   * profiles: game-launchers: disable nou2f (#6534)

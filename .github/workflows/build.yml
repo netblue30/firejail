@@ -84,7 +84,7 @@ jobs:
         --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
-      run: make
+      run: make -j "$(nproc)"
     - name: make install
       run: sudo make install
     - name: make installcheck

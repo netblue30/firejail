@@ -40,6 +40,7 @@ firejail (0.9.73) baseline; urgency=low
   * modif: fcopy: use lstat when copying directory (#5378 #5957)
   * modif: private-dev: keep /dev/kfd unless no3d is used (#6380)
   * modif: keep /sys/module/nvidia* if prop driver and no no3d (#6372 #6387)
+  * modif: clarify error messages in profile.c (#6605)
   * removal: firemon: remove --interface option (it duplicates the firejail
     --net.print= option) (0e48f9933)
   * removal: remove support for LTS and firetunnel (db09546f2)
@@ -129,7 +130,7 @@ firejail (0.9.73) baseline; urgency=low
   * docs: man: sort commands (firejail.1) (#6451)
   * docs: man: fix bold in command TPs (#6472)
   * docs: man: fix wrong escapes (#6474)
-  * docs: github: streamline environment in issue templates (#6471)
+  * docs: github: streamline environment in issue templates (#6471 #6607)
   * docs: fix typos of --enable-selinux configure option (#6526)
   * docs: clarify intro and build section in README (#6524)
   * docs: clarify that other tools may not be in PPA (#6407)
@@ -184,6 +185,9 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: fix misc in kmail/transmission-qt & add kontact.profile (#5905)
   * profiles: misc changes and self-ref fixes in ghostwriter/peek (#5648)
   * profiles: firecfg: fix sha384sum & add b2sum/cksum (#6578)
+  * profiles: refactor com.github.johnfactotum.Foliate into foliate.profile
+    (#6582)
+  * profiles: anki: fix dark mode detection & misc changes (#6581)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

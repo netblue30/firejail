@@ -20,8 +20,7 @@ include disable-proc.inc
 include disable-programs.inc
 include disable-shell.inc
 #include disable-write-mnt.inc
-# xclip and xsel require X11.
-#include disable-X11.inc
+include disable-X11.inc
 include disable-xdg.inc
 
 include whitelist-common.inc
@@ -54,7 +53,7 @@ tracelog
 
 disable-mnt
 private
-private-bin aria2p,cat,python*,wl-copy,wl-paste,xclip,xsel
+private-bin aria2p,cat,python*
 private-dev
 private-tmp
 

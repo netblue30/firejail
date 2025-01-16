@@ -1146,6 +1146,8 @@ int main(int argc, char **argv, char **envp) {
 			__builtin_unreachable();
 		}
 	}
+#else
+	fwarning("firejail was built with --disable-sandbox-check, this is only intended for development\n");
 #endif
 
 	// profile builder

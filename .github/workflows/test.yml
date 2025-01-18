@@ -81,8 +81,8 @@ jobs:
       run: make -j "$(nproc)"
     - name: make install
       run: sudo make install
-    - name: print version
-      run: make print-version
+    - name: make installcheck
+      run: make installcheck
     - run: make lab-setup
     - run: make test-seccomp-extra
     - run: make test-firecfg
@@ -130,8 +130,8 @@ jobs:
       run: make -j "$(nproc)"
     - name: make install
       run: sudo make install
-    - name: print version
-      run: make print-version
+    - name: make installcheck
+      run: make installcheck
     - run: make lab-setup
     - run: make test-private-etc
     - run: make test-fs
@@ -170,8 +170,8 @@ jobs:
       run: make -j "$(nproc)"
     - name: make install
       run: sudo make install
-    - name: print version
-      run: make print-version
+    - name: make installcheck
+      run: make installcheck
     - run: make lab-setup
     - run: make test-environment
     - run: make test-profiles
@@ -213,8 +213,8 @@ jobs:
       run: make -j "$(nproc)"
     - name: make install
       run: sudo make install
-    - name: print version
-      run: make print-version
+    - name: make installcheck
+      run: make installcheck
     - run: make lab-setup
     - run: make test-utils
 
@@ -260,8 +260,8 @@ jobs:
       run: make -j "$(nproc)"
     - name: make install
       run: sudo make install
-    - name: print version
-      run: make print-version
+    - name: make installcheck
+      run: make installcheck
     - run: make lab-setup
     - run: make test-fnetfilter
     - run: make test-sysutils

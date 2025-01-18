@@ -27,7 +27,7 @@ make -j "$(nproc)" &&
 sudo make install
 
 rm -fr gcov-dir gcov-file
-make print-version
+make installcheck
 gcov_generate
 
 make test-firecfg | grep TESTING

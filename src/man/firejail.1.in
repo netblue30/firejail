@@ -3116,11 +3116,24 @@ $ firejail \-\-net=br0 --veth-name=if0
 #endif
 .TP
 \fB\-\-whitelist=dirname_or_filename
-Whitelist directory or file. A temporary file system is mounted on the top directory, and the
-whitelisted files are mount-binded inside. Modifications to whitelisted files are persistent,
-everything else is discarded when the sandbox is closed. The top directory can be
-all directories in / (except /proc and /sys), /sys/module, /run/user/$UID, $HOME and
-all directories in /usr.
+Whitelist directory or file. A temporary file system is mounted on the top directory.
+In the context of firejail, top directory means, if the whitelisted file's path is
+for example /etc/somedir/somefile, then the top directory would be /etc.
+All other top directories like /opt, /usr and so on, haven't changed, so all files there
+are still accessible, unless a file or directory inside them is also whitelisted.
+This is why sometimes it's beneficial to use blacklist in combination with whitelist,
+if used for different top directories.
+.br
+
+.br
+The whitelisted files are mount-binded inside. Modifications to whitelisted files are
+persistent, everything else in the same top directory is discarded when the sandbox is closed.
+.br
+
+.br
+The top directory can be most directories in /, but there are some special cases.
+The /proc and /sys top directories aren't allowed, but /sys/module is allowed.
+Also /run/user/$UID, $HOME and all directories in /usr are treated as a top directory.
 .br
 
 .br
@@ -3128,6 +3141,7 @@ Symbolic link handling: Whitelisting a path that is a symbolic link will also
 whitelist the path that it points to.
 For example, if ~/foo is whitelisted and it points to ~/bar, then ~/bar will
 also be whitelisted.
+.br
 Restrictions: With the exception of the user home directory, both the link and
 the real file should be in the same top directory.
 For symbolic links in the user home directory, both the link and the real file

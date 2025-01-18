@@ -248,7 +248,21 @@ for more details.
 Examples:
 .TP
 \fBblacklist file_or_directory
-Blacklist directory or file. Examples:
+Blacklist directory or file. This makes a file or directory
+completely inaccessible. All other files and directories are unaffected.
+The blacklisted file or directory is still visible on the filesystem,
+even if it's inaccessible.
+.br
+
+.br
+Symbolic link handling: Blacklisting a path that is a symbolic link will also
+blacklist the path that it points to.
+For example, if ~/foo is blacklisted and it points to /bar, then /bar will also
+be blacklisted.
+.br
+
+.br
+Examples:
 .br
 
 .br

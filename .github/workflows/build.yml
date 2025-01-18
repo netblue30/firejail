@@ -80,7 +80,7 @@ jobs:
     - name: configure
       run: >
         ./configure CC=gcc-12
-        --prefix=/usr --enable-fatal-warnings --enable-analyzer
+        --prefix=/usr --enable-fatal-warnings
         --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make

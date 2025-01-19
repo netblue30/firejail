@@ -30,6 +30,9 @@ HAVE_GCOV=@HAVE_GCOV@
 HAVE_MAN=@HAVE_MAN@
 
 # MANFLAGS
+# These are flags which are used both in code and when building the man pages.
+# When adding a new flag, don't forget to add it below in MANFLAGS as well!
+# Use "Misc flags" above for everything else!
 HAVE_APPARMOR=@HAVE_APPARMOR@
 HAVE_CHROOT=@HAVE_CHROOT@
 HAVE_DBUSPROXY=@HAVE_DBUSPROXY@

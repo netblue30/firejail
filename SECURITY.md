@@ -24,6 +24,10 @@
 | 0.9.38  | :x:                | 31 May 2016        |                                                                                   |
 | <0.9.38 | :x:                | Before 05 Feb 2016 |                                                                                   |
 
+Note: Even if a distribution version is still supported, it doesn't mean that
+the individual package for firejail is well maintained. Be careful with older
+distributions!
+
 ## Security vulnerabilities
 
 We take security bugs very seriously.

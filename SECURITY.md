@@ -4,10 +4,10 @@
 
 | Version | Supported by us    | EOL                | Supported by distribution                                                         |
 | ------- | ------------------ | ------------------ | --------------------------------------------------------------------------------- |
-| 0.9.72  | :heavy_check_mark: |                    | :white_check_mark: Debian 11 **backports**, Debian 12                             |
+| 0.9.72  | :heavy_check_mark: |                    | :white_check_mark: Debian 11 **backports**, Debian 12, Ubuntu 24.04 LTS           |
 | 0.9.70  | :x:                |                    |                                                                                   |
 | 0.9.68  | :x:                |                    |                                                                                   |
-| 0.9.66  | :x:                |                    |                                                                                   |
+| 0.9.66  | :x:                |                    | :white_check_mark: Ubuntu 22.04 LTS                                               |
 | 0.9.64  | :x:                |                    | :white_check_mark: Debian 11                                                      |
 | 0.9.62  | :x:                |                    | :white_check_mark: Ubuntu 20.04 LTS                                               |
 | 0.9.60  | :x:                | 29 Dec 2019        |                                                                                   |

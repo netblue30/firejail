@@ -452,8 +452,8 @@ test-apparmor:
 test-firecfg:
 	$(MAKE) -C test $(subst test-,,$@)
 
-
-# old gihub test; the new test is driven directly from .github/workflows/build.yml
+# old gihub test; the new test is driven directly from
+# .github/workflows/test.yml.
 .PHONY: test-github
 test-github: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
 	echo "TEST COMPLETE"

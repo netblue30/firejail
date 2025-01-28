@@ -85,7 +85,8 @@ firejail (0.9.73) baseline; urgency=low
   * build: mkrpm.sh improvements (#6196)
   * build: move errExit macro into inline function (#6217)
   * build: allow overriding certain tools & sync targets with CI (#6222)
-  * build: reduce hardcoding and inconsistencies (#6230)
+  * build: reduce hardcoding and inconsistencies & add installcheck target
+    (#6230 #6620)
   * build: sort.py: filter empty and duplicate items (#6261)
   * build: fix "warning: "_FORTIFY_SOURCE" redefined" (#6282 #6283)
   * build: sort.py: add -h/-i/-n/-- options (#6290 #6339 #6562)
@@ -106,7 +107,7 @@ firejail (0.9.73) baseline; urgency=low
   * ci: upgrade debian:stretch to debian:buster (#5818)
   * ci: standardize apt-get update/install & misc improvements (#5857)
   * ci: Update step-security/harden-runner and update allowed endpoints (#5953)
-  * ci: whitelist paths, reorganize workflows & speed-up tests (#5960)
+  * ci: whitelist paths, reorganize workflows & speed-up tests (#5960 #6627)
   * ci: fix dependabot duplicated workflow runs (#5984)
   * ci: allow running workflows manually (#6026)
   * ci: add timeout limits (#6178)
@@ -135,6 +136,8 @@ firejail (0.9.73) baseline; urgency=low
   * docs: clarify intro and build section in README (#6524)
   * docs: clarify that other tools may not be in PPA (#6407)
   * docs: use GitHub issues as the bug reporting address (#6525)
+  * docs: update distribution table & add note in SECURITY.md (#6624)
+  * docs: clarify unmaintained status of overlayfs in configure.ac (#6632)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
   * profiles: qutebrowser: fix links not opening in the existing instance

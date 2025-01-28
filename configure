@@ -4248,7 +4248,16 @@ then :
 
 fi
 
-# overlayfs features temporarily disabled pending fixes
+# The --overlay and related options are not supported anymore due to security
+# concerns (see CVE-2021-26910 and #4178), issues on newer kernels (see #2799)
+# and overall lack of interest in fixing and maintaining them.
+#
+# Support is unlikely to be restored for the foreseeable future unless someone
+# picks up the work, as it would require auditing the overlayfs code to ensure
+# that it is secure and that it works properly.
+#
+# It is highly recommended to leave this option disabled; the overlayfs code
+# that remains is only intended for testing/debugging purposes.
 HAVE_OVERLAYFS=""
 
 #AC_ARG_ENABLE([overlayfs],

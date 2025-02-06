@@ -306,6 +306,8 @@ Christian Stadelmann (https://github.com/genodeftest)
 	- evolution profile fix
 Clayton Williams (https://github.com/gosre)
 	- addition of RLIMIT_AS
+cobratbq (https://github.com/cobratbq)
+	- tor profile: add memory-deny-write-execute
 CodeWithMa (https://github.com/CodeWithMa)
 	- mpv.profile: add new XDG_STATE_HOME path
 corecontingency (https://https://github.com/corecontingency)
@@ -785,6 +787,7 @@ Lucas (https://github.com/lucasmz-dev)
 	- disable-common: add bubblejail paths
 	- added b3smum (blake3) profile
 	- firecfg: fix sha384sum & add b2sum/cksum
+	- device-flasher.linux profile
 Lukáš Krejčí (https://github.com/lskrejci)
 	- fixed parsing of --keep-var-tmp
 luzpaz (https://github.com/luzpaz)
@@ -994,6 +997,13 @@ powerjungle (https://github.com/powerjungle)
 	- fixed multimc
 	- build: add --disable-sandbox-check configure flag
 	- build: call autoreconf to match new autoconf version
+	- update distribution table & add note in SECURITY.md
+	- (SECURITY.md): add message below table regarding distribution versions
+	- (SECURITY.md): add two more distributions with LTS support for firejail
+	- (SECURITY.md): update latest firejail version for still supported distros
+	- (SECURITY.md): remove distributions which have reached end-of-life
+	- docs: improve whitelist and blacklist descriptions in man pages
+	- bugfix: do not interact with dbus directory if dbus proxy is disabled
 probonopd (https://github.com/probonopd)
 	- automatic build on Travis CI
 pshpsh (https://github.com/pshpsh)

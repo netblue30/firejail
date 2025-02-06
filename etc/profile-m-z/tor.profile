@@ -49,4 +49,5 @@ private-etc @tls-ca,tor
 private-tmp
 writable-var
 
+memory-deny-write-execute
 restrict-namespaces

@@ -586,6 +586,7 @@ blacklist ${HOME}/.config/mutter
 blacklist ${HOME}/.config/mypaint
 blacklist ${HOME}/.config/nano
 blacklist ${HOME}/.config/nautilus
+blacklist ${HOME}/.config/ncmpcpp
 blacklist ${HOME}/.config/nemo
 blacklist ${HOME}/.config/neochat.notifyrc
 blacklist ${HOME}/.config/neochatrc
@@ -1099,6 +1100,7 @@ blacklist ${HOME}/.local/state/audacity
 blacklist ${HOME}/.local/state/mpv
 blacklist ${HOME}/.local/state/pipewire
 blacklist ${HOME}/.lv2
+blacklist ${HOME}/.lyrics
 blacklist ${HOME}/.lyx
 blacklist ${HOME}/.magicor
 blacklist ${HOME}/.masterpdfeditor
@@ -1281,3 +1283,4 @@ blacklist /var/games/slashem
 blacklist /var/games/vulturesclaw
 blacklist /var/games/vultureseye
 blacklist /var/lib/games/Maelstrom-Scores
+blacklist /var/lib/mpd

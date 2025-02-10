@@ -209,6 +209,7 @@ blacklist ${HOME}/.cache/pipe-viewer
 blacklist ${HOME}/.cache/plasmashell
 blacklist ${HOME}/.cache/plasmashellbookmarkrunnerfirefoxdbfile.sqlite*
 blacklist ${HOME}/.cache/psi
+blacklist ${HOME}/.cache/pyradio
 blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/quodlibet
 blacklist ${HOME}/.cache/qupzilla
@@ -628,6 +629,7 @@ blacklist ${HOME}/.config/pragha
 blacklist ${HOME}/.config/profanity
 blacklist ${HOME}/.config/psi
 blacklist ${HOME}/.config/psi+
+blacklist ${HOME}/.config/pyradio
 blacklist ${HOME}/.config/qBittorrent
 blacklist ${HOME}/.config/qBittorrentrc
 blacklist ${HOME}/.config/qnapi.ini
@@ -1056,6 +1058,7 @@ blacklist ${HOME}/.local/share/pnpm
 blacklist ${HOME}/.local/share/profanity
 blacklist ${HOME}/.local/share/psi
 blacklist ${HOME}/.local/share/psi+
+blacklist ${HOME}/.local/share/pyradio
 blacklist ${HOME}/.local/share/qBittorrent
 blacklist ${HOME}/.local/share/qpdfview
 blacklist ${HOME}/.local/share/quadrapassel
@@ -1099,6 +1102,7 @@ blacklist ${HOME}/.local/state/ani-cli
 blacklist ${HOME}/.local/state/audacity
 blacklist ${HOME}/.local/state/mpv
 blacklist ${HOME}/.local/state/pipewire
+blacklist ${HOME}/.local/state/pyradio
 blacklist ${HOME}/.lv2
 blacklist ${HOME}/.lyrics
 blacklist ${HOME}/.lyx
@@ -1263,6 +1267,7 @@ blacklist ${HOME}/hyperrogue.ini
 blacklist ${HOME}/i2p
 blacklist ${HOME}/mps
 blacklist ${HOME}/openstego.ini
+blacklist ${HOME}/pyradio-recordings
 blacklist ${HOME}/wallet.dat
 blacklist ${HOME}/yt-dlp.conf
 blacklist ${HOME}/yt-dlp.conf.txt

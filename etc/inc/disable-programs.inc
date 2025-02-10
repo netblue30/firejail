@@ -777,6 +777,7 @@ blacklist ${HOME}/.guayadeque
 blacklist ${HOME}/.hashcat
 blacklist ${HOME}/.hedgewars
 blacklist ${HOME}/.hex-a-hop
+blacklist ${HOME}/.hledger.journal
 blacklist ${HOME}/.hugin
 blacklist ${HOME}/.i2p
 blacklist ${HOME}/.icedove

@@ -59,7 +59,7 @@ seccomp !mbind
 tracelog
 
 private-dev
-private-etc @x11,python*
+private-etc @x11,python*,gimp
 private-tmp
 
 dbus-user none

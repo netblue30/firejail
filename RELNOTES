@@ -57,6 +57,8 @@ firejail (0.9.73) baseline; urgency=low
   * bugfix: remove --noautopulse from --help and zsh comp (#6401)
   * bugfix: parse --debug before using it (#6579)
   * bugfix: fix possible memory leak in fs_home.c (#6598)
+  * bugfix: do not interact with dbus directory if dbus proxy is disabled
+    (#6591)
   * build: auto-generate syntax files (#5627)
   * build: mark all phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
@@ -138,6 +140,7 @@ firejail (0.9.73) baseline; urgency=low
   * docs: use GitHub issues as the bug reporting address (#6525)
   * docs: update distribution table & add note in SECURITY.md (#6624)
   * docs: clarify unmaintained status of overlayfs in configure.ac (#6632)
+  * docs: improve whitelist and blacklist descriptions in man pages (#6622)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
   * profiles: qutebrowser: fix links not opening in the existing instance
@@ -192,6 +195,8 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: refactor com.github.johnfactotum.Foliate into foliate.profile
     (#6582)
   * profiles: anki: fix dark mode detection & misc changes (#6581)
+  * profiles: tor: add memory-deny-write-execute (#6641)
+  * profiles: torbrowser-launcher: move path from dc to dp (#6640)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

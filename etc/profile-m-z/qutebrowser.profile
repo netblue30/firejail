@@ -58,7 +58,7 @@ seccomp !chroot,!name_to_handle_at
 disable-mnt
 private-cache
 private-dev
-private-etc @tls-ca
+private-etc @sound,@tls-ca
 private-tmp
 
 dbus-user filter

@@ -688,6 +688,7 @@ blacklist ${HOME}/.config/uGet
 blacklist ${HOME}/.config/ueberzugpp
 blacklist ${HOME}/.config/ungoogled-chromium
 blacklist ${HOME}/.config/uzbl
+blacklist ${HOME}/.config/vesktop
 blacklist ${HOME}/.config/viewnior
 blacklist ${HOME}/.config/vivaldi
 blacklist ${HOME}/.config/vivaldi-snapshot

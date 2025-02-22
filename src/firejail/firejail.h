@@ -328,6 +328,7 @@ extern char *arg_netfilter6_file;	// netfilter file
 extern char *arg_netns;		// "ip netns"-created network namespace to use
 extern int arg_doubledash;	// double dash
 extern int arg_private_dev;	// private dev directory
+extern int arg_keep_dev_ntsync; // preserve /dev/ntsync
 extern int arg_keep_dev_shm;    // preserve /dev/shm
 extern int arg_private_etc;	// private etc directory
 extern int arg_private_opt;	// private opt directory
@@ -650,6 +651,7 @@ void fs_dev_disable_dvd(void);
 void fs_dev_disable_tpm(void);
 void fs_dev_disable_u2f(void);
 void fs_dev_disable_input(void);
+void fs_dev_disable_ntsync(void);
 
 // fs_home.c
 // private mode (--private)

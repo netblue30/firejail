@@ -1113,6 +1113,9 @@ int sandbox(void* sandbox_arg) {
 	if (arg_noinput)
 		fs_dev_disable_input();
 
+	if (!arg_keep_dev_ntsync)
+		fs_dev_disable_ntsync();
+
 	//****************************
 	// set DNS
 	//****************************

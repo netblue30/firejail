@@ -114,6 +114,7 @@ char *arg_netfilter6_file = NULL;		// netfilter6 file
 char *arg_netns = NULL;			// "ip netns"-created network namespace to use
 int arg_doubledash = 0;			// double dash
 int arg_private_dev = 0;			// private dev directory
+int arg_keep_dev_ntsync = 0;			// preserve /dev/ntsync
 int arg_keep_dev_shm = 0;			// preserve /dev/shm
 int arg_private_etc = 0;			// private etc directory
 int arg_private_opt = 0;			// private opt directory
@@ -2032,6 +2033,9 @@ int main(int argc, char **argv, char **envp) {
 #endif
 		else if (strcmp(argv[i], "--private-dev") == 0) {
 			arg_private_dev = 1;
+		}
+		else if (strcmp(argv[i], "--keep-dev-ntsync") == 0) {
+			arg_keep_dev_ntsync = 1;
 		}
 		else if (strcmp(argv[i], "--keep-dev-shm") == 0) {
 			arg_keep_dev_shm = 1;

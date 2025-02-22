@@ -79,6 +79,7 @@ protocol unix,inet,inet6,netlink
 seccomp !clone3,!modify_ldt,!process_vm_readv,!ptrace
 seccomp.32 !modify_ldt
 
+keep-dev-ntsync
 # Add the next line to your lutris.local if you do not need controller support.
 #private-dev
 private-tmp

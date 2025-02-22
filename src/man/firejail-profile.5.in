@@ -865,6 +865,9 @@ Disable U2F devices.
 \fBnovideo
 Disable video capture devices.
 .TP
+\fBnontsync
+Disable ntsync char device.
+.TP
 \fBmachine-id
 Spoof id number in /etc/machine-id file - a new random id is generated inside the sandbox.
 #ifdef HAVE_NETWORK

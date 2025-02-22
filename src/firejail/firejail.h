@@ -340,6 +340,7 @@ extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist command
 extern int arg_nosound;	// disable sound
 extern int arg_novideo; //disable video devices in /dev
+extern int arg_nontsync;	// disable ntsync char device in /dev
 extern int arg_no3d;		// disable 3d hardware acceleration
 extern int arg_noprinters;	// disable printers
 extern int arg_quiet;		// no output for scripting
@@ -645,6 +646,7 @@ void fs_private_dev(void);
 void fs_dev_disable_sound(void);
 void fs_dev_disable_3d(void);
 void fs_dev_disable_video(void);
+void fs_dev_disable_ntsync(void);
 void fs_dev_disable_tv(void);
 void fs_dev_disable_dvd(void);
 void fs_dev_disable_tpm(void);

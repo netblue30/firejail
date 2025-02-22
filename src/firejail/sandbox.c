@@ -1110,6 +1110,9 @@ int sandbox(void* sandbox_arg) {
 	if (arg_novideo)
 		fs_dev_disable_video();
 
+	if (arg_nontsync)
+		fs_dev_disable_ntsync();
+
 	if (arg_noinput)
 		fs_dev_disable_input();
 

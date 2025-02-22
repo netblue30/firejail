@@ -142,6 +142,7 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "#notv\t# disable DVB TV devices\n");
 		fprintf(fp, "#nou2f\t# disable U2F devices\n");
 		fprintf(fp, "#novideo\t# disable video capture devices\n");
+		fprintf(fp, "#nontsync\t# disable ntsync char device\n");
 		build_protocol(trace_output, fp);
 		fprintf(fp, "seccomp !chroot\t# allowing chroot, just in case this is an Electron app\n");
 		fprintf(fp, "#tracelog\t# send blacklist violations to syslog\n");

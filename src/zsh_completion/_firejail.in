@@ -136,6 +136,7 @@ _firejail_args=(
     '--notpm[disable TPM devices]'
     '--nou2f[disable U2F devices]'
     '--novideo[disable video devices]'
+    '--nontsync[disable ntsync char device]'
     '--private[temporary home directory]'
     '--private=-[use directory as user home]: :_files -/'
     '--private-bin=-[build a new /bin in a temporary filesystem, and copy the programs in the list]: :_files -W /usr/bin'

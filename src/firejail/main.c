@@ -126,6 +126,7 @@ int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist command
 int arg_nosound = 0;				// disable sound
 int arg_novideo = 0;			//disable video devices in /dev
+int arg_nontsync = 0;				// disable ntsync char device in /dev
 int arg_no3d;					// disable 3d hardware acceleration
 int arg_noprinters = 0;				// disable printers
 int arg_quiet = 0;				// no output for scripting
@@ -2209,6 +2210,8 @@ int main(int argc, char **argv, char **envp) {
 			arg_keep_config_pulse = 1;
 		else if (strcmp(argv[i], "--novideo") == 0)
 			arg_novideo = 1;
+		else if (strcmp(argv[i], "--nontsync") == 0)
+			arg_nontsync = 1;
 		else if (strcmp(argv[i], "--no3d") == 0)
 			arg_no3d = 1;
 		else if (strcmp(argv[i], "--noprinters") == 0) {

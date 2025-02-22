@@ -1983,6 +1983,11 @@ Disable video devices.
 .br
 
 .TP
+\fB\-\-nontsync
+Disable ntsync char device.
+.br
+
+.TP
 \fB\-\-nowhitelist=dirname_or_filename
 Disable whitelist for this directory or file.
 

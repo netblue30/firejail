@@ -24,6 +24,7 @@ nodvd
 nogroups
 noinput
 nonewprivs
+nontsync
 noprinters
 noroot
 nosound

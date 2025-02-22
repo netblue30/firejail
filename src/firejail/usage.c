@@ -190,6 +190,7 @@ static const char *const usage_str =
 #endif
 	"    --nosound - disable sound system.\n"
 	"    --novideo - disable video devices.\n"
+	"    --nontsync - disable ntsync char device.\n"
 	"    --notpm - disable TPM devices.\n"
 	"    --nou2f - disable U2F devices.\n"
 	"    --nowhitelist=filename - disable whitelist for file or directory.\n"

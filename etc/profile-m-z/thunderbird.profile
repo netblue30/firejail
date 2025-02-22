@@ -6,8 +6,6 @@ include thunderbird.local
 # Persistent global definitions
 include globals.local
 
-ignore include whitelist-runuser-common.inc
-
 # TB stopped supporting enigmail in 2020 (v78) - let's harden D-Bus
 # https://support.mozilla.org/en-US/kb/openpgp-thunderbird-howto-and-faq
 ignore dbus-user none

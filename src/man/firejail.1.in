@@ -1220,7 +1220,10 @@ $ firejail \-\-keep-config-pulse firefox
 
 .TP
 \fB\-\-keep-dev-ntsync
-keeps /dev/ntsync char device when --private-dev is being used
+Allow access to the /dev/ntsync character device (even with
+\fB\-\-private-dev\fR), which is blocked by default.
+This device is mostly intended to increase performance and compatibility when
+running certain programs through Wine.
 .br
 
 .br

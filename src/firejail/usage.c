@@ -129,8 +129,8 @@ static const char *const usage_str =
 #endif
 	"    --join-or-start=name|pid - join the sandbox or start a new one.\n"
 	"    --keep-config-pulse - disable automatic ~/.config/pulse init.\n"
+	"    --keep-dev-ntsync - /dev/ntsync character device is untouched (even with --private-dev).\n"
 	"    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
-	"    --keep-dev-ntsync - /dev/ntsync char device is preserved when --private-dev is being used.\n"
 	"    --keep-fd - inherit open file descriptors to sandbox.\n"
 	"    --keep-shell-rc - do not copy shell rc files from /etc/skel\n"
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"

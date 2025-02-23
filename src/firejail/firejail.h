@@ -651,6 +651,7 @@ void fs_dev_disable_dvd(void);
 void fs_dev_disable_tpm(void);
 void fs_dev_disable_u2f(void);
 void fs_dev_disable_input(void);
+void fs_dev_disable_ntsync(void);
 
 // fs_home.c
 // private mode (--private)

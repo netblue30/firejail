@@ -421,3 +421,12 @@ void fs_dev_disable_input(void) {
 		i++;
 	}
 }
+
+void fs_dev_disable_ntsync(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].type == DEV_NTSYNC)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
+}

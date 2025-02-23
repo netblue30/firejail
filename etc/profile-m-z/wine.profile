@@ -40,5 +40,6 @@ notv
 seccomp
 
 private-dev
+keep-dev-ntsync
 
 restrict-namespaces

@@ -68,11 +68,17 @@ To mitigate this, it is recommended to only allow trusted users to run firejail
 For more details on the security/usability tradeoffs of Firejail, see:
 .UR https://github.com/netblue30/firejail/discussions/4601
 #4601
-.UE
+.UE .
 .PP
-Alternative sandbox technologies like snap (https://snapcraft.io/) and flatpak (https://flatpak.org/)
-are not supported. Snap and flatpak packages have their own native management tools and will
-not work when sandboxed with Firejail.
+Alternative sandbox technologies like Snap (see
+.UR https://snapcraft.io
+.UE )
+and Flatpak (see
+.UR https://flatpak.org
+.UE )
+are not supported.
+Snap and Flatpak packages have their own native management tools and will not
+work when sandboxed with Firejail.
 
 .SH USAGE
 Without any options, the sandbox consists of a filesystem build in a new mount namespace,
@@ -82,7 +88,9 @@ system directories mounted read-only. These directories are /etc, /var, /usr, /b
 /libx32 and /lib64. Only /home and /tmp are writable.
 .PP
 Upon execution Firejail first looks in ~/.config/firejail/ for a profile and if it doesn't find one, it looks in /etc/firejail/.
-For profile resolution detail see https://github.com/netblue30/firejail/wiki/Creating-Profiles#locations-and-types.
+For profile resolution detail see
+.UR https://github.com/netblue30/firejail/wiki/Creating-Profiles#locations-and-types
+.UE .
 If an appropriate profile is not found, Firejail will use a default profile.
 The default profile is quite restrictive. In case the application doesn't work, use --noprofile option
 to disable it. For more information, please see \fBSECURITY PROFILES\fR section below.
@@ -152,8 +160,12 @@ $ firejail \-\-apparmor.print=browser
 #endif
 .TP
 \fB\-\-appimage
-Sandbox an AppImage (https://appimage.org/) application. If the sandbox is started
-as a regular user, nonewprivs and a default capabilities filter are enabled.
+Sandbox an AppImage (see
+.UR https://appimage.org
+.UE )
+application.
+If the sandbox is started as a regular user, nonewprivs and a default
+capabilities filter are enabled.
 private-bin and private-lib are disabled by default when running appimages.
 .br
 
@@ -1793,7 +1805,7 @@ This limitation does not apply to expansions of other variables or wildcards.
 For details, see
 .UR https://github.com/netblue30/firejail/issues/6360
 #6360
-.UE
+.UE .
 .br
 
 .br
@@ -2149,7 +2161,7 @@ and "ignore mkfile".
 For details, see
 .UR https://github.com/netblue30/firejail/issues/903
 #903
-.UE
+.UE .
 
 .TP
 \fB\-\-private-bin=file,file
@@ -2379,7 +2391,7 @@ Therefore, in general it is recommended to use "whitelist /opt/PATH" instead of
 For details, see
 .UR https://github.com/netblue30/firejail/discussions/5307
 #5307
-.UE
+.UE .
 
 .TP
 \fB\-\-private-srv=file,directory
@@ -3327,9 +3339,14 @@ $ firejail \-\-x11=xorg firefox
 
 .TP
 \fB\-\-x11=xpra
-Start Xpra (https://xpra.org) and attach the sandbox to this server.
-Xpra is a persistent remote display server and client for forwarding X11 applications and desktop screens.
-A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
+Start Xpra (see
+.UR https://xpra.org
+.UE )
+and attach the sandbox to this server.
+Xpra is a persistent remote display server and client for forwarding X11
+applications and desktop screens.
+A network namespace needs to be instantiated in order to deny access to X11
+abstract Unix domain socket.
 .br
 
 .br
@@ -3956,7 +3973,9 @@ Example:
 .SH LICENSE
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 .PP
-Homepage: https://firejail.wordpress.com
+Homepage:
+.UR https://firejail.wordpress.com
+.UE
 .SH SEE ALSO
 .BR firemon (1),
 .BR firecfg (1),

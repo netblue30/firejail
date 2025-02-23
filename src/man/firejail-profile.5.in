@@ -386,7 +386,7 @@ and "ignore mkfile".
 For details, see
 .UR https://github.com/netblue30/firejail/issues/903
 #903
-.UE
+.UE .
 .TP
 \fBprivate-bin file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
@@ -1113,7 +1113,9 @@ Template for aliasing/redirecting profiles.
 .SH LICENSE
 Firejail is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 .PP
-Homepage: https://firejail.wordpress.com
+Homepage:
+.UR https://firejail.wordpress.com
+.UE
 .SH SEE ALSO
 .BR firejail (1),
 .BR firemon (1),

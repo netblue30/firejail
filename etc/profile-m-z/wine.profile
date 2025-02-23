@@ -39,7 +39,7 @@ notv
 #novideo
 seccomp
 
-private-dev
 keep-dev-ntsync
+private-dev
 
 restrict-namespaces

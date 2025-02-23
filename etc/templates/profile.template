@@ -195,13 +195,12 @@ include globals.local
 ##x11 none
 
 #disable-mnt
+##keep-dev-ntsync
 ##private
 # It's common practice to refer to the python executable(s) in private-bin with `python*`, which covers both v2 and v3
 #private-bin PROGRAMS
 #private-cache
 #private-dev
-# By default private-dev prevents access to /dev/ntsync (which is used by wine), you can change that behaviour by using keep-dev-ntsync
-##keep-dev-ntsync
 #private-etc FILES
 # private-etc templates (see also #1734, #2093)
 #  Common: alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg

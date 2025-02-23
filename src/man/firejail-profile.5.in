@@ -302,6 +302,9 @@ pulse servers or non-standard socket paths.
 \fBkeep-dev-shm
 /dev/shm directory is untouched (even with private-dev).
 .TP
+\fBkeep-dev-ntsync
+keeps /dev/ntsync char device when private-dev is being used
+.TP
 \fBkeep-shell-rc
 Do not copy shell rc files (such as ~/.bashrc and ~/.zshrc) from /etc/skel.
 .TP
@@ -864,9 +867,6 @@ Disable U2F devices.
 .TP
 \fBnovideo
 Disable video capture devices.
-.TP
-\fBnontsync
-Disable ntsync char device.
 .TP
 \fBmachine-id
 Spoof id number in /etc/machine-id file - a new random id is generated inside the sandbox.

@@ -9,6 +9,7 @@ deterministic-shutdown
 disable-mnt
 ipc-namespace
 keep-config-pulse
+keep-dev-ntsync
 keep-dev-shm
 keep-shell-rc
 keep-var-tmp
@@ -24,7 +25,6 @@ nodvd
 nogroups
 noinput
 nonewprivs
-nontsync
 noprinters
 noroot
 nosound

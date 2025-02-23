@@ -328,6 +328,7 @@ extern char *arg_netfilter6_file;	// netfilter file
 extern char *arg_netns;		// "ip netns"-created network namespace to use
 extern int arg_doubledash;	// double dash
 extern int arg_private_dev;	// private dev directory
+extern int arg_keep_dev_ntsync; // keep /dev/ntsync char device when --private-dev is being used
 extern int arg_keep_dev_shm;    // preserve /dev/shm
 extern int arg_private_etc;	// private etc directory
 extern int arg_private_opt;	// private opt directory
@@ -340,7 +341,6 @@ extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist command
 extern int arg_nosound;	// disable sound
 extern int arg_novideo; //disable video devices in /dev
-extern int arg_nontsync;	// disable ntsync char device in /dev
 extern int arg_no3d;		// disable 3d hardware acceleration
 extern int arg_noprinters;	// disable printers
 extern int arg_quiet;		// no output for scripting
@@ -646,7 +646,6 @@ void fs_private_dev(void);
 void fs_dev_disable_sound(void);
 void fs_dev_disable_3d(void);
 void fs_dev_disable_video(void);
-void fs_dev_disable_ntsync(void);
 void fs_dev_disable_tv(void);
 void fs_dev_disable_dvd(void);
 void fs_dev_disable_tpm(void);

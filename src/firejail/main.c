@@ -114,6 +114,7 @@ char *arg_netfilter6_file = NULL;		// netfilter6 file
 char *arg_netns = NULL;			// "ip netns"-created network namespace to use
 int arg_doubledash = 0;			// double dash
 int arg_private_dev = 0;			// private dev directory
+int arg_keep_dev_ntsync = 0;			// keep /dev/ntsync char device when --private-dev is being used
 int arg_keep_dev_shm = 0;			// preserve /dev/shm
 int arg_private_etc = 0;			// private etc directory
 int arg_private_opt = 0;			// private opt directory
@@ -126,7 +127,6 @@ int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist command
 int arg_nosound = 0;				// disable sound
 int arg_novideo = 0;			//disable video devices in /dev
-int arg_nontsync = 0;				// disable ntsync char device in /dev
 int arg_no3d;					// disable 3d hardware acceleration
 int arg_noprinters = 0;				// disable printers
 int arg_quiet = 0;				// no output for scripting
@@ -2210,8 +2210,8 @@ int main(int argc, char **argv, char **envp) {
 			arg_keep_config_pulse = 1;
 		else if (strcmp(argv[i], "--novideo") == 0)
 			arg_novideo = 1;
-		else if (strcmp(argv[i], "--nontsync") == 0)
-			arg_nontsync = 1;
+		else if (strcmp(argv[i], "--keep-dev-ntsync") == 0)
+			arg_keep_dev_ntsync = 1;
 		else if (strcmp(argv[i], "--no3d") == 0)
 			arg_no3d = 1;
 		else if (strcmp(argv[i], "--noprinters") == 0) {

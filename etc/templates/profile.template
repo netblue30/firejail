@@ -200,6 +200,8 @@ include globals.local
 #private-bin PROGRAMS
 #private-cache
 #private-dev
+# By default private-dev prevents access to /dev/ntsync (which is used by wine), you can change that behaviour by using keep-dev-ntsync
+##keep-dev-ntsync
 #private-etc FILES
 # private-etc templates (see also #1734, #2093)
 #  Common: alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg

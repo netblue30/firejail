@@ -463,8 +463,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_novideo = 1;
 		return 0;
 	}
-	else if (strcmp(ptr, "nontsync") == 0) {
-		arg_nontsync = 1;
+	else if (strcmp(ptr, "keep-dev-ntsync") == 0) {
+		arg_keep_dev_ntsync = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "no3d") == 0) {

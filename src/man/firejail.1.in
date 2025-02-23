@@ -1219,6 +1219,16 @@ Example:
 $ firejail \-\-keep-config-pulse firefox
 
 .TP
+\fB\-\-keep-dev-ntsync
+keeps /dev/ntsync char device when --private-dev is being used
+.br
+
+.br
+Example:
+.br
+$ firejail --keep-dev-ntsync --private-dev
+
+.TP
 \fB\-\-keep-dev-shm
 /dev/shm directory is untouched (even with --private-dev)
 .br
@@ -1980,11 +1990,6 @@ $ firejail \-\-nou2f
 .TP
 \fB\-\-novideo
 Disable video devices.
-.br
-
-.TP
-\fB\-\-nontsync
-Disable ntsync char device.
 .br
 
 .TP

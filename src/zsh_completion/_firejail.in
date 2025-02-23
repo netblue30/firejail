@@ -102,6 +102,7 @@ _firejail_args=(
     '--ipc-namespace[enable a new IPC namespace]'
     '--join-or-start=-[join the sandbox or start a new one name|pid]: :_all_firejails'
     '--keep-config-pulse[disable automatic ~/.config/pulse init]'
+    '--keep-dev-ntsync[/dev/ntsync character device is untouched (even with --private-dev)]'
     '--keep-dev-shm[/dev/shm directory is untouched (even with --private-dev)]'
     '--keep-fd[inherit open file descriptors to sandbox]: :'
     '--keep-shell-rc[do not copy shell rc files from /etc/skel]'

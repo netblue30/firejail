@@ -41,6 +41,7 @@ firejail (0.9.73) baseline; urgency=low
   * modif: private-dev: keep /dev/kfd unless no3d is used (#6380)
   * modif: keep /sys/module/nvidia* if prop driver and no no3d (#6372 #6387)
   * modif: clarify error messages in profile.c (#6605)
+  * modif: keep plugdev group unless nou2f is used (#6664)
   * removal: firemon: remove --interface option (it duplicates the firejail
     --net.print= option) (0e48f9933)
   * removal: remove support for LTS and firetunnel (db09546f2)

@@ -12,10 +12,10 @@ noblacklist ${HOME}/.config/youtube-music-desktop-app
 
 mkdir ${HOME}/.config/youtube-music-desktop-app
 whitelist ${HOME}/.config/youtube-music-desktop-app
+whitelist /opt/ytmdesktop
 
 #private-bin env,youtube-music-desktop-app,ytmdesktop
 private-etc @tls-ca,@x11,bumblebee,host.conf,mime.types
-#private-opt
 
 # Redirect
 include electron-common.profile

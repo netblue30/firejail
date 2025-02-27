@@ -435,6 +435,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_keep_dev_ntsync = 1;
 		return 0;
 	}
+	else if (strcmp(ptr, "keep-dev-tpm") == 0) {
+		arg_keep_dev_tpm = 1;
+		return 0;
+	}
 	else if (strcmp(ptr, "keep-dev-shm") == 0) {
 		arg_keep_dev_shm = 1;
 		return 0;
@@ -622,8 +626,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 1;
 	}
+	// TODO: Fully remove notpm after 0.9.76.
 	else if (strcmp(ptr, "notpm") == 0) {
-		arg_notpm = 1;
+		fwarning("ignoring removed command: notpm (see keep-dev-tpm)\n");
 		return 0;
 	}
 	else if (strcmp(ptr, "nou2f") == 0) {

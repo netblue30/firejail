@@ -23,6 +23,7 @@ allusers
 keep-config-pulse
 keep-dev-ntsync
 keep-dev-shm
+keep-dev-tpm
 keep-fd all
 keep-shell-rc
 keep-var-tmp

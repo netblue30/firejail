@@ -305,6 +305,10 @@ which is blocked by default.
 This device is mostly intended to increase performance and compatibility when
 running certain programs through Wine.
 .TP
+\fBkeep-dev-tpm
+Allow access to the /dev/tpm* Trusted Platform Module (TPM) devices (even with
+\fBprivate-dev\fR), which are blocked by default.
+.TP
 \fBkeep-dev-shm
 /dev/shm directory is untouched (even with private-dev).
 .TP
@@ -403,11 +407,10 @@ Set working directory inside the jail. Full directory path is required. Symbolic
 .TP
 \fBprivate-dev
 Create a new /dev directory.
-Only disc, dri, dvb, full, hidraw, log, null, ptmx, pts, random, shm, snd, tpm,
-tty, urandom, usb, video and zero devices are available.
-Use the options no3d, nodvd, nosound, notpm, notv, nou2f and novideo for
-additional restrictions.
-
+Only disc, dri, dvb, full, hidraw, log, null, ptmx, pts, random, shm, snd, tty,
+urandom, usb, video and zero devices are available.
+Use the options no3d, nodvd, nosound, notv, nou2f and novideo for additional
+restrictions.
 .TP
 \fBprivate-etc file,directory
 Build a new /etc in a temporary
@@ -858,9 +861,12 @@ Disable input devices.
 .TP
 \fBnosound
 Disable sound system.
+.\" TODO: Fully remove notpm after 0.9.76.
 .TP
-\fBnotpm
-Disable Trusted Platform Module (TPM) devices.
+\fBnotpm\fR (deprecated)
+Ignored for compatibility.
+.br
+TPM devices are now blocked by default, see \fBkeep-dev-tpm\fR.
 .TP
 \fBnotv
 Disable DVB (Digital Video Broadcasting) TV devices.

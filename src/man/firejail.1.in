@@ -1232,6 +1232,17 @@ Example:
 $ firejail --keep-dev-ntsync --private-dev
 
 .TP
+\fB\-\-keep-dev-tpm
+Allow access to the /dev/tpm* Trusted Platform Module (TPM) devices (even with
+\fBprivate-dev\fR), which are blocked by default.
+.br
+
+.br
+Example:
+.br
+$ firejail --keep-dev-tpm --private-dev
+
+.TP
 \fB\-\-keep-dev-shm
 /dev/shm directory is untouched (even with --private-dev)
 .br
@@ -1959,17 +1970,12 @@ Disable sound system.
 Example:
 .br
 $ firejail \-\-nosound firefox
-
+.\" TODO: Fully remove notpm after 0.9.76.
 .TP
-\fB\-\-notpm
-Disable Trusted Platform Module (TPM) devices.
+\fB\-\-notpm\fR (deprecated)
+Ignored for compatibility.
 .br
-
-.br
-Example:
-.br
-$ firejail \-\-notpm
-
+TPM devices are now blocked by default, see \fB\-\-keep-dev-tpm\fR.
 .TP
 \fB\-\-notv
 Disable DVB (Digital Video Broadcasting) TV devices.
@@ -2225,10 +2231,10 @@ $ pwd
 .TP
 \fB\-\-private-dev
 Create a new /dev directory.
-Only disc, dri, dvb, full, hidraw, log, null, ptmx, pts, random, shm, snd, tpm,
-tty, urandom, usb, video and zero devices are available.
-Use the options \-\-no3d, \-\-nodvd, \-\-nosound, \-\-notpm, \-\-notv,
-\-\-nou2f and \-\-novideo for additional restrictions.
+Only disc, dri, dvb, full, hidraw, log, null, ptmx, pts, random, shm, snd, tty,
+urandom, usb, video and zero devices are available.
+Use the options \-\-no3d, \-\-nodvd, \-\-nosound, \-\-notv, \-\-nou2f and
+\-\-novideo for additional restrictions.
 .br
 
 .br

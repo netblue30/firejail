@@ -67,8 +67,6 @@ static int have_profile(const char *filename, const char *homedir) {
 
 	// we get strange names here, such as .org.gnome.gedit.desktop, com.uploadedlobster.peek.desktop,
 	// or io.github.Pithos.desktop; extract the word before .desktop
-	// TODO: implement proper fix for #2624 (names like org.gnome.Logs.desktop fall thru
-	// the 'last word' logic and don't get installed to ~/.local/share/applications
 
 	char *tmpfname = strdup(filename);
 	if (!tmpfname)
@@ -84,7 +82,16 @@ static int have_profile(const char *filename, const char *homedir) {
 		free(tmpfname);
 		return 0;
 	}
+
+	// strip ".desktop"
 	tmpfname[len - 8] = '\0';
+
+	// check full filename (without .desktop)
+	int rv = check_profile(tmpfname, homedir);
+	if (rv) {
+		free(tmpfname);
+		return rv;
+	}
 
 	// extract last word
 	char *last_word = strrchr(tmpfname, '.');
@@ -95,7 +102,7 @@ static int have_profile(const char *filename, const char *homedir) {
 
 	// try lowercase
 	last_word[0] = tolower(last_word[0]);
-	int rv = check_profile(last_word, homedir);
+	rv = check_profile(last_word, homedir);
 	if (rv) {
 		free(tmpfname);
 		return rv;

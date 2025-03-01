@@ -966,6 +966,7 @@ $ firejail \-\-ids-init
 .TP
 \fB\-\-ignore=command
 Ignore command in profile file.
+See also \fB\-\-profile\fR and \fB\-\-noprofile\fR.
 .br
 
 .br
@@ -980,6 +981,7 @@ $ firejail \-\-ignore="net eth0" firefox
 .TP
 \fB\-\-include=file.profile
 Include a profile file before the regular profiles are used.
+See also \fB\-\-profile\fR.
 .br
 
 .br
@@ -1891,7 +1893,30 @@ Do not use a security profile.
 .br
 
 .br
-Example:
+Note: This option is intended for profile debugging and development.
+This disables practically all security restrictions when running a program.
+.br
+
+Note: While most restrictions are specified in profiles, some of them are done
+in the source code.
+That is, they are imposed by the firejail program itself.
+If \fB\-\-noprofile\fR does not work, try also \fB\-\-profile=noprofile\fR,
+which attempts to make the sandbox as unrestricted as possible by lifting some
+of the source-code-based restrictions.
+If that still does not work, then the program might be incompatible with
+firejail, as some restrictions are enabled unconditionally (that is, there are
+no commands to lift them).
+See \fBnoprofile.profile\fR for the relevant commands and other details.
+.br
+
+.br
+See also commands such as \fB--noblacklist\fR, \fB--nowhitelist\fR and
+\fB--ignore\fR to ignore specific entries in a profile and \fB\-\-profile\fR to
+use a specific security profile.
+.br
+
+.br
+Examples:
 .br
 $ firejail
 .br
@@ -1906,6 +1931,18 @@ Child process initialized
 
 .br
 $ firejail \-\-noprofile
+.br
+Parent pid 8553, child pid 8554
+.br
+Child process initialized
+.br
+[...]
+.br
+
+.br
+$ firejail \-\-profile=noprofile
+.br
+Reading profile /etc/firejail/noprofile.profile
 .br
 Parent pid 8553, child pid 8554
 .br
@@ -2404,6 +2441,7 @@ drwxrwxrwt  2 nobody nogroup 4096 Apr 30 10:52 .X11-unix
 \fB\-\-profile=filename_or_profilename
 Load a custom security profile from filename. For filename use an absolute path or a path relative to the current path.
 For more information, see \fBSECURITY PROFILES\fR section below.
+See also \fB\-\-include\fR \fB\-\-noprofile\fR.
 .br
 
 .br

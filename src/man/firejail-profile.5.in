@@ -299,6 +299,12 @@ Disable /mnt, /media, /run/mount and /run/media access.
 Disable automatic ~/.config/pulse init, for complex setups such as remote
 pulse servers or non-standard socket paths.
 .TP
+\fBkeep-dev-ntsync
+Allow access to the /dev/ntsync character device (even with \fBprivate-dev\fR),
+which is blocked by default.
+This device is mostly intended to increase performance and compatibility when
+running certain programs through Wine.
+.TP
 \fBkeep-dev-shm
 /dev/shm directory is untouched (even with private-dev).
 .TP

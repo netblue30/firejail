@@ -238,6 +238,8 @@ static void clean_supplementary_groups(gid_t gid) {
 	if (!arg_noinput) {
 		copy_group_ifcont("input", groups, ngroups,
 		                  new_groups, &new_ngroups, MAX_GROUPS);
+		copy_group_ifcont("plugdev", groups, ngroups,
+				  new_groups, &new_ngroups, MAX_GROUPS);
 	}
 
 	if (new_ngroups) {

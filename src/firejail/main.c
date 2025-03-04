@@ -3226,9 +3226,14 @@ int main(int argc, char **argv, char **envp) {
 				}
 			}
 
-			// add input group
+			// add input/plugdev groups
 			if (!arg_noinput) {
 				g = get_group_id("input");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
+				g = get_group_id("plugdev");
 				if (g) {
 					sprintf(ptr, "%d %d 1\n", g, g);
 					ptr += strlen(ptr);

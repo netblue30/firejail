@@ -41,7 +41,8 @@ typedef enum {
 	DEV_DVD,
 	DEV_TPM,
 	DEV_U2F,
-	DEV_INPUT
+	DEV_INPUT,
+	DEV_NTSYNC
 } DEV_TYPE;
 
 
@@ -98,6 +99,7 @@ static DevEntry dev[] = {
 	{"/dev/hidraw9", RUN_DEV_DIR "/hidraw9", DEV_U2F},
 	{"/dev/usb", RUN_DEV_DIR "/usb", DEV_U2F},	// USB devices such as Yubikey, U2F
 	{"/dev/input", RUN_DEV_DIR "/input", DEV_INPUT},
+	{"/dev/ntsync", RUN_DEV_DIR "/ntsync", DEV_NTSYNC},
 	{NULL, NULL, DEV_NONE}
 };
 
@@ -114,7 +116,8 @@ static void deventry_mount(void) {
 			    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
 			    (dev[i].type == DEV_TPM && arg_notpm == 0) ||
 			    (dev[i].type == DEV_U2F && arg_nou2f == 0) ||
-			    (dev[i].type == DEV_INPUT && arg_noinput == 0)) {
+			    (dev[i].type == DEV_INPUT && arg_noinput == 0) ||
+			    (dev[i].type == DEV_NTSYNC && arg_keep_dev_ntsync == 1)) {
 
 				int dir = is_dir(dev[i].run_fname);
 				if (arg_debug)
@@ -414,6 +417,15 @@ void fs_dev_disable_input(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
 		if (dev[i].type == DEV_INPUT)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
+}
+
+void fs_dev_disable_ntsync(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].type == DEV_NTSYNC)
 			disable_file_or_dir(dev[i].dev_fname);
 		i++;
 	}

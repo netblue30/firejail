@@ -21,6 +21,7 @@ ignore read-only /sys/module/nvidia*
 allow-debuggers
 allusers
 keep-config-pulse
+keep-dev-ntsync
 keep-dev-shm
 keep-fd all
 keep-var-tmp

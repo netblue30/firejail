@@ -102,37 +102,6 @@ jobs:
     - name: cppcheck
       run: make cppcheck
 
-  # new cppcheck version currently chokes on checkcfg.c and main.c, therefore
-  # scan all files also with older cppcheck version from ubuntu 20.04.
-  cppcheck_old:
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    steps:
-    - name: Harden Runner
-      uses: step-security/harden-runner@4d991eb9b905ef189e4c376166672c3f2f230481
-      with:
-        egress-policy: block
-        allowed-endpoints: >
-          archive.ubuntu.com:80
-          azure.archive.ubuntu.com:80
-          github.com:443
-          packages.microsoft.com:443
-          ppa.launchpad.net:80
-          ppa.launchpadcontent.net:443
-          security.ubuntu.com:80
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-    - name: update package information
-      run: sudo apt-get update -qy
-    - name: install cppcheck
-      run: sudo apt-get install -qy cppcheck
-    - name: configure
-      run: >
-        ./configure CPPCHECK="cppcheck -q -j '$(nproc)'"
-        || (cat config.log; exit 1)
-    - run: cppcheck --version
-    - name: cppcheck-old
-      run: make cppcheck-old
-
   codeql-cpp:
     permissions:
       actions: read

@@ -25,6 +25,7 @@ firejail (0.9.73) baseline; urgency=low
   * feature: fshaper.sh: support tc on NixOS (#6426 #6431)
   * feature: add aarch64 syscalls (#5821 #6574)
   * feature: add --disable-sandbox-check configure flag (#6592)
+  * feature: block /dev/ntsync & add keep-dev-ntsync command (#6655 #6660)
   * modif: Stop forwarding own double-dash to the shell (#5599 #5600)
   * modif: Prevent sandbox name (--name=) and host name (--hostname=)
     from containing only digits (#5578 #5741)
@@ -59,6 +60,7 @@ firejail (0.9.73) baseline; urgency=low
   * bugfix: fix possible memory leak in fs_home.c (#6598)
   * bugfix: do not interact with dbus directory if dbus proxy is disabled
     (#6591)
+  * bugfix: firecfg: check full .desktop filename in check_profile() (#6674)
   * build: auto-generate syntax files (#5627)
   * build: mark all phony targets as such (#5637)
   * build: mkdeb.sh: pass all arguments to ./configure (#5654)
@@ -100,6 +102,7 @@ firejail (0.9.73) baseline; urgency=low
   * build: sort.py: strip whitespace in profiles (#6556)
   * build: sort.py: fix whitespace in entire profile (#6593)
   * build: sort.py: quote diff lines (#6594)
+  * build: remove cppcheck-old target/job (#6676)
   * ci: always update the package db before installing packages (#5742)
   * ci: fix codeql unable to download its own bundle (#5783)
   * ci: split configure/build/install commands on gitlab (#5784)
@@ -141,6 +144,7 @@ firejail (0.9.73) baseline; urgency=low
   * docs: update distribution table & add note in SECURITY.md (#6624)
   * docs: clarify unmaintained status of overlayfs in configure.ac (#6632)
   * docs: improve whitelist and blacklist descriptions in man pages (#6622)
+  * docs: note that --build may generate a non-functional profile (#6653)
   * legal: selinux.c: Split Copyright notice & use same license as upstream
     (#5667)
   * profiles: qutebrowser: fix links not opening in the existing instance
@@ -197,6 +201,10 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: anki: fix dark mode detection & misc changes (#6581)
   * profiles: tor: add memory-deny-write-execute (#6641)
   * profiles: torbrowser-launcher: move path from dc to dp (#6640)
+  * profiles: ytmdesktop: add redirect & whitelist /opt/ytmdesktop (#6662
+    #6666)
+  * profiles: seahorse: add redirect org.gnome.seahorse.Application (#6658
+    #6673)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

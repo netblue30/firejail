@@ -26,6 +26,11 @@ desktop managers are supported in this moment
 .PP
 Note: The examples use \fBsudo\fR, but \fBdoas\fR is also supported.
 .PP
+Note: Changes inside the user home (such as for desktop integration) are only
+made for the user running firecfg, so make sure to run "sudo firecfg" as a
+normal (desktop) user, not as root.
+See \fB\-\-fix\fR for details.
+.PP
 To set it up, run "sudo firecfg" after installing Firejail software.
 The same command should also be run after
 installing new programs. If the program is supported by Firejail, the symbolic link in /usr/local/bin

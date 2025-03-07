@@ -699,6 +699,7 @@ blacklist ${HOME}/.config/wesnoth
 blacklist ${HOME}/.config/wget
 blacklist ${HOME}/.config/wireshark
 blacklist ${HOME}/.config/wormux
+blacklist ${HOME}/.config/xarchiver
 blacklist ${HOME}/.config/xchat
 blacklist ${HOME}/.config/xed
 blacklist ${HOME}/.config/xfburn

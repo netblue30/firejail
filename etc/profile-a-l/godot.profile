@@ -6,12 +6,16 @@ include godot.local
 # Persistent global definitions
 include globals.local
 
+# Needed for loading addons
+ignore noexec ${HOME}
+
 noblacklist ${HOME}/.cache/godot
 noblacklist ${HOME}/.config/godot
 noblacklist ${HOME}/.local/share/godot
 
 include disable-common.inc
 include disable-devel.inc
+include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc

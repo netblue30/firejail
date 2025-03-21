@@ -6,6 +6,9 @@ include godot.local
 # Persistent global definitions
 include globals.local
 
+# Needed for loading addons
+ignore noexec ${HOME}
+
 noblacklist ${HOME}/.cache/godot
 noblacklist ${HOME}/.config/godot
 noblacklist ${HOME}/.local/share/godot

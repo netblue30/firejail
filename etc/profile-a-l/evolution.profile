@@ -25,6 +25,8 @@ include disable-programs.inc
 
 include whitelist-runuser-common.inc
 
+writable-var
+
 caps.drop all
 netfilter
 # no3d breaks under wayland
@@ -43,6 +45,5 @@ seccomp
 
 private-dev
 #private-tmp
-writable-var
 
 restrict-namespaces

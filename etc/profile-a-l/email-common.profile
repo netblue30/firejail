@@ -61,6 +61,10 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+# encrypting and signing email
+writable-run-user
+writable-var
+
 apparmor
 caps.drop all
 machine-id
@@ -85,9 +89,6 @@ private-cache
 private-dev
 private-etc @tls-ca,@x11,bogofilter,bogofilter.cf,clamav,gnupg,hosts.conf,mailname,timezone
 private-tmp
-# encrypting and signing email
-writable-run-user
-writable-var
 
 dbus-user filter
 dbus-user.talk ca.desrt.dconf

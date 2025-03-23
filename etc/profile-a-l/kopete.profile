@@ -21,6 +21,8 @@ include disable-programs.inc
 whitelist /var/lib/winpopup
 include whitelist-var-common.inc
 
+writable-var
+
 caps.drop all
 netfilter
 nodvd
@@ -35,6 +37,5 @@ seccomp
 
 private-dev
 private-tmp
-writable-var
 
 restrict-namespaces

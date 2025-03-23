@@ -41,6 +41,9 @@ include disable-programs.inc
 include whitelist-run-common.inc
 include whitelist-var-common.inc
 
+# writable-run-user is needed for signing and encrypting emails
+writable-run-user
+
 #apparmor
 caps.drop all
 netfilter
@@ -59,8 +62,6 @@ seccomp !chroot,!io_getevents,!io_setup,!io_submit,!ioprio_set
 
 private-dev
 #private-tmp # interrupts connection to akonadi, breaks opening of email attachments
-# writable-run-user is needed for signing and encrypting emails
-writable-run-user
 
 # To harden kmail.profile, add the following lines to kmail.local:
 #dbus-user filter

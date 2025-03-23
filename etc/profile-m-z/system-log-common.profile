@@ -24,6 +24,8 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+writable-var-log
+
 apparmor
 caps.drop all
 ipc-namespace
@@ -57,4 +59,3 @@ restrict-namespaces
 # Add 'ignore read-only ${HOME}' to your system-log-common.local
 # if you export logs to a file under your ${HOME}.
 read-only ${HOME}
-writable-var-log

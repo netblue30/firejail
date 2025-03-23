@@ -24,6 +24,8 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+writable-var
+
 caps.keep dac_read_search,net_bind_service,setgid,setuid
 ipc-namespace
 machine-id
@@ -47,7 +49,6 @@ private-cache
 private-dev
 private-etc @tls-ca,tor
 private-tmp
-writable-var
 
 memory-deny-write-execute
 restrict-namespaces

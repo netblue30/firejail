@@ -24,6 +24,7 @@ keep-config-pulse
 keep-dev-ntsync
 keep-dev-shm
 keep-fd all
+keep-shell-rc
 keep-var-tmp
 writable-etc
 writable-run-user

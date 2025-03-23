@@ -208,6 +208,7 @@ firejail (0.9.73) baseline; urgency=low
   * profiles: seahorse: add redirect org.gnome.seahorse.Application (#6658
     #6673)
   * profiles: godot: ignore noexec in home to fix addons (#6686)
+  * profiles: floorp: add profile sync daemon paths (#6683)
   * new profiles: qpdf and redirects (fix-qdf, qpdf, zlib-flate) (#5675)
   * new profiles: parsecd (#5646 #5682)
   * new profiles: lobster (#5706 #5847 #5885 #6155)

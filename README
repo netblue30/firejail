@@ -1075,6 +1075,8 @@ Reiner Herrmann (https://github.com/reinerh)
 Remco Verhoef (https://github.com/nl5887)
 	- add overlay configuration to profiles
 	- prevent running shells recursively
+Renkoto (https://github.com/Renkoto)
+	- floorp profile fixes
 RD PROJEKT (https://github.com/RDProjekt)
 	- noblacklist support for /sys/module directory
 	- whitelist support for /sys/module directory

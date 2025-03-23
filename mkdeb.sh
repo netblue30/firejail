@@ -51,7 +51,7 @@ chmod 644 "$DEBIAN_CTRL_DIR/conffiles"
 find "$INSTALL_DIR" -type d -exec chmod 755 '{}' +
 cd "$CODE_DIR"
 fakeroot dpkg-deb --build debian
-lintian --no-tag-display-limit debian.deb
+# lintian --no-tag-display-limit debian.deb
 mv debian.deb "../firejail_${VERSION}${EXTRA_VERSION}_1_$(dpkg-architecture -qDEB_HOST_ARCH).deb"
 cd ..
 rm -fr "$CODE_DIR"

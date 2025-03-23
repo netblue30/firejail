@@ -11,6 +11,8 @@ ignore whitelist ${RUNUSER}/psd/*floorp*
 ignore whitelist ${RUNUSER}/kpxc_server
 ignore whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer
 ignore include whitelist-runuser-common.inc
+# Fix PWAs in the Application Launcher (ignore entry from disable-common.inc)
+ignore read-only ${HOME}/.local/share/applications
 
 ignore private-cache
 

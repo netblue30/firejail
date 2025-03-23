@@ -121,6 +121,7 @@ firejail (0.9.73) baseline; urgency=low
   * contrib/syntax: remove 'text/plain' from firejail-profile.lang.in (#6057
     #6059)
   * contrib/vim: match profile files more broadly (#5850)
+  * contrib/vim: add ftplugin file (based on cfg.vim) (#6680)
   * test: split individual test groups in github workflows
   * test: add chroot, appimage and network tests in github workflows
   * docs: remove apparmor options in --help when building without apparmor
@@ -206,6 +207,7 @@ firejail (0.9.73) baseline; urgency=low
     #6666)
   * profiles: seahorse: add redirect org.gnome.seahorse.Application (#6658
     #6673)
+  * profiles: godot: ignore noexec in home to fix addons (#6686)
   * new profiles: fix-qdf, qpdf, zlib-flate, standard-notes, url-eater
  -- netblue30 <netblue30@yahoo.com>  Mon, 17 Jan 2023 09:00:00 -0500
 

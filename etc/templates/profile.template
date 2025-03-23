@@ -155,8 +155,16 @@ include globals.local
 #include landlock-common.inc
 
 # Commands that increase access to resources.
+#
+# Note: Keep this in sync with ../../etc/profile-m-z/noprofile.profile.
+##allow-debuggers
 ##allusers
+##keep-config-pulse
 ##keep-dev-ntsync
+##keep-dev-shm
+##keep-fd all
+##keep-shell-rc
+##keep-var-tmp
 ##writable-etc
 ##writable-run-user
 ##writable-var

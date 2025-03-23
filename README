@@ -143,6 +143,11 @@ amano-kenji  (https://github.com/amano-kenji)
 	- added buku profile
 	- added monero-wallet-cli profile
 	- added tremc profile
+	- added nsxiv profile
+	- added pyradio profile
+	- added ncmpcpp profile
+	- added hledger, hledger-ui profiles
+	- anki profile fixes
 Amin Vakil (https://github.com/aminvakil)
 	- whois profile fix
 	- added profile for strawberry
@@ -308,6 +313,7 @@ Clayton Williams (https://github.com/gosre)
 	- addition of RLIMIT_AS
 cobratbq (https://github.com/cobratbq)
 	- tor profile: add memory-deny-write-execute
+	- torbrowser-launcher fixes
 CodeWithMa (https://github.com/CodeWithMa)
 	- mpv.profile: add new XDG_STATE_HOME path
 corecontingency (https://https://github.com/corecontingency)
@@ -409,6 +415,8 @@ Dmitriy Chestnykh (https://github.com/chestnykh)
 	- lookup xauth in PATH
 Dpeta (https://github.com/Dpeta)
 	- add Chatterino profile
+dringsim (https://github.com/dringsim)
+	- add ftplugin file (vim)
 dshmgh (https://github.com/dshmgh)
 	- overlayfs fix for systems with /home mounted on a separate partition
 Duncan Overbruck (https://github.com/Duncaen)
@@ -884,6 +892,7 @@ NetSysFire (https://github.com/NetSysFire)
 	- added parsecd profile
 	- fix minecraft-launcher.profile
 	- singularity profile
+	- godot profile fixes
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory
@@ -904,6 +913,11 @@ Nikos Chantziaras (https://github.com/realnc)
 	- fix audio support for Discord
 nolanl (https://github.com/nolanl)
 	- added localtime to signal-desktop's profile
+northboot (https://github.com/northboot)
+	- remmina-file-wrapper profile
+	- ouch profile
+	- keep plugdev group unless nou2f is used
+	- xarchiver profile
 nutta-git (https://github.com/nutta-git)
 	- steam.profile: allow process_vm_readv syscall
 	- lutris.profile: allow more syscalls
@@ -1227,6 +1241,8 @@ startx2017 (https://github.com/startx2017)
 	- kwrite and geary profiles
 StelFux (https://github.com/StelFux)
 	- Fix youtube video in totem
+sudoAlphaX (https://github.com/sudoAlphaX)
+	- vesktop profile
 Syed Muhammad Shuja Haider (https://github.com/xplanthris)
 	- prismlauncher profile
 the-antz (https://github.com/the-antz)
@@ -1362,6 +1378,8 @@ Vladislav Nepogodin (https://github.com/vnepogodin)
 	- fix CLion profile
 	- fixes for disable-programs.inc
 	- CachyBrowser profile
+weebnix (https://github.com/weebnix)
+	- block /dev/ntsync & add keep-dev-ntsync command
 Hugo Osvaldo Barrera (https://github.com/WhyNotHugo)
 	- Skype profile tweaks
 	- whitelist-ro command

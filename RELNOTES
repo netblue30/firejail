@@ -273,7 +273,7 @@ firejail (0.9.74) baseline; urgency=low
   * new profiles: syncthing (#6536)
   * new profiles: obsidian (#6314)
   * new profiles: b3sum (blake3) (#6577)
-  * new profiles: aria2p/aria2rpc (#6583)
+  * new profiles: aria2p/aria2rpc (#6583 #6609)
   * new profiles: buku (#6584)
   * new profiles: monero-wallet-cli (#6586)
   * new profiles: tremc (#6590)

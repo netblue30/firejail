@@ -207,7 +207,6 @@ firejail (0.9.74) baseline; urgency=low
   * profiles: seahorse: add redirect org.gnome.seahorse.Application (#6658
     #6673)
   * profiles: godot: ignore noexec in home to fix addons (#6686)
-  * profiles: floorp: add profile sync daemon paths (#6683)
   * new profiles: qpdf and redirects (fix-qdf, qpdf, zlib-flate) (#5675)
   * new profiles: parsecd (#5646 #5682)
   * new profiles: lobster (#5706 #5847 #5885 #6155)
@@ -229,7 +228,7 @@ firejail (0.9.74) baseline; urgency=low
   * new profiles: fluffychat (#6007)
   * new profiles: lettura (#6027)
   * new profiles: brz and bzr (Breezy) (#6028)
-  * new profiles: floorp (#6030)
+  * new profiles: floorp (#6030 #6683)
   * new profiles: tidal-hifi (#6008 #6009)
   * new profiles: termshark (#6039)
   * new profiles: tiny-rdm (#6083)

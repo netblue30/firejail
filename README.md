@@ -267,64 +267,12 @@ See `man firecfg` for details.
 Note: Broken symlinks are ignored when searching for an executable in `$PATH`,
 so uninstalling without doing the above should not cause issues.
 
-## Latest released version: 0.9.72
+## Latest released version: 0.9.74
 
-## Current development version: 0.9.73
+## Current development version: 0.9.75
 
-### --keep-shell-rc
 
-```text
-       --keep-shell-rc
-              By default, when using a private home directory, firejail copies
-              files  from the system's user home template (/etc/skel) into it,
-              which overrides attempts to whitelist the original  files  (such
-              as  ~/.bashrc and ~/.zshrc).  This option disables this feature,
-              and enables the user to whitelist the original files.
-```
-
-### private-etc rework
-
-```text
-       --private-etc, --private-etc=file,directory,@group
-              The files installed by --private-etc are copies of the original
-              system files from /etc directory.  By default, the command
-              brings in a skeleton of files and directories used by most
-              console tools:
-
-              $ firejail --private-etc dig debian.org
-
-              For X11/GTK/QT/Gnome/KDE  programs add @x11 group as a
-              parameter. Example:
-
-              $ firejail --private-etc=@x11,gcrypt,python* gimp
-
-              gcrypt and /etc/python* directories are not part of the generic
-              @x11 group.  File globbing is supported.
-
-              For games, add @games group:
-
-              $ firejail --private-etc=@games,@x11 warzone2100
-
-              Sound and networking files are included automatically, unless
-              --nosound or --net=none are specified.  Files for encrypted
-              TLS/SSL protocol are in @tls-ca group.
-
-              $ firejail --private-etc=@tls-ca,wgetrc wget https://debian.org
-
-              Note: The easiest way to extract the list of /etc files accessed
-              by your program is using strace utility:
-
-              $ strace /usr/bin/transmission-qt 2>&1 | grep open | grep etc
-```
-
-We keep the list of groups in
-[src/include/etc_groups.h](src/include/etc_groups.h).
-
-Discussion:
-
-* [private-etc rework](https://github.com/netblue30/firejail/discussions/5610)
-
-### Landlock support
+### Landlock support - ongoing/experimental
 
 * Added on #6078, which is based on #5315 from ChrysoliteAzalea/landlock
 * Compile-time detection based on linux/landlock.h - if the header is found,
@@ -384,33 +332,35 @@ No include .local found in /etc/firejail/noprofile.profile
 Warning: multiple caps in /etc/firejail/tidal-hifi.profile
 Warning: multiple caps in /etc/firejail/tqemu.profile
 Warning: multiple caps in /etc/firejail/transmission-daemon.profile
+Warning: cannot open youtube-music-desktop-app or /etc/firejail/youtube-music-desktop-app, while processing /etc/firejail/youtube-music-desktop-app.profile
+No include .local found in /etc/firejail/youtube-music-desktop-app.profile
 
 Stats:
-    profiles			1305
-    include local profile	1304   (include profile-name.local)
-    include globals		1271   (include globals.local)
-    blacklist ~/.ssh		1167   (include disable-common.inc)
-    seccomp			1178
-    capabilities		1298
-    noexec			1178   (include disable-exec.inc)
-    noroot			1077
-    memory-deny-write-execute	309
-    restrict-namespaces		1026
-    apparmor			833
-    private-bin			790
-    private-dev			1140
-    private-etc			811
+    profiles			1324
+    include local profile	1323   (include profile-name.local)
+    include globals		1290   (include globals.local)
+    blacklist ~/.ssh		1183   (include disable-common.inc)
+    seccomp			1195
+    capabilities		1317
+    noexec			1197   (include disable-exec.inc)
+    noroot			1092
+    memory-deny-write-execute	320
+    restrict-namespaces		1034
+    apparmor			850
+    private-bin			801
+    private-dev			1158
+    private-etc			824
     private-lib			85
-    private-tmp			1004
-    whitelist home directory	642
-    whitelist var		950   (include whitelist-var-common.inc)
-    whitelist run/user		1268   (include whitelist-runuser-common.inc
+    private-tmp			1020
+    whitelist home directory	654
+    whitelist var		965   (include whitelist-var-common.inc)
+    whitelist run/user		1287   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		732   (include whitelist-usr-share-common.inc
-    net none			443
-    dbus-user none 		738
-    dbus-user filter 		192
-    dbus-system none 		939
+    whitelist usr/share		746   (include whitelist-usr-share-common.inc
+    net none			450
+    dbus-user none 		754
+    dbus-user filter 		196
+    dbus-system none 		956
     dbus-system filter 		13
 
 ```

@@ -1,4 +1,8 @@
 firejail (0.9.74) baseline; urgency=low
+  * work in progress
+ -- netblue30 <netblue30@yahoo.com>  Mon, 24 Mar 2025 09:00:00 -0500
+
+firejail (0.9.74) baseline; urgency=low
   * security: fix sscanf rv checks (CodeQL) (#6184)
   * feature: private-etc rework: improve handling of /etc/resolv.conf and add
     private-etc groups (#6400 #5518 #5608 #5609 #5629 #5638 #5641 #5642 #5643

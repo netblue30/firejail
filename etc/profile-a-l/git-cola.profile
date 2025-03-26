@@ -46,6 +46,8 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+writable-run-user
+
 apparmor
 caps.drop all
 machine-id
@@ -71,7 +73,6 @@ private-cache
 private-dev
 private-etc @tls-ca,@x11,gitconfig,host.conf,mime.types,ssh
 private-tmp
-writable-run-user
 
 # dbus-user filtering breaks meld as diff viewer
 # Add the next line to your git-cola.local if you don't use meld.

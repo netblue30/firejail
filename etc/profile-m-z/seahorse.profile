@@ -36,6 +36,8 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+writable-run-user
+
 apparmor
 caps.drop all
 machine-id
@@ -59,7 +61,6 @@ private-cache
 private-dev
 private-etc @tls-ca,@x11,gconf,host.conf,pkcs11,rpc,services,ssh
 private-tmp
-writable-run-user
 
 dbus-user filter
 dbus-user.own org.gnome.seahorse

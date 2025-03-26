@@ -29,6 +29,7 @@ include disable-interpreters.inc
 #include disable-programs.inc
 
 allusers
+
 #apparmor
 caps.drop all
 #net none

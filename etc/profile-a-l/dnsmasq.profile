@@ -23,6 +23,8 @@ include disable-xdg.inc
 whitelist /var/lib/libvirt/dnsmasq
 whitelist /var/run
 
+writable-var
+
 caps.keep net_admin,net_bind_service,net_raw,setgid,setuid
 no3d
 nodvd
@@ -39,6 +41,5 @@ disable-mnt
 private
 private-dev
 private-tmp
-writable-var
 
 restrict-namespaces

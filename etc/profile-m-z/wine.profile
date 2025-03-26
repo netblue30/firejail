@@ -26,6 +26,8 @@ include whitelist-var-common.inc
 
 # Some applications don't need allow-debuggers. Add 'ignore allow-debuggers' to your wine.local if you want to override this.
 allow-debuggers
+keep-dev-ntsync
+
 caps.drop all
 #net none
 netfilter
@@ -39,7 +41,6 @@ notv
 #novideo
 seccomp
 
-keep-dev-ntsync
 private-dev
 
 restrict-namespaces

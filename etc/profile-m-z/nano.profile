@@ -21,6 +21,12 @@ include disable-programs.inc
 whitelist /usr/share/nano
 include whitelist-usr-share-common.inc
 
+# Add the next lines to your nano.local if you want to edit files in /etc directly.
+#ignore private-etc
+#writable-etc
+# Add the next line to your nano.local if you want to edit files in /var directly.
+#writable-var
+
 apparmor
 caps.drop all
 ipc-namespace
@@ -45,12 +51,7 @@ x11 none
 private-bin nano,rnano
 private-cache
 private-dev
-# Add the next lines to your nano.local if you want to edit files in /etc directly.
-#ignore private-etc
-#writable-etc
 private-etc nanorc
-# Add the next line to your nano.local if you want to edit files in /var directly.
-#writable-var
 
 dbus-user none
 dbus-system none

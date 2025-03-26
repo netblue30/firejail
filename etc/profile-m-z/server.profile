@@ -51,6 +51,10 @@ include disable-xdg.inc
 #include whitelist-usr-share-common.inc
 #include whitelist-var-common.inc
 
+#writable-run-user
+#writable-var
+#writable-var-log
+
 # people use to install servers all over the place!
 # apparmor runs executable only from default system locations
 #apparmor
@@ -82,9 +86,6 @@ private-dev
 #private-lib
 #private-opt none
 private-tmp
-#writable-run-user
-#writable-var
-#writable-var-log
 
 dbus-user none
 #dbus-system none

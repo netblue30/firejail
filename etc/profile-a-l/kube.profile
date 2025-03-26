@@ -51,6 +51,8 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+writable-run-user
+
 apparmor
 caps.drop all
 netfilter
@@ -75,7 +77,6 @@ private-cache
 private-dev
 private-etc @tls-ca,@x11
 private-tmp
-writable-run-user
 
 dbus-user filter
 dbus-user.talk ca.desrt.dconf

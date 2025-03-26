@@ -13,6 +13,9 @@ mkdir ${HOME}/.config/transmission-daemon
 whitelist ${HOME}/.config/transmission-daemon
 whitelist /var/lib/transmission
 
+writable-var-log
+writable-run-user
+
 caps.keep ipc_lock,net_bind_service,setgid,setuid,sys_chroot
 protocol packet
 
@@ -20,8 +23,6 @@ private-bin transmission-daemon
 private-etc @tls-ca
 
 read-write /var/lib/transmission
-writable-var-log
-writable-run-user
 
 # Redirect
 include transmission-common.profile

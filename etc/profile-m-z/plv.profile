@@ -23,6 +23,8 @@ include whitelist-usr-share-common.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 
+writable-var-log
+
 apparmor
 caps.drop all
 ipc-namespace
@@ -48,7 +50,6 @@ private-dev
 private-etc
 private-opt none
 private-tmp
-writable-var-log
 
 dbus-user none
 dbus-system none

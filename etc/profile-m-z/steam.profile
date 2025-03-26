@@ -153,6 +153,8 @@ include whitelist-var-common.inc
 #mkdir ${HOME}/.config/RogueLegacyStorageContainer
 #mkdir ${HOME}/.local/share/RogueLegacyStorageContainer
 
+keep-dev-ntsync
+
 caps.drop all
 #ipc-namespace
 netfilter
@@ -185,7 +187,6 @@ seccomp.32 !process_vm_readv
 # To view screenshots add the next line to your steam.local.
 #private-bin eog,eom,gthumb,pix,viewnior,xviewer
 
-keep-dev-ntsync
 private-dev
 # private-etc breaks a small selection of games on some systems. Add 'ignore private-etc'
 # to your steam.local to support those.

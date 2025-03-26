@@ -17,13 +17,14 @@ include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
 
+# Add the next lines to your vmware.local if you need to use "shared VM".
+#whitelist /var/lib/vmware
+#writable-var
+
 mkdir ${HOME}/.cache/vmware
 mkdir ${HOME}/.vmware
 whitelist ${HOME}/.cache/vmware
 whitelist ${HOME}/.vmware
-# Add the next lines to your vmware.local if you need to use "shared VM".
-#whitelist /var/lib/vmware
-#writable-var
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

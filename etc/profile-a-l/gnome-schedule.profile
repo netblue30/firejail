@@ -42,6 +42,8 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+writable-var
+
 apparmor
 caps.keep chown,dac_override,setgid,setuid
 ipc-namespace
@@ -60,4 +62,3 @@ tracelog
 disable-mnt
 private-cache
 private-dev
-writable-var

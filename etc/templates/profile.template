@@ -154,7 +154,23 @@ include globals.local
 ##landlock.fs.execute PATH
 #include landlock-common.inc
 
+# Commands that increase access to resources.
+#
+# Note: Keep this in sync with ../../etc/profile-m-z/noprofile.profile.
+##allow-debuggers
 ##allusers
+##keep-config-pulse
+##keep-dev-ntsync
+##keep-dev-shm
+##keep-fd all
+##keep-shell-rc
+##keep-var-tmp
+##writable-etc
+##writable-run-user
+##writable-var
+##writable-var-log
+
+# Commands that reduce access to resources.
 #apparmor
 #caps.drop all
 ##caps.keep CAPS
@@ -195,7 +211,6 @@ include globals.local
 ##x11 none
 
 #disable-mnt
-##keep-dev-ntsync
 ##private
 # It's common practice to refer to the python executable(s) in private-bin with `python*`, which covers both v2 and v3
 #private-bin PROGRAMS
@@ -224,10 +239,6 @@ include globals.local
 ##  - use 'private-opt NAME'
 ##private-opt NAME
 #private-tmp
-##writable-etc
-##writable-run-user
-##writable-var
-##writable-var-log
 
 # Since 0.9.63 also a more granular control of dbus is supported.
 # To get the dbus-addresses an application needs access to you can

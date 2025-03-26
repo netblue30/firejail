@@ -8,6 +8,9 @@ include globals.local
 
 include disable-exec.inc
 
+writable-var
+writable-var-log
+
 caps.keep setgid,setuid
 ipc-namespace
 netfilter
@@ -29,8 +32,6 @@ private
 private-cache
 private-dev
 private-tmp
-writable-var
-writable-var-log
 
 memory-deny-write-execute
 restrict-namespaces

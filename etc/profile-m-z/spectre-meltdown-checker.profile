@@ -26,6 +26,7 @@ include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 allow-debuggers
+
 caps.keep sys_rawio
 ipc-namespace
 net none

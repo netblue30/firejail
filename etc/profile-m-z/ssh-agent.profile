@@ -17,6 +17,8 @@ include disable-x11.inc
 
 include whitelist-usr-share-common.inc
 
+writable-run-user
+
 caps.drop all
 netfilter
 no3d
@@ -28,8 +30,6 @@ novideo
 protocol unix,inet,inet6
 seccomp
 tracelog
-
-writable-run-user
 
 dbus-user none
 dbus-system none

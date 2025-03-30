@@ -45,6 +45,8 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+writable-var
+
 # breaks app
 #apparmor
 # For host-only network sys_admin is needed.
@@ -59,7 +61,6 @@ tracelog
 private-cache
 private-etc @network,@sound,@tls-ca,@x11
 private-tmp
-writable-var
 
 dbus-user filter
 dbus-user.own org.virt-manager.virt-manager

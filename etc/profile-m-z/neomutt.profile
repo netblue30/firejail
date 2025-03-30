@@ -96,6 +96,9 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+writable-run-user
+writable-var
+
 apparmor
 caps.drop all
 ipc-namespace
@@ -121,8 +124,6 @@ private-cache
 private-dev
 private-etc @tls-ca,@x11,Mutt,Muttrc,Muttrc.d,gnupg,hosts.conf,mail,mailname,msmtprc,neomuttrc,neomuttrc.d,nntpserver
 private-tmp
-writable-run-user
-writable-var
 
 dbus-user none
 dbus-system none

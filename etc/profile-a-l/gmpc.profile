@@ -24,6 +24,8 @@ include whitelist-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+writable-run-user
+
 apparmor
 caps.drop all
 ipc-namespace
@@ -45,7 +47,6 @@ disable-mnt
 private-cache
 private-etc
 private-tmp
-writable-run-user
 
 dbus-user filter
 dbus-user.talk org.mpris.MediaPlayer2.mpd

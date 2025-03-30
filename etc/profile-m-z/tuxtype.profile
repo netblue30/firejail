@@ -24,6 +24,8 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+writable-var # game scores are stored under /var/games
+
 apparmor
 caps.drop all
 ipc-namespace
@@ -45,7 +47,6 @@ private-bin tuxtype
 private-dev
 private-etc @games,@sound,@x11,tuxtype
 private-tmp
-writable-var # game scores are stored under /var/games
 
 dbus-user none
 dbus-system none

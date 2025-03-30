@@ -15,6 +15,8 @@ include disable-devel.inc
 include disable-exec.inc
 include disable-interpreters.inc
 
+writable-var-log
+
 apparmor
 caps.drop all
 ipc-namespace
@@ -40,7 +42,6 @@ x11 none
 #private-lib
 private-cache
 private-dev
-writable-var-log
 
 dbus-user none
 dbus-system none

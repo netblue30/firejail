@@ -23,6 +23,8 @@ whitelist /var/log/apt/history.log
 whitelist /var/log/dnf.rpm.log
 whitelist /var/log/pacman.log
 
+writable-var-log
+
 apparmor
 caps.drop all
 ipc-namespace
@@ -50,7 +52,6 @@ private-dev
 private-etc
 private-opt none
 private-tmp
-writable-var-log
 
 dbus-user none
 dbus-system none

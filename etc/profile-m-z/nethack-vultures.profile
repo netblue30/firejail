@@ -20,6 +20,8 @@ whitelist /var/log/vultures
 include whitelist-common.inc
 include whitelist-var-common.inc
 
+writable-var
+
 caps.drop all
 ipc-namespace
 net none
@@ -38,7 +40,6 @@ disable-mnt
 private-cache
 private-dev
 private-tmp
-writable-var
 
 dbus-user none
 dbus-system none

@@ -30,6 +30,7 @@ include whitelist-var-common.inc
 
 # Silence blacklist violation. See #5539.
 allow-debuggers
+
 ## Enabling App Armor appears to break some Fedora / Arch installs
 #apparmor
 caps.drop all

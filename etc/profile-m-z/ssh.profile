@@ -26,6 +26,8 @@ whitelist ${RUNUSER}/keyring/ssh
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 
+writable-run-user
+
 apparmor
 caps.drop all
 ipc-namespace
@@ -47,7 +49,6 @@ tracelog
 private-cache
 private-dev
 #private-tmp # Breaks when exiting
-writable-run-user
 
 dbus-user none
 dbus-system none

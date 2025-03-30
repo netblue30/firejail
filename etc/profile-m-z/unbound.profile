@@ -27,6 +27,8 @@ read-only /var/lib/ca-certificates
 whitelist /var/lib/unbound
 whitelist /var/run
 
+writable-var
+
 caps.keep net_admin,net_bind_service,setgid,setuid,sys_chroot,sys_resource
 ipc-namespace
 machine-id
@@ -46,7 +48,6 @@ disable-mnt
 private
 private-dev
 private-tmp
-writable-var
 
 dbus-user none
 dbus-system none

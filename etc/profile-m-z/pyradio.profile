@@ -69,6 +69,8 @@ include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
+writable-run-user
+
 apparmor
 caps.drop all
 ipc-namespace
@@ -93,7 +95,6 @@ private-dev
 # python-exec is required by any python executable on Gentoo Linux
 private-etc @sound,@tls-ca,mplayer,mpv,python-exec,terminfo
 private-tmp
-writable-run-user
 
 dbus-user none
 dbus-system none

@@ -2,6 +2,13 @@
 # Persistent customizations should go in a .local file.
 include firefox-common-addons.local
 
+# Allow creating .desktop files for PWAs (ignore entry from disable-common.inc)
+#
+# Warning: This is dangerous as it allows overriding .desktop files for
+# existing programs and .desktop files allow arbitrary code execution through
+# the `Exec=` line.
+#ignore read-only ${HOME}/.local/share/applications
+
 # Prevent whitelisting in ${RUNUSER}
 ignore whitelist ${RUNUSER}/*firefox*
 ignore whitelist ${RUNUSER}/*floorp*

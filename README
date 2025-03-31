@@ -1077,6 +1077,7 @@ Remco Verhoef (https://github.com/nl5887)
 	- prevent running shells recursively
 Renkoto (https://github.com/Renkoto)
 	- floorp profile fixes
+	- profiles: firefox: add comment about creating PWA shortcuts (#6689)
 RD PROJEKT (https://github.com/RDProjekt)
 	- noblacklist support for /sys/module directory
 	- whitelist support for /sys/module directory

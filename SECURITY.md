@@ -4,7 +4,8 @@
 
 | Version | Supported by us    | EOL                | Supported by distribution                                                         |
 | ------- | ------------------ | ------------------ | --------------------------------------------------------------------------------- |
-| 0.9.72  | :heavy_check_mark: |                    | :white_check_mark: Debian 11 **backports**, Debian 12, Ubuntu 24.04 LTS           |
+| 0.9.74  | :heavy_check_mark: |                    |                                                                                   |
+| 0.9.72  | :x:                |                    | :white_check_mark: Debian 11 **backports**, Debian 12, Ubuntu 24.04 LTS           |
 | 0.9.70  | :x:                |                    |                                                                                   |
 | 0.9.68  | :x:                |                    |                                                                                   |
 | 0.9.66  | :x:                |                    | :white_check_mark: Ubuntu 22.04 LTS                                               |

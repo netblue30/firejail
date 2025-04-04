@@ -118,41 +118,46 @@ static int should_mount(DEV_TYPE type) {
 	return ret;
 }
 
-static void deventry_mount(void) {
+static void deventry_mount(const char *source,
+                           const char *target, DEV_TYPE type) {
+	struct stat s;
+	if (stat(source, &s) == -1)
+		return;
+
+	if (!should_mount(type))
+		return;
+
+	int dir = is_dir(source);
+	if (arg_debug)
+		printf("mounting %s %s\n", source, (dir) ? "directory" : "file");
+	if (dir) {
+		mkdir_attr(target, 0755, 0, 0);
+	}
+	else {
+		struct stat s;
+		if (stat(source, &s) == -1) {
+			if (arg_debug)
+				fwarning("cannot stat %s file\n", source);
+			return;
+		}
+		FILE *fp = fopen(target, "we");
+		if (fp) {
+			fprintf(fp, "\n");
+			SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
+			fclose(fp);
+		}
+	}
+
+	if (mount(source, target, NULL, MS_BIND|MS_REC, NULL) < 0)
+		errExit("mounting dev file");
+	fs_logger2("whitelist", target);
+}
+
+static void deventry_mount_all(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
-		struct stat s;
-		if (stat(source, &s) == -1)
-			goto next;
-
-		if (!should_mount(type))
-			goto next;
-
-		int dir = is_dir(dev[i].run_fname);
-		if (arg_debug)
-			printf("mounting %s %s\n", dev[i].run_fname, (dir) ? "directory" : "file");
-		if (dir) {
-			mkdir_attr(dev[i].dev_fname, 0755, 0, 0);
-		}
-		else {
-			struct stat s;
-			if (stat(dev[i].run_fname, &s) == -1) {
-				if (arg_debug)
-					fwarning("cannot stat %s file\n", dev[i].run_fname);
-				goto next;
-			}
-			FILE *fp = fopen(dev[i].dev_fname, "we");
-			if (fp) {
-				fprintf(fp, "\n");
-				SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
-				fclose(fp);
-			}
-		}
-
-		if (mount(dev[i].run_fname, dev[i].dev_fname, NULL, MS_BIND|MS_REC, NULL) < 0)
-			errExit("mounting dev file");
-		fs_logger2("whitelist", dev[i].dev_fname);
-next:
+		deventry_mount(dev[i].run_fname, dev[i].dev_fname,
+		               dev[i].type);
 		i++;
 	}
 }
@@ -251,7 +256,7 @@ void fs_private_dev(void) {
 	fs_logger("tmpfs /dev");
 
 	// optional devices: sound, video cards etc...
-	deventry_mount();
+	deventry_mount_all();
 
 	// bring back /dev/log
 	if (have_devlog) {

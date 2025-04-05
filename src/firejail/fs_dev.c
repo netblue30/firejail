@@ -20,11 +20,11 @@
 #include "firejail.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
-#include <glob.h>
 #include <dirent.h>
-#include <fcntl.h>
-#include <pwd.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <glob.h>
+#include <pwd.h>
 #ifndef _BSD_SOURCE
 #define _BSD_SOURCE
 #endif

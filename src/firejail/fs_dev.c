@@ -114,7 +114,7 @@ static void deventry_mount(void) {
 			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
 			    (dev[i].type == DEV_TV && arg_notv == 0) ||
 			    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
-			    (dev[i].type == DEV_TPM && arg_notpm == 0) ||
+			    (dev[i].type == DEV_TPM && arg_keep_dev_tpm == 1) ||
 			    (dev[i].type == DEV_U2F && arg_nou2f == 0) ||
 			    (dev[i].type == DEV_INPUT && arg_noinput == 0) ||
 			    (dev[i].type == DEV_NTSYNC && arg_keep_dev_ntsync == 1)) {

@@ -34,6 +34,8 @@ whitelist ${HOME}/.local/state/syncthing
 whitelist ${HOME}/Sync
 include whitelist-common.inc
 
+keep-dev-tpm # not having this line causes error
+
 #apparmor
 caps.drop all
 netfilter
@@ -45,7 +47,6 @@ nonewprivs
 noprinters
 noroot
 nosound
-#notpm # this line causes error
 notv
 nou2f
 novideo

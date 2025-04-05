@@ -162,6 +162,7 @@ include globals.local
 ##keep-config-pulse
 ##keep-dev-ntsync
 ##keep-dev-shm
+##keep-dev-tpm
 ##keep-fd all
 ##keep-shell-rc
 ##keep-var-tmp
@@ -191,7 +192,6 @@ include globals.local
 #noprinters
 #noroot
 #nosound
-#notpm
 #notv
 #nou2f
 #novideo

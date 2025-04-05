@@ -130,6 +130,7 @@ static const char *const usage_str =
 	"    --join-or-start=name|pid - join the sandbox or start a new one.\n"
 	"    --keep-config-pulse - disable automatic ~/.config/pulse init.\n"
 	"    --keep-dev-ntsync - /dev/ntsync character device is untouched (even with --private-dev).\n"
+	"    --keep-dev-tpm - /dev/tpm* devices are untouched (even with --private-dev).\n"
 	"    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
 	"    --keep-fd - inherit open file descriptors to sandbox.\n"
 	"    --keep-shell-rc - do not copy shell rc files from /etc/skel\n"
@@ -191,7 +192,6 @@ static const char *const usage_str =
 #endif
 	"    --nosound - disable sound system.\n"
 	"    --novideo - disable video devices.\n"
-	"    --notpm - disable TPM devices.\n"
 	"    --nou2f - disable U2F devices.\n"
 	"    --nowhitelist=filename - disable whitelist for file or directory.\n"
 	"    --oom=value - configure OutOfMemory killer for the sandbox\n"

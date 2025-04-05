@@ -1101,7 +1101,7 @@ int sandbox(void* sandbox_arg) {
 	if (arg_nodvd)
 		fs_dev_disable_dvd();
 
-	if (arg_notpm)
+	if (!arg_keep_dev_tpm)
 		fs_dev_disable_tpm();
 
 	if (arg_nou2f)

@@ -42,7 +42,6 @@ nonewprivs
 noprinters
 noroot
 nosound
-notpm
 notv
 nou2f
 novideo

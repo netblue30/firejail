@@ -20,6 +20,7 @@
 #include "firejail.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
+#include <assert.h>
 #include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -42,8 +43,28 @@ typedef enum {
 	DEV_TPM,
 	DEV_U2F,
 	DEV_INPUT,
-	DEV_NTSYNC
+	DEV_NTSYNC,
+	DEV_MAX
 } DEV_TYPE;
+
+typedef struct {
+	DEV_TYPE type;
+	const char *str;
+} DevTypeStr;
+
+static DevTypeStr dev_type_str[] = {
+	{DEV_NONE, "none"},
+	{DEV_SOUND, "sound"},
+	{DEV_3D, "3d"},
+	{DEV_VIDEO, "video"},
+	{DEV_TV, "tv"},
+	{DEV_DVD, "dvd"},
+	{DEV_TPM, "tpm"},
+	{DEV_U2F, "u2f"},
+	{DEV_INPUT, "input"},
+	{DEV_NTSYNC, "ntsync"},
+	{DEV_MAX, "max"}
+};
 
 typedef struct {
 	const char *dev_fname;
@@ -120,24 +141,43 @@ static int should_mount(DEV_TYPE type) {
 
 static void deventry_mount(const char *source,
                            const char *target, DEV_TYPE type) {
-	struct stat s;
-	if (stat(source, &s) == -1)
-		return;
+	assert(source);
+	assert(target);
+	assert(type >= DEV_NONE && type < DEV_MAX);
 
-	if (!should_mount(type))
+	const char *typestr = dev_type_str[type].str;
+	struct stat s;
+	if (stat(source, &s) == -1) {
+		if (arg_debug) {
+			printf("cannot stat %s (type=%s): %s, ignoring\n",
+			       source, typestr, strerror(errno));
+		}
 		return;
+	}
+
+	if (!should_mount(type)) {
+		if (arg_debug) {
+			printf("skipping %s on %s due to its type (type=%s)\n",
+			       source, target, typestr);
+		}
+		return;
+	}
 
 	int dir = is_dir(source);
-	if (arg_debug)
-		printf("mounting %s %s\n", source, (dir) ? "directory" : "file");
+	if (arg_debug) {
+		printf("mounting %s on %s (type=%s) %s\n", source, target,
+		       typestr, (dir) ? "directory" : "file");
+	}
 	if (dir) {
 		mkdir_attr(target, 0755, 0, 0);
 	}
 	else {
 		struct stat s;
 		if (stat(source, &s) == -1) {
-			if (arg_debug)
-				fwarning("cannot stat %s file\n", source);
+			if (arg_debug) {
+				fwarning("cannot stat %s (type=%s) file: %s\n",
+				         source, typestr, strerror(errno));
+			}
 			return;
 		}
 		FILE *fp = fopen(target, "we");
@@ -148,8 +188,11 @@ static void deventry_mount(const char *source,
 		}
 	}
 
-	if (mount(source, target, NULL, MS_BIND|MS_REC, NULL) < 0)
+	if (mount(source, target, NULL, MS_BIND|MS_REC, NULL) < 0) {
+		fprintf(stderr, "Error: failed to mount %s on %s (type=%s)\n",
+		        source, target, typestr);
 		errExit("mounting dev file");
+	}
 	fs_logger2("whitelist", target);
 }
 

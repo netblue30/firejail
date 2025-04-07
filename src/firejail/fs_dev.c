@@ -102,6 +102,22 @@ static DevEntry dev[] = {
 	{NULL, NULL, DEV_NONE}
 };
 
+// check device type and subsystem configuration
+static int should_mount(DEV_TYPE type) {
+	int ret =
+	    (type == DEV_SOUND && arg_nosound == 0) ||
+	    (type == DEV_3D && arg_no3d == 0) ||
+	    (type == DEV_VIDEO && arg_novideo == 0) ||
+	    (type == DEV_TV && arg_notv == 0) ||
+	    (type == DEV_DVD && arg_nodvd == 0) ||
+	    (type == DEV_TPM && arg_keep_dev_tpm == 1) ||
+	    (type == DEV_U2F && arg_nou2f == 0) ||
+	    (type == DEV_INPUT && arg_noinput == 0) ||
+	    (type == DEV_NTSYNC && arg_keep_dev_ntsync == 1);
+
+	return ret;
+}
+
 static void deventry_mount(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
@@ -109,18 +125,8 @@ static void deventry_mount(void) {
 		if (stat(source, &s) == -1)
 			goto next;
 
-		// check device type and subsystem configuration
-		if ((dev[i].type == DEV_SOUND && arg_nosound == 0) ||
-		    (dev[i].type == DEV_3D && arg_no3d == 0) ||
-		    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
-		    (dev[i].type == DEV_TV && arg_notv == 0) ||
-		    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
-		    (dev[i].type == DEV_TPM && arg_keep_dev_tpm == 1) ||
-		    (dev[i].type == DEV_U2F && arg_nou2f == 0) ||
-		    (dev[i].type == DEV_INPUT && arg_noinput == 0) ||
-		    (dev[i].type == DEV_NTSYNC && arg_keep_dev_ntsync == 1)) {
+		if (!should_mount(type))
 			goto next;
-		}
 
 		int dir = is_dir(dev[i].run_fname);
 		if (arg_debug)

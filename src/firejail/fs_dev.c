@@ -45,16 +45,15 @@ typedef enum {
 	DEV_NTSYNC
 } DEV_TYPE;
 
-
 typedef struct {
 	const char *dev_fname;
 	const char *run_fname;
-	DEV_TYPE  type;
+	DEV_TYPE type;
 } DevEntry;
 
 static DevEntry dev[] = {
-	{"/dev/snd", RUN_DEV_DIR "/snd", DEV_SOUND},	// sound device
-	{"/dev/dri", RUN_DEV_DIR "/dri", DEV_3D},		// 3d devices
+	{"/dev/snd", RUN_DEV_DIR "/snd", DEV_SOUND}, // sound device
+	{"/dev/dri", RUN_DEV_DIR "/dri", DEV_3D}, // 3d devices
 	{"/dev/kfd", RUN_DEV_DIR "/kfd", DEV_3D},
 	{"/dev/nvidia0", RUN_DEV_DIR "/nvidia0", DEV_3D},
 	{"/dev/nvidia1", RUN_DEV_DIR "/nvidia1", DEV_3D},
@@ -97,7 +96,7 @@ static DevEntry dev[] = {
 	{"/dev/hidraw7", RUN_DEV_DIR "/hidraw7", DEV_U2F},
 	{"/dev/hidraw8", RUN_DEV_DIR "/hidraw8", DEV_U2F},
 	{"/dev/hidraw9", RUN_DEV_DIR "/hidraw9", DEV_U2F},
-	{"/dev/usb", RUN_DEV_DIR "/usb", DEV_U2F},	// USB devices such as Yubikey, U2F
+	{"/dev/usb", RUN_DEV_DIR "/usb", DEV_U2F}, // USB devices such as Yubikey, U2F
 	{"/dev/input", RUN_DEV_DIR "/input", DEV_INPUT},
 	{"/dev/ntsync", RUN_DEV_DIR "/ntsync", DEV_NTSYNC},
 	{NULL, NULL, DEV_NONE}
@@ -121,7 +120,7 @@ static void deventry_mount(void) {
 
 				int dir = is_dir(dev[i].run_fname);
 				if (arg_debug)
-					printf("mounting %s %s\n", dev[i].run_fname, (dir)? "directory": "file");
+					printf("mounting %s %s\n", dev[i].run_fname, (dir) ? "directory" : "file");
 				if (dir) {
 					mkdir_attr(dev[i].dev_fname, 0755, 0, 0);
 				}
@@ -210,11 +209,9 @@ static void process_dev_shm(void) {
 	// if we got here, it means we have a jack server installed
 	// mount-bind the old /dev/shm
 	mount_dev_shm();
-
 }
 
-
-void fs_private_dev(void){
+void fs_private_dev(void) {
 	// install a new /dev directory
 	if (arg_debug)
 		printf("Mounting tmpfs on /dev\n");
@@ -242,7 +239,7 @@ void fs_private_dev(void){
 	}
 
 	// mount tmpfs on top of /dev
-	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
+	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME, "mode=755,gid=0") < 0)
 		errExit("mounting /dev");
 	fs_logger("tmpfs /dev");
 
@@ -282,7 +279,7 @@ void fs_private_dev(void){
 	fs_logger("mknod /dev/random");
 	create_char_dev("/dev/urandom", 0666, 1, 9); // mknod -m 666 /dev/urandom c 1 9
 	fs_logger("mknod /dev/urandom");
-	create_char_dev("/dev/tty", 0666,  5, 0); // mknod -m 666 /dev/tty c 5 0
+	create_char_dev("/dev/tty", 0666, 5, 0); // mknod -m 666 /dev/tty c 5 0
 	fs_logger("mknod /dev/tty");
 #if 0
 	create_dev("/dev/tty0", "mknod -m 666 /dev/tty0 c 4 0");
@@ -302,16 +299,15 @@ void fs_private_dev(void){
 
 // code before github issue #351
 	// mount -vt devpts -o newinstance -o ptmxmode=0666 devpts //dev/pts
-//	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL,  "newinstance,ptmxmode=0666") < 0)
+//	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL, "newinstance,ptmxmode=0666") < 0)
 //		errExit("mounting /dev/pts");
-
 
 	// mount /dev/pts
 	gid_t ttygid = get_group_id("tty");
 	char *data;
 	if (asprintf(&data, "newinstance,gid=%d,mode=620,ptmxmode=0666", (int) ttygid) == -1)
 		errExit("asprintf");
-	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL,  data) < 0)
+	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL, data) < 0)
 		errExit("mounting /dev/pts");
 	free(data);
 	fs_logger("clone /dev/pts");

@@ -435,12 +435,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_keep_dev_ntsync = 1;
 		return 0;
 	}
-	else if (strcmp(ptr, "keep-dev-tpm") == 0) {
-		arg_keep_dev_tpm = 1;
-		return 0;
-	}
 	else if (strcmp(ptr, "keep-dev-shm") == 0) {
 		arg_keep_dev_shm = 1;
+		return 0;
+	}
+	else if (strcmp(ptr, "keep-dev-tpm") == 0) {
+		arg_keep_dev_tpm = 1;
 		return 0;
 	}
 	else if (strcmp(ptr, "private-tmp") == 0) {

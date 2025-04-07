@@ -1232,6 +1232,16 @@ Example:
 $ firejail --keep-dev-ntsync --private-dev
 
 .TP
+\fB\-\-keep-dev-shm
+/dev/shm directory is untouched (even with --private-dev)
+.br
+
+.br
+Example:
+.br
+$ firejail --keep-dev-shm --private-dev
+
+.TP
 \fB\-\-keep-dev-tpm
 Allow access to the /dev/tpm* Trusted Platform Module (TPM) devices (even with
 \fBprivate-dev\fR), which are blocked by default.
@@ -1241,16 +1251,6 @@ Allow access to the /dev/tpm* Trusted Platform Module (TPM) devices (even with
 Example:
 .br
 $ firejail --keep-dev-tpm --private-dev
-
-.TP
-\fB\-\-keep-dev-shm
-/dev/shm directory is untouched (even with --private-dev)
-.br
-
-.br
-Example:
-.br
-$ firejail --keep-dev-shm --private-dev
 
 .TP
 \fB\-\-keep-fd=all

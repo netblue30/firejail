@@ -20,11 +20,13 @@
 #include "firejail.h"
 #include <sys/mount.h>
 #include <sys/stat.h>
-#include <glob.h>
+#include <assert.h>
 #include <dirent.h>
-#include <fcntl.h>
-#include <pwd.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <glob.h>
+#include <libgen.h>
+#include <pwd.h>
 #ifndef _BSD_SOURCE
 #define _BSD_SOURCE
 #endif
@@ -42,111 +44,218 @@ typedef enum {
 	DEV_TPM,
 	DEV_U2F,
 	DEV_INPUT,
-	DEV_NTSYNC
+	DEV_NTSYNC,
+	DEV_MAX
 } DEV_TYPE;
 
+typedef struct {
+	DEV_TYPE type;
+	const char *str;
+} DevTypeStr;
+
+static DevTypeStr dev_type_str[] = {
+	{DEV_NONE, "none"},
+	{DEV_SOUND, "sound"},
+	{DEV_3D, "3d"},
+	{DEV_VIDEO, "video"},
+	{DEV_TV, "tv"},
+	{DEV_DVD, "dvd"},
+	{DEV_TPM, "tpm"},
+	{DEV_U2F, "u2f"},
+	{DEV_INPUT, "input"},
+	{DEV_NTSYNC, "ntsync"},
+	{DEV_MAX, "max"}
+};
 
 typedef struct {
-	const char *dev_fname;
-	const char *run_fname;
-	DEV_TYPE  type;
+	const char *dev_pattern;
+	const char *run_pattern;
+	DEV_TYPE type;
 } DevEntry;
 
 static DevEntry dev[] = {
-	{"/dev/snd", RUN_DEV_DIR "/snd", DEV_SOUND},	// sound device
-	{"/dev/dri", RUN_DEV_DIR "/dri", DEV_3D},		// 3d devices
+	{"/dev/snd", RUN_DEV_DIR "/snd", DEV_SOUND}, // sound device
+	{"/dev/dri", RUN_DEV_DIR "/dri", DEV_3D}, // 3d devices
 	{"/dev/kfd", RUN_DEV_DIR "/kfd", DEV_3D},
-	{"/dev/nvidia0", RUN_DEV_DIR "/nvidia0", DEV_3D},
-	{"/dev/nvidia1", RUN_DEV_DIR "/nvidia1", DEV_3D},
-	{"/dev/nvidia2", RUN_DEV_DIR "/nvidia2", DEV_3D},
-	{"/dev/nvidia3", RUN_DEV_DIR "/nvidia3", DEV_3D},
-	{"/dev/nvidia4", RUN_DEV_DIR "/nvidia4", DEV_3D},
-	{"/dev/nvidia5", RUN_DEV_DIR "/nvidia5", DEV_3D},
-	{"/dev/nvidia6", RUN_DEV_DIR "/nvidia6", DEV_3D},
-	{"/dev/nvidia7", RUN_DEV_DIR "/nvidia7", DEV_3D},
-	{"/dev/nvidia8", RUN_DEV_DIR "/nvidia8", DEV_3D},
-	{"/dev/nvidia9", RUN_DEV_DIR "/nvidia9", DEV_3D},
+	{"/dev/nvidia[0-9]*", RUN_DEV_DIR "/nvidia[0-9]*", DEV_3D},
 	{"/dev/nvidiactl", RUN_DEV_DIR "/nvidiactl", DEV_3D},
 	{"/dev/nvidia-modeset", RUN_DEV_DIR "/nvidia-modeset", DEV_3D},
 	{"/dev/nvidia-uvm", RUN_DEV_DIR "/nvidia-uvm", DEV_3D},
-	{"/dev/video0", RUN_DEV_DIR "/video0", DEV_VIDEO}, // video camera devices
-	{"/dev/video1", RUN_DEV_DIR "/video1", DEV_VIDEO},
-	{"/dev/video2", RUN_DEV_DIR "/video2", DEV_VIDEO},
-	{"/dev/video3", RUN_DEV_DIR "/video3", DEV_VIDEO},
-	{"/dev/video4", RUN_DEV_DIR "/video4", DEV_VIDEO},
-	{"/dev/video5", RUN_DEV_DIR "/video5", DEV_VIDEO},
-	{"/dev/video6", RUN_DEV_DIR "/video6", DEV_VIDEO},
-	{"/dev/video7", RUN_DEV_DIR "/video7", DEV_VIDEO},
-	{"/dev/video8", RUN_DEV_DIR "/video8", DEV_VIDEO},
-	{"/dev/video9", RUN_DEV_DIR "/video9", DEV_VIDEO},
+	{"/dev/video[0-9]*", RUN_DEV_DIR "/video[0-9]*", DEV_VIDEO}, // video camera devices
 	{"/dev/dvb", RUN_DEV_DIR "/dvb", DEV_TV}, // DVB (Digital Video Broadcasting) - TV device
-	{"/dev/sr0", RUN_DEV_DIR "/sr0", DEV_DVD}, // for DVD and audio CD players
-	{"/dev/tpm0", RUN_DEV_DIR "/tpm0", DEV_TPM}, // TPM (Trusted Platform Module) devices
-	{"/dev/tpm1", RUN_DEV_DIR "/tpm1", DEV_TPM},
-	{"/dev/tpm2", RUN_DEV_DIR "/tpm2", DEV_TPM},
-	{"/dev/tpm3", RUN_DEV_DIR "/tpm3", DEV_TPM},
-	{"/dev/tpm4", RUN_DEV_DIR "/tpm4", DEV_TPM},
-	{"/dev/tpm5", RUN_DEV_DIR "/tpm5", DEV_TPM},
-	{"/dev/hidraw0", RUN_DEV_DIR "/hidraw0", DEV_U2F},
-	{"/dev/hidraw1", RUN_DEV_DIR "/hidraw1", DEV_U2F},
-	{"/dev/hidraw2", RUN_DEV_DIR "/hidraw2", DEV_U2F},
-	{"/dev/hidraw3", RUN_DEV_DIR "/hidraw3", DEV_U2F},
-	{"/dev/hidraw4", RUN_DEV_DIR "/hidraw4", DEV_U2F},
-	{"/dev/hidraw5", RUN_DEV_DIR "/hidraw5", DEV_U2F},
-	{"/dev/hidraw6", RUN_DEV_DIR "/hidraw6", DEV_U2F},
-	{"/dev/hidraw7", RUN_DEV_DIR "/hidraw7", DEV_U2F},
-	{"/dev/hidraw8", RUN_DEV_DIR "/hidraw8", DEV_U2F},
-	{"/dev/hidraw9", RUN_DEV_DIR "/hidraw9", DEV_U2F},
-	{"/dev/usb", RUN_DEV_DIR "/usb", DEV_U2F},	// USB devices such as Yubikey, U2F
+	{"/dev/sr[0-9]*", RUN_DEV_DIR "/sr[0-9]*", DEV_DVD}, // for DVD and audio CD players
+	{"/dev/tpm[0-9]*", RUN_DEV_DIR "/tpm[0-9]*", DEV_TPM}, // TPM (Trusted Platform Module) devices
+	{"/dev/hidraw[0-9]*", RUN_DEV_DIR "/hidraw[0-9]*", DEV_U2F},
+	{"/dev/usb", RUN_DEV_DIR "/usb", DEV_U2F}, // USB devices such as Yubikey, U2F
 	{"/dev/input", RUN_DEV_DIR "/input", DEV_INPUT},
 	{"/dev/ntsync", RUN_DEV_DIR "/ntsync", DEV_NTSYNC},
 	{NULL, NULL, DEV_NONE}
 };
 
-static void deventry_mount(void) {
-	int i = 0;
-	while (dev[i].dev_fname != NULL) {
+// check device type and subsystem configuration
+static int should_mount(DEV_TYPE type) {
+	int ret =
+	    (type == DEV_SOUND && arg_nosound == 0) ||
+	    (type == DEV_3D && arg_no3d == 0) ||
+	    (type == DEV_VIDEO && arg_novideo == 0) ||
+	    (type == DEV_TV && arg_notv == 0) ||
+	    (type == DEV_DVD && arg_nodvd == 0) ||
+	    (type == DEV_TPM && arg_keep_dev_tpm == 1) ||
+	    (type == DEV_U2F && arg_nou2f == 0) ||
+	    (type == DEV_INPUT && arg_noinput == 0) ||
+	    (type == DEV_NTSYNC && arg_keep_dev_ntsync == 1);
+
+	return ret;
+}
+
+static void deventry_mount(const char *source,
+                           const char *target, DEV_TYPE type) {
+	assert(source);
+	assert(target);
+	assert(type >= DEV_NONE && type < DEV_MAX);
+
+	const char *typestr = dev_type_str[type].str;
+	struct stat s;
+	if (stat(source, &s) == -1) {
+		if (arg_debug) {
+			printf("cannot stat %s (type=%s): %s, ignoring\n",
+			       source, typestr, strerror(errno));
+		}
+		return;
+	}
+
+	if (!should_mount(type)) {
+		if (arg_debug) {
+			printf("skipping %s on %s due to its type (type=%s)\n",
+			       source, target, typestr);
+		}
+		return;
+	}
+
+	int dir = is_dir(source);
+	if (arg_debug) {
+		printf("mounting %s on %s (type=%s) %s\n", source, target,
+		       typestr, (dir) ? "directory" : "file");
+	}
+	if (dir) {
+		mkdir_attr(target, 0755, 0, 0);
+	}
+	else {
 		struct stat s;
-		if (stat(dev[i].run_fname, &s) == 0) {
-			// check device type and subsystem configuration
-			if ((dev[i].type == DEV_SOUND && arg_nosound == 0) ||
-			    (dev[i].type == DEV_3D && arg_no3d == 0) ||
-			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
-			    (dev[i].type == DEV_TV && arg_notv == 0) ||
-			    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
-			    (dev[i].type == DEV_TPM && arg_keep_dev_tpm == 1) ||
-			    (dev[i].type == DEV_U2F && arg_nou2f == 0) ||
-			    (dev[i].type == DEV_INPUT && arg_noinput == 0) ||
-			    (dev[i].type == DEV_NTSYNC && arg_keep_dev_ntsync == 1)) {
-
-				int dir = is_dir(dev[i].run_fname);
-				if (arg_debug)
-					printf("mounting %s %s\n", dev[i].run_fname, (dir)? "directory": "file");
-				if (dir) {
-					mkdir_attr(dev[i].dev_fname, 0755, 0, 0);
-				}
-				else {
-					struct stat s;
-					if (stat(dev[i].run_fname, &s) == -1) {
-						if (arg_debug)
-							fwarning("cannot stat %s file\n", dev[i].run_fname);
-						i++;
-						continue;
-					}
-					FILE *fp = fopen(dev[i].dev_fname, "we");
-					if (fp) {
-						fprintf(fp, "\n");
-						SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
-						fclose(fp);
-					}
-				}
-
-				if (mount(dev[i].run_fname, dev[i].dev_fname, NULL, MS_BIND|MS_REC, NULL) < 0)
-					errExit("mounting dev file");
-				fs_logger2("whitelist", dev[i].dev_fname);
+		if (stat(source, &s) == -1) {
+			if (arg_debug) {
+				fwarning("cannot stat %s (type=%s) file: %s\n",
+				         source, typestr, strerror(errno));
 			}
+			return;
+		}
+		FILE *fp = fopen(target, "we");
+		if (fp) {
+			fprintf(fp, "\n");
+			SET_PERMS_STREAM(fp, s.st_uid, s.st_gid, s.st_mode);
+			fclose(fp);
+		}
+	}
+
+	if (mount(source, target, NULL, MS_BIND|MS_REC, NULL) < 0) {
+		fprintf(stderr, "Error: failed to mount %s on %s (type=%s)\n",
+		        source, target, typestr);
+		errExit("mounting dev file");
+	}
+	fs_logger2("whitelist", target);
+}
+
+// For every path in source_pattern, mount it on the dirname of target_pattern.
+//
+// Example:
+//
+//     deventry_mount_glob("/run/foo*", "/dev/foo*") ->
+//                   mount("/run/foo1", "/dev/foo1")
+//                   mount("/run/foo2", "/dev/foo2")
+//                   ...
+static void deventry_mount_glob(const char *source_pattern,
+                                const char *target_pattern, DEV_TYPE type) {
+	assert(source_pattern);
+	assert(target_pattern);
+	assert(type >= DEV_NONE && type < DEV_MAX);
+
+	const char *typestr = dev_type_str[type].str;
+	if (arg_debug) {
+		printf("Globbing %s on %s (type=%s)\n", source_pattern,
+		       target_pattern, typestr);
+	}
+
+	// sanity check to avoid arguments like ("/run/foo*", "/dev/bar*")
+	const char *source_pattern_base = gnu_basename(source_pattern);
+	const char *target_pattern_base = gnu_basename(target_pattern);
+	if (strcmp(source_pattern_base, target_pattern_base) != 0) {
+		fprintf(stderr, "Error: patterns do not match: %s / %s (type=%s)\n",
+		        source_pattern_base, target_pattern_base, typestr);
+		exit(1);
+	}
+
+	EUID_USER();
+	glob_t globbuf;
+	int globerr = glob(source_pattern, 0, NULL, &globbuf);
+	EUID_ROOT();
+	if (globerr == GLOB_NOMATCH) {
+		if (arg_debug) {
+			printf("No match %s (type=%s)\n", source_pattern,
+			       typestr);
+		}
+		return;
+	} else if (globerr) {
+		fwarning("failed to glob pattern %s (type=%s): %s\n",
+		         source_pattern, typestr, strerror(errno));
+		return;
+	}
+
+	// strdup for dirname
+	char *tmp = strdup(target_pattern);
+	if (!tmp)
+		errExit("strdup");
+	const char *target_dir = dirname(tmp);
+	if (strcmp(target_dir, ".") == 0 ||
+	    strcmp(target_dir, "..") == 0) {
+		fprintf(stderr, "Error: invalid target_dir: %s -> %s (type=%s)\n",
+		        target_pattern, target_dir, typestr);
+		exit(1);
+	}
+
+	size_t i;
+	for (i = 0; i < globbuf.gl_pathc; i++) {
+		const char *source = globbuf.gl_pathv[i];
+		assert(source);
+
+		const char *source_base = gnu_basename(source);
+		if (strcmp(source_base, ".") == 0 ||
+		    strcmp(source_base, "..") == 0) {
+			fprintf(stderr, "Error: invalid source_base: %s -> %s -> %s (type=%s)\n",
+			        source_pattern, source, source_base, typestr);
+			exit(1);
 		}
 
+		char *target = NULL;
+		if (asprintf(&target, "%s/%s", target_dir, source_base) == -1)
+			errExit("asprintf");
+
+		deventry_mount(source, target, type);
+		free(target);
+	}
+
+	free(tmp);
+	globfree(&globbuf);
+}
+
+// Note: By the time that this function is called for private-dev, RUN_DEV_DIR
+// points to the real /dev directory and tmpfs is mounted on top of /dev, so
+// run_pattern is the source path and dev_pattern is the target path when
+// bind-mounting.
+static void deventry_mount_all(void) {
+	int i = 0;
+	while (dev[i].dev_pattern != NULL) {
+		deventry_mount_glob(dev[i].run_pattern, dev[i].dev_pattern,
+		                    dev[i].type);
 		i++;
 	}
 }
@@ -210,11 +319,9 @@ static void process_dev_shm(void) {
 	// if we got here, it means we have a jack server installed
 	// mount-bind the old /dev/shm
 	mount_dev_shm();
-
 }
 
-
-void fs_private_dev(void){
+void fs_private_dev(void) {
 	// install a new /dev directory
 	if (arg_debug)
 		printf("Mounting tmpfs on /dev\n");
@@ -242,12 +349,12 @@ void fs_private_dev(void){
 	}
 
 	// mount tmpfs on top of /dev
-	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME,  "mode=755,gid=0") < 0)
+	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME, "mode=755,gid=0") < 0)
 		errExit("mounting /dev");
 	fs_logger("tmpfs /dev");
 
 	// optional devices: sound, video cards etc...
-	deventry_mount();
+	deventry_mount_all();
 
 	// bring back /dev/log
 	if (have_devlog) {
@@ -282,7 +389,7 @@ void fs_private_dev(void){
 	fs_logger("mknod /dev/random");
 	create_char_dev("/dev/urandom", 0666, 1, 9); // mknod -m 666 /dev/urandom c 1 9
 	fs_logger("mknod /dev/urandom");
-	create_char_dev("/dev/tty", 0666,  5, 0); // mknod -m 666 /dev/tty c 5 0
+	create_char_dev("/dev/tty", 0666, 5, 0); // mknod -m 666 /dev/tty c 5 0
 	fs_logger("mknod /dev/tty");
 #if 0
 	create_dev("/dev/tty0", "mknod -m 666 /dev/tty0 c 4 0");
@@ -302,16 +409,15 @@ void fs_private_dev(void){
 
 // code before github issue #351
 	// mount -vt devpts -o newinstance -o ptmxmode=0666 devpts //dev/pts
-//	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL,  "newinstance,ptmxmode=0666") < 0)
+//	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL, "newinstance,ptmxmode=0666") < 0)
 //		errExit("mounting /dev/pts");
-
 
 	// mount /dev/pts
 	gid_t ttygid = get_group_id("tty");
 	char *data;
 	if (asprintf(&data, "newinstance,gid=%d,mode=620,ptmxmode=0666", (int) ttygid) == -1)
 		errExit("asprintf");
-	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL,  data) < 0)
+	if (mount("devpts", "/dev/pts", "devpts", MS_MGC_VAL, data) < 0)
 		errExit("mounting /dev/pts");
 	free(data);
 	fs_logger("clone /dev/pts");
@@ -331,102 +437,127 @@ void fs_private_dev(void){
 	}
 }
 
-void fs_dev_disable_sound(void) {
-	unsigned i = 0;
-	while (dev[i].dev_fname != NULL) {
-		if (dev[i].type == DEV_SOUND)
-			disable_file_or_dir(dev[i].dev_fname);
-		i++;
+void fs_dev_disable_glob(const char *pattern, DEV_TYPE type,
+                         int skip_symlinks) {
+	assert(pattern);
+	assert(type >= DEV_NONE && type < DEV_MAX);
+
+	const char *typestr = dev_type_str[type].str;
+	if (arg_debug) {
+		printf("Globbing %s (type=%s skip_symlinks=%d)\n", pattern,
+		       typestr, skip_symlinks);
 	}
 
-	// disable all jack sockets in /dev/shm
 	EUID_USER();
 	glob_t globbuf;
-	int globerr = glob("/dev/shm/jack*", GLOB_NOSORT, NULL, &globbuf);
+	int globerr = glob(pattern, 0, NULL, &globbuf);
 	EUID_ROOT();
-	if (globerr)
+	if (globerr == GLOB_NOMATCH) {
+		if (arg_debug)
+			printf("No match %s (type=%s)\n", pattern, typestr);
 		return;
+	} else if (globerr) {
+		fwarning("failed to glob pattern %s (type=%s): %s\n", pattern,
+		         typestr, strerror(errno));
+		return;
+	}
 
+	size_t i;
 	for (i = 0; i < globbuf.gl_pathc; i++) {
 		char *path = globbuf.gl_pathv[i];
 		assert(path);
-		if (is_link(path)) {
-			fwarning("skipping nosound for %s because it is a symbolic link\n", path);
+
+		if (skip_symlinks && is_link(path)) {
+			fwarning("skipping %s because it is a symbolic link (type=%s)\n",
+			         pattern, path);
 			continue;
 		}
 		disable_file_or_dir(path);
 	}
+
 	globfree(&globbuf);
+}
+
+void fs_dev_disable_sound(void) {
+	int i = 0;
+	while (dev[i].dev_pattern != NULL) {
+		if (dev[i].type == DEV_SOUND)
+			fs_dev_disable_glob(dev[i].dev_pattern, DEV_SOUND, 0);
+		i++;
+	}
+
+	// disable all jack sockets in /dev/shm
+	fs_dev_disable_glob("/dev/shm/jack*", DEV_SOUND, 1);
 }
 
 void fs_dev_disable_video(void) {
 	int i = 0;
-	while (dev[i].dev_fname != NULL) {
+	while (dev[i].dev_pattern != NULL) {
 		if (dev[i].type == DEV_VIDEO)
-			disable_file_or_dir(dev[i].dev_fname);
+			fs_dev_disable_glob(dev[i].dev_pattern, DEV_VIDEO, 0);
 		i++;
 	}
 }
 
 void fs_dev_disable_3d(void) {
 	int i = 0;
-	while (dev[i].dev_fname != NULL) {
+	while (dev[i].dev_pattern != NULL) {
 		if (dev[i].type == DEV_3D)
-			disable_file_or_dir(dev[i].dev_fname);
+			fs_dev_disable_glob(dev[i].dev_pattern, DEV_3D, 0);
 		i++;
 	}
 }
 
 void fs_dev_disable_tv(void) {
 	int i = 0;
-	while (dev[i].dev_fname != NULL) {
+	while (dev[i].dev_pattern != NULL) {
 		if (dev[i].type == DEV_TV)
-			disable_file_or_dir(dev[i].dev_fname);
+			fs_dev_disable_glob(dev[i].dev_pattern, DEV_TV, 0);
 		i++;
 	}
 }
 
 void fs_dev_disable_dvd(void) {
 	int i = 0;
-	while (dev[i].dev_fname != NULL) {
+	while (dev[i].dev_pattern != NULL) {
 		if (dev[i].type == DEV_DVD)
-			disable_file_or_dir(dev[i].dev_fname);
+			fs_dev_disable_glob(dev[i].dev_pattern, DEV_DVD, 0);
 		i++;
 	}
 }
 
 void fs_dev_disable_tpm(void) {
 	int i = 0;
-	while (dev[i].dev_fname != NULL) {
+	while (dev[i].dev_pattern != NULL) {
 		if (dev[i].type == DEV_TPM)
-			disable_file_or_dir(dev[i].dev_fname);
+			fs_dev_disable_glob(dev[i].dev_pattern, DEV_TPM, 0);
 		i++;
 	}
 }
 
 void fs_dev_disable_u2f(void) {
 	int i = 0;
-	while (dev[i].dev_fname != NULL) {
+	while (dev[i].dev_pattern != NULL) {
 		if (dev[i].type == DEV_U2F)
-			disable_file_or_dir(dev[i].dev_fname);
+			fs_dev_disable_glob(dev[i].dev_pattern, DEV_U2F, 0);
 		i++;
 	}
 }
 
 void fs_dev_disable_input(void) {
 	int i = 0;
-	while (dev[i].dev_fname != NULL) {
+	while (dev[i].dev_pattern != NULL) {
 		if (dev[i].type == DEV_INPUT)
-			disable_file_or_dir(dev[i].dev_fname);
+			fs_dev_disable_glob(dev[i].dev_pattern, DEV_INPUT, 0);
 		i++;
 	}
 }
 
 void fs_dev_disable_ntsync(void) {
 	int i = 0;
-	while (dev[i].dev_fname != NULL) {
+	while (dev[i].dev_pattern != NULL) {
 		if (dev[i].type == DEV_NTSYNC)
-			disable_file_or_dir(dev[i].dev_fname);
+			fs_dev_disable_glob(dev[i].dev_pattern, DEV_NTSYNC, 0);
 		i++;
 	}
 }

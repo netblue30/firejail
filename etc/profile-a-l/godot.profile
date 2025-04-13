@@ -26,7 +26,7 @@ caps.drop all
 netfilter
 nodvd
 nogroups
-noinput
+#noinput # may break gamepads (see #6707)
 nonewprivs
 noroot
 notv

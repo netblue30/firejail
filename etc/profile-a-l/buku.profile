@@ -26,7 +26,7 @@ include disable-programs.inc
 include disable-shell.inc
 # Superseded by disable-mnt
 #include disable-write-mnt.inc
-include disable-X11.inc
+include disable-x11.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/buku

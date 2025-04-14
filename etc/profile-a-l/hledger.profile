@@ -25,7 +25,7 @@ include disable-shell.inc
 # Superseded by disable-mnt
 #include disable-write-mnt.inc
 # Superseded by x11 none
-#include disable-X11.inc
+#include disable-x11.inc
 include disable-xdg.inc
 
 whitelist ${HOME}/.hledger.journal

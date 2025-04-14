@@ -79,6 +79,7 @@ shell
 timeout
 tmpfs
 veth-name
+warn
 whitelist
 whitelist-ro
 x11

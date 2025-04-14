@@ -235,6 +235,13 @@ Example: "ignore net eth0"
 Disable Firejail's output. This should be the first uncommented command in the profile file.
 
 Example: "quiet"
+.TP
+\fBwarn message
+Print a warning message to stderr.
+Everything after the command is printed in a warning message as is (that is,
+without macro expansion).
+
+Example: "warn This file is deprecated; use foo instead."
 
 .SH Filesystem
 These profile entries define a chroot filesystem built on top of the existing

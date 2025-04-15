@@ -35,6 +35,7 @@ blacklist-nolog /tmp/clipmenu*
 # X11 session autostart
 # this will kill --x11=xpra cmdline option for all programs
 #blacklist ${HOME}/.xpra
+blacklist ${HOME}/.Xresources
 blacklist ${HOME}/.Xsession
 blacklist ${HOME}/.blackbox
 blacklist ${HOME}/.config/autostart
@@ -62,14 +63,20 @@ blacklist ${HOME}/.kde4/shutdown
 blacklist ${HOME}/.kde4/share/config/startupconfig
 blacklist ${HOME}/.kde4/share/config/startupconfigkeys
 blacklist ${HOME}/.local/share/autostart
+blacklist ${HOME}/.local/share/xorg
 blacklist ${HOME}/.xinitrc
 blacklist ${HOME}/.xprofile
 blacklist ${HOME}/.xserverrc
 blacklist ${HOME}/.xsession
 blacklist ${HOME}/.xsessionrc
 blacklist /etc/X11/Xsession.d
+blacklist /etc/X11/xinit
+blacklist /etc/X11/xorg.conf.d
 blacklist /etc/xdg/autostart
+blacklist /var/log/Xorg.*
 read-only ${HOME}/.Xauthority
+read-only ${HOME}/.Xdefaults
+read-only ${HOME}/.Xdefaults-*
 read-only ${HOME}/.config/awesome/autorun.sh
 read-only ${HOME}/.config/openbox/autostart
 read-only ${HOME}/.config/openbox/environment

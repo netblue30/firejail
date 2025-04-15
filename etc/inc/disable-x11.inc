@@ -4,6 +4,8 @@ include disable-x11.local
 
 blacklist /tmp/.X11-unix
 blacklist ${HOME}/.Xauthority
+blacklist ${HOME}/.Xdefaults
+blacklist ${HOME}/.Xdefaults-*
 blacklist ${RUNUSER}/gdm/Xauthority
 blacklist ${RUNUSER}/.mutter-Xwaylandauth*
 blacklist ${RUNUSER}/xauth_*

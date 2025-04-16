@@ -33,11 +33,11 @@ static void preproc_lock_file(const char *path, int *lockfd_ptr) {
 
 	long pid = (long)getpid();
 	if (arg_debug)
-		fprintf(stderr, "pid=%ld: locking %s ...\n", pid, path);
+		printf("pid=%ld: locking %s ...\n", pid, path);
 
 	if (*lockfd_ptr != -1) {
 		if (arg_debug)
-			fprintf(stderr, "pid=%ld: already locked %s\n", pid, path);
+			printf("pid=%ld: already locked %s\n", pid, path);
 		return;
 	}
 
@@ -59,7 +59,7 @@ static void preproc_lock_file(const char *path, int *lockfd_ptr) {
 
 	*lockfd_ptr = lockfd;
 	if (arg_debug)
-		fprintf(stderr, "pid=%ld: locked %s\n", pid, path);
+		printf("pid=%ld: locked %s\n", pid, path);
 }
 
 static void preproc_unlock_file(const char *path, int *lockfd_ptr) {
@@ -68,12 +68,12 @@ static void preproc_unlock_file(const char *path, int *lockfd_ptr) {
 
 	long pid = (long)getpid();
 	if (arg_debug)
-		fprintf(stderr, "pid=%ld: unlocking %s ...\n", pid, path);
+		printf("pid=%ld: unlocking %s ...\n", pid, path);
 
 	int lockfd = *lockfd_ptr;
 	if (lockfd == -1) {
 		if (arg_debug)
-			fprintf(stderr, "pid=%ld: already unlocked %s\n", pid, path);
+			printf("pid=%ld: already unlocked %s\n", pid, path);
 		return;
 	}
 
@@ -89,7 +89,7 @@ static void preproc_unlock_file(const char *path, int *lockfd_ptr) {
 
 	*lockfd_ptr = -1;
 	if (arg_debug)
-		fprintf(stderr, "pid=%ld: unlocked %s\n", pid, path);
+		printf("pid=%ld: unlocked %s\n", pid, path);
 }
 
 void preproc_lock_firejail_dir(void) {

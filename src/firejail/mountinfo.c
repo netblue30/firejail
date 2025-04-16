@@ -79,6 +79,14 @@ static void parse_line(char *line, MountData *output) {
 	//		output.dir: /home/netblue/.cache
 	//		output.fstype: tmpfs
 
+	size_t linelen = strlen(line);
+	if (linelen >= MAX_BUF - 1) {
+		fprintf(stderr, "Error: /proc/self/mountinfo line is too long and may be truncated (%zu >= %d): %s\n",
+		        linelen, MAX_BUF - 1, line);
+		exit(1);
+	}
+
+	char *orig_line = strdup(line);
 	char *ptr = strtok(line, " ");
 	if (!ptr)
 		goto errexit;
@@ -107,17 +115,22 @@ static void parse_line(char *line, MountData *output) {
 	if (output->mountid < 0 ||
 	    output->fsname == NULL ||
 	    output->dir == NULL ||
-	    output->fstype == NULL)
+	    output->fstype == NULL) {
+		fprintf(stderr, "Error: invalid MountData\n");
 		goto errexit;
+	}
 
 	// restore empty spaces
 	unmangle_path(output->fsname);
 	unmangle_path(output->dir);
 
+	free(orig_line);
 	return;
 
 errexit:
-	fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
+	fprintf(stderr, "Error: cannot parse line from /proc/self/mountinfo: %s", orig_line);
+	fprintf(stderr, "Error: MountData: mountid=%d fsname=%s dir=%s fstype=%s\n",
+	        output->mountid, output->fsname, output->dir, output->fstype);
 	exit(1);
 }
 
@@ -127,7 +140,7 @@ MountData *get_last_mount(void) {
 	FILE *fp = fopen("/proc/self/mountinfo", "re");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
-		exit(1);
+		errExit("fopen");
 	}
 
 	mbuf[0] = '\0';
@@ -158,8 +171,8 @@ static int get_mount_id_from_handle(int fd) {
 	int rv = -1;
 	int tmp;
 	if (name_to_handle_at(-1, proc, fh, &tmp, AT_SYMLINK_FOLLOW) != -1) {
-		fprintf(stderr, "Error: unexpected result from name_to_handle_at\n");
-		exit(1);
+		fprintf(stderr, "Error: unexpected result from name_to_handle_at for fd %d\n", fd);
+		errExit("name_to_handle_at");
 	}
 	if (errno == EOVERFLOW && fh->handle_bytes)
 		rv = tmp;
@@ -184,8 +197,8 @@ static int get_mount_id_from_fdinfo(int fd) {
 
 	FILE *fp = fopen(proc, "re");
 	if (!fp) {
-		fprintf(stderr, "Error: cannot read proc file\n");
-		exit(1);
+		fprintf(stderr, "Error: cannot read %s\n", proc);
+		errExit("fopen");
 	}
 
 	if (called_as_root == 0)
@@ -218,7 +231,7 @@ char **build_mount_array(const int mountid, const char *path) {
 	FILE *fp = fopen("/proc/self/mountinfo", "re");
 	if (!fp) {
 		fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
-		exit(1);
+		errExit("fopen");
 	}
 
 	// try to find line with mount id

@@ -28,8 +28,8 @@
 static int tmpfs_mounted = 0;
 
 static void preproc_lock_file(const char *path, int *lockfd_ptr) {
-	assert(path != NULL);
-	assert(lockfd_ptr != NULL);
+	assert(path);
+	assert(lockfd_ptr);
 
 	long pid = (long)getpid();
 	if (arg_debug)
@@ -63,8 +63,8 @@ static void preproc_lock_file(const char *path, int *lockfd_ptr) {
 }
 
 static void preproc_unlock_file(const char *path, int *lockfd_ptr) {
-	assert(path != NULL);
-	assert(lockfd_ptr != NULL);
+	assert(path);
+	assert(lockfd_ptr);
 
 	long pid = (long)getpid();
 	if (arg_debug)

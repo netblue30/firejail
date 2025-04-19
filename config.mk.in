@@ -20,6 +20,7 @@ libdir=@libdir@
 datarootdir=@datarootdir@
 docdir=@docdir@
 mandir=@mandir@
+localstatedir=@localstatedir@
 sysconfdir=@sysconfdir@
 
 # Misc flags
@@ -99,7 +100,7 @@ COMMON_CFLAGS = \
 	-fstack-protector-all \
 	-DPREFIX='"$(prefix)"' -DSYSCONFDIR='"$(sysconfdir)/$(TARNAME)"' \
 	-DLIBDIR='"$(libdir)"' -DBINDIR='"$(bindir)"' \
-	-DVARDIR='"/var/lib/$(TARNAME)"'
+	-DVARDIR='"$(localstatedir)/lib/$(TARNAME)"'
 
 PROG_CFLAGS = \
 	$(COMMON_CFLAGS) \

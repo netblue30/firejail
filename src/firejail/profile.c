@@ -295,6 +295,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strncmp(ptr, "warn ", 5) == 0) {
+		fwarning("%s:%d: %s\n", fname, lineno, ptr + 5);
+		return 0;
+	}
+
 	if (strncmp(ptr, "keep-fd ", 8) == 0) {
 		if (strcmp(ptr + 8, "all") == 0)
 			arg_keep_fd_all = 1;

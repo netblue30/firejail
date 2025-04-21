@@ -59,6 +59,8 @@ include globals.local
 ##ignore noexec ${HOME}
 ##ignore noexec /tmp
 
+##warn foo
+
 # It is common practice to add files/dirs containing program-specific configuration
 # (often ${HOME}/PROGRAMNAME or ${HOME}/.config/PROGRAMNAME) into disable-programs.inc
 # (keep list sorted) and then disable blacklisting below.

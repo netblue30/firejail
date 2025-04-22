@@ -44,7 +44,7 @@
 static inline void __attribute__((noreturn))
 _errExit(const char *fname, int lineno, const char *func, const char *msg) {
 	char msgout[500];
-	snprintf(msgout, 500, "Error %s:%d: %s: %s", fname, lineno, func, msg);
+	snprintf(msgout, 500, "Error: %s:%d: %s: %s", fname, lineno, func, msg);
 	perror(msgout);
 	exit(1);
 }

@@ -3243,6 +3243,15 @@ int main(int argc, char **argv, char **envp) {
 				}
 			}
 
+			// add tss group
+			if (arg_keep_dev_tpm) {
+				g = get_group_id("tss");
+				if (g) {
+					sprintf(ptr, "%d %d 1\n", g, g);
+					ptr += strlen(ptr);
+				}
+			}
+
 			// add plugdev group
 			if (!arg_nou2f) {
 				g = get_group_id("plugdev");

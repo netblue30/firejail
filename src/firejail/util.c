@@ -240,6 +240,11 @@ static void clean_supplementary_groups(gid_t gid) {
 		                  new_groups, &new_ngroups, MAX_GROUPS);
 	}
 
+	if (arg_keep_dev_tpm) {
+		copy_group_ifcont("tss", groups, ngroups,
+				  new_groups, &new_ngroups, MAX_GROUPS);
+	}
+
 	if (!arg_nou2f) {
 		copy_group_ifcont("plugdev", groups, ngroups,
 				  new_groups, &new_ngroups, MAX_GROUPS);

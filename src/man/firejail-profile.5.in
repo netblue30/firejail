@@ -316,7 +316,7 @@ running certain programs through Wine.
 /dev/shm directory is untouched (even with private-dev).
 .TP
 \fBkeep-dev-tpm
-Allow access to the /dev/tpm[0-9]* and /dev/tpmrm[0-9]* Trusted Platform Module
+Allow access to Trusted Cryptography Module (TCM) and Trusted Platform Module
 (TPM) devices (even with \fBprivate-dev\fR), which are blocked by default.
 .TP
 \fBkeep-shell-rc

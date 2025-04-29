@@ -84,6 +84,8 @@ static DevEntry dev[] = {
 	{"/dev/video[0-9]*", RUN_DEV_DIR "/video[0-9]*", DEV_VIDEO}, // video camera devices
 	{"/dev/dvb", RUN_DEV_DIR "/dvb", DEV_TV}, // DVB (Digital Video Broadcasting) - TV device
 	{"/dev/sr[0-9]*", RUN_DEV_DIR "/sr[0-9]*", DEV_DVD}, // for DVD and audio CD players
+	{"/dev/tcm[0-9]*", RUN_DEV_DIR "/tcm[0-9]*", DEV_TPM}, // TCM (Trusted Cryptography Module) devices
+	{"/dev/tcmrm[0-9]*", RUN_DEV_DIR "/tcmrm[0-9]*", DEV_TPM},
 	{"/dev/tpm[0-9]*", RUN_DEV_DIR "/tpm[0-9]*", DEV_TPM}, // TPM (Trusted Platform Module) devices
 	{"/dev/tpmrm[0-9]*", RUN_DEV_DIR "/tpmrm[0-9]*", DEV_TPM},
 	{"/dev/hidraw[0-9]*", RUN_DEV_DIR "/hidraw[0-9]*", DEV_U2F},

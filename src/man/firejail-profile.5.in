@@ -316,8 +316,8 @@ running certain programs through Wine.
 /dev/shm directory is untouched (even with private-dev).
 .TP
 \fBkeep-dev-tpm
-Allow access to the /dev/tpm* Trusted Platform Module (TPM) devices (even with
-\fBprivate-dev\fR), which are blocked by default.
+Allow access to the /dev/tpm[0-9]* and /dev/tpmrm[0-9]* Trusted Platform Module
+(TPM) devices (even with \fBprivate-dev\fR), which are blocked by default.
 .TP
 \fBkeep-shell-rc
 Do not copy shell rc files (such as ~/.bashrc and ~/.zshrc) from /etc/skel.

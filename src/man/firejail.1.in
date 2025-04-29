@@ -1255,8 +1255,8 @@ $ firejail --keep-dev-shm --private-dev
 
 .TP
 \fB\-\-keep-dev-tpm
-Allow access to the /dev/tpm* Trusted Platform Module (TPM) devices (even with
-\fBprivate-dev\fR), which are blocked by default.
+Allow access to the /dev/tpm[0-9]* and /dev/tpmrm[0-9]* Trusted Platform Module
+(TPM) devices (even with \fB\-\-private-dev\fR), which are blocked by default.
 .br
 
 .br

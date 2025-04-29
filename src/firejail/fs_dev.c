@@ -85,6 +85,7 @@ static DevEntry dev[] = {
 	{"/dev/dvb", RUN_DEV_DIR "/dvb", DEV_TV}, // DVB (Digital Video Broadcasting) - TV device
 	{"/dev/sr[0-9]*", RUN_DEV_DIR "/sr[0-9]*", DEV_DVD}, // for DVD and audio CD players
 	{"/dev/tpm[0-9]*", RUN_DEV_DIR "/tpm[0-9]*", DEV_TPM}, // TPM (Trusted Platform Module) devices
+	{"/dev/tpmrm[0-9]*", RUN_DEV_DIR "/tpmrm[0-9]*", DEV_TPM},
 	{"/dev/hidraw[0-9]*", RUN_DEV_DIR "/hidraw[0-9]*", DEV_U2F},
 	{"/dev/usb", RUN_DEV_DIR "/usb", DEV_U2F}, // USB devices such as Yubikey, U2F
 	{"/dev/input", RUN_DEV_DIR "/input", DEV_INPUT},

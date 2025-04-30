@@ -34,7 +34,6 @@ mkdir ${HOME}/.local/share/midori
 mkdir ${HOME}/.local/share/pki
 mkdir ${HOME}/.local/share/webkit
 mkdir ${HOME}/.local/share/webkitgtk
-mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
 whitelist ${HOME}/.cache/midori

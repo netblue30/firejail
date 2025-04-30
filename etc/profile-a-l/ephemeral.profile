@@ -24,7 +24,6 @@ include disable-programs.inc
 # enforce private-cache
 #mkdir ${HOME}/.cache/ephemeral
 mkdir ${HOME}/.local/share/pki
-mkdir ${HOME}/.pki
 # enforce private-cache
 #whitelist ${HOME}/.cache/ephemeral
 whitelist ${HOME}/.local/share/pki

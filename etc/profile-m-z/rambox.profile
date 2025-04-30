@@ -17,7 +17,6 @@ include disable-programs.inc
 
 mkdir ${HOME}/.config/Rambox
 mkdir ${HOME}/.local/share/pki
-mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.config/Rambox
 whitelist ${HOME}/.local/share/pki

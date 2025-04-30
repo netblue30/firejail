@@ -396,6 +396,7 @@
 79.127.138.0/26 CDN77
 185.59.223.0/27 CDN77
 89.187.162.0/26 CDN77
+109.61.91.0/24 CDN77
 
 # F5 - https://docs.cloud.f5.com/docs-v2/platform/reference/network-cloud-ref
 5.182.215.0/25 F5

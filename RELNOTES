@@ -4,6 +4,10 @@ firejail (0.9.75) baseline; urgency=low
   * feature: add warn command (#6710)
   * modif: block TPM devices & turn notpm command into keep-dev-tpm (#6698)
   * modif: improve error messages in mountinfo.c (#6711)
+  * modif: use "Error:" in errExit message (#6716)
+  * modif: keep tss group if keep-dev-tpm is used (#6718)
+  * modif: keep /dev/tpmrm devices if keep-dev-tpm is used (#6719)
+  * modif: keep tcm/tcmrm devices if keep-dev-tpm is used (#6724)
   * bugfix: fix flock debug messages going to stderr (#6712)
   * build: use TARNAME in SYSCONFDIR/VARDIR (#6713)
   * build: add localstatedir and use in VARDIR (#6715)
@@ -12,6 +16,7 @@ firejail (0.9.75) baseline; urgency=low
   * profiles: firefox: add comment about creating PWA shortcuts (#6689)
   * profiles: add more xorg paths (#6708)
   * profiles: fix include of deprecated disable-X11.inc (uppercase) (#6709)
+  * profiles: godot: remove noinput so gamepads work (#6707)
  -- netblue30 <netblue30@yahoo.com>  Mon, 24 Mar 2025 09:00:00 -0500
 
 firejail (0.9.74) baseline; urgency=low

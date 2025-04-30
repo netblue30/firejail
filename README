@@ -892,6 +892,7 @@ NetSysFire (https://github.com/NetSysFire)
 	- fix minecraft-launcher.profile
 	- singularity profile
 	- godot profile fixes
+	- profiles: godot: remove noinput so gamepads work (#6707)
 Nick Fox (https://github.com/njfox)
 	- add a profile alias for code-oss
 	- add code-oss config directory

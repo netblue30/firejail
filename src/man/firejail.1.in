@@ -1255,8 +1255,20 @@ $ firejail --keep-dev-shm --private-dev
 
 .TP
 \fB\-\-keep-dev-tpm
-Allow access to the /dev/tpm[0-9]* and /dev/tpmrm[0-9]* Trusted Platform Module
+Allow access to Trusted Cryptography Module (TCM) and Trusted Platform Module
 (TPM) devices (even with \fB\-\-private-dev\fR), which are blocked by default.
+.br
+
+.br
+Paths:
+.br
+/dev/tcm[0-9]*
+.br
+/dev/tcmrm[0-9]*
+.br
+/dev/tpm[0-9]*
+.br
+/dev/tpmrm[0-9]*
 .br
 
 .br

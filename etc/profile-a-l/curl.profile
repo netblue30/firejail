@@ -15,6 +15,7 @@ noblacklist ${HOME}/.config/curlrc # since curl 7.73.0
 # and 'noblacklist /path/to/curl/hsts/file' to curl.local to keep the sandbox logic intact.
 noblacklist ${HOME}/.curl-hsts
 noblacklist ${HOME}/.curlrc
+noblacklist ${HOME}/.netrc
 
 blacklist ${RUNUSER}
 

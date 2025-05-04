@@ -21,7 +21,6 @@ include disable-programs.inc
 mkdir ${HOME}/.cache/Franz
 mkdir ${HOME}/.config/Franz
 mkdir ${HOME}/.local/share/pki
-mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/Franz
 whitelist ${HOME}/.config/Franz

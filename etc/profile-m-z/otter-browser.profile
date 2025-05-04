@@ -23,7 +23,6 @@ include disable-xdg.inc
 mkdir ${HOME}/.cache/Otter
 mkdir ${HOME}/.config/otter
 mkdir ${HOME}/.local/share/pki
-mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/Otter
 whitelist ${HOME}/.config/otter

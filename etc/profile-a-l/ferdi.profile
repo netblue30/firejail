@@ -21,7 +21,6 @@ include disable-programs.inc
 mkdir ${HOME}/.cache/Ferdi
 mkdir ${HOME}/.config/Ferdi
 mkdir ${HOME}/.local/share/pki
-mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/Ferdi
 whitelist ${HOME}/.config/Ferdi

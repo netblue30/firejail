@@ -21,7 +21,6 @@ mkdir ${HOME}/.cache/mozilla
 mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.mozilla
 mkdir ${HOME}/.local/share/pki
-mkdir ${HOME}/.pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
 whitelist ${HOME}/.cache/mozilla

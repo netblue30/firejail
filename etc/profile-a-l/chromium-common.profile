@@ -32,7 +32,6 @@ blacklist ${PATH}/wget
 blacklist ${PATH}/wget2
 
 mkdir ${HOME}/.local/share/pki
-mkdir ${HOME}/.pki
 whitelist ${HOME}/.local/share/pki
 whitelist ${HOME}/.pki
 whitelist /usr/share/mozilla/extensions

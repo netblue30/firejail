@@ -10,7 +10,7 @@ all: firejail.bash_completion
 
 firejail.bash_completion: firejail.bash_completion.in $(ROOT)/config.mk
 	$(GAWK) -f ../man/preproc.awk -- $(MANFLAGS) < $< > $@.tmp
-	sed "s|_SYSCONFDIR_|$(sysconfdir)|" < $@.tmp > $@
+	sed "s|@sysconfdir@|$(sysconfdir)|" < $@.tmp > $@
 	$(RM) $@.tmp
 
 .PHONY: clean

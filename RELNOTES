@@ -11,12 +11,17 @@ firejail (0.9.75) baseline; urgency=low
   * bugfix: fix flock debug messages going to stderr (#6712)
   * build: use TARNAME in SYSCONFDIR/VARDIR (#6713)
   * build: add localstatedir and use in VARDIR (#6715)
+  * build: replace _SYSCONFDIR_ with @sysconfdir@ (#6737)
   * docs: improve URL formatting in man pages (#6706)
   * profiles: split commands that increase/reduce access (#6687)
   * profiles: firefox: add comment about creating PWA shortcuts (#6689)
   * profiles: add more xorg paths (#6708)
   * profiles: fix include of deprecated disable-X11.inc (uppercase) (#6709)
   * profiles: godot: remove noinput so gamepads work (#6707)
+  * profiles: remove mkdir ~/.pki (#6732)
+  * profiles: mpv: remove mkfile ~/.netrc (#6735)
+  * profiles: curl: allow ~/.netrc (#6736)
+  * profiles: discord-common: add env to private-bin (#6738)
  -- netblue30 <netblue30@yahoo.com>  Mon, 24 Mar 2025 09:00:00 -0500
 
 firejail (0.9.74) baseline; urgency=low

@@ -837,6 +837,8 @@ Matthew Gyurgyik (https://github.com/pyther)
 	- rpm spec and several fixes
 Matthew Cline (https://github.com/matthew-cline)
 	- steam profile and dropbox profile fixes
+matthew-sharp (https://github.com/matthew-sharp)
+	- profiles: discord-common: add env to private-bin (#6738)
 matu3ba (https://github.com/matu3ba)
 	- evince hardening, dbus removed
 	- fix dia profile

@@ -15,7 +15,7 @@ ignore novideo
 whitelist ${HOME}/.config/BetterDiscord
 whitelist ${HOME}/.local/share/betterdiscordctl
 
-private-bin awk,bash,cut,echo,egrep,electron,electron[0-9],electron[0-9][0-9],fish,grep,head,sed,sh,tclsh,tr,which,xdg-mime,xdg-open,zsh
+private-bin awk,bash,cut,echo,egrep,electron,electron[0-9],electron[0-9][0-9],env,fish,grep,head,sed,sh,tclsh,tr,which,xdg-mime,xdg-open,zsh
 private-etc @tls-ca
 
 # allow D-Bus notifications

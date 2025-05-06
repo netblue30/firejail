@@ -55,7 +55,6 @@ read-only ${DESKTOP}
 mkdir ${HOME}/.cache/mpv
 mkdir ${HOME}/.config/mpv
 mkdir ${HOME}/.local/state/mpv
-mkfile ${HOME}/.netrc
 whitelist ${HOME}/.cache/mpv
 whitelist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/youtube-dl

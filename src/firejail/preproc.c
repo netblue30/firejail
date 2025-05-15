@@ -24,8 +24,12 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <fcntl.h>
+#include <signal.h>
 
 static int tmpfs_mounted = 0;
+volatile sig_atomic_t caught_tstp = 0;
+static struct sigaction backup_tstp_directory_action;
+static struct sigaction backup_tstp_network_action;
 
 static void preproc_lock_file(const char *path, int *lockfd_ptr) {
 	assert(path);
@@ -92,20 +96,66 @@ static void preproc_unlock_file(const char *path, int *lockfd_ptr) {
 		printf("pid=%ld: unlocked %s\n", pid, path);
 }
 
+/*
+We need to ignore SIGTSTP while we hold flock(s), otherwise this process
+can be stopped before locks are released which causes future firejail
+processes to fail to start (Github Issue 6729)
+*/
+void handle_sigtstp(int signo) {
+	if (arg_debug) {
+		long pid = (long)getpid();
+		printf("pid=%ld: caught SIGTSTP while locks are held\n", pid);
+	}
+	caught_tstp++;
+}
+
+void install_ignore_tstp_signal_handler(struct sigaction* backup_action) {
+	struct sigaction sa_ignore;
+	sa_ignore.sa_handler = handle_sigtstp;
+	sigemptyset(&sa_ignore.sa_mask);
+	sa_ignore.sa_flags = 0;
+	if (sigaction(SIGTSTP, &sa_ignore, backup_action) == -1) {
+		perror("sigaction");
+		return;
+	}
+}
+
+void uninstall_ignore_tstp_signal_handler(struct sigaction* backup_action) {
+	if (sigaction(SIGTSTP, backup_action, NULL) == -1) {
+		perror("sigaction");
+	}
+	if (caught_tstp > 0) {
+		if (arg_debug) {
+			long pid = (long)getpid();
+			printf("pid=%ld: resending caught SIGTSTP\n", pid);
+		}
+		// We can do this even in the case of nested locks
+		// as in that case caught_tstp will just be incremented
+		// and the outermost unlock will set back a default
+		// handler before resending SIGTSTP
+		caught_tstp = 0;
+		raise(SIGTSTP);
+	}
+}
+
 void preproc_lock_firejail_dir(void) {
+	install_ignore_tstp_signal_handler(&backup_tstp_directory_action);
 	preproc_lock_file(RUN_DIRECTORY_LOCK_FILE, &lockfd_directory);
 }
 
 void preproc_unlock_firejail_dir(void) {
 	preproc_unlock_file(RUN_DIRECTORY_LOCK_FILE, &lockfd_directory);
+	uninstall_ignore_tstp_signal_handler(&backup_tstp_directory_action);
 }
 
 void preproc_lock_firejail_network_dir(void) {
+	install_ignore_tstp_signal_handler(&backup_tstp_network_action);
 	preproc_lock_file(RUN_NETWORK_LOCK_FILE, &lockfd_network);
 }
 
 void preproc_unlock_firejail_network_dir(void) {
 	preproc_unlock_file(RUN_NETWORK_LOCK_FILE, &lockfd_network);
+	uninstall_ignore_tstp_signal_handler(&backup_tstp_network_action);
 }
 
 // build /run/firejail directory

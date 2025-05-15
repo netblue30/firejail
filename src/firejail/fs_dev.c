@@ -355,6 +355,7 @@ void fs_private_dev(void) {
 	if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME, "mode=755,gid=0") < 0)
 		errExit("mounting /dev");
 	fs_logger("tmpfs /dev");
+	selinux_relabel_path("/dev", "/dev");
 
 	// optional devices: sound, video cards etc...
 	deventry_mount_all();
@@ -384,16 +385,22 @@ void fs_private_dev(void) {
 	// create default devices
 	create_char_dev("/dev/zero", 0666, 1, 5); // mknod -m 666 /dev/zero c 1 5
 	fs_logger("mknod /dev/zero");
+	selinux_relabel_path("/dev/zero", "/dev/zero");
 	create_char_dev("/dev/null", 0666, 1, 3); // mknod -m 666 /dev/null c 1 3
 	fs_logger("mknod /dev/null");
+	selinux_relabel_path("/dev/null", "/dev/null");
 	create_char_dev("/dev/full", 0666, 1, 7); // mknod -m 666 /dev/full c 1 7
 	fs_logger("mknod /dev/full");
+	selinux_relabel_path("/dev/full", "/dev/full");
 	create_char_dev("/dev/random", 0666, 1, 8); // Mknod -m 666 /dev/random c 1 8
 	fs_logger("mknod /dev/random");
+	selinux_relabel_path("/dev/random", "/dev/random");
 	create_char_dev("/dev/urandom", 0666, 1, 9); // mknod -m 666 /dev/urandom c 1 9
 	fs_logger("mknod /dev/urandom");
+	selinux_relabel_path("/dev/urandom", "/dev/urandom");
 	create_char_dev("/dev/tty", 0666, 5, 0); // mknod -m 666 /dev/tty c 5 0
 	fs_logger("mknod /dev/tty");
+	selinux_relabel_path("/dev/tty", "/dev/tty");
 #if 0
 	create_dev("/dev/tty0", "mknod -m 666 /dev/tty0 c 4 0");
 	create_dev("/dev/console", "mknod -m 622 /dev/console c 5 1");
@@ -427,16 +434,24 @@ void fs_private_dev(void) {
 
 	// stdin, stdout, stderr
 	create_link("/proc/self/fd", "/dev/fd");
+	selinux_relabel_path("/dev/fd", "/dev/fd");
 	create_link("/proc/self/fd/0", "/dev/stdin");
+	selinux_relabel_path("/dev/stdin", "/dev/stdin");
 	create_link("/proc/self/fd/1", "/dev/stdout");
+	selinux_relabel_path("/dev/stdout", "/dev/stdout");
 	create_link("/proc/self/fd/2", "/dev/stderr");
+	selinux_relabel_path("/dev/stderr", "/dev/stderr");
 
 	// symlinks for DVD/CD players
 	if (stat("/dev/sr0", &s) == 0) {
 		create_link("/dev/sr0", "/dev/cdrom");
+		selinux_relabel_path("/dev/cdrom", "/dev/cdrom");
 		create_link("/dev/sr0", "/dev/cdrw");
+		selinux_relabel_path("/dev/cdrw", "/dev/cdrw");
 		create_link("/dev/sr0", "/dev/dvd");
+		selinux_relabel_path("/dev/dvd", "/dev/dvd");
 		create_link("/dev/sr0", "/dev/dvdrw");
+		selinux_relabel_path("/dev/dvdrw", "/dev/dvdrw");
 	}
 }
 

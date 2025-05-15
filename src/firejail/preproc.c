@@ -102,6 +102,8 @@ can be stopped before locks are released which causes future firejail
 processes to fail to start (Github Issue 6729)
 */
 void handle_sigtstp(int signo) {
+	// Remove unused parameter warning
+	(void)signo;
 	if (arg_debug) {
 		long pid = (long)getpid();
 		printf("pid=%ld: caught SIGTSTP while locks are held\n", pid);
@@ -112,18 +114,15 @@ void handle_sigtstp(int signo) {
 void install_ignore_tstp_signal_handler(struct sigaction* backup_action) {
 	struct sigaction sa_ignore;
 	sa_ignore.sa_handler = handle_sigtstp;
-	sigemptyset(&sa_ignore.sa_mask);
 	sa_ignore.sa_flags = 0;
-	if (sigaction(SIGTSTP, &sa_ignore, backup_action) == -1) {
-		perror("sigaction");
-		return;
-	}
+	sigemptyset(&sa_ignore.sa_mask);
+	if (sigaction(SIGTSTP, &sa_ignore, backup_action) == -1)
+		errExit("sigaction");
 }
 
 void uninstall_ignore_tstp_signal_handler(struct sigaction* backup_action) {
-	if (sigaction(SIGTSTP, backup_action, NULL) == -1) {
-		perror("sigaction");
-	}
+	if (sigaction(SIGTSTP, backup_action, NULL) == -1)
+		errExit("sigaction");
 	if (caught_tstp > 0) {
 		if (arg_debug) {
 			long pid = (long)getpid();

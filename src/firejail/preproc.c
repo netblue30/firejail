@@ -31,6 +31,47 @@ static volatile sig_atomic_t caught_tstp = 0;
 static struct sigaction backup_tstp_directory_action;
 static struct sigaction backup_tstp_network_action;
 
+// We need to ignore SIGTSTP while we hold flock(s), otherwise that signal
+// could stop this process before the locks are released, causing future
+// firejail processes to be stuck during startup (see #6729).
+static void handle_sigtstp(int signo) {
+	(void) signo;
+
+	if (arg_debug) {
+		long pid = (long)getpid();
+		printf("pid=%ld: caught SIGTSTP while locks are held\n", pid);
+	}
+	caught_tstp++;
+}
+
+static void install_ignore_tstp_signal_handler(struct sigaction* backup_action) {
+	struct sigaction sa_ignore;
+	sa_ignore.sa_handler = handle_sigtstp;
+	sa_ignore.sa_flags = 0;
+	sigemptyset(&sa_ignore.sa_mask);
+
+	if (sigaction(SIGTSTP, &sa_ignore, backup_action) == -1)
+		errExit("sigaction");
+}
+
+static void uninstall_ignore_tstp_signal_handler(struct sigaction* backup_action) {
+	if (sigaction(SIGTSTP, backup_action, NULL) == -1)
+		errExit("sigaction");
+	if (caught_tstp > 0) {
+		if (arg_debug) {
+			long pid = (long)getpid();
+			printf("pid=%ld: resending caught SIGTSTP\n", pid);
+		}
+
+		// We can do this even in the case of nested locks, as in that
+		// case caught_tstp will just be incremented and eventually the
+		// outermost unlock will restore the original handler before
+		// resending SIGTSTP.
+		caught_tstp = 0;
+		raise(SIGTSTP);
+	}
+}
+
 static void preproc_lock_file(const char *path, int *lockfd_ptr) {
 	assert(path);
 	assert(lockfd_ptr);
@@ -94,47 +135,6 @@ static void preproc_unlock_file(const char *path, int *lockfd_ptr) {
 	*lockfd_ptr = -1;
 	if (arg_debug)
 		printf("pid=%ld: unlocked %s\n", pid, path);
-}
-
-// We need to ignore SIGTSTP while we hold flock(s), otherwise that signal
-// could stop this process before the locks are released, causing future
-// firejail processes to be stuck during startup (see #6729).
-void handle_sigtstp(int signo) {
-	(void) signo;
-
-	if (arg_debug) {
-		long pid = (long)getpid();
-		printf("pid=%ld: caught SIGTSTP while locks are held\n", pid);
-	}
-	caught_tstp++;
-}
-
-void install_ignore_tstp_signal_handler(struct sigaction* backup_action) {
-	struct sigaction sa_ignore;
-	sa_ignore.sa_handler = handle_sigtstp;
-	sa_ignore.sa_flags = 0;
-	sigemptyset(&sa_ignore.sa_mask);
-
-	if (sigaction(SIGTSTP, &sa_ignore, backup_action) == -1)
-		errExit("sigaction");
-}
-
-void uninstall_ignore_tstp_signal_handler(struct sigaction* backup_action) {
-	if (sigaction(SIGTSTP, backup_action, NULL) == -1)
-		errExit("sigaction");
-	if (caught_tstp > 0) {
-		if (arg_debug) {
-			long pid = (long)getpid();
-			printf("pid=%ld: resending caught SIGTSTP\n", pid);
-		}
-
-		// We can do this even in the case of nested locks, as in that
-		// case caught_tstp will just be incremented and eventually the
-		// outermost unlock will restore the original handler before
-		// resending SIGTSTP.
-		caught_tstp = 0;
-		raise(SIGTSTP);
-	}
 }
 
 void preproc_lock_firejail_dir(void) {

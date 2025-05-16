@@ -27,7 +27,7 @@
 #include <signal.h>
 
 static int tmpfs_mounted = 0;
-volatile sig_atomic_t caught_tstp = 0;
+static volatile sig_atomic_t caught_tstp = 0;
 static struct sigaction backup_tstp_directory_action;
 static struct sigaction backup_tstp_network_action;
 
@@ -96,14 +96,12 @@ static void preproc_unlock_file(const char *path, int *lockfd_ptr) {
 		printf("pid=%ld: unlocked %s\n", pid, path);
 }
 
-/*
-We need to ignore SIGTSTP while we hold flock(s), otherwise this process
-can be stopped before locks are released which causes future firejail
-processes to fail to start (Github Issue 6729)
-*/
+// We need to ignore SIGTSTP while we hold flock(s), otherwise that signal
+// could stop this process before the locks are released, causing future
+// firejail processes to be stuck during startup (see #6729).
 void handle_sigtstp(int signo) {
-	// Remove unused parameter warning
-	(void)signo;
+	(void) signo;
+
 	if (arg_debug) {
 		long pid = (long)getpid();
 		printf("pid=%ld: caught SIGTSTP while locks are held\n", pid);
@@ -116,6 +114,7 @@ void install_ignore_tstp_signal_handler(struct sigaction* backup_action) {
 	sa_ignore.sa_handler = handle_sigtstp;
 	sa_ignore.sa_flags = 0;
 	sigemptyset(&sa_ignore.sa_mask);
+
 	if (sigaction(SIGTSTP, &sa_ignore, backup_action) == -1)
 		errExit("sigaction");
 }
@@ -128,10 +127,11 @@ void uninstall_ignore_tstp_signal_handler(struct sigaction* backup_action) {
 			long pid = (long)getpid();
 			printf("pid=%ld: resending caught SIGTSTP\n", pid);
 		}
-		// We can do this even in the case of nested locks
-		// as in that case caught_tstp will just be incremented
-		// and the outermost unlock will set back a default
-		// handler before resending SIGTSTP
+
+		// We can do this even in the case of nested locks, as in that
+		// case caught_tstp will just be incremented and eventually the
+		// outermost unlock will restore the original handler before
+		// resending SIGTSTP.
 		caught_tstp = 0;
 		raise(SIGTSTP);
 	}

@@ -88,6 +88,7 @@ blacklist ${HOME}/.cache/Zeal
 blacklist ${HOME}/.cache/agenda
 blacklist ${HOME}/.cache/akonadi*
 blacklist ${HOME}/.cache/ani-cli
+blacklist ${HOME}/.cache/ansel
 blacklist ${HOME}/.cache/atril
 blacklist ${HOME}/.cache/attic
 blacklist ${HOME}/.cache/audacity
@@ -377,6 +378,7 @@ blacklist ${HOME}/.config/agenda
 blacklist ${HOME}/.config/akonadi*
 blacklist ${HOME}/.config/akregatorrc
 blacklist ${HOME}/.config/alacritty
+blacklist ${HOME}/.config/ansel
 blacklist ${HOME}/.config/ardour4
 blacklist ${HOME}/.config/ardour5
 blacklist ${HOME}/.config/aria2

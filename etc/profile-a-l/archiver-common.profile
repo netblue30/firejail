@@ -4,6 +4,9 @@ include archiver-common.local
 
 # common profile for archiver/compression tools
 
+# If you use nvm, add the following to archiver-common.local:
+#noblacklist ${HOME}/.nvm
+
 blacklist ${RUNUSER}
 
 # Comment/uncomment the relevant include file(s) in your archiver-common.local

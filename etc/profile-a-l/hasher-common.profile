@@ -4,6 +4,9 @@ include hasher-common.local
 
 # common profile for hasher/checksum tools
 
+# If you use nvm, add the following to hasher-common.local:
+#noblacklist ${HOME}/.nvm
+
 blacklist ${RUNUSER}
 
 # Comment/uncomment the relevant include file(s) in your hasher-common.local

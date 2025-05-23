@@ -7,9 +7,6 @@ include tar.local
 # Persistent global definitions
 include globals.local
 
-# If you use nvm, add the below lines to your tar.local
-#noblacklist ${HOME}/.nvm
-
 # Included in archiver-common.profile
 ignore include disable-shell.inc
 

@@ -115,7 +115,6 @@ static void preproc_lock_file(const char *path, int *lockfd_ptr) {
 				printf("pid=%ld: sleeping %dus while waiting on lock\n", pid, sleep_usec);
 			usleep(sleep_usec);
 			
-			// Convert usec to seconds and add to total
 			wait_total += sleep_usec;
 			
 			sleep_usec *= 2;

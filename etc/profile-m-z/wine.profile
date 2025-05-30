@@ -15,6 +15,10 @@ noblacklist ${HOME}/.steam
 noblacklist ${HOME}/.wine
 noblacklist /tmp/.wine-*
 
+# Allow python (blacklisted by disable-interpreters.inc)
+include allow-python2.inc
+include allow-python3.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-interpreters.inc

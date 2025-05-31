@@ -182,6 +182,7 @@ Antonio Russo (https://github.com/aerusso)
 	- wusc fixes
 	- okular profile fixes
 	- manpage fixes
+	- bugfix: add missing selinux relabeling for /dev paths (#6734)
 aoand (https://github.com/aoand)
 	- seccomp fix: allow numeric syscalls
 Arne Welzel (https://github.com/awelzel)
@@ -453,6 +454,7 @@ Fidel Ramos (https://github.com/haplo)
 	- fixed geeqie profile
 	- added rawtherapee profile
 	- added electron-cache profile
+	- new profile: ansel (#6751)
 Florian Begusch (https://github.com/florianbegusch)
 	- (la)tex profiles
 	- fixed transmission-common.profile
@@ -674,6 +676,8 @@ Jesse Smith (https://github.com/slicer69)
 	- added QupZilla profile
 jgriffiths (https://github.com/jgriffiths)
 	- make rpm packages support
+jlimor-kl (https://github.com/jlimor-kl)
+	- bugfix: fix potential deadlock with flock + SIGTSTP (#6750)
 Joan Figueras (https://github.com/figue)
 	- added abrowser profile
 	- added Google-Play-Music-Desktop-Player

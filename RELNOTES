@@ -9,6 +9,8 @@ firejail (0.9.75) baseline; urgency=low
   * modif: keep /dev/tpmrm devices if keep-dev-tpm is used (#6719)
   * modif: keep tcm/tcmrm devices if keep-dev-tpm is used (#6724)
   * bugfix: fix flock debug messages going to stderr (#6712)
+  * bugfix: add missing selinux relabeling for /dev paths (#6734)
+  * bugfix: fix potential deadlock with flock + SIGTSTP (#6729 #6750)
   * build: use TARNAME in SYSCONFDIR/VARDIR (#6713)
   * build: add localstatedir and use in VARDIR (#6715)
   * build: replace _SYSCONFDIR_ with @sysconfdir@ (#6737)
@@ -22,6 +24,10 @@ firejail (0.9.75) baseline; urgency=low
   * profiles: mpv: remove mkfile ~/.netrc (#6735)
   * profiles: curl: allow ~/.netrc (#6736)
   * profiles: discord-common: add env to private-bin (#6738)
+  * profiles: firecfg: disable checksum programs (#6755)
+  * profiles: rssguard: allow lua (#6758 #6759)
+  * profiles: wine: allow python to fix Epic Games Launcher (#6762 #6763)
+  * new profile: ansel (#6751)
  -- netblue30 <netblue30@yahoo.com>  Mon, 24 Mar 2025 09:00:00 -0500
 
 firejail (0.9.74) baseline; urgency=low

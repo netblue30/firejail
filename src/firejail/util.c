@@ -1259,8 +1259,15 @@ int remount_by_fd(int dst, unsigned long mountflags) {
 		errExit("asprintf");
 
 	int rv = mount(NULL, proc, NULL, mountflags|MS_BIND|MS_REMOUNT, NULL);
-	if (rv < 0 && arg_debug)
-		printf("Failed mount: %s\n", strerror(errno));
+	int errsv = errno;
+	if (rv < 0 && arg_debug) {
+		char *destname = realpath(proc, NULL);
+		(void) destname;
+
+		printf("Failed to remount %s: %s\n", destname,
+		       strerror(errsv));
+		free(destname);
+	}
 
 	free(proc);
 	return rv;
@@ -1273,8 +1280,18 @@ int bind_mount_by_fd(int src, int dst) {
 		errExit("asprintf");
 
 	int rv = mount(proc_src, proc_dst, NULL, MS_BIND|MS_REC, NULL);
-	if (rv < 0 && arg_debug)
-		printf("Failed mount: %s\n", strerror(errno));
+	int errsv = errno;
+	if (rv < 0 && arg_debug) {
+		char *srcname = realpath(proc_src, NULL);
+		char *destname = realpath(proc_dst, NULL);
+		(void) srcname;
+		(void) destname;
+
+		printf("Failed to mount %s on %s: %s\n", srcname, destname,
+		       strerror(errsv));
+		free(srcname);
+		free(destname);
+	}
 
 	free(proc_src);
 	free(proc_dst);
@@ -1287,8 +1304,15 @@ int bind_mount_fd_to_path(int src, const char *destname) {
 		errExit("asprintf");
 
 	int rv = mount(proc, destname, NULL, MS_BIND|MS_REC, NULL);
-	if (rv < 0 && arg_debug)
-		printf("Failed mount: %s\n", strerror(errno));
+	int errsv = errno;
+	if (rv < 0 && arg_debug) {
+		char *srcname = realpath(proc, NULL);
+		(void) srcname;
+
+		printf("Failed to mount %s on %s: %s\n", srcname, destname,
+		       strerror(errsv));
+		free(srcname);
+	}
 
 	free(proc);
 	return rv;
@@ -1300,8 +1324,15 @@ int bind_mount_path_to_fd(const char *srcname, int dst) {
 		errExit("asprintf");
 
 	int rv = mount(srcname, proc, NULL, MS_BIND|MS_REC, NULL);
-	if (rv < 0 && arg_debug)
-		printf("Failed mount: %s\n", strerror(errno));
+	int errsv = errno;
+	if (rv < 0 && arg_debug) {
+		char *destname = realpath(proc, NULL);
+		(void) destname;
+
+		printf("Failed to mount %s on %s: %s\n", srcname, destname,
+		       strerror(errsv));
+		free(destname);
+	}
 
 	free(proc);
 	return rv;

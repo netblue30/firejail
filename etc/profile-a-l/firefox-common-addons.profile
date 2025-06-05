@@ -83,6 +83,7 @@ whitelist ${HOME}/.netrc
 whitelist ${HOME}/.pentadactyl
 whitelist ${HOME}/.pentadactylrc
 whitelist ${HOME}/.tridactylrc
+whitelist ${HOME}/.config/tridactyl/tridactylrc
 whitelist ${HOME}/.vimperator
 whitelist ${HOME}/.vimperatorrc
 whitelist ${HOME}/.wine-pipelight

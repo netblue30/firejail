@@ -70,6 +70,7 @@ whitelist /usr/share/thumbnail.so
 whitelist /usr/share/uim
 whitelist /usr/share/vulkan
 whitelist /usr/share/X11
+whitelist /usr/share/xkeyboard-config-2
 whitelist /usr/share/xml
 whitelist /usr/share/zenity
 whitelist /usr/share/zoneinfo

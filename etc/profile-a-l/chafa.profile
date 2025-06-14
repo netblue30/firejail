@@ -1,6 +1,7 @@
 # Firejail profile for chafa
 # Description: A terminal-based image viewer and image-to-text converter.
 # This file is overwritten after every install/update
+quiet
 # Persistent local customizations
 include chafa.local
 # Persistent global definitions

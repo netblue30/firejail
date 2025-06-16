@@ -91,6 +91,7 @@ private-bin env,mpv,python*,waf,youtube-dl,yt-dlp
 # private-cache causes slow OSD, see #2838
 #private-cache
 private-dev
+private-etc alsa,asound.conf,ca-certificates,drirc,fonts,gnutls,igfx_user_feature.txt,igfx_user_feature_next.txt,libva.conf,login.defs,machine-id,mpv,pipewire,pkcs11,pulse,ssl,vdpau_wrapper.cfg,vulkan,xdg,xkb,yt-dlp,yt-dlp-plugins,yt-dlp.conf
 
 dbus-user none
 dbus-system none

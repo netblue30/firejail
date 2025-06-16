@@ -1,4 +1,4 @@
-# Firejail profile for mpv
+# Firejail profile for sound-juicer
 # Description: Graphical audio CD ripper and encoder
 # This file is overwritten after every install/update
 # Persistent local customizations

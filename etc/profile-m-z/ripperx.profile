@@ -1,4 +1,4 @@
-# Firejail profile for mpv
+# Firejail profile for ripperx
 # Description: Graphical audio CD ripper and encoder
 # This file is overwritten after every install/update
 # Persistent local customizations

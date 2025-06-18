@@ -233,12 +233,8 @@ include globals.local
 #  Qt: Trolltech.conf
 ##private-lib LIBS
 ## Note: private-opt copies the entire path(s) to RAM, which may break
-## file-copy-limit in firejail.config (see firejail(1)).
-## For sizeable apps (if in doubt, do this):
-##  - never use 'private-opt NAME'
-##  - place 'whitelist /opt/NAME' in the whitelist section above
-## For acceptable apps:
-##  - use 'private-opt NAME'
+## file-copy-limit in firejail.config (see firejail(1)), so for new profiles
+## use 'whitelist /opt/NAME' instead 'private-opt NAME'.
 ##private-opt NAME
 #private-tmp
 

@@ -7,6 +7,7 @@
 #  python >= 3.6
 from os import path
 from sys import argv, exit as sys_exit, stderr
+from trim_private_etc import optimize_etc
 
 __doc__ = f"""\
 Strip whitespace and sort the arguments of commands in profiles.
@@ -85,8 +86,10 @@ def check_profile(filename, overwrite):
         fixed_profile = []
         for lineno, original_line in enumerate(lines, 1):
             line = original_line.rstrip()
-            if line[:12] in ("private-bin ", "private-etc ", "private-lib "):
+            if line[:12] in ("private-bin ", "private-lib "):
                 line = f"{line[:12]}{sort_alphabetical(line[12:])}"
+            elif line[:12] == "private-etc ":
+                line = f"{line[:12]}{sort_alphabetical(optimize_etc(line[12:]))}"
             elif line[:13] in ("seccomp.drop ", "seccomp.keep "):
                 line = f"{line[:13]}{sort_alphabetical(line[13:])}"
             elif line[:10] in ("caps.drop ", "caps.keep "):

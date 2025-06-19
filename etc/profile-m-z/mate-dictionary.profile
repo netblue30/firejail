@@ -16,6 +16,7 @@ include disable-shell.inc
 
 mkdir ${HOME}/.config/mate/mate-dictionary
 whitelist ${HOME}/.config/mate/mate-dictionary
+whitelist /opt/mate-dictionary
 include whitelist-common.inc
 
 apparmor
@@ -37,7 +38,6 @@ seccomp
 disable-mnt
 private-bin mate-dictionary
 private-etc @tls-ca
-private-opt mate-dictionary
 private-dev
 private-tmp
 

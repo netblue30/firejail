@@ -14,6 +14,7 @@ include disable-proc.inc
 include disable-shell.inc
 
 whitelist ${HOME}/.config/tidal-hifi
+whitelist /opt/tidal-hifi
 
 caps.drop all
 no3d
@@ -27,7 +28,6 @@ tracelog
 
 private-bin chrome-sandbox,tidal-hifi
 private-etc @network,@sound,@tls-ca,@xdg
-private-opt tidal-hifi
 
 ignore dbus-user none
 dbus-user filter

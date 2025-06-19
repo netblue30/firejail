@@ -14,10 +14,7 @@ mkdir ${HOME}/.cache/microsoft-edge-dev
 mkdir ${HOME}/.config/microsoft-edge-dev
 whitelist ${HOME}/.cache/microsoft-edge-dev
 whitelist ${HOME}/.config/microsoft-edge-dev
-
 whitelist /opt/microsoft/msedge-dev
-# private-opt might break file-copy-limit, see #5307
-#private-opt microsoft
 
 # Redirect
 include chromium-common.profile

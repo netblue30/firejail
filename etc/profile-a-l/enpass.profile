@@ -28,6 +28,7 @@ whitelist ${HOME}/.config/sinew.in
 whitelist ${HOME}/.config/Sinew Software Systems
 whitelist ${HOME}/.local/share/Enpass
 whitelist ${DOCUMENTS}
+whitelist /opt/Enpass
 include whitelist-common.inc
 include whitelist-var-common.inc
 
@@ -55,7 +56,6 @@ tracelog
 private-bin Enpass,dirname,importer_enpass,readlink,sh
 ?HAS_APPIMAGE: ignore private-dev
 private-dev
-private-opt Enpass
 private-tmp
 
 #memory-deny-write-execute # breaks on Arch (see issue #1803)

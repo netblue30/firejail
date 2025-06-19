@@ -20,6 +20,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.config/ppsspp
 whitelist ${HOME}/.config/ppsspp
+whitelist /opt/ppsspp
 whitelist /usr/share/ppsspp
 include whitelist-common.inc
 include whitelist-runuser-common.inc
@@ -43,7 +44,6 @@ private-bin PPSSPP,PPSSPPQt,PPSSPPSDL,ppsspp
 # Add the next line to your ppsspp.local if you do not need controller support.
 #private-dev
 private-etc @tls-ca,@x11,host.conf
-private-opt ppsspp
 private-tmp
 
 dbus-user none

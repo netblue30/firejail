@@ -27,6 +27,7 @@ mkdir ${HOME}/.minecraft
 whitelist ${HOME}/.minecraft
 # Needs keyring access in order to save logins
 whitelist ${RUNUSER}/keyring
+whitelist /opt/minecraft-launcher
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -53,7 +54,6 @@ private-dev
 # If multiplayer or realms break, add 'private-etc <your-own-java-folder-from-/etc>'
 # or 'ignore private-etc' to your minecraft-launcher.local.
 private-etc @tls-ca,@x11,host.conf,java*,mime.types,services,timezone
-private-opt minecraft-launcher
 private-tmp
 
 dbus-user filter

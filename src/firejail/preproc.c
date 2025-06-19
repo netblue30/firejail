@@ -23,8 +23,13 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <signal.h>
+
+static const useconds_t    LOCK_INITIAL_SLEEP_USEC =  500U;
+static const useconds_t    LOCK_MAX_SLEEP_USEC =   500000U;
+static const unsigned long LOCK_TIMEOUT_USEC =    5000000U;
 
 static int tmpfs_mounted = 0;
 static volatile sig_atomic_t caught_tstp = 0;
@@ -97,9 +102,31 @@ static void preproc_lock_file(const char *path, int *lockfd_ptr) {
 		errExit("fchown");
 	}
 
-	if (flock(lockfd, LOCK_EX) == -1) {
-		fprintf(stderr, "Error: cannot lock %s\n", path);
-		errExit("flock");
+	unsigned long sleep_usec = LOCK_INITIAL_SLEEP_USEC;
+	unsigned long wait_total = 0U;
+
+	while (flock(lockfd, LOCK_EX | LOCK_NB) == -1) {
+		if (errno == EWOULDBLOCK) {
+			if (wait_total >= LOCK_TIMEOUT_USEC) {
+				fprintf(stderr, "Error: timeout occurred while trying to lock %s\n", path);
+				errExit("flock");
+			}
+
+			if (arg_debug) {
+				printf("pid=%ld: sleeping %luus while trying to lock %s\n",
+				       pid, sleep_usec, path);
+			}
+
+			usleep(sleep_usec);
+			wait_total += sleep_usec;
+
+			sleep_usec *= 2U;
+			if (sleep_usec > LOCK_MAX_SLEEP_USEC)
+				sleep_usec = LOCK_MAX_SLEEP_USEC;
+		} else {
+			fprintf(stderr, "Error: cannot lock %s\n", path);
+			errExit("flock");
+		}
 	}
 
 	*lockfd_ptr = lockfd;

@@ -678,6 +678,7 @@ jgriffiths (https://github.com/jgriffiths)
 	- make rpm packages support
 jlimor-kl (https://github.com/jlimor-kl)
 	- bugfix: fix potential deadlock with flock + SIGTSTP (#6750)
+	- feature: use non-blocking flock calls (#6761)
 Joan Figueras (https://github.com/figue)
 	- added abrowser profile
 	- added Google-Play-Music-Desktop-Player
@@ -1252,6 +1253,8 @@ StelFux (https://github.com/StelFux)
 	- Fix youtube video in totem
 sudoAlphaX (https://github.com/sudoAlphaX)
 	- vesktop profile
+	- profiles: chafa: quiet output (#6777)
+	- profiles: ani-cli: add mpv to private-etc for plugins access (#6779)
 Syed Muhammad Shuja Haider (https://github.com/xplanthris)
 	- prismlauncher profile
 the-antz (https://github.com/the-antz)

@@ -2,12 +2,14 @@ firejail (0.9.75) baseline; urgency=low
   * work in progress
   * feature: use globbing in hardcoded numbered /dev paths (#2723 #6704)
   * feature: add warn command (#6710)
+  * feature: use non-blocking flock calls (#6761)
   * modif: block TPM devices & turn notpm command into keep-dev-tpm (#6698)
   * modif: improve error messages in mountinfo.c (#6711)
   * modif: use "Error:" in errExit message (#6716)
   * modif: keep tss group if keep-dev-tpm is used (#6718)
   * modif: keep /dev/tpmrm devices if keep-dev-tpm is used (#6719)
   * modif: keep tcm/tcmrm devices if keep-dev-tpm is used (#6724)
+  * modif: improve "Failed mount" error messages in util.c (#6747)
   * bugfix: fix flock debug messages going to stderr (#6712)
   * bugfix: add missing selinux relabeling for /dev paths (#6734)
   * bugfix: fix potential deadlock with flock + SIGTSTP (#6729 #6750)
@@ -27,6 +29,13 @@ firejail (0.9.75) baseline; urgency=low
   * profiles: firecfg: disable checksum programs (#6755)
   * profiles: rssguard: allow lua (#6758 #6759)
   * profiles: wine: allow python to fix Epic Games Launcher (#6762 #6763)
+  * profiles: wusc: add /usr/share/xkeyboard-config-2 (#6773 #6775)
+  * profiles: chafa: quiet output (#6777)
+  * profiles: ripperx/sound-juicer: fix profile name typos (#6780)
+  * profiles: ani-cli: add mpv to private-etc for plugins access (#6779)
+  * profiles: use private-etc groups in more profiles (#6783)
+  * profiles: firecfg: disable foliate (#6784)
+  * profiles: finish converting private-opt to whitelist (#6785)
   * new profile: ansel (#6751)
  -- netblue30 <netblue30@yahoo.com>  Mon, 24 Mar 2025 09:00:00 -0500
 

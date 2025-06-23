@@ -12,6 +12,7 @@ mkdir ${HOME}/.cache/moonchild productions/basilisk
 mkdir ${HOME}/.moonchild productions
 whitelist ${HOME}/.cache/moonchild productions/basilisk
 whitelist ${HOME}/.moonchild productions
+whitelist /opt/basilisk
 whitelist /usr/share/basilisk
 
 # Basilisk can use the full firejail seccomp filter (unlike firefox >= 60)
@@ -20,7 +21,6 @@ ignore seccomp
 
 #private-bin basilisk
 private-etc basilisk
-#private-opt basilisk
 
 restrict-namespaces
 ignore restrict-namespaces

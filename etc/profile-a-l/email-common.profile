@@ -87,7 +87,7 @@ tracelog
 #disable-mnt
 private-cache
 private-dev
-private-etc @tls-ca,@x11,bogofilter,bogofilter.cf,clamav,gnupg,hosts.conf,mailname,timezone
+private-etc @tls-ca,@x11,bogofilter,bogofilter.cf,clamav,gnupg,host.conf,mailname,timezone
 private-tmp
 
 dbus-user filter

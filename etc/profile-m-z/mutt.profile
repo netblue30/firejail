@@ -130,7 +130,7 @@ tracelog
 #disable-mnt
 private-cache
 private-dev
-private-etc @tls-ca,@x11,Mutt,Muttrc,Muttrc.d,gai.conf,gnupg,hosts.conf,mail,mailname,msmtprc,nntpserver,terminfo
+private-etc @tls-ca,@x11,Mutt,Muttrc,Muttrc.d,gai.conf,gnupg,host.conf,mail,mailname,msmtprc,nntpserver,terminfo
 private-tmp
 
 dbus-user none

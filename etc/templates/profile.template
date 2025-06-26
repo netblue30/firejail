@@ -234,7 +234,7 @@ include globals.local
 ##private-lib LIBS
 ## Note: private-opt copies the entire path(s) to RAM, which may break
 ## file-copy-limit in firejail.config (see firejail(1)), so for new profiles
-## use 'whitelist /opt/NAME' instead 'private-opt NAME'.
+## use 'whitelist /opt/NAME' instead of 'private-opt NAME'.
 ##private-opt NAME
 #private-tmp
 

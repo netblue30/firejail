@@ -10,9 +10,12 @@ firejail (0.9.75) baseline; urgency=low
   * modif: keep /dev/tpmrm devices if keep-dev-tpm is used (#6719)
   * modif: keep tcm/tcmrm devices if keep-dev-tpm is used (#6724)
   * modif: improve "Failed mount" error messages in util.c (#6747)
+  * modif: improve fcopy error messages in check() (#6801)
   * bugfix: fix flock debug messages going to stderr (#6712)
   * bugfix: add missing selinux relabeling for /dev paths (#6734)
   * bugfix: fix potential deadlock with flock + SIGTSTP (#6729 #6750)
+  * bugfix: fcopy: add /usr/share + "runner:root" exception to fix CI (#6797
+    #6803)
   * build: use TARNAME in SYSCONFDIR/VARDIR (#6713)
   * build: add localstatedir and use in VARDIR (#6715)
   * build: replace _SYSCONFDIR_ with @sysconfdir@ (#6737)
@@ -36,6 +39,7 @@ firejail (0.9.75) baseline; urgency=low
   * profiles: use private-etc groups in more profiles (#6783)
   * profiles: firecfg: disable foliate (#6784)
   * profiles: finish converting private-opt to whitelist (#6785)
+  * profiles: replace hosts.conf with host.conf in private-etc (#6791)
   * new profile: ansel (#6751)
  -- netblue30 <netblue30@yahoo.com>  Mon, 24 Mar 2025 09:00:00 -0500
 

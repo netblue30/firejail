@@ -312,6 +312,7 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 					if (proc_ev->event_data.fork.child_pid !=
 					    proc_ev->event_data.fork.child_tgid)
 						continue; // this is a thread, not a process
+
 					pid = proc_ev->event_data.fork.parent_tgid;
 #ifdef DEBUG_PRCTL
 	printf("%s: %d, event fork, pid %d\n", __FUNCTION__, __LINE__, pid);
@@ -326,6 +327,7 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 					sprintf(lineptr, " fork");
 					nodisplay = 1;
 					break;
+
 				case PROC_EVENT_EXEC:
 					pid = proc_ev->event_data.exec.process_tgid;
 #ifdef DEBUG_PRCTL
@@ -350,8 +352,6 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 					sprintf(lineptr, " exit");
 					break;
 
-
-
 				case PROC_EVENT_UID:
 					pid = proc_ev->event_data.id.process_tgid;
 #ifdef DEBUG_PRCTL
@@ -362,10 +362,11 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 						sprintf(lineptr, "\n");
 						continue;
 					}
-					else
+					else {
 						sprintf(lineptr, " uid (%d:%d)",
-							proc_ev->event_data.id.r.ruid,
-							proc_ev->event_data.id.e.euid);
+						        proc_ev->event_data.id.r.ruid,
+						        proc_ev->event_data.id.e.euid);
+					}
 					nodisplay = 1;
 					break;
 
@@ -379,14 +380,13 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 						sprintf(lineptr, "\n");
 						continue;
 					}
-					else
+					else {
 						sprintf(lineptr, " gid (%d:%d)",
-							proc_ev->event_data.id.r.rgid,
-							proc_ev->event_data.id.e.egid);
+						        proc_ev->event_data.id.r.rgid,
+						        proc_ev->event_data.id.e.egid);
+					}
 					nodisplay = 1;
 					break;
-
-
 
 				case PROC_EVENT_SID:
 					pid = proc_ev->event_data.sid.process_tgid;
@@ -421,8 +421,9 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 						sprintf(lineptr, "\n");
 						continue;
 					}
-					else
+					else {
 						sprintf(lineptr, " comm  %s", proc_ev->event_data.comm.comm);
+					}
 					nodisplay = 1;
 					break;
 
@@ -468,7 +469,6 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 				sprintf(lineptr, " (%s)", user);
 				lineptr += strlen(lineptr);
 			}
-
 
 			int sandbox_closed = 0; // exit sandbox flag
 			int cmd_dup = 0;

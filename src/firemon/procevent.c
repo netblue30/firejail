@@ -70,10 +70,10 @@ static int pid_is_firejail(pid_t pid) {
 		if (asprintf(&fname, "/proc/%d/cmdline", pid) == -1)
 			errExit("asprintf");
 		if ((fd = open(fname, O_RDONLY)) < 0) {
-			free(fname);
 #ifdef DEBUG_PRCTL
 			printf("%s: %d, comm %s, rv %d\n", __FUNCTION__, __LINE__, buf, rv);
 #endif
+			free(fname);
 			goto doexit;
 		}
 		free(fname);
@@ -83,10 +83,10 @@ static int pid_is_firejail(pid_t pid) {
 		unsigned char buffer[BUFLEN];
 		ssize_t len;
 		if ((len = read(fd, buffer, sizeof(buffer) - 1)) <= 0) {
-			close(fd);
 #ifdef DEBUG_PRCTL
 			printf("%s: %d, comm %s, rv %d\n", __FUNCTION__, __LINE__, buf, rv);
 #endif
+			close(fd);
 			goto doexit;
 		}
 		buffer[len] = '\0';
@@ -136,10 +136,10 @@ static int pid_is_firejail(pid_t pid) {
 			int j = 0;
 			while (exclude_args[j] != NULL) {
 				if (strcmp(start, exclude_args[j]) == 0) {
-					rv = 0;
 #ifdef DEBUG_PRCTL
 printf("start=#%s#,  ptr=#%s#, flip rv %d\n", start, ptr, rv);
 #endif
+					rv = 0;
 					break;
 				}
 				j++;
@@ -150,11 +150,11 @@ printf("start=#%s#,  ptr=#%s#, flip rv %d\n", start, ptr, rv);
 	}
 
 doexit:
-	fclose(fp);
-	free(file);
 #ifdef DEBUG_PRCTL
 	printf("%s: %d, return %d\n", __FUNCTION__, __LINE__, rv);
 #endif
+	fclose(fp);
+	free(file);
 	return rv;
 }
 

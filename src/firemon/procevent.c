@@ -36,6 +36,13 @@
 
 //#define DEBUG_PRCTL
 
+#ifdef DEBUG_PRCTL
+#define debug_prctl(fmt, ...) \
+	printf("%s: %d, " fmt, __func__, __LINE__, __VA_ARGS__)
+#else
+#define debug_prctl(...) ((void)0)
+#endif
+
 static int pid_is_firejail(pid_t pid) {
 #ifdef DEBUG_PRCTL
 	printf("%s: %d, pid %d\n", __FUNCTION__, __LINE__, pid);

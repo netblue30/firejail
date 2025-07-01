@@ -24,7 +24,7 @@ jobs:
     timeout-minutes: 5
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0
+      uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49
       with:
         egress-policy: block
         allowed-endpoints: >

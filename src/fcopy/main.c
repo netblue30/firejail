@@ -374,6 +374,16 @@ static char *check(const char *src) {
 		if (s.st_uid != user && s.st_uid != p->pw_uid)
 			goto errexit;
 	}
+	// Some system paths may be owned by "runner:root" on GitHub Actions
+	// runner images (see #6797), such as the following pointed-to path:
+	//
+	//     /etc/localtime -> /usr/share/zoneinfo/Etc/UTC
+	else if (user == 0 &&
+			(strncmp(rsrc, "/usr/share/", 11) == 0) &&
+			(strncmp(src_username, "runner", 6) == 0)) {
+		fprintf(stderr, "Warning fcopy: ignoring path for CI: %s -> %s (type=%c uid=%lu, name=%s)\n",
+		        src, rsrc, ftype, (unsigned long)src_uid, src_username);
+	}
 	else {
 		if (s.st_uid != user)
 			goto errexit;

@@ -317,17 +317,55 @@ out:
 	return(0);
 }
 
+// Based on the output of ls(1p).
+static char file_type_to_char(mode_t mode) {
+	char ftype = '?';
+	if (S_ISREG(mode))
+		ftype = '-';
+	else if (S_ISDIR(mode))
+		ftype = 'd';
+	else if (S_ISLNK(mode))
+		ftype = 'l';
+	else if (S_ISCHR(mode))
+		ftype = 'c';
+	else if (S_ISBLK(mode))
+		ftype = 'b';
+	else if (S_ISFIFO(mode))
+		ftype = 'p';
+	else if (S_ISSOCK(mode))
+		ftype = 's';
+
+	return ftype;
+}
 
 static char *check(const char *src) {
-	struct stat s;
 	char *rsrc = realpath(src, NULL);
-	if (!rsrc || stat(rsrc, &s) == -1)
-		goto errexit;
+	if (!rsrc) {
+		fprintf(stderr, "Error fcopy: realpath %s\n", src);
+		errExit("realpath");
+	}
+	struct stat s;
+	if (stat(rsrc, &s) == -1) {
+		fprintf(stderr, "Error fcopy: stat %s -> %s\n", src, rsrc);
+		errExit("stat");
+	}
+	struct passwd *src_pw = getpwuid(s.st_uid);
+	if (!src_pw) {
+		fprintf(stderr, "Error fcopy: getpwuid %s -> %s\n", src, rsrc);
+		errExit("getpwuid");
+	}
+
+	uid_t src_uid = src_pw->pw_uid;
+	char *src_username = strdup(src_pw->pw_name);
+	if (!src_username)
+		errExit("strdup");
+
+	uid_t user = getuid();
+	char ftype = file_type_to_char(s.st_mode);
 
 	// on systems with systemd-resolved installed /etc/resolve.conf is a symlink to
 	//    /run/systemd/resolve/resolv.conf; this file is owned by systemd-resolve user
 	// checking gid will fail for files with a larger group such as /usr/bin/mutt_dotlock
-	uid_t user = getuid();
 	if (user == 0 && strncmp(rsrc, "/run/systemd/resolve/", 21) == 0) {
 		// check user systemd-resolve
 		struct passwd *p = getpwnam("systemd-resolve");
@@ -342,12 +380,18 @@ static char *check(const char *src) {
 	}
 
 	// dir, link, regular file
-	if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode) || S_ISLNK(s.st_mode))
+	if (S_ISDIR(s.st_mode) || S_ISREG(s.st_mode) || S_ISLNK(s.st_mode)) {
+		free(src_username);
 		return rsrc;			  // normal exit from the function
+	}
+
+	fprintf(stderr, "Error fcopy: invalid file type for %s -> %s (type=%c uid=%lu name=%s)\n",
+	        src, rsrc, ftype, (unsigned long)src_uid, src_username);
+	exit(1);
 
 errexit:
-	free(rsrc);
-	fprintf(stderr, "Error fcopy: invalid ownership for file %s\n", src);
+	fprintf(stderr, "Error fcopy: invalid ownership for %s -> %s (type=%c uid=%lu name=%s)\n",
+	        src, rsrc, ftype, (unsigned long)src_uid, src_username);
 	exit(1);
 }
 

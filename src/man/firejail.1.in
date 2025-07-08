@@ -2166,8 +2166,9 @@ $ firejail \-\-private=/home/netblue/firefox-home firefox
 .br
 
 .br
-Bug: Even with this enabled, some commands (such as mkdir, mkfile and
-private-cache) will still operate on the original home directory.
+Bug: Even with this enabled, some firejail commands (such as \fBmkdir\fR,
+\fBmkfile\fR and \fBprivate-cache\fR) will still operate on the original home
+directory.
 Workaround: Disable the incompatible commands, such as by using "ignore mkdir"
 and "ignore mkfile".
 For details, see

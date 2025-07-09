@@ -363,10 +363,14 @@ static char *check(const char *src) {
 	uid_t user = getuid();
 	char ftype = file_type_to_char(s.st_mode);
 
+	// Checking gid will fail for files with a larger group, such as
+	// /usr/bin/mutt_dotlock.
+	if (s.st_uid == user) {
+		// ok
+	}
 	// on systems with systemd-resolved installed /etc/resolve.conf is a symlink to
 	//    /run/systemd/resolve/resolv.conf; this file is owned by systemd-resolve user
-	// checking gid will fail for files with a larger group such as /usr/bin/mutt_dotlock
-	if (user == 0 && strncmp(rsrc, "/run/systemd/resolve/", 21) == 0) {
+	else if (user == 0 && strncmp(rsrc, "/run/systemd/resolve/", 21) == 0) {
 		// check user systemd-resolve
 		struct passwd *p = getpwnam("systemd-resolve");
 		if (!p)
@@ -385,8 +389,7 @@ static char *check(const char *src) {
 		        src, rsrc, ftype, (unsigned long)src_uid, src_username);
 	}
 	else {
-		if (s.st_uid != user)
-			goto errexit;
+		goto errexit;
 	}
 
 	// dir, link, regular file

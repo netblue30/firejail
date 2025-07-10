@@ -363,11 +363,13 @@ static char *check(const char *src) {
 	uid_t user = getuid();
 	char ftype = file_type_to_char(s.st_mode);
 
-	// Checking gid will fail for files with a larger group, such as
-	// /usr/bin/mutt_dotlock.
+	// Note: Checking gid will fail for files with a larger group, such as
+	// /usr/bin/mutt_dotlock (see #1243).
 	if (s.st_uid == user) {
 		// ok
 	}
+	// The following are the allowed exceptions (see #1531).
+
 	// On systems using systemd-resolved, /etc/resolve.conf may be owned by
 	// the "systemd-resolve" user and may be a regular file or a symlink to
 	// /run/systemd/resolve/resolv.conf (see #4545).

@@ -9,5 +9,7 @@ include makedeb.local
 
 ignore noblacklist /var/lib/pacman
 
+noblacklist ${PATH}/dpkg*
+
 # Redirect
 include makepkg.profile

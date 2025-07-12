@@ -206,6 +206,9 @@ $ firejail --list
 
 ## Desktop integration
 
+Note: Desktop integration is only applied to the user running firecfg, so make
+sure to run `sudo firecfg` as a normal (desktop) user, not as root.
+
 Integrate your sandbox into your desktop by running the following two commands:
 
 ```sh
@@ -227,6 +230,8 @@ number goes up with every new release.
 We keep the application list in
 [src/firecfg/firecfg.config](src/firecfg/firecfg.config)
 (/etc/firejail/firecfg.config when installed).
+
+See `man firecfg` for details.
 
 ## Security profiles
 

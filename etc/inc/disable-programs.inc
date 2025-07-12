@@ -242,6 +242,7 @@ blacklist ${HOME}/.cache/vivaldi
 blacklist ${HOME}/.cache/vivaldi-snapshot
 blacklist ${HOME}/.cache/vlc
 blacklist ${HOME}/.cache/vmware
+blacklist ${HOME}/.cache/w3m
 blacklist ${HOME}/.cache/warsow-2.1
 blacklist ${HOME}/.cache/waterfox
 blacklist ${HOME}/.cache/wesnoth
@@ -697,6 +698,7 @@ blacklist ${HOME}/.config/viewnior
 blacklist ${HOME}/.config/vivaldi
 blacklist ${HOME}/.config/vivaldi-snapshot
 blacklist ${HOME}/.config/vlc
+blacklist ${HOME}/.config/w3m
 blacklist ${HOME}/.config/wesnoth
 blacklist ${HOME}/.config/wget
 blacklist ${HOME}/.config/wireshark
@@ -1096,6 +1098,7 @@ blacklist ${HOME}/.local/share/uzbl
 blacklist ${HOME}/.local/share/vlc
 blacklist ${HOME}/.local/share/vpltd
 blacklist ${HOME}/.local/share/vulkan
+blacklist ${HOME}/.local/share/w3m
 blacklist ${HOME}/.local/share/warsow-2.1
 blacklist ${HOME}/.local/share/warzone2100
 blacklist ${HOME}/.local/share/warzone2100-3.*

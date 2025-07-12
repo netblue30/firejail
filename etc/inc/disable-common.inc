@@ -356,6 +356,7 @@ read-only ${HOME}/.config/ncmpcpp/config
 read-only ${HOME}/.config/nsxiv/exec
 read-only ${HOME}/.config/nvim
 read-only ${HOME}/.config/pkcs11
+read-only ${HOME}/.config/w3m
 read-only ${HOME}/.dotfiles
 read-only ${HOME}/.elinks
 read-only ${HOME}/.emacs
@@ -368,6 +369,7 @@ read-only ${HOME}/.iscreenrc
 read-only ${HOME}/.local/lib
 read-only ${HOME}/.local/share/cool-retro-term
 read-only ${HOME}/.local/share/nvim
+read-only ${HOME}/.local/share/w3m
 read-only ${HOME}/.local/state/nvim
 read-only ${HOME}/.mailcap
 read-only ${HOME}/.mozilla/firefox/profiles.ini

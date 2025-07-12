@@ -12,9 +12,12 @@ include globals.local
 #ignore private-dev
 #ignore private-etc
 
+noblacklist ${HOME}/.cache/w3m
+noblacklist ${HOME}/.config/w3m
+noblacklist ${HOME}/.local/share/w3m
 noblacklist ${HOME}/.w3m
 
-blacklist ${RUNUSER}/wayland-*
+#blacklist ${RUNUSER}/wayland-*
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
@@ -28,12 +31,15 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 include disable-shell.inc
-include disable-x11.inc
+#include disable-x11.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.w3m
 whitelist /usr/share/w3m
 whitelist ${DOWNLOADS}
+whitelist ${HOME}/.cache/w3m
+whitelist ${HOME}/.config/w3m
+whitelist ${HOME}/.local/share/w3m
 whitelist ${HOME}/.w3m
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
@@ -68,5 +74,7 @@ dbus-user none
 dbus-system none
 
 memory-deny-write-execute
+read-write ${HOME}/.config/w3m
+read-write ${HOME}/.local/share/w3m
 read-write ${HOME}/.w3m
 restrict-namespaces

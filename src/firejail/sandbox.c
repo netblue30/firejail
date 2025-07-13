@@ -176,7 +176,8 @@ static void save_nogroups(void) {
 		fclose(fp);
 	}
 	else {
-		fprintf(stderr, "Error: cannot save nogroups state\n");
+		fprintf(stderr, "Error: cannot save nogroups state: fopen %s: %s\n",
+		        RUN_GROUPS_CFG, strerror(errno));
 		exit(1);
 	}
 }
@@ -192,7 +193,8 @@ static void save_nonewprivs(void) {
 		fclose(fp);
 	}
 	else {
-		fprintf(stderr, "Error: cannot save nonewprivs state\n");
+		fprintf(stderr, "Error: cannot save nonewprivs state: fopen %s: %s\n",
+		        RUN_NONEWPRIVS_CFG, strerror(errno));
 		exit(1);
 	}
 }
@@ -205,7 +207,8 @@ static void save_umask(void) {
 		fclose(fp);
 	}
 	else {
-		fprintf(stderr, "Error: cannot save umask\n");
+		fprintf(stderr, "Error: cannot save umask: fopen %s: %s\n",
+		        RUN_UMASK_FILE, strerror(errno));
 		exit(1);
 	}
 }
@@ -289,8 +292,7 @@ static void chk_chroot(void) {
 			return;
 	}
 
-	fprintf(stderr, "Error: cannot mount filesystem as slave\n");
-	exit(1);
+	errExit("cannot mount filesystem as slave");
 }
 
 static int monitor_application(pid_t app_pid) {
@@ -377,7 +379,8 @@ static int monitor_application(pid_t app_pid) {
 			// sleep 2 seconds and try again
 			sleep(2);
 			if (!(dir = opendir("/proc"))) {
-				fprintf(stderr, "Error: cannot open /proc directory\n");
+				fprintf(stderr, "Error: cannot open /proc directory: %s\n",
+				        strerror(errno));
 				exit(1);
 			}
 		}
@@ -482,7 +485,7 @@ static void close_file_descriptors(void) {
 	size_t sz = 0;
 	int *keep = str_to_int_array(cfg.keep_fd, &sz);
 	if (!keep) {
-		fprintf(stderr, "Error: invalid keep-fd option\n");
+		fprintf(stderr, "Error: invalid keep-fd option: %s\n", cfg.keep_fd);
 		exit(1);
 	}
 	close_all(keep, sz);
@@ -527,8 +530,7 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 	else if (ll_restrict(0)) {
 		// It isn't safe to continue if Landlock self-restriction was
 		// enabled and the "landlock_restrict_self" syscall has failed.
-		fprintf(stderr, "Error: ll_restrict() failed, exiting...\n");
-		exit(1);
+		errExit("ll_restrict() failed, exiting...");
 	}
 #endif
 
@@ -563,10 +565,8 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 			}
 		}
 
-		if (cfg.original_program_index == 0) {
-			fprintf(stderr, "Error: --shell=none configured, but no program specified\n");
-			exit(1);
-		}
+		if (cfg.original_program_index == 0)
+			errExit("--shell=none configured, but no program specified");
 
 		if (!arg_command && !arg_quiet)
 			print_time();
@@ -641,7 +641,7 @@ void start_application(int no_sandbox, int fd, char *set_sandbox_status) {
 			fexecve(fd, arg, environ);
 	}
 
-	perror("Cannot start application");
+	fprintf(stderr, "Error: Cannot start application: %s\n", strerror(errno));
 	exit(1);
 }
 
@@ -1135,7 +1135,7 @@ int sandbox(void* sandbox_arg) {
 	int cwd = 0;
 	if (cfg.cwd) {
 		if (is_link(cfg.cwd)) {
-			fprintf(stderr, "Error: unable to enter private working directory: %s\n", cfg.cwd);
+			fprintf(stderr, "Error: unable to enter private working directory: %s: it is a symlink\n", cfg.cwd);
 			exit(1);
 		}
 
@@ -1311,10 +1311,9 @@ int sandbox(void* sandbox_arg) {
 	// Set NO_NEW_PRIVS if desired
 	//****************************************
 	if (arg_nonewprivs) {
-		if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) != 0) {
-			fprintf(stderr, "Error: cannot set NO_NEW_PRIVS, it requires a Linux kernel version 3.5 or newer.\n");
-			exit(1);
-		}
+		if (prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) != 0)
+			errExit("cannot set NO_NEW_PRIVS, it requires a Linux kernel version 3.5 or newer");
+
 		if (arg_debug)
 			printf("NO_NEW_PRIVS set\n");
 	}

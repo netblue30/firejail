@@ -55,7 +55,8 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 	if (filtermask & SBOX_STDIN_FROM_FILE) {
 		int fd;
 		if((fd = open(SBOX_STDIN_FILE, O_RDONLY)) == -1) {
-			fprintf(stderr,"Error: cannot open %s\n", SBOX_STDIN_FILE);
+			fprintf(stderr,"Error: cannot open %s: %s\n",
+			        SBOX_STDIN_FILE, strerror(errno));
 			exit(1);
 		}
 		if (dup2(fd, STDIN_FILENO) == -1)
@@ -265,7 +266,7 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 	} else {
 		assert(0);
 	}
-	perror("fexecve");
+	fprintf(stderr, "Error: fexecve %s: %s\n", arg[0], strerror(errno));
 	_exit(1);
 }
 
@@ -320,7 +321,8 @@ int sbox_run_v(unsigned filtermask, char * const arg[]) {
 	}
 	if (WIFSIGNALED(status) ||
 	   (WIFEXITED(status) && WEXITSTATUS(status) != 0)) {
-		fprintf(stderr, "Error: failed to run %s, exiting...\n", arg[0]);
+		fprintf(stderr, "Error: failed to run %s: exit status %d, exiting...\n",
+		        arg[0], WEXITSTATUS(status));
 		exit(1);
 	}
 

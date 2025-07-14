@@ -1430,7 +1430,7 @@ void enter_network_namespace(pid_t pid) {
 		errExit("asprintf");
 	struct stat s;
 	if (stat(name, &s) == -1) {
-		fprintf(stderr, "Error: the sandbox doesn't use a new network namespace\n");
+		fprintf(stderr, "Error: the sandbox doesn't use a new network namespace (see --net)\n");
 		exit(1);
 	}
 	free(name);

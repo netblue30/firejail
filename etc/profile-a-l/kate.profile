@@ -6,6 +6,11 @@ include kate.local
 # Persistent global definitions
 include globals.local
 
+# Add the following to kate.local if you don't need network access:
+#ignore protocol
+#net none
+#protocol unix
+
 ignore noexec ${HOME}
 
 noblacklist ${HOME}/.config/katemetainfos
@@ -49,7 +54,7 @@ nosound
 notv
 nou2f
 novideo
-protocol unix
+protocol unix,inet,inet6
 seccomp
 
 #private-bin kate,kbuildsycoca4,kdeinit4

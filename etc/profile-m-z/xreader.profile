@@ -22,7 +22,7 @@ include disable-xdg.inc
 
 #apparmor
 caps.drop all
-no3d
+#no3d # breaks program startup on Linux Mint (see #6829)
 nodvd
 nogroups
 noinput

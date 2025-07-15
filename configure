@@ -650,6 +650,7 @@ ac_includes_default="\
 ac_header_c_list=
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+RECOMMENDS
 DEPENDS
 HAVE_ONLY_SYSCFG_PROFILES
 HAVE_FORCE_NONEWPRIVS
@@ -4564,6 +4565,27 @@ if test "x$HAVE_APPARMOR" != "x"; then
 fi
 if test "x$HAVE_SELINUX" != "x"; then
 	DEPENDS="$DEPENDS, libselinux1"
+fi
+
+
+# Build complete recommends string for debian control files
+RECOMMENDS=""
+if test "x$HAVE_NETWORK" != "x"; then
+	RECOMMENDS="iproute2, iptables"
+fi
+if test "x$HAVE_DBUSPROXY" != "x"; then
+	if test "x$RECOMMENDS" != "x"; then
+		RECOMMENDS="$RECOMMENDS, xdg-dbus-proxy"
+	else
+		RECOMMENDS="xdg-dbus-proxy"
+	fi
+fi
+if test "x$HAVE_X11" != "x"; then
+	if test "x$RECOMMENDS" != "x"; then
+		RECOMMENDS="$RECOMMENDS, xauth, xpra | xserver-xephyr | xvfb"
+	else
+		RECOMMENDS="xauth, xpra | xserver-xephyr | xvfb"
+	fi
 fi
 
 

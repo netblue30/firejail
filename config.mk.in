@@ -54,6 +54,7 @@ HAVE_X11=@HAVE_X11@
 
 # Dependency strings for debian control files
 DEPENDS=@DEPENDS@
+RECOMMENDS=@RECOMMENDS@
 
 MANFLAGS = \
 	$(HAVE_APPARMOR) \

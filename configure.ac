@@ -313,6 +313,27 @@ if test "x$HAVE_SELINUX" != "x"; then
 fi
 AC_SUBST([DEPENDS])
 
+# Build complete recommends string for debian control files
+RECOMMENDS=""
+if test "x$HAVE_NETWORK" != "x"; then
+	RECOMMENDS="iproute2, iptables"
+fi
+if test "x$HAVE_DBUSPROXY" != "x"; then
+	if test "x$RECOMMENDS" != "x"; then
+		RECOMMENDS="$RECOMMENDS, xdg-dbus-proxy"
+	else
+		RECOMMENDS="xdg-dbus-proxy"
+	fi
+fi
+if test "x$HAVE_X11" != "x"; then
+	if test "x$RECOMMENDS" != "x"; then
+		RECOMMENDS="$RECOMMENDS, xauth, xpra | xserver-xephyr | xvfb"
+	else
+		RECOMMENDS="xauth, xpra | xserver-xephyr | xvfb"
+	fi
+fi
+AC_SUBST([RECOMMENDS])
+
 AC_CONFIG_FILES([config.mk config.sh])
 AC_OUTPUT
 

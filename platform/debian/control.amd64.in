@@ -5,7 +5,7 @@ Maintainer: netblue30 <netblue30@protonmail.com>
 Installed-Size: 2024
 Provides: firejail-profiles
 Depends: @DEPENDS@
-Recommends: iproute2, iptables, xauth, xdg-dbus-proxy, xpra | xserver-xephyr | xvfb
+Recommends: @RECOMMENDS@
 Suggests: python3
 Conflicts: firejail-profiles
 Section: admin

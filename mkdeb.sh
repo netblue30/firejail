@@ -27,6 +27,10 @@ tar -xJvf "$CODE_ARCHIVE"
 cd "$CODE_DIR"
 ./configure --prefix=/usr --enable-apparmor "$@"
 make -j "$(nproc)"
+
+# Source config.mk to get the dependency macros
+. ./config.mk
+
 mkdir debian
 DESTDIR=debian make install-strip
 
@@ -41,7 +45,11 @@ gzip -9 -n "$INSTALL_DIR/usr/share/doc/firejail/changelog.Debian"
 rm "$INSTALL_DIR/usr/share/doc/firejail/COPYING"
 install -m644 "$CODE_DIR/platform/debian/copyright" "$INSTALL_DIR/usr/share/doc/firejail/."
 mkdir -p "$DEBIAN_CTRL_DIR"
-sed "s/FIREJAILVER/$VERSION/g" "$CODE_DIR/platform/debian/control.$(dpkg-architecture -qDEB_HOST_ARCH)" > "$DEBIAN_CTRL_DIR/control"
+# Process the control template file with macros from config.mk
+sed \
+	-e "s/FIREJAILVER/$VERSION/g" \
+	-e "s/@DEPENDS@/$DEPENDS/g" \
+	"$CODE_DIR/platform/debian/control.$(dpkg-architecture -qDEB_HOST_ARCH).in" > "$DEBIAN_CTRL_DIR/control"
 
 mkdir -p "$INSTALL_DIR/usr/share/lintian/overrides/"
 install -m644 "$CODE_DIR/platform/debian/firejail.lintian-overrides" "$INSTALL_DIR/usr/share/lintian/overrides/firejail"

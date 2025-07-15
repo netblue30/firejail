@@ -52,6 +52,9 @@ HAVE_USERNS=@HAVE_USERNS@
 HAVE_USERTMPFS=@HAVE_USERTMPFS@
 HAVE_X11=@HAVE_X11@
 
+# Dependency strings for debian control files
+DEPENDS=@DEPENDS@
+
 MANFLAGS = \
 	$(HAVE_APPARMOR) \
 	$(HAVE_CHROOT) \

@@ -650,6 +650,7 @@ ac_includes_default="\
 ac_header_c_list=
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+DEPENDS
 HAVE_ONLY_SYSCFG_PROFILES
 HAVE_FORCE_NONEWPRIVS
 HAVE_CONTRIB_INSTALL
@@ -4555,6 +4556,16 @@ fi
 if test "$prefix" = /usr; then
 	test "$sysconfdir" = '${prefix}/etc' && sysconfdir="/etc"
 fi
+
+# Build complete dependency string for debian control files
+DEPENDS="libc6"
+if test "x$HAVE_APPARMOR" != "x"; then
+	DEPENDS="libapparmor1, $DEPENDS"
+fi
+if test "x$HAVE_SELINUX" != "x"; then
+	DEPENDS="$DEPENDS, libselinux1"
+fi
+
 
 ac_config_files="$ac_config_files config.mk config.sh"
 

@@ -4,7 +4,7 @@ Architecture: i386
 Maintainer: netblue30 <netblue30@protonmail.com>
 Installed-Size: 2024
 Provides: firejail-profiles
-Depends: libapparmor1, libc6, libselinux1
+Depends: @DEPENDS@
 Recommends: iproute2, iptables, xauth, xdg-dbus-proxy, xpra | xserver-xephyr | xvfb
 Suggests: python3
 Conflicts: firejail-profiles

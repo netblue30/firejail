@@ -303,6 +303,16 @@ if test "$prefix" = /usr; then
 	test "$sysconfdir" = '${prefix}/etc' && sysconfdir="/etc"
 fi
 
+# Build complete dependency string for debian control files
+DEPENDS="libc6"
+if test "x$HAVE_APPARMOR" != "x"; then
+	DEPENDS="libapparmor1, $DEPENDS"
+fi
+if test "x$HAVE_SELINUX" != "x"; then
+	DEPENDS="$DEPENDS, libselinux1"
+fi
+AC_SUBST([DEPENDS])
+
 AC_CONFIG_FILES([config.mk config.sh])
 AC_OUTPUT
 

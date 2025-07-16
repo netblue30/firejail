@@ -95,7 +95,7 @@ private-bin keepassxc,keepassxc-cli,keepassxc-proxy
 # hardware keys) on /dev after it has already started; add "ignore private-dev"
 # to keepassxc.local if this is an issue (see #4883).
 private-dev
-private-etc
+private-etc @x11
 private-tmp
 
 dbus-user filter

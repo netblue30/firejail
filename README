@@ -436,6 +436,8 @@ eventyrer (https://github.com/eventyrer)
 	- update gnome-mplayer.profile
 Ethan R (https://github.com/AN3223)
 	- add allow-perl.inc to w3m.profile
+exponentialmatrix (https://github.com/exponentialmatrix)
+	- profiles: makedeb: allow dpkg (#6816)
 Fabian Würfl (https://github.com/BafDyce)
 	- fixed race condition when creating a new directory
 	- Liferea profile

@@ -12,6 +12,8 @@ firejail (0.9.75) baseline; urgency=low
   * modif: improve "Failed mount" error messages in util.c (#6747)
   * modif: improve fcopy error messages in check() (#6801)
   * modif: fcopy: try normal case first instead of last in check() (#6804)
+  * modif: improve new network namespace error message (#6824)
+  * modif: improve error messages in sandbox.c/sbox.c (#6825)
   * bugfix: fix flock debug messages going to stderr (#6712)
   * bugfix: add missing selinux relabeling for /dev paths (#6734)
   * bugfix: fix potential deadlock with flock + SIGTSTP (#6729 #6750)
@@ -46,6 +48,9 @@ firejail (0.9.75) baseline; urgency=low
   * profiles: firecfg: disable foliate (#6784)
   * profiles: finish converting private-opt to whitelist (#6785)
   * profiles: replace hosts.conf with host.conf in private-etc (#6791)
+  * profiles: makedeb: allow dpkg (#6816)
+  * profiles: kate: fix network access (#6815 #6823)
+  * profiles: keepassxc: add x11 group to private-etc (#6827 #6828)
   * new profile: ansel (#6751)
  -- netblue30 <netblue30@yahoo.com>  Mon, 24 Mar 2025 09:00:00 -0500
 

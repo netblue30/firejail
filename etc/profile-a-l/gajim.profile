@@ -71,6 +71,7 @@ dbus-user.talk ca.desrt.dconf
 dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.kde.kwalletd5
+dbus-user.talk org.kde.kwalletd6
 dbus-user.talk org.mpris.MediaPlayer2.*
 dbus-system filter
 dbus-system.talk org.freedesktop.login1

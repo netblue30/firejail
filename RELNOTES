@@ -88,7 +88,7 @@ firejail (0.9.74) baseline; urgency=low
   * modif: Allow mostly only ASCII letters and digits for sandbox name
     (--name=) and host name (--hostname=) (#5708 #5856)
   * modif: make private-lib a configure-time option, disabled by default (see
-    --enable-private-lib) (#5727 #5732)
+    --enable-private-lib) (b689b69f6 #5727 #5732)
   * modif: Improve --version/--help & print version on startup (#5829 #6172)
   * modif: improve errExit error messages (#5871)
   * modif: drop deprecated 'shell' option references (#5894)

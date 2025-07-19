@@ -28,7 +28,7 @@ build_ubuntu_package:
         - make installcheck
 
 build_debian_package:
-    image: debian:buster
+    image: debian:bullseye
     timeout: 10 minutes
     variables:
         DEBIAN_FRONTEND: noninteractive

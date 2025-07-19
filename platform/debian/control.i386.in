@@ -1,10 +1,13 @@
 Package: firejail
 Version: FIREJAILVER-1
-Architecture: amd64
+Architecture: i386
 Maintainer: netblue30 <netblue30@protonmail.com>
 Installed-Size: 2024
-Depends: libc6
-Suggests: python, python3
+Provides: firejail-profiles
+Depends: @DEPENDS@
+Recommends: @RECOMMENDS@
+Suggests: python3
+Conflicts: firejail-profiles
 Section: admin
 Priority: optional
 Homepage: https://github.com/netblue30/firejail

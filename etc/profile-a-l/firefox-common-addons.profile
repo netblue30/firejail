@@ -60,6 +60,7 @@ whitelist ${HOME}/.config/okularrc
 whitelist ${HOME}/.config/pipelight-silverlight5.1
 whitelist ${HOME}/.config/pipelight-widevine
 whitelist ${HOME}/.config/qpdfview
+whitelist ${HOME}/.config/tridactyl/tridactylrc
 whitelist ${HOME}/.config/youtube-dl
 whitelist ${HOME}/.kde/share/apps/kget
 whitelist ${HOME}/.kde/share/apps/okular

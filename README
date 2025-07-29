@@ -357,6 +357,8 @@ D357R0Y3R (https://github.com/D357R0Y3R)
 	- added floorp to firejail.config
 da2x (https://github.com/da2x)
 	- matched RPM license tag
+Dan Hipschman (https://github.com/dan-hipschman)
+	- profiles: xreader: disable no3d to fix startup (#6829)
 Daan Bakker (https://github.com/dbakker)
 	- protect shell startup files
 Danil Semelenov (https://github.com/sgtpep)
@@ -749,6 +751,7 @@ Kishore96in (https://github.com/Kishore96in)
 	- konversatin profile fix
 	- added Neochat profile
 	- added whitelist-1793-workaround.inc
+	- profiles: allow org.kde.kwalletd6 for Plasma 6 systems (#6819)
 KOLANICH (https://github.com/KOLANICH)
 	- added symlink fixer fix_private-bin.py in contrib section
 	- update fix_private-bin.py
@@ -786,6 +789,8 @@ lecso7 (https://github.com/lecso7)
 	- allow evince to read .cbz file format
 leukimi (https://github.com/leukimi)
 	- 0ad.profile: fix libmozjs error on OpenSUSE Tumbleweed
+lhywk (https://github.com/lhywk)
+	- bugfix: add NULL check for cmdline in find_child() (#6840)
 Loïc Damien (https://github.com/dzamlo)
 	- small fixes
 Liorst4 (https://github.com/Liorst4)
@@ -982,6 +987,8 @@ Petter Reinholdtsen (pere@hungry.com)
 	- Opera profile patch
 Peter Zmanovsky (https://github.com/peter15914)
 	- fix memory leak in fs_home.c
+petRUShka (https://github.com/petRUShka)
+	- profiles: firefox: add alternative tridactylrc path (#6721)
 PharmaceuticalCobweb (https://github.com/PharmaceuticalCobweb)
 	- fix quiterss profile
 	- added profile for gnome-ring

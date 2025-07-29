@@ -22,9 +22,11 @@ firejail (0.9.75) baseline; urgency=low
   * bugfix: fcopy: allow /etc/resolv.conf owned by systemd-resolve (#4545
     #6808)
   * bugfix: fix "Not enforcing Landlock" message always being printed (#6806)
+  * bugfix: add NULL check for cmdline in find_child() (#6840)
   * build: use TARNAME in SYSCONFDIR/VARDIR (#6713)
   * build: add localstatedir and use in VARDIR (#6715)
   * build: replace _SYSCONFDIR_ with @sysconfdir@ (#6737)
+  * ci: upgrade debian:buster to debian:bullseye (#6832)
   * docs: improve URL formatting in man pages (#6706)
   * docs: clarify --private bug in man pages (#6805)
   * docs: fix man formatting of landlock.enforce (#6807)
@@ -51,6 +53,9 @@ firejail (0.9.75) baseline; urgency=low
   * profiles: makedeb: allow dpkg (#6816)
   * profiles: kate: fix network access (#6815 #6823)
   * profiles: keepassxc: add x11 group to private-etc (#6827 #6828)
+  * profiles: allow org.kde.kwalletd6 for Plasma 6 systems (#6819)
+  * profiles: xreader: disable no3d to fix startup (#6829)
+  * profiles: firefox: add alternative tridactylrc path (#6720 #6721)
   * new profile: ansel (#6751)
  -- netblue30 <netblue30@yahoo.com>  Mon, 24 Mar 2025 09:00:00 -0500
 

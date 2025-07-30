@@ -267,9 +267,9 @@ See `man firecfg` for details.
 Note: Broken symlinks are ignored when searching for an executable in `$PATH`,
 so uninstalling without doing the above should not cause issues.
 
-## Latest released version: 0.9.74
+## Latest released version: 0.9.76
 
-## Current development version: 0.9.75
+## Current development version: 0.9.77
 
 
 ### Landlock support - ongoing/experimental
@@ -336,25 +336,25 @@ Warning: cannot open youtube-music-desktop-app or /etc/firejail/youtube-music-de
 No include .local found in /etc/firejail/youtube-music-desktop-app.profile
 
 Stats:
-    profiles			1324
-    include local profile	1323   (include profile-name.local)
-    include globals		1290   (include globals.local)
-    blacklist ~/.ssh		1183   (include disable-common.inc)
-    seccomp			1195
-    capabilities		1317
-    noexec			1197   (include disable-exec.inc)
-    noroot			1092
+    profiles			1325
+    include local profile	1324   (include profile-name.local)
+    include globals		1291   (include globals.local)
+    blacklist ~/.ssh		1184   (include disable-common.inc)
+    seccomp			1196
+    capabilities		1318
+    noexec			1198   (include disable-exec.inc)
+    noroot			1093
     memory-deny-write-execute	320
-    restrict-namespaces		1034
+    restrict-namespaces		1035
     apparmor			850
     private-bin			801
-    private-dev			1158
+    private-dev			1224
     private-etc			824
     private-lib			85
-    private-tmp			1020
+    private-tmp			1021
     whitelist home directory	654
     whitelist var		965   (include whitelist-var-common.inc)
-    whitelist run/user		1287   (include whitelist-runuser-common.inc
+    whitelist run/user		1288   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
     whitelist usr/share		746   (include whitelist-usr-share-common.inc
     net none			450

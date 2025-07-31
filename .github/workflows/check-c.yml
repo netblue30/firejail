@@ -120,6 +120,7 @@ jobs:
           api.github.com:443
           github.com:443
           objects.githubusercontent.com:443
+          release-assets.githubusercontent.com:443
           uploads.github.com:443
 
     - name: Checkout repository

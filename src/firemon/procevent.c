@@ -496,7 +496,9 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 					sprintf(lineptr, "\n");
 				else {
 					sprintf(lineptr, " %s\n", cmd);
-					free(cmd);
+					if (cmd != pids[pid].option.event.cmd) {
+						free(cmd);
+					}
 				}
 				lineptr += strlen(lineptr);
 			}

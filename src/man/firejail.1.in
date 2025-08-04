@@ -125,6 +125,10 @@ ptrace system call allows a full bypass of the seccomp filter.
 Example:
 .br
 $ firejail --allow-debuggers --profile=/etc/firejail/firefox.profile strace -f firefox
+.br
+
+.br
+See also \fB\-\-private-etc\fR and \fB\-\-trace\fR.
 .TP
 \fB\-\-allusers
 All directories under /home are visible inside the sandbox. By default, only current user home directory is visible.
@@ -2299,10 +2303,17 @@ Files for encrypted TLS/SSL protocol are in @tls-ca group.
 
 $ firejail --private-etc=@tls-ca,wgetrc wget https://debian.org
 
+Note: The easiest way to extract the list of /etc files accessed by your
+program is by using the \fBstrace\fR utility.
 
-Note: The easiest way to extract the list of /etc files accessed by your program is using strace utility:
+Example:
 
-$ strace /usr/bin/transmission-qt 2>&1 | grep open | grep etc
+$ strace -f --trace=%file /usr/bin/transmission-qt 2>&1 | grep etc
+
+$ firejail --allow-debuggers --profile=/etc/firejail/transmission-qt.profile
+strace -f --trace=%file /usr/bin/transmission-qt 2>&1 | grep etc
+
+See also \fB\-\-allow-debuggers\fR and \fB\-\-trace\fR.
 #ifdef HAVE_PRIVATE_HOME
 .TP
 \fB\-\-private-home=file,directory
@@ -3096,6 +3107,10 @@ Reading profile /etc/firejail/wget.profile
 
 .br
 parent is shutting down, bye...
+.br
+
+.br
+See also \fB\-\-allow-debuggers\fR and \fB\-\-private-etc\fR.
 .TP
 \fB\-\-tracelog
 This option enables auditing blacklisted files and directories. A message

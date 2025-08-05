@@ -1,5 +1,10 @@
 firejail (0.9.77) baseline; urgency=low
   * work in progress
+  * bugfix: remove /usr/share + "runner:root" CI workaround (#6844)
+  * ci: allow new github domain for codeql download (#6845)
+  * docs: man: improve strace usage and add refs (#6851)
+  * docs: add debian/ubuntu links to README.md (#6850)
+  * profiles: thunderbird: fix ignoring wruc (#6839 #6852)
  -- netblue30 <netblue30@yahoo.com>  Wed, 30 Jul 2025 11:00:00 -0500
 
 firejail (0.9.76) baseline; urgency=low

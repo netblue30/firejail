@@ -75,6 +75,9 @@ alt="Tor Browser Security" width="240" height="142" border="10" />
 * Wiki: <https://github.com/netblue30/firejail/wiki>
 * GitHub Actions: <https://github.com/netblue30/firejail/actions>
 * GitLab CI: <https://gitlab.com/Firejail/firejail_ci/pipelines>
+* Debian CI: <https://salsa.debian.org/reiner/firejail>
+* Debian Package Tracker: <https://tracker.debian.org/pkg/firejail>
+* Ubuntu PPA: <https://launchpad.net/~deki/+archive/ubuntu/firejail>
 * Video Channel: <https://odysee.com/@netblue30:9?order=new>
 * Backup Video Channel: <https://www.bitchute.com/profile/JSBsA1aoQVfW/>
 

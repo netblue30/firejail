@@ -153,7 +153,7 @@ doexit:
 	fclose(fp);
 	free(file);
 #ifdef DEBUG_PRCTL
-	printf("%s: %d: return %d\n", __FUNCTION__, __LINE__, rv);
+	printf("%s: %d, return %d\n", __FUNCTION__, __LINE__, rv);
 #endif
 	return rv;
 }

@@ -88,8 +88,14 @@ output goes here
 <summary>Output of <code>LC_ALL=C firejail --debug /path/to/program</code></summary>
 <p>
 
-<!-- If the output is too long to embed it into the comment,
-     create a secret gist at https://gist.github.com/ and link it here. -->
+<!--
+If the output is too long, save it to a file (e.g. "fjdebug.txt") and attach it
+to the comment:
+https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/attaching-files
+
+If that does not work, create a secret gist at https://gist.github.com/ and
+link it here.
+-->
 
 ```
 output goes here

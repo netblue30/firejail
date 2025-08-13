@@ -182,7 +182,7 @@ static void print_directory(const char *path) {
 	else {
 		for (i = 0; i < n; i++)
 			print_file_or_dir(path, namelist[i]->d_name);
-		// get rid of false psitive reported by GCC -fanalyze
+		// get rid of false psitive reported by GCC -fanalyzer
 		for (i = 0; i < n; i++)
 			free(namelist[i]);
 	}

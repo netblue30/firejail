@@ -135,7 +135,7 @@ int checkcfg(int val) {
 			else if (strncmp(ptr, "netfilter-default ", 18) == 0) {
 				char *fname = ptr + 18;
 				while (*fname == ' ' || *fname == '\t')
-					ptr++;
+					fname++;
 				char *end = strchr(fname, ' ');
 				if (end)
 					*end = '\0';

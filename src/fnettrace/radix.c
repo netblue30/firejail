@@ -99,6 +99,8 @@ RNode *radix_add(uint32_t ip, uint32_t mask, char *name) {
 	uint32_t lastm = 0;
 	if (head == 0) {
 		head = malloc(sizeof(RNode));
+		if (!head)
+			errExit("malloc");
 		memset(head, 0, sizeof(RNode));
 	}
 	RNode *ptr = head;

@@ -330,7 +330,7 @@ void x11_start_xvfb(int argc, char **argv) {
 
 		// running without privileges - see drop_privs call above
 		assert(env_get("LD_PRELOAD") == NULL);
-		assert(getenv("LD_PRELOAD") == NULL);
+		assert(secure_getenv("LD_PRELOAD") == NULL);
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		_exit(1);
@@ -371,7 +371,7 @@ void x11_start_xvfb(int argc, char **argv) {
 
 		// running without privileges - see drop_privs call above
 		assert(env_get("LD_PRELOAD") == NULL);
-		assert(getenv("LD_PRELOAD") == NULL);
+		assert(secure_getenv("LD_PRELOAD") == NULL);
 		execvp(jail_argv[0], jail_argv);
 		perror("execvp");
 		_exit(1);
@@ -567,7 +567,7 @@ void x11_start_xephyr(int argc, char **argv) {
 
 		// running without privileges - see drop_privs call above
 		assert(env_get("LD_PRELOAD") == NULL);
-		assert(getenv("LD_PRELOAD") == NULL);
+		assert(secure_getenv("LD_PRELOAD") == NULL);
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		_exit(1);
@@ -608,7 +608,7 @@ void x11_start_xephyr(int argc, char **argv) {
 		env_apply_all();
 
 		// running without privileges - see drop_privs call above
-		assert(getenv("LD_PRELOAD") == NULL);
+		assert(secure_getenv("LD_PRELOAD") == NULL);
 		assert(env_get("LD_PRELOAD") == NULL);
 		execvp(jail_argv[0], jail_argv);
 		perror("execvp");
@@ -797,7 +797,7 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 		env_apply_all();
 
 		// running without privileges - see drop_privs call above
-		assert(getenv("LD_PRELOAD") == NULL);
+		assert(secure_getenv("LD_PRELOAD") == NULL);
 		assert(env_get("LD_PRELOAD") == NULL);
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
@@ -849,7 +849,7 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 
 		// running without privileges - see drop_privs call above
 		assert(env_get("LD_PRELOAD") == NULL);
-		assert(getenv("LD_PRELOAD") == NULL);
+		assert(secure_getenv("LD_PRELOAD") == NULL);
 		execvp(attach_argv[0], attach_argv);
 		perror("execvp");
 		_exit(1);
@@ -879,7 +879,7 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 	if (jail == 0) {
 		// running without privileges - see drop_privs call above
 		assert(env_get("LD_PRELOAD") == NULL);
-		assert(getenv("LD_PRELOAD") == NULL);
+		assert(secure_getenv("LD_PRELOAD") == NULL);
 
 		// restore original environment variables
 		env_apply_all();
@@ -915,7 +915,7 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 
 				// running without privileges - see drop_privs call above
 				assert(env_get("LD_PRELOAD") == NULL);
-				assert(getenv("LD_PRELOAD") == NULL);
+				assert(secure_getenv("LD_PRELOAD") == NULL);
 				execvp(stop_argv[0], stop_argv);
 				perror("execvp");
 				_exit(1);
@@ -1087,7 +1087,7 @@ static void __attribute__((noreturn)) x11_start_xpra_new(int argc, char **argv, 
 
 		// running without privileges - see drop_privs call above
 		assert(env_get("LD_PRELOAD") == NULL);
-		assert(getenv("LD_PRELOAD") == NULL);
+		assert(secure_getenv("LD_PRELOAD") == NULL);
 		execvp(server_argv[0], server_argv);
 		perror("execvp");
 		_exit(1);

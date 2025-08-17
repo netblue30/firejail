@@ -376,7 +376,7 @@ extras: all
 
 .PHONY: cppcheck
 cppcheck:
-	$(CPPCHECK) --force --error-exitcode=1 --enable=warning,performance \
+	$(CPPCHECK) --force --error-exitcode=1 --enable=warning,performance --check-level=exhaustive \
 	  -i src/firejail/checkcfg.c -i src/firejail/main.c .
 
 .PHONY: scan-build

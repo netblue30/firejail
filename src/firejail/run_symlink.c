@@ -79,7 +79,7 @@ void run_symlink(int argc, char **argv, int run_as_is) {
 	if (env_get("LD_PRELOAD") != NULL)
 		fprintf(stderr, "run_symlink: LD_PRELOAD is: '%s'\n", env_get("LD_PRELOAD"));
 	assert(env_get("LD_PRELOAD") == NULL);
-	assert(getenv("LD_PRELOAD") == NULL);
+	assert(secure_getenv("LD_PRELOAD") == NULL);
 	execvp(a[0], a);
 
 	perror("execvp");

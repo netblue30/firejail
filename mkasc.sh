@@ -10,6 +10,13 @@ printf 'Calculating SHA256 for all files in /transfer - %s version %s' "$TARNAME
 cd /transfer || exit 1
 sha256sum ./* > "$TARNAME-$VERSION-unsigned"
 gpg --clearsign --digest-algo SHA256 < "$TARNAME-$VERSION-unsigned" > "$TARNAME-$VERSION.asc"
-gpg --verify "$TARNAME-$VERSION.asc"
 gpg --detach-sign --armor "$TARNAME-$VERSION.tar.xz"
 rm "$TARNAME-$VERSION-unsigned"
+
+echo
+echo
+echo "*** Verifying $TARNAME-$VERSION.tar.xz.asc ***"
+gpg --verify "$TARNAME-$VERSION.tar.xz.asc"
+echo "*** Verifying $TARNAME-$VERSION.asc ***"
+gpg --verify "$TARNAME-$VERSION.asc"
+

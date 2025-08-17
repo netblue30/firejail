@@ -272,7 +272,16 @@ so uninstalling without doing the above should not cause issues.
 
 ## Latest released version: 0.9.76
 
+This is and emargency release, many thanks to @kmk3, @SkewedZeppelin, and all
+the Arch Linux users that reported the problem.
+
+Due to an xorg change in xkeyboard-config package (https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config),
+many/most xorg programs were rendered completely broken when running under 0.9.74.
+
+
 ## Current development version: 0.9.77
+
+
 
 
 ### Landlock support - ongoing/experimental

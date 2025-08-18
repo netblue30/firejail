@@ -376,8 +376,11 @@ extras: all
 
 .PHONY: cppcheck
 cppcheck:
-	$(CPPCHECK) --force --error-exitcode=1 --enable=warning,performance --max-ctu-depth=40 \
-	  -i src/firejail/checkcfg.c -i src/firejail/main.c .
+	$(CPPCHECK) --force --error-exitcode=1 --enable=warning,performance \
+	  --max-ctu-depth=40 \
+	  -i src/firejail/checkcfg.c \
+	  -i src/firejail/main.c \
+	  .
 
 .PHONY: scan-build
 scan-build: clean

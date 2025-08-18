@@ -86,14 +86,14 @@ char *code_bad_ip_header[3] = {
 };
 
 static void print_icmp(uint32_t ip_dest, uint32_t ip_src, uint8_t type, uint8_t code, unsigned icmp_bytes) {
-	char type_number[10];
+	char type_number[10] = {0};
 	char *type_ptr = type_number;
 	if (type < 19)
 		type_ptr = type_description[type];
 	else
 		sprintf(type_number, "%u", type);
 
-	char code_number[10];
+	char code_number[10] = {0};
 	char *code_ptr = code_number;
 	if (type ==3 && code < 16)
 		code_ptr = code_dest_unreachable[code];

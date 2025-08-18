@@ -288,9 +288,6 @@ This was fixed in the following PR:
 
 ## Current development version: 0.9.77
 
-
-
-
 ### Landlock support - ongoing/experimental
 
 * Added on #6078, which is based on #5315 from ChrysoliteAzalea/landlock

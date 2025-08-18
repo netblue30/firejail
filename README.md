@@ -272,12 +272,19 @@ so uninstalling without doing the above should not cause issues.
 
 ## Latest released version: 0.9.76
 
-This is and emargency release, many thanks to @kmk3, @SkewedZeppelin, and all
+This is an emergency release, many thanks to @kmk3, @SkewedZeppelin, and all
 the Arch Linux users that reported the problem.
 
-Due to an xorg change in xkeyboard-config package (https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config),
-many/most xorg programs were rendered completely broken when running under 0.9.74.
+Due to an xorg change in the xkeyboard-config package
+(https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config), many/most
+xorg programs were rendered completely broken when running under firejail
+0.9.74:
 
+* <https://github.com/netblue30/firejail/issues/6773>
+
+This was fixed in the following PR:
+
+* <https://github.com/netblue30/firejail/pull/6775>
 
 ## Current development version: 0.9.77
 

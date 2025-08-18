@@ -868,6 +868,8 @@ Michele Sorcinelli (https://github.com/michelesr)
 	- fix ssh profile
 Mike Frysinger (vapier@gentoo.org)
 	- Gentoo compile patch
+Mikhail (https://github.com/grey3228)
+	- bugfix: firemon: avoid cmd double-free in procevent_monitor (#6846)
 minus7 (https://github.com/minus7)
 	- fix hanging arp_check
 mirabellette (https://github.com/mirabellette)

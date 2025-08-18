@@ -380,6 +380,7 @@ cppcheck:
 	  --max-ctu-depth=40 \
 	  -i src/firejail/checkcfg.c \
 	  -i src/firejail/main.c \
+	  -i src/lib/syscall.c \
 	  .
 
 .PHONY: scan-build

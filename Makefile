@@ -377,7 +377,7 @@ extras: all
 .PHONY: cppcheck
 cppcheck:
 	$(CPPCHECK) --force --error-exitcode=1 --enable=warning,performance \
-	  --max-ctu-depth=40 \
+	  --check-level=exhaustive \
 	  -i src/firejail/checkcfg.c \
 	  -i src/firejail/main.c \
 	  -i src/lib/syscall.c \

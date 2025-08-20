@@ -186,8 +186,8 @@ void fix_desktop_files(const char *homedir) {
 		char *exec = strdup(filename);
 		if (!exec)
 			errExit("strdup");
-		char *ptr = strstr(exec, ".desktop");
-		if (ptr == NULL || *(ptr + 8) != '\0') {
+		char *ptr = strrchr(exec, '.');
+		if (ptr == NULL || strcmp(ptr, ".desktop") != 0) {
 			printf("   %s skipped (not a .desktop file)\n", exec);
 			free(exec);
 			continue;

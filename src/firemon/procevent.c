@@ -471,8 +471,10 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 
 
 			int sandbox_closed = 0; // exit sandbox flag
+			int cmd_dup = 0;
 			char *cmd = pids[pid].option.event.cmd;
 			if (!cmd) {
+				cmd_dup = 1;
 				cmd = pid_proc_cmdline(pid);
 			}
 			if (add_new) {
@@ -490,19 +492,21 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 			}
 			else {
 				if (!cmd) {
+					cmd_dup = 1;
 					cmd = pid_proc_cmdline(pid);
 				}
-				if (cmd == NULL || nodisplay)
+				if (!cmd || nodisplay)
 					sprintf(lineptr, "\n");
-				else {
+				else
 					sprintf(lineptr, " %s\n", cmd);
-					if (cmd != pids[pid].option.event.cmd) {
-						free(cmd);
-					}
-				}
 				lineptr += strlen(lineptr);
 			}
 			(void) lineptr;
+
+			if (cmd && cmd_dup) {
+				free(cmd);
+				cmd = NULL;
+			}
 
 			// print the event
 			printf("%s", line);

@@ -352,27 +352,27 @@ Warning: cannot open youtube-music-desktop-app or /etc/firejail/youtube-music-de
 No include .local found in /etc/firejail/youtube-music-desktop-app.profile
 
 Stats:
-    profiles			1325
-    include local profile	1324   (include profile-name.local)
-    include globals		1291   (include globals.local)
-    blacklist ~/.ssh		1184   (include disable-common.inc)
-    seccomp			1196
-    capabilities		1318
-    noexec			1198   (include disable-exec.inc)
-    noroot			1093
+    profiles			1326
+    include local profile	1325   (include profile-name.local)
+    include globals		1292   (include globals.local)
+    blacklist ~/.ssh		1185   (include disable-common.inc)
+    seccomp			1197
+    capabilities		1319
+    noexec			1199   (include disable-exec.inc)
+    noroot			1094
     memory-deny-write-execute	320
-    restrict-namespaces		1035
-    apparmor			850
-    private-bin			801
-    private-dev			1224
-    private-etc			824
+    restrict-namespaces		1036
+    apparmor			851
+    private-bin			802
+    private-dev			1160
+    private-etc			825
     private-lib			85
-    private-tmp			1021
-    whitelist home directory	654
-    whitelist var		965   (include whitelist-var-common.inc)
-    whitelist run/user		1288   (include whitelist-runuser-common.inc
+    private-tmp			1022
+    whitelist home directory	655
+    whitelist var		966   (include whitelist-var-common.inc)
+    whitelist run/user		1289   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		746   (include whitelist-usr-share-common.inc
+    whitelist usr/share		747   (include whitelist-usr-share-common.inc
     net none			450
     dbus-user none 		754
     dbus-user filter 		196

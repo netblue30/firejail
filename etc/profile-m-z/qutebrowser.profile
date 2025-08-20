@@ -36,6 +36,7 @@ whitelist ${HOME}/.cache/qutebrowser
 whitelist ${HOME}/.config/qutebrowser
 whitelist ${HOME}/.local/share/qutebrowser
 whitelist ${RUNUSER}/qutebrowser
+whitelist /usr/share/pdf.js
 whitelist /usr/share/qutebrowser
 include whitelist-common.inc
 include whitelist-run-common.inc

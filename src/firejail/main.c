@@ -1079,8 +1079,8 @@ int main(int argc, char **argv, char **envp) {
 	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
 		fprintf(stderr, "Error: argv is invalid\n");
 		exit(1);
-	} else if (argc >= max_arguments) {
-		fprintf(stderr, "Error: too many arguments: argc (%d) >= max_arguments (%d)\n", argc, max_arguments);
+	} else if (argc >= max_arg_count) {
+		fprintf(stderr, "Error: too many arguments: argc (%d) >= max-arg-count (%d)\n", argc, max_arg_count);
 		exit(1);
 	}
 
@@ -1249,7 +1249,7 @@ int main(int argc, char **argv, char **envp) {
 
 	// is this a login shell, or a command passed by sshd,
 	// insert command line options from /etc/firejail/login.users
-	fullargv = malloc(max_arguments * sizeof(char*));
+	fullargv = malloc(max_arg_count * sizeof(char*));
 	if (*argv[0] == '-' || parent_sshd) {
 		if (argc == 1)
 			login_shell = 1;
@@ -1271,7 +1271,7 @@ int main(int argc, char **argv, char **envp) {
 #endif
 
 			int j;
-			for (i = 1, j = fullargc; i < argc && j < max_arguments; i++, j++, fullargc++)
+			for (i = 1, j = fullargc; i < argc && j < max_arg_count; i++, j++, fullargc++)
 				fullargv[j] = argv[i];
 
 			// replace argc/argv with fullargc/fullargv

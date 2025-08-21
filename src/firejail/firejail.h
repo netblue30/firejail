@@ -879,10 +879,10 @@ extern char *xvfb_screen;
 extern char *xvfb_extra_params;
 extern char *netfilter_default;
 extern unsigned long join_timeout;
+extern int max_arg_count;
 extern char *config_seccomp_error_action_str;
 extern char *config_seccomp_filter_add;
 extern char **whitelist_reject_topdirs;
-extern int max_arguments;
 
 int checkcfg(int val);
 void print_compiletime_support(void);

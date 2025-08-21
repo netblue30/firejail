@@ -89,7 +89,7 @@ int restricted_shell(const char *user) {
 			fullargv[0] = "firejail";
 			int i;
 			ptr = args;
-			for (i = 1; i < MAX_ARGS; i++) {
+			for (i = 1; i < max_arg_count; i++) {
 				// skip blanks
 				while (*ptr == ' ' || *ptr == '\t')
 					ptr++;

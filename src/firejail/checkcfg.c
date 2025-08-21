@@ -37,6 +37,7 @@ unsigned long join_timeout = 5000000; // microseconds
 char *config_seccomp_error_action_str = "EPERM";
 char *config_seccomp_filter_add = NULL;
 char **whitelist_reject_topdirs = NULL;
+int max_arguments = 128;
 
 int checkcfg(int val) {
 	assert(val < CFG_MAX);
@@ -275,6 +276,10 @@ int checkcfg(int val) {
 					tok = strtok(NULL, ",");
 				}
 				whitelist_reject_topdirs[cnt] = NULL;
+			}
+
+			else if (strncmp(ptr, "max-arguments", 13) == 0) {
+				max_arguments = strtoul(ptr + 13, NULL, 10);
 			}
 
 			else

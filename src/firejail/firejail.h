@@ -397,9 +397,8 @@ extern pid_t sandbox_pid;
 extern mode_t orig_umask;
 extern unsigned long long start_timestamp;
 
-#define MAX_ARGS 128		// maximum number of command arguments (argc)
 #define MAX_ARG_LEN (PATH_MAX + 32) // --foobar=PATH
-extern char *fullargv[MAX_ARGS];
+extern char **fullargv;
 extern int fullargc;
 
 // main.c
@@ -883,6 +882,7 @@ extern unsigned long join_timeout;
 extern char *config_seccomp_error_action_str;
 extern char *config_seccomp_filter_add;
 extern char **whitelist_reject_topdirs;
+extern int max_arguments;
 
 int checkcfg(int val);
 void print_compiletime_support(void);

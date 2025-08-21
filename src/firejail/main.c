@@ -176,7 +176,7 @@ int arg_restrict_namespaces = 0;
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
 
-char *fullargv[MAX_ARGS];			// expanded argv for restricted shell
+char **fullargv;
 int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;
@@ -1079,8 +1079,8 @@ int main(int argc, char **argv, char **envp) {
 	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
 		fprintf(stderr, "Error: argv is invalid\n");
 		exit(1);
-	} else if (argc >= MAX_ARGS) {
-		fprintf(stderr, "Error: too many arguments: argc (%d) >= MAX_ARGS (%d)\n", argc, MAX_ARGS);
+	} else if (argc >= max_arguments) {
+		fprintf(stderr, "Error: too many arguments: argc (%d) >= max_arguments (%d)\n", argc, max_arguments);
 		exit(1);
 	}
 
@@ -1249,6 +1249,7 @@ int main(int argc, char **argv, char **envp) {
 
 	// is this a login shell, or a command passed by sshd,
 	// insert command line options from /etc/firejail/login.users
+	fullargv = malloc(max_arguments * sizeof(char*));
 	if (*argv[0] == '-' || parent_sshd) {
 		if (argc == 1)
 			login_shell = 1;
@@ -1270,7 +1271,7 @@ int main(int argc, char **argv, char **envp) {
 #endif
 
 			int j;
-			for (i = 1, j = fullargc; i < argc && j < MAX_ARGS; i++, j++, fullargc++)
+			for (i = 1, j = fullargc; i < argc && j < max_arguments; i++, j++, fullargc++)
 				fullargv[j] = argv[i];
 
 			// replace argc/argv with fullargc/fullargv

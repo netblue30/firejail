@@ -176,7 +176,7 @@ int arg_restrict_namespaces = 0;
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
 
-char *fullargv[MAX_ARGS];			// expanded argv for restricted shell
+char **fullargv = NULL;				// expanded argv for restricted shell
 int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;
@@ -1079,16 +1079,16 @@ int main(int argc, char **argv, char **envp) {
 	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
 		fprintf(stderr, "Error: argv is invalid\n");
 		exit(1);
-	} else if (argc >= MAX_ARGS) {
-		fprintf(stderr, "Error: too many arguments: argc (%d) >= MAX_ARGS (%d)\n", argc, MAX_ARGS);
+	} else if (argc >= max_arg_count) {
+		fprintf(stderr, "Error: too many arguments: argc (%d) >= max-arg-count (%d)\n", argc, max_arg_count);
 		exit(1);
 	}
 
 	// sanity check for arguments
 	for (i = 0; i < argc; i++) {
-		if (strlen(argv[i]) >= MAX_ARG_LEN) {
-			fprintf(stderr, "Error: too long argument: argv[%d] len (%zu) >= MAX_ARG_LEN (%d): %s\n",
-			        i, strlen(argv[i]), MAX_ARG_LEN, argv[i]);
+		if ((int)strlen(argv[i]) >= max_arg_len) {
+			fprintf(stderr, "Error: too long argument: argv[%d] len (%zu) >= max-arg-len (%d): '%s'\n",
+			        i, strlen(argv[i]), max_arg_len, argv[i]);
 			exit(1);
 		}
 	}
@@ -1247,6 +1247,10 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
+	fullargv = malloc(max_arg_count * sizeof(char*));
+	if (!fullargv)
+		errExit("malloc");
+
 	// is this a login shell, or a command passed by sshd,
 	// insert command line options from /etc/firejail/login.users
 	if (*argv[0] == '-' || parent_sshd) {
@@ -1270,7 +1274,7 @@ int main(int argc, char **argv, char **envp) {
 #endif
 
 			int j;
-			for (i = 1, j = fullargc; i < argc && j < MAX_ARGS; i++, j++, fullargc++)
+			for (i = 1, j = fullargc; i < argc && j < max_arg_count; i++, j++, fullargc++)
 				fullargv[j] = argv[i];
 
 			// replace argc/argv with fullargc/fullargv

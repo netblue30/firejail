@@ -397,7 +397,6 @@ extern pid_t sandbox_pid;
 extern mode_t orig_umask;
 extern unsigned long long start_timestamp;
 
-#define MAX_ARG_LEN (PATH_MAX + 32) // --foobar=PATH
 extern char **fullargv;
 extern int fullargc;
 
@@ -880,6 +879,7 @@ extern char *xvfb_extra_params;
 extern char *netfilter_default;
 extern unsigned long join_timeout;
 extern int max_arg_count;
+extern int max_arg_len;
 extern char *config_seccomp_error_action_str;
 extern char *config_seccomp_filter_add;
 extern char **whitelist_reject_topdirs;

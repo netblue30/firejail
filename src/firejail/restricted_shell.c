@@ -87,7 +87,7 @@ int restricted_shell(const char *user) {
 			// process program arguments
 
 			fullargv[0] = "firejail";
-			int i;
+			unsigned long i;
 			ptr = args;
 			for (i = 1; i < max_arg_count; i++) {
 				// skip blanks

@@ -36,10 +36,15 @@
 
 //#define DEBUG_PRCTL
 
-static int pid_is_firejail(pid_t pid) {
 #ifdef DEBUG_PRCTL
-	printf("%s: %d, pid %d\n", __FUNCTION__, __LINE__, pid);
+#define debug_prctl(fmt, ...) \
+	printf("%s: %d, " fmt, __func__, __LINE__, __VA_ARGS__)
+#else
+#define debug_prctl(...) ((void)0)
 #endif
+
+static int pid_is_firejail(pid_t pid) {
+	debug_prctl("pid %d\n", pid);
 	uid_t rv = 0;
 
 	// open /proc/self/comm
@@ -60,9 +65,7 @@ static int pid_is_firejail(pid_t pid) {
 			rv = 1;
 	}
 
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, comm %s, rv %d\n", __FUNCTION__, __LINE__, buf, rv);
-#endif
+	debug_prctl("comm %s, rv %d\n", buf, rv);
 	if (rv) {
 		// open /proc/pid/cmdline file
 		char *fname;
@@ -70,10 +73,8 @@ static int pid_is_firejail(pid_t pid) {
 		if (asprintf(&fname, "/proc/%d/cmdline", pid) == -1)
 			errExit("asprintf");
 		if ((fd = open(fname, O_RDONLY)) < 0) {
+			debug_prctl("comm %s, rv %d\n", buf, rv);
 			free(fname);
-#ifdef DEBUG_PRCTL
-			printf("%s: %d, comm %s, rv %d\n", __FUNCTION__, __LINE__, buf, rv);
-#endif
 			goto doexit;
 		}
 		free(fname);
@@ -83,10 +84,8 @@ static int pid_is_firejail(pid_t pid) {
 		unsigned char buffer[BUFLEN];
 		ssize_t len;
 		if ((len = read(fd, buffer, sizeof(buffer) - 1)) <= 0) {
+			debug_prctl("comm %s, rv %d\n", buf, rv);
 			close(fd);
-#ifdef DEBUG_PRCTL
-			printf("%s: %d, comm %s, rv %d\n", __FUNCTION__, __LINE__, buf, rv);
-#endif
 			goto doexit;
 		}
 		buffer[len] = '\0';
@@ -136,10 +135,10 @@ static int pid_is_firejail(pid_t pid) {
 			int j = 0;
 			while (exclude_args[j] != NULL) {
 				if (strcmp(start, exclude_args[j]) == 0) {
-					rv = 0;
 #ifdef DEBUG_PRCTL
 printf("start=#%s#,  ptr=#%s#, flip rv %d\n", start, ptr, rv);
 #endif
+					rv = 0;
 					break;
 				}
 				j++;
@@ -150,11 +149,9 @@ printf("start=#%s#,  ptr=#%s#, flip rv %d\n", start, ptr, rv);
 	}
 
 doexit:
+	debug_prctl("return %d\n", rv);
 	fclose(fp);
 	free(file);
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, return %d\n", __FUNCTION__, __LINE__, rv);
-#endif
 	return rv;
 }
 
@@ -306,16 +303,15 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 			int nodisplay = 0;
 			switch (proc_ev->what) {
 				case PROC_EVENT_FORK:
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, event fork\n", __FUNCTION__, __LINE__);
-#endif
+					debug_prctl("event fork\n");
+
 					if (proc_ev->event_data.fork.child_pid !=
 					    proc_ev->event_data.fork.child_tgid)
 						continue; // this is a thread, not a process
+
 					pid = proc_ev->event_data.fork.parent_tgid;
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, event fork, pid %d\n", __FUNCTION__, __LINE__, pid);
-#endif
+					debug_prctl("event fork, pid %d\n", pid);
+
 					if (pids[pid].level > 0) {
 						child = proc_ev->event_data.fork.child_tgid;
 						child %= max_pids;
@@ -326,11 +322,11 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 					sprintf(lineptr, " fork");
 					nodisplay = 1;
 					break;
+
 				case PROC_EVENT_EXEC:
 					pid = proc_ev->event_data.exec.process_tgid;
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, event exec, pid %d\n", __FUNCTION__, __LINE__, pid);
-#endif
+					debug_prctl("event exec, pid %d\n", pid);
+
 					if (pids[pid].level == -1) {
 						pids[pid].level = 0; // start tracking
 					}
@@ -343,56 +339,50 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 						continue; // this is a thread, not a process
 
 					pid = proc_ev->event_data.exit.process_tgid;
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, event exit, pid %d\n", __FUNCTION__, __LINE__, pid);
-#endif
+					debug_prctl("event exit, pid %d\n", pid);
+
 					remove_pid = 1;
 					sprintf(lineptr, " exit");
 					break;
 
-
-
 				case PROC_EVENT_UID:
 					pid = proc_ev->event_data.id.process_tgid;
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, event uid, pid %d\n", __FUNCTION__, __LINE__, pid);
-#endif
+					debug_prctl("event uid, pid %d\n", pid);
+
 					if (pids[pid].level == 1 ||
 					    pids[pids[pid].parent].level == 1) {
 						sprintf(lineptr, "\n");
 						continue;
 					}
-					else
+					else {
 						sprintf(lineptr, " uid (%d:%d)",
-							proc_ev->event_data.id.r.ruid,
-							proc_ev->event_data.id.e.euid);
+						        proc_ev->event_data.id.r.ruid,
+						        proc_ev->event_data.id.e.euid);
+					}
 					nodisplay = 1;
 					break;
 
 				case PROC_EVENT_GID:
 					pid = proc_ev->event_data.id.process_tgid;
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, event gid, pid %d\n", __FUNCTION__, __LINE__, pid);
-#endif
+					debug_prctl("event gid, pid %d\n", pid);
+
 					if (pids[pid].level == 1 ||
 					    pids[pids[pid].parent].level == 1) {
 						sprintf(lineptr, "\n");
 						continue;
 					}
-					else
+					else {
 						sprintf(lineptr, " gid (%d:%d)",
-							proc_ev->event_data.id.r.rgid,
-							proc_ev->event_data.id.e.egid);
+						        proc_ev->event_data.id.r.rgid,
+						        proc_ev->event_data.id.e.egid);
+					}
 					nodisplay = 1;
 					break;
 
-
-
 				case PROC_EVENT_SID:
 					pid = proc_ev->event_data.sid.process_tgid;
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, event sid, pid %d\n", __FUNCTION__, __LINE__, pid);
-#endif
+					debug_prctl("event sid, pid %d\n", pid);
+
 					sprintf(lineptr, " sid ");
 					break;
 
@@ -400,18 +390,16 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 #ifdef PROC_EVENT_COREDUMP
 				case PROC_EVENT_COREDUMP:
 					pid = proc_ev->event_data.coredump.process_tgid;
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, event coredump, pid %d\n", __FUNCTION__, __LINE__, pid);
-#endif
+					debug_prctl("event coredump, pid %d\n", pid);
+
 					sprintf(lineptr, " coredump ");
 					break;
 #endif /* PROC_EVENT_COREDUMP */
 
 				case PROC_EVENT_COMM:
 					pid = proc_ev->event_data.comm.process_tgid;
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, event comm, pid %d\n", __FUNCTION__, __LINE__, pid);
-#endif
+					debug_prctl("event comm, pid %d\n", pid);
+
 					if (proc_ev->event_data.comm.process_pid !=
 					    proc_ev->event_data.comm.process_tgid)
 						continue; // this is a thread, not a process
@@ -421,23 +409,22 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 						sprintf(lineptr, "\n");
 						continue;
 					}
-					else
+					else {
 						sprintf(lineptr, " comm  %s", proc_ev->event_data.comm.comm);
+					}
 					nodisplay = 1;
 					break;
 
 				case PROC_EVENT_PTRACE:
 					pid = proc_ev->event_data.ptrace.process_tgid;
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, event ptrace, pid %d\n", __FUNCTION__, __LINE__, pid);
-#endif
+					debug_prctl("event ptrace, pid %d\n", pid);
+
 					sprintf(lineptr, " ptrace ");
 					break;
 
 				default:
-#ifdef DEBUG_PRCTL
-	printf("%s: %d, event unknown\n", __FUNCTION__, __LINE__);
-#endif
+					debug_prctl("event unknown\n");
+
 					sprintf(lineptr, "\n");
 					continue;
 			}
@@ -468,7 +455,6 @@ static void __attribute__((noreturn)) procevent_monitor(const int sock, pid_t my
 				sprintf(lineptr, " (%s)", user);
 				lineptr += strlen(lineptr);
 			}
-
 
 			int sandbox_closed = 0; // exit sandbox flag
 			int cmd_dup = 0;

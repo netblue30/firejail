@@ -34,8 +34,8 @@ char *xvfb_screen = "800x600x24";
 char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
 unsigned long join_timeout = 5000000; // microseconds
-int max_arg_count = 128; // maximum number of command arguments (argc)
-int max_arg_len = 4096;  // --foobar=PATH
+unsigned long max_arg_count = 128; // maximum number of command arguments (argc)
+unsigned long max_arg_len = 4096;  // --foobar=PATH
 char *config_seccomp_error_action_str = "EPERM";
 char *config_seccomp_filter_add = NULL;
 char **whitelist_reject_topdirs = NULL;

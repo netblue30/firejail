@@ -1079,15 +1079,16 @@ int main(int argc, char **argv, char **envp) {
 	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
 		fprintf(stderr, "Error: argv is invalid\n");
 		exit(1);
-	} else if (argc >= max_arg_count) {
-		fprintf(stderr, "Error: too many arguments: argc (%d) >= max-arg-count (%d)\n", argc, max_arg_count);
+	} else if ((unsigned long)argc >= max_arg_count) {
+		fprintf(stderr, "Error: too many arguments: argc (%d) >= max-arg-count (%lu)\n",
+		        argc, max_arg_count);
 		exit(1);
 	}
 
 	// sanity check for arguments
 	for (i = 0; i < argc; i++) {
-		if ((int)strlen(argv[i]) >= max_arg_len) {
-			fprintf(stderr, "Error: too long argument: argv[%d] len (%zu) >= max-arg-len (%d): '%s'\n",
+		if (strlen(argv[i]) >= max_arg_len) {
+			fprintf(stderr, "Error: too long argument: argv[%d] len (%zu) >= max-arg-len (%lu): '%s'\n",
 			        i, strlen(argv[i]), max_arg_len, argv[i]);
 			exit(1);
 		}
@@ -1273,7 +1274,7 @@ int main(int argc, char **argv, char **envp) {
 			EUID_USER();}
 #endif
 
-			int j;
+			unsigned long j;
 			for (i = 1, j = fullargc; i < argc && j < max_arg_count; i++, j++, fullargc++)
 				fullargv[j] = argv[i];
 

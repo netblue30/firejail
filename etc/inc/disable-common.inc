@@ -30,6 +30,7 @@ blacklist-nolog ${HOME}/.mutthistory
 blacklist-nolog ${HOME}/.python-history
 blacklist-nolog ${HOME}/.pythonhist
 blacklist-nolog ${HOME}/.viminfo
+blacklist-nolog ${HOME}/.ne
 blacklist-nolog /tmp/clipmenu*
 
 # X11 session autostart

@@ -176,7 +176,7 @@ int arg_restrict_namespaces = 0;
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
 
-char **fullargv;
+char **fullargv;			// expanded argv for restricted shell
 int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;

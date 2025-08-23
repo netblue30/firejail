@@ -98,7 +98,7 @@ int restricted_shell(const char *user) {
 				{EUID_ROOT();
 				FILE *fp = fopen("/firelog", "ae");
 				if (fp) {
-					fprintf(fp, "i %d ptr #%s#\n", i, fullargv[i]);
+					fprintf(fp, "i %zu ptr #%s#\n", i, fullargv[i]);
 					fclose(fp);
 				}
 				EUID_USER();}

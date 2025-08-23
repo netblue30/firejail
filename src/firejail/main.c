@@ -1248,9 +1248,12 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
+	fullargv = malloc(max_arg_count * sizeof(char*));
+	if (!fullargv)
+		errExit("malloc");
+
 	// is this a login shell, or a command passed by sshd,
 	// insert command line options from /etc/firejail/login.users
-	fullargv = malloc(max_arg_count * sizeof(char*));
 	if (*argv[0] == '-' || parent_sshd) {
 		if (argc == 1)
 			login_shell = 1;

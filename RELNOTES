@@ -1,19 +1,27 @@
 firejail (0.9.77) baseline; urgency=low
   * work in progress
+  * modif: firemon: improve debug message code (#6856)
   * bugfix: remove /usr/share + "runner:root" CI workaround (#6844)
   * bugfix: firemon: fix inconsistent debug message format (#6854)
   * bugfix: fix potential infinite loop in checkcfg (-fanalyzer) (#6859)
   * bugfix: fnettrace-icmp: fix uninitialized vars (cppcheck) (#6869)
   * bugfix: firemon: avoid cmd double-free in procevent_monitor (#6792 #6846)
+  * bugfix: firemon: fix potential memory leak in procevent_monitor (#6872)
+  * bugfix: firecfg: fix parsing filenames with multiple ".desktop" (#6865 #6871)
   * build: cppcheck: ignore src/lib/syscalls.c (#6868)
+  * build: cppcheck: use --check-level=exhaustive (#6877)
   * ci: allow new github domain for codeql download (#6845)
   * ci: standardize "apt-get install" step name (#6862)
   * ci: speed-up main build & add build-gcc (#6864)
+  * ci: cppcheck: upgrade ubuntu-22.04 to ubuntu-24.04 (#6874)
+  * ci: codespell: upgrade ubuntu-22.04 to ubuntu-24.04 (#6873)
   * docs: man: improve strace usage and add refs (#6851)
   * docs: add debian/ubuntu links to README.md (#6850)
   * docs: github: clarify how to attach logs (#6858)
   * profiles: thunderbird: fix ignoring wruc (#6839 #6852)
   * profiles: wine: disable noinput so gamepads work (#6866 #6867)
+  * profiles: qutebrowser: whitelist /usr/share/pdf.js (#6875)
+  * profiles: firefox-common: add a comment about mpris (#6876)
  -- netblue30 <netblue30@yahoo.com>  Wed, 30 Jul 2025 11:00:00 -0500
 
 firejail (0.9.76) baseline; urgency=low

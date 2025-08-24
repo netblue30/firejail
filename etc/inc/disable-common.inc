@@ -27,10 +27,10 @@ blacklist-nolog ${HOME}/.local/state/nvim
 blacklist-nolog ${HOME}/.macromedia
 blacklist-nolog ${HOME}/.mupdf.history
 blacklist-nolog ${HOME}/.mutthistory
+blacklist-nolog ${HOME}/.ne
 blacklist-nolog ${HOME}/.python-history
 blacklist-nolog ${HOME}/.pythonhist
 blacklist-nolog ${HOME}/.viminfo
-blacklist-nolog ${HOME}/.ne
 blacklist-nolog /tmp/clipmenu*
 
 # X11 session autostart

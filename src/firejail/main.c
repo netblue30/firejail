@@ -1249,15 +1249,20 @@ int main(int argc, char **argv, char **envp) {
 	EUID_ASSERT();
 
 #ifndef MAX_ARGS_RSHELL
-#define MAX_ARGS_RSHELL 10000
+#define MAX_ARGS_RSHELL 10000L
 #endif
 	// is this a login shell, or a command passed by sshd,
 	// insert command line options from /etc/firejail/login.users
 	if (*argv[0] == '-' || parent_sshd) {
 		// use a sane size for allocation
 		long size = max_arg_count;
-		if (size > MAX_ARGS_RSHELL)
+		if (size > MAX_ARGS_RSHELL) {
+			if (arg_debug) {
+				printf("max-arg-count %ld > %ld, allocating %ld elements for fullargv\n",
+				       max_arg_count, MAX_ARGS_RSHELL, MAX_ARGS_RSHELL);
+			}
 			size = MAX_ARGS_RSHELL;
+		}
 
 		fullargv = malloc(size * sizeof(char*));
 		if (!fullargv)

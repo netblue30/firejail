@@ -237,8 +237,13 @@ int checkcfg(int val) {
 
 			else if (strncmp(ptr, "max-arg-count", 13) == 0) {
 				max_arg_count = strtol(ptr + 13, NULL, 10);
-				if (max_arg_count < 0)
+				if (max_arg_count < 0) {
+					if (arg_debug) {
+						printf("max-arg-count %ld < 0, using %ld\n",
+						       max_arg_count, LONG_MAX);
+					}
 					max_arg_count = LONG_MAX;
+				}
 			}
 
 			else if (strncmp(ptr, "max-arg-len", 11) == 0)

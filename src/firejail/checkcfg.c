@@ -22,6 +22,7 @@
 #include "../include/syscall.h"
 #include <sys/stat.h>
 #include <linux/loop.h>
+#include <limits.h>
 
 #define MAX_READ 8192				  // line buffer for profile files
 
@@ -34,8 +35,8 @@ char *xvfb_screen = "800x600x24";
 char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
 unsigned long join_timeout = 5000000; // microseconds
-unsigned long max_arg_count = 128; // maximum number of command arguments (argc)
-unsigned long max_arg_len = 4096;  // --foobar=PATH
+long max_arg_count = 128; // maximum number of command arguments (argc)
+unsigned long max_arg_len = 4096; // --foobar=PATH
 char *config_seccomp_error_action_str = "EPERM";
 char *config_seccomp_filter_add = NULL;
 char **whitelist_reject_topdirs = NULL;
@@ -234,8 +235,11 @@ int checkcfg(int val) {
 			else if (strncmp(ptr, "join-timeout ", 13) == 0)
 				join_timeout = strtoul(ptr + 13, NULL, 10) * 1000000; // seconds to microseconds
 
-			else if (strncmp(ptr, "max-arg-count", 13) == 0)
-				max_arg_count = strtoul(ptr + 13, NULL, 10);
+			else if (strncmp(ptr, "max-arg-count", 13) == 0) {
+				max_arg_count = strtol(ptr + 13, NULL, 10);
+				if (max_arg_count < 0)
+					max_arg_count = LONG_MAX;
+			}
 
 			else if (strncmp(ptr, "max-arg-len", 11) == 0)
 				max_arg_len = strtoul(ptr + 11, NULL, 10);

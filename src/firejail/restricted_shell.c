@@ -88,7 +88,7 @@ int restricted_shell(const char *user) {
 
 			assert(fullargv != NULL);
 			fullargv[0] = "firejail";
-			unsigned long i;
+			int i;
 			ptr = args;
 			for (i = 1; i < max_arg_count; i++) {
 				// skip blanks
@@ -99,7 +99,7 @@ int restricted_shell(const char *user) {
 				{EUID_ROOT();
 				FILE *fp = fopen("/firelog", "ae");
 				if (fp) {
-					fprintf(fp, "i %lu ptr #%s#\n", i, fullargv[i]);
+					fprintf(fp, "i %d ptr #%s#\n", i, fullargv[i]);
 					fclose(fp);
 				}
 				EUID_USER();}

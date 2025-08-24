@@ -46,7 +46,7 @@ include whitelist-var-common.inc
 # Put the following in qutebrowser.local if you want to use qute-pass
 # Note that using this will leave zombie processes in the sandbox when you
 # close qutebrowser
-# Defaults for gpg and pass respectively
+# Defaults for pass and gpg respectively
 #noblacklist ${HOME}/.password-store
 #noblacklist ${HOME}/.gnupg
 #whitelist ${HOME}/.password-store

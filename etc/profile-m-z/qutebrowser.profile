@@ -6,6 +6,15 @@ include qutebrowser.local
 # Persistent global definitions
 include globals.local
 
+# Put the following lines in qutebrowser.local if you want to use qute-pass.
+# Note that using this will leave zombie processes in the sandbox when you
+# close qutebrowser.
+# Defaults for gpg and pass, respectively.
+#noblacklist ${HOME}/.gnupg
+#noblacklist ${HOME}/.password-store
+#whitelist ${HOME}/.gnupg
+#whitelist ${HOME}/.password-store
+
 noblacklist ${HOME}/.cache/qutebrowser
 noblacklist ${HOME}/.config/qutebrowser
 noblacklist ${HOME}/.local/share/qutebrowser

@@ -7,7 +7,8 @@ firejail (0.9.77) baseline; urgency=low
   * bugfix: fnettrace-icmp: fix uninitialized vars (cppcheck) (#6869)
   * bugfix: firemon: avoid cmd double-free in procevent_monitor (#6792 #6846)
   * bugfix: firemon: fix potential memory leak in procevent_monitor (#6872)
-  * bugfix: firecfg: fix parsing filenames with multiple ".desktop" (#6865 #6871)
+  * bugfix: firecfg: fix parsing filenames with multiple ".desktop" (#6865
+    #6871)
   * build: cppcheck: ignore src/lib/syscalls.c (#6868)
   * build: cppcheck: use --check-level=exhaustive (#6877)
   * ci: allow new github domain for codeql download (#6845)

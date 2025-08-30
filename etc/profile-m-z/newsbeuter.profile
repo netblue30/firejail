@@ -11,11 +11,11 @@ ignore include newsboat.local
 ignore mkdir ${HOME}/.config/newsboat
 ignore mkdir ${HOME}/.local/share/newsboat
 ignore mkdir ${HOME}/.newsboat
-blacklist ${PATH}/newsboat
 
 blacklist ${HOME}/.config/newsboat
 blacklist ${HOME}/.local/share/newsboat
 blacklist ${HOME}/.newsboat
+blacklist ${PATH}/newsboat
 
 nowhitelist ${HOME}/.config/newsboat
 nowhitelist ${HOME}/.local/share/newsboat

@@ -6,8 +6,8 @@ include libreoffice.local
 # Persistent global definitions
 include globals.local
 
-noblacklist /usr/local/sbin
 noblacklist ${HOME}/.config/libreoffice
+noblacklist /usr/local/sbin
 
 # libreoffice can sign documents with GPG
 noblacklist ${HOME}/.gnupg

@@ -6,13 +6,13 @@ include koreader.local
 # Persistent global definitions
 include globals.local
 
-blacklist /usr/libexec
-
 noblacklist ${HOME}/.config/koreader
 noblacklist ${DOCUMENTS}
 
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
+
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

@@ -38,12 +38,12 @@ noblacklist ${HOME}/postponed
 noblacklist ${HOME}/sent
 noblacklist /etc/msmtprc
 
-blacklist ${RUNUSER}/wayland-*
-
 # Add the next lines to your mutt.local for oauth.py,S/MIME support.
 #include allow-perl.inc
 #include allow-python2.inc
 #include allow-python3.inc
+
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

@@ -11,8 +11,6 @@ include globals.local
 # Add the next line to your rtv.local to enable external application support.
 #include rtv-addons.profile
 
-blacklist ${RUNUSER}/wayland-*
-
 noblacklist ${HOME}/.config/rtv
 noblacklist ${HOME}/.local/share/rtv
 
@@ -22,6 +20,8 @@ include allow-bin-sh.inc
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc
+
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

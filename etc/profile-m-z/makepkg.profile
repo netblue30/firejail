@@ -7,8 +7,6 @@ include makepkg.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
-
 # Note: see this Arch forum discussion https://bbs.archlinux.org/viewtopic.php?pid=1743138
 # for potential issues and their solutions when Firejailing makepkg
 
@@ -28,6 +26,8 @@ blacklist ${HOME}/.gnupg/random_seed
 
 # Arch Linux (based distributions) need access to /var/lib/pacman. As we drop all capabilities this is automatically read-only.
 noblacklist /var/lib/pacman
+
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-exec.inc

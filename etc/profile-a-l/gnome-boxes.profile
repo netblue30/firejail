@@ -6,8 +6,6 @@ include gnome-boxes.local
 # Persistent global definitions
 include globals.local
 
-blacklist /usr/libexec
-
 noblacklist ${HOME}/.cache/gnome-boxes
 noblacklist ${HOME}/.config/gnome-boxes
 noblacklist ${HOME}/.local/share/gnome-boxes
@@ -15,6 +13,8 @@ noblacklist ${RUNUSER}/libvirt
 
 noblacklist /sbin
 noblacklist /usr/sbin
+
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

@@ -6,8 +6,6 @@ include virt-manager.local
 # Persistent global definitions
 include globals.local
 
-blacklist /usr/libexec
-
 noblacklist ${HOME}/.cache/virt-manager
 noblacklist ${RUNUSER}/libvirt
 
@@ -16,6 +14,8 @@ noblacklist /usr/sbin
 
 # Allow python 3 (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
+
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

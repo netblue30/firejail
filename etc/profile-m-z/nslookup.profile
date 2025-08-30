@@ -7,9 +7,9 @@ include nslookup.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}
-
 noblacklist ${PATH}/nslookup
+
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

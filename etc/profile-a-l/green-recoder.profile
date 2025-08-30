@@ -6,8 +6,6 @@ include green-recorder.local
 # Persistent global definitions
 include globals.local
 
-blacklist /usr/libexec
-
 noblacklist ${HOME}/.config/green-recorder
 
 # Allow python 3 (blacklisted by disable-interpreters.inc)
@@ -17,6 +15,8 @@ include allow-python3.inc
 include allow-bin-sh.inc
 
 noblacklist ${VIDEOS}
+
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

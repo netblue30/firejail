@@ -15,8 +15,6 @@ include nodejs-common.local
 # used by nvm: curl, sha256sum, tar and wget. We have comments in these
 # profiles on how to enable nvm support via local overrides.
 
-blacklist ${RUNUSER}
-
 ignore read-only ${HOME}/.npm-packages
 ignore read-only ${HOME}/.npmrc
 ignore read-only ${HOME}/.nvm
@@ -34,6 +32,8 @@ noblacklist ${HOME}/.yarnrc
 
 ignore noexec ${HOME}
 include allow-bin-sh.inc
+
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-exec.inc

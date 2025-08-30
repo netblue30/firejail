@@ -6,10 +6,10 @@ include textroom.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.config/textroom
+
 blacklist ${RUNUSER}/wayland-*
 blacklist /usr/libexec
-
-noblacklist ${HOME}/.config/textroom
 
 include disable-common.inc
 include disable-devel.inc

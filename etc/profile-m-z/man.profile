@@ -7,13 +7,13 @@ include man.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}
-
 noblacklist ${HOME}/.local/share/man
 noblacklist ${HOME}/.rustup
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
+
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

@@ -6,9 +6,9 @@ include localsend_app.local
 # Persistent global definitions
 include globals.local
 
-blacklist /usr/libexec
-
 noblacklist ${HOME}/.local/share/localsend_app
+
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

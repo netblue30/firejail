@@ -39,9 +39,9 @@ noblacklist /etc/msmtprc
 noblacklist /var/mail
 noblacklist /var/spool/mail
 
-blacklist ${RUNUSER}/wayland-*
-
 include allow-lua.inc
+
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

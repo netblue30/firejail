@@ -7,14 +7,14 @@ include googler-common.local
 # added by caller profile
 #include globals.local
 
-blacklist ${RUNUSER}
-
 noblacklist ${HOME}/.w3m
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
+
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

@@ -7,12 +7,12 @@ include gist.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
-
 noblacklist ${HOME}/.gist
 
 # Allow ruby (blacklisted by disable-interpreters.inc)
 include allow-ruby.inc
+
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

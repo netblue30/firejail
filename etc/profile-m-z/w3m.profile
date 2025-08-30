@@ -32,9 +32,9 @@ include disable-x11.inc
 include disable-xdg.inc
 
 mkdir ${HOME}/.w3m
-whitelist /usr/share/w3m
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.w3m
+whitelist /usr/share/w3m
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc
 include whitelist-var-common.inc

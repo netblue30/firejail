@@ -7,15 +7,15 @@ include wget.local
 # Persistent global definitions
 include globals.local
 
+# If you use nvm, add the below lines to your wget.local
+#ignore read-only ${HOME}/.nvm
+#noblacklist ${HOME}/.nvm
+
 noblacklist ${HOME}/.config/wget
 noblacklist ${HOME}/.local/share/wget
 noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/.wget-hsts
 noblacklist ${HOME}/.wgetrc
-
-# If you use nvm, add the below lines to your wget.local
-#ignore read-only ${HOME}/.nvm
-#noblacklist ${HOME}/.nvm
 
 blacklist ${RUNUSER}
 

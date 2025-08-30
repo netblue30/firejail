@@ -8,8 +8,8 @@ include globals.local
 
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.gnupg
-noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.local/share/pki
+noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.pki
 
 include disable-common.inc
@@ -19,8 +19,8 @@ include disable-programs.inc
 
 mkdir ${HOME}/.cache/mozilla
 mkdir ${HOME}/.gnupg
-mkdir ${HOME}/.mozilla
 mkdir ${HOME}/.local/share/pki
+mkdir ${HOME}/.mozilla
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
 whitelist ${HOME}/.cache/mozilla

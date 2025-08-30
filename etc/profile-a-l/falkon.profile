@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.cache/falkon
 noblacklist ${HOME}/.config/falkon
+noblacklist ${HOME}/.mailcap
 
 include disable-common.inc
 include disable-devel.inc
@@ -21,6 +22,7 @@ mkdir ${HOME}/.config/falkon
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/falkon
 whitelist ${HOME}/.config/falkon
+whitelist ${HOME}/.mailcap
 whitelist /usr/share/falkon
 include whitelist-common.inc
 include whitelist-run-common.inc

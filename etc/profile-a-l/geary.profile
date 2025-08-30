@@ -14,6 +14,7 @@ noblacklist ${HOME}/.config/geary
 noblacklist ${HOME}/.local/share/evolution
 noblacklist ${HOME}/.local/share/geary
 noblacklist ${HOME}/.local/share/pki
+noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.pki
 
 # sh is needed to allow Firefox to open links
@@ -49,6 +50,7 @@ whitelist ${HOME}/.config/geary
 whitelist ${HOME}/.local/share/evolution
 whitelist ${HOME}/.local/share/geary
 whitelist ${HOME}/.local/share/pki
+whitelist ${HOME}/.mailcap
 whitelist ${HOME}/.pki
 whitelist /usr/share/geary
 include whitelist-common.inc

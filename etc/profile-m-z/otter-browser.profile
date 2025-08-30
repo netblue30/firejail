@@ -11,6 +11,7 @@ include globals.local
 noblacklist ${HOME}/.cache/Otter
 noblacklist ${HOME}/.config/otter
 noblacklist ${HOME}/.local/share/pki
+noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.pki
 
 include disable-common.inc
@@ -27,6 +28,7 @@ whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/Otter
 whitelist ${HOME}/.config/otter
 whitelist ${HOME}/.local/share/pki
+whitelist ${HOME}/.mailcap
 whitelist ${HOME}/.pki
 whitelist /usr/share/otter-browser
 include whitelist-common.inc

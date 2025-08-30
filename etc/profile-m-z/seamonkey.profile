@@ -9,6 +9,7 @@ include globals.local
 noblacklist ${HOME}/.cache/mozilla
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.local/share/pki
+noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.mozilla
 noblacklist ${HOME}/.pki
 
@@ -31,6 +32,7 @@ whitelist ${HOME}/.gnupg
 whitelist ${HOME}/.keysnail.js
 whitelist ${HOME}/.lastpass
 whitelist ${HOME}/.local/share/pki
+whitelist ${HOME}/.mailcap
 whitelist ${HOME}/.mozilla
 whitelist ${HOME}/.pentadactyl
 whitelist ${HOME}/.pentadactylrc

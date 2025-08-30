@@ -122,7 +122,7 @@ tracelog
 #disable-mnt
 private-cache
 private-dev
-private-etc @tls-ca,@x11,Mutt,Muttrc,Muttrc.d,gnupg,host.conf,mail,mailname,msmtprc,neomuttrc,neomuttrc.d,nntpserver
+private-etc @tls-ca,@x11,Mutt,Muttrc,Muttrc.d,gnupg,host.conf,mail,mailcap,mailname,msmtprc,neomuttrc,neomuttrc.d,nntpserver
 private-tmp
 
 dbus-user none

@@ -11,8 +11,8 @@ noblacklist /usr/local/sbin
 
 # libreoffice can sign documents with GPG
 noblacklist ${HOME}/.gnupg
-read-only ${HOME}/.gnupg/trustdb.gpg
 read-only ${HOME}/.gnupg/pubring.kbx
+read-only ${HOME}/.gnupg/trustdb.gpg
 blacklist ${HOME}/.gnupg/crls.d
 blacklist ${HOME}/.gnupg/openpgp-revocs.d
 blacklist ${HOME}/.gnupg/private-keys-v1.d

@@ -6,6 +6,7 @@ include Viber.local
 include globals.local
 
 noblacklist ${HOME}/.ViberPC
+noblacklist ${HOME}/.mailcap
 noblacklist ${PATH}/dig
 
 include disable-common.inc
@@ -17,6 +18,7 @@ include disable-programs.inc
 mkdir ${HOME}/.ViberPC
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.ViberPC
+whitelist ${HOME}/.mailcap
 include whitelist-common.inc
 
 caps.drop all

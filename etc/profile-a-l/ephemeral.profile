@@ -10,6 +10,7 @@ include globals.local
 #noblacklist ${HOME}/.cache/ephemeral
 
 noblacklist ${HOME}/.local/share/pki
+noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.pki
 
 # noexec ${HOME} breaks DRM binaries.
@@ -27,6 +28,7 @@ mkdir ${HOME}/.local/share/pki
 # enforce private-cache
 #whitelist ${HOME}/.cache/ephemeral
 whitelist ${HOME}/.local/share/pki
+whitelist ${HOME}/.mailcap
 whitelist ${HOME}/.pki
 whitelist ${DOWNLOADS}
 include whitelist-common.inc

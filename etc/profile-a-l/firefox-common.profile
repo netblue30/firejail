@@ -30,6 +30,7 @@ include firefox-common.local
 #include firefox-common-addons.profile
 
 noblacklist ${HOME}/.local/share/pki
+noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.pki
 
 blacklist ${PATH}/curl
@@ -46,6 +47,7 @@ include disable-programs.inc
 mkdir ${HOME}/.local/share/pki
 whitelist ${DOWNLOADS}
 whitelist ${HOME}/.local/share/pki
+whitelist ${HOME}/.mailcap
 whitelist ${HOME}/.pki
 whitelist /usr/share/doc
 whitelist /usr/share/gtk-doc/html

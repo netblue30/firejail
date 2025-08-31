@@ -12,6 +12,7 @@ include globals.local
 #ignore private-dev
 #ignore private-etc
 
+noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.w3m
 
 blacklist ${RUNUSER}/wayland-*
@@ -33,6 +34,7 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.w3m
 whitelist ${DOWNLOADS}
+whitelist ${HOME}/.mailcap
 whitelist ${HOME}/.w3m
 whitelist /usr/share/w3m
 include whitelist-runuser-common.inc

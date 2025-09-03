@@ -32,13 +32,11 @@ noroot
 nosound
 notv
 nou2f
-novideo
 protocol unix
 seccomp
 x11 none
 
 disable-mnt
-private-bin hashcat
 private-cache
 private-dev
 private-tmp

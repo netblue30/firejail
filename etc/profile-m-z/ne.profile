@@ -1,8 +1,8 @@
-# Firejail profile for vim
+# Firejail profile for ne
 # Description: ne text editor
 # This file is overwritten after every install/update
 # Persistent local customizations
-include vim.local
+include ne.local
 # Persistent global definitions
 include globals.local
 

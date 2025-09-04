@@ -35,7 +35,7 @@ char *xvfb_screen = "800x600x24";
 char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
 unsigned long join_timeout = 5000000; // microseconds
-long max_arg_count = 128; // maximum number of command arguments (argc)
+int max_arg_count = 128; // maximum number of command arguments (argc)
 unsigned long max_arg_len = 4096; // --foobar=PATH
 char *config_seccomp_error_action_str = "EPERM";
 char *config_seccomp_filter_add = NULL;
@@ -236,13 +236,16 @@ int checkcfg(int val) {
 				join_timeout = strtoul(ptr + 13, NULL, 10) * 1000000; // seconds to microseconds
 
 			else if (strncmp(ptr, "max-arg-count", 13) == 0) {
-				max_arg_count = strtol(ptr + 13, NULL, 10);
-				if (max_arg_count < 0) {
+				long tmp = strtol(ptr + 13, NULL, 10);
+				if (tmp < 0 || tmp >= INT_MAX) {
 					if (arg_debug) {
-						printf("max-arg-count %ld < 0, using %ld\n",
-						       max_arg_count, LONG_MAX);
+						printf("max-arg-count out of range: %ld, using %d\n",
+						       tmp, INT_MAX);
 					}
-					max_arg_count = LONG_MAX;
+					max_arg_count = INT_MAX;
+				}
+				else {
+					max_arg_count = (int)tmp;
 				}
 			}
 

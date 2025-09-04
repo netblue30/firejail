@@ -1080,7 +1080,7 @@ int main(int argc, char **argv, char **envp) {
 		fprintf(stderr, "Error: argv is invalid\n");
 		exit(1);
 	} else if (argc >= max_arg_count) {
-		fprintf(stderr, "Error: too many arguments: argc (%d) >= max-arg-count (%ld)\n",
+		fprintf(stderr, "Error: too many arguments: argc (%d) >= max-arg-count (%d)\n",
 		        argc, max_arg_count);
 		exit(1);
 	}
@@ -1249,16 +1249,16 @@ int main(int argc, char **argv, char **envp) {
 	EUID_ASSERT();
 
 #ifndef MAX_ARGS_RSHELL
-#define MAX_ARGS_RSHELL 10000L
+#define MAX_ARGS_RSHELL 10000
 #endif
 	// is this a login shell, or a command passed by sshd,
 	// insert command line options from /etc/firejail/login.users
 	if (*argv[0] == '-' || parent_sshd) {
 		// use a sane size for allocation
-		long fullargv_sz = max_arg_count;
+		int fullargv_sz = max_arg_count;
 		if (fullargv_sz > MAX_ARGS_RSHELL) {
 			if (arg_debug) {
-				printf("max-arg-count %ld > %ld, allocating %ld elements for fullargv\n",
+				printf("max-arg-count %d > %d, allocating %d elements for fullargv\n",
 				       max_arg_count, MAX_ARGS_RSHELL, MAX_ARGS_RSHELL);
 			}
 			fullargv_sz = MAX_ARGS_RSHELL;

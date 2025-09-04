@@ -1255,16 +1255,16 @@ int main(int argc, char **argv, char **envp) {
 	// insert command line options from /etc/firejail/login.users
 	if (*argv[0] == '-' || parent_sshd) {
 		// use a sane size for allocation
-		long size = max_arg_count;
-		if (size > MAX_ARGS_RSHELL) {
+		long fullargv_sz = max_arg_count;
+		if (fullargv_sz > MAX_ARGS_RSHELL) {
 			if (arg_debug) {
 				printf("max-arg-count %ld > %ld, allocating %ld elements for fullargv\n",
 				       max_arg_count, MAX_ARGS_RSHELL, MAX_ARGS_RSHELL);
 			}
-			size = MAX_ARGS_RSHELL;
+			fullargv_sz = MAX_ARGS_RSHELL;
 		}
 
-		fullargv = malloc(size * sizeof(char*));
+		fullargv = malloc(fullargv_sz * sizeof(char *));
 		if (!fullargv)
 			errExit("malloc");
 
@@ -1288,7 +1288,7 @@ int main(int argc, char **argv, char **envp) {
 #endif
 
 			int j;
-			for (i = 1, j = fullargc; i < argc && j < size; i++, j++, fullargc++)
+			for (i = 1, j = fullargc; i < argc && j < fullargv_sz; i++, j++, fullargc++)
 				fullargv[j] = argv[i];
 
 			// replace argc/argv with fullargc/fullargv

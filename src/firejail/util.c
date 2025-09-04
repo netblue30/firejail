@@ -51,6 +51,7 @@ long long unsigned parse_arg_size(char *str) {
 	sscanf(str, "%llu", &result);
 
 	char suffix = *(str + len - 1);
+	suffix = tolower((unsigned char)suffix);
 	if (!isdigit(suffix) && (suffix == 'k' || suffix == 'm' || suffix == 'g')) {
 		len -= 1;
 	}

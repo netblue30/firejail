@@ -23,6 +23,7 @@ firejail (0.9.77) baseline; urgency=low
   * profiles: wine: disable noinput so gamepads work (#6866 #6867)
   * profiles: qutebrowser: whitelist /usr/share/pdf.js (#6875)
   * profiles: firefox-common: add a comment about mpris (#6876)
+  * new profile: ne (text editor) (ae22e5610)
  -- netblue30 <netblue30@yahoo.com>  Wed, 30 Jul 2025 11:00:00 -0500
 
 firejail (0.9.76) baseline; urgency=low

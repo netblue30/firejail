@@ -1288,7 +1288,7 @@ int main(int argc, char **argv, char **envp) {
 #endif
 
 			int j;
-			for (i = 1, j = fullargc; i < argc && j < max_arg_count; i++, j++, fullargc++)
+			for (i = 1, j = fullargc; i < argc && j < size; i++, j++, fullargc++)
 				fullargv[j] = argv[i];
 
 			// replace argc/argv with fullargc/fullargv

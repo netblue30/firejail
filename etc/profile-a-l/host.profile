@@ -7,8 +7,9 @@ include host.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}
 noblacklist ${PATH}/host
+
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

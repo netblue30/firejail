@@ -6,10 +6,10 @@ include img2txt.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
-
 noblacklist ${DOCUMENTS}
 noblacklist ${PICTURES}
+
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

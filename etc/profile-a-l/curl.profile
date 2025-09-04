@@ -7,6 +7,10 @@ include curl.local
 # Persistent global definitions
 include globals.local
 
+# If you use nvm, add the below lines to your curl.local
+#ignore read-only ${HOME}/.nvm
+#noblacklist ${HOME}/.nvm
+
 noblacklist ${HOME}/.config/curlrc # since curl 7.73.0
 # curl 7.74.0 introduces experimental support for HSTS cache
 # https://daniel.haxx.se/blog/2020/11/03/hsts-your-curl/
@@ -18,10 +22,6 @@ noblacklist ${HOME}/.curlrc
 noblacklist ${HOME}/.netrc
 
 blacklist ${RUNUSER}
-
-# If you use nvm, add the below lines to your curl.local
-#ignore read-only ${HOME}/.nvm
-#noblacklist ${HOME}/.nvm
 
 include disable-common.inc
 include disable-exec.inc

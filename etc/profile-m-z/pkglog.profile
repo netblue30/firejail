@@ -6,10 +6,10 @@ include pkglog.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}
-
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
+
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

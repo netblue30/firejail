@@ -6,11 +6,11 @@ include session-desktop.local
 # Persistent global definitions
 include globals.local
 
-blacklist /usr/libexec
-
 ignore noexec /tmp
 
 noblacklist ${HOME}/.config/Session
+
+blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

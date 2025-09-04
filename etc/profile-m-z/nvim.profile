@@ -13,12 +13,12 @@ noblacklist ${HOME}/.config/nvim
 noblacklist ${HOME}/.local/share/nvim
 noblacklist ${HOME}/.local/state/nvim
 
+blacklist ${RUNUSER}
+
 include disable-common.inc
 include disable-devel.inc
 include disable-programs.inc
 include disable-xdg.inc
-
-blacklist ${RUNUSER}
 
 include whitelist-runuser-common.inc
 

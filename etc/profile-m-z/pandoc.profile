@@ -7,11 +7,11 @@ include pandoc.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}
-
 noblacklist ${DOCUMENTS}
 
 include allow-bin-sh.inc
+
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

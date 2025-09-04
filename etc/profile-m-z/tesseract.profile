@@ -7,10 +7,11 @@ include tesseract.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}
-
 noblacklist ${DOCUMENTS}
 noblacklist ${PICTURES}
+
+blacklist ${RUNUSER}
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

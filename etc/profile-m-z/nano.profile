@@ -7,10 +7,10 @@ include nano.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
-
 noblacklist ${HOME}/.config/nano
 noblacklist ${HOME}/.nanorc
+
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

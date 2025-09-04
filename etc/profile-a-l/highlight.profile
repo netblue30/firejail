@@ -6,10 +6,10 @@ include highlight.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}
-
 # Allow lua (blacklisted by disable-interpreters.inc)
 include allow-lua.inc
+
+blacklist ${RUNUSER}
 
 include disable-common.inc
 include disable-devel.inc

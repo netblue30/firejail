@@ -6,10 +6,10 @@ include exiftool.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
-
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
+
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

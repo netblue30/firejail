@@ -6,11 +6,11 @@ include signal-cli.local
 # Persistent global definitions
 include globals.local
 
-blacklist ${RUNUSER}/wayland-*
-
 noblacklist ${HOME}/.local/share/signal-cli
 
 include allow-java.inc
+
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

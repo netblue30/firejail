@@ -15,13 +15,13 @@ include globals.local
 noblacklist ${HOME}/.mailcap
 noblacklist ${HOME}/.w3m
 
-blacklist ${RUNUSER}/wayland-*
-
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc
+
+blacklist ${RUNUSER}/wayland-*
 
 include disable-common.inc
 include disable-devel.inc

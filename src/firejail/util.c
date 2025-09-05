@@ -52,7 +52,7 @@ long long unsigned parse_arg_size(char *str) {
 
 	char suffix = *(str + len - 1);
 	suffix = tolower((unsigned char)suffix);
-	if (!isdigit(suffix) && (suffix == 'k' || suffix == 'm' || suffix == 'g')) {
+	if (!isdigit(suffix) && (suffix == 'K' || suffix == 'M' || suffix == 'G')) {
 		len -= 1;
 	}
 
@@ -68,13 +68,13 @@ long long unsigned parse_arg_size(char *str) {
 		return result;
 
 	switch (suffix) {
-	case 'k':
+	case 'K':
 		result *= 1024;
 		break;
-	case 'm':
+	case 'M':
 		result *= 1024 * 1024;
 		break;
-	case 'g':
+	case 'G':
 		result *= 1024 * 1024 * 1024;
 		break;
 	default:

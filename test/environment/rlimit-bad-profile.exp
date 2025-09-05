@@ -10,27 +10,27 @@ match_max 100000
 send -- "firejail --profile=rlimit-bad-fsize.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"invalid rlimit-fsize in profile file. Only use positive numbers and K, M or G suffix."
+	"invalid rlimit-fsize:"
 }
 after 100
 
 send -- "firejail --profile=rlimit-bad-nofile.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"invalid rlimit"
+	"invalid rlimit-nofile:"
 }
 after 100
 
 send -- "firejail --profile=rlimit-bad-nproc.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"invalid rlimit"
+	"invalid rlimit-nproc:"
 }
 after 100
 send -- "firejail --profile=rlimit-bad-sigpending.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
-	"invalid rlimit"
+	"invalid rlimit-sigpending:"
 }
 after 100
 

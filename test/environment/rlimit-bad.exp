@@ -10,27 +10,27 @@ match_max 100000
 send -- "firejail --rlimit-fsize=-1024\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"invalid rlimit-fsize. Only use positive numbers and K, M or G suffix."
+	"invalid rlimit-fsize: -1024"
 }
 after 100
 
 send -- "firejail --rlimit-nofile=asdf\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"invalid rlimit"
+	"invalid rlimit-nofile: asdf"
 }
 after 100
 
 send -- "firejail --rlimit-nproc=100.23\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"invalid rlimit"
+	"invalid rlimit-nproc: 100.23"
 }
 after 100
 send -- "firejail --rlimit-sigpending=2345-78\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"invalid rlimit"
+	"invalid rlimit-sigpending: 2345-78"
 }
 after 100
 

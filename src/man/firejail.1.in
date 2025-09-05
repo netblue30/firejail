@@ -2577,7 +2577,8 @@ $ firejail \-\-restrict-namespaces=user,net
 .TP
 \fB\-\-rlimit-as=number
 Set the maximum size of the process's virtual memory (address space) in bytes.
-Use K(ilobyte), M(egabyte) or G(igabyte) for size suffix (base 1024).
+You can use K(ibibyte), M(ebibyte) or G(ibibyte) as a suffix, such as "100M"
+(which is equivalent to 104857600 bytes).
 
 .TP
 \fB\-\-rlimit-cpu=number
@@ -2591,7 +2592,8 @@ track of CPU seconds for each process independently.
 .TP
 \fB\-\-rlimit-fsize=number
 Set the maximum file size that can be created by a process.
-Use K(ilobyte), M(egabyte) or G(igabyte) for size suffix (base 1024).
+You can use K(ibibyte), M(ebibyte) or G(ibibyte) as a suffix, such as "100M"
+(which is equivalent to 104857600 bytes).
 .TP
 \fB\-\-rlimit-nofile=number
 Set the maximum number of files that can be opened by a process.

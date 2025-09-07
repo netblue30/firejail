@@ -94,12 +94,12 @@ char *arg_caps_list = NULL;			// optional caps list
 int arg_trace = 0;				// syscall tracing support
 char *arg_tracefile = NULL;			// syscall tracing file
 int arg_tracelog = 0;				// blacklist tracing support
+int arg_rlimit_as = 0;				// rlimit as
 int arg_rlimit_cpu = 0;				// rlimit max cpu time
+int arg_rlimit_fsize = 0;				// rlimit fsize
 int arg_rlimit_nofile = 0;			// rlimit nofile
 int arg_rlimit_nproc = 0;			// rlimit nproc
-int arg_rlimit_fsize = 0;				// rlimit fsize
 int arg_rlimit_sigpending = 0;			// rlimit fsize
-int arg_rlimit_as = 0;				// rlimit as
 int arg_nogroups = 0;				// disable supplementary groups
 #ifdef HAVE_FORCE_NONEWPRIVS
 int arg_nonewprivs = 1;			// set the NO_NEW_PRIVS prctl
@@ -1611,10 +1611,26 @@ int main(int argc, char **argv, char **envp) {
 			else
 				exit_err_feature("tracelog");
 		}
+		else if (strncmp(argv[i], "--rlimit-as=", 12) == 0) {
+			cfg.rlimit_as = parse_arg_size(argv[i] + 12);
+			if (cfg.rlimit_as == 0) {
+				perror("Error: invalid rlimit-as. Only use positive numbers and K, M or G suffix.");
+				exit(1);
+			}
+			arg_rlimit_as = 1;
+		}
 		else if (strncmp(argv[i], "--rlimit-cpu=", 13) == 0) {
 			check_unsigned(argv[i] + 13, "Error: invalid rlimit");
 			sscanf(argv[i] + 13, "%llu", &cfg.rlimit_cpu);
 			arg_rlimit_cpu = 1;
+		}
+		else if (strncmp(argv[i], "--rlimit-fsize=", 15) == 0) {
+			cfg.rlimit_fsize = parse_arg_size(argv[i] + 15);
+			if (cfg.rlimit_fsize == 0) {
+				perror("Error: invalid rlimit-fsize. Only use positive numbers and K, M or G suffix.");
+				exit(1);
+			}
+			arg_rlimit_fsize = 1;
 		}
 		else if (strncmp(argv[i], "--rlimit-nofile=", 16) == 0) {
 			check_unsigned(argv[i] + 16, "Error: invalid rlimit");
@@ -1626,26 +1642,10 @@ int main(int argc, char **argv, char **envp) {
 			sscanf(argv[i] + 15, "%llu", &cfg.rlimit_nproc);
 			arg_rlimit_nproc = 1;
 		}
-		else if (strncmp(argv[i], "--rlimit-fsize=", 15) == 0) {
-			cfg.rlimit_fsize = parse_arg_size(argv[i] + 15);
-			if (cfg.rlimit_fsize == 0) {
-				perror("Error: invalid rlimit-fsize. Only use positive numbers and K, M or G suffix.");
-				exit(1);
-			}
-			arg_rlimit_fsize = 1;
-		}
 		else if (strncmp(argv[i], "--rlimit-sigpending=", 20) == 0) {
 			check_unsigned(argv[i] + 20, "Error: invalid rlimit");
 			sscanf(argv[i] + 20, "%llu", &cfg.rlimit_sigpending);
 			arg_rlimit_sigpending = 1;
-		}
-		else if (strncmp(argv[i], "--rlimit-as=", 12) == 0) {
-			cfg.rlimit_as = parse_arg_size(argv[i] + 12);
-			if (cfg.rlimit_as == 0) {
-				perror("Error: invalid rlimit-as. Only use positive numbers and K, M or G suffix.");
-				exit(1);
-			}
-			arg_rlimit_as = 1;
 		}
 		else if (strncmp(argv[i], "--ipc-namespace", 15) == 0)
 			arg_ipc = 1;

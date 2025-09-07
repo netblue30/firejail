@@ -26,6 +26,23 @@ void set_rlimits(void) {
 	EUID_ASSERT();
 	// resource limits
 	struct rlimit rl;
+	if (arg_rlimit_as) {
+		if (getrlimit(RLIMIT_AS, &rl) == -1)
+			errExit("getrlimit");
+		if (cfg.rlimit_as > rl.rlim_max && getuid() != 0)
+			cfg.rlimit_as = rl.rlim_max;
+		// set the new limit
+		rl.rlim_cur = (rlim_t) cfg.rlimit_as;
+		rl.rlim_max = (rlim_t) cfg.rlimit_as;
+
+		__gcov_dump();
+
+		if (setrlimit(RLIMIT_AS, &rl) == -1)
+			errExit("setrlimit");
+		if (arg_debug)
+			printf("Config rlimit: maximum virtual memory %llu\n", cfg.rlimit_as);
+	}
+
 	if (arg_rlimit_cpu) {
 		if (getrlimit(RLIMIT_CPU, &rl) == -1)
 			errExit("getrlimit");
@@ -41,6 +58,23 @@ void set_rlimits(void) {
 			errExit("setrlimit");
 		if (arg_debug)
 			printf("Config rlimit: max cpu time %llu\n", cfg.rlimit_cpu);
+	}
+
+	if (arg_rlimit_fsize) {
+		if (getrlimit(RLIMIT_FSIZE, &rl) == -1)
+			errExit("getrlimit");
+		if (cfg.rlimit_fsize > rl.rlim_max && getuid() != 0)
+			cfg.rlimit_fsize = rl.rlim_max;
+		// set the new limit
+		rl.rlim_cur = (rlim_t) cfg.rlimit_fsize;
+		rl.rlim_max = (rlim_t) cfg.rlimit_fsize;
+
+		__gcov_dump();
+
+		if (setrlimit(RLIMIT_FSIZE, &rl) == -1)
+			errExit("setrlimit");
+		if (arg_debug)
+			printf("Config rlimit: maximum file size %llu\n", cfg.rlimit_fsize);
 	}
 
 	if (arg_rlimit_nofile) {
@@ -78,23 +112,6 @@ void set_rlimits(void) {
 			printf("Config rlimit: number of processes %llu\n", cfg.rlimit_nproc);
 	}
 
-	if (arg_rlimit_fsize) {
-		if (getrlimit(RLIMIT_FSIZE, &rl) == -1)
-			errExit("getrlimit");
-		if (cfg.rlimit_fsize > rl.rlim_max && getuid() != 0)
-			cfg.rlimit_fsize = rl.rlim_max;
-		// set the new limit
-		rl.rlim_cur = (rlim_t) cfg.rlimit_fsize;
-		rl.rlim_max = (rlim_t) cfg.rlimit_fsize;
-
-		__gcov_dump();
-
-		if (setrlimit(RLIMIT_FSIZE, &rl) == -1)
-			errExit("setrlimit");
-		if (arg_debug)
-			printf("Config rlimit: maximum file size %llu\n", cfg.rlimit_fsize);
-	}
-
 	if (arg_rlimit_sigpending) {
 		if (getrlimit(RLIMIT_SIGPENDING, &rl) == -1)
 			errExit("getrlimit");
@@ -110,22 +127,5 @@ void set_rlimits(void) {
 			errExit("setrlimit");
 		if (arg_debug)
 			printf("Config rlimit: maximum number of signals pending %llu\n", cfg.rlimit_sigpending);
-	}
-
-	if (arg_rlimit_as) {
-		if (getrlimit(RLIMIT_AS, &rl) == -1)
-			errExit("getrlimit");
-		if (cfg.rlimit_as > rl.rlim_max && getuid() != 0)
-			cfg.rlimit_as = rl.rlim_max;
-		// set the new limit
-		rl.rlim_cur = (rlim_t) cfg.rlimit_as;
-		rl.rlim_max = (rlim_t) cfg.rlimit_as;
-
-		__gcov_dump();
-
-		if (setrlimit(RLIMIT_AS, &rl) == -1)
-			errExit("setrlimit");
-		if (arg_debug)
-			printf("Config rlimit: maximum virtual memory %llu\n", cfg.rlimit_as);
 	}
 }

@@ -215,12 +215,12 @@ typedef struct config_t {
 	char *seccomp_error_action;			// error action: kill, log or errno
 
 	// rlimits
+	long long unsigned rlimit_as;
 	long long unsigned rlimit_cpu;
+	long long unsigned rlimit_fsize;
 	long long unsigned rlimit_nofile;
 	long long unsigned rlimit_nproc;
-	long long unsigned rlimit_fsize;
 	long long unsigned rlimit_sigpending;
-	long long unsigned rlimit_as;
 	unsigned timeout;	// maximum time elapsed before killing the sandbox
 
 	// cpu affinity, nice and control groups
@@ -312,12 +312,12 @@ extern char *arg_caps_list;		// optional caps list
 extern int arg_trace;		// syscall tracing support
 extern char *arg_tracefile;	// syscall tracing file
 extern int arg_tracelog;	// blacklist tracing support
+extern int arg_rlimit_as;	//rlimit as
 extern int arg_rlimit_cpu;	// rlimit cpu
+extern int arg_rlimit_fsize;	// rlimit fsize
 extern int arg_rlimit_nofile;	// rlimit nofile
 extern int arg_rlimit_nproc;	// rlimit nproc
-extern int arg_rlimit_fsize;	// rlimit fsize
 extern int arg_rlimit_sigpending;// rlimit sigpending
-extern int arg_rlimit_as;	//rlimit as
 extern int arg_nogroups;	// disable supplementary groups
 extern int arg_nonewprivs;	// set the NO_NEW_PRIVS prctl
 extern int arg_noroot;		// create a new user namespace and disable root user

@@ -1625,20 +1625,18 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// rlimit
 	if (strncmp(ptr, "rlimit", 6) == 0) {
-		if (strncmp(ptr, "rlimit-nofile ", 14) == 0) {
-			check_unsigned(ptr + 14, "Error: invalid rlimit in profile file: ");
-			sscanf(ptr + 14, "%llu", &cfg.rlimit_nofile);
-			arg_rlimit_nofile = 1;
+		if (strncmp(ptr, "rlimit-as ", 10) == 0) {
+			cfg.rlimit_as = parse_arg_size(ptr + 10);
+			if (cfg.rlimit_as == 0) {
+				perror("Error: invalid rlimit-as in profile file. Only use positive numbers and K, M or G suffix.");
+				exit(1);
+			}
+			arg_rlimit_as = 1;
 		}
 		else if (strncmp(ptr, "rlimit-cpu ", 11) == 0) {
 			check_unsigned(ptr + 11, "Error: invalid rlimit-cpu in profile file: ");
 			sscanf(ptr + 11, "%llu", &cfg.rlimit_cpu);
 			arg_rlimit_cpu = 1;
-		}
-		else if (strncmp(ptr, "rlimit-nproc ", 13) == 0) {
-			check_unsigned(ptr + 13, "Error: invalid rlimit-nproc in profile file: ");
-			sscanf(ptr + 13, "%llu", &cfg.rlimit_nproc);
-			arg_rlimit_nproc = 1;
 		}
 		else if (strncmp(ptr, "rlimit-fsize ", 13) == 0) {
 			cfg.rlimit_fsize = parse_arg_size(ptr + 13);
@@ -1648,18 +1646,20 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 			arg_rlimit_fsize = 1;
 		}
+		else if (strncmp(ptr, "rlimit-nofile ", 14) == 0) {
+			check_unsigned(ptr + 14, "Error: invalid rlimit in profile file: ");
+			sscanf(ptr + 14, "%llu", &cfg.rlimit_nofile);
+			arg_rlimit_nofile = 1;
+		}
+		else if (strncmp(ptr, "rlimit-nproc ", 13) == 0) {
+			check_unsigned(ptr + 13, "Error: invalid rlimit-nproc in profile file: ");
+			sscanf(ptr + 13, "%llu", &cfg.rlimit_nproc);
+			arg_rlimit_nproc = 1;
+		}
 		else if (strncmp(ptr, "rlimit-sigpending ", 18) == 0) {
 			check_unsigned(ptr + 18, "Error: invalid rlimit-sigpending in profile file: ");
 			sscanf(ptr + 18, "%llu", &cfg.rlimit_sigpending);
 			arg_rlimit_sigpending = 1;
-		}
-		else if (strncmp(ptr, "rlimit-as ", 10) == 0) {
-			cfg.rlimit_as = parse_arg_size(ptr + 10);
-			if (cfg.rlimit_as == 0) {
-				perror("Error: invalid rlimit-as in profile file. Only use positive numbers and K, M or G suffix.");
-				exit(1);
-			}
-			arg_rlimit_as = 1;
 		}
 		else {
 			fprintf(stderr, "Error: Invalid rlimit option on line %d\n", lineno);

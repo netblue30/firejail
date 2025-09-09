@@ -7,29 +7,43 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --rlimit-fsize=-1024\r"
+send -- "firejail --rlimit-as=-1234567890\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
+	"invalid rlimit-as: -1234567890"
+}
+after 100
+
+send -- "firejail --rlimit-cpu=-100\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"invalid rlimit-cpu: -100"
+}
+after 100
+
+send -- "firejail --rlimit-fsize=-1024\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"invalid rlimit-fsize: -1024"
 }
 after 100
 
 send -- "firejail --rlimit-nofile=asdf\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"invalid rlimit-nofile: asdf"
 }
 after 100
 
 send -- "firejail --rlimit-nproc=100.23\r"
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
 	"invalid rlimit-nproc: 100.23"
 }
 after 100
 send -- "firejail --rlimit-sigpending=2345-78\r"
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
+	timeout {puts "TESTING ERROR 5\n";exit}
 	"invalid rlimit-sigpending: 2345-78"
 }
 after 100

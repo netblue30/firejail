@@ -1614,36 +1614,38 @@ int main(int argc, char **argv, char **envp) {
 		else if (strncmp(argv[i], "--rlimit-as=", 12) == 0) {
 			cfg.rlimit_as = parse_arg_size(argv[i] + 12);
 			if (cfg.rlimit_as == 0) {
-				perror("Error: invalid rlimit-as. Only use positive numbers and K, M or G suffix.");
+				fprintf(stderr, "Error: invalid rlimit-as: %s; use only positive numbers and K, M or G suffix\n",
+				        argv[i] + 12);
 				exit(1);
 			}
 			arg_rlimit_as = 1;
 		}
 		else if (strncmp(argv[i], "--rlimit-cpu=", 13) == 0) {
-			check_unsigned(argv[i] + 13, "Error: invalid rlimit");
+			check_unsigned(argv[i] + 13, "Error: invalid rlimit-cpu");
 			sscanf(argv[i] + 13, "%llu", &cfg.rlimit_cpu);
 			arg_rlimit_cpu = 1;
 		}
 		else if (strncmp(argv[i], "--rlimit-fsize=", 15) == 0) {
 			cfg.rlimit_fsize = parse_arg_size(argv[i] + 15);
 			if (cfg.rlimit_fsize == 0) {
-				perror("Error: invalid rlimit-fsize. Only use positive numbers and K, M or G suffix.");
+				fprintf(stderr, "Error: invalid rlimit-fsize: %s; use only positive numbers and K, M or G suffix\n",
+				        argv[i] + 15);
 				exit(1);
 			}
 			arg_rlimit_fsize = 1;
 		}
 		else if (strncmp(argv[i], "--rlimit-nofile=", 16) == 0) {
-			check_unsigned(argv[i] + 16, "Error: invalid rlimit");
+			check_unsigned(argv[i] + 16, "Error: invalid rlimit-nofile");
 			sscanf(argv[i] + 16, "%llu", &cfg.rlimit_nofile);
 			arg_rlimit_nofile = 1;
 		}
 		else if (strncmp(argv[i], "--rlimit-nproc=", 15) == 0) {
-			check_unsigned(argv[i] + 15, "Error: invalid rlimit");
+			check_unsigned(argv[i] + 15, "Error: invalid rlimit-nproc");
 			sscanf(argv[i] + 15, "%llu", &cfg.rlimit_nproc);
 			arg_rlimit_nproc = 1;
 		}
 		else if (strncmp(argv[i], "--rlimit-sigpending=", 20) == 0) {
-			check_unsigned(argv[i] + 20, "Error: invalid rlimit");
+			check_unsigned(argv[i] + 20, "Error: invalid rlimit-sigpending");
 			sscanf(argv[i] + 20, "%llu", &cfg.rlimit_sigpending);
 			arg_rlimit_sigpending = 1;
 		}

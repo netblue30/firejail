@@ -11,6 +11,7 @@ ignore noexec ${HOME}
 
 noblacklist ${HOME}/.cache/godot
 noblacklist ${HOME}/.config/godot
+noblacklist ${HOME}/.local/share/Trash
 noblacklist ${HOME}/.local/share/godot
 
 include disable-common.inc

@@ -23,6 +23,7 @@ whitelist /usr/share/gir-1.0
 whitelist /usr/share/gjs-1.0
 whitelist /usr/share/glib-2.0
 whitelist /usr/share/glvnd
+whitelist /usr/share/glycin-loaders
 whitelist /usr/share/gtk-2.0
 whitelist /usr/share/gtk-3.0
 whitelist /usr/share/gtk-engines

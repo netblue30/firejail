@@ -235,6 +235,7 @@ blacklist ${HOME}/.cache/thunderbird
 blacklist ${HOME}/.cache/tiny-rdm
 blacklist ${HOME}/.cache/torbrowser
 blacklist ${HOME}/.cache/transmission
+blacklist ${HOME}/.cache/trivalent
 blacklist ${HOME}/.cache/ueberzugpp
 blacklist ${HOME}/.cache/ungoogled-chromium
 blacklist ${HOME}/.cache/virt-manager
@@ -682,6 +683,7 @@ blacklist ${HOME}/.config/totem
 blacklist ${HOME}/.config/tox
 blacklist ${HOME}/.config/transgui
 blacklist ${HOME}/.config/transmission
+blacklist ${HOME}/.config/trivalent
 blacklist ${HOME}/.config/truecraft
 blacklist ${HOME}/.config/tuir
 blacklist ${HOME}/.config/tuta_integration

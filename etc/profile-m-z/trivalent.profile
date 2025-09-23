@@ -16,6 +16,7 @@ whitelist ${HOME}/.config/trivalent
 
 # We need this for some reason, just pulse/native doesn't work
 whitelist ${RUNUSER}/pulse
+read-only ${RUNUSER}/pulse/pid
 
 private-bin arch,cat,dirname,exec,grep,mkdir,ps,readlink,sh,trivalent,uname
 

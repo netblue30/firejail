@@ -261,7 +261,8 @@ static const char * const env_whitelist[] = {
 	"LANGUAGE",
 	"LC_MESSAGES",
 	// "PATH",
-	"DISPLAY"	// required by X11
+	"DISPLAY",	// required by X11
+	"WAYLAND_DISPLAY"	// required by wayland
 };
 
 static const char * const env_whitelist_sbox[] = {

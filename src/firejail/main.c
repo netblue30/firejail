@@ -1267,6 +1267,7 @@ int main(int argc, char **argv, char **envp) {
 		fullargv = malloc(fullargv_sz * sizeof(char *));
 		if (!fullargv)
 			errExit("malloc");
+		memset(fullargv, 0, fullargv_sz * sizeof(char *));
 
 		if (argc == 1)
 			login_shell = 1;

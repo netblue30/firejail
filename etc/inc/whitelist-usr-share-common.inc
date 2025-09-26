@@ -26,6 +26,7 @@ whitelist /usr/share/glvnd
 whitelist /usr/share/glycin-loaders
 whitelist /usr/share/gtk-2.0
 whitelist /usr/share/gtk-3.0
+whitelist /usr/share/gtk-4.0
 whitelist /usr/share/gtk-engines
 whitelist /usr/share/gtksourceview-3.0
 whitelist /usr/share/gtksourceview-4

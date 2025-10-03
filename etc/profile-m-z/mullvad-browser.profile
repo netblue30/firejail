@@ -76,7 +76,7 @@ seccomp.block-secondary
 #tracelog # may cause issues, see #1930
 
 disable-mnt
-private-bin bash,cat,cp,cut,dirname,env,expr,file,gpg,grep,gxmessage,id,kdialog,ln,mkdir,mullvad-browser,mv,python*,rm,sed,sh,tail,tar,tclsh,test,update-desktop-database,xmessage,xz,zenity
+private-bin bash,cat,cp,cut,dirname,env,expr,file,gpg,grep,gxmessage,id,kdialog,ln,mkdir,mullvad-browser,mv,python*,readlink,realpath,rm,sed,sh,tail,tar,tclsh,test,update-desktop-database,xmessage,xz,zenity
 private-dev
 private-etc @tls-ca
 private-tmp

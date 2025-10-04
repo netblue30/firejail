@@ -811,6 +811,9 @@ Lucas (https://github.com/lucasmz-dev)
 	- added b3smum (blake3) profile
 	- firecfg: fix sha384sum & add b2sum/cksum
 	- device-flasher.linux profile
+	- new profile: trivalent (#6900)
+	- profiles: blink-common-hardened: disable noroot to fix saving files
+	  (#6920)
 Lukáš Krejčí (https://github.com/lskrejci)
 	- fixed parsing of --keep-var-tmp
 luzpaz (https://github.com/luzpaz)
@@ -1227,6 +1230,8 @@ SkewedZeppelin (https://github.com/SkewedZeppelin)
 	- Spotify and itch.io profile fixes
 Spacewalker2 (https://github.com/Spacewalker2)
 	- fix  MediathekView profile
+Spider Jerusalem (https://github.com/spider-jeru)
+	- profiles: godot: allow ~/.local/share/Trash (#6904)
 sshirokov (https://sourceforge.net/u/yshirokov/profile/)
 	- Patch to output "Reading profile" to stderr instead of stdout
 SYN-cook (https://github.com/SYN-cook)
@@ -1300,6 +1305,8 @@ Timo Hardebusch (https://github.com/tihadot)
 	- KeePassXC: added a warning regarding tray icon
 tinmanx (https://github.com/tinmanx)
 	- remove network access from cherrytree.profile
+t-m-w (https://github.com/t-m-w)
+	- profiles: mullvad-browser: allow readlink and realpath (#6923)
 Tom Mellor (https://github.com/kalegrill)
 	- mupen64plus profile
 Tomasz Jan Góralczyk (https://github.com/tjg)

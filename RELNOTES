@@ -31,7 +31,13 @@ firejail (0.9.77) baseline; urgency=low
   * profiles: qutebrowser: add comment about qute-pass support (#6879)
   * profiles: add missing mailcap entries (#6883 #6884)
   * profiles: organize blacklist sections as per profile.template (#6885)
+  * profiles: godot: allow ~/.local/share/Trash (#6904)
+  * profiles: wusc: add /usr/share/glycin-loaders (#6907)
+  * profiles: wusc: add /usr/share/gtk-4.0 (#6909)
+  * profiles: mullvad-browser: allow readlink and realpath (#6923)
+  * profiles: blink-common-hardened: disable noroot to fix saving files (#6920)
   * new profile: ne (text editor) (ae22e5610)
+  * new profile: trivalent (#6900)
  -- netblue30 <netblue30@yahoo.com>  Wed, 30 Jul 2025 11:00:00 -0500
 
 firejail (0.9.76) baseline; urgency=low

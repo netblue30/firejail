@@ -4,7 +4,7 @@ include blink-common-hardened.inc.local
 
 caps.drop all
 nonewprivs
-noroot
+#noroot breaks saving files
 protocol unix,inet,inet6,netlink
 seccomp !chroot
 

@@ -838,6 +838,13 @@ env CFLAGS="-W -Wall -Werror"
 \fBipc-namespace
 Enable a new IPC namespace if the sandbox was started as a regular user.
 IPC namespace is enabled by default for sandboxes started as root.
+.br
+
+.br
+Note: This only affects the IPC resources that are mentioned in
+\fBipc_namespaces\fR(7).
+It does not affect other IPC resources, such as Unix sockets (see
+\fBunix\fR(7)).
 
 .TP
 \fBkeep-fd

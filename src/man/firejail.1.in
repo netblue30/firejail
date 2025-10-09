@@ -1117,8 +1117,8 @@ $ firejail \-\-net=eth0 \-\-iprange=192.168.1.100,192.168.1.150
 
 .TP
 \fB\-\-ipc-namespace
-Enable a new IPC namespace if the sandbox was started as a regular user. IPC namespace is enabled by default
-for sandboxes started as root.
+Enable a new IPC namespace if the sandbox was started as a regular user.
+IPC namespace is enabled by default for sandboxes started as root.
 .br
 
 .br

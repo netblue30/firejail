@@ -119,6 +119,7 @@ firejail (0.9.78) baseline; urgency=low
   * new profile: openra (#7005)
   * new profile: gzdoom, lzdoom, uzdoom (#7010)
   * new profile: quakespasm (#7014)
+  * new profile: gemini (#6936)
  -- netblue30 <netblue30@yahoo.com>  Sat, 3 Jan 2026 11:00:00 -0500
 
 firejail (0.9.76) baseline; urgency=low

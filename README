@@ -161,6 +161,7 @@ Amin Vakil (https://github.com/aminvakil)
 	- added profile for strawberry
 	- w3m profile fix
 	- disable seccomp in wireshark profile
+        - added profile for gemini
 Ammon Smith (https://github.com/ammongit)
 	- Add DBus filter rules specific to firefox-developer-edition
 Andreas Hunkeler (https://github.com/Karneades)

@@ -7,6 +7,8 @@ include gemini.local
 # Persistent global definitions
 include globals.local
 
+noblacklist ${HOME}/.gemini
+
 include allow-bin-sh.inc
 
 include allow-common-devel.inc
@@ -23,7 +25,6 @@ include disable-shell.inc
 include disable-x11.inc
 include disable-xdg.inc
 
-noblacklist ${HOME}/.gemini
 whitelist ${HOME}/.gemini
 
 include whitelist-common.inc

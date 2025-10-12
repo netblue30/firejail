@@ -23,6 +23,11 @@ include disable-shell.inc
 include disable-x11.inc
 include disable-xdg.inc
 
+noblacklist ${HOME}/.gemini
+whitelist ${HOME}/.gemini
+
+include whitelist-common.inc
+
 apparmor
 caps.drop all
 ipc-namespace
@@ -40,11 +45,15 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6
+seccomp
+seccomp.block-secondary
+tracelog
 
 disable-mnt
-#private-cache
+private-cache
 private-dev
 private-etc
+private-lib
 private-tmp
 
 dbus-user none

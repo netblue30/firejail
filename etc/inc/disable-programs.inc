@@ -781,6 +781,7 @@ blacklist ${HOME}/.g8
 blacklist ${HOME}/.gallery-dl.conf
 blacklist ${HOME}/.gdfuse
 blacklist ${HOME}/.geekbench5
+blacklist ${HOME}/.gemini
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.gist
 blacklist ${HOME}/.gitconfig

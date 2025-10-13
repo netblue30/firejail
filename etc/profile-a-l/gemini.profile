@@ -9,8 +9,10 @@ include globals.local
 
 noblacklist ${HOME}/.gemini
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
 
+# Allows files commonly used by IDEs
 include allow-common-devel.inc
 
 blacklist ${RUNUSER}
@@ -54,7 +56,6 @@ disable-mnt
 private-cache
 private-dev
 private-etc
-private-lib
 private-tmp
 
 dbus-user none

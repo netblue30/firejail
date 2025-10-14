@@ -22,6 +22,7 @@ noblacklist ${HOME}/.local/share/Baba_Is_You
 noblacklist ${HOME}/.local/share/bohemiainteractive
 noblacklist ${HOME}/.local/share/cdprojektred
 noblacklist ${HOME}/.local/share/Colossal Order
+noblacklist ${HOME}/.local/share/doublefine
 noblacklist ${HOME}/.local/share/Dredmor
 noblacklist ${HOME}/.local/share/FasterThanLight
 noblacklist ${HOME}/.local/share/feral-interactive
@@ -78,6 +79,7 @@ mkdir ${HOME}/.local/share/Baba_Is_You
 mkdir ${HOME}/.local/share/bohemiainteractive
 mkdir ${HOME}/.local/share/cdprojektred
 mkdir ${HOME}/.local/share/Colossal Order
+mkdir ${HOME}/.local/share/doublefine
 mkdir ${HOME}/.local/share/Dredmor
 mkdir ${HOME}/.local/share/FasterThanLight
 mkdir ${HOME}/.local/share/feral-interactive
@@ -118,6 +120,7 @@ whitelist ${HOME}/.local/share/Baba_Is_You
 whitelist ${HOME}/.local/share/bohemiainteractive
 whitelist ${HOME}/.local/share/cdprojektred
 whitelist ${HOME}/.local/share/Colossal Order
+whitelist ${HOME}/.local/share/doublefine
 whitelist ${HOME}/.local/share/Dredmor
 whitelist ${HOME}/.local/share/FasterThanLight
 whitelist ${HOME}/.local/share/feral-interactive

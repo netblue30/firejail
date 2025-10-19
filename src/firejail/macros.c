@@ -52,7 +52,7 @@ Macro macro[] = {
 	{
 		"${PICTURES}",
 		"XDG_PICTURES_DIR=\"$HOME/",
-		{"Pictures", "Изображения", "Photos", "Immagini", "Imágenes", "Imagens", "Bilder"}
+		{"Pictures", "Изображения", "Images", "Immagini", "Imágenes", "Imagens", "Bilder"}
 	},
 
 	{

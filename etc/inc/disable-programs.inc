@@ -965,6 +965,7 @@ blacklist ${HOME}/.local/share/dev.nhex
 blacklist ${HOME}/.local/share/dino
 blacklist ${HOME}/.local/share/dolphin
 blacklist ${HOME}/.local/share/dolphin-emu
+blacklist ${HOME}/.local/share/doublefine
 blacklist ${HOME}/.local/share/emailidentities
 blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution

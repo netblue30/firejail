@@ -739,8 +739,6 @@ int check_namespace_virt(void);
 int check_kernel_procs(void);
 void run_no_sandbox(int argc, char **argv) __attribute__((noreturn));
 
-#define MAX_ENVS 256			// some sane maximum number of environment variables
-#define MAX_ENV_LEN (PATH_MAX + 32)	// FOOBAR=SOME_PATH, only applied to Firejail's own sandboxed apps
 // env.c
 typedef enum {
 	SETENV = 0,
@@ -879,6 +877,8 @@ extern char *xvfb_extra_params;
 extern char *netfilter_default;
 extern int arg_max_count;
 extern unsigned long arg_max_len;
+extern int env_max_count;
+extern unsigned long env_max_len;
 extern unsigned long join_timeout;
 extern char *config_seccomp_error_action_str;
 extern char *config_seccomp_filter_add;

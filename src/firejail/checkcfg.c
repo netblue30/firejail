@@ -235,8 +235,8 @@ int checkcfg(int val) {
 			else if (strncmp(ptr, "join-timeout ", 13) == 0)
 				join_timeout = strtoul(ptr + 13, NULL, 10) * 1000000; // seconds to microseconds
 
-			else if (strncmp(ptr, "max-arg-count", 13) == 0) {
-				long tmp = strtol(ptr + 13, NULL, 10);
+			else if (strncmp(ptr, "max-arg-count ", 14) == 0) {
+				long tmp = strtol(ptr + 14, NULL, 10);
 				if (tmp < 0 || tmp >= INT_MAX) {
 					if (arg_debug) {
 						printf("max-arg-count out of range: %ld, using %d\n",
@@ -249,8 +249,8 @@ int checkcfg(int val) {
 				}
 			}
 
-			else if (strncmp(ptr, "max-arg-len", 11) == 0)
-				max_arg_len = strtoul(ptr + 11, NULL, 10);
+			else if (strncmp(ptr, "max-arg-len ", 12) == 0)
+				max_arg_len = strtoul(ptr + 12, NULL, 10);
 
 			// add rules to default seccomp filter
 			else if (strncmp(ptr, "seccomp-filter-add ", 19) == 0)

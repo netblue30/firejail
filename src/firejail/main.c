@@ -1075,6 +1075,9 @@ int main(int argc, char **argv, char **envp) {
 	// check standard streams before opening any file
 	fix_std_streams();
 
+	// initialize values from firejail.config (needed for max_arg_count)
+	checkcfg(0);
+
 	// argument count should be larger than 0
 	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
 		fprintf(stderr, "Error: argv is invalid\n");

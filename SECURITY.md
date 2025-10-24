@@ -2,6 +2,31 @@
 
 ## Supported Versions
 
+Unless explicitly stated otherwise, we only support the latest released version
+(and the current development version) of firejail, which should be the one in
+the following page:
+
+* <https://github.com/netblue30/firejail/releases/latest>
+
+Versions older than the latest usually have outdated profiles and may contain
+bugs and security vulnerabilities that were already fixed in a later version.
+
+See [Installing](README.md#installing) for distribution-specific instructions
+and recommendations.
+
+If the firejail version in your distribution is older than the latest released
+version (and at least a few days have passed since the release), please contact
+the maintainers for your distribution and request an update to the relevant
+package(s).
+
+In the meantime, you can [build and install](README.md#building) the current
+development version.
+
+See also [CONTRIBUTING.md](CONTRIBUTING.md).
+
+Released versions are listed in the table below, which is mostly intended for
+historical reference and may be outdated and/or incomplete.
+
 | Version | Supported by us    | EOL                | Supported by distribution                                                         |
 | ------- | ------------------ | ------------------ | --------------------------------------------------------------------------------- |
 | 0.9.76  | :heavy_check_mark: |                    |                                                                                   |

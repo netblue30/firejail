@@ -10,7 +10,7 @@ match_max 100000
 send -- "rm -f /tmp/t\r"
 after 500
 
-send -- "firejail man firejail > /tmp/t\r"
+send -- "firejail /usr/bin/man firecfg > /tmp/t\r"
 sleep 1
 
 send -- "cat /tmp/t\r"

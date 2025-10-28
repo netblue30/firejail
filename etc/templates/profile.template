@@ -38,11 +38,13 @@
 #   REDIRECT INCLUDES
 #
 # The following macros may be used in path names to substitute common locations:
+#  ${CFG} (usually /etc/firejail)
 #  ${DESKTOP}
 #  ${DOCUMENTS}
 #  ${DOWNLOADS}
 #  ${HOME} (user's home)
 #  ${PATH} (contents of PATH env var)
+#  ${PICTURES}
 #  ${MUSIC}
 #  ${RUNUSER} (/run/user/UID)
 #  ${VIDEOS}

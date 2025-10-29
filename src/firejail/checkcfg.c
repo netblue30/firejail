@@ -35,8 +35,8 @@ char *xvfb_screen = "800x600x24";
 char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
 unsigned long join_timeout = 5000000; // microseconds
-int max_arg_count = 128; // maximum number of command arguments (argc)
-unsigned long max_arg_len = 4096; // --foobar=PATH
+int arg_max_count = 128; // maximum number of command arguments (argc)
+unsigned long arg_max_len = 4096; // --foobar=PATH
 char *config_seccomp_error_action_str = "EPERM";
 char *config_seccomp_filter_add = NULL;
 char **whitelist_reject_topdirs = NULL;
@@ -235,22 +235,22 @@ int checkcfg(int val) {
 			else if (strncmp(ptr, "join-timeout ", 13) == 0)
 				join_timeout = strtoul(ptr + 13, NULL, 10) * 1000000; // seconds to microseconds
 
-			else if (strncmp(ptr, "max-arg-count ", 14) == 0) {
+			else if (strncmp(ptr, "arg-max-count ", 14) == 0) {
 				long tmp = strtol(ptr + 14, NULL, 10);
 				if (tmp < 0 || tmp >= INT_MAX) {
 					if (arg_debug) {
-						printf("max-arg-count out of range: %ld, using %d\n",
+						printf("arg-max-count out of range: %ld, using %d\n",
 						       tmp, INT_MAX);
 					}
-					max_arg_count = INT_MAX;
+					arg_max_count = INT_MAX;
 				}
 				else {
-					max_arg_count = (int)tmp;
+					arg_max_count = (int)tmp;
 				}
 			}
 
-			else if (strncmp(ptr, "max-arg-len ", 12) == 0)
-				max_arg_len = strtoul(ptr + 12, NULL, 10);
+			else if (strncmp(ptr, "arg-max-len ", 12) == 0)
+				arg_max_len = strtoul(ptr + 12, NULL, 10);
 
 			// add rules to default seccomp filter
 			else if (strncmp(ptr, "seccomp-filter-add ", 19) == 0)

@@ -1075,24 +1075,24 @@ int main(int argc, char **argv, char **envp) {
 	// check standard streams before opening any file
 	fix_std_streams();
 
-	// initialize values from firejail.config (needed for max_arg_count)
+	// initialize values from firejail.config (needed for arg_max_count)
 	checkcfg(0);
 
 	// argument count should be larger than 0
 	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
 		fprintf(stderr, "Error: argv is invalid\n");
 		exit(1);
-	} else if (argc >= max_arg_count) {
-		fprintf(stderr, "Error: too many arguments: argc (%d) >= max-arg-count (%d)\n",
-		        argc, max_arg_count);
+	} else if (argc >= arg_max_count) {
+		fprintf(stderr, "Error: too many arguments: argc (%d) >= arg-max-count (%d)\n",
+		        argc, arg_max_count);
 		exit(1);
 	}
 
 	// sanity check for arguments
 	for (i = 0; i < argc; i++) {
-		if (strlen(argv[i]) >= max_arg_len) {
-			fprintf(stderr, "Error: too long argument: argv[%d] len (%zu) >= max-arg-len (%lu): '%s'\n",
-			        i, strlen(argv[i]), max_arg_len, argv[i]);
+		if (strlen(argv[i]) >= arg_max_len) {
+			fprintf(stderr, "Error: too long argument: argv[%d] len (%zu) >= arg-max-len (%lu): '%s'\n",
+			        i, strlen(argv[i]), arg_max_len, argv[i]);
 			exit(1);
 		}
 	}
@@ -1258,11 +1258,11 @@ int main(int argc, char **argv, char **envp) {
 	// insert command line options from /etc/firejail/login.users
 	if (*argv[0] == '-' || parent_sshd) {
 		// use a sane size for allocation
-		int fullargv_sz = max_arg_count;
+		int fullargv_sz = arg_max_count;
 		if (fullargv_sz > MAX_ARGS_RESTRICTED_SHELL) {
 			if (arg_debug) {
-				printf("max-arg-count %d > %d, allocating %d elements for fullargv\n",
-				       max_arg_count, MAX_ARGS_RESTRICTED_SHELL,
+				printf("arg-max-count %d > %d, allocating %d elements for fullargv\n",
+				       arg_max_count, MAX_ARGS_RESTRICTED_SHELL,
 				       MAX_ARGS_RESTRICTED_SHELL);
 			}
 			fullargv_sz = MAX_ARGS_RESTRICTED_SHELL;

@@ -22,6 +22,7 @@
 #include "../include/syscall.h"
 #include <sys/stat.h>
 #include <linux/loop.h>
+#include <limits.h>
 
 #define MAX_READ 8192				  // line buffer for profile files
 
@@ -33,6 +34,8 @@ char *xpra_extra_params = "";
 char *xvfb_screen = "800x600x24";
 char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
+int arg_max_count = 128; // maximum number of command arguments (argc)
+unsigned long arg_max_len = 4096; // --foobar=PATH
 unsigned long join_timeout = 5000000; // microseconds
 char *config_seccomp_error_action_str = "EPERM";
 char *config_seccomp_filter_add = NULL;
@@ -216,6 +219,26 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
+
+			// arg max count
+			else if (strncmp(ptr, "arg-max-count ", 14) == 0) {
+				long tmp = strtol(ptr + 14, NULL, 10);
+				if (tmp < 0 || tmp >= INT_MAX) {
+					if (arg_debug) {
+						printf("arg-max-count out of range: %ld, using %d\n",
+						       tmp, INT_MAX);
+					}
+					arg_max_count = INT_MAX;
+				}
+				else {
+					arg_max_count = (int)tmp;
+				}
+			}
+
+			// arg max len
+			else if (strncmp(ptr, "arg-max-len ", 12) == 0)
+				arg_max_len = strtoul(ptr + 12, NULL, 10);
+
 			// arp probes
 			else if (strncmp(ptr, "arp-probes ", 11) == 0) {
 				int arp_probes = atoi(ptr + 11);

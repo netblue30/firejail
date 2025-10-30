@@ -176,7 +176,7 @@ int arg_restrict_namespaces = 0;
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
 
-char *fullargv[MAX_ARGS];			// expanded argv for restricted shell
+char **fullargv = NULL;				// expanded argv for restricted shell
 int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;
@@ -1075,20 +1075,24 @@ int main(int argc, char **argv, char **envp) {
 	// check standard streams before opening any file
 	fix_std_streams();
 
+	// initialize values from firejail.config (needed for arg_max_count)
+	checkcfg(0);
+
 	// argument count should be larger than 0
 	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
 		fprintf(stderr, "Error: argv is invalid\n");
 		exit(1);
-	} else if (argc >= MAX_ARGS) {
-		fprintf(stderr, "Error: too many arguments: argc (%d) >= MAX_ARGS (%d)\n", argc, MAX_ARGS);
+	} else if (argc >= arg_max_count) {
+		fprintf(stderr, "Error: too many arguments: argc (%d) >= arg-max-count (%d)\n",
+		        argc, arg_max_count);
 		exit(1);
 	}
 
 	// sanity check for arguments
 	for (i = 0; i < argc; i++) {
-		if (strlen(argv[i]) >= MAX_ARG_LEN) {
-			fprintf(stderr, "Error: too long argument: argv[%d] len (%zu) >= MAX_ARG_LEN (%d): %s\n",
-			        i, strlen(argv[i]), MAX_ARG_LEN, argv[i]);
+		if (strlen(argv[i]) >= arg_max_len) {
+			fprintf(stderr, "Error: too long argument: argv[%d] len (%zu) >= arg-max-len (%lu): '%s'\n",
+			        i, strlen(argv[i]), arg_max_len, argv[i]);
 			exit(1);
 		}
 	}
@@ -1247,9 +1251,28 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
+#ifndef ARGC_MAX_RESTRICTED_SHELL
+#define ARGC_MAX_RESTRICTED_SHELL 4096
+#endif
 	// is this a login shell, or a command passed by sshd,
 	// insert command line options from /etc/firejail/login.users
 	if (*argv[0] == '-' || parent_sshd) {
+		// use a sane size for allocation
+		int fullargv_sz = arg_max_count;
+		if (fullargv_sz > ARGC_MAX_RESTRICTED_SHELL) {
+			if (arg_debug) {
+				printf("arg-max-count %d > %d, allocating %d elements for fullargv\n",
+				       arg_max_count, ARGC_MAX_RESTRICTED_SHELL,
+				       ARGC_MAX_RESTRICTED_SHELL);
+			}
+			fullargv_sz = ARGC_MAX_RESTRICTED_SHELL;
+		}
+
+		fullargv = malloc(fullargv_sz * sizeof(char *));
+		if (!fullargv)
+			errExit("malloc");
+		memset(fullargv, 0, fullargv_sz * sizeof(char *));
+
 		if (argc == 1)
 			login_shell = 1;
 		fullargc = restricted_shell(cfg.username);
@@ -1270,7 +1293,7 @@ int main(int argc, char **argv, char **envp) {
 #endif
 
 			int j;
-			for (i = 1, j = fullargc; i < argc && j < MAX_ARGS; i++, j++, fullargc++)
+			for (i = 1, j = fullargc; i < argc && j < fullargv_sz; i++, j++, fullargc++)
 				fullargv[j] = argv[i];
 
 			// replace argc/argv with fullargc/fullargv

@@ -1005,6 +1005,9 @@ pholodniak (https://github.com/pholodniak)
 	- profstats fixes
 pianoslum (https://github.com/pianoslum)
 	- nodbus breaking evince two-page-view warning
+pierretom (https://github.com/pierretom)
+	- bugfix: fix French translation for ${PICTURES} macro (#6942)
+	- bugfix: add missing macros in profile.template (#6948)
 pirate486743186 (https://github.com/pirate486743186)
 	- KMail profile
 	- mpsyt profile
@@ -1152,6 +1155,8 @@ Sergey Alirzaev (https://github.com/l29ah)
 	- firefox-common-addons.inc: + tridactyl
 Serphentas (https://github.com/Serphentas)
 	- add Paradox Launcher to Steam profile
+sk84 (https://github.com/sk84)
+	- profiles: steam: allow ~/.local/share/doublefine (#6937)
 Slava Monich (https://github.com/monich)
 	- added configure option to disable man pages
 Simon Peter (https://github.com/probonopd)
@@ -1300,6 +1305,9 @@ Thomas Jarosch (https://github.com/thomasjfox)
 	- added lstat() / lstat64() support to libtrace
 	- include mkuid.sh in make dist
 	- cppcheck bugfixes
+tht2005 (https://github.com/tht2005)
+	- feature: add arg-max-count and arg-max-len options to firejail.config
+	  (#4633 #6878)
 Timo Hardebusch (https://github.com/tihadot)
 	- add signal-cli profile
 	- KeePassXC: added a warning regarding tray icon

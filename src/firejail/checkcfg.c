@@ -36,6 +36,8 @@ char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
 int arg_max_count = 128; // maximum number of command arguments (argc)
 unsigned long arg_max_len = 4096; // --foobar=PATH
+int env_max_count = 256; // some sane maximum number of environment variables
+unsigned long env_max_len = (PATH_MAX + 32); // FOOBAR=SOME_PATH, only applied to Firejail's own sandboxed apps
 unsigned long join_timeout = 5000000; // microseconds
 char *config_seccomp_error_action_str = "EPERM";
 char *config_seccomp_filter_add = NULL;
@@ -238,6 +240,25 @@ int checkcfg(int val) {
 			// arg max len
 			else if (strncmp(ptr, "arg-max-len ", 12) == 0)
 				arg_max_len = strtoul(ptr + 12, NULL, 10);
+
+			// env max count
+			else if (strncmp(ptr, "env-max-count ", 14) == 0) {
+				long tmp = strtol(ptr + 14, NULL, 10);
+				if (tmp < 0 || tmp >= INT_MAX) {
+					if (arg_debug) {
+						printf("env-max-count out of range: %ld, using %d\n",
+						       tmp, INT_MAX);
+					}
+					env_max_count = INT_MAX;
+				}
+				else {
+					env_max_count = (int)tmp;
+				}
+			}
+
+			// env max len
+			else if (strncmp(ptr, "env-max-len ", 12) == 0)
+				env_max_len = strtoul(ptr + 12, NULL, 10);
 
 			// arp probes
 			else if (strncmp(ptr, "arp-probes ", 11) == 0) {

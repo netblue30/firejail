@@ -283,8 +283,9 @@ static void env_apply_list(const char * const *list, unsigned int num_items) {
 			for (i = 0; i < num_items; i++)
 				if (strcmp(env->name, list[i]) == 0) {
 					// sanity check for whitelisted environment variables
-					if (strlen(env->name) + strlen(env->value) >= MAX_ENV_LEN) {
-						fprintf(stderr, "Error: too long environment variable %s, please use --rmenv\n", env->name);
+					if (strlen(env->name) + strlen(env->value) >= env_max_len) {
+						fprintf(stderr, "Error: too long environment variable value: '%s' len (%zu) >= env-max-len (%lu): '%s'; see --rmenv\n",
+						        env->name, strlen(env->value), env_max_len, env->value);
 						exit(1);
 					}
 

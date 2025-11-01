@@ -1075,7 +1075,7 @@ int main(int argc, char **argv, char **envp) {
 	// check standard streams before opening any file
 	fix_std_streams();
 
-	// initialize values from firejail.config (needed for arg_max_count)
+	// initialize values from firejail.config (needed for arg/env checks)
 	checkcfg(0);
 
 	// argument count should be larger than 0
@@ -1098,12 +1098,13 @@ int main(int argc, char **argv, char **envp) {
 	}
 
 	// Stash environment variables
-	for (i = 0, ptr = envp; ptr && *ptr && i < MAX_ENVS; i++, ptr++)
+	for (i = 0, ptr = envp; ptr && *ptr && i < env_max_count; i++, ptr++)
 		env_store(*ptr, SETENV);
 
 	// sanity check for environment variables
-	if (i >= MAX_ENVS) {
-		fprintf(stderr, "Error: too many environment variables: >= MAX_ENVS (%d)\n", MAX_ENVS);
+	if (i >= env_max_count) {
+		fprintf(stderr, "Error: too many environment variables: >= env-max-count (%d)\n",
+		        env_max_count);
 		exit(1);
 	}
 

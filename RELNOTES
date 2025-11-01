@@ -19,7 +19,7 @@ firejail (0.9.77) baseline; urgency=low
   * build: cppcheck: ignore src/lib/syscalls.c (#6868)
   * build: cppcheck: use --check-level=exhaustive (#6877)
   * tests: rlimit: add missing tests for rlimit-as / rlimit-cpu (#6895)
-  * tests: man: fix timeout error (#6949)
+  * tests: man: disable test due to timeout (#6949 #6955)
   * ci: allow new github domain for codeql download (#6845)
   * ci: standardize "apt-get install" step name (#6862)
   * ci: speed-up main build & add build-gcc (#6864)

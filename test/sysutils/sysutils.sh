@@ -113,8 +113,8 @@ fi
 
 if command -v man
 then
-	echo "TESTING: man"
-	./man.exp
+	echo "TESTING: FIXME: man"
+	#./man.exp # FIXME: Broken in CI (see #6949)
 else
 	echo "TESTING SKIP: man not found"
 fi

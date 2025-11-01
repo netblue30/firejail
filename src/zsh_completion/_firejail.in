@@ -271,6 +271,7 @@ _firejail_args=(
     '--x11[enable X11 sandboxing. The software checks first if Xpra is installed, then it checks if Xephyr is installed. If all fails, it will attempt to use X11 security extension]'
     '--x11=-[disable or enable specific X11 server]: :(none xephyr xorg xpra xvfb)'
     '--xephyr-screen=-[set screen size for --x11=xephyr]: :(WIDTHxHEIGHT)'
+    '--xephyr-extra-params=-[set Xephyr command server extra parameters for --x11=xephyr]: :(OPTIONS)'
 #endif
 )
 

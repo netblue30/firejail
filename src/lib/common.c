@@ -473,6 +473,25 @@ int has_cntrl_chars(const char *str) {
 	return 0;
 }
 
+int str_ends_with(const char *str, const char *postfix) {
+	int str_length = strlen(str);
+	int postfix_length = strlen(postfix);
+
+	if (str_length < postfix_length)
+		return false;
+
+	const char *str_tail = str + str_length - postfix_length;
+
+	return !strcmp(str_tail, postfix);
+}
+
+int contains_directory_traversal(const char *fname) {
+	return    !strcmp(fname, "..")
+		|| strstr(fname, "../")
+		|| str_ends_with(fname, "/..");
+}
+
+
 void reject_cntrl_chars(const char *fname) {
 	assert(fname);
 

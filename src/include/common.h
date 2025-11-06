@@ -156,6 +156,7 @@ char *do_replace_cntrl_chars(char *str, char c);
 char *replace_cntrl_chars(const char *str, char c);
 char *escape_cntrl_chars(const char *str);
 int has_cntrl_chars(const char *str);
+int contains_directory_traversal(const char *fname);
 void reject_cntrl_chars(const char *fname);
 void reject_meta_chars(const char *fname, int globbing);
 void warn_dumpable(void);

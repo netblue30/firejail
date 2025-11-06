@@ -124,7 +124,7 @@ void check_netfilter_file(const char *fname) {
 
 	invalid_filename(tmp, 0); // no globbing
 
-	if (is_dir(tmp) || is_link(tmp) || strstr(tmp, "..") || access(tmp, R_OK )) {
+	if (is_dir(tmp) || is_link(tmp) || contains_directory_traversal(tmp) || access(tmp, R_OK )) {
 		fprintf(stderr, "Error: invalid network filter file %s\n", tmp);
 		exit(1);
 	}

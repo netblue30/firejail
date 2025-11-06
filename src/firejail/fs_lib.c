@@ -103,7 +103,7 @@ static const char *masked_lib_dirs[] = {
 
 // return 1 if the file is in masked_lib_dirs[]
 static int valid_full_path(const char *full_path) {
-	if (strstr(full_path, ".."))
+	if (contains_directory_traversal(full_path))
 		return 0;
 
 	int i = 0;
@@ -279,7 +279,7 @@ static void install_list_entry(const char *lib) {
 	// filename check
 	reject_meta_chars(lib, 1);
 
-	if (strstr(lib, "..")) {
+	if (contains_directory_traversal(lib)) {
 		fprintf(stderr, "Error: \"%s\" is an invalid library\n", lib);
 		exit(1);
 	}

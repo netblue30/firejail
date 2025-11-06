@@ -45,7 +45,7 @@ static char *netns_etc_dir(const char *nsname) {
 }
 
 void check_netns(const char *nsname) {
-	if (strchr(nsname, '/') || strstr(nsname, "..")) {
+	if (strchr(nsname, '/') || contains_directory_traversal(nsname)) {
 		fprintf(stderr, "Error: invalid netns name %s\n", nsname);
 		exit(1);
 	}

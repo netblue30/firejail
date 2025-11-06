@@ -619,7 +619,7 @@ void fs_whitelist(void) {
 		if (arg_debug || arg_debug_whitelists)
 			printf("Debug %d: new_name: %s\n", __LINE__, new_name);
 
-		if (strstr(new_name, ".."))
+		if (contains_directory_traversal(new_name))
 			whitelist_error(new_name);
 
 		TopDir *current_top = NULL;

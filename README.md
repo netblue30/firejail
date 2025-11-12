@@ -167,7 +167,8 @@ git clone 'https://github.com/netblue30/firejail.git' &&
 cd firejail &&
 ./configure &&
 make -j "$(nproc)" &&
-sudo make install-strip
+sudo make install-strip &&
+make installcheck
 ```
 
 On Debian/Ubuntu you will need to install git and gcc.

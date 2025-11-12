@@ -163,9 +163,11 @@ packages](https://github.com/netblue30/firejail/releases).
 You can clone the source code from this git repository and build manually:
 
 ```sh
-git clone https://github.com/netblue30/firejail.git
-cd firejail
-./configure && make && sudo make install-strip
+git clone 'https://github.com/netblue30/firejail.git' &&
+cd firejail &&
+./configure &&
+make -j "$(nproc)" &&
+sudo make install-strip
 ```
 
 On Debian/Ubuntu you will need to install git and gcc.

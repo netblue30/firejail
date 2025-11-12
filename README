@@ -24,9 +24,11 @@ Please report all security vulnerabilities to:
 
 Compile and install the mainline version from GitHub:
 
-    git clone https://github.com/netblue30/firejail.git
-    cd firejail
-    ./configure && make && sudo make install-strip
+    git clone 'https://github.com/netblue30/firejail.git' &&
+    cd firejail &&
+    ./configure &&
+    make -j "$(nproc)" &&
+    sudo make install-strip
 
 On Debian/Ubuntu you will need to install git and gcc.
 
@@ -43,7 +45,9 @@ derivatives), install libselinux1-dev (libselinux-devel on Fedora) and use the
 We build our release firejail.tar.xz and firejail.deb packages using the
 following commands:
 
-    make distclean && ./configure && make deb
+    make distclean &&
+    ./configure &&
+    make deb
 
 Maintainer:
 - netblue30 (netblue30@protonmail.com)

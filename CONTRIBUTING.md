@@ -2,6 +2,11 @@
 
 Welcome to firejail, and thank you for your interest in contributing!
 
+## Support
+
+Make sure that you are using a [supported version](SECURITY.md) of firejail
+before commenting on an issue/discussion/PR or opening a new one.
+
 ## Opening an issue
 
 We welcome issues, whether to ask a question, provide information, request a

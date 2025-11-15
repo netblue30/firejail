@@ -87,6 +87,8 @@ See [SECURITY.md](SECURITY.md).
 
 ## Installing
 
+For the supported versions, see [SECURITY.md](SECURITY.md).
+
 ### Debian
 
 Debian stable (bullseye): We recommend to use the

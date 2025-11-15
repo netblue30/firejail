@@ -160,7 +160,73 @@ packages](https://github.com/netblue30/firejail/releases).
 
 ## Building
 
-You can clone the source code from this git repository and build manually:
+Instructions for building and installing the current development version from
+source.
+
+It is recommended to use the distribution-specific instructions below when
+applicable, as they generate native packages, which should make integration
+with the rest of the system and package management easier.
+
+For other distributions, see the [generic instructions](#generic).
+
+See also [.gitlab-ci.yml](.gitlab-ci.yml) for how distribution-specific builds
+are done in CI.
+
+### Arch
+
+Note: The AUR package is not maintained by us.
+
+Install [firejail-git](https://aur.archlinux.org/packages/firejail-git) from
+the AUR.
+
+Example:
+
+```sh
+yay -S firejail-git
+```
+
+### Debian
+
+For Debian, Ubuntu and derivatives:
+
+Note: Any ./configure flags should be passed to [`mkdeb.sh`](mkdeb.sh)
+(such as `./mkdeb.sh --enable-foo`).
+
+```sh
+sudo apt-get update -qy
+sudo apt-get install -qy \
+  git build-essential fakeroot lintian libapparmor-dev pkg-config gawk
+git clone 'https://github.com/netblue30/firejail.git' &&
+cd firejail &&
+./configure &&
+make dist &&
+./mkdeb.sh &&
+sudo dpkg -i ./*.deb &&
+make installcheck
+```
+
+### Fedora
+
+For Fedora and derivatives:
+
+Note: Any ./configure flags should be passed to [`mkrpm.sh`](platform/rpm/mkrpm.sh)
+(such as `./platform/rpm/mkrpm.sh --enable-foo`).
+
+```sh
+sudo dnf update -y
+sudo dnf install -y rpm-build gcc make
+git clone 'https://github.com/netblue30/firejail.git' &&
+cd firejail &&
+./configure &&
+make dist &&
+./platform/rpm/mkrpm.sh &&
+sudo rpm -i ./*.rpm &&
+make installcheck
+```
+
+### Generic
+
+Generic build/install instructions:
 
 ```sh
 git clone 'https://github.com/netblue30/firejail.git' &&

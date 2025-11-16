@@ -63,7 +63,7 @@ Running the profile builder:
 .br
 Example:
 .br
-$ firejail --build=blobby.profile blobby
+$ firejail --build=blobby.profile /usr/bin/blobby
 .br
 
 .br
@@ -82,7 +82,7 @@ profile files. Firejail chooses the profile file as follows:
 Example:
 .PP
 .RS
-$ firejail --profile=/home/netblue/icecat.profile icecat
+$ firejail --profile=/home/netblue/icecat.profile /usr/bin/icecat
 .br
 Reading profile /home/netblue/icecat.profile
 .br
@@ -91,7 +91,7 @@ Reading profile /home/netblue/icecat.profile
 
 .PP
 .RS
-$ firejail --profile=icecat icecat-wrapper.sh
+$ firejail --profile=icecat /usr/bin/icecat-wrapper.sh
 .br
 Reading profile /etc/firejail/icecat.profile
 .br
@@ -102,7 +102,7 @@ Reading profile /etc/firejail/icecat.profile
 in /etc/firejail, the profile is loaded. ~/.config/firejail takes precedence over /etc/firejail. Example:
 .PP
 .RS
-$ firejail icecat
+$ firejail /usr/bin/icecat
 .br
 Command name #icecat#
 .br

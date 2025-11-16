@@ -64,6 +64,7 @@ Note: Items are checked with an "x", like so:
 -->
 
 - [ ] I am using a [supported version](https://github.com/netblue30/firejail/tree/master/SECURITY.md) of firejail
+- [ ] I am using the full program path (e.g. `firejail /usr/bin/vlc` instead of `firejail vlc`; see `https://github.com/netblue30/firejail/issues/2877`)
 - [ ] The issues is caused by firejail (i.e. running the program by path (e.g. `/usr/bin/vlc`) "fixes" it).
 - [ ] I can reproduce the issue without custom modifications (e.g. globals.local).
 - [ ] The program has a profile. (If not, request one in `https://github.com/netblue30/firejail/issues/1139`)

@@ -258,12 +258,17 @@ Detailed information on using firejail from git is available on the
 
 ## Running the sandbox
 
+Note: Make sure to use the full path to the program (for example, `firejail
+/usr/bin/firefox` instead of `firejail firefox`) to avoid potential
+firejail-in-firejail issues (see
+[#2877](https://github.com/netblue30/firejail/issues/2877).
+
 To start the sandbox, prefix your command with `firejail`:
 
 ```sh
-firejail firefox            # starting Mozilla Firefox
-firejail transmission-gtk   # starting Transmission BitTorrent
-firejail vlc                # starting VideoLAN Client
+firejail /usr/bin/firefox            # starting Mozilla Firefox
+firejail /usr/bin/transmission-gtk   # starting Transmission BitTorrent
+firejail /usr/bin/vlc                # starting VideoLAN Client
 sudo firejail /etc/init.d/nginx start
 ```
 
@@ -403,7 +408,7 @@ LANDLOCK
        --landlock.execute  options  together with --landlock or instead of it.
        Example:
 
-       $ firejail --landlock --landlock.read=/media --landlock.proc=ro mc
+       $ firejail --landlock --landlock.read=/media --landlock.proc=ro /usr/bin/mc
 ```
 
 ### Profile Statistics

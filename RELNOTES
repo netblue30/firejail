@@ -2,6 +2,8 @@ firejail (0.9.77) baseline; urgency=low
   * work in progress
   * feature: add arg-max-count and arg-max-len options to firejail.config
     (#4633 #6878)
+  * feature: add env-max-count and env-max-len options to firejail.config
+    (#3678 #6951)
   * modif: firemon: improve debug message code (#6856)
   * modif: rlimit: allow uppercase suffixes (#6890)
   * modif: rlimit: use uppercase suffixes in the code/docs (#6891)
@@ -20,6 +22,7 @@ firejail (0.9.77) baseline; urgency=low
   * build: cppcheck: use --check-level=exhaustive (#6877)
   * tests: rlimit: add missing tests for rlimit-as / rlimit-cpu (#6895)
   * tests: man: fix timeout error (#6949)
+  * tests: man: disable test due to timeout (#6955)
   * ci: allow new github domain for codeql download (#6845)
   * ci: standardize "apt-get install" step name (#6862)
   * ci: speed-up main build & add build-gcc (#6864)
@@ -30,6 +33,10 @@ firejail (0.9.77) baseline; urgency=low
   * docs: github: clarify how to attach logs (#6858)
   * docs: rlimit: improve text and use base-2 units (#6894)
   * docs: man: clarify what ipc-namespace affects (#6930)
+  * docs: improve build/install commands (#6962)
+  * docs: add distribution-specific build/install instructions (#6964)
+  * docs: clarify that only latest and dev versions are supported (#6965)
+  * docs: always use full path to program in examples (#6963)
   * profiles: thunderbird: fix ignoring wruc (#6839 #6852)
   * profiles: wine: disable noinput so gamepads work (#6866 #6867)
   * profiles: qutebrowser: whitelist /usr/share/pdf.js (#6875)

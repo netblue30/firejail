@@ -224,7 +224,7 @@ static void parse_config_file(const char *cfgfile, int do_symlink) {
 			continue;
 
 		// do not accept .. and/or / in file name
-		if (strstr(buf, "..") || strchr(buf, '/')) {
+		if (contains_directory_traversal(buf) || strchr(buf, '/')) {
 			fprintf(stderr, "Error: invalid line %d in %s\n", lineno, cfgfile);
 			exit(1);
 		}

@@ -778,7 +778,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			}
 			char *path = argv[i + 1];
 			invalid_filename(path, 0); // no globbing
-			if (strstr(path, "..")) {
+			if (contains_directory_traversal(path)) {
 				fprintf(stderr, "Error: invalid file name %s\n", path);
 				exit(1);
 			}
@@ -806,13 +806,13 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			}
 			char *path1 = argv[i + 1];
 			invalid_filename(path1, 0); // no globbing
-			if (strstr(path1, "..")) {
+			if (contains_directory_traversal(path1)) {
 				fprintf(stderr, "Error: invalid file name %s\n", path1);
 				exit(1);
 			}
 			char *path2 = argv[i + 2];
 			invalid_filename(path2, 0); // no globbing
-			if (strstr(path2, "..")) {
+			if (contains_directory_traversal(path2)) {
 				fprintf(stderr, "Error: invalid file name %s\n", path2);
 				exit(1);
 			}
@@ -840,7 +840,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			}
 			char *path = argv[i + 1];
 			invalid_filename(path, 0); // no globbing
-			if (strstr(path, "..")) {
+			if (contains_directory_traversal(path)) {
 				fprintf(stderr, "Error: invalid file name %s\n", path);
 				exit(1);
 			}
@@ -869,7 +869,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			}
 			char *path = argv[i + 1];
 			invalid_filename(path, 0); // no globbing
-			if (strstr(path, "..")) {
+			if (contains_directory_traversal(path)) {
 				fprintf(stderr, "Error: invalid file name %s\n", path);
 				exit(1);
 			}
@@ -1624,7 +1624,7 @@ int main(int argc, char **argv, char **envp) {
 				exit(1);
 			}
 			invalid_filename(arg_tracefile, 0); // no globbing
-			if (strstr(arg_tracefile, "..") || has_cntrl_chars(arg_tracefile)) {
+			if (contains_directory_traversal(arg_tracefile) || has_cntrl_chars(arg_tracefile)) {
 				fprintf(stderr, "Error: invalid file name %s\n", arg_tracefile);
 				exit(1);
 			}
@@ -1836,7 +1836,7 @@ int main(int argc, char **argv, char **envp) {
 
 				// check name
 				invalid_filename(subdirname, 0); // no globbing
-				if (strstr(subdirname, "..") || strstr(subdirname, "/")) {
+				if (contains_directory_traversal(subdirname) || strstr(subdirname, "/")) {
 					fprintf(stderr, "Error: invalid overlay name\n");
 					exit(1);
 				}

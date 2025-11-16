@@ -33,6 +33,7 @@
 #include <dirent.h>
 #include <limits.h>
 #include "../include/rundefs.h"
+#include "../include/common.h"
 
 //#define DEBUG
 
@@ -110,7 +111,7 @@ static char *storage_find(const char *str) {
 	const char *tofind = str;
 	int allocated = 0;
 
-	if (strstr(str, "..") || strstr(str, "/./") || strstr(str, "//") || str[0] != '/') {
+	if (contains_directory_traversal(str) || strstr(str, "/./") || strstr(str, "//") || str[0] != '/') {
 		if (cwd != NULL && str[0] != '/') {
 			char *fullpath=malloc(PATH_MAX);
 			if (!fullpath) {

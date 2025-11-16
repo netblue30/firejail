@@ -20,6 +20,7 @@
 #include "firejail.h"
 #include "../include/gcov_wrapper.h"
 #include "../include/seccomp.h"
+#include "../include/common.h"
 #include "../include/syscall.h"
 #include <dirent.h>
 #include <sys/stat.h>
@@ -1534,7 +1535,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 			// check name
 			invalid_filename(subdirname, 0); // no globbing
-			if (strstr(subdirname, "..") || strstr(subdirname, "/")) {
+			if (contains_directory_traversal(subdirname) || strstr(subdirname, "/")) {
 				fprintf(stderr, "Error: invalid overlay name\n");
 				exit(1);
 			}
@@ -1605,7 +1606,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			// check directories
 			invalid_filename(dname1, 0); // no globbing
 			invalid_filename(dname2, 0); // no globbing
-			if (strstr(dname1, "..") || strstr(dname2, "..")) {
+			if (contains_directory_traversal(dname1) || contains_directory_traversal(dname2)) {
 				fprintf(stderr, "Error: invalid file name.\n");
 				exit(1);
 			}
@@ -1763,7 +1764,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// some characters just don't belong in filenames
 	invalid_filename(ptr, 1); // globbing
-	if (strstr(ptr, "..")) {
+	if (contains_directory_traversal(ptr)) {
 		if (lineno == 0)
 			fprintf(stderr, "Error: \"%s\" is an invalid filename\n", ptr);
 		else if (fname != NULL)

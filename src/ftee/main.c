@@ -199,7 +199,7 @@ int main(int argc, char **argv) {
 
 
 	// do not accept directories, links, and files with ".."
-	if (strstr(fname, "..") || is_link(fname) || is_dir(fname))
+	if (contains_directory_traversal(fname) || is_link(fname) || is_dir(fname))
 		goto errexit;
 
 	struct stat s;

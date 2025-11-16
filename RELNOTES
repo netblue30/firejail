@@ -1,8 +1,8 @@
 firejail (0.9.77) baseline; urgency=low
   * work in progress
-  * feature: add arg-max-count and arg-max-len options to firejail.config
+  * feature: add arg-max-count / arg-max-len to firejail.config
     (#4633 #6878)
-  * feature: add env-max-count and env-max-len options to firejail.config
+  * feature: add env-max-count / env-max-len to firejail.config
     (#3678 #6951)
   * modif: firemon: improve debug message code (#6856)
   * modif: rlimit: allow uppercase suffixes (#6890)

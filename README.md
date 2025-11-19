@@ -261,7 +261,7 @@ Detailed information on using firejail from git is available on the
 Note: Make sure to use the full path to the program (for example, `firejail
 /usr/bin/firefox` instead of `firejail firefox`) to avoid potential
 firejail-in-firejail issues (see
-[#2877](https://github.com/netblue30/firejail/issues/2877).
+[#2877](https://github.com/netblue30/firejail/issues/2877)).
 
 To start the sandbox, prefix your command with `firejail`:
 

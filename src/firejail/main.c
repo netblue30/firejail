@@ -1075,20 +1075,33 @@ int main(int argc, char **argv, char **envp) {
 	// check standard streams before opening any file
 	fix_std_streams();
 
-	// initialize values from firejail.config (needed for arg/env checks)
-	checkcfg(0);
-
 	// argument count should be larger than 0
 	if (argc == 0 || !argv || strlen(argv[0]) == 0) {
 		fprintf(stderr, "Error: argv is invalid\n");
 		exit(1);
-	} else if (argc >= arg_max_count) {
+	}
+
+	// process --quiet
+	const char *env_quiet = env_get("FIREJAIL_QUIET");
+	if (check_arg(argc, argv, "--quiet", 1) || (env_quiet && strcmp(env_quiet, "yes") == 0))
+		arg_quiet = 1;
+
+	// process --debug
+	if (check_arg(argc, argv, "--debug", 1)) {
+		arg_debug = 1;
+		arg_quiet = 0;
+	}
+
+	// initialize values from firejail.config (needed for arg/env checks)
+	checkcfg(0);
+
+	// sanity check for arguments
+	if (argc >= arg_max_count) {
 		fprintf(stderr, "Error: too many arguments: argc (%d) >= arg-max-count (%d)\n",
 		        argc, arg_max_count);
 		exit(1);
 	}
 
-	// sanity check for arguments
 	for (i = 0; i < argc; i++) {
 		if (strlen(argv[i]) >= arg_max_len) {
 			fprintf(stderr, "Error: too long argument: argv[%d] len (%zu) >= arg-max-len (%lu): '%s'\n",
@@ -1110,17 +1123,6 @@ int main(int argc, char **argv, char **envp) {
 
 	// Reapply a minimal set of environment variables
 	env_apply_whitelist();
-
-	// process --quiet
-	const char *env_quiet = env_get("FIREJAIL_QUIET");
-	if (check_arg(argc, argv, "--quiet", 1) || (env_quiet && strcmp(env_quiet, "yes") == 0))
-		arg_quiet = 1;
-
-	// process --debug
-	if (check_arg(argc, argv, "--debug", 1)) {
-		arg_debug = 1;
-		arg_quiet = 0;
-	}
 
 	// check if the user is allowed to use firejail
 	init_cfg(argc, argv);

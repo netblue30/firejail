@@ -26,8 +26,8 @@
 
 #define MAX_READ 8192				  // line buffer for profile files
 
-static int firejail_config_init = 0;
-static int cfg_val[CFG_MAX];
+int firejail_config_init = 0;
+int cfg_val[CFG_MAX];
 char *xephyr_screen = "800x600";
 char *xephyr_extra_params = "";
 char *xpra_extra_params = "";

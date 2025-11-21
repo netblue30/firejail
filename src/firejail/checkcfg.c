@@ -26,7 +26,7 @@
 
 #define MAX_READ 8192				  // line buffer for profile files
 
-static int initialized = 0;
+static int firejail_config_init = 0;
 static int cfg_val[CFG_MAX];
 char *xephyr_screen = "800x600";
 char *xephyr_extra_params = "";
@@ -49,7 +49,7 @@ int checkcfg(int val) {
 	FILE *fp = NULL;
 	char *ptr;
 
-	if (!initialized) {
+	if (!firejail_config_init) {
 		// initialize defaults
 		int i;
 		for (i = 0; i < CFG_MAX; i++)
@@ -77,7 +77,7 @@ int checkcfg(int val) {
 			fprintf(stderr, "Error: Firejail configuration file %s not found\n", fname);
 			exit(1);
 #else
-			initialized = 1;
+			firejail_config_init = 1;
 			return	cfg_val[val];
 #endif
 		}
@@ -328,7 +328,7 @@ int checkcfg(int val) {
 		}
 
 		fclose(fp);
-		initialized = 1;
+		firejail_config_init = 1;
 	}
 
 

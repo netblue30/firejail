@@ -1311,8 +1311,8 @@ Thomas Jarosch (https://github.com/thomasjfox)
 	- include mkuid.sh in make dist
 	- cppcheck bugfixes
 tht2005 (https://github.com/tht2005)
-	- feature: add arg-max-count and arg-max-len options to firejail.config
-	  (#4633 #6878)
+	- feature: add arg-max-count / arg-max-len to firejail.config (#4633
+	  #6878)
 Timo Hardebusch (https://github.com/tihadot)
 	- add signal-cli profile
 	- KeePassXC: added a warning regarding tray icon

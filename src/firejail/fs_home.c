@@ -474,7 +474,7 @@ void fs_check_private_cwd(const char *dir) {
 	cfg.cwd = expand_macros(dir);
 
 	// realpath/is_dir not used because path may not exist outside of jail
-	if (strstr(cfg.cwd, "..") || *cfg.cwd != '/')
+	if (contains_directory_traversal(cfg.cwd) || *cfg.cwd != '/')
 		goto errout;
 
 	return;

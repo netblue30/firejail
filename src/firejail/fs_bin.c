@@ -86,7 +86,7 @@ static int valid_full_path_file(const char *name) {
 
 	if (*name != '/')
 		return 0;
-	if (strstr(name, ".."))
+	if (contains_directory_traversal(name))
 		return 0;
 
 	// do we have a file?
@@ -136,7 +136,7 @@ static void duplicate(char *fname) {
 	EUID_ASSERT();
 	assert(fname);
 
-	if (*fname == '~' || strstr(fname, "..")) {
+	if (*fname == '~' || contains_directory_traversal(fname)) {
 		fprintf(stderr, "Error: \"%s\" is an invalid filename\n", fname);
 		exit(1);
 	}

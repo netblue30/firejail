@@ -869,6 +869,8 @@ enum {
 	CFG_TRACELOG,
 	CFG_MAX // this should always be the last entry
 };
+extern int firejail_config_init;
+extern int cfg_val[CFG_MAX];
 extern char *xephyr_screen;
 extern char *xephyr_extra_params;
 extern char *xpra_extra_params;

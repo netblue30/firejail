@@ -375,10 +375,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		usage();
 		exit(0);
 	}
-	else if (strcmp(argv[i], "--version") == 0) {
-		print_version_full();
-		exit(0);
-	}
 #ifdef HAVE_OVERLAYFS
 	else if (strcmp(argv[i], "--overlay-clean") == 0) {
 		if (checkcfg(CFG_OVERLAYFS)) {
@@ -1092,6 +1088,12 @@ int main(int argc, char **argv, char **envp) {
 		arg_quiet = 0;
 	}
 
+	// process --version
+	if (check_arg(argc, argv, "--version", 1)) {
+		print_version_full();
+		exit(0);
+	}
+
 	// initialize values from firejail.config (needed for arg/env checks)
 	checkcfg(0);
 
@@ -1144,11 +1146,6 @@ int main(int argc, char **argv, char **envp) {
 		int rv = check_kernel_procs();
 		EUID_USER();
 		if (rv == 0) {
-			if (check_arg(argc, argv, "--version", 1)) {
-				print_version_full();
-				exit(0);
-			}
-
 			// start the program directly without sandboxing
 			run_no_sandbox(argc, argv);
 			__builtin_unreachable();

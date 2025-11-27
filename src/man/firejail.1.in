@@ -3467,6 +3467,18 @@ Example:
 .br
 $ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 /usr/bin/firefox
 .br
+
+.TP
+\fB\-\-xephyr-extra-params=OPTIONS
+Set Xephyr server command extra parameters for x11 --x11=xephyr. The setting will overwrite the default set in /etc/firejail/firejail.config
+for the current sandbox. Run Xephyr -help to get a list of available options.
+.br
+
+.br
+Example:
+.br
+$ firejail --net=eth0 --x11=xephyr --xephyr-extra-params="-title firefox" firefox
+.br
 #endif
 .\" Note: Keep this in sync with invalid_name() in src/firejail/util.c.
 #ifdef HAVE_APPARMOR

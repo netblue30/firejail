@@ -434,6 +434,11 @@ void x11_start_xephyr(int argc, char **argv) {
 	if (newscreen)
 		xephyr_screen = newscreen;
 
+	// default xephyr options can be overwritten by a --xephyr-extra-params= command line option
+	char *new_xephyr_extra_params = extract_setting(argc, argv, "--xephyr-extra-params=");
+	if (new_xephyr_extra_params)
+		xephyr_extra_params = new_xephyr_extra_params;
+
 	env_store_name_val("FIREJAIL_X11", "yes", SETENV);
 
 	// unfortunately, xephyr does a number of weird things when started by root user!!!
@@ -711,7 +716,7 @@ static void __attribute__((noreturn)) x11_start_xpra_old(int argc, char **argv, 
 
 	assert(xpra_extra_params);		  // should be "" if empty
 
-	// parse xephyr_extra_params
+	// parse xpra_extra_params
 	// very basic quoting support
 	char *temp = strdup(xpra_extra_params);
 	if (*xpra_extra_params != '\0') {

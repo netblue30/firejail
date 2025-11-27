@@ -1412,6 +1412,12 @@ int main(int argc, char **argv, char **envp) {
 			else
 				exit_err_feature("x11");
 		}
+		else if (strncmp(argv[i], "--xephyr-extra-params=", 16) == 0) {
+			if (checkcfg(CFG_X11))
+				; // the processing is done directly in x11.c
+			else
+				exit_err_feature("x11");
+		}
 #endif
 		//*************************************
 		// filtering

@@ -84,3 +84,4 @@ whitelist
 whitelist-ro
 x11
 xephyr-screen
+xephyr-extra-params

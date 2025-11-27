@@ -1441,6 +1441,8 @@ ydididodat (https://github.com/ydididodat)
 yumkam (https://github.com/yumkam)
 	- add compile-time option to restrict --net= to root only
 	- man page fixes
+Yurei TZK (https://github.com/yureitzk)
+	- added --xephyr-extra-params= command
 Yves-Alexis Perez (https://github.com/corsac-s)
 	- signal-desktop profile fix
 	- signal: add access to D-Bus freedesktop.org secret API

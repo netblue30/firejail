@@ -675,6 +675,19 @@ Enable X11 sandboxing with Xpra server.
 \fBx11 xvfb
 Enable X11 sandboxing with Xvfb server.
 .TP
+\fBxephyr-extra-params OPTIONS
+Set Xephyr server command extra parameters for x11 xephyr. This command should be included in the profile file before x11 xephyr command.
+.br
+
+.br
+Example:
+.br
+
+.br
+xephyr-extra-params -grayscale
+.br
+x11 xephyr
+.TP
 \fBxephyr-screen WIDTHxHEIGHT
 Set screen size for x11 xephyr. This command should be included in the profile file before x11 xephyr command.
 .br
@@ -688,19 +701,6 @@ xephyr-screen 640x480
 .br
 x11 xephyr
 
-.TP
-\fBxephyr-extra-params OPTIONS
-Set Xephyr server command extra parameters for x11 xephyr. This command should be included in the profile file before x11 xephyr command.
-.br
-
-.br
-Example:
-.br
-
-.br
-xephyr-extra-params -grayscale
-.br
-x11 xephyr
 #endif
 #ifdef HAVE_DBUSPROXY
 .SH DBus filtering

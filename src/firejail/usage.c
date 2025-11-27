@@ -301,8 +301,9 @@ static const char *const usage_str =
 	"    --x11=xorg - enable X11 security extension.\n"
 	"    --x11=xpra - enable Xpra X11 server.\n"
 	"    --x11=xvfb - enable Xvfb X11 server.\n"
+	"    --xephyr-extra-params=OPTIONS - set Xephyr server command extra parameters\n"
+	"\tfor --x11=xephyr.\n"
 	"    --xephyr-screen=WIDTHxHEIGHT - set screen size for --x11=xephyr.\n"
-	"    --xephyr-extra-params=OPTIONS - set Xephyr server command extra parameters for --x11=xephyr.\n"
 #endif
 	"\n"
 	"Examples:\n"

@@ -3465,7 +3465,7 @@ for the current sandbox. Run Xephyr -help to get a list of available options.
 .br
 Example:
 .br
-$ firejail --net=eth0 --x11=xephyr --xephyr-extra-params="-title firefox" firefox
+$ firejail --net=eth0 --x11=xephyr --xephyr-extra-params="-title firefox" /usr/bin/firefox
 .br
 
 .TP

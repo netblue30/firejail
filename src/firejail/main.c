@@ -1093,7 +1093,8 @@ int main(int argc, char **argv, char **envp) {
 	}
 
 	// initialize values from firejail.config (needed for arg/env checks)
-	checkcfg(0);
+	//maxarg rework: fix in progress
+	//	checkcfg(0);
 
 	// sanity check for arguments
 	if (argc >= arg_max_count) {

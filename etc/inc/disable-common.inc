@@ -433,6 +433,7 @@ read-only ${HOME}/.config/MangoHud
 read-only ${HOME}/.local/share/thumbnailers
 
 # prevent access to ssh-agent
+blacklist ${RUNUSER}/openssh_agent
 blacklist /tmp/ssh-*
 
 # top secret

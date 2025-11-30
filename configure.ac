@@ -196,15 +196,6 @@ AS_IF([test "x$enable_chroot" != "xno"], [
 	HAVE_CHROOT="-DHAVE_CHROOT"
 ])
 
-HAVE_GLOBALCFG=""
-AC_SUBST([HAVE_GLOBALCFG])
-AC_ARG_ENABLE([globalcfg],
-    [AS_HELP_STRING([--disable-globalcfg],
-        [if the global config file firejail.config is not present, continue the program using defaults])])
-AS_IF([test "x$enable_globalcfg" != "xno"], [
-	HAVE_GLOBALCFG="-DHAVE_GLOBALCFG"
-])
-
 HAVE_NETWORK=""
 AC_SUBST([HAVE_NETWORK])
 AC_ARG_ENABLE([network],
@@ -335,7 +326,6 @@ Features:
    disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
    enable --output logging: $HAVE_OUTPUT
    file transfer support: $HAVE_FILE_TRANSFER
-   global config: $HAVE_GLOBALCFG
    IDS support: $HAVE_IDS
    Landlock support: $HAVE_LANDLOCK
    manpage support: $HAVE_MAN

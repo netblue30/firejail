@@ -1093,9 +1093,8 @@ int main(int argc, char **argv, char **envp) {
 	}
 
 	// initialize values from firejail.config (needed for arg/env checks)
-	//maxarg rework: fix in progress
-	//	checkcfg(0);
-
+	checkcfg(0);
+	
 	// sanity check for arguments
 	if (argc >= arg_max_count) {
 		fprintf(stderr, "Error: too many arguments: argc (%d) >= arg-max-count (%d)\n",

@@ -34,8 +34,8 @@ char *xpra_extra_params = "";
 char *xvfb_screen = "800x600x24";
 char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
-int arg_max_count = 128; // maximum number of command arguments (argc)
-unsigned long arg_max_len = 4096; // --foobar=PATH
+int arg_max_count = MAX_ARGS; // maximum number of command arguments (argc)
+unsigned long arg_max_len = MAX_ARG_LEN; // --foobar=PATH
 int env_max_count = 256; // some sane maximum number of environment variables
 unsigned long env_max_len = (PATH_MAX + 32); // FOOBAR=SOME_PATH, only applied to Firejail's own sandboxed apps
 unsigned long join_timeout = 5000000; // microseconds
@@ -73,13 +73,9 @@ int checkcfg(int val) {
 		const char *fname = SYSCONFDIR "/firejail.config";
 		fp = fopen(fname, "re");
 		if (!fp) {
-#ifdef HAVE_GLOBALCFG
-			fprintf(stderr, "Error: Firejail configuration file %s not found\n", fname);
-			exit(1);
-#else
+			fprintf(stderr, "Warning: Firejail configuration file %s not found, using defaults\n", fname);
 			initialized = 1;
 			return	cfg_val[val];
-#endif
 		}
 
 		// read configuration file
@@ -225,12 +221,12 @@ int checkcfg(int val) {
 			// arg max count
 			else if (strncmp(ptr, "arg-max-count ", 14) == 0) {
 				long tmp = strtol(ptr + 14, NULL, 10);
-				if (tmp < 0 || tmp >= INT_MAX) {
+				if (tmp > ARG_MAX) { // ARG_MAX defined in glibc limits.h
 					if (arg_debug) {
 						printf("arg-max-count out of range: %ld, using %d\n",
-						       tmp, INT_MAX);
+						       tmp, ARG_MAX);
 					}
-					arg_max_count = INT_MAX;
+					arg_max_count = ARG_MAX;
 				}
 				else {
 					arg_max_count = (int)tmp;

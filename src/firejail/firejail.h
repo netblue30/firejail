@@ -397,6 +397,10 @@ extern pid_t sandbox_pid;
 extern mode_t orig_umask;
 extern unsigned long long start_timestamp;
 
+#define MAX_ARGS 128		// maximum number of command arguments (argc)
+#define MAX_ARG_LEN (PATH_MAX + 32) // --foobar=PATH
+extern int arg_max_count;
+extern unsigned long arg_max_len;
 extern char **fullargv;
 extern int fullargc;
 
@@ -875,8 +879,6 @@ extern char *xpra_extra_params;
 extern char *xvfb_screen;
 extern char *xvfb_extra_params;
 extern char *netfilter_default;
-extern int arg_max_count;
-extern unsigned long arg_max_len;
 extern int env_max_count;
 extern unsigned long env_max_len;
 extern unsigned long join_timeout;

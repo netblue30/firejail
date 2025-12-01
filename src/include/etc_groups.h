@@ -82,6 +82,7 @@ static char *etc_group_tls_ca[] = {
 	"gnutls",
 	"pki",
 	"ssl",
+	"openssl",
 	NULL
 };
 
@@ -101,6 +102,7 @@ static char *etc_group_x11[] = {
 	"vulkan", // next generation OpenGL stack
 	"X11",
 	"xdg",
+	"fonts",
 	NULL
 };
 

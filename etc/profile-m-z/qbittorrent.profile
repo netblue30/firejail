@@ -55,7 +55,7 @@ seccomp
 
 private-bin python*,qbittorrent
 private-dev
-#private-etc alternatives,ca-certificates,crypto-policies,fonts,pki,resolv.conf,ssl,X11,xdg
+private-etc @tls-ca,@x11
 private-tmp
 
 # See https://github.com/netblue30/firejail/issues/3707 for tray-icon

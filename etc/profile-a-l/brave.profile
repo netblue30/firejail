@@ -35,5 +35,8 @@ whitelist ${HOME}/.gnupg
 # Brave sandbox needs read access to /proc/config.gz
 noblacklist /proc/config.gz
 
+# mpris
+dbus-user.own org.mpris.MediaPlayer2.brave.*
+
 # Redirect
 include chromium-common.profile

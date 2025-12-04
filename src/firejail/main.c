@@ -1092,6 +1092,36 @@ int main(int argc, char **argv, char **envp) {
 		arg_quiet = 0;
 	}
 
+	// Note: The check for an existing sandbox (and running
+	// `run_no_sandbox()` if applicable) must be done before calling
+	// `checkcfg()`, since if `private-etc` is already in effect, running
+	// firejail again will abort at `checkcfg()`, as
+	// /etc/firejail/firejail.config will not be accessible (see #6966).
+	//
+	// check if we already have a sandbox running
+	// If LXC is detected, start firejail sandbox
+	// otherwise try to detect a PID namespace by looking under /proc for specific kernel processes and:
+	//	- start the application in a /bin/bash shell
+#ifdef HAVE_SANDBOX_CHECK
+	if (check_namespace_virt() == 0) {
+		EUID_ROOT();
+		int rv = check_kernel_procs();
+		EUID_USER();
+		if (rv == 0) {
+			if (check_arg(argc, argv, "--version", 1)) {
+				print_version_full();
+				exit(0);
+			}
+
+			// start the program directly without sandboxing
+			run_no_sandbox(argc, argv);
+			__builtin_unreachable();
+		}
+	}
+#else
+	fwarning("firejail was built with --disable-sandbox-check, this is only intended for development\n");
+#endif
+
 	// initialize values from firejail.config (needed for arg/env checks)
 	checkcfg(0);
 	
@@ -1133,30 +1163,6 @@ int main(int argc, char **argv, char **envp) {
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')
 		run_symlink(argc, argv, 0); // if symlink detected, this function will not return
-
-	// check if we already have a sandbox running
-	// If LXC is detected, start firejail sandbox
-	// otherwise try to detect a PID namespace by looking under /proc for specific kernel processes and:
-	//	- start the application in a /bin/bash shell
-#ifdef HAVE_SANDBOX_CHECK
-	if (check_namespace_virt() == 0) {
-		EUID_ROOT();
-		int rv = check_kernel_procs();
-		EUID_USER();
-		if (rv == 0) {
-			if (check_arg(argc, argv, "--version", 1)) {
-				print_version_full();
-				exit(0);
-			}
-
-			// start the program directly without sandboxing
-			run_no_sandbox(argc, argv);
-			__builtin_unreachable();
-		}
-	}
-#else
-	fwarning("firejail was built with --disable-sandbox-check, this is only intended for development\n");
-#endif
 
 	// profile builder
 	if (check_arg(argc, argv, "--build", 0)) // supports both --build and --build=filename

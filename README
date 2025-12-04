@@ -154,6 +154,7 @@ amano-kenji  (https://github.com/amano-kenji)
 	- anki profile fixes
 	- profiles: qutebrowser: whitelist /usr/share/pdf.js (#6875)
 	- profiles: firefox-common: add a comment about mpris (#6876)
+	- added mpris support to brave.profile
 Amin Vakil (https://github.com/aminvakil)
 	- whois profile fix
 	- added profile for strawberry
@@ -1030,6 +1031,9 @@ pirate486743186 (https://github.com/pirate486743186)
 	- reorganizing links browsers
 	- added rtv, alpine, mcomix, qcomicbook, googler, ddgr profiles
 	- w3m, zahura, profile.template fixes
+pierretom (https://github.com/pierretom)
+	- add script to generate syscall headers
+	- update and add system calls for several architectures
 Pixel Fairy (https://github.com/xahare)
 	- added fjclip.py, fjdisplay.py and fjresize.py in contrib section
 PizzaDude (https://github.com/pizzadude)
@@ -1090,6 +1094,8 @@ Raphaël Droz (https://github.com/drzraf)
 	- zoom profile fixes
 realaltffour (https://github.com/realaltffour)
 	- add lynx support to newsboat profile
+RedRampage (https://github.com/redrampage)
+	 - added a default socket path used for ssh-agent socket activation
 Reed Riley (https://github.com/reedriley)
 	- cointop profile
 	- 1password profile

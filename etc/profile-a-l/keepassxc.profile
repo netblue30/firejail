@@ -14,6 +14,7 @@ noblacklist ${HOME}/.config/KeePassXCrc
 noblacklist ${HOME}/.keepassxc
 noblacklist ${DOCUMENTS}
 noblacklist ${RUNUSER}/app
+noblacklist ${RUNUSER}/openssh_agent
 noblacklist /tmp/ssh-*
 
 # Allow browser profiles, required for browser integration.
@@ -66,6 +67,7 @@ include disable-xdg.inc
 
 mkdir ${RUNUSER}/app/org.keepassxc.KeePassXC
 whitelist ${RUNUSER}/app/org.keepassxc.KeePassXC
+whitelist ${RUNUSER}/openssh_agent
 whitelist /tmp/ssh-*
 whitelist /usr/share/keepassxc
 include whitelist-run-common.inc

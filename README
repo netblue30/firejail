@@ -616,6 +616,7 @@ hlein (https://github.com/hlein)
 	- make env/arg sanity check failure messages more useful
 	- relocate firecfg.config to /etc/firejail/
 	- fix display profile for Gentoo distribution
+	- hashcat profile fixes
 Holger Heinz (https://github.com/hheinz)
 	- manpage work
 Hotty Capy (https://github.com/hotcapy)

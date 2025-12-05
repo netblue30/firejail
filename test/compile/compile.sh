@@ -24,7 +24,6 @@ arr[7]="TEST 7: compile X11 disabled"
 arr[8]="TEST 8: compile selinux"
 arr[9]="TEST 9: compile file transfer disabled"
 arr[10]="TEST 10: compile disable whitelist"
-arr[11]="TEST 11: compile disable global config"
 arr[12]="TEST 12: compile apparmor"
 arr[13]="TEST 13: compile busybox"
 arr[14]="TEST 14: compile overlayfs disabled"
@@ -271,26 +270,6 @@ grep Warning output-configure output-make > ./report-test10
 grep Error output-configure output-make >> ./report-test10
 cp output-configure oc10
 cp output-make om10
-rm output-configure output-make
-
-#*****************************************************************
-# TEST 11
-#*****************************************************************
-# - disable global config
-#*****************************************************************
-print_title "${arr[11]}"
-cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-globalcfg \
-  2>&1 | tee ../output-configure
-
-make -j "$(nproc)" 2>&1 | tee ../output-make
-cd ..
-grep Warning output-configure output-make > ./report-test11
-grep Error output-configure output-make >> ./report-test11
-cp output-configure oc11
-cp output-make om11
 rm output-configure output-make
 
 #*****************************************************************

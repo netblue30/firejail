@@ -91,8 +91,11 @@ static char *etc_group_x11[] = {
 	"ati", // 3D
 	"dconf",
 	"drirc",
+	"gconf",
+	"glib-2.0",
 	"gtk-2.0",
 	"gtk-3.0",
+	"gtk-4.0",
 	"kde4rc",
 	"kde5rc",
 	"machine-id", // QT dbus lib is crashing without it!

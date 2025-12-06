@@ -220,19 +220,27 @@ static void parse_config_file(const char *cfgfile, int do_symlink) {
 	int lineno = 0;
 	while (fgets(buf, MAX_BUF,fp)) {
 		lineno++;
+
+		// remove comments
 		if (*buf == '#') // comments
 			continue;
-
-		// do not accept .. and/or / in file name
-		if (strstr(buf, "..") || strchr(buf, '/')) {
-			fprintf(stderr, "Error: invalid line %d in %s\n", lineno, cfgfile);
-			exit(1);
-		}
-
-		// remove \n
-		char *ptr = strchr(buf, '\n');
+		char *ptr = strchr(buf, '#');
 		if (ptr)
 			*ptr = '\0';
+
+		// remove \n blanks, tabs ...
+		ptr = strchr(buf, '\n');
+		if (ptr)
+			*ptr = '\0';
+		int i;
+		for (i = strlen(buf) -1; i >= 0; i--) {
+			if (buf[i] == ' ' || buf[i] == '\t')
+				buf[i] = '\0';
+			else
+				break;
+		}
+		if (*buf == '\0')
+			continue;
 
 		// trim spaces
 		ptr = buf;
@@ -243,6 +251,12 @@ static void parse_config_file(const char *cfgfile, int do_symlink) {
 		// empty line
 		if (*start == '\0')
 			continue;
+
+		// do not accept .. and/or / in file name
+		if (strstr(buf, "..") || strchr(buf, '/')) {
+			fprintf(stderr, "Error: invalid line %d in %s\n", lineno, cfgfile);
+			exit(1);
+		}
 
 		// handle ignore command
 		if (*start == '!') {

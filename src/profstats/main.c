@@ -39,6 +39,7 @@ static int cnt_privatebin = 0;
 static int cnt_privatedev = 0;
 static int cnt_privatetmp = 0;
 static int cnt_privateetc = 0;
+static int cnt_privatecache = 0;
 static int cnt_privatelib = 0;
 static int cnt_whitelistvar = 0;	// include whitelist-var-common.inc
 static int cnt_whitelistrunuser = 0;	// include whitelist-runuser-common.inc
@@ -58,6 +59,7 @@ static int arg_privatebin = 0;
 static int arg_privatedev = 0;
 static int arg_privatetmp = 0;
 static int arg_privateetc = 0;
+static int arg_privatecache = 0;
 static int arg_privatelib = 0;
 static int arg_whitelistvar = 0;
 static int arg_whitelistrunuser = 0;
@@ -67,6 +69,7 @@ static int arg_mdwx = 0;
 static int arg_dbus_system_none = 0;
 static int arg_dbus_user_none = 0;
 static int arg_whitelisthome = 0;
+static int arg_netnone = 0;
 static int arg_noroot = 0;
 static int arg_print_blacklist = 0;
 static int arg_print_whitelist = 0;
@@ -87,12 +90,14 @@ static const char *const usage_str =
 	"   --noroot - print profiles without \"noroot\"\n"
 	"   --private-bin - print profiles without private-bin\n"
 	"   --private-dev - print profiles without private-dev\n"
+	"   --private-cache - print profiles without private-cache\n"
 	"   --private-etc - print profiles without private-etc\n"
 	"   --private-tmp - print profiles without private-tmp\n"
 	"   --print-blacklist - print all --blacklist for a profile\n"
 	"   --print-whitelist - print all --private and --whitelist for a profile\n"
 	"   --seccomp - print profiles without seccomp\n"
 	"   --memory-deny-write-execute - print profiles without \"memory-deny-write-execute\"\n"
+	"   --netnone - print profiles without \"net none\"\n"
 	"   --restrict-namespaces - print profiles without \"restrict-namespaces\"\n"
 	"   --whitelist-home - print profiles whitelisting home directory\n"
 	"   --whitelist-var - print profiles without \"include whitelist-var-common.inc\"\n"
@@ -190,6 +195,8 @@ static void process_file(char *fname) {
 			cnt_privatetmp++;
 		else if (strncmp(ptr, "private-etc", 11) == 0)
 			cnt_privateetc++;
+		else if (strncmp(ptr, "private-cache", 11) == 0)
+			cnt_privatecache++;
 		else if (strncmp(ptr, "private-lib", 11) == 0)
 			cnt_privatelib++;
 		else if (strncmp(ptr, "dbus-system none", 16) == 0)
@@ -257,6 +264,8 @@ int main(int argc, char **argv) {
 			arg_noexec = 1;
 		else if (strcmp(argv[i], "--noroot") == 0)
 			arg_noroot = 1;
+		else if (strcmp(argv[i], "--netnone") == 0)
+			arg_netnone = 1;
 		else if (strcmp(argv[i], "--private-bin") == 0)
 			arg_privatebin = 1;
 		else if (strcmp(argv[i], "--private-dev") == 0)
@@ -265,6 +274,8 @@ int main(int argc, char **argv) {
 			arg_privatetmp = 1;
 		else if (strcmp(argv[i], "--private-etc") == 0)
 			arg_privateetc = 1;
+		else if (strcmp(argv[i], "--private-cache") == 0)
+			arg_privatecache = 1;
 		else if (strcmp(argv[i], "--print-blacklist") == 0)
 			arg_print_blacklist = 1;
 		else if (strcmp(argv[i], "--print-whitelist") == 0)
@@ -305,11 +316,13 @@ int main(int argc, char **argv) {
 		int caps = cnt_caps;
 		int apparmor = cnt_apparmor;
 		int noexec = cnt_noexec;
+		int netnone = cnt_netnone;
 		int noroot = cnt_noroot;
 		int privatebin = cnt_privatebin;
 		int privatetmp = cnt_privatetmp;
 		int privatedev = cnt_privatedev;
 		int privateetc = cnt_privateetc;
+		int privatecache = cnt_privatecache;
 		int privatelib = cnt_privatelib;
 		int dotlocal = cnt_dotlocal;
 		int globalsdotlocal = cnt_globalsdotlocal;
@@ -378,6 +391,8 @@ int main(int argc, char **argv) {
 			printf("No private-tmp found in %s\n", argv[i]);
 		if (arg_privateetc && privateetc == cnt_privateetc)
 			printf("No private-etc found in %s\n", argv[i]);
+		if (arg_privatecache && privatecache == cnt_privatecache)
+			printf("No private-cache found in %s\n", argv[i]);
 		if (arg_privatelib && privatelib == cnt_privatelib)
 			printf("No private-lib found in %s\n", argv[i]);
 		if (arg_whitelisthome && whitelisthome == cnt_whitelisthome)
@@ -392,6 +407,8 @@ int main(int argc, char **argv) {
 			printf("No include disable-common.inc found in %s\n", argv[i]);
 		if (arg_mdwx && mdwx == cnt_mdwx)
 			printf("No memory-deny-write-execute found in %s\n", argv[i]);
+		if (arg_netnone && netnone == cnt_netnone)
+			printf("No \"net none\" in %s\n", argv[i]);
 
 		assert(level == 0);
 	}
@@ -415,6 +432,7 @@ int main(int argc, char **argv) {
 	printf("    private-bin\t\t\t%d\n", cnt_privatebin);
 	printf("    private-dev\t\t\t%d\n", cnt_privatedev);
 	printf("    private-etc\t\t\t%d\n", cnt_privateetc);
+	printf("    private-cache\t\t%d\n", cnt_privatecache);
 	printf("    private-lib\t\t\t%d\n", cnt_privatelib);
 	printf("    private-tmp\t\t\t%d\n", cnt_privatetmp);
 	printf("    whitelist home directory\t%d\n", cnt_whitelisthome);

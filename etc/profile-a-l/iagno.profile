@@ -38,8 +38,9 @@ seccomp.block-secondary
 
 disable-mnt
 private-bin iagno
+private-cache
 private-dev
-private-etc @x11,gconf
+private-etc @x11,gconf,@sound
 private-tmp
 
 #dbus-user none

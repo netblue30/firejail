@@ -38,7 +38,10 @@ protocol unix
 seccomp
 
 disable-mnt
+private-bin 2048-qt
+private-cache
 private-dev
+private-etc @x11
 private-tmp
 
 restrict-namespaces

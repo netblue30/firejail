@@ -40,7 +40,7 @@ tracelog
 private-bin gpicview
 private-cache
 private-dev
-private-etc
+private-etc @x11
 private-lib
 private-tmp
 

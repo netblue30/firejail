@@ -53,6 +53,7 @@ disable-mnt
 private-bin 0ad,pyrogenesis,sh,which
 private-cache
 private-dev
+private-etc @x11,@games,@sound,ldap
 private-tmp
 
 dbus-user none

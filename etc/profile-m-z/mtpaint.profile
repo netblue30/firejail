@@ -41,6 +41,7 @@ tracelog
 disable-mnt
 private-bin mtpaint
 private-cache
+private-etc @x11,mtpaint
 private-dev
 private-tmp
 

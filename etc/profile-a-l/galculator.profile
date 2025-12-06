@@ -41,7 +41,7 @@ tracelog
 private-bin galculator
 private-cache
 private-dev
-private-etc
+private-etc @x11
 private-lib
 private-tmp
 

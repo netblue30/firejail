@@ -8,6 +8,10 @@ include globals.local
 
 noblacklist ${HOME}/.electrum
 
+# Allow system fonts
+# Otherwise restricted to ${HOME}/.local/share/fonts which may be empty.
+noblacklist /usr/share/fonts
+
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc
 include allow-python3.inc

@@ -280,8 +280,8 @@ static int fs_copydir(const char *infname, const struct stat *st, int ftype, str
 	if (lstat(outfname, &s) == 0) {
 		if (first)
 			first = 0;
-		else if (!arg_quiet)
-			fprintf(stderr, "Warning fcopy: skipping %s, file already present\n", infname);
+		//else if (!arg_quiet)
+		//	fprintf(stderr, "Warning fcopy: skipping %s, file already present\n", infname);
 		goto out;
 	}
 

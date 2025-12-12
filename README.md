@@ -364,6 +364,72 @@ This was fixed in the following PR:
 
 ## Current development version: 0.9.77
 
+### New features
+```text
+$ man firejail
+
+      --xephyr-extra-params=OPTIONS
+              Set Xephyr server command extra parameters for x11  --x11=xephyr.
+              The setting will overwrite the default set in /etc/firejail/fire‐
+              jail.config  for  the  current sandbox. Run Xephyr -help to get a
+              list of available options.
+
+              Example:
+              $ firejail --net=eth0 --x11=xephyr  --xephyr-extra-params="-title
+              firefox" /usr/bin/firefox
+
+
+       --notpm (deprecated)
+              Ignored for compatibility.
+              TPM devices are now blocked by default, see --keep-dev-tpm.
+
+      --keep-dev-tpm
+              Allow access to Trusted Cryptography  Module  (TCM)  and  Trusted
+              Platform  Module  (TPM)  devices (even with --private-dev), which
+              are blocked by default.
+
+              Paths:
+              /dev/tcm[0-9]*
+              /dev/tcmrm[0-9]*
+              /dev/tpm[0-9]*
+              /dev/tpmrm[0-9]*
+
+              Example:
+              $ firejail --keep-dev-tpm --private-dev
+
+```
+
+### firejail.config enhancements
+```text
+$ less /etc/firejail/firejail.config
+[...]
+# Maximum number of arguments in the command line.
+# Example: `firejail --foo /usr/bin/bar baz` has 4 arguments.
+# This limit is intended to make stack smashing harder (see
+# https://github.com/netblue30/firejail/issues/4633).
+# arg-max-count 128
+
+# Maximum length of each argument in the command line.
+# Example: `--foo=bar` has a length of 9.
+# This limit is intended to make stack smashing harder (see
+# https://github.com/netblue30/firejail/issues/4633).
+# arg-max-len 4096
+[...]
+# Maximum number of environment variables.
+# This limit is intended to make stack smashing harder (see
+# https://github.com/netblue30/firejail/issues/4633).
+# env-max-count 256
+
+# Maximum length for each environment variable value.
+# Example: `FOO=barr` has a length of 4.
+# This limit is intended to make stack smashing harder (see
+# https://github.com/netblue30/firejail/issues/4633).
+# Note: The actual default value is based on `PATH_MAX`; see checkcfg.c.
+# env-max-len 4096
+[...]
+
+```
+
 ### Landlock support - ongoing/experimental
 
 * Added on #6078, which is based on #5315 from ChrysoliteAzalea/landlock
@@ -424,35 +490,35 @@ No include .local found in /etc/firejail/noprofile.profile
 Warning: multiple caps in /etc/firejail/tidal-hifi.profile
 Warning: multiple caps in /etc/firejail/tqemu.profile
 Warning: multiple caps in /etc/firejail/transmission-daemon.profile
-Warning: cannot open youtube-music-desktop-app or /etc/firejail/youtube-music-desktop-app, while processing /etc/firejail/youtube-music-desktop-app.profile
-No include .local found in /etc/firejail/youtube-music-desktop-app.profile
+Warning: multiple caps in /etc/firejail/trivalent.profile
 
 Stats:
-    profiles			1326
-    include local profile	1325   (include profile-name.local)
-    include globals		1292   (include globals.local)
-    blacklist ~/.ssh		1185   (include disable-common.inc)
-    seccomp			1197
-    capabilities		1319
-    noexec			1199   (include disable-exec.inc)
-    noroot			1094
+    profiles			1328
+    include local profile	1327   (include profile-name.local)
+    include globals		1294   (include globals.local)
+    blacklist ~/.ssh		1187   (include disable-common.inc)
+    seccomp			1199
+    capabilities		1321
+    noexec			1200   (include disable-exec.inc)
+    noroot			1092
     memory-deny-write-execute	320
-    restrict-namespaces		1036
-    apparmor			851
-    private-bin			802
-    private-dev			1160
-    private-etc			825
+    restrict-namespaces		1037
+    apparmor			852
+    private-bin			804
+    private-dev			1161
+    private-etc			830
+    private-cache		855
     private-lib			85
     private-tmp			1022
-    whitelist home directory	655
-    whitelist var		966   (include whitelist-var-common.inc)
-    whitelist run/user		1289   (include whitelist-runuser-common.inc
+    whitelist home directory	656
+    whitelist var		967   (include whitelist-var-common.inc)
+    whitelist run/user		1291   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		747   (include whitelist-usr-share-common.inc
+    whitelist usr/share		748   (include whitelist-usr-share-common.inc
     net none			450
     dbus-user none 		754
-    dbus-user filter 		196
-    dbus-system none 		956
+    dbus-user filter 		202
+    dbus-system none 		957
     dbus-system filter 		13
 
 ```

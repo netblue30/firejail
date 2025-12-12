@@ -79,7 +79,7 @@ tab # allow tab completion
 disable-mnt
 private
 #private-bin program
-#private-cache
+private-cache
 private-dev
 # see /usr/share/doc/firejail/profile.template for more common private-etc paths.
 #private-etc alternatives

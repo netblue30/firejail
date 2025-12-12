@@ -46,7 +46,7 @@ seccomp
 disable-mnt
 private
 private-bin bash,ipcalc,ipcalc-ng,perl,sh
-#private-cache
+private-cache
 private-dev
 # empty etc directory
 private-etc

@@ -41,6 +41,7 @@ disable-mnt
 private
 #private-bin sh,xkbcomp,Xvfb
 #private-bin bash,cat,ls,sh,strace,xkbcomp,Xvfb
+private-cache
 private-dev
 private-etc gai.conf,host.conf
 private-tmp

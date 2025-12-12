@@ -53,6 +53,7 @@ tracelog
 disable-mnt
 private
 private-bin aria2p,cat,python*
+private-cache
 private-dev
 private-tmp
 

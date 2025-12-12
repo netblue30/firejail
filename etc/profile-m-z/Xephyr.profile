@@ -37,6 +37,7 @@ disable-mnt
 private
 #private-bin sh,Xephyr,xkbcomp
 #private-bin bash,cat,ls,sh,strace,Xephyr,xkbcomp
+private-cache
 private-dev
 #private-etc alternatives,gai.conf,host.conf,hostname,hosts,ld.so.cache,ld.so.conf,nsswitch.conf,resolv.conf
 #private-tmp

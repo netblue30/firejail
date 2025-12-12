@@ -32,6 +32,7 @@ seccomp
 disable-mnt
 private
 private-bin python*,sa-solver,silentarmy
+private-cache
 private-dev
 private-opt none
 private-tmp

@@ -54,6 +54,7 @@ tracelog
 disable-mnt
 private
 private-bin aria2rpc,env,ruby*
+private-cache
 private-dev
 private-tmp
 

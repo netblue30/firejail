@@ -43,6 +43,7 @@ tracelog
 disable-mnt
 private
 private-bin bash,host,sh
+private-cache
 private-etc
 private-dev
 private-tmp

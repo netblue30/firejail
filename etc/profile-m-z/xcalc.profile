@@ -34,6 +34,7 @@ seccomp
 disable-mnt
 private
 private-bin xcalc
+private-cache
 private-dev
 private-lib
 private-tmp

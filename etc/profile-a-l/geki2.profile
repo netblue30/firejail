@@ -39,6 +39,7 @@ tracelog
 disable-mnt
 private
 private-bin geki2
+private-cache
 private-dev
 private-etc @games,@sound,@x11
 private-tmp

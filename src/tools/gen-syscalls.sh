@@ -10,7 +10,7 @@
 # contrib/syntax/lists/syscalls.list is synchronized too.
 # It generates also etc/templates/new_syscalls.txt, this makes it easier to update
 # groups and to inform users about new syscalls added.
-# The script must reside in the src/tools directory and requires the cURL CLI program.
+# The script must reside in the src/tools directory and requires the cURL program.
 
 set -e
 export LC_ALL=C
@@ -36,7 +36,8 @@ then
     exit 0
 fi
 
-if [[ "$#" -gt 0 ]]; then
+if [[ "$#" -gt 0 ]]
+then
     echo "✖ Invalid argument: $1. Use -h for help." >&2
     exit 1
 fi
@@ -64,7 +65,10 @@ then
     exit 1
 else
     mkdir "$TEMP_DIR"/old
-    cp "$DEST_DIR"/syscall_*.h "$TEMP_DIR"/old
+    if compgen -G "$DEST_DIR"/syscall_*.h > /dev/null
+    then
+        cp "$DEST_DIR"/syscall_*.h "$TEMP_DIR"/old
+    fi
 fi
 
 if [[ ! -d "$DEST_DIR" ]]
@@ -117,8 +121,7 @@ cp "$TEMP_DIR"/syscall_aarch64.tbl "$TEMP_DIR"/syscall_nios2.tbl && echo "✔ Fi
 cp "$TEMP_DIR"/syscall_aarch64.tbl "$TEMP_DIR"/syscall_openrisc_32.tbl && echo "✔ File received: syscall_openrisc_32.tbl"
 "$CURL" --no-progress-meter "$BASE_URL"/arch/parisc/kernel/syscalls/syscall.tbl -o "$TEMP_DIR"/syscall_parisc_32.tbl
 echo "✔ File received: syscall_parisc_32.tbl"
-"$CURL" --no-progress-meter "$BASE_URL"/arch/parisc/kernel/syscalls/syscall.tbl -o "$TEMP_DIR"/syscall_parisc_64.tbl
-echo "✔ File received: syscall_parisc_64.tbl"
+cp "$TEMP_DIR"/syscall_parisc_32.tbl "$TEMP_DIR"/syscall_parisc_64.tbl && echo "✔ File received: syscall_parisc_64.tbl"
 "$CURL" --no-progress-meter "$BASE_URL"/arch/powerpc/kernel/syscalls/syscall.tbl -o "$TEMP_DIR"/syscall_powerpc_32_nospu.tbl
 echo "✔ File received: syscall_powerpc_32_nospu.tbl"
 cp "$TEMP_DIR"/syscall_powerpc_32_nospu.tbl "$TEMP_DIR"/syscall_powerpc_64_nospu.tbl && echo "✔ File received: syscall_powerpc_64_nospu.tbl"
@@ -151,80 +154,108 @@ function extract_and_install()
     table_file_basen=$(basename "$table_file")
     local firejail_header="${table_file_basen%.*}".h
 
-    cat "$table_file" \
-    | grep --color=never -v '^[[:space:]]*#' \
-    | grep --color=never -E "^[^[:space:]]+[[:space:]]+($abi_1|$abi_2|$abi_3|$abi_4|$abi_5|$abi_6|$abi_7)\b" \
-    | sed -E 's/^([0-9]+)[[:space:]]+[^[:space:]]+[[:space:]]+([^[:space:]]+).*/{ "\2", \1 },/' \
+    grep --color=never -v '^[[:space:]]*#' "$table_file" | # Ignore comment lines.
+    grep --color=never -E "^[^[:space:]]+[[:space:]]+($abi_1|$abi_2|$abi_3|$abi_4|$abi_5|$abi_6|$abi_7)\b" | # Keep lines with desired ABIs.
+    # Fill the array.
+    sed -E 's/^([0-9]+)[[:space:]]+[^[:space:]]+[[:space:]]+([^[:space:]]+).*/{ "\2", \1 },/' \
     > "$DEST_DIR"/"$firejail_header"
 
     echo "✔ Installed: $DEST_DIR"/"$firejail_header"
 
+    ALL_SYSCALLS+="▶ $firejail_header\n"
     ALL_SYSCALLS+=$(
-        cat "$table_file" \
-        | grep --color=never -v '^[[:space:]]*#' \
-        | grep --color=never -E "^[^[:space:]]+[[:space:]]+($abi_1|$abi_2|$abi_3|$abi_4|$abi_5|$abi_6|$abi_7)\b" \
-        | sed -E 's/^([^[:space:]]+[[:space:]]+){2}([^[:space:]]+).*/\2/'
+        grep --color=never -v '^[[:space:]]*#' "$table_file" |
+        grep --color=never -E "^[^[:space:]]+[[:space:]]+($abi_1|$abi_2|$abi_3|$abi_4|$abi_5|$abi_6|$abi_7)\b" |
+        awk '{printf "%s\t%s\t%s\n", $1, $3, $4}' # Keep column 1, 3 and 4.
     )
-
     ALL_SYSCALLS+=$'\n'
 }
 
 function gen_syscalls_list()
 {
-    ALL_SYSCALLS=$(echo "$ALL_SYSCALLS" | sed '$d' | sort -u)
-    echo "$ALL_SYSCALLS" > "$SYSCALLS_LIST"
+    local all_syscalls
+
+    all_syscalls=$(echo -e "$ALL_SYSCALLS" | grep -v "▶" | awk '{print $2}' | sed '$d' | sort -u)
+    echo "$all_syscalls" > "$SYSCALLS_LIST"
 
     echo "✔ Installed: $SYSCALLS_LIST"
 }
 
-# Extract the string in quotation marks on lines: { "xxx", N },
-function extract_words() {
-    awk -F'"' '
-    /^\s*\{\s*"/ { print $2 }
-    ' "$1" | sort -u
+# Extract the syscalls block for each header from the concatenated string.
+function extract_block()
+{
+    local all_syscalls="$1"
+    local marker="$2"
+
+    echo -e "$all_syscalls" | awk -v mrk="▶ $marker" '
+        $0 == mrk { in_block = 1; next }
+        in_block && /^▶ / { exit }
+        in_block && NF > 0 { print }
+    '
 }
 
 function gen_new_syscalls()
 {
-    local f1 f2 base missing
+    local all_headers header new_sysc old_header
+    local syscalls_block syscalls_names old_syscalls syscall
 
-    echo "List of new system calls added after generation with the gen-syscalls.sh script." > "$NEW_SYSCALLS_FILE"
-    echo "Generated on" $(date +"%Y-%m-%d %H:%M:%S")"." >> "$NEW_SYSCALLS_FILE"
-    echo >> "$NEW_SYSCALLS_FILE"
+    {
+        echo "List of new system calls added after generation with the gen-syscalls.sh script."
+        echo "Generated on" "$(date '+%Y-%m-%d %H:%M:%S')."
+        echo "Format: <syscall number>  <syscall name>  <entry point>"
+        echo
+    } > "$NEW_SYSCALLS_FILE"
 
-    for f2 in "$DEST_DIR"/syscall_*.h; do
-        base="${f2##*/}"
-        f1="$TEMP_DIR"/old/"$base"
+    all_headers=$(echo -e "$ALL_SYSCALLS" | grep "▶" | awk '{print $2}')
 
-        echo "▶ $base" >> "$NEW_SYSCALLS_FILE"
+    while IFS= read -r header
+    do
+        new_sysc=0
+        old_header="$TEMP_DIR"/old/"$header"
 
-        if [[ -f "$f1" ]]
+        echo "▶ $header" >> "$NEW_SYSCALLS_FILE"
+
+        syscalls_block=$(extract_block "$ALL_SYSCALLS" "$header")
+        syscalls_block=$(echo "$syscalls_block" | awk '{printf "%-5s %-32s %s\n", $1, $2, $3}' | sort -n)
+        syscalls_names=$(echo "$syscalls_block" | awk '{print $2}')
+
+        if [[ ! -f "$old_header" ]] # If the header does not exist in the old directory, add all syscalls.
         then
-            missing=$(comm -13 <(extract_words "$f1") <(extract_words "$f2"))
-            if [[ -n "$missing" ]]
+            {
+                echo "$syscalls_block"
+                echo
+            } >> "$NEW_SYSCALLS_FILE"
+            continue
+        fi
+
+        # Read the old header in memory.
+        old_syscalls=$(<"$old_header")
+
+        while IFS= read -r syscall
+        do
+            if [[ ! "$old_syscalls" =~ \"$syscall\" ]] # If the syscall is not found in the old header, add it.
             then
-                # If file exists in the old directory, add missing syscalls.
-                echo "$missing" >> "$NEW_SYSCALLS_FILE"
-            else
-                echo "No new system calls added." >> "$NEW_SYSCALLS_FILE"
+                echo "$syscalls_block" | grep -w "$syscall" >> "$NEW_SYSCALLS_FILE"
+                new_sysc=1
             fi
-        else
-            # If file is missing in the old directory, add all syscalls.
-            extract_words "$f2" >> "$NEW_SYSCALLS_FILE"
+        done <<< "$syscalls_names"
+
+        if [[ "$new_sysc" -eq 0 ]] # If no new syscalls, report it.
+        then
+            echo "No new system calls added." >> "$NEW_SYSCALLS_FILE"
         fi
 
         echo >> "$NEW_SYSCALLS_FILE"
-    done
+    done <<< "$all_headers"
 
-    # Remove the last line.
-    sed -i '$d' "$NEW_SYSCALLS_FILE"
+    sed -i '$d' "$NEW_SYSCALLS_FILE" # Remove the last line.
 
     echo "✔ Installed: $NEW_SYSCALLS_FILE"
 }
 
 echo
 echo "Extraction and installation..."
-# See arch/*/kernel/Makefile.syscalls for supported pseudo-ABIs by architectures.
+# See arch/*/kernel/Makefile.syscalls for supported ABIs by each architectures.
 extract_and_install "syscall_aarch32.tbl" "common" # Corresponds to syscall_armeabi.tbl.
 extract_and_install "syscall_aarch64.tbl" "common" "64" "renameat" "rlimit" "memfd_secret"
 extract_and_install "syscall_alpha.tbl" "common"

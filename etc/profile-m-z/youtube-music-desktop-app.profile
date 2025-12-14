@@ -5,7 +5,7 @@
 include youtube-music-desktop-app.local
 # Persistent global definitions
 # added by included profile
-include globals.local
+#include globals.local
 
 # Redirect
 include ytmdesktop.profile

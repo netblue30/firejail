@@ -662,8 +662,6 @@ Jan-Niclas (https://github.com/0x6a61)
 Jan Sonntag (https://github.com/jmetrius)
 	- added OpenStego profile
 	- allow common access to EGL External platform configuration directory
-Jared Johnstone (https://github.com/ipaqmaster)
-        - electrum.profile add noblacklist /usr/share/fonts
 Jean Lucas (https://github.com/flacks)
 	- fix Discord profile
 	- add AnyDesk profile

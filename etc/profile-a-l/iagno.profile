@@ -40,7 +40,7 @@ disable-mnt
 private-bin iagno
 private-cache
 private-dev
-private-etc @x11,gconf,@sound
+private-etc @sound,@x11,gconf
 private-tmp
 
 #dbus-user none

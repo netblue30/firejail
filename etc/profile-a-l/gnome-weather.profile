@@ -41,10 +41,10 @@ seccomp.block-secondary
 tracelog
 
 disable-mnt
-private-bin gnome-weather,gjs*
+private-bin gjs*,gnome-weather
 private-cache
 private-dev
-private-etc @x11,@tls-ca,sysconfig
+private-etc @tls-ca,@x11,sysconfig
 private-tmp
 
 restrict-namespaces

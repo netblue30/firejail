@@ -33,7 +33,7 @@ noroot
 notv
 nou2f
 novideo
-protocol unix
+#protocol unix - problems on Debian stable!
 seccomp
 tracelog
 

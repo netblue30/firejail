@@ -79,14 +79,6 @@ AS_IF([test "x$enable_sandbox_check" != "xno"], [
 	HAVE_SANDBOX_CHECK="-DHAVE_SANDBOX_CHECK"
 ])
 
-HAVE_IDS=""
-AC_SUBST([HAVE_IDS])
-AC_ARG_ENABLE([ids],
-    [AS_HELP_STRING([--enable-ids], [enable ids])])
-AS_IF([test "x$enable_ids" = "xyes"], [
-	HAVE_IDS="-DHAVE_IDS"
-])
-
 HAVE_APPARMOR=""
 AC_SUBST([HAVE_APPARMOR])
 AC_ARG_ENABLE([apparmor],
@@ -308,7 +300,6 @@ Features:
    disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
    enable --output logging: $HAVE_OUTPUT
    file transfer support: $HAVE_FILE_TRANSFER
-   IDS support: $HAVE_IDS
    Landlock support: $HAVE_LANDLOCK
    manpage support: $HAVE_MAN
    network: $HAVE_NETWORK

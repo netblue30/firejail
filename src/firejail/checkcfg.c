@@ -388,13 +388,6 @@ static const char *const compiletime_support =
 		"disabled"
 #endif
 
-	"\n\t- IDS support is "
-#ifdef HAVE_IDS
-		"enabled"
-#else
-		"disabled"
-#endif
-
 	"\n\t- Landlock support is "
 #ifdef HAVE_LANDLOCK
 		"enabled"

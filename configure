@@ -671,7 +671,6 @@ PKG_CONFIG_LIBDIR
 PKG_CONFIG_PATH
 PKG_CONFIG
 HAVE_APPARMOR
-HAVE_IDS
 HAVE_SANDBOX_CHECK
 DEPS_CFLAGS
 TAR
@@ -733,7 +732,6 @@ enable_option_checking
 enable_analyzer
 enable_sanitizer
 enable_sandbox_check
-enable_ids
 enable_apparmor
 enable_selinux
 enable_landlock
@@ -1393,7 +1391,6 @@ Optional Features:
   --disable-sandbox-check disable checking if firejail is running within a
                           sandbox, only use this when developing firejail
                           inside of a sandbox
-  --enable-ids            enable ids
   --enable-apparmor       enable apparmor
   --enable-selinux        SELinux labeling support
   --disable-landlock      disable Landlock self-restriction support
@@ -3972,21 +3969,6 @@ then :
 
 fi
 
-HAVE_IDS=""
-
-# Check whether --enable-ids was given.
-if test ${enable_ids+y}
-then :
-  enableval=$enable_ids;
-fi
-
-if test "x$enable_ids" = "xyes"
-then :
-
-	HAVE_IDS="-DHAVE_IDS"
-
-fi
-
 HAVE_APPARMOR=""
 
 # Check whether --enable-apparmor was given.
@@ -5776,7 +5758,6 @@ Features:
    disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
    enable --output logging: $HAVE_OUTPUT
    file transfer support: $HAVE_FILE_TRANSFER
-   IDS support: $HAVE_IDS
    Landlock support: $HAVE_LANDLOCK
    manpage support: $HAVE_MAN
    network: $HAVE_NETWORK

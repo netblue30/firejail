@@ -915,8 +915,6 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 
 #define PATH_FLDD (RUN_FIREJAIL_LIB_DIR "/fldd")
 
-#define PATH_FIDS (LIBDIR "/firejail/fids")
-
 // bitmapped filters for sbox_run
 #define SBOX_ROOT (1 << 0)			// run the sandbox as root
 #define SBOX_USER (1 << 1)			// run the sandbox as a regular user
@@ -961,9 +959,6 @@ void dhcp_start(void);
 
 // selinux.c
 void selinux_relabel_path(const char *path, const char *inside_path);
-
-// ids.c
-void run_ids(int argc, char **argv);
 
 // oom.c
 void oom_set(const char *oom_string);

@@ -115,7 +115,6 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_RESTRICTED_NETWORK, "restricted-network")
 			PARSE_YESNO(CFG_TRACELOG, "tracelog")
 			PARSE_YESNO(CFG_XEPHYR_WINDOW_TITLE, "xephyr-window-title")
-			PARSE_YESNO(CFG_OVERLAYFS, "overlayfs")
 			PARSE_YESNO(CFG_PRIVATE_BIN, "private-bin")
 			PARSE_YESNO(CFG_PRIVATE_BIN_NO_LOCAL, "private-bin-no-local")
 			PARSE_YESNO(CFG_PRIVATE_CACHE, "private-cache")
@@ -412,13 +411,6 @@ static const char *const compiletime_support =
 
 	"\n\t- output logging is "
 #ifdef HAVE_OUTPUT
-		"enabled"
-#else
-		"disabled"
-#endif
-
-	"\n\t- overlayfs support is "
-#ifdef HAVE_OVERLAYFS
 		"enabled"
 #else
 		"disabled"

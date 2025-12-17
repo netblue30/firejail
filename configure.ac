@@ -129,24 +129,6 @@ AS_IF([test "x$enable_dbusproxy" != "xno"], [
 	HAVE_DBUSPROXY="-DHAVE_DBUSPROXY"
 ])
 
-# The --overlay and related options are not supported anymore due to security
-# concerns (see CVE-2021-26910 and #4178), issues on newer kernels (see #2799)
-# and overall lack of interest in fixing and maintaining them.
-#
-# Support is unlikely to be restored for the foreseeable future unless someone
-# picks up the work, as it would require auditing the overlayfs code to ensure
-# that it is secure and that it works properly.
-#
-# It is highly recommended to leave this option disabled; the overlayfs code
-# that remains is only intended for testing/debugging purposes.
-HAVE_OVERLAYFS=""
-AC_SUBST([HAVE_OVERLAYFS])
-#AC_ARG_ENABLE([overlayfs],
-#    [AS_HELP_STRING([--disable-overlayfs], [disable overlayfs])])
-#AS_IF([test "x$enable_overlayfs" != "xno"], [
-#	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
-#])
-
 HAVE_OUTPUT=""
 AC_SUBST([HAVE_OUTPUT])
 AC_ARG_ENABLE([output],
@@ -330,7 +312,6 @@ Features:
    Landlock support: $HAVE_LANDLOCK
    manpage support: $HAVE_MAN
    network: $HAVE_NETWORK
-   overlayfs support: $HAVE_OVERLAYFS
    private home support: $HAVE_PRIVATE_HOME
    private lib support: $HAVE_PRIVATE_LIB
    sandbox check: $HAVE_SANDBOX_CHECK

@@ -1977,7 +1977,7 @@ Child process initialized
 Install a user namespace with a single user - the current user.
 root user does not exist in the new namespace. This option
 requires a Linux kernel version 3.8 or newer. The option
-is not supported for \-\-chroot and \-\-overlay configurations,
+is not supported for \-\-chroot and \-\-appimage configurations,
 or for sandboxes started as root.
 .br
 
@@ -2084,74 +2084,6 @@ $ ls -l sandboxlog*
 Similar to \-\-output, but stderr is also stored.
 #endif
 
-#ifdef HAVE_OVERLAYFS
-.TP
-\fB\-\-overlay
-Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
-the system directories are mounted read-write. All filesystem modifications go into the overlay.
-Directories /run, /tmp and /dev are not covered by the overlay. The overlay is stored in $HOME/.firejail/<PID> directory.
-If the sandbox is started as a regular user, nonewprivs and a default capabilities filter are enabled.
-.br
-
-.br
-OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18.
-This option is not available on Grsecurity systems.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-overlay /usr/bin/firefox
-
-.TP
-\fB\-\-overlay-clean
-Clean all overlays stored in $HOME/.firejail directory.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-overlay-clean
-
-.TP
-\fB\-\-overlay-named=name
-Mount a filesystem overlay on top of the current filesystem.  Unlike the regular filesystem container,
-the system directories are mounted read-write. All filesystem modifications go into the overlay.
-Directories /run, /tmp and /dev are not covered by the overlay. The overlay is stored in $HOME/.firejail/<NAME> directory.
-The created overlay can be reused between multiple sessions.
-If the sandbox is started as a regular user, nonewprivs and a default capabilities filter are enabled.
-.br
-
-.br
-OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18.
-This option is not available on Grsecurity systems.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-overlay-named=jail1 /usr/bin/firefox
-
-.TP
-\fB\-\-overlay-tmpfs
-Mount a filesystem overlay on top of the current filesystem. All filesystem modifications
-are discarded when the sandbox is closed. Directories /run, /tmp and /dev are not covered by the overlay.
-If the sandbox is started as a regular user, nonewprivs and a default capabilities filter are enabled.
-.br
-
-.br
-OverlayFS support is required in Linux kernel for this option to work.
-OverlayFS was officially introduced in Linux kernel version 3.18.
-This option is not available on Grsecurity systems.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-overlay-tmpfs /usr/bin/firefox
-#endif
 .TP
 \fB\-\-private
 Mount new /root and /home/user directories in temporary
@@ -3191,7 +3123,6 @@ Compile time support:
     - file transfer support is enabled
     - firetunnel support is enabled
     - networking support is enabled
-    - overlayfs support is enabled
     - private-home support is enabled
     - seccomp-bpf support is enabled
     - user namespace support is enabled

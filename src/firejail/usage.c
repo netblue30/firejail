@@ -199,14 +199,6 @@ static const char *const usage_str =
 	"    --output=logfile - stdout logging and log rotation.\n"
 	"    --output-stderr=logfile - stdout and stderr logging and log rotation.\n"
 #endif
-#ifdef HAVE_OVERLAYFS
-	"    --overlay - mount a filesystem overlay on top of the current filesystem.\n"
-	"    --overlay-named=name - mount a filesystem overlay on top of the current\n"
-	"\tfilesystem, and store it in name directory.\n"
-	"    --overlay-tmpfs - mount a temporary filesystem overlay on top of the\n"
-	"\tcurrent filesystem.\n"
-	"    --overlay-clean - clean all overlays stored in $HOME/.firejail directory.\n"
-#endif
 	"    --private - temporary home directory.\n"
 	"    --private=directory - use directory as user home.\n"
 	"    --private-cache - temporary ~/.cache directory.\n"

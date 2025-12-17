@@ -48,7 +48,6 @@ nice
 noblacklist
 noexec
 nowhitelist
-overlay-named
 private
 private-bin
 private-cwd
@@ -83,5 +82,4 @@ warn
 whitelist
 whitelist-ro
 x11
-xephyr-extra-params
 xephyr-screen

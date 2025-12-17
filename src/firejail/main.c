@@ -73,9 +73,6 @@ int arg_debug_whitelists = 0;			// print debug messages for whitelists
 int arg_debug_private_lib = 0;			// print debug messages for private-lib
 int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
-int arg_overlay = 0;				// overlay option
-int arg_overlay_keep = 0;			// place overlay diff in a known directory
-int arg_overlay_reuse = 0;			// allow the reuse of overlays
 
 int arg_landlock_enforce = 0;		// enforce the Landlock ruleset
 
@@ -375,19 +372,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		usage();
 		exit(0);
 	}
-#ifdef HAVE_OVERLAYFS
-	else if (strcmp(argv[i], "--overlay-clean") == 0) {
-		if (checkcfg(CFG_OVERLAYFS)) {
-			if (remove_overlay_directory()) {
-				fprintf(stderr, "Error: cannot remove overlay directory\n");
-				exit(1);
-			}
-		}
-		else
-			exit_err_feature("overlayfs");
-		exit(0);
-	}
-#endif
 #ifdef HAVE_X11
 	else if (strcmp(argv[i], "--x11") == 0) {
 		if (checkcfg(CFG_X11)) {
@@ -1794,78 +1778,6 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strcmp(argv[i], "--disable-mnt") == 0)
 			arg_disable_mnt = 1;
-#ifdef HAVE_OVERLAYFS
-		else if (strcmp(argv[i], "--overlay") == 0) {
-			if (checkcfg(CFG_OVERLAYFS)) {
-				if (arg_overlay) {
-					fprintf(stderr, "Error: only one overlay command is allowed\n");
-					exit(1);
-				}
-
-				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				arg_overlay = 1;
-				arg_overlay_keep = 1;
-
-				char *subdirname;
-				if (asprintf(&subdirname, "%d", getpid()) == -1)
-					errExit("asprintf");
-				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
-
-				free(subdirname);
-			}
-			else
-				exit_err_feature("overlayfs");
-		}
-		else if (strncmp(argv[i], "--overlay-named=", 16) == 0) {
-			if (checkcfg(CFG_OVERLAYFS)) {
-				if (arg_overlay) {
-					fprintf(stderr, "Error: only one overlay command is allowed\n");
-					exit(1);
-				}
-				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				arg_overlay = 1;
-				arg_overlay_keep = 1;
-				arg_overlay_reuse = 1;
-
-				char *subdirname = argv[i] + 16;
-				if (*subdirname == '\0') {
-					fprintf(stderr, "Error: invalid overlay option\n");
-					exit(1);
-				}
-
-				// check name
-				invalid_filename(subdirname, 0); // no globbing
-				if (strstr(subdirname, "..") || strstr(subdirname, "/")) {
-					fprintf(stderr, "Error: invalid overlay name\n");
-					exit(1);
-				}
-				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
-			}
-			else
-				exit_err_feature("overlayfs");
-		}
-		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
-			if (checkcfg(CFG_OVERLAYFS)) {
-				if (arg_overlay) {
-					fprintf(stderr, "Error: only one overlay command is allowed\n");
-					exit(1);
-				}
-				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				arg_overlay = 1;
-			}
-			else
-				exit_err_feature("overlayfs");
-		}
-#endif
 		else if (strncmp(argv[i], "--include=", 10) == 0) {
 			char *ppath = expand_macros(argv[i] + 10);
 			if (!ppath)
@@ -1966,11 +1878,6 @@ int main(int argc, char **argv, char **envp) {
 #ifdef HAVE_CHROOT
 		else if (strncmp(argv[i], "--chroot=", 9) == 0) {
 			if (checkcfg(CFG_CHROOT)) {
-				if (arg_overlay) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-
 				// extract chroot dirname
 				cfg.chrootdir = expand_macros(argv[i] + 9);
 				if (*cfg.chrootdir == '\0') {
@@ -2889,8 +2796,6 @@ int main(int argc, char **argv, char **envp) {
 		char *opt = NULL;
 		if (arg_appimage)
 			opt = "appimage";
-		else if (arg_overlay)
-			opt = "overlay";
 		else if (cfg.chrootdir)
 			opt = "chroot";
 
@@ -2909,11 +2814,7 @@ int main(int argc, char **argv, char **envp) {
 
 	// check user namespace (--noroot) options
 	if (arg_noroot) {
-		if (arg_overlay) {
-			fwarning("--overlay and --noroot are mutually exclusive, --noroot disabled...\n");
-			arg_noroot = 0;
-		}
-		else if (cfg.chrootdir) {
+		if (cfg.chrootdir) {
 			fwarning("--chroot and --noroot are mutually exclusive, --noroot disabled...\n");
 			arg_noroot = 0;
 		}
@@ -3053,11 +2954,7 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
-	if (arg_noroot && arg_overlay) {
-		fwarning("--overlay and --noroot are mutually exclusive, noroot disabled\n");
-		arg_noroot = 0;
-	}
-	else if (arg_noroot && cfg.chrootdir) {
+	if (arg_noroot && cfg.chrootdir) {
 		fwarning("--chroot and --noroot are mutually exclusive, noroot disabled\n");
 		arg_noroot = 0;
 	}

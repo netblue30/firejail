@@ -186,7 +186,6 @@ typedef struct config_t {
 	char *bin_private_lib;	// executable list sent by private-bin to private-lib
 	char *lib_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
-	char *overlay_dir;
 
 	// networking
 	char *name;		// sandbox name
@@ -292,9 +291,6 @@ extern int arg_debug_whitelists;	// print debug messages for whitelists
 extern int arg_debug_private_lib;	// print debug messages for private-lib
 extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
-extern int arg_overlay;		// overlay option
-extern int arg_overlay_keep;	// place overlay diff in a known directory
-extern int arg_overlay_reuse;	// allow the reuse of overlays
 
 extern int arg_landlock_enforce;	// enforce the Landlock ruleset
 
@@ -471,11 +467,6 @@ void fs_basic_fs(void);
 void fs_private_tmp(void);
 void fs_private_cache(void);
 void fs_mnt(const int enforce);
-
-// fs_overlayfs.c
-char *fs_check_overlay_dir(const char *subdirname, int allow_reuse);
-void fs_overlayfs(void);
-int remove_overlay_directory(void);
 
 // chroot.c
 // chroot into an existing directory; mount existing /dev and update /etc/resolv.conf
@@ -847,7 +838,6 @@ enum {
 	CFG_RESTRICTED_NETWORK,
 	CFG_FORCE_NONEWPRIVS,
 	CFG_XEPHYR_WINDOW_TITLE,
-	CFG_OVERLAYFS,
 	CFG_PRIVATE_BIN,
 	CFG_PRIVATE_BIN_NO_LOCAL,
 	CFG_PRIVATE_CACHE,

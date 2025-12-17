@@ -709,8 +709,6 @@ int sandbox(void* sandbox_arg) {
 	fs_logger2int("sandbox pid:", (int) sandbox_pid);
 	if (cfg.chrootdir)
 		fs_logger("sandbox filesystem: chroot");
-	else if (arg_overlay)
-		fs_logger("sandbox filesystem: overlay");
 	else
 		fs_logger("sandbox filesystem: local");
 	fs_logger("install mount namespace");
@@ -851,9 +849,9 @@ int sandbox(void* sandbox_arg) {
 			exit(rv);
 	}
 
-	// for --appimage, --chroot and --overlay* we force NO_NEW_PRIVS
+	// for --appimage, and --chroot we force NO_NEW_PRIVS
 	// and drop all capabilities
-	if (getuid() != 0 && (arg_appimage || cfg.chrootdir || arg_overlay))
+	if (getuid() != 0 && (arg_appimage || cfg.chrootdir))
 		enforce_filters();
 
 	// need ld.so.preload if tracing or seccomp with any non-default lists
@@ -884,11 +882,6 @@ int sandbox(void* sandbox_arg) {
 	}
 	else
 #endif
-#ifdef HAVE_OVERLAYFS
-	if (arg_overlay)
-		fs_overlayfs();
-	else
-#endif
 		fs_basic_fs();
 
 	//****************************
@@ -905,16 +898,12 @@ int sandbox(void* sandbox_arg) {
 		if (cfg.home_private) {	// --private=
 			if (cfg.chrootdir)
 				fwarning("private=directory feature is disabled in chroot\n");
-			else if (arg_overlay)
-				fwarning("private=directory feature is disabled in overlay\n");
 			else
 				fs_private_homedir();
 		}
 		else if (cfg.home_private_keep) { // --private-home=
 			if (cfg.chrootdir)
 				fwarning("private-home= feature is disabled in chroot\n");
-			else if (arg_overlay)
-				fwarning("private-home= feature is disabled in overlay\n");
 			else
 				fs_private_home_list();
 		}
@@ -929,8 +918,6 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private_opt) {
 		if (cfg.chrootdir)
 			fwarning("private-opt feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-opt feature is disabled in overlay\n");
 		else {
 			fs_private_dir_list("/opt", RUN_OPT_DIR, cfg.opt_private_keep);
 		}
@@ -939,8 +926,6 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private_srv) {
 		if (cfg.chrootdir)
 			fwarning("private-srv feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-srv feature is disabled in overlay\n");
 		else {
 			fs_private_dir_list("/srv", RUN_SRV_DIR, cfg.srv_private_keep);
 		}
@@ -950,8 +935,6 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private_bin && !arg_appimage) {
 		if (cfg.chrootdir)
 			fwarning("private-bin feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-bin feature is disabled in overlay\n");
 		else {
 			EUID_USER();
 			// for --x11=xorg we need to add xauth command
@@ -971,8 +954,6 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private_lib && !arg_appimage) {
 		if (cfg.chrootdir)
 			fwarning("private-lib feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-lib feature is disabled in overlay\n");
 		else {
 			fs_private_lib();
 		}
@@ -1029,8 +1010,6 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private_etc) {
 		if (cfg.chrootdir)
 			fwarning("private-etc feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-etc feature is disabled in overlay\n");
 		else {
 			/* Current /etc/passwd and /etc/group files are bind
 			 * mounted filtered versions of originals. Leaving

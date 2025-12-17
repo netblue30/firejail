@@ -33,8 +33,6 @@ notpm
 notv
 nou2f
 novideo
-overlay
-overlay-tmpfs
 private
 private-cache
 private-cwd

@@ -24,6 +24,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
+// enable debug messages
 //#define DEBUG
 
 // checking the file is in the regular executable path or in /usr/lib*
@@ -48,7 +49,7 @@ static int check_env_path(const char *fname) {
 		while (ptr) {
 			if (strncmp(fname, ptr, strlen(ptr)) == 0) {
 				free(path2);
-				printf("INFO: full path provided for %s\n", fname);
+				printf("Info: full path provided for %s\n", fname);
 				return 0;
 			}
 			ptr = strtok(NULL, ":");
@@ -93,7 +94,12 @@ int main(int argc, char **argv) {
 #ifdef DEBUG
 	printf("%s:%s():%d\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
 #endif
-	
+	if (argc == 1) {
+		fprintf(stderr, "Error: bwrap program arguments are required.\n");
+		usage();
+		return 1;
+	}
+			
 	if (strcmp(argv[1], "-h") == 0 ||
 	    strcmp(argv[1], "-?") == 0 ||
 	    strcmp(argv[1], "-v") == 0 ||

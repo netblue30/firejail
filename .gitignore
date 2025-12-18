@@ -47,6 +47,7 @@ src/jailcheck/jailcheck
 src/fnettrace/fnettrace
 src/fnetlock/fnetlock
 src/fzenity/fzenity
+src/fbwrap/fbwrap
 uids.h
 seccomp
 seccomp.debug

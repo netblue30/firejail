@@ -674,7 +674,7 @@ read-only ${HOME}/.local/share/flatpak/exports
 blacklist ${HOME}/.local/share/flatpak/*
 blacklist ${HOME}/.var
 # most of the time bwrap is SUID binary
-blacklist ${PATH}/bwrap
+#blacklist ${PATH}/bwrap
 blacklist ${RUNUSER}/.dbus-proxy
 blacklist ${RUNUSER}/.flatpak
 blacklist ${RUNUSER}/.flatpak-cache

@@ -22,7 +22,6 @@ include disable-xdg.inc
 mkdir ${HOME}/.srb2
 whitelist ${HOME}/.srb2
 include whitelist-common.inc
-include whitelist-run-common.inc
 include whitelist-runuser-common.inc
 include whitelist-var-common.inc
 

@@ -21,6 +21,10 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.srb2
 whitelist ${HOME}/.srb2
+include whitelist-common.inc
+include whitelist-run-common.inc
+include whitelist-runuser-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all
@@ -44,7 +48,7 @@ disable-mnt
 private-bin srb2
 private-cache
 private-dev
-private-etc @games,@x11
+private-etc @tls-ca,@games,@x11
 private-tmp
 
 dbus-user none

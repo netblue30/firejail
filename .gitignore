@@ -28,7 +28,6 @@ src/firejail/firejail
 src/firemon/firemon
 src/firecfg/firecfg
 src/ftee/ftee
-src/fids/fids
 src/tags
 src/faudit/faudit
 src/fnet/fnet

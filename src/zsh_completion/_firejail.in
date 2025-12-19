@@ -62,9 +62,6 @@ _firejail_args=(
     '--tree[print a tree of all sandboxed processes]'
     '--version[print program version and exit]'
 
-    '--ids-check[verify file system]'
-    '--ids-init[initialize IDS database]'
-
     '--debug[print sandbox debug messages]'
     '--debug-blacklists[debug blacklisting]'
     '--debug-caps[print all recognized capabilities]'

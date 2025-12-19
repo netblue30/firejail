@@ -251,9 +251,6 @@ endif
 	sh -c "if [ ! -f $(DESTDIR)$(sysconfdir)/firejail/login.users ]; then \
 		$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/login.users; \
 	fi"
-ifeq ($(HAVE_IDS),-DHAVE_IDS)
-	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/ids.config
-endif
 ifeq ($(BUSYBOX_WORKAROUND),yes)
 	./mketc.sh $(DESTDIR)$(sysconfdir)/firejail/disable-common.inc
 endif

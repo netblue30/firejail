@@ -265,10 +265,8 @@ void fs_var_utmp(void) {
 	gid_t utmp_group = 0;
 	if (stat(UTMP_FILE, &s) == 0)
 		utmp_group = s.st_gid;
-	else {
-		fwarning("cannot find %s\n", UTMP_FILE);
+	else
 		return;
-	}
 
 	// create a new utmp file
 	if (arg_debug)

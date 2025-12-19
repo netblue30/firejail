@@ -34,7 +34,7 @@ protocol unix
 seccomp
 tracelog
 
-private-bin gnome-text-editor,bash,dash,sh
+private-bin bash,dash,gnome-text-editor,sh
 private-dev
 private-lib
 private-tmp

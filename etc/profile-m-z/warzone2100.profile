@@ -49,7 +49,7 @@ seccomp
 tracelog
 
 disable-mnt
-private-bin bash,dash,sh,warzone2100,warzone2100.real,which,mkdir
+private-bin bash,dash,mkdir,sh,warzone2100,warzone2100.real,which
 private-dev
 private-etc @games,@x11
 private-tmp

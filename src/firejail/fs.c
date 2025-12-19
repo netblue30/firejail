@@ -713,10 +713,31 @@ void fs_mnt(const int enforce) {
 	EUID_ROOT();
 }
 
+// replace /usr/bin/bwrap if present in the system
+void fs_bwrap(void) {
+        // open bwrap without following symbolic links
+        if (is_link("/usr/bin/bwrap")) // just in case O_NOFOLLOW below failes in glibc
+                goto out;       
+        int fd = open("/usr/bin/bwrap", O_NOFOLLOW|O_CLOEXEC);
+        if (fd < 0)
+                goto out;
+        
+        int err = bind_mount_path_to_fd("/usr/lib/firejail/fbwrap", fd);
+        if (err) {
+                close(fd);
+                goto out;
+        }
+        close(fd);
+        fprintf(stderr, "Info: /usr/bin/bwrap was disabled\n");
+        return;
+
+out:
+        fprintf(stderr, "Warning: /usr/bin/bwrap was not disabled\n");
+}
+
 
 // mount /proc and /sys directories
 void fs_proc_sys_dev_boot(void) {
-
 	// remount /proc/sys readonly
 	if (arg_debug)
 		printf("Mounting read-only /proc/sys\n");

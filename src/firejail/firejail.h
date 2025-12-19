@@ -467,6 +467,7 @@ void fs_basic_fs(void);
 void fs_private_tmp(void);
 void fs_private_cache(void);
 void fs_mnt(const int enforce);
+void fs_bwrap(void);
 
 // chroot.c
 // chroot into an existing directory; mount existing /dev and update /etc/resolv.conf

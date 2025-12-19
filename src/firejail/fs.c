@@ -728,7 +728,6 @@ void fs_bwrap(void) {
         }
 
 	close(fd);
-        fprintf(stderr, "Info: /usr/bin/bwrap was disabled\n");
         return;
 
 out:

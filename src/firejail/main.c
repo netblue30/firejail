@@ -2778,7 +2778,7 @@ int main(int argc, char **argv, char **envp) {
 	}
 	EUID_ASSERT();
 
-	// exit chroot, overlay and appimage sandboxes when caps are explicitly specified on command line
+	// exit chroot and appimage sandboxes when caps are explicitly specified on command line
 	if (getuid() != 0 && arg_caps_cmdline) {
 		char *opt = NULL;
 		if (arg_appimage)

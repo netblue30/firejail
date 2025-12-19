@@ -26,7 +26,6 @@ arr[9]="TEST 9: compile file transfer disabled"
 arr[10]="TEST 10: compile disable whitelist"
 arr[12]="TEST 12: compile apparmor"
 arr[13]="TEST 13: compile busybox"
-arr[14]="TEST 14: compile overlayfs disabled"
 arr[15]="TEST 15: compile private-home disabled"
 arr[16]="TEST 16: compile disable manpages"
 arr[17]="TEST 17: disable tmpfs as regular user"
@@ -312,26 +311,6 @@ cp output-make om13
 rm output-configure output-make
 
 #*****************************************************************
-# TEST 14
-#*****************************************************************
-# - disable overlayfs
-#*****************************************************************
-print_title "${arr[14]}"
-cd firejail || exit 1
-make distclean
-./configure --prefix=/usr --enable-fatal-warnings \
-  --disable-overlayfs \
-  2>&1 | tee ../output-configure
-
-make -j "$(nproc)" 2>&1 | tee ../output-make
-cd ..
-grep Warning output-configure output-make > ./report-test14
-grep Error output-configure output-make >> ./report-test14
-cp output-configure oc14
-cp output-make om14
-rm output-configure output-make
-
-#*****************************************************************
 # TEST 15
 #*****************************************************************
 # - disable private home
@@ -437,7 +416,6 @@ echo "${arr[9]}"
 echo "${arr[10]}"
 echo "${arr[12]}"
 echo "${arr[13]}"
-echo "${arr[14]}"
 echo "${arr[15]}"
 echo "${arr[16]}"
 echo "${arr[17]}"

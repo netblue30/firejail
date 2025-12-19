@@ -106,7 +106,7 @@ static int pid_is_firejail(pid_t pid) {
 			// network
 			"netstats", "bandwidth",
 			// etc
-			"help", "version", "overlay-clean",
+			"help", "version",
 
 			NULL // end of list marker
 		};

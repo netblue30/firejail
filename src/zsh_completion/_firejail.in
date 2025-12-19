@@ -183,7 +183,7 @@ _firejail_args=(
 #endif
 
 #ifdef HAVE_CHROOT
-    '(--noroot --overlay --overlay-named --overlay-tmpfs)--chroot=-[chroot into directory]: :_files -/'
+    '(--noroot)--chroot=-[chroot into directory]: :_files -/'
 #endif
 
 #ifdef HAVE_DBUSPROXY
@@ -241,19 +241,12 @@ _firejail_args=(
     '--output-stderr=-[stdout and stderr logging and log rotation]: :_files'
 #endif
 
-#ifdef HAVE_OVERLAYFS
-    '(--chroot --noroot)--overlay[mount a filesystem overlay on top of the current filesystem]'
-    '--overlay-clean[clean all overlays stored in $HOME/.firejail directory]'
-    '(--chroot --noroot)--overlay-named=-[mount a filesystem overlay on top of the current filesystem, and store it in name directory]: :_files -/'
-    '(--chroot --noroot)--overlay-tmpfs[mount a temporary filesystem overlay on top of the current filesystem]'
-#endif
-
 #ifdef HAVE_PRIVATE_HOME
     '--private-home=-[build a new user home in a temporary filesystem, and copy the files and directories in the list in the new home]: :_files'
 #endif
 
 #ifdef HAVE_USERNS
-    '(--chroot --overlay --overlay-named --overlay-tmpfs)--noroot[install a user namespace with only the current user]'
+    '(--chroot)--noroot[install a user namespace with only the current user]'
 #endif
 
 #ifdef HAVE_USERTMPFS

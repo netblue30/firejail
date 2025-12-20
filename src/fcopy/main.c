@@ -251,11 +251,10 @@ void copy_link(const char *target, const char *linkpath, mode_t mode, uid_t uid,
 
 	return;
 errout:
-	if (!arg_quiet)
+	// this will generate a lot of noise when private-etc is enabled!
+	if (!arg_quiet && strncmp(target, "/etc/alternatives", 17))
 		fprintf(stderr, "Warning fcopy: cannot create symbolic link %s\n", target);
 }
-
-
 
 static int first = 1;
 static int fs_copydir(const char *infname, const struct stat *st, int ftype, struct FTW *sftw) {

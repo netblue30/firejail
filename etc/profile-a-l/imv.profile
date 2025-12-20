@@ -8,7 +8,8 @@ include globals.local
 
 include allow-bin-sh.inc
 
-blacklist /usr/libexec
+# uses libgdk-pixbuf and/or glycin - see #6906
+#blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

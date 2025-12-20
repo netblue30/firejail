@@ -42,7 +42,8 @@ include allow-lua.inc
 include allow-python2.inc
 include allow-python3.inc
 
-blacklist /usr/libexec
+# uses libgdk-pixbuf and/or glycin - see #6906
+#blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

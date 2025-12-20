@@ -27,7 +27,8 @@ whitelist ${HOME}/.mozilla/firefox/profiles.ini
 
 mkdir ${HOME}/.config/yelp
 whitelist ${HOME}/.config/yelp
-whitelist /usr/libexec/webkit2gtk-4.0
+# uses libgdk-pixbuf and/or glycin - see #6906
+#whitelist /usr/libexec/webkit2gtk-4.0
 whitelist /usr/share/doc
 whitelist /usr/share/groff
 whitelist /usr/share/help

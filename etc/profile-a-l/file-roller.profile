@@ -14,8 +14,9 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
-whitelist /usr/libexec/file-roller
-whitelist /usr/libexec/p7zip
+# uses libgdk-pixbuf and/or glycin - see #6906
+#whitelist /usr/libexec/file-roller
+#whitelist /usr/libexec/p7zip
 whitelist /usr/share/file-roller
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

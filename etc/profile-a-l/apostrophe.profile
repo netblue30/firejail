@@ -30,7 +30,9 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/libexec/webkit2gtk-4.0
+# uses libgdk-pixbuf and/or glycin - see #6906
+#whitelist /usr/libexec/webkit2gtk-4.0
+
 whitelist /usr/share/apostrophe
 whitelist /usr/share/texmf
 whitelist /usr/share/pandoc-*

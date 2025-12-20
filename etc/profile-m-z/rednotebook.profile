@@ -29,7 +29,8 @@ whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}
 whitelist ${VIDEOS}
-whitelist /usr/libexec/webkit2gtk-4.0
+# uses libgdk-pixbuf and/or glycin - see #6906
+#whitelist /usr/libexec/webkit2gtk-4.0
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

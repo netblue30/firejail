@@ -24,7 +24,8 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-whitelist /usr/libexec/webkit2gtk-4.0
+# uses libgdk-pixbuf and/or glycin - see #6906
+#whitelist /usr/libexec/webkit2gtk-4.0
 whitelist /usr/share/com.github.fabiocolacio.marker
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

@@ -19,7 +19,10 @@ include disable-xdg.inc
 mkdir ${HOME}/.local/share/bijiben
 whitelist ${HOME}/.local/share/bijiben
 whitelist ${HOME}/.cache/tracker
-whitelist /usr/libexec/webkit2gtk-4.0
+
+# uses libgdk-pixbuf and/or glycin - see #6906
+#whitelist /usr/libexec/webkit2gtk-4.0
+
 whitelist /usr/share/bijiben
 whitelist /usr/share/tracker
 whitelist /usr/share/tracker3

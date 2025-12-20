@@ -15,7 +15,8 @@ noblacklist /usr/sbin
 # Allow python 3 (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
-blacklist /usr/libexec
+# uses libgdk-pixbuf and/or glycin - see #6906
+#blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

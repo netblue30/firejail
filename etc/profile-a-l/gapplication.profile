@@ -7,7 +7,8 @@ include gapplication.local
 include globals.local
 
 blacklist ${RUNUSER}/wayland-*
-blacklist /usr/libexec
+# uses libgdk-pixbuf and/or glycin - see #6906
+#blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

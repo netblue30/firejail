@@ -21,7 +21,8 @@ include disable-xdg.inc
 
 whitelist ${VIDEOS}
 whitelist ${PICTURES}
-whitelist /usr/libexec/gstreamer-1.0/gst-plugin-scanner
+# uses libgdk-pixbuf and/or glycin - see #6906
+#whitelist /usr/libexec/gstreamer-1.0/gst-plugin-scanner
 whitelist /usr/share/gnome-video-effects
 whitelist /usr/share/gstreamer-1.0
 include whitelist-common.inc

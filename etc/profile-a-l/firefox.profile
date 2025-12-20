@@ -22,7 +22,8 @@ noblacklist ${HOME}/.mozilla
 noblacklist ${RUNUSER}/*firefox*
 noblacklist ${RUNUSER}/psd/*firefox*
 
-blacklist /usr/libexec
+# uses libgdk-pixbuf and/or glycin - see #6906
+#blacklist /usr/libexec
 
 mkdir ${HOME}/.cache/mozilla/firefox
 mkdir ${HOME}/.mozilla

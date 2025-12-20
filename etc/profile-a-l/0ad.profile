@@ -14,7 +14,7 @@ noblacklist ${HOME}/.local/share/0ad
 include allow-gjs.inc
 
 # uses libgdk-pixbuf and/or glycin - see #6906
-# blacklist /usr/libexec 
+# blacklist /usr/libexec
 
 include disable-common.inc
 include disable-devel.inc

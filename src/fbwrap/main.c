@@ -23,6 +23,9 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <linux/prctl.h>
+#include <sys/prctl.h>
+#include <signal.h>
 
 // enable debug messages
 //#define DEBUG
@@ -134,7 +137,24 @@ int main(int argc, char **argv) {
 		exit(1);
 	}
 		
-	execvp(arglist[0], arglist);
+	pid_t child = fork();                                                                                                    
+        if (child == -1) {                                                                                                       
+                fprintf(stderr, "Error: fbwrap cannot fork\n");                                                                  
+                exit(1);                                                                                                         
+        }                                                                                                                        
+        if (child == 0) {                                                                                                        
+                // kill the target if the parent dies                                                                            
+                prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);                                                                       
+                execvp(arglist[0], arglist);                                                                                     
+                return 0;                                                                                                        
+        }                                                                                                                        
+                                                                                                                                 
+        // wait child to finish                                                                                                  
+        //int status;                                                                                                            
+        //waitpid(child, &status, 0);                                                                                            
+                                                                                                                                 
+        // don't bother waiting                                                                                                
+        sleep(2);                                                                                                                
 	
 	return 0;
 }

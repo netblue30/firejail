@@ -28,6 +28,7 @@ static const char *const usage_str =
 	"\n"
 	"Options:\n"
 	"    -- - signal the end of options and disables further option processing.\n"
+	"    --allow-bwrap - allow bubblewrap sandbox running inside the sandbox.\n"
 	"    --allow-debuggers - allow tools such as strace and gdb inside the sandbox.\n"
 	"    --allusers - all user home directories are visible inside the sandbox.\n"
 #ifdef HAVE_APPARMOR

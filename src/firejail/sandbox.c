@@ -931,8 +931,11 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	// bwrap is replaced by our own program
-	fs_bwrap();
+	if (!arg_allow_bwrap) {
+		// bwrap is replaced by our own program
+		fs_bwrap();
+	}
+	
 	// private-bin is disabled for appimages
 	if (arg_private_bin && !arg_appimage) {
 		if (cfg.chrootdir)

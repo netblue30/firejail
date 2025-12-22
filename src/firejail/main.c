@@ -169,6 +169,7 @@ int login_shell = 0;
 int just_run_the_shell = 0;
 int arg_netlock = 0;
 int arg_restrict_namespaces = 0;
+int arg_allow_bwrap = 0;
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -1367,6 +1368,8 @@ int main(int argc, char **argv, char **envp) {
 		else if (strcmp(argv[i], "--allow-debuggers") == 0) {
 			// already handled
 		}
+		else if (strcmp(argv[i], "--allow-bwrap") == 0)
+			arg_allow_bwrap = 1;
 
 
 		//*************************************

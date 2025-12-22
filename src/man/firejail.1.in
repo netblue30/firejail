@@ -114,6 +114,39 @@ generally be disabled on the command line using \fB--ignore\fR.
 \fB\-\-
 Signal the end of options and disables further option processing.
 .TP
+\fB\-\-allow-bwrap
+By default firejail replaces /usr/bin/bwrap executable with a do-nothing program.
+Our replacement just runs the bubblewrap target, and is visible only inside
+firejail sandbox. Use this option to disable this default functionality.
+.br
+
+.br
+Example:
+.br
+$ firejail --noprofile --allow-bwrap bwrap --help
+.br
+firejail version 0.9.77
+.br
+
+.br
+Parent pid 44129, child pid 44130
+.br
+Base filesystem installed in 0.04 ms
+.br
+Child process initialized in 5.02 ms
+.br
+usage: bwrap [OPTIONS...] [--] COMMAND [ARGS...]
+.br
+
+.br
+    --help                       Print this help
+.br
+    --version                    Print version
+.br
+    --args FD                    Parse NUL-separated args from FD
+.br
+
+.TP
 \fB\-\-allow-debuggers
 Allow tools such as strace and gdb inside the sandbox by whitelisting
 system calls ptrace and process_vm_readv. This option is only

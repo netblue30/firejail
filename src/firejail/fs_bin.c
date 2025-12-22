@@ -285,7 +285,8 @@ void fs_private_bin_list(void) {
 	while ((ptr = strtok(NULL, ",")) != NULL)
 		globbing(ptr);
 	free(dlist);
-	globbing("/usr/bin/bwrap");
+	if (!arg_allow_bwrap)
+		globbing("/usr/bin/bwrap");
 
 	// mount-bind
 	EUID_ROOT();

@@ -78,8 +78,6 @@ static int ok_to_run(const char *fname) {
 
 static void usage(void) {
 	printf("fbwrap - bwrap replacement for Firejail sandbox.\n"
-	       "Usage: fbwrap bwrap-program-and-arguments\n"
-	       "\n"
 	       "This program does nothing! It just starts the application\n"
 	       "bwrap was supposed to sandbox, without any sandboxing features.\n"
 	       "\n"
@@ -95,7 +93,6 @@ int main(int argc, char **argv) {
 	printf("%s:%s():%d\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
 #endif
 	if (argc == 1) {
-		fprintf(stderr, "Error: bwrap program arguments are required.\n");
 		usage();
 		return 1;
 	}

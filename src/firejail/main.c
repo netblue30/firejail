@@ -1329,6 +1329,8 @@ int main(int argc, char **argv, char **envp) {
 		if (!cmd)
 			errExit("strdup");
 		profile_add(cmd);
+		// disable apparmor - our apparmor profile disables ptrace by default!
+		profile_add_ignore("apparmor");
 	}
 
 	// for appimages we need to remove "include disable-shell.inc from the profile

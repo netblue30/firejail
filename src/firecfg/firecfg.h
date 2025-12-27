@@ -54,6 +54,7 @@ int in_ignorelist(const char *const str);
 void parse_config_all(int do_symlink);
 
 // util.c
+int find(const char *program, const char *directory);
 int which(const char *program);
 int is_link(const char *fname);
 

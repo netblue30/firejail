@@ -103,7 +103,7 @@ static void list(void) {
 }
 
 static void clean(void) {
-	printf("Removing all firejail symlinks:\n");
+	printf("Removing all firejail symlinks from /usr/local/bin\n");
 
 	DIR *dir = opendir(arg_bindir);
 	if (!dir) {
@@ -131,8 +131,6 @@ static void clean(void) {
 					int rv = unlink(fullname);
 					if (rv)
 						fprintf(stderr, "Warning: cannot remove %s\n", fullname);
-					else
-						printf("   %s removed\n", ptr);
 				}
 				free(fname);
 			}
@@ -179,9 +177,18 @@ int in_ignorelist(const char *const str) {
 }
 
 static void set_file(const char *name, const char *firejail_exec) {
+	assert(name);
+	assert(firejail_exec);
+	
 	if (which(name) == 0)
 		return;
 
+	// if the application is a snap (Ubuntu), don't link it!
+	if (find(name, "/snap")) {
+		printf("   %s is a snap package, skipping...\n", name);
+		return;
+	}
+	
 	char *fname;
 	if (asprintf(&fname, "%s/%s", arg_bindir, name) == -1)
 		errExit("asprintf");
@@ -196,7 +203,7 @@ static void set_file(const char *name, const char *firejail_exec) {
 			printf("   %s created\n", name);
 		}
 	} else {
-		fprintf(stderr, "Warning: cannot create %s - already exists! Skipping...\n", fname);
+		fprintf(stderr, "   %s already exists, skipping...\n", fname);
 	}
 
 	free(fname);
@@ -205,7 +212,7 @@ static void set_file(const char *name, const char *firejail_exec) {
 // parse a single config file
 static void parse_config_file(const char *cfgfile, int do_symlink) {
 	if (do_symlink)
-		printf("Configuring symlinks in %s\n", arg_bindir);
+		printf("\nConfiguring symlinks in %s\n", arg_bindir);
 
 	printf("Parsing %s\n", cfgfile);
 
@@ -285,10 +292,9 @@ static void parse_config_glob(const char *pattern, int do_symlink) {
 
 	glob_t globbuf;
 	int globerr = glob(pattern, 0, NULL, &globbuf);
-	if (globerr == GLOB_NOMATCH) {
-		fprintf(stderr, "No matches for glob pattern %s\n", pattern);
+	if (globerr == GLOB_NOMATCH)
 		goto out;
-	} else if (globerr != 0) {
+	else if (globerr != 0) {
 		fprintf(stderr, "Warning: Failed to match glob pattern %s: %s\n",
 		        pattern, strerror(errno));
 		goto out;
@@ -307,6 +313,8 @@ void parse_config_all(int do_symlink) {
 	if (done_config)
 		return;
 
+	
+	
 	parse_config_glob(FIRECFG_CONF_GLOB, do_symlink);
 	parse_config_file(FIRECFG_CFGFILE, do_symlink);
 

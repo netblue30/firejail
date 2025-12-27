@@ -21,7 +21,7 @@
 #include "firecfg.h"
 
 // return 1 if the program is found
-static int find(const char *program, const char *directory) {
+int find(const char *program, const char *directory) {
 	int retval = 0;
 
 	char *fname;

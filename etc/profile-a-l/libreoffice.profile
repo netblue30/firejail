@@ -8,6 +8,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/libreoffice
 noblacklist /usr/local/sbin
+noblacklist ${HOME}/.local/share/gvfs-metadata
 
 # libreoffice can sign documents with GPG
 noblacklist ${HOME}/.gnupg

@@ -6,7 +6,18 @@ include freetube.local
 # Persistent global definitions
 include globals.local
 
+# mpv integration
+ignore include disable-programs.inc
+ignore include disable-shell.inc
+
+private-etc mpv
+
 ignore dbus-user none
+ignore dbus-system none
+
+ignore restrict-namespaces
+
+include mpv.profile
 
 noblacklist ${HOME}/.config/FreeTube
 

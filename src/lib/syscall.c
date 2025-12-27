@@ -48,31 +48,89 @@ typedef struct {
 	int syscall;
 } SyscallCheckList;
 
-// Native syscalls (64 bit versions for 64 bit arch etc)
+// Native syscalls (64-bit versions for 64-bit archs, etc)
 static const SyscallEntry syslist[] = {
-#if defined(__x86_64__)
-// code generated using
-// awk '/__NR_/ { print "{ \"" gensub("__NR_", "", "g", $2) "\", " $3 " },"; }' < /usr/include/x86_64-linux-gnu/asm/unistd_64.h
-#include "../include/syscall_x86_64.h"
+#if defined(__aarch64__)
+	#include "../include/syscall_aarch64.h"
+#elif defined(__alpha__)
+	#include "../include/syscall_alpha.h"
+#elif defined(__arc__)
+	#include "../include/syscall_arc_32.h"
+#elif defined(__arm__) && defined(__ARM_EABI__)
+	#include "../include/syscall_armeabi.h" // Identical to syscall_aarch32.h
+#elif defined(__arm__) && !defined(__ARM_EABI__)
+	#include "../include/syscall_armoabi.h"
+#elif defined(__csky__) || defined(__CSKY__)
+	#include "../include/syscall_csky.h"
+#elif defined(__hexagon__)
+	#include "../include/syscall_hexagon_32.h"
 #elif defined(__i386__)
-// awk '/__NR_/ { print "{ \"" gensub("__NR_", "", "g", $2) "\", " $3 " },"; }' < /usr/include/x86_64-linux-gnu/asm/unistd_32.h
-#include "../include/syscall_i386.h"
-#elif defined(__arm__)
-#include "../include/syscall_armeabi.h"
-#elif defined(__aarch64__)
-#include "../include/syscall_aarch64.h"
+	#include "../include/syscall_i386.h"
+#elif defined(__loongarch64) || __loongarch_grlen == 64
+	#include "../include/syscall_loongarch_64.h"
+#elif defined(__m68k__)
+	#include "../include/syscall_m68k.h"
+#elif defined(__microblaze__) || defined(__MICROBLAZE__)
+	#include "../include/syscall_microblaze.h"
+#elif defined(__mips__) && _MIPS_SIM == _ABIN32
+	#include "../include/syscall_mips_n32.h"
+#elif defined(__mips__) && _MIPS_SIM == _ABI64
+	#include "../include/syscall_mips_n64.h"
+#elif defined(__mips__) && _MIPS_SIM == _ABIO32
+	#include "../include/syscall_mips_o32.h"
+#elif defined(__nios2__) // Support for Nios II is removed in GCC 15
+	#include "../include/syscall_nios2.h"
+#elif defined(__or1k__) || defined(__OR1K__)
+	#include "../include/syscall_openrisc_32.h"
+#elif (defined(__hppa__) || defined(__hppa)) && !defined(__LP64__)
+	#include "../include/syscall_parisc_32.h"
+#elif (defined(__hppa__) || defined(__hppa)) && defined(__LP64__)
+	#include "../include/syscall_parisc_64.h"
+#elif (defined(__powerpc__) || defined(__PPC__)) && (!defined(__powerpc64__) && !defined(__PPC64__))
+	#include "../include/syscall_powerpc_32_nospu.h"
+#elif defined(__powerpc64__) || defined(__PPC64__)
+	#include "../include/syscall_powerpc_64_nospu.h"
+#elif defined(__riscv) && __riscv_xlen == 32
+	#include "../include/syscall_riscv_32.h"
+#elif defined(__riscv) && __riscv_xlen == 64
+	#include "../include/syscall_riscv_64.h"
+#elif defined(__s390__) && !defined(__s390x__)
+	#include "../include/syscall_s390_32.h"
+#elif defined(__s390x__)
+	#include "../include/syscall_s390_64.h"
+#elif defined(__sparc__) && !defined(__arch64__)
+	#include "../include/syscall_sparc_32.h"
+#elif defined(__sparc__) && defined(__arch64__)
+	#include "../include/syscall_sparc_64.h"
+#elif defined(__sh__)
+	#include "../include/syscall_superh.h"
+#elif defined(__x86_64__)
+	#include "../include/syscall_x86_64.h"
+#elif defined(__xtensa__) || defined(__XTENSA__)
+	#include "../include/syscall_xtensa.h"
 #else
-#warning "Please submit a syscall table for your architecture"
+	#warning "Please submit a syscall table for your architecture"
 #endif
 };
 
-// 32 bit syscalls for 64 bit arch
+// 32-bit syscalls for 64-bit archs
 static const SyscallEntry syslist32[] = {
-#if defined(__x86_64__)
-#include "../include/syscall_i386.h"
-// TODO for other 64 bit archs
-#elif defined(__i386__) || defined(__arm__) || defined(__powerpc__)
-// no secondary arch for 32 bit archs
+#if defined(__aarch64__)
+	#include "../include/syscall_armeabi.h"
+#elif defined(__mips__) && _MIPS_SIM == _ABI64
+	#include "../include/syscall_mips_o32.h"
+#elif defined(__riscv) && __riscv_xlen == 64
+	#include "../include/syscall_riscv_32.h"
+#elif defined(__s390x__)
+	#include "../include/syscall_s390_32.h"
+#elif defined(__sparc__) && defined(__arch64__)
+	#include "../include/syscall_sparc_32.h"
+#elif defined(__x86_64__)
+	#include "../include/syscall_i386.h"
+/*
+#elif defined(__i386__) || defined(__arm__) || defined(__m68k__) || ...
+	no secondary arch for 32-bit archs
+*/
 #endif
 };
 

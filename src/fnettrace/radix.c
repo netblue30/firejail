@@ -210,7 +210,7 @@ void squash(RNode *ptr, int level) {
 	    strnullcmp(ptr->zero->name, ptr->one->name) == 0 &&
 	    !ptr->zero->zero && !ptr->zero->one &&
 	    !ptr->one->zero && !ptr->one->one) {
-	    	ptr->name = ptr->one->name;
+		ptr->name = ptr->one->name;
 //		fprintf(stderr, "squashing %d.%d.%d.%d/%d ", PRINT_IP(sum << (32 - level)), level);
 //		fprintf(stderr, "%s\n", ptr->name);
 		ptr->zero = NULL;

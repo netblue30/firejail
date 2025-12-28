@@ -33,4 +33,3 @@ if [[ -f /sys/kernel/security/apparmor/profiles ]]; then
 else
 	echo "TESTING SKIP: no apparmor support in Linux kernel (test/filters/apparmor.exp)"
 fi
-

@@ -48,5 +48,3 @@ void terminal_set(void) {
 	}
 	tcsetattr(0, TCSANOW, &twait);
 }
-
-

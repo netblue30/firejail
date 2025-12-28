@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
 		usage();
 		return 1;
 	}
-			
+
 	if (strcmp(argv[1], "-h") == 0 ||
 	    strcmp(argv[1], "-?") == 0 ||
 	    strcmp(argv[1], "-v") == 0 ||
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
 #ifdef DEBUG
 		printf("%s:%s():%d %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, argv[i]);
 #endif
-		if (*argv[i] != '/') // enforcing $(PATH) for our target 
+		if (*argv[i] != '/') // enforcing $(PATH) for our target
 			continue;
 		if (ok_to_run(argv[i])) {
 			fprintf(stderr, "Info: fbwrap target program %s found\n", argv[i]);
@@ -136,25 +136,25 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "Error: fbwrap target program has an argument list larger than %d\n", MAX_ARGLIST - 1);
 		exit(1);
 	}
-		
-	pid_t child = fork();                                                                                                    
-        if (child == -1) {                                                                                                       
-                fprintf(stderr, "Error: fbwrap cannot fork\n");                                                                  
-                exit(1);                                                                                                         
-        }                                                                                                                        
-        if (child == 0) {                                                                                                        
-                // kill the target if the parent dies                                                                            
-                prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);                                                                       
-                execvp(arglist[0], arglist);                                                                                     
-                return 0;                                                                                                        
-        }                                                                                                                        
-                                                                                                                                 
-        // wait child to finish                                                                                                  
-        //int status;                                                                                                            
-        //waitpid(child, &status, 0);                                                                                            
-                                                                                                                                 
-        // don't bother waiting                                                                                                
-        sleep(2);                                                                                                                
-	
+
+	pid_t child = fork();
+	if (child == -1) {
+		fprintf(stderr, "Error: fbwrap cannot fork\n");
+		exit(1);
+	}
+	if (child == 0) {
+		// kill the target if the parent dies
+		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
+		execvp(arglist[0], arglist);
+		return 0;
+	}
+
+	// wait child to finish
+	//int status;
+	//waitpid(child, &status, 0);
+
+	// don't bother waiting
+	sleep(2);
+
 	return 0;
 }

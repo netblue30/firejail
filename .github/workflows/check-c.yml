@@ -136,7 +136,7 @@ jobs:
         languages: cpp
 
     - name: configure
-      run: ./configure
+      run: ./configure || (cat config.log; exit 1)
 
     - name: make
       run: make -j "$(nproc)"

@@ -131,6 +131,8 @@ static void clean(void) {
 					int rv = unlink(fullname);
 					if (rv)
 						fprintf(stderr, "Warning: cannot remove %s\n", fullname);
+					else if (arg_debug)
+						printf("   %s removed\n", ptr);
 				}
 				free(fname);
 			}
@@ -292,9 +294,11 @@ static void parse_config_glob(const char *pattern, int do_symlink) {
 
 	glob_t globbuf;
 	int globerr = glob(pattern, 0, NULL, &globbuf);
-	if (globerr == GLOB_NOMATCH)
+	if (globerr == GLOB_NOMATCH) {
+		if (arg_debug)
+			fprintf(stderr, "No matches for glob pattern %s\n", pattern);
 		goto out;
-	else if (globerr != 0) {
+	} else if (globerr != 0) {
 		fprintf(stderr, "Warning: Failed to match glob pattern %s: %s\n",
 		        pattern, strerror(errno));
 		goto out;

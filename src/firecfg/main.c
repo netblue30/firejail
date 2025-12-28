@@ -179,7 +179,7 @@ int in_ignorelist(const char *const str) {
 static void set_file(const char *name, const char *firejail_exec) {
 	assert(name);
 	assert(firejail_exec);
-	
+
 	if (which(name) == 0)
 		return;
 
@@ -188,7 +188,7 @@ static void set_file(const char *name, const char *firejail_exec) {
 		printf("   %s is a snap package, skipping...\n", name);
 		return;
 	}
-	
+
 	char *fname;
 	if (asprintf(&fname, "%s/%s", arg_bindir, name) == -1)
 		errExit("asprintf");
@@ -313,8 +313,6 @@ void parse_config_all(int do_symlink) {
 	if (done_config)
 		return;
 
-	
-	
 	parse_config_glob(FIRECFG_CONF_GLOB, do_symlink);
 	parse_config_file(FIRECFG_CFGFILE, do_symlink);
 

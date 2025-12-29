@@ -46,7 +46,7 @@ seccomp.block-secondary
 tracelog
 
 disable-mnt
-private-bin bash,dash,sh,python*,openra-ra
+private-bin bash,dash,openra-ra,python*,sh
 private-cache
 private-dev
 private-etc @games,@tls-ca,@x11

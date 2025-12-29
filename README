@@ -154,7 +154,7 @@ amano-kenji  (https://github.com/amano-kenji)
 	- anki profile fixes
 	- profiles: qutebrowser: whitelist /usr/share/pdf.js (#6875)
 	- profiles: firefox-common: add a comment about mpris (#6876)
-	- added mpris support to brave.profile
+	- profiles: brave: add `org.mpris.MediaPlayer2.brave.*` (#6980)
 Amin Vakil (https://github.com/aminvakil)
 	- whois profile fix
 	- added profile for strawberry
@@ -616,7 +616,7 @@ hlein (https://github.com/hlein)
 	- make env/arg sanity check failure messages more useful
 	- relocate firecfg.config to /etc/firejail/
 	- fix display profile for Gentoo distribution
-	- hashcat profile fixes
+	- profiles: hashcat: fix runtime errors (#6364 #6888)
 Holger Heinz (https://github.com/hheinz)
 	- manpage work
 Hotty Capy (https://github.com/hotcapy)
@@ -1033,8 +1033,9 @@ pirate486743186 (https://github.com/pirate486743186)
 	- added rtv, alpine, mcomix, qcomicbook, googler, ddgr profiles
 	- w3m, zahura, profile.template fixes
 pierretom (https://github.com/pierretom)
-	- add script to generate syscall headers
-	- update and add system calls for several architectures
+	- build: add script to generate syscall headers (#6960)
+	- modif: update and add syscalls for several architectures (#6956
+	  #6961)
 Pixel Fairy (https://github.com/xahare)
 	- added fjclip.py, fjdisplay.py and fjresize.py in contrib section
 PizzaDude (https://github.com/pizzadude)
@@ -1096,7 +1097,7 @@ Raphaël Droz (https://github.com/drzraf)
 realaltffour (https://github.com/realaltffour)
 	- add lynx support to newsboat profile
 RedRampage (https://github.com/redrampage)
-	 - added a default socket path used for ssh-agent socket activation
+	- profiles: ssh: add `${RUNUSER}/openssh_agent` socket path (#6975)
 Reed Riley (https://github.com/reedriley)
 	- cointop profile
 	- 1password profile

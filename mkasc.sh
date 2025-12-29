@@ -19,4 +19,3 @@ echo "*** Verifying $TARNAME-$VERSION.tar.xz.asc ***"
 gpg --verify "$TARNAME-$VERSION.tar.xz.asc"
 echo "*** Verifying $TARNAME-$VERSION.asc ***"
 gpg --verify "$TARNAME-$VERSION.asc"
-

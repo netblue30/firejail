@@ -613,6 +613,7 @@ blacklist ${HOME}/.config/onboard
 blacklist ${HOME}/.config/onionshare
 blacklist ${HOME}/.config/onlyoffice
 blacklist ${HOME}/.config/openmw
+blacklist ${HOME}/.config/openra
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/opera-developer

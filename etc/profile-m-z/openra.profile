@@ -8,6 +8,12 @@ include globals.local
 
 noblacklist ${HOME}/.config/openra
 
+# Allow /bin/sh (blacklisted by disable-shell.inc)
+include allow-bin-sh.inc
+
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
+
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 

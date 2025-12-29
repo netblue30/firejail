@@ -26,7 +26,7 @@ expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	-re "Error: .*mounting appimage"
 }
-after 100
+after 500
 
 
 

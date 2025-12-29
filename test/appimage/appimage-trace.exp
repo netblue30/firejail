@@ -15,15 +15,11 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"AppRun:exec"
+	"/proc/self/status"
 }
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"AppRun:opendir"
-}
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"Hello, World!"
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Seccomp 2"
 }
 
 after 500

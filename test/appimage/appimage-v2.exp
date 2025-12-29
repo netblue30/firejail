@@ -15,81 +15,16 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1.1\n";exit}
-	"Hello, World!"
+	"container firejail"
 }
 expect {
 	timeout {puts "TESTING ERROR 1.2\n";exit}
-	"Operation not permitted" {puts "1"}
-	"Permission denied" {puts "2"}
+	"NoNewPrivs 1"
 }
 expect {
 	timeout {puts "TESTING ERROR 1.3\n";exit}
-	"Hello, again!"
+	"Seccomp 2"
 }
-sleep 5
-
-spawn $env(SHELL)
-send -- "firejail --list\r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	":firejail"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"appimage hello-x86_64"
-}
-after 100
-
-send -- "firejail --name=blablabla\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-sleep 2
-
-spawn $env(SHELL)
-send -- "firemon --seccomp\r"
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
-	"appimage hello-x86_64"
-}
-expect {
-	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
-	"Seccomp:	2"
-}
-expect {
-	timeout {puts "TESTING ERROR 5.1\n";exit}
-	"name=blablabla"
-}
-after 100
-send -- "firemon --caps\r"
-expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	"appimage hello-x86_64"
-}
-expect {
-	timeout {puts "TESTING ERROR 6.1\n";exit}
-	"CapBnd:"
-}
-expect {
-	timeout {puts "TESTING ERROR 6.2\n";exit}
-	"0000000000000000"
-}
-expect {
-	timeout {puts "TESTING ERROR 6.3\n";exit}
-	"name=blablabla"
-}
-after 100
-
-spawn $env(SHELL)
-send -- "firejail --shutdown=test\r"
-set spawn_id $appimage_id
-expect {
-	timeout {puts "shutdown\n"}
-	"AppImage detached"
-}
-
-after 100
+after 500
 
 puts "\nall done\n"

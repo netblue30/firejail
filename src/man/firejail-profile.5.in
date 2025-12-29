@@ -522,6 +522,10 @@ directory, and a skeleton filesystem is created based on the original /var/log.
 The following security filters are currently implemented:
 
 .TP
+\fBallow-bwrap
+Allow bubblewrap sandbox inside Firejail sandbox. By default Firejail replaces
+/usr/bin/bwrap executable with a do-nothing  program.
+.TP
 \fBallow-debuggers
 Allow tools such as strace and gdb inside the sandbox by whitelisting system calls ptrace and process_vm_readv.
 #ifdef HAVE_APPARMOR

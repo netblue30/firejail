@@ -1000,6 +1000,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "allow-bwrap") == 0) {
+		arg_allow_bwrap = 1;
+		return 0;
+	}
+
 	if (strncmp(ptr, "protocol ", 9) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			const char *add = ptr + 9;

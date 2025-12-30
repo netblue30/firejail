@@ -239,7 +239,7 @@ int checkcfg(int val) {
 			// env max count
 			else if (strncmp(ptr, "env-max-count ", 14) == 0) {
 				long tmp = strtol(ptr + 14, NULL, 10);
-				if (tmp < 0 || tmp >= INT_MAX) {
+				if (tmp < 0 || tmp > INT_MAX) {
 					if (arg_debug) {
 						printf("env-max-count out of range: %ld, using %d\n",
 						       tmp, INT_MAX);

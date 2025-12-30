@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # This file is part of Firejail project.
-# Copyright (C) 2014-2025 Firejail Authors.
+# Copyright (C) 2014-2026 Firejail Authors.
 # License GPL v2.
 #
 # This script fetches current system calls from kernel sources then extracts and

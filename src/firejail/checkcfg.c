@@ -220,7 +220,7 @@ int checkcfg(int val) {
 			// arg max count
 			else if (strncmp(ptr, "arg-max-count ", 14) == 0) {
 				long tmp = strtol(ptr + 14, NULL, 10);
-				if (tmp > ARG_MAX) { // ARG_MAX defined in glibc limits.h
+				if (tmp < 0 || tmp > ARG_MAX) { // ARG_MAX defined in glibc limits.h
 					if (arg_debug) {
 						printf("arg-max-count out of range: %ld, using %d\n",
 						       tmp, ARG_MAX);

@@ -7,14 +7,12 @@
 
 int main(int argc, char **argv) {
 	printf("Hello, Firejail!\n");
-	
+
 	// test args
 	int i;
 	for (i = 1; i < argc; i++)
 		printf("%d - %s\n", i, argv[i]);
 
-
-    
 	char *cont = getenv("container");
 	if (cont)
 		printf("\n*** container %s ***\n", cont);
@@ -31,7 +29,7 @@ int main(int argc, char **argv) {
 			char *ptr = strchr(buf, '\n');
 			if (ptr)
 				*ptr = '\0';
-		    
+
 			if (strncmp(buf, "NoNewPrivs:", 11) == 0) {
 				ptr = buf + 11;
 				while (*ptr == ' ' || *ptr == '\t')
@@ -39,7 +37,7 @@ int main(int argc, char **argv) {
 				printf("*** NoNewPrivs %s ***\n", ptr);
 				sleep(1);
 			}
-			
+
 			if (strncmp(buf, "Seccomp:", 8) == 0) {
 				ptr = buf + 8;
 				while (*ptr == ' ' || *ptr == '\t')
@@ -49,6 +47,6 @@ int main(int argc, char **argv) {
 		}
 		fclose(fp);
 	}
-	    
+
 	return 0;
 }

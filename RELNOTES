@@ -3,9 +3,8 @@ firejail (0.9.78) baseline; urgency=low
   * feature: add arg-max-count / arg-max-len to firejail.config (#4633 #6878)
   * feature: add env-max-count / env-max-len to firejail.config (#3678 #6951)
   * feature: add --xephyr-extra-params= command (#6952)
-  * feature: disable bwrap by default, add --allow-bwrap command option
-    and allow-bwrap command in profile files (#6906)
-  * feature: support for glycin 2.0.0 via gdk-pixbuf2 (#6906)
+  * feature: add --allow-bwrap command (and fbwrap program) to work around
+    bwrap in glycin 2.0.0 via gdk-pixbuf2 (#6906 #7009)
   * modif: firemon: improve debug message code (#6856)
   * modif: rlimit: allow uppercase suffixes (#6890)
   * modif: rlimit: use uppercase suffixes in the code/docs (#6891)
@@ -15,8 +14,6 @@ firejail (0.9.78) baseline; urgency=low
   * removal: --disable-globalcfg configure option (#6984)
   * removal: overlayfs support/--overlay commands (#6994)
   * removal: Intrusion Detection System (IDS)/fids (#6995)
-  * bugfix: firecfg/snap integration on Ubuntu desktop (#7008)
-  * bugfix: make test-appimage fix for newer versions of Debian (#7007)
   * bugfix: remove /usr/share + "runner:root" CI workaround (#6844)
   * bugfix: firemon: fix inconsistent debug message format (#6854)
   * bugfix: fix potential infinite loop in checkcfg (-fanalyzer) (#6859)
@@ -29,12 +26,15 @@ firejail (0.9.78) baseline; urgency=low
   * bugfix: add missing macros in profile.template (#6948)
   * bugfix: check for --quiet/--debug earlier during init (#6969)
   * bugfix: disable apparmor if --allow-debuggers (#6882)
+  * bugfix: firecfg: skip snap-packaged programs to avoid breaking them on
+    Ubuntu desktop (#7008)
   * build: cppcheck: ignore src/lib/syscalls.c (#6868)
   * build: cppcheck: use --check-level=exhaustive (#6877)
   * build: add script to generate syscall headers (#6960 #6990)
   * tests: rlimit: add missing tests for rlimit-as / rlimit-cpu (#6895)
   * tests: man: fix timeout error (#6949)
   * tests: man: disable test due to timeout (#6955)
+  * tests: fix test-appimage on Arch and Debian 13 (#7007)
   * ci: allow new github domain for codeql download (#6845)
   * ci: standardize "apt-get install" step name (#6862)
   * ci: speed-up main build & add build-gcc (#6864)
@@ -68,7 +68,7 @@ firejail (0.9.78) baseline; urgency=low
   * profiles: hashcat: fix runtime errors (#6364 #6888)
   * new profile: ne (text editor) (ae22e5610)
   * new profile: trivalent (#6900)
- -- netblue30 <netblue30@yahoo.com>  Sat, 3 Jan 2025 11:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sat, 3 Jan 2026 11:00:00 -0500
 
 firejail (0.9.76) baseline; urgency=low
   * feature: use globbing in hardcoded numbered /dev paths (#2723 #6704)

@@ -48,6 +48,7 @@ seccomp.block-secondary
 tracelog
 
 disable-mnt
+private-bin bash,dash,gdb,sh,uname,which,xmessage
 private-cache
 private-dev
 private-etc @games,@x11

@@ -18,7 +18,7 @@ whitelist ${HOME}/.local/share/games/uzdoom
 whitelist /usr/local/share/games/uzdoom
 whitelist /usr/share/games/uzdoom
 
-private-bin bash,dash,gdb,sh,uname,uzdoom,which,xmessage
+private-bin uzdoom
 
 # Redirect
 include gzdoom-common.profile

@@ -16,7 +16,7 @@ mkdir ${HOME}/.local/share/games/gzdoom
 whitelist ${HOME}/.config/gzdoom
 whitelist ${HOME}/.local/share/games/gzdoom
 
-private-bin bash,dash,gdb,gzdoom,sh,uname,which,xmessage
+private-bin gzdoom
 
 # Redirect
 include gzdoom-common.profile

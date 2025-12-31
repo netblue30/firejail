@@ -9,8 +9,6 @@ include globals.local
 noblacklist ${HOME}/.config/gzdoom
 noblacklist ${HOME}/.local/share/games/gzdoom
 
-blacklist /usr/libexec
-
 mkdir ${HOME}/.config/gzdoom
 mkdir ${HOME}/.local/share/games/gzdoom
 whitelist ${HOME}/.config/gzdoom

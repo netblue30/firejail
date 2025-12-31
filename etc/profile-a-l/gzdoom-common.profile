@@ -11,6 +11,8 @@ noblacklist ${HOME}/.local/share/games/doom
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc
 
+blacklist /usr/libexec
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc
@@ -22,8 +24,6 @@ include disable-xdg.inc
 
 mkdir ${HOME}/.local/share/games/doom
 whitelist ${HOME}/.local/share/games/doom
-whitelist /usr/local/share/doom
-whitelist /usr/local/share/games/doom
 whitelist /usr/share/doom
 whitelist /usr/share/games/doom
 whitelist /usr/share/soundfonts

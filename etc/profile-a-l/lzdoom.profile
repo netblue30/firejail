@@ -9,13 +9,10 @@ include globals.local
 noblacklist ${HOME}/.config/lzdoom
 noblacklist ${HOME}/.local/share/games/lzdoom
 
-blacklist /usr/libexec
-
 mkdir ${HOME}/.config/lzdoom
 mkdir ${HOME}/.local/share/games/lzdoom
 whitelist ${HOME}/.config/lzdoom
 whitelist ${HOME}/.local/share/games/lzdoom
-whitelist /usr/local/share/games/lzdoom
 whitelist /usr/share/games/lzdoom
 
 private-bin lzdoom

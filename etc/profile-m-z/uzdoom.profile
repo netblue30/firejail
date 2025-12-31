@@ -9,13 +9,10 @@ include globals.local
 noblacklist ${HOME}/.config/uzdoom
 noblacklist ${HOME}/.local/share/games/uzdoom
 
-blacklist /usr/libexec
-
 mkdir ${HOME}/.config/uzdoom
 mkdir ${HOME}/.local/share/games/uzdoom
 whitelist ${HOME}/.config/uzdoom
 whitelist ${HOME}/.local/share/games/uzdoom
-whitelist /usr/local/share/games/uzdoom
 whitelist /usr/share/games/uzdoom
 
 private-bin uzdoom

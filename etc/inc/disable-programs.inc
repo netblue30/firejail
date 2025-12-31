@@ -317,7 +317,6 @@ blacklist ${HOME}/.config/LibreCAD
 blacklist ${HOME}/.config/Loop_Hero
 blacklist ${HOME}/.config/Luminance
 blacklist ${HOME}/.config/LyX
-blacklist ${HOME}/.config/lzdoom
 blacklist ${HOME}/.config/MangoHud
 blacklist ${HOME}/.config/Mattermost
 blacklist ${HOME}/.config/Meltytech
@@ -563,6 +562,7 @@ blacklist ${HOME}/.config/lobster
 blacklist ${HOME}/.config/lugaru
 blacklist ${HOME}/.config/lutris
 blacklist ${HOME}/.config/lximage-qt
+blacklist ${HOME}/.config/lzdoom
 blacklist ${HOME}/.config/mailtransports
 blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc

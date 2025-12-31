@@ -505,6 +505,7 @@ blacklist ${HOME}/.config/gthumb
 blacklist ${HOME}/.config/gummi
 blacklist ${HOME}/.config/guvcview2
 blacklist ${HOME}/.config/gwenviewrc
+blacklist ${HOME}/.config/gzdoom
 blacklist ${HOME}/.config/hexchat
 blacklist ${HOME}/.config/homebank
 blacklist ${HOME}/.config/i2p
@@ -561,6 +562,7 @@ blacklist ${HOME}/.config/lobster
 blacklist ${HOME}/.config/lugaru
 blacklist ${HOME}/.config/lutris
 blacklist ${HOME}/.config/lximage-qt
+blacklist ${HOME}/.config/lzdoom
 blacklist ${HOME}/.config/mailtransports
 blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc
@@ -695,6 +697,7 @@ blacklist ${HOME}/.config/uGet
 blacklist ${HOME}/.config/ueberzugpp
 blacklist ${HOME}/.config/ungoogled-chromium
 blacklist ${HOME}/.config/uzbl
+blacklist ${HOME}/.config/uzdoom
 blacklist ${HOME}/.config/vesktop
 blacklist ${HOME}/.config/viewnior
 blacklist ${HOME}/.config/vivaldi
@@ -977,6 +980,10 @@ blacklist ${HOME}/.local/share/fluffychat
 blacklist ${HOME}/.local/share/fractal
 blacklist ${HOME}/.local/share/freecol
 blacklist ${HOME}/.local/share/gajim
+blacklist ${HOME}/.local/share/games/doom
+blacklist ${HOME}/.local/share/games/gzdoom
+blacklist ${HOME}/.local/share/games/lzdoom
+blacklist ${HOME}/.local/share/games/uzdoom
 blacklist ${HOME}/.local/share/gdfuse
 blacklist ${HOME}/.local/share/geary
 blacklist ${HOME}/.local/share/geeqie

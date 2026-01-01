@@ -43,20 +43,17 @@ jobs:
     - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3
     - name: print env
       run: ./ci/printenv.sh
+    - name: configure
+      run: ./configure || (cat config.log; exit 1)
     - run: python3 --version
 
-    - name: sort.py
-      run: >
-        set +e;
-        ./ci/check/profiles/sort.py
-        etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile;
-        echo;
-        git diff --exit-code
+    - name: sort profiles
+      run: make sort-profiles || (echo; git diff --exit-code)
 # Currently broken (see #5610)
 #   - name: private-etc-always-required.sh
 #     run: >
 #       ./ci/check/profiles/private-etc-always-required.sh
-#       etc/inc/*.inc etc/{profile-a-l,profile-m-z}/*.profile
+#       etc/inc/*.inc etc/profile*/*.profile
     - name: sort-disable-programs.sh
       run: >
         ./ci/check/profiles/sort-disable-programs.sh

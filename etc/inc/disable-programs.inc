@@ -1191,6 +1191,7 @@ blacklist ${HOME}/.pylint.d
 blacklist ${HOME}/.qemu-launcher
 blacklist ${HOME}/.qgis2
 blacklist ${HOME}/.qmmp
+blacklist ${HOME}/.quakespasm
 blacklist ${HOME}/.quodlibet
 blacklist ${HOME}/.redeclipse
 blacklist ${HOME}/.rednotebook

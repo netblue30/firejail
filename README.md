@@ -361,7 +361,7 @@ applications for loading images.
 As of gdk-pixbuf2 2.44.1 the calls to glycin loaders are wrapped in
 bubblewrap.
 `````
- (more...)[https://github.com/netblue30/firejail/issues/6906]
+https://github.com/netblue30/firejail/issues/6906
 
 
 ## Current development version: 0.9.79

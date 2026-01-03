@@ -350,7 +350,7 @@ so uninstalling without doing the above should not cause issues.
 
 This is an emergency release due to GTK library changes:
 
-`````
+```
 Applications that use glycin 2.0.0 or later via gdk-pixbuf2
 (examples: Firefox, Thunderbird, GIMP) crash.
 
@@ -358,14 +358,13 @@ The library glycin provides a set of "safe" image format loaders
 to gdk-pixbuf2, another library which is widely used in GTK-based
 applications for loading images.
 
-As of gdk-pixbuf2 2.44.1 the calls to glycin loaders are wrapped in
+As of gdk-pixbuf2 2.44.1, the calls to glycin loaders are wrapped in
 bubblewrap.
-`````
-https://github.com/netblue30/firejail/issues/6906
+```
 
+For details, see [#6906](https://github.com/netblue30/firejail/issues/6906).
 
 ## Current development version: 0.9.79
-
 
 ### Landlock support - ongoing/experimental
 

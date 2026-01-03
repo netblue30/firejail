@@ -359,8 +359,9 @@ to gdk-pixbuf2, another library which is widely used in GTK-based
 applications for loading images.
 
 As of gdk-pixbuf2 2.44.1 the calls to glycin loaders are wrapped in
-bubblewrap (bwrap). https://github.com/netblue30/firejail/issues/6906
+bubblewrap.
 `````
+ (more...)[https://github.com/netblue30/firejail/issues/6906]
 
 
 ## Current development version: 0.9.79

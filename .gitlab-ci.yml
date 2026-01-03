@@ -148,7 +148,7 @@ debian_ci:
         - git commit -m 'add debian/'
         - export CI_COMMIT_SHA="$(git rev-parse HEAD)"
     script:
-        - apt-get install --no-install-recommends -qy gawk
+        - apt-get install --no-install-recommends -qy gawk git-buildpackage
         - ./ci/printenv.sh
         - gitlab-ci-git-buildpackage
         - gitlab-ci-lintian

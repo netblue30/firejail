@@ -71,6 +71,9 @@ firejail (0.9.78) baseline; urgency=low
   * profiles: hashcat: fix runtime errors (#6364 #6888)
   * new profile: ne (text editor) (ae22e5610)
   * new profile: trivalent (#6900)
+  * new profile: openra (#7005)
+  * new profile: gzdoom, lzdoom, uzdoom (#7010)
+  * new profile: quakespasm (#7014)
  -- netblue30 <netblue30@yahoo.com>  Sat, 3 Jan 2026 11:00:00 -0500
 
 firejail (0.9.76) baseline; urgency=low

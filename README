@@ -1288,7 +1288,9 @@ startx2017 (https://github.com/startx2017)
 	- mplayer and smplayer profiles
 	- kwrite and geary profiles
 StellariusOrion592 (https://github.com/StellariusOrion592)
-	- openra, gzdoom, and quakespasm profiles
+	- new profile: openra (#7005)
+	- new profile: gzdoom, lzdoom, uzdoom (#7010)
+	- new profile: quakespasm (#7014)
 StelFux (https://github.com/StelFux)
 	- Fix youtube video in totem
 sudoAlphaX (https://github.com/sudoAlphaX)

@@ -1,5 +1,8 @@
-firejail (0.9.78) baseline; urgency=low
+firejail (0.9.79) baseline; urgency=low
   * work in progress
+ -- netblue30 <netblue30@yahoo.com>  Sat, 3 Jan 2026 11:00:00 -0500
+
+firejail (0.9.78) baseline; urgency=low
   * feature: add arg-max-count / arg-max-len to firejail.config (#4633 #6878)
   * feature: add env-max-count / env-max-len to firejail.config (#3678 #6951)
   * feature: add --xephyr-extra-params= command (#6952)

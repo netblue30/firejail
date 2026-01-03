@@ -346,89 +346,26 @@ See `man firecfg` for details.
 Note: Broken symlinks are ignored when searching for an executable in `$PATH`,
 so uninstalling without doing the above should not cause issues.
 
-## Latest released version: 0.9.76
+## Latest released version: 0.9.78
 
-This is an emergency release, many thanks to @kmk3, @SkewedZeppelin, and all
-the Arch Linux users that reported the problem.
+This is an emergency release due to GTK library changes:
 
-Due to an xorg change in the xkeyboard-config package
-(https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config), many/most
-xorg programs were rendered completely broken when running under firejail
-0.9.74:
+`````
+Applications that use glycin 2.0.0 or later via gdk-pixbuf2
+(examples: Firefox, Thunderbird, GIMP) crash.
 
-* <https://github.com/netblue30/firejail/issues/6773>
+The library glycin provides a set of "safe" image format loaders
+to gdk-pixbuf2, another library which is widely used in GTK-based
+applications for loading images.
 
-This was fixed in the following PR:
-
-* <https://github.com/netblue30/firejail/pull/6775>
-
-## Current development version: 0.9.77
-
-### New features
-```text
-$ man firejail
-
-      --xephyr-extra-params=OPTIONS
-              Set Xephyr server command extra parameters for x11  --x11=xephyr.
-              The setting will overwrite the default set in /etc/firejail/fire‐
-              jail.config  for  the  current sandbox. Run Xephyr -help to get a
-              list of available options.
-
-              Example:
-              $ firejail --net=eth0 --x11=xephyr  --xephyr-extra-params="-title
-              firefox" /usr/bin/firefox
+As of gdk-pixbuf2 2.44.1 the calls to glycin loaders are wrapped in
+bubblewrap.
+`````
+https://github.com/netblue30/firejail/issues/6906
 
 
-       --notpm (deprecated)
-              Ignored for compatibility.
-              TPM devices are now blocked by default, see --keep-dev-tpm.
+## Current development version: 0.9.79
 
-      --keep-dev-tpm
-              Allow access to Trusted Cryptography  Module  (TCM)  and  Trusted
-              Platform  Module  (TPM)  devices (even with --private-dev), which
-              are blocked by default.
-
-              Paths:
-              /dev/tcm[0-9]*
-              /dev/tcmrm[0-9]*
-              /dev/tpm[0-9]*
-              /dev/tpmrm[0-9]*
-
-              Example:
-              $ firejail --keep-dev-tpm --private-dev
-
-```
-
-### firejail.config enhancements
-```text
-$ less /etc/firejail/firejail.config
-[...]
-# Maximum number of arguments in the command line.
-# Example: `firejail --foo /usr/bin/bar baz` has 4 arguments.
-# This limit is intended to make stack smashing harder (see
-# https://github.com/netblue30/firejail/issues/4633).
-# arg-max-count 128
-
-# Maximum length of each argument in the command line.
-# Example: `--foo=bar` has a length of 9.
-# This limit is intended to make stack smashing harder (see
-# https://github.com/netblue30/firejail/issues/4633).
-# arg-max-len 4096
-[...]
-# Maximum number of environment variables.
-# This limit is intended to make stack smashing harder (see
-# https://github.com/netblue30/firejail/issues/4633).
-# env-max-count 256
-
-# Maximum length for each environment variable value.
-# Example: `FOO=barr` has a length of 4.
-# This limit is intended to make stack smashing harder (see
-# https://github.com/netblue30/firejail/issues/4633).
-# Note: The actual default value is based on `PATH_MAX`; see checkcfg.c.
-# env-max-len 4096
-[...]
-
-```
 
 ### Landlock support - ongoing/experimental
 

@@ -366,6 +366,52 @@ For details, see [#6906](https://github.com/netblue30/firejail/issues/6906).
 
 ## Current development version: 0.9.79
 
+### --profile=filename|appanme rework
+
+Issue https://github.com/netblue30/firejail/issues/6896: imposing a relative
+path or a full path for pathname.
+
+```text
+      --profile=filename|appname
+              Load a custom security profile from filename, or use the name  of
+              a specific application.
+
+              If  the  command  line option --profile is not provided, Firejail
+              will attempt to extract the appname from the target program file‐
+              name. It will then  search  ~/.config/firejail  directory  for  a
+              suitable  profile,  followed  by a search in /etc/firejail/direc‐
+              tory.
+
+              Example:
+              $ firejail firefox
+              Reading profile /home/netblue/.config/firejail/firefox.profile
+              Reading profile /etc/firejail/firefox.profile
+              Reading profile /etc/firejail/firefox-common.profile
+              [...]
+
+              When using a filename, please include a full path or  a  relative
+              path.
+
+              $ firejail --profile=./firefox.profile firefox
+              Reading profile ./firefox.profile
+              Reading profile /etc/firejail/firefox.profile
+              Reading profile /etc/firejail/firefox-common.profile
+              [...]
+
+              --profile=appname comes in handy when running appimages:
+
+              $      firejail     --appimage     --profile=firefox     firefox-
+              nightly-148.0.r20260103-x86_64.AppImage
+              Reading profile /home/netblue/.config/firejail/firefox.profile
+              Reading profile /etc/firejail/firefox.profile
+              Reading profile /etc/firejail/firefox-common.profile
+              [...]
+
+              See man 5 firejail-profile for profile file  syntax  information.
+              For   profile  resolution   details  see  https://github.com/net‐
+              blue30/firejail/wiki/Creating-Profiles.
+```
+
 ### Landlock support - ongoing/experimental
 
 * Added on #6078, which is based on #5315 from ChrysoliteAzalea/landlock
@@ -429,32 +475,32 @@ Warning: multiple caps in /etc/firejail/transmission-daemon.profile
 Warning: multiple caps in /etc/firejail/trivalent.profile
 
 Stats:
-    profiles			1328
-    include local profile	1327   (include profile-name.local)
-    include globals		1294   (include globals.local)
-    blacklist ~/.ssh		1187   (include disable-common.inc)
-    seccomp			1199
-    capabilities		1321
-    noexec			1200   (include disable-exec.inc)
-    noroot			1092
-    memory-deny-write-execute	320
-    restrict-namespaces		1037
-    apparmor			852
-    private-bin			804
-    private-dev			1161
-    private-etc			830
-    private-cache		855
-    private-lib			85
-    private-tmp			1022
+    profiles			1336
+    include local profile	1335   (include profile-name.local)
+    include globals		1301   (include globals.local)
+    blacklist ~/.ssh		1195   (include disable-common.inc)
+    seccomp			1207
+    capabilities		1329
+    noexec			1208   (include disable-exec.inc)
+    noroot			1099
+    memory-deny-write-execute	321
+    restrict-namespaces		1045
+    apparmor			860
+    private-bin			814
+    private-dev			1169
+    private-etc			837
+    private-cache		861
+    private-lib			86
+    private-tmp			1030
     whitelist home directory	656
-    whitelist var		967   (include whitelist-var-common.inc)
-    whitelist run/user		1291   (include whitelist-runuser-common.inc
+    whitelist var		969   (include whitelist-var-common.inc)
+    whitelist run/user		1299   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		748   (include whitelist-usr-share-common.inc
-    net none			450
-    dbus-user none 		754
+    whitelist usr/share		755   (include whitelist-usr-share-common.inc
+    net none			452
+    dbus-user none 		761
     dbus-user filter 		202
-    dbus-system none 		957
+    dbus-system none 		964
     dbus-system filter 		13
 
 ```

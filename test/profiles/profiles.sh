@@ -46,7 +46,7 @@ echo "TESTING: multiple profiles (test/profiles/profile_multiple.exp)"
 echo "TESTING: profiles bad appname (test/profiles/profile_app_name.exp)"
 ./profile_bad_appname.exp
 
-echo "TESTING: profiles nopprofilee (test/profiles/profile_noprofile.exp)"
+echo "TESTING: profiles noprofile (test/profiles/profile_noprofile.exp)"
 ./profile_noprofile.exp
 
 profiles=( transmission-gtk transmission-qt firefox mpv vlc ping warzone2100 galculator )

@@ -68,7 +68,7 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt-get install -qy
-        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils bubblewrap
     - name: print env
       run: ./ci/printenv.sh
     - name: configure
@@ -117,7 +117,7 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt-get install -qy
-        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils bubblewrap
     - name: print env
       run: ./ci/printenv.sh
     - name: configure
@@ -157,7 +157,7 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt-get install -qy
-        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils bubblewrap
     - name: print env
       run: ./ci/printenv.sh
     - name: configure
@@ -200,7 +200,7 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt-get install -qy
-        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec bridge-utils bubblewrap
     - name: print env
       run: ./ci/printenv.sh
     - name: configure
@@ -246,7 +246,7 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt-get install -qy
-        gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois
+        gcc-12 libapparmor-dev libselinux1-dev expect xzdec whois bubblewrap
         bridge-utils
     - name: print env
       run: ./ci/printenv.sh

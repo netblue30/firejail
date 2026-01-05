@@ -44,7 +44,7 @@ expect {
 }
 sleep 1
 
-send -- "firejail  --profile=private-cwd.profile pwd\r"
+send -- "firejail  --profile=./private-cwd.profile pwd\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	"$env(HOME)"

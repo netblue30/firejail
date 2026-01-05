@@ -16,7 +16,7 @@ sleep 2
 
 
 spawn $env(SHELL)
-send -- "firejail --name=test1 --profile=protocol1.profile\r"
+send -- "firejail --name=test1 --profile=./protocol1.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -24,7 +24,7 @@ expect {
 sleep 2
 
 spawn $env(SHELL)
-send -- "firejail --name=test2 --profile=protocol2.profile\r"
+send -- "firejail --name=test2 --profile=./protocol2.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"

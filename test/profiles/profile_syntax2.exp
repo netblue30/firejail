@@ -7,10 +7,10 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --profile=test2.profile\r"
+send -- "firejail --profile=./test2.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile test2.profile"
+	"Reading profile ./test2.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

@@ -25,7 +25,7 @@ after 500
 
 
 # profile
-send -- "firejail --profile=net_none.profile\r"
+send -- "firejail --profile=./net_none.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"

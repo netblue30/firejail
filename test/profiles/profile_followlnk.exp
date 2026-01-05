@@ -13,7 +13,7 @@ send -- "touch /tmp/firejailtestfile\r"
 send -- "ln -s /tmp/firejailtestfile /tmp/firejailtestfilelnk\r"
 sleep 1
 
-send -- "firejail --profile=readonly-lnk.profile\r"
+send -- "firejail --profile=./readonly-lnk.profile\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"

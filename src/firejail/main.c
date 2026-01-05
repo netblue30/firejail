@@ -1800,7 +1800,6 @@ int main(int argc, char **argv, char **envp) {
 		}
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
 			// multiple profile files are allowed!
-
 			if (arg_noprofile) {
 				fprintf(stderr, "Error: --noprofile and --profile options are mutually exclusive\n");
 				exit(1);
@@ -1813,21 +1812,31 @@ int main(int argc, char **argv, char **envp) {
 			// checking for strange chars in the file name, no globbing
 			invalid_filename(ppath, 0);
 
-			if (*ppath == ':' || access(ppath, R_OK) || is_dir(ppath)) {
-				int has_colon = (*ppath == ':');
+			// is this a file path?
+			if (*ppath == '/' ||
+			    strncmp(ppath, "~/", 2) == 0 ||
+			    strncmp(ppath, "./", 2) == 0 ||
+			    strncmp(ppath, "../", 3) == 0) {
+				if (access(ppath, R_OK)) {
+					fprintf(stderr, "Error: inaccessible profile file: %s\n", ppath);
+					exit(1);
+				}
+				profile_read(ppath);
+				custom_profile = 1;
+			}
+			// or an application name?
+			else {
 				char *ptr = ppath;
 				while (*ptr != '/' && *ptr != '.' && *ptr != '\0')
 					ptr++;
 				// profile path contains no / or . chars,
-				// assume its a profile name
+				// for example firefox will be ok, firefox.profile will fail
 				if (*ptr != '\0') {
-					fprintf(stderr, "Error: inaccessible profile file: %s\n", ppath);
+					fprintf(stderr, "Error: %s is not an application name.\n", ppath);
 					exit(1);
 				}
 
-				// profile was not read in previously, try to see if
-				// we were given a profile name.
-				if (!profile_find_firejail(ppath + has_colon, 1)) {
+				if (!profile_find_firejail(ppath, 1)) {
 					// do not fall through to default profile,
 					// because the user should be notified that
 					// given profile arg could not be used.
@@ -1836,10 +1845,6 @@ int main(int argc, char **argv, char **envp) {
 				}
 				else
 					custom_profile = 1;
-			}
-			else {
-				profile_read(ppath);
-				custom_profile = 1;
 			}
 			free(ppath);
 		}

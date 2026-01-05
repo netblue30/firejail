@@ -36,7 +36,7 @@ expect {
 sleep 2
 
 
-send -- "firejail --profile=sound.profile speaker-test\r"
+send -- "firejail --profile=./sound.profile speaker-test\r"
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -47,7 +47,7 @@ expect {
 }
 sleep 2
 
-send -- "firejail --profile=sound.profile aplay -l\r"
+send -- "firejail --profile=./sound.profile aplay -l\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"

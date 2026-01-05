@@ -88,12 +88,9 @@ system directories mounted read-only. These directories are /etc, /var, /usr, /b
 /libx32 and /lib64. Only /home and /tmp are writable.
 .PP
 Upon execution Firejail first looks in ~/.config/firejail/ for a profile and if it doesn't find one, it looks in /etc/firejail/.
-For profile resolution detail see
-.UR https://github.com/netblue30/firejail/wiki/Creating-Profiles#locations-and-types
-.UE .
 If an appropriate profile is not found, Firejail will use a default profile.
 The default profile is quite restrictive. In case the application doesn't work, use --noprofile option
-to disable it. For more information, please see \fBSECURITY PROFILES\fR section below.
+to disable it.
 .PP
 If a program argument is not specified, Firejail starts the user's preferred shell.
 Examples:
@@ -2406,15 +2403,68 @@ drwxrwxrwt  2 nobody nogroup 4096 Apr 30 10:52 .X11-unix
 .br
 
 .TP
-\fB\-\-profile=filename_or_profilename
-Load a custom security profile from filename. For filename use an absolute path or a path relative to the current path.
-For more information, see \fBSECURITY PROFILES\fR section below.
+\fB\-\-profile=filename|appname
+Load a custom security profile from filename, or use the name of a specific application.
+.br
+
+.br
+If the command line option --profile is not provided, Firejail will attempt to extract the appname
+from the target program filename. It will then search ~/.config/firejail directory for a suitable profile,
+followed by a search in /etc/firejail/directory.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-profile=myprofile
+$ firejail firefox
+.br
+Reading profile /home/netblue/.config/firejail/firefox.profile
+.br
+Reading profile /etc/firejail/firefox.profile
+.br
+Reading profile /etc/firejail/firefox-common.profile
+.br
+[...]
+.br
+
+.br
+When using a filename, please include a full path or a relative path.
+.br
+
+.br
+$ firejail --profile=./firefox.profile firefox
+.br
+Reading profile ./firefox.profile
+.br
+Reading profile /etc/firejail/firefox.profile
+.br
+Reading profile /etc/firejail/firefox-common.profile
+.br
+[...]
+.br
+
+.br
+--profile=appname comes in handy when running appimages:
+.br
+
+.br
+$ firejail --appimage --profile=firefox firefox-nightly-148.0.r20260103-x86_64.AppImage
+.br
+Reading profile /home/netblue/.config/firejail/firefox.profile
+.br
+Reading profile /etc/firejail/firefox.profile
+.br
+Reading profile /etc/firejail/firefox-common.profile
+.br
+[...]
+.br
+
+.br
+See \fBman 5 firejail-profile\fR for profile file syntax information.
+For  profile resolution  details see
+.UR
+https://github.com/netblue30/firejail/wiki/Creating-Profiles.
+.UE
 
 .TP
 \fB\-\-profile.print=name|pid
@@ -3792,73 +3842,6 @@ adduser \-\-shell /usr/bin/firejail username
 
 Additional arguments passed to firejail executable upon login are declared in /etc/firejail/login.users file.
 
-.SH SECURITY PROFILES
-Several command line options can be passed to the program using
-profile files. Firejail chooses the profile file as follows:
-
-1. If a profile file is provided by the user with --profile=FILE option, the profile FILE is loaded. If a profile name is given, it is searched for first in the ~/.config/firejail directory and if not found then in /etc/firejail directory. Profile names do not include the .profile suffix. If there is a file with the same name as the given profile name, it will be used instead of doing the profile search. To force a profile search, prefix the profile name with a colon (:), eg. --profile=:PROFILE_NAME.
-Example:
-.PP
-.RS
-$ firejail --profile=/home/netblue/icecat.profile /usr/bin/icecat
-.br
-Reading profile /home/netblue/icecat.profile
-.br
-[...]
-.RE
-
-.PP
-.RS
-$ firejail --profile=icecat /usr/bin/icecat-wrapper.sh
-.br
-Reading profile /etc/firejail/icecat.profile
-.br
-[...]
-.RE
-
-2. If a profile file with the same name as the application is present in ~/.config/firejail directory or
-in /etc/firejail, the profile is loaded. ~/.config/firejail takes precedence over /etc/firejail. Example:
-.PP
-.RS
-$ firejail /usr/bin/icecat
-.br
-Command name #icecat#
-.br
-Found icecat profile in /home/netblue/.config/firejail directory
-.br
-Reading profile /home/netblue/.config/firejail/icecat.profile
-.br
-[...]
-.RE
-
-3. Use default.profile file if the sandbox
-is started by a regular user, or server.profile file if the sandbox
-is started by root. Firejail looks for these files in ~/.config/firejail directory, followed by /etc/firejail directory.
-To disable default profile loading, use --noprofile command option. Example:
-.PP
-.RS
-$ firejail
-.br
-Reading profile /etc/firejail/default.profile
-.br
-Parent pid 8553, child pid 8554
-.br
-Child process initialized
-.br
-[...]
-.br
-
-.br
-$ firejail \-\-noprofile
-.br
-Parent pid 8553, child pid 8554
-.br
-Child process initialized
-.br
-[...]
-.RE
-
-See \fBman 5 firejail-profile\fR for profile file syntax information.
 #ifdef HAVE_NETWORK
 .SH TRAFFIC SHAPING
 Network bandwidth is an expensive resource shared among all sandboxes running on a system.

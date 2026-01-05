@@ -7,16 +7,18 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-if { $argc != 1 } {
-    puts "TESTING ERROR: argument missing"
-    puts "Usage: test-profile.exp profile_name"
-    exit
+send -- "firejail --ignore=quiet --profile=wget --profile=curl bwrap\r"
+expect {
+    timeout {puts "TESTING ERROR 0\n";exit}
+    "disable-programs"
 }
-
-send -- "firejail --profile=$argv bwrap\r"
 expect {
     timeout {puts "TESTING ERROR 1\n";exit}
+    "disable-programs"
+}
+expect {
+    timeout {puts "TESTING ERROR 2\n";exit}
     "fbwrap - bwrap replacement for Firejail sandbox"
 }
 after 100
-puts "\n"
+puts "all done\n"

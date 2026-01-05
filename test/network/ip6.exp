@@ -26,7 +26,7 @@ expect {
 }
 sleep 1
 
-send -- "firejail --profile=ip6.profile ip addr show\r"
+send -- "firejail --profile=./ip6.profile ip addr show\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"

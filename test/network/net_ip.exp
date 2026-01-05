@@ -131,7 +131,7 @@ expect {
 
 after 500
 
-send -- "firejail --profile=net_ip.profile ip addr show\r"
+send -- "firejail --profile=./net_ip.profile ip addr show\r"
 expect {
 	timeout {puts "TESTING ERROR 26\n";exit}
 	"eth0"
@@ -158,7 +158,7 @@ expect {
 }
 after 500
 
-send -- "firejail --profile=net_ip.profile ip route  show\r"
+send -- "firejail --profile=./net_ip.profile ip route  show\r"
 expect {
 	timeout {puts "TESTING ERROR 32\n";exit}
 	"default via 10.10.20.9"

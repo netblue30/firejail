@@ -137,1397 +137,1397 @@ static const SyscallEntry syslist32[] = {
 static const SyscallGroupList sysgroups[] = {
 	{ .name = "@aio", .list =
 #ifdef SYS_io_cancel
-	  "io_cancel,"
+	"io_cancel,"
 #endif
 #ifdef SYS_io_destroy
-	  "io_destroy,"
+	"io_destroy,"
 #endif
 #ifdef SYS_io_getevents
-	  "io_getevents,"
+	"io_getevents,"
 #endif
 #ifdef SYS_io_pgetevents
-	  "io_pgetevents,"
+	"io_pgetevents,"
 #endif
 #ifdef SYS_io_setup
-	  "io_setup,"
+	"io_setup,"
 #endif
 #ifdef SYS_io_submit
-	  "io_submit,"
+	"io_submit,"
 #endif
 #ifdef SYS_io_uring_enter
-	  "io_uring_enter,"
+	"io_uring_enter,"
 #endif
 #ifdef SYS_io_uring_register
-	  "io_uring_register,"
+	"io_uring_register,"
 #endif
 #ifdef SYS_io_uring_setup
-	  "io_uring_setup"
+	"io_uring_setup"
 #endif
 	},
 	{ .name = "@basic-io", .list =
 #ifdef SYS__llseek
-	  "_llseek,"
+	"_llseek,"
 #endif
 #ifdef SYS_close
-	  "close,"
+	"close,"
 #endif
 #ifdef SYS_close_range
-	  "close_range,"
+	"close_range,"
 #endif
 #ifdef SYS_dup
-	  "dup,"
+	"dup,"
 #endif
 #ifdef SYS_dup2
-	  "dup2,"
+	"dup2,"
 #endif
 #ifdef SYS_dup3
-	  "dup3,"
+	"dup3,"
 #endif
 #ifdef SYS_lseek
-	  "lseek,"
+	"lseek,"
 #endif
 #ifdef SYS_pread64
-	  "pread64,"
+	"pread64,"
 #endif
 #ifdef SYS_preadv
-	  "preadv,"
+	"preadv,"
 #endif
 #ifdef SYS_preadv2
-	  "preadv2,"
+	"preadv2,"
 #endif
 #ifdef SYS_pwrite64
-	  "pwrite64,"
+	"pwrite64,"
 #endif
 #ifdef SYS_pwritev
-	  "pwritev,"
+	"pwritev,"
 #endif
 #ifdef SYS_pwritev2
-	  "pwritev2,"
+	"pwritev2,"
 #endif
 #ifdef SYS_read
-	  "read,"
+	"read,"
 #endif
 #ifdef SYS_readv
-	  "readv,"
+	"readv,"
 #endif
 #ifdef SYS_write
-	  "write,"
+	"write,"
 #endif
 #ifdef SYS_writev
-	  "writev"
+	"writev"
 #endif
 	},
 	{ .name = "@chown", .list =
 #ifdef SYS_chown
-	  "chown,"
+	"chown,"
 #endif
 #ifdef SYS_chown32
-	  "chown32,"
+	"chown32,"
 #endif
 #ifdef SYS_fchown
-	  "fchown,"
+	"fchown,"
 #endif
 #ifdef SYS_fchown32
-	  "fchown32,"
+	"fchown32,"
 #endif
 #ifdef SYS_fchownat
-	  "fchownat,"
+	"fchownat,"
 #endif
 #ifdef SYS_lchown
-	  "lchown,"
+	"lchown,"
 #endif
 #ifdef SYS_lchown32
-	  "lchown32"
+	"lchown32"
 #endif
 	},
 	{ .name = "@clock", .list =
 #ifdef SYS_adjtimex
-	  "adjtimex,"
+	"adjtimex,"
 #endif
 #ifdef SYS_clock_adjtime
-	  "clock_adjtime,"
+	"clock_adjtime,"
 #endif
 #ifdef SYS_clock_settime
-	  "clock_settime,"
+	"clock_settime,"
 #endif
 #ifdef SYS_settimeofday
-	  "settimeofday,"
+	"settimeofday,"
 #endif
 #ifdef SYS_stime
-	  "stime"
+	"stime"
 #endif
 	},
 	{ .name = "@cpu-emulation", .list =
 #ifdef SYS_modify_ldt
-	  "modify_ldt,"
+	"modify_ldt,"
 #endif
 #ifdef SYS_subpage_prot
-	  "subpage_prot,"
+	"subpage_prot,"
 #endif
 #ifdef SYS_switch_endian
-	  "switch_endian,"
+	"switch_endian,"
 #endif
 #ifdef SYS_vm86
-	  "vm86,"
+	"vm86,"
 #endif
 #ifdef SYS_vm86old
-	  "vm86old"
+	"vm86old"
 #endif
 #if !defined(SYS_modify_ldt) && !defined(SYS_subpage_prot) && !defined(SYS_switch_endian) && !defined(SYS_vm86) && !defined(SYS_vm86old)
-	  "__dummy_syscall__" // workaround for arm64, s390x and sparc64 which don't have any of above defined and empty syscall lists are not allowed
+	"__dummy_syscall__" // workaround for arm64, s390x and sparc64 which don't have any of above defined and empty syscall lists are not allowed
 #endif
 	},
 	{ .name = "@debug", .list =
 #ifdef SYS_lookup_dcookie
-	  "lookup_dcookie,"
+	"lookup_dcookie,"
 #endif
 #ifdef SYS_perf_event_open
-	  "perf_event_open,"
+	"perf_event_open,"
 #endif
 #ifdef SYS_pidfd_getfd
-	  "pidfd_getfd,"
+	"pidfd_getfd,"
 #endif
 #ifdef SYS_process_vm_writev
-	  "process_vm_writev,"
+	"process_vm_writev,"
 #endif
 #ifdef SYS_rtas
-	  "rtas,"
+	"rtas,"
 #endif
 #ifdef SYS_s390_runtime_instr
-	  "s390_runtime_instr,"
+	"s390_runtime_instr,"
 #endif
 #ifdef SYS_sys_debug_setcontext
-	  "sys_debug_setcontext,"
+	"sys_debug_setcontext,"
 #endif
 	},
 	{ .name = "@default", .list =
-	  "@clock,"
-	  "@cpu-emulation,"
-	  "@debug,"
-	  "@module,"
-	  "@mount,"
-	  "@obsolete,"
-	  "@raw-io,"
-	  "@reboot,"
-	  "@swap,"
+	"@clock,"
+	"@cpu-emulation,"
+	"@debug,"
+	"@module,"
+	"@mount,"
+	"@obsolete,"
+	"@raw-io,"
+	"@reboot,"
+	"@swap,"
 #ifdef SYS_open_by_handle_at
-	  "open_by_handle_at,"
+	"open_by_handle_at,"
 #endif
 #ifdef SYS_name_to_handle_at
-	  "name_to_handle_at,"
+	"name_to_handle_at,"
 #endif
 #ifdef SYS_ioprio_set
-	  "ioprio_set,"
+	"ioprio_set,"
 #endif
 #ifdef SYS_ni_syscall
-	  "ni_syscall,"
+	"ni_syscall,"
 #endif
 #ifdef SYS_syslog
-	  "syslog,"
+	"syslog,"
 #endif
 #ifdef SYS_fanotify_init
-	  "fanotify_init,"
+	"fanotify_init,"
 #endif
 #ifdef SYS_add_key
-	  "add_key,"
+	"add_key,"
 #endif
 #ifdef SYS_request_key
-	  "request_key,"
+	"request_key,"
 #endif
 #ifdef SYS_mbind
-	  "mbind,"
+	"mbind,"
 #endif
 #ifdef SYS_migrate_pages
-	  "migrate_pages,"
+	"migrate_pages,"
 #endif
 #ifdef SYS_move_pages
-	  "move_pages,"
+	"move_pages,"
 #endif
 #ifdef SYS_keyctl
-	  "keyctl,"
+	"keyctl,"
 #endif
 #ifdef SYS_io_setup
-	  "io_setup,"
+	"io_setup,"
 #endif
 #ifdef SYS_io_destroy
-	  "io_destroy,"
+	"io_destroy,"
 #endif
 #ifdef SYS_io_getevents
-	  "io_getevents,"
+	"io_getevents,"
 #endif
 #ifdef SYS_io_submit
-	  "io_submit,"
+	"io_submit,"
 #endif
 #ifdef SYS_io_cancel
-	  "io_cancel,"
+	"io_cancel,"
 #endif
 #ifdef SYS_remap_file_pages
-	  "remap_file_pages,"
+	"remap_file_pages,"
 #endif
 #ifdef SYS_set_mempolicy
-	  "set_mempolicy,"
+	"set_mempolicy,"
 #endif
 #ifdef SYS_vmsplice
-	  "vmsplice,"
+	"vmsplice,"
 #endif
 #ifdef SYS_userfaultfd
-	  "userfaultfd,"
+	"userfaultfd,"
 #endif
 #ifdef SYS_acct
-	  "acct,"
+	"acct,"
 #endif
 #ifdef SYS_bpf
-	  "bpf,"
+	"bpf,"
 #endif
 #ifdef SYS_nfsservctl
-	  "nfsservctl,"
+	"nfsservctl,"
 #endif
 #ifdef SYS_setdomainname
-	  "setdomainname,"
+	"setdomainname,"
 #endif
 #ifdef SYS_sethostname
-	  "sethostname,"
+	"sethostname,"
 #endif
 #ifdef SYS_vhangup
-	  "vhangup"
+	"vhangup"
 #endif
 //#ifdef SYS_mincore	// 0.9.57 - problem fixed in Linux kernel 5.0; on 4.x it will break kodi, mpv, totem
-//	  "mincore"
+//	"mincore"
 //#endif
 	},
 	{ .name = "@default-nodebuggers", .list =
-	  "@default,"
+	"@default,"
 #ifdef SYS_ptrace
-	  "ptrace,"
+	"ptrace,"
 #endif
 #ifdef SYS_personality
-	  "personality,"
+	"personality,"
 #endif
 #ifdef SYS_process_vm_readv
-	  "process_vm_readv"
+	"process_vm_readv"
 #endif
 	},
 	{ .name = "@default-keep", .list =
-	  "execveat," // commonly used by fexecve
-	  "execve,"
-	  "prctl"
+	"execveat," // commonly used by fexecve
+	"execve,"
+	"prctl"
 	},
 	{ .name = "@file-system", .list =
 #ifdef SYS_access
-	  "access,"
+	"access,"
 #endif
 #ifdef SYS_chdir
-	  "chdir,"
+	"chdir,"
 #endif
 #ifdef SYS_chmod
-	  "chmod,"
+	"chmod,"
 #endif
 #ifdef SYS_close
-	  "close,"
+	"close,"
 #endif
 #ifdef SYS_close_range
-	  "close_range,"
+	"close_range,"
 #endif
 #ifdef SYS_creat
-	  "creat,"
+	"creat,"
 #endif
 #ifdef SYS_faccessat
-	  "faccessat,"
+	"faccessat,"
 #endif
 #ifdef SYS_faccessat2
-	  "faccessat2,"
+	"faccessat2,"
 #endif
 #ifdef SYS_fallocate
-	  "fallocate,"
+	"fallocate,"
 #endif
 #ifdef SYS_fchdir
-	  "fchdir,"
+	"fchdir,"
 #endif
 #ifdef SYS_fchmod
-	  "fchmod,"
+	"fchmod,"
 #endif
 #ifdef SYS_fchmodat
-	  "fchmodat,"
+	"fchmodat,"
 #endif
 #ifdef SYS_fcntl
-	  "fcntl,"
+	"fcntl,"
 #endif
 #ifdef SYS_fcntl64
-	  "fcntl64,"
+	"fcntl64,"
 #endif
 #ifdef SYS_fgetxattr
-	  "fgetxattr,"
+	"fgetxattr,"
 #endif
 #ifdef SYS_flistxattr
-	  "flistxattr,"
+	"flistxattr,"
 #endif
 #ifdef SYS_fremovexattr
-	  "fremovexattr,"
+	"fremovexattr,"
 #endif
 #ifdef SYS_fsetxattr
-	  "fsetxattr,"
+	"fsetxattr,"
 #endif
 #ifdef SYS_fstat
-	  "fstat,"
+	"fstat,"
 #endif
 #ifdef SYS_fstat64
-	  "fstat64,"
+	"fstat64,"
 #endif
 #ifdef SYS_fstatat64
-	  "fstatat64,"
+	"fstatat64,"
 #endif
 #ifdef SYS_fstatfs
-	  "fstatfs,"
+	"fstatfs,"
 #endif
 #ifdef SYS_fstatfs64
-	  "fstatfs64,"
+	"fstatfs64,"
 #endif
 #ifdef SYS_ftruncate
-	  "ftruncate,"
+	"ftruncate,"
 #endif
 #ifdef SYS_ftruncate64
-	  "ftruncate64,"
+	"ftruncate64,"
 #endif
 #ifdef SYS_futimesat
-	  "futimesat,"
+	"futimesat,"
 #endif
 #ifdef SYS_getcwd
-	  "getcwd,"
+	"getcwd,"
 #endif
 #ifdef SYS_getdents
-	  "getdents,"
+	"getdents,"
 #endif
 #ifdef SYS_getdents64
-	  "getdents64,"
+	"getdents64,"
 #endif
 #ifdef SYS_getxattr
-	  "getxattr,"
+	"getxattr,"
 #endif
 #ifdef SYS_inotify_add_watch
-	  "inotify_add_watch,"
+	"inotify_add_watch,"
 #endif
 #ifdef SYS_inotify_init
-	  "inotify_init,"
+	"inotify_init,"
 #endif
 #ifdef SYS_inotify_init1
-	  "inotify_init1,"
+	"inotify_init1,"
 #endif
 #ifdef SYS_inotify_rm_watch
-	  "inotify_rm_watch,"
+	"inotify_rm_watch,"
 #endif
 #ifdef SYS_lgetxattr
-	  "lgetxattr,"
+	"lgetxattr,"
 #endif
 #ifdef SYS_link
-	  "link,"
+	"link,"
 #endif
 #ifdef SYS_linkat
-	  "linkat,"
+	"linkat,"
 #endif
 #ifdef SYS_listxattr
-	  "listxattr,"
+	"listxattr,"
 #endif
 #ifdef SYS_llistxattr
-	  "llistxattr,"
+	"llistxattr,"
 #endif
 #ifdef SYS_lremovexattr
-	  "lremovexattr,"
+	"lremovexattr,"
 #endif
 #ifdef SYS_lsetxattr
-	  "lsetxattr,"
+	"lsetxattr,"
 #endif
 #ifdef SYS_lstat
-	  "lstat,"
+	"lstat,"
 #endif
 #ifdef SYS_lstat64
-	  "lstat64,"
+	"lstat64,"
 #endif
 #ifdef SYS_mkdir
-	  "mkdir,"
+	"mkdir,"
 #endif
 #ifdef SYS_mkdirat
-	  "mkdirat,"
+	"mkdirat,"
 #endif
 #ifdef SYS_mknod
-	  "mknod,"
+	"mknod,"
 #endif
 #ifdef SYS_mknodat
-	  "mknodat,"
+	"mknodat,"
 #endif
 #ifdef SYS_mmap
-	  "mmap,"
+	"mmap,"
 #endif
 #ifdef SYS_mmap2
-	  "mmap2,"
+	"mmap2,"
 #endif
 #ifdef SYS_munmap
-	  "munmap,"
+	"munmap,"
 #endif
 #ifdef SYS_newfstatat
-	  "newfstatat,"
+	"newfstatat,"
 #endif
 #ifdef SYS_oldfstat
-	  "oldfstat,"
+	"oldfstat,"
 #endif
 #ifdef SYS_oldlstat
-	  "oldlstat,"
+	"oldlstat,"
 #endif
 #ifdef SYS_oldstat
-	  "oldstat,"
+	"oldstat,"
 #endif
 #ifdef SYS_open
-	  "open,"
+	"open,"
 #endif
 #ifdef SYS_openat
-	  "openat,"
+	"openat,"
 #endif
 #ifdef SYS_openat2
-	  "openat2,"
+	"openat2,"
 #endif
 #ifdef SYS_readlink
-	  "readlink,"
+	"readlink,"
 #endif
 #ifdef SYS_readlinkat
-	  "readlinkat,"
+	"readlinkat,"
 #endif
 #ifdef SYS_removexattr
-	  "removexattr,"
+	"removexattr,"
 #endif
 #ifdef SYS_rename
-	  "rename,"
+	"rename,"
 #endif
 #ifdef SYS_renameat
-	  "renameat,"
+	"renameat,"
 #endif
 #ifdef SYS_renameat2
-	  "renameat2,"
+	"renameat2,"
 #endif
 #ifdef SYS_rmdir
-	  "rmdir,"
+	"rmdir,"
 #endif
 #ifdef SYS_setxattr
-	  "setxattr,"
+	"setxattr,"
 #endif
 #ifdef SYS_stat
-	  "stat,"
+	"stat,"
 #endif
 #ifdef SYS_stat64
-	  "stat64,"
+	"stat64,"
 #endif
 #ifdef SYS_statfs
-	  "statfs,"
+	"statfs,"
 #endif
 #ifdef SYS_statfs64
-	  "statfs64,"
+	"statfs64,"
 #endif
 #ifdef SYS_statx
-	  "statx,"
+	"statx,"
 #endif
 #ifdef SYS_symlink
-	  "symlink,"
+	"symlink,"
 #endif
 #ifdef SYS_symlinkat
-	  "symlinkat,"
+	"symlinkat,"
 #endif
 #ifdef SYS_truncate
-	  "truncate,"
+	"truncate,"
 #endif
 #ifdef SYS_truncate64
-	  "truncate64,"
+	"truncate64,"
 #endif
 #ifdef SYS_unlink
-	  "unlink,"
+	"unlink,"
 #endif
 #ifdef SYS_unlinkat
-	  "unlinkat,"
+	"unlinkat,"
 #endif
 #ifdef SYS_utime
-	  "utime,"
+	"utime,"
 #endif
 #ifdef SYS_utimensat
-	  "utimensat,"
+	"utimensat,"
 #endif
 #ifdef SYS_utimes
-	  "utimes"
+	"utimes"
 #endif
 	},
 	{ .name = "@io-event", .list =
 #ifdef SYS__newselect
-	  "_newselect,"
+	"_newselect,"
 #endif
 #ifdef SYS_epoll_create
-	  "epoll_create,"
+	"epoll_create,"
 #endif
 #ifdef SYS_epoll_create1
-	  "epoll_create1,"
+	"epoll_create1,"
 #endif
 #ifdef SYS_epoll_ctl
-	  "epoll_ctl,"
+	"epoll_ctl,"
 #endif
 #ifdef SYS_epoll_ctl_old
-	  "epoll_ctl_old,"
+	"epoll_ctl_old,"
 #endif
 #ifdef SYS_epoll_pwait
-	  "epoll_pwait,"
+	"epoll_pwait,"
 #endif
 #ifdef SYS_epoll_wait
-	  "epoll_wait,"
+	"epoll_wait,"
 #endif
 #ifdef SYS_epoll_wait_old
-	  "epoll_wait_old,"
+	"epoll_wait_old,"
 #endif
 #ifdef SYS_eventfd
-	  "eventfd,"
+	"eventfd,"
 #endif
 #ifdef SYS_eventfd2
-	  "eventfd2,"
+	"eventfd2,"
 #endif
 #ifdef SYS_poll
-	  "poll,"
+	"poll,"
 #endif
 #ifdef SYS_ppoll
-	  "ppoll,"
+	"ppoll,"
 #endif
 #ifdef SYS_pselect6
-	  "pselect6,"
+	"pselect6,"
 #endif
 #ifdef SYS_select
-	  "select"
+	"select"
 #endif
 	},
 	{ .name = "@ipc", .list =
 #ifdef SYS_ipc
-	  "ipc,"
+	"ipc,"
 #endif
 #ifdef SYS_memfd_create
-	  "memfd_create,"
+	"memfd_create,"
 #endif
 #ifdef SYS_mq_getsetattr
-	  "mq_getsetattr,"
+	"mq_getsetattr,"
 #endif
 #ifdef SYS_mq_notify
-	  "mq_notify,"
+	"mq_notify,"
 #endif
 #ifdef SYS_mq_open
-	  "mq_open,"
+	"mq_open,"
 #endif
 #ifdef SYS_mq_timedreceive
-	  "mq_timedreceive,"
+	"mq_timedreceive,"
 #endif
 #ifdef SYS_mq_timedsend
-	  "mq_timedsend,"
+	"mq_timedsend,"
 #endif
 #ifdef SYS_mq_unlink
-	  "mq_unlink,"
+	"mq_unlink,"
 #endif
 #ifdef SYS_msgctl
-	  "msgctl,"
+	"msgctl,"
 #endif
 #ifdef SYS_msgget
-	  "msgget,"
+	"msgget,"
 #endif
 #ifdef SYS_msgrcv
-	  "msgrcv,"
+	"msgrcv,"
 #endif
 #ifdef SYS_msgsnd
-	  "msgsnd,"
+	"msgsnd,"
 #endif
 #ifdef SYS_pipe
-	  "pipe,"
+	"pipe,"
 #endif
 #ifdef SYS_pipe2
-	  "pipe2,"
+	"pipe2,"
 #endif
 #ifdef SYS_process_madvise
-	  "process_madvise,"
+	"process_madvise,"
 #endif
 #ifdef SYS_process_vm_readv
-	  "process_vm_readv,"
+	"process_vm_readv,"
 #endif
 #ifdef SYS_process_vm_writev
-	  "process_vm_writev,"
+	"process_vm_writev,"
 #endif
 #ifdef SYS_semctl
-	  "semctl,"
+	"semctl,"
 #endif
 #ifdef SYS_semget
-	  "semget,"
+	"semget,"
 #endif
 #ifdef SYS_semop
-	  "semop,"
+	"semop,"
 #endif
 #ifdef SYS_semtimedop
-	  "semtimedop,"
+	"semtimedop,"
 #endif
 #ifdef SYS_shmat
-	  "shmat,"
+	"shmat,"
 #endif
 #ifdef SYS_shmctl
-	  "shmctl,"
+	"shmctl,"
 #endif
 #ifdef SYS_shmdt
-	  "shmdt,"
+	"shmdt,"
 #endif
 #ifdef SYS_shmget
-	  "shmget"
+	"shmget"
 #endif
 	},
 	{ .name = "@keyring", .list =
 #ifdef SYS_add_key
-	  "add_key,"
+	"add_key,"
 #endif
 #ifdef SYS_keyctl
-	  "keyctl,"
+	"keyctl,"
 #endif
 #ifdef SYS_request_key
-	  "request_key"
+	"request_key"
 #endif
 	},
 	{ .name = "@memlock", .list =
 #ifdef SYS_mlock
-	  "mlock,"
+	"mlock,"
 #endif
 #ifdef SYS_mlock2
-	  "mlock2,"
+	"mlock2,"
 #endif
 #ifdef SYS_mlockall
-	  "mlockall,"
+	"mlockall,"
 #endif
 #ifdef SYS_munlock
-	  "munlock,"
+	"munlock,"
 #endif
 #ifdef SYS_munlockall
-	  "munlockall"
+	"munlockall"
 #endif
 	},
 	{ .name = "@module", .list =
 #ifdef SYS_delete_module
-	  "delete_module,"
+	"delete_module,"
 #endif
 #ifdef SYS_finit_module
-	  "finit_module,"
+	"finit_module,"
 #endif
 #ifdef SYS_init_module
-	  "init_module"
+	"init_module"
 #endif
 	},
 	{ .name = "@mount", .list =
 #ifdef SYS_chroot
-	  "chroot,"
+	"chroot,"
 #endif
 #ifdef SYS_fsconfig
-	  "fsconfig,"
+	"fsconfig,"
 #endif
 #ifdef SYS_fsmount
-	  "fsmount,"
+	"fsmount,"
 #endif
 #ifdef SYS_fsopen
-	  "fsopen,"
+	"fsopen,"
 #endif
 #ifdef SYS_fspick
-	  "fspick,"
+	"fspick,"
 #endif
 #ifdef SYS_mount
-	  "mount,"
+	"mount,"
 #endif
 #ifdef SYS_move_mount
-	  "move_mount,"
+	"move_mount,"
 #endif
 #ifdef SYS_open_tree
-	  "open_tree,"
+	"open_tree,"
 #endif
 #ifdef SYS_pivot_root
-	  "pivot_root,"
+	"pivot_root,"
 #endif
 #ifdef SYS_umount
-	  "umount,"
+	"umount,"
 #endif
 #ifdef SYS_umount2
-	  "umount2"
+	"umount2"
 #endif
 	},
 	{ .name = "@network-io", .list =
 #ifdef SYS_accept
-	  "accept,"
+	"accept,"
 #endif
 #ifdef SYS_accept4
-	  "accept4,"
+	"accept4,"
 #endif
 #ifdef SYS_bind
-	  "bind,"
+	"bind,"
 #endif
 #ifdef SYS_connect
-	  "connect,"
+	"connect,"
 #endif
 #ifdef SYS_getpeername
-	  "getpeername,"
+	"getpeername,"
 #endif
 #ifdef SYS_getsockname
-	  "getsockname,"
+	"getsockname,"
 #endif
 #ifdef SYS_getsockopt
-	  "getsockopt,"
+	"getsockopt,"
 #endif
 #ifdef SYS_listen
-	  "listen,"
+	"listen,"
 #endif
 #ifdef SYS_recv
-	  "recv,"
+	"recv,"
 #endif
 #ifdef SYS_recvfrom
-	  "recvfrom,"
+	"recvfrom,"
 #endif
 #ifdef SYS_recvmmsg
-	  "recvmmsg,"
+	"recvmmsg,"
 #endif
 #ifdef SYS_recvmsg
-	  "recvmsg,"
+	"recvmsg,"
 #endif
 #ifdef SYS_send
-	  "send,"
+	"send,"
 #endif
 #ifdef SYS_sendmmsg
-	  "sendmmsg,"
+	"sendmmsg,"
 #endif
 #ifdef SYS_sendmsg
-	  "sendmsg,"
+	"sendmsg,"
 #endif
 #ifdef SYS_sendto
-	  "sendto,"
+	"sendto,"
 #endif
 #ifdef SYS_setsockopt
-	  "setsockopt,"
+	"setsockopt,"
 #endif
 #ifdef SYS_shutdown
-	  "shutdown,"
+	"shutdown,"
 #endif
 #ifdef SYS_socket
-	  "socket,"
+	"socket,"
 #endif
 #ifdef SYS_socketcall
-	  "socketcall,"
+	"socketcall,"
 #endif
 #ifdef SYS_socketpair
-	  "socketpair"
+	"socketpair"
 #endif
 	},
 	{ .name = "@obsolete", .list =
 #ifdef SYS__sysctl
-	  "_sysctl,"
+	"_sysctl,"
 #endif
 #ifdef SYS_afs_syscall
-	  "afs_syscall,"
+	"afs_syscall,"
 #endif
 #ifdef SYS_bdflush
-	  "bdflush,"
+	"bdflush,"
 #endif
 #ifdef SYS_break
-	  "break,"
+	"break,"
 #endif
 #ifdef SYS_create_module
-	  "create_module,"
+	"create_module,"
 #endif
 #ifdef SYS_ftime
-	  "ftime,"
+	"ftime,"
 #endif
 #ifdef SYS_get_kernel_syms
-	  "get_kernel_syms,"
+	"get_kernel_syms,"
 #endif
 #ifdef SYS_getpmsg
-	  "getpmsg,"
+	"getpmsg,"
 #endif
 #ifdef SYS_gtty
-	  "gtty,"
+	"gtty,"
 #endif
 #ifdef SYS_idle
-	  "idle,"
+	"idle,"
 #endif
 #ifdef SYS_lock
-	  "lock,"
+	"lock,"
 #endif
 #ifdef SYS_mpx
-	  "mpx,"
+	"mpx,"
 #endif
 #ifdef SYS_prof
-	  "prof,"
+	"prof,"
 #endif
 #ifdef SYS_profil
-	  "profil,"
+	"profil,"
 #endif
 #ifdef SYS_putpmsg
-	  "putpmsg,"
+	"putpmsg,"
 #endif
 #ifdef SYS_query_module
-	  "query_module,"
+	"query_module,"
 #endif
 #ifdef SYS_security
-	  "security,"
+	"security,"
 #endif
 #ifdef SYS_sgetmask
-	  "sgetmask,"
+	"sgetmask,"
 #endif
 #ifdef SYS_ssetmask
-	  "ssetmask,"
+	"ssetmask,"
 #endif
 #ifdef SYS_stty
-	  "stty,"
+	"stty,"
 #endif
 #ifdef SYS_sysfs
-	  "sysfs,"
+	"sysfs,"
 #endif
 #ifdef SYS_tuxcall
-	  "tuxcall,"
+	"tuxcall,"
 #endif
 #ifdef SYS_ulimit
-	  "ulimit,"
+	"ulimit,"
 #endif
 #ifdef SYS_uselib
-	  "uselib,"
+	"uselib,"
 #endif
 #ifdef SYS_ustat
-	  "ustat,"
+	"ustat,"
 #endif
 #ifdef SYS_vserver
-	  "vserver"
+	"vserver"
 #endif
 #if !defined(SYS__sysctl) && !defined(SYS_afs_syscall) && !defined(SYS_bdflush) && !defined(SYS_break) && !defined(SYS_create_module) && !defined(SYS_ftime) && !defined(SYS_get_kernel_syms) && !defined(SYS_getpmsg) && !defined(SYS_gtty) && !defined(SYS_lock) && !defined(SYS_mpx) && !defined(SYS_prof) && !defined(SYS_profil) && !defined(SYS_putpmsg) && !defined(SYS_query_module) && !defined(SYS_security) && !defined(SYS_sgetmask) && !defined(SYS_ssetmask) && !defined(SYS_stty) && !defined(SYS_sysfs) && !defined(SYS_tuxcall) && !defined(SYS_ulimit) && !defined(SYS_uselib) && !defined(SYS_ustat) && !defined(SYS_vserver)
-	  "__dummy_syscall__" // workaround for arm64 which doesn't have any of above defined and empty syscall lists are not allowed
+	"__dummy_syscall__" // workaround for arm64 which doesn't have any of above defined and empty syscall lists are not allowed
 #endif
 	},
 	{ .name = "@privileged", .list =
-	  "@chown,"
-	  "@clock,"
-	  "@module,"
-	  "@raw-io,"
-	  "@reboot,"
-	  "@swap,"
+	"@chown,"
+	"@clock,"
+	"@module,"
+	"@raw-io,"
+	"@reboot,"
+	"@swap,"
 #ifdef SYS__sysctl
-	  "_sysctl,"
+	"_sysctl,"
 #endif
 #ifdef SYS_acct
-	  "acct,"
+	"acct,"
 #endif
 #ifdef SYS_bpf
-	  "bpf,"
+	"bpf,"
 #endif
 #ifdef SYS_capset
-	  "capset,"
+	"capset,"
 #endif
 #ifdef SYS_chroot
-	  "chroot,"
+	"chroot,"
 #endif
 #ifdef SYS_fanotify_init
-	  "fanotify_init,"
+	"fanotify_init,"
 #endif
 #ifdef SYS_mount
-	  "mount,"
+	"mount,"
 #endif
 #ifdef SYS_nfsservctl
-	  "nfsservctl,"
+	"nfsservctl,"
 #endif
 #ifdef SYS_open_by_handle_at
-	  "open_by_handle_at,"
+	"open_by_handle_at,"
 #endif
 #ifdef SYS_pivot_root
-	  "pivot_root,"
+	"pivot_root,"
 #endif
 #ifdef SYS_quotactl
-	  "quotactl,"
+	"quotactl,"
 #endif
 #ifdef SYS_setdomainname
-	  "setdomainname,"
+	"setdomainname,"
 #endif
 #ifdef SYS_setfsuid
-	  "setfsuid,"
+	"setfsuid,"
 #endif
 #ifdef SYS_setfsuid32
-	  "setfsuid32,"
+	"setfsuid32,"
 #endif
 #ifdef SYS_setgroups
-	  "setgroups,"
+	"setgroups,"
 #endif
 #ifdef SYS_setgroups32
-	  "setgroups32,"
+	"setgroups32,"
 #endif
 #ifdef SYS_sethostname
-	  "sethostname,"
+	"sethostname,"
 #endif
 #ifdef SYS_setresuid
-	  "setresuid,"
+	"setresuid,"
 #endif
 #ifdef SYS_setresuid32
-	  "setresuid32,"
+	"setresuid32,"
 #endif
 #ifdef SYS_setreuid
-	  "setreuid,"
+	"setreuid,"
 #endif
 #ifdef SYS_setreuid32
-	  "setreuid32,"
+	"setreuid32,"
 #endif
 #ifdef SYS_setuid
-	  "setuid,"
+	"setuid,"
 #endif
 #ifdef SYS_setuid32
-	  "setuid32,"
+	"setuid32,"
 #endif
 #ifdef SYS_umount2
-	  "umount2,"
+	"umount2,"
 #endif
 #ifdef SYS_vhangup
-	  "vhangup"
+	"vhangup"
 #endif
 	},
 	{ .name = "@process", .list =
 #ifdef SYS_arch_prctl
-	  "arch_prctl,"
+	"arch_prctl,"
 #endif
 #ifdef SYS_capget
-	  "capget,"
+	"capget,"
 #endif
 #ifdef SYS_clone
-	  "clone,"
+	"clone,"
 #endif
 #ifdef SYS_clone3
-	  "clone3,"
+	"clone3,"
 #endif
 #ifdef SYS_execveat
-	  "execveat,"
+	"execveat,"
 #endif
 #ifdef SYS_fork
-	  "fork,"
+	"fork,"
 #endif
 #ifdef SYS_getrusage
-	  "getrusage,"
+	"getrusage,"
 #endif
 #ifdef SYS_kill
-	  "kill,"
+	"kill,"
 #endif
 #ifdef SYS_pidfd_open
-	  "pidfd_open,"
+	"pidfd_open,"
 #endif
 #ifdef SYS_pidfd_send_signal
-	  "pidfd_send_signal,"
+	"pidfd_send_signal,"
 #endif
 #ifdef SYS_prctl
-	  "prctl,"
+	"prctl,"
 #endif
 #ifdef SYS_rt_sigqueueinfo
-	  "rt_sigqueueinfo,"
+	"rt_sigqueueinfo,"
 #endif
 #ifdef SYS_rt_tgsigqueueinfo
-	  "rt_tgsigqueueinfo,"
+	"rt_tgsigqueueinfo,"
 #endif
 #ifdef SYS_setns
-	  "setns,"
+	"setns,"
 #endif
 #ifdef SYS_swapcontext
-	  "swapcontext,"
+	"swapcontext,"
 #endif
 #ifdef SYS_tgkill
-	  "tgkill,"
+	"tgkill,"
 #endif
 #ifdef SYS_times
-	  "times,"
+	"times,"
 #endif
 #ifdef SYS_tkill
-	  "tkill,"
+	"tkill,"
 #endif
 #ifdef SYS_unshare
-	  "unshare,"
+	"unshare,"
 #endif
 #ifdef SYS_vfork
-	  "vfork,"
+	"vfork,"
 #endif
 #ifdef SYS_wait4
-	  "wait4,"
+	"wait4,"
 #endif
 #ifdef SYS_waitid
-	  "waitid,"
+	"waitid,"
 #endif
 #ifdef SYS_waitpid
-	  "waitpid"
+	"waitpid"
 #endif
 	},
 	{ .name = "@raw-io", .list =
 #ifdef SYS_ioperm
-	  "ioperm,"
+	"ioperm,"
 #endif
 #ifdef SYS_iopl
-	  "iopl,"
+	"iopl,"
 #endif
 #ifdef SYS_pciconfig_iobase
-	  "pciconfig_iobase,"
+	"pciconfig_iobase,"
 #endif
 #ifdef SYS_pciconfig_read
-	  "pciconfig_read,"
+	"pciconfig_read,"
 #endif
 #ifdef SYS_pciconfig_write
-	  "pciconfig_write,"
+	"pciconfig_write,"
 #endif
 #ifdef SYS_s390_pci_mmio_read
-	  "s390_pci_mmio_read,"
+	"s390_pci_mmio_read,"
 #endif
 #ifdef SYS_s390_pci_mmio_write
-	  "s390_pci_mmio_write"
+	"s390_pci_mmio_write"
 #endif
 #if !defined(SYS_ioperm) && !defined(SYS_iopl) && !defined(SYS_pciconfig_iobase) && !defined(SYS_pciconfig_read) && !defined(SYS_pciconfig_write) && !defined(SYS_s390_pci_mmio_read) && !defined(SYS_s390_pci_mmio_write)
-	  "__dummy_syscall__" // workaround for s390x which doesn't have any of above defined and empty syscall lists are not allowed
+	"__dummy_syscall__" // workaround for s390x which doesn't have any of above defined and empty syscall lists are not allowed
 #endif
 	},
 	{ .name = "@reboot", .list =
 #ifdef SYS_kexec_load
-	  "kexec_load,"
+	"kexec_load,"
 #endif
 #ifdef SYS_kexec_file_load
-	  "kexec_file_load,"
+	"kexec_file_load,"
 #endif
 #ifdef SYS_reboot
-	  "reboot,"
+	"reboot,"
 #endif
 	},
 	{ .name = "@resources", .list =
 #ifdef SYS_ioprio_set
-	  "ioprio_set,"
+	"ioprio_set,"
 #endif
 #ifdef SYS_mbind
-	  "mbind,"
+	"mbind,"
 #endif
 #ifdef SYS_migrate_pages
-	  "migrate_pages,"
+	"migrate_pages,"
 #endif
 #ifdef SYS_move_pages
-	  "move_pages,"
+	"move_pages,"
 #endif
 #ifdef SYS_nice
-	  "nice,"
+	"nice,"
 #endif
 #ifdef SYS_sched_setaffinity
-	  "sched_setaffinity,"
+	"sched_setaffinity,"
 #endif
 #ifdef SYS_sched_setattr
-	  "sched_setattr,"
+	"sched_setattr,"
 #endif
 #ifdef SYS_sched_setparam
-	  "sched_setparam,"
+	"sched_setparam,"
 #endif
 #ifdef SYS_sched_setscheduler
-	  "sched_setscheduler,"
+	"sched_setscheduler,"
 #endif
 #ifdef SYS_set_mempolicy
-	  "set_mempolicy"
+	"set_mempolicy"
 #endif
 	},
 	{ .name = "@setuid", .list =
 #ifdef SYS_setgid
-	  "setgid,"
+	"setgid,"
 #endif
 #ifdef SYS_setgid32
-	  "setgid32,"
+	"setgid32,"
 #endif
 #ifdef SYS_setgroups
-	  "setgroups,"
+	"setgroups,"
 #endif
 #ifdef SYS_setgroups32
-	  "setgroups32,"
+	"setgroups32,"
 #endif
 #ifdef SYS_setregid
-	  "setregid,"
+	"setregid,"
 #endif
 #ifdef SYS_setregid32
-	  "setregid32,"
+	"setregid32,"
 #endif
 #ifdef SYS_setresgid
-	  "setresgid,"
+	"setresgid,"
 #endif
 #ifdef SYS_setresgid32
-	  "setresgid32,"
+	"setresgid32,"
 #endif
 #ifdef SYS_setresuid
-	  "setresuid,"
+	"setresuid,"
 #endif
 #ifdef SYS_setresuid32
-	  "setresuid32,"
+	"setresuid32,"
 #endif
 #ifdef SYS_setreuid
-	  "setreuid,"
+	"setreuid,"
 #endif
 #ifdef SYS_setreuid32
-	  "setreuid32,"
+	"setreuid32,"
 #endif
 #ifdef SYS_setuid
-	  "setuid,"
+	"setuid,"
 #endif
 #ifdef SYS_setuid32
-	  "setuid32"
+	"setuid32"
 #endif
 	},
 	{ .name = "@signal", .list =
 #ifdef SYS_rt_sigaction
-	  "rt_sigaction,"
+	"rt_sigaction,"
 #endif
 #ifdef SYS_rt_sigpending
-	  "rt_sigpending,"
+	"rt_sigpending,"
 #endif
 #ifdef SYS_rt_sigprocmask
-	  "rt_sigprocmask,"
+	"rt_sigprocmask,"
 #endif
 #ifdef SYS_rt_sigsuspend
-	  "rt_sigsuspend,"
+	"rt_sigsuspend,"
 #endif
 #ifdef SYS_rt_sigtimedwait
-	  "rt_sigtimedwait,"
+	"rt_sigtimedwait,"
 #endif
 #ifdef SYS_sigaction
-	  "sigaction,"
+	"sigaction,"
 #endif
 #ifdef SYS_sigaltstack
-	  "sigaltstack,"
+	"sigaltstack,"
 #endif
 #ifdef SYS_signal
-	  "signal,"
+	"signal,"
 #endif
 #ifdef SYS_signalfd
-	  "signalfd,"
+	"signalfd,"
 #endif
 #ifdef SYS_signalfd4
-	  "signalfd4,"
+	"signalfd4,"
 #endif
 #ifdef SYS_sigpending
-	  "sigpending,"
+	"sigpending,"
 #endif
 #ifdef SYS_sigprocmask
-	  "sigprocmask,"
+	"sigprocmask,"
 #endif
 #ifdef SYS_sigsuspend
-	  "sigsuspend"
+	"sigsuspend"
 #endif
 	},
 	{ .name = "@swap", .list =
 #ifdef SYS_swapon
-	  "swapon,"
+	"swapon,"
 #endif
 #ifdef SYS_swapoff
-	  "swapoff"
+	"swapoff"
 #endif
 	},
 	{ .name = "@sync", .list =
 #ifdef SYS_fdatasync
-	  "fdatasync,"
+	"fdatasync,"
 #endif
 #ifdef SYS_fsync
-	  "fsync,"
+	"fsync,"
 #endif
 #ifdef SYS_msync
-	  "msync,"
+	"msync,"
 #endif
 #ifdef SYS_sync
-	  "sync,"
+	"sync,"
 #endif
 #ifdef SYS_sync_file_range
-	  "sync_file_range,"
+	"sync_file_range,"
 #endif
 #ifdef SYS_sync_file_range2
-	  "sync_file_range2,"
+	"sync_file_range2,"
 #endif
 #ifdef SYS_syncfs
-	  "syncfs"
+	"syncfs"
 #endif
 	},
 	{ .name = "@system-service", .list =
-	  "@aio,"
-	  "@basic-io,"
-	  "@chown,"
-	  "@default,"
-	  "@file-system,"
-	  "@io-event,"
-	  "@ipc,"
-	  "@keyring,"
-	  "@memlock,"
-	  "@network-io,"
-	  "@process,"
-	  "@resources,"
-	  "@setuid,"
-	  "@signal,"
-	  "@sync,"
-	  "@timer,"
+	"@aio,"
+	"@basic-io,"
+	"@chown,"
+	"@default,"
+	"@file-system,"
+	"@io-event,"
+	"@ipc,"
+	"@keyring,"
+	"@memlock,"
+	"@network-io,"
+	"@process,"
+	"@resources,"
+	"@setuid,"
+	"@signal,"
+	"@sync,"
+	"@timer,"
 #ifdef SYS_brk
-	  "brk,"
+	"brk,"
 #endif
 #ifdef SYS_capget
-	  "capget,"
+	"capget,"
 #endif
 #ifdef SYS_capset
-	  "capset,"
+	"capset,"
 #endif
 #ifdef SYS_copy_file_range
-	  "copy_file_range,"
+	"copy_file_range,"
 #endif
 #ifdef SYS_fadvise64
-	  "fadvise64,"
+	"fadvise64,"
 #endif
 #ifdef SYS_fadvise64_64
-	  "fadvise64_64,"
+	"fadvise64_64,"
 #endif
 #ifdef SYS_flock
-	  "flock,"
+	"flock,"
 #endif
 #ifdef SYS_get_mempolicy
-	  "get_mempolicy,"
+	"get_mempolicy,"
 #endif
 #ifdef SYS_getcpu
-	  "getcpu,"
+	"getcpu,"
 #endif
 #ifdef SYS_getpriority
-	  "getpriority,"
+	"getpriority,"
 #endif
 #ifdef SYS_getrandom
-	  "getrandom,"
+	"getrandom,"
 #endif
 #ifdef SYS_ioctl
-	  "ioctl,"
+	"ioctl,"
 #endif
 #ifdef SYS_ioprio_get
-	  "ioprio_get,"
+	"ioprio_get,"
 #endif
 #ifdef SYS_kcmp
-	  "kcmp,"
+	"kcmp,"
 #endif
 #ifdef SYS_madvise
-	  "madvise,"
+	"madvise,"
 #endif
 #ifdef SYS_mprotect
-	  "mprotect,"
+	"mprotect,"
 #endif
 #ifdef SYS_mremap
-	  "mremap,"
+	"mremap,"
 #endif
 #ifdef SYS_name_to_handle_at
-	  "name_to_handle_at,"
+	"name_to_handle_at,"
 #endif
 #ifdef SYS_oldolduname
-	  "oldolduname,"
+	"oldolduname,"
 #endif
 #ifdef SYS_olduname
-	  "olduname,"
+	"olduname,"
 #endif
 #ifdef SYS_personality
-	  "personality,"
+	"personality,"
 #endif
 #ifdef SYS_readahead
-	  "readahead,"
+	"readahead,"
 #endif
 #ifdef SYS_readdir
-	  "readdir,"
+	"readdir,"
 #endif
 #ifdef SYS_remap_file_pages
-	  "remap_file_pages,"
+	"remap_file_pages,"
 #endif
 #ifdef SYS_sched_get_priority_max
-	  "sched_get_priority_max,"
+	"sched_get_priority_max,"
 #endif
 #ifdef SYS_sched_get_priority_min
-	  "sched_get_priority_min,"
+	"sched_get_priority_min,"
 #endif
 #ifdef SYS_sched_getaffinity
-	  "sched_getaffinity,"
+	"sched_getaffinity,"
 #endif
 #ifdef SYS_sched_getattr
-	  "sched_getattr,"
+	"sched_getattr,"
 #endif
 #ifdef SYS_sched_getparam
-	  "sched_getparam,"
+	"sched_getparam,"
 #endif
 #ifdef SYS_sched_getscheduler
-	  "sched_getscheduler,"
+	"sched_getscheduler,"
 #endif
 #ifdef SYS_sched_rr_get_interval
-	  "sched_rr_get_interval,"
+	"sched_rr_get_interval,"
 #endif
 #ifdef SYS_sched_yield
-	  "sched_yield,"
+	"sched_yield,"
 #endif
 #ifdef SYS_sendfile
-	  "sendfile,"
+	"sendfile,"
 #endif
 #ifdef SYS_sendfile64
-	  "sendfile64,"
+	"sendfile64,"
 #endif
 #ifdef SYS_setfsgid
-	  "setfsgid,"
+	"setfsgid,"
 #endif
 #ifdef SYS_setfsgid32
-	  "setfsgid32,"
+	"setfsgid32,"
 #endif
 #ifdef SYS_setfsuid
-	  "setfsuid,"
+	"setfsuid,"
 #endif
 #ifdef SYS_setfsuid32
-	  "setfsuid32,"
+	"setfsuid32,"
 #endif
 #ifdef SYS_setpgid
-	  "setpgid,"
+	"setpgid,"
 #endif
 #ifdef SYS_setsid
-	  "setsid,"
+	"setsid,"
 #endif
 #ifdef SYS_splice
-	  "splice,"
+	"splice,"
 #endif
 #ifdef SYS_sysinfo
-	  "sysinfo,"
+	"sysinfo,"
 #endif
 #ifdef SYS_tee
-	  "tee,"
+	"tee,"
 #endif
 #ifdef SYS_umask
-	  "umask,"
+	"umask,"
 #endif
 #ifdef SYS_uname
-	  "uname,"
+	"uname,"
 #endif
 #ifdef SYS_userfaultfd
-	  "userfaultfd,"
+	"userfaultfd,"
 #endif
 #ifdef SYS_vmsplice
-	  "vmsplice"
+	"vmsplice"
 #endif
 	},
 	{ .name = "@timer", .list =
 #ifdef SYS_alarm
-	  "alarm,"
+	"alarm,"
 #endif
 #ifdef SYS_getitimer
-	  "getitimer,"
+	"getitimer,"
 #endif
 #ifdef SYS_setitimer
-	  "setitimer,"
+	"setitimer,"
 #endif
 #ifdef SYS_timer_create
-	  "timer_create,"
+	"timer_create,"
 #endif
 #ifdef SYS_timer_delete
-	  "timer_delete,"
+	"timer_delete,"
 #endif
 #ifdef SYS_timer_getoverrun
-	  "timer_getoverrun,"
+	"timer_getoverrun,"
 #endif
 #ifdef SYS_timer_gettime
-	  "timer_gettime,"
+	"timer_gettime,"
 #endif
 #ifdef SYS_timer_settime
-	  "timer_settime,"
+	"timer_settime,"
 #endif
 #ifdef SYS_timerfd_create
-	  "timerfd_create,"
+	"timerfd_create,"
 #endif
 #ifdef SYS_timerfd_gettime
-	  "timerfd_gettime,"
+	"timerfd_gettime,"
 #endif
 #ifdef SYS_timerfd_settime
-	  "timerfd_settime,"
+	"timerfd_settime,"
 #endif
 #ifdef SYS_times
-	  "times"
+	"times"
 #endif
 	}
 };

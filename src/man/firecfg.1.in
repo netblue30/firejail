@@ -48,7 +48,7 @@ The following actions are implemented by default by running sudo firecfg:
 .br
 
 .br
-- fix desktop files in $HOME/.local/share/applications/ (firecfg --fix).
+- fix desktop files in $HOME/.local/share/applications/ (firecfg \-\-fix).
 .br
 #ifdef HAVE_APPARMOR
 .br
@@ -63,7 +63,7 @@ Add the list of users to Firejail user access database.
 
 Example:
 .br
-$ sudo firecfg --add-users dustin lucas mike eleven
+$ sudo firecfg \-\-add-users dustin lucas mike eleven
 
 .TP
 \fB\-\-bindir=directory
@@ -95,7 +95,7 @@ Guided configuration for new users.
 .br
 Example:
 .br
-$ sudo firecfg --guide
+$ sudo firecfg \-\-guide
 .br
 .TP
 \fB\-\-debug

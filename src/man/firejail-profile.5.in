@@ -14,7 +14,7 @@ Using a specific profile:
 .br
 Example:
 .br
-$ firejail --appimage --profile=/etc/firejail/kdenlive.profile kdenlive.appimage
+$ firejail \-\-appimage \-\-profile=/etc/firejail/kdenlive.profile kdenlive.appimage
 .br
 
 .br
@@ -25,7 +25,7 @@ $ firejail --appimage --profile=/etc/firejail/kdenlive.profile kdenlive.appimage
 .br
 Example:
 .br
-$ firejail --appimage --profile=kdenlive kdenlive.appimage
+$ firejail \-\-appimage \-\-profile=kdenlive kdenlive.appimage
 .br
 
 .br
@@ -63,7 +63,7 @@ Running the profile builder:
 .br
 Example:
 .br
-$ firejail --build=blobby.profile /usr/bin/blobby
+$ firejail \-\-build=blobby.profile /usr/bin/blobby
 .br
 
 .br
@@ -82,7 +82,7 @@ profile files. Firejail chooses the profile file as follows:
 Example:
 .PP
 .RS
-$ firejail --profile=/home/netblue/icecat.profile /usr/bin/icecat
+$ firejail \-\-profile=/home/netblue/icecat.profile /usr/bin/icecat
 .br
 Reading profile /home/netblue/icecat.profile
 .br
@@ -91,7 +91,7 @@ Reading profile /home/netblue/icecat.profile
 
 .PP
 .RS
-$ firejail --profile=icecat /usr/bin/icecat-wrapper.sh
+$ firejail \-\-profile=icecat /usr/bin/icecat-wrapper.sh
 .br
 Reading profile /etc/firejail/icecat.profile
 .br
@@ -179,9 +179,9 @@ can be enabled or disabled globally in Firejail's configuration file.
 
 The profile line may be any profile line that you would normally use in a profile \fBexcept\fR for "quiet" and "include" lines.
 
-Note: When using one or more conditionals and \fB--profile\fR, it is
-recommended that the relevant option(s) (such as \fB--appimage\fR) be specified
-before \fB--profile\fR, so that their respective conditional(s) (such as
+Note: When using one or more conditionals and \fB\-\-profile\fR, it is
+recommended that the relevant option(s) (such as \fB\-\-appimage\fR) be specified
+before \fB\-\-profile\fR, so that their respective conditional(s) (such as
 \fB?HAS_APPIMAGE\fR) inside of the profile evaluate to true.
 
 .TP
@@ -246,7 +246,7 @@ Example: "warn This file is deprecated; use foo instead."
 .SH Filesystem
 These profile entries define a chroot filesystem built on top of the existing
 host filesystem. Each line describes a file/directory that is inaccessible
-(\fBblacklist\fR), a read-only file or directory (\fBread-only\fR),
+(\fBblacklist\fR), a read-only file or directory (\fBread\-only\fR),
 a tmpfs mounted on top of an existing directory (\fBtmpfs\fR),
 or mount-bind a directory or file on top of another directory or file (\fBbind\fR).
 Use \fBprivate\fR to set private mode.  File globbing is supported, and PATH and
@@ -282,8 +282,8 @@ blacklist ${PATH}/ifconfig
 blacklist ${HOME}/.ssh
 
 .TP
-\fBblacklist-nolog file_or_directory
-When --tracelog flag is set, blacklisting generates syslog messages if the sandbox tries to access the file or directory.
+\fBblacklist\-nolog file_or_directory
+When \-\-tracelog flag is set, blacklisting generates syslog messages if the sandbox tries to access the file or directory.
 blacklist-nolog command disables syslog messages for this particular file or directory. Examples:
 .br
 
@@ -299,30 +299,30 @@ Mount-bind directory1 on top of directory2. This option is only available when r
 \fBbind file1,file2
 Mount-bind file1 on top of file2. This option is only available when running as root.
 .TP
-\fBdisable-mnt
+\fBdisable\-mnt
 Disable /mnt, /media, /run/mount and /run/media access.
 .TP
-\fBkeep-config-pulse
+\fBkeep\-config\-pulse
 Disable automatic ~/.config/pulse init, for complex setups such as remote
 pulse servers or non-standard socket paths.
 .TP
-\fBkeep-dev-ntsync
+\fBkeep\-dev\-ntsync
 Allow access to the /dev/ntsync character device (even with \fBprivate-dev\fR),
 which is blocked by default.
 This device is mostly intended to increase performance and compatibility when
 running certain programs through Wine.
 .TP
-\fBkeep-dev-shm
+\fBkeep\-dev\-shm
 /dev/shm directory is untouched (even with private-dev).
 .TP
-\fBkeep-dev-tpm
+\fBkeep\-dev\-tpm
 Allow access to Trusted Cryptography Module (TCM) and Trusted Platform Module
 (TPM) devices (even with \fBprivate-dev\fR), which are blocked by default.
 .TP
-\fBkeep-shell-rc
+\fBkeep\-shell\-rc
 Do not copy shell rc files (such as ~/.bashrc and ~/.zshrc) from /etc/skel.
 .TP
-\fBkeep-var-tmp
+\fBkeep\-var\-tmp
 /var/tmp directory is untouched.
 .TP
 \fBmkdir directory
@@ -352,7 +352,7 @@ For files in /run/user/<PID> use ${RUNUSER} macro:
 .br
 
 .br
-mkdir ${RUNUSER}/firejail-testing
+mkdir ${RUNUSER}/firejail\-testing
 .TP
 \fBmkfile file
 Similar to mkdir, this command creates an empty file in user home, or /tmp, or under /run/user/<UID>
@@ -368,7 +368,7 @@ closed.
 .TP
 \fBprivate directory
 Use directory as user home.
---private and --private=directory cannot be used together.
+\-\-private and \-\-private=directory cannot be used together.
 .br
 
 .br
@@ -382,31 +382,31 @@ For details, see
 #903
 .UE .
 .TP
-\fBprivate-bin file,file
+\fBprivate\-bin file,file
 Build a new /bin in a temporary filesystem, and copy the programs in the list.
 The files in the list must be expressed as relative to the /bin,
 /sbin, /usr/bin, /usr/sbin, or /usr/local/bin directories.
 The same directory is also bind-mounted over /sbin, /usr/bin and /usr/sbin.
-Multiple private-bin commands are allowed and they accumulate.
+Multiple private\-bin commands are allowed and they accumulate.
 .TP
-\fBprivate-cache
+\fBprivate\-cache
 Mount an empty temporary filesystem on top of the .cache directory in user home. All
 modifications are discarded when the sandbox is closed.
 .TP
-\fBprivate-cwd
+\fBprivate\-cwd
 Set working directory inside jail to the home directory, and failing that, the root directory.
 .TP
-\fBprivate-cwd directory
+\fBprivate\-cwd directory
 Set working directory inside the jail. Full directory path is required. Symbolic links are not allowed.
 .TP
-\fBprivate-dev
+\fBprivate\-dev
 Create a new /dev directory.
 Only disc, dri, dvb, full, hidraw, log, null, ptmx, pts, random, shm, snd, tty,
 urandom, usb, video and zero devices are available.
 Use the options no3d, nodvd, nosound, notv, nou2f and novideo for additional
 restrictions.
 .TP
-\fBprivate-etc file,directory
+\fBprivate\-etc file,directory
 Build a new /etc in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
@@ -417,7 +417,7 @@ All modifications are discarded when the sandbox is closed.
 Multiple private-etc commands are allowed and they accumulate.
 #ifdef HAVE_PRIVATE_HOME
 .TP
-\fBprivate-home file,directory
+\fBprivate\-home file,directory
 Build a new user home in a temporary
 filesystem, and copy the files and directories in the list in the
 new home.
@@ -428,14 +428,14 @@ closed.
 #endif
 #ifdef HAVE_PRIVATE_LIB
 .TP
-\fBprivate-lib file,directory
+\fBprivate\-lib file,directory
 Build a new /lib directory and bring in the libraries required by the application to run.
 The files and directories in the list must be expressed as relative to
 the /lib directory.
 This feature is still under development, see \fBman 1 firejail\fR for some examples.
 #endif
 .TP
-\fBprivate-opt file,directory
+\fBprivate\-opt file,directory
 Build a new /opt in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
@@ -444,7 +444,7 @@ the /opt directory, and must not contain the / character
 expressed as foo/bar -- is disallowed).
 All modifications are discarded when the sandbox is closed.
 .TP
-\fBprivate-srv file,directory
+\fBprivate\-srv file,directory
 Build a new /srv in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
@@ -453,10 +453,10 @@ the /srv directory, and must not contain the / character
 expressed as foo/bar -- is disallowed).
 All modifications are discarded when the sandbox is closed.
 .TP
-\fBprivate-tmp
+\fBprivate\-tmp
 Mount an empty temporary filesystem on top of /tmp directory whitelisting /tmp/.X11-unix.
 .TP
-\fBread-only file_or_directory
+\fBread\-only file_or_directory
 Make directory or file read-only.
 .TP
 \fBread-write file_or_directory
@@ -501,20 +501,20 @@ For symbolic links in the user home directory, both the link and the real file
 should be owned by the user.
 
 .TP
-\fBwhitelist-ro file_or_directory
+\fBwhitelist\-ro file_or_directory
 Equivalent to "whitelist file_or_directory" followed by "read-only file_or_directory"
 
 .TP
-\fBwritable-etc
+\fBwritable\-etc
 Mount /etc directory read-write.
 .TP
-\fBwritable-run-user
+\fBwritable\-run\-user
 Disable the default blacklisting of run/user/$UID/systemd and /run/user/$UID/gnupg.
 .TP
-\fBwritable-var
+\fBwritable\-var
 Mount /var directory read-write.
 .TP
-\fBwritable-var-log
+\fBwritable\-var\-log
 Use the real /var/log directory, not a clone. By default, a tmpfs is mounted on top of /var/log
 directory, and a skeleton filesystem is created based on the original /var/log.
 
@@ -522,7 +522,7 @@ directory, and a skeleton filesystem is created based on the original /var/log.
 The following security filters are currently implemented:
 
 .TP
-\fBallow-bwrap
+\fBallow\-bwrap
 Allow bubblewrap sandbox inside Firejail sandbox. By default Firejail replaces
 /usr/bin/bwrap executable with a do-nothing  program.
 .TP
@@ -579,7 +579,7 @@ Create a Landlock ruleset (if it doesn't already exist) and add an execution
 permission rule for path.
 #endif
 .TP
-\fBmemory-deny-write-execute
+\fBmemory\-deny\-write\-execute
 Install a seccomp filter to block attempts to create memory mappings
 that are both writable and executable, to change mappings to be
 executable or to create executable shared memory.
@@ -605,10 +605,10 @@ first argument to socket system call. Recognized values: \fBunix\fR,
 \fBinet\fR, \fBinet6\fR, \fBnetlink\fR, \fBpacket\fR, and \fBbluetooth\fR.
 Multiple protocol commands are allowed and they accumulate.
 .TP
-\fBrestrict-namespaces
+\fBrestrict\-namespaces
 Install a seccomp filter that blocks attempts to create new cgroup, ipc, net, mount, pid, time, user or uts namespaces.
 .TP
-\fBrestrict-namespaces cgroup,ipc,net,mnt,pid,time,user,uts
+\fBrestrict\-namespaces cgroup,ipc,net,mnt,pid,time,user,uts
 Install a seccomp filter that blocks attempts to create any of the specified namespaces.
 .TP
 \fBseccomp
@@ -623,7 +623,7 @@ Enable seccomp filter and blacklist the system calls in the list on top of defau
 \fBseccomp.32 syscall,syscall,syscall
 Enable seccomp filter and blacklist the system calls in the list on top of default seccomp filter for 32 bit system calls on a 64 bit architecture system.
 .TP
-\fBseccomp.block-secondary
+\fBseccomp.block\-secondary
 Enable seccomp filter and filter system call architectures
 so that only the native architecture is allowed.
 .TP
@@ -639,7 +639,7 @@ Enable seccomp filter and whitelist the system calls in the list.
 \fBseccomp.32.keep syscall,syscall,syscall
 Enable seccomp filter and whitelist the system calls in the list for 32 bit system calls on a 64 bit architecture system.
 .TP
-\fBseccomp-error-action kill | log | ERRNO
+\fBseccomp\-error\-action kill | log | ERRNO
 Return a different error instead of EPERM to the process, kill it when
 an attempt is made to call a blocked system call, or allow but log the
 attempt.
@@ -649,7 +649,7 @@ attempt.
 Enable X11 sandboxing.
 .TP
 \fBx11 none
-Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and file specified in ${XAUTHORITY} environment variable.
+Blacklist /tmp/.X11\-unix directory, ${HOME}/.Xauthority and file specified in ${XAUTHORITY} environment variable.
 Remove DISPLAY and XAUTHORITY environment variables.
 Stop with error message if X11 abstract socket will be accessible in jail.
 .TP
@@ -665,7 +665,7 @@ Enable X11 sandboxing with Xpra server.
 \fBx11 xvfb
 Enable X11 sandboxing with Xvfb server.
 .TP
-\fBxephyr-extra-params OPTIONS
+\fBxephyr\-extra\-params OPTIONS
 Set Xephyr server command extra parameters for x11 xephyr. This command should be included in the profile file before x11 xephyr command.
 .br
 
@@ -674,11 +674,11 @@ Example:
 .br
 
 .br
-xephyr-extra-params -grayscale
+xephyr\-extra\-params \-grayscale
 .br
 x11 xephyr
 .TP
-\fBxephyr-screen WIDTHxHEIGHT
+\fBxephyr\-screen WIDTHxHEIGHT
 Set screen size for x11 xephyr. This command should be included in the profile file before x11 xephyr command.
 .br
 
@@ -687,7 +687,7 @@ Example:
 .br
 
 .br
-xephyr-screen 640x480
+xephyr\-screen 640x480
 .br
 x11 xephyr
 
@@ -716,46 +716,46 @@ see xdg-dbus-proxy(1).
 Examples:
 
 .TP
-\fBdbus-system filter
+\fBdbus\-system filter
 Enable filtered access to the system DBus. Filters can be specified with the dbus-system.talk and dbus-system.own commands.
 .TP
-\fBdbus-system none
+\fBdbus\-system none
 Disable access to the system DBus. Once access is disabled, it cannot be relaxed to filtering.
 .TP
-\fBdbus-system.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+\fBdbus\-system.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 Allow the application to receive broadcast signals from the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
 .TP
-\fBdbus-system.call org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+\fBdbus\-system.call org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 Allow the application to call methods of the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the system DBus.
 .TP
-\fBdbus-system.own org.gnome.ghex.*
+\fBdbus\-system.own org.gnome.ghex.*
 Allow the application to own the name org.gnome.ghex and all names underneath in on the system DBus.
 .TP
-\fBdbus-system.see org.freedesktop.Notifications
+\fBdbus\-system.see org.freedesktop.Notifications
 Allow the application to see but not talk to the name org.freedesktop.Notifications on the system DBus.
 .TP
-\fBdbus-system.talk org.freedesktop.Notifications
+\fBdbus\-system.talk org.freedesktop.Notifications
 Allow the application to talk to the name org.freedesktop.Notifications on the system DBus.
 .TP
-\fBdbus-user filter
+\fBdbus\-user filter
 Enable filtered access to the session DBus. Filters can be specified with the dbus-user.talk and dbus-user.own commands.
 .TP
-\fBdbus-user none
+\fBdbus\-user none
 Disable access to the session DBus. Once access is disabled, it cannot be relaxed to filtering.
 .TP
-\fBdbus-user.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+\fBdbus\-user.broadcast org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 Allow the application to receive broadcast signals from the the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the session DBus.
 .TP
-\fBdbus-user.call org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
+\fBdbus\-user.call org.freedesktop.Notifications=org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 Allow the application to call methods of the interface org.freedesktop.Notifications of the object exposed at the path /org/freedesktop/Notifications by the client owning the bus name org.freedesktop.Notifications on the session DBus.
 .TP
-\fBdbus-user.own org.gnome.ghex.*
+\fBdbus\-user.own org.gnome.ghex.*
 Allow the application to own the name org.gnome.ghex and all names underneath in on the session DBus.
 .TP
-\fBdbus-user.see org.freedesktop.Notifications
+\fBdbus\-user.see org.freedesktop.Notifications
 Allow the application to see but not talk to the name org.freedesktop.Notifications on the session DBus.
 .TP
-\fBdbus-user.talk org.freedesktop.Notifications
+\fBdbus\-user.talk org.freedesktop.Notifications
 Allow the application to talk to the name org.freedesktop.Notifications on the session DBus.
 .TP
 \fBnodbus\fR (deprecated)
@@ -768,13 +768,13 @@ Individual filters can be overridden via the \-\-ignore command. Supposing a pro
 .br
 [...]
 .br
-dbus-user filter
+dbus\-user filter
 .br
-dbus-user.own org.mozilla.firefox.*
+dbus\-user.own org.mozilla.firefox.*
 .br
-dbus-user.talk org.freedesktop.Notifications
+dbus\-user.talk org.freedesktop.Notifications
 .br
-dbus-system none
+dbus\-system none
 .br
 [...]
 .br
@@ -784,7 +784,7 @@ and the user wants to disable notifications, this can be achieved by putting the
 .br
 [...]
 .br
-ignore dbus-user.talk org.freedesktop.Notifications
+ignore dbus\-user.talk org.freedesktop.Notifications
 .br
 [...]
 #endif
@@ -799,25 +799,25 @@ Examples:
 \fBcpu 0,1,2
 Use only CPU cores 0, 1 and 2.
 .TP
-\fBnice -5
+\fBnice \-5
 Set a nice value of -5 to all processes running inside the sandbox.
 .TP
-\fBrlimit-as 123456789012
+\fBrlimit\-as 123456789012
 Set the maximum size of the process's virtual memory to 123456789012 bytes.
 .TP
-\fBrlimit-cpu 123
+\fBrlimit\-cpu 123
 Set the maximum CPU time in seconds.
 .TP
-\fBrlimit-fsize 1024
+\fBrlimit\-fsize 1024
 Set the maximum file size that can be created by a process to 1024 bytes.
 .TP
-\fBrlimit-nproc 1000
+\fBrlimit\-nproc 1000
 Set the maximum number of processes that can be created for the real user ID of the calling process to 1000.
 .TP
-\fBrlimit-nofile 500
+\fBrlimit\-nofile 500
 Set the maximum number of files that can be opened by a process to 500.
 .TP
-\fBrlimit-sigpending 200
+\fBrlimit\-sigpending 200
 Set the maximum number of processes that can be created for the real user ID of the calling process to 200.
 .TP
 \fBtimeout hh:mm:ss
@@ -836,10 +836,10 @@ Set environment variable. Examples:
 .br
 env LD_LIBRARY_PATH=/opt/test/lib
 .br
-env CFLAGS="-W -Wall -Werror"
+env CFLAGS="\-W \-Wall \-Werror"
 
 .TP
-\fBipc-namespace
+\fBipc\-namespace
 Enable a new IPC namespace if the sandbox was started as a regular user.
 IPC namespace is enabled by default for sandboxes started as root.
 .br
@@ -851,7 +851,7 @@ It does not affect other IPC resources, such as Unix sockets (see
 \fBunix\fR(7)).
 
 .TP
-\fBkeep-fd
+\fBkeep\-fd
 Inherit open file descriptors to sandbox.
 
 .TP
@@ -867,7 +867,7 @@ name browser
 Disable 3D hardware acceleration.
 .TP
 \fBnoautopulse\fR (deprecated)
-See keep-config-pulse.
+See keep\-config\-pulse.
 .TP
 \fBnodvd
 Disable DVD and audio CD devices.
@@ -885,7 +885,7 @@ Disable sound system.
 \fBnotpm\fR (deprecated)
 Ignored for compatibility.
 .br
-TPM devices are now blocked by default, see \fBkeep-dev-tpm\fR.
+TPM devices are now blocked by default, see \fBkeep\-dev\-tpm\fR.
 .TP
 \fBnotv
 Disable DVB (Digital Video Broadcasting) TV devices.
@@ -897,7 +897,7 @@ Disable U2F devices.
 Disable video capture devices.
 .TP
 \fBmachine-id
-Spoof id number in /etc/machine-id file - a new random id is generated inside the sandbox.
+Spoof id number in /etc/machine\-id file - a new random id is generated inside the sandbox.
 #ifdef HAVE_NETWORK
 .SH Networking
 Networking features available in profile files.
@@ -915,7 +915,7 @@ Set a DNS server for the sandbox. Up to three DNS servers can be defined.
 Set a hostname for the sandbox.
 
 .TP
-\fBhosts-file file
+\fBhosts\-file file
 Use file as /etc/hosts.
 
 .TP
@@ -1100,17 +1100,17 @@ instead of the default one.
 
 .SH Other
 .TP
-\fBdeterministic-exit-code
+\fBdeterministic\-exit\-code
 Always exit firejail with the first child's exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
 
 .TP
-\fBdeterministic-shutdown
+\fBdeterministic\-shutdown
 Always shut down the sandbox after the first child has terminated. The default behavior is to keep the sandbox alive as long as it contains running processes.
 
 .TP
-\fBjoin-or-start sandboxname
+\fBjoin\-or\-start sandboxname
 Join the sandbox identified by name or start a new one.
-Same as "firejail --join=sandboxname" command if sandbox with specified name exists, otherwise same as "name sandboxname".
+Same as "firejail \-\-join=sandboxname" command if sandbox with specified name exists, otherwise same as "name sandboxname".
 
 .SH FILES
 .TP

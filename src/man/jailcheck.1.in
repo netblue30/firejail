@@ -9,7 +9,7 @@ on the sandbox filesystem:
 .TP
 \fB1. Virtual directories
 jailcheck extracts a list with the main virtual directories installed by the sandbox.
-These directories are build by firejail at startup using --private* and --whitelist commands.
+These directories are build by firejail at startup using \-\-private* and \-\-whitelist commands.
 .TP
 \fB2. Noexec test
 jailcheck inserts executable programs in /home/username, /tmp, and /var/tmp directories
@@ -61,7 +61,7 @@ $ sudo jailcheck
 .br
 
 .br
-2055:netblue::firejail /usr/bin/ssh -X netblue@x.y.z.net
+2055:netblue::firejail /usr/bin/ssh \-X netblue@x.y.z.net
 .br
    Virtual dirs: /var/tmp, /dev, /usr/share, /run/user/1000,
 .br
@@ -71,7 +71,7 @@ $ sudo jailcheck
 .br
 
 .br
-2186:netblue:libreoffice:firejail --appimage /opt/LibreOffice-fresh.appimage
+2186:netblue:libreoffice:firejail \-\-appimage /opt/LibreOffice\-fresh.appimage
 .br
    Virtual dirs: /tmp, /var/tmp, /dev,
 .br
@@ -89,7 +89,7 @@ $ sudo jailcheck
 .br
 
 .br
-26160:netblue:tor:firejail --private=~/tor-browser_en-US ./start-tor
+26160:netblue:tor:firejail \-\-private=~/tor-browser_en-US ./start-tor
 .br
    Warning: AppArmor not enabled
 .br

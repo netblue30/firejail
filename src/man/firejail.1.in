@@ -120,7 +120,7 @@ firejail sandbox. Use this option to disable this default functionality.
 .br
 Example:
 .br
-$ firejail --noprofile --allow-bwrap bwrap --help
+$ firejail \-\-noprofile \-\-allow\-bwrap bwrap \-\-help
 .br
 firejail version 0.9.77
 .br
@@ -136,11 +136,11 @@ usage: bwrap [OPTIONS...] [--] COMMAND [ARGS...]
 .br
 
 .br
-    --help                       Print this help
+    \-\-help                       Print this help
 .br
-    --version                    Print version
+    \-\-version                    Print version
 .br
-    --args FD                    Parse NUL-separated args from FD
+    \-\-args FD                    Parse NUL-separated args from FD
 .br
 
 .TP
@@ -167,7 +167,7 @@ All directories under /home are visible inside the sandbox. By default, only cur
 .br
 Example:
 .br
-$ firejail --allusers
+$ firejail \-\-allusers
 #ifdef HAVE_APPARMOR
 .TP
 \fB\-\-apparmor
@@ -206,20 +206,20 @@ private-bin and private-lib are disabled by default when running appimages.
 .br
 Example:
 .br
-$ firejail --appimage --profile=krita krita-3.0-x86_64.appimage
+$ firejail \-\-appimage \-\-profile=krita krita\-3.0\-x86_64.appimage
 .br
-$ firejail --quiet --appimage --private --profile=krita krita-3.0-x86_64.appimage
+$ firejail \-\-quiet \-\-appimage \-\-private \-\-profile=krita krita\-3.0\-x86_64.appimage
 .br
 #ifdef HAVE_X11
-$ firejail --appimage --net=none --x11 --profile=krita krita-3.0-x86_64.appimage
+$ firejail \-\-appimage \-\-net=none \-\-x11 \-\-profile=krita krita\-3.0\-x86_64.appimage
 #endif
 .br
 
 .br
-Note: When using both \fB--appimage\fR and \fB--profile\fR, it is recommended
+Note: When using both \fB\-\-appimage\fR and \fB\-\-profile\fR, it is recommended
 to always specify the former before the latter, so that any \fB?HAS_APPIMAGE\fR
 conditionals inside of the profile evaluate to true (see \fB?CONDITIONAL\fR in
-firejail-profile(5)).
+firejail\-profile(5)).
 #ifdef HAVE_NETWORK
 .TP
 \fB\-\-bandwidth=name|pid
@@ -261,8 +261,6 @@ $ firejail \-\-blacklist=/sbin \-\-blacklist=/usr/sbin
 $ firejail \-\-blacklist=~/.mozilla
 .br
 $ firejail \-\-blacklist="/home/username/My Virtual Machines"
-.br
-$ firejail \-\-blacklist=/home/username/My\\ Virtual\\ Machines
 .TP
 \fB\-\-build
 The command builds a whitelisted profile.
@@ -413,7 +411,7 @@ Note: Support for this command is controlled in firejail.config with the
 \fBchroot\fR option.
 #endif
 .TP
-\fB\-\-cpu=cpu-number,cpu-number,cpu-number
+\fB\-\-cpu=cpu\-number,cpu\-number,cpu\-number
 Set CPU affinity.
 .br
 
@@ -458,9 +456,9 @@ path is given, logs are written to the standard output instead.
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.log \\
+$ firejail \-\-dbus\-system=filter \-\-dbus\-system.log \\
 .br
---dbus-log=dbus.txt
+\-\-dbus-log=dbus.txt
 
 .TP
 \fB\-\-dbus-system=filter|none
@@ -506,7 +504,7 @@ object paths, respectively.
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.broadcast=\\
+$ firejail \-\-dbus\-system=filter \-\-dbus\-system.broadcast=\\
 .br
 org.freedesktop.Notifications=\\
 .br
@@ -528,7 +526,7 @@ object paths, respectively.
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.call=\\
+$ firejail \-\-dbus\-system=filter \-\-dbus\-system.call=\\
 .br
 org.freedesktop.Notifications=\\
 .br
@@ -541,7 +539,7 @@ Turn on DBus logging for the system DBus. This option requires --dbus-system=fil
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.log
+$ firejail \-\-dbus\-system=filter \-\-dbus-system.log
 
 .TP
 \fB\-\-dbus-system.own=name
@@ -554,7 +552,7 @@ not "foobar").
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.own=\\
+$ firejail \-\-dbus\-system=filter \-\-dbus\-system.own=\\
 .br
 org.gnome.ghex.*
 
@@ -570,7 +568,7 @@ not "foobar").
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.see=\\
+$ firejail \-\-dbus\-system=filter \-\-dbus\-system.see=\\
 .br
 org.freedesktop.Notifications
 
@@ -585,7 +583,7 @@ not "foobar").
 .br
 Example:
 .br
-$ firejail --dbus-system=filter --dbus-system.talk=\\
+$ firejail \-\-dbus\-system=filter \-\-dbus\-system.talk=\\
 .br
 org.freedesktop.Notifications
 
@@ -617,7 +615,7 @@ Example:
 $ firejail \-\-dbus-user=none
 
 .TP
-\fB\-\-dbus-user.broadcast=name=[member][@path]
+\fB\-\-dbus\-user.broadcast=name=[member][@path]
 Allows the application to receive broadcast signals from the indicated interface
 member at the indicated object path exposed by the indicated bus name on the
 session DBus.
@@ -633,14 +631,14 @@ object paths, respectively.
 .br
 Example:
 .br
-$ firejail --dbus-user=filter --dbus-user.broadcast=\\
+$ firejail \-\-dbus\-user=filter \-\-dbus\-user.broadcast=\\
 .br
 org.freedesktop.Notifications=\\
 .br
 org.freedesktop.Notifications.*@/org/freedesktop/Notifications
 
 .TP
-\fB\-\-dbus-user.call=name=[member][@path]
+\fB\-\-dbus\-user.call=name=[member][@path]
 Allows the application to call the indicated interface member at the indicated
 object path exposed by the indicated bus name on the session DBus.
 The name may have a .* suffix to match all names underneath it, including
@@ -655,7 +653,7 @@ object paths, respectively.
 .br
 Example:
 .br
-$ firejail --dbus-user=filter --dbus-user.call=\\
+$ firejail \-\-dbus\-user=filter \-\-dbus\-user.call=\\
 .br
 org.freedesktop.Notifications=\\
 .br
@@ -668,10 +666,10 @@ Turn on DBus logging for the session DBus. This option requires --dbus-user=filt
 .br
 Example:
 .br
-$ firejail --dbus-user=filter --dbus-user.log
+$ firejail \-\-dbus\-user=filter \-\-dbus\-user.log
 
 .TP
-\fB\-\-dbus-user.own=name
+\fB\-\-dbus\-user.own=name
 Allows the application to own the specified well-known name on the session DBus.
 The name may have a .* suffix to match all names underneath it, including itself
 (e.g. "foo.bar.*" matches "foo.bar", "foo.bar.baz" and "foo.bar.baz.quux", but
@@ -681,7 +679,7 @@ not "foobar").
 .br
 Example:
 .br
-$ firejail --dbus-user=filter --dbus-user.own=org.gnome.ghex.*
+$ firejail \-\-dbus\-user=filter \-\-dbus\-user.own=org.gnome.ghex.*
 
 .TP
 \fB\-\-dbus-user.see=name
@@ -695,7 +693,7 @@ not "foobar").
 .br
 Example:
 .br
-$ firejail --dbus-user=filter --dbus-user.see=\\
+$ firejail \-\-dbus\-user=filter \-\-dbus\-user.see=\\
 .br
 org.freedesktop.Notifications
 
@@ -710,7 +708,7 @@ not "foobar").
 .br
 Example:
 .br
-$ firejail --dbus-user=filter --dbus-user.talk=\\
+$ firejail \-\-dbus\-user=filter \-\-dbus\-user.talk=\\
 .br
 org.freedesktop.Notifications
 #endif
@@ -725,48 +723,48 @@ Example:
 $ firejail \-\-debug /usr/bin/firefox
 
 .TP
-\fB\-\-debug-blacklists\fR
+\fB\-\-debug\-blacklists\fR
 Debug blacklisting.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-debug-blacklists /usr/bin/firefox
+$ firejail \-\-debug\-blacklists /usr/bin/firefox
 
 .TP
-\fB\-\-debug-caps
+\fB\-\-debug\-caps
 Print all recognized capabilities in the current Firejail software build and exit.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-debug-caps
+$ firejail \-\-debug\-caps
 
 .TP
-\fB\-\-debug-errnos
+\fB\-\-debug\-errnos
 Print all recognized error numbers in the current Firejail software build and exit.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-debug-errnos
+$ firejail \-\-debug\-errnos
 #ifdef HAVE_PRIVATE_LIB
 .TP
-\fB\-\-debug-private-lib
-Debug messages for --private-lib option.
+\fB\-\-debug\-private\-lib
+Debug messages for \-\-private\-lib option.
 #endif
 .TP
-\fB\-\-debug-protocols
+\fB\-\-debug\-protocols
 Print all recognized protocols in the current Firejail software build and exit.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-debug-protocols
+$ firejail \-\-debug\-protocols
 .TP
 \fB\-\-debug-syscalls
 Print all recognized system calls in the current Firejail software build and exit.
@@ -775,20 +773,20 @@ Print all recognized system calls in the current Firejail software build and exi
 .br
 Example:
 .br
-$ firejail \-\-debug-syscalls
+$ firejail \-\-debug\-syscalls
 .TP
-\fB\-\-debug-syscalls32
+\fB\-\-debug\-syscalls32
 Print all recognized 32 bit system calls in the current Firejail software build and exit.
 .br
 .TP
-\fB\-\-debug-whitelists\fR
+\fB\-\-debug\-whitelists\fR
 Debug whitelisting.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-debug-whitelists /usr/bin/firefox
+$ firejail \-\-debug\-whitelists /usr/bin/firefox
 #ifdef HAVE_NETWORK
 .TP
 \fB\-\-defaultgw=address
@@ -802,24 +800,24 @@ $ firejail \-\-net=eth0 \-\-defaultgw=10.10.20.1 /usr/bin/firefox
 #endif
 
 .TP
-\fB\-\-deterministic-exit-code
+\fB\-\-deterministic\-exit\-code
 Always exit firejail with the first child's exit status. The default behavior is to use the exit status of the final child to exit, which can be nondeterministic.
 .br
 
 .TP
-\fB\-\-deterministic-shutdown
+\fB\-\-deterministic\-shutdown
 Always shut down the sandbox after the first child has terminated. The default behavior is to keep the sandbox alive as long as it contains running processes.
 .br
 
 .TP
-\fB\-\-disable-mnt
+\fB\-\-disable\-mnt
 Blacklist /mnt, /media, /run/mount and /run/media access.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-disable-mnt /usr/bin/firefox
+$ firejail \-\-disable\-mnt /usr/bin/firefox
 
 .TP
 \fB\-\-dns=address
@@ -870,7 +868,7 @@ Without a name/pid, Firejail will monitor the main system network namespace.
 .br
 Example:
 .br
-$ sudo firejail --dnstrace
+$ sudo firejail \-\-dnstrace
 .br
 11:31:43  9.9.9.9        linux.com (type 1)
 .br
@@ -974,7 +972,7 @@ Without a name/pid, Firejail will monitor the main system network namespace.
 .br
 Example
 .br
-$ sudo firejail --icmptrace
+$ sudo firejail \-\-icmptrace
 .br
 20:53:54  192.168.1.60 -> 142.250.65.174 - 98 bytes - Echo request/0
 .br
@@ -995,7 +993,7 @@ Ignore command in profile file.
 .br
 Example:
 .br
-$ firejail --ignore=seccomp --ignore=caps /usr/bin/firefox
+$ firejail \-\-ignore=seccomp \-\-ignore=caps /usr/bin/firefox
 #ifdef HAVE_NETWORK
 .br
 $ firejail \-\-ignore="net eth0" /usr/bin/firefox
@@ -1009,7 +1007,7 @@ Include a profile file before the regular profiles are used.
 .br
 Example:
 .br
-$ firejail --include=/etc/firejail/disable-devel.inc /usr/bin/gedit
+$ firejail \-\-include=/etc/firejail/disable-devel.inc /usr/bin/gedit
 
 #ifdef HAVE_NETWORK
 .TP
@@ -1124,7 +1122,7 @@ Example:
 $ firejail \-\-net=eth0 \-\-iprange=192.168.1.100,192.168.1.150
 
 .TP
-\fB\-\-ipc-namespace
+\fB\-\-ipc\-namespace
 Enable a new IPC namespace if the sandbox was started as a regular user.
 IPC namespace is enabled by default for sandboxes started as root.
 .br
@@ -1139,7 +1137,7 @@ It does not affect other IPC resources, such as Unix sockets (see
 .br
 Example:
 .br
-$ firejail \-\-ipc-namespace /usr/bin/firefox
+$ firejail \-\-ipc\-namespace /usr/bin/firefox
 #endif
 .TP
 \fB\-\-join=name|pid
@@ -1183,25 +1181,25 @@ Security filters and cpus configurations are not applied to the process joining 
 .br
 # start firefox
 .br
-$ firejail --net=eth0 --name=browser /usr/bin/firefox &
+$ firejail \-\-net=eth0 \-\-name=browser /usr/bin/firefox &
 .br
 
 .br
 # change netfilter configuration
 .br
-$ sudo firejail --join-network=browser bash -c "cat /etc/firejail/nolocal.net | /sbin/iptables-restore"
+$ sudo firejail \-\-join-network=browser bash -c "cat /etc/firejail/nolocal.net | /sbin/iptables-restore"
 .br
 
 .br
 # verify netfilter configuration
 .br
-$ sudo firejail --join-network=browser /sbin/iptables -vL
+$ sudo firejail \-\-join\-network=browser /sbin/iptables \-vL
 .br
 
 .br
 # verify IP addresses
 .br
-$ sudo firejail --join-network=browser ip addr
+$ sudo firejail \-\-join-network=browser ip addr
 .br
 Switching to pid 1932, the first child process inside the sandbox
 .br
@@ -1239,7 +1237,7 @@ See \fB\-\-name\fR for details.
 Note that in contrary to other join options there is respective profile option.
 
 .TP
-\fB\-\-keep-config-pulse
+\fB\-\-keep\-config\-pulse
 Disable automatic ~/.config/pulse init, for complex setups such as remote
 pulse servers or non-standard socket paths.
 .br
@@ -1250,9 +1248,9 @@ Example:
 $ firejail \-\-keep-config-pulse /usr/bin/firefox
 
 .TP
-\fB\-\-keep-dev-ntsync
+\fB\-\-keep\-dev\-ntsync
 Allow access to the /dev/ntsync character device (even with
-\fB\-\-private-dev\fR), which is blocked by default.
+\fB\-\-private\-dev\fR), which is blocked by default.
 This device is mostly intended to increase performance and compatibility when
 running certain programs through Wine.
 .br
@@ -1260,17 +1258,17 @@ running certain programs through Wine.
 .br
 Example:
 .br
-$ firejail --keep-dev-ntsync --private-dev
+$ firejail \-\-keep\-dev\-ntsync \-\-private-dev
 
 .TP
-\fB\-\-keep-dev-shm
-/dev/shm directory is untouched (even with --private-dev)
+\fB\-\-keep\-dev\-shm
+/dev/shm directory is untouched (even with \-\-private-dev)
 .br
 
 .br
 Example:
 .br
-$ firejail --keep-dev-shm --private-dev
+$ firejail \-\-keep\-dev\-shm \-\-private-dev
 
 .TP
 \fB\-\-keep-dev-tpm
@@ -1293,30 +1291,30 @@ Paths:
 .br
 Example:
 .br
-$ firejail --keep-dev-tpm --private-dev
+$ firejail \-\-keep\-dev\-tpm \-\-private-dev
 
 .TP
-\fB\-\-keep-fd=all
+\fB\-\-keep\-fd=all
 Inherit all open file descriptors to the sandbox. By default only file descriptors 0, 1 and 2 are inherited to the sandbox, and all other file descriptors are closed.
 .br
 
 .br
 Example:
 .br
-$ firejail --keep-fd=all
+$ firejail \-\-keep\-fd=all
 
 .TP
-\fB\-\-keep-fd=file_descriptor
+\fB\-\-keep\-fd=file_descriptor
 Don't close specified open file descriptors. By default only file descriptors 0, 1 and 2 are inherited to the sandbox, and all other file descriptors are closed.
 .br
 
 .br
 Example:
 .br
-$ firejail --keep-fd=3,4,5
+$ firejail \-\-keep\-fd=3,4,5
 
 .TP
-\fB\-\-keep-shell-rc
+\fB\-\-keep\-shell\-rc
 By default, when using a private home directory, firejail copies files from the
 system's user home template (/etc/skel) into it, which overrides attempts to
 whitelist the original files (such as ~/.bashrc and ~/.zshrc).
@@ -1324,14 +1322,14 @@ This option disables this feature, and enables the user to whitelist the
 original files.
 
 .TP
-\fB\-\-keep-var-tmp
+\fB\-\-keep\-var\-tmp
 /var/tmp directory is untouched.
 .br
 
 .br
 Example:
 .br
-$ firejail --keep-var-tmp
+$ firejail \-\-keep\-var\-tmp
 
 #ifdef HAVE_LANDLOCK
 .TP
@@ -1424,13 +1422,13 @@ that are both writable and executable, to change mappings to be
 executable, or to create executable shared memory. The filter examines
 the arguments of mmap, mmap2, mprotect, pkey_mprotect, memfd_create
 and shmat system calls and returns error EPERM to the process (or
-kills it or log the attempt, see \-\-seccomp-error-action below) if necessary.
+kills it or log the attempt, see \-\-seccomp\-error\-action below) if necessary.
 .br
 
 .br
 Note: shmat is not implemented
 as a system call on some platforms including i386, and it cannot be
-handled by seccomp-bpf.
+handled by seccomp\-bpf.
 
 .TP
 \fB\-\-mkdir=dirname
@@ -1440,7 +1438,7 @@ Create a directory in user home. Parent directories are created as needed.
 .br
 Example:
 .br
-$ firejail --mkdir=~/work/project
+$ firejail \-\-mkdir=~/work/project
 
 .TP
 \fB\-\-mkfile=filename
@@ -1450,7 +1448,7 @@ Create an empty file in user home.
 .br
 Example:
 .br
-$ firejail --mkfile=~/work/project/readme
+$ firejail \-\-mkfile=~/work/project/readme
 
 #ifdef HAVE_NETWORK
 .TP
@@ -1487,7 +1485,7 @@ $ firejail \-\-name=browser /usr/bin/firefox &
 $ firejail \-\-name=browser \-\-private \
 /usr/bin/firefox \-\-no-remote &
 .br
-$ firejail --list
+$ firejail \-\-list
 .br
 1198:netblue:browser:firejail --name=browser /usr/bin/firefox
 .br
@@ -1546,7 +1544,7 @@ network access to programs that don't really need network access.
 .br
 Example:
 .br
-$ firejail \-\-net=none /usr/bin/vlc
+$ firejail \\-\-net=none /usr/bin/vlc
 .br
 
 .br
@@ -1573,7 +1571,7 @@ If a new network namespace is enabled, print network interface configuration for
 .br
 
 .br
-$ firejail --net.print=browser
+$ firejail \-\-net.print=browser
 .br
 Switching to pid 1853, the first child process inside the sandbox
 .br
@@ -1618,13 +1616,13 @@ connections are accepted:
 .br
 # drop STUN (WebRTC) requests
 .br
--A OUTPUT -p udp --dport 3478 -j DROP
+-A OUTPUT \-p udp \-\-dport 3478 \-j DROP
 .br
--A OUTPUT -p udp --dport 3479 -j DROP
+\-A OUTPUT \-p udp \-\-dport 3479 \-j DROP
 .br
--A OUTPUT -p tcp --dport 3478 -j DROP
+\-A OUTPUT \-p tcp \-\-dport 3478 \-j DROP
 .br
--A OUTPUT -p tcp --dport 3479 -j DROP
+\-A OUTPUT \-p tcp \-\-dport 3479 \-j DROP
 .br
 COMMIT
 .br
@@ -1651,7 +1649,7 @@ Example:
 .br
 
 .br
-$ firejail --netfilter=/etc/firejail/webserver.net --net=eth0 \\
+$ firejail \-\-netfilter=/etc/firejail/webserver.net \-\-net=eth0 \\
 .br
 /etc/init.d/apache2 start
 .br
@@ -1662,9 +1660,9 @@ is a desktop client firewall that disable access to local network. Example:
 .br
 
 .br
-$ firejail --netfilter=/etc/firejail/nolocal.net \\
+$ firejail \-\-netfilter=/etc/firejail/nolocal.net \\
 .br
---net=eth0 /usr/bin/firefox
+\-\-net=eth0 /usr/bin/firefox
 
 .TP
 \fB\-\-netfilter=filename,arg1,arg2,arg3 ...
@@ -1674,9 +1672,9 @@ Example:
 .br
 
 .br
-$ firejail --net=eth0 --ip=192.168.1.105 \\
+$ firejail \-\-net=eth0 \-\-ip=192.168.1.105 \\
 .br
---netfilter=/etc/firejail/tcpserver.net,5001 server-program
+\-\-netfilter=/etc/firejail/tcpserver.net,5001 server-program
 .br
 
 .TP
@@ -1685,9 +1683,9 @@ Print the firewall installed in the sandbox specified by name or PID. Example:
 .br
 
 .br
-$ firejail --name=browser --net=eth0 --netfilter /usr/bin/firefox &
+$ firejail \-\-name=browser \-\-net=eth0 \-\-netfilter /usr/bin/firefox &
 .br
-$ firejail --netfilter.print=browser
+$ firejail \-\-netfilter.print=browser
 
 .TP
 \fB\-\-netfilter6=filename
@@ -1701,9 +1699,9 @@ Print the IPv6 firewall installed in the sandbox specified by name or PID. Examp
 .br
 
 .br
-$ firejail --name=browser --net=eth0 --netfilter /usr/bin/firefox &
+$ firejail \-\-name=browser \-\-net=eth0 \-\-netfilter /usr/bin/firefox &
 .br
-$ firejail --netfilter6.print=browser
+$ firejail \-\-netfilter6.print=browser
 
 .TP
 \fB\-\-netlock
@@ -1722,9 +1720,9 @@ A network namespace (\-\-net=eth0) is required for this feature to work. Example
 .br
 
 .br
-$ firejail --net=eth0 --netlock \\
+$ firejail \-\-net=eth0 \-\-netlock \\
 .br
---private=~/tor-browser_en-US ./start-tor-browser.desktop
+\-\-private=~/tor-browser_en-US ./start-tor-browser.desktop
 .br
 
 .br
@@ -1742,7 +1740,7 @@ $ sudo /sbin/brctl addbr br0
 .br
 $ sudo /sbin/ifconfig br0 up
 .br
-$ firejail --ip=10.10.20.67 --netmask=255.255.255.0 --defaultgw=10.10.20.1
+$ firejail \-\-ip=10.10.20.67 \-\-netmask=255.255.255.0 \-\-defaultgw=10.10.20.1
 
 .TP
 \fB\-\-netns=name
@@ -1780,7 +1778,7 @@ Without a name/pid, Firejail will monitor the main system network namespace.
 .br
 Example:
 .br
-$ sudo firejail --nettrace
+$ sudo firejail \-\-nettrace
 .br
                        93 KB/s  address:port (protocol) network
 .br
@@ -1808,7 +1806,7 @@ Only root may specify a negative value.
 .br
 Example:
 .br
-$ firejail --nice=2 /usr/bin/firefox
+$ firejail \-\-nice=2 /usr/bin/firefox
 
 .TP
 \fB\-\-no3d
@@ -1818,11 +1816,11 @@ Disable 3D hardware acceleration.
 .br
 Example:
 .br
-$ firejail --no3d /usr/bin/firefox
+$ firejail \-\-no3d /usr/bin/firefox
 
 .TP
 \fB\-\-noautopulse\fR (deprecated)
-See --keep-config-pulse.
+See \-\-keep-config-pulse.
 
 .TP
 \fB\-\-noblacklist=dirname_or_filename
@@ -1852,7 +1850,7 @@ $ exit
 .br
 
 .br
-$ firejail --noblacklist=/bin/nc
+$ firejail \-\-noblacklist=/bin/nc
 .br
 bash: /bin/nc: Permission denied
 .br
@@ -1860,7 +1858,7 @@ $ exit
 .br
 
 .br
-$ firejail --noblacklist='${PATH}/nc'
+$ firejail \-\-noblacklist='${PATH}/nc'
 .br
 $ nc dict.org 2628
 .br
@@ -2088,7 +2086,7 @@ $ ls -l sandboxlog*
 -rw-r--r-- 1 netblue netblue 511488 Jun  2 07:48 sandboxlog.5
 
 .TP
-\fB\-\-output-stderr=logfile
+\fB\-\-output\-stderr=logfile
 Similar to \-\-output, but stderr is also stored.
 #endif
 
@@ -2107,7 +2105,7 @@ $ firejail \-\-private /usr/bin/firefox
 .TP
 \fB\-\-private=directory
 Use directory as user home.
---private and --private=directory cannot be used together.
+\-\-private and \-\-private=directory cannot be used together.
 .br
 
 .br
@@ -2142,7 +2140,7 @@ File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br
 Example:
 .br
-$ firejail \-\-private-bin=bash,cat,ls,sed
+$ firejail \-\-private\-bin=bash,cat,ls,sed
 .br
 Parent pid 20841, child pid 20842
 .br
@@ -2153,7 +2151,7 @@ $ ls /bin
 bash  cat  ls  sed
 
 .TP
-\fB\-\-private-cache
+\fB\-\-private\-cache
 Mount an empty temporary filesystem on top of the .cache directory in user home. All
 modifications are discarded when the sandbox is closed.
 .br
@@ -2161,10 +2159,10 @@ modifications are discarded when the sandbox is closed.
 .br
 Example:
 .br
-$ firejail \-\-private-cache /usr/bin/openbox
+$ firejail \-\-private\-cache /usr/bin/openbox
 
 .TP
-\fB\-\-private-cwd
+\fB\-\-private\-cwd
 Set working directory inside jail to the home directory, and failing that, the root directory.
 Does not impact working directory of profile include paths.
 .br
@@ -2176,7 +2174,7 @@ $ pwd
 .br
 /tmp
 .br
-$ firejail \-\-private-cwd
+$ firejail \-\-private\-cwd
 .br
 $ pwd
 .br
@@ -2184,7 +2182,7 @@ $ pwd
 .br
 
 .TP
-\fB\-\-private-cwd=directory
+\fB\-\-private\-cwd=directory
 Set working directory inside the jail.
 Full directory path is required. Symbolic links are not allowed.
 Does not impact working directory of profile include paths.
@@ -2197,7 +2195,7 @@ $ pwd
 .br
 /tmp
 .br
-$ firejail \-\-private-cwd=/opt
+$ firejail \-\-private\-cwd=/opt
 .br
 $ pwd
 .br
@@ -2205,7 +2203,7 @@ $ pwd
 .br
 
 .TP
-\fB\-\-private-dev
+\fB\-\-private\-dev
 Create a new /dev directory.
 Only disc, dri, dvb, full, hidraw, log, null, ptmx, pts, random, shm, snd, tty,
 urandom, usb, video and zero devices are available.
@@ -2216,7 +2214,7 @@ Use the options \-\-no3d, \-\-nodvd, \-\-nosound, \-\-notv, \-\-nou2f and
 .br
 Example:
 .br
-$ firejail \-\-private-dev
+$ firejail \-\-private\-dev
 .br
 Parent pid 9887, child pid 9888
 .br
@@ -2232,38 +2230,38 @@ $
 The files installed by \-\-private-etc are copies of the original system files from /etc directory.
 By default, the command brings in a skeleton of files and directories used by most console tools:
 
-$ firejail --private-etc /usr/bin/dig debian.org
+$ firejail \-\-private\-etc /usr/bin/dig debian.org
 
 For X11/GTK/QT/Gnome/KDE  programs add @x11 group as a parameter. Example:
 
-$ firejail --private-etc=@x11,gcrypt,python* /usr/bin/gimp
+$ firejail \-\-private\-etc=@x11,gcrypt,python* /usr/bin/gimp
 
 gcrypt and /etc/python* directories are not part of the generic @x11 group.
 File globbing is supported.
 
 For games, add @games group:
 
-$ firejail --private-etc=@games,@x11 /usr/bin/warzone2100
+$ firejail \-\-private\-etc=@games,@x11 /usr/bin/warzone2100
 
 Sound and networking files are included automatically, unless \-\-nosound or \-\-net=none are specified.
 Files for encrypted TLS/SSL protocol are in @tls-ca group.
 
-$ firejail --private-etc=@tls-ca,wgetrc /usr/bin/wget https://debian.org
+$ firejail \-\-private\-etc=@tls\-ca,wgetrc /usr/bin/wget https://debian.org
 
 Note: The easiest way to extract the list of /etc files accessed by your
 program is by using the \fBstrace\fR utility.
 
 Example:
 
-$ strace -f --trace=%file /usr/bin/transmission-qt 2>&1 | grep etc
+$ strace \-f \-\-trace=%file /usr/bin/transmission-qt 2>&1 | grep etc
 
-$ firejail --allow-debuggers --profile=/etc/firejail/transmission-qt.profile
-strace -f --trace=%file /usr/bin/transmission-qt 2>&1 | grep etc
+$ firejail \-\-allow\-debuggers \-\-profile=/etc/firejail/transmission\-qt.profile
+strace \-f \-\-trace=%file /usr/bin/transmission-qt 2>&1 | grep etc
 
 See also \fB\-\-allow-debuggers\fR and \fB\-\-trace\fR.
 #ifdef HAVE_PRIVATE_HOME
 .TP
-\fB\-\-private-home=file,directory
+\fB\-\-private\-home=file,directory
 Build a new user home in a temporary
 filesystem, and copy the files and directories in the list in the
 new home.
@@ -2276,11 +2274,11 @@ closed.
 .br
 Example:
 .br
-$ firejail \-\-private-home=.mozilla /usr/bin/firefox
+$ firejail \-\-private\-home=.mozilla /usr/bin/firefox
 #endif
 #ifdef HAVE_PRIVATE_LIB
 .TP
-\fB\-\-private-lib=file,directory
+\fB\-\-private\-lib=file,directory
 This feature is currently under heavy development. Only amd64 platforms are supported at this moment.
 The files and directories in the list must be expressed as relative to
 the /lib directory.
@@ -2290,7 +2288,7 @@ It could be as simple as:
 .br
 
 .br
-$ firejail --private-lib /usr/bin/galculator
+$ firejail \-\-private\-lib /usr/bin/galculator
 .br
 
 .br
@@ -2298,15 +2296,15 @@ but it gets complicated really fast:
 .br
 
 .br
-$ firejail --private-lib=x86_64-linux-gnu/xed,x86_64-linux-gnu/gdk-pixbuf-2.0,libenchant.so.1,librsvg-2.so.2 /usr/bin/xed
+$ firejail \-\-private\-lib=x86_64\-linux\-gnu/xed,x86_64\-linux\-gnu/gdk\-pixbuf\-2.0,libenchant.so.1,librsvg\-2.so.2 /usr/bin/xed
 .br
 
 .br
-The feature is integrated with \-\-private-bin:
+The feature is integrated with \-\-private\-bin:
 .br
 
 .br
-$ firejail --private-lib --private-bin=bash,ls,ps
+$ firejail \-\-private\-lib \-\-private\-bin=bash,ls,ps
 .br
 $ ls /lib
 .br
@@ -2333,10 +2331,10 @@ $
 
 .br
 Note: Support for this command is controlled in firejail.config with the
-\fBprivate-lib\fR option.
+\fBprivate\-lib\fR option.
 #endif
 .TP
-\fB\-\-private-opt=file,directory
+\fB\-\-private\-opt=file,directory
 Build a new /opt in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
@@ -2350,7 +2348,7 @@ All modifications are discarded when the sandbox is closed.
 .br
 Example:
 .br
-$ firejail --private-opt=firefox /opt/firefox/firefox
+$ firejail \-\-private\-opt=firefox /opt/firefox/firefox
 .br
 
 .br
@@ -2365,7 +2363,7 @@ For details, see
 .UE .
 
 .TP
-\fB\-\-private-srv=file,directory
+\fB\-\-private\-srv=file,directory
 Build a new /srv in a temporary
 filesystem, and copy the files and directories in the list.
 The files and directories in the list must be expressed as relative to
@@ -2379,17 +2377,17 @@ All modifications are discarded when the sandbox is closed.
 .br
 Example:
 .br
-# firejail --private-srv=www /etc/init.d/apache2 start
+# firejail \-\-private-srv=www /etc/init.d/apache2 start
 
 .TP
-\fB\-\-private-tmp
+\fB\-\-private\-tmp
 Mount an empty temporary filesystem on top of /tmp directory whitelisting X11 and PulseAudio sockets.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-private-tmp
+$ firejail \-\-private\-tmp
 .br
 $ ls -al /tmp
 .br
@@ -2408,7 +2406,7 @@ Load a custom security profile from filename, or use the name of a specific appl
 .br
 
 .br
-If the command line option --profile is not provided, Firejail will attempt to extract the appname
+If the command line option \-\-profile is not provided, Firejail will attempt to extract the appname
 from the target program filename. It will then search ~/.config/firejail directory for a suitable profile,
 followed by a search in /etc/firejail/directory.
 .br
@@ -2432,7 +2430,7 @@ When using a filename, please include a full path or a relative path.
 .br
 
 .br
-$ firejail --profile=./firefox.profile firefox
+$ firejail \-\-profile=./firefox.profile firefox
 .br
 Reading profile ./firefox.profile
 .br
@@ -2444,11 +2442,11 @@ Reading profile /etc/firejail/firefox-common.profile
 .br
 
 .br
---profile=appname comes in handy when running appimages:
+\-\-profile=appname comes in handy when running appimages:
 .br
 
 .br
-$ firejail --appimage --profile=firefox firefox-nightly-148.0.r20260103-x86_64.AppImage
+$ firejail \-\-appimage \-\-profile=firefox firefox-nightly-148.0.r20260103-x86_64.AppImage
 .br
 Reading profile /home/netblue/.config/firejail/firefox.profile
 .br
@@ -2460,7 +2458,7 @@ Reading profile /etc/firejail/firefox-common.profile
 .br
 
 .br
-See \fBman 5 firejail-profile\fR for profile file syntax information.
+See \fBman 5 firejail\-profile\fR for profile file syntax information.
 For  profile resolution  details see
 .UR
 https://github.com/netblue30/firejail/wiki/Creating-Profiles.
@@ -2527,14 +2525,14 @@ Turn off Firejail's output.
 .br
 The same effect can be obtained by setting an environment variable FIREJAIL_QUIET to yes.
 .TP
-\fB\-\-read-only=dirname_or_filename
+\fB\-\-read\-only=dirname_or_filename
 Set directory or file read-only. File globbing is supported, see \fBFILE GLOBBING\fR section for more details.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-read-only=~/.mozilla /usr/bin/firefox
+$ firejail \-\-read\-only=~/.mozilla /usr/bin/firefox
 .br
 .TP
 \fB\-\-read-write=dirname_or_filename
@@ -2548,40 +2546,40 @@ $ mkdir ~/test
 .br
 $ touch ~/test/a
 .br
-$ firejail --read-only=~/test --read-write=~/test/a
+$ firejail \-\-read\-only=~/test \-\-read\-write=~/test/a
 
 
 .TP
-\fB\-\-restrict-namespaces
+\fB\-\-restrict\-namespaces
 Install a seccomp filter that blocks attempts to create new cgroup, ipc, net, mount, pid, time, user or uts namespaces.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-restrict-namespaces
+$ firejail \-\-restrict\-namespaces
 
 .TP
-\fB\-\-restrict-namespaces=cgroup,ipc,net,mnt,pid,time,user,uts
+\fB\-\-restrict\-namespaces=cgroup,ipc,net,mnt,pid,time,user,uts
 Install a seccomp filter that blocks attempts to create any of the specified namespaces. The filter examines
 the arguments of clone, unshare and setns system calls and returns error EPERM to the process
-(or kills it or logs the attempt, see \-\-seccomp-error-action below) if necessary. Note that the filter is not
+(or kills it or logs the attempt, see \-\-seccomp\-error\-action below) if necessary. Note that the filter is not
 able to examine the arguments of clone3 system calls, and always responds to these calls with error ENOSYS.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-restrict-namespaces=user,net
+$ firejail \-\-restrict\-namespaces=user,net
 
 .TP
-\fB\-\-rlimit-as=number
+\fB\-\-rlimit\-as=number
 Set the maximum size of the process's virtual memory (address space) in bytes.
 You can use K(ibibyte), M(ebibyte) or G(ibibyte) as a suffix, such as "100M"
 (which is equivalent to 104857600 bytes).
 
 .TP
-\fB\-\-rlimit-cpu=number
+\fB\-\-rlimit\-cpu=number
 Set the maximum limit, in seconds, for the amount of CPU time each
 sandboxed process can consume. When the limit is reached, the processes are killed.
 
@@ -2590,18 +2588,18 @@ the CPU has been in use and does not necessarily directly relate to the elapsed 
 track of CPU seconds for each process independently.
 
 .TP
-\fB\-\-rlimit-fsize=number
+\fB\-\-rlimit\-fsize=number
 Set the maximum file size that can be created by a process.
 You can use K(ibibyte), M(ebibyte) or G(ibibyte) as a suffix, such as "100M"
 (which is equivalent to 104857600 bytes).
 .TP
-\fB\-\-rlimit-nofile=number
+\fB\-\-rlimit\-nofile=number
 Set the maximum number of files that can be opened by a process.
 .TP
-\fB\-\-rlimit-nproc=number
+\fB\-\-rlimit\-nproc=number
 Set the maximum number of processes that can be created for the real user ID of the calling process.
 .TP
-\fB\-\-rlimit-sigpending=number
+\fB\-\-rlimit\-sigpending=number
 Set the maximum number of pending signals for a process.
 
 .TP
@@ -2740,7 +2738,7 @@ $ ls
 Operation not permitted
 
 .TP
-\fB\-\-seccomp.block-secondary
+\fB\-\-seccomp.block\-secondary
 Enable seccomp filter and filter system call architectures so that
 only the native architecture is allowed. For example, on amd64, i386
 and x32 system calls are blocked as well as changing the execution
@@ -2764,7 +2762,7 @@ $ firejail \-\-seccomp.drop=utime,utimensat,utimes,@clock
 .br
 Instead of dropping the syscall by returning EPERM, another error
 number can be returned using \fBsyscall:errno\fR syntax. This can be
-also changed globally with \-\-seccomp-error-action or
+also changed globally with \-\-seccomp\-error\-action or
 in /etc/firejail/firejail.config file.  The process can also be killed
 by using \fBsyscall:kill\fR syntax, or the attempt may be logged with
 \fBsyscall:log\fR.
@@ -2814,7 +2812,7 @@ Example:
 .br
 $ firejail \-\-name=browser /usr/bin/firefox &
 .br
-$ firejail --seccomp.print=browser
+$ firejail \-\-seccomp.print=browser
 .br
  line  OP JT JF    K
 .br
@@ -3018,7 +3016,7 @@ Without a name/pid, Firejail will monitor the main system network namespace.
 .br
 Example:
 .br
-$ sudo firejail --snitrace
+$ sudo firejail \-\-snitrace
 .br
 07:49:51  23.185.0.3       linux.com
 .br
@@ -3053,7 +3051,7 @@ Enable shell tab completion in sandboxes using private or whitelisted home direc
 .br
 
 .br
-$ firejail \-\-private --tab
+$ firejail \-\-private \-\-tab
 .TP
 \fB\-\-timeout=hh:mm:ss
 Kill the sandbox automatically after the time has elapsed. The time is specified in hours/minutes/seconds format.
@@ -3088,7 +3086,7 @@ trace output to filename, otherwise log to console.
 .br
 Example:
 .br
-$ firejail \-\-trace /usr/bin/wget -q www.debian.org
+$ firejail \-\-trace /usr/bin/wget \-q www.debian.org
 .br
 Reading profile /etc/firejail/wget.profile
 .br
@@ -3112,7 +3110,7 @@ parent is shutting down, bye...
 .br
 
 .br
-See also \fB\-\-allow-debuggers\fR and \fB\-\-private-etc\fR.
+See also \fB\-\-allow\-debuggers\fR and \fB\-\-private\-etc\fR.
 .TP
 \fB\-\-tracelog
 This option enables auditing blacklisted files and directories. A message
@@ -3122,13 +3120,13 @@ is sent to syslog in case the file or the directory is accessed.
 .br
 Example:
 .br
-$ firejail --tracelog /usr/bin/firefox
+$ firejail \-\-tracelog /usr/bin/firefox
 .br
 
 .br
 Sample messages:
 .br
-$ sudo tail -f /var/log/syslog
+$ sudo tail \-f /var/log/syslog
 .br
 [...]
 .br
@@ -3191,15 +3189,15 @@ Compile time support:
 .br
 #ifdef HAVE_NETWORK
 .TP
-\fB\-\-veth-name=name
-Use this name for the interface connected to the bridge for --net=bridge_interface commands,
+\fB\-\-veth\-name=name
+Use this name for the interface connected to the bridge for \-\-net=bridge_interface commands,
 instead of the default one.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-net=br0 --veth-name=if0
+$ firejail \-\-net=br0 \-\-veth\-name=if0
 #endif
 .TP
 \fB\-\-whitelist=dirname_or_filename
@@ -3260,30 +3258,30 @@ Mount /etc directory read-write.
 .br
 Example:
 .br
-$ sudo firejail --writable-etc
+$ sudo firejail \-\-writable-etc
 
 .TP
-\fB\-\-writable-run-user
+\fB\-\-writable\-run\-user
 Disable the default blacklisting of /run/user/$UID/systemd and /run/user/$UID/gnupg.
 .br
 
 .br
 Example:
 .br
-$ sudo firejail --writable-run-user
+$ sudo firejail \-\-writable\-run\-user
 
 .TP
-\fB\-\-writable-var
-Mount /var directory read-write.
+\fB\-\-writable\-var
+Mount /var directory read\-write.
 .br
 
 .br
 Example:
 .br
-$ sudo firejail --writable-var
+$ sudo firejail \-\-writable\-var
 
 .TP
-\fB\-\-writable-var-log
+\fB\-\-writable\-var\-log
 Use the real /var/log directory, not a clone. By default, a tmpfs is mounted on top of /var/log
 directory, and a skeleton filesystem is created based on the original /var/log.
 .br
@@ -3291,7 +3289,7 @@ directory, and a skeleton filesystem is created based on the original /var/log.
 .br
 Example:
 .br
-$ sudo firejail --writable-var-log
+$ sudo firejail \-\-writable\-var\-log
 
 #ifdef HAVE_X11
 .TP
@@ -3312,7 +3310,7 @@ by adding "-nolisten local" on Xorg command line at system level.
 .br
 Example:
 .br
-$ firejail \-\-x11 --net=eth0 /usr/bin/firefox
+$ firejail \-\-x11 \-\-net=eth0 /usr/bin/firefox
 
 .TP
 \fB\-\-x11=none
@@ -3386,7 +3384,7 @@ This feature is not available when running as root.
 .br
 Example:
 .br
-$ firejail \-\-x11=xpra --net=eth0 /usr/bin/firefox
+$ firejail \-\-x11=xpra \-\-net=eth0 /usr/bin/firefox
 
 
 .TP
@@ -3398,7 +3396,7 @@ testing on headless servers.
 .br
 
 .br
-On Debian platforms Xvfb is installed with the command \fBsudo apt-get install xvfb\fR.
+On Debian platforms Xvfb is installed with the command \fBsudo apt\-get install xvfb\fR.
 This feature is not available when running as root.
 .br
 
@@ -3414,7 +3412,7 @@ in order to isolate the abstract sockets used by other X servers.
 .br
 
 .br
-$ firejail --net=none --x11=xvfb /usr/bin/openbox
+$ firejail \-\-net=none \-\-x11=xvfb /usr/bin/openbox
 .br
 
 .br
@@ -3437,7 +3435,7 @@ Xvfb server (792).
 .br
 
 .br
-$ x11vnc -display :792
+$ x11vnc \-display :792
 .br
 
 .br
@@ -3449,27 +3447,27 @@ $ vncviewer
 .br
 
 .TP
-\fB\-\-xephyr-extra-params=OPTIONS
-Set Xephyr server command extra parameters for x11 --x11=xephyr. The setting will overwrite the default set in /etc/firejail/firejail.config
+\fB\-\-xephyr\-extra\-params=OPTIONS
+Set Xephyr server command extra parameters for x11 \-\-x11=xephyr. The setting will overwrite the default set in /etc/firejail/firejail.config
 for the current sandbox. Run Xephyr -help to get a list of available options.
 .br
 
 .br
 Example:
 .br
-$ firejail --net=eth0 --x11=xephyr --xephyr-extra-params="-title firefox" /usr/bin/firefox
+$ firejail \-\-net=eth0 \-\-x11=xephyr \-\-xephyr\-extra\-params="\-title firefox" /usr/bin/firefox
 .br
 
 .TP
-\fB\-\-xephyr-screen=WIDTHxHEIGHT
-Set screen size for --x11=xephyr. The setting will overwrite the default set in /etc/firejail/firejail.config
+\fB\-\-xephyr\-screen=WIDTHxHEIGHT
+Set screen size for \-\-x11=xephyr. The setting will overwrite the default set in /etc/firejail/firejail.config
 for the current sandbox. Run xrandr to get a list of supported resolutions on your computer.
 .br
 
 .br
 Example:
 .br
-$ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 /usr/bin/firefox
+$ firejail \-\-net=eth0 \-\-x11=xephyr \-\-xephyr\-screen=640x480 /usr/bin/firefox
 .br
 
 #endif
@@ -3477,17 +3475,17 @@ $ firejail --net=eth0 --x11=xephyr --xephyr-screen=640x480 /usr/bin/firefox
 #ifdef HAVE_APPARMOR
 .SH APPARMOR
 .TP
-AppArmor support is disabled by default at compile time. Use --enable-apparmor configuration option to enable it:
+AppArmor support is disabled by default at compile time. Use \-\-enable-apparmor configuration option to enable it:
 .br
 
 .br
-$ ./configure --prefix=/usr --enable-apparmor
+$ ./configure \-\-prefix=/usr \-\-enable-apparmor
 .TP
 During software install, a generic AppArmor profile file, firejail-default, is placed in /etc/apparmor.d directory. The local customizations must be placed in /etc/apparmor.d/local/firejail-local. The profile needs to be loaded into the kernel by reloading apparmor.service, rebooting the system or running the following command as root:
 .br
 
 .br
-# apparmor_parser -r /etc/apparmor.d/firejail-default
+# apparmor_parser \-r /etc/apparmor.d/firejail\-default
 .TP
 The installed profile is supplemental for main firejail functions and among other things does the following:
 .br
@@ -3532,7 +3530,7 @@ Make a firefox symlink to /usr/bin/firejail:
 .br
 
 .br
-$ sudo ln -s /usr/bin/firejail /usr/local/bin/firefox
+$ sudo ln \-s /usr/bin/firejail /usr/local/bin/firefox
 .br
 
 .br
@@ -3540,7 +3538,7 @@ Verify $PATH
 .br
 
 .br
-$ which -a firefox
+$ which \-a firefox
 .br
 /usr/local/bin/firefox
 .br
@@ -3553,7 +3551,7 @@ Starting firefox in this moment, automatically invokes “firejail /usr/bin/fire
 .br
 
 .br
-This works for clicking on desktop environment icons, menus etc. Use "firejail --tree"
+This works for clicking on desktop environment icons, menus etc. Use "firejail \-\-tree"
 to verify the program is sandboxed.
 .PP
 .RS
@@ -3561,7 +3559,7 @@ to verify the program is sandboxed.
 
 .br
 .br
-$ firejail --tree
+$ firejail \-\-tree
 .br
 1189:netblue:firejail /usr/bin/firefox
 .br
@@ -3588,7 +3586,7 @@ Debug Firefox sandbox.
 \fBfirejail \-\-private /usr/bin/firefox
 Start Firefox with a new, empty home directory.
 .TP
-\fBfirejail --net=none /usr/bin/vlc
+\fBfirejail \-\-net=none /usr/bin/vlc
 Start VLC in an unconnected network namespace.
 #ifdef HAVE_NETWORK
 .TP
@@ -3639,11 +3637,11 @@ Examples:
 .br
 
 .br
-$ firejail --private-bin=sh,bash,python*
+$ firejail \-\-private\-bin=sh,bash,python*
 .br
-$ firejail --blacklist=~/dir[1234]
+$ firejail \-\-blacklist=~/dir[1234]
 .br
-$ firejail --read-only=~/dir[1-4]
+$ firejail \-\-read-only=~/dir[1-4]
 .br
 
 #ifdef HAVE_FILE_TRANSFER
@@ -3676,7 +3674,7 @@ Examples:
 .br
 
 .br
-$ firejail \-\-name=mybrowser --private /usr/bin/firefox
+$ firejail \-\-name=mybrowser \-\-private /usr/bin/firefox
 .br
 
 .br
@@ -3853,15 +3851,15 @@ The shaper works at sandbox level, and can be used only for sandboxes configured
 
 Set rate-limits:
 
-	$ firejail --bandwidth=name|pid set network download upload
+	$ firejail \-\-bandwidth=name|pid set network download upload
 
 Clear rate-limits:
 
-	$ firejail --bandwidth=name|pid clear network
+	$ firejail \-\-bandwidth=name|pid clear network
 
 Status:
 
-	$ firejail --bandwidth=name|pid status
+	$ firejail \-\-bandwidth=name|pid status
 
 where:
 .br

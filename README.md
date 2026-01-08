@@ -369,7 +369,7 @@ For details, see [#6906](https://github.com/netblue30/firejail/issues/6906).
 ### --profile=filename|appanme rework
 
 Issue https://github.com/netblue30/firejail/issues/6896: requiring a full path or a relative
-ath for the filename.
+path for the filename.
 
 ```text
       --profile=filename|appname

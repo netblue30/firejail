@@ -360,7 +360,7 @@ void fs_private_homedir(void) {
 
 	if (!arg_keep_shell_rc)
 		skel(homedir);
-	if (xflag)
+	if (xflag)		
 		copy_xauthority();
 	if (aflag)
 		copy_asoundrc();
@@ -395,7 +395,7 @@ void fs_private(void) {
 	if (!arg_allusers) {
 		if (arg_debug)
 			printf("Mounting a new /home directory\n");
-		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_NOEXEC | MS_STRICTATIME,  "mode=755,gid=0") < 0)
+		if (mount("tmpfs", "/home", "tmpfs", MS_NOSUID | MS_NODEV | MS_STRICTATIME,  "mode=755,gid=0") < 0)
 			errExit("mounting /home directory");
 		selinux_relabel_path("/home", "/home");
 		fs_logger("tmpfs /home");

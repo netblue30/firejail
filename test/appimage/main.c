@@ -19,7 +19,7 @@
  */
 
 /* How to build an appimage type 2 based on this program (Debian 13 stable):
-   
+
    $ wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
    $ mv appimagetool-x86_64.AppImage ~/tmp/.
    $ cd ~/tmp
@@ -32,7 +32,7 @@
    #!/bin/bash
    exec $APPDIR/usr/bin/hello-world $@
    $ chmod +x AppDir/AppRun
- 
+
    $ gcc -o hello-world main.c
    $ cp hello-world AppDir/usr/bin/.
    $ ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir HelloWorld.AppImage
@@ -64,14 +64,12 @@
 
 int main(int argc, char **argv) {
 	printf("Hello, Firejail!\n");
-	
+
 	// test args
 	int i;
 	for (i = 1; i < argc; i++)
 		printf("%d - %s\n", i, argv[i]);
 
-
-    
 	char *cont = getenv("container");
 	if (cont)
 		printf("\n*** container %s ***\n", cont);
@@ -88,7 +86,7 @@ int main(int argc, char **argv) {
 			char *ptr = strchr(buf, '\n');
 			if (ptr)
 				*ptr = '\0';
-		    
+
 			if (strncmp(buf, "NoNewPrivs:", 11) == 0) {
 				ptr = buf + 11;
 				while (*ptr == ' ' || *ptr == '\t')
@@ -96,7 +94,7 @@ int main(int argc, char **argv) {
 				printf("*** NoNewPrivs %s ***\n", ptr);
 				sleep(1);
 			}
-			
+
 			if (strncmp(buf, "Seccomp:", 8) == 0) {
 				ptr = buf + 8;
 				while (*ptr == ' ' || *ptr == '\t')
@@ -106,6 +104,6 @@ int main(int argc, char **argv) {
 		}
 		fclose(fp);
 	}
-	    
+
 	return 0;
 }

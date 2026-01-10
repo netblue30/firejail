@@ -319,9 +319,6 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_ioprio_set
 	  "ioprio_set,"
 #endif
-#ifdef SYS_ni_syscall
-	  "ni_syscall,"
-#endif
 #ifdef SYS_syslog
 	  "syslog,"
 #endif
@@ -391,9 +388,21 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_vhangup
 	  "vhangup"
 #endif
-//#ifdef SYS_mincore	// 0.9.57 - problem fixed in Linux kernel 5.0; on 4.x it will break kodi, mpv, totem
-//	  "mincore"
-//#endif
+	},
+	{ .name = "@default-keep", .list =
+#ifdef SYS_arch_prctl
+	  "arch_prctl," // breaks glibc, i386 and x86_64 only
+#endif
+	  "execve,"
+	  "execveat," // commonly used by fexecve
+#ifdef SYS_mmap
+	  "mmap," // cannot load shared libraries
+#endif
+#ifdef SYS_mmap2
+	  "mmap2,"
+#endif
+	  "mprotect," // cannot load shared libraries
+	  "prctl"
 	},
 	{ .name = "@default-nodebuggers", .list =
 	  "@default,"
@@ -406,11 +415,6 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_process_vm_readv
 	  "process_vm_readv"
 #endif
-	},
-	{ .name = "@default-keep", .list =
-	  "execveat," // commonly used by fexecve
-	  "execve,"
-	  "prctl"
 	},
 	{ .name = "@file-system", .list =
 #ifdef SYS_access
@@ -554,12 +558,6 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_mknodat
 	  "mknodat,"
 #endif
-#ifdef SYS_mmap
-	  "mmap,"
-#endif
-#ifdef SYS_mmap2
-	  "mmap2,"
-#endif
 #ifdef SYS_munmap
 	  "munmap,"
 #endif
@@ -664,17 +662,11 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_epoll_ctl
 	  "epoll_ctl,"
 #endif
-#ifdef SYS_epoll_ctl_old
-	  "epoll_ctl_old,"
-#endif
 #ifdef SYS_epoll_pwait
 	  "epoll_pwait,"
 #endif
 #ifdef SYS_epoll_wait
 	  "epoll_wait,"
-#endif
-#ifdef SYS_epoll_wait_old
-	  "epoll_wait_old,"
 #endif
 #ifdef SYS_eventfd
 	  "eventfd,"
@@ -927,6 +919,12 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_create_module
 	  "create_module,"
 #endif
+#ifdef SYS_epoll_ctl_old
+	  "epoll_ctl_old,"
+#endif
+#ifdef SYS_epoll_wait_old
+	  "epoll_wait_old,"
+#endif
 #ifdef SYS_ftime
 	  "ftime,"
 #endif
@@ -1078,9 +1076,6 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 	},
 	{ .name = "@process", .list =
-#ifdef SYS_arch_prctl
-	  "arch_prctl,"
-#endif
 #ifdef SYS_capget
 	  "capget,"
 #endif
@@ -1090,14 +1085,8 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_clone3
 	  "clone3,"
 #endif
-#ifdef SYS_execveat
-	  "execveat,"
-#endif
 #ifdef SYS_fork
 	  "fork,"
-#endif
-#ifdef SYS_getrusage
-	  "getrusage,"
 #endif
 #ifdef SYS_kill
 	  "kill,"
@@ -1107,9 +1096,6 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_pidfd_send_signal
 	  "pidfd_send_signal,"
-#endif
-#ifdef SYS_prctl
-	  "prctl,"
 #endif
 #ifdef SYS_rt_sigqueueinfo
 	  "rt_sigqueueinfo,"
@@ -1186,6 +1172,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 	},
 	{ .name = "@resources", .list =
+#ifdef SYS_getrusage
+	  "getrusage,"
+#endif
 #ifdef SYS_ioprio_set
 	  "ioprio_set,"
 #endif
@@ -1194,6 +1183,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_migrate_pages
 	  "migrate_pages,"
+#endif
+#ifdef SYS_mincore
+	  "mincore,"
 #endif
 #ifdef SYS_move_pages
 	  "move_pages,"
@@ -1394,9 +1386,6 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_madvise
 	  "madvise,"
-#endif
-#ifdef SYS_mprotect
-	  "mprotect,"
 #endif
 #ifdef SYS_mremap
 	  "mremap,"

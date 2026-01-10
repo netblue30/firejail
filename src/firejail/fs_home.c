@@ -360,7 +360,7 @@ void fs_private_homedir(void) {
 
 	if (!arg_keep_shell_rc)
 		skel(homedir);
-	if (xflag)		
+	if (xflag)
 		copy_xauthority();
 	if (aflag)
 		copy_asoundrc();

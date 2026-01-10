@@ -1544,7 +1544,7 @@ network access to programs that don't really need network access.
 .br
 Example:
 .br
-$ firejail \\-\-net=none /usr/bin/vlc
+$ firejail \-\-net=none /usr/bin/vlc
 .br
 
 .br

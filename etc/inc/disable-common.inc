@@ -390,6 +390,7 @@ read-only ${HOME}/.w3m
 read-only ${HOME}/.xmonad
 read-only ${HOME}/.xscreensaver
 read-only ${HOME}/.yarnrc
+read-only ${HOME}/.zen/profiles.ini
 read-only ${HOME}/_exrc
 read-only ${HOME}/_gvimrc
 read-only ${HOME}/_vimrc

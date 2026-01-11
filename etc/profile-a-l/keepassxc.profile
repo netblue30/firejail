@@ -58,6 +58,9 @@ include disable-xdg.inc
 #mkdir ${HOME}/.mozilla/native-messaging-hosts
 #mkfile ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
+#mkdir ${HOME}/.zen/native-messaging-hosts
+#mkfile ${HOME}/.zen/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
+#whitelist ${HOME}/.zen/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #mkdir ${HOME}/.cache/keepassxc
 #mkdir ${HOME}/.config/keepassxc
 #whitelist ${HOME}/.cache/keepassxc

@@ -22,7 +22,7 @@ whitelist ${HOME}/.zen
 
 # Note: Zen Browser requires a shell to launch on Arch and Fedora.
 # Add the next lines to zen-browser.local to enable private-bin.
-private-bin bash,dbus-launch,dbus-send,env,zen-browser,sh,which
+#private-bin bash,dbus-launch,dbus-send,env,zen-browser,sh,which
 #private-bin basename,bash,cat,dirname,expr,false,zen-browser,getenforce,ln,mkdir,pidof,restorecon,rm,rmdir,sed,sh,tclsh,true,uname
 
 dbus-user filter

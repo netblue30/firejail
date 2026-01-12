@@ -597,6 +597,8 @@ hamzadis (https://github.com/hamzadis)
 	- added --overlay-named=name and --overlay-path=path
 Hans-Christoph Steiner (https://github.com/eighthave)
 	- added xournal profile
+Haowei Yu (https://github.com/sfc-gh-hyu)
+	- add configure options when building rpm
 Harald Kubota (https://github.com/haraldkubota)
 	- zsh completion
 Harry Seiler (https://github.com/Xunil73)
@@ -623,8 +625,8 @@ Holger Heinz (https://github.com/hheinz)
 	- manpage work
 Hotty Capy (https://github.com/hotcapy)
 	- softmaker-common.profile: add fstab to private-etc
-Haowei Yu (https://github.com/sfc-gh-hyu)
-	- add configure options when building rpm
+HybridDog - (https://github.com/HybridDog)
+	- added srb2 profile
 Icaro Perseo (https://github.com/icaroperseo)
 	- Icecat profile
 	- several profile fixes

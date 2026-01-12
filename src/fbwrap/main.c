@@ -23,7 +23,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <linux/prctl.h>
+//#include <linux/prctl.h>
 #include <sys/prctl.h>
 #include <signal.h>
 

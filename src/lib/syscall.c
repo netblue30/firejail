@@ -310,26 +310,38 @@ static const SyscallGroupList sysgroups[] = {
 	  "@raw-io,"
 	  "@reboot,"
 	  "@swap,"
-#ifdef SYS_open_by_handle_at
-	  "open_by_handle_at,"
-#endif
-#ifdef SYS_name_to_handle_at
-	  "name_to_handle_at,"
-#endif
-#ifdef SYS_ioprio_set
-	  "ioprio_set,"
-#endif
-#ifdef SYS_syslog
-	  "syslog,"
-#endif
-#ifdef SYS_fanotify_init
-	  "fanotify_init,"
+#ifdef SYS_acct
+	  "acct,"
 #endif
 #ifdef SYS_add_key
 	  "add_key,"
 #endif
-#ifdef SYS_request_key
-	  "request_key,"
+#ifdef SYS_bpf
+	  "bpf,"
+#endif
+#ifdef SYS_fanotify_init
+	  "fanotify_init,"
+#endif
+#ifdef SYS_io_cancel
+	  "io_cancel,"
+#endif
+#ifdef SYS_io_destroy
+	  "io_destroy,"
+#endif
+#ifdef SYS_io_getevents
+	  "io_getevents,"
+#endif
+#ifdef SYS_io_setup
+	  "io_setup,"
+#endif
+#ifdef SYS_io_submit
+	  "io_submit,"
+#endif
+#ifdef SYS_ioprio_set
+	  "ioprio_set,"
+#endif
+#ifdef SYS_keyctl
+	  "keyctl,"
 #endif
 #ifdef SYS_mbind
 	  "mbind,"
@@ -340,44 +352,23 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_move_pages
 	  "move_pages,"
 #endif
-#ifdef SYS_keyctl
-	  "keyctl,"
+#ifdef SYS_name_to_handle_at
+	  "name_to_handle_at,"
 #endif
-#ifdef SYS_io_setup
-	  "io_setup,"
+#ifdef SYS_nfsservctl
+	  "nfsservctl,"
 #endif
-#ifdef SYS_io_destroy
-	  "io_destroy,"
-#endif
-#ifdef SYS_io_getevents
-	  "io_getevents,"
-#endif
-#ifdef SYS_io_submit
-	  "io_submit,"
-#endif
-#ifdef SYS_io_cancel
-	  "io_cancel,"
+#ifdef SYS_open_by_handle_at
+	  "open_by_handle_at,"
 #endif
 #ifdef SYS_remap_file_pages
 	  "remap_file_pages,"
 #endif
+#ifdef SYS_request_key
+	  "request_key,"
+#endif
 #ifdef SYS_set_mempolicy
 	  "set_mempolicy,"
-#endif
-#ifdef SYS_vmsplice
-	  "vmsplice,"
-#endif
-#ifdef SYS_userfaultfd
-	  "userfaultfd,"
-#endif
-#ifdef SYS_acct
-	  "acct,"
-#endif
-#ifdef SYS_bpf
-	  "bpf,"
-#endif
-#ifdef SYS_nfsservctl
-	  "nfsservctl,"
 #endif
 #ifdef SYS_setdomainname
 	  "setdomainname,"
@@ -385,8 +376,17 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_sethostname
 	  "sethostname,"
 #endif
+#ifdef SYS_syslog
+	  "syslog,"
+#endif
+#ifdef SYS_userfaultfd
+	  "userfaultfd,"
+#endif
 #ifdef SYS_vhangup
-	  "vhangup"
+	  "vhangup,"
+#endif
+#ifdef SYS_vmsplice
+	  "vmsplice"
 #endif
 	},
 	{ .name = "@default-keep", .list =
@@ -406,14 +406,14 @@ static const SyscallGroupList sysgroups[] = {
 	},
 	{ .name = "@default-nodebuggers", .list =
 	  "@default,"
-#ifdef SYS_ptrace
-	  "ptrace,"
-#endif
 #ifdef SYS_personality
 	  "personality,"
 #endif
 #ifdef SYS_process_vm_readv
-	  "process_vm_readv"
+	  "process_vm_readv,"
+#endif
+#ifdef SYS_ptrace
+	  "ptrace"
 #endif
 	},
 	{ .name = "@file-system", .list =
@@ -1161,14 +1161,14 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 	},
 	{ .name = "@reboot", .list =
-#ifdef SYS_kexec_load
-	  "kexec_load,"
-#endif
 #ifdef SYS_kexec_file_load
 	  "kexec_file_load,"
 #endif
+#ifdef SYS_kexec_load
+	  "kexec_load,"
+#endif
 #ifdef SYS_reboot
-	  "reboot,"
+	  "reboot"
 #endif
 	},
 	{ .name = "@resources", .list =
@@ -1295,11 +1295,11 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 	},
 	{ .name = "@swap", .list =
-#ifdef SYS_swapon
-	  "swapon,"
-#endif
 #ifdef SYS_swapoff
-	  "swapoff"
+	  "swapoff,"
+#endif
+#ifdef SYS_swapon
+	  "swapon"
 #endif
 	},
 	{ .name = "@sync", .list =

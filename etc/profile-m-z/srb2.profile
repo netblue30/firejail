@@ -47,7 +47,7 @@ disable-mnt
 private-bin srb2
 private-cache
 private-dev
-private-etc @tls-ca,@games,@x11
+private-etc @games,@tls-ca,@x11
 private-tmp
 
 dbus-user none

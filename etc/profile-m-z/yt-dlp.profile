@@ -64,7 +64,7 @@ seccomp
 seccomp.block-secondary
 tracelog
 
-private-bin deno,env,ffmpeg,ffprobe,python*,yt-dlp,uname,file
+private-bin deno,env,ffmpeg,ffprobe,file,python*,uname,yt-dlp
 private-cache
 private-dev
 private-etc @tls-ca,mime.types,yt-dlp,yt-dlp-plugins,yt-dlp.conf

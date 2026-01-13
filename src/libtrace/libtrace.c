@@ -447,18 +447,18 @@ int stat(const char *pathname, struct stat *statbuf) {
 	return rv;
 }
 
-#ifndef stat64
-typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *statbuf);
-static orig_stat64_t orig_stat64 = NULL;
-int stat64(const char *pathname, struct stat64 *statbuf) {
-	if (!orig_stat64)
-		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
-
-	int rv = orig_stat64(pathname, statbuf);
-	tprintf(ftty, "%u:%s:stat64 %s:%d\n", mypid, myname, pathname, rv);
-	return rv;
-}
-#endif
+//#ifndef stat64
+//typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *statbuf);
+//static orig_stat64_t orig_stat64 = NULL;
+//int stat64(const char *pathname, struct stat64 *statbuf) {
+//	if (!orig_stat64)
+//		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
+//
+//	int rv = orig_stat64(pathname, statbuf);
+//	tprintf(ftty, "%u:%s:stat64 %s:%d\n", mypid, myname, pathname, rv);
+//	return rv;
+//}
+//#endif
 
 // lstat
 typedef int (*orig_lstat_t)(const char *pathname, struct stat *statbuf);
@@ -472,18 +472,18 @@ int lstat(const char *pathname, struct stat *statbuf) {
 	return rv;
 }
 
-#ifndef lstat64
-typedef int (*orig_lstat64_t)(const char *pathname, struct stat64 *statbuf);
-static orig_lstat64_t orig_lstat64 = NULL;
-int lstat64(const char *pathname, struct stat64 *statbuf) {
-	if (!orig_lstat64)
-		orig_lstat64 = (orig_lstat64_t)dlsym(RTLD_NEXT, "lstat64");
-
-	int rv = orig_lstat64(pathname, statbuf);
-	tprintf(ftty, "%u:%s:lstat64 %s:%d\n", mypid, myname, pathname, rv);
-	return rv;
-}
-#endif
+//#ifndef lstat64
+//typedef int (*orig_lstat64_t)(const char *pathname, struct stat64 *statbuf);
+//static orig_lstat64_t orig_lstat64 = NULL;
+//int lstat64(const char *pathname, struct stat64 *statbuf) {
+//	if (!orig_lstat64)
+//		orig_lstat64 = (orig_lstat64_t)dlsym(RTLD_NEXT, "lstat64");
+//
+//	int rv = orig_lstat64(pathname, statbuf);
+//	tprintf(ftty, "%u:%s:lstat64 %s:%d\n", mypid, myname, pathname, rv);
+//	return rv;
+//}
+//#endif
 
 // opendir
 typedef DIR *(*orig_opendir_t)(const char *pathname);

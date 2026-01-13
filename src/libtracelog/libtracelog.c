@@ -565,24 +565,24 @@ int stat(const char *pathname, struct stat *buf) {
 	return rv;
 }
 
-#ifndef stat64
-typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *buf);
-static orig_stat64_t orig_stat64 = NULL;
-int stat64(const char *pathname, struct stat64 *buf) {
-#ifdef DEBUG
-	printf("%s %s\n", __FUNCTION__, pathname);
-#endif
-	if (!orig_stat64)
-		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
-	if (!blacklist_loaded)
-		load_blacklist();
-
-	if (storage_find(pathname))
-		sendlog(name(), __FUNCTION__, pathname);
-	int rv = orig_stat64(pathname, buf);
-	return rv;
-}
-#endif
+//#ifndef stat64
+//typedef int (*orig_stat64_t)(const char *pathname, struct stat64 *buf);
+//static orig_stat64_t orig_stat64 = NULL;
+//int stat64(const char *pathname, struct stat64 *buf) {
+//#ifdef DEBUG
+//	printf("%s %s\n", __FUNCTION__, pathname);
+//#endif
+//	if (!orig_stat64)
+//		orig_stat64 = (orig_stat64_t)dlsym(RTLD_NEXT, "stat64");
+//	if (!blacklist_loaded)
+//		load_blacklist();
+//
+//	if (storage_find(pathname))
+//		sendlog(name(), __FUNCTION__, pathname);
+//	int rv = orig_stat64(pathname, buf);
+//	return rv;
+//}
+//#endif
 
 typedef int (*orig_lstat_t)(const char *pathname, struct stat *buf);
 static orig_lstat_t orig_lstat = NULL;
@@ -601,24 +601,24 @@ int lstat(const char *pathname, struct stat *buf) {
 	return rv;
 }
 
-#ifndef lstat64
-typedef int (*orig_lstat64_t)(const char *pathname, struct stat64 *buf);
-static orig_lstat64_t orig_lstat64 = NULL;
-int lstat64(const char *pathname, struct stat64 *buf) {
-#ifdef DEBUG
-	printf("%s %s\n", __FUNCTION__, pathname);
-#endif
-	if (!orig_lstat64)
-		orig_lstat64 = (orig_lstat64_t)dlsym(RTLD_NEXT, "lstat64");
-	if (!blacklist_loaded)
-		load_blacklist();
-
-	if (storage_find(pathname))
-		sendlog(name(), __FUNCTION__, pathname);
-	int rv = orig_lstat64(pathname, buf);
-	return rv;
-}
-#endif
+//#ifndef lstat64
+//typedef int (*orig_lstat64_t)(const char *pathname, struct stat64 *buf);
+//static orig_lstat64_t orig_lstat64 = NULL;
+//int lstat64(const char *pathname, struct stat64 *buf) {
+//#ifdef DEBUG
+//	printf("%s %s\n", __FUNCTION__, pathname);
+//#endif
+//	if (!orig_lstat64)
+//		orig_lstat64 = (orig_lstat64_t)dlsym(RTLD_NEXT, "lstat64");
+//	if (!blacklist_loaded)
+//		load_blacklist();
+//
+//	if (storage_find(pathname))
+//		sendlog(name(), __FUNCTION__, pathname);
+//	int rv = orig_lstat64(pathname, buf);
+//	return rv;
+//}
+//#endif
 
 // access
 typedef int (*orig_access_t)(const char *pathname, int mode);

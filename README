@@ -1303,6 +1303,8 @@ sudoAlphaX (https://github.com/sudoAlphaX)
 	- profiles: ani-cli: add mpv to private-etc for plugins access (#6779)
 Syed Muhammad Shuja Haider (https://github.com/xplanthris)
 	- prismlauncher profile
+Teru (https://github.com/KhoTeru)
+	- zen, zen-bin, zen-browser profiles
 the-antz (https://github.com/the-antz)
 	- Fix libx265 encoding in ffmpeg profile
 	- Fix Firefox profile

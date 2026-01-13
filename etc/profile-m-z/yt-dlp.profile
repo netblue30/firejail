@@ -23,6 +23,7 @@ noblacklist ${HOME}/.config/yt-dlp.conf
 noblacklist ${HOME}/yt-dlp.conf
 noblacklist ${HOME}/yt-dlp.conf.txt
 noblacklist ${HOME}/.netrc
+noblacklist ${HOME}/.deno
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
 
@@ -63,15 +64,16 @@ seccomp
 seccomp.block-secondary
 tracelog
 
-private-bin env,ffmpeg,ffprobe,python*,yt-dlp
+private-bin deno,env,ffmpeg,ffprobe,python*,yt-dlp,uname,file
 private-cache
 private-dev
-private-etc @tls-ca,mime.types,yt-dlp.conf
+private-etc @tls-ca,mime.types,yt-dlp,yt-dlp-plugins,yt-dlp.conf
 private-tmp
 
 dbus-user none
 dbus-system none
 
-memory-deny-write-execute
+# allow deno JavaScript
+#memory-deny-write-execute
 
 restrict-namespaces

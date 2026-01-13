@@ -17,7 +17,6 @@ include globals.local
 # then run the command
 # 'sudo apparmor_parser -r /etc/apparmor.d/firejail-default'
 
-
 # For age-restricted and rate limited videos yt-dlp needs the browser cookie,
 # uncomment the following line:
 #noblacklist ${HOME}/.mozilla

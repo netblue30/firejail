@@ -24,10 +24,10 @@ include globals.local
 noblacklist ${HOME}/.cache/yt-dlp
 noblacklist ${HOME}/.config/yt-dlp
 noblacklist ${HOME}/.config/yt-dlp.conf
+noblacklist ${HOME}/.deno
+noblacklist ${HOME}/.netrc
 noblacklist ${HOME}/yt-dlp.conf
 noblacklist ${HOME}/yt-dlp.conf.txt
-noblacklist ${HOME}/.netrc
-noblacklist ${HOME}/.deno
 noblacklist ${MUSIC}
 noblacklist ${VIDEOS}
 

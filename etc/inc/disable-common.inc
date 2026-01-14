@@ -348,6 +348,7 @@ blacklist ${HOME}/.ssh/rc
 blacklist /etc/hosts.equiv
 
 # Initialization files that allow arbitrary command execution
+read-only ${HOME}/.cache/deno
 read-only ${HOME}/.caffrc
 read-only ${HOME}/.cargo/env
 read-only ${HOME}/.config/mpv
@@ -357,6 +358,7 @@ read-only ${HOME}/.config/ncmpcpp/config
 read-only ${HOME}/.config/nsxiv/exec
 read-only ${HOME}/.config/nvim
 read-only ${HOME}/.config/pkcs11
+read-only ${HOME}/.deno
 read-only ${HOME}/.dotfiles
 read-only ${HOME}/.elinks
 read-only ${HOME}/.emacs

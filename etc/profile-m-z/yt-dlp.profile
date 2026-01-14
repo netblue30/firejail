@@ -21,6 +21,8 @@ include globals.local
 # (yt-dlp needs the browser cookie):
 #noblacklist ${HOME}/.mozilla
 
+noblacklist ${PATH}/deno
+
 noblacklist ${HOME}/.cache/yt-dlp
 noblacklist ${HOME}/.config/yt-dlp
 noblacklist ${HOME}/.config/yt-dlp.conf

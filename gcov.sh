@@ -4,59 +4,105 @@
 # License GPL v2
 
 # GCOV test setup
-# required: sudo, lcov (apt-get install lcov)
-# setup: modify ./configure line below if necessary
+# required: sudo, gcov (apt-get install gcovr)
+# Compile and install
+#    $ ./configure --prefix=/usr --enable-apparmor --enable-gcov
+#    $ make
+#    $ sudo make install
 # run as regular user: ./gcov.sh
 # result in gcov-dir/index.html
 
 gcov_generate() {
-	USER="$(whoami)"
-	find . -exec sudo chown "$USER:$USER" '{}' +
-	lcov -q --capture \
-		-d src/firejail -d src/lib -d src/firecfg -d src/firemon \
-		-d src/fnet -d src/fnetfilter -d src/fcopy \
-		-d src/fseccomp --output-file gcov-file
-
-	genhtml -q gcov-file --output-directory gcov-dir
+    rm -fr gcov-dir
+    sleep 1
+    mkdir gcov-dir
+    USER="$(whoami)"
+    find . -exec sudo chown "$USER:$USER" '{}' +
+    sleep 1
+    gcovr --html-nested gcov-dir/index.html \
+	  src/firejail src/firemon src/firecfg src/jailcheck \
+	  src/etc-cleanup \
+	  src/fbuilder \
+	  src/fbwrap \
+	  src/fcopy \
+	  src/fnet \
+	  src/fnetfilter \
+	  src/fnetlock \
+	  src/fnettrace \
+	  src/fnettrace-dns \
+	  src/fnettrace-icmp \
+	  src/fnettrace-sni \
+	  src/fseccomp \
+	  src/fsec-optimize \
+	  src/fsec-print \
+	  src/ftee \
+	  src/fzenity \
+	  src/lib \
+	  src/profstats
 }
 
-make distclean &&
-./configure --prefix=/usr --enable-fatal-warnings \
-  --enable-apparmor --enable-gcov &&
-make -j "$(nproc)" &&
-sudo make install
-
-rm -fr gcov-dir gcov-file
-make installcheck
+# --help - main programs
+/usr/bin/firejail --help
+/usr/bin/firemon --help
+/usr/bin/firecfg --help
+/usr/bin/jailcheck --help
 gcov_generate
 
-make test-firecfg | grep TESTING
+# --help -secondary programs
+/usr/lib/firejail/etc-cleanup --help
+/usr/lib/firejail/fbuilder --help
+/usr/lib/firejail/fbwrap --help
+/usr/lib/firejail/fcopy --help
+/usr/lib/firejail/fnet --help
+/usr/lib/firejail/fnetfilter --help
+/usr/lib/firejail/fnetlock --help
+/usr/lib/firejail/fnettrace --help
+/usr/lib/firejail/fnettrace-dns --help
+/usr/lib/firejail/fnettrace-icmp --help
+/usr/lib/firejail/fnettrace-sni --help
+/usr/lib/firejail/fseccomp --help
+/usr/lib/firejail/fseccomp-optimize --help
+/usr/lib/firejail/fseccomp-print --help
+/usr/lib/firejail/ftee --help
+/usr/lib/firejail/fzenity --help
+/usr/lib/firejail/profstats --help
 gcov_generate
-make test-capabilities | grep TESTING
+
+# test-main: .github/workflows/test.yml#L50
+make test-seccomp-extra
+make test-firecfg
+make test-capabilities
+make test-apparmor
+make test-appimage
+make test-chroot
+make test-fcopy
 gcov_generate
-make test-seccomp-extra | grep TESTING
+
+# test-fs: .github/workflows/test.yml#L99
+make test-private-etc
 gcov_generate
-make test-apparmor | grep TESTING
+make test-fs
 gcov_generate
-make test-network | grep TESTING
+
+# test-environment: .github/workflows/test.yml#L139
+make test-environment
 gcov_generate
-make test-appimage | grep TESTING
+make test-profiles
 gcov_generate
-make test-chroot | grep TESTING
+
+# test-utils: .github/workflows/test.yml#L179
+make test-utils
 gcov_generate
-make test-sysutils | grep TESTING
+
+# test-network: .github/workflows/test.yml#L221
+make test-fnetfilter
+make test-sysutils
 gcov_generate
-make test-private-etc | grep TESTING
+make test-network
 gcov_generate
-make test-profiles | grep TESTING
-gcov_generate
-make test-fcopy | grep TESTING
-gcov_generate
-make test-fnetfilter | grep TESTING
-gcov_generate
-make test-fs | grep TESTING
-gcov_generate
-make test-utils | grep TESTING
-gcov_generate
-make test-environment | grep TESTING
-gcov_generate
+
+
+
+
+
+

@@ -82,14 +82,14 @@ expect {
 sleep 1
 
 # ping test
-send --  "firejail --hostname=foo --private-etc ping -c 3 foo\r"
+send --  "firejail --noprofile --hostname=foo --private-etc ping -c 3 foo\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	"3 packets transmitted, 3 received"
 }
 sleep 1
 
-send --  "firejail --hosts-file=hosts-file --private-etc ping -c 3 blablabla\r"
+send --  "firejail --noprofile --hosts-file=hosts-file --private-etc ping -c 3 blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
 	"3 packets transmitted, 3 received"

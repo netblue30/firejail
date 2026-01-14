@@ -199,6 +199,7 @@ clean:
 	$(RM) -r ./$(TARNAME)-$(VERSION) ./$(TARNAME)-$(VERSION).tar.xz
 	$(RM) ./$(TARNAME)*.deb
 	$(RM) ./$(TARNAME)*.rpm
+	$(RM) -fr gcov-dir
 
 .PHONY: distclean
 distclean: clean

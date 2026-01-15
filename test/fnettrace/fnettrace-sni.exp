@@ -18,6 +18,6 @@ expect {
 	-re "SNI debian.org"
 }
 
-sleep 1
+after 100
 puts "\nexpect script done\r"
 

@@ -11,13 +11,13 @@ match_max 100000
 send --  "cat /tmp/output\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	-re "ICMP trace for"
+	-re "protocol"
 }
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	-re "Echo request"
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "ICMP"
 }
 
-after 100
+sleep 1
 puts "\nexpect script done\r"
 

@@ -19,13 +19,12 @@
 */
 #include "fnettrace.h"
 #include "radix.h"
+#include "../include/gcov_wrapper.h"
 #include <limits.h>
 #include <sys/ioctl.h>
 #include <sys/prctl.h>
 #include <signal.h>
 #define MAX_BUF_SIZE (64 * 1024)
-
-static char *arg_log = NULL;
 
 // only 0 or negative values; positive values as defined in RFC
 #define PROTOCOL_ICMP 0
@@ -749,6 +748,8 @@ static void run_trace(void) {
 
 			}
 		}
+
+		__gcov_flush();
 	}
 
 	close(s1);
@@ -761,30 +762,10 @@ static void run_trace(void) {
 }
 
 
-void logprintf(char *fmt, ...) {
-	if (!arg_log)
-		return;
-
-	FILE *fp = fopen(arg_log, "a");
-	if (fp) { // disregard if error
-		va_list args;
-		va_start(args, fmt);
-		vfprintf(fp, fmt, args);
-		va_end(args);
-		fclose(fp);
-	}
-
-	va_list args;
-	va_start(args, fmt);
-	vfprintf(stdout, fmt, args);
-	va_end(args);
-}
-
 static const char *const usage_str =
 	"Usage: fnettrace [OPTIONS]\n"
 	"Options:\n"
 	"   --help, -? - this help screen\n"
-	"   --log=filename - netlocker logfile\n"
 	"   --print-map - print IP map\n"
 	"   --squash-map - compress IP map\n";
 
@@ -844,8 +825,6 @@ int main(int argc, char **argv) {
 			fprintf(stderr, "static ip map: input %d, output %d\n", in, radix_nodes);
 			return 0;
 		}
-		else if (strncmp(argv[i], "--log=", 6) == 0)
-			arg_log = argv[i] + 6;
 		else {
 			fprintf(stderr, "Error: invalid argument\n");
 			return 1;

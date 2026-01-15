@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "fnettrace_dns.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/ioctl.h>
 #include <time.h>
 #include <linux/filter.h>
@@ -75,6 +76,7 @@ void print_dns(uint32_t ip_src, unsigned char *pkt) {
 		strcpy(last, tmp);
 	}
 
+	__gcov_flush();
 	return;
 
 errout:

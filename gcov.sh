@@ -60,8 +60,8 @@ gcov_generate
 /usr/lib/firejail/fnettrace-icmp --help
 /usr/lib/firejail/fnettrace-sni --help
 /usr/lib/firejail/fseccomp --help
-/usr/lib/firejail/fseccomp-optimize --help
-/usr/lib/firejail/fseccomp-print --help
+/usr/lib/firejail/fsec-optimize --help
+/usr/lib/firejail/fsec-print --help
 /usr/lib/firejail/ftee --help
 /usr/lib/firejail/fzenity --help
 gcov_generate
@@ -94,6 +94,7 @@ gcov_generate
 
 # test-network: .github/workflows/test.yml#L221
 make test-fnetfilter
+make test-fnettrace
 make test-sysutils
 gcov_generate
 make test-network

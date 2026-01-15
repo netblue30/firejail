@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "fnettrace_icmp.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/ioctl.h>
 #include <time.h>
 #include <linux/filter.h>
@@ -116,6 +117,7 @@ static void print_icmp(uint32_t ip_dest, uint32_t ip_src, uint8_t type, uint8_t 
 		type_ptr,
 		code_ptr);
 	fflush(0);
+	__gcov_flush();
 }
 
 // https://www.kernel.org/doc/html/latest/networking/filter.html

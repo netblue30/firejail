@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "fnettrace_sni.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/ioctl.h>
 #include <time.h>
 #include <linux/filter.h>
@@ -82,6 +83,7 @@ static void print_tls(uint32_t ip_dest, unsigned char *pkt, unsigned len) {
 	}
 	else
 		goto nosni;
+	__gcov_flush();
 	return;
 
 nosni:

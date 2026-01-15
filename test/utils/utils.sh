@@ -13,16 +13,25 @@ if [[ -f /etc/debian_version ]]; then
 fi
 export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 
+echo "TESTING: firemon-events (test/utils/firemon-events.exp)"
+rm -f /tmp/output
+sudo timeout 5 firemon 2>&1 | tee /tmp/output &
+firejail sleep 2
+sleep 3
+./firemon-events.exp
+cat /tmp/output
+rm -f /tmp/output
+
 echo "TESTING: jailcheck (test/utils/jailcheck.exp)"
 rm -f /tmp/output
 mkdir ~/.ssh
 firejail --noprofile --name=audit sleep 5&
 sleep 2
-pwd
 sudo jailcheck > /tmp/output
 sleep 2
 ./jailcheck.exp
 sleep 2
+cat /tmp/output
 rm -f /tmp/output
 
 echo "TESTING: build (test/utils/build.exp)"

@@ -1,0 +1,27 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2026 Firejail Authors
+# License GPL v2
+
+set timeout 10
+cd /home
+spawn $env(SHELL)
+match_max 100000
+
+send --  "cat /tmp/output\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	-re "DNS trace for"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "DNS yahoo.com"
+}
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	-re "type 1"
+}
+
+sleep 1
+puts "\nexpect script done\r"
+

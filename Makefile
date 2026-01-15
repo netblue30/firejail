@@ -343,6 +343,7 @@ DISTFILES_TEST = \
 	test/fcopy \
 	test/filters \
 	test/fnetfilter \
+	test/fnettrace \
 	test/fs \
 	test/network \
 	test/private-lib \
@@ -419,7 +420,7 @@ sort-profiles: $(PROFILES_INC) $(PROFILES_PRO)
 # make test
 #
 
-TESTS=profiles capabilities apps apps-x11 apps-x11-xorg sysutils utils environment filters fs fcopy fnetfilter private-etc seccomp-extra
+TESTS=profiles capabilities apps apps-x11 apps-x11-xorg sysutils utils environment filters fs fcopy fnettrace fnetfilter private-etc seccomp-extra
 TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 
 $(TEST_TARGETS):
@@ -431,11 +432,7 @@ $(TEST_TARGETS):
 lab-setup:; uname -r; ldd --version | grep GLIBC; pwd; whoami; ip addr show; cat /etc/resolv.conf; cat /etc/hosts; ls /etc
 
 .PHONY: test
-test: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-private-etc test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-seccomp-extra
-	echo "TEST COMPLETE"
-
-.PHONY: test-noprofiles
-test-noprofiles: lab-setup test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters
+test: lab-setup test-profiles test-fcopy test-fnettrace test-fnetfilter test-fs test-private-etc test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-seccomp-extra
 	echo "TEST COMPLETE"
 
 # not included in "make dist" and "make test"
@@ -462,12 +459,6 @@ test-apparmor:
 .PHONY: test-firecfg
 test-firecfg:
 	$(MAKE) -C test $(subst test-,,$@)
-
-# old gihub test; the new test is driven directly from
-# .github/workflows/test.yml.
-.PHONY: test-github
-test-github: lab-setup test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment
-	echo "TEST COMPLETE"
 
 ##########################################
 # Individual tests, some of them require root access

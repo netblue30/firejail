@@ -37,8 +37,7 @@ gcov_generate() {
 	  src/fsec-print \
 	  src/ftee \
 	  src/fzenity \
-	  src/lib \
-	  src/profstats
+	  src/lib
 }
 
 # --help - main programs
@@ -65,7 +64,6 @@ gcov_generate
 /usr/lib/firejail/fseccomp-print --help
 /usr/lib/firejail/ftee --help
 /usr/lib/firejail/fzenity --help
-/usr/lib/firejail/profstats --help
 gcov_generate
 
 # test-main: .github/workflows/test.yml#L50

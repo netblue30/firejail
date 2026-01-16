@@ -6,6 +6,10 @@ include allow-common-devel.local
 noblacklist ${HOME}/.arduino15
 noblacklist ${HOME}/Arduino
 
+# Deno
+noblacklist ${HOME}/.cache/deno
+noblacklist ${HOME}/.deno
+
 # Git
 noblacklist ${HOME}/.config/git
 noblacklist ${HOME}/.gitconfig

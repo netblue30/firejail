@@ -2,6 +2,9 @@
 # Persistent customizations should go in a .local file.
 include disable-interpreters.local
 
+# Deno
+blacklist ${PATH}/deno
+
 # gjs
 blacklist ${PATH}/gjs
 blacklist ${PATH}/gjs-console

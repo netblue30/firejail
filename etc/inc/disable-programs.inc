@@ -106,6 +106,7 @@ blacklist ${HOME}/.cache/cliqz
 blacklist ${HOME}/.cache/com.github.johnfactotum.Foliate
 blacklist ${HOME}/.cache/darktable
 blacklist ${HOME}/.cache/deja-dup
+blacklist ${HOME}/.cache/deno
 blacklist ${HOME}/.cache/discover
 blacklist ${HOME}/.cache/dnox
 blacklist ${HOME}/.cache/dolphin
@@ -742,6 +743,7 @@ blacklist ${HOME}/.cups
 blacklist ${HOME}/.curl-hsts
 blacklist ${HOME}/.curlrc
 blacklist ${HOME}/.dashcore
+blacklist ${HOME}/.deno
 blacklist ${HOME}/.devilspie
 blacklist ${HOME}/.dia
 blacklist ${HOME}/.digrc

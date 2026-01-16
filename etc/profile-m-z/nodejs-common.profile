@@ -15,11 +15,15 @@ include nodejs-common.local
 # used by nvm: curl, sha256sum, tar and wget. We have comments in these
 # profiles on how to enable nvm support via local overrides.
 
+ignore read-only ${HOME}/.cache/deno
+ignore read-only ${HOME}/.deno
 ignore read-only ${HOME}/.npm-packages
 ignore read-only ${HOME}/.npmrc
 ignore read-only ${HOME}/.nvm
 ignore read-only ${HOME}/.yarnrc
 
+noblacklist ${HOME}/.cache/deno
+noblacklist ${HOME}/.deno
 noblacklist ${HOME}/.local/share/pnpm
 noblacklist ${HOME}/.node-gyp
 noblacklist ${HOME}/.npm

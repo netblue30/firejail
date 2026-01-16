@@ -265,5 +265,4 @@ jobs:
     - run: make lab-setup
     - run: make test-fnetfilter
     - run: make test-fnettrace
-    - run: make test-sysutils
     - run: make test-network

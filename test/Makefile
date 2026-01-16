@@ -18,7 +18,6 @@ clean:
 	$(RM) environment/index.html*
 	$(RM) environment/logfile*
 	$(RM) environment/wget-log*
-	$(RM) sysutils/firejail_t*
 	$(RM) utils/firejail-test-file*
 	$(RM) utils/index.html*
 	$(RM) utils/lstesting

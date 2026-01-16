@@ -7,21 +7,10 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test --x11=xephyr xterm\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-
-exit
-
-
-sleep 5
-
-
+send -- "firejail --name=test --x11=none\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"use network namespace in firejail"
+	"Additional setup required"
 }
 sleep 1
 

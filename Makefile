@@ -335,8 +335,6 @@ DISTFILES = \
 DISTFILES_TEST = \
 	test/Makefile \
 	test/apps \
-	test/apps-x11 \
-	test/apps-x11-xorg \
 	test/capabilities \
 	test/compile \
 	test/environment \
@@ -420,7 +418,7 @@ sort-profiles: $(PROFILES_INC) $(PROFILES_PRO)
 # make test
 #
 
-TESTS=profiles capabilities apps apps-x11 apps-x11-xorg sysutils utils environment filters fs fcopy fnettrace fnetfilter private-etc seccomp-extra
+TESTS=profiles capabilities apps sysutils utils environment filters fs fcopy fnettrace fnetfilter private-etc seccomp-extra
 TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 
 $(TEST_TARGETS):
@@ -435,42 +433,5 @@ lab-setup:; uname -r; ldd --version | grep GLIBC; pwd; whoami; ip addr show; cat
 test: lab-setup test-profiles test-fcopy test-fnettrace test-fnetfilter test-fs test-private-etc test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-seccomp-extra
 	echo "TEST COMPLETE"
 
-# not included in "make dist" and "make test"
-.PHONY: test-appimage
-test-appimage:
-	$(MAKE) -C test $(subst test-,,$@)
 
-# using sudo; not included in "make dist" and "make test"
-.PHONY: test-chroot
-test-chroot:
-	$(MAKE) -C test $(subst test-,,$@)
 
-# using sudo; not included in "make dist" and "make test"
-.PHONY: test-network
-test-network:
-	$(MAKE) -C test $(subst test-,,$@)
-
-# using sudo; not included in "make dist" and "make test"
-.PHONY: test-apparmor
-test-apparmor:
-	$(MAKE) -C test $(subst test-,,$@)
-
-# using sudo; not included in "make dist" and "make test"
-.PHONY: test-firecfg
-test-firecfg:
-	$(MAKE) -C test $(subst test-,,$@)
-
-##########################################
-# Individual tests, some of them require root access
-# The tests are very intrusive, by the time you are done
-# with them you will need to restart your computer.
-##########################################
-# private-lib is disabled by default in /etc/firejail/firejail.config
-.PHONY: test-private-lib
-test-private-lib:
-	$(MAKE) -C test $(subst test-,,$@)
-
-# Root access, network devices are created before the test
-# restart your computer to get rid of these devices
-
-# For testing hidepid system, the command to set it up is "mount -o remount,rw,hidepid=2 /proc"

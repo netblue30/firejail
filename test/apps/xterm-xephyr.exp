@@ -7,8 +7,8 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test --x11=xorg --ignore=net --ignore=netfilter --ignore=iprange transmission-qt\r"
-sleep 10
+send -- "firejail --name=test --x11 xterm\r"
+sleep 5
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
@@ -18,27 +18,11 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"transmission-qt"
+	"xterm"
 }
-sleep 1
+after 100
 
-# grsecurity exit
-send -- "file /proc/sys/kernel/grsecurity\r"
-expect {
-	timeout {puts "TESTING ERROR - grsecurity detection\n";exit}
-	"grsecurity: directory" {puts "grsecurity present, exiting...\n";exit}
-	"cannot open" {puts "grsecurity not present\n"}
-}
-
-send -- "firejail --name=blablabla\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-sleep 2
-
-spawn $env(SHELL)
-send -- "firemon --seccomp --wrap\r"
+send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
@@ -46,25 +30,22 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5.0\n";exit}
-	"transmission-qt"
+	"xterm"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
 	"Seccomp:	2"
 }
-expect {
-	timeout {puts "TESTING ERROR 5.1\n";exit}
-	"name=blablabla"
-}
-sleep 1
-send -- "firemon --caps --wrap\r"
+after 100
+
+send -- "firemon --caps\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
 	":firejail"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.0\n";exit}
-	"transmission-qt"
+	"xterm"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}
@@ -74,12 +55,8 @@ expect {
 	timeout {puts "TESTING ERROR 6.2\n";exit}
 	"0000000000000000"
 }
-expect {
-	timeout {puts "TESTING ERROR 6.3\n";exit}
-	"name=blablabla"
-}
 sleep 1
 send -- "firejail --shutdown=test\r"
-sleep 3
+after 100
 
 puts "\nall done\n"

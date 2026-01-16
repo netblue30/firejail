@@ -7,41 +7,43 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=test --x11=none\r"
+send -- "firejail --name=firefox-test --xephyr-screen=1024x768 --private --x11 firefox --no-remote www.debian.org\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"use network namespace in firejail"
+	"Reading profile /etc/firejail/firefox.profile"
 }
-sleep 1
-
-send -- "firejail --name=test --net=none --x11=none\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
-sleep 1
+sleep 5
 
-send -- "ls -al /tmp/.X11-unix\r"
+spawn $env(SHELL)
+send -- "firejail --list\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"cannot open directory"
+	"firejail"
 }
-after 100
-
-send -- "xterm\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"DISPLAY is not set"
+	"firefox"
 }
 after 100
 
-send -- "export DISPLAY=:0.0\r"
-after 100
-send -- "xterm\r"
+spawn $env(SHELL)
+send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Xt error"
+	"firefox"
+}
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Seccomp:	2"
 }
 after 100
+
+send -- "firejail --shutdown=firefox-test\r"
+sleep 3
+
 
 puts "\nall done\n"

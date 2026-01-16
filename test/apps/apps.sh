@@ -20,3 +20,6 @@ for app in "${apps[@]}"; do
 	fi
 	sleep 1
 done
+
+cd ../../
+./mkgcov.sh

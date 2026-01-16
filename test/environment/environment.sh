@@ -101,3 +101,6 @@ echo "TESTING: keep fd errors (test/environment/keep-fd-bad.exp)"
 
 echo "TESTING: retain umask (test/environment/umask.exp)"
 (umask 123 && ./umask.exp)
+
+cd ../../
+./mkgcov.sh

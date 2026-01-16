@@ -30,3 +30,8 @@ echo "TESTING: fcopy directory (test/fcopy/dircopy.exp)"
 
 rm -fr dest/*
 rm -f src/dircopy.exp
+
+cd ../..
+./mkgcov.sh
+
+

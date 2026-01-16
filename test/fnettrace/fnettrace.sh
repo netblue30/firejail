@@ -57,3 +57,5 @@ echo "TESTING: fnettrace-check-root (test/nettrace/fnettrace-check-root.exp)"
 #rm -f /tmp/output
 #echo "all done"
 
+cd ../../
+./mkgcov.sh

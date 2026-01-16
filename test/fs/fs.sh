@@ -162,3 +162,6 @@ echo "TESTING: fscheck --read-only= (test/fs/fscheck-readonly.exp)"
 
 #cleanup
 rm -fr ~/_firejail_test*
+
+cd ../../
+./mkgcov.sh

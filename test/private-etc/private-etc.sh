@@ -21,3 +21,6 @@ echo "TESTING: etc-cleanup (test/private-etc/etc-cleanup.exp)"
 
 echo "TESTING: hostname (test/private-etc/hostname.exp)"
 ./hostname.exp
+
+cd ../../
+./mkgcov.sh

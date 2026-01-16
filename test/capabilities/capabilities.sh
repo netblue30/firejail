@@ -23,3 +23,6 @@ echo "TESTING: capabilities join (test/filters/caps-join.exp)"
 
 echo "TESTING: firemon caps (test/utils/firemon-caps.exp)"
 ./firemon-caps.exp
+
+cd ../../
+./mkgcov.sh

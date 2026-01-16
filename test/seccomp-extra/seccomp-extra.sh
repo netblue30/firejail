@@ -24,3 +24,6 @@ echo "TESTING: mrwx2 (test/seccomp-extras/mrwx.exp)"
 
 echo "TESTING: block-secondary (test/seccomp-extras/block-secondary.exp)"
 ./block-secondary.exp
+
+cd ../../
+./mkgcov.sh

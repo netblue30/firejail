@@ -134,3 +134,6 @@ if [[ $(uname -m) == "x86_64" ]]; then
 else
 	echo "TESTING SKIP: seccomp join test implemented only for x86_64"
 fi
+
+cd ../../
+./mkgcov.sh

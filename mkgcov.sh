@@ -12,9 +12,11 @@
 # run as regular user: ./gcov.sh
 # result in gcov-dir/index.html
 
+echo
+echo "checking gcov data"
+echo
 
-
-if test -f ../../src/firejail/main.gcno; then
+if test -f src/firejail/main.gcno; then
     rm -fr gcov-dir
     sleep 1
     mkdir gcov-dir

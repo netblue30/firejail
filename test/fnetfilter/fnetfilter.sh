@@ -29,3 +29,6 @@ echo "TESTING: fnetfilter template (test/fnetfilter/template.exp)"
 ./template.exp
 
 rm -f outfile
+
+cd ../../
+./mkgcov.sh

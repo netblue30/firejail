@@ -150,3 +150,6 @@ then
 else
 	echo "TESTING SKIP: whois not found"
 fi
+
+cd ../../
+./mkgcov.sh

@@ -58,4 +58,5 @@ do
 	./test-profile.exp "$profile"
 done
 
-../../mkgcov.sh
+cd ../../
+./mkgcov.sh

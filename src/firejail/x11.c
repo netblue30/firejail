@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 #include "firejail.h"
+#include "../include/gcov_wrapper.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/statvfs.h>
@@ -75,6 +76,7 @@ int x11_display(void) {
 	if (arg_debug)
 		fprintf(stderr, "DISPLAY=%s parsed as %lu\n", display_str, display);
 
+	__gcov_flush();
 	return (int)display;
 }
 
@@ -116,6 +118,8 @@ static int x11_abstract_sockets_present(void) {
 
 	free(linebuf);
 	fclose(fp);
+
+	__gcov_flush();
 	return found;
 }
 
@@ -196,6 +200,8 @@ static int random_display_number(void) {
 			"exiting...\n", stderr);
 		exit(1);
 	}
+
+	__gcov_flush();
 	return display;
 }
 #endif
@@ -397,6 +403,7 @@ void x11_start_xvfb(int argc, char **argv) {
 	// jail process ends and releases terminal
 	wait(NULL);				  // fulneral
 
+	__gcov_flush();
 	exit(0);
 }
 
@@ -640,6 +647,7 @@ void x11_start_xephyr(int argc, char **argv) {
 	// jail process ends and releases terminal
 	wait(NULL);				  // fulneral
 
+	__gcov_flush();
 	exit(0);
 }
 
@@ -697,6 +705,7 @@ static char * get_title_arg_str() {
 		strcpy(title_arg_str, title_start);
 	}
 
+	__gcov_flush();
 	return title_arg_str;
 }
 
@@ -1074,6 +1083,7 @@ static void __attribute__((noreturn)) x11_start_xpra_new(int argc, char **argv, 
 	}
 
 	// start
+	__gcov_flush();
 	server = fork();
 	if (server < 0)
 		errExit("fork");
@@ -1139,6 +1149,7 @@ void x11_start_xpra(int argc, char **argv) {
 		x11_start_xpra_new(argc, argv, display_str);
 	else
 		x11_start_xpra_old(argc, argv, display, display_str);
+	__gcov_flush();
 }
 
 
@@ -1166,6 +1177,7 @@ void x11_start(int argc, char **argv) {
 		fprintf(stderr, "   Fedora: sudo dnf install xorg-x11-server-Xephyr\n");
 		exit(0);
 	}
+	__gcov_flush();
 }
 #endif
 

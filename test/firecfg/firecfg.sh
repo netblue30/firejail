@@ -15,4 +15,6 @@ echo "TESTING: firecfg (test/firecfg/firecfg.exp)"
 ./firecfg.exp
 
 sudo rm -fr /tmp/ttt
-../../mkgcov.sh
+
+cd ../../
+./mkgcov.sh

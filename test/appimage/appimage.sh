@@ -18,3 +18,6 @@ echo "TESTING: AppImage args (test/appimage/appimage-args.exp)"
 
 echo "TESTING: AppImage trace (test/appimage/appimage-trace.exp)"
 ./appimage-trace.exp
+
+cd ../../
+./mkgcov.sh

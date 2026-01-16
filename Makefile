@@ -203,7 +203,7 @@ clean:
 
 .PHONY: distclean
 distclean: clean
-	$(RM) -r autom4te.cache config.log config.mk config.sh config.status
+	$(RM) -r autom4te.cache config.log config.mk config.sh config.status test/fnetfilter/outfile test/fnettrace/index.html test/chroot/unchroot 
 
 .PHONY: install
 install: all config.mk
@@ -418,7 +418,7 @@ sort-profiles: $(PROFILES_INC) $(PROFILES_PRO)
 # make test
 #
 
-TESTS=profiles capabilities apps sysutils utils environment filters fs fcopy fnettrace fnetfilter private-etc seccomp-extra
+TESTS=chroot profiles capabilities firecfg network apparmor appimage apps sysutils utils environment filters fs fcopy fnettrace fnetfilter private-etc seccomp-extra
 TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 
 $(TEST_TARGETS):

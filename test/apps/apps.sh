@@ -7,7 +7,7 @@ export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
-apps=(dsdfasdf firefox qbittorrent firefox-xephyr galculator lowriter firefox-xorg \
+apps=(firefox qbittorrent firefox-xephyr galculator lowriter firefox-xorg \
      x11-none xterm-xorg xterm-xephyr)
 
 for app in "${apps[@]}"; do

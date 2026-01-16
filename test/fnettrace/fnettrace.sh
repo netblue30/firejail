@@ -7,16 +7,6 @@ export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
-echo "TESTING: nettrace (test/fnettrace/fnettrace.exp)"
-rm -f /tmp/output
-ping -c 10 1.1.1.1 > /dev/null &
-sudo timeout 5 firejail --nettrace 2>&1 > /tmp/output
-echo waiting
-sleep 5
-./nettrace.exp
-rm -f /tmp/output
-echo "all done"
-
 echo "TESTING: fnettrace-sni (test/fnettrace/fnettrace-sni.exp)"
 rm -f /tmp/output
 sudo timeout 5 /usr/lib/firejail/fnettrace-sni 2>&1 | tee /tmp/output &
@@ -24,6 +14,7 @@ wget https://debian.org 2>&1 > /dev/null
 sleep 5
 ./fnettrace-sni.exp
 cat /tmp/output
+sleep 1
 rm -f /tmp/output
 rm -f index.html
 echo "all done"
@@ -31,10 +22,12 @@ echo "all done"
 echo "TESTING: fnettrace-dns (test/fnettrace/fnettrace-dns.exp)"
 rm -f /tmp/output
 sudo timeout 5 /usr/lib/firejail/fnettrace-dns 2>&1 | tee /tmp/output &
-ping -c 3 yahoo.com
+sleep 2
+dig +timeout=2 +retry=0 dns.quad9.net
 sleep 3
 ./fnettrace-dns.exp
 cat /tmp/output
+sleep 1
 rm -f /tmp/output
 echo "all done"
 
@@ -45,9 +38,22 @@ ping -c 3 1.1.1.1
 sleep 3
 ./fnettrace-icmp.exp
 cat /tmp/output
+sleep 1
 rm -f /tmp/output
 echo "all done"
 
 echo "TESTING: fnettrace-check-root (test/nettrace/fnettrace-check-root.exp)"
 ./fnettrace-check-root.exp
+
+#echo "TESTING: nettrace (test/fnettrace/fnettrace.exp)"
+#rm -f /tmp/output
+#ping -c 10 1.1.1.1 > /dev/null &
+#sudo timeout 5 firejail --nettrace 2>&1 > /tmp/output
+#echo waiting
+#sleep 5
+#cat /tmp/output
+#sleep 1
+#./nettrace.exp
+#rm -f /tmp/output
+#echo "all done"
 

@@ -15,7 +15,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	-re "DNS yahoo.com"
+	-re "DNS dns.quad9.net"
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}

@@ -347,7 +347,8 @@ DISTFILES_TEST = \
 	test/private-lib \
 	test/profiles \
 	test/sysutils \
-	test/utils
+	test/utils \
+	test/help
 
 .PHONY: dist
 dist: clean config.mk

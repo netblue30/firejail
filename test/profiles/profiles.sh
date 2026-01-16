@@ -57,3 +57,5 @@ do
 	echo "TESTING: profile $profile"
 	./test-profile.exp "$profile"
 done
+
+../../mkgcov.sh

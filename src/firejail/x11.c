@@ -1163,10 +1163,10 @@ void x11_start(int argc, char **argv) {
 	}
 
 	// check xpra
-	if (program_in_path("xpra"))
-		x11_start_xpra(argc, argv);
-	else if (program_in_path("Xephyr"))
+	if (program_in_path("Xephyr"))
 		x11_start_xephyr(argc, argv);
+	else if (program_in_path("xpra"))
+		x11_start_xpra(argc, argv);
 	else {
 		fprintf(stderr, "\nError: Xpra or Xephyr not found in /usr/bin directory, please install one of them:\n");
 		fprintf(stderr, "   Debian/Ubuntu/Mint: sudo apt-get install xpra\n");

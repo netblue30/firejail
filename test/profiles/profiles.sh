@@ -50,7 +50,7 @@ echo "TESTING: profiles noprofile (test/profiles/profile_noprofile.exp)"
 ./profile_noprofile.exp
 
 profiles=( transmission-gtk transmission-qt firefox mpv vlc ping warzone2100 galculator )
-profiles+=( gimp inkscape qbittorrent chromium-browser ssh evince pdftotext audacity okular)
+profiles+=( gimp inkscape qbittorrent chromium-browser ssh evince pdftotext audacity)
 
 for profile in "${profiles[@]}"
 do

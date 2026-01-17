@@ -13,7 +13,7 @@ apps=(firefox qbittorrent firefox-xephyr galculator lowriter firefox-xorg \
 for app in "${apps[@]}"; do
 	if file -v "$app".exp
 	then
-		echo "TESTING: $app"
+		echo "TESTING: $app (test/apps/$app.exp)"
 		./"$app".exp
 	else
 		echo "TESTING SKIP: $app not found"

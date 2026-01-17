@@ -418,7 +418,7 @@ sort-profiles: $(PROFILES_INC) $(PROFILES_PRO)
 # make test
 #
 
-TESTS=chroot profiles capabilities firecfg network apparmor appimage apps utils environment filters fs fcopy fnettrace fnetfilter private-etc seccomp-extra
+TESTS=apps chroot profiles capabilities firecfg network apparmor appimage utils environment filters fs fcopy fnettrace fnetfilter private-etc seccomp-extra
 TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 
 $(TEST_TARGETS):
@@ -429,5 +429,5 @@ $(TEST_TARGETS):
 lab-setup:; uname -r; ldd --version | grep GLIBC; pwd; whoami; ip addr show; cat /etc/resolv.conf; cat /etc/hosts; ls /etc
 
 .PHONY: test
-test: lab-setup test-profiles test-fcopy test-fnettrace test-fnetfilter test-fs test-private-etc test-utils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-seccomp-extra
-	echo "TEST COMPLETE"
+test:  lab-setup  test-apps test-chroot test-profiles test-capabilities test-firecfg test-network test-apparmor test-appimage test-utils test-environment test-filters test-fs test-fcopy test-fnettrace test-fnetfilter test-private-etc test-seccomp-extra
+	echo "TESTING COMPLETE"

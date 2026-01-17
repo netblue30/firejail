@@ -11,33 +11,10 @@
 #    $ sudo make install
 # run as regular user: ./gcov.sh
 # result in gcov-dir/index.html
-
 gcov_generate() {
-    rm -fr gcov-dir
-    sleep 1
-    mkdir gcov-dir
-    USER="$(whoami)"
-    find . -exec sudo chown "$USER:$USER" '{}' +
-    sleep 1
-    gcovr --html-nested gcov-dir/index.html \
-	  src/firejail src/firemon src/firecfg src/jailcheck \
-	  src/etc-cleanup \
-	  src/fbuilder \
-	  src/fbwrap \
-	  src/fcopy \
-	  src/fnet \
-	  src/fnetfilter \
-	  src/fnetlock \
-	  src/fnettrace \
-	  src/fnettrace-dns \
-	  src/fnettrace-icmp \
-	  src/fnettrace-sni \
-	  src/fseccomp \
-	  src/fsec-optimize \
-	  src/fsec-print \
-	  src/ftee \
-	  src/fzenity \
-	  src/lib
+    sleep 2
+    printf "TESTING "; gcovr | grep TOTAL
+    sleep 2
 }
 
 # --help - main programs
@@ -45,7 +22,8 @@ gcov_generate() {
 /usr/bin/firemon --help
 /usr/bin/firecfg --help
 /usr/bin/jailcheck --help
-gcov_generate
+sleep 2
+
 
 # --help -secondary programs
 /usr/lib/firejail/etc-cleanup --help
@@ -64,44 +42,41 @@ gcov_generate
 /usr/lib/firejail/fsec-print --help
 /usr/lib/firejail/ftee --help
 /usr/lib/firejail/fzenity --help
-gcov_generate
+sleep 2
 
-# test-main: .github/workflows/test.yml#L50
-make test-seccomp-extra
-make test-firecfg
-make test-capabilities
-make test-apparmor
-make test-appimage
+make test-apps
+gcov_generate
 make test-chroot
-make test-fcopy
-gcov_generate
-
-# test-fs: .github/workflows/test.yml#L99
-make test-private-etc
-gcov_generate
-make test-fs
-gcov_generate
-
-# test-environment: .github/workflows/test.yml#L139
-make test-environment
 gcov_generate
 make test-profiles
 gcov_generate
-
-# test-utils: .github/workflows/test.yml#L179
-make test-utils
+make test-capabilities
 gcov_generate
-
-# test-network: .github/workflows/test.yml#L221
-make test-fnetfilter
-make test-fnettrace
-make test-sysutils
+make test-firecfg
 gcov_generate
 make test-network
 gcov_generate
-
-
-
-
+make test-apparmor
+gcov_generate
+make test-appimage
+gcov_generate
+make test-utils
+gcov_generate
+make test-environment
+gcov_generate
+make test-filters
+gcov_generate
+make test-fs
+gcov_generate
+make test-fcopy
+gcov_generate
+make test-fnettrace
+gcov_generate
+make test-fnetfilter
+gcov_generate
+make test-private-etc
+gcov_generate
+make test-seccomp-extra
+gcov_generate
 
 

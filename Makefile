@@ -203,7 +203,7 @@ clean:
 
 .PHONY: distclean
 distclean: clean
-	$(RM) -r autom4te.cache config.log config.mk config.sh config.status test/fnetfilter/outfile test/fnettrace/index.html test/chroot/unchroot test/fcopy/src/dircopy.exp
+	$(RM) -r autom4te.cache config.log config.mk config.sh config.status
 
 .PHONY: install
 install: all config.mk

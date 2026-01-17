@@ -424,7 +424,6 @@ TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 $(TEST_TARGETS):
 	$(MAKE) -C test $(subst test-,,$@)
 
-
 # extract some data about the testing setup: kernel, network connectivity, user
 .PHONY: lab-setup
 lab-setup:; uname -r; ldd --version | grep GLIBC; pwd; whoami; ip addr show; cat /etc/resolv.conf; cat /etc/hosts; ls /etc
@@ -432,6 +431,3 @@ lab-setup:; uname -r; ldd --version | grep GLIBC; pwd; whoami; ip addr show; cat
 .PHONY: test
 test: lab-setup test-profiles test-fcopy test-fnettrace test-fnetfilter test-fs test-private-etc test-utils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-seccomp-extra
 	echo "TEST COMPLETE"
-
-
-

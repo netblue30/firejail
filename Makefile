@@ -197,9 +197,9 @@ clean:
 	$(RM) $(SECCOMP_FILTERS)
 	$(RM) $(SYNTAX_FILES)
 	$(RM) -r ./$(TARNAME)-$(VERSION) ./$(TARNAME)-$(VERSION).tar.xz
+	$(RM) -r gcov-dir
 	$(RM) ./$(TARNAME)*.deb
 	$(RM) ./$(TARNAME)*.rpm
-	$(RM) -fr gcov-dir
 
 .PHONY: distclean
 distclean: clean

@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --private firefox --no-remote www.debian.org\r"
+send -- "firejail --name=firefox-test --private --x11=xpra firefox --no-remote www.debian.org\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Reading profile /etc/firejail/firefox.profile"
@@ -16,7 +16,7 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
-sleep 5
+sleep 10
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
@@ -40,6 +40,10 @@ expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"Seccomp:	2"
 }
-sleep 1
+after 100
+
+send -- "firejail --shutdown=firefox-test\r"
+sleep 3
+
 
 puts "\nall done\n"

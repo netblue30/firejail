@@ -635,32 +635,33 @@ blacklist /opt/microsoft/msedge*/msedge-sandbox
 blacklist /usr/lib/virtualbox
 blacklist /usr/lib64/virtualbox
 
-# prevent lxterminal connecting to an existing lxterminal session
-blacklist /tmp/.lxterminal-socket*
 # prevent tmux connecting to an existing session
 blacklist /tmp/tmux-*
 
-# disable terminals running as server resulting in sandbox escape
-blacklist ${PATH}/foot
-blacklist ${PATH}/footserver
+# Sandbox escape via terminal emulator
+# The following terminals don't have the problem:
+#    alacritty, cool-retro-term, deepin-terminal, foot,
+#    kgx, kitty, konsole, mate-terminal, mlterm, pterm,
+#    qterminal, terminator, terminology, termit, tilda,
+#    tilix, rxvt, rxvt-unicode, urxvt, xfce4-terminal, xterm
+#    Tested on Debian and Fedora Jan 2026
 blacklist ${PATH}/gnome-terminal
 blacklist ${PATH}/gnome-terminal.wrapper
-blacklist ${PATH}/kgx
-# konsole doesn't seem to have this problem - last tested on Ubuntu 16.04
-#blacklist ${PATH}/konsole
-blacklist ${PATH}/lilyterm
-blacklist ${PATH}/lxterminal
-blacklist ${PATH}/mate-terminal
-blacklist ${PATH}/mate-terminal.wrapper
 blacklist ${PATH}/pantheon-terminal
+blacklist ${PATH}/foot
+blacklist ${PATH}/footserver
+blacklist ${PATH}/lxterminal
+blacklist ${PATH}/ptyxis
 blacklist ${PATH}/roxterm
 blacklist ${PATH}/roxterm-config
 blacklist ${PATH}/terminix
-blacklist ${PATH}/tilix
 blacklist ${PATH}/urxvtc
+blacklist ${PATH}/urxvtd
 blacklist ${PATH}/urxvtcd
-blacklist ${PATH}/xfce4-terminal
-blacklist ${PATH}/xfce4-terminal.wrapper
+# Drop-down terminals running in single-session mode
+blacklist ${PATH}/guake
+blacklist ${PATH}/yakuake
+blacklist ${PATH}/termius
 
 # kernel files
 blacklist /initrd*

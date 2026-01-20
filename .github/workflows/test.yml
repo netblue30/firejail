@@ -135,6 +135,7 @@ jobs:
     - run: make lab-setup
     - run: make test-private-etc
     - run: make test-fs
+    - run: make test-filters
 
   test-environment:
     runs-on: ubuntu-22.04

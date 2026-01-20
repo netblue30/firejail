@@ -101,7 +101,7 @@ expect {
 after 100
 
 # 64 bit architecture - seccomp.block-secondary, profile
-send --  "firejail --debug --profile=block-secondary.profile sleep 1; echo done\r"
+send --  "firejail --debug --profile=./block-secondary.profile sleep 1; echo done\r"
 expect {
 	timeout {puts "TESTING ERROR 33\n";exit}
 	"Installing /run/firejail/mnt/seccomp/seccomp.32 seccomp filter" {puts "TESTING ERROR 34\n";exit}

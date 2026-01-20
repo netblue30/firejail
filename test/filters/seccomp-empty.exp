@@ -85,7 +85,7 @@ send -- "exit\r"
 puts "\n"
 
 sleep 2
-send --  "firejail --debug --profile=seccomp.profile --private\r"
+send --  "firejail --debug --profile=./seccomp.profile --private\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"seccomp entries in /run/firejail/mnt/seccomp"
@@ -127,7 +127,7 @@ send -- "exit\r"
 sleep 3
 puts "\n"
 
-send --  "firejail --debug --profile=seccomp-empty.profile --private\r"
+send --  "firejail --debug --profile=./seccomp-empty.profile --private\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"seccomp entries in /run/firejail/mnt/seccomp"

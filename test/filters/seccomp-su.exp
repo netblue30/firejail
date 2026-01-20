@@ -19,6 +19,7 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"effective uid is not 0" {puts "OK\n"}
 	"Bad system call" {puts "OK\n"}
+	"no new privileges" {puts "OK\n"}
 }
 
 send -- "sudo ls\r"
@@ -26,6 +27,7 @@ expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"effective uid is not 0" {puts "OK\n"}
 	"Bad system call" {puts "OK\n"}
+	"no new privileges" {puts "OK\n"}
 }
 
 send -- "exit\r"

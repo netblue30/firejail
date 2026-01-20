@@ -22,6 +22,7 @@
 #include <ctype.h>
 
 static int check_profile(const char *name, const char *homedir) {
+	(void) homedir;
 	// build profile name
 	char *profname1;
 #ifndef HAVE_ONLY_SYSCFG_PROFILES

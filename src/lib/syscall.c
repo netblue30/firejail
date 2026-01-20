@@ -447,9 +447,7 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 	  "execve,"
 	  "execveat," // commonly used by fexecve
-#ifdef SYS_exit
 	  "exit," // breaks most Qt applications
-#endif
 	  "futex," // frequently used and causes breakages
 #ifdef SYS_mmap
 	  "mmap," // cannot load shared libraries

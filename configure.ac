@@ -137,15 +137,6 @@ AS_IF([test "x$enable_usertmpfs" != "xno"], [
 	HAVE_USERTMPFS="-DHAVE_USERTMPFS"
 ])
 
-HAVE_MAN="no"
-AC_SUBST([HAVE_MAN])
-AC_ARG_ENABLE([man],
-    [AS_HELP_STRING([--disable-man], [disable man pages])])
-AS_IF([test "x$enable_man" != "xno"], [
-	HAVE_MAN="-DHAVE_MAN"
-	AS_IF([test "x$GAWK" = "x"], [AC_MSG_ERROR([*** gawk not found ***])])
-])
-
 HAVE_PRIVATE_HOME=""
 AC_SUBST([HAVE_PRIVATE_HOME])
 AC_ARG_ENABLE([private-home],
@@ -301,7 +292,6 @@ Features:
    enable --output logging: $HAVE_OUTPUT
    file transfer support: $HAVE_FILE_TRANSFER
    Landlock support: $HAVE_LANDLOCK
-   manpage support: $HAVE_MAN
    network: $HAVE_NETWORK
    private home support: $HAVE_PRIVATE_HOME
    private lib support: $HAVE_PRIVATE_LIB

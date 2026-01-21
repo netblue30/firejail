@@ -26,17 +26,16 @@ arr[8]="8: compile --disable-file-transfer"
 arr[9]="9: compile --enable-apparmor"
 arr[10]="10: compile --enable-busybox-workaround"
 arr[11]="11: compile --disable-private-home"
-arr[12]="12: compile --disable-man"
-arr[13]="13: compile --disable-usertmpfs"
-arr[14]="14: compile --disable-sandbox-check"
-arr[15]="15: compile --disable-landlock"
-arr[16]="16: compile --disable-output"
-arr[17]="17: compile --disable-man"
-arr[18]="18: compile --disable-private-lib"
-arr[19]="19: compile --disable-suid"
-arr[20]="20: compile --enable-contrib-install"
-arr[21]="21: compile --enable-only-syscfg-profiles"
-arr[22]="22: compile --enable-force-nonewprivs"
+arr[12]="12: compile --disable-usertmpfs"
+arr[13]="13: compile --disable-sandbox-check"
+arr[14]="14: compile --disable-landlock"
+arr[15]="15: compile --disable-output"
+arr[16]="16: compile --disable-man"
+arr[17]="17: compile --disable-private-lib"
+arr[18]="18: compile --disable-suid"
+arr[19]="19: compile --enable-contrib-install"
+arr[20]="20: compile --enable-only-syscfg-profiles"
+arr[21]="21: compile --enable-force-nonewprivs"
 
 print_title() {
 	echo
@@ -312,31 +311,9 @@ cd ..
 #*****************************************************************
 # TEST 12
 #*****************************************************************
-# - disable manpages
-#*****************************************************************
-print_title "${arr[12]}"
-cd firejail || exit 1
-
-./configure --enable-fatal-warnings --disable-man 2>&1 | tee output
-if grep -E '(WARNING|ERROR)' output; then
-    echo "TESTING ERROR";
-    exit 1
-fi
-
-make -j4 2>&1 | tee output
-if grep -E -i 'error:' output; then
-    echo "TESTING ERROR";
-    exit 1
-fi
-make distclean
-cd ..
-
-#*****************************************************************
-# TEST 13
-#*****************************************************************
 # - disable tmpfs as regular user"
 #*****************************************************************
-print_title "${arr[13]}"
+print_title "${arr[12]}"
 cd firejail || exit 1
 
 ./configure --enable-fatal-warnings --disable-usertmpfs 2>&1 | tee output
@@ -354,11 +331,11 @@ make distclean
 cd ..
 
 #*****************************************************************
-# TEST 14
+# TEST 13
 #*****************************************************************
 # - disable sandbox check
 #*****************************************************************
-print_title "${arr[14]}"
+print_title "${arr[13]}"
 cd firejail || exit 1
 
 ./configure --enable-fatal-warnings --disable-sandbox-check 2>&1 | tee output
@@ -376,11 +353,11 @@ make distclean
 cd ..
 
 #*****************************************************************
-# TEST 15
+# TEST 14
 #*****************************************************************
 # - disable landlock
 #*****************************************************************
-print_title "${arr[15]}"
+print_title "${arr[14]}"
 cd firejail || exit 1
 
 ./configure --enable-fatal-warnings --disable-landlock 2>&1 | tee output
@@ -398,11 +375,11 @@ make distclean
 cd ..
 
 #*****************************************************************
-# TEST 16
+# TEST 15
 #*****************************************************************
 # - disable --output logging
 #*****************************************************************
-print_title "${arr[16]}"
+print_title "${arr[15]}"
 cd firejail || exit 1
 
 ./configure --enable-fatal-warnings --disable-output 2>&1 | tee output
@@ -419,11 +396,11 @@ fi
 cd ..
 
 #*****************************************************************
-# TEST 17
+# TEST 16
 #*****************************************************************
 # - disable man pages
 #*****************************************************************
-print_title "${arr[17]}"
+print_title "${arr[16]}"
 cd firejail || exit 1
 
 ./configure --enable-fatal-warnings --disable-man 2>&1 | tee output
@@ -441,11 +418,11 @@ make distclean
 cd ..
 
 #*****************************************************************
-# TEST 18
+# TEST 17
 #*****************************************************************
 # - disable private-lib
 #*****************************************************************
-print_title "${arr[18]}"
+print_title "${arr[17]}"
 cd firejail || exit 1
 
 ./configure --enable-fatal-warnings --disable-private-lib 2>&1 | tee output
@@ -463,11 +440,11 @@ make distclean
 cd ..
 
 #*****************************************************************
-# TEST 19
+# TEST 18
 #*****************************************************************
 # - disable suid
 #*****************************************************************
-print_title "${arr[19]}"
+print_title "${arr[18]}"
 cd firejail || exit 1
 
 ./configure --enable-fatal-warnings --disable-suid 2>&1 | tee output
@@ -485,11 +462,11 @@ make distclean
 cd ..
 
 #*****************************************************************
-# TEST 20
+# TEST 19
 #*****************************************************************
 # - enable contrib install
 #*****************************************************************
-print_title "${arr[20]}"
+print_title "${arr[19]}"
 cd firejail || exit 1
 
 ./configure --enable-fatal-warnings --enable-contrib-install 2>&1 | tee output
@@ -507,11 +484,11 @@ make distclean
 cd ..
 
 #*****************************************************************
-# TEST 21
+# TEST 20
 #*****************************************************************
 # --enable-only-syscfg-profile
 #*****************************************************************
-print_title "${arr[21]}"
+print_title "${arr[20]}"
 cd firejail || exit 1
 
 ./configure --enable-fatal-warnings --enable-only-syscfg-profiles 2>&1 | tee output
@@ -529,11 +506,11 @@ make distclean
 cd ..
 
 #*****************************************************************
-# TEST 22
+# TEST 21
 #*****************************************************************
 # - enable force nonewprivs
 #*****************************************************************
-print_title "${arr[22]}"
+print_title "${arr[21]}"
 cd firejail || exit 1
 
 ./configure --enable-fatal-warnings  --enable-force-nonewprivs 2>&1 | tee output

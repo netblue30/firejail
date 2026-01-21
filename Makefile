@@ -16,9 +16,7 @@ TAR ?= tar
 INSTALL ?= install
 RM ?= rm -f
 
-ifneq ($(HAVE_MAN),no)
 MAN_TARGET = man
-endif
 
 ifneq ($(HAVE_CONTRIB_INSTALL),no)
 CONTRIB_TARGET = contrib
@@ -274,13 +272,11 @@ ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/apparmor.d/abstractions/base.d etc/apparmor/firejail-base
 endif
-ifneq ($(HAVE_MAN),no)
 	# man pages
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(mandir)/man1
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(mandir)/man1 $(MANPAGES1_GZ)
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(mandir)/man5
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(mandir)/man5 $(MANPAGES5_GZ)
-endif
 	# bash completion
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(datarootdir)/bash-completion/completions
 	$(INSTALL) -m 0644 src/bash_completion/firejail.bash_completion $(DESTDIR)$(datarootdir)/bash-completion/completions/firejail

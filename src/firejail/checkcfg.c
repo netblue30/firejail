@@ -423,13 +423,6 @@ static const char *const compiletime_support =
 		"disabled"
 #endif
 
-	"\n\t- private-cache and tmpfs as user "
-#ifdef HAVE_USERTMPFS
-		"enabled"
-#else
-		"disabled"
-#endif
-
 	"\n\t- sandbox check is "
 #ifdef HAVE_SANDBOX_CHECK
 		"enabled"

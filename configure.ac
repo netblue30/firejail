@@ -129,14 +129,6 @@ AS_IF([test "x$enable_output" != "xno"], [
 	HAVE_OUTPUT="-DHAVE_OUTPUT"
 ])
 
-HAVE_USERTMPFS=""
-AC_SUBST([HAVE_USERTMPFS])
-AC_ARG_ENABLE([usertmpfs],
-    [AS_HELP_STRING([--disable-usertmpfs], [disable tmpfs as regular user])])
-AS_IF([test "x$enable_usertmpfs" != "xno"], [
-	HAVE_USERTMPFS="-DHAVE_USERTMPFS"
-])
-
 HAVE_PRIVATE_HOME=""
 AC_SUBST([HAVE_PRIVATE_HOME])
 AC_ARG_ENABLE([private-home],
@@ -282,7 +274,6 @@ Compile options:
    Spectre compiler patch: $HAVE_SPECTRE
 
 Features:
-   allow tmpfs as regular user: $HAVE_USERTMPFS
    always enforce filters: $HAVE_FORCE_NONEWPRIVS
    apparmor: $HAVE_APPARMOR
    busybox workaround: $BUSYBOX_WORKAROUND

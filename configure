@@ -657,7 +657,6 @@ HAVE_NETWORK
 HAVE_CHROOT
 HAVE_PRIVATE_LIB
 HAVE_PRIVATE_HOME
-HAVE_USERTMPFS
 HAVE_OUTPUT
 HAVE_DBUSPROXY
 EXTRA_LDFLAGS
@@ -736,7 +735,6 @@ enable_selinux
 enable_landlock
 enable_dbusproxy
 enable_output
-enable_usertmpfs
 enable_private_home
 enable_private_lib
 enable_chroot
@@ -1394,7 +1392,6 @@ Optional Features:
   --disable-landlock      disable Landlock self-restriction support
   --disable-dbusproxy     disable dbus proxy
   --disable-output        disable --output logging
-  --disable-usertmpfs     disable tmpfs as regular user
   --disable-private-home  disable private home feature
   --disable-private-lib   disable private lib feature
   --disable-chroot        disable chroot
@@ -4309,21 +4306,6 @@ then :
 
 fi
 
-HAVE_USERTMPFS=""
-
-# Check whether --enable-usertmpfs was given.
-if test ${enable_usertmpfs+y}
-then :
-  enableval=$enable_usertmpfs;
-fi
-
-if test "x$enable_usertmpfs" != "xno"
-then :
-
-	HAVE_USERTMPFS="-DHAVE_USERTMPFS"
-
-fi
-
 HAVE_PRIVATE_HOME=""
 
 # Check whether --enable-private-home was given.
@@ -5727,7 +5709,6 @@ Compile options:
    Spectre compiler patch: $HAVE_SPECTRE
 
 Features:
-   allow tmpfs as regular user: $HAVE_USERTMPFS
    always enforce filters: $HAVE_FORCE_NONEWPRIVS
    apparmor: $HAVE_APPARMOR
    busybox workaround: $BUSYBOX_WORKAROUND

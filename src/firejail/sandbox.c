@@ -965,13 +965,11 @@ int sandbox(void* sandbox_arg) {
 	}
 #endif
 
-#ifdef HAVE_USERTMPFS
 	if (arg_private_cache) {
 		EUID_USER();
 		profile_add("tmpfs ${HOME}/.cache");
 		EUID_ROOT();
 	}
-#endif
 
 	if (arg_private_tmp) {
 		// private-tmp is implemented as a whitelist

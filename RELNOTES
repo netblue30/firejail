@@ -1,5 +1,33 @@
 firejail (0.9.79) baseline; urgency=low
   * work in progress
+  * security: --profile=FILE with just a filename has security implications
+    and should be highly discouraged; a full or relative file path is required
+    for --profile=filename (#6896)
+  * security: updated the list of terminal emulators that can be used for
+    sandbox escape (cbf4308)
+  * compile time: compile fix for --enable-only-syscfg-profiles ./config
+    option (d1a58de)
+  * compile time: removed ./configure --disable-man option (a655b7d)
+  * compile time: removed ./configure --disable-usertmpfs option (b214d08)
+  * modif: include new generated syscall headers (#7000)
+  * modif: reorganize & update syscall groups (#7024 etc.)
+  * modif: make Xephyr default for --x11 option - currently Xpra is not
+    available in Debian/Ubuntu and derivatives (cbb7a38)
+  * bugfix: /home/user is mounted with noexec when --private is used (#6921)
+  * bugfix: Void Linux/musl libc compile fixes (e602396, 0949685)
+  * docs: man: non-ASCII hyphens - copy pasting commands fails on command
+    line (#5903)
+  * docs: man: fix double backslash before hyphen (0ddf56a)
+  * ci: gitlab: install missing git-buildpackage dependency (#7017)
+  * ci: gcov testing scripts update
+  * profiles: add deno paths (#7043)
+  * profiles: yt-dlp support JavaScript deno (#6999)
+  * profiles: yt-dlp support browser cookies for authenticated downloads
+    (#7030)
+  * profiles: global support for deno in .inc files (2ba2f2d)
+  * new profiles: fragments (97871d7, f712b9a)
+  * new profiles: srb2 (9882aa0)
+  * new profiles: zen, zen-bin, zen-browser (09e376d, fa6bfd7)
  -- netblue30 <netblue30@yahoo.com>  Sat, 3 Jan 2026 11:00:00 -0500
 
 firejail (0.9.78) baseline; urgency=low

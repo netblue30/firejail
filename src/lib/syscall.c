@@ -148,6 +148,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_io_pgetevents
 	  "io_pgetevents,"
 #endif
+#ifdef SYS_io_pgetevents_time64
+	  "io_pgetevents_time64,"
+#endif
 #ifdef SYS_io_setup
 	  "io_setup,"
 #endif
@@ -247,14 +250,53 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_clock_adjtime
 	  "clock_adjtime,"
 #endif
+#ifdef SYS_clock_adjtime64
+	  "clock_adjtime64,"
+#endif
+#ifdef SYS_clock_getres
+	  "clock_getres,"
+#endif
+#ifdef SYS_clock_getres_time64
+	  "clock_getres_time64,"
+#endif
+#ifdef SYS_clock_gettime
+	  "clock_gettime,"
+#endif
+#ifdef SYS_clock_gettime64
+	  "clock_gettime64,"
+#endif
+#ifdef SYS_clock_nanosleep
+	  "clock_nanosleep,"
+#endif
+#ifdef SYS_clock_nanosleep_time64
+	  "clock_nanosleep_time64,"
+#endif
 #ifdef SYS_clock_settime
 	  "clock_settime,"
+#endif
+#ifdef SYS_clock_settime64
+	  "clock_settime64,"
+#endif
+#ifdef SYS_gettimeofday
+	  "gettimeofday,"
+#endif
+#ifdef SYS_old_adjtimex
+	  "old_adjtimex,"
+#endif
+#ifdef SYS_osf_gettimeofday
+	  "osf_gettimeofday,"
+#endif
+#ifdef SYS_osf_settimeofday
+	  "osf_settimeofday,"
 #endif
 #ifdef SYS_settimeofday
 	  "settimeofday,"
 #endif
 #ifdef SYS_stime
-	  "stime"
+	  "stime,"
+#endif
+#ifdef SYS_time
+	  "time"
 #endif
 	},
 	{ .name = "@cpu-emulation", .list =
@@ -274,7 +316,8 @@ static const SyscallGroupList sysgroups[] = {
 	  "vm86old"
 #endif
 #if !defined(SYS_modify_ldt) && !defined(SYS_subpage_prot) && !defined(SYS_switch_endian) && !defined(SYS_vm86) && !defined(SYS_vm86old)
-	  "__dummy_syscall__" // workaround for arm64, s390x and sparc64 which don't have any of above defined and empty syscall lists are not allowed
+	  "__dummy_syscall__" // workaround for the following architectures which don't have any of above defined and empty syscall lists are not allowed:
+						  // arm64, alpha, arc32, armeabi, armoabi, csky, hexagon32, loongarch64, m68k, mips_n32, mips_n64, nios2, openrisc32, parisc32, parisc64, riscv32, riscv64, s390_32, s390_64, sparc32, sparc64, superh and xtensa
 #endif
 	},
 	{ .name = "@debug", .list =
@@ -298,6 +341,12 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_sys_debug_setcontext
 	  "sys_debug_setcontext,"
+#endif
+#ifdef SYS_uprobe
+	  "uprobe,"
+#endif
+#ifdef SYS_uretprobe
+	  "uretprobe" // occasional breakages with seccomp reported, see https://lwn.net/Articles/1005662
 #endif
 	},
 	{ .name = "@default", .list =
@@ -393,8 +442,13 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_arch_prctl
 	  "arch_prctl," // breaks glibc, i386 and x86_64 only
 #endif
+#ifdef SYS_execv
+	  "execv," // sparc only
+#endif
 	  "execve,"
 	  "execveat," // commonly used by fexecve
+	  "exit," // breaks most Qt applications
+	  "futex," // frequently used and causes breakages
 #ifdef SYS_mmap
 	  "mmap," // cannot load shared libraries
 #endif
@@ -420,6 +474,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_access
 	  "access,"
 #endif
+#ifdef SYS_cachestat
+	  "cachestat,"
+#endif
 #ifdef SYS_chdir
 	  "chdir,"
 #endif
@@ -444,6 +501,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_fallocate
 	  "fallocate,"
 #endif
+#ifdef SYS_fanotify_mark
+	  "fanotify_mark,"
+#endif
 #ifdef SYS_fchdir
 	  "fchdir,"
 #endif
@@ -453,6 +513,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_fchmodat
 	  "fchmodat,"
 #endif
+#ifdef SYS_fchmodat2
+	  "fchmodat2,"
+#endif
 #ifdef SYS_fcntl
 	  "fcntl,"
 #endif
@@ -461,6 +524,12 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_fgetxattr
 	  "fgetxattr,"
+#endif
+#ifdef SYS_file_getattr
+	  "file_getattr,"
+#endif
+#ifdef SYS_file_setattr
+	  "file_setattr,"
 #endif
 #ifdef SYS_flistxattr
 	  "flistxattr,"
@@ -507,6 +576,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_getxattr
 	  "getxattr,"
 #endif
+#ifdef SYS_getxattrat
+	  "getxattrat,"
+#endif
 #ifdef SYS_inotify_add_watch
 	  "inotify_add_watch,"
 #endif
@@ -530,6 +602,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_listxattr
 	  "listxattr,"
+#endif
+#ifdef SYS_listxattrat
+	  "listxattrat,"
 #endif
 #ifdef SYS_llistxattr
 	  "llistxattr,"
@@ -582,6 +657,30 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_openat2
 	  "openat2,"
 #endif
+#ifdef SYS_osf_fstat
+	  "osf_fstat,"
+#endif
+#ifdef SYS_osf_fstatfs
+	  "osf_fstatfs,"
+#endif
+#ifdef SYS_osf_fstatfs64
+	  "osf_fstatfs64,"
+#endif
+#ifdef SYS_osf_getdirentries
+	  "osf_getdirentries,"
+#endif
+#ifdef SYS_osf_lstat
+	  "osf_lstat,"
+#endif
+#ifdef SYS_osf_proplist_syscall
+	  "osf_proplist_syscall,"
+#endif
+#ifdef SYS_osf_utimes
+	  "osf_utimes,"
+#endif
+#ifdef SYS_quotactl_fd
+	  "quotactl_fd,"
+#endif
 #ifdef SYS_readlink
 	  "readlink,"
 #endif
@@ -590,6 +689,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_removexattr
 	  "removexattr,"
+#endif
+#ifdef SYS_removexattrat
+	  "removexattrat,"
 #endif
 #ifdef SYS_rename
 	  "rename,"
@@ -605,6 +707,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_setxattr
 	  "setxattr,"
+#endif
+#ifdef SYS_setxattrat
+	  "setxattrat,"
 #endif
 #ifdef SYS_stat
 	  "stat,"
@@ -691,9 +796,6 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_ipc
 	  "ipc,"
 #endif
-#ifdef SYS_memfd_create
-	  "memfd_create,"
-#endif
 #ifdef SYS_mq_getsetattr
 	  "mq_getsetattr,"
 #endif
@@ -706,8 +808,14 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_mq_timedreceive
 	  "mq_timedreceive,"
 #endif
+#ifdef SYS_mq_timedreceive_time64
+	  "mq_timedreceive_time64,"
+#endif
 #ifdef SYS_mq_timedsend
 	  "mq_timedsend,"
+#endif
+#ifdef SYS_mq_timedsend_time64
+	  "mq_timedsend_time64,"
 #endif
 #ifdef SYS_mq_unlink
 	  "mq_unlink,"
@@ -733,6 +841,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_process_madvise
 	  "process_madvise,"
 #endif
+#ifdef SYS_process_mrelease
+	  "process_mrelease,"
+#endif
 #ifdef SYS_process_vm_readv
 	  "process_vm_readv,"
 #endif
@@ -750,6 +861,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_semtimedop
 	  "semtimedop,"
+#endif
+#ifdef SYS_semtimedop_time64
+	  "semtimedop_time64,"
 #endif
 #ifdef SYS_shmat
 	  "shmat,"
@@ -773,6 +887,14 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_request_key
 	  "request_key"
+#endif
+	},
+	{ .name = "@memfd", .list =
+#ifdef SYS_memfd_create
+	  "memfd_create,"
+#endif
+#ifdef SYS_memfd_secret
+	  "memfd_secret"
 #endif
 	},
 	{ .name = "@memlock", .list =
@@ -819,17 +941,35 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_fspick
 	  "fspick,"
 #endif
+#ifdef SYS_listmount
+	  "listmount,"
+#endif
 #ifdef SYS_mount
 	  "mount,"
+#endif
+#ifdef SYS_mount_setattr
+	  "mount_setattr,"
 #endif
 #ifdef SYS_move_mount
 	  "move_mount,"
 #endif
+#ifdef SYS_oldumount
+	  "oldumount,"
+#endif
 #ifdef SYS_open_tree
 	  "open_tree,"
 #endif
+#ifdef SYS_open_tree_attr
+	  "open_tree_attr,"
+#endif
+#ifdef SYS_osf_mount
+	  "osf_mount,"
+#endif
 #ifdef SYS_pivot_root
 	  "pivot_root,"
+#endif
+#ifdef SYS_statmount
+	  "statmount,"
 #endif
 #ifdef SYS_umount
 	  "umount,"
@@ -871,6 +1011,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_recvmmsg
 	  "recvmmsg,"
+#endif
+#ifdef SYS_recvmmsg_time64
+	  "recvmmsg_time64,"
 #endif
 #ifdef SYS_recvmsg
 	  "recvmsg,"
@@ -919,11 +1062,17 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_create_module
 	  "create_module,"
 #endif
+#ifdef SYS_dipc
+	  "dipc,"
+#endif
 #ifdef SYS_epoll_ctl_old
 	  "epoll_ctl_old,"
 #endif
 #ifdef SYS_epoll_wait_old
 	  "epoll_wait_old,"
+#endif
+#ifdef SYS_exec_with_loader
+	  "exec_with_loader,"
 #endif
 #ifdef SYS_ftime
 	  "ftime,"
@@ -940,11 +1089,269 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_idle
 	  "idle,"
 #endif
+#ifdef SYS_llseek
+	  "llseek,"
+#endif
 #ifdef SYS_lock
 	  "lock,"
 #endif
 #ifdef SYS_mpx
 	  "mpx,"
+#endif
+#ifdef SYS_multiplexer
+	  "multiplexer,"
+#endif
+#ifdef SYS_osf_adjtime
+	  "osf_adjtime,"
+#endif
+#ifdef SYS_osf_afs_syscall
+	  "osf_afs_syscall,"
+#endif
+#ifdef SYS_osf_alt_plock
+	  "osf_alt_plock,"
+#endif
+#ifdef SYS_osf_alt_setsid
+	  "osf_alt_setsid,"
+#endif
+#ifdef SYS_osf_alt_sigpending
+	  "osf_alt_sigpending,"
+#endif
+#ifdef SYS_osf_asynch_daemon
+	  "osf_asynch_daemon,"
+#endif
+#ifdef SYS_osf_audcntl
+	  "osf_audcntl,"
+#endif
+#ifdef SYS_osf_audgen
+	  "osf_audgen,"
+#endif
+#ifdef SYS_osf_chflags
+	  "osf_chflags,"
+#endif
+#ifdef SYS_osf_execve
+	  "osf_execve,"
+#endif
+#ifdef SYS_osf_exportfs
+	  "osf_exportfs,"
+#endif
+#ifdef SYS_osf_fchflags
+	  "osf_fchflags,"
+#endif
+#ifdef SYS_osf_fdatasync
+	  "osf_fdatasync,"
+#endif
+#ifdef SYS_osf_fpathconf
+	  "osf_fpathconf,"
+#endif
+#ifdef SYS_osf_fuser
+	  "osf_fuser,"
+#endif
+#ifdef SYS_osf_getaddressconf
+	  "osf_getaddressconf,"
+#endif
+#ifdef SYS_osf_getfh
+	  "osf_getfh,"
+#endif
+#ifdef SYS_osf_getfsstat
+	  "osf_getfsstat,"
+#endif
+#ifdef SYS_osf_gethostid
+	  "osf_gethostid,"
+#endif
+#ifdef SYS_osf_getlogin
+	  "osf_getlogin,"
+#endif
+#ifdef SYS_osf_getmnt
+	  "osf_getmnt,"
+#endif
+#ifdef SYS_osf_kloadcall
+	  "osf_kloadcall,"
+#endif
+#ifdef SYS_osf_kmodcall
+	  "osf_kmodcall,"
+#endif
+#ifdef SYS_osf_memcntl
+	  "osf_memcntl,"
+#endif
+#ifdef SYS_osf_mincore
+	  "osf_mincore,"
+#endif
+#ifdef SYS_osf_mremap
+	  "osf_mremap,"
+#endif
+#ifdef SYS_osf_msfs_syscall
+	  "osf_msfs_syscall,"
+#endif
+#ifdef SYS_osf_msleep
+	  "osf_msleep,"
+#endif
+#ifdef SYS_osf_mvalid
+	  "osf_mvalid,"
+#endif
+#ifdef SYS_osf_mwakeup
+	  "osf_mwakeup,"
+#endif
+#ifdef SYS_osf_naccept
+	  "osf_naccept,"
+#endif
+#ifdef SYS_osf_nfssvc
+	  "osf_nfssvc,"
+#endif
+#ifdef SYS_osf_ngetpeername
+	  "osf_ngetpeername,"
+#endif
+#ifdef SYS_osf_ngetsockname
+	  "osf_ngetsockname,"
+#endif
+#ifdef SYS_osf_nrecvfrom
+	  "osf_nrecvfrom,"
+#endif
+#ifdef SYS_osf_nrecvmsg
+	  "osf_nrecvmsg,"
+#endif
+#ifdef SYS_osf_nsendmsg
+	  "osf_nsendmsg,"
+#endif
+#ifdef SYS_osf_ntp_adjtime
+	  "osf_ntp_adjtime,"
+#endif
+#ifdef SYS_osf_ntp_gettime
+	  "osf_ntp_gettime,"
+#endif
+#ifdef SYS_osf_old_creat
+	  "osf_old_creat,"
+#endif
+#ifdef SYS_osf_old_fstat
+	  "osf_old_fstat,"
+#endif
+#ifdef SYS_osf_old_getpgrp
+	  "osf_old_getpgrp,"
+#endif
+#ifdef SYS_osf_old_killpg
+	  "osf_old_killpg,"
+#endif
+#ifdef SYS_osf_old_lstat
+	  "osf_old_lstat,"
+#endif
+#ifdef SYS_osf_old_open
+	  "osf_old_open,"
+#endif
+#ifdef SYS_osf_old_sigaction
+	  "osf_old_sigaction,"
+#endif
+#ifdef SYS_osf_old_sigblock
+	  "osf_old_sigblock,"
+#endif
+#ifdef SYS_osf_old_sigreturn
+	  "osf_old_sigreturn,"
+#endif
+#ifdef SYS_osf_old_sigsetmask
+	  "osf_old_sigsetmask,"
+#endif
+#ifdef SYS_osf_old_sigvec
+	  "osf_old_sigvec,"
+#endif
+#ifdef SYS_osf_old_stat
+	  "osf_old_stat,"
+#endif
+#ifdef SYS_osf_old_vadvise
+	  "osf_old_vadvise,"
+#endif
+#ifdef SYS_osf_old_vtrace
+	  "osf_old_vtrace,"
+#endif
+#ifdef SYS_osf_old_wait
+	  "osf_old_wait,"
+#endif
+#ifdef SYS_osf_oldquota
+	  "osf_oldquota,"
+#endif
+#ifdef SYS_osf_pathconf
+	  "osf_pathconf,"
+#endif
+#ifdef SYS_osf_pid_block
+	  "osf_pid_block,"
+#endif
+#ifdef SYS_osf_pid_unblock
+	  "osf_pid_unblock,"
+#endif
+#ifdef SYS_osf_plock
+	  "osf_plock,"
+#endif
+#ifdef SYS_osf_priocntlset
+	  "osf_priocntlset,"
+#endif
+#ifdef SYS_osf_profil
+	  "osf_profil,"
+#endif
+#ifdef SYS_osf_reboot
+	  "osf_reboot,"
+#endif
+#ifdef SYS_osf_revoke
+	  "osf_revoke,"
+#endif
+#ifdef SYS_osf_sbrk
+	  "osf_sbrk,"
+#endif
+#ifdef SYS_osf_security
+	  "osf_security,"
+#endif
+#ifdef SYS_osf_set_speculative
+	  "osf_set_speculative,"
+#endif
+#ifdef SYS_osf_sethostid
+	  "osf_sethostid,"
+#endif
+#ifdef SYS_osf_setlogin
+	  "osf_setlogin,"
+#endif
+#ifdef SYS_osf_signal
+	  "osf_signal,"
+#endif
+#ifdef SYS_osf_sigsendset
+	  "osf_sigsendset,"
+#endif
+#ifdef SYS_osf_sigwaitprim
+	  "osf_sigwaitprim,"
+#endif
+#ifdef SYS_osf_sstk
+	  "osf_sstk,"
+#endif
+#ifdef SYS_osf_stat
+	  "osf_stat,"
+#endif
+#ifdef SYS_osf_statfs
+	  "osf_statfs,"
+#endif
+#ifdef SYS_osf_statfs64
+	  "osf_statfs64,"
+#endif
+#ifdef SYS_osf_subsys_info
+	  "osf_subsys_info,"
+#endif
+#ifdef SYS_osf_swapctl
+	  "osf_swapctl,"
+#endif
+#ifdef SYS_osf_table
+	  "osf_table,"
+#endif
+#ifdef SYS_osf_uadmin
+	  "osf_uadmin,"
+#endif
+#ifdef SYS_osf_uswitch
+	  "osf_uswitch,"
+#endif
+#ifdef SYS_osf_utc_adjtime
+	  "osf_utc_adjtime,"
+#endif
+#ifdef SYS_osf_utc_gettime
+	  "osf_utc_gettime,"
+#endif
+#ifdef SYS_osf_waitid
+	  "osf_waitid,"
+#endif
+#ifdef SYS_perfctr
+	  "perfctr,"
 #endif
 #ifdef SYS_prof
 	  "prof,"
@@ -964,6 +1371,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_sgetmask
 	  "sgetmask,"
 #endif
+#ifdef SYS_spill
+	  "spill,"
+#endif
 #ifdef SYS_ssetmask
 	  "ssetmask,"
 #endif
@@ -972,6 +1382,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_sysfs
 	  "sysfs,"
+#endif
+#ifdef SYS_timerfd
+	  "timerfd,"
 #endif
 #ifdef SYS_tuxcall
 	  "tuxcall,"
@@ -986,10 +1399,13 @@ static const SyscallGroupList sysgroups[] = {
 	  "ustat,"
 #endif
 #ifdef SYS_vserver
-	  "vserver"
+	  "vserver,"
 #endif
-#if !defined(SYS__sysctl) && !defined(SYS_afs_syscall) && !defined(SYS_bdflush) && !defined(SYS_break) && !defined(SYS_create_module) && !defined(SYS_ftime) && !defined(SYS_get_kernel_syms) && !defined(SYS_getpmsg) && !defined(SYS_gtty) && !defined(SYS_lock) && !defined(SYS_mpx) && !defined(SYS_prof) && !defined(SYS_profil) && !defined(SYS_putpmsg) && !defined(SYS_query_module) && !defined(SYS_security) && !defined(SYS_sgetmask) && !defined(SYS_ssetmask) && !defined(SYS_stty) && !defined(SYS_sysfs) && !defined(SYS_tuxcall) && !defined(SYS_ulimit) && !defined(SYS_uselib) && !defined(SYS_ustat) && !defined(SYS_vserver)
-	  "__dummy_syscall__" // workaround for arm64 which doesn't have any of above defined and empty syscall lists are not allowed
+#ifdef SYS_xtensa
+	  "xtensa"
+#endif
+#if defined(__aarch64__) || defined(__loongarch64) || __loongarch_grlen == 64 || (defined(__riscv) && __riscv_xlen == 64)
+	  "__dummy_syscall__" // workaround for arm64, loongarch64 and riscv64 which don't have any of above defined and empty syscall lists are not allowed
 #endif
 	},
 	{ .name = "@privileged", .list =
@@ -1076,6 +1492,27 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 	},
 	{ .name = "@process", .list =
+#ifdef SYS_arc_gettls
+	  "arc_gettls,"
+#endif
+#ifdef SYS_arc_settls
+	  "arc_settls,"
+#endif
+#ifdef SYS_arc_usr_cmpxchg
+	  "arc_usr_cmpxchg,"
+#endif
+#ifdef SYS_atomic_barrier
+	  "atomic_barrier,"
+#endif
+#ifdef SYS_atomic_cmpxchg_32
+	  "atomic_cmpxchg_32,"
+#endif
+#ifdef SYS_cachectl
+	  "cachectl,"
+#endif
+#ifdef SYS_cacheflush
+	  "cacheflush,"
+#endif
 #ifdef SYS_capget
 	  "capget,"
 #endif
@@ -1085,11 +1522,113 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_clone3
 	  "clone3,"
 #endif
+#ifdef SYS_exit_group
+	  "exit_group,"
+#endif
 #ifdef SYS_fork
 	  "fork,"
 #endif
+#ifdef SYS_futex_requeue
+	  "futex_requeue,"
+#endif
+#ifdef SYS_futex_time64
+	  "futex_time64,"
+#endif
+#ifdef SYS_futex_wait
+	  "futex_wait,"
+#endif
+#ifdef SYS_futex_waitv
+	  "futex_waitv,"
+#endif
+#ifdef SYS_futex_wake
+	  "futex_wake,"
+#endif
+#ifdef SYS_get_robust_list
+	  "get_robust_list,"
+#endif
+#ifdef SYS_get_thread_area
+	  "get_thread_area,"
+#endif
+#ifdef SYS_getegid
+	  "getegid,"
+#endif
+#ifdef SYS_getegid32
+	  "getegid32,"
+#endif
+#ifdef SYS_geteuid
+	  "geteuid,"
+#endif
+#ifdef SYS_geteuid32
+	  "geteuid32,"
+#endif
+#ifdef SYS_getgid
+	  "getgid,"
+#endif
+#ifdef SYS_getgroups
+	  "getgroups,"
+#endif
+#ifdef SYS_getgroups32
+	  "getgroups32,"
+#endif
+#ifdef SYS_getpgid
+	  "getpgid,"
+#endif
+#ifdef SYS_getpgrp
+	  "getpgrp,"
+#endif
+#ifdef SYS_getpid
+	  "getpid,"
+#endif
+#ifdef SYS_getppid
+	  "getppid,"
+#endif
+#ifdef SYS_getresgid
+	  "getresgid,"
+#endif
+#ifdef SYS_getresgid32
+	  "getresgid32,"
+#endif
+#ifdef SYS_getresuid
+	  "getresuid,"
+#endif
+#ifdef SYS_getresuid32
+	  "getresuid32,"
+#endif
+#ifdef SYS_getsid
+	  "getsid,"
+#endif
+#ifdef SYS_gettid
+	  "gettid,"
+#endif
+#ifdef SYS_getuid
+	  "getuid,"
+#endif
+#ifdef SYS_getuid32
+	  "getuid32,"
+#endif
+#ifdef SYS_getxgid
+	  "getxgid,"
+#endif
+#ifdef SYS_getxpid
+	  "getxpid,"
+#endif
+#ifdef SYS_getxuid
+	  "getxuid,"
+#endif
 #ifdef SYS_kill
 	  "kill,"
+#endif
+#ifdef SYS_membarrier
+	  "membarrier,"
+#endif
+#ifdef SYS_or1k_atomic
+	  "or1k_atomic,"
+#endif
+#ifdef SYS_osf_set_program_attributes
+	  "osf_set_program_attributes,"
+#endif
+#ifdef SYS_osf_wait4
+	  "osf_wait4,"
 #endif
 #ifdef SYS_pidfd_open
 	  "pidfd_open,"
@@ -1097,14 +1636,50 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_pidfd_send_signal
 	  "pidfd_send_signal,"
 #endif
+#ifdef SYS_riscv_flush_icache
+	  "riscv_flush_icache,"
+#endif
+#ifdef SYS_rseq
+	  "rseq,"
+#endif
 #ifdef SYS_rt_sigqueueinfo
 	  "rt_sigqueueinfo,"
 #endif
 #ifdef SYS_rt_tgsigqueueinfo
 	  "rt_tgsigqueueinfo,"
 #endif
+#ifdef SYS_s390_guarded_storage
+	  "s390_guarded_storage,"
+#endif
+#ifdef SYS_sched_get_affinity
+	  "sched_get_affinity,"
+#endif
+#ifdef SYS_set_robust_list
+	  "set_robust_list,"
+#endif
+#ifdef SYS_set_thread_area
+	  "set_thread_area,"
+#endif
+#ifdef SYS_set_tid_address
+	  "set_tid_address,"
+#endif
+#ifdef SYS_sethae
+	  "sethae,"
+#endif
 #ifdef SYS_setns
 	  "setns,"
+#endif
+#ifdef SYS_setpgrp
+	  "setpgrp,"
+#endif
+#ifdef SYS_setpriority
+	  "setpriority,"
+#endif
+#ifdef SYS_spu_create
+	  "spu_create,"
+#endif
+#ifdef SYS_spu_run
+	  "spu_run,"
 #endif
 #ifdef SYS_swapcontext
 	  "swapcontext,"
@@ -1120,6 +1695,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_unshare
 	  "unshare,"
+#endif
+#ifdef SYS_utimensat_time64
+	  "utimensat_time64,"
 #endif
 #ifdef SYS_vfork
 	  "vfork,"
@@ -1157,7 +1735,8 @@ static const SyscallGroupList sysgroups[] = {
 	  "s390_pci_mmio_write"
 #endif
 #if !defined(SYS_ioperm) && !defined(SYS_iopl) && !defined(SYS_pciconfig_iobase) && !defined(SYS_pciconfig_read) && !defined(SYS_pciconfig_write) && !defined(SYS_s390_pci_mmio_read) && !defined(SYS_s390_pci_mmio_write)
-	  "__dummy_syscall__" // workaround for s390x which doesn't have any of above defined and empty syscall lists are not allowed
+	  "__dummy_syscall__" // workaround for the following architectures which don't have any of above defined and empty syscall lists are not allowed:
+						  // arm64, arc32, hexagon32, loongarch64, m68k, mips_n32, mips_n64, nios2, openrisc32, parisc32, parisc64, riscv32, riscv64, superh and xtensa
 #endif
 	},
 	{ .name = "@reboot", .list =
@@ -1172,6 +1751,12 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 	},
 	{ .name = "@resources", .list =
+#ifdef SYS_getdtablesize
+	  "getdtablesize,"
+#endif
+#ifdef SYS_getrlimit
+	  "getrlimit,"
+#endif
 #ifdef SYS_getrusage
 	  "getrusage,"
 #endif
@@ -1193,6 +1778,15 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_nice
 	  "nice,"
 #endif
+#ifdef SYS_osf_getrusage
+	  "osf_getrusage,"
+#endif
+#ifdef SYS_prlimit64
+	  "prlimit64,"
+#endif
+#ifdef SYS_sched_set_affinity
+	  "sched_set_affinity,"
+#endif
 #ifdef SYS_sched_setaffinity
 	  "sched_setaffinity,"
 #endif
@@ -1202,11 +1796,34 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_sched_setparam
 	  "sched_setparam,"
 #endif
+#ifdef SYS_setrlimit
+	  "sched_setrlimit,"
+#endif
 #ifdef SYS_sched_setscheduler
 	  "sched_setscheduler,"
 #endif
 #ifdef SYS_set_mempolicy
-	  "set_mempolicy"
+	  "set_mempolicy,"
+#endif
+#ifdef SYS_set_mempolicy_home_node
+	  "set_mempolicy_home_node,"
+#endif
+#ifdef SYS_set_ugetrlimit
+	  "ugetrlimit"
+#endif
+	},
+	{ .name = "@sandbox", .list =
+#ifdef SYS_landlock_add_rule
+	  "landlock_add_rule,"
+#endif
+#ifdef SYS_landlock_create_ruleset
+	  "landlock_create_ruleset,"
+#endif
+#ifdef SYS_landlock_restrict_self
+	  "landlock_restrict_self,"
+#endif
+#ifdef SYS_seccomp
+	  "seccomp"
 #endif
 	},
 	{ .name = "@setuid", .list =
@@ -1254,6 +1871,18 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 	},
 	{ .name = "@signal", .list =
+#ifdef SYS_osf_sigprocmask
+	  "osf_sigprocmask,"
+#endif
+#ifdef SYS_osf_sigstack
+	  "osf_sigstack,"
+#endif
+#ifdef SYS_pause
+	  "pause,"
+#endif
+#ifdef SYS_restart_syscall
+	  "restart_syscall,"
+#endif
 #ifdef SYS_rt_sigaction
 	  "rt_sigaction,"
 #endif
@@ -1263,11 +1892,17 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_rt_sigprocmask
 	  "rt_sigprocmask,"
 #endif
+#ifdef SYS_rt_sigreturn
+	  "rt_sigreturn,"
+#endif
 #ifdef SYS_rt_sigsuspend
 	  "rt_sigsuspend,"
 #endif
 #ifdef SYS_rt_sigtimedwait
 	  "rt_sigtimedwait,"
+#endif
+#ifdef SYS_rt_sigtimedwait_time64
+	  "rt_sigtimedwait_time64,"
 #endif
 #ifdef SYS_sigaction
 	  "sigaction,"
@@ -1290,11 +1925,20 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_sigprocmask
 	  "sigprocmask,"
 #endif
+#ifdef SYS_sigreturn
+	  "sigreturn,"
+#endif
 #ifdef SYS_sigsuspend
-	  "sigsuspend"
+	  "sigsuspend,"
+#endif
+#ifdef SYS_utrap_install
+	  "utrap_install"
 #endif
 	},
 	{ .name = "@swap", .list =
+#ifdef SYS_osf_swapon
+	  "osf_swapon,"
+#endif
 #ifdef SYS_swapoff
 	  "swapoff,"
 #endif
@@ -1303,6 +1947,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 	},
 	{ .name = "@sync", .list =
+#ifdef SYS_arm_sync_file_range
+	  "arm_sync_file_range,"
+#endif
 #ifdef SYS_fdatasync
 	  "fdatasync,"
 #endif
@@ -1334,14 +1981,19 @@ static const SyscallGroupList sysgroups[] = {
 	  "@io-event,"
 	  "@ipc,"
 	  "@keyring,"
+      "@memfd,"
 	  "@memlock,"
 	  "@network-io,"
 	  "@process,"
 	  "@resources,"
+      "@sandbox,"
 	  "@setuid,"
 	  "@signal,"
 	  "@sync,"
 	  "@timer,"
+#ifdef SYS_arm_fadvise64_64
+	  "arm_fadvise64_64,"
+#endif
 #ifdef SYS_brk
 	  "brk,"
 #endif
@@ -1369,6 +2021,15 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_getcpu
 	  "getcpu,"
 #endif
+#ifdef SYS_getdomainname
+	  "getdomainname,"
+#endif
+#ifdef SYS_gethostname
+	  "gethostname,"
+#endif
+#ifdef SYS_getpagesize
+	  "getpagesize,"
+#endif
 #ifdef SYS_getpriority
 	  "getpriority,"
 #endif
@@ -1384,11 +2045,35 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_kcmp
 	  "kcmp,"
 #endif
+#ifdef SYS_kern_features
+	  "kern_features,"
+#endif
+#ifdef SYS_listns
+	  "listns,"
+#endif
+#ifdef SYS_lsm_get_self_attr
+	  "lsm_get_self_attr,"
+#endif
+#ifdef SYS_lsm_list_modules
+	  "lsm_list_modules,"
+#endif
+#ifdef SYS_lsm_set_self_attr
+	  "lsm_set_self_attr,"
+#endif
 #ifdef SYS_madvise
 	  "madvise,"
 #endif
+#ifdef SYS_map_shadow_stack
+	  "map_shadow_stack,"
+#endif
+#ifdef SYS_memory_ordering
+	  "memory_ordering,"
+#endif
 #ifdef SYS_mremap
 	  "mremap,"
+#endif
+#ifdef SYS_mseal
+	  "mseal,"
 #endif
 #ifdef SYS_name_to_handle_at
 	  "name_to_handle_at,"
@@ -1399,8 +2084,35 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_olduname
 	  "olduname,"
 #endif
+#ifdef SYS_osf_getdomainname
+	  "osf_getdomainname,"
+#endif
+#ifdef SYS_osf_getsysinfo
+	  "osf_getsysinfo,"
+#endif
+#ifdef SYS_osf_setsysinfo
+	  "osf_setsysinfo,"
+#endif
+#ifdef SYS_osf_syscall
+	  "osf_syscall,"
+#endif
+#ifdef SYS_osf_sysinfo
+	  "osf_sysinfo,"
+#endif
+#ifdef SYS_osf_utsname
+	  "osf_utsname,"
+#endif
 #ifdef SYS_personality
 	  "personality,"
+#endif
+#ifdef SYS_pkey_alloc
+	  "pkey_alloc,"
+#endif
+#ifdef SYS_pkey_free
+	  "pkey_free,"
+#endif
+#ifdef SYS_pkey_mprotect
+	  "pkey_mprotect,"
 #endif
 #ifdef SYS_readahead
 	  "readahead,"
@@ -1410,6 +2122,12 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_remap_file_pages
 	  "remap_file_pages,"
+#endif
+#ifdef SYS_riscv_hwprobe
+	  "riscv_hwprobe,"
+#endif
+#ifdef SYS_s390_sthyi
+	  "s390_sthyi,"
 #endif
 #ifdef SYS_sched_get_priority_max
 	  "sched_get_priority_max,"
@@ -1431,6 +2149,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_sched_rr_get_interval
 	  "sched_rr_get_interval,"
+#endif
+#ifdef SYS_sched_rr_get_interval_time64
+	  "sched_rr_get_interval_time64,"
 #endif
 #ifdef SYS_sched_yield
 	  "sched_yield,"
@@ -1462,8 +2183,14 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_splice
 	  "splice,"
 #endif
+#ifdef SYS_syscall
+	  "syscall,"
+#endif
 #ifdef SYS_sysinfo
 	  "sysinfo,"
+#endif
+#ifdef SYS_sysmips
+	  "sysmips,"
 #endif
 #ifdef SYS_tee
 	  "tee,"
@@ -1488,6 +2215,18 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_getitimer
 	  "getitimer,"
 #endif
+#ifdef SYS_nanosleep
+	  "nanosleep,"
+#endif
+#ifdef SYS_osf_getitimer
+	  "osf_getitimer,"
+#endif
+#ifdef SYS_osf_setitimer
+	  "osf_setitimer,"
+#endif
+#ifdef SYS_osf_usleep_thread
+	  "osf_usleep_thread,"
+#endif
 #ifdef SYS_setitimer
 	  "setitimer,"
 #endif
@@ -1503,8 +2242,14 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_timer_gettime
 	  "timer_gettime,"
 #endif
+#ifdef SYS_timer_gettime64
+	  "timer_gettime64,"
+#endif
 #ifdef SYS_timer_settime
 	  "timer_settime,"
+#endif
+#ifdef SYS_timer_settime64
+	  "timer_settime64,"
 #endif
 #ifdef SYS_timerfd_create
 	  "timerfd_create,"
@@ -1512,8 +2257,14 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_timerfd_gettime
 	  "timerfd_gettime,"
 #endif
+#ifdef SYS_timerfd_gettime64
+	  "timerfd_gettime64,"
+#endif
 #ifdef SYS_timerfd_settime
 	  "timerfd_settime,"
+#endif
+#ifdef SYS_timerfd_settime64
+	  "timerfd_settime64,"
 #endif
 #ifdef SYS_times
 	  "times"

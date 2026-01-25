@@ -6,7 +6,7 @@
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * (at your option) any later version.1
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -256,36 +256,36 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_clock_getres
 	  "clock_getres,"
 #endif
-#ifdef SYS_clock_getres_time64
-	  "clock_getres_time64,"
-#endif
-#ifdef SYS_clock_gettime
-	  "clock_gettime,"
-#endif
-#ifdef SYS_clock_gettime64
-	  "clock_gettime64,"
-#endif
-#ifdef SYS_clock_nanosleep
-	  "clock_nanosleep,"
-#endif
-#ifdef SYS_clock_nanosleep_time64
-	  "clock_nanosleep_time64,"
-#endif
+	  //groupfix: #ifdef SYS_clock_getres_time64
+	  //groupfix: 	  "clock_getres_time64,"
+	  //groupfix: #endif
+	  //groupfix: #ifdef SYS_clock_gettime
+	  //groupfix: 	  "clock_gettime,"
+	  //groupfix: #endif
+	  //groupfix: #ifdef SYS_clock_gettime64
+	  //groupfix: 	  "clock_gettime64,"
+	  //groupfix: #endif
+	  //groupfix: #ifdef SYS_clock_nanosleep
+	  //groupfix: 	  "clock_nanosleep,"
+	  //groupfix: #endif
+	  //groupfix: #ifdef SYS_clock_nanosleep_time64
+	  //groupfix: 	  "clock_nanosleep_time64,"
+	  //groupfix: #endif
 #ifdef SYS_clock_settime
 	  "clock_settime,"
 #endif
 #ifdef SYS_clock_settime64
 	  "clock_settime64,"
 #endif
-#ifdef SYS_gettimeofday
-	  "gettimeofday,"
-#endif
+	  //groupfix: #ifdef SYS_gettimeofday
+	  //groupfix: 	  "gettimeofday,"
+	  //groupfix: #endif
 #ifdef SYS_old_adjtimex
 	  "old_adjtimex,"
 #endif
-#ifdef SYS_osf_gettimeofday
-	  "osf_gettimeofday,"
-#endif
+	  //groupfix: #ifdef SYS_osf_gettimeofday
+	  //groupfix: 	  "osf_gettimeofday,"
+	  //groupfix: #endif
 #ifdef SYS_osf_settimeofday
 	  "osf_settimeofday,"
 #endif
@@ -295,9 +295,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_stime
 	  "stime,"
 #endif
-#ifdef SYS_time
-	  "time"
-#endif
+	  //groupfix: #ifdef SYS_time
+	  //groupfix: 	  "time"
+	  //groupfix: #endif
 	},
 	{ .name = "@cpu-emulation", .list =
 #ifdef SYS_modify_ldt

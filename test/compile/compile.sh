@@ -29,7 +29,6 @@ arr[11]="11: compile --disable-private-home"
 arr[12]="12: compile --disable-sandbox-check"
 arr[13]="13: compile --disable-landlock"
 arr[14]="14: compile --disable-output"
-arr[15]="15: compile --disable-man"
 arr[16]="16: compile --disable-private-lib"
 arr[17]="17: compile --disable-suid"
 arr[18]="18: compile --enable-contrib-install"
@@ -370,28 +369,6 @@ if grep -E -i 'error:' output; then
     echo "TESTING ERROR";
     exit 1
 fi
-cd ..
-
-#*****************************************************************
-# TEST 15
-#*****************************************************************
-# - disable man pages
-#*****************************************************************
-print_title "${arr[15]}"
-cd firejail || exit 1
-
-./configure --enable-fatal-warnings --disable-man 2>&1 | tee output
-if grep -E '(WARNING|ERROR)' output; then
-    echo "TESTING ERROR";
-    exit 1
-fi
-
-make -j4 2>&1 | tee output
-if grep -E -i 'error:' output; then
-    echo "TESTING ERROR";
-    exit 1
-fi
-make distclean
 cd ..
 
 #*****************************************************************

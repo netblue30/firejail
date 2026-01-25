@@ -17,7 +17,6 @@ firejail (0.9.79) baseline; urgency=low
   * bugfix: Void Linux/musl libc compile fixes (e602396, 0949685)
   * docs: man: non-ASCII hyphens - copy pasting commands fails on command
     line (#5903)
-  * docs: man: fix double backslash before hyphen (0ddf56a)
   * ci: gitlab: install missing git-buildpackage dependency (#7017)
   * ci: gcov testing scripts update
   * profiles: add deno paths (#7043)

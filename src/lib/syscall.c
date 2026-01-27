@@ -770,6 +770,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_epoll_pwait
 	  "epoll_pwait,"
 #endif
+#ifdef SYS_epoll_pwait2
+	  "epoll_pwait2,"
+#endif
 #ifdef SYS_epoll_wait
 	  "epoll_wait,"
 #endif
@@ -779,14 +782,23 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_eventfd2
 	  "eventfd2,"
 #endif
+#ifdef SYS_osf_select
+	  "osf_select,"
+#endif
 #ifdef SYS_poll
 	  "poll,"
 #endif
 #ifdef SYS_ppoll
 	  "ppoll,"
 #endif
+#ifdef SYS_ppoll_time64
+	  "ppoll_time64,"
+#endif
 #ifdef SYS_pselect6
 	  "pselect6,"
+#endif
+#ifdef SYS_pselect6_time64
+	  "pselect6_time64,"
 #endif
 #ifdef SYS_select
 	  "select"
@@ -1564,6 +1576,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_getgid
 	  "getgid,"
 #endif
+#ifdef SYS_getgid32
+	  "getgid32,"
+#endif
 #ifdef SYS_getgroups
 	  "getgroups,"
 #endif
@@ -1796,9 +1811,6 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_sched_setparam
 	  "sched_setparam,"
 #endif
-#ifdef SYS_setrlimit
-	  "sched_setrlimit,"
-#endif
 #ifdef SYS_sched_setscheduler
 	  "sched_setscheduler,"
 #endif
@@ -1807,6 +1819,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_set_mempolicy_home_node
 	  "set_mempolicy_home_node,"
+#endif
+#ifdef SYS_setrlimit
+	  "setrlimit,"
 #endif
 #ifdef SYS_set_ugetrlimit
 	  "ugetrlimit"

@@ -1,7 +1,6 @@
 Hints to write own seccomp filters
 ==================================
 
-
 The different seccomp commands
 ------------------------------
 
@@ -27,64 +26,66 @@ Always have a look at 'man 1 firejail'.
 Definition of groups
 --------------------
 
-@aio=io_cancel,io_destroy,io_getevents,io_pgetevents,io_setup,io_submit,io_uring_enter,io_uring_register,io_uring_setup
+@aio=io_cancel,io_destroy,io_getevents,io_pgetevents,io_pgetevents_time64,io_setup,io_submit,io_uring_enter,io_uring_register,io_uring_setup
 @basic-io=_llseek,close,close_range,dup,dup2,dup3,lseek,pread64,preadv,preadv2,pwrite64,pwritev,pwritev2,read,readv,write,writev
 @chown=chown,chown32,fchown,fchown32,fchownat,lchown,lchown32
-@clock=adjtimex,clock_adjtime,clock_settime,settimeofday,stime
+@clock=adjtimex,clock_adjtime,clock_adjtime64,clock_getres,clock_getres_time64,clock_gettime,clock_gettime64,clock_nanosleep,clock_nanosleep_time64,clock_settime,clock_settime64,gettimeofday,old_adjtimex,osf_gettimeofday,osf_settimeofday,settimeofday,stime,time
 @cpu-emulation=modify_ldt,subpage_prot,switch_endian,vm86,vm86old
-@debug=lookup_dcookie,perf_event_open,pidfd_getfd,process_vm_writev,rtas,s390_runtime_instr,sys_debug_setcontext
-@default=@clock,@cpu-emulation,@debug,@module,@mount,@obsolete,@raw-io,@reboot,@swap,open_by_handle_at,name_to_handle_at,ioprio_set,ni_syscall,syslog,fanotify_init,add_key,request_key,mbind,migrate_pages,move_pages,keyctl,io_setup,io_destroy,io_getevents,io_submit,io_cancel,remap_file_pages,set_mempolicyvmsplice,userfaultfd,acct,bpf,nfsservctl,setdomainname,sethostname,vhangup
-@default-nodebuggers=@default,ptrace,personality,process_vm_readv
-@default-keep=execveat,execve,prctl
-@file-system=access,chdir,chmod,close,close_range,creat,faccessat,faccessat2,fallocate,fchdir,fchmod,fchmodat,fcntl,fcntl64,fgetxattr,flistxattr,fremovexattr,fsetxattr,fstat,fstat64,fstatat64,fstatfs,fstatfs64,ftruncate,ftruncate64,futimesat,getcwd,getdents,getdents64,getxattr,inotify_add_watch,inotify_init,inotify_init1,inotify_rm_watch,lgetxattr,link,linkat,listxattr,llistxattr,lremovexattr,lsetxattr,lstat,lstat64,mkdir,mkdirat,mknod,mknodat,mmap,mmap2,munmap,newfstatat,oldfstat,oldlstat,oldstat,open,openat,openat2,readlink,readlinkat,removexattr,rename,renameat,renameat2,rmdir,setxattr,stat,stat64,statfs,statfs64,statx,symlink,symlinkat,truncate,truncate64,unlink,unlinkat,utime,utimensat,utimes
-@io-event=_newselect,epoll_create,epoll_create1,epoll_ctl,epoll_ctl_old,epoll_pwait,epoll_wait,epoll_wait_old,eventfd,eventfd2,poll,ppoll,pselect6,select
-@ipc=ipc,memfd_create,mq_getsetattr,mq_notify,mq_open,mq_timedreceive,mq_timedsend,mq_unlink,msgctl,msgget,msgrcv,msgsnd,pipe,pipe2,process_madvise,process_vm_readv,process_vm_writev,semctl,semget,semop,semtimedop,shmat,shmctl,shmdt,shmget
+@debug=lookup_dcookie,perf_event_open,pidfd_getfd,process_vm_writev,rtas,s390_runtime_instr,sys_debug_setcontext,uprobe,uretprobe
+@default=@clock,@cpu-emulation,@debug,@module,@mount,@obsolete,@raw-io,@reboot,@swap,acct,add_key,bpf,fanotify_init,io_cancel,io_destroy,io_getevents,io_setup,io_submit,ioprio_set,keyctl,mbind,migrate_pages,move_pages,name_to_handle_at,nfsservctl,open_by_handle_at,remap_file_pages,request_key,set_mempolicy,setdomainname,sethostname,syslog,userfaultfd,vhangup,vmsplice
+@default-keep=arch_prctl,execv,execve,execveat,exit,futex,mmap,mmap2,mprotect,prctl
+@default-nodebuggers=@default,personality,process_vm_readv,ptrace
+@file-system=access,cachestat,chdir,chmod,close,close_range,creat,faccessat,faccessat2,fallocate,fanotify_mark,fchdir,fchmod,fchmodat,fchmodat2,fcntl,fcntl64,fgetxattr,file_getattr,file_setattr,flistxattr,fremovexattr,fsetxattr,fstat,fstat64,fstatat64,fstatfs,fstatfs64,ftruncate,ftruncate64,futimesat,getcwd,getdents,getdents64,getxattr,getxattrat,inotify_add_watch,inotify_init,inotify_init1,inotify_rm_watch,lgetxattr,link,linkat,listxattr,listxattrat,llistxattr,lremovexattr,lsetxattr,lstat,lstat64,mkdir,mkdirat,mknod,mknodat,munmap,newfstatat,oldfstat,oldlstat,oldstat,open,openat,openat2,osf_fstat,osf_fstatfs,osf_fstatfs64,osf_getdirentries,osf_lstat,osf_proplist_syscall,osf_utimes,quotactl_fd,readlink,readlinkat,removexattr,removexattrat,rename,renameat,renameat2,rmdir,setxattr,setxattrat,stat,stat64,statfs,statfs64,statx,symlink,symlinkat,truncate,truncate64,unlink,unlinkat,utime,utimensat,utimes
+@io-event=_newselect,epoll_create,epoll_create1,epoll_ctl,epoll_pwait,epoll_pwait2,epoll_wait,eventfd,eventfd2,osf_select,poll,ppoll,ppoll_time64,pselect6,pselect6_time64,select
+@ipc=ipc,mq_getsetattr,mq_notify,mq_open,mq_timedreceive,mq_timedreceive_time64,mq_timedsend,mq_timedsend_time64,mq_unlink,msgctl,msgget,msgrcv,msgsnd,pipe,pipe2,process_madvise,process_mrelease,process_vm_readv,process_vm_writev,semctl,semget,semop,semtimedop,semtimedop_time64,shmat,shmctl,shmdt,shmget
 @keyring=add_key,keyctl,request_key
+@memfd=memfd_create,memfd_secret
 @memlock=mlock,mlock2,mlockall,munlock,munlockall
 @module=delete_module,finit_module,init_module
-@mount=chroot,fsconfig,fsmount,fsopen,fspick,mount,move_mount,open_tree,pivot_root,umount,umount2
-@network-io=accept,accept4,bind,connect,getpeername,getsockname,getsockopt,listen,recv,recvfrom,recvmmsg,recvmsg,send,sendmmsg,sendmsg,sendto,setsockopt,shutdown,socket,socketcall,socketpair
-@obsolete=_sysctl,afs_syscall,bdflush,break,create_module,ftime,get_kernel_syms,getpmsg,gtty,idle,lock,mpx,prof,profil,putpmsg,query_module,security,sgetmask,ssetmask,stty,sysfs,tuxcall,ulimit,uselib,ustat,vserver
+@mount=chroot,fsconfig,fsmount,fsopen,fspick,listmount,mount,mount_setattr,move_mount,oldumount,open_tree,open_tree_attr,osf_mount,pivot_root,statmount,umount,umount2
+@network-io=accept,accept4,bind,connect,getpeername,getsockname,getsockopt,listen,recv,recvfrom,recvmmsg,recvmmsg_time64,recvmsg,send,sendmmsg,sendmsg,sendto,setsockopt,shutdown,socket,socketcall,socketpair
+@obsolete=_sysctl,afs_syscall,bdflush,break,create_module,dipc,epoll_ctl_old,epoll_wait_old,exec_with_loader,ftime,get_kernel_syms,getpmsg,gtty,idle,llseek,lock,mpx,multiplexer,osf_adjtime,osf_afs_syscall,osf_alt_plock,osf_alt_setsid,osf_alt_sigpending,osf_asynch_daemon,osf_audcntl,osf_audgen,osf_chflags,osf_execve,osf_exportfs,osf_fchflags,osf_fdatasync,osf_fpathconf,osf_fuser,osf_getaddressconf,osf_getfh,osf_getfsstat,osf_gethostid,osf_getlogin,osf_getmnt,osf_kloadcall,osf_kmodcall,osf_memcntl,osf_mincore,osf_mremap,osf_msfs_syscall,osf_msleep,osf_mvalid,osf_mwakeup,osf_naccept,osf_nfssvc,osf_ngetpeername,osf_ngetsockname,osf_nrecvfrom,osf_nrecvmsg,osf_nsendmsg,osf_ntp_adjtime,osf_ntp_gettime,osf_old_creat,osf_old_fstat,osf_old_getpgrp,osf_old_killpg,osf_old_lstat,osf_old_open,osf_old_sigaction,osf_old_sigblock,osf_old_sigreturn,osf_old_sigsetmask,osf_old_sigvec,osf_old_stat,osf_old_vadvise,osf_old_vtrace,osf_old_wait,osf_oldquota,osf_pathconf,osf_pid_block,osf_pid_unblock,osf_plock,osf_priocntlset,osf_profil,osf_reboot,osf_revoke,osf_sbrk,osf_security,osf_set_speculative,osf_sethostid,osf_setlogin,osf_signal,osf_sigsendset,osf_sigwaitprim,osf_sstk,osf_stat,osf_statfs,osf_statfs64,osf_subsys_info,osf_swapctl,osf_table,osf_uadmin,osf_uswitch,osf_utc_adjtime,osf_utc_gettime,osf_waitid,perfctr,prof,profil,putpmsg,query_module,security,sgetmask,spill,ssetmask,stty,sysfs,timerfd,tuxcall,ulimit,uselib,ustat,vserver,xtensa
 @privileged=@chown,@clock,@module,@raw-io,@reboot,@swap,_sysctl,acct,bpf,capset,chroot,fanotify_init,mount,nfsservctl,open_by_handle_at,pivot_root,quotactl,setdomainname,setfsuid,setfsuid32,setgroups,setgroups32,sethostname,setresuid,setresuid32,setreuid,setreuid32,setuid,setuid32,umount2,vhangup
-@process=arch_prctl,capget,clone,clone3,execveat,fork,getrusage,kill,pidfd_open,pidfd_send_signal,prctl,rt_sigqueueinfo,rt_tgsigqueueinfo,setns,swapcontext,tgkill,times,tkill,unshare,vfork,wait4,waitid,waitpid
+@process=arc_gettls,arc_settls,arc_usr_cmpxchg,atomic_barrier,atomic_cmpxchg_32,cachectl,cacheflush,capget,clone,clone3,exit_group,fork,futex_requeue,futex_time64,futex_wait,futex_waitv,futex_wake,get_robust_list,get_thread_area,getegid,getegid32,geteuid,geteuid32,getgid,getgid32,getgroups,getgroups32,getpgid,getpgrp,getpid,getppid,getresgid,getresgid32,getresuid,getresuid32,getsid,gettid,getuid,getuid32,getxgid,getxpid,getxuid,kill,membarrier,or1k_atomic,osf_set_program_attributes,osf_wait4,pidfd_open,pidfd_send_signal,riscv_flush_icache,rseq,rt_sigqueueinfo,rt_tgsigqueueinfo,s390_guarded_storage,sched_get_affinity,set_robust_list,set_thread_area,set_tid_address,sethae,setns,setpgrp,setpriority,spu_create,spu_run,swapcontext,tgkill,times,tkill,unshare,utimensat_time64,vfork,wait4,waitid,waitpid
 @raw-io=ioperm,iopl,pciconfig_iobase,pciconfig_read,pciconfig_write,s390_pci_mmio_read,s390_pci_mmio_write
-@reboot=kexec_load,kexec_file_load,reboot
-@resources=ioprio_set,mbind,migrate_pages,move_pages,nice,sched_setaffinity,sched_setattr,sched_setparam,sched_setscheduler,set_mempolicy
+@reboot=kexec_file_load,kexec_load,reboot
+@resources=getdtablesize,getrlimit,getrusage,ioprio_set,mbind,migrate_pages,mincore,move_pages,nice,osf_getrusage,prlimit64,sched_set_affinity,sched_setaffinity,sched_setattr,sched_setparam,sched_setscheduler,set_mempolicy,set_mempolicy_home_node,setrlimit,ugetrlimit
+@sandbox=landlock_add_rule,landlock_create_ruleset,landlock_restrict_self,seccomp
 @setuid=setgid,setgid32,setgroups,setgroups32,setregid,setregid32,setresgid,setresgid32,setresuid,setresuid32,setreuid,setreuid32,setuid,setuid32
-@signal=rt_sigaction,rt_sigpending,rt_sigprocmask,rt_sigsuspend,rt_sigtimedwait,sigaction,sigaltstack,signal,signalfd,signalfd4,sigpending,sigprocmask,sigsuspend
-@swap=swapon,swapoff
-@sync=fdatasync,fsync,msync,sync,sync_file_range,sync_file_range2,syncfs
-@system-service=@aio,@basic-io,@chown,@default,@file-system,@io-event,@ipc,@keyring,@memlock,@network-io,@process,@resources,@setuid,@signal,@sync,@timer,brk,capget,capset,copy_file_range,fadvise64,fadvise64_64,flock,get_mempolicy,getcpu,getpriority,getrandom,ioctl,ioprio_get,kcmp,madvise,mprotect,mremap,name_to_handle_at,oldolduname,olduname,personality,readahead,readdir,remap_file_pages,sched_get_priority_max,sched_get_priority_min,sched_getaffinity,sched_getattr,sched_getparam,sched_getscheduler,sched_rr_get_interval,sched_yield,sendfile,sendfile64,setfsgid,setfsgid32,setfsuid,setfsuid32,setpgid,setsid,splice,sysinfo,tee,umask,uname,userfaultfd,vmsplice
-@timer=alarm,getitimer,setitimer,timer_create,timer_delete,timer_getoverrun,timer_gettime,timer_settime,timerfd_create,timerfd_gettime,timerfd_settime,times
+@signal=osf_sigprocmask,osf_sigstack,pause,restart_syscall,rt_sigaction,rt_sigpending,rt_sigprocmask,rt_sigreturn,rt_sigsuspend,rt_sigtimedwait,rt_sigtimedwait_time64,sigaction,sigaltstack,signal,signalfd,signalfd4,sigpending,sigprocmask,sigreturn,sigsuspend,utrap_install
+@swap=osf_swapon,swapoff,swapon
+@sync=arm_sync_file_range,fdatasync,fsync,msync,sync,sync_file_range,sync_file_range2,syncfs
+@system-service=@aio,@basic-io,@chown,@default,@file-system,@io-event,@ipc,@keyring,@memfd,@memlock,@network-io,@process,@resources,@sandbox,@setuid,@signal,@sync,@timer,arm_fadvise64_64,brk,capget,capset,copy_file_range,fadvise64,fadvise64_64,flock,get_mempolicy,getcpu,getdomainname,gethostname,getpagesize,getpriority,getrandom,ioctl,ioprio_get,kcmp,kern_features,listns,lsm_get_self_attr,lsm_list_modules,lsm_set_self_attr,madvise,map_shadow_stack,memory_ordering,mremap,mseal,name_to_handle_at,oldolduname,olduname,osf_getdomainname,osf_getsysinfo,osf_setsysinfo,osf_syscall,osf_sysinfo,osf_utsname,personality,pkey_alloc,pkey_free,pkey_mprotect,readahead,readdir,remap_file_pages,riscv_hwprobe,s390_sthyi,sched_get_priority_max,sched_get_priority_min,sched_getaffinity,sched_getattr,sched_getparam,sched_getscheduler,sched_rr_get_interval,sched_rr_get_interval_time64,sched_yield,sendfile,sendfile64,setfsgid,setfsgid32,setfsuid,setfsuid32,setpgid,setsid,splice,syscall,sysinfo,sysmips,tee,umask,uname,userfaultfd,vmsplice
+@timer=alarm,getitimer,nanosleep,osf_getitimer,osf_setitimer,osf_usleep_thread,setitimer,timer_create,timer_delete,timer_getoverrun,timer_gettime,timer_gettime64,timer_settime,timer_settime64,timerfd_create,timerfd_gettime,timerfd_gettime64,timerfd_settime,timerfd_settime64,times
 
 Inheritance of groups
 ---------------------
 
-+---------------+
-| @default-keep |
-+---------------+
+                               +---------------+
+                               | @default-keep |
+                               +---------------+
 
-+----------------+  +---------+  +--------+  +--------------+
-| @cpu-emulation |  | @clock  |  | @chown |  | @aio         |
-| @debug         |  | @module |  +--------+  | @basic-io    |
-| @obsolete      |  | @raw-io |     :  :     | @file-system |
-| @mount         |  | @reboot |     :  :     | @io-event    |
-+----------------+  | @swap   |     :  :     | @ipc         |
-   :                +---------+     :  :     | @keyring     |
-   :                  :  :          :  :     | @memlock     |
-   :    ..............:  :          :  :     | @network-io  |
-   :    :                :  ........:  :     | @process     |
-   :    :                :  :          :     | @resources   |
-+----------+    +-------------+        :     | @setuid      |
-| @default |    | @privileged |        :     | @signal      |
-+----------+    +-------------+        :     | @sync        |
-   :    :                              :     | @timer       |
-   :    :...........................   :     +--------------+
-   :                               :   :        :
-+----------------------+        +-----------------+
-| @default-nodebuggers |        | @system-service |
-+----------------------+        +-----------------+
 
+   +----------------------+                    +-----------------+
+   | @default-nodebuggers |                    | @system-service |
+   +----------------------+                    +-----------------+
+           :      ...............................:     :       :
+           :      :                                    :       :
+         +----------+  +-------------+  ...............:       :..
+         | @default |  | @privileged |  :              :         :
+         +----------+  +-------------+  :              :         :
+           :      :....     :      :    :              :         :
+           :          :     :      :    :              :         :
++----------------+  +---------+  +--------+  +--------------+  +--------------+
+| @cpu-emulation |  | @clock  |  | @chown |  | @aio         |  | @network-io  |
+| @debug         |  | @module |  +--------+  | @basic-io    |  | @process     |
+| @mount         |  | @raw-io |              | @file-system |  | @resources   |
+| @obsolete      |  | @reboot |              | @io-event    |  | @sandbox     |
++----------------+  | @swap   |              | @ipc         |  | @setuid      |
+                    +---------+              | @keyring     |  | @signal      |
+                                             | @memfd       |  | @sync        |
+                                             | @memlock     |  | @timer       |
+                                             +--------------+  +--------------+
 
 What to do if seccomp breaks a program
 --------------------------------------

@@ -9,16 +9,16 @@ match_max 100000
 
 send -- "firejail --ignore=quiet dig cloudflare.com\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/dig.profile"
+    timeout {puts "TESTING ERROR 0\n";exit}
+    "Reading profile /etc/firejail/dig.profile"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+    timeout {puts "TESTING ERROR 1\n";exit}
+    -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	-re "ANSWER SECTION"
+    timeout {puts "TESTING ERROR 1\n";exit}
+    -re "ANSWER SECTION"
 }
 after 100
 puts "\nall done\n"

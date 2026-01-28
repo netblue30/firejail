@@ -7,6 +7,15 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
+if {[file exists /usr/bin/Xephyr]} {
+    puts "TESTING: Xephyr available\n"
+} else {
+    puts "TESTING: xpra not installed, skipping...\n"
+    after 100
+    exit
+}
+
+
 send -- "firejail --name=test --x11 xterm\r"
 sleep 5
 

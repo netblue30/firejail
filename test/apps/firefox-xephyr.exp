@@ -7,22 +7,30 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
+if {[file exists /usr/bin/Xephyr]} {
+    puts "TESTING: Xephyr available\n"
+} else {
+    puts "TESTING: xpra not installed, skipping...\n"
+    after 100
+    exit
+}
+
 send -- "firejail --name=firefox-test --xephyr-screen=1024x768 --private --x11 firefox --no-remote www.debian.org\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/firefox.profile"
+    timeout {puts "TESTING ERROR 0\n";exit}
+    "Reading profile /etc/firejail/firefox.profile"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+    timeout {puts "TESTING ERROR 1\n";exit}
+    -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 5
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"firejail"
+    timeout {puts "TESTING ERROR 2\n";exit}
+    "firejail"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
@@ -33,12 +41,12 @@ after 100
 spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"firefox"
+    timeout {puts "TESTING ERROR 4\n";exit}
+    "firefox"
 }
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"Seccomp:	2"
+    timeout {puts "TESTING ERROR 5\n";exit}
+    "Seccomp:	2"
 }
 after 100
 

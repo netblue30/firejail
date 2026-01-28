@@ -7,19 +7,22 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --ignore=quiet sleep 5\r"
+send -- "firejail --ignore=quiet curl cloudflare.com\r"
 expect {
     timeout {puts "TESTING ERROR 0\n";exit}
-    "Reading profile /etc/firejail/default.profile"
+    "Reading profile /etc/firejail/curl.profile"
 }
 expect {
     timeout {puts "TESTING ERROR 1\n";exit}
     -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
+    timeout {puts "TESTING ERROR 1\n";exit}
+    "<html>"
+}
+expect {
     timeout {puts "TESTING ERROR 2\n";exit}
-    "Operation not permitted" {puts "TESTING ERROR 3\n";exit}
-    "Parent is shutting down"
+    "</html>"
 }
 after 100
 puts "\nall done\n"

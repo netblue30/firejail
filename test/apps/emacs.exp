@@ -7,16 +7,16 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --private firefox --no-remote www.debian.org\r"
+send -- "firejail --private emacs\r"
 expect {
     timeout {puts "TESTING ERROR 0\n";exit}
-    "Reading profile /etc/firejail/firefox.profile"
+    "Reading profile /etc/firejail/emacs.profile"
 }
 expect {
     timeout {puts "TESTING ERROR 1\n";exit}
     -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
-sleep 5
+sleep 3
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
@@ -26,7 +26,7 @@ expect {
 }
 expect {
     timeout {puts "TESTING ERROR 3\n";exit}
-    "firefox"
+    "emacs"
 }
 after 100
 
@@ -34,12 +34,12 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
     timeout {puts "TESTING ERROR 4\n";exit}
-    "firefox"
+    "emacs"
 }
 expect {
     timeout {puts "TESTING ERROR 5\n";exit}
     "Seccomp:	2"
 }
-sleep 1
+after 100
 
 puts "\nall done\n"

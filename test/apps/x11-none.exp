@@ -9,29 +9,29 @@ match_max 100000
 
 send -- "firejail --name=test --x11=none\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	"Additional setup required"
+    timeout {puts "TESTING ERROR 0\n";exit}
+    "Additional setup required"
 }
 sleep 1
 
 send -- "firejail --name=test --net=none --x11=none\r"
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+    timeout {puts "TESTING ERROR 1\n";exit}
+    -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 1
 
 send -- "ls -al /tmp/.X11-unix\r"
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"cannot open directory"
+    timeout {puts "TESTING ERROR 2\n";exit}
+    "cannot open directory"
 }
 after 100
 
 send -- "xterm\r"
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"DISPLAY is not set"
+    timeout {puts "TESTING ERROR 3\n";exit}
+    "DISPLAY is not set"
 }
 after 100
 
@@ -39,8 +39,8 @@ send -- "export DISPLAY=:0.0\r"
 after 100
 send -- "xterm\r"
 expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"Xt error"
+    timeout {puts "TESTING ERROR 4\n";exit}
+    "Xt error"
 }
 after 100
 

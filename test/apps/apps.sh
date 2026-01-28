@@ -13,15 +13,15 @@ export LC_ALL=C
 sudo ls
 
 # console apps
-apps=(ping dig wget)
+apps=(ping dig wget curl)
 for app in "${apps[@]}"; do
-	if command -v "$app"
-	then
-		echo "TESTING: $app"
-		./$app.exp
-	else
-		echo "TESTING SKIP: $app not found"
-	fi
+    if command -v "$app"
+    then
+	echo "TESTING: $app"
+	./$app.exp
+    else
+	echo "TESTING SKIP: $app not found"
+    fi
 done
 rm -f index.html
 rm wget-log*
@@ -33,19 +33,19 @@ echo "TESTING: seccomp @clock group (test/apps/seccomp-clock.exp)"
 
 # X11 apps
 x11apps=(firefox qbittorrent firefox-xephyr galculator libreoffice firefox-xorg \
-		 lowriter gimp inkscape \
+		 lowriter gimp inkscape emacs okular kdiff3 gpicview audacity \
 		 xterm x11-none xterm-xorg xterm-xephyr xterm-xpra firefox-xpra)
 
 for app in "${x11apps[@]}"; do
-	sudo ls
-	if file -v "$app".exp
-	then
-		echo "TESTING: $app (test/apps/$app.exp)"
-		./"$app".exp
-	else
-		echo "TESTING SKIP: $app not found"
-	fi
-	sleep 1
+    sudo ls
+    if file -v "$app".exp
+    then
+	echo "TESTING: $app (test/apps/$app.exp)"
+	./"$app".exp
+    else
+	echo "TESTING SKIP: $app not found"
+    fi
+    sleep 1
 done
 
 cd ../../

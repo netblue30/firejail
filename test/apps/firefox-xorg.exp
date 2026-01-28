@@ -9,36 +9,36 @@ match_max 100000
 
 send -- "firejail --private --x11=xorg firefox --no-remote www.debian.org\r"
 expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/firefox.profile"
+    timeout {puts "TESTING ERROR 0\n";exit}
+    "Reading profile /etc/firejail/firefox.profile"
 }
 expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+    timeout {puts "TESTING ERROR 1\n";exit}
+    -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 5
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
 expect {
-	timeout {puts "TESTING ERROR 2\n";exit}
-	"firejail"
+    timeout {puts "TESTING ERROR 2\n";exit}
+    "firejail"
 }
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	"firefox"
+    timeout {puts "TESTING ERROR 3\n";exit}
+    "firefox"
 }
 after 100
 
 spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"firefox"
+    timeout {puts "TESTING ERROR 4\n";exit}
+    "firefox"
 }
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"Seccomp:	2"
+    timeout {puts "TESTING ERROR 5\n";exit}
+    "Seccomp:	2"
 }
 after 100
 

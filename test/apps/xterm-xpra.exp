@@ -7,53 +7,61 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
+if {[file exists /usr/bin/xpra]} {
+    puts "TESTING: xpra available\n"
+} else {
+    puts "TESTING: xpra not installed, skipping...\n"
+    after 100
+    exit
+}
+
 send -- "firejail --name=test --x11=xpra xterm\r"
 sleep 10
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
-	":firejail"
+    timeout {puts "TESTING ERROR 3\n";exit}
+    ":firejail"
 }
 expect {
-	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"xterm"
+    timeout {puts "TESTING ERROR 3.1\n";exit}
+    "xterm"
 }
 after 100
 
 send -- "firemon --seccomp\r"
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	"need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
-	":firejail"
+    timeout {puts "TESTING ERROR 5\n";exit}
+    "need to be root" {puts "/proc mounted as hidepid, exiting...\n"; exit}
+    ":firejail"
 }
 expect {
-	timeout {puts "TESTING ERROR 5.0\n";exit}
-	"xterm"
+    timeout {puts "TESTING ERROR 5.0\n";exit}
+    "xterm"
 }
 expect {
-	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
-	"Seccomp:	2"
+    timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
+    "Seccomp:	2"
 }
 after 100
 
 send -- "firemon --caps\r"
 expect {
-	timeout {puts "TESTING ERROR 6\n";exit}
-	":firejail"
+    timeout {puts "TESTING ERROR 6\n";exit}
+    ":firejail"
 }
 expect {
-	timeout {puts "TESTING ERROR 6.0\n";exit}
-	"xterm"
+    timeout {puts "TESTING ERROR 6.0\n";exit}
+    "xterm"
 }
 expect {
-	timeout {puts "TESTING ERROR 6.1\n";exit}
-	"CapBnd"
+    timeout {puts "TESTING ERROR 6.1\n";exit}
+    "CapBnd"
 }
 expect {
-	timeout {puts "TESTING ERROR 6.2\n";exit}
-	"0000000000000000"
+    timeout {puts "TESTING ERROR 6.2\n";exit}
+    "0000000000000000"
 }
 sleep 1
 send -- "firejail --shutdown=test\r"

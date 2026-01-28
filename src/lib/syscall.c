@@ -253,51 +253,21 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_clock_adjtime64
 	  "clock_adjtime64,"
 #endif
-#ifdef SYS_clock_getres
-	  "clock_getres,"
-#endif
-	  //groupfix: #ifdef SYS_clock_getres_time64
-	  //groupfix: 	  "clock_getres_time64,"
-	  //groupfix: #endif
-	  //groupfix: #ifdef SYS_clock_gettime
-	  //groupfix: 	  "clock_gettime,"
-	  //groupfix: #endif
-	  //groupfix: #ifdef SYS_clock_gettime64
-	  //groupfix: 	  "clock_gettime64,"
-	  //groupfix: #endif
-	  //groupfix: #ifdef SYS_clock_nanosleep
-	  //groupfix: 	  "clock_nanosleep,"
-	  //groupfix: #endif
-	  //groupfix: #ifdef SYS_clock_nanosleep_time64
-	  //groupfix: 	  "clock_nanosleep_time64,"
-	  //groupfix: #endif
 #ifdef SYS_clock_settime
 	  "clock_settime,"
 #endif
 #ifdef SYS_clock_settime64
 	  "clock_settime64,"
 #endif
-	  //groupfix: #ifdef SYS_gettimeofday
-	  //groupfix: 	  "gettimeofday,"
-	  //groupfix: #endif
 #ifdef SYS_old_adjtimex
 	  "old_adjtimex,"
 #endif
-	  //groupfix: #ifdef SYS_osf_gettimeofday
-	  //groupfix: 	  "osf_gettimeofday,"
-	  //groupfix: #endif
 #ifdef SYS_osf_settimeofday
 	  "osf_settimeofday,"
 #endif
 #ifdef SYS_settimeofday
-	  "settimeofday,"
+	  "settimeofday"
 #endif
-#ifdef SYS_stime
-	  "stime,"
-#endif
-	  //groupfix: #ifdef SYS_time
-	  //groupfix: 	  "time"
-	  //groupfix: #endif
 	},
 	{ .name = "@cpu-emulation", .list =
 #ifdef SYS_modify_ldt
@@ -442,6 +412,18 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_arch_prctl
 	  "arch_prctl," // breaks glibc, i386 and x86_64 only
 #endif
+	  "clock_getres," // clokc_getres*, stop programs that try to read theoretical resolution
+#ifdef SYS_clock_getres_time64
+	  "clock_getres_time64,"
+#endif
+	  "clock_gettime," // clokc_gettime*, *gettimeofday and time, stop programs that try to read time
+#ifdef SYS_clock_gettime64
+	  "clock_gettime64,"
+#endif
+	  "clock_nanosleep," // clock_nanosleep*, stop programs that try to use sleep functions
+#ifdef SYS_clock_nanosleep_time64
+	  "clock_nanosleep_time64,"
+#endif
 #ifdef SYS_execv
 	  "execv," // sparc only
 #endif
@@ -449,6 +431,7 @@ static const SyscallGroupList sysgroups[] = {
 	  "execveat," // commonly used by fexecve
 	  "exit," // breaks most Qt applications
 	  "futex," // frequently used and causes breakages
+	  "gettimeofday,"
 #ifdef SYS_mmap
 	  "mmap," // cannot load shared libraries
 #endif
@@ -456,7 +439,13 @@ static const SyscallGroupList sysgroups[] = {
 	  "mmap2,"
 #endif
 	  "mprotect," // cannot load shared libraries
-	  "prctl"
+#ifdef SYS_osf_gettimeofday
+	  "osf_gettimeofday,"
+#endif
+	  "prctl,"
+#ifdef SYS_time
+	  "time"
+#endif
 	},
 	{ .name = "@default-nodebuggers", .list =
 	  "@default,"
@@ -1388,6 +1377,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_ssetmask
 	  "ssetmask,"
+#endif
+#ifdef SYS_stime
+	  "stime,"
 #endif
 #ifdef SYS_stty
 	  "stty,"

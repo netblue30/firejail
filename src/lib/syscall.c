@@ -260,13 +260,7 @@ static const SyscallGroupList sysgroups[] = {
 	  "clock_settime64,"
 #endif
 #ifdef SYS_old_adjtimex
-	  "old_adjtimex,"
-#endif
-#ifdef SYS_osf_settimeofday
-	  "osf_settimeofday,"
-#endif
-#ifdef SYS_settimeofday
-	  "settimeofday"
+	  "old_adjtimex"
 #endif
 	},
 	{ .name = "@cpu-emulation", .list =
@@ -380,9 +374,6 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_open_by_handle_at
 	  "open_by_handle_at,"
 #endif
-#ifdef SYS_remap_file_pages
-	  "remap_file_pages,"
-#endif
 #ifdef SYS_request_key
 	  "request_key,"
 #endif
@@ -416,7 +407,7 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_clock_getres_time64
 	  "clock_getres_time64,"
 #endif
-	  "clock_gettime," // clokc_gettime*, *gettimeofday and time, stop programs that try to read time
+	  "clock_gettime," // clokc_gettime* and time, stop programs that try to read time
 #ifdef SYS_clock_gettime64
 	  "clock_gettime64,"
 #endif
@@ -431,7 +422,6 @@ static const SyscallGroupList sysgroups[] = {
 	  "execveat," // commonly used by fexecve
 	  "exit," // breaks most Qt applications
 	  "futex," // frequently used and causes breakages
-	  "gettimeofday,"
 #ifdef SYS_mmap
 	  "mmap," // cannot load shared libraries
 #endif
@@ -439,9 +429,6 @@ static const SyscallGroupList sysgroups[] = {
 	  "mmap2,"
 #endif
 	  "mprotect," // cannot load shared libraries
-#ifdef SYS_osf_gettimeofday
-	  "osf_gettimeofday,"
-#endif
 	  "prctl,"
 #ifdef SYS_time
 	  "time"
@@ -549,9 +536,6 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_ftruncate64
 	  "ftruncate64,"
-#endif
-#ifdef SYS_futimesat
-	  "futimesat,"
 #endif
 #ifdef SYS_getcwd
 	  "getcwd,"
@@ -732,9 +716,6 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_unlinkat
 	  "unlinkat,"
-#endif
-#ifdef SYS_utime
-	  "utime,"
 #endif
 #ifdef SYS_utimensat
 	  "utimensat,"
@@ -1078,11 +1059,17 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_ftime
 	  "ftime,"
 #endif
+#ifdef SYS_futimesat
+	  "futimesat,"
+#endif
 #ifdef SYS_get_kernel_syms
 	  "get_kernel_syms,"
 #endif
 #ifdef SYS_getpmsg
 	  "getpmsg,"
+#endif
+#ifdef SYS_gettimeofday
+	  "gettimeofday,"
 #endif
 #ifdef SYS_gtty
 	  "gtty,"
@@ -1164,6 +1151,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_osf_getmnt
 	  "osf_getmnt,"
+#endif
+#ifdef SYS_osf_gettimeofday
+	  "osf_gettimeofday,"
 #endif
 #ifdef SYS_osf_kloadcall
 	  "osf_kloadcall,"
@@ -1306,6 +1296,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_osf_setlogin
 	  "osf_setlogin,"
 #endif
+#ifdef SYS_osf_settimeofday
+	  "osf_settimeofday,"
+#endif
 #ifdef SYS_osf_signal
 	  "osf_signal,"
 #endif
@@ -1366,8 +1359,14 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_query_module
 	  "query_module,"
 #endif
+#ifdef SYS_remap_file_pages
+	  "remap_file_pages,"
+#endif
 #ifdef SYS_security
 	  "security,"
+#endif
+#ifdef SYS_settimeofday
+	  "settimeofday,"
 #endif
 #ifdef SYS_sgetmask
 	  "sgetmask,"
@@ -1390,6 +1389,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_timerfd
 	  "timerfd,"
 #endif
+#ifdef SYS_tkill
+	  "tkill,"
+#endif
 #ifdef SYS_tuxcall
 	  "tuxcall,"
 #endif
@@ -1401,6 +1403,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_ustat
 	  "ustat,"
+#endif
+#ifdef SYS_utime
+	  "utime,"
 #endif
 #ifdef SYS_vserver
 	  "vserver,"
@@ -1696,9 +1701,6 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_times
 	  "times,"
-#endif
-#ifdef SYS_tkill
-	  "tkill,"
 #endif
 #ifdef SYS_unshare
 	  "unshare,"
@@ -2126,9 +2128,6 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_readdir
 	  "readdir,"
-#endif
-#ifdef SYS_remap_file_pages
-	  "remap_file_pages,"
 #endif
 #ifdef SYS_riscv_hwprobe
 	  "riscv_hwprobe,"

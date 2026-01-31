@@ -26,6 +26,7 @@ static const char *const usage_str =
 	"Usage:\n"
 	"\tfseccomp debug-syscalls\n"
 	"\tfseccomp debug-syscalls32\n"
+	"\tfseccomp debug-syscall-groups\n"
 	"\tfseccomp debug-errnos\n"
 	"\tfseccomp debug-protocols\n"
 	"\tfseccomp protocol build list file\n"
@@ -98,6 +99,8 @@ printf("\n");
 		syscall_print();
 	else if (argc == 2 && strcmp(argv[1], "debug-syscalls32") == 0)
 		syscall_print_32();
+	else if (argc == 2 && strcmp(argv[1], "debug-syscall-groups") == 0)
+		syscall_groups_print();
 	else if (argc == 2 && strcmp(argv[1], "debug-errnos") == 0)
 		errno_print();
 	else if (argc == 2 && strcmp(argv[1], "debug-protocols") == 0)

@@ -31,6 +31,9 @@ sudo ls
 echo "TESTING: seccomp @clock group (test/apps/seccomp-clock.exp)"
 ./seccomp-clock.exp
 
+echo "TESTING: pid 1 functionality (test/apps/pid1.exp)"
+./pid1.exp
+
 # X11 apps
 x11apps=(firefox qbittorrent firefox-xephyr galculator libreoffice firefox-xorg \
 		 lowriter gimp inkscape emacs okular kdiff3 gpicview audacity \

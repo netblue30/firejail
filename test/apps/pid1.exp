@@ -1,0 +1,65 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2026 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firejail --name=test\r"
+expect {
+    timeout {puts "TESTING ERROR 0\n";exit}
+    "Reading profile /etc/firejail/default.profile"
+}
+expect {
+    timeout {puts "TESTING ERROR 1\n";exit}
+    -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 2
+
+send -- "ps a\r"
+expect {
+    timeout {puts "TESTING ERROR 3\n";exit}
+    "firejail --name=test" {puts "TESTING ERROR 4\n";exit}
+    "/bin/bash"
+}
+expect {
+    timeout {puts "TESTING ERROR 5\n";exit}
+    "ps a"
+}
+after 100
+
+send -- "exit\r"
+expect {
+    timeout {puts "TESTING ERROR 6\n";exit}
+    "Parent is shutting down"
+}
+sleep 1
+
+send -- "firejail --name=test --unhide-pid1\r"
+expect {
+    timeout {puts "TESTING ERROR 7\n";exit}
+    "Reading profile /etc/firejail/default.profile"
+}
+expect {
+    timeout {puts "TESTING ERROR 8\n";exit}
+    -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 2
+
+send -- "ps a\r"
+expect {
+    timeout {puts "TESTING ERROR 9\n";exit}
+    "firejail --name=test --unhide-pid1"
+}
+after 100
+
+send -- "exit\r"
+expect {
+    timeout {puts "TESTING ERROR 11\n";exit}
+    "Parent is shutting down"
+}
+after 100
+
+puts "\nall done\n"

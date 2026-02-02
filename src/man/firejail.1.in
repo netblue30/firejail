@@ -3163,6 +3163,60 @@ $ firejail \-\-tree
   11970:netblue:transmission-gtk
 
 .TP
+\fB\-\-unhide\-pid1
+Pid 1 is always present inside Firejail sandbox. By restricting access to
+/proc kernel interface, general tools like ps are unable to view and access  this process.
+\-\-unhide\-pid1 option disables this functionality. Example:
+.br
+
+.br
+$ firejail \-\-name=test    ### by default pid 1 is not visible
+.br
+[...]
+.br
+Child process initialized in 59.41 ms
+.br
+$  ps a
+.br
+    PID TTY      STAT   TIME COMMAND
+.br
+      4 ?        S      0:00 /bin/bash
+.br
+      5 ?        R+     0:00 ps a
+.br
+$ exit
+.br
+Parent is shutting down, bye…
+.br
+
+.br
+
+.br
+$ firejail \-\-name=test \-\-unhide\-pid1  ### pid 1 is visible
+.br
+[...]
+.br
+Child process initialized in 58.29 ms
+.br
+$ ps a
+.br
+   PID TTY      STAT   TIME COMMAND
+.br
+      1 ?        S      0:00 firejail \-\-name=test \-\-unhide\-pid1
+.br
+      4 ?        S      0:00 /bin/bash
+.br
+      6 ?        R+     0:00 ps a
+.br
+$ exit
+.br
+Parent is shutting down, bye…
+.br
+
+.br
+
+
+.TP
 \fB\-\-version
 Print program version/compile time support and exit.
 .br

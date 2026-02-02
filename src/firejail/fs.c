@@ -801,6 +801,20 @@ void fs_proc_sys_dev_boot(void) {
 	disable_file(BLACKLIST_FILE, "/proc/mem");
 	disable_file(BLACKLIST_FILE, "/proc/kmem");
 
+	// hide the name of pid1
+	if (!arg_unhide_pid1) {
+		disable_file(BLACKLIST_FILE, "/proc/1/comm");
+		disable_file(BLACKLIST_FILE, "/proc/1/cmdline");
+		disable_file(BLACKLIST_FILE, "/proc/1/stat");
+		disable_file(BLACKLIST_FILE, "/proc/1/statm");
+		disable_file(BLACKLIST_FILE, "/proc/1/status");
+		disable_file(BLACKLIST_FILE, "/proc/1/task/1/comm");
+		disable_file(BLACKLIST_FILE, "/proc/1/task/1/cmdline");
+		disable_file(BLACKLIST_FILE, "/proc/1/task/1/stat");
+		disable_file(BLACKLIST_FILE, "/proc/1/task/1/statm");
+		disable_file(BLACKLIST_FILE, "/proc/1/task/1/status");
+	}
+	
 	// remove kernel symbol information
 	if (!arg_allow_debuggers) {
 		disable_file(BLACKLIST_FILE, "/usr/src/linux");

@@ -170,6 +170,7 @@ int just_run_the_shell = 0;
 int arg_netlock = 0;
 int arg_restrict_namespaces = 0;
 int arg_allow_bwrap = 0;
+int arg_unhide_pid1 = 0;
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -2314,6 +2315,8 @@ int main(int argc, char **argv, char **envp) {
 			arg_dbus_log_system = 1;
 		}
 #endif
+		else if (strcmp(argv[i], "--unhide-pid1") == 0)
+			arg_unhide_pid1 = 1;
 
 		//*************************************
 		// network

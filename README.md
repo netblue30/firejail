@@ -412,6 +412,36 @@ path for the filename.
               blue30/firejail/wiki/Creating-Profiles.
 ```
 
+### --unhide-pid1
+```text
+      --unhide-pid1
+              Pid  1  is always present inside Firejail sandbox. By restricting
+              access to /proc kernel interface, general tools like ps  are  un‐
+              able to view and access  this process.  --unhide-pid1 option dis‐
+              ables this functionality. Example:
+
+              $ firejail --name=test    ### by default pid 1 is not visible
+	      [...]
+              Child process initialized in 59.41 ms
+              $  ps a
+                  PID TTY      STAT   TIME COMMAND
+                    4 ?        S      0:00 /bin/bash
+                    5 ?        R+     0:00 ps a
+              $ exit
+              Parent is shutting down, bye…
+
+              $ firejail --name=test --unhide-pid1  ### pid 1 is visible
+              [...]
+              Child process initialized in 58.29 ms
+              $ ps a
+                 PID TTY      STAT   TIME COMMAND
+                    1 ?        S      0:00 firejail --name=test --unhide-pid1
+                    4 ?        S      0:00 /bin/bash
+                    6 ?        R+     0:00 ps a
+              $ exit
+              Parent is shutting down, bye…
+```
+
 ### Landlock support - ongoing/experimental
 
 * Added on #6078, which is based on #5315 from ChrysoliteAzalea/landlock

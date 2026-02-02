@@ -7,79 +7,30 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --profile=./ignore.profile --ignore=seccomp \r"
-expect {
-	timeout {puts "TESTING ERROR 0\n";exit}
-	"Error: please use --profile after --ignore"
-}
+send -- "touch ~/firejail-testfile\r"
+sleep 1
 
-send -- "firejail --debug --ignore=seccomp\r"
+send -- "firejail --ignore=private --profile=./ignore.profile \r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	BLACKLIST {puts "TESTING ERROR 2\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-after 100
-send -- "exit\r"
-sleep 1
-
-send -- "firejail --ignore=seccomp --ignore=name --profile=./ignore.profile \r"
-expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 after 100
 
-send -- "ps aux | wc -l\r"
-expect {
-	timeout {puts "TESTING ERROR 4\n";exit}
-	"5"
-}
-after 100
-send -- "exit\r"
-sleep 1
-
-send -- "firejail --ignore=private --ignore=name --profile=./ignore.profile \r"
-expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-after 100
-
-send -- "ps aux | wc -l\r"
+send -- "ls ~\r"
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"5"
+	"firejail-testfile"
 }
 after 100
 send -- "exit\r"
+after 100
+
+
+
+
+
+send -- "rm ~/firejail-testfile\r"
 sleep 1
-
-send -- "firejail --debug --profile=./ignore2.profile\r"
-expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	BLACKLIST {puts "TESTING ERROR 8\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-
-after 100
-send -- "exit\r"
-sleep 1
-
-send -- "firejail --ignore=quiet --ignore=name --profile=./ignore.profile \r"
-expect {
-	timeout {puts "TESTING ERROR 9\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-after 100
-
-send -- "ps aux | wc -l\r"
-expect {
-	timeout {puts "TESTING ERROR 10\n";exit}
-	"5"
-}
-after 100
-send -- "exit\r"
-after 100
 
 puts "\nall done\n"

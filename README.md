@@ -421,7 +421,7 @@ path for the filename.
               ables this functionality. Example:
 
               $ firejail --name=test    ### by default pid 1 is not visible
-	      [...]
+              [...]
               Child process initialized in 59.41 ms
               $  ps a
                   PID TTY      STAT   TIME COMMAND

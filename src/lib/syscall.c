@@ -403,11 +403,11 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_arch_prctl
 	  "arch_prctl," // breaks glibc, i386 and x86_64 only
 #endif
-	  "clock_getres," // clokc_getres*, stop programs that try to read theoretical resolution
+	  "clock_getres," // clock_getres*, stop programs that try to read theoretical resolution
 #ifdef SYS_clock_getres_time64
 	  "clock_getres_time64,"
 #endif
-	  "clock_gettime," // clokc_gettime* and time, stop programs that try to read time
+	  "clock_gettime," // clock_gettime* and time, stop programs that try to read time
 #ifdef SYS_clock_gettime64
 	  "clock_gettime64,"
 #endif

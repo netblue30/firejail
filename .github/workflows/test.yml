@@ -54,7 +54,7 @@ jobs:
       SHELL: /bin/bash
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76
+      uses: step-security/harden-runner@e3f713f2d8f53843e71c69a996d56f51aa9adfb9
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -62,7 +62,7 @@ jobs:
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
-    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies
@@ -103,7 +103,7 @@ jobs:
       SHELL: /bin/bash
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76
+      uses: step-security/harden-runner@e3f713f2d8f53843e71c69a996d56f51aa9adfb9
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -111,7 +111,7 @@ jobs:
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
-    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies
@@ -144,7 +144,7 @@ jobs:
       SHELL: /bin/bash
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76
+      uses: step-security/harden-runner@e3f713f2d8f53843e71c69a996d56f51aa9adfb9
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -152,7 +152,7 @@ jobs:
           github.com:443
           packages.microsoft.com:443
           ppa.launchpadcontent.net:443
-    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies
@@ -184,7 +184,7 @@ jobs:
       SHELL: /bin/bash
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76
+      uses: step-security/harden-runner@e3f713f2d8f53843e71c69a996d56f51aa9adfb9
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -195,7 +195,7 @@ jobs:
           ppa.launchpadcontent.net:443
           www.debian.org:443
           www.debian.org:80
-    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies
@@ -226,7 +226,7 @@ jobs:
       SHELL: /bin/bash
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76
+      uses: step-security/harden-runner@e3f713f2d8f53843e71c69a996d56f51aa9adfb9
       with:
         egress-policy: block
         allowed-endpoints: >
@@ -241,7 +241,7 @@ jobs:
           www.debian.org:443
           www.debian.org:80
           yahoo.com:1025
-    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies

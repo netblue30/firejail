@@ -681,6 +681,7 @@ int sandbox(void* sandbox_arg) {
 	// set hostname
 	//****************************
 	if (cfg.hostname) {
+		assert(arg_keep_hostname == 0);
 		if (sethostname(cfg.hostname, strlen(cfg.hostname)) < 0)
 			errExit("sethostname");
 	}
@@ -988,7 +989,8 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// hosts and hostname
 	//****************************
-	fs_hostname();
+	if (!arg_keep_hostname)
+		fs_hostname();
 
 	//****************************
 	// /etc overrides from the network namespace

@@ -1205,6 +1205,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// hostname
 	if (strncmp(ptr, "hostname ", 9) == 0) {
+		if (arg_keep_hostname) {
+			fprintf(stderr, "Error: hostname and keep-hostname are mutually exclusive\n");
+			exit(1);
+		}
 		cfg.hostname = ptr + 9;
 		if (strlen(cfg.hostname) == 0) {
 			fprintf(stderr, "Error: invalid hostname: cannot be empty\n");
@@ -1214,6 +1218,14 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			fprintf(stderr, "Error: invalid hostname\n");
 			exit(1);
 		}
+		return 0;
+	}
+	if (strncmp(ptr, "keep-hostname", 13) == 0) {
+		if (cfg.hostname) {
+			fprintf(stderr, "Error: hostname and keep-hostname are mutually exclusive\n");
+			exit(1);
+		}
+		arg_keep_hostname = 1;
 		return 0;
 	}
 

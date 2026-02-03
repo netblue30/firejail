@@ -171,6 +171,7 @@ int arg_netlock = 0;
 int arg_restrict_namespaces = 0;
 int arg_allow_bwrap = 0;
 int arg_unhide_pid1 = 0;
+int arg_keep_hostname = 0;
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -2118,6 +2119,10 @@ int main(int argc, char **argv, char **envp) {
 			}
 		}
 		else if (strncmp(argv[i], "--hostname=", 11) == 0) {
+			if (arg_keep_hostname) {
+				fprintf(stderr, "Error: hostname and keep-hostname are mutually exclusive\n");
+				exit(1);
+			}
 			cfg.hostname = argv[i] + 11;
 			if (strlen(cfg.hostname) == 0) {
 				fprintf(stderr, "Error: invalid hostname: cannot be empty\n");
@@ -2317,6 +2322,13 @@ int main(int argc, char **argv, char **envp) {
 #endif
 		else if (strcmp(argv[i], "--unhide-pid1") == 0)
 			arg_unhide_pid1 = 1;
+		else if (strcmp(argv[i], "--keep-hostname") == 0) {
+			if (cfg.hostname) {
+				fprintf(stderr, "Error: hostname and keep-hostname are mutually exclusive\n");
+				exit(1);
+			}
+			arg_keep_hostname = 1;
+		}
 
 		//*************************************
 		// network

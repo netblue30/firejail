@@ -26,6 +26,8 @@
 
 // build a random host name
 static char *random_hostname(void) {
+	assert(!arg_keep_hostname);
+	
 	char vowels[] = { 'a', 'e', 'i', 'o', 'u'};
 	char consonants[] = {'b', 'c', 'c', 'c', 'g', 'h', 'h', 'h', 'h', 'h',
 		'j', 'j', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'm', 'm', 'm', 'm', 'n', 'n', 'n', 'n', 'n',
@@ -53,6 +55,8 @@ static char *random_hostname(void) {
 }
 
 void fs_hostname(void) {
+	assert(!arg_keep_hostname);
+
 	if (!cfg.hostname)
 		cfg.hostname = random_hostname();
 	struct stat s;

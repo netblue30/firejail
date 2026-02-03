@@ -13,6 +13,7 @@ keep-config-pulse
 keep-dev-ntsync
 keep-dev-shm
 keep-dev-tpm
+keep-hostname
 keep-shell-rc
 keep-var-tmp
 landlock.enforce

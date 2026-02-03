@@ -18,6 +18,17 @@ expect {
 }
 sleep 1
 
+send --  "firejail --hostname=foo cat /proc/sys/kernel/hostname\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Child process initialized"
+}
+expect {
+	timeout {puts "TESTING ERROR 0.1\n";exit}
+	"foo"
+}
+sleep 1
+
 send --  "firejail --hostname=foo --private-etc cat /etc/hostname\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

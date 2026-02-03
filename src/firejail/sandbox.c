@@ -678,15 +678,6 @@ int sandbox(void* sandbox_arg) {
 
 
 	//****************************
-	// set hostname
-	//****************************
-	if (cfg.hostname) {
-		assert(arg_keep_hostname == 0);
-		if (sethostname(cfg.hostname, strlen(cfg.hostname)) < 0)
-			errExit("sethostname");
-	}
-
-	//****************************
 	// mount namespace
 	//****************************
 	// mount events are not forwarded between the host the sandbox
@@ -989,9 +980,15 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// hosts and hostname
 	//****************************
-	if (!arg_keep_hostname)
+	if (!arg_keep_hostname) {
 		fs_hostname();
-
+		// /usr/bin/hostname is blacklisted in default.profile
+		// test this using cat /proc/sys/kernel/hostname, 
+		assert(cfg.hostname);
+		if (sethostname(cfg.hostname, strlen(cfg.hostname)) < 0)
+			errExit("sethostname");
+	}
+	
 	//****************************
 	// /etc overrides from the network namespace
 	//****************************

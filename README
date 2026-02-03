@@ -414,7 +414,7 @@ Dieter Plaetinck (https://github.com/Dieterbe)
 	- fix email-common.profile
 	- fix claws-mail profile
 Dmitry (https://github.com/reagentoo)
-        - fragments profile
+        - new profiles: fragments (#7023, 97871d7, f712b9a)
 Disconnect3d (https://github.com/disconnect3d)
 	- code cleanup
 dm9pZCAq (https://github.com/dm9pZCAq)
@@ -627,7 +627,7 @@ Holger Heinz (https://github.com/hheinz)
 Hotty Capy (https://github.com/hotcapy)
 	- softmaker-common.profile: add fstab to private-etc
 HybridDog - (https://github.com/HybridDog)
-	- added srb2 profile
+	- new profiles: srb2 (#6996, 9882aa0)
 Icaro Perseo (https://github.com/icaroperseo)
 	- Icecat profile
 	- several profile fixes
@@ -1305,7 +1305,7 @@ sudoAlphaX (https://github.com/sudoAlphaX)
 Syed Muhammad Shuja Haider (https://github.com/xplanthris)
 	- prismlauncher profile
 Teru (https://github.com/KhoTeru)
-	- zen, zen-bin, zen-browser profiles
+	- new profiles: zen, zen-bin, zen-browser (#7029, 09e376d, fa6bfd7)
 the-antz (https://github.com/the-antz)
 	- Fix libx265 encoding in ffmpeg profile
 	- Fix Firefox profile

@@ -19,13 +19,13 @@ firejail (0.9.79) baseline; urgency=low
     line (#5903)
   * ci: gitlab: install missing git-buildpackage dependency (#7017)
   * ci: gcov testing scripts update
-  * profiles: yt-dlp support JavaScript deno (#6999)
-  * profiles: yt-dlp support browser cookies for authenticated downloads
+  * profiles: yt-dlp: support deno JavaScript engine to fix YouTube (#6999)
+  * profiles: yt-dlp: support browser cookies for authenticated downloads
     (#7030)
   * profiles: add deno paths (#7032, 2ba2f2d)
-  * new profiles: fragments (97871d7, f712b9a)
-  * new profiles: srb2 (9882aa0)
-  * new profiles: zen, zen-bin, zen-browser (09e376d, fa6bfd7)
+  * new profiles: fragments (#7023, 97871d7, f712b9a)
+  * new profiles: srb2 (#6996, 9882aa0)
+  * new profiles: zen, zen-bin, zen-browser (#7029, 09e376d, fa6bfd7)
  -- netblue30 <netblue30@yahoo.com>  Sat, 3 Jan 2026 11:00:00 -0500
 
 firejail (0.9.78) baseline; urgency=low

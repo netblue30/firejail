@@ -19,11 +19,10 @@ firejail (0.9.79) baseline; urgency=low
     line (#5903)
   * ci: gitlab: install missing git-buildpackage dependency (#7017)
   * ci: gcov testing scripts update
-  * profiles: add deno paths (#7043)
   * profiles: yt-dlp support JavaScript deno (#6999)
   * profiles: yt-dlp support browser cookies for authenticated downloads
     (#7030)
-  * profiles: global support for deno in .inc files (2ba2f2d)
+  * profiles: add deno paths (#7032, 2ba2f2d)
   * new profiles: fragments (97871d7, f712b9a)
   * new profiles: srb2 (9882aa0)
   * new profiles: zen, zen-bin, zen-browser (09e376d, fa6bfd7)

@@ -23,6 +23,7 @@ firejail (0.9.79) baseline; urgency=low
   * profiles: yt-dlp: support browser cookies for authenticated downloads
     (#7030)
   * profiles: add deno paths (#7032, 2ba2f2d)
+  * profiles: vesktop: fix screen sharing (#7043, b59005c)
   * new profiles: fragments (#7023, 97871d7, f712b9a)
   * new profiles: srb2 (#6996, 9882aa0)
   * new profiles: zen, zen-bin, zen-browser (#7029, 09e376d, fa6bfd7)

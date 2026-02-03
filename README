@@ -1211,6 +1211,8 @@ smitsohu (https://github.com/smitsohu)
 	- snap profile cleanup
 	- tighten some capability sets further
 	- enhance mutt, goobox, baloo and clementine profiles
+sofoxe1 (https://github.com/sofoxe1)
+	- profiles: vesktop: fix screen sharing (#7043, b59005c)
 soredake (https://github.com/soredake)
 	- fix steam startup with >=llvm-4
 	- fix handling of STEAM_RUNTIME_PREFER_HOST_LIBRARIES in steam profile

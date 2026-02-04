@@ -47,7 +47,9 @@ Print route table for each sandbox.
 #endif
 .TP
 \fB\-\-seccomp
-Print seccomp configuration for each sandbox.
+Print seccomp configuration for each sandbox. Several other firejail features such
+as memory\-deny\-write\-execute, protocol and restrict\-namespaces are implemented
+as seccomp filters. This option will show the global seccomp setting inside the kernel.
 .TP
 \fB\-\-top
 Monitor the most CPU-intensive sandboxes. This command is similar to

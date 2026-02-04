@@ -273,8 +273,7 @@ static const char *const usage_str =
 	"    --tracelog - add a syslog message for every access to files or\n"
 	"\tdirectories blacklisted by the security profile.\n"
 	"    --tree - print a tree of all sandboxed processes.\n"
-	"    --tunnel[=devname] - connect the sandbox to a tunnel created by\n"
-	"\tfiretunnel utility.\n"
+	"    --unhide-pid1 - make pid 1 process visible to tools such as ps\n"
 	"    --version - print program version and exit.\n"
 #ifdef HAVE_NETWORK
 	"    --veth-name=name - use this name for the interface connected to the bridge.\n"

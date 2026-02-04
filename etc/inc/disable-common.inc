@@ -188,6 +188,14 @@ blacklist ${HOME}/.config/systemd
 blacklist ${HOME}/.local/share/systemd
 blacklist ${PATH}/systemctl
 blacklist ${PATH}/systemd*
+blacklist ${PATH}/hostnamectl
+blacklist ${PATH}/journalctl
+blacklist ${PATH}/busctl
+blacklist ${PATH}/localectl
+blacklist ${PATH}/loginctl
+blacklist ${PATH}/networkctl
+blacklist ${PATH}/timedatectl
+blacklist ${PATH}/varlinkctl
 blacklist ${RUNUSER}/systemd
 blacklist /etc/credstore*
 blacklist /etc/systemd/network

@@ -606,6 +606,22 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			exit_err_feature("seccomp");
 	}
+	else if (strcmp(argv[i], "--debug-syscall-groups") == 0) {
+		if (checkcfg(CFG_SECCOMP)) {
+			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-syscall-groups");
+			exit(rv);
+		}
+		else
+			exit_err_feature("seccomp");
+	}
+	else if (strncmp(argv[i], "--debug-syscall-groups=", 23) == 0) {
+		if (checkcfg(CFG_SECCOMP)) {
+			syscall_in_groups_print(argv[i] + 23);
+			exit(0);
+		}
+		else
+			exit_err_feature("seccomp");
+	}
 	else if (strcmp(argv[i], "--debug-errnos") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
 			int rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 2, PATH_FSECCOMP_MAIN, "debug-errnos");

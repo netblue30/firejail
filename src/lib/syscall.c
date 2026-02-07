@@ -38,6 +38,7 @@ typedef struct {
 
 typedef struct {
 	const char * const name;
+    const char * const description;
 	const char * const list;
 } SyscallGroupList;
 
@@ -135,7 +136,9 @@ static const SyscallEntry syslist32[] = {
 };
 
 static const SyscallGroupList sysgroups[] = {
-	{ .name = "@aio", .list =
+	{ .name = "@aio",
+	  .description = "Asynchronous I/O and io_uring operations.",
+	  .list =
 #ifdef SYS_io_cancel
 	  "io_cancel,"
 #endif
@@ -167,7 +170,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "io_uring_setup"
 #endif
 	},
-	{ .name = "@basic-io", .list =
+	{ .name = "@basic-io",
+	  .description = "Basic file-descriptor read, write, seek and dup operations.",
+	  .list =
 #ifdef SYS__llseek
 	  "_llseek,"
 #endif
@@ -220,7 +225,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "writev"
 #endif
 	},
-	{ .name = "@chown", .list =
+	{ .name = "@chown",
+	  .description = "Change file owner and group metadata.",
+	  .list =
 #ifdef SYS_chown
 	  "chown,"
 #endif
@@ -243,7 +250,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "lchown32"
 #endif
 	},
-	{ .name = "@clock", .list =
+	{ .name = "@clock",
+	  .description = "System clock adjustment.",
+	  .list =
 #ifdef SYS_adjtimex
 	  "adjtimex,"
 #endif
@@ -263,7 +272,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "old_adjtimex"
 #endif
 	},
-	{ .name = "@cpu-emulation", .list =
+	{ .name = "@cpu-emulation",
+	  .description = "Legacy CPU, segment and VM86 emulation helpers.",
+	  .list =
 #ifdef SYS_modify_ldt
 	  "modify_ldt,"
 #endif
@@ -284,7 +295,9 @@ static const SyscallGroupList sysgroups[] = {
 						  // arm64, alpha, arc32, armeabi, armoabi, csky, hexagon32, loongarch64, m68k, mips_n32, mips_n64, nios2, openrisc32, parisc32, parisc64, riscv32, riscv64, s390_32, s390_64, sparc32, sparc64, superh and xtensa
 #endif
 	},
-	{ .name = "@debug", .list =
+	{ .name = "@debug",
+	  .description = "Low-level debugging, tracing, and perf monitoring interfaces.",
+	  .list =
 #ifdef SYS_lookup_dcookie
 	  "lookup_dcookie,"
 #endif
@@ -313,7 +326,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "uretprobe" // occasional breakages with seccomp reported, see https://lwn.net/Articles/1005662
 #endif
 	},
-	{ .name = "@default", .list =
+	{ .name = "@default",
+	  .description = "Broad set of syscalls usually considered unsafe or rarely used.",
+	  .list =
 	  "@clock,"
 	  "@cpu-emulation,"
 	  "@debug,"
@@ -399,7 +414,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "vmsplice"
 #endif
 	},
-	{ .name = "@default-keep", .list =
+	{ .name = "@default-keep",
+	  .description = "Minimal core exec and other syscalls usually kept even under strict filters.",
+	  .list =
 #ifdef SYS_arch_prctl
 	  "arch_prctl," // breaks glibc, i386 and x86_64 only
 #endif
@@ -434,7 +451,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "time"
 #endif
 	},
-	{ .name = "@default-nodebuggers", .list =
+	{ .name = "@default-nodebuggers",
+	  .description = "Debugger and introspection syscalls, also includes the @default group.",
+	  .list =
 	  "@default,"
 #ifdef SYS_personality
 	  "personality,"
@@ -446,7 +465,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "ptrace"
 #endif
 	},
-	{ .name = "@file-system", .list =
+	{ .name = "@file-system",
+	  .description = "Filesystem access: path navigation, metadata, open, create, remove, and inotify.",
+	  .list =
 #ifdef SYS_access
 	  "access,"
 #endif
@@ -724,7 +745,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "utimes"
 #endif
 	},
-	{ .name = "@io-event", .list =
+	{ .name = "@io-event",
+	  .description = "Evented I/O multiplexing.",
+	  .list =
 #ifdef SYS__newselect
 	  "_newselect,"
 #endif
@@ -774,7 +797,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "select"
 #endif
 	},
-	{ .name = "@ipc", .list =
+	{ .name = "@ipc",
+	  .description = "Inter-process communication: pipes, SysV IPC and POSIX message queues.",
+	  .list =
 #ifdef SYS_ipc
 	  "ipc,"
 #endif
@@ -860,7 +885,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "shmget"
 #endif
 	},
-	{ .name = "@keyring", .list =
+	{ .name = "@keyring",
+	  .description = "Kernel keyring and key management operations.",
+	  .list =
 #ifdef SYS_add_key
 	  "add_key,"
 #endif
@@ -871,7 +898,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "request_key"
 #endif
 	},
-	{ .name = "@memfd", .list =
+	{ .name = "@memfd",
+	  .description = "Anonymous in-kernel file-like memory objects.",
+	  .list =
 #ifdef SYS_memfd_create
 	  "memfd_create,"
 #endif
@@ -879,7 +908,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "memfd_secret"
 #endif
 	},
-	{ .name = "@memlock", .list =
+	{ .name = "@memlock",
+	  .description = "Lock and unlock memory to and from RAM (no swapping).",
+	  .list =
 #ifdef SYS_mlock
 	  "mlock,"
 #endif
@@ -896,7 +927,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "munlockall"
 #endif
 	},
-	{ .name = "@module", .list =
+	{ .name = "@module",
+	  .description = "Load, initialize, and unload kernel modules.",
+	  .list =
 #ifdef SYS_delete_module
 	  "delete_module,"
 #endif
@@ -907,7 +940,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "init_module"
 #endif
 	},
-	{ .name = "@mount", .list =
+	{ .name = "@mount",
+	  .description = "Mount, unmount, manage filesystems and mount namespaces.",
+	  .list =
 #ifdef SYS_chroot
 	  "chroot,"
 #endif
@@ -960,7 +995,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "umount2"
 #endif
 	},
-	{ .name = "@network-io", .list =
+	{ .name = "@network-io",
+	  .description = "Create and use sockets, send and receive network data.",
+	  .list =
 #ifdef SYS_accept
 	  "accept,"
 #endif
@@ -1028,7 +1065,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "socketpair"
 #endif
 	},
-	{ .name = "@obsolete", .list =
+	{ .name = "@obsolete",
+	  .description = "Deprecated or very old arch-specific legacy syscalls.",
+	  .list =
 #ifdef SYS__sysctl
 	  "_sysctl,"
 #endif
@@ -1417,7 +1456,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "__dummy_syscall__" // workaround for arm64, loongarch64 and riscv64 which don't have any of above defined and empty syscall lists are not allowed
 #endif
 	},
-	{ .name = "@privileged", .list =
+	{ .name = "@privileged",
+	  .description = "Highly privileged operations: IDs, mounts, modules, raw I/O, reboot, etc.",
+	  .list =
 	  "@chown,"
 	  "@clock,"
 	  "@module,"
@@ -1500,7 +1541,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "vhangup"
 #endif
 	},
-	{ .name = "@process", .list =
+	{ .name = "@process",
+	  .description = "Process and thread lifecycle, IDs, signals sending, namespaces and futex-related helpers.",
+	  .list =
 #ifdef SYS_arc_gettls
 	  "arc_gettls,"
 #endif
@@ -1721,7 +1764,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "waitpid"
 #endif
 	},
-	{ .name = "@raw-io", .list =
+	{ .name = "@raw-io",
+	  .description = "Direct port/PCI and low-level device I/O.",
+	  .list =
 #ifdef SYS_ioperm
 	  "ioperm,"
 #endif
@@ -1748,7 +1793,9 @@ static const SyscallGroupList sysgroups[] = {
 						  // arm64, arc32, hexagon32, loongarch64, m68k, mips_n32, mips_n64, nios2, openrisc32, parisc32, parisc64, riscv32, riscv64, superh and xtensa
 #endif
 	},
-	{ .name = "@reboot", .list =
+	{ .name = "@reboot",
+	  .description = "Reboot and kexec-related operations.",
+	  .list =
 #ifdef SYS_kexec_file_load
 	  "kexec_file_load,"
 #endif
@@ -1759,7 +1806,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "reboot"
 #endif
 	},
-	{ .name = "@resources", .list =
+	{ .name = "@resources",
+	  .description = "Resource limits, priorities, CPU affinity and NUMA memory policies.",
+	  .list =
 #ifdef SYS_getdtablesize
 	  "getdtablesize,"
 #endif
@@ -1821,7 +1870,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "ugetrlimit"
 #endif
 	},
-	{ .name = "@sandbox", .list =
+	{ .name = "@sandbox",
+	  .description = "Seccomp and Landlock sandbox configuration syscalls.",
+	  .list =
 #ifdef SYS_landlock_add_rule
 	  "landlock_add_rule,"
 #endif
@@ -1835,7 +1886,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "seccomp"
 #endif
 	},
-	{ .name = "@setuid", .list =
+	{ .name = "@setuid",
+	  .description = "Change user and group IDs.",
+	  .list =
 #ifdef SYS_setgid
 	  "setgid,"
 #endif
@@ -1879,7 +1932,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "setuid32"
 #endif
 	},
-	{ .name = "@signal", .list =
+	{ .name = "@signal",
+	  .description = "Signal handling, masks, signal delivery and signalfd-based interfaces.",
+	  .list =
 #ifdef SYS_osf_sigprocmask
 	  "osf_sigprocmask,"
 #endif
@@ -1944,7 +1999,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "utrap_install"
 #endif
 	},
-	{ .name = "@swap", .list =
+	{ .name = "@swap",
+	  .description = "Enable and disable swap devices and partitions.",
+	  .list =
 #ifdef SYS_osf_swapon
 	  "osf_swapon,"
 #endif
@@ -1955,7 +2012,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "swapon"
 #endif
 	},
-	{ .name = "@sync", .list =
+	{ .name = "@sync",
+	  .description = "Synchronize file data and memory mappings to storage.",
+	  .list =
 #ifdef SYS_arm_sync_file_range
 	  "arm_sync_file_range,"
 #endif
@@ -1981,7 +2040,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "syncfs"
 #endif
 	},
-	{ .name = "@system-service", .list =
+	{ .name = "@system-service",
+	  .description = "Extended system call set focusing on the user (program).",
+	  .list =
 	  "@aio,"
 	  "@basic-io,"
 	  "@chown,"
@@ -2214,7 +2275,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "vmsplice"
 #endif
 	},
-	{ .name = "@timer", .list =
+	{ .name = "@timer",
+	  .description = "Timers, sleeps and interval operations.",
+	  .list =
 #ifdef SYS_alarm
 	  "alarm,"
 #endif
@@ -2339,6 +2402,116 @@ void syscall_print_32(void) {
 		printf("%d\t- %s\n", syslist32[i].nr, syslist32[i].name);
 	}
 	printf("\n");
+}
+
+void syscall_groups_print(void) {
+	int i;
+	int elems = sizeof(sysgroups) / sizeof(sysgroups[0]);
+
+	printf ("%-23s %s\n", "Group", "Description");
+	printf ("─────────────────────────────────────────────────────────────────────────────\n");
+
+	for (i = 0; i < elems; i++) {
+		printf ("%-23s %s\n", sysgroups[i].name, sysgroups[i].description);
+	}
+}
+
+void is_syscall_groups_exist(const char *groups_list)
+{
+	int i;
+	int elems = sizeof(sysgroups) / sizeof(sysgroups[0]);
+	int no_match = 0;
+	char *copy = strdup(groups_list); // duplicate the string for tokenization, since strtok modifies the string
+	char *token = strtok(copy, ",");
+	char *new_str = malloc(strlen(copy) + 1); // unrecognized groups go here
+
+	if ((copy == NULL) || (new_str == NULL)) {
+		fprintf(stderr, "Memory allocation failed\n");
+		exit(1);
+	}
+
+	new_str[0] = '\0'; // init with an empty string
+
+	while (token != NULL) {
+		if (strcmp(token, "@all") == 0) {
+			token = strtok(NULL, ",");
+			continue;
+		}
+
+		for (i = 0; i < elems; i++) {
+			if (strcmp(token, sysgroups[i].name) == 0)
+			{
+				no_match = 0;
+				break;
+			}
+			else
+				no_match = 1;
+		}
+
+		if (no_match) {
+			if (new_str[0] != '\0')
+				strcat(new_str, ",");
+			strcat(new_str, token);
+		}
+
+		token = strtok(NULL, ",");
+	}
+
+	if (new_str[0] != '\0') {
+		fprintf(stderr, "Unrecognized group(s): %s\n", new_str);
+		fprintf(stderr, "See --debug-syscall-groups for valid groups\n");
+		free(copy);
+		free(new_str);
+		exit(1);
+	}
+
+	free(copy);
+	free(new_str);
+}
+
+void syscall_in_groups_print(const char *groups_list) {
+	if (groups_list == NULL || *groups_list == '\0') {
+		fprintf(stderr, "Value for --debug-syscall-groups can not be empty\n");
+		exit(1);
+	}
+
+	is_syscall_groups_exist(groups_list);
+
+	int i;
+	int elems = sizeof(sysgroups) / sizeof(sysgroups[0]);
+	char *copy = strdup(groups_list);
+
+	if (copy == NULL) {
+		fprintf(stderr, "Memory allocation failed\n");
+		exit(1);
+	}
+
+	char *token = strtok(copy, ",");
+
+	while (token != NULL) {
+		for (i = 0; i < elems; i++) {
+			if ((strcmp(token, "@all") == 0) || (strcmp(token, sysgroups[i].name) == 0)) {
+				if (strcmp(sysgroups[i].list, "__dummy_syscall__") == 0) {
+					printf ("%s=(There are no system calls defined in this group for the current architecture)\n", sysgroups[i].name);
+					continue;
+				}
+
+				int len = strlen(sysgroups[i].list);
+				char new_list[len + 1];
+
+				strcpy(new_list, sysgroups[i].list);
+
+				if (len > 0 && new_list[len - 1] == ',') // remove the last comma if present
+					new_list[len - 1] = '\0';
+
+				printf ("%s=%s\n", sysgroups[i].name, new_list);
+			}
+		}
+
+		token = strtok(NULL, ",");
+	}
+
+	free(copy);
 }
 
 static const char *syscall_find_group(const char *name) {

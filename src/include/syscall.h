@@ -37,6 +37,8 @@ const char *errno_find_nr(int nr);
 // syscall.c
 void syscall_print(void);
 void syscall_print_32(void);
+void syscall_groups_print(void);
+void syscall_in_groups_print(const char *name);
 typedef void (filter_fn)(int fd, int syscall, int arg, void *ptrarg, bool native);
 int syscall_check_list(const char *slist, filter_fn *callback, int fd, int arg, void *ptrarg, bool native);
 const char *syscall_find_nr(int nr);

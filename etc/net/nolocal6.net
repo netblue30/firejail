@@ -33,6 +33,7 @@
 
 # drop all local network traffic
 -A OUTPUT -d FC00::/7 -j DROP
+-A OUTPUT -d fe80::/10 -j DROP
 
 # drop multicast traffic
 # required for ipv6

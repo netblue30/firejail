@@ -68,6 +68,8 @@ _firejail_args=(
     '--debug-errnos[print all recognized error numbers]'
     '--debug-private-lib[debug for --private-lib option]'
     '--debug-protocols[print all recognized protocols]'
+    '--debug-syscall-groups[print all system call groups and descriptions]'
+    '--debug-syscall-groups=-[print all recognized system calls in specified groups: @group1,@group2,@all,...]: :'
     '--debug-syscalls[print all recognized system calls]'
     '--debug-syscalls32[print all recognized 32 bit system calls]'
     '--debug-whitelists[debug whitelisting]'

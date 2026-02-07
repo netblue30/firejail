@@ -86,6 +86,8 @@ static const char *const usage_str =
 	"    --debug-private-lib - debug for --private-lib option.\n"
 #endif
 	"    --debug-protocols - print all recognized protocols.\n"
+	"    --debug-syscall-groups - print all system call groups and descriptions.\n"
+	"    --debug-syscall-groups=@group1,@group2,@all,... - print all recognized system calls in specified groups.\n"
 	"    --debug-syscalls - print all recognized system calls.\n"
 	"    --debug-syscalls32 - print all recognized 32 bit system calls.\n"
 	"    --debug-whitelists - debug whitelisting.\n"

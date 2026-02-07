@@ -766,6 +766,23 @@ Example:
 .br
 $ firejail \-\-debug\-protocols
 .TP
+\fB\-\-debug-syscall-groups[=@group1,@group2,@all,...]
+Print all system call groups and descriptions then exit.
+.br
+
+.br
+Specify seccomp groups separated by a comma to print their system calls in the current Firejail software build and exit. The special group @all can be used to print all seccomp groups and related syscalls.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-debug-syscall-groups
+.br
+$ firejail \-\-debug-syscall-groups=@chown,@mount,@swap
+.br
+$ firejail \-\-debug-syscall-groups=@all
+.TP
 \fB\-\-debug-syscalls
 Print all recognized system calls in the current Firejail software build and exit.
 .br
@@ -2633,10 +2650,10 @@ then it is @default.
 To help creating useful seccomp filters more easily, the following
 system call groups are defined: @aio, @basic-io, @chown, @clock,
 @cpu-emulation, @debug, @default, @default-nodebuggers, @default-keep,
-@file-system, @io-event, @ipc, @keyring, @memlock, @module, @mount,
+@file-system, @io-event, @ipc, @keyring, @memfd, @memlock, @module, @mount,
 @network-io, @obsolete, @privileged, @process, @raw-io, @reboot,
-@resources, @setuid, @swap, @sync, @system-service and @timer.
-More information about groups can be found in /usr/share/doc/firejail/syscalls.txt
+@resources, @sandbox, @setuid, @swap, @sync, @system-service and @timer.
+More information about groups can be found in /usr/share/doc/firejail/syscalls.txt and see also \-\-debug-syscall-groups.
 .br
 
 .br

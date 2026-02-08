@@ -134,6 +134,7 @@ static const char *const usage_str =
 	"    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
 	"    --keep-dev-tpm - /dev/tpm* devices are untouched (even with --private-dev).\n"
 	"    --keep-fd - inherit open file descriptors to sandbox.\n"
+	"    --keep-hostname - use the current hostname\n"
 	"    --keep-shell-rc - do not copy shell rc files from /etc/skel\n"
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
 #ifdef HAVE_LANDLOCK

@@ -442,6 +442,17 @@ path for the filename.
               Parent is shutting down, bye…
 ```
 
+### --keep-hostname
+```text
+       --keep-hostname
+              By default, the hostname is replaced by a random  name  generated
+              by firejail at startup. Use this option to disable this feature.
+
+              Example:
+              $ firejail --keep-hostname
+
+```
+
 ### Landlock support - ongoing/experimental
 
 * Added on #6078, which is based on #5315 from ChrysoliteAzalea/landlock

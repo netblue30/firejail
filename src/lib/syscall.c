@@ -2458,8 +2458,8 @@ void is_syscall_groups_exist(const char *groups_list)
 	}
 
 	if (new_str[0] != '\0') {
-		fprintf(stderr, "Unrecognized group(s): %s\n", new_str);
-		fprintf(stderr, "See --debug-syscall-groups for valid groups\n");
+		fprintf(stderr, "Unrecognized syscall group(s): %s\n", new_str);
+		fprintf(stderr, "See --debug-syscall-groups for valid seccomp groups\n");
 		free(copy);
 		free(new_str);
 		exit(1);

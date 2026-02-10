@@ -11,6 +11,9 @@ noblacklist ${HOME}/.PlayOnLinux
 
 # nc is needed to run playonlinux
 noblacklist ${PATH}/nc
+noblacklist ${PATH}/nc.openbsd
+noblacklist ${PATH}/nc.traditional
+noblacklist ${PATH}/ncat
 
 # Allow perl (blacklisted by disable-interpreters.inc)
 include allow-perl.inc

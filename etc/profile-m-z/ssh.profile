@@ -9,6 +9,8 @@ include globals.local
 
 # nc can be used as ProxyCommand, e.g. when using tor
 noblacklist ${PATH}/nc
+noblacklist ${PATH}/nc.openbsd
+noblacklist ${PATH}/nc.traditional
 noblacklist ${PATH}/ncat
 
 # Allow ssh (blacklisted by disable-common.inc)

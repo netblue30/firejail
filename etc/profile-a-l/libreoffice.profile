@@ -44,9 +44,10 @@ include whitelist-var-common.inc
 #ignore seccomp
 #ignore tracelog
 
+keep-hostname
+
 apparmor
 caps.drop all
-keep-hostname
 netfilter
 nodvd
 nogroups

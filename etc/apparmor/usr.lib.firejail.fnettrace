@@ -1,0 +1,37 @@
+#include <tunables/global>
+
+/usr/lib/firejail/fnettrace {
+  signal (send) peer=@{profile_name}//&unconfined,
+  signal (send) peer=@{profile_name},
+  signal (receive),
+
+  /{dev,etc,tmp,proc,sys,usr}/{,**} rklm,
+  /tmp/** rwl,
+  /usr/bin/** ix,
+  /usr/lib/firejail/** ix,
+
+  deny /tmp/.X11-unix/* mrwkl,
+  deny /tmp/.XIM-unix/* mrwkl,
+  deny /tmp/.ICE-unix/* mrwkl,
+  deny /tmp/.font-unix/* mrwkl,
+  deny /tmp/.tX[0-9]*-lock mrwkl,
+  deny /tmp/.X[0-9]*-lock mrwkl,
+  deny /tmp/systemd* mrwkl,
+  deny /tmp/ssh* mrwkl,
+  
+  deny /etc/ssh/{,**} mrwkl,
+  deny /etc/ssl/{,**} mrwkl,
+  deny /etc/ca-certificates/{,**} mrwkl,
+  deny /{etc,usr/share}/pki/{,**} mrwkl,
+  deny /etc/certbot/{,**} mrwkl,
+  deny /etc/X11/{,**} mrwkl,
+
+  deny /usr/share/{,**} mrwkl,
+  deny /usr/local/{,**} mrwkl,
+
+  capability net_raw,
+  capability net_admin,
+
+  network packet,
+  network raw,
+}

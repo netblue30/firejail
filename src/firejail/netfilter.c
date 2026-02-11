@@ -43,12 +43,14 @@ void netfilter_netlock(pid_t pid) {
 	char *terminal = NULL;
 	if (access("/usr/bin/xterm", X_OK) == 0)
 		terminal = "/usr/bin/xterm";
-	else if (access("/usr/bin/lxterminal", X_OK) == 0)
-		terminal = "/usr/bin/lxterminal";
+	else if (access("/usr/bin/mate-terminal", X_OK) == 0)
+		terminal = "/usr/bin/mate-terminal";
 	else if (access("/usr/bin/xfce4-terminal", X_OK) == 0)
 		terminal = "/usr/bin/xfce4-terminal";
 	else if (access("/usr/bin/konsole", X_OK) == 0)
 		terminal = "/usr/bin/konsole";
+	else if (access("/usr/bin/qterminal", X_OK) == 0)
+		terminal = "/usr/bin/qterminal";
 // problem: newer gnome-terminal versions don't support -e command line option???
 // same for mate-terminal
 

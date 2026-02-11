@@ -18,14 +18,55 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #include "fnettrace.h"
+#include <signal.h>
+
+typedef struct pidlist_t {
+	struct pidlist_t *next;
+	pid_t pid;
+} PidList;
+
+static PidList *pidlist = NULL;
+
+static void add(pid_t pid) {
+	assert(pid);
+
+	PidList *p = malloc(sizeof(PidList));
+	if (!p)
+		errExit("malloc");
+	p->pid = pid;
+	p->next = pidlist;
+	pidlist = p;
+}
+
 
 int runprog(const char *program) {
-	assert(program);
-	FILE *fp = popen(program, "r");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot run %s\n", program);
-		return -1;
-	}
+	int fd[2]; // child tx on fd[1], parent rx on fd[0]
+	if (pipe(fd))
+		errExit("pipe");
 
-	return fileno(fp);
+	pid_t pid = fork();
+	if(pid == -1)
+		errExit("fork");
+	else if (pid == 0) {
+		close(fd[0]);
+		dup2(fd[1], 1); // connect child stdout to fd[1]
+		execl(program, program, NULL);
+		exit(0);
+	}
+	else {
+		close(fd[1]);
+		add(pid);
+        }
+
+	return fd[0];
 }
+
+void killprogs(void) {
+	PidList *p = pidlist;
+	while (p) {
+		assert(p->pid);
+		kill(p->pid, SIGKILL);
+		p = p->next;
+	}
+}
+		

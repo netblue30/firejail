@@ -24,6 +24,8 @@
 #include <sys/ioctl.h>
 #include <sys/prctl.h>
 #include <signal.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 #define MAX_BUF_SIZE (64 * 1024)
 
 // only 0 or negative values; positive values as defined in RFC
@@ -533,6 +535,7 @@ static void run_trace(void) {
 		errExit("socket");
 
 
+	prctl(PR_SET_PDEATHSIG, SIGHUP);
 	int p1 = runprog(LIBDIR "/firejail/fnettrace-sni");
 	if (p1 != -1)
 		printf("loading snitrace...");
@@ -622,19 +625,35 @@ static void run_trace(void) {
 				char *ptr = strchr(buf, '\n');
 				if (!ptr) { // we should have a '\n'
 					printf("Error: invalid file name\n");
-					sleep(5);
+					sleep(4);
 					continue;
 				}
 				*ptr = '\0';
+			
+				if (strstr(buf, "/../") ||
+				    strstr(buf, "/./") ||
+				    strstr(buf, "//") ||
+				    strchr(buf, '~')) {
+					printf("Error: invalid file name\n");
+					sleep(4);
+					continue;
+				}
+
+				struct stat s;
+				if (stat(buf, &s) == 0) {
+					printf("Error: a file with this name is already present in /tmp directory\n");
+					sleep(4);
+					continue;
+				}
 
 				FILE *fp = fopen(buf, "w");
 				if (!fp) {
 					printf("Error: cannot open file %s\n", buf);
 					perror("fopen");
-					sleep(5);
+					sleep(4);
 					continue;
 				}
-
+			
 				printf("Saving stats in %s file...\n", buf);
 				print_stats(fp);
 				fclose(fp);
@@ -643,8 +662,10 @@ static void run_trace(void) {
 				sleep(1);
 				continue;
 			}
-			else if (c == 'x' || c == 'X')
+			else if (c == 'x' || c == 'X') {
+				killprogs();
 				break;
+			}
 			continue;
 		}
 		else if (FD_ISSET(p1, &rfds)) {

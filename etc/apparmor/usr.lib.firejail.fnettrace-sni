@@ -1,0 +1,14 @@
+include <tunables/global>
+
+/usr/lib/firejail/fnettrace-sni {
+  signal (send) peer=@{profile_name}//&unconfined,
+  signal (send) peer=@{profile_name},
+  signal (receive),
+
+  /{dev,etc,proc,sys,usr,**} rklm,
+
+  capability net_raw,
+  capability net_admin,
+  network packet,
+  network raw,
+}

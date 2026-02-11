@@ -260,9 +260,13 @@ ifeq ($(BUSYBOX_WORKAROUND),yes)
 	./mketc.sh $(DESTDIR)$(sysconfdir)/firejail/disable-common.inc
 endif
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
-	# install apparmor profile
+	# install apparmor profiles
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/apparmor.d etc/apparmor/firejail-default
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/apparmor.d etc/apparmor/usr.lib.firejail.fnettrace
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/apparmor.d etc/apparmor/usr.lib.firejail.fnettrace-dns
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/apparmor.d etc/apparmor/usr.lib.firejail.fnettrace-icmp
+	$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/apparmor.d etc/apparmor/usr.lib.firejail.fnettrace-sni
 	# install apparmor profile customization file
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d/local
 	sh -c "if [ ! -f $(DESTDIR)$(sysconfdir)/apparmor.d/local/firejail-default ]; then \

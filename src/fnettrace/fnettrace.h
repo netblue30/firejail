@@ -98,6 +98,7 @@ void terminal_restore(void);
 
 // runprog.c
 int runprog(const char *program);
+void killprogs(void);
 
 // event.c
 extern int ev_cnt;

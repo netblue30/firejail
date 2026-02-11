@@ -46,6 +46,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
+keep-hostname
 netfilter
 nodvd
 nogroups

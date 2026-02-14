@@ -15,9 +15,11 @@ include globals.local
 # https://github.com/netblue30/firejail/issues/4206#issuecomment-824806968
 
 # (Ignore entry from disable-common.inc)
+ignore read-only ${HOME}/.config/mozilla/firefox/profiles.ini
 ignore read-only ${HOME}/.mozilla/firefox/profiles.ini
 
 noblacklist ${HOME}/.cache/mozilla
+noblacklist ${HOME}/.config/mozilla
 noblacklist ${HOME}/.mozilla
 noblacklist ${RUNUSER}/*firefox*
 noblacklist ${RUNUSER}/psd/*firefox*
@@ -26,8 +28,10 @@ noblacklist ${RUNUSER}/psd/*firefox*
 #blacklist /usr/libexec
 
 mkdir ${HOME}/.cache/mozilla/firefox
+mkdir ${HOME}/.config/mozilla
 mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/firefox
+whitelist ${HOME}/.config/mozilla
 whitelist ${HOME}/.mozilla
 
 whitelist /usr/share/firefox

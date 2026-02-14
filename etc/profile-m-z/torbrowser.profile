@@ -10,14 +10,17 @@ include globals.local
 ignore dbus-user none
 
 noblacklist ${HOME}/.cache/mozilla
+noblacklist ${HOME}/.config/mozilla
 noblacklist ${HOME}/.mozilla
 
 blacklist /sys/class/net
 blacklist /usr/libexec
 
 mkdir ${HOME}/.cache/mozilla/torbrowser
+mkdir ${HOME}/.config/mozilla
 mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/torbrowser
+whitelist ${HOME}/.config/mozilla
 whitelist ${HOME}/.mozilla
 include whitelist-usr-share-common.inc
 

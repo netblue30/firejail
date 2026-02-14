@@ -7,6 +7,7 @@ include seamonkey.local
 include globals.local
 
 noblacklist ${HOME}/.cache/mozilla
+noblacklist ${HOME}/.config/mozilla
 noblacklist ${HOME}/.gnupg
 noblacklist ${HOME}/.local/share/pki
 noblacklist ${HOME}/.mailcap
@@ -19,6 +20,7 @@ include disable-interpreters.inc
 include disable-programs.inc
 
 mkdir ${HOME}/.cache/mozilla
+mkdir ${HOME}/.config/mozilla
 mkdir ${HOME}/.gnupg
 mkdir ${HOME}/.local/share/pki
 mkdir ${HOME}/.mozilla
@@ -26,6 +28,7 @@ whitelist ${DOWNLOADS}
 whitelist ${HOME}/.cache/gnome-mplayer/plugin
 whitelist ${HOME}/.cache/mozilla
 whitelist ${HOME}/.config/gnome-mplayer
+whitelist ${HOME}/.config/mozilla
 whitelist ${HOME}/.config/pipelight-silverlight5.1
 whitelist ${HOME}/.config/pipelight-widevine
 whitelist ${HOME}/.gnupg

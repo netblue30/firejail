@@ -21,6 +21,7 @@ noblacklist /tmp/ssh-*
 noblacklist ${HOME}/.config/BraveSoftware
 noblacklist ${HOME}/.config/chromium
 noblacklist ${HOME}/.config/google-chrome
+noblacklist ${HOME}/.config/mozilla
 noblacklist ${HOME}/.config/vivaldi
 noblacklist ${HOME}/.local/share/torbrowser
 noblacklist ${HOME}/.mozilla
@@ -55,8 +56,11 @@ include disable-xdg.inc
 #mkdir ${HOME}/.local/share/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts
 #mkfile ${HOME}/.local/share/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.local/share/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
+#mkdir ${HOME}/.config/mozilla/native-messaging-hosts
 #mkdir ${HOME}/.mozilla/native-messaging-hosts
+#mkfile ${HOME}/.config/mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #mkfile ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
+#whitelist ${HOME}/.config/mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #whitelist ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #mkdir ${HOME}/.cache/keepassxc
 #mkdir ${HOME}/.config/keepassxc

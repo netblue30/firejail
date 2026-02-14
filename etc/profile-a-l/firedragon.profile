@@ -16,7 +16,9 @@ whitelist ${HOME}/.firedragon
 whitelist /usr/share/firedragon
 
 # Add the next lines to your firedragon.local if you want to use the migration wizard.
+#noblacklist ${HOME}/.config/mozilla
 #noblacklist ${HOME}/.mozilla
+#whitelist ${HOME}/.config/mozilla
 #whitelist ${HOME}/.mozilla
 
 # FireDragon requires a shell to launch on Arch. We can possibly remove sh though.

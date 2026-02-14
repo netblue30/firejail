@@ -34,7 +34,9 @@ writable-run-user
 #writable-var
 
 # These lines are needed to allow Firefox to load your profile when clicking a link in an email
+noblacklist ${HOME}/.config/mozilla
 noblacklist ${HOME}/.mozilla
+whitelist ${HOME}/.config/mozilla/firefox/profiles.ini
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
 
 noblacklist ${HOME}/.cache/thunderbird

@@ -13,7 +13,9 @@ include firefox-common.local
 
 # Add the next lines to firefox-common.local if you want to use the migration
 # wizard.
+#noblacklist ${HOME}/.config/mozilla
 #noblacklist ${HOME}/.mozilla
+#whitelist ${HOME}/.config/mozilla
 #whitelist ${HOME}/.mozilla
 
 # To enable support for the KeePassXC extension, add the following lines to

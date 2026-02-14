@@ -27,7 +27,9 @@ include disable-xdg.inc
 # The lines below are needed to find the default Firefox profile name, to allow
 # opening links in an existing instance of Firefox (note that it still fails if
 # there isn't a Firefox instance running with the default profile; see #5352)
+noblacklist ${HOME}/.config/mozilla
 noblacklist ${HOME}/.mozilla
+whitelist ${HOME}/.config/mozilla/firefox/profiles.ini
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
 
 mkdir ${HOME}/.cache/kube

@@ -19,6 +19,7 @@ include globals.local
 
 # For age-restricted and rate-limited videos, uncomment the following line
 # (yt-dlp needs the browser cookie):
+#noblacklist ${HOME}/.config/mozilla
 #noblacklist ${HOME}/.mozilla
 
 noblacklist ${PATH}/deno

@@ -15,7 +15,9 @@ whitelist ${HOME}/.waterfox
 whitelist /usr/share/waterfox
 
 # Add the next lines to your watefox.local if you want to use the migration wizard.
+#noblacklist ${HOME}/.config/mozilla
 #noblacklist ${HOME}/.mozilla
+#whitelist ${HOME}/.config/mozilla
 #whitelist ${HOME}/.mozilla
 
 # waterfox requires a shell to launch on Arch. We can possibly remove sh though.

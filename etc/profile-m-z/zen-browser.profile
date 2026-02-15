@@ -22,8 +22,11 @@ whitelist ${HOME}/.zen
 
 # Add the following lines to allow access to the .mozilla directory,
 # required by some extensions (like KeePassXC-Browser) to work properly
+#noblacklist ${HOME}/.config/mozilla
 #noblacklist ${HOME}/.mozilla
+#mkdir ${HOME}/.config/mozilla
 #mkdir ${HOME}/.mozilla
+#whitelist ${HOME}/.config/mozilla
 #whitelist ${HOME}/.mozilla
 
 # Note: Zen Browser requires a shell to launch on Arch and Fedora.

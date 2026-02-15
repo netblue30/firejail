@@ -359,6 +359,7 @@ blacklist /etc/hosts.equiv
 read-only ${HOME}/.cache/deno
 read-only ${HOME}/.caffrc
 read-only ${HOME}/.cargo/env
+read-only ${HOME}/.config/mozilla/firefox/profiles.ini
 read-only ${HOME}/.config/mpv
 read-only ${HOME}/.config/msmtp
 read-only ${HOME}/.config/nano

@@ -14,6 +14,7 @@ include globals.local
 #noblacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite*
 #noblacklist ${HOME}/.config/chromium
 noblacklist ${HOME}/.config/krunnerrc
+#noblacklist ${HOME}/.config/mozilla
 noblacklist ${HOME}/.kde/share/config/krunnerrc
 noblacklist ${HOME}/.kde4/share/config/krunnerrc
 #noblacklist ${HOME}/.local/share/baloo

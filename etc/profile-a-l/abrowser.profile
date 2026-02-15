@@ -6,11 +6,14 @@ include abrowser.local
 include globals.local
 
 noblacklist ${HOME}/.cache/mozilla
+noblacklist ${HOME}/.config/mozilla
 noblacklist ${HOME}/.mozilla
 
 mkdir ${HOME}/.cache/mozilla/abrowser
+mkdir ${HOME}/.config/mozilla
 mkdir ${HOME}/.mozilla
 whitelist ${HOME}/.cache/mozilla/abrowser
+whitelist ${HOME}/.config/mozilla
 whitelist ${HOME}/.mozilla
 whitelist /usr/share/abrowser
 

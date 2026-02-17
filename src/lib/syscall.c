@@ -2567,6 +2567,10 @@ static void syscall_process_name(const char *name, int *syscall_nr, int *error_n
 				*syscall_nr = SYSCALL_ERROR;
 		}
 	}
+	if (*syscall_nr == SYSCALL_ERROR) {
+		free(str);
+		goto error;
+	}
 
 	free(str);
 	return;

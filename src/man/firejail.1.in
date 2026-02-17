@@ -2714,6 +2714,12 @@ so for example "$165" corresponds to "mount" on the x86_64 architecture.
 .br
 
 .br
+The syscall numbers and names for \fB\-\-seccomp\fR can be found by using
+\fB\-\-debug-syscalls\fR and \fB\-\-debug-syscalls32\fR for
+\fB\-\-seccomp.32\fR.
+.br
+
+.br
 Instead of dropping the syscall by returning EPERM, another error
 number can be returned using \fBsyscall:errno\fR syntax. This can be
 also changed globally with \-\-seccomp-error-action or

@@ -2709,8 +2709,8 @@ $ firejail '\-\-seccomp=@ipc,!pipe,!pipe2' audacious
 .br
 
 .br
-Syscalls can be specified by their number if prefix $ is added,
-so for example $165 corresponds to mount on the x86_64 architecture.
+Syscalls can be specified by their number if the "$" prefix is added,
+so for example "$165" corresponds to "mount" on the x86_64 architecture.
 .br
 
 .br

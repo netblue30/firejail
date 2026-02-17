@@ -784,17 +784,44 @@ $ firejail \-\-debug-syscall-groups=@chown,@mount,@swap
 $ firejail \-\-debug-syscall-groups=@all
 .TP
 \fB\-\-debug-syscalls
-Print all recognized system calls in the current Firejail software build and exit.
+Print all recognized system calls in the current Firejail software build and
+exit.
 .br
 
 .br
 Example:
 .br
 $ firejail \-\-debug\-syscalls
+.br
+
+.br
+Note: The syscall mapping comes directly from the architecture-specific .tbl
+files in the Linux kernel sources, which are transformed into header files in
+src/include and built into firejail.
+Only syscalls for the build target architecture and 32-bit variants (if
+applicable) are included in the build, such as for x86_64 and x86
+(respectively).
+If a syscall number or name is not listed, it is not recognized by firejail.
+This may be due to a syscall not being present in the .tbl file (such as for
+obsolete syscalls), not having been added to firejail yet or the current build
+of firejail being too old.
+.br
+
+.br
+Example .tbl files for x86_64 and x86 on Linux v6.19:
+.br
+
+.br
+.UR https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/x86/entry/syscalls/syscall_64.tbl?h=v6.19
+.UE
+.br
+.UR https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/x86/entry/syscalls/syscall_32.tbl?h=v6.19
+.UE
 .TP
 \fB\-\-debug\-syscalls32
-Print all recognized 32 bit system calls in the current Firejail software build and exit.
-.br
+Print all recognized 32 bit system calls in the current Firejail software build
+and exit.
+This is the same as \fB\-\-debug-syscalls\fR, but for the 32-bit syscalls.
 .TP
 \fB\-\-debug\-whitelists\fR
 Debug whitelisting.

@@ -120,7 +120,7 @@ int dbus_check_name(const char *name) {
 
 int dbus_check_call_rule(const char *rule) {
 	char buf[DBUS_MAX_NAME_LENGTH + 1];
-	char *name_end = strchr(rule, '=');
+	const char *name_end = strchr(rule, '=');
 	if (name_end == NULL)
 		return 0;
 	size_t name_length = (size_t) (name_end - rule);
@@ -131,7 +131,7 @@ int dbus_check_call_rule(const char *rule) {
 	if (!dbus_check_name(buf))
 		return 0;
 	++name_end;
-	char *interface_end = strchr(name_end, '@');
+	const char *interface_end = strchr(name_end, '@');
 	if (interface_end == NULL)
 		return check_bus_or_interface_name(name_end, 0);
 	size_t interface_length = (size_t) (interface_end - name_end);

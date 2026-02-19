@@ -15,7 +15,7 @@ include disable-exec.inc
 #include disable-interpreters.inc
 include disable-programs.inc
 include disable-xdg.inc
-# TODO: probably want to exchange this for explicits and `disable-...` entries.
+# TODO: probably want to exchange this for explicit and `disable-...` entries.
 #include default.profile
 
 novideo

@@ -24,6 +24,7 @@ noinput
 nodvd
 notv
 nou2f
+noroot
 nogroups
 
 disable-mnt

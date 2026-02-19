@@ -47,4 +47,3 @@ nonewprivs
 caps.drop all
 deterministic-exit-code
 deterministic-shutdown
-

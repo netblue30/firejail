@@ -25,6 +25,7 @@ keep-dev-ntsync
 keep-dev-shm
 keep-dev-tpm
 keep-fd all
+keep-hostname
 keep-shell-rc
 keep-var-tmp
 writable-etc

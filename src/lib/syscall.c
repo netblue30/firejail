@@ -432,6 +432,9 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_clock_nanosleep_time64
 	  "clock_nanosleep_time64,"
 #endif
+#ifdef SYS_gettimeofday
+	  "gettimeofday,"
+#endif
 #ifdef SYS_execv
 	  "execv," // sparc only
 #endif
@@ -1106,9 +1109,6 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_getpmsg
 	  "getpmsg,"
-#endif
-#ifdef SYS_gettimeofday
-	  "gettimeofday,"
 #endif
 #ifdef SYS_gtty
 	  "gtty,"

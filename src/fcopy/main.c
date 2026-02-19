@@ -430,7 +430,7 @@ static void duplicate_file(const char *src, const char *dest, struct stat *s) {
 
 	// build destination file name
 	char *name;
-	char *ptr = (arg_follow_link)? strrchr(src, '/'): strrchr(rsrc, '/');
+	const char *ptr = (arg_follow_link)? strrchr(src, '/'): strrchr(rsrc, '/');
 	ptr++;
 	if (asprintf(&name, "%s/%s", rdest, ptr) == -1)
 		errExit("asprintf");
@@ -454,7 +454,7 @@ static void duplicate_link(const char *src, const char *dest, struct stat *s) {
 	// build destination file name
 	char *name;
 	//     char *ptr = strrchr(rsrc, '/');
-	char *ptr = strrchr(src, '/');
+	const char *ptr = strrchr(src, '/');
 	ptr++;
 	if (asprintf(&name, "%s/%s", rdest, ptr) == -1)
 		errExit("asprintf");

@@ -158,7 +158,7 @@ void env_store(const char *str, ENV_OP op) {
 	// some basic checking
 	if (*str == '\0')
 		goto errexit;
-	char *ptr = strchr(str, '=');
+	const char *ptr = strchr(str, '=');
 	if (op == SETENV) {
 		if (!ptr)
 			goto errexit;
@@ -175,7 +175,7 @@ void env_store(const char *str, ENV_OP op) {
 	if (env->name == NULL)
 		errExit("strdup");
 	if (op == SETENV) {
-		char *ptr2 = strchr(env->name, '=');
+		char *ptr2 = (char *) strchr(env->name, '=');
 		assert(ptr2);
 		*ptr2 = '\0';
 		env->value = ptr2 + 1;

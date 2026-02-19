@@ -1750,7 +1750,7 @@ void profile_read(const char *fname) {
 		int errsv = errno;
 		// if the file ends in ".local", do not exit
 		const char *base = gnu_basename(fname);
-		char *ptr = strstr(base, ".local");
+		const char *ptr = strstr(base, ".local");
 		if (ptr && strlen(ptr) == 6 && errsv != EACCES) {
 			if (arg_debug) {
 				printf("Cannot access .local file %s: %s, skipping...\n",
@@ -1766,7 +1766,7 @@ void profile_read(const char *fname) {
 
 	// --allow-debuggers - skip disable-devel.inc file
 	if (arg_allow_debuggers) {
-		char *tmp = strrchr(fname, '/');
+		const char *tmp = strrchr(fname, '/');
 		if (tmp && *(tmp + 1) != '\0') {
 			tmp++;
 			if (strcmp(tmp, "disable-devel.inc") == 0)
@@ -1775,7 +1775,7 @@ void profile_read(const char *fname) {
 	}
 	// --appimage - skip disable-shell.inc file
 	if (arg_appimage) {
-		char *tmp = strrchr(fname, '/');
+		const char *tmp = strrchr(fname, '/');
 		if (tmp && *(tmp + 1) != '\0') {
 			tmp++;
 			if (strcmp(tmp, "disable-shell.inc") == 0)

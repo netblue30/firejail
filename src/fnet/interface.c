@@ -337,8 +337,8 @@ void net_if_ip6(const char *ifname, const char *addr6) {
 
 	// extract prefix
 	unsigned long prefix;
-	char *ptr;
-	if ((ptr = strchr(addr6, '/'))) {
+	char *ptr = (char *) strchr(addr6, '/');
+	if (ptr) {
 		prefix = atol(ptr + 1);
 		if (prefix > 128) {
 			fprintf(stderr, "Error fnet: invalid prefix for IPv6 address %s\n", addr6);

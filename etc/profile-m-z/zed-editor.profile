@@ -20,20 +20,24 @@ include disable-xdg.inc
 
 novideo
 nosound
+noinput
 nodvd
 notv
 nou2f
+nogroups
 
 disable-mnt
 private-dev
 private-tmp
 noexec /tmp
 
-# TODO: not tested, seen working.
+# TODO: likely not complete.
 dbus-user filter
-dbus-system filter
-#dbus-system.talk org.freedesktop.secrets
+dbus-user.talk org.freedesktop.secrets
+dbus-system none
 
+# AppArmor causes issues with spawning sub-processes for language-tooling.
+# This is probably only viable when used with a specialized profile for Zed.
 #apparmor
 seccomp
 # For hardening: `seccomp.block-secondary`

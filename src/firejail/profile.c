@@ -1030,7 +1030,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_seccomp = 1;
 			cfg.seccomp_list = seccomp_check_list(ptr + 8);
 		}
-		else if (!arg_quiet)
+		else
 			warning_feature_disabled("seccomp");
 
 		return 0;
@@ -1040,7 +1040,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_seccomp32 = 1;
 			cfg.seccomp_list32 = seccomp_check_list(ptr + 11);
 		}
-		else if (!arg_quiet)
+		else
 			warning_feature_disabled("seccomp");
 
 		return 0;

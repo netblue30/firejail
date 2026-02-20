@@ -883,8 +883,8 @@ extern char *config_seccomp_error_action_str;
 extern char *config_seccomp_filter_add;
 extern char **whitelist_reject_topdirs;
 
-void exit_err_feature(const char *feature) __attribute__((noreturn));
-void warning_feature_disabled(const char *feature);
+void exit_err_feature(const char *arg, int cfgval) __attribute__((noreturn));
+void warning_feature_disabled(const char *fname, int lineno, const char *line, int cfgval);
 int checkcfg(int val);
 void print_compiletime_support(void);
 

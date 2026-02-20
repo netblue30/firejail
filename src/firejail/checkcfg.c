@@ -81,14 +81,24 @@ const char *const cfgstr[] = {
 	[CFG_MAX] = "max" // this should always be the last entry
 };
 
-void __attribute__((noreturn)) exit_err_feature(const char *feature) {
-	fprintf(stderr, "Error: %s feature is disabled in Firejail configuration file %s\n",
-		feature, SYSCONFDIR "/firejail.config");
+void __attribute__((noreturn)) exit_err_feature(const char *arg, int cfgval) {
+	assert(cfgval >= CFG_NONE);
+	assert(cfgval < CFG_MAX);
+
+	const char *feature = cfgstr[cfgval];
+	fprintf(stderr, "Error: '%s' feature is disabled in %s: %s\n", feature,
+	        SYSCONFDIR "/firejail.config", arg);
 	exit(1);
 }
 
-void warning_feature_disabled(const char *feature) {
-	fwarning("%s feature is disabled in Firejail configuration file\n", feature);
+void warning_feature_disabled(const char *fname, int lineno,
+                              const char *line, int cfgval) {
+	assert(cfgval >= CFG_NONE);
+	assert(cfgval < CFG_MAX);
+
+	const char *feature = cfgstr[cfgval];
+	fwarning("%s:%d: ignoring command because '%s' feature is disabled in %s: %s\n",
+	         fname, lineno, feature, SYSCONFDIR "/firejail.config", line);
 }
 
 int checkcfg(int val) {

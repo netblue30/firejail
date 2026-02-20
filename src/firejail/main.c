@@ -375,7 +375,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else
-			exit_err_feature("x11");
+			exit_err_feature(argv[i], CFG_X11);
 	}
 	else if (strcmp(argv[i], "--x11=xpra") == 0) {
 		if (checkcfg(CFG_X11)) {
@@ -383,7 +383,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else
-			exit_err_feature("x11");
+			exit_err_feature(argv[i], CFG_X11);
 	}
 	else if (strcmp(argv[i], "--x11=xephyr") == 0) {
 		if (checkcfg(CFG_X11)) {
@@ -391,7 +391,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else
-			exit_err_feature("x11");
+			exit_err_feature(argv[i], CFG_X11);
 	}
 	else if (strcmp(argv[i], "--x11=xvfb") == 0) {
 		if (checkcfg(CFG_X11)) {
@@ -399,7 +399,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else
-			exit_err_feature("x11");
+			exit_err_feature(argv[i], CFG_X11);
 	}
 #endif
 	else if (strcmp(argv[i], "--nettrace") == 0) {
@@ -411,7 +411,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			netfilter_trace(0, LIBDIR "/firejail/fnettrace");
 		}
 		else
-			exit_err_feature("networking");
+			exit_err_feature(argv[i], CFG_NETWORK);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--nettrace=", 11) == 0) {
@@ -424,7 +424,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			netfilter_trace(pid, LIBDIR "/firejail/fnettrace");
 		}
 		else
-			exit_err_feature("networking");
+			exit_err_feature(argv[i], CFG_NETWORK);
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--dnstrace") == 0) {
@@ -436,7 +436,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			netfilter_trace(0, LIBDIR "/firejail/fnettrace-dns");
 		}
 		else
-			exit_err_feature("networking");
+			exit_err_feature(argv[i], CFG_NETWORK);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--dnstrace=", 11) == 0) {
@@ -449,7 +449,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			netfilter_trace(pid, LIBDIR "/firejail/fnettrace-dns");
 		}
 		else
-			exit_err_feature("networking");
+			exit_err_feature(argv[i], CFG_NETWORK);
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--snitrace") == 0) {
@@ -461,7 +461,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			netfilter_trace(0, LIBDIR "/firejail/fnettrace-sni");
 		}
 		else
-			exit_err_feature("networking");
+			exit_err_feature(argv[i], CFG_NETWORK);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--snitrace=", 11) == 0) {
@@ -474,7 +474,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			netfilter_trace(pid, LIBDIR "/firejail/fnettrace-sni");
 		}
 		else
-			exit_err_feature("networking");
+			exit_err_feature(argv[i], CFG_NETWORK);
 		exit(0);
 	}
 
@@ -488,7 +488,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			netfilter_trace(0, LIBDIR "/firejail/fnettrace-icmp");
 		}
 		else
-			exit_err_feature("networking");
+			exit_err_feature(argv[i], CFG_NETWORK);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--icmptrace=", 12) == 0) {
@@ -501,7 +501,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			netfilter_trace(pid, LIBDIR "/firejail/fnettrace-icmp");
 		}
 		else
-			exit_err_feature("networking");
+			exit_err_feature(argv[i], CFG_NETWORK);
 		exit(0);
 	}
 
@@ -564,7 +564,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			bandwidth_pid(pid, cmd, dev, down, up);
 		}
 		else
-			exit_err_feature("networking");
+			exit_err_feature(argv[i], CFG_NETWORK);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--netfilter.print=", 18) == 0) {
@@ -589,7 +589,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(rv);
 		}
 		else
-			exit_err_feature("seccomp");
+			exit_err_feature(argv[i], CFG_SECCOMP);
 	}
 	else if (strcmp(argv[i], "--debug-syscalls32") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
@@ -597,7 +597,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(rv);
 		}
 		else
-			exit_err_feature("seccomp");
+			exit_err_feature(argv[i], CFG_SECCOMP);
 	}
 	else if (strcmp(argv[i], "--debug-syscall-groups") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
@@ -605,7 +605,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(rv);
 		}
 		else
-			exit_err_feature("seccomp");
+			exit_err_feature(argv[i], CFG_SECCOMP);
 	}
 	else if (strncmp(argv[i], "--debug-syscall-groups=", 23) == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
@@ -613,7 +613,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else
-			exit_err_feature("seccomp");
+			exit_err_feature(argv[i], CFG_SECCOMP);
 	}
 	else if (strcmp(argv[i], "--debug-errnos") == 0) {
 		if (checkcfg(CFG_SECCOMP)) {
@@ -621,7 +621,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(rv);
 		}
 		else
-			exit_err_feature("seccomp");
+			exit_err_feature(argv[i], CFG_SECCOMP);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--seccomp.print=", 16) == 0) {
@@ -631,7 +631,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			seccomp_print_filter(pid);
 		}
 		else
-			exit_err_feature("seccomp");
+			exit_err_feature(argv[i], CFG_SECCOMP);
 		exit(0);
 	}
 	else if (strcmp(argv[i], "--debug-protocols") == 0) {
@@ -645,7 +645,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			protocol_print_filter(pid);
 		}
 		else
-			exit_err_feature("seccomp");
+			exit_err_feature(argv[i], CFG_SECCOMP);
 		exit(0);
 	}
 	else if (strncmp(argv[i], "--profile.print=", 16) == 0) {
@@ -741,7 +741,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else
-			exit_err_feature("networking");
+			exit_err_feature(argv[i], CFG_NETWORK);
 	}
 	else if (strncmp(argv[i], "--net.print=", 12) == 0) {
 		if (checkcfg(CFG_NETWORK)) {
@@ -751,7 +751,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else
-			exit_err_feature("networking");
+			exit_err_feature(argv[i], CFG_NETWORK);
 	}
 #endif
 #ifdef HAVE_FILE_TRANSFER
@@ -781,7 +781,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else
-			exit_err_feature("file transfer");
+			exit_err_feature(argv[i], CFG_FILE_TRANSFER);
 	}
 	else if (strncmp(argv[i], "--put=", 6) == 0) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
@@ -815,7 +815,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else
-			exit_err_feature("file transfer");
+			exit_err_feature(argv[i], CFG_FILE_TRANSFER);
 	}
 	else if (strncmp(argv[i], "--ls=", 5) == 0) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
@@ -845,7 +845,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else
-			exit_err_feature("file transfer");
+			exit_err_feature(argv[i], CFG_FILE_TRANSFER);
 	}
 	else if (strncmp(argv[i], "--cat=", 6) == 0) {
 		if (checkcfg(CFG_FILE_TRANSFER)) {
@@ -874,7 +874,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else
-			exit_err_feature("file transfer");
+			exit_err_feature(argv[i], CFG_FILE_TRANSFER);
 	}
 #endif
 	else if (strncmp(argv[i], "--join=", 7) == 0) {
@@ -891,7 +891,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			exit(0);
 		}
 		else
-			exit_err_feature("join");
+			exit_err_feature(argv[i], CFG_JOIN);
 
 	}
 	else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
@@ -913,7 +913,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			// if there no such sandbox continue argument processing
 		}
 		else
-			exit_err_feature("join");
+			exit_err_feature(argv[i], CFG_JOIN);
 	}
 #ifdef HAVE_NETWORK
 	else if (strncmp(argv[i], "--join-network=", 15) == 0) {
@@ -934,7 +934,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 			join(pid, argc, argv, i + 1);
 		}
 		else
-			exit_err_feature("networking");
+			exit_err_feature(argv[i], CFG_NETWORK);
 		exit(0);
 	}
 #endif
@@ -1394,13 +1394,13 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_X11))
 				; // the processing is done directly in x11.c
 			else
-				exit_err_feature("x11");
+				exit_err_feature(argv[i], CFG_X11);
 		}
 		else if (strncmp(argv[i], "--xephyr-extra-params=", 16) == 0) {
 			if (checkcfg(CFG_X11))
 				; // the processing is done directly in x11.c
 			else
-				exit_err_feature("x11");
+				exit_err_feature(argv[i], CFG_X11);
 		}
 #endif
 		//*************************************
@@ -1428,7 +1428,7 @@ int main(int argc, char **argv, char **envp) {
 					fprintf(stderr, "[option] combined protocol list: \"%s\"\n", cfg.protocol);
 			}
 			else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 		else if (strcmp(argv[i], "--seccomp") == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1439,7 +1439,7 @@ int main(int argc, char **argv, char **envp) {
 				arg_seccomp = 1;
 			}
 			else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 		else if (strncmp(argv[i], "--seccomp=", 10) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1451,7 +1451,7 @@ int main(int argc, char **argv, char **envp) {
 				cfg.seccomp_list = seccomp_check_list(argv[i] + 10);
 			}
 			else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 		else if (strncmp(argv[i], "--seccomp.32=", 13) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1463,7 +1463,7 @@ int main(int argc, char **argv, char **envp) {
 				cfg.seccomp_list32 = seccomp_check_list(argv[i] + 13);
 			}
 			else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 		else if (strncmp(argv[i], "--seccomp.drop=", 15) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1475,7 +1475,7 @@ int main(int argc, char **argv, char **envp) {
 				cfg.seccomp_list_drop = seccomp_check_list(argv[i] + 15);
 			}
 			else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 		else if (strncmp(argv[i], "--seccomp.32.drop=", 18) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1487,7 +1487,7 @@ int main(int argc, char **argv, char **envp) {
 				cfg.seccomp_list_drop32 = seccomp_check_list(argv[i] + 18);
 			}
 			else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 		else if (strncmp(argv[i], "--seccomp.keep=", 15) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1499,7 +1499,7 @@ int main(int argc, char **argv, char **envp) {
 				cfg.seccomp_list_keep = seccomp_check_list(argv[i] + 15);
 			}
 			else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 		else if (strncmp(argv[i], "--seccomp.32.keep=", 18) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1511,7 +1511,7 @@ int main(int argc, char **argv, char **envp) {
 				cfg.seccomp_list_keep32 = seccomp_check_list(argv[i] + 18);
 			}
 			else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 		else if (strcmp(argv[i], "--seccomp.block-secondary") == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1522,7 +1522,7 @@ int main(int argc, char **argv, char **envp) {
 				arg_seccomp_block_secondary = 1;
 			}
 			else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 #ifdef HAVE_LANDLOCK
 		else if (strncmp(argv[i], "--landlock.enforce", 18) == 0)
@@ -1542,7 +1542,7 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_SECCOMP))
 				arg_memory_deny_write_execute = 1;
 			else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 		else if (strcmp(argv[i], "--restrict-namespaces") == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1550,7 +1550,7 @@ int main(int argc, char **argv, char **envp) {
 				profile_list_augment(&cfg.restrict_namespaces, "cgroup,ipc,net,mnt,pid,time,user,uts");
 			}
 			else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 		else if (strncmp(argv[i], "--restrict-namespaces=", 22) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1558,7 +1558,7 @@ int main(int argc, char **argv, char **envp) {
 				profile_list_augment(&cfg.restrict_namespaces, add);
 			}
 			else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 		else if (strncmp(argv[i], "--seccomp-error-action=", 23) == 0) {
 			if (checkcfg(CFG_SECCOMP)) {
@@ -1577,10 +1577,10 @@ int main(int argc, char **argv, char **envp) {
 					if (!cfg.seccomp_error_action)
 						errExit("strdup");
 				} else
-					exit_err_feature("seccomp-error-action");
+					exit_err_feature(argv[i], CFG_SECCOMP_ERROR_ACTION);
 
 			} else
-				exit_err_feature("seccomp");
+				exit_err_feature(argv[i], CFG_SECCOMP);
 		}
 		else if (strcmp(argv[i], "--caps") == 0) {
 			arg_caps_default_filter = 1;
@@ -1625,7 +1625,7 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_TRACELOG))
 				arg_tracelog = 1;
 			else
-				exit_err_feature("tracelog");
+				exit_err_feature(argv[i], CFG_TRACELOG);
 		}
 		else if (strncmp(argv[i], "--rlimit-as=", 12) == 0) {
 			cfg.rlimit_as = parse_arg_size(argv[i] + 12);
@@ -1691,7 +1691,7 @@ int main(int argc, char **argv, char **envp) {
 				profile_add(line);
 			}
 			else
-				exit_err_feature("bind");
+				exit_err_feature(argv[i], CFG_BIND);
 		}
 		else if (strncmp(argv[i], "--tmpfs=", 8) == 0) {
 			char *line;
@@ -1898,7 +1898,7 @@ int main(int argc, char **argv, char **envp) {
 				fs_check_chroot_dir();
 			}
 			else
-				exit_err_feature("chroot");
+				exit_err_feature(argv[i], CFG_CHROOT);
 		}
 #endif
 		else if (strcmp(argv[i], "--writable-etc") == 0) {
@@ -1974,7 +1974,7 @@ int main(int argc, char **argv, char **envp) {
 				arg_private = 1;
 			}
 			else
-				exit_err_feature("private-home");
+				exit_err_feature(argv[i], CFG_PRIVATE_HOME);
 		}
 #endif
 		else if (strcmp(argv[i], "--private-dev") == 0) {
@@ -1998,7 +1998,7 @@ int main(int argc, char **argv, char **envp) {
 				arg_private_etc = 1;
 			}
 			else
-				exit_err_feature("private-etc");
+				exit_err_feature(argv[i], CFG_PRIVATE_ETC);
 		}
 		else if (strncmp(argv[i], "--private-etc=", 14) == 0) {
 			if (checkcfg(CFG_PRIVATE_ETC)) {
@@ -2020,7 +2020,7 @@ int main(int argc, char **argv, char **envp) {
 				arg_private_etc = 1;
 			}
 			else
-				exit_err_feature("private-etc");
+				exit_err_feature(argv[i], CFG_PRIVATE_ETC);
 		}
 		else if (strncmp(argv[i], "--private-opt=", 14) == 0) {
 			if (checkcfg(CFG_PRIVATE_OPT)) {
@@ -2037,7 +2037,7 @@ int main(int argc, char **argv, char **envp) {
 				arg_private_opt = 1;
 			}
 			else
-				exit_err_feature("private-opt");
+				exit_err_feature(argv[i], CFG_PRIVATE_OPT);
 		}
 		else if (strncmp(argv[i], "--private-srv=", 14) == 0) {
 			if (checkcfg(CFG_PRIVATE_SRV)) {
@@ -2054,7 +2054,7 @@ int main(int argc, char **argv, char **envp) {
 				arg_private_srv = 1;
 			}
 			else
-				exit_err_feature("private-srv");
+				exit_err_feature(argv[i], CFG_PRIVATE_SRV);
 		}
 		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
 			if (checkcfg(CFG_PRIVATE_BIN)) {
@@ -2071,7 +2071,7 @@ int main(int argc, char **argv, char **envp) {
 				arg_private_bin = 1;
 			}
 			else
-				exit_err_feature("private-bin");
+				exit_err_feature(argv[i], CFG_PRIVATE_BIN);
 		}
 #ifdef HAVE_PRIVATE_LIB
 		else if (strncmp(argv[i], "--private-lib", 13) == 0) {
@@ -2087,7 +2087,7 @@ int main(int argc, char **argv, char **envp) {
 				arg_private_lib = 1;
 			}
 			else
-				exit_err_feature("private-lib");
+				exit_err_feature(argv[i], CFG_PRIVATE_LIB);
 		}
 #endif
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
@@ -2097,7 +2097,7 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_PRIVATE_CACHE))
 				arg_private_cache = 1;
 			else
-				exit_err_feature("private-cache");
+				exit_err_feature(argv[i], CFG_PRIVATE_CACHE);
 		}
 		else if (strcmp(argv[i], "--private-cwd") == 0) {
 			cfg.cwd = NULL;
@@ -2149,7 +2149,7 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_USERNS))
 				check_user_namespace();
 			else
-				exit_err_feature("noroot");
+				exit_err_feature(argv[i], CFG_USERNS);
 		}
 #endif
 		else if (strcmp(argv[i], "--nonewprivs") == 0)
@@ -2359,7 +2359,7 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_NETWORK))
 				arg_netlock = 1;
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 		else if (strncmp(argv[i], "--netlock=", 10) == 0) {
 			if (checkcfg(CFG_NETWORK)) {
@@ -2367,7 +2367,7 @@ int main(int argc, char **argv, char **envp) {
 				netfilter_netlock(pid);
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 			exit(0);
 		}
 		else if (strncmp(argv[i], "--interface=", 12) == 0) {
@@ -2411,7 +2411,7 @@ int main(int argc, char **argv, char **envp) {
 				intf->configured = 1;
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 
 		else if (strncmp(argv[i], "--net=", 6) == 0) {
@@ -2451,7 +2451,7 @@ int main(int argc, char **argv, char **envp) {
 				br->configured = 1;
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 
 		else if (strncmp(argv[i], "--veth-name=", 12) == 0) {
@@ -2470,7 +2470,7 @@ int main(int argc, char **argv, char **envp) {
 				}
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 
 		else if (strcmp(argv[i], "--scan") == 0) {
@@ -2478,7 +2478,7 @@ int main(int argc, char **argv, char **envp) {
 				arg_scan = 1;
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 		else if (strncmp(argv[i], "--iprange=", 10) == 0) {
 			if (checkcfg(CFG_NETWORK)) {
@@ -2515,7 +2515,7 @@ int main(int argc, char **argv, char **envp) {
 				}
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 
 		else if (strncmp(argv[i], "--mac=", 6) == 0) {
@@ -2544,7 +2544,7 @@ int main(int argc, char **argv, char **envp) {
 
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 
 		else if (strncmp(argv[i], "--mtu=", 6) == 0) {
@@ -2561,7 +2561,7 @@ int main(int argc, char **argv, char **envp) {
 				}
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 
 		else if (strncmp(argv[i], "--ip=", 5) == 0) {
@@ -2590,7 +2590,7 @@ int main(int argc, char **argv, char **envp) {
 				}
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 
 		else if (strncmp(argv[i], "--netmask=", 10) == 0) {
@@ -2612,7 +2612,7 @@ int main(int argc, char **argv, char **envp) {
 				}
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 
 		else if (strncmp(argv[i], "--ip6=", 6) == 0) {
@@ -2642,7 +2642,7 @@ int main(int argc, char **argv, char **envp) {
 				}
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 
 
@@ -2654,7 +2654,7 @@ int main(int argc, char **argv, char **envp) {
 				}
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 #endif
 		else if (strncmp(argv[i], "--dns=", 6) == 0) {
@@ -2689,7 +2689,7 @@ int main(int argc, char **argv, char **envp) {
 				arg_netfilter = 1;
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 
 		else if (strncmp(argv[i], "--netfilter=", 12) == 0) {
@@ -2699,7 +2699,7 @@ int main(int argc, char **argv, char **envp) {
 				check_netfilter_file(arg_netfilter_file);
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 
 		else if (strncmp(argv[i], "--netfilter6=", 13) == 0) {
@@ -2709,7 +2709,7 @@ int main(int argc, char **argv, char **envp) {
 				check_netfilter_file(arg_netfilter6_file);
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 
 		else if (strncmp(argv[i], "--netns=", 8) == 0) {
@@ -2718,7 +2718,7 @@ int main(int argc, char **argv, char **envp) {
 				check_netns(arg_netns);
 			}
 			else
-				exit_err_feature("networking");
+				exit_err_feature(argv[i], CFG_NETWORK);
 		}
 #endif
 		//*************************************
@@ -2753,7 +2753,7 @@ int main(int argc, char **argv, char **envp) {
 			if (checkcfg(CFG_X11))
 				arg_x11_xorg = 1;
 			else
-				exit_err_feature("x11");
+				exit_err_feature(argv[i], CFG_X11);
 		}
 #endif
 		else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {

@@ -43,6 +43,44 @@ char *config_seccomp_error_action_str = "EPERM";
 char *config_seccomp_filter_add = NULL;
 char **whitelist_reject_topdirs = NULL;
 
+const char *const cfgstr[] = {
+	[CFG_NONE] = "none",
+	[CFG_ALLOW_TRAY] = "allow-tray",
+	[CFG_APPARMOR] = "apparmor",
+	[CFG_ARP_PROBES] = "arp-probes",
+	[CFG_BIND] = "bind",
+	[CFG_BROWSER_ALLOW_DRM] = "browser-allow-drm",
+	[CFG_BROWSER_DISABLE_U2F] = "browser-disable-u2f",
+	[CFG_CHROOT] = "chroot",
+	[CFG_DBUS] = "dbus",
+	[CFG_DISABLE_MNT] = "disable-mnt",
+	// [CFG_FILE_COPY_LIMIT] = "file-copy-limit",
+	[CFG_FILE_TRANSFER] = "file-transfer",
+	[CFG_FIREJAIL_PROMPT] = "firejail-prompt",
+	[CFG_FORCE_NONEWPRIVS] = "force-nonewprivs",
+	[CFG_JOIN] = "join",
+	[CFG_NAME_CHANGE] = "name-change",
+	[CFG_NETWORK] = "network",
+	[CFG_PRIVATE_BIN] = "private-bin",
+	[CFG_PRIVATE_BIN_NO_LOCAL] = "private-bin-no-local",
+	[CFG_PRIVATE_CACHE] = "private-cache",
+	[CFG_PRIVATE_ETC] = "private-etc",
+	[CFG_PRIVATE_HOME] = "private-home",
+	[CFG_PRIVATE_LIB] = "private-lib",
+	[CFG_PRIVATE_OPT] = "private-opt",
+	[CFG_PRIVATE_SRV] = "private-srv",
+	[CFG_RESTRICTED_NETWORK] = "restricted-network",
+	[CFG_SECCOMP] = "seccomp",
+	[CFG_SECCOMP_ERROR_ACTION] = "seccomp-error-action",
+	[CFG_SECCOMP_LOG] = "seccomp-log",
+	[CFG_TRACELOG] = "tracelog",
+	[CFG_USERNS] = "userns",
+	[CFG_X11] = "x11",
+	[CFG_XEPHYR_WINDOW_TITLE] = "xephyr-window-title",
+	[CFG_XPRA_ATTACH] = "xpra-attach",
+	[CFG_MAX] = "max" // this should always be the last entry
+};
+
 int checkcfg(int val) {
 	assert(val < CFG_MAX);
 	int line = 0;

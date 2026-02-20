@@ -868,6 +868,8 @@ enum {
 	CFG_XPRA_ATTACH,
 	CFG_MAX // this should always be the last entry
 };
+
+extern const char *const cfgstr[];
 extern char *xephyr_screen;
 extern char *xephyr_extra_params;
 extern char *xpra_extra_params;

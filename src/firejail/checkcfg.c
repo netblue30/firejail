@@ -43,6 +43,64 @@ char *config_seccomp_error_action_str = "EPERM";
 char *config_seccomp_filter_add = NULL;
 char **whitelist_reject_topdirs = NULL;
 
+const char *const cfgstr[] = {
+	[CFG_NONE] = "none",
+	[CFG_ALLOW_TRAY] = "allow-tray",
+	[CFG_APPARMOR] = "apparmor",
+	[CFG_ARP_PROBES] = "arp-probes",
+	[CFG_BIND] = "bind",
+	[CFG_BROWSER_ALLOW_DRM] = "browser-allow-drm",
+	[CFG_BROWSER_DISABLE_U2F] = "browser-disable-u2f",
+	[CFG_CHROOT] = "chroot",
+	[CFG_DBUS] = "dbus",
+	[CFG_DISABLE_MNT] = "disable-mnt",
+	// [CFG_FILE_COPY_LIMIT] = "file-copy-limit",
+	[CFG_FILE_TRANSFER] = "file-transfer",
+	[CFG_FIREJAIL_PROMPT] = "firejail-prompt",
+	[CFG_FORCE_NONEWPRIVS] = "force-nonewprivs",
+	[CFG_JOIN] = "join",
+	[CFG_NAME_CHANGE] = "name-change",
+	[CFG_NETWORK] = "network",
+	[CFG_PRIVATE_BIN] = "private-bin",
+	[CFG_PRIVATE_BIN_NO_LOCAL] = "private-bin-no-local",
+	[CFG_PRIVATE_CACHE] = "private-cache",
+	[CFG_PRIVATE_ETC] = "private-etc",
+	[CFG_PRIVATE_HOME] = "private-home",
+	[CFG_PRIVATE_LIB] = "private-lib",
+	[CFG_PRIVATE_OPT] = "private-opt",
+	[CFG_PRIVATE_SRV] = "private-srv",
+	[CFG_RESTRICTED_NETWORK] = "restricted-network",
+	[CFG_SECCOMP] = "seccomp",
+	[CFG_SECCOMP_ERROR_ACTION] = "seccomp-error-action",
+	[CFG_SECCOMP_LOG] = "seccomp-log",
+	[CFG_TRACELOG] = "tracelog",
+	[CFG_USERNS] = "userns",
+	[CFG_X11] = "x11",
+	[CFG_XEPHYR_WINDOW_TITLE] = "xephyr-window-title",
+	[CFG_XPRA_ATTACH] = "xpra-attach",
+	[CFG_MAX] = "max" // this should always be the last entry
+};
+
+void __attribute__((noreturn)) exit_err_feature(const char *arg, int cfgval) {
+	assert(cfgval >= CFG_NONE);
+	assert(cfgval < CFG_MAX);
+
+	const char *feature = cfgstr[cfgval];
+	fprintf(stderr, "Error: '%s' feature is disabled in %s: %s\n", feature,
+	        SYSCONFDIR "/firejail.config", arg);
+	exit(1);
+}
+
+void warning_feature_disabled(const char *fname, int lineno,
+                              const char *line, int cfgval) {
+	assert(cfgval >= CFG_NONE);
+	assert(cfgval < CFG_MAX);
+
+	const char *feature = cfgstr[cfgval];
+	fwarning("%s:%d: ignoring command because '%s' feature is disabled in %s: %s\n",
+	         fname, lineno, feature, SYSCONFDIR "/firejail.config", line);
+}
+
 int checkcfg(int val) {
 	assert(val < CFG_MAX);
 	int line = 0;
@@ -99,22 +157,20 @@ int checkcfg(int val) {
 			ptr = line_remove_spaces(buf);
 			if (!ptr)
 				continue;
-			PARSE_YESNO(CFG_FILE_TRANSFER, "file-transfer")
-			PARSE_YESNO(CFG_DBUS, "dbus")
-			PARSE_YESNO(CFG_JOIN, "join")
-			PARSE_YESNO(CFG_X11, "x11")
+			PARSE_YESNO(CFG_ALLOW_TRAY, "allow-tray")
 			PARSE_YESNO(CFG_APPARMOR, "apparmor")
 			PARSE_YESNO(CFG_BIND, "bind")
-			PARSE_YESNO(CFG_NAME_CHANGE, "name-change")
-			PARSE_YESNO(CFG_USERNS, "userns")
+			PARSE_YESNO(CFG_BROWSER_ALLOW_DRM, "browser-allow-drm")
+			PARSE_YESNO(CFG_BROWSER_DISABLE_U2F, "browser-disable-u2f")
 			PARSE_YESNO(CFG_CHROOT, "chroot")
+			PARSE_YESNO(CFG_DBUS, "dbus")
+			PARSE_YESNO(CFG_DISABLE_MNT, "disable-mnt")
+			PARSE_YESNO(CFG_FILE_TRANSFER, "file-transfer")
 			PARSE_YESNO(CFG_FIREJAIL_PROMPT, "firejail-prompt")
 			PARSE_YESNO(CFG_FORCE_NONEWPRIVS, "force-nonewprivs")
-			PARSE_YESNO(CFG_SECCOMP, "seccomp")
+			PARSE_YESNO(CFG_JOIN, "join")
+			PARSE_YESNO(CFG_NAME_CHANGE, "name-change")
 			PARSE_YESNO(CFG_NETWORK, "network")
-			PARSE_YESNO(CFG_RESTRICTED_NETWORK, "restricted-network")
-			PARSE_YESNO(CFG_TRACELOG, "tracelog")
-			PARSE_YESNO(CFG_XEPHYR_WINDOW_TITLE, "xephyr-window-title")
 			PARSE_YESNO(CFG_PRIVATE_BIN, "private-bin")
 			PARSE_YESNO(CFG_PRIVATE_BIN_NO_LOCAL, "private-bin-no-local")
 			PARSE_YESNO(CFG_PRIVATE_CACHE, "private-cache")
@@ -123,12 +179,14 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_PRIVATE_LIB, "private-lib")
 			PARSE_YESNO(CFG_PRIVATE_OPT, "private-opt")
 			PARSE_YESNO(CFG_PRIVATE_SRV, "private-srv")
-			PARSE_YESNO(CFG_DISABLE_MNT, "disable-mnt")
-			PARSE_YESNO(CFG_XPRA_ATTACH, "xpra-attach")
-			PARSE_YESNO(CFG_BROWSER_DISABLE_U2F, "browser-disable-u2f")
-			PARSE_YESNO(CFG_BROWSER_ALLOW_DRM, "browser-allow-drm")
-			PARSE_YESNO(CFG_ALLOW_TRAY, "allow-tray")
+			PARSE_YESNO(CFG_RESTRICTED_NETWORK, "restricted-network")
+			PARSE_YESNO(CFG_SECCOMP, "seccomp")
 			PARSE_YESNO(CFG_SECCOMP_LOG, "seccomp-log")
+			PARSE_YESNO(CFG_TRACELOG, "tracelog")
+			PARSE_YESNO(CFG_USERNS, "userns")
+			PARSE_YESNO(CFG_X11, "x11")
+			PARSE_YESNO(CFG_XEPHYR_WINDOW_TITLE, "xephyr-window-title")
+			PARSE_YESNO(CFG_XPRA_ATTACH, "xpra-attach")
 #undef PARSE_YESNO
 
 			// netfilter

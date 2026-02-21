@@ -95,11 +95,6 @@ int profile_find_firejail(const char *name, int add_ext) {
 // run-time profiles
 //***************************************************
 
-static void warning_feature_disabled(const char *feature) {
-	fwarning("%s feature is disabled in Firejail configuration file\n", feature);
-}
-
-
 static int is_in_ignore_list(char *ptr) {
 	// check ignore list
 	int i;
@@ -315,7 +310,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			xephyr_screen = ptr + 14;
 		}
 		else
-			warning_feature_disabled("x11");
+			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
 #endif
 		return 0;
 	}
@@ -352,7 +347,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_USERNS))
 			check_user_namespace();
 		else
-			warning_feature_disabled("noroot");
+			warning_feature_disabled(fname, lineno, ptr, CFG_USERNS);
 #endif
 
 		return 0;
@@ -365,7 +360,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_SECCOMP))
 			arg_seccomp = 1;
 		else
-			warning_feature_disabled("seccomp");
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 		return 0;
 	}
 	else if (strcmp(ptr, "caps") == 0) {
@@ -401,7 +396,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_private = 1;
 		}
 		else
-			warning_feature_disabled("private-home");
+			warning_feature_disabled(fname, lineno, ptr, CFG_PRIVATE_HOME);
 #endif
 		return 0;
 	}
@@ -427,7 +422,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_PRIVATE_CACHE))
 			arg_private_cache = 1;
 		else
-			warning_feature_disabled("private-cache");
+			warning_feature_disabled(fname, lineno, ptr, CFG_PRIVATE_CACHE);
 		return 0;
 	}
 	else if (strcmp(ptr, "private-dev") == 0) {
@@ -643,7 +638,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_NETWORK))
 			arg_netfilter = 1;
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -655,7 +650,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			check_netfilter_file(arg_netfilter_file);
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -667,7 +662,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			check_netfilter_file(arg_netfilter6_file);
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -677,7 +672,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_netlock = 1;
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -688,7 +683,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			check_netns(arg_netns);
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -729,7 +724,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			br->configured = 1;
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -752,7 +747,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -793,7 +788,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -826,7 +821,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -846,7 +841,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -881,7 +876,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -912,7 +907,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -945,7 +940,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -959,7 +954,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("networking");
+			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
 #endif
 		return 0;
 	}
@@ -1011,7 +1006,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "[profile] combined protocol list: \"%s\"\n", cfg.protocol);
 		}
 		else
-			warning_feature_disabled("seccomp");
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 		return 0;
 	}
 
@@ -1030,8 +1025,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_seccomp = 1;
 			cfg.seccomp_list = seccomp_check_list(ptr + 8);
 		}
-		else if (!arg_quiet)
-			warning_feature_disabled("seccomp");
+		else
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 
 		return 0;
 	}
@@ -1040,8 +1035,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_seccomp32 = 1;
 			cfg.seccomp_list32 = seccomp_check_list(ptr + 11);
 		}
-		else if (!arg_quiet)
-			warning_feature_disabled("seccomp");
+		else
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 
 		return 0;
 	}
@@ -1051,7 +1046,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_seccomp_block_secondary = 1;
 		}
 		else
-			warning_feature_disabled("seccomp");
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 		return 0;
 	}
 	// seccomp drop list without default list
@@ -1061,7 +1056,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.seccomp_list_drop = seccomp_check_list(ptr + 13);
 		}
 		else
-			warning_feature_disabled("seccomp");
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 		return 0;
 	}
 	if (strncmp(ptr, "seccomp.32.drop ", 16) == 0) {
@@ -1070,7 +1065,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.seccomp_list_drop32 = seccomp_check_list(ptr + 16);
 		}
 		else
-			warning_feature_disabled("seccomp");
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 		return 0;
 	}
 
@@ -1081,7 +1076,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.seccomp_list_keep= seccomp_check_list(ptr + 13);
 		}
 		else
-			warning_feature_disabled("seccomp");
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 		return 0;
 	}
 	if (strncmp(ptr, "seccomp.32.keep ", 16) == 0) {
@@ -1090,7 +1085,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			cfg.seccomp_list_keep32 = seccomp_check_list(ptr + 16);
 		}
 		else
-			warning_feature_disabled("seccomp");
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 		return 0;
 	}
 
@@ -1130,7 +1125,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_SECCOMP))
 			arg_memory_deny_write_execute = 1;
 		else
-			warning_feature_disabled("seccomp");
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 		return 0;
 	}
 
@@ -1141,7 +1136,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			profile_list_augment(&cfg.restrict_namespaces, "cgroup,ipc,net,mnt,pid,time,user,uts");
 		}
 		else
-			warning_feature_disabled("seccomp");
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 		return 0;
 	}
 	if (strncmp(ptr, "restrict-namespaces ", 20) == 0) {
@@ -1150,7 +1145,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			profile_list_augment(&cfg.restrict_namespaces, add);
 		}
 		else
-			warning_feature_disabled("seccomp");
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 		return 0;
 	}
 
@@ -1174,10 +1169,10 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			} else {
 				arg_seccomp_error_action = config_seccomp_error_action;
 				cfg.seccomp_error_action = config_seccomp_error_action_str;
-				warning_feature_disabled("seccomp-error-action");
+				warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP_ERROR_ACTION);
 			}
 		} else
-			warning_feature_disabled("seccomp");
+			warning_feature_disabled(fname, lineno, ptr, CFG_SECCOMP);
 		return 0;
 	}
 
@@ -1353,7 +1348,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("x11");
+			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
 #endif
 		return 0;
 	}
@@ -1363,7 +1358,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		if (checkcfg(CFG_X11))
 			arg_x11_xorg = 1;
 		else
-			warning_feature_disabled("x11");
+			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
 #endif
 		return 0;
 	}
@@ -1382,7 +1377,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("x11");
+			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
 #endif
 		return 0;
 	}
@@ -1401,7 +1396,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("x11");
+			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
 #endif
 		return 0;
 	}
@@ -1420,7 +1415,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("x11");
+			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
 #endif
 		return 0;
 	}
@@ -1441,7 +1436,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_private_etc = 1;
 		}
 		else
-			warning_feature_disabled("private-etc");
+			warning_feature_disabled(fname, lineno, ptr, CFG_PRIVATE_ETC);
 		return 0;
 	}
 
@@ -1455,7 +1450,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_private_etc = 1;
 		}
 		else
-			warning_feature_disabled("private-etc");
+			warning_feature_disabled(fname, lineno, ptr, CFG_PRIVATE_ETC);
 		return 0;
 	}
 
@@ -1471,7 +1466,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_private_opt = 1;
 		}
 		else
-			warning_feature_disabled("private-opt");
+			warning_feature_disabled(fname, lineno, ptr, CFG_PRIVATE_OPT);
 		return 0;
 	}
 
@@ -1487,7 +1482,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_private_srv = 1;
 		}
 		else
-			warning_feature_disabled("private-srv");
+			warning_feature_disabled(fname, lineno, ptr, CFG_PRIVATE_SRV);
 		return 0;
 	}
 
@@ -1503,7 +1498,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_private_bin = 1;
 		}
 		else
-			warning_feature_disabled("private-bin");
+			warning_feature_disabled(fname, lineno, ptr, CFG_PRIVATE_BIN);
 		return 0;
 	}
 
@@ -1521,7 +1516,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			arg_private_lib = 1;
 		}
 		else
-			warning_feature_disabled("private-lib");
+			warning_feature_disabled(fname, lineno, ptr, CFG_PRIVATE_LIB);
 		return 0;
 	}
 
@@ -1558,7 +1553,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			return 1;
 		}
 		else
-			warning_feature_disabled("bind");
+			warning_feature_disabled(fname, lineno, ptr, CFG_BIND);
 		return 0;
 	}
 
@@ -1643,7 +1638,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 		}
 		else
-			warning_feature_disabled("join");
+			warning_feature_disabled(fname, lineno, ptr, CFG_JOIN);
 		return 0;
 	}
 

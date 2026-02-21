@@ -832,16 +832,23 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) __attrib
 // checkcfg.c
 #define DEFAULT_ARP_PROBES 2
 enum {
-	CFG_FILE_TRANSFER = 0,
-	CFG_X11,
+	CFG_NONE = 0,
+	CFG_ALLOW_TRAY,
+	CFG_APPARMOR,
+	CFG_ARP_PROBES,
 	CFG_BIND,
-	CFG_USERNS,
+	CFG_BROWSER_ALLOW_DRM,
+	CFG_BROWSER_DISABLE_U2F,
 	CFG_CHROOT,
-	CFG_SECCOMP,
-	CFG_NETWORK,
-	CFG_RESTRICTED_NETWORK,
+	CFG_DBUS,
+	CFG_DISABLE_MNT,
+	// CFG_FILE_COPY_LIMIT - file copy limit handled using setenv/getenv
+	CFG_FILE_TRANSFER,
+	CFG_FIREJAIL_PROMPT,
 	CFG_FORCE_NONEWPRIVS,
-	CFG_XEPHYR_WINDOW_TITLE,
+	CFG_JOIN,
+	CFG_NAME_CHANGE,
+	CFG_NETWORK,
 	CFG_PRIVATE_BIN,
 	CFG_PRIVATE_BIN_NO_LOCAL,
 	CFG_PRIVATE_CACHE,
@@ -850,23 +857,19 @@ enum {
 	CFG_PRIVATE_LIB,
 	CFG_PRIVATE_OPT,
 	CFG_PRIVATE_SRV,
-	CFG_FIREJAIL_PROMPT,
-	CFG_DISABLE_MNT,
-	CFG_JOIN,
-	CFG_ARP_PROBES,
-	CFG_XPRA_ATTACH,
-	CFG_BROWSER_DISABLE_U2F,
-	CFG_BROWSER_ALLOW_DRM,
-	CFG_APPARMOR,
-	CFG_DBUS,
-	CFG_NAME_CHANGE,
+	CFG_RESTRICTED_NETWORK,
+	CFG_SECCOMP,
 	CFG_SECCOMP_ERROR_ACTION,
-	// CFG_FILE_COPY_LIMIT - file copy limit handled using setenv/getenv
-	CFG_ALLOW_TRAY,
 	CFG_SECCOMP_LOG,
 	CFG_TRACELOG,
+	CFG_USERNS,
+	CFG_X11,
+	CFG_XEPHYR_WINDOW_TITLE,
+	CFG_XPRA_ATTACH,
 	CFG_MAX // this should always be the last entry
 };
+
+extern const char *const cfgstr[];
 extern char *xephyr_screen;
 extern char *xephyr_extra_params;
 extern char *xpra_extra_params;
@@ -880,6 +883,8 @@ extern char *config_seccomp_error_action_str;
 extern char *config_seccomp_filter_add;
 extern char **whitelist_reject_topdirs;
 
+void exit_err_feature(const char *arg, int cfgval) __attribute__((noreturn));
+void warning_feature_disabled(const char *fname, int lineno, const char *line, int cfgval);
 int checkcfg(int val);
 void print_compiletime_support(void);
 

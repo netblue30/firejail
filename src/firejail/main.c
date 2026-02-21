@@ -356,7 +356,7 @@ errout:
 #endif
 
 
-static void exit_err_feature(const char *feature) {
+static void __attribute__((noreturn)) exit_err_feature(const char *feature) {
 	fprintf(stderr, "Error: %s feature is disabled in Firejail configuration file %s\n",
 		feature, SYSCONFDIR "/firejail.config");
 	exit(1);

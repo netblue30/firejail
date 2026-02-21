@@ -95,11 +95,6 @@ int profile_find_firejail(const char *name, int add_ext) {
 // run-time profiles
 //***************************************************
 
-static void warning_feature_disabled(const char *feature) {
-	fwarning("%s feature is disabled in Firejail configuration file\n", feature);
-}
-
-
 static int is_in_ignore_list(char *ptr) {
 	// check ignore list
 	int i;

@@ -52,7 +52,9 @@ static char *opstr[] = {
 	[MOUNT_RDWR_NOCHECK] = "read-write",
 };
 
-static void disable_file(OPERATION op, const char *filename) {
+
+// return: 0 - OK; 1 - error
+static int disable_file(OPERATION op, const char *filename) {
 	assert(filename);
 	assert(op <OPERATION_MAX);
 	EUID_ASSERT();
@@ -60,7 +62,7 @@ static void disable_file(OPERATION op, const char *filename) {
 	// Resolve all symlinks
 	char* fname = realpath(filename, NULL);
 	if (fname == NULL && errno != EACCES) {
-		return;
+		return 1;
 	}
 	if (fname == NULL && errno == EACCES) {
 		// realpath and stat functions will fail on FUSE filesystems
@@ -68,7 +70,7 @@ static void disable_file(OPERATION op, const char *filename) {
 		// force mounting
 		int fd = open(filename, O_PATH|O_CLOEXEC);
 		if (fd < 0)
-			return;
+			return 1;
 
 		EUID_ROOT();
 		int err = bind_mount_path_to_fd(RUN_RO_DIR, fd);
@@ -84,11 +86,13 @@ static void disable_file(OPERATION op, const char *filename) {
 				fs_logger2("blacklist", filename);
 			else
 				fs_logger2("blacklist-nolog", filename);
+			return 0;
 		}
-		else if (arg_debug)
-			printf("Warning (blacklisting): cannot mount on %s\n", filename);
-
-		return;
+		else {
+			if (arg_debug)
+				printf("Warning (blacklisting): cannot mount on %s\n", filename);
+			return 1;
+		}
 	}
 
 	assert(fname);
@@ -98,7 +102,7 @@ static void disable_file(OPERATION op, const char *filename) {
 	//     and expects Firefox to open in the same sandbox
 	if (strcmp(BINDIR "/firejail", fname) == 0) {
 		free(fname);
-		return;
+		return 1;
 	}
 
 	// if the file is not present, do nothing
@@ -107,7 +111,7 @@ static void disable_file(OPERATION op, const char *filename) {
 		if (arg_debug)
 			printf("Warning (blacklisting): cannot open %s: %s\n", fname, strerror(errno));
 		free(fname);
-		return;
+		return 1;
 	}
 
 	struct stat s;
@@ -116,9 +120,10 @@ static void disable_file(OPERATION op, const char *filename) {
 			printf("Warning (blacklisting): cannot stat %s: %s\n", fname, strerror(errno));
 		free(fname);
 		close(fd);
-		return;
+		return 1;
 	}
 
+	int retval = 0;
 	// modify the file
 	if (op == BLACKLIST_FILE || op == BLACKLIST_NOLOG) {
 		// some distros put all executables under /usr/bin and make /bin a symbolic link
@@ -142,22 +147,29 @@ static void disable_file(OPERATION op, const char *filename) {
 					printf(" - no logging\n");
 			}
 
+			int err_mount = 0;
 			EUID_ROOT();
 			if (S_ISDIR(s.st_mode)) {
 				if (bind_mount_path_to_fd(RUN_RO_DIR, fd) < 0)
-					errExit("disable file");
+					err_mount = 1;
 			}
 			else {
 				if (bind_mount_path_to_fd(RUN_RO_FILE, fd) < 0)
-					errExit("disable file");
+					err_mount = 1;
 			}
 			EUID_USER();
 
-			if (op == BLACKLIST_FILE)
-				fs_logger2("blacklist", fname);
-			else
-				fs_logger2("blacklist-nolog", fname);
-
+			if (!err_mount) {
+				if (op == BLACKLIST_FILE)
+					fs_logger2("blacklist", fname);
+				else
+					fs_logger2("blacklist-nolog", fname);
+			}
+			else {
+				fwarning("cannot blacklist %s, mount failed\n", fname);
+				retval = 1;
+			}
+			
 			// files in /etc will be reprocessed during /etc rebuild
 			if (strncmp(fname, "/etc/", 5) == 0) {
 				ProfileEntry *prf = malloc(sizeof(ProfileEntry));
@@ -178,6 +190,7 @@ static void disable_file(OPERATION op, const char *filename) {
 	else if (op == MOUNT_TMPFS) {
 		if (!S_ISDIR(s.st_mode)) {
 			fwarning("%s is not a directory; cannot mount a tmpfs on top of it.\n", fname);
+			retval = 1;
 			goto out;
 		}
 
@@ -188,6 +201,7 @@ static void disable_file(OPERATION op, const char *filename) {
 			    strncmp(cfg.homedir, fname, strlen(cfg.homedir)) != 0 ||
 			    fname[strlen(cfg.homedir)] != '/') {
 				fwarning("you are not allowed to mount a tmpfs on %s\n", fname);
+				retval = 1;
 				goto out;
 			}
 		}
@@ -201,6 +215,7 @@ static void disable_file(OPERATION op, const char *filename) {
 out:
 	close(fd);
 	free(fname);
+	return retval;
 }
 
 #ifdef TEST_NO_BLACKLIST_MATCHING
@@ -802,7 +817,7 @@ void fs_proc_sys_dev_boot(void) {
 	disable_file(BLACKLIST_FILE, "/proc/kmem");
 
 	// hide the name of pid1
-	if (!arg_unhide_pid1) {
+	if (!arg_unhide_pid1 && !disable_file(BLACKLIST_FILE, "/proc/1/comm")) {
 		disable_file(BLACKLIST_FILE, "/proc/1/comm");
 		disable_file(BLACKLIST_FILE, "/proc/1/cmdline");
 		disable_file(BLACKLIST_FILE, "/proc/1/stat");
@@ -814,6 +829,8 @@ void fs_proc_sys_dev_boot(void) {
 		disable_file(BLACKLIST_FILE, "/proc/1/task/1/statm");
 		disable_file(BLACKLIST_FILE, "/proc/1/task/1/status");
 	}
+	else
+		fwarning("cannot hide pid 1 inside the sandbox\n");
 	
 	// remove kernel symbol information
 	if (!arg_allow_debuggers) {

@@ -169,7 +169,7 @@ static int disable_file(OPERATION op, const char *filename) {
 				fwarning("cannot blacklist %s, mount failed\n", fname);
 				retval = 1;
 			}
-			
+
 			// files in /etc will be reprocessed during /etc rebuild
 			if (strncmp(fname, "/etc/", 5) == 0) {
 				ProfileEntry *prf = malloc(sizeof(ProfileEntry));
@@ -831,7 +831,7 @@ void fs_proc_sys_dev_boot(void) {
 	}
 	else
 		fwarning("cannot hide pid 1 inside the sandbox\n");
-	
+
 	// remove kernel symbol information
 	if (!arg_allow_debuggers) {
 		disable_file(BLACKLIST_FILE, "/usr/src/linux");

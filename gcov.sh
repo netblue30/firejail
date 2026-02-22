@@ -24,7 +24,6 @@ gcov_generate() {
 /usr/bin/jailcheck --help
 sleep 2
 
-
 # --help -secondary programs
 /usr/lib/firejail/etc-cleanup --help
 /usr/lib/firejail/fbuilder --help
@@ -78,5 +77,3 @@ make test-private-etc
 gcov_generate
 make test-seccomp-extra
 gcov_generate
-
-

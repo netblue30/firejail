@@ -18,7 +18,7 @@
   deny /tmp/.X[0-9]*-lock mrwkl,
   deny /tmp/systemd* mrwkl,
   deny /tmp/ssh* mrwkl,
-  
+
   deny /etc/ssh/{,**} mrwkl,
   deny /etc/ssl/{,**} mrwkl,
   deny /etc/ca-certificates/{,**} mrwkl,

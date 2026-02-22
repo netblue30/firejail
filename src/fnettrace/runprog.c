@@ -69,4 +69,3 @@ void killprogs(void) {
 		p = p->next;
 	}
 }
-		

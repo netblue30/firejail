@@ -983,12 +983,12 @@ int sandbox(void* sandbox_arg) {
 	if (!arg_keep_hostname) {
 		fs_hostname();
 		// /usr/bin/hostname is blacklisted in default.profile
-		// test this using cat /proc/sys/kernel/hostname, 
+		// test this using cat /proc/sys/kernel/hostname,
 		assert(cfg.hostname);
 		if (sethostname(cfg.hostname, strlen(cfg.hostname)) < 0)
 			errExit("sethostname");
 	}
-	
+
 	//****************************
 	// /etc overrides from the network namespace
 	//****************************

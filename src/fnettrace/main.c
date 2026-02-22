@@ -629,7 +629,7 @@ static void run_trace(void) {
 					continue;
 				}
 				*ptr = '\0';
-			
+
 				if (strstr(buf, "/../") ||
 				    strstr(buf, "/./") ||
 				    strstr(buf, "//") ||
@@ -653,7 +653,7 @@ static void run_trace(void) {
 					sleep(4);
 					continue;
 				}
-			
+
 				printf("Saving stats in %s file...\n", buf);
 				print_stats(fp);
 				fclose(fp);

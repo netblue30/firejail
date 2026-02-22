@@ -43,10 +43,3 @@ if test -f src/firejail/main.gcno; then
 	  src/fzenity \
 	  src/lib
 fi
-
-
-
-
-
-
-

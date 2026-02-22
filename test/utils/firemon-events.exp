@@ -22,7 +22,5 @@ expect {
 	-re "EXIT SANDBOX"
 }
 
-
 sleep 1
 puts "\nall done\r"
-

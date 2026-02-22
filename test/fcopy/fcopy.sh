@@ -33,5 +33,3 @@ rm -f src/dircopy.exp
 
 cd ../..
 ./mkgcov.sh
-
-

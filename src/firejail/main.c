@@ -2142,6 +2142,13 @@ int main(int argc, char **argv, char **envp) {
 				return 1;
 			}
 		}
+		else if (strcmp(argv[i], "--keep-hostname") == 0) {
+			if (cfg.hostname) {
+				fprintf(stderr, "Error: hostname and keep-hostname are mutually exclusive\n");
+				exit(1);
+			}
+			arg_keep_hostname = 1;
+		}
 		else if (strcmp(argv[i], "--nogroups") == 0)
 			arg_nogroups = 1;
 #ifdef HAVE_USERNS
@@ -2331,13 +2338,6 @@ int main(int argc, char **argv, char **envp) {
 #endif
 		else if (strcmp(argv[i], "--unhide-pid1") == 0)
 			arg_unhide_pid1 = 1;
-		else if (strcmp(argv[i], "--keep-hostname") == 0) {
-			if (cfg.hostname) {
-				fprintf(stderr, "Error: hostname and keep-hostname are mutually exclusive\n");
-				exit(1);
-			}
-			arg_keep_hostname = 1;
-		}
 
 		//*************************************
 		// network

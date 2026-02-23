@@ -618,6 +618,8 @@ blacklist ${HOME}/.config/onionshare
 blacklist ${HOME}/.config/onlyoffice
 blacklist ${HOME}/.config/openmw
 blacklist ${HOME}/.config/openra
+blacklist ${HOME}/.config/openvr
+blacklist ${HOME}/.config/openxr
 blacklist ${HOME}/.config/opera
 blacklist ${HOME}/.config/opera-beta
 blacklist ${HOME}/.config/opera-developer
@@ -708,6 +710,7 @@ blacklist ${HOME}/.config/vlc
 blacklist ${HOME}/.config/wesnoth
 blacklist ${HOME}/.config/wget
 blacklist ${HOME}/.config/wireshark
+blacklist ${HOME}/.config/wivrn
 blacklist ${HOME}/.config/wormux
 blacklist ${HOME}/.config/xarchiver
 blacklist ${HOME}/.config/xchat
@@ -974,6 +977,7 @@ blacklist ${HOME}/.local/share/dolphin
 blacklist ${HOME}/.local/share/dolphin-emu
 blacklist ${HOME}/.local/share/doublefine
 blacklist ${HOME}/.local/share/emailidentities
+blacklist ${HOME}/.local/share/envision
 blacklist ${HOME}/.local/share/epiphany
 blacklist ${HOME}/.local/share/evolution
 blacklist ${HOME}/.local/share/feedreader
@@ -1124,6 +1128,7 @@ blacklist ${HOME}/.local/state/audacity
 blacklist ${HOME}/.local/state/mpv
 blacklist ${HOME}/.local/state/pipewire
 blacklist ${HOME}/.local/state/pyradio
+blacklist ${HOME}/.local/state/xrizer
 blacklist ${HOME}/.lv2
 blacklist ${HOME}/.lyrics
 blacklist ${HOME}/.lyx
@@ -1297,9 +1302,11 @@ blacklist ${RUNUSER}/*firefox*
 blacklist ${RUNUSER}/*floorp*
 blacklist ${RUNUSER}/akonadi
 blacklist ${RUNUSER}/i3
+blacklist ${RUNUSER}/monado_comp_ipc
 blacklist ${RUNUSER}/psd/*firefox*
 blacklist ${RUNUSER}/psd/*floorp*
 blacklist ${RUNUSER}/qutebrowser
+blacklist ${RUNUSER}/wivrn
 blacklist /etc/clamav
 blacklist /etc/ssmtp
 blacklist /tmp/.wine-*

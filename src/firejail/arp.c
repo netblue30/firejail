@@ -230,15 +230,26 @@ int arp_check(const char *dev, uint32_t destaddr) {
 			if (framerx[12] != (ETH_P_ARP / 256) || framerx[13] != (ETH_P_ARP % 256))
 				continue;
 			memcpy(&hdr, framerx + 14, sizeof(ArpHdr));
-			if (hdr.opcode == htons(1))
-				continue;
-			if (hdr.opcode == htons(2)) {
-				// check my mac and my address
-				if (memcmp(ifr.ifr_hwaddr.sa_data, hdr.target_mac, 6) != 0)
-					continue;
+			if (hdr.opcode == htons(1)) {
+				//  request, check if someone else is probing the same IP
+				if (memcmp(ifr.ifr_hwaddr.sa_data, hdr.sender_mac, 6) == 0)
+					continue; // it was our own probe, ignore it
+
 				uint32_t ip;
 				memcpy(&ip, hdr.target_ip, 4);
-				if (ip != srcaddr) {
+				if (ip != destaddr) {
+					continue;
+				}
+				close(sock);
+				return -1;
+			}
+			if (hdr.opcode == htons(2)) {
+				// reply, check if someone else has the address we are probing for
+				/*if (memcmp(ifr.ifr_hwaddr.sa_data, hdr.target_mac, 6) != 0)
+					continue;*/
+				uint32_t ip;
+				memcpy(&ip, hdr.sender_ip, 4);
+				if (ip != destaddr) {
 					continue;
 				}
 				close(sock);

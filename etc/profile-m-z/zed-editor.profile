@@ -59,4 +59,4 @@ dbus-system none
 deterministic-exit-code
 deterministic-shutdown
 noexec /tmp
-restrict-namespaces
+#restrict-namespaces

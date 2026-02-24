@@ -97,7 +97,8 @@ void fs_hostname(void) {
 		}
 
 		char buf[4096];
-		int done = 0;
+		int done_ipv4 = 0;
+		int done_ipv6 = 0;
 		while (fgets(buf, sizeof(buf), fp1)) {
 			// remove '\n'
 			char *ptr = strchr(buf, '\n');
@@ -105,9 +106,13 @@ void fs_hostname(void) {
 				*ptr = '\0';
 
 			// copy line
-			if (strstr(buf, "127.0.0.1") && done == 0) {
-				done = 1;
+			if (strstr(buf, "127.0.0.1") && done_ipv4 == 0) {
+				done_ipv4 = 1;
 				fprintf(fp2, "127.0.0.1 %s\n", cfg.hostname);
+			}
+			else if (strstr(buf, "::1") && done_ipv6 == 0) {
+				done_ipv6 = 1;
+				fprintf(fp2, "::1 %s\n", cfg.hostname);
 			}
 			else
 				fprintf(fp2, "%s\n", buf);

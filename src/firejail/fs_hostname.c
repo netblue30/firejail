@@ -109,10 +109,12 @@ void fs_hostname(void) {
 			if (strstr(buf, "127.0.0.1") && done_ipv4 == 0) {
 				done_ipv4 = 1;
 				fprintf(fp2, "127.0.0.1 %s\n", cfg.hostname);
+				fprintf(fp2, "127.0.0.1 localhost\n");
 			}
 			else if (strstr(buf, "::1") && done_ipv6 == 0) {
 				done_ipv6 = 1;
 				fprintf(fp2, "::1 %s\n", cfg.hostname);
+				fprintf(fp2, "::1 localhost\n");
 			}
 			else
 				fprintf(fp2, "%s\n", buf);

@@ -15,6 +15,12 @@
 @{PID}={[1-9],[1-9][0-9],[1-9][0-9][0-9],[1-9][0-9][0-9][0-9],[1-9][0-9][0-9][0-9][0-9],[1-9][0-9][0-9][0-9][0-9][0-9],[1-4][0-9][0-9][0-9][0-9][0-9][0-9]}
 
 profile firejail-default flags=(attach_disconnected,mediate_deleted) {
+
+##########
+# Allow unprivileged user-namespaces. It may negatively affect security.
+# These privileges are granted to firejail in case they are needed and are
+# expected to be dropped by firejail as required.
+##########
 userns,
 
 ##########

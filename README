@@ -1020,6 +1020,9 @@ pianoslum (https://github.com/pianoslum)
 pierretom (https://github.com/pierretom)
 	- bugfix: fix French translation for ${PICTURES} macro (#6942)
 	- bugfix: add missing macros in profile.template (#6948)
+	- added --debug-syscall-groups command (88a75a6 etc.)
+	- compile time: include architecture-specific syscall headers (#7000)
+	- reorganize & update syscall groups  (#7024 etc.)
 pirate486743186 (https://github.com/pirate486743186)
 	- KMail profile
 	- mpsyt profile

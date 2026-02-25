@@ -5,28 +5,43 @@ firejail (0.9.79) baseline; urgency=low
     for --profile=filename (#6896)
   * security: updated the list of terminal emulators that can be used for
     sandbox escape (cbf4308)
+  * feature: --debug-syscall-groups command (88a75a6 etc.)
+  * feature: hide/unhide PID 1 inside the sandbox, command and profile
+    option (#7046)
+  * feature: --keep-hostname command and profile option (#7048)
+  * feature: adding apparmor profiles for --nettrace command (c133313)
+  * feature: add support for the new XDG-compliant Firefox config
+    directory (#7040) 
   * compile time: compile fix for --enable-only-syscfg-profiles ./config
     option (d1a58de)
   * compile time: removed ./configure --disable-man option (a655b7d)
   * compile time: removed ./configure --disable-usertmpfs option (b214d08)
-  * modif: include new generated syscall headers (#7000)
+  * compile time: include architecture-specific headers (#7000)
   * modif: reorganize & update syscall groups (#7024 etc.)
   * modif: make Xephyr default for --x11 option - currently Xpra is not
     available in Debian/Ubuntu and derivatives (cbb7a38)
   * bugfix: /home/user is mounted with noexec when --private is used (#6921)
   * bugfix: Void Linux/musl libc compile fixes (e602396, 0949685)
+  * bugfix: added link-local addresses to 'nolocal' firewall configs (#7054)
+  * bugfix: map sandbox hostname to ipv6 in /etc/hosts (#7077)
   * docs: man: non-ASCII hyphens - copy pasting commands fails on command
     line (#5903)
+  * docs: various other fixes and changes
   * ci: gitlab: install missing git-buildpackage dependency (#7017)
   * ci: gcov testing scripts update
+  * ci: update various automated tests
+  * ci: update and fixes for  make test-compile
   * profiles: yt-dlp: support deno JavaScript engine to fix YouTube (#6999)
   * profiles: yt-dlp: support browser cookies for authenticated downloads
     (#7030)
   * profiles: add deno paths (#7032, 2ba2f2d)
   * profiles: vesktop: fix screen sharing (#7043, b59005c)
+  * profiles: disable by default several systemd tools (ca934a2)
+  * profiles: fix allowing netcat in playonlinux and ssh profiles (#7059)
   * new profiles: fragments (#7023, 97871d7, f712b9a)
   * new profiles: srb2 (#6996, 9882aa0)
   * new profiles: zen, zen-bin, zen-browser (#7029, 09e376d, fa6bfd7)
+  * cleanup various files (including RELNOTES) after release 0.9.78
  -- netblue30 <netblue30@yahoo.com>  Sat, 3 Jan 2026 11:00:00 -0500
 
 firejail (0.9.78) baseline; urgency=low

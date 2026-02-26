@@ -18,13 +18,18 @@ firejail (0.9.79) baseline; urgency=low
   * modif: reorganize & update syscall groups (#7024 etc.)
   * modif: make Xephyr default for --x11 option - currently Xpra is not
     available in Debian/Ubuntu and derivatives (cbb7a38)
+  * modif: improve feature disabled warning/error messages (#7074)
   * bugfix: /home/user is mounted with noexec when --private is used (#6921)
   * bugfix: Void Linux/musl libc compile fixes (e602396, 0949685)
   * bugfix: added link-local addresses to 'nolocal' firewall configs (#7054)
   * bugfix: map sandbox hostname to ipv6 in /etc/hosts (#7077)
+  * bugfix: add localhost lines to /etc/hosts (#7048 #7079)
   * docs: man: non-ASCII hyphens - copy pasting commands fails on command
     line (#5903)
   * docs: various other fixes and changes
+  * docs: man: fix arch for syscall map in seccomp example (#7064)
+  * docs: man: clarify --debug-syscalls for seccomp (#7065)
+  * build: fix discarded const qualifier compiler warnings (#7068)
   * ci: gitlab: install missing git-buildpackage dependency (#7017)
   * ci: gcov testing scripts update
   * ci: update various automated tests

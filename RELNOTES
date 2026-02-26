@@ -10,8 +10,6 @@ firejail (0.9.79) baseline; urgency=low
     option (#7046)
   * feature: --keep-hostname command and profile option (#7048)
   * feature: adding apparmor profiles for --nettrace command (c133313)
-  * feature: add support for the new XDG-compliant Firefox config
-    directory (#7040) 
   * compile time: compile fix for --enable-only-syscfg-profiles ./config
     option (d1a58de)
   * compile time: removed ./configure --disable-man option (a655b7d)
@@ -38,6 +36,7 @@ firejail (0.9.79) baseline; urgency=low
   * profiles: vesktop: fix screen sharing (#7043, b59005c)
   * profiles: disable by default several systemd tools (ca934a2)
   * profiles: fix allowing netcat in playonlinux and ssh profiles (#6911 #7059)
+  * profiles: firefox: add new ~/.config/mozilla dir (#7056 #7061)
   * new profiles: fragments (#7023, 97871d7, f712b9a)
   * new profiles: srb2 (#6996, 9882aa0)
   * new profiles: zen, zen-bin, zen-browser (#7029, 09e376d, fa6bfd7)

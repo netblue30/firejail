@@ -7,7 +7,7 @@ firejail (0.9.79) baseline; urgency=low
     sandbox escape (cbf4308 c8a6707)
   * feature: hide/unhide PID 1 inside the sandbox, command and profile
     option (#7046)
-  * feature: --keep-hostname command and profile option (#7048)
+  * feature: add --keep-hostname command and profile option (#7069)
   * feature: add --debug-syscall-groups command (#7049 #7055)
   * feature: adding apparmor profiles for --nettrace command (c133313)
   * modif: reorganize & update syscall groups (#7024 #7027 #7034 #7039 #7042

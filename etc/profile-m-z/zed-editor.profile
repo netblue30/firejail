@@ -55,6 +55,7 @@ private-tmp
 # TODO: likely not complete.
 dbus-user filter
 dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.a11y.Bus
 dbus-system none
 
 deterministic-exit-code

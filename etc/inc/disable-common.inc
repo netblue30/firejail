@@ -654,23 +654,23 @@ blacklist /tmp/tmux-*
 #    qterminal, terminator, terminology, termit, tilda,
 #    tilix, rxvt, rxvt-unicode, urxvt, xfce4-terminal, xterm
 #    Tested on Debian and Fedora Jan 2026
-blacklist ${PATH}/gnome-terminal
-blacklist ${PATH}/gnome-terminal.wrapper
-blacklist ${PATH}/pantheon-terminal
 blacklist ${PATH}/foot
 blacklist ${PATH}/footserver
+blacklist ${PATH}/gnome-terminal
+blacklist ${PATH}/gnome-terminal.wrapper
 blacklist ${PATH}/lxterminal
+blacklist ${PATH}/pantheon-terminal
 blacklist ${PATH}/ptyxis
 blacklist ${PATH}/roxterm
 blacklist ${PATH}/roxterm-config
 blacklist ${PATH}/terminix
 blacklist ${PATH}/urxvtc
-blacklist ${PATH}/urxvtd
 blacklist ${PATH}/urxvtcd
+blacklist ${PATH}/urxvtd
 # Drop-down terminals running in single-session mode
 blacklist ${PATH}/guake
-blacklist ${PATH}/yakuake
 blacklist ${PATH}/termius
+blacklist ${PATH}/yakuake
 
 # kernel files
 blacklist /initrd*

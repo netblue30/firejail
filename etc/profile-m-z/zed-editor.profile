@@ -54,7 +54,9 @@ private-tmp
 
 # TODO: likely not complete.
 dbus-user filter
-dbus-user.talk org.freedesktop.secrets
+dbus-user.talk org.freedesktop.portal.Desktop
+# Add below line to `~/.config/firejail/zed-editor.local` to enable keyring-access.
+#dbus-user.talk org.freedesktop.secrets
 dbus-user.talk org.a11y.Bus
 dbus-system none
 

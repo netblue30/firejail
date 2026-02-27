@@ -11,7 +11,7 @@ noblacklist ${HOME}
 
 # NOTE: add common development-related modifications, such as blacklisting,
 # whitelisting, noexec, and other grants and permissions,
-# to `$XDG_RUNTIME_DIR/firejail/allow-common-devel.local`.
+# to `~/.config/firejail/allow-common-devel.local`.
 include allow-common-devel.inc
 
 include disable-common.inc

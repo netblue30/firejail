@@ -37,14 +37,14 @@ firejail (0.9.79) baseline; urgency=low
   * profiles: yt-dlp: support deno JavaScript engine to fix YouTube (#6999)
   * profiles: yt-dlp: support browser cookies for authenticated downloads
     (#7030)
-  * profiles: add deno paths (#7032, 2ba2f2d)
-  * profiles: vesktop: fix screen sharing (#7043, b59005c)
+  * profiles: add deno paths (#7032)
+  * profiles: vesktop: fix screen sharing (#7043)
   * profiles: disable by default several systemd tools (ca934a2)
   * profiles: fix allowing netcat in playonlinux and ssh profiles (#6911 #7059)
   * profiles: firefox: add new ~/.config/mozilla dir (#7056 #7061)
-  * new profiles: fragments (#7023, 97871d7, f712b9a)
-  * new profiles: srb2 (#6996, 9882aa0)
-  * new profiles: zen, zen-bin, zen-browser (#7029, 09e376d, fa6bfd7)
+  * new profiles: fragments (#7023)
+  * new profiles: srb2 (#6996)
+  * new profiles: zen, zen-bin, zen-browser (#7029)
   * cleanup various files (including RELNOTES) after release 0.9.78
  -- netblue30 <netblue30@yahoo.com>  Sat, 3 Jan 2026 11:00:00 -0500
 

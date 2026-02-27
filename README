@@ -414,7 +414,7 @@ Dieter Plaetinck (https://github.com/Dieterbe)
 	- fix email-common.profile
 	- fix claws-mail profile
 Dmitry (https://github.com/reagentoo)
-        - new profiles: fragments (#7023, 97871d7, f712b9a)
+        - new profiles: fragments (#7023)
 Disconnect3d (https://github.com/disconnect3d)
 	- code cleanup
 dm9pZCAq (https://github.com/dm9pZCAq)
@@ -627,7 +627,7 @@ Holger Heinz (https://github.com/hheinz)
 Hotty Capy (https://github.com/hotcapy)
 	- softmaker-common.profile: add fstab to private-etc
 HybridDog - (https://github.com/HybridDog)
-	- new profiles: srb2 (#6996, 9882aa0)
+	- new profiles: srb2 (#6996)
 Icaro Perseo (https://github.com/icaroperseo)
 	- Icecat profile
 	- several profile fixes
@@ -1216,7 +1216,7 @@ smitsohu (https://github.com/smitsohu)
 	- tighten some capability sets further
 	- enhance mutt, goobox, baloo and clementine profiles
 sofoxe1 (https://github.com/sofoxe1)
-	- profiles: vesktop: fix screen sharing (#7043, b59005c)
+	- profiles: vesktop: fix screen sharing (#7043)
 soredake (https://github.com/soredake)
 	- fix steam startup with >=llvm-4
 	- fix handling of STEAM_RUNTIME_PREFER_HOST_LIBRARIES in steam profile
@@ -1311,7 +1311,7 @@ sudoAlphaX (https://github.com/sudoAlphaX)
 Syed Muhammad Shuja Haider (https://github.com/xplanthris)
 	- prismlauncher profile
 Teru (https://github.com/KhoTeru)
-	- new profiles: zen, zen-bin, zen-browser (#7029, 09e376d, fa6bfd7)
+	- new profiles: zen, zen-bin, zen-browser (#7029)
 the-antz (https://github.com/the-antz)
 	- Fix libx265 encoding in ffmpeg profile
 	- Fix Firefox profile

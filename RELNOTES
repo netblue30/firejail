@@ -4,7 +4,7 @@ firejail (0.9.79) baseline; urgency=low
     and should be highly discouraged; a full or relative file path is required
     for --profile=filename (#6896)
   * security: updated the list of terminal emulators that can be used for
-    sandbox escape (cbf4308)
+    sandbox escape (cbf4308 c8a6707)
   * feature: --debug-syscall-groups command (88a75a6 etc.)
   * feature: hide/unhide PID 1 inside the sandbox, command and profile
     option (#7046)

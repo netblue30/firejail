@@ -1,26 +1,26 @@
 firejail (0.9.79) baseline; urgency=low
   * work in progress: 0.9.80-rc1
-  * security: --profile=FILE with just a filename has security implications
-    and should be highly discouraged; a full or relative file path is required
-    for --profile=filename (#6896)
-  * security: updated the list of terminal emulators that can be used for
-    sandbox escape (cbf4308 c8a6707)
-  * feature: hide/unhide PID 1 inside the sandbox, command and profile
-    option (#7046)
+  * security: require a full or relative file path for --profile=FILE -
+    using it with just a filename has security implications and is highly
+    discouraged (#6896)
+  * security: profiles: update the list of terminal emulators that can be used
+    for sandbox escape (cbf4308 c8a6707)
+  * feature: hide PID 1 inside of the sandbox and add --unhide-pid1 command to
+    unhide (#7046)
   * feature: add --keep-hostname command and profile option (#7069)
   * feature: add --debug-syscall-groups command (#7049 #7055)
-  * feature: adding apparmor profiles for --nettrace command (c133313)
+  * feature: add apparmor profiles for --nettrace command (c133313)
   * modif: reorganize & update syscall groups (#7024 #7027 #7034 #7039 #7042
     #7044 #7045)
   * modif: make Xephyr default for --x11 option - currently Xpra is not
     available in Debian/Ubuntu and derivatives (cbb7a38)
   * modif: improve feature disabled warning/error messages (#7074)
   * bugfix: /home/user is mounted with noexec when --private is used (#6921)
-  * bugfix: added link-local addresses to 'nolocal' firewall configs (#7054)
+  * bugfix: add link-local addresses to 'nolocal' firewall configs (#7054)
   * bugfix: map sandbox hostname to ipv6 in /etc/hosts (#7077)
   * bugfix: add localhost lines to /etc/hosts (#7048 #7079)
-  * docs: man: non-ASCII hyphens - copy pasting commands fails on command
-    line (#5903)
+  * docs: man: fix non-ASCII hyphens in the output - copy-pasting commands fail
+    on the command line (#5903)
   * docs: various other fixes and changes
   * docs: man: fix arch for syscall map in seccomp example (#7064)
   * docs: man: clarify --debug-syscalls for seccomp (#7065)

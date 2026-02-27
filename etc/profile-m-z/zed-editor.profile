@@ -9,10 +9,11 @@ ignore noexec ${HOME}
 
 noblacklist ${HOME}
 
+# NOTE: add common development-related modifications, such as blacklisting,
+# whitelisting, noexec, and other grants and permissions,
+# to `$XDG_RUNTIME_DIR/firejail/allow-common-devel.local`.
 include allow-common-devel.inc
 
-# NOTE: add `noblacklist` entries here or in `allow-common-devel.local` to allow
-# for more programming languages and tools , such as `noblacklist ${HOME}/.cargo`.
 include disable-common.inc
 include disable-exec.inc
 include disable-proc.inc
@@ -59,4 +60,8 @@ dbus-system none
 deterministic-exit-code
 deterministic-shutdown
 noexec /tmp
+# Given use of extensions and subprocesses in Zed-editor, although I have not
+# found clear indication that it critically relies on user-namespaces right now,
+# it is very likely that granulary sandboxing will happen in the future as it
+# hosts a variety of external, programming-language-specific tools.
 #restrict-namespaces

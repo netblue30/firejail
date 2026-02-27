@@ -10,17 +10,11 @@ firejail (0.9.79) baseline; urgency=low
     option (#7046)
   * feature: --keep-hostname command and profile option (#7048)
   * feature: adding apparmor profiles for --nettrace command (c133313)
-  * compile time: compile fix for --enable-only-syscfg-profiles ./config
-    option (d1a58de)
-  * compile time: removed ./configure --disable-man option (a655b7d)
-  * compile time: removed ./configure --disable-usertmpfs option (b214d08)
-  * compile time: include architecture-specific headers (#7000)
   * modif: reorganize & update syscall groups (#7024 etc.)
   * modif: make Xephyr default for --x11 option - currently Xpra is not
     available in Debian/Ubuntu and derivatives (cbb7a38)
   * modif: improve feature disabled warning/error messages (#7074)
   * bugfix: /home/user is mounted with noexec when --private is used (#6921)
-  * bugfix: Void Linux/musl libc compile fixes (e602396, 0949685)
   * bugfix: added link-local addresses to 'nolocal' firewall configs (#7054)
   * bugfix: map sandbox hostname to ipv6 in /etc/hosts (#7077)
   * bugfix: add localhost lines to /etc/hosts (#7048 #7079)
@@ -29,6 +23,12 @@ firejail (0.9.79) baseline; urgency=low
   * docs: various other fixes and changes
   * docs: man: fix arch for syscall map in seccomp example (#7064)
   * docs: man: clarify --debug-syscalls for seccomp (#7065)
+  * build: Void Linux/musl libc compile fixes (e602396, 0949685)
+  * build: fix compiler warning for ./configure --enable-only-syscfg-profiles
+    option (d1a58de)
+  * build: remove ./configure --disable-man option (a655b7d)
+  * build: remove ./configure --disable-usertmpfs option (b214d08)
+  * build: support syscalls for many more architectures (#7000)
   * build: fix discarded const qualifier compiler warnings (#7068)
   * ci: gitlab: install missing git-buildpackage dependency (#7017)
   * ci: gcov testing scripts update

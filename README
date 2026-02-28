@@ -1024,8 +1024,8 @@ pierretom (https://github.com/pierretom)
 	- modif: update and add syscalls for several architectures (#6956
 	  #6961)
 	- modif: include new generated syscall headers (#7000)
-	- added --debug-syscall-groups command (88a75a6 etc.)
 	- reorganize & update syscall groups  (#7024 etc.)
+	- feature: add --debug-syscall-groups command (#7049 #7055)
 	- docs: man: fix arch for syscall map in seccomp example (#7064)
 pirate486743186 (https://github.com/pirate486743186)
 	- KMail profile

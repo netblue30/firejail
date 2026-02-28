@@ -5,10 +5,10 @@ firejail (0.9.79) baseline; urgency=low
     for --profile=filename (#6896)
   * security: updated the list of terminal emulators that can be used for
     sandbox escape (cbf4308 c8a6707)
-  * feature: --debug-syscall-groups command (88a75a6 etc.)
   * feature: hide/unhide PID 1 inside the sandbox, command and profile
     option (#7046)
   * feature: --keep-hostname command and profile option (#7048)
+  * feature: add --debug-syscall-groups command (#7049 #7055)
   * feature: adding apparmor profiles for --nettrace command (c133313)
   * modif: reorganize & update syscall groups (#7024 etc.)
   * modif: make Xephyr default for --x11 option - currently Xpra is not

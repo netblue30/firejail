@@ -1,5 +1,5 @@
 firejail (0.9.79) baseline; urgency=low
-  * work in progress
+  * work in progress: 0.9.80-rc1
   * security: --profile=FILE with just a filename has security implications
     and should be highly discouraged; a full or relative file path is required
     for --profile=filename (#6896)
@@ -46,7 +46,7 @@ firejail (0.9.79) baseline; urgency=low
   * new profiles: srb2 (#6996)
   * new profiles: zen, zen-bin, zen-browser (#7029)
   * cleanup various files (including RELNOTES) after release 0.9.78
- -- netblue30 <netblue30@yahoo.com>  Sat, 3 Jan 2026 11:00:00 -0500
+ -- netblue30 <netblue30@yahoo.com>  Sat, 28 Feb 2026 07:00:00 -0500
 
 firejail (0.9.78) baseline; urgency=low
   * feature: add arg-max-count / arg-max-len to firejail.config (#4633 #6878)

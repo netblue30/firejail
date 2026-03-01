@@ -17,6 +17,13 @@
 profile firejail-default flags=(attach_disconnected,mediate_deleted) {
 
 ##########
+# Allow unprivileged user-namespaces. It may negatively affect security.
+# These privileges are granted to firejail in case they are needed and are
+# expected to be dropped by firejail as required.
+##########
+userns,
+
+##########
 # Allow D-Bus access. It may negatively affect security. Comment those lines or
 # use 'nodbus' option in profile if you don't need D-Bus functionality.
 ##########

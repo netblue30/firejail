@@ -424,16 +424,13 @@ static const SyscallGroupList sysgroups[] = {
 #ifdef SYS_clock_getres_time64
 	  "clock_getres_time64,"
 #endif
-	  "clock_gettime," // clock_gettime* and time, stop programs that try to read time
+	  "clock_gettime," // *gettime* and time, stop programs that try to read time
 #ifdef SYS_clock_gettime64
 	  "clock_gettime64,"
 #endif
 	  "clock_nanosleep," // clock_nanosleep*, stop programs that try to use sleep functions
 #ifdef SYS_clock_nanosleep_time64
 	  "clock_nanosleep_time64,"
-#endif
-#ifdef SYS_gettimeofday
-	  "gettimeofday,"
 #endif
 #ifdef SYS_execv
 	  "execv," // sparc only
@@ -442,6 +439,7 @@ static const SyscallGroupList sysgroups[] = {
 	  "execveat," // commonly used by fexecve
 	  "exit," // breaks most Qt applications
 	  "futex," // frequently used and causes breakages
+	  "gettimeofday,"
 #ifdef SYS_mmap
 	  "mmap," // cannot load shared libraries
 #endif

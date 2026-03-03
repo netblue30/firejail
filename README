@@ -1024,7 +1024,8 @@ pierretom (https://github.com/pierretom)
 	- modif: update and add syscalls for several architectures (#6956
 	  #6961)
 	- modif: include new generated syscall headers (#7000)
-	- reorganize & update syscall groups  (#7024 etc.)
+	- modif: reorganize & update syscall groups (#7024 #7027 #7034 #7039
+	  #7042 #7044 #7045)
 	- feature: add --debug-syscall-groups command (#7049 #7055)
 	- docs: man: fix arch for syscall map in seccomp example (#7064)
 pirate486743186 (https://github.com/pirate486743186)

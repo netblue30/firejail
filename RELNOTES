@@ -10,7 +10,8 @@ firejail (0.9.79) baseline; urgency=low
   * feature: --keep-hostname command and profile option (#7048)
   * feature: add --debug-syscall-groups command (#7049 #7055)
   * feature: adding apparmor profiles for --nettrace command (c133313)
-  * modif: reorganize & update syscall groups (#7024 etc.)
+  * modif: reorganize & update syscall groups (#7024 #7027 #7034 #7039 #7042
+    #7044 #7045)
   * modif: make Xephyr default for --x11 option - currently Xpra is not
     available in Debian/Ubuntu and derivatives (cbb7a38)
   * modif: improve feature disabled warning/error messages (#7074)

@@ -223,6 +223,7 @@ link
 linkat
 listen
 listmount
+listns
 listxattr
 listxattrat
 llistxattr
@@ -480,6 +481,7 @@ riscv_flush_icache
 riscv_hwprobe
 rmdir
 rseq
+rseq_slice_yield
 rt_sigaction
 rt_sigpending
 rt_sigprocmask

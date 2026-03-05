@@ -383,3 +383,5 @@
 { "open_tree_attr", 467 },
 { "file_getattr", 468 },
 { "file_setattr", 469 },
+{ "listns", 470 },
+{ "rseq_slice_yield", 471 },

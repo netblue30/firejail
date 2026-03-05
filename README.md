@@ -366,10 +366,10 @@ For details, see [#6906](https://github.com/netblue30/firejail/issues/6906).
 
 ## Current development version: 0.9.79
 
-### --profile=filename|appanme rework
+### --profile=filename|appname rework
 
-Issue https://github.com/netblue30/firejail/issues/6896: requiring a full path or a relative
-path for the filename.
+Issue [#6896](https://github.com/netblue30/firejail/issues/6896): Require a
+full path or a relative path for the filename.
 
 ```text
       --profile=filename|appname
@@ -413,6 +413,7 @@ path for the filename.
 ```
 
 ### --unhide-pid1
+
 ```text
       --unhide-pid1
               Pid  1  is always present inside Firejail sandbox. By restricting
@@ -443,6 +444,7 @@ path for the filename.
 ```
 
 ### --keep-hostname
+
 ```text
        --keep-hostname
               By default, the hostname is replaced by a random  name  generated
@@ -450,7 +452,6 @@ path for the filename.
 
               Example:
               $ firejail --keep-hostname
-
 ```
 
 ### Landlock support - ongoing/experimental

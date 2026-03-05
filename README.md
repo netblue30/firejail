@@ -383,7 +383,7 @@ full path or a relative path for the filename.
               tory.
 
               Example:
-              $ firejail firefox
+              $ firejail /usr/bin/firefox
               Reading profile /home/netblue/.config/firejail/firefox.profile
               Reading profile /etc/firejail/firefox.profile
               Reading profile /etc/firejail/firefox-common.profile
@@ -392,7 +392,7 @@ full path or a relative path for the filename.
               When using a filename, please include a full path or  a  relative
               path.
 
-              $ firejail --profile=./firefox.profile firefox
+              $ firejail --profile=./firefox.profile /usr/bin/firefox
               Reading profile ./firefox.profile
               Reading profile /etc/firejail/firefox.profile
               Reading profile /etc/firejail/firefox-common.profile

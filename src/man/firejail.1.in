@@ -2470,7 +2470,7 @@ followed by a search in /etc/firejail/directory.
 .br
 Example:
 .br
-$ firejail firefox
+$ firejail /usr/bin/firefox
 .br
 Reading profile /home/netblue/.config/firejail/firefox.profile
 .br
@@ -2486,7 +2486,7 @@ When using a filename, please include a full path or a relative path.
 .br
 
 .br
-$ firejail \-\-profile=./firefox.profile firefox
+$ firejail \-\-profile=./firefox.profile /usr/bin/firefox
 .br
 Reading profile ./firefox.profile
 .br

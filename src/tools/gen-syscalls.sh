@@ -136,6 +136,7 @@ cp "$TEMP_DIR"/syscall_sparc_32.tbl "$TEMP_DIR"/syscall_sparc_64.tbl && echo "�
 "$CURL" --no-progress-meter "$BASE_URL"/arch/sh/kernel/syscalls/syscall.tbl -o "$TEMP_DIR"/syscall_superh.tbl
 echo "✔ File received: syscall_superh.tbl"
 "$CURL" --no-progress-meter "$BASE_URL"/arch/x86/entry/syscalls/syscall_64.tbl -o "$TEMP_DIR"/syscall_x86_64.tbl
+cp "$TEMP_DIR"/syscall_x86_64.tbl "$TEMP_DIR"/syscall_x32.tbl && echo "✔ File received: syscall_x32.tbl"
 echo "✔ File received: syscall_x86_64.tbl"
 "$CURL" --no-progress-meter "$BASE_URL"/arch/xtensa/kernel/syscalls/syscall.tbl -o "$TEMP_DIR"/syscall_xtensa.tbl
 echo "✔ File received: syscall_xtensa.tbl"
@@ -228,8 +229,7 @@ function gen_new_syscalls()
             continue
         fi
 
-        # Read the old header in memory.
-        old_syscalls=$(<"$old_header")
+        old_syscalls=$(<"$old_header") # Read the old header in memory.
 
         while IFS= read -r syscall
         do
@@ -248,7 +248,7 @@ function gen_new_syscalls()
         echo >> "$NEW_SYSCALLS_FILE"
     done <<< "$all_headers"
 
-    sed -i '$d' "$NEW_SYSCALLS_FILE" # Remove the last line.
+    sed -i '$d' "$NEW_SYSCALLS_FILE" # Remove the last empty line.
 
     echo "✔ Installed: $NEW_SYSCALLS_FILE"
 }
@@ -284,6 +284,7 @@ extract_and_install "syscall_s390_64.tbl" "common" "64"
 extract_and_install "syscall_sparc_32.tbl" "common" "32"
 extract_and_install "syscall_sparc_64.tbl" "common" "64"
 extract_and_install "syscall_superh.tbl" "common"
+extract_and_install "syscall_x32.tbl" "common" "x32"
 extract_and_install "syscall_x86_64.tbl" "common" "64"
 extract_and_install "syscall_xtensa.tbl" "common"
 gen_syscalls_list

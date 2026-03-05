@@ -105,6 +105,8 @@ static const SyscallEntry syslist[] = {
 	#include "../include/syscall_sparc_64.h"
 #elif defined(__sh__)
 	#include "../include/syscall_superh.h"
+#elif defined(__x86_64__) && defined(__ILP32__)
+	#include "../include/syscall_x32.h"
 #elif defined(__x86_64__)
 	#include "../include/syscall_x86_64.h"
 #elif defined(__xtensa__) || defined(__XTENSA__)
@@ -1694,6 +1696,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_rseq
 	  "rseq,"
+#endif
+#ifdef SYS_rseq_slice_yield
+	  "rseq_slice_yield,"
 #endif
 #ifdef SYS_rt_sigqueueinfo
 	  "rt_sigqueueinfo,"

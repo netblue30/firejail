@@ -32,10 +32,10 @@ firejail (0.9.79) baseline; urgency=low
   * build: remove ./configure --disable-man option (#7091)
   * build: remove ./configure --disable-usertmpfs option (#7092)
   * build: fix discarded const qualifier compiler warnings (#7068)
+  * tests: update gcov testing scripts and calls in the source code
+  * tests: update various automated tests
+  * tests: rework and add fixes for "make test-compile" (5c7c58f)
   * ci: gitlab: install missing git-buildpackage dependency (#7017)
-  * ci: gcov testing scripts update
-  * ci: update various automated tests
-  * ci: update and fixes for  make test-compile
   * profiles: yt-dlp: support deno JavaScript engine to fix YouTube (#6999)
   * profiles: yt-dlp: support browser cookies for authenticated downloads
     (#7030)

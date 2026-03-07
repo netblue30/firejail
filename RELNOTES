@@ -9,11 +9,11 @@ firejail (0.9.79) baseline; urgency=low
     unhide (#7046)
   * feature: add --keep-hostname command and profile option (#7069)
   * feature: add --debug-syscall-groups command (#7049 #7055)
-  * feature: add apparmor profiles for --nettrace command (c133313)
+  * feature: add apparmor profiles for --nettrace command (#7093)
   * modif: reorganize & update syscall groups (#7024 #7027 #7034 #7039 #7042
     #7044 #7045)
   * modif: make Xephyr default for --x11 option - currently Xpra is not
-    available in Debian/Ubuntu and derivatives (cbb7a38)
+    available in Debian/Ubuntu and derivatives (#7094)
   * modif: improve feature disabled warning/error messages (#7074)
   * bugfix: /home/user is mounted with noexec when --private is used (#6921)
   * bugfix: add link-local addresses to 'nolocal' firewall configs (#7054)

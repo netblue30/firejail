@@ -554,6 +554,7 @@ blacklist ${HOME}/.config/ktorrentrc
 blacklist ${HOME}/.config/ktouch2rc
 blacklist ${HOME}/.config/kube
 blacklist ${HOME}/.config/kwriterc
+blacklist ${HOME}/.config/lact
 blacklist ${HOME}/.config/lbry-viewer
 blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
@@ -1301,7 +1302,9 @@ blacklist ${RUNUSER}/psd/*firefox*
 blacklist ${RUNUSER}/psd/*floorp*
 blacklist ${RUNUSER}/qutebrowser
 blacklist /etc/clamav
+blacklist /etc/lact
 blacklist /etc/ssmtp
+blacklist /run/lactd.sock
 blacklist /tmp/.wine-*
 blacklist /tmp/akonadi-*
 blacklist /tmp/evolution-*

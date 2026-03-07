@@ -38,7 +38,7 @@ typedef struct {
 
 typedef struct {
 	const char * const name;
-    const char * const description;
+	const char * const description;
 	const char * const list;
 } SyscallGroupList;
 
@@ -2054,12 +2054,12 @@ static const SyscallGroupList sysgroups[] = {
 	  "@io-event,"
 	  "@ipc,"
 	  "@keyring,"
-      "@memfd,"
+	  "@memfd,"
 	  "@memlock,"
 	  "@network-io,"
 	  "@process,"
 	  "@resources,"
-      "@sandbox,"
+	  "@sandbox,"
 	  "@setuid,"
 	  "@signal,"
 	  "@sync,"

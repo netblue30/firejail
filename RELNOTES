@@ -29,8 +29,8 @@ firejail (0.9.79) baseline; urgency=low
   * build: Void Linux/musl libc compile fixes (e602396, 0949685)
   * build: fix compiler warning for ./configure --enable-only-syscfg-profiles
     option (d1a58de)
-  * build: remove ./configure --disable-man option (a655b7d)
-  * build: remove ./configure --disable-usertmpfs option (b214d08)
+  * build: remove ./configure --disable-man option (#7091)
+  * build: remove ./configure --disable-usertmpfs option (#7092)
   * build: fix discarded const qualifier compiler warnings (#7068)
   * ci: gitlab: install missing git-buildpackage dependency (#7017)
   * ci: gcov testing scripts update

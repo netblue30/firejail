@@ -108,7 +108,7 @@ expect {
 sleep 1
 
 # random hostname
-send --  "firejail cat /etc/hostname\r"
+send --  "firejail --hostname-randomize cat /etc/hostname\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}
 	"Child process initialized"

@@ -171,7 +171,7 @@ int arg_netlock = 0;
 int arg_restrict_namespaces = 0;
 int arg_allow_bwrap = 0;
 int arg_unhide_pid1 = 0;
-int arg_keep_hostname = 0;
+int arg_hostname_randomize = 0;
 
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
@@ -2128,8 +2128,8 @@ int main(int argc, char **argv, char **envp) {
 			}
 		}
 		else if (strncmp(argv[i], "--hostname=", 11) == 0) {
-			if (arg_keep_hostname) {
-				fprintf(stderr, "Error: hostname and keep-hostname are mutually exclusive\n");
+			if (arg_hostname_randomize) {
+				fprintf(stderr, "Error: hostname and hostname-randomize are mutually exclusive\n");
 				exit(1);
 			}
 			cfg.hostname = argv[i] + 11;
@@ -2142,13 +2142,16 @@ int main(int argc, char **argv, char **envp) {
 				return 1;
 			}
 		}
-		else if (strcmp(argv[i], "--keep-hostname") == 0) {
+		else if (strcmp(argv[i], "--hostname-randomize") == 0) {
 			if (cfg.hostname) {
-				fprintf(stderr, "Error: hostname and keep-hostname are mutually exclusive\n");
+				fprintf(stderr, "Error: hostname and hostname-randomize are mutually exclusive\n");
 				exit(1);
 			}
-			arg_keep_hostname = 1;
+			arg_hostname_randomize = 1;
 		}
+		// TODO: Fully remove keep-hostname after 0.9.80.
+		else if (strcmp(argv[i], "--keep-hostname") == 0)
+			fwarning("ignoring removed command: --keep-hostname (see --hostname-randomize)\n");
 		else if (strcmp(argv[i], "--nogroups") == 0)
 			arg_nogroups = 1;
 #ifdef HAVE_USERNS

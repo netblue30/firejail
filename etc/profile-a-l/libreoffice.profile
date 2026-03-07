@@ -6,6 +6,8 @@ include libreoffice.local
 # Persistent global definitions
 include globals.local
 
+ignore hostname-randomize
+
 noblacklist ${HOME}/.config/libreoffice
 noblacklist ${HOME}/.local/share/gvfs-metadata
 noblacklist /usr/local/sbin
@@ -43,8 +45,6 @@ include whitelist-var-common.inc
 #ignore protocol
 #ignore seccomp
 #ignore tracelog
-
-keep-hostname
 
 apparmor
 caps.drop all

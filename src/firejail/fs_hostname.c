@@ -25,9 +25,7 @@
 #include <fcntl.h>
 
 // build a random host name
-static char *random_hostname(void) {
-	assert(!arg_keep_hostname);
-
+char *random_hostname(void) {
 	char vowels[] = { 'a', 'e', 'i', 'o', 'u'};
 	char consonants[] = {'b', 'c', 'c', 'c', 'g', 'h', 'h', 'h', 'h', 'h',
 		'j', 'j', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'k', 'm', 'm', 'm', 'm', 'n', 'n', 'n', 'n', 'n',
@@ -54,11 +52,16 @@ static char *random_hostname(void) {
 	return name;
 }
 
-void fs_hostname(void) {
-	assert(!arg_keep_hostname);
+void fs_hostname(const char *orig_hostname) {
+	char tmp[256] = "";
+	const char *hostname = orig_hostname;
+	if (!hostname) {
+		if (gethostname(tmp, 256 - 1))
+			errExit("gethostname");
+		hostname = tmp;
+	}
+	assert(hostname);
 
-	if (!cfg.hostname)
-		cfg.hostname = random_hostname();
 	struct stat s;
 
 	// create a new /etc/hostname
@@ -70,7 +73,7 @@ void fs_hostname(void) {
 		FILE *fp = fopen(RUN_HOSTNAME_FILE, "we");
 		if (!fp)
 			goto errexit;
-		fprintf(fp, "%s\n", cfg.hostname);
+		fprintf(fp, "%s\n", hostname);
 		SET_PERMS_STREAM(fp, 0, 0, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		fclose(fp);
 
@@ -108,12 +111,12 @@ void fs_hostname(void) {
 			// copy line
 			if (strstr(buf, "127.0.0.1") && done_ipv4 == 0) {
 				done_ipv4 = 1;
-				fprintf(fp2, "127.0.0.1 %s\n", cfg.hostname);
+				fprintf(fp2, "127.0.0.1 %s\n", hostname);
 				fprintf(fp2, "127.0.0.1 localhost\n");
 			}
 			else if (strstr(buf, "::1") && done_ipv6 == 0) {
 				done_ipv6 = 1;
-				fprintf(fp2, "::1 %s\n", cfg.hostname);
+				fprintf(fp2, "::1 %s\n", hostname);
 				fprintf(fp2, "::1 localhost\n");
 			}
 			else

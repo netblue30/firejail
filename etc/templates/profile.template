@@ -168,7 +168,6 @@ include globals.local
 ##keep-dev-shm
 ##keep-dev-tpm
 ##keep-fd all
-##keep-hostname
 ##keep-shell-rc
 ##keep-var-tmp
 ##writable-etc
@@ -181,6 +180,7 @@ include globals.local
 #caps.drop all
 ##caps.keep CAPS
 ##hostname NAME
+##hostname-randomize
 # CLI only
 ##ipc-namespace
 # breaks audio and sometimes dbus related functions

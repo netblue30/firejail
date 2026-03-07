@@ -7,7 +7,9 @@ firejail (0.9.79) baseline; urgency=low
     for sandbox escape (cbf4308 c8a6707)
   * feature: hide PID 1 inside of the sandbox and add --unhide-pid1 command to
     unhide (#7046)
-  * feature: add --keep-hostname command and profile option (#7069)
+  * feature: add --hostname-randomize command and profile option - stop
+    randomizing the hostname by default to fix breakage with X11 programs
+    (#7062 #7069 #7095)
   * feature: add --debug-syscall-groups command (#7049 #7055)
   * feature: add apparmor profiles for --nettrace command (#7093)
   * modif: reorganize & update syscall groups (#7024 #7027 #7034 #7039 #7042

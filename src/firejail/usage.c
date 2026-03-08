@@ -108,6 +108,7 @@ static const char *const usage_str =
 #endif
 	"    --help, -? - this help screen.\n"
 	"    --hostname=name - set sandbox hostname.\n"
+	"    --hostname-randomize - set sandbox hostname to a random value.\n"
 	"    --hosts-file=file - use file as /etc/hosts.\n"
 #ifdef HAVE_NETWORK
 	"    --icmptrace - monitor Server Name Indiication (TLS/SNI).\n"
@@ -136,7 +137,6 @@ static const char *const usage_str =
 	"    --keep-dev-shm - /dev/shm directory is untouched (even with --private-dev).\n"
 	"    --keep-dev-tpm - /dev/tpm* devices are untouched (even with --private-dev).\n"
 	"    --keep-fd - inherit open file descriptors to sandbox.\n"
-	"    --keep-hostname - use the current hostname\n"
 	"    --keep-shell-rc - do not copy shell rc files from /etc/skel\n"
 	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
 #ifdef HAVE_LANDLOCK

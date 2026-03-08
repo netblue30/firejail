@@ -980,14 +980,17 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	// hosts and hostname
 	//****************************
-	if (!arg_keep_hostname) {
-		fs_hostname();
+	if (!cfg.hostname && arg_hostname_randomize)
+		cfg.hostname = random_hostname();
+
+	if (cfg.hostname) {
 		// /usr/bin/hostname is blacklisted in default.profile
 		// test this using cat /proc/sys/kernel/hostname,
-		assert(cfg.hostname);
 		if (sethostname(cfg.hostname, strlen(cfg.hostname)) < 0)
 			errExit("sethostname");
 	}
+
+	fs_hostname(cfg.hostname);
 
 	//****************************
 	// /etc overrides from the network namespace

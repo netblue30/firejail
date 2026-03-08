@@ -1200,8 +1200,8 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// hostname
 	if (strncmp(ptr, "hostname ", 9) == 0) {
-		if (arg_keep_hostname) {
-			fprintf(stderr, "Error: hostname and keep-hostname are mutually exclusive\n");
+		if (arg_hostname_randomize) {
+			fprintf(stderr, "Error: hostname and hostname-randomize are mutually exclusive\n");
 			exit(1);
 		}
 		cfg.hostname = ptr + 9;
@@ -1215,12 +1215,17 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		return 0;
 	}
-	if (strncmp(ptr, "keep-hostname", 13) == 0) {
+	if (strncmp(ptr, "hostname-randomize", 18) == 0) {
 		if (cfg.hostname) {
-			fprintf(stderr, "Error: hostname and keep-hostname are mutually exclusive\n");
+			fprintf(stderr, "Error: hostname and hostname-randomize are mutually exclusive\n");
 			exit(1);
 		}
-		arg_keep_hostname = 1;
+		arg_hostname_randomize = 1;
+		return 0;
+	}
+	// TODO: Fully remove keep-hostname after 0.9.80.
+	if (strncmp(ptr, "keep-hostname", 13) == 0) {
+		fwarning("ignoring removed command: keep-hostname (see hostname-randomize)\n");
 		return 0;
 	}
 

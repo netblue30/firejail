@@ -8,6 +8,7 @@ caps
 deterministic-exit-code
 deterministic-shutdown
 disable-mnt
+hostname-randomize
 ipc-namespace
 keep-config-pulse
 keep-dev-ntsync

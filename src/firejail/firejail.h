@@ -375,7 +375,7 @@ extern int arg_netlock;	// netlocker
 extern int arg_restrict_namespaces;
 extern int arg_allow_bwrap;
 extern int arg_unhide_pid1;
-extern int arg_keep_hostname;
+extern int arg_hostname_randomize;
 
 typedef enum {
 	DBUS_POLICY_ALLOW,	// Allow unrestricted access to the bus
@@ -691,7 +691,8 @@ void fs_tracefile(void);
 void fs_trace(void);
 
 // fs_hostname.c
-void fs_hostname(void);
+char *random_hostname(void);
+void fs_hostname(const char *orig_hostname);
 char *fs_check_hosts_file(const char *fname);
 void fs_store_hosts_file(void);
 void fs_mount_hosts_file(void);

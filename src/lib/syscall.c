@@ -2669,8 +2669,10 @@ static void syscall_in_list(int fd, int syscall, int arg, void *ptrarg, bool nat
 	// if found in the problem list, add to post-exec list
 	if (sl.found) {
 		if (ptr->postlist) {
-			if (asprintf(&ptr->postlist, "%s,%s", ptr->postlist, name) == -1)
+			char *old = ptr->postlist;
+			if (asprintf(&ptr->postlist, "%s,%s", old, name) == -1)
 				errExit("asprintf");
+			free(old);
 		}
 		else
 			ptr->postlist = strdup(name);
@@ -2689,8 +2691,10 @@ static void syscall_in_list(int fd, int syscall, int arg, void *ptrarg, bool nat
 		}
 
 		if (ptr->prelist) {
-			if (asprintf(&ptr->prelist, "%s,%s", ptr->prelist, newcall) == -1)
+			char *old = ptr->prelist;
+			if (asprintf(&ptr->prelist, "%s,%s", old, newcall) == -1)
 				errExit("asprintf");
+			free(old);
 			free(newcall);
 		}
 		else

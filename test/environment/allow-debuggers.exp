@@ -5,6 +5,10 @@
 
 set timeout 10
 cd /home
+
+# disable strace's terminal background color probing
+set env(NO_COLOR) 1
+
 spawn $env(SHELL)
 match_max 100000
 

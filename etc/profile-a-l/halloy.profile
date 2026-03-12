@@ -1,7 +1,6 @@
 # Firejail profile for Halloy
 # Description: Modern IRC client
 # This file is overwritten after every install/update
-
 # Persistent local customizations
 include halloy.local
 # Persistent global definitions
@@ -11,8 +10,6 @@ noblacklist ${HOME}/.config/halloy
 noblacklist ${HOME}/.cache/halloy
 noblacklist ${HOME}/.local/share/halloy
 
-# Remove the next blacklist if your system has no /usr/libexec dir,
-# otherwise try to add it.
 blacklist /usr/libexec
 
 include disable-common.inc
@@ -30,7 +27,6 @@ mkdir ${HOME}/.local/share/halloy
 whitelist ${HOME}/.config/halloy
 whitelist ${HOME}/.cache/halloy
 whitelist ${HOME}/.local/share/halloy
-
 include whitelist-common.inc
 include whitelist-runuser-common.inc
 include whitelist-usr-share-common.inc

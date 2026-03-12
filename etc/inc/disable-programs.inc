@@ -143,6 +143,7 @@ blacklist ${HOME}/.cache/google-chrome-beta
 blacklist ${HOME}/.cache/google-chrome-unstable
 blacklist ${HOME}/.cache/gradio
 blacklist ${HOME}/.cache/gummi
+blacklist ${HOME}/.cache/halloy
 blacklist ${HOME}/.cache/hashcat
 blacklist ${HOME}/.cache/icedove
 blacklist ${HOME}/.cache/inkscape
@@ -507,6 +508,7 @@ blacklist ${HOME}/.config/gummi
 blacklist ${HOME}/.config/guvcview2
 blacklist ${HOME}/.config/gwenviewrc
 blacklist ${HOME}/.config/gzdoom
+blacklist ${HOME}/.config/halloy
 blacklist ${HOME}/.config/hexchat
 blacklist ${HOME}/.config/homebank
 blacklist ${HOME}/.config/i2p
@@ -1010,6 +1012,7 @@ blacklist ${HOME}/.local/share/gnote
 blacklist ${HOME}/.local/share/godot
 blacklist ${HOME}/.local/share/gradio
 blacklist ${HOME}/.local/share/gwenview
+blacklist ${HOME}/.local/share/halloy
 blacklist ${HOME}/.local/share/hashcat
 blacklist ${HOME}/.local/share/i2p
 blacklist ${HOME}/.local/share/io.github.lainsce.Notejot

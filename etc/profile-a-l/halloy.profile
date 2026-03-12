@@ -6,8 +6,8 @@ include halloy.local
 # Persistent global definitions
 include globals.local
 
-noblacklist ${HOME}/.config/halloy
 noblacklist ${HOME}/.cache/halloy
+noblacklist ${HOME}/.config/halloy
 noblacklist ${HOME}/.local/share/halloy
 
 blacklist /usr/libexec
@@ -21,11 +21,11 @@ include disable-programs.inc
 include disable-shell.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.config/halloy
 mkdir ${HOME}/.cache/halloy
+mkdir ${HOME}/.config/halloy
 mkdir ${HOME}/.local/share/halloy
-whitelist ${HOME}/.config/halloy
 whitelist ${HOME}/.cache/halloy
+whitelist ${HOME}/.config/halloy
 whitelist ${HOME}/.local/share/halloy
 include whitelist-common.inc
 include whitelist-runuser-common.inc

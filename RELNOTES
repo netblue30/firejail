@@ -21,6 +21,7 @@ firejail (0.9.79) baseline; urgency=low
   * bugfix: add link-local addresses to 'nolocal' firewall configs (#7054)
   * bugfix: map sandbox hostname to ipv6 in /etc/hosts (#7077)
   * bugfix: add localhost lines to /etc/hosts (#7048 #7079)
+  * bugfix: lib: fix memory leaks in `syscall_in_list()` (#7098)
   * docs: add missing items and cleanup things related to release 0.9.78 in
     README/README.md/RELNOTES
   * docs: man: fix non-ASCII hyphens in the output - copy-pasting commands fail

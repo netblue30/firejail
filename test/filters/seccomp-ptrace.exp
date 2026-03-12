@@ -4,6 +4,10 @@
 # License GPL v2
 
 set timeout 10
+
+# disable strace's terminal background color probing
+set env(NO_COLOR) 1
+
 spawn $env(SHELL)
 match_max 100000
 

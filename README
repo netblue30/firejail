@@ -1028,6 +1028,7 @@ pierretom (https://github.com/pierretom)
 	  #7042 #7044 #7045)
 	- feature: add --debug-syscall-groups command (#7049 #7055)
 	- docs: man: fix arch for syscall map in seccomp example (#7064)
+	- bugfix: lib: fix memory leaks in `syscall_in_list()` (#7098)
 pirate486743186 (https://github.com/pirate486743186)
 	- KMail profile
 	- mpsyt profile

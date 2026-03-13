@@ -710,7 +710,8 @@ Jonas Heinrich (https://github.com/onny)
 	- whitelist for NixOS to resolve binary paths in user environment
 	- NixOS fix OpenGL app support
 Jonas Jelten (https://github.com/TheJJ)
-        - fix strace color probing in allow-debuggers & seccomp-ptrace
+	- tests: fix strace color probing in allow-debuggers & seccomp-ptrace
+	  (#7099)
 Jose Riha (https://github.com/jose1711)
 	- added meteo-qt profile
 	- created qgis, links, xlinks profiles
@@ -1069,7 +1070,7 @@ powerjungle (https://github.com/powerjungle)
 	- (SECURITY.md): remove distributions which have reached end-of-life
 	- docs: improve whitelist and blacklist descriptions in man pages
 	- bugfix: do not interact with dbus directory if dbus proxy is disabled
-	- halloy IRC client
+	- new profiles: halloy IRC client (#7100)
 probonopd (https://github.com/probonopd)
 	- automatic build on Travis CI
 pshpsh (https://github.com/pshpsh)

@@ -147,6 +147,7 @@ whitelist ${HOME}/.steampid
 whitelist ${HOME}/Zomboid
 include whitelist-common.inc
 include whitelist-var-common.inc
+include whitelist-vr.inc
 
 # Note: The following were intentionally left out as they are alternative
 # (i.e.: unnecessary and/or legacy) paths whose existence may potentially

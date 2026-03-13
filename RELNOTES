@@ -14,6 +14,8 @@ firejail (0.9.79) baseline; urgency=low
   * feature: add apparmor profiles for --nettrace command (#7093)
   * modif: reorganize & update syscall groups (#7024 #7027 #7034 #7039 #7042
     #7044 #7045)
+  * modif: add a syscall header for the x32 ABI (6a6ff98)
+  * modif: update all system call headers, except s390 32-bit (3db2e97 e9cccef)
   * modif: make Xephyr default for --x11 option - currently Xpra is not
     available in Debian/Ubuntu and derivatives (#7094)
   * modif: improve feature disabled warning/error messages (#7074)

@@ -6,6 +6,9 @@ include globals.local
 
 noblacklist ${HOME}/.blobby
 
+# Allow lua (blacklisted by disable-interpreters.inc)
+include allow-lua.inc
+
 include disable-common.inc
 include disable-devel.inc
 include disable-exec.inc

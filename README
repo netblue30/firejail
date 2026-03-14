@@ -426,6 +426,8 @@ dmfreemon (https://github.com/dmfreemon)
 Dmitriy Chestnykh (https://github.com/chestnykh)
 	- add ability to disable user profiles at compile time
 	- lookup xauth in PATH
+dogknowsnx (https://github.com/dogknowsnx)
+	- profiles: blobby: allow lua (#7102)
 Dpeta (https://github.com/Dpeta)
 	- add Chatterino profile
 dringsim (https://github.com/dringsim)

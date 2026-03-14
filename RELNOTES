@@ -51,6 +51,7 @@ firejail (0.9.79) baseline; urgency=low
   * profiles: disable by default several systemd tools (ca934a2)
   * profiles: fix allowing netcat in playonlinux and ssh profiles (#6911 #7059)
   * profiles: firefox: add new ~/.config/mozilla dir (#7056 #7061)
+  * profiles: blobby: allow lua (#7102)
   * new profiles: fragments (#7023)
   * new profiles: srb2 (#6996)
   * new profiles: zen, zen-bin, zen-browser (#7029)

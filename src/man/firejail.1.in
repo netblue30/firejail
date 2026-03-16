@@ -3725,7 +3725,7 @@ assigned automatically.
 \fBfirejail \-\-net=br0 \-\-ip=10.10.20.5 \-\-net=br1 \-\-net=br2
 Start a shell session in a new network namespace and connect it
 to br0, br1, and br2 host bridge devices. IP addresses are assigned
-automatically for the interfaces connected to br1 and b2
+automatically for the interfaces connected to br1 and br2.
 #endif
 .TP
 \fBfirejail \-\-list

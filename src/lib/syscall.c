@@ -169,8 +169,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "io_uring_register,"
 #endif
 #ifdef SYS_io_uring_setup
-	  "io_uring_setup"
+	  "io_uring_setup,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@basic-io",
 	  .description = "Basic file-descriptor read, write, seek and dup operations.",
@@ -224,8 +225,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "write,"
 #endif
 #ifdef SYS_writev
-	  "writev"
+	  "writev,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@chown",
 	  .description = "Change file owner and group metadata.",
@@ -249,8 +251,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "lchown,"
 #endif
 #ifdef SYS_lchown32
-	  "lchown32"
+	  "lchown32,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@clock",
 	  .description = "System clock adjustment.",
@@ -271,8 +274,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "clock_settime64,"
 #endif
 #ifdef SYS_old_adjtimex
-	  "old_adjtimex"
+	  "old_adjtimex,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@cpu-emulation",
 	  .description = "Legacy CPU, segment and VM86 emulation helpers.",
@@ -290,12 +294,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "vm86,"
 #endif
 #ifdef SYS_vm86old
-	  "vm86old"
+	  "vm86old,"
 #endif
-#if !defined(SYS_modify_ldt) && !defined(SYS_subpage_prot) && !defined(SYS_switch_endian) && !defined(SYS_vm86) && !defined(SYS_vm86old)
-	  "__dummy_syscall__" // workaround for the following architectures which don't have any of above defined and empty syscall lists are not allowed:
-						  // arm64, alpha, arc32, armeabi, armoabi, csky, hexagon32, loongarch64, m68k, mips_n32, mips_n64, nios2, openrisc32, parisc32, parisc64, riscv32, riscv64, s390_32, s390_64, sparc32, sparc64, superh and xtensa
-#endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@debug",
 	  .description = "Low-level debugging, tracing, and perf monitoring interfaces.",
@@ -325,8 +326,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "uprobe,"
 #endif
 #ifdef SYS_uretprobe
-	  "uretprobe" // occasional breakages with seccomp reported, see https://lwn.net/Articles/1005662
+	  "uretprobe," // occasional breakages with seccomp reported, see https://lwn.net/Articles/1005662
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@default",
 	  .description = "Broad set of syscalls usually considered unsafe or rarely used.",
@@ -413,8 +415,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "vhangup,"
 #endif
 #ifdef SYS_vmsplice
-	  "vmsplice"
+	  "vmsplice,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@default-keep",
 	  .description = "Minimal core exec and other syscalls usually kept even under strict filters.",
@@ -451,8 +454,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "mprotect," // cannot load shared libraries
 	  "prctl,"
 #ifdef SYS_time
-	  "time"
+	  "time,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@default-nodebuggers",
 	  .description = "Debugger and introspection syscalls, also includes the @default group.",
@@ -465,8 +469,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "process_vm_readv,"
 #endif
 #ifdef SYS_ptrace
-	  "ptrace"
+	  "ptrace,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@file-system",
 	  .description = "Filesystem access: path navigation, metadata, open, create, remove, and inotify.",
@@ -745,8 +750,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "utimensat,"
 #endif
 #ifdef SYS_utimes
-	  "utimes"
+	  "utimes,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@io-event",
 	  .description = "Evented I/O multiplexing.",
@@ -797,8 +803,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "pselect6_time64,"
 #endif
 #ifdef SYS_select
-	  "select"
+	  "select,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@ipc",
 	  .description = "Inter-process communication: pipes, SysV IPC and POSIX message queues.",
@@ -885,8 +892,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "shmdt,"
 #endif
 #ifdef SYS_shmget
-	  "shmget"
+	  "shmget,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@keyring",
 	  .description = "Kernel keyring and key management operations.",
@@ -898,8 +906,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "keyctl,"
 #endif
 #ifdef SYS_request_key
-	  "request_key"
+	  "request_key,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@memfd",
 	  .description = "Anonymous in-kernel file-like memory objects.",
@@ -908,8 +917,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "memfd_create,"
 #endif
 #ifdef SYS_memfd_secret
-	  "memfd_secret"
+	  "memfd_secret,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@memlock",
 	  .description = "Lock and unlock memory to and from RAM (no swapping).",
@@ -927,8 +937,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "munlock,"
 #endif
 #ifdef SYS_munlockall
-	  "munlockall"
+	  "munlockall,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@module",
 	  .description = "Load, initialize, and unload kernel modules.",
@@ -940,8 +951,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "finit_module,"
 #endif
 #ifdef SYS_init_module
-	  "init_module"
+	  "init_module,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@mount",
 	  .description = "Mount, unmount, manage filesystems and mount namespaces.",
@@ -995,8 +1007,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "umount,"
 #endif
 #ifdef SYS_umount2
-	  "umount2"
+	  "umount2,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@network-io",
 	  .description = "Create and use sockets, send and receive network data.",
@@ -1065,8 +1078,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "socketcall,"
 #endif
 #ifdef SYS_socketpair
-	  "socketpair"
+	  "socketpair,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@obsolete",
 	  .description = "Deprecated or very old arch-specific legacy syscalls.",
@@ -1450,11 +1464,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "vserver,"
 #endif
 #ifdef SYS_xtensa
-	  "xtensa"
+	  "xtensa,"
 #endif
-#if defined(__aarch64__) || defined(__loongarch64) || __loongarch_grlen == 64 || (defined(__riscv) && __riscv_xlen == 64)
-	  "__dummy_syscall__" // workaround for arm64, loongarch64 and riscv64 which don't have any of above defined and empty syscall lists are not allowed
-#endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@privileged",
 	  .description = "Highly privileged operations: IDs, mounts, modules, raw I/O, reboot, etc.",
@@ -1538,8 +1550,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "umount2,"
 #endif
 #ifdef SYS_vhangup
-	  "vhangup"
+	  "vhangup,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@process",
 	  .description = "Process and thread lifecycle, IDs, signals sending, namespaces and futex-related helpers.",
@@ -1764,8 +1777,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "waitid,"
 #endif
 #ifdef SYS_waitpid
-	  "waitpid"
+	  "waitpid,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@raw-io",
 	  .description = "Direct port/PCI and low-level device I/O.",
@@ -1789,12 +1803,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "s390_pci_mmio_read,"
 #endif
 #ifdef SYS_s390_pci_mmio_write
-	  "s390_pci_mmio_write"
+	  "s390_pci_mmio_write,"
 #endif
-#if !defined(SYS_ioperm) && !defined(SYS_iopl) && !defined(SYS_pciconfig_iobase) && !defined(SYS_pciconfig_read) && !defined(SYS_pciconfig_write) && !defined(SYS_s390_pci_mmio_read) && !defined(SYS_s390_pci_mmio_write)
-	  "__dummy_syscall__" // workaround for the following architectures which don't have any of above defined and empty syscall lists are not allowed:
-						  // arm64, arc32, hexagon32, loongarch64, m68k, mips_n32, mips_n64, nios2, openrisc32, parisc32, parisc64, riscv32, riscv64, superh and xtensa
-#endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@reboot",
 	  .description = "Reboot and kexec-related operations.",
@@ -1806,8 +1817,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "kexec_load,"
 #endif
 #ifdef SYS_reboot
-	  "reboot"
+	  "reboot,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@resources",
 	  .description = "Resource limits, priorities, CPU affinity and NUMA memory policies.",
@@ -1870,8 +1882,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "setrlimit,"
 #endif
 #ifdef SYS_set_ugetrlimit
-	  "ugetrlimit"
+	  "ugetrlimit,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@sandbox",
 	  .description = "Seccomp and Landlock sandbox configuration syscalls.",
@@ -1886,8 +1899,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "landlock_restrict_self,"
 #endif
 #ifdef SYS_seccomp
-	  "seccomp"
+	  "seccomp,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@setuid",
 	  .description = "Change user and group IDs.",
@@ -1932,8 +1946,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "setuid,"
 #endif
 #ifdef SYS_setuid32
-	  "setuid32"
+	  "setuid32,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@signal",
 	  .description = "Signal handling, masks, signal delivery and signalfd-based interfaces.",
@@ -1999,8 +2014,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "sigsuspend,"
 #endif
 #ifdef SYS_utrap_install
-	  "utrap_install"
+	  "utrap_install,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@swap",
 	  .description = "Enable and disable swap devices and partitions.",
@@ -2012,8 +2028,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "swapoff,"
 #endif
 #ifdef SYS_swapon
-	  "swapon"
+	  "swapon,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@sync",
 	  .description = "Synchronize file data and memory mappings to storage.",
@@ -2040,8 +2057,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "sync_file_range2,"
 #endif
 #ifdef SYS_syncfs
-	  "syncfs"
+	  "syncfs,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@system-service",
 	  .description = "Extended system call set focusing on the user (program).",
@@ -2275,8 +2293,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "userfaultfd,"
 #endif
 #ifdef SYS_vmsplice
-	  "vmsplice"
+	  "vmsplice,"
 #endif
+	  "__dummy_syscall__"
 	},
 	{ .name = "@timer",
 	  .description = "Timers, sleeps and interval operations.",
@@ -2339,8 +2358,9 @@ static const SyscallGroupList sysgroups[] = {
 	  "timerfd_settime64,"
 #endif
 #ifdef SYS_times
-	  "times"
+	  "times,"
 #endif
+	  "__dummy_syscall__"
 	}
 };
 
@@ -2504,8 +2524,16 @@ void syscall_in_groups_print(const char *groups_list) {
 
 				strcpy(new_list, sysgroups[i].list);
 
-				if (len > 0 && new_list[len - 1] == ',') // remove the last comma if present
-					new_list[len - 1] = '\0';
+				// remove dummy syscall
+				char *dummy = strstr(new_list, "__dummy_syscall__");
+				if (dummy)
+					*dummy = '\0';
+
+				int new_len = strlen(new_list);
+
+				// remove the last comma if present
+				if (len > 0 && new_list[new_len - 1] == ',')
+					new_list[new_len - 1] = '\0';
 
 				printf ("%s=%s\n", sysgroups[i].name, new_list);
 			}

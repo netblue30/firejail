@@ -6,6 +6,10 @@ noexec ${HOME}
 noexec ${RUNUSER}
 noexec /dev/mqueue
 noexec /dev/shm
+noexec /media
+noexec /mnt
+noexec /run/media
+noexec /run/mount
 noexec /run/shm
 noexec /tmp
 # /var is noexec by default for unprivileged users

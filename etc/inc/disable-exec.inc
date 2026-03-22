@@ -2,14 +2,16 @@
 # Persistent customizations should go in a .local file.
 include disable-exec.local
 
-noexec ${HOME}
-noexec ${RUNUSER}
-noexec /dev/mqueue
-noexec /dev/shm
+# Note: Keep this in sync with disable-write-mnt.inc.
 noexec /media
 noexec /mnt
 noexec /run/media
 noexec /run/mount
+
+noexec ${HOME}
+noexec ${RUNUSER}
+noexec /dev/mqueue
+noexec /dev/shm
 noexec /run/shm
 noexec /tmp
 # /var is noexec by default for unprivileged users

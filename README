@@ -453,6 +453,8 @@ Ethan R (https://github.com/AN3223)
 	- add allow-perl.inc to w3m.profile
 exponentialmatrix (https://github.com/exponentialmatrix)
 	- profiles: makedeb: allow dpkg (#6816)
+Fabian Foerg (https://github.com/faf0)
+	- docs: man: fix typo in example (#7106)
 Fabian Würfl (https://github.com/BafDyce)
 	- fixed race condition when creating a new directory
 	- Liferea profile
@@ -1224,6 +1226,8 @@ smitsohu (https://github.com/smitsohu)
 	- enhance mutt, goobox, baloo and clementine profiles
 sofoxe1 (https://github.com/sofoxe1)
 	- profiles: vesktop: fix screen sharing (#7043)
+	- profiles: disable-programs: add lact paths (#7083)
+	- profiles: mumble: include whitelist-runuser-common (#7084)
 soredake (https://github.com/soredake)
 	- fix steam startup with >=llvm-4
 	- fix handling of STEAM_RUNTIME_PREFER_HOST_LIBRARIES in steam profile

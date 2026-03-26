@@ -1,5 +1,11 @@
 firejail (0.9.81) baseline; urgency=low
   * work in progress
+  * docs: man: fix typo in example (#7106)
+  * docs: recommend .deb or building from source on debian/ubuntu (#7110)
+  * build: fix empty lists in syscall.c breaking compilation (#7108 #7109)
+  * profiles: disable-programs: add lact paths (#7083)
+  * profiles: disable-exec: add mount paths (#7112)
+  * profiles: mumble: include whitelist-runuser-common (#7084)
 -- netblue30 <netblue30@yahoo.com>  Sat, 14 Mar 2026 08:00:00 -0500
 
 firejail (0.9.80) baseline; urgency=low

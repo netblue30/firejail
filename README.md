@@ -91,10 +91,34 @@ For the supported versions, see [SECURITY.md](SECURITY.md).
 
 ### Debian
 
+Note: The versions from Debian stable and backports are likely to be outdated,
+so currently we recommend either downloading and installing the .deb package
+from the latest release:
+
+* <https://github.com/netblue30/firejail/releases/latest>
+
+Or [building from source](#building).
+
+<details>
+<summary>Old instructions</summary>
+
 Debian stable (bullseye): We recommend to use the
 [backports](https://packages.debian.org/bullseye-backports/firejail) package.
 
+</details>
+
 ### Ubuntu
+
+Note: The versions from the distribution and PPA are likely to be outdated, so
+currently we recommend either downloading and installing the .deb package from
+the latest release:
+
+* <https://github.com/netblue30/firejail/releases/latest>
+
+Or [building from source](#building).
+
+<details>
+<summary>Old instructions</summary>
 
 Note: The PPA recommendation is mainly for firejail itself; it should be fine
 to install firetools and firejail-related tools directly from the distribution
@@ -137,6 +161,8 @@ See the following discussions for details:
   repos?](https://github.com/netblue30/firejail/discussions/4666)
 * [How to install the latest version on Ubuntu and
   derivatives](https://github.com/netblue30/firejail/discussions/4663)
+
+</details>
 
 ### Other
 

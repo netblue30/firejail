@@ -84,7 +84,7 @@ mkdir ${HOME}/.local/share/doublefine
 mkdir ${HOME}/.local/share/Dredmor
 mkdir ${HOME}/.local/share/FasterThanLight
 mkdir ${HOME}/.local/share/feral-interactive
-mkdir ${HOME}/.local/share/godot
+mkdir ${HOME}/.local/share/godot/app_userdata
 mkdir ${HOME}/.local/share/HotlineMiami
 mkdir ${HOME}/.local/share/IntoTheBreach
 mkdir ${HOME}/.local/share/Paradox Interactive
@@ -126,7 +126,7 @@ whitelist ${HOME}/.local/share/doublefine
 whitelist ${HOME}/.local/share/Dredmor
 whitelist ${HOME}/.local/share/FasterThanLight
 whitelist ${HOME}/.local/share/feral-interactive
-whitelist ${HOME}/.local/share/godot
+whitelist ${HOME}/.local/share/godot/app_userdata
 whitelist ${HOME}/.local/share/HotlineMiami
 whitelist ${HOME}/.local/share/IntoTheBreach
 whitelist ${HOME}/.local/share/Paradox Interactive

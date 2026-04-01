@@ -26,7 +26,6 @@ on:
       - config.sh.in
       - configure
       - configure.ac
-      - install.sh
       - mkdeb.sh
       - mketc.sh
   pull_request:
@@ -47,7 +46,6 @@ on:
       - config.sh.in
       - configure
       - configure.ac
-      - install.sh
       - mkdeb.sh
       - mketc.sh
 

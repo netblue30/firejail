@@ -2702,7 +2702,7 @@ To help creating useful seccomp filters more easily, the following
 system call groups are defined: @aio, @basic-io, @chown, @clock,
 @cpu-emulation, @debug, @default, @default-nodebuggers, @default-keep,
 @file-system, @io-event, @ipc, @keyring, @memfd, @memlock, @module, @mount,
-@network-io, @obsolete, @privileged, @process, @raw-io, @reboot,
+@network-io, @obsolete, @privileged, @process, @program-keep, @raw-io, @reboot,
 @resources, @sandbox, @setuid, @swap, @sync, @system-service and @timer.
 More information about groups can be found in /usr/share/doc/firejail/syscalls.txt and see also \-\-debug-syscall-groups.
 .br

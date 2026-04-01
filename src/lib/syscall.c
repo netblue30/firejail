@@ -420,42 +420,11 @@ static const SyscallGroupList sysgroups[] = {
 	  "__dummy_syscall__"
 	},
 	{ .name = "@default-keep",
-	  .description = "Minimal core exec and other syscalls usually kept even under strict filters.",
+	  .description = "System calls needed by Firejail itself, kept even under strict filters.",
 	  .list =
-#ifdef SYS_arch_prctl
-	  "arch_prctl," // breaks glibc, i386 and x86_64 only
-#endif
-	  "clock_getres," // clock_getres*, stop programs that try to read theoretical resolution
-#ifdef SYS_clock_getres_time64
-	  "clock_getres_time64,"
-#endif
-	  "clock_gettime," // *gettime* and time, stop programs that try to read time
-#ifdef SYS_clock_gettime64
-	  "clock_gettime64,"
-#endif
-	  "clock_nanosleep," // clock_nanosleep*, stop programs that try to use sleep functions
-#ifdef SYS_clock_nanosleep_time64
-	  "clock_nanosleep_time64,"
-#endif
-#ifdef SYS_execv
-	  "execv," // sparc only
-#endif
 	  "execve,"
 	  "execveat," // commonly used by fexecve
-	  "exit," // breaks most Qt applications
-	  "futex," // frequently used and causes breakages
-	  "gettimeofday,"
-#ifdef SYS_mmap
-	  "mmap," // cannot load shared libraries
-#endif
-#ifdef SYS_mmap2
-	  "mmap2,"
-#endif
-	  "mprotect," // cannot load shared libraries
 	  "prctl,"
-#ifdef SYS_time
-	  "time,"
-#endif
 	  "__dummy_syscall__"
 	},
 	{ .name = "@default-nodebuggers",
@@ -1111,6 +1080,9 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_exec_with_loader
 	  "exec_with_loader,"
+#endif
+#ifdef SYS_execv
+	  "execv,"
 #endif
 #ifdef SYS_ftime
 	  "ftime,"
@@ -1778,6 +1750,53 @@ static const SyscallGroupList sysgroups[] = {
 #endif
 #ifdef SYS_waitpid
 	  "waitpid,"
+#endif
+	  "__dummy_syscall__"
+	},
+	{ .name = "@program-keep", // syscalls in this group should never be present in `@default` and its sub-groups
+	  .description = "Some system calls commonly invoked by programs, blocking them can cause widespread breakage.",
+	  .list =
+#ifdef SYS_arch_prctl
+	  "arch_prctl," // breaks glibc, i386 and x86_64 only
+#endif
+#ifdef SYS_clock_getres
+	  "clock_getres," // clock_getres*, stop programs that try to read theoretical resolution
+#endif
+#ifdef SYS_clock_getres_time64
+	  "clock_getres_time64,"
+#endif
+#ifdef SYS_clock_gettime
+	  "clock_gettime," // *gettime* and time, stop programs that try to read time
+#endif
+#ifdef SYS_clock_gettime64
+	  "clock_gettime64,"
+#endif
+#ifdef SYS_clock_nanosleep
+	  "clock_nanosleep," // clock_nanosleep*, stop programs that try to use sleep functions
+#endif
+#ifdef SYS_clock_nanosleep_time64
+	  "clock_nanosleep_time64,"
+#endif
+#ifdef SYS_exit
+	  "exit," // breaks most Qt applications
+#endif
+#ifdef SYS_futex
+	  "futex," // frequently used and causes breakages
+#endif
+#ifdef SYS_gettimeofday
+	  "gettimeofday,"
+#endif
+#ifdef SYS_mmap
+	  "mmap," // cannot load shared libraries
+#endif
+#ifdef SYS_mmap2
+	  "mmap2,"
+#endif
+#ifdef SYS_mprotect
+	  "mprotect," // cannot load shared libraries
+#endif
+#ifdef SYS_time
+	  "time,"
 #endif
 	  "__dummy_syscall__"
 	},

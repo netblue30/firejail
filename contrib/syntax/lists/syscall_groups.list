@@ -20,6 +20,7 @@ network-io
 obsolete
 privileged
 process
+program-keep
 raw-io
 reboot
 resources

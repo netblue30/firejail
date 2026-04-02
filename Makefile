@@ -325,7 +325,6 @@ DISTFILES = \
 	configure.ac \
 	contrib \
 	etc \
-	install.sh \
 	m4 \
 	mkdeb.sh \
 	mketc.sh \

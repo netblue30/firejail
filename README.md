@@ -164,6 +164,21 @@ See the following discussions for details:
 
 </details>
 
+### Arch Linux
+
+Arch Linux provides an official
+[firejail](https://archlinux.org/packages/extra/x86_64/firejail/) package in
+the `Extra` repository.
+
+Install it with:
+
+```sh
+sudo pacman -Syu firejail
+```
+
+After installing, verify the version with `firejail --version`. For optional
+desktop integration, see [Desktop integration](#desktop-integration).
+
 ### Other
 
 Firejail is available in multiple Linux distributions:
@@ -199,19 +214,6 @@ For other distributions, see the [generic instructions](#generic).
 
 See also [.gitlab-ci.yml](.gitlab-ci.yml) for how distribution-specific builds
 are done in CI.
-
-### Arch
-
-Note: The AUR package is not maintained by us.
-
-Install [firejail-git](https://aur.archlinux.org/packages/firejail-git) from
-the AUR.
-
-Example:
-
-```sh
-yay -S firejail-git
-```
 
 ### Debian
 

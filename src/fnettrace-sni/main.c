@@ -17,7 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include "fnettrace_sni.h"
+#include "../include/fnettrace_common.h"
 #include "../include/gcov_wrapper.h"
 #include <sys/ioctl.h>
 #include <time.h>

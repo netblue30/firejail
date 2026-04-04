@@ -17,8 +17,8 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#ifndef FNETTRACE_SNI_H
-#define FNETTRACE_SNI_H
+#ifndef FNETTRACE_COMMON_H
+#define FNETTRACE_COMMON_H
 
 #include "../include/common.h"
 #include <unistd.h>

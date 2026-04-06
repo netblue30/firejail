@@ -14,7 +14,7 @@ blacklist-nolog ${HOME}/.adobe
 blacklist-nolog ${HOME}/.ammonite/history
 blacklist-nolog ${HOME}/.cache/greenclip*
 blacklist-nolog ${HOME}/.cache/mupdf.history
-blacklist-nolog ${HOME}/.cache/xfce4/clipman/*
+blacklist-nolog ${HOME}/.cache/xfce4/clipman
 blacklist-nolog ${HOME}/.histfile
 blacklist-nolog ${HOME}/.history
 blacklist-nolog ${HOME}/.kde/share/apps/klipper

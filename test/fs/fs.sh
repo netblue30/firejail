@@ -125,6 +125,9 @@ echo "TESTING: blacklist glob (test/fs/option_blacklist_glob.exp)"
 ./option_blacklist_glob.exp
 rm -fr ~/_firejail_test_dir
 
+echo "TESTING: disable symlink to /dev/null (test/fs/disable-devnull-symlink.exp)"
+./disable-devnull-symlink.exp
+
 echo "TESTING: noblacklist blacklist noexec (test/fs/noblacklist-blacklist-noexec.exp)"
 ./noblacklist-blacklist-noexec.exp
 

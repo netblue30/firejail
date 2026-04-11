@@ -20,8 +20,9 @@
 #ifndef FNETTRACE_COMMON_H
 #define FNETTRACE_COMMON_H
 
-#include "../include/common.h"
-#include "../include/gcov_wrapper.h"
+#include "common.h"
+#include "gcov_wrapper.h"
+
 #include <sys/ioctl.h>
 #include <time.h>
 #include <linux/filter.h>

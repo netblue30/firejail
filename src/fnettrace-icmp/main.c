@@ -17,15 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
-#include "fnettrace_icmp.h"
-#include "../include/gcov_wrapper.h"
-#include <sys/ioctl.h>
-#include <time.h>
-#include <linux/filter.h>
-#include <linux/if_ether.h>
-#include <sys/prctl.h>
-#include <signal.h>
-#define MAX_BUF_SIZE (64 * 1024)
+#include "../include/fnettrace_common.h"
 
 char *type_description[19] = {
 	"Echo reply",

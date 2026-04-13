@@ -23,7 +23,6 @@
 #include "common.h"
 #include "gcov_wrapper.h"
 
-#include <sys/ioctl.h>
 #include <time.h>
 #include <linux/filter.h>
 #include <linux/if_ether.h>

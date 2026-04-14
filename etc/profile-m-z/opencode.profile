@@ -29,6 +29,10 @@ include disable-programs.inc
 include disable-x11.inc
 include disable-xdg.inc
 
+mkdir ${HOME}/.cache/opencode
+mkdir ${HOME}/.config/opencode
+mkdir ${HOME}/.local/share/opencode
+mkdir ${HOME}/.local/state/opencode
 whitelist ${HOME}/.cache/opencode
 whitelist ${HOME}/.config/git
 whitelist ${HOME}/.config/opencode

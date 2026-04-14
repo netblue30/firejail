@@ -35,7 +35,6 @@ whitelist ${HOME}/.config/opencode
 whitelist ${HOME}/.gitconfig
 whitelist ${HOME}/.local/share/opencode
 whitelist ${HOME}/.local/state/opencode
-
 include whitelist-common.inc
 
 apparmor

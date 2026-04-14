@@ -28,6 +28,7 @@ blacklist ${HOME}/.ZAP
 blacklist ${HOME}/.aMule
 blacklist ${HOME}/.abook
 blacklist ${HOME}/.addressbook
+blacklist ${HOME}/.agents
 blacklist ${HOME}/.alienblaster
 blacklist ${HOME}/.alienblaster_highscore
 blacklist ${HOME}/.alpine-smime

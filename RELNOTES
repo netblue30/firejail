@@ -1,11 +1,16 @@
 firejail (0.9.81) baseline; urgency=low
   * work in progress
+  * modif: create a new syscall group: `@program-keep` (9d90daf)
+  * bugfix: remove the unused variable `remove_cnt` in src/fsec-optimize/optimizer.c (156593d)
   * docs: man: fix typo in example (#7106)
   * docs: recommend .deb or building from source on debian/ubuntu (#7110)
   * build: fix empty lists in syscall.c breaking compilation (#7108 #7109)
+  * build: remove unused install.sh (#7124)
+  * build: merge fnettrace headers into fnettrace_common.h (#7127 f2f099c)
   * profiles: disable-programs: add lact paths (#7083)
   * profiles: disable-exec: add mount paths (#7112)
   * profiles: mumble: include whitelist-runuser-common (#7084)
+  * profiles: disable-common: add xfce clipman path (#7120)
 -- netblue30 <netblue30@yahoo.com>  Sat, 14 Mar 2026 08:00:00 -0500
 
 firejail (0.9.80) baseline; urgency=low

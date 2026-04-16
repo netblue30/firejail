@@ -64,13 +64,11 @@ static int optimize_blacklists(struct sock_filter *filter, int entries) {
 	// step1: extract information
 	Action action[entries];
 	memset(&action[0], 0, sizeof(Action) * entries);
-	int remove_cnt = 0;
 	for (i = 0; i < (entries - 1); i++) { // is_blacklist works on two consecutive lines; using entries - 1
 		if (is_blacklist(filter + i)) {
 			action[i]. to_fix_jumps = 1;
 			i++;
 			action[i].to_remove = 1;
-			remove_cnt++;
 		}
 	}
 

@@ -393,6 +393,8 @@ Davide Beatrici (https://github.com/davidebeatrici)
 	- allow access to ~/.cache/winetricks
 David Hyrule (https://github.com/Svaag)
 	- remove nou2f in ssh profile
+debugur (https://github.com/debugur)
+	- profiles: disable-common: add xfce clipman path (#7120)
 Deelvesh Bunjun (https://github.com/DeelveshBunjun)
 	- added xpdf profile
 DefaultUser (https://github.com/DefaultUser)
@@ -458,6 +460,8 @@ Fabian Foerg (https://github.com/faf0)
 Fabian Würfl (https://github.com/BafDyce)
 	- fixed race condition when creating a new directory
 	- Liferea profile
+fcrwr (https://github.com/fcrwr)
+	- build: remove unused install.sh (#7124)
 Felipe Barriga Richards (https://github.com/fbarriga)
 	- --private-etc fix
 Felix Pehla (https://github.com/FelixPehla)

@@ -1,12 +1,13 @@
 firejail (0.9.81) baseline; urgency=low
   * work in progress
   * modif: create a new syscall group: `@program-keep` (9d90daf)
-  * bugfix: remove the unused variable `remove_cnt` in src/fsec-optimize/optimizer.c (156593d)
   * docs: man: fix typo in example (#7106)
   * docs: recommend .deb or building from source on debian/ubuntu (#7110)
   * build: fix empty lists in syscall.c breaking compilation (#7108 #7109)
   * build: remove unused install.sh (#7124)
   * build: merge fnettrace headers into `fnettrace_common.h` (#7127)
+  * build: remove unused `remove_cnt` variable in src/fsec-optimize/optimizer.c
+    (156593d)
   * profiles: disable-programs: add lact paths (#7083)
   * profiles: disable-exec: add mount paths (#7112)
   * profiles: mumble: include whitelist-runuser-common (#7084)

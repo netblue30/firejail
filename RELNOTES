@@ -6,7 +6,7 @@ firejail (0.9.81) baseline; urgency=low
   * docs: recommend .deb or building from source on debian/ubuntu (#7110)
   * build: fix empty lists in syscall.c breaking compilation (#7108 #7109)
   * build: remove unused install.sh (#7124)
-  * build: merge fnettrace headers into fnettrace_common.h (#7127 f2f099c)
+  * build: merge fnettrace headers into `fnettrace_common.h` (#7127)
   * profiles: disable-programs: add lact paths (#7083)
   * profiles: disable-exec: add mount paths (#7112)
   * profiles: mumble: include whitelist-runuser-common (#7084)

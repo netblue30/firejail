@@ -10,14 +10,14 @@ match_max 100000
 send --  "file /usr/local/bin/ping\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"ping: symbolic link to /usr/bin/firejail"
+	-re "ping: symbolic link to .*/firejail-symlink"
 }
 after 100
 
 send --  "file /tmp/ttt/ping\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"ping: symbolic link to /usr/bin/firejail"
+	-re "ping: symbolic link to .*/firejail-symlink"
 }
 after 100
 

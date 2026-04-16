@@ -17,6 +17,7 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 bindir=@bindir@
 libdir=@libdir@
+libexecdir=@libexecdir@
 datarootdir=@datarootdir@
 docdir=@docdir@
 mandir=@mandir@
@@ -92,6 +93,7 @@ COMMON_CFLAGS = \
 	-DPREFIX='"$(prefix)"' \
 	-DBINDIR='"$(bindir)"' \
 	-DLIBDIR='"$(libdir)"' \
+	-DLIBEXECDIR='"$(libexecdir)"' \
 	-DVARDIR='"$(localstatedir)/lib/$(TARNAME)"' \
 	-DSYSCONFDIR='"$(sysconfdir)/$(TARNAME)"'
 

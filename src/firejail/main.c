@@ -63,6 +63,7 @@ gid_t firejail_gid = 0;
 static char child_stack[STACK_SIZE] __attribute__((aligned(STACK_ALIGNMENT)));		// space for child's stack
 
 Config cfg;					// configuration
+const char *env_symlink = NULL;
 int lockfd_directory = -1;
 int lockfd_network = -1;
 int arg_private = 0;				// mount private /home and /tmp directoryu
@@ -970,6 +971,10 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 static int check_arg(int argc, char **argv, const char *argument, int strict) {
 	int i;
 	int found = 0;
+
+	if (env_symlink)
+		return found;
+
 	for (i = 1; i < argc; i++) {
 		if (strict) {
 			if (strcmp(argv[i], argument) == 0) {
@@ -1072,6 +1077,12 @@ int main(int argc, char **argv, char **envp) {
 		fprintf(stderr, "Error: argv is invalid\n");
 		exit(1);
 	}
+
+	// Check if firejail was executed from a symlink (such as one created
+	// by firecfg), which means that argv[0] is the program to be sandboxed
+	// and so any `--foo` flags after it belong to the program and should
+	// not be parsed by firejail (see #7140).
+	env_symlink = env_get("FIREJAIL_SYMLINK");
 
 	// process --quiet
 	const char *env_quiet = env_get("FIREJAIL_QUIET");

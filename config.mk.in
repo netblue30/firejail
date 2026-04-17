@@ -89,8 +89,10 @@ COMMON_CFLAGS = \
 	-Wall -Wextra $(HAVE_FATAL_WARNINGS) \
 	-Wformat -Wformat-security \
 	-fstack-protector-all \
-	-DPREFIX='"$(prefix)"' -DSYSCONFDIR='"$(sysconfdir)/$(TARNAME)"' \
-	-DLIBDIR='"$(libdir)"' -DBINDIR='"$(bindir)"' \
+	-DPREFIX='"$(prefix)"' \
+	-DSYSCONFDIR='"$(sysconfdir)/$(TARNAME)"' \
+	-DLIBDIR='"$(libdir)"' \
+	-DBINDIR='"$(bindir)"' \
 	-DVARDIR='"$(localstatedir)/lib/$(TARNAME)"'
 
 PROG_CFLAGS = \

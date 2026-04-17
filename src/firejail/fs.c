@@ -60,11 +60,11 @@ static int disable_file(OPERATION op, const char *filename) {
 	EUID_ASSERT();
 
 	// Resolve all symlinks
-	char* fname = realpath(filename, NULL);
-	if (fname == NULL && errno != EACCES) {
+	char* rpath = realpath(filename, NULL);
+	if (rpath == NULL && errno != EACCES) {
 		return 1;
 	}
-	if (fname == NULL && errno == EACCES) {
+	if (rpath == NULL && errno == EACCES) {
 		// realpath and stat functions will fail on FUSE filesystems
 		// they don't seem to like a uid of 0
 		// force mounting
@@ -95,22 +95,38 @@ static int disable_file(OPERATION op, const char *filename) {
 		}
 	}
 
-	assert(fname);
+	assert(rpath);
 	// check for firejail executable
 	// we might have a file found in ${PATH} pointing to /usr/bin/firejail
 	// blacklisting it here will end up breaking situations like user clicks on a link in Thunderbird
 	//     and expects Firefox to open in the same sandbox
-	if (strcmp(BINDIR "/firejail", fname) == 0) {
-		free(fname);
+	if (strcmp(BINDIR "/firejail", rpath) == 0) {
+		free(rpath);
 		return 1;
 	}
 
+	int follow_symlinks = 1;
+
+	// Users may try to disable writing to certain paths in the user home
+	// by replacing them with symlinks to /dev/null, so avoid following
+	// symlinks to /dev/null to prevent disabling /dev/null itself, as that
+	// can lead to unexpected issues (see #5803).
+	if (strcmp(rpath, "/dev/null") == 0 && is_link(filename))
+		follow_symlinks = 0;
+
+	int extraflags = 0;
+	const char *fname = rpath; // filename to be used for operations
+	if (!follow_symlinks) {
+		fname = filename;
+		extraflags |= O_NOFOLLOW;
+	}
+
 	// if the file is not present, do nothing
-	int fd = open(fname, O_PATH|O_CLOEXEC);
+	int fd = open(fname, O_PATH|O_CLOEXEC|extraflags);
 	if (fd < 0) {
 		if (arg_debug)
 			printf("Warning (blacklisting): cannot open %s: %s\n", fname, strerror(errno));
-		free(fname);
+		free(rpath);
 		return 1;
 	}
 
@@ -118,7 +134,7 @@ static int disable_file(OPERATION op, const char *filename) {
 	if (fstat(fd, &s) < 0) {
 		if (arg_debug)
 			printf("Warning (blacklisting): cannot stat %s: %s\n", fname, strerror(errno));
-		free(fname);
+		free(rpath);
 		close(fd);
 		return 1;
 	}
@@ -214,7 +230,7 @@ static int disable_file(OPERATION op, const char *filename) {
 
 out:
 	close(fd);
-	free(fname);
+	free(rpath);
 	return retval;
 }
 

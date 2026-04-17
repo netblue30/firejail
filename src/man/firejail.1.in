@@ -247,6 +247,13 @@ Symbolic link handling: Blacklisting a path that is a symbolic link will also
 blacklist the path that it points to.
 For example, if ~/foo is blacklisted and it points to /bar, then /bar will also
 be blacklisted.
+Symlinks to /dev/null are not followed (only the symlink itself will be
+affected), as replacing certain paths with symlinks to /dev/null is not
+uncommon and restricting access to /dev/null can lead to unexpected issues (see
+.UR https://github.com/netblue30/firejail/issues/5803
+#5803
+.UE ).
+Using /dev/null directly (instead of through a symlink) should work normally.
 .br
 
 .br

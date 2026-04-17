@@ -272,11 +272,11 @@ Format: <syscall number>  <syscall name>  <entry point>
 175   init_module                      sys_init_module
 176   delete_module                    sys_delete_module
 179   quotactl                         sys_quotactl
-181   getpmsg                          
-182   putpmsg                          
-183   afs_syscall                      
-184   tuxcall                          
-185   security                         
+181   getpmsg
+182   putpmsg
+183   afs_syscall
+184   tuxcall
+185   security
 186   gettid                           sys_gettid
 187   readahead                        sys_readahead
 188   setxattr                         sys_setxattr
@@ -299,7 +299,7 @@ Format: <syscall number>  <syscall name>  <entry point>
 207   io_destroy                       sys_io_destroy
 208   io_getevents                     sys_io_getevents
 210   io_cancel                        sys_io_cancel
-212   lookup_dcookie                   
+212   lookup_dcookie
 213   epoll_create                     sys_epoll_create
 216   remap_file_pages                 sys_remap_file_pages
 217   getdents64                       sys_getdents64

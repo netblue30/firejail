@@ -90,10 +90,10 @@ COMMON_CFLAGS = \
 	-Wformat -Wformat-security \
 	-fstack-protector-all \
 	-DPREFIX='"$(prefix)"' \
-	-DSYSCONFDIR='"$(sysconfdir)/$(TARNAME)"' \
-	-DLIBDIR='"$(libdir)"' \
 	-DBINDIR='"$(bindir)"' \
-	-DVARDIR='"$(localstatedir)/lib/$(TARNAME)"'
+	-DLIBDIR='"$(libdir)"' \
+	-DVARDIR='"$(localstatedir)/lib/$(TARNAME)"' \
+	-DSYSCONFDIR='"$(sysconfdir)/$(TARNAME)"'
 
 PROG_CFLAGS = \
 	$(COMMON_CFLAGS) \

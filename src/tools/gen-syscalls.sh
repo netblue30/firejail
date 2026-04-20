@@ -216,7 +216,12 @@ function gen_new_syscalls()
         echo "▶ $header" >> "$NEW_SYSCALLS_FILE"
 
         syscalls_block=$(extract_block "$ALL_SYSCALLS" "$header")
-        syscalls_block=$(echo "$syscalls_block" | awk '{printf "%-5s %-32s %s\n", $1, $2, $3}' | sort -n)
+        syscalls_block=$(
+            echo "$syscalls_block" |
+            awk '{printf "%-5s %-32s %s\n", $1, $2, $3}' | # Align columns.
+            sed 's/[[:space:]]*$//' | # Remove all trailing spaces.
+            sort -n
+        )
         syscalls_names=$(echo "$syscalls_block" | awk '{print $2}')
 
         if [[ ! -f "$old_header" ]] # If the header does not exist in the old directory, add all syscalls.

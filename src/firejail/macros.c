@@ -32,6 +32,18 @@ typedef struct macro_t {
 
 Macro macro[] = {
 	{
+		"${DESKTOP}",
+		"XDG_DESKTOP_DIR=\"$HOME/",
+		{"Desktop", "Рабочий стол", "Bureau", "Scrivania", "Escritorio", "Área de trabalho", "Schreibtisch"}
+	},
+
+	{
+		"${DOCUMENTS}",
+		"XDG_DOCUMENTS_DIR=\"$HOME/",
+		{"Documents", "Документы", "Documenti", "Documentos", "Dokumente"}
+	},
+
+	{
 		"${DOWNLOADS}",
 		"XDG_DOWNLOAD_DIR=\"$HOME/",
 		{"Downloads", "Загрузки", "Téléchargement", "Scaricati", "Descargas"}
@@ -44,27 +56,15 @@ Macro macro[] = {
 	},
 
 	{
-		"${VIDEOS}",
-		"XDG_VIDEOS_DIR=\"$HOME/",
-		{"Videos", "Видео", "Vidéos", "Video", "Vídeos"}
-	},
-
-	{
 		"${PICTURES}",
 		"XDG_PICTURES_DIR=\"$HOME/",
 		{"Pictures", "Изображения", "Images", "Immagini", "Imágenes", "Imagens", "Bilder"}
 	},
 
 	{
-		"${DESKTOP}",
-		"XDG_DESKTOP_DIR=\"$HOME/",
-		{"Desktop", "Рабочий стол", "Bureau", "Scrivania", "Escritorio", "Área de trabalho", "Schreibtisch"}
-	},
-
-	{
-		"${DOCUMENTS}",
-		"XDG_DOCUMENTS_DIR=\"$HOME/",
-		{"Documents", "Документы", "Documenti", "Documentos", "Dokumente"}
+		"${VIDEOS}",
+		"XDG_VIDEOS_DIR=\"$HOME/",
+		{"Videos", "Видео", "Vidéos", "Video", "Vídeos"}
 	},
 
 	{ 0 }

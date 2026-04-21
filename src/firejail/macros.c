@@ -200,10 +200,10 @@ char *expand_macros(const char *path) {
 
 	int called_as_root = 0;
 
-	if(geteuid() == 0)
+	if (geteuid() == 0)
 		called_as_root = 1;
 
-	if(called_as_root) {
+	if (called_as_root) {
 		EUID_USER();
 	}
 
@@ -218,28 +218,28 @@ char *expand_macros(const char *path) {
 	else if (strncmp(path, "${HOME}", 7) == 0) {
 		if (asprintf(&new_name, "%s%s", cfg.homedir, path + 7) == -1)
 			errExit("asprintf");
-		if(called_as_root)
+		if (called_as_root)
 			EUID_ROOT();
 		return new_name;
 	}
 	else if (*path == '~') {
 		if (asprintf(&new_name, "%s%s", cfg.homedir, path + 1) == -1)
 			errExit("asprintf");
-		if(called_as_root)
+		if (called_as_root)
 			EUID_ROOT();
 		return new_name;
 	}
 	else if (strncmp(path, "${CFG}", 6) == 0) {
 		if (asprintf(&new_name, "%s%s", SYSCONFDIR, path + 6) == -1)
 			errExit("asprintf");
-		if(called_as_root)
+		if (called_as_root)
 			EUID_ROOT();
 		return new_name;
 	}
 	else if (strncmp(path, "${RUNUSER}", 10) == 0) {
 		if (asprintf(&new_name, "/run/user/%u%s", getuid(), path + 10) == -1)
 			errExit("asprintf");
-		if(called_as_root)
+		if (called_as_root)
 			EUID_ROOT();
 		return new_name;
 	}
@@ -248,7 +248,7 @@ char *expand_macros(const char *path) {
 		if (directory) {
 			if (asprintf(&new_name, "%s/%s", cfg.homedir, directory) == -1)
 				errExit("asprintf");
-			if(called_as_root)
+			if (called_as_root)
 				EUID_ROOT();
 			free(directory);
 			return new_name;
@@ -259,7 +259,7 @@ char *expand_macros(const char *path) {
 	if (!rv)
 		errExit("strdup");
 
-	if(called_as_root)
+	if (called_as_root)
 		EUID_ROOT();
 
 	return rv;

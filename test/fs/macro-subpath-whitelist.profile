@@ -1,0 +1,6 @@
+whitelist ${DESKTOP}/_firejail_test_dir/a
+whitelist ${DOCUMENTS}/_firejail_test_dir/a
+whitelist ${DOWNLOADS}/_firejail_test_dir/a
+whitelist ${MUSIC}/_firejail_test_dir/a
+whitelist ${PICTURES}/_firejail_test_dir/a
+whitelist ${VIDEOS}/_firejail_test_dir/a

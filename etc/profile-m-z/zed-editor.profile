@@ -44,7 +44,8 @@ nosound
 notv
 nou2f
 novideo
-protocol unix,inet,inet6,netlink
+protocol unix,inet,inet6
+#restrict-namespaces
 seccomp
 # For hardening: `seccomp.block-secondary`
 
@@ -55,16 +56,11 @@ private-tmp
 # TODO: likely not complete.
 dbus-user filter
 dbus-user.talk org.freedesktop.portal.Desktop
+dbus-user.talk org.a11y.Bus
 # Add below line to `~/.config/firejail/zed-editor.local` to enable keyring-access.
 #dbus-user.talk org.freedesktop.secrets
-dbus-user.talk org.a11y.Bus
 dbus-system none
 
 deterministic-exit-code
 deterministic-shutdown
 noexec /tmp
-# Given use of extensions and subprocesses in Zed-editor, although I have not
-# found clear indication that it critically relies on user-namespaces right now,
-# it is very likely that granulary sandboxing will happen in the future as it
-# hosts a variety of external, programming-language-specific tools.
-#restrict-namespaces

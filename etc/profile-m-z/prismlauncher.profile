@@ -14,8 +14,8 @@ include disable-interpreters.inc
 include disable-proc.inc
 include disable-shell.inc
 
+whitelist ${DOWNLOADS}
 whitelist ${HOME}/.local/share/PrismLauncher
-whitelist ${HOME}/Downloads
 include whitelist-common.inc
 
 apparmor

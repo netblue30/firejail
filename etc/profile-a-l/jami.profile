@@ -10,9 +10,9 @@ include jami.local
 noblacklist ${HOME}/.config/jami.net
 
 mkdir ${HOME}/.config/jami.net
-mkdir ${HOME}/Videos/Jami
+mkdir ${VIDEOS}/Jami
 whitelist ${HOME}/.config/jami.net
-whitelist ${HOME}/Videos/Jami
+whitelist ${VIDEOS}/Jami
 
 # Redirect
 include jami-gnome.profile

@@ -23,16 +23,16 @@ noblacklist ${HOME}/.zoom
 
 nowhitelist ${DOWNLOADS}
 
+mkdir ${DOCUMENTS}/Zoom
 mkdir ${HOME}/.cache/zoom
 mkdir ${HOME}/.zoom
-mkdir ${HOME}/Documents/Zoom
 mkfile ${HOME}/.config/zoom.conf
 mkfile ${HOME}/.config/zoomus.conf
+whitelist ${DOCUMENTS}/Zoom
 whitelist ${HOME}/.cache/zoom
 whitelist ${HOME}/.config/zoom.conf
 whitelist ${HOME}/.config/zoomus.conf
 whitelist ${HOME}/.zoom
-whitelist ${HOME}/Documents/Zoom
 
 # Disable for now, see https://github.com/netblue30/firejail/issues/3726
 #private-etc alternatives,ca-certificates,crypto-policies,fonts,group,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,machine-id,nsswitch.conf,pki,resolv.conf,ssl

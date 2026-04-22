@@ -26,12 +26,6 @@ include disable-programs.inc
 include disable-x11.inc
 include disable-xdg.inc
 
-whitelist ${HOME}/.gemini
-whitelist ${HOME}/.config/git
-whitelist ${HOME}/.gitconfig
-
-include whitelist-common.inc
-
 apparmor
 caps.drop all
 ipc-namespace

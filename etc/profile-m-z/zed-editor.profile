@@ -9,9 +9,7 @@ ignore noexec ${HOME}
 
 noblacklist ${HOME}
 
-# NOTE: add common development-related modifications, such as blacklisting,
-# whitelisting, noexec, and other grants and permissions,
-# to `~/.config/firejail/allow-common-devel.local`.
+# NOTE: add common development-related modifications, such as blacklisting, whitelisting, noexec, and other grants and permissions, to `~/.config/firejail/allow-common-devel.local`.
 include allow-common-devel.inc
 
 include disable-common.inc
@@ -45,7 +43,11 @@ notv
 nou2f
 novideo
 protocol unix,inet,inet6
-#restrict-namespaces
+# restricting namespaces, because they aren't used (yet), and there are risks
+# attached to their availability. Use `ignore restrict-namespaces` in
+# `~/.config/firejail/zed-editor.local` to override this protective measure in
+# case programming-language tooling refuses to start.
+restrict-namespaces
 seccomp
 # For hardening: `seccomp.block-secondary`
 

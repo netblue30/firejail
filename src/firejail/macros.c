@@ -203,9 +203,8 @@ char *expand_macros(const char *path) {
 	if (geteuid() == 0)
 		called_as_root = 1;
 
-	if (called_as_root) {
+	if (called_as_root)
 		EUID_USER();
-	}
 
 	EUID_ASSERT();
 

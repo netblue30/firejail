@@ -101,7 +101,7 @@ echo "TESTING: macros (test/fs/macro.exp)"
 
 echo "TESTING: whitelist empty (test/fs/whitelist-empty.exp)"
 ./whitelist-empty.exp
-rm -f ~/Videos/_firejail_test_fil
+rm -f ~/Videos/_firejail_test_file
 rm -f ~/Pictures/_firejail_test_file
 rm -f ~/Music/_firejail_test_file
 rm -f ~/Downloads/_firejail_test_file

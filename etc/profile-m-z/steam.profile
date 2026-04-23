@@ -103,6 +103,7 @@ mkdir ${HOME}/.steam
 mkdir ${HOME}/Zomboid
 mkfile ${HOME}/.steampath
 mkfile ${HOME}/.steampid
+whitelist ${HOME}/.cache/nvidia
 whitelist ${HOME}/.config/Epic
 whitelist ${HOME}/.config/Loop_Hero
 whitelist ${HOME}/.config/MangoHud

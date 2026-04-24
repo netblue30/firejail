@@ -101,12 +101,12 @@ echo "TESTING: macros (test/fs/macro.exp)"
 
 echo "TESTING: whitelist empty (test/fs/whitelist-empty.exp)"
 ./whitelist-empty.exp
-rm -f ~/Videos/_firejail_test_file
-rm -f ~/Pictures/_firejail_test_file
-rm -f ~/Music/_firejail_test_file
-rm -f ~/Downloads/_firejail_test_file
-rm -f ~/Documents/_firejail_test_file
 rm -f ~/Desktop/_firejail_test_file
+rm -f ~/Documents/_firejail_test_file
+rm -f ~/Downloads/_firejail_test_file
+rm -f ~/Music/_firejail_test_file
+rm -f ~/Pictures/_firejail_test_file
+rm -f ~/Videos/_firejail_test_file
 
 echo "TESTING: private whitelist (test/fs/private-whitelist.exp)"
 ./private-whitelist.exp

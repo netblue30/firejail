@@ -5,6 +5,7 @@ Maintainer: netblue30 <netblue30@protonmail.com>
 Installed-Size: 2024
 Depends: libc6
 Suggests: python, python3
+Conflicts: firejail-profiles
 Section: admin
 Priority: optional
 Homepage: https://github.com/netblue30/firejail

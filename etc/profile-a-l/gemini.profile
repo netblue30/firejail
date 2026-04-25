@@ -26,11 +26,12 @@ include disable-programs.inc
 include disable-x11.inc
 include disable-xdg.inc
 
-whitelist ${HOME}/.gemini
-whitelist ${HOME}/.config/git
-whitelist ${HOME}/.gitconfig
+# Uncomment these if you do not want your agent to access your files, you can allow specific dirs in local customizations
+# whitelist ${HOME}/.gemini
+# whitelist ${HOME}/.config/git
+# whitelist ${HOME}/.gitconfig
 
-include whitelist-common.inc
+# include whitelist-common.inc
 
 apparmor
 caps.drop all

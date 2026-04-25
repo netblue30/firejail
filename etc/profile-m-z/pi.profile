@@ -27,17 +27,18 @@ include disable-programs.inc
 include disable-x11.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.agents
-mkdir ${HOME}/.pi
-whitelist ${HOME}/.agents
-whitelist ${HOME}/.config/git
-whitelist ${HOME}/.gitconfig
-whitelist ${HOME}/.pi
-include whitelist-common.inc
-include whitelist-run-common.inc
-include whitelist-runuser-common.inc
-include whitelist-usr-share-common.inc
-include whitelist-var-common.inc
+# Uncomment these if you do not want your agent to access your files, you can allow specific dirs in local customizations
+# mkdir ${HOME}/.agents
+# mkdir ${HOME}/.pi
+# whitelist ${HOME}/.agents
+# whitelist ${HOME}/.config/git
+# whitelist ${HOME}/.gitconfig
+# whitelist ${HOME}/.pi
+# include whitelist-common.inc
+# include whitelist-run-common.inc
+# include whitelist-runuser-common.inc
+# include whitelist-usr-share-common.inc
+# include whitelist-var-common.inc
 
 apparmor
 caps.drop all

@@ -29,17 +29,18 @@ include disable-programs.inc
 include disable-x11.inc
 include disable-xdg.inc
 
-mkdir ${HOME}/.cache/opencode
-mkdir ${HOME}/.config/opencode
-mkdir ${HOME}/.local/share/opencode
-mkdir ${HOME}/.local/state/opencode
-whitelist ${HOME}/.cache/opencode
-whitelist ${HOME}/.config/git
-whitelist ${HOME}/.config/opencode
-whitelist ${HOME}/.gitconfig
-whitelist ${HOME}/.local/share/opencode
-whitelist ${HOME}/.local/state/opencode
-include whitelist-common.inc
+# Uncomment these if you do not want your agent to access your files, you can allow specific dirs in local customizations
+# mkdir ${HOME}/.cache/opencode
+# mkdir ${HOME}/.config/opencode
+# mkdir ${HOME}/.local/share/opencode
+# mkdir ${HOME}/.local/state/opencode
+# whitelist ${HOME}/.cache/opencode
+# whitelist ${HOME}/.config/git
+# whitelist ${HOME}/.config/opencode
+# whitelist ${HOME}/.gitconfig
+# whitelist ${HOME}/.local/share/opencode
+# whitelist ${HOME}/.local/state/opencode
+# include whitelist-common.inc
 
 apparmor
 caps.drop all

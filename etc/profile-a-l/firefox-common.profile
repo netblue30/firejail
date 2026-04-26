@@ -113,7 +113,7 @@ dbus-user.talk org.freedesktop.portal.Documents
 #dbus-user.talk org.kde.kdeconnect
 #dbus-user.talk org.kde.kuiserver
 # Add the next lines to firefox-common.local to allow firefox to get notified
-# when system is switching light/dark style.
+# when the system switches to light/dark style.
 # dbus-user.broadcast ca.desrt.dconf=ca.desrt.dconf.*@/*
 # Add the next line to firefox-common.local to allow screensharing under
 # Wayland.

@@ -1,6 +1,6 @@
-whitelist ${VIDEOS}
-whitelist ${DOCUMENTS}
-whitelist ${MUSIC}
-whitelist ${DOWNLOADS}
-whitelist ${PICTURES}
 whitelist ${DESKTOP}
+whitelist ${DOCUMENTS}
+whitelist ${DOWNLOADS}
+whitelist ${MUSIC}
+whitelist ${PICTURES}
+whitelist ${VIDEOS}

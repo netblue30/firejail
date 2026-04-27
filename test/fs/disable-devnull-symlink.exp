@@ -21,31 +21,31 @@ send -- "firejail --noprofile --blacklist=./devnull_symlink ls -l /dev/null\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"crw-rw-rw-" {puts "OK\n"}
-	"cr--r--r--" {puts "TESTING ERROR 2\n";exit}
+	"cr--r--r--" {puts "TESTING ERROR 1.1\n";exit}
 }
 after 100
 
 send -- "firejail --noprofile --blacklist=./devnull_symlink touch /dev/null; echo ret \$?\r"
 expect {
-	timeout {puts "TESTING ERROR 3\n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	-re {ret 0} {puts "OK\n"}
-	-re {ret [1-9]} {puts "TESTING ERROR 4\n";exit}
+	-re {ret [1-9]} {puts "TESTING ERROR 2.1\n";exit}
 }
 after 100
 
 # Test that /dev/null can still be disabled directly (without a symlink).
 send -- "firejail --noprofile --blacklist=/dev/null ls -l /dev/null\r"
 expect {
-	timeout {puts "TESTING ERROR 5\n";exit}
+	timeout {puts "TESTING ERROR 3\n";exit}
 	"\\-r--------" {puts "OK\n"}
-	"crw-rw-rw-" {puts "TESTING ERROR 6\n";exit}
+	"crw-rw-rw-" {puts "TESTING ERROR 3.1\n";exit}
 }
 after 100
 
 send -- "firejail --noprofile --blacklist=/dev/null touch /dev/null; echo ret \$?\r"
 expect {
-	timeout {puts "TESTING ERROR 7\n";exit}
-	-re {ret 0} {puts "TESTING ERROR 8\n";exit}
+	timeout {puts "TESTING ERROR 4\n";exit}
+	-re {ret 0} {puts "TESTING ERROR 4.1\n";exit}
 	-re {ret [1-9]} {puts "OK\n"}
 }
 after 100

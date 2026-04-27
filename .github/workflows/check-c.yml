@@ -67,12 +67,12 @@ jobs:
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        ./configure CC=clang-14 SCAN_BUILD=scan-build-14
+        ./configure CC=clang-14
         --prefix=/usr --enable-fatal-warnings
         --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: scan-build
-      run: make -j "$(nproc)" scan-build
+      run: scan-build-14 make -j "$(nproc)" -Orecurse
 
   cppcheck:
     runs-on: ubuntu-24.04
@@ -139,7 +139,7 @@ jobs:
       run: ./configure || (cat config.log; exit 1)
 
     - name: make
-      run: make -j "$(nproc)"
+      run: make -j "$(nproc)" -Orecurse
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@95e58e9a2cdfd71adc6e0353d5c52f41a045d225

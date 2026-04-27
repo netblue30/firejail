@@ -78,7 +78,7 @@ jobs:
         --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
-      run: make -j "$(nproc)"
+      run: make -j "$(nproc)" -Orecurse
     - name: make install
       run: sudo make install
     - name: make installcheck
@@ -127,7 +127,7 @@ jobs:
         --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
-      run: make -j "$(nproc)"
+      run: make -j "$(nproc)" -Orecurse
     - name: make install
       run: sudo make install
     - name: make installcheck
@@ -168,7 +168,7 @@ jobs:
         --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
-      run: make -j "$(nproc)"
+      run: make -j "$(nproc)" -Orecurse
     - name: make install
       run: sudo make install
     - name: make installcheck
@@ -211,7 +211,7 @@ jobs:
         --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
-      run: make -j "$(nproc)"
+      run: make -j "$(nproc)" -Orecurse
     - name: make install
       run: sudo make install
     - name: make installcheck
@@ -258,7 +258,7 @@ jobs:
         --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)
     - name: make
-      run: make -j "$(nproc)"
+      run: make -j "$(nproc)" -Orecurse
     - name: make install
       run: sudo make install
     - name: make installcheck

@@ -23,7 +23,9 @@ build_ubuntu_package:
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
         - make dist
-        - ./mkdeb.sh --enable-fatal-warnings
+        - >
+            MAKEFLAGS="$MAKEFLAGS -Orecurse" ./mkdeb.sh
+            --enable-fatal-warnings
         - dpkg -i ./*.deb
         - make installcheck
 
@@ -41,7 +43,9 @@ build_debian_package:
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
         - make dist
-        - ./mkdeb.sh --enable-fatal-warnings
+        - >
+            MAKEFLAGS="$MAKEFLAGS -Orecurse" ./mkdeb.sh
+            --enable-fatal-warnings
         - dpkg -i ./*.deb
         - make installcheck
 
@@ -60,8 +64,8 @@ build_no_apparmor:
         - ./configure || (cat config.log; exit 1)
         - make dist
         - >
-            ./mkdeb.sh --enable-fatal-warnings
-            --disable-apparmor
+            MAKEFLAGS="$MAKEFLAGS -Orecurse" ./mkdeb.sh
+            --enable-fatal-warnings --disable-apparmor
         - dpkg -i ./*.deb
         - make installcheck
         - make installcheck | grep -F 'AppArmor support is disabled'
@@ -75,7 +79,9 @@ build_redhat_package:
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
         - make dist
-        - ./platform/rpm/mkrpm.sh --enable-fatal-warnings
+        - >
+            MAKEFLAGS="$MAKEFLAGS -Orecurse" ./platform/rpm/mkrpm.sh
+            --enable-fatal-warnings
         - rpm -i ./*.rpm
         - make installcheck
 
@@ -88,7 +94,9 @@ build_fedora_package:
         - ./ci/printenv.sh
         - ./configure || (cat config.log; exit 1)
         - make dist
-        - ./platform/rpm/mkrpm.sh --enable-fatal-warnings
+        - >
+            MAKEFLAGS="$MAKEFLAGS -Orecurse" ./platform/rpm/mkrpm.sh
+            --enable-fatal-warnings
         - rpm -i ./*.rpm
         - make installcheck
 
@@ -106,7 +114,7 @@ build_fedora_package:
 #        - >
 #            ./configure --prefix=/usr
 #            || (cat config.log; exit 1)
-#        - make
+#        - make -j "$(nproc)" -Orecurse
 #        - make install-strip
 #        - make installcheck
 

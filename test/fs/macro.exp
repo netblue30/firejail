@@ -52,7 +52,7 @@ sleep 1
 
 send -- "firejail --profile=./macro-blacklist.profile ls ~/Documents\r"
 expect {
-	timeout {puts "TESTING ERROR 9n";exit}
+	timeout {puts "TESTING ERROR 9\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
@@ -63,11 +63,11 @@ sleep 1
 
 send -- "firejail --profile=./macro-blacklist.profile ls ~/Downloads\r"
 expect {
-	timeout {puts "TESTING ERROR 11n";exit}
+	timeout {puts "TESTING ERROR 11\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
-	timeout {puts "TESTING ERROR 12n";exit}
+	timeout {puts "TESTING ERROR 12\n";exit}
 	"Permission denied"
 }
 sleep 1

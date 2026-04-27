@@ -31,7 +31,13 @@ include disable-xdg.inc
 # whitelist ${HOME}/.config/git
 # whitelist ${HOME}/.gitconfig
 
-# include whitelist-common.inc
+# Add the following lines to gemini.local to enable whitelisting in `${HOME}`.
+#whitelist ${HOME}/.config/git
+#whitelist ${HOME}/.gemini
+#whitelist ${HOME}/.git-credential-cache
+#whitelist ${HOME}/.git-credentials
+#whitelist ${HOME}/.gitconfig
+#include whitelist-common.inc
 # include whitelist-run-common.inc
 # include whitelist-runuser-common.inc
 # include whitelist-usr-share-common.inc

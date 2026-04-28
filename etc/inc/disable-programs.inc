@@ -111,7 +111,9 @@ blacklist ${HOME}/.cache/discover
 blacklist ${HOME}/.cache/dnox
 blacklist ${HOME}/.cache/dolphin
 blacklist ${HOME}/.cache/dolphin-emu
+blacklist ${HOME}/.cache/efreet
 blacklist ${HOME}/.cache/ephemeral
+blacklist ${HOME}/.cache/ephoto
 blacklist ${HOME}/.cache/epiphany
 blacklist ${HOME}/.cache/evolution
 blacklist ${HOME}/.cache/falkon
@@ -456,6 +458,7 @@ blacklist ${HOME}/.config/emailidentities
 blacklist ${HOME}/.config/emilia
 blacklist ${HOME}/.config/enchant
 blacklist ${HOME}/.config/eog
+blacklist ${HOME}/.config/ephoto
 blacklist ${HOME}/.config/epiphany
 blacklist ${HOME}/.config/equalx
 blacklist ${HOME}/.config/evince

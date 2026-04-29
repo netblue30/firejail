@@ -40,11 +40,11 @@ include disable-xdg.inc
 #whitelist ${HOME}/.gitconfig
 #whitelist ${HOME}/.local/share/opencode
 #whitelist ${HOME}/.local/state/opencode
-include whitelist-common.inc
+#include whitelist-common.inc
+#include whitelist-usr-share-common.inc
 include whitelist-run-common.inc
-include whitelist-runuser-common.inc
-include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
+whitelist ${RUNUSER}/openssh_agent
 
 apparmor
 caps.drop all

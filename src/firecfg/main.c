@@ -91,7 +91,8 @@ static void list(void) {
 		if (is_link(fullname)) {
 			char* fname = realpath(fullname, NULL);
 			if (fname) {
-				if (strcmp(fname, FIREJAIL_EXEC) == 0)
+				if ((strcmp(fname, FIREJAIL_EXEC) == 0) ||
+				    (strcmp(fname, FIREJAIL_SYMLINK_EXEC) == 0))
 					printf("%s\n", fullname);
 				free(fname);
 			}
@@ -124,7 +125,8 @@ static void clean(void) {
 		if (is_link(fullname)) {
 			char* fname = realpath(fullname, NULL);
 			if (fname) {
-				if (strcmp(fname, FIREJAIL_EXEC) == 0) {
+				if ((strcmp(fname, FIREJAIL_EXEC) == 0) ||
+				    (strcmp(fname, FIREJAIL_SYMLINK_EXEC) == 0)) {
 					char *ptr = strrchr(fullname, '/');
 					assert(ptr);
 					ptr++;
@@ -281,7 +283,7 @@ static void parse_config_file(const char *cfgfile, int do_symlink) {
 
 		// set link
 		if (do_symlink)
-			set_file(start, FIREJAIL_EXEC);
+			set_file(start, FIREJAIL_SYMLINK_EXEC);
 	}
 
 	fclose(fp);
@@ -369,7 +371,7 @@ static void set_links_homedir(const char *homedir) {
 			goto next;
 		}
 
-		set_file(exec, FIREJAIL_EXEC);
+		set_file(exec, FIREJAIL_SYMLINK_EXEC);
 next:
 		free(exec);
 	}
@@ -504,6 +506,8 @@ int main(int argc, char **argv) {
 	}
 
 	print_version();
+
+	printf("Symlink target: %s\n\n", FIREJAIL_SYMLINK_EXEC);
 	if (arg_debug)
 		printf("%s %d %d %d %d\n", user, getuid(), getgid(), geteuid(), getegid());
 

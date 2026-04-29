@@ -225,6 +225,9 @@ endif
 	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail src/profstats/profstats
 	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail src/etc-cleanup/etc-cleanup
 	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail src/fbwrap/fbwrap
+	# other scripts and executables
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(libexecdir)/firejail
+	$(INSTALL) -m 0755 src/firecfg/firejail-symlink.sh $(DESTDIR)$(libexecdir)/firejail/firejail-symlink
 	# plugins w/o read permission (non-dumpable)
 	$(INSTALL) -m 0711 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
 	$(INSTALL) -m 0711 -t $(DESTDIR)$(libdir)/firejail src/fshaper/fshaper.sh

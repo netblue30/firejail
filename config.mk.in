@@ -17,6 +17,7 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 bindir=@bindir@
 libdir=@libdir@
+libexecdir=@libexecdir@
 datarootdir=@datarootdir@
 docdir=@docdir@
 mandir=@mandir@
@@ -89,9 +90,12 @@ COMMON_CFLAGS = \
 	-Wall -Wextra $(HAVE_FATAL_WARNINGS) \
 	-Wformat -Wformat-security \
 	-fstack-protector-all \
-	-DPREFIX='"$(prefix)"' -DSYSCONFDIR='"$(sysconfdir)/$(TARNAME)"' \
-	-DLIBDIR='"$(libdir)"' -DBINDIR='"$(bindir)"' \
-	-DVARDIR='"$(localstatedir)/lib/$(TARNAME)"'
+	-DPREFIX='"$(prefix)"' \
+	-DBINDIR='"$(bindir)"' \
+	-DLIBDIR='"$(libdir)"' \
+	-DLIBEXECDIR='"$(libexecdir)"' \
+	-DVARDIR='"$(localstatedir)/lib/$(TARNAME)"' \
+	-DSYSCONFDIR='"$(sysconfdir)/$(TARNAME)"'
 
 PROG_CFLAGS = \
 	$(COMMON_CFLAGS) \

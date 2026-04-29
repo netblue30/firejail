@@ -16,5 +16,13 @@ echo "TESTING: firecfg (test/firecfg/firecfg.exp)"
 
 sudo rm -fr /tmp/ttt
 
+sudo cp -f firejail-program-args.sh /usr/bin/firejail-program-args
+sudo printf 'firejail-program-args\n' >/etc/firejail/firecfg.d/firejail-program-args.conf
+sudo firecfg
+echo "TESTING: firejail-program-args (test/firecfg/firejail-program-args.exp)"
+./firejail-program-args.exp
+sudo rm -f /etc/firejail/firecfg.d/firejail-program-args.conf
+sudo rm -f /usr/bin/firejail-program-args
+
 cd ../../
 ./mkgcov.sh

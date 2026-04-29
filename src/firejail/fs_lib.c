@@ -45,7 +45,8 @@ int is_firejail_link(const char *fname) {
 
 	int rv = 0;
 	const char *base = gnu_basename(rp);
-	if (strcmp(base, "firejail") == 0)
+	if ((strcmp(base, "firejail") == 0) ||
+	    (strcmp(base, "firejail-symlink") == 0))
 		rv = 1;
 
 	free(rp);

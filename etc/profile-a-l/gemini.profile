@@ -32,10 +32,10 @@ include disable-xdg.inc
 #whitelist ${HOME}/.git-credential-cache
 #whitelist ${HOME}/.git-credentials
 #whitelist ${HOME}/.gitconfig
-include whitelist-common.inc
+#include whitelist-common.inc
+#include whitelist-usr-share-common.inc
+whitelist ${RUNUSER}/openssh_agent
 include whitelist-run-common.inc
-include whitelist-runuser-common.inc
-include whitelist-usr-share-common.inc
 include whitelist-var-common.inc
 
 caps.drop all

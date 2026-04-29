@@ -12,6 +12,7 @@ firejail (0.9.81) baseline; urgency=low
   * profiles: disable-exec: add mount paths (#7112)
   * profiles: mumble: include whitelist-runuser-common (#7084)
   * profiles: disable-common: add xfce clipman path (#7120)
+  * new profile: pi (#7136)
 -- netblue30 <netblue30@yahoo.com>  Sat, 14 Mar 2026 08:00:00 -0500
 
 firejail (0.9.80) baseline; urgency=low

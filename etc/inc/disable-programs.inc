@@ -28,6 +28,7 @@ blacklist ${HOME}/.ZAP
 blacklist ${HOME}/.aMule
 blacklist ${HOME}/.abook
 blacklist ${HOME}/.addressbook
+blacklist ${HOME}/.agents
 blacklist ${HOME}/.alienblaster
 blacklist ${HOME}/.alienblaster_highscore
 blacklist ${HOME}/.alpine-smime
@@ -1181,6 +1182,7 @@ blacklist ${HOME}/.parallelrealities/blobwars
 blacklist ${HOME}/.parsec
 blacklist ${HOME}/.pcsxr
 blacklist ${HOME}/.penguin-command
+blacklist ${HOME}/.pi
 blacklist ${HOME}/.pine-crash
 blacklist ${HOME}/.pine-debug1
 blacklist ${HOME}/.pine-debug2

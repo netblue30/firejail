@@ -905,6 +905,7 @@ void disable_config(void) {
 	char *fname;
 	if (asprintf(&fname, "%s/.config/firejail", cfg.homedir) == -1)
 		errExit("asprintf");
+	fs_mkdir(fname);
 	disable_file(BLACKLIST_FILE, fname);
 	free(fname);
 #endif

@@ -32,6 +32,18 @@ typedef struct macro_t {
 
 Macro macro[] = {
 	{
+		"${DESKTOP}",
+		"XDG_DESKTOP_DIR=\"$HOME/",
+		{"Desktop", "Рабочий стол", "Bureau", "Scrivania", "Escritorio", "Área de trabalho", "Schreibtisch"}
+	},
+
+	{
+		"${DOCUMENTS}",
+		"XDG_DOCUMENTS_DIR=\"$HOME/",
+		{"Documents", "Документы", "Documenti", "Documentos", "Dokumente"}
+	},
+
+	{
 		"${DOWNLOADS}",
 		"XDG_DOWNLOAD_DIR=\"$HOME/",
 		{"Downloads", "Загрузки", "Téléchargement", "Scaricati", "Descargas"}
@@ -44,52 +56,32 @@ Macro macro[] = {
 	},
 
 	{
-		"${VIDEOS}",
-		"XDG_VIDEOS_DIR=\"$HOME/",
-		{"Videos", "Видео", "Vidéos", "Video", "Vídeos"}
-	},
-
-	{
 		"${PICTURES}",
 		"XDG_PICTURES_DIR=\"$HOME/",
 		{"Pictures", "Изображения", "Images", "Immagini", "Imágenes", "Imagens", "Bilder"}
 	},
 
 	{
-		"${DESKTOP}",
-		"XDG_DESKTOP_DIR=\"$HOME/",
-		{"Desktop", "Рабочий стол", "Bureau", "Scrivania", "Escritorio", "Área de trabalho", "Schreibtisch"}
-	},
-
-	{
-		"${DOCUMENTS}",
-		"XDG_DOCUMENTS_DIR=\"$HOME/",
-		{"Documents", "Документы", "Documenti", "Documentos", "Dokumente"}
+		"${VIDEOS}",
+		"XDG_VIDEOS_DIR=\"$HOME/",
+		{"Videos", "Видео", "Vidéos", "Video", "Vídeos"}
 	},
 
 	{ 0 }
 };
 
 // return -1 if not found
-int macro_id(const char *name) {
+int macro_id(const char *path) {
+	assert(path);
 	int i = 0;
 	while (macro[i].name != NULL) {
-		if (strcmp(name, macro[i].name) == 0)
+		size_t len = strlen(macro[i].name);
+		if (strncmp(path, macro[i].name, len) == 0)
 			return i;
 		i++;
 	}
 
 	return -1;
-}
-
-int is_macro(const char *name) {
-	assert(name);
-	int len = strlen(name);
-	if (len <= 4)
-		return 0;
-	if (*name == '$' && name[1] == '{' && name[len - 1] == '}')
-		return 1;
-	return 0;
 }
 
 // returns mallocated memory
@@ -175,17 +167,25 @@ static char *resolve_hardcoded(char *entries[]) {
 }
 
 // returns mallocated memory
-char *resolve_macro(const char *name) {
+char *resolve_macro(const char *path) {
 	char *rv = NULL;
-	int id = macro_id(name);
+	int id = macro_id(path);
 	if (id == -1)
 		return NULL;
 
-	rv = resolve_xdg(macro[id].xdg);
-	if (rv == NULL)
-		rv = resolve_hardcoded(macro[id].translation);
+	char *directory = resolve_xdg(macro[id].xdg);
+	if (!directory)
+		directory = resolve_hardcoded(macro[id].translation);
+	if (!directory)
+		return NULL;
+
+	size_t len = strlen(macro[id].name);
+	if (asprintf(&rv, "%s/%s%s", cfg.homedir, directory, path + len) == -1)
+		errExit("asprintf");
+	free(directory);
+
 	if (rv && arg_debug)
-		printf("Directory %s resolved as %s\n", name, rv);
+		printf("Path %s resolved as %s\n", path, rv);
 
 	return rv;
 }
@@ -200,66 +200,52 @@ char *expand_macros(const char *path) {
 
 	int called_as_root = 0;
 
-	if(geteuid() == 0)
+	if (geteuid() == 0)
 		called_as_root = 1;
 
-	if(called_as_root) {
+	if (called_as_root)
 		EUID_USER();
-	}
 
 	EUID_ASSERT();
 
 	// Replace home macro
-	char *new_name = NULL;
+	char *rv = NULL;
 	if (strncmp(path, "$HOME", 5) == 0) {
 		fprintf(stderr, "Error: $HOME is not allowed in profile files, please replace it with ${HOME}\n");
 		exit(1);
 	}
 	else if (strncmp(path, "${HOME}", 7) == 0) {
-		if (asprintf(&new_name, "%s%s", cfg.homedir, path + 7) == -1)
+		if (asprintf(&rv, "%s%s", cfg.homedir, path + 7) == -1)
 			errExit("asprintf");
-		if(called_as_root)
-			EUID_ROOT();
-		return new_name;
+		goto out;
 	}
 	else if (*path == '~') {
-		if (asprintf(&new_name, "%s%s", cfg.homedir, path + 1) == -1)
+		if (asprintf(&rv, "%s%s", cfg.homedir, path + 1) == -1)
 			errExit("asprintf");
-		if(called_as_root)
-			EUID_ROOT();
-		return new_name;
+		goto out;
 	}
 	else if (strncmp(path, "${CFG}", 6) == 0) {
-		if (asprintf(&new_name, "%s%s", SYSCONFDIR, path + 6) == -1)
+		if (asprintf(&rv, "%s%s", SYSCONFDIR, path + 6) == -1)
 			errExit("asprintf");
-		if(called_as_root)
-			EUID_ROOT();
-		return new_name;
+		goto out;
 	}
 	else if (strncmp(path, "${RUNUSER}", 10) == 0) {
-		if (asprintf(&new_name, "/run/user/%u%s", getuid(), path + 10) == -1)
+		if (asprintf(&rv, "/run/user/%u%s", getuid(), path + 10) == -1)
 			errExit("asprintf");
-		if(called_as_root)
-			EUID_ROOT();
-		return new_name;
+		goto out;
 	}
 	else {
-		char *directory = resolve_macro(path);
-		if (directory) {
-			if (asprintf(&new_name, "%s/%s", cfg.homedir, directory) == -1)
-				errExit("asprintf");
-			if(called_as_root)
-				EUID_ROOT();
-			free(directory);
-			return new_name;
-		}
+		rv = resolve_macro(path);
+		if (rv)
+			goto out;
 	}
 
-	char *rv = strdup(path);
+	assert(rv == NULL);
+	rv = strdup(path);
 	if (!rv)
 		errExit("strdup");
-
-	if(called_as_root)
+out:
+	if (called_as_root)
 		EUID_ROOT();
 
 	return rv;
@@ -279,7 +265,7 @@ void invalid_filename(const char *fname, int globbing) {
 	else {
 		int id = macro_id(fname);
 		if (id != -1)
-			return;
+			ptr = fname + strlen(macro[id].name);
 	}
 
 	reject_meta_chars(ptr, globbing);

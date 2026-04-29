@@ -593,7 +593,7 @@ void fs_whitelist(void) {
 		char *expanded = expand_macros(dataptr);
 
 		// check if respolving the macro was successful
-		if (is_macro(expanded) && macro_id(expanded) > -1) {
+		if (macro_id(expanded) > -1) {
 			if (!nowhitelist_flag && (have_topdir(cfg.homedir, topdirs) || add_topdir(cfg.homedir, topdirs, expanded)) && !arg_quiet) {
 				fprintf(stderr, "***\n");
 				fprintf(stderr, "*** Warning: cannot whitelist %s directory\n", expanded);

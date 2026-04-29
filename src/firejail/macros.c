@@ -72,6 +72,7 @@ Macro macro[] = {
 
 // return -1 if not found
 int macro_id(const char *name) {
+	assert(path);
 	int i = 0;
 	while (macro[i].name != NULL) {
 		if (strcmp(name, macro[i].name) == 0)
@@ -80,16 +81,6 @@ int macro_id(const char *name) {
 	}
 
 	return -1;
-}
-
-int is_macro(const char *name) {
-	assert(name);
-	int len = strlen(name);
-	if (len <= 4)
-		return 0;
-	if (*name == '$' && name[1] == '{' && name[len - 1] == '}')
-		return 1;
-	return 0;
 }
 
 // returns mallocated memory

@@ -41,10 +41,11 @@ include disable-xdg.inc
 #whitelist ${HOME}/.local/share/opencode
 #whitelist ${HOME}/.local/state/opencode
 #include whitelist-common.inc
-#include whitelist-usr-share-common.inc
-include whitelist-run-common.inc
-include whitelist-var-common.inc
+
 whitelist ${RUNUSER}/openssh_agent
+include whitelist-run-common.inc
+#include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 apparmor
 caps.drop all
@@ -73,8 +74,8 @@ private-dev
 private-etc @network,@tls-ca
 private-tmp
 
-dbus-system none
 dbus-user none
+dbus-system none
 
 env NO_BROWSER=true
 restrict-namespaces

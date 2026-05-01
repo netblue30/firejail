@@ -35,10 +35,11 @@ include disable-xdg.inc
 #whitelist ${HOME}/.gitconfig
 #whitelist ${HOME}/.pi
 #include whitelist-common.inc
-#include whitelist-usr-share-common.inc
-include whitelist-run-common.inc
-include whitelist-var-common.inc
+
 whitelist ${RUNUSER}/openssh_agent
+include whitelist-run-common.inc
+#include whitelist-usr-share-common.inc
+include whitelist-var-common.inc
 
 caps.drop all
 ipc-namespace
@@ -66,7 +67,7 @@ private-dev
 private-etc @network,@tls-ca
 private-tmp
 
-dbus-system none
 dbus-user none
+dbus-system none
 
 restrict-namespaces

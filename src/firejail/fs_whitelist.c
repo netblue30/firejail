@@ -596,8 +596,8 @@ void fs_whitelist(void) {
 		if (is_macro(expanded) && macro_id(expanded) > -1) {
 			if (!nowhitelist_flag && (have_topdir(cfg.homedir, topdirs) || add_topdir(cfg.homedir, topdirs, expanded)) && !arg_quiet) {
 				fprintf(stderr, "***\n");
-				fprintf(stderr, "*** Warning: cannot whitelist %s directory\n", expanded);
-				fprintf(stderr, "*** Any file saved in this directory will be lost when the sandbox is closed.\n");
+				fprintf(stderr, "*** Warning: cannot whitelist %s path\n", expanded);
+				fprintf(stderr, "*** Any file saved in this path will be lost when the sandbox is closed.\n");
 				fprintf(stderr, "***\n");
 			}
 			entry = entry->next;

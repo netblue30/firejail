@@ -7,39 +7,53 @@ set timeout 3
 spawn $env(SHELL)
 match_max 100000
 
+# Test that macros work with subpaths (see #2359).
+send -- "firejail --profile=./macro-subpath-whitelist.profile ls \
+	~/Desktop/_firejail_test_dir \
+	~/Documents/_firejail_test_dir \
+	~/Downloads/_firejail_test_dir \
+	~/Music/_firejail_test_dir \
+	~/Pictures/_firejail_test_dir \
+	~/Videos/_firejail_test_dir \
+\r"
 
-send -- "firejail --profile=./macro-whitelist.profile ls ~\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"Desktop"
+	"Desktop/_firejail_test_dir/a" {}
+	"Desktop/_firejail_test_dir/b" {puts "TESTING ERROR 1.1\n";exit}
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"Documents"
+	"Documents/_firejail_test_dir/a" {}
+	"Documents/_firejail_test_dir/b" {puts "TESTING ERROR 2.1\n";exit}
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"Downloads"
+	"Downloads/_firejail_test_dir/a" {}
+	"Downloads/_firejail_test_dir/b" {puts "TESTING ERROR 3.1\n";exit}
 }
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"Music"
+	"Music/_firejail_test_dir/a" {}
+	"Music/_firejail_test_dir/b" {puts "TESTING ERROR 4.1\n";exit}
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
-	"Pictures"
+	"Pictures/_firejail_test_dir/a" {}
+	"Pictures/_firejail_test_dir/b" {puts "TESTING ERROR 5.1\n";exit}
 }
 expect {
 	timeout {puts "TESTING ERROR 6\n";exit}
-	"Videos"
+	"Videos/_firejail_test_dir/a" {}
+	"Videos/_firejail_test_dir/b" {puts "TESTING ERROR 6.1\n";exit}
 }
 after 100
 
-send -- "firejail --profile=./macro-blacklist.profile ls ~/Desktop; echo ret \$?\r"
+send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Desktop/_firejail_test_dir; echo ret \$?\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -51,7 +65,7 @@ expect {
 }
 after 100
 
-send -- "firejail --profile=./macro-blacklist.profile ls ~/Documents; echo ret \$?\r"
+send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Documents/_firejail_test_dir; echo ret \$?\r"
 expect {
 	timeout {puts "TESTING ERROR 9\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -63,7 +77,7 @@ expect {
 }
 after 100
 
-send -- "firejail --profile=./macro-blacklist.profile ls ~/Downloads; echo ret \$?\r"
+send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Downloads/_firejail_test_dir; echo ret \$?\r"
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -75,7 +89,7 @@ expect {
 }
 after 100
 
-send -- "firejail --profile=./macro-blacklist.profile ls ~/Music; echo ret \$?\r"
+send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Music/_firejail_test_dir; echo ret \$?\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -87,7 +101,7 @@ expect {
 }
 after 100
 
-send -- "firejail --profile=./macro-blacklist.profile ls ~/Pictures; echo ret \$?\r"
+send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Pictures/_firejail_test_dir; echo ret \$?\r"
 expect {
 	timeout {puts "TESTING ERROR 15\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -99,7 +113,7 @@ expect {
 }
 after 100
 
-send -- "firejail --profile=./macro-blacklist.profile ls ~/Videos; echo ret \$?\r"
+send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Videos/_firejail_test_dir; echo ret \$?\r"
 expect {
 	timeout {puts "TESTING ERROR 17\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -111,7 +125,7 @@ expect {
 }
 after 100
 
-send -- "firejail --profile=./macro-readonly.profile touch ~/Desktop/_firejail_test_file; echo ret \$?\r"
+send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Desktop/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
 expect {
 	timeout {puts "TESTING ERROR 19\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -123,7 +137,7 @@ expect {
 }
 after 100
 
-send -- "firejail --profile=./macro-readonly.profile touch ~/Documents/_firejail_test_file; echo ret \$?\r"
+send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Documents/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
 expect {
 	timeout {puts "TESTING ERROR 21\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -135,7 +149,7 @@ expect {
 }
 after 100
 
-send -- "firejail --profile=./macro-readonly.profile touch ~/Downloads/_firejail_test_file; echo ret \$?\r"
+send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Downloads/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
 expect {
 	timeout {puts "TESTING ERROR 23\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -147,7 +161,7 @@ expect {
 }
 after 100
 
-send -- "firejail --profile=./macro-readonly.profile touch ~/Music/_firejail_test_file; echo ret \$?\r"
+send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Music/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
 expect {
 	timeout {puts "TESTING ERROR 25\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -159,7 +173,7 @@ expect {
 }
 after 100
 
-send -- "firejail --profile=./macro-readonly.profile touch ~/Pictures/_firejail_test_file; echo ret \$?\r"
+send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Pictures/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
 expect {
 	timeout {puts "TESTING ERROR 27\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
@@ -171,7 +185,7 @@ expect {
 }
 after 100
 
-send -- "firejail --profile=./macro-readonly.profile touch ~/Videos/_firejail_test_file; echo ret \$?\r"
+send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Videos/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
 expect {
 	timeout {puts "TESTING ERROR 29\n";exit}
 	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"

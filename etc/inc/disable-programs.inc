@@ -201,6 +201,7 @@ blacklist ${HOME}/.cache/nsxiv
 blacklist ${HOME}/.cache/nvim
 blacklist ${HOME}/.cache/ocenaudio
 blacklist ${HOME}/.cache/okular
+blacklist ${HOME}/.cache/opencode
 blacklist ${HOME}/.cache/opera
 blacklist ${HOME}/.cache/opera-beta
 blacklist ${HOME}/.cache/opera-developer
@@ -620,6 +621,7 @@ blacklist ${HOME}/.config/okularrc
 blacklist ${HOME}/.config/onboard
 blacklist ${HOME}/.config/onionshare
 blacklist ${HOME}/.config/onlyoffice
+blacklist ${HOME}/.config/opencode
 blacklist ${HOME}/.config/openmw
 blacklist ${HOME}/.config/openra
 blacklist ${HOME}/.config/opera
@@ -785,6 +787,7 @@ blacklist ${HOME}/.g8
 blacklist ${HOME}/.gallery-dl.conf
 blacklist ${HOME}/.gdfuse
 blacklist ${HOME}/.geekbench5
+blacklist ${HOME}/.gemini
 blacklist ${HOME}/.gimp*
 blacklist ${HOME}/.gist
 blacklist ${HOME}/.gitconfig
@@ -1075,6 +1078,7 @@ blacklist ${HOME}/.local/share/notes
 blacklist ${HOME}/.local/share/ocenaudio
 blacklist ${HOME}/.local/share/okular
 blacklist ${HOME}/.local/share/onlyoffice
+blacklist ${HOME}/.local/share/opencode
 blacklist ${HOME}/.local/share/openmw
 blacklist ${HOME}/.local/share/orage
 blacklist ${HOME}/.local/share/org.kde.gwenview
@@ -1127,6 +1131,7 @@ blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.local/state/ani-cli
 blacklist ${HOME}/.local/state/audacity
 blacklist ${HOME}/.local/state/mpv
+blacklist ${HOME}/.local/state/opencode
 blacklist ${HOME}/.local/state/pipewire
 blacklist ${HOME}/.local/state/pyradio
 blacklist ${HOME}/.lv2

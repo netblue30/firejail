@@ -542,10 +542,10 @@ uint32_t arp_assign(const char *dev, Bridge *br);
 
 // macros.c
 char *expand_macros(const char *path);
-char *resolve_macro(const char *name);
+char *resolve_macro(const char *path);
 void invalid_filename(const char *fname, int globbing);
-int is_macro(const char *name);
-int macro_id(const char *name);
+int is_macro(const char *path);
+int macro_id(const char *path);
 
 
 // util.c

@@ -39,6 +39,7 @@ noblacklist ${HOME}/.local/share/SuperHexagon
 noblacklist ${HOME}/.local/share/Terraria
 noblacklist ${HOME}/.local/share/vpltd
 noblacklist ${HOME}/.local/share/vulkan
+noblacklist ${HOME}/.nv
 noblacklist ${HOME}/.mbwarband
 noblacklist ${HOME}/.paradoxinteractive
 noblacklist ${HOME}/.paradoxlauncher
@@ -103,6 +104,7 @@ mkdir ${HOME}/.steam
 mkdir ${HOME}/Zomboid
 mkfile ${HOME}/.steampath
 mkfile ${HOME}/.steampid
+whitelist ${HOME}/.cache/mesa_shader_cache
 whitelist ${HOME}/.cache/nvidia
 whitelist ${HOME}/.config/Epic
 whitelist ${HOME}/.config/Loop_Hero
@@ -139,6 +141,7 @@ whitelist ${HOME}/.local/share/Terraria
 whitelist ${HOME}/.local/share/vpltd
 whitelist ${HOME}/.local/share/vulkan
 whitelist ${HOME}/.mbwarband
+whitelist ${HOME}/.nv
 whitelist ${HOME}/.paradoxinteractive
 whitelist ${HOME}/.paradoxlauncher
 whitelist ${HOME}/.prey

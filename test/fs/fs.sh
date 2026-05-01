@@ -98,15 +98,36 @@ echo "TESTING: private-cwd (test/fs/private-cwd.exp)"
 
 echo "TESTING: macros (test/fs/macro.exp)"
 ./macro.exp
+rm -f ~/Desktop/_firejail_test_file
+rm -f ~/Documents/_firejail_test_file
+rm -f ~/Downloads/_firejail_test_file
+rm -f ~/Music/_firejail_test_file
+rm -f ~/Pictures/_firejail_test_file
+rm -f ~/Videos/_firejail_test_file
+
+mkdir -p ~/Desktop/_firejail_test_dir/a
+mkdir -p ~/Desktop/_firejail_test_dir/b
+mkdir -p ~/Documents/_firejail_test_dir/a
+mkdir -p ~/Documents/_firejail_test_dir/b
+mkdir -p ~/Downloads/_firejail_test_dir/a
+mkdir -p ~/Downloads/_firejail_test_dir/b
+mkdir -p ~/Music/_firejail_test_dir/a
+mkdir -p ~/Music/_firejail_test_dir/b
+mkdir -p ~/Pictures/_firejail_test_dir/a
+mkdir -p ~/Pictures/_firejail_test_dir/b
+mkdir -p ~/Videos/_firejail_test_dir/a
+mkdir -p ~/Videos/_firejail_test_dir/b
+echo "TESTING: macro subpaths (test/fs/macro-subpath.exp)"
+./macro-subpath.exp
+rm -fr ~/Desktop/_firejail_test_dir
+rm -fr ~/Documents/_firejail_test_dir
+rm -fr ~/Downloads/_firejail_test_dir
+rm -fr ~/Music/_firejail_test_dir
+rm -fr ~/Pictures/_firejail_test_dir
+rm -fr ~/Videos/_firejail_test_dir
 
 echo "TESTING: whitelist empty (test/fs/whitelist-empty.exp)"
 ./whitelist-empty.exp
-rm -f ~/Videos/_firejail_test_fil
-rm -f ~/Pictures/_firejail_test_file
-rm -f ~/Music/_firejail_test_file
-rm -f ~/Downloads/_firejail_test_file
-rm -f ~/Documents/_firejail_test_file
-rm -f ~/Desktop/_firejail_test_file
 
 echo "TESTING: private whitelist (test/fs/private-whitelist.exp)"
 ./private-whitelist.exp

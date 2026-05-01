@@ -34,7 +34,7 @@ send -- "firejail --get=test ~/lstesting\r"
 sleep 1
 send -- "cat lstesting\r"
 expect {
-	timeout {puts "TESTING ERROR 2n";exit}
+	timeout {puts "TESTING ERROR 2\n";exit}
 	"my_testing"
 }
 after 100

@@ -12,23 +12,6 @@ noblacklist ${HOME}/.config/opencode
 noblacklist ${HOME}/.local/share/opencode
 noblacklist ${HOME}/.local/state/opencode
 
-# Allow /bin/sh (blacklisted by disable-shell.inc)
-include allow-bin-sh.inc
-
-# Allows files commonly used by IDEs
-include allow-common-devel.inc
-
-# Allow ssh (blacklisted by disable-common.inc)
-include allow-ssh.inc
-
-blacklist ${RUNUSER}
-
-include disable-common.inc
-include disable-proc.inc
-include disable-programs.inc
-include disable-x11.inc
-include disable-xdg.inc
-
 # Add the following lines to opencode.local to enable whitelisting in `${HOME}`.
 #mkdir ${HOME}/.cache/opencode
 #mkdir ${HOME}/.config/opencode
@@ -42,40 +25,7 @@ include disable-xdg.inc
 #whitelist ${HOME}/.local/state/opencode
 #include whitelist-common.inc
 
-whitelist ${RUNUSER}/openssh_agent
-include whitelist-run-common.inc
-#include whitelist-usr-share-common.inc
-include whitelist-var-common.inc
-
 apparmor
-caps.drop all
-ipc-namespace
-machine-id
-netfilter
-no3d
-nodvd
-nogroups
-noinput
-nonewprivs
-noprinters
-noroot
-nosound
-notv
-nou2f
-novideo
-protocol unix,inet,inet6,netlink
-seccomp
-seccomp.block-secondary
-tracelog
-
-disable-mnt
-private-cache
-private-dev
-private-etc @network,@tls-ca
-private-tmp
-
-dbus-user none
-dbus-system none
-
 env NO_BROWSER=true
-restrict-namespaces
+
+include llm-agent-common.inc

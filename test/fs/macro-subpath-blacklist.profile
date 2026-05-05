@@ -3,4 +3,5 @@ blacklist ${DOCUMENTS}/_firejail_test_dir
 blacklist ${DOWNLOADS}/_firejail_test_dir
 blacklist ${MUSIC}/_firejail_test_dir
 blacklist ${PICTURES}/_firejail_test_dir
+blacklist ${PROJECTS}/_firejail_test_dir
 blacklist ${VIDEOS}/_firejail_test_dir

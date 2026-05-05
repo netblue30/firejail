@@ -28,7 +28,7 @@ include disable-shell.inc
 include disable-x11.inc
 include disable-xdg.inc
 
-#whitelist ${HOME}/Projects
+#whitelist ${PROJECTS}
 #include whitelist-common.inc
 
 whitelist /usr/share/pkgconfig

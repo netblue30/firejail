@@ -62,6 +62,12 @@ Macro macro[] = {
 	},
 
 	{
+		"${PROJECTS}",
+		"XDG_PROJECTS_DIR=\"$HOME/",
+		{"Projects", "Проекты", "Projets", "Progetti", "Proyectos", "Projectos", "Projekte"}
+	},
+
+	{
 		"${VIDEOS}",
 		"XDG_VIDEOS_DIR=\"$HOME/",
 		{"Videos", "Видео", "Vidéos", "Video", "Vídeos"}

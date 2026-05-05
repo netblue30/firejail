@@ -14,6 +14,7 @@ send -- "firejail --profile=./macro-subpath-whitelist.profile ls \
 	~/Downloads/_firejail_test_dir \
 	~/Music/_firejail_test_dir \
 	~/Pictures/_firejail_test_dir \
+	~/Projects/_firejail_test_dir \
 	~/Videos/_firejail_test_dir \
 \r"
 
@@ -45,6 +46,11 @@ expect {
 	timeout {puts "TESTING ERROR 1.1 Pictures\n";exit}
 	"Pictures/_firejail_test_dir/a" {}
 	"Pictures/_firejail_test_dir/b" {puts "TESTING ERROR 1.2 Pictures\n";exit}
+}
+expect {
+	timeout {puts "TESTING ERROR 1.1 Projects\n";exit}
+	"Projects/_firejail_test_dir/a" {}
+	"Projects/_firejail_test_dir/b" {puts "TESTING ERROR 1.2 Projects\n";exit}
 }
 expect {
 	timeout {puts "TESTING ERROR 1.1 Videos\n";exit}
@@ -111,6 +117,18 @@ expect {
 	timeout {puts "TESTING ERROR 2.1 Pictures\n";exit}
 	"Permission denied" {}
 	-re {ret 0} {puts "TESTING ERROR 2.2 Pictures\n";exit}
+}
+after 100
+
+send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Projects/_firejail_test_dir; echo ret \$?\r"
+expect {
+	timeout {puts "TESTING ERROR 2 Projects\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.1 Projects\n";exit}
+	"Permission denied" {}
+	-re {ret 0} {puts "TESTING ERROR 2.2 Projects\n";exit}
 }
 after 100
 
@@ -184,6 +202,18 @@ expect {
 	timeout {puts "TESTING ERROR 3.1 Pictures\n";exit}
 	"Read-only file system" {}
 	-re {ret 0} {puts "TESTING ERROR 3.2 Pictures\n";exit}
+}
+after 100
+
+send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Projects/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
+expect {
+	timeout {puts "TESTING ERROR 3 Projects\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.1 Projects\n";exit}
+	"Read-only file system" {}
+	-re {ret 0} {puts "TESTING ERROR 3.2 Projects\n";exit}
 }
 after 100
 

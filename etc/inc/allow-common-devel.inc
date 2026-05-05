@@ -2,6 +2,9 @@
 # Persistent customizations should go in a .local file.
 include allow-common-devel.local
 
+# Default
+noblacklist ${PROJECTS}
+
 # Arduino
 noblacklist ${HOME}/.arduino15
 noblacklist ${HOME}/Arduino

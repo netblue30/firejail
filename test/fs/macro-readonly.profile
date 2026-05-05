@@ -3,4 +3,5 @@ read-only ${DOCUMENTS}
 read-only ${DOWNLOADS}
 read-only ${MUSIC}
 read-only ${PICTURES}
+read-only ${PROJECTS}
 read-only ${VIDEOS}

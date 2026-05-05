@@ -22,6 +22,7 @@ ignore read-only ${HOME}/.npmrc
 ignore read-only ${HOME}/.nvm
 ignore read-only ${HOME}/.yarnrc
 
+noblacklist ${PROJECTS}
 noblacklist ${HOME}/.cache/deno
 noblacklist ${HOME}/.deno
 noblacklist ${HOME}/.local/share/pnpm
@@ -46,8 +47,8 @@ include disable-shell.inc
 include disable-x11.inc
 include disable-xdg.inc
 
-# If you want whitelisting, change ${HOME}/Projects below to your node projects directory
-# and add the next lines to your nodejs-common.local.
+# If you want whitelisting, change ${PROJECTS} below to your node projects
+# directory and add the next lines to your nodejs-common.local.
 #mkdir ${HOME}/.local/share/pnpm
 #mkdir ${HOME}/.node-gyp
 #mkdir ${HOME}/.npm
@@ -58,6 +59,7 @@ include disable-xdg.inc
 #mkdir ${HOME}/.yarncache
 #mkfile ${HOME}/.npmrc
 #mkfile ${HOME}/.yarnrc
+#whitelist ${PROJECTS}
 #whitelist ${HOME}/.local/share/pnpm
 #whitelist ${HOME}/.node-gyp
 #whitelist ${HOME}/.npm
@@ -68,7 +70,6 @@ include disable-xdg.inc
 #whitelist ${HOME}/.yarn-config
 #whitelist ${HOME}/.yarncache
 #whitelist ${HOME}/.yarnrc
-#whitelist ${HOME}/Projects
 #include whitelist-common.inc
 
 whitelist /usr/share/doc/node

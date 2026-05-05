@@ -45,6 +45,7 @@
 #  ${HOME} (user's home)
 #  ${PATH} (contents of PATH env var)
 #  ${PICTURES}
+#  ${PROJECTS}
 #  ${MUSIC}
 #  ${RUNUSER} (/run/user/UID)
 #  ${VIDEOS}

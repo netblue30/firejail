@@ -34,6 +34,10 @@ expect {
 	"Pictures"
 }
 expect {
+	timeout {puts "TESTING ERROR 1.1 Projects\n";exit}
+	"Projects"
+}
+expect {
 	timeout {puts "TESTING ERROR 1.1 Videos\n";exit}
 	"Videos"
 }
@@ -97,6 +101,18 @@ expect {
 	timeout {puts "TESTING ERROR 2.1 Pictures\n";exit}
 	"Permission denied" {}
 	-re {ret 0} {puts "TESTING ERROR 2.2 Pictures\n";exit}
+}
+after 100
+
+send -- "firejail --profile=./macro-blacklist.profile ls ~/Projects; echo ret \$?\r"
+expect {
+	timeout {puts "TESTING ERROR 2 Projects\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 2.1 Projects\n";exit}
+	"Permission denied" {}
+	-re {ret 0} {puts "TESTING ERROR 2.2 Projects\n";exit}
 }
 after 100
 
@@ -170,6 +186,18 @@ expect {
 	timeout {puts "TESTING ERROR 3.1 Pictures\n";exit}
 	"Read-only file system" {}
 	-re {ret 0} {puts "TESTING ERROR 3.2 Pictures\n";exit}
+}
+after 100
+
+send -- "firejail --profile=./macro-readonly.profile touch ~/Projects/_firejail_test_file; echo ret \$?\r"
+expect {
+	timeout {puts "TESTING ERROR 3 Projects\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+	timeout {puts "TESTING ERROR 3.1 Projects\n";exit}
+	"Read-only file system" {}
+	-re {ret 0} {puts "TESTING ERROR 3.2 Projects\n";exit}
 }
 after 100
 

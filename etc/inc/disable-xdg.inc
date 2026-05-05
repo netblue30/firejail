@@ -5,6 +5,7 @@ include disable-xdg.local
 blacklist ${DOCUMENTS}
 blacklist ${MUSIC}
 blacklist ${PICTURES}
+blacklist ${PROJECTS}
 blacklist ${VIDEOS}
 
 # The following should be considered catch-all directories

@@ -1,5 +1,11 @@
-# Firejail common profile for LLM agents
+# Firejail profile for llm-agent-common
+# Description: Common profile for LLM agents
 # This file is overwritten after every install/update
+# Persistent local customizations
+include llm-agent-common.local
+# Persistent global definitions
+# added by caller profile
+#include globals.local
 
 # Allow /bin/sh (blacklisted by disable-shell.inc)
 include allow-bin-sh.inc

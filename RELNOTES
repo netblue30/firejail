@@ -24,7 +24,7 @@ firejail (0.9.81) baseline; urgency=low
   * profiles: firefox-common: allow auto light/dark theme switching (#7103)
   * profiles: steam: allow more 3d cache paths (#7149)
   * profiles: torbrowser-launcher: add no3d (#7143)
-  * profiles: add common LLM agent include (#7158)
+  * profiles: add llm-agent-common.inc (#7158)
   * new profile: gemini (#6936)
   * new profile: opencode (#7135)
   * new profile: pi (#7136)

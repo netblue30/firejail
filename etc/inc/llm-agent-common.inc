@@ -58,4 +58,6 @@ private-tmp
 dbus-user none
 dbus-system none
 
+env NO_BROWSER=true
+
 restrict-namespaces

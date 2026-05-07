@@ -17,7 +17,5 @@ noblacklist ${HOME}/.gemini
 #whitelist ${HOME}/.gitconfig
 #include whitelist-common.inc
 
-env NO_BROWSER=true
-
 # Redirect
 include llm-agent-common.inc

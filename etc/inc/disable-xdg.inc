@@ -6,6 +6,8 @@ blacklist ${DOCUMENTS}
 blacklist ${MUSIC}
 blacklist ${PICTURES}
 blacklist ${PROJECTS}
+blacklist ${PUBLICSHARE}
+blacklist ${TEMPLATES}
 blacklist ${VIDEOS}
 
 # The following should be considered catch-all directories

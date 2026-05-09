@@ -4,4 +4,6 @@ blacklist ${DOWNLOADS}
 blacklist ${MUSIC}
 blacklist ${PICTURES}
 blacklist ${PROJECTS}
+blacklist ${PUBLICSHARE}
+blacklist ${TEMPLATES}
 blacklist ${VIDEOS}

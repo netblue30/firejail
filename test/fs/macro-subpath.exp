@@ -8,13 +8,15 @@ spawn $env(SHELL)
 match_max 100000
 
 set macros [ dict create \
-	"DESKTOP"   "$::env(HOME)/Desktop" \
-	"DOCUMENTS" "$::env(HOME)/Documents" \
-	"DOWNLOADS" "$::env(HOME)/Downloads" \
-	"MUSIC"     "$::env(HOME)/Music" \
-	"PICTURES"  "$::env(HOME)/Pictures" \
-	"PROJECTS"  "$::env(HOME)/Projects" \
-	"VIDEOS"    "$::env(HOME)/Videos" \
+	"DESKTOP"     "$::env(HOME)/Desktop" \
+	"DOCUMENTS"   "$::env(HOME)/Documents" \
+	"DOWNLOADS"   "$::env(HOME)/Downloads" \
+	"MUSIC"       "$::env(HOME)/Music" \
+	"PICTURES"    "$::env(HOME)/Pictures" \
+	"PROJECTS"    "$::env(HOME)/Projects" \
+	"PUBLICSHARE" "$::env(HOME)/Public" \
+	"TEMPLATES"   "$::env(HOME)/Templates" \
+	"VIDEOS"      "$::env(HOME)/Videos" \
 ]
 
 # Test that macros work with subpaths (see #2359).

@@ -4,4 +4,6 @@ whitelist ${DOWNLOADS}
 whitelist ${MUSIC}
 whitelist ${PICTURES}
 whitelist ${PROJECTS}
+whitelist ${PUBLICSHARE}
+whitelist ${TEMPLATES}
 whitelist ${VIDEOS}

@@ -4,4 +4,6 @@ whitelist ${DOWNLOADS}/_firejail_test_dir/a
 whitelist ${MUSIC}/_firejail_test_dir/a
 whitelist ${PICTURES}/_firejail_test_dir/a
 whitelist ${PROJECTS}/_firejail_test_dir/a
+whitelist ${PUBLICSHARE}/_firejail_test_dir/a
+whitelist ${TEMPLATES}/_firejail_test_dir/a
 whitelist ${VIDEOS}/_firejail_test_dir/a

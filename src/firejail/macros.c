@@ -68,6 +68,18 @@ Macro macro[] = {
 	},
 
 	{
+		"${PUBLICSHARE}",
+		"XDG_PUBLICSHARE_DIR=\"$HOME/",
+		{"Public", "Общедоступные", "Public", "Pubblici", "Público", "Público", "Öffentlich"}
+	},
+
+	{
+		"${TEMPLATES}",
+		"XDG_TEMPLATES_DIR=\"$HOME/",
+		{"Templates", "Шаблоны", "Modèles", "Modelli", "Plantillas", "Modelos", "Vorlagen"}
+	},
+
+	{
 		"${VIDEOS}",
 		"XDG_VIDEOS_DIR=\"$HOME/",
 		{"Videos", "Видео", "Vidéos", "Video", "Vídeos"}

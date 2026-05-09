@@ -4,4 +4,6 @@ read-only ${DOWNLOADS}
 read-only ${MUSIC}
 read-only ${PICTURES}
 read-only ${PROJECTS}
+read-only ${PUBLICSHARE}
+read-only ${TEMPLATES}
 read-only ${VIDEOS}

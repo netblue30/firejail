@@ -14,6 +14,8 @@ macro_paths=(
 	"$HOME/Music"
 	"$HOME/Pictures"
 	"$HOME/Projects"
+	"$HOME/Public"
+	"$HOME/Templates"
 	"$HOME/Videos"
 )
 

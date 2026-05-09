@@ -10,6 +10,7 @@ include globals.local
 
 noblacklist ${HOME}/.config/libreoffice
 noblacklist ${DOCUMENTS}
+noblacklist ${TEMPLATES}
 
 # Allow gjs (blacklisted by disable-interpreters.inc)
 include allow-gjs.inc

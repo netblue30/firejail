@@ -47,7 +47,9 @@
 #  ${PATH} (contents of PATH env var)
 #  ${PICTURES}
 #  ${PROJECTS}
+#  ${PUBLICSHARE}
 #  ${RUNUSER} (/run/user/UID)
+#  ${TEMPLATES}
 #  ${VIDEOS}
 #
 # Check contents of ~/.config/user-dirs.dirs to see how they translate to actual paths.

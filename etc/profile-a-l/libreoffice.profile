@@ -8,6 +8,7 @@ include globals.local
 
 ignore hostname-randomize
 
+noblacklist ${TEMPLATES}
 noblacklist ${HOME}/.config/libreoffice
 noblacklist ${HOME}/.local/share/gvfs-metadata
 noblacklist /usr/local/sbin

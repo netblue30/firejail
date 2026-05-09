@@ -66,9 +66,7 @@ void netfilter_netlock(pid_t pid) {
 			env_apply_all();
 			umask(orig_umask);
 
-			char *fnetlock_path;
-			if (asprintf(&fnetlock_path, "%s/firejail/fnetlock", LIBDIR) == -1)
-				errExit("asprintf");
+			char *fnetlock_path = LIBDIR "/firejail/fnetlock";
 			char *log_arg;
 			if (asprintf(&log_arg, "--log=%s", flog) == -1)
 				errExit("asprintf");

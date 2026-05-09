@@ -66,11 +66,14 @@ void netfilter_netlock(pid_t pid) {
 			env_apply_all();
 			umask(orig_umask);
 
-			char *cmd;
-			if (asprintf(&cmd, "%s -e \"%s/firejail/fnetlock --tail --log=%s\"", terminal, LIBDIR, flog) == -1)
+			char *fnetlock_path;
+			if (asprintf(&fnetlock_path, "%s/firejail/fnetlock", LIBDIR) == -1)
 				errExit("asprintf");
-			int rv = system(cmd);
-			(void) rv;
+			char *log_arg;
+			if (asprintf(&log_arg, "--log=%s", flog) == -1)
+				errExit("asprintf");
+			char *exec_args[] = { terminal, "-e", fnetlock_path, "--tail", log_arg, NULL };
+			execv(terminal, exec_args);
 			exit(0);
 		}
 	}

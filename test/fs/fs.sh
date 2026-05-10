@@ -7,14 +7,20 @@ export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
+macro_paths=(
+	"$HOME/Desktop"
+	"$HOME/Documents"
+	"$HOME/Downloads"
+	"$HOME/Music"
+	"$HOME/Pictures"
+	"$HOME/Projects"
+	"$HOME/Videos"
+)
+
 # These directories are required by some tests:
-mkdir -p ~/Desktop
-mkdir -p ~/Documents
-mkdir -p ~/Downloads
-mkdir -p ~/Music
-mkdir -p ~/Pictures
-mkdir -p ~/Projects
-mkdir -p ~/Videos
+for path in "${macro_paths[@]}"; do
+	mkdir -p "$path"
+done
 
 echo "TESTING: tmpfs as regular user (test/fs/tmpfs.exp)"
 ./tmpfs.exp
@@ -104,37 +110,19 @@ echo "TESTING: private-cwd (test/fs/private-cwd.exp)"
 
 echo "TESTING: macros (test/fs/macro.exp)"
 ./macro.exp
-rm -f ~/Desktop/_firejail_test_file
-rm -f ~/Documents/_firejail_test_file
-rm -f ~/Downloads/_firejail_test_file
-rm -f ~/Music/_firejail_test_file
-rm -f ~/Pictures/_firejail_test_file
-rm -f ~/Projects/_firejail_test_file
-rm -f ~/Videos/_firejail_test_file
+for path in "${macro_paths[@]}"; do
+	rm -f "$path/_firejail_test_file"
+done
 
-mkdir -p ~/Desktop/_firejail_test_dir/a
-mkdir -p ~/Desktop/_firejail_test_dir/b
-mkdir -p ~/Documents/_firejail_test_dir/a
-mkdir -p ~/Documents/_firejail_test_dir/b
-mkdir -p ~/Downloads/_firejail_test_dir/a
-mkdir -p ~/Downloads/_firejail_test_dir/b
-mkdir -p ~/Music/_firejail_test_dir/a
-mkdir -p ~/Music/_firejail_test_dir/b
-mkdir -p ~/Pictures/_firejail_test_dir/a
-mkdir -p ~/Pictures/_firejail_test_dir/b
-mkdir -p ~/Projects/_firejail_test_dir/a
-mkdir -p ~/Projects/_firejail_test_dir/b
-mkdir -p ~/Videos/_firejail_test_dir/a
-mkdir -p ~/Videos/_firejail_test_dir/b
+for path in "${macro_paths[@]}"; do
+	mkdir -p "$path/_firejail_test_dir/a"
+	mkdir -p "$path/_firejail_test_dir/b"
+done
 echo "TESTING: macro subpaths (test/fs/macro-subpath.exp)"
 ./macro-subpath.exp
-rm -fr ~/Desktop/_firejail_test_dir
-rm -fr ~/Documents/_firejail_test_dir
-rm -fr ~/Downloads/_firejail_test_dir
-rm -fr ~/Music/_firejail_test_dir
-rm -fr ~/Pictures/_firejail_test_dir
-rm -fr ~/Projects/_firejail_test_dir
-rm -fr ~/Videos/_firejail_test_dir
+for path in "${macro_paths[@]}"; do
+	rm -fr "$path/_firejail_test_dir"
+done
 
 echo "TESTING: whitelist empty (test/fs/whitelist-empty.exp)"
 ./whitelist-empty.exp

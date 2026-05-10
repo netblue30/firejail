@@ -7,227 +7,57 @@ set timeout 3
 spawn $env(SHELL)
 match_max 100000
 
+set macros [ dict create \
+	"DESKTOP"   "$::env(HOME)/Desktop" \
+	"DOCUMENTS" "$::env(HOME)/Documents" \
+	"DOWNLOADS" "$::env(HOME)/Downloads" \
+	"MUSIC"     "$::env(HOME)/Music" \
+	"PICTURES"  "$::env(HOME)/Pictures" \
+	"PROJECTS"  "$::env(HOME)/Projects" \
+	"VIDEOS"    "$::env(HOME)/Videos" \
+]
+
 # Test that macros work with subpaths (see #2359).
-send -- "firejail --profile=./macro-subpath-whitelist.profile find \
-	~/Desktop/_firejail_test_dir \
-	~/Documents/_firejail_test_dir \
-	~/Downloads/_firejail_test_dir \
-	~/Music/_firejail_test_dir \
-	~/Pictures/_firejail_test_dir \
-	~/Projects/_firejail_test_dir \
-	~/Videos/_firejail_test_dir \
-	| LC_ALL=C sort
-\r"
+dict for {name path} $macros {
+	send -- "firejail --profile=./macro-subpath-whitelist.profile find $path/_firejail_test_dir | LC_ALL=C sort\r"
+	expect {
+		timeout {puts "TESTING ERROR 1 $name\n";exit}
+		-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 1.1 $name\n";exit}
+		"$path/_firejail_test_dir/a" {}
+		"$path/_firejail_test_dir/b" {puts "TESTING ERROR 1.2 $name\n";exit}
+	}
+	after 100
+}
 
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+dict for {name path} $macros {
+	send -- "firejail --profile=./macro-subpath-blacklist.profile ls $path/_firejail_test_dir; echo ret \$?\r"
+	expect {
+		timeout {puts "TESTING ERROR 2 $name\n";exit}
+		-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 2.1 $name\n";exit}
+		"Permission denied" {}
+		-re {ret 0} {puts "TESTING ERROR 2.2 $name\n";exit}
+	}
+	after 100
 }
-expect {
-	timeout {puts "TESTING ERROR 1.1 Desktop\n";exit}
-	"Desktop/_firejail_test_dir/a" {}
-	"Desktop/_firejail_test_dir/b" {puts "TESTING ERROR 1.2 Desktop\n";exit}
-}
-expect {
-	timeout {puts "TESTING ERROR 1.1 Documents\n";exit}
-	"Documents/_firejail_test_dir/a" {}
-	"Documents/_firejail_test_dir/b" {puts "TESTING ERROR 1.2 Documents\n";exit}
-}
-expect {
-	timeout {puts "TESTING ERROR 1.1 Downloads\n";exit}
-	"Downloads/_firejail_test_dir/a" {}
-	"Downloads/_firejail_test_dir/b" {puts "TESTING ERROR 1.2 Downloads\n";exit}
-}
-expect {
-	timeout {puts "TESTING ERROR 1.1 Music\n";exit}
-	"Music/_firejail_test_dir/a" {}
-	"Music/_firejail_test_dir/b" {puts "TESTING ERROR 1.2 Music\n";exit}
-}
-expect {
-	timeout {puts "TESTING ERROR 1.1 Pictures\n";exit}
-	"Pictures/_firejail_test_dir/a" {}
-	"Pictures/_firejail_test_dir/b" {puts "TESTING ERROR 1.2 Pictures\n";exit}
-}
-expect {
-	timeout {puts "TESTING ERROR 1.1 Projects\n";exit}
-	"Projects/_firejail_test_dir/a" {}
-	"Projects/_firejail_test_dir/b" {puts "TESTING ERROR 1.2 Projects\n";exit}
-}
-expect {
-	timeout {puts "TESTING ERROR 1.1 Videos\n";exit}
-	"Videos/_firejail_test_dir/a" {}
-	"Videos/_firejail_test_dir/b" {puts "TESTING ERROR 1.2 Videos\n";exit}
-}
-after 100
 
-# blacklist
-send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Desktop/_firejail_test_dir; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 2 Desktop\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+dict for {name path} $macros {
+	send -- "firejail --profile=./macro-subpath-readonly.profile touch $path/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
+	expect {
+		timeout {puts "TESTING ERROR 3 $name\n";exit}
+		-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+	}
+	expect {
+		timeout {puts "TESTING ERROR 3.1 $name\n";exit}
+		"Read-only file system" {}
+		-re {ret 0} {puts "TESTING ERROR 3.2 $name\n";exit}
+	}
+	after 100
 }
-expect {
-	timeout {puts "TESTING ERROR 2.1 Desktop\n";exit}
-	"Permission denied" {}
-	-re {ret 0} {puts "TESTING ERROR 2.2 Desktop\n";exit}
-}
-after 100
-
-send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Documents/_firejail_test_dir; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 2 Documents\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 2.1 Documents\n";exit}
-	"Permission denied" {}
-	-re {ret 0} {puts "TESTING ERROR 2.2 Documents\n";exit}
-}
-after 100
-
-send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Downloads/_firejail_test_dir; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 2 Downloads\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 2.1 Downloads\n";exit}
-	"Permission denied" {}
-	-re {ret 0} {puts "TESTING ERROR 2.2 Downloads\n";exit}
-}
-after 100
-
-send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Music/_firejail_test_dir; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 2 Music\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 2.1 Music\n";exit}
-	"Permission denied" {}
-	-re {ret 0} {puts "TESTING ERROR 2.2 Music\n";exit}
-}
-after 100
-
-send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Pictures/_firejail_test_dir; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 2 Pictures\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 2.1 Pictures\n";exit}
-	"Permission denied" {}
-	-re {ret 0} {puts "TESTING ERROR 2.2 Pictures\n";exit}
-}
-after 100
-
-send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Projects/_firejail_test_dir; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 2 Projects\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 2.1 Projects\n";exit}
-	"Permission denied" {}
-	-re {ret 0} {puts "TESTING ERROR 2.2 Projects\n";exit}
-}
-after 100
-
-send -- "firejail --profile=./macro-subpath-blacklist.profile ls ~/Videos/_firejail_test_dir; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 2 Videos\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 2.1 Videos\n";exit}
-	"Permission denied" {}
-	-re {ret 0} {puts "TESTING ERROR 2.2 Videos\n";exit}
-}
-after 100
-
-# read-only
-send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Desktop/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 3 Desktop\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.1 Desktop\n";exit}
-	"Read-only file system" {}
-	-re {ret 0} {puts "TESTING ERROR 3.2 Desktop\n";exit}
-}
-after 100
-
-send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Documents/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 3 Documents\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.1 Documents\n";exit}
-	"Read-only file system" {}
-	-re {ret 0} {puts "TESTING ERROR 3.2 Documents\n";exit}
-}
-after 100
-
-send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Downloads/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 3 Downloads\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.1 Downloads\n";exit}
-	"Read-only file system" {}
-	-re {ret 0} {puts "TESTING ERROR 3.2 Downloads\n";exit}
-}
-after 100
-
-send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Music/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 3 Music\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.1 Music\n";exit}
-	"Read-only file system" {}
-	-re {ret 0} {puts "TESTING ERROR 3.2 Music\n";exit}
-}
-after 100
-
-send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Pictures/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 3 Pictures\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.1 Pictures\n";exit}
-	"Read-only file system" {}
-	-re {ret 0} {puts "TESTING ERROR 3.2 Pictures\n";exit}
-}
-after 100
-
-send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Projects/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 3 Projects\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.1 Projects\n";exit}
-	"Read-only file system" {}
-	-re {ret 0} {puts "TESTING ERROR 3.2 Projects\n";exit}
-}
-after 100
-
-send -- "firejail --profile=./macro-subpath-readonly.profile touch ~/Videos/_firejail_test_dir/_firejail_test_file; echo ret \$?\r"
-expect {
-	timeout {puts "TESTING ERROR 3 Videos\n";exit}
-	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.1 Videos\n";exit}
-	"Read-only file system" {}
-	-re {ret 0} {puts "TESTING ERROR 3.2 Videos\n";exit}
-}
-after 100
 
 puts "\nall done\n"

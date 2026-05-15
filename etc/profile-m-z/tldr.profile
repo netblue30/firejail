@@ -50,8 +50,7 @@ seccomp
 
 disable-mnt
 private-bin python*,tldr
-private-dev
-private-etc alternatives,ld.so.cache,ca-certificates,crypto-policies,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,protocols,resolv.conf,ssl,xdg
+private-dev alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,protocols,resolv.conf,ssl,xdg
 private-tmp
 
 dbus-user none

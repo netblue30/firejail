@@ -35,19 +35,19 @@
 ##   REDIRECT INCLUDES
 ##
 ## The following macros may be used in path names to substitute common locations:
-##  ${CFG} (usually /etc/firejail)
-##  ${DESKTOP}
-##  ${DOCUMENTS}
-##  ${DOWNLOADS}
-##  ${HOME} (user's home)
-##  ${MUSIC}
-##  ${PATH} (contents of PATH env var)
-##  ${PICTURES}
-##  ${PROJECTS}
-##  ${PUBLICSHARE}
-##  ${RUNUSER} (/run/user/UID)
-##  ${TEMPLATES}
-##  ${VIDEOS}
+##   ${CFG} (usually /etc/firejail)
+##   ${DESKTOP}
+##   ${DOCUMENTS}
+##   ${DOWNLOADS}
+##   ${HOME} (user's home)
+##   ${MUSIC}
+##   ${PATH} (contents of PATH env var)
+##   ${PICTURES}
+##   ${PROJECTS}
+##   ${PUBLICSHARE}
+##   ${RUNUSER} (/run/user/UID)
+##   ${TEMPLATES}
+##   ${VIDEOS}
 ##
 ## Check contents of ~/.config/user-dirs.dirs to see how they translate to actual paths.
 ##
@@ -226,17 +226,17 @@ include globals.local
 #private-dev
 #private-etc FILES
 ## private-etc templates (see also #1734, #2093)
-##  Common: alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg
-##    Extra: group,magic,magic.mgc,passwd
-##  3D: bumblebee,drirc,glvnd,nvidia
-##  Audio: alsa,asound.conf,machine-id,pulse
-##  D-Bus: dbus-1,machine-id
-##  GUI: fonts,pango,X11
-##  GTK: dconf,gconf,gtk-2.0,gtk-3.0
-##  KDE: kde4rc,kde5rc
-##  Networking: ca-certificates,crypto-policies,host.conf,hostname,hosts,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
-##    Extra: gai.conf,proxychains.conf
-##  Qt: Trolltech.conf
+##   Common: alternatives,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,xdg
+##     Extra: group,magic,magic.mgc,passwd
+##   3D: bumblebee,drirc,glvnd,nvidia
+##   Audio: alsa,asound.conf,machine-id,pulse
+##   D-Bus: dbus-1,machine-id
+##   GUI: fonts,pango,X11
+##   GTK: dconf,gconf,gtk-2.0,gtk-3.0
+##   KDE: kde4rc,kde5rc
+##   Networking: ca-certificates,crypto-policies,host.conf,hostname,hosts,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
+##     Extra: gai.conf,proxychains.conf
+##   Qt: Trolltech.conf
 ##private-lib LIBS
 ## Note: private-opt copies the entire path(s) to RAM, which may break
 ## file-copy-limit in firejail.config (see firejail(1)), so for new profiles

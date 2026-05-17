@@ -9,6 +9,7 @@ include globals.local
 
 noblacklist ${HOME}/.cache/tldr
 
+# Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
 blacklist ${RUNUSER}/wayland-*
@@ -29,7 +30,6 @@ include disable-write-mnt.inc
 include disable-x11.inc
 include disable-xdg.inc
 
-# Commands that reduce access to resources.
 apparmor
 caps.drop all
 ipc-namespace
@@ -50,7 +50,7 @@ seccomp
 
 disable-mnt
 private-bin python*,tldr
-private-etc alternatives,ca-certificates,crypto-policies,ld.so.cache,ld.so.conf,ld.so.conf.d,ld.so.preload,locale,locale.alias,locale.conf,localtime,mime.types,protocols,resolv.conf,ssl,xdg
+private-etc @alternatives,@network,@tls-ca
 private-tmp
 
 dbus-user none

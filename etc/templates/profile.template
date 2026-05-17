@@ -1,6 +1,3 @@
-# Firejail profile for PROGRAM_NAME
-# Description: DESCRIPTION OF THE PROGRAM
-# This file is overwritten after every install/update
 ## --- CUT HERE ---
 ## This is a generic template to help you create profiles.
 ## PRs welcome at https://github.com/netblue30/firejail/.
@@ -55,6 +52,9 @@
 ## Check contents of ~/.config/user-dirs.dirs to see how they translate to actual paths.
 ##
 ## --- CUT HERE ---
+# Firejail profile for PROGRAM_NAME
+# Description: DESCRIPTION OF THE PROGRAM
+# This file is overwritten after every install/update
 ##quiet
 # Persistent local customizations
 include PROFILE.local

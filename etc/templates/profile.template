@@ -3,21 +3,25 @@
 ## PRs welcome at https://github.com/netblue30/firejail/.
 ##
 ## Rules to follow:
-##  - Lines with one # are often used in profiles.
-##  - Lines with two ## are only needed in special situations.
+##  - Lines starting with `## ` (such as this line) are documentation comments
+##    for the template and should not be copied to the profile.
+##  - Lines starting with `# ` are comments that belong to a section and should
+##    be copied together with the section if relevant (such as the `# Allow`
+##    comments).
+##  - Lines starting with `#` (no space) are often used in profiles.
+##  - Lines starting with `##` (no space) are only needed in special situations
+##    (only copy the line if it is relevant).
 ##  - Make the profile as restrictive as possible while still keeping the
-##    program useful (e.g. a program that is unable to save user's work is
+##    program useful (e.g. a program that is unable to save the user's work is
 ##    considered bad practice).
 ##  - Dedicate ample time (based on the complexity of the application) to
 ##    profile testing before submitting a pull request.
 ##  - Keep the sections structure, use a single empty line as separator.
 ##  - Entries within sections are alphabetically sorted.
-##  - Consider putting binary into src/firecfg/firecfg.config (keep list
-##    sorted) but beware to not do this for essential utilities as this may
-##    *break* your OS! (related discussion:
+##  - Consider putting the program name into src/firecfg/firecfg.config (keep
+##    the list sorted) but beware to not do this for essential utilities as
+##    this may *break* the OS! (related discussion:
 ##    https://github.com/netblue30/firejail/issues/2507).
-##  - Remove this comment section and any generic comment past
-##    'Persistent global definitions'.
 ##
 ## Sections structure:
 ##   HEADER

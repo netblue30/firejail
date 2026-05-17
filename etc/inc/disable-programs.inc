@@ -265,6 +265,8 @@ blacklist ${HOME}/.cache/yt-dlp
 blacklist ${HOME}/.cache/zim
 blacklist ${HOME}/.cachy
 blacklist ${HOME}/.cargo
+blacklist ${HOME}/.claude
+blacklist ${HOME}/.claude.json
 blacklist ${HOME}/.claws-mail
 blacklist ${HOME}/.clion*
 blacklist ${HOME}/.cliqz

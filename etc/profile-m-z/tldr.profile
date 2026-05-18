@@ -49,7 +49,7 @@ seccomp
 
 disable-mnt
 private-bin python*,tldr
-private-etc @alternatives,@network,@tls-ca
+private-etc @network,@tls-ca
 private-tmp
 
 dbus-user none

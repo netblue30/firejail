@@ -239,6 +239,7 @@ blacklist ${HOME}/.cache/systemsettings
 blacklist ${HOME}/.cache/telepathy
 blacklist ${HOME}/.cache/thunderbird
 blacklist ${HOME}/.cache/tiny-rdm
+blacklist ${HOME}/.cache/tldr
 blacklist ${HOME}/.cache/torbrowser
 blacklist ${HOME}/.cache/transmission
 blacklist ${HOME}/.cache/trivalent

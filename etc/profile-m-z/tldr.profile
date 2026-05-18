@@ -12,7 +12,6 @@ noblacklist ${HOME}/.cache/tldr
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
-blacklist ${RUNUSER}/wayland-*
 blacklist ${RUNUSER}
 blacklist /usr/libexec
 

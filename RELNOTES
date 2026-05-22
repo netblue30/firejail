@@ -15,7 +15,7 @@ firejail (0.9.81) baseline; urgency=low
     (4a5ed83)
   * build: deb: add conflict with firejail-profiles (#7141)
   * test: fix unescaped newlines in error messages (#7146)
-  * test: improve tests related to macros (#7147)
+  * test/fs: improve tests related to macros (#7147)
   * profiles: disable-programs: add lact paths (#7083)
   * profiles: disable-exec: add mount paths (#7112)
   * profiles: mumble: include whitelist-runuser-common (#7084)

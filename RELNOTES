@@ -37,6 +37,7 @@ firejail (0.9.81) baseline; urgency=low
   * new profile: pi (#7136)
   * new profile: ephoto (#7153)
   * new profile: tldr (#7166)
+  * new profile: claude (#7169)
 -- netblue30 <netblue30@yahoo.com>  Sat, 14 Mar 2026 08:00:00 -0500
 
 firejail (0.9.80) baseline; urgency=low

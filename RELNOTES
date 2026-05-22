@@ -2,6 +2,8 @@ firejail (0.9.81) baseline; urgency=low
   * work in progress
   * security: create `~/.config/firejail` to prevent sandbox escape (#7154)
   * feature: allow subpaths in xdg macros (#2359 #7151)
+  * feature: add `${PROJECTS}` macro (#7157)
+  * feature: add `${PUBLICSHARE}` and `${TEMPLATES}` macros (#7164)
   * modif: create a new syscall group: `@program-keep` (9d90daf)
   * modif: stop following symlinks to /dev/null on disable (#5803 #7129)
   * docs: man: fix typo in example (#7106)
@@ -14,8 +16,12 @@ firejail (0.9.81) baseline; urgency=low
   * build: gen-syscalls.sh: remove trailing spaces in `new_syscalls.txt`
     (4a5ed83)
   * build: deb: add conflict with firejail-profiles (#7141)
+  * build: netfilter.c: replace `system()` with `execv()` (#7159)
   * test: fix unescaped newlines in error messages (#7146)
   * test/fs: improve tests related to macros (#7147)
+  * test/fs: deduplicate xdg dirs in macro tests (#7163)
+  * test/fs: support and use XDG user dir env vars (#7167)
+  * ci: make all main make steps parallel and sync output (#7162)
   * profiles: disable-programs: add lact paths (#7083)
   * profiles: disable-exec: add mount paths (#7112)
   * profiles: mumble: include whitelist-runuser-common (#7084)
@@ -25,10 +31,12 @@ firejail (0.9.81) baseline; urgency=low
   * profiles: steam: allow more 3d cache paths (#7149)
   * profiles: torbrowser-launcher: add no3d (#7143)
   * profiles: add llm-agent-common.profile (#7158)
+  * profiles: use xdg macros with subpaths (#7160)
   * new profile: gemini (#6936)
   * new profile: opencode (#7135)
   * new profile: pi (#7136)
   * new profile: ephoto (#7153)
+  * new profile: tldr (#7166)
 -- netblue30 <netblue30@yahoo.com>  Sat, 14 Mar 2026 08:00:00 -0500
 
 firejail (0.9.80) baseline; urgency=low

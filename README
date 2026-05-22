@@ -489,6 +489,7 @@ Fidel Ramos (https://github.com/haplo)
 	- added rawtherapee profile
 	- added electron-cache profile
 	- new profile: ansel (#6751)
+	- new profile: tldr (#7166)
 Florian Begusch (https://github.com/florianbegusch)
 	- (la)tex profiles
 	- fixed transmission-common.profile
@@ -993,6 +994,8 @@ Ondřej Nový (https://github.com/onovy)
 	- added Mattermost desktop profile
 	- hardened Zoom profile
 	- hardened Signal desktop profile
+orbisai0security (https://github.com/orbisai0security)
+	- build: netfilter.c: replace `system()` with `execv()` (#7159)
 Lorenzo "Palinuro" Faletra (https://github.com/PalinuroSec)
 	- prevent thunderbird conflicts when firefox is running
 	- add join-or-start to pluma to open multiple files in tabs

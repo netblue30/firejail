@@ -10,6 +10,7 @@ include globals.local
 noblacklist ${HOME}/.gemini
 
 # Add the following lines to gemini.local to enable whitelisting in `${HOME}`.
+#mkdir ${HOME}/.gemini
 #whitelist ${HOME}/.config/git
 #whitelist ${HOME}/.gemini
 #whitelist ${HOME}/.git-credential-cache

@@ -303,6 +303,7 @@ uninstall: config.mk
 	$(RM) $(DESTDIR)$(bindir)/firecfg
 	$(RM) $(DESTDIR)$(bindir)/jailcheck
 	$(RM) -r $(DESTDIR)$(libdir)/firejail
+	$(RM) -r $(DESTDIR)$(libexecdir)/firejail
 	$(RM) -r $(DESTDIR)$(datarootdir)/doc/firejail
 	$(RM) $(addprefix $(DESTDIR)$(mandir)/man1/,$(notdir $(MANPAGES1_GZ)))
 	$(RM) $(addprefix $(DESTDIR)$(mandir)/man5/,$(notdir $(MANPAGES5_GZ)))

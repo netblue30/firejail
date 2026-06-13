@@ -54,6 +54,7 @@ whitelist ${HOME}/.cache/winetricks
 whitelist ${HOME}/.config/MangoHud
 whitelist ${HOME}/.config/lutris
 whitelist ${HOME}/.local/share/lutris
+whitelist ${HOME}/.local/share/umu
 #whitelist ${HOME}/.wine
 whitelist /usr/share/lutris
 whitelist /usr/share/wine
@@ -78,7 +79,7 @@ notv
 #nou2f # may break gamepads in certain games (see #6523)
 novideo
 protocol unix,inet,inet6,netlink
-seccomp !clone3,!modify_ldt,!process_vm_readv,!ptrace
+seccomp !chroot,!clone3,!modify_ldt,!mount,!name_to_handle_at,!pivot_root,!process_vm_readv,!ptrace,!umount2
 seccomp.32 !modify_ldt
 
 # Add the next line to your lutris.local if you do not need controller support.
@@ -90,4 +91,5 @@ dbus-user.own net.lutris.Lutris
 dbus-user.talk com.feralinteractive.GameMode
 dbus-system none
 
-restrict-namespaces
+#breaks proton
+#restrict-namespaces

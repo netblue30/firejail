@@ -173,10 +173,14 @@ static void sanitize_passwd(void) {
 	FILE *fpout = NULL;
 
 	// open files
-	/* coverity[toctou] */
-	fpin = fopen("/etc/passwd", "re");
-	if (!fpin)
+	int pfd = open("/etc/passwd", O_RDONLY|O_NOFOLLOW|O_CLOEXEC);
+	if (pfd < 0)
 		goto errout;
+	fpin = fdopen(pfd, "re");
+	if (!fpin) {
+		close(pfd);
+		goto errout;
+	}
 	fpout = fopen(RUN_PASSWD_FILE, "we");
 	if (!fpout)
 		goto errout;
@@ -313,10 +317,14 @@ static void sanitize_group(void) {
 	FILE *fpout = NULL;
 
 	// open files
-	/* coverity[toctou] */
-	fpin = fopen("/etc/group", "re");
-	if (!fpin)
+	int gfd = open("/etc/group", O_RDONLY|O_NOFOLLOW|O_CLOEXEC);
+	if (gfd < 0)
 		goto errout;
+	fpin = fdopen(gfd, "re");
+	if (!fpin) {
+		close(gfd);
+		goto errout;
+	}
 	fpout = fopen(RUN_GROUP_FILE, "we");
 	if (!fpout)
 		goto errout;

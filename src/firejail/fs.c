@@ -354,9 +354,11 @@ void fs_blacklist(void) {
 			// EUID_ROOT(); - option not accessible to non-root users
 			if (mount(dname1, dname2, NULL, MS_BIND|MS_REC, NULL) < 0)
 				errExit("mount bind");
-			/* coverity[toctou] */
-			if (set_perms(dname2,  s.st_uid, s.st_gid,s.st_mode))
-				errExit("set_perms");
+			int perms_fd = open(dname2, O_RDONLY|O_NOFOLLOW|O_CLOEXEC);
+			if (perms_fd < 0)
+				errExit("open");
+			SET_PERMS_FD(perms_fd, s.st_uid, s.st_gid, s.st_mode);
+			close(perms_fd);
 			// EUID_USER();
 
 			entry = entry->next;

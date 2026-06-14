@@ -125,11 +125,15 @@ void fs_var_log(void) {
 		release_all();
 
 		// create an empty /var/log/wtmp file
-		/* coverity[toctou] */
-		FILE *fp = fopen("/var/log/wtmp", "wxe");
-		if (fp) {
-			SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-			fclose(fp);
+		int wtmp_fd = open("/var/log/wtmp", O_WRONLY|O_CREAT|O_EXCL|O_TRUNC|O_CLOEXEC|O_NOFOLLOW, 0644);
+		if (wtmp_fd >= 0) {
+			FILE *fp = fdopen(wtmp_fd, "we");
+			if (fp) {
+				SET_PERMS_STREAM(fp, 0, wtmp_group, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+				fclose(fp);
+			}
+			else
+				close(wtmp_fd);
 		}
 		fs_logger("touch /var/log/wtmp");
 
@@ -272,10 +276,12 @@ void fs_var_utmp(void) {
 	if (arg_debug)
 		printf("Create the new utmp file\n");
 
-	/* coverity[toctou] */
-	FILE *fp = fopen(RUN_UTMP_FILE, "we");
+	int utmp_fd = open(RUN_UTMP_FILE, O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC|O_NOFOLLOW, 0644);
+	if (utmp_fd < 0)
+		errExit("open");
+	FILE *fp = fdopen(utmp_fd, "we");
 	if (!fp)
-		errExit("fopen");
+		errExit("fdopen");
 
 	// read current utmp
 	struct utmp *u;

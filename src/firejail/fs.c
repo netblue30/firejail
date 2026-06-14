@@ -68,7 +68,7 @@ static int disable_file(OPERATION op, const char *filename) {
 		// realpath and stat functions will fail on FUSE filesystems
 		// they don't seem to like a uid of 0
 		// force mounting
-		int fd = open(filename, O_PATH|O_CLOEXEC);
+		int fd = open(filename, O_PATH|O_NOFOLLOW|O_CLOEXEC);
 		if (fd < 0)
 			return 1;
 

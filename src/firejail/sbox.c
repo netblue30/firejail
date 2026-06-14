@@ -241,7 +241,7 @@ static int __attribute__((noreturn)) sbox_do_exec_v(unsigned filtermask, char * 
 	else assert(0);
 
 	if (arg[0]) { // get rid of scan-build warning
-		int fd = open(arg[0], O_PATH | O_CLOEXEC);
+		int fd = open(arg[0], O_PATH | O_NOFOLLOW | O_CLOEXEC);
 		if (fd == -1) {
 			if (errno == ENOENT) {
 				fprintf(stderr, "Error: %s does not exist\n", arg[0]);

@@ -484,8 +484,15 @@ void reject_cntrl_chars(const char *fname) {
 	}
 }
 
+// Note: Characters intentionally ignored:
+//
+// * `'`: Used in some dirnames (see #4614).
+// * `()`: Used in some dirnames (see #3001 #3156).
+// * `~`: Might be useful for expansion and seems unlikely to cause problems by
+//        itself.
 #ifndef METACHARS
-#define METACHARS "!\"%&,;<>\\^`{}"
+// All metachars except for ignored chars and chars in other groups.
+#define METACHARS "!\"#$%&',;<>\\^`{|}"
 #endif
 #ifndef GLOBCHARS
 #define GLOBCHARS "*?[]"

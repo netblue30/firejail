@@ -484,14 +484,23 @@ void reject_cntrl_chars(const char *fname) {
 	}
 }
 
+#ifndef METACHARS
+#define METACHARS "!\"%&,;<>\\^`{}"
+#endif
+#ifndef GLOBCHARS
+#define GLOBCHARS "*?[]"
+#endif
+
 void reject_meta_chars(const char *fname, int globbing) {
 	assert(fname);
 
 	reject_cntrl_chars(fname);
 
-	const char *reject = "!\"%&*,;<>?[\\]^`{}";
-	if (globbing)
-		reject = "!\"%&,;<>\\^`{}"; // file globbing ('*?[]') is allowed
+	const char *reject = METACHARS GLOBCHARS;
+	if (globbing) {
+		// file globbing is allowed
+		reject = METACHARS;
+	}
 
 	const char *c = strpbrk(fname, reject);
 	if (c) {

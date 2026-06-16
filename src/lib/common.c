@@ -489,9 +489,9 @@ void reject_meta_chars(const char *fname, int globbing) {
 
 	reject_cntrl_chars(fname);
 
-	const char *reject = "\\&!?\"<>%^{};,*[]`";
+	const char *reject = "!\"%&*,;<>?[\\]^`{}";
 	if (globbing)
-		reject = "\\&!\"<>%^{};,`"; // file globbing ('*?[]') is allowed
+		reject = "!\"%&,;<>\\^`{}"; // file globbing ('*?[]') is allowed
 
 	const char *c = strpbrk(fname, reject);
 	if (c) {

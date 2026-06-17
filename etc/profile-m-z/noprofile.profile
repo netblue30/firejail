@@ -18,6 +18,7 @@ noblacklist /sys/module
 nowhitelist /sys/module/nvidia*
 ignore read-only /sys/module/nvidia*
 
+allow-bwrap
 allow-debuggers
 allusers
 keep-config-pulse

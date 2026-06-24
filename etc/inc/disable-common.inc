@@ -618,8 +618,7 @@ blacklist /usr/lib/ssh
 blacklist /usr/lib/vmware
 blacklist /usr/lib/xorg/Xorg.wrap
 blacklist /usr/libexec/openssh
-# since firejail version 0.9.73
-blacklist ${PATH}/dpkg*
+#blacklist ${PATH}/dpkg*  - on Debian some packages end up calling "dpkg --print-architecture"
 blacklist ${PATH}/apt*
 blacklist ${PATH}/dumpcap
 blacklist ${PATH}/efibootdump

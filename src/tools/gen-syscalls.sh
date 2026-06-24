@@ -154,8 +154,8 @@ function extract_and_install()
     table_file_basen=$(basename "$table_file")
     local firejail_header="${table_file_basen%.*}".h
 
-    grep --color=never -v '^[[:space:]]*#' "$table_file" | # Ignore comment lines.
-    grep --color=never -E "^[^[:space:]]+[[:space:]]+($abi_1|$abi_2|$abi_3|$abi_4|$abi_5|$abi_6|$abi_7)\b" | # Keep lines with desired ABIs.
+    grep -v '^[[:space:]]*#' "$table_file" | # Ignore comment lines.
+    grep -E "^[^[:space:]]+[[:space:]]+($abi_1|$abi_2|$abi_3|$abi_4|$abi_5|$abi_6|$abi_7)\b" | # Keep lines with desired ABIs.
     # Fill the array.
     sed -E 's/^([0-9]+)[[:space:]]+[^[:space:]]+[[:space:]]+([^[:space:]]+).*/{ "\2", \1 },/' \
     > "$DEST_DIR"/"$firejail_header"
@@ -164,8 +164,8 @@ function extract_and_install()
 
     ALL_SYSCALLS+="▶ $firejail_header\n"
     ALL_SYSCALLS+=$(
-        grep --color=never -v '^[[:space:]]*#' "$table_file" |
-        grep --color=never -E "^[^[:space:]]+[[:space:]]+($abi_1|$abi_2|$abi_3|$abi_4|$abi_5|$abi_6|$abi_7)\b" |
+        grep -v '^[[:space:]]*#' "$table_file" |
+        grep -E "^[^[:space:]]+[[:space:]]+($abi_1|$abi_2|$abi_3|$abi_4|$abi_5|$abi_6|$abi_7)\b" |
         awk '{printf "%s\t%s\t%s\n", $1, $3, $4}' # Keep column 1, 3 and 4.
     )
     ALL_SYSCALLS+=$'\n'

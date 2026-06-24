@@ -176,9 +176,10 @@ include globals.local
 ##landlock.fs.execute PATH
 ##include landlock-common.inc
 
-## Commands that increase access to resources.
-##
-## Note: Keep this in sync with ../../etc/profile-m-z/noprofile.profile.
+# Commands that increase access to resources.
+#
+# Note: Keep this in sync with ../../etc/profile-m-z/noprofile.profile.
+##allow-bwrap
 ##allow-debuggers
 ##allusers
 ##keep-config-pulse

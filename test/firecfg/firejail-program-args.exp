@@ -1,0 +1,57 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2026 Firejail Authors
+# License GPL v2
+
+set timeout 3
+spawn $env(SHELL)
+match_max 100000
+
+send -- "firecfg --list\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"/usr/local/bin/firejail-program-args"
+}
+after 100
+
+send --  "file /usr/local/bin/firejail-program-args\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "firejail-program-args: symbolic link to .*/firejail-symlink" {}
+	"cannot open" {puts "TESTING ERROR 2";exit}
+}
+after 100
+
+send --  "command -V firejail-program-args\r"
+expect {
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"/usr/local/bin/firejail-program-args" {}
+	"not found" {puts "TESTING ERROR 4";exit}
+}
+after 100
+
+send --  "firejail --version\r"
+expect {
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"firejail version "
+}
+after 100
+
+# Test that firejail does not intercept `--version` (see #7140).
+send --  "./firejail-program-args.sh --version\r"
+expect {
+	timeout {puts "TESTING ERROR 6\n";exit}
+	"firejail-program-args version " {}
+	"firejail version " {puts "TESTING ERROR 7";exit}
+}
+after 100
+
+send --  "firejail-program-args --version\r"
+expect {
+	timeout {puts "TESTING ERROR 8\n";exit}
+	"firejail-program-args version " {}
+	"firejail version " {puts "TESTING ERROR 9";exit}
+}
+after 100
+
+puts "\nall done\n"

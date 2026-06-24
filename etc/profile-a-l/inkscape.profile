@@ -45,7 +45,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
+#ipc-namespace # problems on Arch
 machine-id
 net none
 nodvd

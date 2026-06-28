@@ -7,9 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-if {[file exists /usr/bin/xpra]} {
-    puts "TESTING: xpra available\n"
-} else {
+if {![file exists /usr/bin/xpra]} {
     puts "TESTING: xpra not installed, skipping...\n"
     after 100
     exit

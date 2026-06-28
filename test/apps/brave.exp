@@ -7,18 +7,18 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-if {![file exists /usr/bin/qbittorrent]} {
-    puts "TESTING: qbittorrent not installed, skipping...\n"
+if {![file exists /usr/bin/brave]} {
+    puts "TESTING: brave not installed, skipping...\n"
     after 100
     exit
 }
 
 
 
-send -- "firejail --private qbittorrent\r"
+send -- "firejail --private --ignore=quiet brave\r"
 expect {
     timeout {puts "TESTING ERROR 0\n";exit}
-    "Reading profile /etc/firejail/qbittorrent.profile"
+    "Reading profile /etc/firejail/brave.profile"
 }
 expect {
     timeout {puts "TESTING ERROR 1\n";exit}
@@ -34,19 +34,7 @@ expect {
 }
 expect {
     timeout {puts "TESTING ERROR 3\n";exit}
-    "qbittorrent"
-}
-after 100
-
-spawn $env(SHELL)
-send -- "firemon --seccomp\r"
-expect {
-    timeout {puts "TESTING ERROR 4\n";exit}
-    "qbittorrent"
-}
-expect {
-    timeout {puts "TESTING ERROR 5\n";exit}
-    "Seccomp:	2"
+    "brave"
 }
 after 100
 

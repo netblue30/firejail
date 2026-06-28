@@ -7,6 +7,12 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
+if {![file exists /usr/bin/kdiff3]} {
+    puts "TESTING: kdiff3 not installed, skipping...\n"
+    after 100
+    exit
+}
+
 send -- "firejail --private kdiff3\r"
 expect {
     timeout {puts "TESTING ERROR 0\n";exit}

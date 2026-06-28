@@ -52,7 +52,7 @@ include whitelist-runuser-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
+#ipc-namespace
 machine-id
 netfilter
 no3d

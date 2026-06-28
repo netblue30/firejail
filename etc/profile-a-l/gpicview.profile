@@ -21,7 +21,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
+#ipc-namespace
 machine-id
 net none
 nodvd
@@ -47,5 +47,5 @@ private-tmp
 dbus-user none
 dbus-system none
 
-memory-deny-write-execute
+#memory-deny-write-execute
 restrict-namespaces

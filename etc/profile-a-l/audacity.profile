@@ -48,7 +48,7 @@ protocol unix,inet,inet6
 seccomp
 tracelog
 
-private-bin audacity
+#private-bin audacity
 private-dev
 private-etc @network,@sound,@tls-ca,@x11
 private-tmp

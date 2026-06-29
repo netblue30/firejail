@@ -8,7 +8,7 @@ spawn $env(SHELL)
 match_max 100000
 
 if {![file exists /usr/bin/meld]} {
-    puts "TESTING: medl not installed, skipping...\n"
+    puts "TESTING: meld not installed, skipping...\n"
     after 100
     exit
 }

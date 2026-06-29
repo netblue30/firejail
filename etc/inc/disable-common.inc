@@ -618,7 +618,7 @@ blacklist /usr/lib/ssh
 blacklist /usr/lib/vmware
 blacklist /usr/lib/xorg/Xorg.wrap
 blacklist /usr/libexec/openssh
-#blacklist ${PATH}/dpkg*  - on Debian some packages end up calling "dpkg --print-architecture"
+#blacklist ${PATH}/dpkg* # on Debian some packages end up calling "dpkg --print-architecture"
 blacklist ${PATH}/apt*
 blacklist ${PATH}/dumpcap
 blacklist ${PATH}/efibootdump

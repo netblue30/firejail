@@ -179,7 +179,6 @@ include globals.local
 ## Commands that increase access to resources.
 ##
 ## Note: Keep this in sync with ../../etc/profile-m-z/noprofile.profile.
-##allow-bwrap
 ##allow-debuggers
 ##allusers
 ##keep-config-pulse
@@ -195,6 +194,7 @@ include globals.local
 ##writable-var-log
 
 ## Commands that reduce access to resources.
+##allow-bwrap # likely to cause breakage (see #6906)
 #apparmor
 #caps.drop all
 ##caps.keep CAPS

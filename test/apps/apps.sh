@@ -13,7 +13,7 @@ export LC_ALL=C
 sudo ls
 
 # console apps
-apps=(ping dig wget curl)
+apps=(ping dig wget curl ftp telnet ffmpeg)
 for app in "${apps[@]}"; do
     if command -v "$app"
     then
@@ -40,7 +40,9 @@ x11apps=(firefox qbittorrent firefox-xephyr galculator libreoffice firefox-xorg 
 		 gpicview audacity meld vlc warzone2100 audacious \
 		 pauvcontrol mpv dosbox gnome-screenshot brave \
 		 flameshot ghb kdenlive krita meld \
-		 vlc warzone2100 \
+		 vlc warzone2100 evince atril rhythmbox kate eom eog \
+		 gwenview chromium loupe showtime totem gnome-calculator \
+		 darktable brasero \
 		 xterm x11-none xterm-xorg xterm-xephyr xterm-xpra firefox-xpra)
 
 for app in "${x11apps[@]}"; do

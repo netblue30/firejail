@@ -7,18 +7,18 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-if {![file exists /usr/bin/gnome-screenshot]} {
-    puts "TESTING: gnome-screenshot not installed, skipping...\n"
+if {![file exists /usr/bin/loupe]} {
+    puts "TESTING: loupe not installed, skipping...\n"
     after 100
     exit
 }
 
 
 
-send -- "firejail --private --ignore=quiet gnome-screenshot\r"
+send -- "firejail --private --ignore=quiet loupe\r"
 expect {
     timeout {puts "TESTING ERROR 0\n";exit}
-    "Reading profile /etc/firejail/gnome-screenshot.profile"
+    "Reading profile /etc/firejail/loupe.profile"
 }
 expect {
     timeout {puts "TESTING ERROR 1\n";exit}
@@ -34,7 +34,7 @@ expect {
 }
 expect {
     timeout {puts "TESTING ERROR 3\n";exit}
-    "gnome-screenshot"
+    "loupe"
 }
 after 100
 
@@ -42,7 +42,7 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
     timeout {puts "TESTING ERROR 4\n";exit}
-    "gnome-screenshot"
+    "loupe"
 }
 expect {
     timeout {puts "TESTING ERROR 5\n";exit}

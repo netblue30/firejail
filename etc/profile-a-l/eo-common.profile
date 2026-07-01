@@ -27,7 +27,7 @@ include whitelist-var-common.inc
 
 apparmor
 caps.drop all
-ipc-namespace
+#ipc-namespace
 machine-id
 net none
 no3d

@@ -8,7 +8,7 @@ spawn $env(SHELL)
 match_max 100000
 
 if {![file exists /usr/bin/kate]} {
-    puts "TESTING: KATE not installed, skipping...\n"
+    puts "TESTING: kate not installed, skipping...\n"
     after 100
     exit
 }

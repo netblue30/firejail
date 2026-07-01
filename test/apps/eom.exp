@@ -8,7 +8,7 @@ spawn $env(SHELL)
 match_max 100000
 
 if {![file exists /usr/bin/eom]} {
-    puts "TESTING: EOM not installed, skipping...\n"
+    puts "TESTING: eom not installed, skipping...\n"
     after 100
     exit
 }

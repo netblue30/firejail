@@ -8,7 +8,7 @@ spawn $env(SHELL)
 match_max 100000
 
 if {![file exists /usr/bin/chromium]} {
-    puts "TESTING: CHROMIUM not installed, skipping...\n"
+    puts "TESTING: chromium not installed, skipping...\n"
     after 100
     exit
 }

@@ -8,7 +8,7 @@ spawn $env(SHELL)
 match_max 100000
 
 if {![file exists /usr/bin/eog]} {
-    puts "TESTING: EOG not installed, skipping...\n"
+    puts "TESTING: eog not installed, skipping...\n"
     after 100
     exit
 }

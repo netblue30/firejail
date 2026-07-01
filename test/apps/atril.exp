@@ -8,7 +8,7 @@ spawn $env(SHELL)
 match_max 100000
 
 if {![file exists /usr/bin/atril]} {
-    puts "TESTING: ATRIL not installed, skipping...\n"
+    puts "TESTING: atril not installed, skipping...\n"
     after 100
     exit
 }

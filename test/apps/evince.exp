@@ -8,7 +8,7 @@ spawn $env(SHELL)
 match_max 100000
 
 if {![file exists /usr/bin/evince]} {
-    puts "TESTING: EVINCE not installed, skipping...\n"
+    puts "TESTING: evince not installed, skipping...\n"
     after 100
     exit
 }

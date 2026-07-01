@@ -8,7 +8,7 @@ spawn $env(SHELL)
 match_max 100000
 
 if {![file exists /usr/bin/rhythmbox]} {
-    puts "TESTING: RHYTHMBOX not installed, skipping...\n"
+    puts "TESTING: rhythmbox not installed, skipping...\n"
     after 100
     exit
 }

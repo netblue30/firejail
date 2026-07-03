@@ -4,7 +4,6 @@ updates:
   # together in the same PR, to avoid CodeQL checks failing due to version
   # mismatches (see #7192).
 
-  # CodeQL
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -15,13 +14,6 @@ updates:
         patterns:
           - "github/codeql-action/*"
 
-  # Other
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-    open-pull-requests-limit: 4
-    groups:
       other-actions:
         patterns:
           - "*"

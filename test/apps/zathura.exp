@@ -1,0 +1,53 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2026 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+if {![file exists /usr/bin/zathura]} {
+    puts "TESTING: zathura not installed, skipping...\n"
+    after 100
+    exit
+}
+
+
+
+send -- "firejail --private --ignore=quiet zathura\r"
+expect {
+    timeout {puts "TESTING ERROR 0\n";exit}
+    "Reading profile /etc/firejail/zathura.profile"
+}
+expect {
+    timeout {puts "TESTING ERROR 1\n";exit}
+    -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+sleep 5
+
+spawn $env(SHELL)
+send -- "firejail --list\r"
+expect {
+    timeout {puts "TESTING ERROR 2\n";exit}
+    "firejail"
+}
+expect {
+    timeout {puts "TESTING ERROR 3\n";exit}
+    "zathura"
+}
+after 100
+
+spawn $env(SHELL)
+send -- "firemon --seccomp\r"
+expect {
+    timeout {puts "TESTING ERROR 4\n";exit}
+    "zathura"
+}
+expect {
+    timeout {puts "TESTING ERROR 5\n";exit}
+    "Seccomp:	2"
+}
+after 100
+
+puts "\n"

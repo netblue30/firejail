@@ -13,6 +13,7 @@ export LC_ALL=C
 sudo ls
 
 # console apps
+echo "TESTING: console apps **************************"
 apps=(ping dig wget curl ftp telnet ffmpeg)
 for app in "${apps[@]}"; do
     if command -v "$app"
@@ -28,23 +29,17 @@ rm wget-log*
 sudo true
 
 # testing seccomp @clock group
+echo "TESTING: firejail problems **************************"
 echo "TESTING: seccomp @clock group (test/apps/seccomp-clock.exp)"
 ./seccomp-clock.exp
 
 echo "TESTING: pid 1 functionality (test/apps/pid1.exp)"
 ./pid1.exp
 
-# X11 apps
-x11apps=(firefox qbittorrent firefox-xephyr galculator libreoffice firefox-xorg \
-		 lowriter gimp inkscape firefox-neteth emacs okular kdiff3 \
-		 gpicview audacity meld vlc warzone2100 audacious \
-		 pauvcontrol mpv dosbox gnome-screenshot brave \
-		 flameshot ghb kdenlive krita meld \
-		 vlc warzone2100 evince atril rhythmbox kate eom eog \
-		 gwenview chromium loupe showtime totem gnome-calculator \
-		 darktable brasero \
-		 xterm x11-none xterm-xorg xterm-xephyr xterm-xpra firefox-xpra)
-
+# x11 sandboxing
+echo "TESTING: x11 sandboxing *********************************"
+x11apps=(firefox-xephyr x11-none firefox-xorg xterm-xorg xterm-xephyr \
+			xterm-xpra firefox-xpra)
 for app in "${x11apps[@]}"; do
     sudo true
     echo "TESTING: $app (test/apps/$app.exp)"
@@ -52,5 +47,52 @@ for app in "${x11apps[@]}"; do
     sleep 1
 done
 
-cd ../../
-./mkgcov.sh
+# browsers
+echo "TESTING: browsers ***************************************"
+browsers=(firefox brave chromium vivaldi)
+for app in "${browsers[@]}"; do
+    sudo true
+    echo "TESTING: $app (test/apps/$app.exp)"
+    ./"$app".exp
+    sleep 1
+done
+
+# multimedia apps
+echo "TESTING: multimedia apps ************************************"
+multimedia=(vlc mpv rhythmbox totem showtime audacious smplayer mplayer \
+	   cmus strawberry amarok quodlibet qmmp)
+for app in "${multimedia[@]}"; do
+    sudo true
+    echo "TESTING: $app (test/apps/$app.exp)"
+    ./"$app".exp
+    sleep 1
+done
+
+echo "TESTING: games ************************************"
+games=(warzone2100 dosbox)
+for app in "${games[@]}"; do
+    sudo true
+    echo "TESTING: $app (test/apps/$app.exp)"
+    ./"$app".exp
+    sleep 1
+done
+
+# dektop apps
+echo "TESTING: desktop apps ************************************"
+desktopapps=(xterm qbittorrent galculator libreoffice \
+		 lowriter gimp inkscape firefox-neteth emacs okular kdiff3 \
+		 gpicview audacity meld \
+		 pauvcontrol gnome-screenshot \
+		 flameshot ghb kdenlive krita \
+		 evince atril kate eom eog \
+		 gwenview oupe gnome-calculator \
+		 darktable brasero \
+		 transmission-qt transmission-gtk \
+		 thunderbird kmail xpdf zathura)
+
+for app in "${desktopapps[@]}"; do
+    sudo true
+    echo "TESTING: $app (test/apps/$app.exp)"
+    ./"$app".exp
+    sleep 1
+done

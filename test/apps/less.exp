@@ -1,0 +1,32 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2026 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+if {![file exists /usr/bin/less]} {
+    puts "TESTING: less not installed, skipping...\n"
+    after 100
+    exit
+}
+
+
+
+send -- "firejail --private --ignore=quiet less --help\r"
+expect {
+    timeout {puts "TESTING ERROR 0\n";exit}
+    "Reading profile /etc/firejail/less.profile"
+}
+expect {
+    timeout {puts "TESTING ERROR 1\n";exit}
+    -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+}
+expect {
+    timeout {puts "TESTING ERROR 2\n";exit}
+    "Commands marked with"
+}
+
+puts "all done\n"

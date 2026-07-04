@@ -22,14 +22,6 @@ firejail {\-\-ls | \-\-get | \-\-put | \-\-cat} dir_or_filename
 .RE
 .PP
 #endif
-#ifdef HAVE_NETWORK
-Network traffic shaping for an existing sandbox:
-.PP
-.RS
-firejail \-\-bandwidth={name|pid} bandwidth-command
-.RE
-.PP
-#endif
 Monitoring:
 .PP
 .RS
@@ -220,11 +212,6 @@ Note: When using both \fB\-\-appimage\fR and \fB\-\-profile\fR, it is recommende
 to always specify the former before the latter, so that any \fB?HAS_APPIMAGE\fR
 conditionals inside of the profile evaluate to true (see \fB?CONDITIONAL\fR in
 firejail\-profile(5)).
-#ifdef HAVE_NETWORK
-.TP
-\fB\-\-bandwidth=name|pid
-Set bandwidth limits for the sandbox identified by name or PID, see \fBTRAFFIC SHAPING\fR section for more details.
-#endif
 .TP
 \fB\-\-bind=filename1,filename2
 Mount-bind filename1 on top of filename2. This option is only available when running as root.
@@ -3975,49 +3962,6 @@ adduser \-\-shell /usr/bin/firejail username
 
 Additional arguments passed to firejail executable upon login are declared in /etc/firejail/login.users file.
 
-#ifdef HAVE_NETWORK
-.SH TRAFFIC SHAPING
-Network bandwidth is an expensive resource shared among all sandboxes running on a system.
-Traffic shaping allows the user to increase network performance by controlling
-the amount of data that flows into and out of the sandboxes.
-
-Firejail implements a simple rate-limiting shaper based on Linux command tc.
-The shaper works at sandbox level, and can be used only for sandboxes configured with new network namespaces.
-
-Set rate-limits:
-
-	$ firejail \-\-bandwidth=name|pid set network download upload
-
-Clear rate-limits:
-
-	$ firejail \-\-bandwidth=name|pid clear network
-
-Status:
-
-	$ firejail \-\-bandwidth=name|pid status
-
-where:
-.br
-	name - sandbox name
-.br
-	pid - sandbox pid
-.br
-	network - network interface as used by \-\-net option
-.br
-	download - download speed in KB/s (kilobyte per second)
-.br
-	upload - upload speed in KB/s (kilobyte per second)
-
-Example:
-.br
-	$ firejail \-\-name=mybrowser \-\-net=eth0 /usr/bin/firefox &
-.br
-	$ firejail \-\-bandwidth=mybrowser set eth0 80 20
-.br
-	$ firejail \-\-bandwidth=mybrowser status
-.br
-	$ firejail \-\-bandwidth=mybrowser clear eth0
-#endif
 .SH LICENSE
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 .PP

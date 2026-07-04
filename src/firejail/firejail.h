@@ -413,6 +413,7 @@ int sandbox(void* sandbox_arg);
 void start_application(int no_sandbox, int fd, char *set_sandbox_status) __attribute__((noreturn));
 
 // network_main.c
+void network_set_run_file(pid_t pid);
 void net_configure_sandbox_ip(Bridge *br);
 void net_configure_veth_pair(Bridge *br, const char *ifname, pid_t child);
 void net_check_cfg(void);
@@ -721,10 +722,6 @@ void netfilter_print(pid_t pid, int ipv6);
 void check_netns(const char *nsname);
 void netns(const char *nsname);
 void netns_mounts(const char *nsname);
-
-// bandwidth.c
-void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up) __attribute__((noreturn));
-void network_set_run_file(pid_t pid);
 
 // fs_etc.c
 char *fs_etc_build(char *str);

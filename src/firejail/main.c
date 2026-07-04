@@ -506,67 +506,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	}
 
 #ifdef HAVE_NETWORK
-	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
-		if (checkcfg(CFG_NETWORK)) {
-			logargs(argc, argv);
-
-			// extract the command
-			if ((i + 1) == argc) {
-				fprintf(stderr, "Error: command expected after --bandwidth option\n");
-				exit(1);
-			}
-			char *cmd = argv[i + 1];
-			if (strcmp(cmd, "status") && strcmp(cmd, "clear") && strcmp(cmd, "set")) {
-				fprintf(stderr, "Error: invalid --bandwidth command.\nValid commands: set, clear, status.\n");
-				exit(1);
-			}
-
-			// extract network name
-			char *dev = NULL;
-			int down = 0;
-			int up = 0;
-			if (strcmp(cmd, "set") == 0 || strcmp(cmd, "clear") == 0) {
-				// extract device name
-				if ((i + 2) == argc) {
-					fprintf(stderr, "Error: network name expected after --bandwidth %s option\n", cmd);
-					exit(1);
-				}
-				dev = argv[i + 2];
-
-				// check device name
-				if (if_nametoindex(dev) == 0) {
-					fprintf(stderr, "Error: network device %s not found\n", dev);
-					exit(1);
-				}
-
-				// extract bandwidth
-				if (strcmp(cmd, "set") == 0) {
-					if ((i + 4) >= argc) {
-						fprintf(stderr, "Error: invalid --bandwidth set command\n");
-						exit(1);
-					}
-
-					down = atoi(argv[i + 3]);
-					if (down < 0) {
-						fprintf(stderr, "Error: invalid download speed\n");
-						exit(1);
-					}
-					up = atoi(argv[i + 4]);
-					if (up < 0) {
-						fprintf(stderr, "Error: invalid upload speed\n");
-						exit(1);
-					}
-				}
-			}
-
-			// extract pid or sandbox name
-			pid_t pid = require_pid(argv[i] + 12);
-			bandwidth_pid(pid, cmd, dev, down, up);
-		}
-		else
-			exit_err_feature(argv[i], CFG_NETWORK);
-		exit(0);
-	}
 	else if (strncmp(argv[i], "--netfilter.print=", 18) == 0) {
 		// extract pid or sandbox name
 		pid_t pid = require_pid(argv[i] + 18);

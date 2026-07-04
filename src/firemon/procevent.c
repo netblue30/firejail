@@ -104,7 +104,7 @@ static int pid_is_firejail(pid_t pid) {
 			// stats
 			"tree", "list", "top",
 			// network
-			"netstats", "bandwidth",
+			"netstats",
 			// etc
 			"help", "version",
 

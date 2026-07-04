@@ -227,7 +227,6 @@ endif
 	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail src/fbwrap/fbwrap
 	# plugins w/o read permission (non-dumpable)
 	$(INSTALL) -m 0711 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS_NON_DUMPABLE)
-	$(INSTALL) -m 0711 -t $(DESTDIR)$(libdir)/firejail src/fshaper/fshaper.sh
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(libdir)/firejail src/fnettrace/static-ip-map
 ifeq ($(HAVE_CONTRIB_INSTALL),yes)
 	# contrib scripts

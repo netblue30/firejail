@@ -43,7 +43,6 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-tracelog
 
 disable-mnt
 # Add 'private-bin PROGRAM1,PROGRAM2' to your links-common.local if you want to use user-configured programs.

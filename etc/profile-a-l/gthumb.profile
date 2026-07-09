@@ -28,7 +28,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 private-bin gthumb
 private-cache

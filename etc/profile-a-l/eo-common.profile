@@ -43,7 +43,6 @@ novideo
 protocol unix,netlink
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-cache
 private-dev

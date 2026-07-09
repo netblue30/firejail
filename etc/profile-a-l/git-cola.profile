@@ -64,7 +64,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 # Add your own diff viewer,editor,pinentry program to private-bin in your git-cola.local.
 #private-bin pinentry-curses,pinentry-emacs,pinentry-fltk,pinentry-gnome3,pinentry-gtk,pinentry-gtk2,pinentry-gtk-2,pinentry-qt,pinentry-qt4,pinentry-tty,pinentry-x2go,pinentry-kwallet" for gpg

@@ -33,7 +33,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 private-bin desktopeditors,sh
 private-cache

@@ -28,7 +28,6 @@ notv
 nou2f
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 disable-mnt
 private-bin bash,curl,dmenu,ls,printf,sed,sh,sleep,st,stterm,surf,xargs,xprop

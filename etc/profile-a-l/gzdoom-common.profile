@@ -45,7 +45,6 @@ novideo
 protocol unix,inet,inet6
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-bin bash,dash,gdb,sh,uname,which,xmessage

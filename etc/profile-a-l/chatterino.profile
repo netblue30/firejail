@@ -69,7 +69,6 @@ protocol unix,inet,inet6,netlink
 # Seccomp may break browser integration.
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 # Add more private-bin lines for browsers or video players to chatterino.local if wanted.

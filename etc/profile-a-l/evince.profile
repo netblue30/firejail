@@ -51,7 +51,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-bin evince,evince-previewer,evince-thumbnailer,sh
 private-cache

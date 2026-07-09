@@ -43,7 +43,6 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-tracelog
 
 disable-mnt
 private-bin bash,dig,sh

@@ -46,7 +46,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 disable-mnt
 private-bin font-manager,python*,yelp

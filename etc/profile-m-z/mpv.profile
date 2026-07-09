@@ -84,7 +84,6 @@ nou2f
 protocol unix,inet,inet6,netlink
 seccomp !set_mempolicy
 seccomp.block-secondary
-tracelog
 
 # mpv links to libluajit, so no need to reference "lua*" in private-bin:
 # https://github.com/netblue30/firejail/pull/5711#discussion_r1125622615

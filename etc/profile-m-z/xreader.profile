@@ -34,7 +34,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 private-bin xreader,xreader-previewer,xreader-thumbnailer
 private-dev

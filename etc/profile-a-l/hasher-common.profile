@@ -42,7 +42,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 x11 none
 
 # Add the next line to your hasher-common.local if you don't need to hash files in ~/.cache.

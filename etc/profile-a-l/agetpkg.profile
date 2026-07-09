@@ -43,7 +43,6 @@ nou2f
 novideo
 protocol inet,inet6
 seccomp
-tracelog
 
 private-bin agetpkg,python3
 private-cache

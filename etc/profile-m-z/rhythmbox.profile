@@ -46,7 +46,6 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-bin rhythmbox,rhythmbox-client
 private-cache

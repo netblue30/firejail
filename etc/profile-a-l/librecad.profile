@@ -34,7 +34,6 @@ novideo
 protocol unix,inet,inet6
 netfilter
 seccomp
-#tracelog
 
 #disable-mnt
 private-bin librecad

@@ -44,7 +44,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-bin imv,imv-wayland,imv-x11,sh
 private-cache

@@ -37,7 +37,6 @@ noroot
 nou2f
 protocol unix,inet,inet6
 seccomp
-tracelog
 
 private-bin xplayer,xplayer-audio-preview,xplayer-video-thumbnailer
 private-dev

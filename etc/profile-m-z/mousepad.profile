@@ -31,7 +31,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 private-bin mousepad
 private-dev

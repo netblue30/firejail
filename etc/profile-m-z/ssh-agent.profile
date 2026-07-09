@@ -29,7 +29,6 @@ notv
 novideo
 protocol unix,inet,inet6
 seccomp
-tracelog
 
 dbus-user none
 dbus-system none

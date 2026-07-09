@@ -24,7 +24,6 @@ noroot
 protocol unix,inet,inet6
 seccomp !chroot
 seccomp.block-secondary
-tracelog
 
 private-bin chrome-sandbox,tidal-hifi
 private-etc @network,@sound,@tls-ca,@xdg

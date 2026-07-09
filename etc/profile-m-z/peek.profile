@@ -50,7 +50,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-bin bash,convert,ffmpeg,fish,gst-*-1.0,orcc,peek,python3*,sh,which,zsh

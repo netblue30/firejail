@@ -47,7 +47,6 @@ noroot
 nou2f
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 private-dev
 private-tmp

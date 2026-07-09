@@ -50,7 +50,6 @@ notv
 ?BROWSER_DISABLE_U2F: nou2f
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 disable-mnt
 private-cache

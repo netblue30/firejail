@@ -50,7 +50,6 @@ nou2f
 novideo
 protocol inet,inet6
 seccomp
-tracelog
 
 #private-bin curl
 private-cache

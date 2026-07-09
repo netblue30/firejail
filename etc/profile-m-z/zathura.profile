@@ -43,7 +43,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-bin zathura
 private-cache

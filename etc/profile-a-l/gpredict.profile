@@ -31,7 +31,6 @@ notv
 nou2f
 protocol unix,inet,inet6
 seccomp
-tracelog
 
 private-bin gpredict
 private-dev

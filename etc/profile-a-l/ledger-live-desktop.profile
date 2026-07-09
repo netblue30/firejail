@@ -45,7 +45,6 @@ notv
 novideo
 protocol unix,inet,inet6,netlink
 seccomp !chroot
-tracelog
 
 disable-mnt
 private-cache

@@ -76,7 +76,6 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-tracelog
 
 disable-mnt
 private-bin QMediathekView,mplayer,mpv,smplayer,totem,vlc,xplayer

@@ -56,7 +56,6 @@ notv
 nou2f
 protocol unix
 seccomp !mbind
-tracelog
 
 private-dev
 private-etc @x11,gimp,python*

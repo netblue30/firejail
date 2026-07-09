@@ -55,7 +55,6 @@ notv
 nou2f
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 disable-mnt
 private-bin bash,gajim,gajim-history-manager,gpg,gpg2,paplay,python*,sh,zsh

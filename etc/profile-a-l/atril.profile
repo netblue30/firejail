@@ -37,7 +37,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 private-bin 7z,7za,7zr,atril,atril-previewer,atril-thumbnailer,sh,tar,unrar,unzip,zipnote
 private-dev

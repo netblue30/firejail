@@ -48,7 +48,6 @@ novideo
 protocol unix,inet
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-bin textroom

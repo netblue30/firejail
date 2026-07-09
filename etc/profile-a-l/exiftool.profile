@@ -38,7 +38,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 x11 none
 
 # To support exiftool in private-bin on Arch Linux (and derivatives), symlink /usr/bin/vendor_perl/exiftool

@@ -57,7 +57,6 @@ nosound
 notv
 nou2f
 novideo
-tracelog
 
 disable-mnt
 private-cache

@@ -94,7 +94,6 @@ novideo
 protocol unix
 seccomp !name_to_handle_at
 seccomp.block-secondary
-tracelog
 
 private-bin keepassxc,keepassxc-cli,keepassxc-proxy
 # Note: private-dev prevents the program from seeing new devices (such as

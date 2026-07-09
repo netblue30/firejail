@@ -20,7 +20,6 @@ no3d
 nosound
 notv
 protocol unix
-tracelog
 x11 none
 
 private-bin mencoder

@@ -30,7 +30,6 @@ notv
 nou2f
 novideo
 seccomp
-tracelog
 
 disable-mnt
 private-dev

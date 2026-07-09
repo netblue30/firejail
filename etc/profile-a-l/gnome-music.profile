@@ -36,7 +36,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 # private-bin calls a file manager - whatever is installed!
 #private-bin env,gio-launch-desktop,gnome-music,python*,yelp

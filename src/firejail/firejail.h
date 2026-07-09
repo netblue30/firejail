@@ -307,7 +307,6 @@ extern char *arg_caps_list;		// optional caps list
 
 extern int arg_trace;		// syscall tracing support
 extern char *arg_tracefile;	// syscall tracing file
-extern int arg_tracelog;	// blacklist tracing support
 extern int arg_rlimit_as;	//rlimit as
 extern int arg_rlimit_cpu;	// rlimit cpu
 extern int arg_rlimit_fsize;	// rlimit fsize
@@ -447,7 +446,6 @@ void preproc_clean_run(void);
 // fs.c
 typedef enum {
 	BLACKLIST_FILE,
-	BLACKLIST_NOLOG,
 	MOUNT_READONLY,
 	MOUNT_TMPFS,
 	MOUNT_NOEXEC,
@@ -859,7 +857,6 @@ enum {
 	CFG_SECCOMP,
 	CFG_SECCOMP_ERROR_ACTION,
 	CFG_SECCOMP_LOG,
-	CFG_TRACELOG,
 	CFG_USERNS,
 	CFG_X11,
 	CFG_XEPHYR_WINDOW_TITLE,

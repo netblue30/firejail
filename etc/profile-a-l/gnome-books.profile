@@ -37,7 +37,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 #private-bin gjs,gnome-books
 private-dev

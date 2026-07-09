@@ -40,7 +40,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 # Add the next line to your gnome-characters.local if you don't need access to recently used chars.

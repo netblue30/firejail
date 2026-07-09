@@ -37,7 +37,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 disable-mnt
 private-bin assogiate,gtk-update-icon-cache,update-mime-database

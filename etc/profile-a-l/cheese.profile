@@ -46,7 +46,6 @@ nou2f
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-bin cheese

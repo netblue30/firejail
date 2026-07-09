@@ -38,7 +38,6 @@ notv
 nou2f
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 #private-bin pidgin
 private-cache

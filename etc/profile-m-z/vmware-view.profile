@@ -43,7 +43,6 @@ novideo
 protocol unix,inet,inet6
 seccomp !iopl
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-cache

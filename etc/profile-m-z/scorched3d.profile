@@ -37,7 +37,6 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-tracelog
 
 disable-mnt
 private-bin scorched3d,scorched3dc,scorched3ds

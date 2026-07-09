@@ -54,7 +54,6 @@ novideo
 protocol unix,inet,inet6
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-bin exfalso,operon,python*,quodlibet,sh
 private-cache

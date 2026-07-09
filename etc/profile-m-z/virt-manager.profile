@@ -57,7 +57,6 @@ caps.keep net_raw,sys_nice
 netfilter
 nodvd
 notv
-tracelog
 
 private-cache
 private-etc @network,@sound,@tls-ca,@x11

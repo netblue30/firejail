@@ -47,7 +47,6 @@ nosound
 protocol unix,netlink
 seccomp
 seccomp.block-secondary
-tracelog
 
 #disable-mnt
 private-bin bash,exiftool,ffmpeg,metadata-cleaner,perl,python,python*,sh,which

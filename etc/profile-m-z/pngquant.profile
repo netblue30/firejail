@@ -40,7 +40,6 @@ nou2f
 novideo
 # block socket syscall to simulate empty protocol option (see #639)
 seccomp socket
-tracelog
 x11 none
 
 private-bin pngquant

@@ -38,7 +38,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 disable-mnt
 private-bin cat,env,gconftool-2,ln,mendeleydesktop,python*,sh,update-desktop-database,which

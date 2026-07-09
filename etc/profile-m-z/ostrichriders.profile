@@ -37,7 +37,6 @@ nou2f
 novideo
 protocol unix,netlink
 seccomp
-tracelog
 
 disable-mnt
 private-bin ostrichriders

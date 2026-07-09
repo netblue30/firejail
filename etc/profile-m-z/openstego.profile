@@ -45,7 +45,6 @@ nou2f
 novideo
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-bin bash,dirname,openstego,readlink,sh

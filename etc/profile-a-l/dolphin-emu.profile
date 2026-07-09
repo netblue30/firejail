@@ -48,7 +48,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink,bluetooth
 seccomp
-tracelog
 
 private-bin bash,dolphin-emu,dolphin-emu-x11,sh
 private-cache

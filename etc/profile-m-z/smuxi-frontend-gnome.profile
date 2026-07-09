@@ -41,7 +41,6 @@ notv
 nou2f
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 disable-mnt
 private-bin bash,mono,mono-sgen,sh,smuxi-frontend-gnome

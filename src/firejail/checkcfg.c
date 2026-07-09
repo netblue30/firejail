@@ -73,7 +73,6 @@ const char *const cfgstr[] = {
 	[CFG_SECCOMP] = "seccomp",
 	[CFG_SECCOMP_ERROR_ACTION] = "seccomp-error-action",
 	[CFG_SECCOMP_LOG] = "seccomp-log",
-	[CFG_TRACELOG] = "tracelog",
 	[CFG_USERNS] = "userns",
 	[CFG_X11] = "x11",
 	[CFG_XEPHYR_WINDOW_TITLE] = "xephyr-window-title",
@@ -125,7 +124,6 @@ int checkcfg(int val) {
 		cfg_val[CFG_CHROOT] = 0;
 		cfg_val[CFG_SECCOMP_LOG] = 0;
 		cfg_val[CFG_PRIVATE_LIB] = 0;
-		cfg_val[CFG_TRACELOG] = 0;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -182,12 +180,13 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_RESTRICTED_NETWORK, "restricted-network")
 			PARSE_YESNO(CFG_SECCOMP, "seccomp")
 			PARSE_YESNO(CFG_SECCOMP_LOG, "seccomp-log")
-			PARSE_YESNO(CFG_TRACELOG, "tracelog")
 			PARSE_YESNO(CFG_USERNS, "userns")
 			PARSE_YESNO(CFG_X11, "x11")
 			PARSE_YESNO(CFG_XEPHYR_WINDOW_TITLE, "xephyr-window-title")
 			PARSE_YESNO(CFG_XPRA_ATTACH, "xpra-attach")
 #undef PARSE_YESNO
+			else if (strncmp(ptr, "tracelog", 8) == 0)
+				; // tracelog feature was deprecated in firejail version 0.9.81
 
 			// netfilter
 			else if (strncmp(ptr, "netfilter-default ", 18) == 0) {

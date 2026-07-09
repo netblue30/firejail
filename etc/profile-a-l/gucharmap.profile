@@ -36,7 +36,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-bin gnome-character-map,gucharmap

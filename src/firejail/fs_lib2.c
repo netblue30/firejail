@@ -139,7 +139,6 @@ static void fdir(void) {
 		// PATH_FSEC_OPTIMIZE,
 		// PATH_FSEC_PRINT,
 		// RUN_FIREJAIL_LIB_DIR "/libtrace.so",
-		// RUN_FIREJAIL_LIB_DIR "/libtracelog.so",
 		// RUN_FIREJAIL_LIB_DIR "/libpostexecseccomp.so",
 		NULL,
 	};

@@ -49,7 +49,6 @@ notv
 nou2f
 novideo
 seccomp
-tracelog
 x11 none
 
 #disable-mnt

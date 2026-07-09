@@ -37,7 +37,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 disable-mnt
 # breaks custom shell command functionality

@@ -46,7 +46,6 @@ nou2f
 novideo
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-bin kdiff3

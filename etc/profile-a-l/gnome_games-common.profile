@@ -35,7 +35,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-cache

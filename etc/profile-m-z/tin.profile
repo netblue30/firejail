@@ -51,7 +51,6 @@ novideo
 protocol inet,inet6
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-bin rtin,tin

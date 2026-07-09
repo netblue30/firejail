@@ -44,7 +44,6 @@ novideo
 # block socket syscall to simulate empty protocol option (see #639)
 seccomp socket
 seccomp.block-secondary
-tracelog
 x11 none
 
 private-bin chafa

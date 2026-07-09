@@ -36,7 +36,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 disable-mnt
 private-bin bash,cut,glxinfo,grep,head,openarena,openarena_ded,quake3,zenity

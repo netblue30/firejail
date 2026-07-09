@@ -51,7 +51,6 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp !chroot
 seccomp.block-secondary
-#tracelog # breaks
 
 private-bin affixcompress,analyze,chmorph,cmark,context,gettext,ghostwriter,hunspell,hunzip,hzip,latex,makealias,mktexfmt,multimarkdown,munch,pandoc,pdflatex,pdfroff,prince,unmunch,weasyprint,wkhtmltopdf,wordforms,wordlist2hunspell
 private-cache

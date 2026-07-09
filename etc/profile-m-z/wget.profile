@@ -50,7 +50,6 @@ novideo
 protocol unix,inet,inet6
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-bin wget
 private-cache

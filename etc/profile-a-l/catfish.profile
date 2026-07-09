@@ -36,7 +36,6 @@ notv
 novideo
 protocol unix
 seccomp
-tracelog
 
 # These options work but are disabled in case
 # a users wants to search in these directories.

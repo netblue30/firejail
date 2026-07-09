@@ -29,7 +29,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 x11 none
 
 #private-bin bzip2,file,gzip,lrzip,lz4,lzip,xz,zstd

@@ -32,7 +32,6 @@ notv
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 private-cache
 private-dev

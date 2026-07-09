@@ -38,9 +38,6 @@ static const char *const usage_str =
 	"    --apparmor.print=name|pid - print apparmor status.\n"
 #endif
 	"    --appimage - sandbox an AppImage application.\n"
-#ifdef HAVE_NETWORK
-	"    --bandwidth=name|pid - set bandwidth limits.\n"
-#endif
 	"    --bind=dirname1,dirname2 - mount-bind dirname1 on top of dirname2.\n"
 	"    --bind=filename1,filename2 - mount-bind filename1 on top of filename2.\n"
 	"    --blacklist=filename - blacklist directory or file.\n"
@@ -273,7 +270,6 @@ static const char *const usage_str =
 	"    --tmpfs=dirname - mount a tmpfs filesystem on directory dirname.\n"
 	"    --top - monitor the most CPU-intensive sandboxes.\n"
 	"    --trace - trace open, access and connect system calls.\n"
-	"    --tracelog - add a syslog message for every access to files or\n"
 	"\tdirectories blacklisted by the security profile.\n"
 	"    --tree - print a tree of all sandboxed processes.\n"
 	"    --unhide-pid1 - make pid 1 process visible to tools such as ps\n"

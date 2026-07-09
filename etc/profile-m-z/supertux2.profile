@@ -38,7 +38,6 @@ novideo
 protocol unix,netlink
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 #private-bin supertux2

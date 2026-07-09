@@ -49,7 +49,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-bin marker,python3*
 private-cache

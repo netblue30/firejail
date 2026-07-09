@@ -43,7 +43,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-#tracelog
 
 private-bin gimp*,gwenview,kbuildsycoca4,kdeinit4
 private-dev

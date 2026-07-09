@@ -42,7 +42,6 @@ novideo
 # commented out in case they bring in new protocols
 #protocol unix,inet,inet6,netlink,packet,bluetooth
 #seccomp
-tracelog
 
 #private-bin wireshark
 private-cache

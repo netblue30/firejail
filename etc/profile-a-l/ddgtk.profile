@@ -39,7 +39,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 disable-mnt
 private-bin bash,dd,ddgtk,grep,lsblk,python*,sed,sh,tr

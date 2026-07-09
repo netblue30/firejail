@@ -46,7 +46,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-bin avidemux3_cli,avidemux3_jobs_qt5,avidemux3_qt5
 private-cache

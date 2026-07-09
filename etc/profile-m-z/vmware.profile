@@ -34,7 +34,6 @@ caps.keep chown,net_raw,sys_nice
 netfilter
 nogroups
 notv
-tracelog
 
 #disable-mnt
 # Add the next line to your vmware.local to enable private-bin.

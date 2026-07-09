@@ -34,7 +34,6 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-tracelog
 
 disable-mnt
 private-bin freeciv-gtk3,freeciv-manual,freeciv-mp-gtk3,freeciv-server

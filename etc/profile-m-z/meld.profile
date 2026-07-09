@@ -68,7 +68,6 @@ novideo
 protocol unix,inet,inet6
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-bin bzr,cvs,git,hg,meld,python*,svn
 private-cache

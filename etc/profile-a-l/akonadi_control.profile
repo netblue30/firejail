@@ -50,7 +50,6 @@ nou2f
 novideo
 #protocol unix,inet,inet6,netlink
 #seccomp !io_destroy,!io_getevents,!io_setup,!io_submit,!ioprio_set
-tracelog
 
 private-dev
 #private-tmp # breaks programs that depend on akonadi

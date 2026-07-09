@@ -45,7 +45,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-bin com.github.tchx84.Flatseal,gjs

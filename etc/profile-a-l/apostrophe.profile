@@ -56,7 +56,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 disable-mnt
 private-bin apostrophe,fmtutil,kpsewhich,mktexfmt,pandoc,pdftex,perl,python3*,sh,xdvipdfmx,xelatex,xetex

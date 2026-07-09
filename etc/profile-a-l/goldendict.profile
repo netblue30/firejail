@@ -44,7 +44,6 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-bin goldendict

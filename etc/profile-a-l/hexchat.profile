@@ -58,7 +58,6 @@ novideo
 protocol unix,inet,inet6
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 # If you need Lua and/or Perl support, add the relevant binaries from

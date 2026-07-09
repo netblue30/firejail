@@ -35,7 +35,6 @@ notv
 nou2f
 novideo
 #seccomp
-tracelog
 
 disable-mnt
 #private-bin sniffnet

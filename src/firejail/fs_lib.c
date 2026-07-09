@@ -376,12 +376,12 @@ static void mount_directories(void) {
 	if (is_dir("/lib32")) {
 		if (mount(RUN_RO_DIR, "/lib32", "none", MS_BIND, "mode=400,gid=0") < 0)
 			errExit("disable file");
-		fs_logger("blacklist-nolog /lib32");
+		// fs_logger("blacklist-nolog /lib32");
 	}
 	if (is_dir("/libx32")) {
 		if (mount(RUN_RO_DIR, "/libx32", "none", MS_BIND, "mode=400,gid=0") < 0)
 			errExit("disable file");
-		fs_logger("blacklist-nolog /libx32");
+		// fs_logger("blacklist-nolog /libx32");
 	}
 }
 

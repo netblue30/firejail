@@ -38,7 +38,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 #private-bin gedit
 private-dev

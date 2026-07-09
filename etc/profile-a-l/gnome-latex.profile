@@ -41,7 +41,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-cache
 private-dev

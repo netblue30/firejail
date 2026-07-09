@@ -46,7 +46,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 disable-mnt
 #private-bin bash,dash,mkdir,sh,warzone2100,warzone2100.real,which

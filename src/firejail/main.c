@@ -90,7 +90,6 @@ char *arg_caps_list = NULL;			// optional caps list
 
 int arg_trace = 0;				// syscall tracing support
 char *arg_tracefile = NULL;			// syscall tracing file
-int arg_tracelog = 0;				// blacklist tracing support
 int arg_rlimit_as = 0;				// rlimit as
 int arg_rlimit_cpu = 0;				// rlimit max cpu time
 int arg_rlimit_fsize = 0;				// rlimit fsize
@@ -1560,12 +1559,6 @@ int main(int argc, char **argv, char **envp) {
 				exit(1);
 			}
 		}
-		else if (strcmp(argv[i], "--tracelog") == 0) {
-			if (checkcfg(CFG_TRACELOG))
-				arg_tracelog = 1;
-			else
-				exit_err_feature(argv[i], CFG_TRACELOG);
-		}
 		else if (strncmp(argv[i], "--rlimit-as=", 12) == 0) {
 			cfg.rlimit_as = parse_arg_size(argv[i] + 12);
 			if (cfg.rlimit_as == 0) {
@@ -2767,12 +2760,6 @@ int main(int argc, char **argv, char **envp) {
 		}
 	}
 
-
-	// check trace configuration
-	if (arg_trace && arg_tracelog) {
-		fwarning("--trace and --tracelog are mutually exclusive; --tracelog disabled\n");
-	}
-
 	// check user namespace (--noroot) options
 	if (arg_noroot) {
 		if (cfg.chrootdir) {
@@ -2891,9 +2878,9 @@ int main(int argc, char **argv, char **envp) {
 	if (arg_seccomp)
 		arg_seccomp_postexec = check_postexec(cfg.seccomp_list) || check_postexec(cfg.seccomp_list_drop);
 
-	bool need_preload = arg_trace || arg_tracelog || arg_seccomp_postexec;
+	bool need_preload = arg_trace || arg_seccomp_postexec;
 	if (need_preload && (cfg.seccomp_list32 || cfg.seccomp_list_drop32 || cfg.seccomp_list_keep32))
-		fwarning("preload libraries (trace, tracelog, postexecseccomp due to seccomp.drop=execve etc.) are incompatible with 32 bit filters\n");
+		fwarning("preload libraries (trace, postexecseccomp due to seccomp.drop=execve etc.) are incompatible with 32 bit filters\n");
 
 	// check and assign an IP address - for macvlan it will be done again in the sandbox!
 	if (any_bridge_configured()) {

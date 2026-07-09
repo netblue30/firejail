@@ -8,31 +8,31 @@ include disable-common.local
 blacklist ${HOME}/.local/share/Trash
 
 # History files in $HOME and clipboard managers
-blacklist-nolog ${HOME}/.*_history
-blacklist-nolog ${HOME}/.*_history_*
-blacklist-nolog ${HOME}/.adobe
-blacklist-nolog ${HOME}/.ammonite/history
-blacklist-nolog ${HOME}/.cache/greenclip*
-blacklist-nolog ${HOME}/.cache/mupdf.history
-blacklist-nolog ${HOME}/.cache/xfce4/clipman
-blacklist-nolog ${HOME}/.histfile
-blacklist-nolog ${HOME}/.history
-blacklist-nolog ${HOME}/.kde/share/apps/klipper
-blacklist-nolog ${HOME}/.kde4/share/apps/klipper
-blacklist-nolog ${HOME}/.lesshst
-blacklist-nolog ${HOME}/.local/share/fish/fish_history
-blacklist-nolog ${HOME}/.local/share/ibus-typing-booster
-blacklist-nolog ${HOME}/.local/share/klipper
-blacklist-nolog ${HOME}/.local/share/nvim
-blacklist-nolog ${HOME}/.local/state/nvim
-blacklist-nolog ${HOME}/.macromedia
-blacklist-nolog ${HOME}/.mupdf.history
-blacklist-nolog ${HOME}/.mutthistory
-blacklist-nolog ${HOME}/.ne
-blacklist-nolog ${HOME}/.python-history
-blacklist-nolog ${HOME}/.pythonhist
-blacklist-nolog ${HOME}/.viminfo
-blacklist-nolog /tmp/clipmenu*
+blacklist ${HOME}/.*_history
+blacklist ${HOME}/.*_history_*
+blacklist ${HOME}/.adobe
+blacklist ${HOME}/.ammonite/history
+blacklist ${HOME}/.cache/greenclip*
+blacklist ${HOME}/.cache/mupdf.history
+blacklist ${HOME}/.cache/xfce4/clipman
+blacklist ${HOME}/.histfile
+blacklist ${HOME}/.history
+blacklist ${HOME}/.kde/share/apps/klipper
+blacklist ${HOME}/.kde4/share/apps/klipper
+blacklist ${HOME}/.lesshst
+blacklist ${HOME}/.local/share/fish/fish_history
+blacklist ${HOME}/.local/share/ibus-typing-booster
+blacklist ${HOME}/.local/share/klipper
+blacklist ${HOME}/.local/share/nvim
+blacklist ${HOME}/.local/state/nvim
+blacklist ${HOME}/.macromedia
+blacklist ${HOME}/.mupdf.history
+blacklist ${HOME}/.mutthistory
+blacklist ${HOME}/.ne
+blacklist ${HOME}/.python-history
+blacklist ${HOME}/.pythonhist
+blacklist ${HOME}/.viminfo
+blacklist /tmp/clipmenu*
 
 # X11 session autostart
 # this will kill --x11=xpra cmdline option for all programs

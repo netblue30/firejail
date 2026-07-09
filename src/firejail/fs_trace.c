@@ -97,10 +97,6 @@ void fs_trace(void) {
 	if (arg_trace) {
 		fprintf(fp, "%s/libtrace.so\n", prefix);
 	}
-	else if (arg_tracelog) {
-		fprintf(fp, "%s/libtracelog.so\n", prefix);
-		fmessage("Blacklist violations are logged to syslog\n");
-	}
 	if (arg_seccomp_postexec) {
 		fprintf(fp, "%s/libpostexecseccomp.so\n", prefix);
 		fmessage("Post-exec seccomp protector enabled\n");

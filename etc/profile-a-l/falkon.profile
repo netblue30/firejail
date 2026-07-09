@@ -43,7 +43,6 @@ nou2f
 protocol unix,inet,inet6,netlink
 # blacklisting of chroot system calls breaks falkon
 seccomp !chroot
-#tracelog
 
 disable-mnt
 #private-bin falkon

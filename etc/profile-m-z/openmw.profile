@@ -47,7 +47,6 @@ novideo
 protocol unix,netlink
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-bin bsatool,esmtool,niftest,openmw,openmw-cs,openmw-essimporter,openmw-iniimporter,openmw-launcher,openmw-wizard
 private-cache

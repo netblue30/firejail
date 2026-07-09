@@ -37,7 +37,6 @@ nou2f
 novideo
 seccomp socket
 seccomp.block-secondary
-tracelog
 x11 none
 
 #disable-mnt

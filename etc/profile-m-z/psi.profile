@@ -62,7 +62,6 @@ novideo
 nou2f
 protocol unix,inet,inet6,netlink
 seccomp !chroot
-#tracelog # breaks on Arch
 
 disable-mnt
 # Add the next line to your psi.local to enable GPG support.

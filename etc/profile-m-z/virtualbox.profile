@@ -39,7 +39,6 @@ netfilter
 nodvd
 #nogroups
 notv
-tracelog
 
 #disable-mnt
 #private-bin awk,basename,bash,env,gawk,grep,ps,readlink,sh,virtualbox,VirtualBox,VBox*,vbox*,whoami

@@ -182,8 +182,6 @@ protocol unix,inet,inet6,netlink
 seccomp !chroot,!mount,!name_to_handle_at,!pivot_root,!process_vm_readv,!ptrace,!umount2
 # process_vm_readv is used by GE-Proton7-18 (see #5185).
 seccomp.32 !process_vm_readv
-# tracelog breaks integrated browser
-#tracelog
 
 # private-bin is disabled while in testing, but is known to work with multiple games.
 # Add the next line to your steam.local to enable private-bin.

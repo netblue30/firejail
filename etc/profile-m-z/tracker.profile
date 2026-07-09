@@ -31,7 +31,6 @@ notv
 novideo
 protocol unix
 seccomp
-tracelog
 
 #private-bin tracker
 #private-dev

@@ -56,7 +56,6 @@ nou2f
 novideo
 protocol unix,netlink
 seccomp
-tracelog
 
 disable-mnt
 #private-bin sysprof # breaks help menu

@@ -47,7 +47,6 @@ noroot
 nou2f
 protocol unix,inet,inet6
 seccomp
-tracelog
 
 private-bin totem
 # totem needs access to ~/.cache/tracker or it exits

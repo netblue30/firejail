@@ -31,7 +31,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 private-bin bash,dash,gnome-text-editor,sh
 private-dev

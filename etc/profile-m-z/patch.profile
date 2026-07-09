@@ -38,7 +38,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 x11 none
 
 private-bin patch,red

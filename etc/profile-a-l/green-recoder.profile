@@ -54,7 +54,6 @@ protocol unix
 # allow set_mempolicy, which is required to encode using libx265
 seccomp !set_mempolicy
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-bin awk,bash,convert,ffmpeg,green-recorder,grep,mv,pactl,ps,python*,sh,sleep,xdg-open,xdpyinfo,xwininfo

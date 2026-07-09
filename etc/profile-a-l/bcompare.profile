@@ -36,7 +36,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 private-cache
 private-dev

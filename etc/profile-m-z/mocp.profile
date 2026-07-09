@@ -47,7 +47,6 @@ novideo
 protocol unix,inet,inet6
 seccomp
 seccomp.block-secondary
-tracelog
 
 private-bin mocp
 private-cache

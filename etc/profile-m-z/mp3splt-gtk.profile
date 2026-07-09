@@ -31,7 +31,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 private-bin mp3splt-gtk
 private-cache

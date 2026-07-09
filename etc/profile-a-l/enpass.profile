@@ -51,7 +51,6 @@ nou2f
 novideo
 protocol unix,inet,inet6,netlink
 seccomp
-tracelog
 
 private-bin Enpass,dirname,importer_enpass,readlink,sh
 ?HAS_APPIMAGE: ignore private-dev

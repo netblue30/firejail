@@ -50,7 +50,6 @@ novideo
 protocol unix
 seccomp
 seccomp.block-secondary
-tracelog
 
 # mcomix <= 1.2 uses python2
 private-bin 7z,lha,mcomix,mutool,python*,rar,sh,unrar,unzip

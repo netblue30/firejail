@@ -53,7 +53,6 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-tracelog
 
 disable-mnt
 private-bin bash,ffmpeg,ffprobe,mpv,perl,python*,sh,smplayer,stty,wget,wget2,which,youtube-dl,yt-dlp

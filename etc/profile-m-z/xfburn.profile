@@ -23,7 +23,6 @@ notv
 novideo
 protocol unix
 seccomp
-tracelog
 
 #private-bin xfburn
 #private-dev

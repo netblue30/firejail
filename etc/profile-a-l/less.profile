@@ -33,7 +33,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 x11 none
 
 # The user can have a custom coloring script configured in ${HOME}/.lessfilter.

@@ -47,7 +47,6 @@ novideo
 protocol unix,inet
 seccomp
 seccomp.block-secondary
-tracelog
 x11 none
 
 disable-mnt

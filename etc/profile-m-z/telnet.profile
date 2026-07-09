@@ -37,7 +37,6 @@ nou2f
 novideo
 protocol inet,inet6
 seccomp
-tracelog
 
 #disable-mnt
 #private-bin PROGRAMS

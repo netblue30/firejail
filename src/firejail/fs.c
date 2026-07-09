@@ -44,7 +44,6 @@ static void fs_remount_rec(const char *dir, OPERATION op);
 
 static char *opstr[] = {
 	[BLACKLIST_FILE] = "blacklist",
-	[BLACKLIST_NOLOG] = "blacklist-nolog",
 	[MOUNT_READONLY] = "read-only",
 	[MOUNT_TMPFS] = "tmpfs",
 	[MOUNT_NOEXEC] = "noexec",
@@ -82,10 +81,7 @@ static int disable_file(OPERATION op, const char *filename) {
 		if (err == 0) {
 			if (arg_debug)
 				printf("Disable %s\n", filename);
-			if (op == BLACKLIST_FILE)
-				fs_logger2("blacklist", filename);
-			else
-				fs_logger2("blacklist-nolog", filename);
+			fs_logger2("blacklist", filename);
 			return 0;
 		}
 		else {
@@ -141,7 +137,7 @@ static int disable_file(OPERATION op, const char *filename) {
 
 	int retval = 0;
 	// modify the file
-	if (op == BLACKLIST_FILE || op == BLACKLIST_NOLOG) {
+	if (op == BLACKLIST_FILE) {
 		// some distros put all executables under /usr/bin and make /bin a symbolic link
 		if ((strcmp(fname, "/bin") == 0 || strcmp(fname, "/usr/bin") == 0) &&
 		    is_link(filename) &&
@@ -175,12 +171,8 @@ static int disable_file(OPERATION op, const char *filename) {
 			}
 			EUID_USER();
 
-			if (!err_mount) {
-				if (op == BLACKLIST_FILE)
-					fs_logger2("blacklist", fname);
-				else
-					fs_logger2("blacklist-nolog", fname);
-			}
+			if (!err_mount)
+				fs_logger2("blacklist", fname);
 			else {
 				fwarning("cannot blacklist %s, mount failed\n", fname);
 				retval = 1;
@@ -275,7 +267,7 @@ static void globbing(OPERATION op, const char *pattern, const char *noblacklist[
 			continue;
 		// noblacklist is expected to be short in normal cases, so stupid and correct brute force is okay
 		bool okay_to_blacklist = true;
-		if (op == BLACKLIST_FILE || op == BLACKLIST_NOLOG) {
+		if (op == BLACKLIST_FILE) {
 			for (j = 0; j < noblacklist_len; j++) {
 				int result = fnmatch(noblacklist[j], path, FNM_PATHNAME);
 				if (result == FNM_NOMATCH)
@@ -416,7 +408,7 @@ void fs_blacklist(void) {
 		}
 		else if (strncmp(entry->data, "blacklist-nolog ", 16) == 0)  {
 			ptr = entry->data + 16;
-			op = BLACKLIST_NOLOG;
+			op = BLACKLIST_FILE; // blacklist-nolog was deprecated in 0.9.81 -> using regular blacklist
 		}
 		else if (strncmp(entry->data, "read-only ", 10) == 0) {
 			ptr = entry->data + 10;

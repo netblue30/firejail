@@ -38,7 +38,6 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-tracelog
 
 private-bin bitcoin-qt
 private-dev

@@ -82,9 +82,6 @@ protocol unix,inet,inet6,netlink
 # Note: The seccomp line below still permits the chroot syscall; see
 # https://github.com/netblue30/firejail/issues/2506 for possible workarounds.
 seccomp !chroot
-# Note: tracelog may break or cause major issues with many Firefox-based
-# browsers; see https://github.com/netblue30/firejail/issues/1930.
-#tracelog
 
 disable-mnt
 ?BROWSER_DISABLE_U2F: private-dev

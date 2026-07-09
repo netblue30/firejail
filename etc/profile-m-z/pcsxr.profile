@@ -41,7 +41,6 @@ nou2f
 novideo
 protocol unix,netlink
 seccomp
-tracelog
 
 private-bin pcsxr
 private-cache

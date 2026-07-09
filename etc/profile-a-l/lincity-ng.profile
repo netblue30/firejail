@@ -35,7 +35,6 @@ nou2f
 novideo
 #protocol unix - problems on Debian stable!
 seccomp
-tracelog
 
 disable-mnt
 private-bin lincity-ng

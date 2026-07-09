@@ -34,7 +34,6 @@ nou2f
 novideo
 protocol unix
 seccomp
-tracelog
 
 private-bin qpdfview
 private-dev

@@ -44,7 +44,6 @@ protocol unix,netlink
 #https://gitlab.gnome.org/sophie-h/glycin#sandboxing-and-inner-workings
 #seccomp
 seccomp.block-secondary
-tracelog
 
 private-bin bwrap,loupe
 private-cache

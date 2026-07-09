@@ -43,7 +43,6 @@ novideo
 protocol unix,inet,inet6,netlink
 seccomp
 seccomp.block-secondary
-tracelog
 
 disable-mnt
 private-bin megaglest,megaglest_editor,megaglest_g3dviewer

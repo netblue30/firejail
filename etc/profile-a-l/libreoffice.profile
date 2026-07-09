@@ -45,7 +45,6 @@ include whitelist-var-common.inc
 #ignore nonewprivs
 #ignore protocol
 #ignore seccomp
-#ignore tracelog
 
 apparmor
 caps.drop all
@@ -60,7 +59,6 @@ nou2f
 novideo
 protocol unix,inet,inet6
 seccomp
-tracelog
 
 #private-bin libreoffice,sh,uname,dirname,grep,sed,basename,ls
 private-cache

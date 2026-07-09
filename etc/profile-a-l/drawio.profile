@@ -39,7 +39,6 @@ nou2f
 novideo
 protocol unix
 seccomp !chroot
-#tracelog # breaks on Arch
 
 private-bin drawio
 private-cache

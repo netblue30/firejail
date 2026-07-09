@@ -255,9 +255,6 @@ endif
 	sh -c "if [ ! -f $(DESTDIR)$(sysconfdir)/firejail/login.users ]; then \
 		$(INSTALL) -m 0644 -t $(DESTDIR)$(sysconfdir)/firejail etc/login.users; \
 	fi"
-ifeq ($(BUSYBOX_WORKAROUND),yes)
-	./mketc.sh $(DESTDIR)$(sysconfdir)/firejail/disable-common.inc
-endif
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profiles
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(sysconfdir)/apparmor.d

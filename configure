@@ -647,7 +647,6 @@ HAVE_ONLY_SYSCFG_PROFILES
 HAVE_FORCE_NONEWPRIVS
 HAVE_CONTRIB_INSTALL
 HAVE_GCOV
-BUSYBOX_WORKAROUND
 HAVE_FATAL_WARNINGS
 HAVE_SUID
 HAVE_FILE_TRANSFER
@@ -744,7 +743,6 @@ enable_x11
 enable_file_transfer
 enable_suid
 enable_fatal_warnings
-enable_busybox_workaround
 enable_gcov
 enable_contrib_install
 enable_force_nonewprivs
@@ -1401,8 +1399,6 @@ Optional Features:
   --disable-file-transfer disable file transfer
   --disable-suid          install as a non-SUID executable
   --enable-fatal-warnings -W -Werror
-  --enable-busybox-workaround
-                          enable busybox workaround
   --enable-gcov           Gcov instrumentation
   --enable-contrib-install
                           install contrib scripts
@@ -4441,21 +4437,6 @@ then :
 
 fi
 
-BUSYBOX_WORKAROUND="no"
-
-# Check whether --enable-busybox-workaround was given.
-if test ${enable_busybox_workaround+y}
-then :
-  enableval=$enable_busybox_workaround;
-fi
-
-if test "x$enable_busybox_workaround" = "xyes"
-then :
-
-	BUSYBOX_WORKAROUND="yes"
-
-fi
-
 HAVE_GCOV=""
 
 # Check whether --enable-gcov was given.
@@ -5711,7 +5692,6 @@ Compile options:
 Features:
    always enforce filters: $HAVE_FORCE_NONEWPRIVS
    apparmor: $HAVE_APPARMOR
-   busybox workaround: $BUSYBOX_WORKAROUND
    chroot: $HAVE_CHROOT
    DBUS proxy support: $HAVE_DBUSPROXY
    disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES

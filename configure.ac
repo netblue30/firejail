@@ -201,14 +201,6 @@ AS_IF([test "x$enable_fatal_warnings" = "xyes"], [
 	HAVE_FATAL_WARNINGS="-W -Werror"
 ])
 
-BUSYBOX_WORKAROUND="no"
-AC_SUBST([BUSYBOX_WORKAROUND])
-AC_ARG_ENABLE([busybox-workaround],
-    [AS_HELP_STRING([--enable-busybox-workaround], [enable busybox workaround])])
-AS_IF([test "x$enable_busybox_workaround" = "xyes"], [
-	BUSYBOX_WORKAROUND="yes"
-])
-
 HAVE_GCOV=""
 AC_SUBST([HAVE_GCOV])
 AC_ARG_ENABLE([gcov],
@@ -276,7 +268,6 @@ Compile options:
 Features:
    always enforce filters: $HAVE_FORCE_NONEWPRIVS
    apparmor: $HAVE_APPARMOR
-   busybox workaround: $BUSYBOX_WORKAROUND
    chroot: $HAVE_CHROOT
    DBUS proxy support: $HAVE_DBUSPROXY
    disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES

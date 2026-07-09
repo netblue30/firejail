@@ -411,17 +411,6 @@ the /etc directory, and must not contain the / character
 expressed as foo/bar -- is disallowed).
 All modifications are discarded when the sandbox is closed.
 Multiple private-etc commands are allowed and they accumulate.
-#ifdef HAVE_PRIVATE_HOME
-.TP
-\fBprivate\-home file,directory
-Build a new user home in a temporary
-filesystem, and copy the files and directories in the list in the
-new home.
-The files and directories in the list must be expressed as relative to
-the current user's home directory.
-All modifications are discarded when the sandbox is
-closed.
-#endif
 #ifdef HAVE_PRIVATE_LIB
 .TP
 \fBprivate\-lib file,directory

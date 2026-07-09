@@ -129,14 +129,6 @@ AS_IF([test "x$enable_output" != "xno"], [
 	HAVE_OUTPUT="-DHAVE_OUTPUT"
 ])
 
-HAVE_PRIVATE_HOME=""
-AC_SUBST([HAVE_PRIVATE_HOME])
-AC_ARG_ENABLE([private-home],
-    [AS_HELP_STRING([--disable-private-home], [disable private home feature])])
-AS_IF([test "x$enable_private_home" != "xno"], [
-	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
-])
-
 HAVE_PRIVATE_LIB=""
 AC_SUBST([HAVE_PRIVATE_LIB])
 AC_ARG_ENABLE([private-lib],
@@ -275,7 +267,6 @@ Features:
    file transfer support: $HAVE_FILE_TRANSFER
    Landlock support: $HAVE_LANDLOCK
    network: $HAVE_NETWORK
-   private home support: $HAVE_PRIVATE_HOME
    private lib support: $HAVE_PRIVATE_LIB
    sandbox check: $HAVE_SANDBOX_CHECK
    SELinux labeling support: $HAVE_SELINUX

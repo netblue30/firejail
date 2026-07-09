@@ -384,18 +384,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strncmp(ptr, "private-home ", 13) == 0) {
-#ifdef HAVE_PRIVATE_HOME
-		if (checkcfg(CFG_PRIVATE_HOME)) {
-			if (cfg.home_private_keep) {
-				if ( asprintf(&cfg.home_private_keep, "%s,%s", cfg.home_private_keep, ptr + 13) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.home_private_keep = ptr + 13;
-			arg_private = 1;
-		}
-		else
-			warning_feature_disabled(fname, lineno, ptr, CFG_PRIVATE_HOME);
-#endif
+		fprintf(stderr, "Warning: \"private-home\" feature was deprecated in firejail version 0.9.81\n");
 		return 0;
 	}
 	else if (strcmp(ptr, "tab") == 0) {

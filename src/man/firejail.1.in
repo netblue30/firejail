@@ -2321,23 +2321,6 @@ $ firejail \-\-allow\-debuggers \-\-profile=/etc/firejail/transmission\-qt.profi
 strace \-f \-\-trace=%file /usr/bin/transmission-qt 2>&1 | grep etc
 
 See also \fB\-\-allow-debuggers\fR and \fB\-\-trace\fR.
-#ifdef HAVE_PRIVATE_HOME
-.TP
-\fB\-\-private\-home=file,directory
-Build a new user home in a temporary
-filesystem, and copy the files and directories in the list in the
-new home.
-The files and directories in the list must be expressed as relative to
-the current user's home directory.
-All modifications are discarded when the sandbox is
-closed.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-private\-home=.mozilla /usr/bin/firefox
-#endif
 #ifdef HAVE_PRIVATE_LIB
 .TP
 \fB\-\-private\-lib=file,directory
@@ -3275,7 +3258,6 @@ Compile time support:
     - file transfer support is enabled
     - firetunnel support is enabled
     - networking support is enabled
-    - private-home support is enabled
     - seccomp-bpf support is enabled
     - user namespace support is enabled
     - X11 sandboxing support is enabled

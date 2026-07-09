@@ -178,7 +178,6 @@ typedef struct config_t {
 	char *keep_fd;		// inherit file descriptors to sandbox
 	char *chrootdir;	// chroot directory
 	char *home_private;	// private home directory
-	char *home_private_keep;	// keep list for private home directory
 	char *etc_private_keep;	// keep list for private etc directory
 	char *opt_private_keep;	// keep list for private opt directory
 	char *srv_private_keep;	// keep list for private srv directory
@@ -658,7 +657,6 @@ void fs_private_homedir(void);
 void fs_check_private_dir(void);
 // check new private working directory (--private-cwd= option) - exit if it fails
 void fs_check_private_cwd(const char *dir);
-void fs_private_home_list(void);
 
 
 // seccomp.c
@@ -849,7 +847,6 @@ enum {
 	CFG_PRIVATE_BIN_NO_LOCAL,
 	CFG_PRIVATE_CACHE,
 	CFG_PRIVATE_ETC,
-	CFG_PRIVATE_HOME,
 	CFG_PRIVATE_LIB,
 	CFG_PRIVATE_OPT,
 	CFG_PRIVATE_SRV,

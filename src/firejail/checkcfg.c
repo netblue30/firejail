@@ -65,7 +65,6 @@ const char *const cfgstr[] = {
 	[CFG_PRIVATE_BIN_NO_LOCAL] = "private-bin-no-local",
 	[CFG_PRIVATE_CACHE] = "private-cache",
 	[CFG_PRIVATE_ETC] = "private-etc",
-	[CFG_PRIVATE_HOME] = "private-home",
 	[CFG_PRIVATE_LIB] = "private-lib",
 	[CFG_PRIVATE_OPT] = "private-opt",
 	[CFG_PRIVATE_SRV] = "private-srv",
@@ -173,7 +172,6 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_PRIVATE_BIN_NO_LOCAL, "private-bin-no-local")
 			PARSE_YESNO(CFG_PRIVATE_CACHE, "private-cache")
 			PARSE_YESNO(CFG_PRIVATE_ETC, "private-etc")
-			PARSE_YESNO(CFG_PRIVATE_HOME, "private-home")
 			PARSE_YESNO(CFG_PRIVATE_LIB, "private-lib")
 			PARSE_YESNO(CFG_PRIVATE_OPT, "private-opt")
 			PARSE_YESNO(CFG_PRIVATE_SRV, "private-srv")
@@ -186,6 +184,8 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_XPRA_ATTACH, "xpra-attach")
 #undef PARSE_YESNO
 			else if (strncmp(ptr, "tracelog", 8) == 0)
+				; // tracelog feature was deprecated in firejail version 0.9.81
+			else if (strncmp(ptr, "private-home", 12) == 0)
 				; // tracelog feature was deprecated in firejail version 0.9.81
 
 			// netfilter
@@ -461,13 +461,6 @@ static const char *const compiletime_support =
 
 	"\n\t- output logging is "
 #ifdef HAVE_OUTPUT
-		"enabled"
-#else
-		"disabled"
-#endif
-
-	"\n\t- private-home support is "
-#ifdef HAVE_PRIVATE_HOME
 		"enabled"
 #else
 		"disabled"

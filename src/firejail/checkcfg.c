@@ -473,13 +473,6 @@ static const char *const compiletime_support =
 		"disabled"
 #endif
 
-	"\n\t- sandbox check is "
-#ifdef HAVE_SANDBOX_CHECK
-		"enabled"
-#else
-		"disabled"
-#endif
-
 	"\n\t- SELinux support is "
 #ifdef HAVE_SELINUX
 		"enabled"

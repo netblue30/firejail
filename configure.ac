@@ -69,16 +69,6 @@ AS_IF([test "x$enable_sanitizer" != "xno" ], [
 	], [AC_MSG_ERROR([sanitizer not supported: $enable_sanitizer])])
 ])
 
-HAVE_SANDBOX_CHECK=""
-AC_SUBST([HAVE_SANDBOX_CHECK])
-AC_ARG_ENABLE([sandbox-check],
-    [AS_HELP_STRING([--disable-sandbox-check],
-        [disable checking if firejail is running within a sandbox, only use
-         this when developing firejail inside of a sandbox])])
-AS_IF([test "x$enable_sandbox_check" != "xno"], [
-	HAVE_SANDBOX_CHECK="-DHAVE_SANDBOX_CHECK"
-])
-
 HAVE_APPARMOR=""
 AC_SUBST([HAVE_APPARMOR])
 AC_ARG_ENABLE([apparmor],
@@ -268,7 +258,6 @@ Features:
    Landlock support: $HAVE_LANDLOCK
    network: $HAVE_NETWORK
    private lib support: $HAVE_PRIVATE_LIB
-   sandbox check: $HAVE_SANDBOX_CHECK
    SELinux labeling support: $HAVE_SELINUX
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11

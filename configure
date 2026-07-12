@@ -667,7 +667,6 @@ PKG_CONFIG_LIBDIR
 PKG_CONFIG_PATH
 PKG_CONFIG
 HAVE_APPARMOR
-HAVE_SANDBOX_CHECK
 DEPS_CFLAGS
 TAR
 STRIP
@@ -727,7 +726,6 @@ ac_user_opts='
 enable_option_checking
 enable_analyzer
 enable_sanitizer
-enable_sandbox_check
 enable_apparmor
 enable_selinux
 enable_landlock
@@ -1380,9 +1378,6 @@ Optional Features:
   --enable-analyzer       enable GCC static analyzer
   --enable-sanitizer=[address | memory | undefined]
                           enable a compiler-based sanitizer (debug)
-  --disable-sandbox-check disable checking if firejail is running within a
-                          sandbox, only use this when developing firejail
-                          inside of a sandbox
   --enable-apparmor       enable apparmor
   --enable-selinux        SELinux labeling support
   --disable-landlock      disable Landlock self-restriction support
@@ -3941,21 +3936,6 @@ fi
 
 fi
 
-HAVE_SANDBOX_CHECK=""
-
-# Check whether --enable-sandbox-check was given.
-if test ${enable_sandbox_check+y}
-then :
-  enableval=$enable_sandbox_check;
-fi
-
-if test "x$enable_sandbox_check" != "xno"
-then :
-
-	HAVE_SANDBOX_CHECK="-DHAVE_SANDBOX_CHECK"
-
-fi
-
 HAVE_APPARMOR=""
 
 # Check whether --enable-apparmor was given.
@@ -5682,7 +5662,6 @@ Features:
    Landlock support: $HAVE_LANDLOCK
    network: $HAVE_NETWORK
    private lib support: $HAVE_PRIVATE_LIB
-   sandbox check: $HAVE_SANDBOX_CHECK
    SELinux labeling support: $HAVE_SELINUX
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11

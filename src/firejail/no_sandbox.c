@@ -24,63 +24,6 @@
 #include <unistd.h>
 #include <grp.h>
 
-#define MAX_BUF 4096
-
-int is_container(const char *str) {
-	assert(str);
-	if (strcmp(str, "lxc") == 0 ||
-	    strcmp(str, "docker") == 0 ||
-	    strcmp(str, "lxc-libvirt") == 0 ||
-	    strcmp(str, "systemd-nspawn") == 0 ||
-	    strcmp(str, "rkt") == 0)
-		return 1;
-	return 0;
-}
-
-// returns 1 if we are running under LXC
-int check_namespace_virt(void) {
-	EUID_ASSERT();
-
-	// check container environment variable
-	const char *str = env_get("container");
-	if (str && is_container(str))
-		return 1;
-
-	// check PID 1 container environment variable
-	EUID_ROOT();
-	FILE *fp = fopen("/proc/1/environ", "re");
-	EUID_USER();
-	if (fp) {
-		int c = 0;
-		while (c != EOF) {
-			// read one line
-			char buf[MAX_BUF];
-			int i = 0;
-			while ((c = fgetc(fp)) != EOF) {
-				if (c == 0)
-					break;
-				buf[i] = (char) c;
-				if (++i == (MAX_BUF - 1))
-					break;
-			}
-			buf[i] = '\0';
-
-			// check env var name
-			if (strncmp(buf, "container=", 10) == 0) {
-				// found it
-				if (is_container(buf + 10)) {
-					fclose(fp);
-					return 1;
-				}
-			}
-//			printf("i %d c %d, buf #%s#\n", i, c, buf);
-		}
-
-		fclose(fp);
-	}
-
-	return 0;
-}
 
 // check process space for kernel processes
 // return 1 if found, 0 if not found

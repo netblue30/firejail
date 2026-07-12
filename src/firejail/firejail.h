@@ -728,7 +728,6 @@ void fs_private_dir_mount(const char *private_dir, const char *private_run_dir);
 void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list);
 
 // no_sandbox.c
-int check_namespace_virt(void);
 int check_kernel_procs(void);
 void run_no_sandbox(int argc, char **argv) __attribute__((noreturn));
 

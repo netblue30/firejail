@@ -655,7 +655,6 @@ HAVE_USERNS
 HAVE_NETWORK
 HAVE_CHROOT
 HAVE_PRIVATE_LIB
-HAVE_PRIVATE_HOME
 HAVE_OUTPUT
 HAVE_DBUSPROXY
 EXTRA_LDFLAGS
@@ -734,7 +733,6 @@ enable_selinux
 enable_landlock
 enable_dbusproxy
 enable_output
-enable_private_home
 enable_private_lib
 enable_chroot
 enable_network
@@ -1390,7 +1388,6 @@ Optional Features:
   --disable-landlock      disable Landlock self-restriction support
   --disable-dbusproxy     disable dbus proxy
   --disable-output        disable --output logging
-  --disable-private-home  disable private home feature
   --disable-private-lib   disable private lib feature
   --disable-chroot        disable chroot
   --disable-network       disable network
@@ -4302,21 +4299,6 @@ then :
 
 fi
 
-HAVE_PRIVATE_HOME=""
-
-# Check whether --enable-private-home was given.
-if test ${enable_private_home+y}
-then :
-  enableval=$enable_private_home;
-fi
-
-if test "x$enable_private_home" != "xno"
-then :
-
-	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
-
-fi
-
 HAVE_PRIVATE_LIB=""
 
 # Check whether --enable-private-lib was given.
@@ -5699,7 +5681,6 @@ Features:
    file transfer support: $HAVE_FILE_TRANSFER
    Landlock support: $HAVE_LANDLOCK
    network: $HAVE_NETWORK
-   private home support: $HAVE_PRIVATE_HOME
    private lib support: $HAVE_PRIVATE_LIB
    sandbox check: $HAVE_SANDBOX_CHECK
    SELinux labeling support: $HAVE_SELINUX

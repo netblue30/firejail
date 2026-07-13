@@ -24,7 +24,6 @@ arr[6]="6: compile --disable-x11"
 arr[7]="7: compile --enable-selinux"
 arr[8]="8: compile --disable-file-transfer"
 arr[9]="9: compile --enable-apparmor"
-arr[10]="10: compile --enable-busybox-workaround"
 arr[13]="13: compile --disable-landlock"
 arr[14]="14: compile --disable-output"
 arr[16]="16: compile --disable-private-lib"
@@ -247,28 +246,6 @@ print_title "${arr[9]}"
 cd firejail || exit 1
 
 ./configure --enable-fatal-warnings --enable-apparmor 2>&1 | tee output
-if grep -E '(WARNING|ERROR)' output; then
-    echo "TESTING ERROR";
-    exit 1
-fi
-
-make -j4 2>&1 | tee output
-if grep -E -i 'error:' output; then
-    echo "TESTING ERROR";
-    exit 1
-fi
-make distclean
-cd ..
-
-#*****************************************************************
-# TEST 10
-#*****************************************************************
-# - enable busybox workaround
-#*****************************************************************
-print_title "${arr[10]}"
-cd firejail || exit 1
-
-./configure --enable-fatal-warnings --enable-busybox-workaround 2>&1 | tee output
 if grep -E '(WARNING|ERROR)' output; then
     echo "TESTING ERROR";
     exit 1

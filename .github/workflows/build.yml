@@ -27,7 +27,6 @@ on:
       - configure
       - configure.ac
       - mkdeb.sh
-      - mketc.sh
   pull_request:
     paths:
       - 'contrib/**'
@@ -47,7 +46,6 @@ on:
       - configure
       - configure.ac
       - mkdeb.sh
-      - mketc.sh
 
 permissions:  # added using https://github.com/step-security/secure-workflows
   contents: read

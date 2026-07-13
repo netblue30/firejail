@@ -323,7 +323,6 @@ DISTFILES = \
 	etc \
 	m4 \
 	mkdeb.sh \
-	mketc.sh \
 	platform \
 	src
 

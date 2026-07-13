@@ -77,7 +77,7 @@ for app in "${games[@]}"; do
     sleep 1
 done
 
-# dektop apps
+# desktop apps
 echo "TESTING: desktop apps ************************************"
 desktopapps=(xterm qbittorrent galculator libreoffice \
 		 lowriter gimp inkscape firefox-neteth emacs okular kdiff3 \

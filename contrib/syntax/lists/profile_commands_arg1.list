@@ -52,6 +52,7 @@ private
 private-bin
 private-cwd
 private-etc
+private-home
 private-lib
 private-opt
 private-srv

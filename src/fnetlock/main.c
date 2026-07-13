@@ -94,9 +94,6 @@ static void run_trace(void) {
 
 	unsigned start = time(NULL);
 	unsigned char buf[MAX_BUF_SIZE];
-	// FIXME: error: variable 'bw' set but not used [-Werror,-Wunused-but-set-variable]
-	//unsigned bw = 0; // bandwidth calculations
-
 	int printed = 0;
 	while (1) {
 		unsigned runtime = time(NULL) - start;
@@ -150,9 +147,6 @@ static void run_trace(void) {
 #endif
 			// filter out loopback traffic
 			if (buf[12] != 127 && buf[16] != 127) {
-				// FIXME: error: variable 'bw' set but not used [-Werror,-Wunused-but-set-variable]
-				//bw += bytes + 14; // assume a 14 byte Ethernet layer
-
 				uint32_t ip_src;
 				memcpy(&ip_src, buf + 12, 4);
 				ip_src = ntohl(ip_src);

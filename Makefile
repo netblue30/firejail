@@ -31,7 +31,7 @@ SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-pr
 SBOX_APPS_NON_DUMPABLE += src/fnettrace/fnettrace src/fnettrace-dns/fnettrace-dns src/fnettrace-sni/fnettrace-sni
 SBOX_APPS_NON_DUMPABLE += src/fnettrace-icmp/fnettrace-icmp src/fnetlock/fnetlock
 MYDIRS = src/lib $(COMPLETIONDIRS)
-MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so src/libtracelog/libtracelog.so
+MYLIBS = src/libpostexecseccomp/libpostexecseccomp.so src/libtrace/libtrace.so
 COMPLETIONS = src/zsh_completion/_firejail src/bash_completion/firejail.bash_completion
 SECCOMP_FILTERS = seccomp seccomp.debug seccomp.32 seccomp.block_secondary seccomp.mdwx seccomp.mdwx.32 seccomp.namespaces seccomp.namespaces.32
 

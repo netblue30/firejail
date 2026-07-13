@@ -450,9 +450,6 @@ Make directory or file read-write.
 \fBtmpfs directory
 Mount an empty tmpfs filesystem on top of directory. Directories outside user home or not owned by the user are not allowed. Sandboxes running as root are exempt from these restrictions.
 .TP
-\fBtracelog
-Blacklist violations logged to syslog.
-.TP
 \fBwhitelist file_or_directory
 Whitelist directory or file. A temporary file system is mounted on the top directory.
 In the context of firejail, top directory means, if the whitelisted file's path is

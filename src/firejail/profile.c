@@ -384,7 +384,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strncmp(ptr, "private-home ", 13) == 0) {
-		fprintf(stderr, "Warning: \"private-home\" feature was deprecated in firejail version 0.9.81\n");
+		fprintf(stderr, "Warning: \"private-home\" feature was removed in firejail version 0.9.81\n");
 		return 0;
 	}
 	else if (strcmp(ptr, "tab") == 0) {

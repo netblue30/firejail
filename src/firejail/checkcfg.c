@@ -186,7 +186,7 @@ int checkcfg(int val) {
 			else if (strncmp(ptr, "tracelog", 8) == 0)
 				; // tracelog feature was removed in firejail version 0.9.81
 			else if (strncmp(ptr, "private-home", 12) == 0)
-				; // private-home feature was deprecated in firejail version 0.9.81
+				; // private-home feature was removed in firejail version 0.9.81
 
 			// netfilter
 			else if (strncmp(ptr, "netfilter-default ", 18) == 0) {

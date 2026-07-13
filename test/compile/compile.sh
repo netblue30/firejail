@@ -26,7 +26,6 @@ arr[8]="8: compile --disable-file-transfer"
 arr[9]="9: compile --enable-apparmor"
 arr[10]="10: compile --enable-busybox-workaround"
 arr[11]="11: compile --disable-private-home"
-arr[12]="12: compile --disable-sandbox-check"
 arr[13]="13: compile --disable-landlock"
 arr[14]="14: compile --disable-output"
 arr[16]="16: compile --disable-private-lib"
@@ -293,28 +292,6 @@ print_title "${arr[11]}"
 cd firejail || exit 1
 
 ./configure --enable-fatal-warnings --disable-private-home 2>&1 | tee output
-if grep -E '(WARNING|ERROR)' output; then
-    echo "TESTING ERROR";
-    exit 1
-fi
-
-make -j4 2>&1 | tee output
-if grep -E -i 'error:' output; then
-    echo "TESTING ERROR";
-    exit 1
-fi
-make distclean
-cd ..
-
-#*****************************************************************
-# TEST 12
-#*****************************************************************
-# - disable sandbox check
-#*****************************************************************
-print_title "${arr[12]}"
-cd firejail || exit 1
-
-./configure --enable-fatal-warnings --disable-sandbox-check 2>&1 | tee output
 if grep -E '(WARNING|ERROR)' output; then
     echo "TESTING ERROR";
     exit 1

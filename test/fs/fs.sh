@@ -95,14 +95,6 @@ fi
 echo "TESTING: private (test/fs/private.exp)"
 ./private.exp
 
-echo "TESTING: private home (test/fs/private-home.exp)"
-./private-home.exp
-rm -f ~/_firejail_test_file1
-rm -f ~/_firejail_test_file2
-rm -fr ~/_firejail_test_dir1
-rm -f ~/_firejail_test_link1
-rm -f ~/_firejail_test_link2
-
 echo "TESTING: private home dir (test/fs/private-home-dir.exp)"
 ./private-home-dir.exp
 rm -fr ~/_firejail_test_dir1

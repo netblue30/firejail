@@ -243,10 +243,6 @@ _firejail_args=(
     '--output-stderr=-[stdout and stderr logging and log rotation]: :_files'
 #endif
 
-#ifdef HAVE_PRIVATE_HOME
-    '--private-home=-[build a new user home in a temporary filesystem, and copy the files and directories in the list in the new home]: :_files'
-#endif
-
 #ifdef HAVE_USERNS
     '(--chroot)--noroot[install a user namespace with only the current user]'
 #endif

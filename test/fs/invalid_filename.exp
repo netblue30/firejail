@@ -58,17 +58,6 @@ expect {
 }
 after 100
 
-send -- "firejail --noprofile --private-home=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 8.2\n";exit}
-	"Error:"
-}
-expect {
-	timeout {puts "TESTING ERROR 8.3\n";exit}
-	"is an invalid filename"
-}
-after 100
-
 send -- "firejail --noprofile --private-etc=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 9.2\n";exit}

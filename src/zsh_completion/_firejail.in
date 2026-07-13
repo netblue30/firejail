@@ -214,7 +214,6 @@ _firejail_args=(
 #endif
 
 #ifdef HAVE_NETWORK
-    '--bandwidth=-[set bandwidth limits name|pid]: :_all_firejails'
     '--defaultgw=[configure default gateway]: :'
     '--dns.print=-[print DNS configuration name|pid]: :_all_firejails'
     '--join-network=-[join the network namespace name|pid]: :_all_firejails'

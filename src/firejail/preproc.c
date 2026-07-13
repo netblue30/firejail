@@ -206,7 +206,6 @@ void preproc_build_firejail_dir_unlocked(void) {
 // preproc_lock_firejail_dir().
 void preproc_build_firejail_dir_locked(void) {
 	create_empty_dir_as_root(RUN_FIREJAIL_NETWORK_DIR, 0755);
-	create_empty_dir_as_root(RUN_FIREJAIL_BANDWIDTH_DIR, 0755);
 	create_empty_dir_as_root(RUN_FIREJAIL_NAME_DIR, 0755);
 	create_empty_dir_as_root(RUN_FIREJAIL_PROFILE_DIR, 0755);
 	create_empty_dir_as_root(RUN_FIREJAIL_X11_DIR, 0755);

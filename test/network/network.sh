@@ -33,9 +33,6 @@ echo "TESTING: print network (net-print.exp)"
 echo "TESTING: print dns (dns-print.exp)"
 ./dns-print.exp
 
-echo "TESTING: bandwidth (net_bandwidth.exp)"
-./net_bandwidth.exp
-
 echo "TESTING: ipv6 (ip6.exp)"
 ./ip6.exp
 

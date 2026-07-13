@@ -934,7 +934,6 @@ void sbox_exec_v(unsigned filter, char * const arg[]) __attribute__((noreturn));
 
 // run_files.c
 void delete_run_files(pid_t pid);
-void delete_bandwidth_run_file(pid_t pid);
 void set_name_run_file(pid_t pid);
 void set_x11_run_file(pid_t pid, int display);
 void set_profile_run_file(pid_t pid, const char *fname);

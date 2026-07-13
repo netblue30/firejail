@@ -59,14 +59,6 @@ static void delete_name_run_file(pid_t pid) {
 	free(fname);
 }
 
-void delete_bandwidth_run_file(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d-bandwidth", RUN_FIREJAIL_BANDWIDTH_DIR, (int) pid) == -1)
-		errExit("asprintf");
-	unlink(fname);
-	free(fname);
-}
-
 static void delete_network_run_file(pid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "%s/%d-netmap", RUN_FIREJAIL_NETWORK_DIR, (int) pid) == -1)
@@ -79,7 +71,6 @@ static void delete_network_run_file(pid_t pid) {
 
 void delete_run_files(pid_t pid) {
 	delete_sandbox_run_file(pid);
-	delete_bandwidth_run_file(pid);
 	delete_network_run_file(pid);
 	delete_name_run_file(pid);
 	delete_x11_run_file(pid);

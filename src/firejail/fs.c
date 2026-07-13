@@ -408,7 +408,7 @@ void fs_blacklist(void) {
 		}
 		else if (strncmp(entry->data, "blacklist-nolog ", 16) == 0)  {
 			ptr = entry->data + 16;
-			op = BLACKLIST_FILE; // blacklist-nolog was deprecated in 0.9.81 -> using regular blacklist
+			op = BLACKLIST_FILE; // blacklist-nolog was removed in 0.9.81 -> using regular blacklist
 		}
 		else if (strncmp(entry->data, "read-only ", 10) == 0) {
 			ptr = entry->data + 10;

@@ -376,7 +376,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 	else if (strcmp(ptr, "tracelog") == 0) {
-		fprintf(stderr, "Warning: \"tracelog\" feature was deprecated in firejail version 0.9.81\n");
+		fprintf(stderr, "Warning: \"tracelog\" feature was removed in firejail version 0.9.81\n");
 		return 0;
 	}
 	else if (strcmp(ptr, "private") == 0) {

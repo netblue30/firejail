@@ -184,7 +184,7 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_XPRA_ATTACH, "xpra-attach")
 #undef PARSE_YESNO
 			else if (strncmp(ptr, "tracelog", 8) == 0)
-				; // tracelog feature was deprecated in firejail version 0.9.81
+				; // tracelog feature was removed in firejail version 0.9.81
 			else if (strncmp(ptr, "private-home", 12) == 0)
 				; // private-home feature was deprecated in firejail version 0.9.81
 

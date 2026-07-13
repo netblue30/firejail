@@ -336,7 +336,7 @@ void top(void) {
 		// find system uptime
 		FILE *fp = fopen("/proc/uptime", "r");
 		if (fp) {
-			float f;
+			float f = 0;
 			int rv = fscanf(fp, "%f", &f);
 			(void) rv;
 			sysuptime = (unsigned long long) f;

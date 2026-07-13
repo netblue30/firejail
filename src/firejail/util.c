@@ -389,6 +389,7 @@ void logargs(int argc, char **argv) {
 
 	// build message
 	char msg[len + 1];
+	memset(msg, 0, len + 1);
 	char *ptr = msg;
 	for (i = 0; i < argc; i++) {
 		sprintf(ptr, "%s ", argv[i]);
@@ -907,6 +908,8 @@ void wait_for_other(int fd) {
 		errExit("fcntl");
 	FILE* stream;
 	stream = fdopen(newfd, "r");
+	if (!stream)
+		errExit("fdopen");
 	*childstr = '\0';
 	if (fgets(childstr, MAXBUF, stream)) {
 		// remove \n)
@@ -955,6 +958,8 @@ void notify_other(int fd) {
 	if (newfd == -1)
 		errExit("fcntl");
 	stream = fdopen(newfd, "w");
+	if (!stream)
+		errExit("fdopen");
 	fprintf(stream, "arg_noroot=%d\n", arg_noroot);
 	fflush(stream);
 	fclose(stream);
@@ -1212,7 +1217,7 @@ int safer_openat(int dirfd, const char *path, int flags) {
 		free(dup);
 		return openat(dirfd, path, flags);
 	}
-	char *last_tok = EMPTY_STRING;
+	char *last_tok; // = EMPTY_STRING; -> fix make scan-build error
 
 	int parentfd;
 	if (path[0] == '/')

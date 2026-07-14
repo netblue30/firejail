@@ -91,5 +91,5 @@ dbus-user.own net.lutris.Lutris
 dbus-user.talk com.feralinteractive.GameMode
 dbus-system none
 
-#breaks proton
+# breaks proton
 #restrict-namespaces

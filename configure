@@ -4302,7 +4302,7 @@ then :
   enableval=$enable_chroot;
 fi
 
-if test "x$enable_chroot" == "xyes"
+if test "x$enable_chroot" = "xyes"
 then :
 
 	HAVE_CHROOT="-DHAVE_CHROOT"

@@ -75,7 +75,7 @@ jobs:
       run: >
         ./configure CC=gcc-12
         --prefix=/usr --enable-fatal-warnings --enable-analyzer
-        --enable-apparmor --enable-selinux
+        --enable-apparmor --enable-selinux --enable-chroot
         || (cat config.log; exit 1)
     - name: make
       run: make -j "$(nproc)" -Orecurse

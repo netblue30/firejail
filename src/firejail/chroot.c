@@ -268,7 +268,7 @@ void fs_chroot(const char *rootdir) {
 
 	if (chdir("/"))
 		errExit("chdir");
-	
+
 	// mount a new proc filesystem
 	if (arg_debug)
 		printf("Mounting /proc filesystem representing the PID namespace\n");

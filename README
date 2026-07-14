@@ -416,6 +416,8 @@ Denis Subbotin (https://github.com/mr-tron)
 Denys Havrysh (https://github.com/vutny)
 	- update SkypeForLinux profile for latest version
 	- removed outdated Skype profile
+Devon Kirk (https://github.com/hyder365)
+	- modif: add backtick in `reject_meta_chars()` (#7183)
 dewbasaur (https://github.com/dewbasaur)
 	- block access to history files
 	- Firefox PDF.js exploit (CVE-2015-4495) fixes
@@ -643,6 +645,7 @@ hlein (https://github.com/hlein)
 	- relocate firecfg.config to /etc/firejail/
 	- fix display profile for Gentoo distribution
 	- profiles: hashcat: fix runtime errors (#6364 #6888)
+	- profiles: man: add terminfo (#7131)
 Holger Heinz (https://github.com/hheinz)
 	- manpage work
 Hotty Capy (https://github.com/hotcapy)
@@ -1247,6 +1250,7 @@ sofoxe1 (https://github.com/sofoxe1)
 	- profiles: vesktop: fix screen sharing (#7043)
 	- profiles: disable-programs: add lact paths (#7083)
 	- profiles: mumble: include whitelist-runuser-common (#7084)
+	- profiles: lutris: fix proton compatibility (#7181)
 soredake (https://github.com/soredake)
 	- fix steam startup with >=llvm-4
 	- fix handling of STEAM_RUNTIME_PREFER_HOST_LIBRARIES in steam profile

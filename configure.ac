@@ -130,8 +130,8 @@ AS_IF([test "x$enable_private_lib" = "xyes"], [
 HAVE_CHROOT=""
 AC_SUBST([HAVE_CHROOT])
 AC_ARG_ENABLE([chroot],
-    [AS_HELP_STRING([--disable-chroot], [disable chroot])])
-AS_IF([test "x$enable_chroot" != "xno"], [
+    [AS_HELP_STRING([--enable-chroot], [disable chroot])])
+AS_IF([test "x$enable_chroot" == "xyes"], [
 	HAVE_CHROOT="-DHAVE_CHROOT"
 ])
 

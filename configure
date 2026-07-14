@@ -1384,7 +1384,7 @@ Optional Features:
   --disable-dbusproxy     disable dbus proxy
   --disable-output        disable --output logging
   --disable-private-lib   disable private lib feature
-  --disable-chroot        disable chroot
+  --enable-chroot         disable chroot
   --disable-network       disable network
   --disable-userns        disable user namespace
   --disable-x11           disable X11 sandboxing support
@@ -4302,7 +4302,7 @@ then :
   enableval=$enable_chroot;
 fi
 
-if test "x$enable_chroot" != "xno"
+if test "x$enable_chroot" == "xyes"
 then :
 
 	HAVE_CHROOT="-DHAVE_CHROOT"

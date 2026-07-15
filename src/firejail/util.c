@@ -42,8 +42,6 @@
 
 #define MAX_GROUPS 1024
 #define MAXBUF 4096
-#define EMPTY_STRING ("")
-
 
 long long unsigned parse_arg_size(char *str) {
 	long long unsigned result = 0;
@@ -1219,7 +1217,7 @@ int safer_openat(int dirfd, const char *path, int flags) {
 		free(dup);
 		return openat(dirfd, path, flags);
 	}
-	char *last_tok; // = EMPTY_STRING; -> fix make scan-build error
+	char *last_tok = NULL;
 
 	int parentfd;
 	if (path[0] == '/')

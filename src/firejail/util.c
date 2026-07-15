@@ -906,10 +906,11 @@ void wait_for_other(int fd) {
 	int newfd = fcntl(fd, F_DUPFD_CLOEXEC, 0);
 	if (newfd == -1)
 		errExit("fcntl");
-	FILE* stream;
-	stream = fdopen(newfd, "r");
+
+	FILE* stream = fdopen(newfd, "r");
 	if (!stream)
 		errExit("fdopen");
+
 	*childstr = '\0';
 	if (fgets(childstr, MAXBUF, stream)) {
 		// remove \n)
@@ -953,13 +954,14 @@ void wait_for_other(int fd) {
 }
 
 void notify_other(int fd) {
-	FILE* stream;
 	int newfd = fcntl(fd, F_DUPFD_CLOEXEC, 0);
 	if (newfd == -1)
 		errExit("fcntl");
-	stream = fdopen(newfd, "w");
+
+	FILE* stream = fdopen(newfd, "w");
 	if (!stream)
 		errExit("fdopen");
+
 	fprintf(stream, "arg_noroot=%d\n", arg_noroot);
 	fflush(stream);
 	fclose(stream);

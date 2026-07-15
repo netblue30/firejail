@@ -360,8 +360,8 @@ deb: dist config.sh
 	./mkdeb.sh
 
 .PHONY: test-compile
-test-compile: dist config.sh
-	cd test/compile; ./compile.sh
+test-compile:
+	./testcompile.sh
 
 .PHONY: rpms
 rpms: src/man config.sh

@@ -192,13 +192,13 @@ clean:
 	done
 	$(MAKE) -C src/man clean
 	$(MAKE) -C test clean
-	$(RM) testcompile.result
 	$(RM) $(SECCOMP_FILTERS)
 	$(RM) $(SYNTAX_FILES)
 	$(RM) -r ./$(TARNAME)-$(VERSION) ./$(TARNAME)-$(VERSION).tar.xz
 	$(RM) -r gcov-dir
 	$(RM) ./$(TARNAME)*.deb
 	$(RM) ./$(TARNAME)*.rpm
+	$(RM) testcompile.result
 
 .PHONY: distclean
 distclean: clean

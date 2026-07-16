@@ -958,6 +958,7 @@ static void run_builder(int argc, char **argv) {
 	exit(1);
 }
 
+// callback from src/lib/syscall.c
 void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {
 	(void) fd;
 	(void) syscall;
@@ -965,6 +966,8 @@ void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {
 	(void) ptrarg;
 	(void) native;
 }
+
+// callback from src/lib/syscall.c
 void filter_add_blacklist_override(int fd, int syscall, int arg, void *ptrarg, bool native) {
 	(void) fd;
 	(void) syscall;

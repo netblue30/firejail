@@ -330,7 +330,6 @@ DISTFILES_TEST = \
 	test/Makefile \
 	test/apps \
 	test/capabilities \
-	test/compile \
 	test/environment \
 	test/fcopy \
 	test/filters \

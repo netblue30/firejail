@@ -13,8 +13,8 @@ testconfigure() {
 
 	printf '%s...' "$msg" >> testcompile.result
 	make distclean
-	./configure "$@" 2>&1 | tee /tmp/testcompile-output
-	if grep -E '(WARNING|ERROR)' /tmp/testcompile-output; then
+	./configure "$@" 2>&1 | tee testcompile-output
+	if grep -E '(WARNING|ERROR)' testcompile-output; then
 		printf 'TESTING ERROR - %s\n' "$msg"
 		exit 1
 	fi
@@ -24,8 +24,8 @@ testmake() {
 	msg="$1"
 	shift
 
-	make "$@" 2>&1 | tee /tmp/testcompile-output
-	if grep -E -i 'error:' /tmp/testcompile-output; then
+	make "$@" 2>&1 | tee testcompile-output
+	if grep -E -i 'error:' testcompile-output; then
 		printf 'TESTING ERROR - %s\n' "$msg"
 		exit 1
 	fi
@@ -34,7 +34,7 @@ testmake() {
 }
 
 : > testcompile.result
-: > /tmp/testcompile-output
+: > testcompile-output
 
 msg='default'
 testconfigure "$msg" --enable-fatal-warnings
@@ -94,7 +94,7 @@ testmake "$msg" -j4
 
 echo "cleanup" >> testcompile.result
 make distclean
-rm /tmp/testcompile-output
+rm testcompile-output
 
 echo "*******************************************"
 echo "All fine!!!" >> testcompile.result

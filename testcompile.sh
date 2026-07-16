@@ -123,7 +123,7 @@ make distclean
 
 ./configure --enable-fatal-warnings --enable-selinux 2>&1 | tee /tmp/testcompile-output
 if grep -E '(WARNING|ERROR)' /tmp/testcompile-output; then
-    echo "TESTING ERRO - enable selinuxR";
+    echo "TESTING ERROR - enable selinux";
     exit 1
 fi
 

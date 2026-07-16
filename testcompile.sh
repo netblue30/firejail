@@ -11,7 +11,7 @@ testconfigure() {
 	msg="$1"
 	shift
 
-	printf '%s' "$msg" >> testcompile.result
+	printf '%s...' "$msg" >> testcompile.result
 	make distclean
 	./configure "$@" 2>&1 | tee /tmp/testcompile-output
 	if grep -E '(WARNING|ERROR)' /tmp/testcompile-output; then
@@ -30,7 +30,7 @@ testmake() {
 		exit 1
 	fi
 
-	echo " ...OK" >> testcompile.result
+	echo " OK" >> testcompile.result
 }
 
 : > testcompile.result

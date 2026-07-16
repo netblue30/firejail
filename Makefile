@@ -198,7 +198,7 @@ clean:
 	$(RM) -r gcov-dir
 	$(RM) ./$(TARNAME)*.deb
 	$(RM) ./$(TARNAME)*.rpm
-	$(RM) testcompile.output
+	$(RM) testcompile-output
 	$(RM) testcompile.result
 
 .PHONY: distclean

@@ -19,7 +19,7 @@ testconfigure() {
 	./configure "$@" 2>&1 | tee -a "$output"
 	if grep -E '(WARNING|ERROR)' "$output"; then
 		printf 'TESTING ERROR - %s\n' "$msg"
-		exit 1
+		echo " FAIL configure" >> "$result"
 	fi
 }
 
@@ -30,69 +30,69 @@ testmake() {
 	make "$@" 2>&1 | tee -a "$output"
 	if grep -E -i 'error:' "$output"; then
 		printf 'TESTING ERROR - %s\n' "$msg"
-		exit 1
+		echo " FAIL make" >> "$result"
+	else
+		echo " OK" >> "$result"
 	fi
-
-	echo " OK" >> "$result"
 }
 
 : > "$output"
 : > "$result"
 
 msg='default'
-testconfigure "$msg" --enable-fatal-warnings
+testconfigure "$msg" --enable-fatal-warnings &&
 testmake "$msg" -j4
 
 msg='disable dbus proxy configuration'
-testconfigure "$msg" --enable-fatal-warnings --disable-dbusproxy
+testconfigure "$msg" --enable-fatal-warnings --disable-dbusproxy &&
 testmake "$msg" -j4
 
 msg='disable chroot configuration'
-testconfigure "$msg" --enable-fatal-warnings --enable-chroot
+testconfigure "$msg" --enable-fatal-warnings --enable-chroot &&
 testmake "$msg" -j4
 
 msg='disable user namespace configuration'
-testconfigure "$msg" --enable-fatal-warnings --disable-userns
+testconfigure "$msg" --enable-fatal-warnings --disable-userns &&
 testmake "$msg" -j4
 
 msg='disable network namespace configuration'
-testconfigure "$msg" --enable-fatal-warnings --disable-network
+testconfigure "$msg" --enable-fatal-warnings --disable-network &&
 testmake "$msg" -j4
 
 msg='disable X11 support'
-testconfigure "$msg" --enable-fatal-warnings --disable-x11
+testconfigure "$msg" --enable-fatal-warnings --disable-x11 &&
 testmake "$msg" -j4
 
 msg='enable selinux'
-testconfigure "$msg" --enable-fatal-warnings --enable-selinux
+testconfigure "$msg" --enable-fatal-warnings --enable-selinux &&
 testmake "$msg" -j4
 
 msg='disable file transfer'
-testconfigure "$msg" --enable-fatal-warnings --disable-file-transfer
+testconfigure "$msg" --enable-fatal-warnings --disable-file-transfer &&
 testmake "$msg" -j4
 
 msg='enable apparmor'
-testconfigure "$msg" --enable-fatal-warnings --enable-apparmor
+testconfigure "$msg" --enable-fatal-warnings --enable-apparmor &&
 testmake "$msg" -j4
 
 msg='disable landlock'
-testconfigure "$msg" --enable-fatal-warnings --disable-landlock
+testconfigure "$msg" --enable-fatal-warnings --disable-landlock &&
 testmake "$msg" -j4
 
 msg='disable output logging'
-testconfigure "$msg" --enable-fatal-warnings --disable-output
+testconfigure "$msg" --enable-fatal-warnings --disable-output &&
 testmake "$msg" -j4
 
 msg='disable private-lib'
-testconfigure "$msg" --enable-fatal-warnings --disable-private-lib
+testconfigure "$msg" --enable-fatal-warnings --disable-private-lib &&
 testmake "$msg" -j4
 
 msg='enable-only-syscfg-profiles'
-testconfigure "$msg" --enable-fatal-warnings --enable-only-syscfg-profiles
+testconfigure "$msg" --enable-fatal-warnings --enable-only-syscfg-profiles &&
 testmake "$msg"
 
 msg='enable force nonewprivs'
-testconfigure "$msg" --enable-fatal-warnings --enable-force-nonewprivs
+testconfigure "$msg" --enable-fatal-warnings --enable-force-nonewprivs &&
 testmake "$msg" -j4
 
 echo "cleanup" >> "$result"

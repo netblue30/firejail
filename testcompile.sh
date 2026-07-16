@@ -7,14 +7,17 @@
 
 # shellcheck source=config.sh
 
+output=testcompile-output
+result=testcompile.result
+
 testconfigure() {
 	msg="$1"
 	shift
 
-	printf '%s...' "$msg" >> testcompile.result
+	printf '%s...' "$msg" >> "$result"
 	make distclean
-	./configure "$@" 2>&1 | tee testcompile-output
-	if grep -E '(WARNING|ERROR)' testcompile-output; then
+	./configure "$@" 2>&1 | tee "$output"
+	if grep -E '(WARNING|ERROR)' "$output"; then
 		printf 'TESTING ERROR - %s\n' "$msg"
 		exit 1
 	fi
@@ -24,17 +27,17 @@ testmake() {
 	msg="$1"
 	shift
 
-	make "$@" 2>&1 | tee testcompile-output
-	if grep -E -i 'error:' testcompile-output; then
+	make "$@" 2>&1 | tee "$output"
+	if grep -E -i 'error:' "$output"; then
 		printf 'TESTING ERROR - %s\n' "$msg"
 		exit 1
 	fi
 
-	echo " OK" >> testcompile.result
+	echo " OK" >> "$result"
 }
 
-: > testcompile.result
-: > testcompile-output
+: > "$output"
+: > "$result"
 
 msg='default'
 testconfigure "$msg" --enable-fatal-warnings
@@ -92,10 +95,10 @@ msg='enable force nonewprivs'
 testconfigure "$msg" --enable-fatal-warnings --enable-force-nonewprivs
 testmake "$msg" -j4
 
-echo "cleanup" >> testcompile.result
+echo "cleanup" >> "$result"
 make distclean
-rm testcompile-output
+rm "$output"
 
 echo "*******************************************"
-echo "All fine!!!" >> testcompile.result
-cat testcompile.result
+echo "All fine!!!" >> "$result"
+cat "$result"

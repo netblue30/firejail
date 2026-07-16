@@ -7,8 +7,8 @@
 
 # shellcheck source=config.sh
 
-output=testcompile-output.tmp
-result=testcompile-result.tmp
+output=/tmp/testcompile-output.tmp
+result=/tmp/testcompile-result.tmp
 
 testconfigure() {
 	msg="$1"

@@ -16,7 +16,7 @@ testconfigure() {
 
 	printf '%s...' "$msg" >> "$result"
 	make distclean
-	./configure "$@" 2>&1 | tee "$output"
+	./configure "$@" 2>&1 | tee -a "$output"
 	if grep -E '(WARNING|ERROR)' "$output"; then
 		printf 'TESTING ERROR - %s\n' "$msg"
 		exit 1
@@ -27,7 +27,7 @@ testmake() {
 	msg="$1"
 	shift
 
-	make "$@" 2>&1 | tee "$output"
+	make "$@" 2>&1 | tee -a "$output"
 	if grep -E -i 'error:' "$output"; then
 		printf 'TESTING ERROR - %s\n' "$msg"
 		exit 1
@@ -97,7 +97,6 @@ testmake "$msg" -j4
 
 echo "cleanup" >> "$result"
 make distclean
-rm "$output"
 
 echo "*******************************************"
 echo "All fine!!!" >> "$result"

@@ -324,7 +324,8 @@ DISTFILES = \
 	m4 \
 	mkdeb.sh \
 	platform \
-	src
+	src \
+	testcompile.sh
 
 DISTFILES_TEST = \
 	test/Makefile \

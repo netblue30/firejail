@@ -98,7 +98,7 @@ testmake "$msg" -j4
 
 msg='enable-only-syscfg-profiles'
 testconfigure "$msg" --enable-fatal-warnings --enable-only-syscfg-profiles &&
-testmake "$msg"
+testmake "$msg" -j4
 
 msg='enable force nonewprivs'
 testconfigure "$msg" --enable-fatal-warnings --enable-force-nonewprivs &&

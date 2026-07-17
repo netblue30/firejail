@@ -9,6 +9,7 @@
 
 output=/tmp/testcompile-output.tmp
 result=/tmp/testcompile-result.tmp
+total_errors=0
 
 testconfigure() {
 	msg="$1"
@@ -17,7 +18,11 @@ testconfigure() {
 	printf '%s...' "$msg" >> "$result"
 	make distclean
 	./configure "$@" 2>&1 | tee -a "$output"
-	if grep -E '(WARNING|ERROR)' "$output"; then
+
+	errors="$(grep -E '(WARNING|ERROR)' "$output" | wc -l)"
+	printf '%s\n' "$errors"
+	if test "$errors" -gt "$total_errors"; then
+		total_errors="$errors"
 		printf 'TESTING ERROR - %s\n' "$msg"
 		echo " FAIL configure" >> "$result"
 	fi
@@ -28,7 +33,11 @@ testmake() {
 	shift
 
 	make "$@" 2>&1 | tee -a "$output"
-	if grep -E -i 'error:' "$output"; then
+
+	errors="$(grep -E -i 'error:' "$output" | wc -l)"
+	printf '%s\n' "$errors"
+	if test "$errors" -gt "$total_errors"; then
+		total_errors="$errors"
 		printf 'TESTING ERROR - %s\n' "$msg"
 		echo " FAIL make" >> "$result"
 	else

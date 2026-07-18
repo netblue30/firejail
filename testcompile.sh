@@ -32,7 +32,7 @@ testmake() {
 	msg="$1"
 	shift
 
-	make "$@" 2>&1 | tee -a "$output"
+	make -j4 "$@" 2>&1 | tee -a "$output"
 
 	errors="$(grep -E -c -i 'error:' "$output")"
 	printf '%s\n' "$errors"
@@ -50,59 +50,59 @@ testmake() {
 
 msg='default'
 testconfigure "$msg" --enable-fatal-warnings &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='disable dbus proxy configuration'
 testconfigure "$msg" --enable-fatal-warnings --disable-dbusproxy &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='disable chroot configuration'
 testconfigure "$msg" --enable-fatal-warnings --enable-chroot &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='disable user namespace configuration'
 testconfigure "$msg" --enable-fatal-warnings --disable-userns &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='disable network namespace configuration'
 testconfigure "$msg" --enable-fatal-warnings --disable-network &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='disable X11 support'
 testconfigure "$msg" --enable-fatal-warnings --disable-x11 &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='enable selinux'
 testconfigure "$msg" --enable-fatal-warnings --enable-selinux &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='disable file transfer'
 testconfigure "$msg" --enable-fatal-warnings --disable-file-transfer &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='enable apparmor'
 testconfigure "$msg" --enable-fatal-warnings --enable-apparmor &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='disable landlock'
 testconfigure "$msg" --enable-fatal-warnings --disable-landlock &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='disable output logging'
 testconfigure "$msg" --enable-fatal-warnings --disable-output &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='disable private-lib'
 testconfigure "$msg" --enable-fatal-warnings --disable-private-lib &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='enable-only-syscfg-profiles'
 testconfigure "$msg" --enable-fatal-warnings --enable-only-syscfg-profiles &&
-testmake "$msg" -j4
+testmake "$msg"
 
 msg='enable force nonewprivs'
 testconfigure "$msg" --enable-fatal-warnings --enable-force-nonewprivs &&
-testmake "$msg" -j4
+testmake "$msg"
 
 echo "cleanup" >> "$result"
 make distclean

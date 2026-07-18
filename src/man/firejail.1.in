@@ -3369,15 +3369,15 @@ $ sudo firejail \-\-writable\-var\-log
 #ifdef HAVE_X11
 .TP
 \fB\-\-x11
-Sandbox the application using Xpra, Xephyr, Xvfb or Xorg security extension.
+Sandbox the application using Xephyr, Xvfb or Xorg security extension.
 The sandbox will prevent screenshot and keylogger applications started inside the sandbox from accessing
 clients running outside the sandbox.
-Firejail will try Xephyr first, and if Xephyr is not installed on the system, it will try to find Xpra.
-If all fails, Firejail will not attempt to use Xvfb or X11 security extension.
+By default Firejail will will use Xephyr.
+If this fails, Firejail will not attempt to use Xvfb or X11 security extension.
 .br
 
 .br
-Xpra, Xephyr and Xvfb modes require a network namespace to be instantiated in order to disable
+Xephyr and Xvfb modes require a network namespace to be instantiated in order to disable
 X11 abstract Unix socket. If this is not possible, the user can disable the abstract socket
 by adding "-nolisten local" on Xorg command line at system level.
 .br
@@ -3438,29 +3438,6 @@ A network namespace is not required for this option.
 Example:
 .br
 $ firejail \-\-x11=xorg /usr/bin/firefox
-
-.TP
-\fB\-\-x11=xpra
-Start Xpra (see
-.UR https://xpra.org
-.UE )
-and attach the sandbox to this server.
-Xpra is a persistent remote display server and client for forwarding X11
-applications and desktop screens.
-A network namespace needs to be instantiated in order to deny access to X11
-abstract Unix domain socket.
-.br
-
-.br
-On Debian platforms Xpra is installed with the command \fBsudo apt-get install xpra\fR.
-This feature is not available when running as root.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-x11=xpra \-\-net=eth0 /usr/bin/firefox
-
 
 .TP
 \fB\-\-x11=xvfb
@@ -3763,15 +3740,13 @@ drwxr-xr-x netblue  netblue         4096 ..
 .br
 -rw-r--r-- netblue  netblue         6800 x11-x642.png
 .br
--rw-r--r-- netblue  netblue        34139 xpra-clipboard.png
+
+.br
+$ firejail \-\-get=mybrowser ~/Downloads/x11-x305.png
 .br
 
 .br
-$ firejail \-\-get=mybrowser ~/Downloads/xpra-clipboard.png
-.br
-
-.br
-$ firejail \-\-put=mybrowser xpra-clipboard.png ~/Downloads/xpra-clipboard.png
+$ firejail \-\-put=mybrowser x11-x305.png ~/Downloads/x11-x305.png
 .br
 
 .br

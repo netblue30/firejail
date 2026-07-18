@@ -38,8 +38,7 @@ echo "TESTING: pid 1 functionality (test/apps/pid1.exp)"
 
 # x11 sandboxing
 echo "TESTING: x11 sandboxing *********************************"
-x11apps=(firefox-xephyr x11-none firefox-xorg xterm-xorg xterm-xephyr \
-			xterm-xpra firefox-xpra)
+x11apps=(firefox-xephyr x11-none firefox-xorg xterm-xorg xterm-xephyr)
 for app in "${x11apps[@]}"; do
     sudo true
     echo "TESTING: $app (test/apps/$app.exp)"

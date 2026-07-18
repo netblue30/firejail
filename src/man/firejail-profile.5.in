@@ -641,9 +641,6 @@ Enable X11 sandboxing with Xephyr server.
 \fBx11 xorg
 Enable X11 sandboxing with X11 security extension.
 .TP
-\fBx11 xpra
-Enable X11 sandboxing with Xpra server.
-.TP
 \fBx11 xvfb
 Enable X11 sandboxing with Xvfb server.
 .TP

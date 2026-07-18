@@ -287,7 +287,6 @@ static const char *const usage_str =
 	"    --x11=none - disable access to X11 sockets.\n"
 	"    --x11=xephyr - enable Xephyr X11 server. The window size is 800x600.\n"
 	"    --x11=xorg - enable X11 security extension.\n"
-	"    --x11=xpra - enable Xpra X11 server.\n"
 	"    --x11=xvfb - enable Xvfb X11 server.\n"
 	"    --xephyr-extra-params=OPTIONS - set Xephyr server command extra parameters\n"
 	"\tfor --x11=xephyr.\n"

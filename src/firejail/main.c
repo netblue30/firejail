@@ -376,14 +376,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			exit_err_feature(argv[i], CFG_X11);
 	}
-	else if (strcmp(argv[i], "--x11=xpra") == 0) {
-		if (checkcfg(CFG_X11)) {
-			x11_start_xpra(argc, argv);
-			exit(0);
-		}
-		else
-			exit_err_feature(argv[i], CFG_X11);
-	}
 	else if (strcmp(argv[i], "--x11=xephyr") == 0) {
 		if (checkcfg(CFG_X11)) {
 			x11_start_xephyr(argc, argv);
@@ -958,6 +950,7 @@ static void run_builder(int argc, char **argv) {
 	exit(1);
 }
 
+// callback from src/lib/syscall.c
 void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {
 	(void) fd;
 	(void) syscall;
@@ -965,6 +958,8 @@ void filter_add_errno(int fd, int syscall, int arg, void *ptrarg, bool native) {
 	(void) ptrarg;
 	(void) native;
 }
+
+// callback from src/lib/syscall.c
 void filter_add_blacklist_override(int fd, int syscall, int arg, void *ptrarg, bool native) {
 	(void) fd;
 	(void) syscall;

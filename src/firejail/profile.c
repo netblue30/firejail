@@ -1357,19 +1357,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	if (strcmp(ptr, "x11 xpra") == 0) {
 #ifdef HAVE_X11
-		if (checkcfg(CFG_X11)) {
-			const char *x11env = env_get("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0) {
-				return 0;
-			}
-			else {
-				// start x11
-				x11_start_xpra(cfg.original_argc, cfg.original_argv);
-				exit(0);
-			}
-		}
-		else
-			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
+		fprintf(stderr, "Warning: \"--x11=xpra\" feature was removed in firejail version 0.9.81\n");
 #endif
 		return 0;
 	}

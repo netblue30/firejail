@@ -804,7 +804,6 @@ void fs_mkfile(const char *name);
 void fs_x11(void);
 int x11_display(void);
 void x11_start(int argc, char **argv) __attribute__((noreturn));
-void x11_start_xpra(int argc, char **argv) __attribute__((noreturn));
 void x11_start_xephyr(int argc, char **argv) __attribute__((noreturn));
 void x11_block(void);
 void x11_start_xvfb(int argc, char **argv) __attribute__((noreturn));
@@ -856,14 +855,12 @@ enum {
 	CFG_USERNS,
 	CFG_X11,
 	CFG_XEPHYR_WINDOW_TITLE,
-	CFG_XPRA_ATTACH,
 	CFG_MAX // this should always be the last entry
 };
 
 extern const char *const cfgstr[];
 extern char *xephyr_screen;
 extern char *xephyr_extra_params;
-extern char *xpra_extra_params;
 extern char *xvfb_screen;
 extern char *xvfb_extra_params;
 extern char *netfilter_default;

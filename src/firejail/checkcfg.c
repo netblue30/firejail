@@ -30,7 +30,6 @@ static int initialized = 0;
 static int cfg_val[CFG_MAX];
 char *xephyr_screen = "800x600";
 char *xephyr_extra_params = "";
-char *xpra_extra_params = "";
 char *xvfb_screen = "800x600x24";
 char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
@@ -75,7 +74,6 @@ const char *const cfgstr[] = {
 	[CFG_USERNS] = "userns",
 	[CFG_X11] = "x11",
 	[CFG_XEPHYR_WINDOW_TITLE] = "xephyr-window-title",
-	[CFG_XPRA_ATTACH] = "xpra-attach",
 	[CFG_MAX] = "max" // this should always be the last entry
 };
 
@@ -116,7 +114,6 @@ int checkcfg(int val) {
 		cfg_val[CFG_FIREJAIL_PROMPT] = 0;
 		cfg_val[CFG_DISABLE_MNT] = 0;
 		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
-		cfg_val[CFG_XPRA_ATTACH] = 0;
 		cfg_val[CFG_SECCOMP_ERROR_ACTION] = -1;
 		cfg_val[CFG_BROWSER_ALLOW_DRM] = 0;
 		cfg_val[CFG_ALLOW_TRAY] = 0;
@@ -181,13 +178,13 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_USERNS, "userns")
 			PARSE_YESNO(CFG_X11, "x11")
 			PARSE_YESNO(CFG_XEPHYR_WINDOW_TITLE, "xephyr-window-title")
-			PARSE_YESNO(CFG_XPRA_ATTACH, "xpra-attach")
 #undef PARSE_YESNO
 			else if (strncmp(ptr, "tracelog", 8) == 0)
 				fwarning("%s:%d: 'tracelog' feature was removed in firejail version 0.9.81\n", fname, line);
 			else if (strncmp(ptr, "private-home", 12) == 0)
 				fwarning("%s:%d: 'private-home' feature was removed in firejail version 0.9.81\n", fname, line);
-
+			else if (strncmp(ptr, "xpra-attach", 11) == 0)
+				fwarning("%s:%d: 'x11=xpra' feature was removed in firejail version 0.9.81\n", fname, line);
 			// netfilter
 			else if (strncmp(ptr, "netfilter-default ", 18) == 0) {
 				char *fname = ptr + 18;
@@ -235,11 +232,7 @@ int checkcfg(int val) {
 
 			// xpra server extra parameters
 			else if (strncmp(ptr, "xpra-extra-params ", 18) == 0) {
-				if (*xpra_extra_params != '\0')
-					goto errout;
-				xpra_extra_params = strdup(ptr + 18);
-				if (!xpra_extra_params)
-					errExit("strdup");
+				fwarning("%s:%d: 'x11=xpra' feature was removed in firejail version 0.9.81\n", fname, line);
 			}
 
 			// Xvfb screen size

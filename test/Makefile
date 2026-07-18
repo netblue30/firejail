@@ -26,4 +26,3 @@ clean:
 	$(RM) utils/index.html*
 	$(RM) utils/lstesting
 	$(RM) utils/wget-log
-	cd compile && (./compile.sh --clean || true)

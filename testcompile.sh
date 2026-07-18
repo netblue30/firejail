@@ -19,7 +19,7 @@ testconfigure() {
 	make distclean
 	./configure "$@" 2>&1 | tee -a "$output"
 
-	errors="$(grep -E '(WARNING|ERROR)' "$output" | wc -l)"
+	errors="$(grep -E -c '(WARNING|ERROR)' "$output")"
 	printf '%s\n' "$errors"
 	if test "$errors" -gt "$total_errors"; then
 		total_errors="$errors"
@@ -34,7 +34,7 @@ testmake() {
 
 	make "$@" 2>&1 | tee -a "$output"
 
-	errors="$(grep -E -i 'error:' "$output" | wc -l)"
+	errors="$(grep -E -c -i 'error:' "$output")"
 	printf '%s\n' "$errors"
 	if test "$errors" -gt "$total_errors"; then
 		total_errors="$errors"

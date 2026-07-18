@@ -82,6 +82,7 @@ protocol unix,inet,inet6,netlink
 # Note: The seccomp line below still permits the chroot syscall; see
 # https://github.com/netblue30/firejail/issues/2506 for possible workarounds.
 seccomp !chroot
+seccomp.block-secondary
 
 disable-mnt
 ?BROWSER_DISABLE_U2F: private-dev

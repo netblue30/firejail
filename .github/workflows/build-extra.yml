@@ -75,7 +75,7 @@ jobs:
       run: make installcheck
 
   build-clang:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
     - name: Harden Runner
@@ -98,7 +98,7 @@ jobs:
       run: ./ci/printenv.sh
     - name: configure
       run: >
-        ./configure CC=clang-14
+        ./configure CC=clang-18
         --prefix=/usr --enable-fatal-warnings
         --enable-apparmor --enable-selinux
         || (cat config.log; exit 1)

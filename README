@@ -1337,6 +1337,7 @@ StellariusOrion592 (https://github.com/StellariusOrion592)
 	- new profile: gzdoom, lzdoom, uzdoom (#7010)
 	- new profile: quakespasm (#7014)
 	- new profile: ephoto (#7153)
+	- profiles: firefox-common: add seccomp.block-secondary (#7204)
 StelFux (https://github.com/StelFux)
 	- Fix youtube video in totem
 sudoAlphaX (https://github.com/sudoAlphaX)

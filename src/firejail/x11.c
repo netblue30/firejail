@@ -655,7 +655,7 @@ void x11_start_xephyr(int argc, char **argv) {
 void x11_start(int argc, char **argv) {
 	EUID_ASSERT();
 
-	// prevent root for running --x11
+	// prevent root from running --x11
 	if (getuid() == 0) {
 		fprintf(stderr, "Error: X11 sandboxing is not available when running as root\n");
 		exit(1);

@@ -17,7 +17,11 @@ testconfigure() {
 
 	printf '%s...' "$msg" >> "$result"
 	make distclean
-	./configure "$@" 2>&1 | tee -a "$output"
+
+	(
+		set -x
+		./configure "$@"
+	) 2>&1 | tee -a "$output"
 
 	errors="$(grep -E -c '(WARNING|ERROR)' "$output")"
 	printf '%s\n' "$errors"
@@ -32,7 +36,10 @@ testmake() {
 	msg="$1"
 	shift
 
-	make -j "$(nproc)" "$@" 2>&1 | tee -a "$output"
+	(
+		set -x
+		make -j "$(nproc)" "$@"
+	) 2>&1 | tee -a "$output"
 
 	errors="$(grep -E -c -i 'error:' "$output")"
 	printf '%s\n' "$errors"

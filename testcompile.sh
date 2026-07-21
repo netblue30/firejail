@@ -32,7 +32,7 @@ testmake() {
 	msg="$1"
 	shift
 
-	make -j4 "$@" 2>&1 | tee -a "$output"
+	make -j "$(nproc)" "$@" 2>&1 | tee -a "$output"
 
 	errors="$(grep -E -c -i 'error:' "$output")"
 	printf '%s\n' "$errors"

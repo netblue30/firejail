@@ -63,7 +63,7 @@ msg='disable dbus proxy configuration'
 testconfigure "$msg" --enable-fatal-warnings --disable-dbusproxy &&
 testmake "$msg"
 
-msg='disable chroot configuration'
+msg='enable chroot configuration'
 testconfigure "$msg" --enable-fatal-warnings --enable-chroot &&
 testmake "$msg"
 

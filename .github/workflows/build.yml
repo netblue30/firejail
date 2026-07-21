@@ -54,7 +54,7 @@ permissions:  # added using https://github.com/step-security/secure-workflows
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
     - name: Harden Runner

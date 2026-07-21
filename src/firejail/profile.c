@@ -1357,9 +1357,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	if (strcmp(ptr, "x11 xpra") == 0) {
 #ifdef HAVE_X11
-		fprintf(stderr, "Warning: \"--x11=xpra\" feature was removed in firejail version 0.9.81\n");
+		fprintf(stderr, "Error: \"--x11=xpra\" feature was removed in firejail version 0.9.81\n");
 #endif
-		return 0;
+		exit(1);
 	}
 
 	if (strcmp(ptr, "x11 xvfb") == 0) {

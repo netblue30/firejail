@@ -20,7 +20,7 @@ testconfigure() {
 
 	(
 		set -x
-		./configure "$@"
+		./configure "$@" || cat config.log
 	) 2>&1 | tee -a "$output"
 
 	errors="$(grep -E -c '(WARNING|ERROR)' "$output")"

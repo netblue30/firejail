@@ -684,6 +684,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		cfg.interface1.configured = 0;
 		cfg.interface2.configured = 0;
 		cfg.interface3.configured = 0;
+		profile_add("blacklist /run/systemd/resolve");
 		return 0;
 	}
 	else if (strncmp(ptr, "net ", 4) == 0) {

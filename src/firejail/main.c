@@ -2247,6 +2247,7 @@ int main(int argc, char **argv, char **envp) {
 			cfg.interface1.configured = 0;
 			cfg.interface2.configured = 0;
 			cfg.interface3.configured = 0;
+			profile_add("blacklist /run/systemd/resolve");
 			continue;
 		}
 #ifdef HAVE_NETWORK

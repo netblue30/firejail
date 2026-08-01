@@ -18,10 +18,10 @@ clean:
 	$(RM) environment/index.html*
 	$(RM) environment/logfile*
 	$(RM) environment/wget-log*
-	$(RM) test/chroot/unchroot
-	$(RM) test/fcopy/src/dircopy.exp
-	$(RM) test/fnetfilter/outfile
-	$(RM) test/fnettrace/index.html
+	$(RM) chroot/unchroot
+	$(RM) fcopy/src/dircopy.exp
+	$(RM) fnetfilter/outfile
+	$(RM) fnettrace/index.html
 	$(RM) utils/firejail-test-file*
 	$(RM) utils/index.html*
 	$(RM) utils/lstesting

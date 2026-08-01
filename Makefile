@@ -438,7 +438,15 @@ $(TEST_TARGETS):
 
 # extract some data about the testing setup: kernel, network connectivity, user
 .PHONY: lab-setup
-lab-setup:; uname -r; ldd --version | grep GLIBC; pwd; whoami; ip addr show; cat /etc/resolv.conf; cat /etc/hosts; ls /etc
+lab-setup:
+	uname -r
+	ldd --version | grep GLIBC
+	pwd
+	whoami
+	ip addr show
+	cat /etc/resolv.conf
+	cat /etc/hosts
+	ls /etc
 
 .PHONY: test
 test: lab-setup $(TEST_TARGETS)

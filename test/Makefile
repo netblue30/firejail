@@ -15,10 +15,10 @@ $(TESTS):
 clean:
 	for test in $(TESTS); do $(RM) "$$test/$$test.log"; done
 	$(RM) -r environment/-testdir
+	$(RM) chroot/unchroot
 	$(RM) environment/index.html*
 	$(RM) environment/logfile*
 	$(RM) environment/wget-log*
-	$(RM) chroot/unchroot
 	$(RM) fcopy/src/dircopy.exp
 	$(RM) fnetfilter/outfile
 	$(RM) fnettrace/index.html

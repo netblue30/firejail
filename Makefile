@@ -411,7 +411,25 @@ sort-profiles: $(PROFILES_INC) $(PROFILES_PRO)
 # make test
 #
 
-TESTS=apps chroot profiles capabilities firecfg network apparmor appimage utils environment filters fs fcopy fnettrace fnetfilter private-etc seccomp-extra
+TESTS = \
+	apps \
+	chroot \
+	profiles \
+	capabilities \
+	firecfg \
+	network \
+	apparmor \
+	appimage \
+	utils \
+	environment \
+	filters \
+	fs \
+	fcopy \
+	fnettrace \
+	fnetfilter \
+	private-etc \
+	seccomp-extra
+
 TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 
 $(TEST_TARGETS):

@@ -1,4 +1,5 @@
 # Firejail profile for Xephyr
+# Description: A nested X server that runs as an X application
 # This file is overwritten after every install/update
 quiet
 # Persistent local customizations

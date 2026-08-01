@@ -33,7 +33,7 @@ syn match fjSyscall /\$[0-9]\+/ nextgroup=fjSyscallErrno contained
 syn match fjSyscallErrno /\v(:(@FJ_SYSTEM_ERRNOS@)>)?/ nextgroup=fjSyscallList contained
 syn match fjSyscallList /,/ nextgroup=fjSyscall contained
 
-syn keyword fjX11Sandbox none xephyr xorg xpra xvfb contained
+syn keyword fjX11Sandbox none xephyr xorg xvfb contained
 syn keyword fjSeccompAction kill log ERRNO contained
 
 syn match fjEnvVar "[A-Za-z0-9_]\+=" contained

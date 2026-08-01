@@ -281,9 +281,9 @@ static const char *const usage_str =
 	"    --writable-var - /var directory is mounted read-write.\n"
 	"    --writable-var-log - use the real /var/log directory, not a clone.\n"
 #ifdef HAVE_X11
-	"    --x11 - enable X11 sandboxing. The software checks first if Xpra is\n"
-	"\tinstalled, then it checks if Xephyr is installed. If all fails, it will\n"
-	"\tattempt to use X11 security extension.\n"
+	"    --x11 - enable X11 sandboxing. The software checks first if\n"
+	"\tXephyr is installed. If this fails, it will attempt to use the\n"
+	"\tX11 security extension.\n"
 	"    --x11=none - disable access to X11 sockets.\n"
 	"    --x11=xephyr - enable Xephyr X11 server. The window size is 800x600.\n"
 	"    --x11=xorg - enable X11 security extension.\n"

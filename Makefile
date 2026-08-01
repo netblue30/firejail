@@ -440,5 +440,5 @@ $(TEST_TARGETS):
 lab-setup:; uname -r; ldd --version | grep GLIBC; pwd; whoami; ip addr show; cat /etc/resolv.conf; cat /etc/hosts; ls /etc
 
 .PHONY: test
-test:  lab-setup  test-apps test-chroot test-profiles test-capabilities test-firecfg test-network test-apparmor test-appimage test-utils test-environment test-filters test-fs test-fcopy test-fnettrace test-fnetfilter test-private-etc test-seccomp-extra
+test: lab-setup $(TEST_TARGETS)
 	echo "TESTING COMPLETE"

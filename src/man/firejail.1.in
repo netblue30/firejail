@@ -3372,7 +3372,7 @@ $ sudo firejail \-\-writable\-var\-log
 Sandbox the application using Xephyr, Xvfb or Xorg security extension.
 The sandbox will prevent screenshot and keylogger applications started inside the sandbox from accessing
 clients running outside the sandbox.
-By default Firejail will will use Xephyr.
+By default Firejail will use Xephyr.
 If this fails, Firejail will not attempt to use Xvfb or X11 security extension.
 .br
 

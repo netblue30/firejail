@@ -1,8 +1,5 @@
 version: 2
 updates:
-  # Note: Grouping is used to ensure that all CodeQL actions are updated
-  # together in the same PR, to avoid CodeQL checks failing due to version
-  # mismatches (see #7192).
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -10,6 +7,11 @@ updates:
       interval: "monthly"
     open-pull-requests-limit: 4
     groups:
+
+      # Note: Grouping is used to ensure that all CodeQL actions are updated
+      # together in the same PR, to avoid CodeQL checks failing due to version
+      # mismatches (see #7192).
+
       codeql-actions:
         patterns:
           - "github/codeql-action/*"

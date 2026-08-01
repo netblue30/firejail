@@ -436,7 +436,7 @@ TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 $(TEST_TARGETS):
 	$(MAKE) -C test $(subst test-,,$@)
 
-# extract some data about the testing setup: kernel, network connectivity, user
+# Extract some data about the testing setup.
 .PHONY: lab-setup
 lab-setup:
 	uname -r

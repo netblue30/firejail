@@ -4,7 +4,7 @@ ROOT = ..
 
 RM ?= rm -f
 
-TESTS=$(patsubst %/,%,$(wildcard */))
+TESTS := $(patsubst %/,%,$(sort $(wildcard */)))
 
 .PHONY: $(TESTS)
 $(TESTS):

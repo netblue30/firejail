@@ -432,6 +432,7 @@ TESTS = \
 
 TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 
+.PHONY: $(TEST_TARGETS)
 $(TEST_TARGETS):
 	$(MAKE) -C test $(subst test-,,$@)
 

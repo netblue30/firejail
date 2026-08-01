@@ -13,9 +13,3 @@ updates:
       codeql-actions:
         patterns:
           - "github/codeql-action/*"
-
-      other-actions:
-        patterns:
-          - "*"
-        exclude-patterns:
-          - "github/codeql-action/*"

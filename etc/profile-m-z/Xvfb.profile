@@ -7,16 +7,17 @@ include Xvfb.local
 # Persistent global definitions
 include globals.local
 
+# This profile will sandbox Xvfb server itself when used with firejail
+# --x11=xvfb.
 #
-# This profile will sandbox Xvfb server itself when used with firejail --x11=xvfb.
-# The target program is sandboxed with its own profile. By default the this functionality
-# is disabled. To enable it, create a firejail-Xvfb symlink in /usr/local/bin:
+# The target program is sandboxed with its own profile. By default the this
+# functionality is disabled. To enable it, create a firejail-Xvfb symlink in
+# /usr/local/bin:
 #
 #    $ sudo ln -s /usr/bin/firejail /usr/local/bin/Xvfb
 #
 # We have this functionality disabled by default because it creates problems on
 # some Linux distributions. Also, older versions of Xpra use Xvfb.
-#
 
 whitelist /var/lib/xkb
 #include whitelist-common.inc # see #903

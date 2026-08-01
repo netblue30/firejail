@@ -7,14 +7,14 @@ include Xephyr.local
 # Persistent global definitions
 include globals.local
 
+# This profile will sandbox Xephyr server itself when used with firejail
+# --x11=xephyr.
 #
-# This profile will sandbox Xephyr server itself when used with firejail --x11=xephyr.
 # To enable it, create a firejail-Xephyr symlink in /usr/local/bin:
 #
 #    $ sudo ln -s /usr/bin/firejail /usr/local/bin/Xephyr
 #
-# or run "sudo firecfg"
-#
+# Or run "sudo firecfg".
 
 whitelist /var/lib/xkb
 #include whitelist-common.inc # see #903

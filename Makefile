@@ -411,16 +411,43 @@ sort-profiles: $(PROFILES_INC) $(PROFILES_PRO)
 # make test
 #
 
-TESTS=apps chroot profiles capabilities firecfg network apparmor appimage utils environment filters fs fcopy fnettrace fnetfilter private-etc seccomp-extra
+TESTS = \
+	apparmor \
+	appimage \
+	apps \
+	capabilities \
+	chroot \
+	environment \
+	fcopy \
+	filters \
+	firecfg \
+	fnetfilter \
+	fnettrace \
+	fs \
+	network \
+	private-etc \
+	profiles \
+	seccomp-extra \
+	utils
+
 TEST_TARGETS=$(patsubst %,test-%,$(TESTS))
 
+.PHONY: $(TEST_TARGETS)
 $(TEST_TARGETS):
 	$(MAKE) -C test $(subst test-,,$@)
 
-# extract some data about the testing setup: kernel, network connectivity, user
+# Extract some data about the testing setup.
 .PHONY: lab-setup
-lab-setup:; uname -r; ldd --version | grep GLIBC; pwd; whoami; ip addr show; cat /etc/resolv.conf; cat /etc/hosts; ls /etc
+lab-setup:
+	uname -r
+	ldd --version | grep GLIBC
+	pwd
+	whoami
+	ip addr show
+	cat /etc/resolv.conf
+	cat /etc/hosts
+	ls /etc
 
 .PHONY: test
-test:  lab-setup  test-apps test-chroot test-profiles test-capabilities test-firecfg test-network test-apparmor test-appimage test-utils test-environment test-filters test-fs test-fcopy test-fnettrace test-fnetfilter test-private-etc test-seccomp-extra
+test: lab-setup $(TEST_TARGETS)
 	echo "TESTING COMPLETE"

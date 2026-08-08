@@ -5,7 +5,7 @@ include blink-common-hardened.inc.local
 caps.drop all
 nonewprivs
 #noroot breaks saving files
-protocol unix,inet,inet6,netlink
+protocol unix,inet,inet6
 seccomp !chroot
 
 #restrict-namespaces

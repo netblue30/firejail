@@ -25,6 +25,7 @@
 #include <sys/stat.h>
 //#include <linux/prctl.h>
 #include <sys/prctl.h>
+#include <sys/wait.h>
 #include <signal.h>
 
 // enable debug messages
@@ -146,15 +147,23 @@ int main(int argc, char **argv) {
 		// kill the target if the parent dies
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
 		execvp(arglist[0], arglist);
-		return 0;
+		// execvp only returns on failure
+		fprintf(stderr, "Error: fbwrap cannot execute %s\n", arglist[0]);
+		_exit(127); // 127: standard "command not found/not executable" status
 	}
 
-	// wait child to finish
-	//int status;
-	//waitpid(child, &status, 0);
+	// wait for the target and propagate its exit status: callers (and the real
+	// bwrap that fbwrap stands in for) expect fbwrap to block until the child
+	// exits and to return the child's return code, not a fixed delay
+	int status;
+	if (waitpid(child, &status, 0) == -1) {
+		fprintf(stderr, "Error: fbwrap cannot wait for the target program\n");
+		exit(1);
+	}
+	if (WIFEXITED(status))
+		return WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		return 128 + WTERMSIG(status); // 128+signo: shell convention for signal death
 
-	// don't bother waiting
-	sleep(2);
-
-	return 0;
+	return 1;
 }

@@ -148,8 +148,9 @@ int main(int argc, char **argv) {
 		// kill the target if the parent dies
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
 		execvp(arglist[0], arglist);
+
 		// execvp only returns on failure
-		fprintf(stderr, "Error: fbwrap cannot execute %s\n", arglist[0]);
+		fprintf(stderr, "Error: fbwrap cannot execute %s: %s\n", arglist[0], strerror(errno));
 		_exit(127); // 127: standard "command not found/not executable" status
 	}
 
@@ -157,12 +158,11 @@ int main(int argc, char **argv) {
 	// bwrap that fbwrap stands in for) expect fbwrap to block until the child
 	// exits and to return the child's return code, not a fixed delay
 	int status;
-	pid_t rv;
-	do {
-		rv = waitpid(child, &status, 0);
-	} while (rv == -1 && errno == EINTR);
-	if (rv == -1) {
-		fprintf(stderr, "Error: fbwrap cannot wait for the target program\n");
+	while (waitpid(child, &status, 0) == -1) {
+		if (errno == EINTR)
+			continue;
+
+		fprintf(stderr, "Error: fbwrap cannot wait for %s: %s\n", arglist[0], strerror(errno));
 		exit(1);
 	}
 	if (WIFEXITED(status))

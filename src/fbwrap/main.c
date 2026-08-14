@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 #define _GNU_SOURCE
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -156,7 +157,11 @@ int main(int argc, char **argv) {
 	// bwrap that fbwrap stands in for) expect fbwrap to block until the child
 	// exits and to return the child's return code, not a fixed delay
 	int status;
-	if (waitpid(child, &status, 0) == -1) {
+	pid_t rv;
+	do {
+		rv = waitpid(child, &status, 0);
+	} while (rv == -1 && errno == EINTR);
+	if (rv == -1) {
 		fprintf(stderr, "Error: fbwrap cannot wait for the target program\n");
 		exit(1);
 	}

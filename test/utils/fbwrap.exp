@@ -7,29 +7,28 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-# fbwrap must wait for the target and propagate its exit status (#7081)
+# Check the target's exit status (see #7081).
 after 100
-send -- "fbwrap /usr/bin/false ; echo fbwrap-rc-$?\r"
+send -- "fbwrap /usr/bin/false; echo ret $?\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"fbwrap-rc-1"
+	"ret 1"
 }
 
 after 100
-send -- "fbwrap /usr/bin/true ; echo fbwrap-rc-$?\r"
+send -- "fbwrap /usr/bin/true; echo ret $?\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"fbwrap-rc-0"
+	"ret 0"
 }
 
-# a target killed by a signal is reported as 128+signo (SIGTERM -> 143)
+# A target killed by a signal should return 128+signo (SIGTERM -> 143).
 after 100
-send -- "fbwrap /bin/sh -c 'kill -TERM \$\$' ; echo fbwrap-rc-$?\r"
+send -- "fbwrap /bin/sh -c 'kill -TERM \$\$'; echo ret $?\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"fbwrap-rc-143"
+	"ret 143"
 }
-
 
 after 100
 puts "\nall done\n"

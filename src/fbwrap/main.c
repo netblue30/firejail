@@ -154,9 +154,8 @@ int main(int argc, char **argv) {
 		_exit(127); // 127: standard "command not found/not executable" status
 	}
 
-	// wait for the target and propagate its exit status: callers (and the real
-	// bwrap that fbwrap stands in for) expect fbwrap to block until the child
-	// exits and to return the child's return code, not a fixed delay
+	// Note: Callers expect bwrap to block until the child exits and to
+	// return the child's exit status (see #7081).
 	int status;
 	while (waitpid(child, &status, 0) == -1) {
 		if (errno == EINTR)

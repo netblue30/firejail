@@ -16,10 +16,10 @@ expect {
 }
 
 after 100
-send -- "fbwrap /usr/bin/false; echo ret $?\r"
+send -- "fbwrap /bin/sh -c 'exit 10'; echo ret $?\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	"ret 1"
+	"ret 10"
 }
 
 # A target killed by a signal should return 128+signo (SIGTERM -> 143).

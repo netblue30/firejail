@@ -133,7 +133,8 @@ int main(int argc, char **argv) {
 	for (j = 0; i < argc && j < MAX_ARGLIST; i++, j++)
 		arglist[j] = argv[i];
 	if (j >= (MAX_ARGLIST - 1)) {
-		fprintf(stderr, "Error: fbwrap target program has an argument list larger than %d\n", MAX_ARGLIST - 1);
+		fprintf(stderr, "Error: fbwrap: too many arguments: argc (%d) >= (%d)\n",
+		        argc, MAX_ARGLIST - 1);
 		exit(1);
 	}
 

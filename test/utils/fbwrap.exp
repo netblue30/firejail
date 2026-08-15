@@ -9,17 +9,17 @@ match_max 100000
 
 # Check the target's exit status (see #7081).
 after 100
-send -- "fbwrap /usr/bin/false; echo ret $?\r"
-expect {
-	timeout {puts "TESTING ERROR 1\n";exit}
-	"ret 1"
-}
-
-after 100
 send -- "fbwrap /usr/bin/true; echo ret $?\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
 	"ret 0"
+}
+
+after 100
+send -- "fbwrap /usr/bin/false; echo ret $?\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"ret 1"
 }
 
 # A target killed by a signal should return 128+signo (SIGTERM -> 143).

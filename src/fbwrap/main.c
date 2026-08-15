@@ -17,7 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-#define _GNU_SOURCE
+#include "../include/common.h"
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,10 +44,8 @@ static int check_env_path(const char *fname) {
 	const char *path1 = secure_getenv("PATH");
 	if (path1) {
 		char *path2 = strdup(path1);
-		if (!path2) {
-			fprintf(stderr, "Error: strdup failed in fbwrap\n");
-			return 1;
-		}
+		if (!path2)
+			errExit("strdup");
 
 		// use path2 to count the entries
 		char *ptr = strtok(path2, ":");
@@ -140,10 +138,9 @@ int main(int argc, char **argv) {
 	}
 
 	pid_t child = fork();
-	if (child == -1) {
-		fprintf(stderr, "Error: fbwrap cannot fork\n");
-		exit(1);
-	}
+	if (child == -1)
+		errExit("fork");
+
 	if (child == 0) {
 		// kill the target if the parent dies
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
@@ -161,8 +158,7 @@ int main(int argc, char **argv) {
 		if (errno == EINTR)
 			continue;
 
-		fprintf(stderr, "Error: fbwrap cannot wait for %s: %s\n", arglist[0], strerror(errno));
-		exit(1);
+		errExit("waitpid");
 	}
 	if (WIFEXITED(status))
 		return WEXITSTATUS(status);

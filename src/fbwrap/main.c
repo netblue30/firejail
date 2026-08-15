@@ -18,6 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 #define _GNU_SOURCE
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -25,6 +26,7 @@
 #include <sys/stat.h>
 //#include <linux/prctl.h>
 #include <sys/prctl.h>
+#include <sys/wait.h>
 #include <signal.h>
 
 // enable debug messages
@@ -146,15 +148,26 @@ int main(int argc, char **argv) {
 		// kill the target if the parent dies
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
 		execvp(arglist[0], arglist);
-		return 0;
+
+		// execvp only returns on failure
+		fprintf(stderr, "Error: fbwrap cannot execute %s: %s\n", arglist[0], strerror(errno));
+		_exit(127); // 127: standard "command not found/not executable" status
 	}
 
-	// wait child to finish
-	//int status;
-	//waitpid(child, &status, 0);
+	// Note: Callers expect bwrap to block until the child exits and to
+	// return the child's exit status (see #7081).
+	int status;
+	while (waitpid(child, &status, 0) == -1) {
+		if (errno == EINTR)
+			continue;
 
-	// don't bother waiting
-	sleep(2);
+		fprintf(stderr, "Error: fbwrap cannot wait for %s: %s\n", arglist[0], strerror(errno));
+		exit(1);
+	}
+	if (WIFEXITED(status))
+		return WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		return 128 + WTERMSIG(status); // 128+signo: shell convention for signal death
 
-	return 0;
+	return 1;
 }

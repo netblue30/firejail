@@ -136,5 +136,8 @@ echo "TESTING: firemon version (test/utils/firemon-version.exp)"
 echo "TESTING: firemon name (test/utils/firemon-name.exp)"
 ./firemon-name.exp
 
+echo "TESTING: fbwrap (test/utils/fbwrap.exp)"
+./fbwrap.exp
+
 cd ../../
 ./mkgcov.sh

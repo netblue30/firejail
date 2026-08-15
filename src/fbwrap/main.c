@@ -52,7 +52,7 @@ static int check_env_path(const char *fname) {
 		while (ptr) {
 			if (strncmp(fname, ptr, strlen(ptr)) == 0) {
 				free(path2);
-				printf("Info: full path provided for %s\n", fname);
+				printf("Info: fbwrap: full path provided for %s\n", fname);
 				return 0;
 			}
 			ptr = strtok(NULL, ":");
@@ -116,13 +116,13 @@ int main(int argc, char **argv) {
 		if (*argv[i] != '/') // enforcing $(PATH) for our target
 			continue;
 		if (ok_to_run(argv[i])) {
-			fprintf(stderr, "Info: fbwrap target program %s found\n", argv[i]);
+			fprintf(stderr, "Info: fbwrap: target program found: %s\n", argv[i]);
 			break;
 		}
 	}
 
 	if (i == argc) {
-		fprintf(stderr, "Error: fbwrap target program not found. Please use a full path for your target.\n");
+		fprintf(stderr, "Error: fbwrap: target program not found. Please use a full path for your target.\n");
 		usage();
 		exit(1);
 	}
@@ -148,7 +148,7 @@ int main(int argc, char **argv) {
 		execvp(arglist[0], arglist);
 
 		// execvp only returns on failure
-		fprintf(stderr, "Error: fbwrap cannot execute %s: %s\n", arglist[0], strerror(errno));
+		fprintf(stderr, "Error: fbwrap: cannot execute %s: %s\n", arglist[0], strerror(errno));
 		_exit(127); // 127: standard "command not found/not executable" status
 	}
 

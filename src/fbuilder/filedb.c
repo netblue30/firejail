@@ -54,6 +54,12 @@ FileDB *filedb_find(FileDB *head, const char *fname) {
 FileDB *filedb_add(FileDB *head, const char *fname) {
 	assert(fname);
 
+	// don't add paths with characters firejail rejects in filenames (#4592):
+	// they would produce whitelist entries firejail refuses to load. Globbing
+	// is allowed in whitelist entries, so only METACHARS are rejected here.
+	if (strpbrk(fname, METACHARS))
+		return head;
+
 	// don't add it if it is already there or if the parent directory is already in the list
 	if (filedb_find(head, fname))
 		return head;

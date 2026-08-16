@@ -157,6 +157,16 @@ char *replace_cntrl_chars(const char *str, char c);
 char *escape_cntrl_chars(const char *str);
 int has_cntrl_chars(const char *str);
 void reject_cntrl_chars(const char *fname);
+// Characters rejected by reject_meta_chars() in filenames.
+//
+// Note: Characters intentionally ignored:
+//
+// * `'`: Used in some dirnames (see #4614).
+// * `()`: Used in some dirnames (see #3001 #3156).
+// * `~`: Might be useful for expansion and seems unlikely to cause problems by
+//        itself.
+#define METACHARS "!\"#$%&',;<>\\^`{|}"
+#define GLOBCHARS "*?[]"
 void reject_meta_chars(const char *fname, int globbing);
 void warn_dumpable(void);
 const char *gnu_basename(const char *path);

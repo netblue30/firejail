@@ -76,6 +76,21 @@ after 100
 send -- "rm -f ~/_firejail-test-file\r"
 after 100
 
+# #4592: a home file whose name contains a character firejail rejects in
+# filenames (here a comma) must not be emitted as a whitelist entry, otherwise
+# the generated profile fails to load.
+send -- "echo testing > ~/_firejail-test-file,x\r"
+after 100
+send -- "firejail --build cat ~/_firejail-test-file,x\r"
+expect {
+	timeout {puts "TESTING ERROR 9.1\n";exit}
+	-re {whitelist \$\{HOME\}/[^\r\n]*,} {puts "TESTING ERROR 9.2: invalid path with comma was whitelisted\n";exit}
+	"caps.drop all"
+}
+after 100
+send -- "rm -f ~/_firejail-test-file,x\r"
+after 100
+
 send -- "firejail --build cat /etc/passwd\r"
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}

@@ -85,7 +85,7 @@ desktopapps=(xterm qbittorrent galculator libreoffice \
 		 flameshot ghb kdenlive krita \
 		 evince atril kate eom eog \
 		 gwenview oupe gnome-calculator \
-		 darktable brasero \
+		 darktable brasero digikam mtpaint \
 		 transmission-qt transmission-gtk \
 		 thunderbird kmail xpdf zathura)
 

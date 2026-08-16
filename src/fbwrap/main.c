@@ -36,7 +36,7 @@
 // fname: full path required!!!
 static int check_env_path(const char *fname) {
 #ifdef DEBUG
-	printf("%s:%s():%d %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, fname);
+	printf("%s:%s():%d %s\n", __FILE__, __func__, __LINE__, fname);
 #endif
 	if (strncmp(fname, "/usr/lib", 8) == 0)
 		return 0;
@@ -66,7 +66,7 @@ static int check_env_path(const char *fname) {
 // fname: full path required!!!
 static int ok_to_run(const char *fname) {
 #ifdef DEBUG
-	printf("%s:%s():%d %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, fname);
+	printf("%s:%s():%d %s\n", __FILE__, __func__, __LINE__, fname);
 #endif
 	if (check_env_path(fname))
 		return 0;
@@ -93,7 +93,7 @@ static void usage(void) {
 int main(int argc, char **argv) {
 	int i;
 #ifdef DEBUG
-	printf("%s:%s():%d\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
+	printf("%s:%s():%d\n", __FILE__, __func__, __LINE__);
 #endif
 	if (argc == 1) {
 		usage();
@@ -111,7 +111,7 @@ int main(int argc, char **argv) {
 
 	for (i = 1; i < argc; i++) {
 #ifdef DEBUG
-		printf("%s:%s():%d %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, argv[i]);
+		printf("%s:%s():%d %s\n", __FILE__, __func__, __LINE__, argv[i]);
 #endif
 		if (*argv[i] != '/') // enforcing $(PATH) for our target
 			continue;

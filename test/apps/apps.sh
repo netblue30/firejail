@@ -14,7 +14,7 @@ sudo ls
 
 # console apps
 echo "TESTING: console apps **************************"
-apps=(ping dig wget curl ftp telnet ffmpeg)
+apps=(ping dig wget curl ftp telnet ffmpeg ssh less)
 for app in "${apps[@]}"; do
     if command -v "$app"
     then

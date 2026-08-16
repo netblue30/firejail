@@ -80,7 +80,7 @@ done
 echo "TESTING: desktop apps ************************************"
 desktopapps=(xterm qbittorrent galculator libreoffice \
 		 lowriter gimp inkscape firefox-neteth emacs okular kdiff3 \
-		 gpicview audacity meld \
+		 gpicview audacity meld blender \
 		 pauvcontrol gnome-screenshot \
 		 flameshot ghb kdenlive krita \
 		 evince atril kate eom eog \

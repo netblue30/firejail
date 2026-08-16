@@ -28,7 +28,6 @@
 
 #define MAX_BUF 4096
 
-static char mbuf[MAX_BUF];
 static MountData mdata;
 
 
@@ -78,13 +77,6 @@ static void parse_line(char *line, MountData *output) {
 	//		output.fsname: /
 	//		output.dir: /home/netblue/.cache
 	//		output.fstype: tmpfs
-
-	size_t linelen = strlen(line);
-	if (linelen >= MAX_BUF - 1) {
-		fprintf(stderr, "Error: /proc/self/mountinfo line is too long and may be truncated (%zu >= %d): %s\n",
-		        linelen, MAX_BUF - 1, line);
-		exit(1);
-	}
 
 	char *orig_line = strdup(line);
 	char *ptr = strtok(line, " ");
@@ -143,14 +135,22 @@ MountData *get_last_mount(void) {
 		errExit("fopen");
 	}
 
-	mbuf[0] = '\0';
-	// go to the last line
-	while (fgets(mbuf, MAX_BUF, fp));
+	// go to the last line; mountinfo lines can be arbitrarily long (e.g. an
+	// overlayfs mount with many lowerdirs), so grow the buffer as needed.
+	// The buffer is static because the returned MountData points into it.
+	static char *line = NULL;
+	static size_t line_size = 0;
+	while (getline(&line, &line_size, fp) != -1)
+		;
 	fclose(fp);
+	if (line == NULL) {
+		fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
+		exit(1);
+	}
 	if (arg_debug)
-		printf("%s", mbuf);
+		printf("%s", line);
 
-	parse_line(mbuf, &mdata);
+	parse_line(line, &mdata);
 
 	if (arg_debug)
 		printf("mountid=%d fsname=%s dir=%s fstype=%s\n", mdata.mountid, mdata.fsname, mdata.dir, mdata.fstype);
@@ -237,8 +237,9 @@ char **build_mount_array(const int mountid, const char *path) {
 	// try to find line with mount id
 	int found = 0;
 	MountData mntp;
-	char line[MAX_BUF];
-	while (fgets(line, MAX_BUF, fp)) {
+	char *line = NULL;
+	size_t line_size = 0;
+	while (getline(&line, &line_size, fp) != -1) {
 		parse_line(line, &mntp);
 		if (mntp.mountid == mountid) {
 			found = 1;
@@ -247,6 +248,7 @@ char **build_mount_array(const int mountid, const char *path) {
 	}
 
 	if (!found) {
+		free(line);
 		fclose(fp);
 		return NULL;
 	}
@@ -265,7 +267,7 @@ char **build_mount_array(const int mountid, const char *path) {
 
 	// and add all following mountpoints contained in this directory
 	size_t pathlen = strlen(path);
-	while (fgets(line, MAX_BUF, fp)) {
+	while (getline(&line, &line_size, fp) != -1) {
 		parse_line(line, &mntp);
 		if (strncmp(mntp.dir, path, pathlen) == 0 && mntp.dir[pathlen] == '/') {
 			if (++cnt == size) {
@@ -279,6 +281,7 @@ char **build_mount_array(const int mountid, const char *path) {
 				errExit("strdup");
 		}
 	}
+	free(line);
 	fclose(fp);
 
 	// end of array

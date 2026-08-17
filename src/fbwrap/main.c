@@ -17,7 +17,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-#define _GNU_SOURCE
+#include "../include/common.h"
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,7 +36,7 @@
 // fname: full path required!!!
 static int check_env_path(const char *fname) {
 #ifdef DEBUG
-	printf("%s:%s():%d %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, fname);
+	printf("%s:%d: %s: %s\n", __FILE__, __LINE__, __func__, fname);
 #endif
 	if (strncmp(fname, "/usr/lib", 8) == 0)
 		return 0;
@@ -44,17 +44,15 @@ static int check_env_path(const char *fname) {
 	const char *path1 = secure_getenv("PATH");
 	if (path1) {
 		char *path2 = strdup(path1);
-		if (!path2) {
-			fprintf(stderr, "Error: strdup failed in fbwrap\n");
-			return 1;
-		}
+		if (!path2)
+			errExit("strdup");
 
 		// use path2 to count the entries
 		char *ptr = strtok(path2, ":");
 		while (ptr) {
 			if (strncmp(fname, ptr, strlen(ptr)) == 0) {
 				free(path2);
-				printf("Info: full path provided for %s\n", fname);
+				printf("Info: fbwrap: full path provided for %s\n", fname);
 				return 0;
 			}
 			ptr = strtok(NULL, ":");
@@ -68,7 +66,7 @@ static int check_env_path(const char *fname) {
 // fname: full path required!!!
 static int ok_to_run(const char *fname) {
 #ifdef DEBUG
-	printf("%s:%s():%d %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, fname);
+	printf("%s:%d: %s: %s\n", __FILE__, __LINE__, __func__, fname);
 #endif
 	if (check_env_path(fname))
 		return 0;
@@ -95,7 +93,7 @@ static void usage(void) {
 int main(int argc, char **argv) {
 	int i;
 #ifdef DEBUG
-	printf("%s:%s():%d\n", __FILE__, __PRETTY_FUNCTION__, __LINE__);
+	printf("%s:%d: %s\n", __FILE__, __LINE__, __func__);
 #endif
 	if (argc == 1) {
 		usage();
@@ -113,18 +111,18 @@ int main(int argc, char **argv) {
 
 	for (i = 1; i < argc; i++) {
 #ifdef DEBUG
-		printf("%s:%s():%d %s\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, argv[i]);
+		printf("%s:%d: %s: %s\n", __FILE__, __LINE__, __func__, argv[i]);
 #endif
 		if (*argv[i] != '/') // enforcing $(PATH) for our target
 			continue;
 		if (ok_to_run(argv[i])) {
-			fprintf(stderr, "Info: fbwrap target program %s found\n", argv[i]);
+			fprintf(stderr, "Info: fbwrap: target program found: %s\n", argv[i]);
 			break;
 		}
 	}
 
 	if (i == argc) {
-		fprintf(stderr, "Error: fbwrap target program not found. Please use a full path for your target.\n");
+		fprintf(stderr, "Error: fbwrap: target program not found. Please use a full path for your target.\n");
 		usage();
 		exit(1);
 	}
@@ -135,22 +133,22 @@ int main(int argc, char **argv) {
 	for (j = 0; i < argc && j < MAX_ARGLIST; i++, j++)
 		arglist[j] = argv[i];
 	if (j >= (MAX_ARGLIST - 1)) {
-		fprintf(stderr, "Error: fbwrap target program has an argument list larger than %d\n", MAX_ARGLIST - 1);
+		fprintf(stderr, "Error: fbwrap: too many arguments: argc (%d) >= (%d)\n",
+		        argc, MAX_ARGLIST - 1);
 		exit(1);
 	}
 
 	pid_t child = fork();
-	if (child == -1) {
-		fprintf(stderr, "Error: fbwrap cannot fork\n");
-		exit(1);
-	}
+	if (child == -1)
+		errExit("fork");
+
 	if (child == 0) {
 		// kill the target if the parent dies
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
 		execvp(arglist[0], arglist);
 
 		// execvp only returns on failure
-		fprintf(stderr, "Error: fbwrap cannot execute %s: %s\n", arglist[0], strerror(errno));
+		fprintf(stderr, "Error: fbwrap: cannot execute %s: %s\n", arglist[0], strerror(errno));
 		_exit(127); // 127: standard "command not found/not executable" status
 	}
 
@@ -161,8 +159,7 @@ int main(int argc, char **argv) {
 		if (errno == EINTR)
 			continue;
 
-		fprintf(stderr, "Error: fbwrap cannot wait for %s: %s\n", arglist[0], strerror(errno));
-		exit(1);
+		errExit("waitpid");
 	}
 	if (WIFEXITED(status))
 		return WEXITSTATUS(status);

@@ -49,6 +49,8 @@ jobs:
 
     - name: sort profiles
       run: make sort-profiles || (echo; git diff --exit-code)
+    - name: check Steam private-bin requirements
+      run: ./ci/check/profiles/steam-private-bin.sh etc/profile-m-z/steam.profile
 # Currently broken (see #5610)
 #   - name: private-etc-always-required.sh
 #     run: >

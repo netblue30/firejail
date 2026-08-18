@@ -1,0 +1,15 @@
+TESTING: protocol (test/seccomp-extras/protocol-print.exp)
+./seccomp-extra.sh: line 11: ./protocol.exp: cannot execute: required file not found
+TESTING: protocol.print (test/seccomp-extras/protocol-print.exp)
+./seccomp-extra.sh: line 14: ./protocol-print.exp: cannot execute: required file not found
+TESTING: noroot (test/seccomp-extras/noroot.exp)
+./seccomp-extra.sh: line 17: ./noroot.exp: cannot execute: required file not found
+TESTING: mrwx (test/seccomp-extras/mrwx.exp)
+./seccomp-extra.sh: line 20: ./mrwx.exp: cannot execute: required file not found
+TESTING: mrwx2 (test/seccomp-extras/mrwx.exp)
+./seccomp-extra.sh: line 23: ./mrwx2.exp: cannot execute: required file not found
+TESTING: block-secondary (test/seccomp-extras/block-secondary.exp)
+./seccomp-extra.sh: line 26: ./block-secondary.exp: cannot execute: required file not found
+
+checking gcov data
+

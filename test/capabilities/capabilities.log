@@ -1,0 +1,11 @@
+TESTING: capabilities (test/filters/caps.exp)
+./capabilities.sh: line 13: ./caps.exp: cannot execute: required file not found
+TESTING: capabilities print (test/filters/caps-print.exp)
+./capabilities.sh: line 19: ./caps-print.exp: cannot execute: required file not found
+TESTING: capabilities join (test/filters/caps-join.exp)
+./capabilities.sh: line 22: ./caps-join.exp: cannot execute: required file not found
+TESTING: firemon caps (test/utils/firemon-caps.exp)
+./capabilities.sh: line 25: ./firemon-caps.exp: cannot execute: required file not found
+
+checking gcov data
+

@@ -1,0 +1,9 @@
+./firecfg.sh: line 10: sudo: command not found
+./firecfg.sh: line 11: sudo: command not found
+./firecfg.sh: line 12: sudo: command not found
+TESTING: firecfg (test/firecfg/firecfg.exp)
+./firecfg.sh: line 15: ./firecfg.exp: cannot execute: required file not found
+./firecfg.sh: line 17: sudo: command not found
+
+checking gcov data
+

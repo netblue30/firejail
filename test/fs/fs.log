@@ -1,0 +1,78 @@
+TESTING: tmpfs as regular user (test/fs/tmpfs.exp)
+./fs.sh: line 43: ./tmpfs.exp: cannot execute: required file not found
+TESTING: tmpfs as root (test/fs/tmpfs-root.exp)
+./fs.sh: line 46: sudo: command not found
+TESTING: tab completion (test/fs/tab.exp)
+./fs.sh: line 49: ./tab.exp: cannot execute: required file not found
+TESTING: mkdir/mkfile (test/fs/mkdir_mkfile.exp)
+./fs.sh: line 53: ./mkdir_mkfile.exp: cannot execute: required file not found
+TESTING: recursive mkdir (test/fs/mkdir.exp)
+./fs.sh: line 57: ./mkdir.exp: cannot execute: required file not found
+TESTING: read/write (test/fs/read-write.exp)
+./fs.sh: line 62: ./read-write.exp: cannot execute: required file not found
+TESTING: whitelist readonly (test/fs/whitelist-readonly.exp)
+./fs.sh: line 66: ./whitelist-readonly.exp: cannot execute: required file not found
+TESTING: /sys/fs access (test/fs/sys_fs.exp)
+./fs.sh: line 70: ./sys_fs.exp: cannot execute: required file not found
+TESTING SKIP: /dev/kmsg not available
+TESTING: read/write /var/tmp (test/fs/fs_var_tmp.exp)
+./fs.sh: line 80: ./fs_var_tmp.exp: cannot execute: required file not found
+TESTING: read/write /var/lock (test/fs/fs_var_lock.exp)
+./fs.sh: line 84: ./fs_var_lock.exp: cannot execute: required file not found
+TESTING: read/write /dev/shm (test/fs/fs_dev_shm.exp)
+./fs.sh: line 89: ./fs_dev_shm.exp: cannot execute: required file not found
+TESTING: private (test/fs/private.exp)
+./fs.sh: line 96: ./private.exp: cannot execute: required file not found
+TESTING: private home dir (test/fs/private-home-dir.exp)
+./fs.sh: line 99: ./private-home-dir.exp: cannot execute: required file not found
+TESTING: private home dir same as user home (test/fs/private-homedir.exp)
+./fs.sh: line 103: ./private-homedir.exp: cannot execute: required file not found
+TESTING: private-bin (test/fs/private-bin.exp)
+./fs.sh: line 111: ./private-bin.exp: cannot execute: required file not found
+TESTING: private-cache (test/fs/private-cache.exp)
+./fs.sh: line 114: ./private-cache.exp: cannot execute: required file not found
+TESTING: private-cwd (test/fs/private-cwd.exp)
+./fs.sh: line 118: ./private-cwd.exp: cannot execute: required file not found
+TESTING: macros (test/fs/macro.exp)
+./fs.sh: line 121: ./macro.exp: cannot execute: required file not found
+TESTING: macro subpaths (test/fs/macro-subpath.exp)
+./fs.sh: line 131: ./macro-subpath.exp: cannot execute: required file not found
+TESTING: whitelist empty (test/fs/whitelist-empty.exp)
+./fs.sh: line 137: ./whitelist-empty.exp: cannot execute: required file not found
+TESTING: private whitelist (test/fs/private-whitelist.exp)
+./fs.sh: line 140: ./private-whitelist.exp: cannot execute: required file not found
+TESTING: invalid filename (test/fs/invalid_filename.exp)
+./fs.sh: line 143: ./invalid_filename.exp: cannot execute: required file not found
+TESTING: blacklist directory (test/fs/option_blacklist.exp)
+./fs.sh: line 146: ./option_blacklist.exp: cannot execute: required file not found
+TESTING: blacklist file (test/fs/option_blacklist_file.exp)
+./fs.sh: line 149: ./option_blacklist_file.exp: cannot execute: required file not found
+TESTING: blacklist glob (test/fs/option_blacklist_glob.exp)
+./fs.sh: line 153: ./option_blacklist_glob.exp: cannot execute: required file not found
+TESTING: disable symlink to /dev/null (test/fs/disable-devnull-symlink.exp)
+./fs.sh: line 157: ./disable-devnull-symlink.exp: cannot execute: required file not found
+TESTING: noblacklist blacklist noexec (test/fs/noblacklist-blacklist-noexec.exp)
+./fs.sh: line 160: ./noblacklist-blacklist-noexec.exp: cannot execute: required file not found
+TESTING: noblacklist blacklist readonly (test/fs/noblacklist-blacklist-readonly.exp)
+./fs.sh: line 163: ./noblacklist-blacklist-readonly.exp: cannot execute: required file not found
+TESTING: bind as user (test/fs/option_bind_user.exp)
+./fs.sh: line 166: ./option_bind_user.exp: cannot execute: required file not found
+TESTING: double whitelist (test/fs/whitelist-double.exp)
+./fs.sh: line 169: ./whitelist-double.exp: cannot execute: required file not found
+TESTING: whitelist (test/fs/whitelist.exp)
+./fs.sh: line 173: ./whitelist.exp: cannot execute: required file not found
+TESTING: whitelist noexec (test/fs/whitelist-noexec.exp)
+./fs.sh: line 181: ./whitelist-noexec.exp: cannot execute: required file not found
+TESTING: whitelist with whitespaces (test/fs/whitelist-whitespace.exp)
+./fs.sh: line 184: ./whitelist-whitespace.exp: cannot execute: required file not found
+TESTING: fscheck --bind non root (test/fs/fscheck-bindnoroot.exp)
+./fs.sh: line 187: ./fscheck-bindnoroot.exp: cannot execute: required file not found
+TESTING: fscheck --tmpfs non root (test/fs/fscheck-tmpfs.exp)
+./fs.sh: line 190: ./fscheck-tmpfs.exp: cannot execute: required file not found
+TESTING: fscheck --private= (test/fs/fscheck-private.exp)
+./fs.sh: line 195: ./fscheck-private.exp: cannot execute: required file not found
+TESTING: fscheck --read-only= (test/fs/fscheck-readonly.exp)
+./fs.sh: line 198: ./fscheck-readonly.exp: cannot execute: required file not found
+
+checking gcov data
+

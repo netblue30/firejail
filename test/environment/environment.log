@@ -1,0 +1,49 @@
+TESTING: timeout (test/environment/timeout.exp)
+./environment.sh: line 11: ./timeout.exp: cannot execute: required file not found
+TESTING: DNS (test/environment/dns.exp)
+./environment.sh: line 14: ./dns.exp: cannot execute: required file not found
+TESTING: machine-id (test/environment/machineid.exp)
+./environment.sh: line 17: ./machineid.exp: cannot execute: required file not found
+TESTING: hosts file (test/environment/hostfile.exp)
+./environment.sh: line 20: ./hostfile.exp: cannot execute: required file not found
+TESTING: doubledash (test/environment/doubledash.exp
+./environment.sh: line 26: ./doubledash.exp: cannot execute: required file not found
+TESTING: output (test/environment/output.exp)
+./environment.sh: line 30: ./output.exp: cannot execute: required file not found
+TESTING: extract command (extract_command.exp)
+./environment.sh: line 33: ./extract_command.exp: cannot execute: required file not found
+TESTING: environment variables (test/environment/env.exp)
+./environment.sh: line 36: ./env.exp: cannot execute: required file not found
+TESTING: firejail in firejail - single sandbox (test/environment/firejail-in-firejail.exp)
+./environment.sh: line 39: ./firejail-in-firejail.exp: cannot execute: required file not found
+TESTING SKIP: no aplay or sound card found
+TESTING: nice (test/environment/nice.exp)
+./environment.sh: line 50: ./nice.exp: cannot execute: required file not found
+TESTING: quiet (test/environment/quiet.exp)
+./environment.sh: line 53: ./quiet.exp: cannot execute: required file not found
+TESTING SKIP: strace not found
+find: '/home/ousama/.config/ibus/bus': No such file or directory
+TESTING SKIP: ibus not configured
+TESTING: rlimit (test/environment/rlimit.exp)
+./environment.sh: line 76: ./rlimit.exp: cannot execute: required file not found
+TESTING: rlimit profile (test/environment/rlimit-profile.exp)
+./environment.sh: line 79: ./rlimit-profile.exp: cannot execute: required file not found
+TESTING: rlimit join (test/environment/rlimit-join.exp)
+./environment.sh: line 82: ./rlimit-join.exp: cannot execute: required file not found
+TESTING: rlimit errors (test/environment/rlimit-bad.exp)
+./environment.sh: line 85: ./rlimit-bad.exp: cannot execute: required file not found
+TESTING: rlimit errors profile (test/environment/rlimit-bad-profile.exp)
+./environment.sh: line 88: ./rlimit-bad-profile.exp: cannot execute: required file not found
+TESTING: deterministic exit code (test/environment/deterministic-exit-code.exp)
+./environment.sh: line 91: ./deterministic-exit-code.exp: cannot execute: required file not found
+TESTING: deterministic shutdown (test/environment/deterministic-shutdown.exp)
+./environment.sh: line 94: ./deterministic-shutdown.exp: cannot execute: required file not found
+TESTING: keep fd (test/environment/keep-fd.exp)
+./environment.sh: line 97: ./keep-fd.exp: cannot execute: required file not found
+TESTING: keep fd errors (test/environment/keep-fd-bad.exp)
+./environment.sh: line 100: ./keep-fd-bad.exp: cannot execute: required file not found
+TESTING: retain umask (test/environment/umask.exp)
+./environment.sh: line 103: ./umask.exp: cannot execute: required file not found
+
+checking gcov data
+

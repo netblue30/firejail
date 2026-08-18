@@ -13,6 +13,7 @@ whitelist ${RUNUSER}/pulse/native
 whitelist ${RUNUSER}/pipewire-*
 whitelist ${RUNUSER}/wayland-*
 whitelist ${RUNUSER}/xauth_*
+whitelist ${RUNUSER}/lyxauth
 whitelist ${RUNUSER}/[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]
 
 # wayland and pipewire files I've seen so far (Debian 13):

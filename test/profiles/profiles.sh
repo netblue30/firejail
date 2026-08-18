@@ -49,6 +49,9 @@ echo "TESTING: profiles bad appname (test/profiles/profile_app_name.exp)"
 echo "TESTING: profiles noprofile (test/profiles/profile_noprofile.exp)"
 ./profile_noprofile.exp
 
+echo "TESTING: lyxauth profile coverage (test/profiles/lyxauth.sh)"
+./lyxauth.sh
+
 profiles=( transmission-gtk transmission-qt firefox mpv vlc ping warzone2100 galculator )
 profiles+=( gimp inkscape qbittorrent chromium-browser ssh evince pdftotext audacity)
 

@@ -1,0 +1,4 @@
+TESTING SKIP: no apparmor support in Linux kernel (test/filters/apparmor.exp)
+
+checking gcov data
+

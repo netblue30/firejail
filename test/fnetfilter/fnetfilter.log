@@ -1,0 +1,13 @@
+dpkg-query: package 'firejail' is not installed
+Use dpkg --contents (= dpkg-deb --contents) to list archive files contents.
+TESTING: fnetfilter cmdline (test/fnetfilter/cmdline.exp)
+./fnetfilter.sh: line 20: ./cmdline.exp: cannot execute: required file not found
+TESTING: fnetfilter default (test/fnetfilter/default.exp)
+./fnetfilter.sh: line 23: ./default.exp: cannot execute: required file not found
+TESTING: fnetfilter copy (test/fnetfilter/copy.exp)
+./fnetfilter.sh: line 26: ./copy.exp: cannot execute: required file not found
+TESTING: fnetfilter template (test/fnetfilter/template.exp)
+./fnetfilter.sh: line 29: ./template.exp: cannot execute: required file not found
+
+checking gcov data
+

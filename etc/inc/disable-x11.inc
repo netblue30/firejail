@@ -9,6 +9,7 @@ blacklist ${HOME}/.Xdefaults-*
 blacklist ${RUNUSER}/gdm/Xauthority
 blacklist ${RUNUSER}/.mutter-Xwaylandauth*
 blacklist ${RUNUSER}/xauth_*
+blacklist ${RUNUSER}/lyxauth
 #blacklist ${RUNUSER}/[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]-[[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]][[:xdigit:]]
 blacklist /tmp/xauth*
 blacklist /tmp/.ICE-unix

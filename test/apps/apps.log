@@ -1,0 +1,220 @@
+./apps.sh: line 13: sudo: command not found
+TESTING: console apps **************************
+TESTING SKIP: ping not found
+TESTING SKIP: dig not found
+TESTING SKIP: wget not found
+/usr/bin/curl
+TESTING: curl
+./apps.sh: line 22: ./curl.exp: cannot execute: required file not found
+TESTING SKIP: ftp not found
+TESTING SKIP: telnet not found
+/usr/bin/ffmpeg
+TESTING: ffmpeg
+./apps.sh: line 22: ./ffmpeg.exp: cannot execute: required file not found
+/usr/bin/ssh
+TESTING: ssh
+./apps.sh: line 22: ./ssh.exp: cannot execute: required file not found
+/usr/bin/less
+TESTING: less
+./apps.sh: line 22: ./less.exp: cannot execute: required file not found
+rm: cannot remove 'wget-log*': No such file or directory
+./apps.sh: line 29: sudo: command not found
+TESTING: firejail problems **************************
+TESTING: seccomp @clock group (test/apps/seccomp-clock.exp)
+./apps.sh: line 34: ./seccomp-clock.exp: cannot execute: required file not found
+TESTING: pid 1 functionality (test/apps/pid1.exp)
+./apps.sh: line 37: ./pid1.exp: cannot execute: required file not found
+TESTING: x11 sandboxing *********************************
+./apps.sh: line 43: sudo: command not found
+TESTING: firefox-xephyr (test/apps/firefox-xephyr.exp)
+./apps.sh: line 45: ./firefox-xephyr.exp: cannot execute: required file not found
+./apps.sh: line 43: sudo: command not found
+TESTING: x11-none (test/apps/x11-none.exp)
+./apps.sh: line 45: ./x11-none.exp: cannot execute: required file not found
+./apps.sh: line 43: sudo: command not found
+TESTING: firefox-xorg (test/apps/firefox-xorg.exp)
+./apps.sh: line 45: ./firefox-xorg.exp: cannot execute: required file not found
+./apps.sh: line 43: sudo: command not found
+TESTING: xterm-xorg (test/apps/xterm-xorg.exp)
+./apps.sh: line 45: ./xterm-xorg.exp: cannot execute: required file not found
+./apps.sh: line 43: sudo: command not found
+TESTING: xterm-xephyr (test/apps/xterm-xephyr.exp)
+./apps.sh: line 45: ./xterm-xephyr.exp: cannot execute: required file not found
+TESTING: browsers ***************************************
+./apps.sh: line 53: sudo: command not found
+TESTING: firefox (test/apps/firefox.exp)
+./apps.sh: line 55: ./firefox.exp: cannot execute: required file not found
+./apps.sh: line 53: sudo: command not found
+TESTING: brave (test/apps/brave.exp)
+./apps.sh: line 55: ./brave.exp: cannot execute: required file not found
+./apps.sh: line 53: sudo: command not found
+TESTING: chromium (test/apps/chromium.exp)
+./apps.sh: line 55: ./chromium.exp: cannot execute: required file not found
+./apps.sh: line 53: sudo: command not found
+TESTING: vivaldi (test/apps/vivaldi.exp)
+./apps.sh: line 55: ./vivaldi.exp: cannot execute: required file not found
+TESTING: multimedia apps ************************************
+./apps.sh: line 64: sudo: command not found
+TESTING: vlc (test/apps/vlc.exp)
+./apps.sh: line 66: ./vlc.exp: cannot execute: required file not found
+./apps.sh: line 64: sudo: command not found
+TESTING: mpv (test/apps/mpv.exp)
+./apps.sh: line 66: ./mpv.exp: cannot execute: required file not found
+./apps.sh: line 64: sudo: command not found
+TESTING: rhythmbox (test/apps/rhythmbox.exp)
+./apps.sh: line 66: ./rhythmbox.exp: cannot execute: required file not found
+./apps.sh: line 64: sudo: command not found
+TESTING: totem (test/apps/totem.exp)
+./apps.sh: line 66: ./totem.exp: cannot execute: required file not found
+./apps.sh: line 64: sudo: command not found
+TESTING: showtime (test/apps/showtime.exp)
+./apps.sh: line 66: ./showtime.exp: cannot execute: required file not found
+./apps.sh: line 64: sudo: command not found
+TESTING: audacious (test/apps/audacious.exp)
+./apps.sh: line 66: ./audacious.exp: cannot execute: required file not found
+./apps.sh: line 64: sudo: command not found
+TESTING: smplayer (test/apps/smplayer.exp)
+./apps.sh: line 66: ./smplayer.exp: cannot execute: required file not found
+./apps.sh: line 64: sudo: command not found
+TESTING: mplayer (test/apps/mplayer.exp)
+./apps.sh: line 66: ./mplayer.exp: cannot execute: required file not found
+./apps.sh: line 64: sudo: command not found
+TESTING: cmus (test/apps/cmus.exp)
+./apps.sh: line 66: ./cmus.exp: cannot execute: required file not found
+./apps.sh: line 64: sudo: command not found
+TESTING: strawberry (test/apps/strawberry.exp)
+./apps.sh: line 66: ./strawberry.exp: cannot execute: required file not found
+./apps.sh: line 64: sudo: command not found
+TESTING: amarok (test/apps/amarok.exp)
+./apps.sh: line 66: ./amarok.exp: cannot execute: required file not found
+./apps.sh: line 64: sudo: command not found
+TESTING: quodlibet (test/apps/quodlibet.exp)
+./apps.sh: line 66: ./quodlibet.exp: cannot execute: required file not found
+./apps.sh: line 64: sudo: command not found
+TESTING: qmmp (test/apps/qmmp.exp)
+./apps.sh: line 66: ./qmmp.exp: cannot execute: required file not found
+TESTING: games ************************************
+./apps.sh: line 73: sudo: command not found
+TESTING: warzone2100 (test/apps/warzone2100.exp)
+./apps.sh: line 75: ./warzone2100.exp: cannot execute: required file not found
+./apps.sh: line 73: sudo: command not found
+TESTING: dosbox (test/apps/dosbox.exp)
+./apps.sh: line 75: ./dosbox.exp: cannot execute: required file not found
+TESTING: desktop apps ************************************
+./apps.sh: line 93: sudo: command not found
+TESTING: xterm (test/apps/xterm.exp)
+./apps.sh: line 95: ./xterm.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: qbittorrent (test/apps/qbittorrent.exp)
+./apps.sh: line 95: ./qbittorrent.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: galculator (test/apps/galculator.exp)
+./apps.sh: line 95: ./galculator.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: libreoffice (test/apps/libreoffice.exp)
+./apps.sh: line 95: ./libreoffice.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: lowriter (test/apps/lowriter.exp)
+./apps.sh: line 95: ./lowriter.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: gimp (test/apps/gimp.exp)
+./apps.sh: line 95: ./gimp.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: inkscape (test/apps/inkscape.exp)
+./apps.sh: line 95: ./inkscape.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: firefox-neteth (test/apps/firefox-neteth.exp)
+./apps.sh: line 95: ./firefox-neteth.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: emacs (test/apps/emacs.exp)
+./apps.sh: line 95: ./emacs.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: okular (test/apps/okular.exp)
+./apps.sh: line 95: ./okular.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: kdiff3 (test/apps/kdiff3.exp)
+./apps.sh: line 95: ./kdiff3.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: gpicview (test/apps/gpicview.exp)
+./apps.sh: line 95: ./gpicview.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: audacity (test/apps/audacity.exp)
+./apps.sh: line 95: ./audacity.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: meld (test/apps/meld.exp)
+./apps.sh: line 95: ./meld.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: blender (test/apps/blender.exp)
+./apps.sh: line 95: ./blender.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: pauvcontrol (test/apps/pauvcontrol.exp)
+./apps.sh: line 95: ./pauvcontrol.exp: No such file or directory
+./apps.sh: line 93: sudo: command not found
+TESTING: gnome-screenshot (test/apps/gnome-screenshot.exp)
+./apps.sh: line 95: ./gnome-screenshot.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: flameshot (test/apps/flameshot.exp)
+./apps.sh: line 95: ./flameshot.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: ghb (test/apps/ghb.exp)
+./apps.sh: line 95: ./ghb.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: kdenlive (test/apps/kdenlive.exp)
+./apps.sh: line 95: ./kdenlive.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: krita (test/apps/krita.exp)
+./apps.sh: line 95: ./krita.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: evince (test/apps/evince.exp)
+./apps.sh: line 95: ./evince.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: atril (test/apps/atril.exp)
+./apps.sh: line 95: ./atril.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: kate (test/apps/kate.exp)
+./apps.sh: line 95: ./kate.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: eom (test/apps/eom.exp)
+./apps.sh: line 95: ./eom.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: eog (test/apps/eog.exp)
+./apps.sh: line 95: ./eog.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: gwenview (test/apps/gwenview.exp)
+./apps.sh: line 95: ./gwenview.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: oupe (test/apps/oupe.exp)
+./apps.sh: line 95: ./oupe.exp: No such file or directory
+./apps.sh: line 93: sudo: command not found
+TESTING: gnome-calculator (test/apps/gnome-calculator.exp)
+./apps.sh: line 95: ./gnome-calculator.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: darktable (test/apps/darktable.exp)
+./apps.sh: line 95: ./darktable.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: brasero (test/apps/brasero.exp)
+./apps.sh: line 95: ./brasero.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: digikam (test/apps/digikam.exp)
+./apps.sh: line 95: ./digikam.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: mtpaint (test/apps/mtpaint.exp)
+./apps.sh: line 95: ./mtpaint.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: transmission-qt (test/apps/transmission-qt.exp)
+./apps.sh: line 95: ./transmission-qt.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: transmission-gtk (test/apps/transmission-gtk.exp)
+./apps.sh: line 95: ./transmission-gtk.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: thunderbird (test/apps/thunderbird.exp)
+./apps.sh: line 95: ./thunderbird.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: kmail (test/apps/kmail.exp)
+./apps.sh: line 95: ./kmail.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: xpdf (test/apps/xpdf.exp)
+./apps.sh: line 95: ./xpdf.exp: cannot execute: required file not found
+./apps.sh: line 93: sudo: command not found
+TESTING: zathura (test/apps/zathura.exp)
+./apps.sh: line 95: ./zathura.exp: cannot execute: required file not found

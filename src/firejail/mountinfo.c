@@ -239,8 +239,8 @@ char **build_mount_array(const int mountid, const char *path) {
 	int found = 0;
 	MountData mntp;
 	char *line = NULL;
-	size_t line_size = 0;
-	while (getline(&line, &line_size, fp) != -1) {
+	size_t line_sz = 0;
+	while (getline(&line, &line_sz, fp) != -1) {
 		parse_line(line, &mntp);
 		if (mntp.mountid == mountid) {
 			found = 1;
@@ -268,7 +268,7 @@ char **build_mount_array(const int mountid, const char *path) {
 
 	// and add all following mountpoints contained in this directory
 	size_t pathlen = strlen(path);
-	while (getline(&line, &line_size, fp) != -1) {
+	while (getline(&line, &line_sz, fp) != -1) {
 		parse_line(line, &mntp);
 		if (strncmp(mntp.dir, path, pathlen) == 0 && mntp.dir[pathlen] == '/') {
 			if (++cnt == size) {

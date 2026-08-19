@@ -143,11 +143,12 @@ MountData *get_last_mount(void) {
 	// go to the last line
 	while (getline(&mbuf, &mbuf_sz, fp) != -1);
 
-	fclose(fp);
-	if (mbuf == NULL) {
+	if (ferror(fp)) {
 		fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
-		exit(1);
+		errExit("getline");
 	}
+	fclose(fp);
+
 	if (arg_debug)
 		printf("%s", mbuf);
 
@@ -248,6 +249,11 @@ char **build_mount_array(const int mountid, const char *path) {
 		}
 	}
 
+	if (ferror(fp)) {
+		fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
+		errExit("getline");
+	}
+
 	if (!found) {
 		free(line);
 		fclose(fp);
@@ -282,6 +288,12 @@ char **build_mount_array(const int mountid, const char *path) {
 				errExit("strdup");
 		}
 	}
+
+	if (ferror(fp)) {
+		fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
+		errExit("getline");
+	}
+
 	free(line);
 	fclose(fp);
 

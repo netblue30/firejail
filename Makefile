@@ -427,6 +427,7 @@ TESTS = \
 	network \
 	private-etc \
 	profiles \
+	release-version \
 	seccomp-extra \
 	utils
 

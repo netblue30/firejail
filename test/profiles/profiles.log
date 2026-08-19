@@ -1,0 +1,63 @@
+TESTING: profile comments (test/profiles/profile_comment.exp)
+./profiles.sh: line 11: ./profile_comment.exp: cannot execute: required file not found
+TESTING: profile build (test/profiles/profile_build.exp)
+./profiles.sh: line 14: ./profile_build.exp: cannot execute: required file not found
+TESTING: profile conditional (test/profiles/profile_conditional.exp)
+./profiles.sh: line 17: ./profile_conditional.exp: cannot execute: required file not found
+TESTING: profile recursivity (test/profiles/profile_recursivity.exp)
+./profiles.sh: line 20: ./profile_recursivity.exp: cannot execute: required file not found
+TESTING: profile application name (test/profiles/profile_appname.exp)
+./profiles.sh: line 23: ./profile_appname.exp: cannot execute: required file not found
+TESTING: profile syntax (test/profiles/profile_syntax.exp)
+./profiles.sh: line 26: ./profile_syntax.exp: cannot execute: required file not found
+TESTING: profile syntax 2 (test/profiles/profile_syntax2.exp)
+./profiles.sh: line 29: ./profile_syntax2.exp: cannot execute: required file not found
+TESTING: profile ignore command (test/profiles/profile_ignore.exp)
+./profiles.sh: line 32: ./profile_ignore.exp: cannot execute: required file not found
+TESTING: profile read-only (test/profiles/profile_readonly.exp)
+./profiles.sh: line 35: ./profile_readonly.exp: cannot execute: required file not found
+TESTING: profile read-only links (test/profiles/profile_followlnk.exp)
+./profiles.sh: line 38: ./profile_followlnk.exp: cannot execute: required file not found
+TESTING: profile no permissions (test/profiles/profile_noperm.exp)
+./profiles.sh: line 41: ./profile_noperm.exp: cannot execute: required file not found
+TESTING: multiple profiles (test/profiles/profile_multiple.exp)
+./profiles.sh: line 44: ./profile_multiple.exp: cannot execute: required file not found
+TESTING: profiles bad appname (test/profiles/profile_app_name.exp)
+./profiles.sh: line 47: ./profile_bad_appname.exp: cannot execute: required file not found
+TESTING: profiles noprofile (test/profiles/profile_noprofile.exp)
+./profiles.sh: line 50: ./profile_noprofile.exp: cannot execute: required file not found
+TESTING: profile transmission-gtk
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile transmission-qt
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile firefox
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile mpv
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile vlc
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile ping
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile warzone2100
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile galculator
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile gimp
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile inkscape
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile qbittorrent
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile chromium-browser
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile ssh
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile evince
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile pdftotext
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+TESTING: profile audacity
+./profiles.sh: line 58: ./test-profile.exp: cannot execute: required file not found
+
+checking gcov data
+

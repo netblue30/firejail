@@ -1,0 +1,23 @@
+TESTING: fnettrace-sni (test/fnettrace/fnettrace-sni.exp)
+./fnettrace.sh: line 13: wget: command not found
+./fnettrace.sh: line 12: sudo: command not found
+./fnettrace.sh: line 15: ./fnettrace-sni.exp: cannot execute: required file not found
+./fnettrace.sh: line 12: sudo: command not found
+all done
+TESTING: fnettrace-dns (test/fnettrace/fnettrace-dns.exp)
+./fnettrace.sh: line 24: sudo: command not found
+./fnettrace.sh: line 26: dig: command not found
+./fnettrace.sh: line 28: ./fnettrace-dns.exp: cannot execute: required file not found
+./fnettrace.sh: line 24: sudo: command not found
+all done
+TESTING: fnettrace-icmp (test/fnettrace/fnettrace-icmp.exp)
+./fnettrace.sh: line 37: ping: command not found
+./fnettrace.sh: line 36: sudo: command not found
+./fnettrace.sh: line 39: ./fnettrace-icmp.exp: cannot execute: required file not found
+./fnettrace.sh: line 36: sudo: command not found
+all done
+TESTING: fnettrace-check-root (test/nettrace/fnettrace-check-root.exp)
+./fnettrace.sh: line 46: ./fnettrace-check-root.exp: cannot execute: required file not found
+
+checking gcov data
+

@@ -1,0 +1,13 @@
+TESTING: private-etc (test/private-etc/private-etc.exp)
+./private-etc.sh: line 11: ./private-etc.exp: cannot execute: required file not found
+TESTING: profile (test/private-etc/profile.exp)
+./private-etc.sh: line 14: ./private-etc.exp: cannot execute: required file not found
+TESTING: groups (test/private-etc/groups.exp)
+./private-etc.sh: line 17: ./groups.exp: cannot execute: required file not found
+TESTING: etc-cleanup (test/private-etc/etc-cleanup.exp)
+./private-etc.sh: line 20: ./etc-cleanup.exp: cannot execute: required file not found
+TESTING: hostname (test/private-etc/hostname.exp)
+./private-etc.sh: line 23: ./hostname.exp: cannot execute: required file not found
+
+checking gcov data
+

@@ -9,6 +9,8 @@ on:
   push:
     branches-ignore:
       - 'dependabot/**'
+    tags:
+      - '**'
     paths:
       - 'contrib/**'
       - 'etc/**'
@@ -16,6 +18,7 @@ on:
       - 'platform/**'
       - 'src/**'
       - 'test/**'
+      - 'ci/check/release-version.sh'
       - .github/workflows/build.yml
       - COPYING
       - Makefile
@@ -36,6 +39,7 @@ on:
       - 'platform/**'
       - 'src/**'
       - 'test/**'
+      - 'ci/check/release-version.sh'
       - .github/workflows/build.yml
       - COPYING
       - Makefile
@@ -66,6 +70,11 @@ jobs:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
     - name: print env
       run: ./ci/printenv.sh
+    - name: check release version
+      if: github.ref_type == 'tag'
+      env:
+        RELEASE_TAG: ${{ github.ref_name }}
+      run: ./ci/check/release-version.sh "$RELEASE_TAG" configure.ac
     - name: configure
       run: >
         ./configure

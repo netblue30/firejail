@@ -1,0 +1,38 @@
+dpkg-query: package 'firejail' is not installed
+Use dpkg --contents (= dpkg-deb --contents) to list archive files contents.
+TESTING: memory-deny-write-execute (test/filters/memwrexe.exp)
+./filters.sh: line 25: ./memwrexe.exp: No such file or directory
+TESTING: restrict-namespaces (test/filters/namespaces.exp)
+./filters.sh: line 35: ./namespaces.exp: cannot execute: required file not found
+TESTING: debug options (test/filters/debug.exp)
+./filters.sh: line 44: ./debug.exp: cannot execute: required file not found
+TESTING: seccomp run files (test/filters/seccomp-run-files.exp)
+./filters.sh: line 48: ./seccomp-run-files.exp: cannot execute: required file not found
+TESTING: seccomp postexec (test/filters/seccomp-postexec.exp)
+./filters.sh: line 54: ./seccomp-postexec.exp: cannot execute: required file not found
+TESTING: fseccomp (test/filters/fseccomp.exp)
+./filters.sh: line 73: ./fseccomp.exp: cannot execute: required file not found
+TESTING: protocol (test/filters/protocol.exp)
+./filters.sh: line 82: ./protocol.exp: No such file or directory
+TESTING: seccomp bad empty (test/filters/seccomp-bad-empty.exp)
+./filters.sh: line 88: ./seccomp-bad-empty.exp: cannot execute: required file not found
+TESTING: seccomp debug (test/filters/seccomp-debug.exp)
+./filters.sh: line 92: ./seccomp-debug.exp: cannot execute: required file not found
+TESTING: seccomp errno (test/filters/seccomp-errno.exp)
+./filters.sh: line 101: ./seccomp-errno.exp: cannot execute: required file not found
+TESTING: seccomp su (test/filters/seccomp-su.exp)
+./filters.sh: line 104: ./seccomp-su.exp: cannot execute: required file not found
+TESTING SKIP: ptrace, strace not found
+TESTING: seccomp chmod - seccomp lists (test/filters/seccomp-chmod.exp)
+./filters.sh: line 114: ./seccomp-chmod.exp: cannot execute: required file not found
+TESTING: seccomp chmod profile - seccomp lists (test/filters/seccomp-chmod-profile.exp)
+./filters.sh: line 117: ./seccomp-chmod-profile.exp: cannot execute: required file not found
+TESTING: seccomp empty (test/filters/seccomp-empty.exp)
+./filters.sh: line 122: ./seccomp-empty.exp: cannot execute: required file not found
+TESTING: seccomp numeric (test/filters/seccomp-numeric.exp)
+./filters.sh: line 126: ./seccomp-numeric.exp: cannot execute: required file not found
+TESTING: seccomp join (test/filters/seccomp-join.exp)
+./filters.sh: line 133: ./seccomp-join.exp: cannot execute: required file not found
+
+checking gcov data
+

@@ -1,0 +1,71 @@
+dpkg-query: package 'firejail' is not installed
+Use dpkg --contents (= dpkg-deb --contents) to list archive files contents.
+TESTING: firemon-events (test/utils/firemon-events.exp)
+./utils.sh: line 19: firejail: command not found
+./utils.sh: line 18: sudo: command not found
+./utils.sh: line 21: ./firemon-events.exp: cannot execute: required file not found
+./utils.sh: line 18: sudo: command not found
+TESTING: jailcheck (test/utils/jailcheck.exp)
+mkdir: cannot create directory '/home/ousama/.ssh': File exists
+./utils.sh: line 28: firejail: command not found
+./utils.sh: line 30: sudo: command not found
+./utils.sh: line 32: ./jailcheck.exp: cannot execute: required file not found
+TESTING: build (test/utils/build.exp)
+./utils.sh: line 38: ./build.exp: cannot execute: required file not found
+TESTING: name (test/utils/name.exp)
+./utils.sh: line 43: ./name.exp: cannot execute: required file not found
+TESTING: command (test/utils/command.exp)
+./utils.sh: line 46: ./command.exp: cannot execute: required file not found
+TESTING: profile.print (test/utils/profile_print.exp)
+./utils.sh: line 49: ./profile_print.exp: cannot execute: required file not found
+TESTING: version (test/utils/version.exp)
+./utils.sh: line 52: ./version.exp: cannot execute: required file not found
+TESTING: help (test/utils/help.exp)
+./utils.sh: line 55: ./help.exp: cannot execute: required file not found
+TESTING SKIP: man not found
+TESTING: list (test/utils/list.exp)
+./utils.sh: line 66: ./list.exp: cannot execute: required file not found
+TESTING: tree (test/utils/tree.exp)
+./utils.sh: line 69: ./tree.exp: cannot execute: required file not found
+TESTING: cpu.print (test/utils/cpu-print.exp)
+./utils.sh: line 74: ./cpu-print.exp: cannot execute: required file not found
+TESTING: fs.print (test/utils/fs-print.exp)
+./utils.sh: line 80: ./fs-print.exp: cannot execute: required file not found
+TESTING: dns.print (test/utils/dns-print.exp)
+./utils.sh: line 83: ./dns-print.exp: cannot execute: required file not found
+TESTING: seccomp.print (test/utils/seccomp-print.exp)
+./utils.sh: line 86: ./seccomp-print.exp: cannot execute: required file not found
+TESTING: shutdown (test/utils/shutdown.exp)
+./utils.sh: line 89: ./shutdown.exp: cannot execute: required file not found
+TESTING: shutdown2 (test/utils/shutdown2.exp)
+./utils.sh: line 92: ./shutdown2.exp: cannot execute: required file not found
+TESTING: shutdown3 (test/utils/shutdown3.exp)
+./utils.sh: line 95: ./shutdown3.exp: cannot execute: required file not found
+TESTING: shutdown4 (test/utils/shutdown4.exp)
+./utils.sh: line 98: ./shutdown4.exp: cannot execute: required file not found
+TESTING: join (test/utils/join.exp)
+./utils.sh: line 101: ./join.exp: cannot execute: required file not found
+TESTING: join4 (test/utils/join4.exp)
+./utils.sh: line 104: ./join4.exp: cannot execute: required file not found
+TESTING: join5 (test/utils/join5.exp)
+./utils.sh: line 107: ./join5.exp: cannot execute: required file not found
+TESTING: join profile (test/utils/join-profile.exp)
+./utils.sh: line 110: ./join-profile.exp: cannot execute: required file not found
+TESTING: trace (test/utils/trace.exp)
+./utils.sh: line 114: ./trace.exp: cannot execute: required file not found
+TESTING: top (test/utils/top.exp)
+./utils.sh: line 118: ./top.exp: cannot execute: required file not found
+TESTING: file transfer (test/utils/ls.exp)
+./utils.sh: line 121: ./ls.exp: cannot execute: required file not found
+TESTING SKIP: seccomp already active (test/utils/firemon-seccomp.exp)
+TESTING: firemon cpu (test/utils/firemon-cpu.exp)
+./utils.sh: line 131: ./firemon-cpu.exp: cannot execute: required file not found
+TESTING: firemon version (test/utils/firemon-version.exp)
+./utils.sh: line 134: ./firemon-version.exp: cannot execute: required file not found
+TESTING: firemon name (test/utils/firemon-name.exp)
+./utils.sh: line 137: ./firemon-name.exp: cannot execute: required file not found
+TESTING: fbwrap (test/utils/fbwrap.exp)
+./utils.sh: line 140: ./fbwrap.exp: cannot execute: required file not found
+
+checking gcov data
+

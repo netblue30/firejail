@@ -1,0 +1,14 @@
+dpkg-query: package 'firejail' is not installed
+Use dpkg --contents (= dpkg-deb --contents) to list archive files contents.
+mkdir: cannot create directory 'dest': File exists
+TESTING: fcopy cmdline (test/fcopy/cmdline.exp)
+./fcopy.sh: line 20: ./cmdline.exp: cannot execute: required file not found
+TESTING: fcopy file (test/fcopy/filecopy.exp)
+./fcopy.sh: line 23: ./filecopy.exp: cannot execute: required file not found
+TESTING: fcopy link (test/fcopy/linkcopy.exp)
+./fcopy.sh: line 26: ./linkcopy.exp: cannot execute: required file not found
+TESTING: fcopy directory (test/fcopy/dircopy.exp)
+./fcopy.sh: line 29: ./dircopy.exp: cannot execute: required file not found
+
+checking gcov data
+

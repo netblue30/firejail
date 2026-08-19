@@ -1,0 +1,12 @@
+./chroot.sh: line 12: sudo: command not found
+TESTING: chroot disabled (test/chroot/fs_chroot_disabled.exp)
+./chroot.sh: line 16: sudo: command not found
+./chroot.sh: line 17: ./fs_chroot_disabled.exp: cannot execute: required file not found
+TESTING: chroot (test/chroot/fs_chroot.exp)
+./chroot.sh: line 21: sudo: command not found
+./chroot.sh: line 22: ./fs_chroot.exp: cannot execute: required file not found
+TESTING: unchroot as root (test/chroot/unchroot-as-root.exp)
+./chroot.sh: line 25: sudo: command not found
+
+checking gcov data
+

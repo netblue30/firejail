@@ -1,0 +1,11 @@
+TESTING: AppImage v2 (test/appimage/appimage-v2.exp)
+./appimage.sh: line 11: ./appimage-v2.exp: cannot execute: required file not found
+TESTING: AppImage file name (test/appimage/filename.exp)
+./appimage.sh: line 14: ./filename.exp: cannot execute: required file not found
+TESTING: AppImage args (test/appimage/appimage-args.exp)
+./appimage.sh: line 17: ./appimage-args.exp: cannot execute: required file not found
+TESTING: AppImage trace (test/appimage/appimage-trace.exp)
+./appimage.sh: line 20: ./appimage-trace.exp: cannot execute: required file not found
+
+checking gcov data
+

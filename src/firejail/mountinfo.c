@@ -28,8 +28,13 @@
 
 #define MAX_BUF 4096
 
-static MountData mdata;
+// Note: mountinfo lines can be over 4096 bytes long (e.g. an overlayfs mount
+// with many lowerdirs or Docker overlays; see #6450), so grow the buffer as
+// needed (e.g. with getline).
+static char *mbuf = NULL;
+static size_t mbuf_sz = 0;
 
+static MountData mdata;
 
 // Convert octal escape sequence to decimal value
 static unsigned read_oct(char *s) {
@@ -135,22 +140,18 @@ MountData *get_last_mount(void) {
 		errExit("fopen");
 	}
 
-	// go to the last line; mountinfo lines can be arbitrarily long (e.g. an
-	// overlayfs mount with many lowerdirs), so grow the buffer as needed.
-	// The buffer is static because the returned MountData points into it.
-	static char *line = NULL;
-	static size_t line_size = 0;
-	while (getline(&line, &line_size, fp) != -1)
-		;
+	// go to the last line
+	while (getline(&mbuf, &mbuf_sz, fp) != -1);
+
 	fclose(fp);
-	if (line == NULL) {
+	if (mbuf == NULL) {
 		fprintf(stderr, "Error: cannot read /proc/self/mountinfo\n");
 		exit(1);
 	}
 	if (arg_debug)
-		printf("%s", line);
+		printf("%s", mbuf);
 
-	parse_line(line, &mdata);
+	parse_line(mbuf, &mdata);
 
 	if (arg_debug)
 		printf("mountid=%d fsname=%s dir=%s fstype=%s\n", mdata.mountid, mdata.fsname, mdata.dir, mdata.fstype);

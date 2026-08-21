@@ -2618,6 +2618,12 @@ static void syscall_process_name(const char *name, int *syscall_nr, int *error_n
 		}
 	}
 
+	if (*syscall_nr == SYSCALL_ERROR) {
+		if (!arg_quiet && strcmp(syscall_name, "__dummy_syscall__") != 0) {
+			fprintf(stderr, "Warning: unknown syscall '%s'\n", syscall_name);
+		}
+	}
+
 	free(str);
 	return;
 

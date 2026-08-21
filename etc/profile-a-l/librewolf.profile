@@ -7,11 +7,14 @@ include librewolf.local
 include globals.local
 
 noblacklist ${HOME}/.cache/librewolf
+noblacklist ${HOME}/.config/librewolf
 noblacklist ${HOME}/.librewolf
 
 mkdir ${HOME}/.cache/librewolf
+mkdir ${HOME}/.config/librewolf
 mkdir ${HOME}/.librewolf
 whitelist ${HOME}/.cache/librewolf
+whitelist ${HOME}/.config/librewolf
 whitelist ${HOME}/.librewolf
 
 whitelist /usr/share/librewolf

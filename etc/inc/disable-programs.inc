@@ -568,6 +568,7 @@ blacklist ${HOME}/.config/lact
 blacklist ${HOME}/.config/lbry-viewer
 blacklist ${HOME}/.config/leafpad
 blacklist ${HOME}/.config/libreoffice
+blacklist ${HOME}/.config/librewolf
 blacklist ${HOME}/.config/liferea
 blacklist ${HOME}/.config/linphone
 blacklist ${HOME}/.config/lobster

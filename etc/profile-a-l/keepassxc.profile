@@ -13,6 +13,7 @@ noblacklist ${HOME}/.cache/keepassxc
 noblacklist ${HOME}/.config/KeePassXCrc
 noblacklist ${HOME}/.config/keepassxc
 noblacklist ${HOME}/.keepassxc
+noblacklist ${HOME}/.local/state/keepassxc
 noblacklist ${RUNUSER}/app
 noblacklist ${RUNUSER}/openssh_agent
 noblacklist /tmp/ssh-*
@@ -64,9 +65,11 @@ include disable-xdg.inc
 #whitelist ${HOME}/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 #mkdir ${HOME}/.cache/keepassxc
 #mkdir ${HOME}/.config/keepassxc
+#mkdir ${HOME}/.local/state/keepassxc
 #whitelist ${HOME}/.cache/keepassxc
 #whitelist ${HOME}/.config/keepassxc
 #whitelist ${HOME}/.config/KeePassXCrc
+#whitelist ${HOME}/.local/state/keepassxc
 #include whitelist-common.inc
 
 mkdir ${RUNUSER}/app/org.keepassxc.KeePassXC

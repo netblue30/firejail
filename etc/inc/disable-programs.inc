@@ -1137,6 +1137,7 @@ blacklist ${HOME}/.local/share/xreader
 blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.local/state/ani-cli
 blacklist ${HOME}/.local/state/audacity
+blacklist ${HOME}/.local/state/keepassxc
 blacklist ${HOME}/.local/state/mpv
 blacklist ${HOME}/.local/state/opencode
 blacklist ${HOME}/.local/state/pipewire

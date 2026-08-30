@@ -327,21 +327,6 @@ DISTFILES = \
 	src \
 	testcompile.sh
 
-DISTFILES_TEST = \
-	test/Makefile \
-	test/apps \
-	test/capabilities \
-	test/environment \
-	test/fcopy \
-	test/filters \
-	test/fnetfilter \
-	test/fnettrace \
-	test/fs \
-	test/network \
-	test/private-lib \
-	test/profiles \
-	test/utils
-
 .PHONY: dist
 dist: clean config.mk
 	mkdir -p $(TARNAME)-$(VERSION)/test
@@ -429,6 +414,10 @@ TESTS = \
 	profiles \
 	seccomp-extra \
 	utils
+
+DISTFILES_TEST = \
+	test/Makefile \
+	$(patsubst %,test/%,$(TESTS))
 
 TEST_TARGETS = $(patsubst %,test-%,$(TESTS))
 

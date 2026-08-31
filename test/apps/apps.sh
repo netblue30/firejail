@@ -16,13 +16,13 @@ sudo ls
 echo "TESTING: console apps **************************"
 apps=(ping dig wget curl ftp telnet ffmpeg ssh less yt-dlp)
 for app in "${apps[@]}"; do
-    if command -v "$app"
-    then
-	echo "TESTING: $app"
-	./$app.exp
-    else
-	echo "TESTING SKIP: $app not found"
-    fi
+	if command -v "$app"
+	then
+		echo "TESTING: $app"
+		./$app.exp
+	else
+		echo "TESTING SKIP: $app not found"
+	fi
 done
 rm -f index.html
 rm wget-log*
@@ -40,20 +40,20 @@ echo "TESTING: pid 1 functionality (test/apps/pid1.exp)"
 echo "TESTING: x11 sandboxing *********************************"
 x11apps=(firefox-xephyr x11-none firefox-xorg xterm-xorg xterm-xephyr)
 for app in "${x11apps[@]}"; do
-    sudo true
-    echo "TESTING: $app (test/apps/$app.exp)"
-    ./"$app".exp
-    sleep 1
+	sudo true
+	echo "TESTING: $app (test/apps/$app.exp)"
+	./"$app".exp
+	sleep 1
 done
 
 # browsers
 echo "TESTING: browsers ***************************************"
 browsers=(firefox brave chromium vivaldi tor-browser)
 for app in "${browsers[@]}"; do
-    sudo true
-    echo "TESTING: $app (test/apps/$app.exp)"
-    ./"$app".exp
-    sleep 1
+	sudo true
+	echo "TESTING: $app (test/apps/$app.exp)"
+	./"$app".exp
+	sleep 1
 done
 
 # multimedia apps
@@ -61,19 +61,19 @@ echo "TESTING: multimedia apps ************************************"
 multimedia=(vlc mpv rhythmbox totem showtime audacious smplayer mplayer \
 	   cmus strawberry amarok quodlibet qmmp shortwave)
 for app in "${multimedia[@]}"; do
-    sudo true
-    echo "TESTING: $app (test/apps/$app.exp)"
-    ./"$app".exp
-    sleep 1
+	sudo true
+	echo "TESTING: $app (test/apps/$app.exp)"
+	./"$app".exp
+	sleep 1
 done
 
 echo "TESTING: games ************************************"
 games=(warzone2100 dosbox lutris)
 for app in "${games[@]}"; do
-    sudo true
-    echo "TESTING: $app (test/apps/$app.exp)"
-    ./"$app".exp
-    sleep 1
+	sudo true
+	echo "TESTING: $app (test/apps/$app.exp)"
+	./"$app".exp
+	sleep 1
 done
 
 # desktop apps
@@ -90,8 +90,8 @@ desktopapps=(xterm qbittorrent galculator libreoffice \
 		 thunderbird kmail xpdf zathura)
 
 for app in "${desktopapps[@]}"; do
-    sudo true
-    echo "TESTING: $app (test/apps/$app.exp)"
-    ./"$app".exp
-    sleep 1
+	sudo true
+	echo "TESTING: $app (test/apps/$app.exp)"
+	./"$app".exp
+	sleep 1
 done

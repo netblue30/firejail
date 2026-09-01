@@ -24,26 +24,5 @@ whitelist ${DOWNLOADS}
 include whitelist-common.inc
 include whitelist-var-common.inc
 
-apparmor
-caps.drop all
-netfilter
-no3d
-nodvd
-nogroups
-noinput
-nonewprivs
-noroot
-notv
-nou2f
-novideo
-protocol unix,inet,inet6
-seccomp
-
-disable-mnt
-private-bin locale,zulip
-private-cache
-private-dev
-private-etc
-private-tmp
-
-restrict-namespaces
+# Redirect
+include electron-common.profile

@@ -272,15 +272,15 @@ static void whitelist_symlink(const TopDir * const top, const char *link, const 
 	// create the link
 	// skel() may have already touched an empty regular file at this path
 	// (e.g. ~/.zshrc); remove it so whitelist can restore the real symlink
-	if (symlinkat(target, fd, file) == -1 && errno == EEXIST) {
+	int symlink_rv = symlinkat(target, fd, file);
+	if (symlink_rv == -1 && errno == EEXIST) {
 		if (unlinkat(fd, file, 0) == 0)
-			symlinkat(target, fd, file);
+			symlink_rv = symlinkat(target, fd, file);
 	}
-	if (is_link(link)) {
+	if (symlink_rv == 0) {
 		if (arg_debug || arg_debug_whitelists)
 			printf("Created symbolic link %s -> %s\n", link, target);
-	}
-	else if (arg_debug || arg_debug_whitelists) {
+	} else if (arg_debug || arg_debug_whitelists) {
 		perror("symlink");
 		printf("Debug %d: cannot create symbolic link %s\n", __LINE__, link);
 	}

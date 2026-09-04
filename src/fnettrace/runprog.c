@@ -56,7 +56,7 @@ int runprog(const char *program) {
 	else {
 		close(fd[1]);
 		add(pid);
-        }
+	}
 
 	return fd[0];
 }

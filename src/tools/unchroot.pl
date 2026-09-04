@@ -23,7 +23,7 @@ chdir(*JAILROOT);
 
 # Get to the real root
 while ((stat("."))[0] != (stat(".."))[0] or (stat("."))[1] != (stat(".."))[1]) {
-        chdir "..";
+	chdir "..";
 }
 
 # Lock ourselves in real root - so we're not really in a jail at all now

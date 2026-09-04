@@ -17,13 +17,13 @@ echo "checking gcov data"
 echo
 
 if test -f src/firejail/main.gcno; then
-    rm -fr gcov-dir
-    sleep 1
-    mkdir gcov-dir
-    USER="$(whoami)"
-    find . -exec sudo chown "$USER:$USER" '{}' +
-    sleep 1
-    gcovr --html-nested gcov-dir/index.html \
+	rm -fr gcov-dir
+	sleep 1
+	mkdir gcov-dir
+	USER="$(whoami)"
+	find . -exec sudo chown "$USER:$USER" '{}' +
+	sleep 1
+	gcovr --html-nested gcov-dir/index.html \
 	  src/firejail src/firemon src/firecfg src/jailcheck \
 	  src/etc-cleanup \
 	  src/fbuilder \

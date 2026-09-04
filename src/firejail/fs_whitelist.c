@@ -270,14 +270,20 @@ static void whitelist_symlink(const TopDir * const top, const char *link, const 
 	const char *file = gnu_basename(relpath);
 
 	// create the link
-	if (symlinkat(target, fd, file) == -1) {
-		if (arg_debug || arg_debug_whitelists) {
-			perror("symlink");
-			printf("Debug %d: cannot create symbolic link %s\n", __LINE__, link);
-		}
+	// skel() may have already touched an empty regular file at this path
+	// (e.g. ~/.zshrc); remove it so whitelist can restore the real symlink
+	if (symlinkat(target, fd, file) == -1 && errno == EEXIST) {
+		if (unlinkat(fd, file, 0) == 0)
+			symlinkat(target, fd, file);
 	}
-	else if (arg_debug || arg_debug_whitelists)
-		printf("Created symbolic link %s -> %s\n", link, target);
+	if (is_link(link)) {
+		if (arg_debug || arg_debug_whitelists)
+			printf("Created symbolic link %s -> %s\n", link, target);
+	}
+	else if (arg_debug || arg_debug_whitelists) {
+		perror("symlink");
+		printf("Debug %d: cannot create symbolic link %s\n", __LINE__, link);
+	}
 
 	close(fd);
 	EUID_USER();

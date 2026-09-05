@@ -428,44 +428,49 @@ static int ok_to_run(const char *program) {
 			return 1;
 	}
 	else { // search $PATH
+		// the program runs with DEFAULT_PATH when the calling environment has
+		// none (env_apply_whitelist()), so search that list here as well;
+		// otherwise the lookup depends on whether something else in this run
+		// called init_paths() first, e.g. a ${PATH} macro in the profile
 		const char *path1 = env_get("PATH");
-		if (path1) {
+		if (!path1)
+			path1 = DEFAULT_PATH;
+
+		if (arg_debug)
+			printf("Searching $PATH for %s\n", program);
+		char *path2 = strdup(path1);
+		if (!path2)
+			errExit("strdup");
+
+		// use path2 to count the entries
+		char *ptr = strtok(path2, ":");
+		while (ptr) {
+			char *fname;
+
+			if (asprintf(&fname, "%s/%s", ptr, program) == -1)
+				errExit("asprintf");
 			if (arg_debug)
-				printf("Searching $PATH for %s\n", program);
-			char *path2 = strdup(path1);
-			if (!path2)
-				errExit("strdup");
+				printf("trying #%s#\n", fname);
 
-			// use path2 to count the entries
-			char *ptr = strtok(path2, ":");
-			while (ptr) {
-				char *fname;
-
-				if (asprintf(&fname, "%s/%s", ptr, program) == -1)
-					errExit("asprintf");
-				if (arg_debug)
-					printf("trying #%s#\n", fname);
-
-				struct stat s;
-				int rv = stat(fname, &s);
-				if (rv == 0) {
-					if (access(fname, X_OK) == 0) {
-						free(path2);
-						free(fname);
-						return 1;
-					}
-					else
-						fprintf(stderr, "Error: execute permission denied for %s\n", fname);
-
+			struct stat s;
+			int rv = stat(fname, &s);
+			if (rv == 0) {
+				if (access(fname, X_OK) == 0) {
+					free(path2);
 					free(fname);
-					break;
+					return 1;
 				}
+				else
+					fprintf(stderr, "Error: execute permission denied for %s\n", fname);
 
 				free(fname);
-				ptr = strtok(NULL, ":");
+				break;
 			}
-			free(path2);
+
+			free(fname);
+			ptr = strtok(NULL, ":");
 		}
+		free(path2);
 	}
 	return 0;
 }

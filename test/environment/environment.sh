@@ -35,6 +35,9 @@ echo "TESTING: extract command (extract_command.exp)"
 echo "TESTING: environment variables (test/environment/env.exp)"
 ./env.exp
 
+echo "TESTING: no PATH in the environment (test/environment/path-unset.exp)"
+./path-unset.exp
+
 echo "TESTING: firejail in firejail - single sandbox (test/environment/firejail-in-firejail.exp)"
 ./firejail-in-firejail.exp
 

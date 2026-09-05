@@ -313,7 +313,7 @@ void env_apply_whitelist(void) {
 	env_apply_list(env_whitelist, ARRAY_SIZE(env_whitelist));
 
 	// hardcoding PATH
-	if (setenv("PATH", "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin", 1) < 0)
+	if (setenv("PATH", DEFAULT_PATH, 1) < 0)
 		errExit("setenv");
 }
 

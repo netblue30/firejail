@@ -48,7 +48,7 @@ done
 
 # browsers
 echo "TESTING: browsers ***************************************"
-browsers=(firefox brave chromium vivaldi tor)
+browsers=(firefox brave chromium vivaldi tor-browser)
 for app in "${browsers[@]}"; do
     sudo true
     echo "TESTING: $app (test/apps/$app.exp)"

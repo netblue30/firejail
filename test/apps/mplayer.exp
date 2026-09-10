@@ -7,16 +7,18 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-if {![file exists /usr/bin/mplayer]} {
-	puts "TESTING: mplayer not installed, skipping...\n"
+set program mplayer
+
+if {![file exists /usr/bin/$program]} {
+	puts "TESTING: $program not installed, skipping...\n"
 	after 100
 	exit
 }
 
-send -- "firejail --private --ignore=quiet mplayer --help\r"
+send -- "firejail --private --ignore=quiet $program --help\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/mplayer.profile"
+	"Reading profile /etc/firejail/$program.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

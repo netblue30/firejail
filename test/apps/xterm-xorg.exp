@@ -7,13 +7,15 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-if {![file exists /usr/bin/xterm]} {
-	puts "TESTING: xterm not installed, skipping...\n"
+set program xterm
+
+if {![file exists /usr/bin/$program]} {
+	puts "TESTING: $program not installed, skipping...\n"
 	after 100
 	exit
 }
 
-send -- "firejail --name=test --x11=xorg xterm\r"
+send -- "firejail --name=test --x11=xorg $program\r"
 sleep 5
 
 spawn $env(SHELL)
@@ -24,7 +26,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"xterm"
+	"$program"
 }
 after 100
 
@@ -36,7 +38,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 5.0\n";exit}
-	"xterm"
+	"$program"
 }
 expect {
 	timeout {puts "TESTING ERROR 5.1 (seccomp)\n";exit}
@@ -51,7 +53,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6.0\n";exit}
-	"xterm"
+	"$program"
 }
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}

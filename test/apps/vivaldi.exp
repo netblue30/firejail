@@ -7,16 +7,18 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-if {![file exists /usr/bin/vivaldi]} {
-	puts "TESTING: vivaldi not installed, skipping...\n"
+set program vivaldi
+
+if {![file exists /usr/bin/$program]} {
+	puts "TESTING: $program not installed, skipping...\n"
 	after 100
 	exit
 }
 
-send -- "firejail --private --ignore=quiet vivaldi\r"
+send -- "firejail --private --ignore=quiet $program\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/vivaldi.profile"
+	"Reading profile /etc/firejail/$program.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
@@ -32,7 +34,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"vivaldi"
+	"$program"
 }
 after 100
 

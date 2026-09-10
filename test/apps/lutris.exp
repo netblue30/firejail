@@ -7,16 +7,18 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-if {![file exists /usr/bin/lutris]} {
-	puts "TESTING: lutris not installed, skipping...\n"
+set program lutris
+
+if {![file exists /usr/bin/$program]} {
+	puts "TESTING: $program not installed, skipping...\n"
 	after 100
 	exit
 }
 
-send -- "firejail --private --ignore=quiet lutris\r"
+send -- "firejail --private --ignore=quiet $program\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/lutris.profile"
+	"Reading profile /etc/firejail/$program.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
@@ -32,7 +34,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"lutris"
+	"$program"
 }
 after 100
 
@@ -40,7 +42,7 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"lutris"
+	"$program"
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}

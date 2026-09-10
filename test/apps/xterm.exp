@@ -7,13 +7,15 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-if {![file exists /usr/bin/xterm]} {
-	puts "TESTING: xterm not installed, skipping...\n"
+set program xterm
+
+if {![file exists /usr/bin/$program]} {
+	puts "TESTING: $program not installed, skipping...\n"
 	after 100
 	exit
 }
 
-send -- "firejail --private xterm\r"
+send -- "firejail --private $program\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Reading profile /etc/firejail/default.profile"
@@ -32,7 +34,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"xterm"
+	"$program"
 }
 after 100
 
@@ -40,7 +42,7 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"xterm"
+	"$program"
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}

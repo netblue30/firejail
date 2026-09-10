@@ -7,16 +7,18 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-if {![file exists /usr/bin/ping]} {
-	puts "TESTING: ping not installed, skipping...\n"
+set program ping
+
+if {![file exists /usr/bin/$program]} {
+	puts "TESTING: $program not installed, skip$program...\n"
 	after 100
 	exit
 }
 
-send -- "firejail --ignore=quiet ping -c 5 1.1.1.1\r"
+send -- "firejail --ignore=quiet $program -c 5 1.1.1.1\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/ping.profile"
+	"Reading profile /etc/firejail/$program.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

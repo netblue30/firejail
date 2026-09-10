@@ -7,8 +7,10 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-if {![file exists /usr/bin/firefox]} {
-	puts "TESTING: firefox not installed, skipping...\n"
+set program firefox
+
+if {![file exists /usr/bin/$program]} {
+	puts "TESTING: $program not installed, skipping...\n"
 	after 100
 	exit
 }
@@ -19,10 +21,10 @@ if {![file exists /usr/bin/Xephyr]} {
 	exit
 }
 
-send -- "firejail --name=firefox-test --xephyr-screen=1024x768 --private --x11 firefox --no-remote www.debian.org\r"
+send -- "firejail --name=$program-test --xephyr-screen=1024x768 --private --x11 $program --no-remote www.debian.org\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
-	"Reading profile /etc/firejail/firefox.profile"
+	"Reading profile /etc/firejail/$program.profile"
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
@@ -38,7 +40,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
-	"firefox"
+	"$program"
 }
 after 100
 
@@ -46,7 +48,7 @@ spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}
-	"firefox"
+	"$program"
 }
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
@@ -54,7 +56,7 @@ expect {
 }
 after 100
 
-send -- "firejail --shutdown=firefox-test\r"
+send -- "firejail --shutdown=$program-test\r"
 sleep 3
 
 puts "\nall done\n"

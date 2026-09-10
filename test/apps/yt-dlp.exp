@@ -13,8 +13,6 @@ if {![file exists /usr/bin/yt-dlp]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet yt-dlp --help\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

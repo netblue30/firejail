@@ -11,11 +11,9 @@ rm -f unchroot
 gcc -o unchroot unchroot.c
 sudo ./configure
 
-
 echo "TESTING: chroot disabled (test/chroot/fs_chroot_disabled.exp)"
 sudo sed -i s/"chroot yes"/"# chroot no"/g /etc/firejail/firejail.config
 ./fs_chroot_disabled.exp
-
 
 echo "TESTING: chroot (test/chroot/fs_chroot.exp)"
 sudo sed -i s/"# chroot no"/"chroot yes"/g /etc/firejail/firejail.config

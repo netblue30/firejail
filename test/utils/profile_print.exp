@@ -7,7 +7,6 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-
 send -- "firejail --name=ftest\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
@@ -21,7 +20,6 @@ expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
 	"/etc/firejail/default.profile"
 }
-
 
 after 100
 puts "all done\n"

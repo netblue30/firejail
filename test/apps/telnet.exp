@@ -13,8 +13,6 @@ if {![file exists /usr/bin/telnet]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet telnet --help\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

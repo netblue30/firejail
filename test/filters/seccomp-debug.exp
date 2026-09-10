@@ -29,7 +29,6 @@ expect {
 }
 after 100
 
-
 # 64 bit architecture
 send --  "firejail --debug sleep 1; echo done\r"
 expect {

@@ -47,5 +47,4 @@ cd $ROOTDIR;
 mkdir -p usr/lib/firejail/
 cp /usr/lib/firejail/libtrace.so usr/lib/firejail/.
 
-
 echo "To enter the chroot directory run: firejail --chroot=$ROOTDIR"

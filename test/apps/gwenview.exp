@@ -13,8 +13,6 @@ if {![file exists /usr/bin/gwenview]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet gwenview\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

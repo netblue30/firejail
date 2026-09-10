@@ -13,8 +13,6 @@ if {![file exists /usr/bin/ghb]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet ghb\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

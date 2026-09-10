@@ -13,8 +13,6 @@ if {![file exists /usr/bin/vivaldi]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet vivaldi\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

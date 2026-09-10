@@ -13,8 +13,6 @@ if {![file exists /usr/bin/brave]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet brave\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

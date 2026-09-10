@@ -67,7 +67,6 @@ expect {
 send -- "exit\r"
 after 100
 
-
 send -- "firejail --private-bin=/etc/shadow\r"
 expect {
 	timeout {puts "TESTING ERROR 13\n";exit}

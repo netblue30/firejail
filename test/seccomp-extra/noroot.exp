@@ -75,8 +75,6 @@ expect {
 	"10"
 }
 
-
-
 spawn $env(SHELL)
 send -- "firejail --debug --join=test\r"
 expect {
@@ -130,7 +128,6 @@ expect {
 	"Cpus_allowed:"
 }
 puts "\n"
-
 
 after 500
 puts "\nall done\n"

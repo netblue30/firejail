@@ -13,8 +13,6 @@ if {![file exists /usr/bin/totem]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet totem\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

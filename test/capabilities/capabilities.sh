@@ -7,7 +7,6 @@ export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
-
 #if grep -q "^CapBnd:\\s0000003fffffffff" /proc/self/status; then
 	echo "TESTING: capabilities (test/filters/caps.exp)"
 	./caps.exp

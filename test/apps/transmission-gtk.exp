@@ -13,8 +13,6 @@ if {![file exists /usr/bin/transmission-gtk]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet transmission-gtk\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

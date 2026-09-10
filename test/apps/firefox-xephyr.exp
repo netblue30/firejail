@@ -51,5 +51,4 @@ after 100
 send -- "firejail --shutdown=firefox-test\r"
 sleep 3
 
-
 puts "\nall done\n"

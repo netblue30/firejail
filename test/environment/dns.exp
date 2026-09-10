@@ -38,7 +38,6 @@ expect {
 }
 after 100
 
-
 send -- "firejail --quiet --dns=8.8.4.4 --dns=8.8.8.8 --dns=4.2.2.1 --dns=::2 --dns=1.2.3.4  cat /etc/passwd\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
@@ -80,7 +79,6 @@ expect {
 after 100
 send -- "exit\r"
 sleep 1
-
 
 send -- "firejail --profile=./dns.profile\r"
 expect {

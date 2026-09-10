@@ -21,7 +21,6 @@ expect {
 }
 after 100
 
-
 send --  "firejail --name=join\\ testing\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
@@ -35,7 +34,6 @@ expect {
 	"invalid sandbox name"
 }
 after 100
-
 
 send -- "firejail --name=ftest\r"
 expect {

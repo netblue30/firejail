@@ -65,7 +65,6 @@ sleep 1
 send -- "exit\r"
 after 100
 
-
 # negative nice value should result in nice=0
 send -- "firejail --nice=-5\r"
 expect {

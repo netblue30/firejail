@@ -37,7 +37,6 @@ if { $fexist } {
 	send -- "rm -rf /run/user/$UID/_firejail_test_dir\r"
 	after 100
 
-
 	send -- "firejail --profile=./mkdir2.profile\r"
 	expect {
 		timeout {puts "TESTING ERROR 4\n";exit}

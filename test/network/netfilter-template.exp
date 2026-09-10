@@ -7,7 +7,6 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-
 send -- "firejail --net=br0 --ip=10.10.30.10 --name=test1 --netfilter=/etc/firejail/blablabla\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

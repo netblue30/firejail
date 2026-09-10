@@ -13,8 +13,6 @@ if {![file exists /usr/bin/chromium]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet chromium\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

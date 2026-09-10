@@ -13,8 +13,6 @@ if {![file exists /usr/bin/kdenlive]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet kdenlive\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

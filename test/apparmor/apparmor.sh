@@ -7,9 +7,7 @@ export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
-
 #	sudo /usr/sbin/apparmor_parser -r /etc/apparmor.d/firejail-default
-
 
 if [[ -f /sys/kernel/security/apparmor/profiles ]]; then
 	# setup

@@ -13,8 +13,6 @@ if {![file exists /usr/bin/rhythmbox]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet rhythmbox\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

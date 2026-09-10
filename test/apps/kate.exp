@@ -13,8 +13,6 @@ if {![file exists /usr/bin/kate]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet kate\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

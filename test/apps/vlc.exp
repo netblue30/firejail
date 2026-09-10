@@ -13,8 +13,6 @@ if {![file exists /usr/bin/vlc]} {
 	exit
 }
 
-
-
 send -- "firejail --private vlc\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

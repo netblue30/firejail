@@ -18,7 +18,6 @@ sleep 1
 send -- "cd /\r"
 after 100
 
-
 send -- "./unchroot\r"
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}

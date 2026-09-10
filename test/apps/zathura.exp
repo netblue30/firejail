@@ -13,8 +13,6 @@ if {![file exists /usr/bin/zathura]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet zathura\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

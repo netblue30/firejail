@@ -13,8 +13,6 @@ if {![file exists /usr/bin/blender]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet blender\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

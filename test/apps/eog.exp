@@ -13,8 +13,6 @@ if {![file exists /usr/bin/eog]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet eog\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

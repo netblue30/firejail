@@ -42,7 +42,6 @@ expect {
 }
 after 500
 
-
 send -- "firejail --private-etc=@tls-ca ls -l /etc\r"
 expect {
 	timeout {puts "TESTING ERROR 10\n";exit}
@@ -73,7 +72,6 @@ expect {
 	"ssl"
 }
 after 500
-
 
 send -- "firejail --private-etc --nosound ls -l /etc\r"
 expect {
@@ -127,6 +125,5 @@ expect {
 	"xdg"
 }
 after 100
-
 
 puts "\nall done\n"

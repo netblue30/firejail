@@ -27,7 +27,6 @@ expect {
 }
 after 100
 
-
 send -- "ls -al dest\r"
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}

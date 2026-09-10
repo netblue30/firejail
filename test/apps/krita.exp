@@ -13,8 +13,6 @@ if {![file exists /usr/bin/krita]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet krita\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

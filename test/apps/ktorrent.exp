@@ -13,8 +13,6 @@ if {![file exists /usr/bin/ktorrent]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet ktorrent\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

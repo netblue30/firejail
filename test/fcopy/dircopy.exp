@@ -91,7 +91,6 @@ expect {
 }
 after 100
 
-
 send -- "ls -al dest\r"
 expect {
 	timeout {puts "TESTING ERROR 8\n";exit}

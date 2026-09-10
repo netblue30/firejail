@@ -13,7 +13,6 @@ if {![file exists /usr/bin/Xephyr]} {
 	exit
 }
 
-
 send -- "firejail --name=test --x11 xterm\r"
 sleep 5
 

@@ -29,7 +29,6 @@ expect {
 }
 after 100
 
-
 # 64 bit architecture - ignore seccomp
 send --  "firejail --debug --ignore=seccomp sleep 1; echo done\r"
 expect {
@@ -75,7 +74,6 @@ expect {
 	timeout {puts "TESTING ERROR 26\n";exit}
 	"done"
 }
-
 
 # 64 bit architecture - seccomp.block-secondary
 send --  "firejail --debug --seccomp.block-secondary sleep 1; echo done\r"

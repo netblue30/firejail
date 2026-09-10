@@ -33,6 +33,4 @@ after 100
 send -- "exit\r"
 sleep 1
 
-
-
 puts "\nall done\n"

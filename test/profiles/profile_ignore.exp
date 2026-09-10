@@ -26,10 +26,6 @@ after 100
 send -- "exit\r"
 after 100
 
-
-
-
-
 send -- "rm ~/firejail-testfile\r"
 sleep 1
 

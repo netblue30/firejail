@@ -23,7 +23,6 @@ expect {
 send -- "exit\r"
 after 500
 
-
 # profile
 send -- "firejail --profile=./net_none.profile\r"
 expect {

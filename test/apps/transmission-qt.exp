@@ -13,8 +13,6 @@ if {![file exists /usr/bin/transmission-qt]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet transmission-qt\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

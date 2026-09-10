@@ -51,5 +51,4 @@ after 100
 send -- "rm -fr /tmp/fjtest-dir\r"
 after 100
 
-
 puts "\nall done\n"

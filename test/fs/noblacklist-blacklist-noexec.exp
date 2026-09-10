@@ -8,7 +8,6 @@ spawn $env(SHELL)
 match_max 100000
 set PWD $env(PWD)
 
-
 send -- "firejail --noprofile --noblacklist=$PWD --blacklist=$PWD --noexec=$PWD\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

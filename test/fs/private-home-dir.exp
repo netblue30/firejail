@@ -7,7 +7,6 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-
 if {[file exists ~/.asoundrc]} {
 	puts "found .asoundrc file\n"
 } else {
@@ -59,7 +58,6 @@ after 100
 send -- "exit\r"
 sleep 1
 
-
 # testing profile and private
 send -- "firejail --private=/etc\r"
 expect {
@@ -100,6 +98,5 @@ sleep 1
 
 send -- "rm -fr ~/_firejail_test_dir1\r"
 after 100
-
 
 puts "\nall done\n"

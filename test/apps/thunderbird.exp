@@ -13,8 +13,6 @@ if {![file exists /usr/bin/thunderbird]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet thunderbird\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

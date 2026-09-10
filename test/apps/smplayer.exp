@@ -13,8 +13,6 @@ if {![file exists /usr/bin/smplayer]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet smplayer\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

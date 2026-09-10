@@ -7,7 +7,6 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-
 #
 # obtain some open file descriptors
 #
@@ -31,14 +30,12 @@ expect {
 }
 after 100
 
-
 #
 # inherit environment variables
 #
 send -- "export READ_FD\r"
 send -- "export WRITE_FD\r"
 after 100
-
 
 #
 # close all file descriptors
@@ -76,7 +73,6 @@ after 100
 send -- "exit\r"
 after 500
 
-
 #
 # keep one file descriptor
 #
@@ -111,7 +107,6 @@ after 100
 
 send -- "exit\r"
 after 500
-
 
 #
 # keep other file descriptor
@@ -148,7 +143,6 @@ after 100
 send -- "exit\r"
 after 500
 
-
 #
 # keep both file descriptors
 #
@@ -184,7 +178,6 @@ after 100
 send -- "exit\r"
 after 500
 
-
 #
 # keep all file descriptors
 #
@@ -212,12 +205,10 @@ after 100
 send -- "exit\r"
 after 500
 
-
 #
 # cleanup
 #
 send -- "rm -f blabla\r"
 after 100
-
 
 puts "\nall done\n"

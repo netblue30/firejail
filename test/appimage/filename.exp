@@ -28,7 +28,4 @@ expect {
 }
 after 500
 
-
-
-
 puts "\nall done\n"

@@ -13,8 +13,6 @@ if {![file exists /usr/bin/pitivi]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet pitivi\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

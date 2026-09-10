@@ -13,8 +13,6 @@ if {![file exists /usr/bin/audacious]} {
 	exit
 }
 
-
-
 send -- "firejail --private audacious\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

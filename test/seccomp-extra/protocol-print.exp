@@ -14,7 +14,6 @@ expect {
 }
 sleep 2
 
-
 spawn $env(SHELL)
 send -- "firejail --name=test1 --profile=./protocol1.profile\r"
 expect {

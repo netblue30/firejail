@@ -7,8 +7,6 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-
-
 # file link
 #send -- "firejail --private=fscheck-file-link\r"
 #expect {

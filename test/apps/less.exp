@@ -13,8 +13,6 @@ if {![file exists /usr/bin/less]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet less --dumb --version\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

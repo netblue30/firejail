@@ -3,7 +3,6 @@
 # Copyright (C) 2014-2026 Firejail Authors
 # License GPL v2
 
-
 set timeout 10
 spawn $env(SHELL)
 match_max 100000
@@ -35,7 +34,6 @@ expect {
 }
 sleep 2
 
-
 send -- "firejail --profile=./sound.profile speaker-test\r"
 expect {
 	timeout {puts "TESTING ERROR 11\n";exit}
@@ -62,7 +60,6 @@ expect {
 	"Parent is shutting down"
 }
 sleep 2
-
 
 send -- "firejail aplay -l\r"
 expect {

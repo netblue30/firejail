@@ -21,7 +21,6 @@
 
 #define STACK_SIZE 1024 * 1024
 
-
 static int usage() {
 	fprintf(stderr, "Usage: namespaces <system call>[clone,clone3,unshare] <list of namespaces>[cgroup,ipc,mnt,net,pid,time,user,uts]\n");
 	exit(1);

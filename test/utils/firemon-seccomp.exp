@@ -22,9 +22,6 @@ expect {
 }
 sleep 1
 
-
-
-
 spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {

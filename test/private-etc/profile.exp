@@ -32,7 +32,6 @@ expect {
 	"resolv.conf"
 }
 
-
 send -- "file /etc/shadow\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}
@@ -67,7 +66,6 @@ expect {
 	"resolv.conf"
 }
 
-
 send -- "file /etc/shadow\r"
 expect {
 	timeout {puts "TESTING ERROR 17\n";exit}
@@ -76,15 +74,6 @@ expect {
 after 100
 send -- "exit\r"
 sleep 1
-
-
-
-
-
-
-
-
-
 
 after 100
 puts "\nall done\n"

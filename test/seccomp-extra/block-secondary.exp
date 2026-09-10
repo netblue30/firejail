@@ -7,7 +7,6 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-
 # 64 bit architecture - seccomp.block-secondary
 send --  "firejail --debug --seccomp.block-secondary pwd\r"
 expect {

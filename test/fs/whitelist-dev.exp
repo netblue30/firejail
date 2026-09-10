@@ -74,7 +74,6 @@ expect {
 }
 after 100
 
-
 set have_dri 0
 send -- "ls -l /dev\r"
 expect {

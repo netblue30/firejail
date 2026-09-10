@@ -7,7 +7,6 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-
 send -- "firejail --noprofile --keep-fd=\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
@@ -35,6 +34,5 @@ expect {
 	"Error: invalid keep-fd option"
 }
 after 100
-
 
 puts "\nall done\n"

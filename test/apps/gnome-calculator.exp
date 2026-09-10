@@ -13,8 +13,6 @@ if {![file exists /usr/bin/gnome-calculator]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet gnome-calculator\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

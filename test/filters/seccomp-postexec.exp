@@ -24,7 +24,6 @@ expect {
 	"not permitted"
 }
 
-
 send -- "exit\r"
 after 100
 puts "all done\n"

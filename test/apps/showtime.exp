@@ -13,8 +13,6 @@ if {![file exists /usr/bin/showtime]} {
 	exit
 }
 
-
-
 send -- "firejail --private --ignore=quiet showtime\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

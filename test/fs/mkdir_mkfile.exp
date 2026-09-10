@@ -7,7 +7,6 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-
 # testing profile and private
 send -- "firejail --private --profile=./mkdir_mkfile.profile\r"
 expect {

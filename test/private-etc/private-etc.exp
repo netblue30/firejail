@@ -32,7 +32,6 @@ expect {
 	"resolv.conf"
 }
 
-
 send -- "file /etc/shadow\r"
 expect {
 	timeout {puts "TESTING ERROR 7\n";exit}

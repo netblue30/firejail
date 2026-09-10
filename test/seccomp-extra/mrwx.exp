@@ -7,8 +7,6 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-
-
 # memory-deny-write-execute
 send --  "firejail --debug --memory-deny-write-execute pwd\r"
 expect {
@@ -31,7 +29,6 @@ expect {
 	"Installing /run/firejail/mnt/seccomp/seccomp.mdwx seccomp filter"
 }
 after 500
-
 
 after 500
 puts "all done\n"

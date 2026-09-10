@@ -17,8 +17,6 @@ after 200
 send -- "rm ~/fjtest-file-lnk\r"
 after 200
 
-
-
 # simple files and directories
 send -- "mkdir -p ~/fjtest-dir/fjtest-dir\r"
 after 200
@@ -67,8 +65,6 @@ expect {
 send -- "exit\r"
 sleep 1
 
-
-
 # simple files and directories
 send -- "firejail --whitelist=~/fjtest-dir/fjtest-dir/fjtest-file\r"
 expect {
@@ -91,8 +87,6 @@ expect {
 
 send -- "exit\r"
 sleep 1
-
-
 
 # symlinks
 send -- "firejail --whitelist=~/fjtest-file-lnk --whitelist=~/fjtest-dir-lnk\r"
@@ -145,8 +139,6 @@ expect {
 }
 send -- "exit\r"
 sleep 1
-
-
 
 # cleanup
 send -- "rm -fr ~/fjtest-dir\r"

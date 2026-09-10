@@ -35,7 +35,6 @@ expect {
 sleep 2
 puts "\n"
 
-
 set timeout 2
 send -- "ls -al logfile*\r"
 expect {
@@ -64,7 +63,6 @@ expect {
 }
 after 100
 send -- "rm -f logfile*\r"
-
 
 send -- "firejail --output=../logfile -- ./output.sh\r"
 expect {

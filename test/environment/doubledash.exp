@@ -22,7 +22,6 @@ expect {
 }
 sleep 1
 
-
 send --  "firejail --name=testing -- -testdir/bash\r"
 expect {
 	timeout {puts "TESTING ERROR 4\n";exit}

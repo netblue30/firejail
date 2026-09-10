@@ -53,7 +53,6 @@ fi
 echo "TESTING: seccomp postexec (test/filters/seccomp-postexec.exp)"
 ./seccomp-postexec.exp
 
-
 #if grep -q "^CapBnd:\\s0000003fffffffff" /proc/self/status; then
 #	echo "TESTING: capabilities (test/filters/caps.exp)"
 #	./caps.exp
@@ -75,7 +74,6 @@ else
 	echo "TESTING SKIP: fseccomp test implemented only for x86_64"
 fi
 rm -f seccomp-test-file
-
 
 if [[ $(uname -m) == "x86_64" ]]; then
 	echo "TESTING: protocol (test/filters/protocol.exp)"

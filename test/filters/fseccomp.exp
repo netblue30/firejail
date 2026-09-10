@@ -114,7 +114,5 @@ expect {
 	"ret ERRNO"
 }
 
-
-
 after 100
 puts "\nall done\n"

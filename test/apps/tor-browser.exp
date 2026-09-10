@@ -7,7 +7,7 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --name=tor --private=~/tor-browser --net=enp5s0 --netlock ./start-tor-browser.desktop\r"
+send -- "firejail --name=tor-browser --private=~/tor-browser --net=enp5s0 --netlock ./start-tor-browser.desktop\r"
 expect {
     timeout {puts "TESTING ERROR 0\n";exit}
     "Reading profile /etc/firejail/start-tor-browser.desktop.profile"

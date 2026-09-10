@@ -9,43 +9,43 @@ match_max 100000
 
 send -- "which -a warzone2100\r"
 expect {
-    timeout {puts "TESTING: warzone2100 not installed\n"; exit}
-    "/warzone2100"
+	timeout {puts "TESTING: warzone2100 not installed\n"; exit}
+	"/warzone2100"
 }
 after 100
 
 send -- "firejail --private warzone2100\r"
 expect {
-    timeout {puts "TESTING ERROR 0\n";exit}
-    "Reading profile /etc/firejail/warzone2100.profile"
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Reading profile /etc/firejail/warzone2100.profile"
 }
 expect {
-    timeout {puts "TESTING ERROR 1\n";exit}
-    -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 8
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
 expect {
-    timeout {puts "TESTING ERROR 2\n";exit}
-    "firejail"
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"firejail"
 }
 expect {
-    timeout {puts "TESTING ERROR 3\n";exit}
-    "warzone"
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"warzone"
 }
 after 100
 
 spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
-    timeout {puts "TESTING ERROR 4\n";exit}
-    "warzone"
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"warzone"
 }
 expect {
-    timeout {puts "TESTING ERROR 5\n";exit}
-    "Seccomp:	2"
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Seccomp:	2"
 }
 after 100
 

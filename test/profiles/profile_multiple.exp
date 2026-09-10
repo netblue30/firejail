@@ -9,16 +9,16 @@ match_max 100000
 
 send -- "firejail --ignore=quiet --profile=wget --profile=curl bwrap\r"
 expect {
-    timeout {puts "TESTING ERROR 0\n";exit}
-    "disable-programs"
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"disable-programs"
 }
 expect {
-    timeout {puts "TESTING ERROR 1\n";exit}
-    "disable-programs"
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"disable-programs"
 }
 expect {
-    timeout {puts "TESTING ERROR 2\n";exit}
-    "fbwrap - bwrap replacement for Firejail sandbox"
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"fbwrap - bwrap replacement for Firejail sandbox"
 }
 after 100
 puts "all done\n"

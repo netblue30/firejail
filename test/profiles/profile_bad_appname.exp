@@ -9,8 +9,8 @@ match_max 100000
 
 send -- "firejail --profile=org.gnome.blablabla bwrap\r"
 expect {
-    timeout {puts "TESTING ERROR 0\n";exit}
-    "is not an application name"
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"is not an application name"
 }
 after 100
 puts "all done\n"

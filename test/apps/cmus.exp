@@ -8,25 +8,25 @@ spawn $env(SHELL)
 match_max 100000
 
 if {![file exists /usr/bin/cmus]} {
-    puts "TESTING: cmus not installed, skipping...\n"
-    after 100
-    exit
+	puts "TESTING: cmus not installed, skipping...\n"
+	after 100
+	exit
 }
 
 
 
 send -- "firejail --private --ignore=quiet cmus --help\r"
 expect {
-    timeout {puts "TESTING ERROR 0\n";exit}
-    "Reading profile /etc/firejail/cmus.profile"
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Reading profile /etc/firejail/cmus.profile"
 }
 expect {
-    timeout {puts "TESTING ERROR 1\n";exit}
-    -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 expect {
-    timeout {puts "TESTING ERROR 2\n";exit}
-    "Curses based music player"
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"Curses based music player"
 }
 
 puts "all done\n"

@@ -8,9 +8,9 @@ spawn $env(SHELL)
 match_max 100000
 
 if {![file exists /usr/bin/Xephyr]} {
-    puts "TESTING: Xephyr not installed, skipping...\n"
-    after 100
-    exit
+	puts "TESTING: Xephyr not installed, skipping...\n"
+	after 100
+	exit
 }
 
 

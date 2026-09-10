@@ -8,43 +8,43 @@ spawn $env(SHELL)
 match_max 100000
 
 if {![file exists /usr/bin/kdiff3]} {
-    puts "TESTING: kdiff3 not installed, skipping...\n"
-    after 100
-    exit
+	puts "TESTING: kdiff3 not installed, skipping...\n"
+	after 100
+	exit
 }
 
 send -- "firejail --private kdiff3\r"
 expect {
-    timeout {puts "TESTING ERROR 0\n";exit}
-    "Reading profile /etc/firejail/kdiff3.profile"
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"Reading profile /etc/firejail/kdiff3.profile"
 }
 expect {
-    timeout {puts "TESTING ERROR 1\n";exit}
-    -re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
+	timeout {puts "TESTING ERROR 1\n";exit}
+	-re "Child process initialized in \[0-9\]+.\[0-9\]+ ms"
 }
 sleep 3
 
 spawn $env(SHELL)
 send -- "firejail --list\r"
 expect {
-    timeout {puts "TESTING ERROR 2\n";exit}
-    "firejail"
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"firejail"
 }
 expect {
-    timeout {puts "TESTING ERROR 3\n";exit}
-    "kdiff3"
+	timeout {puts "TESTING ERROR 3\n";exit}
+	"kdiff3"
 }
 after 100
 
 spawn $env(SHELL)
 send -- "firemon --seccomp\r"
 expect {
-    timeout {puts "TESTING ERROR 4\n";exit}
-    "kdiff3"
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"kdiff3"
 }
 expect {
-    timeout {puts "TESTING ERROR 5\n";exit}
-    "Seccomp:	2"
+	timeout {puts "TESTING ERROR 5\n";exit}
+	"Seccomp:	2"
 }
 after 100
 

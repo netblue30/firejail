@@ -7,6 +7,12 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
+if {![file exists /usr/bin/xterm]} {
+	puts "TESTING: xterm not installed, skipping...\n"
+	after 100
+	exit
+}
+
 send -- "firejail --name=test --x11=xorg xterm\r"
 sleep 5
 

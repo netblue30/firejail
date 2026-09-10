@@ -7,6 +7,12 @@ set timeout 10
 spawn $env(SHELL)
 match_max 100000
 
+if {![file exists /usr/bin/gimp]} {
+	puts "TESTING: gimp not installed, skipping...\n"
+	after 100
+	exit
+}
+
 send -- "firejail gimp\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}

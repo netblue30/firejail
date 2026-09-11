@@ -3,7 +3,7 @@
 # Copyright (C) 2014-2026 Firejail Authors
 # License GPL v2
 #
-# quic test for several applications
+# quick test for several applications
 #
 export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))

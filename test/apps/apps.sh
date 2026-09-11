@@ -38,7 +38,6 @@ rm -f index.html
 rm wget-log*
 sudo true
 
-# testing seccomp @clock group
 echo "TESTING: firejail problems **************************"
 echo "TESTING: seccomp @clock group (test/apps/seccomp-clock.exp)"
 ./seccomp-clock.exp
@@ -46,19 +45,16 @@ echo "TESTING: seccomp @clock group (test/apps/seccomp-clock.exp)"
 echo "TESTING: pid 1 functionality (test/apps/pid1.exp)"
 ./pid1.exp
 
-# x11 sandboxing
 echo "TESTING: x11 sandboxing *********************************"
 for app in "${x11apps[@]}"; do
 	testapp "$app"
 done
 
-# browsers
 echo "TESTING: browsers ***************************************"
 for app in "${browsers[@]}"; do
 	testapp "$app"
 done
 
-# multimedia apps
 echo "TESTING: multimedia apps ************************************"
 for app in "${multimedia[@]}"; do
 	testapp "$app"
@@ -69,7 +65,6 @@ for app in "${games[@]}"; do
 	testapp "$app"
 done
 
-# desktop apps
 echo "TESTING: desktop apps ************************************"
 for app in "${desktopapps[@]}"; do
 	testapp "$app"

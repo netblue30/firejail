@@ -14,15 +14,15 @@ sudo ls
 
 # console apps
 apps=(
-	ping
-	dig
-	wget
 	curl
-	ftp
-	telnet
+	dig
 	ffmpeg
-	ssh
+	ftp
 	less
+	ping
+	ssh
+	telnet
+	wget
 	yt-dlp
 )
 for app in "${apps[@]}"; do
@@ -50,10 +50,10 @@ echo "TESTING: pid 1 functionality (test/apps/pid1.exp)"
 echo "TESTING: x11 sandboxing *********************************"
 x11apps=(
 	firefox-xephyr
-	x11-none
 	firefox-xorg
-	xterm-xorg
+	x11-none
 	xterm-xephyr
+	xterm-xorg
 )
 for app in "${x11apps[@]}"; do
 	sudo true
@@ -65,11 +65,11 @@ done
 # browsers
 echo "TESTING: browsers ***************************************"
 browsers=(
-	firefox
 	brave
 	chromium
-	vivaldi
+	firefox
 	tor-browser
+	vivaldi
 )
 for app in "${browsers[@]}"; do
 	sudo true
@@ -81,20 +81,20 @@ done
 # multimedia apps
 echo "TESTING: multimedia apps ************************************"
 multimedia=(
-	vlc
-	mpv
-	rhythmbox
-	totem
-	showtime
-	audacious
-	smplayer
-	mplayer
-	cmus
-	strawberry
 	amarok
-	quodlibet
+	audacious
+	cmus
+	mplayer
+	mpv
 	qmmp
+	quodlibet
+	rhythmbox
 	shortwave
+	showtime
+	smplayer
+	strawberry
+	totem
+	vlc
 )
 for app in "${multimedia[@]}"; do
 	sudo true
@@ -105,9 +105,9 @@ done
 
 echo "TESTING: games ************************************"
 games=(
-	warzone2100
 	dosbox
 	lutris
+	warzone2100
 )
 for app in "${games[@]}"; do
 	sudo true
@@ -119,44 +119,44 @@ done
 # desktop apps
 echo "TESTING: desktop apps ************************************"
 desktopapps=(
-	xterm
-	qbittorrent
-	galculator
-	libreoffice
-	lowriter
-	gimp
-	inkscape
-	firefox-neteth
-	emacs
-	okular
-	kdiff3
-	gpicview
-	audacity
-	meld
-	blender
-	pavucontrol
-	gnome-screenshot
-	flameshot
-	ghb
-	kdenlive
-	krita
-	evince
 	atril
-	kate
-	eom
-	eog
-	gwenview
-	loupe
-	gnome-calculator
-	darktable
+	audacity
+	blender
 	brasero
+	darktable
 	digikam
-	mtpaint
-	transmission-qt
-	transmission-gtk
-	thunderbird
+	emacs
+	eog
+	eom
+	evince
+	firefox-neteth
+	flameshot
+	galculator
+	ghb
+	gimp
+	gnome-calculator
+	gnome-screenshot
+	gpicview
+	gwenview
+	inkscape
+	kate
+	kdenlive
+	kdiff3
 	kmail
+	krita
+	libreoffice
+	loupe
+	lowriter
+	meld
+	mtpaint
+	okular
+	pavucontrol
+	qbittorrent
+	thunderbird
+	transmission-gtk
+	transmission-qt
 	xpdf
+	xterm
 	zathura
 )
 

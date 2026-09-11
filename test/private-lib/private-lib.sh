@@ -8,25 +8,25 @@ export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
 apps=(
-	gnome-logs
-	gnome-system-log
-	gnome-nettool
-	pavucontrol
+	atril
 	dig
+	eog
+	eom
 	evince
-	whois
 	galculator
-	gnome-calculator
 	gedit
+	gnome-calculator
+	gnome-logs
+	gnome-nettool
+	gnome-system-log
+	gpicview
 	leafpad
 	mousepad
+	pavucontrol
 	pluma
 	transmission-gtk
+	whois
 	xcalc
-	atril
-	gpicview
-	eom
-	eog
 )
 
 for app in "${apps[@]}"; do

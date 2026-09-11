@@ -50,22 +50,22 @@ echo "TESTING: profiles noprofile (test/profiles/profile_noprofile.exp)"
 ./profile_noprofile.exp
 
 profiles=(
-	transmission-gtk
-	transmission-qt
+	audacity
+	chromium-browser
+	evince
 	firefox
-	mpv
-	vlc
-	ping
-	warzone2100
 	galculator
 	gimp
 	inkscape
-	qbittorrent
-	chromium-browser
-	ssh
-	evince
+	mpv
 	pdftotext
-	audacity
+	ping
+	qbittorrent
+	ssh
+	transmission-gtk
+	transmission-qt
+	vlc
+	warzone2100
 )
 
 for profile in "${profiles[@]}"

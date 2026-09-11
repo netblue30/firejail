@@ -134,7 +134,7 @@ desktopapps=(
 	audacity
 	meld
 	blender
-	pauvcontrol
+	pavucontrol
 	gnome-screenshot
 	flameshot
 	ghb

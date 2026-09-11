@@ -13,8 +13,18 @@ export LC_ALL=C
 sudo ls
 
 # console apps
-echo "TESTING: console apps **************************"
-apps=(ping dig wget curl ftp telnet ffmpeg ssh less yt-dlp)
+apps=(
+	ping
+	dig
+	wget
+	curl
+	ftp
+	telnet
+	ffmpeg
+	ssh
+	less
+	yt-dlp
+)
 for app in "${apps[@]}"; do
 	if command -v "$app"
 	then
@@ -38,7 +48,13 @@ echo "TESTING: pid 1 functionality (test/apps/pid1.exp)"
 
 # x11 sandboxing
 echo "TESTING: x11 sandboxing *********************************"
-x11apps=(firefox-xephyr x11-none firefox-xorg xterm-xorg xterm-xephyr)
+x11apps=(
+	firefox-xephyr
+	x11-none
+	firefox-xorg
+	xterm-xorg
+	xterm-xephyr
+)
 for app in "${x11apps[@]}"; do
 	sudo true
 	echo "TESTING: $app (test/apps/$app.exp)"
@@ -48,7 +64,13 @@ done
 
 # browsers
 echo "TESTING: browsers ***************************************"
-browsers=(firefox brave chromium vivaldi tor-browser)
+browsers=(
+	firefox
+	brave
+	chromium
+	vivaldi
+	tor-browser
+)
 for app in "${browsers[@]}"; do
 	sudo true
 	echo "TESTING: $app (test/apps/$app.exp)"
@@ -58,8 +80,22 @@ done
 
 # multimedia apps
 echo "TESTING: multimedia apps ************************************"
-multimedia=(vlc mpv rhythmbox totem showtime audacious smplayer mplayer \
-	   cmus strawberry amarok quodlibet qmmp shortwave)
+multimedia=(
+	vlc
+	mpv
+	rhythmbox
+	totem
+	showtime
+	audacious
+	smplayer
+	mplayer
+	cmus
+	strawberry
+	amarok
+	quodlibet
+	qmmp
+	shortwave
+)
 for app in "${multimedia[@]}"; do
 	sudo true
 	echo "TESTING: $app (test/apps/$app.exp)"
@@ -68,7 +104,11 @@ for app in "${multimedia[@]}"; do
 done
 
 echo "TESTING: games ************************************"
-games=(warzone2100 dosbox lutris)
+games=(
+	warzone2100
+	dosbox
+	lutris
+)
 for app in "${games[@]}"; do
 	sudo true
 	echo "TESTING: $app (test/apps/$app.exp)"
@@ -78,16 +118,47 @@ done
 
 # desktop apps
 echo "TESTING: desktop apps ************************************"
-desktopapps=(xterm qbittorrent galculator libreoffice \
-		 lowriter gimp inkscape firefox-neteth emacs okular kdiff3 \
-		 gpicview audacity meld blender \
-		 pauvcontrol gnome-screenshot \
-		 flameshot ghb kdenlive krita \
-		 evince atril kate eom eog \
-		 gwenview oupe gnome-calculator \
-		 darktable brasero digikam mtpaint \
-		 transmission-qt transmission-gtk \
-		 thunderbird kmail xpdf zathura)
+desktopapps=(
+	xterm
+	qbittorrent
+	galculator
+	libreoffice
+	lowriter
+	gimp
+	inkscape
+	firefox-neteth
+	emacs
+	okular
+	kdiff3
+	gpicview
+	audacity
+	meld
+	blender
+	pauvcontrol
+	gnome-screenshot
+	flameshot
+	ghb
+	kdenlive
+	krita
+	evince
+	atril
+	kate
+	eom
+	eog
+	gwenview
+	oupe
+	gnome-calculator
+	darktable
+	brasero
+	digikam
+	mtpaint
+	transmission-qt
+	transmission-gtk
+	thunderbird
+	kmail
+	xpdf
+	zathura
+)
 
 for app in "${desktopapps[@]}"; do
 	sudo true

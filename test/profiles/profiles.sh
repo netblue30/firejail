@@ -49,8 +49,24 @@ echo "TESTING: profiles bad appname (test/profiles/profile_app_name.exp)"
 echo "TESTING: profiles noprofile (test/profiles/profile_noprofile.exp)"
 ./profile_noprofile.exp
 
-profiles=( transmission-gtk transmission-qt firefox mpv vlc ping warzone2100 galculator )
-profiles+=( gimp inkscape qbittorrent chromium-browser ssh evince pdftotext audacity)
+profiles=(
+	transmission-gtk
+	transmission-qt
+	firefox
+	mpv
+	vlc
+	ping
+	warzone2100
+	galculator
+	gimp
+	inkscape
+	qbittorrent
+	chromium-browser
+	ssh
+	evince
+	pdftotext
+	audacity
+)
 
 for profile in "${profiles[@]}"
 do

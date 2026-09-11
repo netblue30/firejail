@@ -146,7 +146,7 @@ desktopapps=(
 	eom
 	eog
 	gwenview
-	oupe
+	loupe
 	gnome-calculator
 	darktable
 	brasero

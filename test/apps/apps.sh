@@ -9,22 +9,13 @@ export MALLOC_CHECK_=3
 export MALLOC_PERTURB_=$(($RANDOM % 255 + 1))
 export LC_ALL=C
 
+# shellcheck source=test/apps/applist.sh
+. "$(dirname "$0")"/applist.sh || exit 1
+
 # keeping sudo available
 sudo ls
 
 # console apps
-apps=(
-	curl
-	dig
-	ffmpeg
-	ftp
-	less
-	ping
-	ssh
-	telnet
-	wget
-	yt-dlp
-)
 for app in "${apps[@]}"; do
 	if command -v "$app"
 	then
@@ -48,13 +39,6 @@ echo "TESTING: pid 1 functionality (test/apps/pid1.exp)"
 
 # x11 sandboxing
 echo "TESTING: x11 sandboxing *********************************"
-x11apps=(
-	firefox-xephyr
-	firefox-xorg
-	x11-none
-	xterm-xephyr
-	xterm-xorg
-)
 for app in "${x11apps[@]}"; do
 	sudo true
 	echo "TESTING: $app (test/apps/$app.exp)"
@@ -64,13 +48,6 @@ done
 
 # browsers
 echo "TESTING: browsers ***************************************"
-browsers=(
-	brave
-	chromium
-	firefox
-	tor-browser
-	vivaldi
-)
 for app in "${browsers[@]}"; do
 	sudo true
 	echo "TESTING: $app (test/apps/$app.exp)"
@@ -80,22 +57,6 @@ done
 
 # multimedia apps
 echo "TESTING: multimedia apps ************************************"
-multimedia=(
-	amarok
-	audacious
-	cmus
-	mplayer
-	mpv
-	qmmp
-	quodlibet
-	rhythmbox
-	shortwave
-	showtime
-	smplayer
-	strawberry
-	totem
-	vlc
-)
 for app in "${multimedia[@]}"; do
 	sudo true
 	echo "TESTING: $app (test/apps/$app.exp)"
@@ -104,11 +65,6 @@ for app in "${multimedia[@]}"; do
 done
 
 echo "TESTING: games ************************************"
-games=(
-	dosbox
-	lutris
-	warzone2100
-)
 for app in "${games[@]}"; do
 	sudo true
 	echo "TESTING: $app (test/apps/$app.exp)"
@@ -118,48 +74,6 @@ done
 
 # desktop apps
 echo "TESTING: desktop apps ************************************"
-desktopapps=(
-	atril
-	audacity
-	blender
-	brasero
-	darktable
-	digikam
-	emacs
-	eog
-	eom
-	evince
-	firefox-neteth
-	flameshot
-	galculator
-	ghb
-	gimp
-	gnome-calculator
-	gnome-screenshot
-	gpicview
-	gwenview
-	inkscape
-	kate
-	kdenlive
-	kdiff3
-	kmail
-	krita
-	libreoffice
-	loupe
-	lowriter
-	meld
-	mtpaint
-	okular
-	pavucontrol
-	qbittorrent
-	thunderbird
-	transmission-gtk
-	transmission-qt
-	xpdf
-	xterm
-	zathura
-)
-
 for app in "${desktopapps[@]}"; do
 	sudo true
 	echo "TESTING: $app (test/apps/$app.exp)"

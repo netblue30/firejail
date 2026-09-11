@@ -1,0 +1,96 @@
+# shellcheck shell=bash
+# shellcheck disable=SC2034
+
+apps=(
+	curl
+	dig
+	ffmpeg
+	ftp
+	less
+	ping
+	ssh
+	telnet
+	wget
+	yt-dlp
+)
+
+x11apps=(
+	firefox-xephyr
+	firefox-xorg
+	x11-none
+	xterm-xephyr
+	xterm-xorg
+)
+
+browsers=(
+	brave
+	chromium
+	firefox
+	tor-browser
+	vivaldi
+)
+
+multimedia=(
+	amarok
+	audacious
+	cmus
+	mplayer
+	mpv
+	qmmp
+	quodlibet
+	rhythmbox
+	shortwave
+	showtime
+	smplayer
+	strawberry
+	totem
+	vlc
+)
+
+games=(
+	dosbox
+	lutris
+	warzone2100
+)
+
+desktopapps=(
+	atril
+	audacity
+	blender
+	brasero
+	darktable
+	digikam
+	emacs
+	eog
+	eom
+	evince
+	firefox-neteth
+	flameshot
+	galculator
+	ghb
+	gimp
+	gnome-calculator
+	gnome-screenshot
+	gpicview
+	gwenview
+	inkscape
+	kate
+	kdenlive
+	kdiff3
+	kmail
+	krita
+	libreoffice
+	loupe
+	lowriter
+	meld
+	mtpaint
+	okular
+	pavucontrol
+	qbittorrent
+	thunderbird
+	transmission-gtk
+	transmission-qt
+	xpdf
+	xterm
+	zathura
+)

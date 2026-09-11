@@ -12,6 +12,15 @@ export LC_ALL=C
 # shellcheck source=test/apps/applist.sh
 . "$(dirname "$0")"/applist.sh || exit 1
 
+testapp() {
+	app="$1"
+
+	sudo true
+	echo "TESTING: $app (test/apps/$app.exp)"
+	./"$app".exp
+	sleep 1
+}
+
 # keeping sudo available
 sudo ls
 
@@ -40,43 +49,28 @@ echo "TESTING: pid 1 functionality (test/apps/pid1.exp)"
 # x11 sandboxing
 echo "TESTING: x11 sandboxing *********************************"
 for app in "${x11apps[@]}"; do
-	sudo true
-	echo "TESTING: $app (test/apps/$app.exp)"
-	./"$app".exp
-	sleep 1
+	testapp "$app"
 done
 
 # browsers
 echo "TESTING: browsers ***************************************"
 for app in "${browsers[@]}"; do
-	sudo true
-	echo "TESTING: $app (test/apps/$app.exp)"
-	./"$app".exp
-	sleep 1
+	testapp "$app"
 done
 
 # multimedia apps
 echo "TESTING: multimedia apps ************************************"
 for app in "${multimedia[@]}"; do
-	sudo true
-	echo "TESTING: $app (test/apps/$app.exp)"
-	./"$app".exp
-	sleep 1
+	testapp "$app"
 done
 
 echo "TESTING: games ************************************"
 for app in "${games[@]}"; do
-	sudo true
-	echo "TESTING: $app (test/apps/$app.exp)"
-	./"$app".exp
-	sleep 1
+	testapp "$app"
 done
 
 # desktop apps
 echo "TESTING: desktop apps ************************************"
 for app in "${desktopapps[@]}"; do
-	sudo true
-	echo "TESTING: $app (test/apps/$app.exp)"
-	./"$app".exp
-	sleep 1
+	testapp "$app"
 done

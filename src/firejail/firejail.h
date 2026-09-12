@@ -31,6 +31,9 @@
 
 
 
+// PATH used when the calling environment doesn't set one
+#define DEFAULT_PATH "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin"
+
 // profiles
 #define DEFAULT_USER_PROFILE	"default"
 #define DEFAULT_ROOT_PROFILE	"server"

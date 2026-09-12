@@ -29,7 +29,7 @@ static void init_paths(void) {
 	const char *env_path = env_get("PATH");
 	char *p;
 	if (!env_path) {
-		env_path = "/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin";
+		env_path = DEFAULT_PATH;
 		env_store_name_val("PATH", env_path, SETENV);
 	}
 	char *path = strdup(env_path);

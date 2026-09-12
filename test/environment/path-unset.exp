@@ -1,0 +1,27 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2026 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+send -- "stty -echo\r"
+after 100
+
+# Looking up the program must not depend on the profile expanding a ${PATH}
+# macro, so run without a profile and with no PATH in the environment.
+# printf assembles the marker at run time, so a shell that still echoes the
+# command line cannot be mistaken for the sandboxed program's output.
+send -- "FIREJAIL=\$(command -v firejail)\r"
+after 100
+send -- "env -u PATH \$FIREJAIL --quiet --noprofile printf 'path%s\\n' unset\r"
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"no suitable" {puts "TESTING ERROR 2\n";exit}
+	"pathunset"
+}
+after 100
+
+puts "\nall done\n"

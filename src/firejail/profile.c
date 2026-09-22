@@ -666,7 +666,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "netns ", 6) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
-			arg_netns = ptr + 6;
+			arg_netns = strdup(ptr + 6);
+			if (!arg_netns)
+				errExit("strdup");
 			check_netns(arg_netns);
 		}
 		else

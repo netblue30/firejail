@@ -3624,37 +3624,6 @@ $ firejail \-\-tree
 
 We provide a tool that automates all this integration, please see \fBfirecfg\fR(1) for more details.
 
-.SH EXAMPLES
-.TP
-\fBfirejail
-Sandbox a regular shell session.
-.TP
-\fBfirejail /usr/bin/firefox
-Start Mozilla Firefox.
-.TP
-\fBfirejail \-\-debug /usr/bin/firefox
-Debug Firefox sandbox.
-.TP
-\fBfirejail \-\-private /usr/bin/firefox
-Start Firefox with a new, empty home directory.
-.TP
-\fBfirejail \-\-net=none /usr/bin/vlc
-Start VLC in an unconnected network namespace.
-#ifdef HAVE_NETWORK
-.TP
-\fBfirejail \-\-net=eth0 /usr/bin/firefox
-Start Firefox in a new network namespace. An IP address is
-assigned automatically.
-.TP
-\fBfirejail \-\-net=br0 \-\-ip=10.10.20.5 \-\-net=br1 \-\-net=br2
-Start a shell session in a new network namespace and connect it
-to br0, br1, and br2 host bridge devices. IP addresses are assigned
-automatically for the interfaces connected to br1 and br2.
-#endif
-.TP
-\fBfirejail \-\-list
-List all sandboxed processes.
-
 .SH FILE GLOBBING
 .TP
 Globbing is the operation that expands a wildcard pattern into the
@@ -3889,6 +3858,75 @@ you can specify /usr/bin/firejail in adduser command:
 adduser \-\-shell /usr/bin/firejail username
 
 Additional arguments passed to firejail executable upon login are declared in /etc/firejail/login.users file.
+
+.SH GLOBAL CONFIG FILE
+firejail.config is the global configuration file, and resides in /etc/firejail directory.
+Most major Firejail features can be enabled or disabled.
+Uncomment the line and switch the yes/no flag. Examples:
+
+.TP
+\fB# restricted-network no
+Enable or disable restricted network support, default disabled. If enabled,
+Firejail  grants access to --interface, --net=ethXXX and
+--netfilter features only to root user. Regular users are only allowed --net=none.
+
+Note: When restricted-network is disabled on a multiuser system, Firejail allows the user to bypass the firewall installed
+by the system administrator. Some distributions such as Debian and Ubuntu ship with restricted-network yes
+in the configuration file.
+.TP
+\fB# browser-disable-u2f yes
+Disable U2F in browsers, default enabled.
+
+Note:
+Universal Two-Factor (U2F) devices are used as a password store for online
+accounts. These devices usually come in a form of a USB key.
+.TP
+\fB# browser-allow-drm no
+Allow DRM execution in browsers, default disabled.
+.TP
+\fB# force-nonewprivs no
+Force use of nonewprivs on all programs, default disabled.
+
+Note: nonewprivs is a Linux kernel feature that prevents programs from rising privileges.
+It is also a strong mitigation against exploits in Firejail. However, some programs
+like chromium, wireshark, or even ping might not work.
+.TP
+\fB# seccomp-error-action EPERM
+Seccomp error action, kill, log or errno (EPERM, ENOSYS etc).
+By default seccomp prevents the program from running the syscall and returns an error.
+
+Note: Change EPERM to KILL if you want the program to exit immediately.
+
+.SH EXAMPLES
+.TP
+\fBfirejail
+Sandbox a regular shell session.
+.TP
+\fBfirejail /usr/bin/firefox
+Start Mozilla Firefox.
+.TP
+\fBfirejail \-\-debug /usr/bin/firefox
+Debug Firefox sandbox.
+.TP
+\fBfirejail \-\-private /usr/bin/firefox
+Start Firefox with a new, empty home directory.
+.TP
+\fBfirejail \-\-net=none /usr/bin/vlc
+Start VLC in an unconnected network namespace.
+#ifdef HAVE_NETWORK
+.TP
+\fBfirejail \-\-net=eth0 /usr/bin/firefox
+Start Firefox in a new network namespace. An IP address is
+assigned automatically.
+.TP
+\fBfirejail \-\-net=br0 \-\-ip=10.10.20.5 \-\-net=br1 \-\-net=br2
+Start a shell session in a new network namespace and connect it
+to br0, br1, and br2 host bridge devices. IP addresses are assigned
+automatically for the interfaces connected to br1 and br2.
+#endif
+.TP
+\fBfirejail \-\-list
+List all sandboxed processes.
 
 .SH LICENSE
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.

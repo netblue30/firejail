@@ -41,7 +41,6 @@ static const char *const usage_str =
 	"   --debug - print debug messages.\n\n"
 	"   --fix - fix .desktop files.\n\n"
 	"   --fix-sound - create ~/.config/pulse/client.conf file.\n\n"
-	"   --guide - guided configuration for new users.\n\n"
 	"   --help, -? - this help screen.\n\n"
 	"   --list - list all firejail symbolic links.\n\n"
 	"   --version - print program version and exit.\n\n"
@@ -468,9 +467,6 @@ int main(int argc, char **argv) {
 			fix_desktop_files(home);
 			return 0;
 		}
-		else if (strcmp(argv[i], "--guide") == 0) {
-			arg_guide = 1;
-		}
 		else if (strcmp(argv[i], "--list") == 0) {
 			list();
 			return 0;
@@ -534,31 +530,6 @@ int main(int argc, char **argv) {
 			}
 		}
 		umask(orig_umask);
-	}
-
-	if (arg_guide) {
-		const char *zenity_exec;
-		if (arg_debug)
-			zenity_exec = FZENITY_EXEC;
-		else
-			zenity_exec = ZENITY_EXEC;
-
-		char *cmd;
-		if (asprintf(&cmd, "%s %s %s %s %s",
-			     SUDO_EXEC, FIREJAIL_WELCOME_SH, zenity_exec, SYSCONFDIR, user) == -1)
-			errExit("asprintf");
-
-		int status = system(cmd);
-		if (status == -1) {
-			fprintf(stderr, "Error: cannot run %s\n", FIREJAIL_WELCOME_SH);
-			exit(1);
-		}
-		free(cmd);
-
-		// the last 8 bits of the status is the return value of the command executed by system()
-		// firejail-welcome.sh returns 55 if setting sysmlinks is required
-		if (WEXITSTATUS(status)  != 55)
-			return 0;
 	}
 
 	// clear all symlinks

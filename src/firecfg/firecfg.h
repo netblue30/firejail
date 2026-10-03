@@ -44,8 +44,6 @@
 // programs
 #define FIREJAIL_EXEC PREFIX "/bin/firejail"
 #define FIREJAIL_WELCOME_SH LIBDIR "/firejail/firejail-welcome.sh"
-#define FZENITY_EXEC        LIBDIR "/firejail/fzenity"
-#define ZENITY_EXEC "/usr/bin/zenity"
 #define SUDO_EXEC "sudo"
 
 // main.c

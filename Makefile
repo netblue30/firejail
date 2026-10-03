@@ -26,7 +26,7 @@ COMPLETIONDIRS = src/zsh_completion src/bash_completion
 
 APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailcheck/jailcheck src/etc-cleanup/etc-cleanup src/fbwrap/fbwrap
 SBOX_APPS = src/fbuilder/fbuilder src/ftee/ftee
-SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter src/fzenity/fzenity
+SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter
 SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
 SBOX_APPS_NON_DUMPABLE += src/fnettrace/fnettrace src/fnettrace-dns/fnettrace-dns src/fnettrace-sni/fnettrace-sni
 SBOX_APPS_NON_DUMPABLE += src/fnettrace-icmp/fnettrace-icmp src/fnetlock/fnetlock
@@ -219,7 +219,6 @@ endif
 	$(INSTALL) -m 0755 -t $(DESTDIR)$(bindir) src/jailcheck/jailcheck
 	# libraries and plugins
 	$(INSTALL) -m 0755 -d $(DESTDIR)$(libdir)/firejail
-	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail src/firecfg/firejail-welcome.sh
 	$(INSTALL) -m 0644 -t $(DESTDIR)$(libdir)/firejail $(MYLIBS) $(SECCOMP_FILTERS)
 	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail $(SBOX_APPS)
 	$(INSTALL) -m 0755 -t $(DESTDIR)$(libdir)/firejail src/profstats/profstats

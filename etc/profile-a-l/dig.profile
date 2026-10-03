@@ -49,7 +49,6 @@ private-bin bash,dig,sh
 private-dev
 private-etc
 # Add the next line to your dig.local on non Debian/Ubuntu OS (see issue #3038).
-#private-lib
 private-tmp
 
 dbus-user none

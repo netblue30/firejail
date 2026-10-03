@@ -9,7 +9,6 @@ include ffmpegthumbnailer.local
 #include globals.local
 
 private-bin ffmpegthumbnailer
-private-lib libffmpegthumbnailer.so.*
 
 # fix for ranger video thumbnails
 ignore private-cache

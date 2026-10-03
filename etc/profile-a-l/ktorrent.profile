@@ -62,7 +62,6 @@ seccomp
 
 private-bin kbuildsycoca4,kdeinit4,ktmagnetdownloader,ktorrent,ktupnptest
 private-dev
-#private-lib # problems on Arch
 private-tmp
 
 deterministic-shutdown

@@ -51,7 +51,6 @@ disable-mnt
 #private-bin gnome-keyrin*,secret-tool
 private-cache
 private-dev
-#private-lib alternatives,gnome-keyring,libsecret-1.so.*,pkcs11,security
 private-tmp
 
 #dbus-user none

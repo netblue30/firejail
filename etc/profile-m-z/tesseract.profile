@@ -56,7 +56,6 @@ private-bin ambiguous_words,classifier_tester,cntraining,combine_lang_model,comb
 private-cache
 private-dev
 private-etc
-#private-lib libtesseract.so.*
 #private-tmp # breaks ocrmypdf (see #6550)
 
 dbus-user none

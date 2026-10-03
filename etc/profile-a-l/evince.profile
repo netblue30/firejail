@@ -56,8 +56,6 @@ private-bin evince,evince-previewer,evince-thumbnailer,sh
 private-cache
 private-dev
 private-etc
-# private-lib might break two-page-view on some systems
-private-lib evince,gcc/*/*/libgcc_s.so.*,gcc/*/*/libstdc++.so.*,gconv,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libarchive.so.*,libdjvulibre.so.*,libgconf-2.so.*,libgraphite2.so.*,libpoppler-glib.so.*,librsvg-2.so.*,libspectre.so.*
 private-tmp
 
 dbus-user filter

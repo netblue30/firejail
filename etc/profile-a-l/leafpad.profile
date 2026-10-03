@@ -35,7 +35,6 @@ seccomp
 
 private-bin leafpad
 private-dev
-private-lib
 private-tmp
 
 restrict-namespaces

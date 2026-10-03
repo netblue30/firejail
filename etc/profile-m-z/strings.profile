@@ -45,7 +45,6 @@ x11 none
 private-cache
 private-dev
 #private-etc alternatives
-#private-lib libfakeroot
 private-tmp
 
 dbus-user none

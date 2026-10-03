@@ -46,7 +46,6 @@ private-bin url-eater
 private-cache
 private-dev
 private-etc url-eater.kdl
-private-lib
 #private-tmp # breaks on Arch
 
 dbus-user none

@@ -44,7 +44,6 @@ private-bin pavucontrol
 private-cache
 private-dev
 private-etc avahi
-private-lib
 private-tmp
 
 dbus-user none

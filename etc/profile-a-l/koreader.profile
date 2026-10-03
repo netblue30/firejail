@@ -52,7 +52,6 @@ seccomp.block-secondary
 private-cache
 private-dev
 private-etc
-private-lib
 private-tmp
 
 dbus-user none

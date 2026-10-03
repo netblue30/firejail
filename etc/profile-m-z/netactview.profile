@@ -45,7 +45,6 @@ private-bin netactview,netactview_polkit
 private-cache
 private-dev
 private-etc
-private-lib
 private-tmp
 
 dbus-user none

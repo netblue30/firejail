@@ -52,7 +52,6 @@ private-cache
 # USB devices you can add private-dev to your ledger-live-desktop.local
 #private-dev
 private-etc @network,@tls-ca,@x11,host.conf,rpc
-private-lib
 private-tmp
 
 # app attempts to connect to dbus but seems to work fine when blocked

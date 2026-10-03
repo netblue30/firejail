@@ -42,7 +42,6 @@ private-bin dconf-editor
 private-cache
 private-dev
 private-etc @x11
-private-lib
 private-tmp
 
 dbus-user filter

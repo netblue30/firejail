@@ -53,7 +53,6 @@ private-bin qpdf
 private-cache
 private-dev
 private-etc
-private-lib libqpdf.so.*
 #private-tmp # breaks on Arch Linux
 
 dbus-user none

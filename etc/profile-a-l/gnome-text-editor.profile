@@ -34,7 +34,6 @@ seccomp
 
 private-bin bash,dash,gnome-text-editor,sh
 private-dev
-private-lib
 private-tmp
 
 restrict-namespaces

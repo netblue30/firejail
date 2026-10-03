@@ -46,7 +46,6 @@ private-bin lyriek
 private-cache
 private-dev
 private-etc @network,@tls-ca
-private-lib
 private-tmp
 
 dbus-user filter

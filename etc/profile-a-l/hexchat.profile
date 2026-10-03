@@ -64,7 +64,6 @@ disable-mnt
 # allow-lua.inc/allow-perl.inc to private-bin in your hexchat.local.
 private-bin hexchat,python*,sh
 private-dev
-#private-lib # python problems
 private-tmp
 
 dbus-user filter

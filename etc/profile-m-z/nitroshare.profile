@@ -42,7 +42,6 @@ private-bin awk,grep,nitroshare,nitroshare-cli,nitroshare-nmh,nitroshare-send,ni
 private-cache
 private-dev
 private-etc @tls-ca,@x11
-#private-lib libnitroshare.so.*,libqhttpengine.so.*,libqmdnsengine.so.*,nitroshare
 private-tmp
 
 #dbus-user none

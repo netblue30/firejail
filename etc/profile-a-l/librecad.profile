@@ -39,7 +39,6 @@ seccomp
 private-bin librecad
 private-dev
 #private-etc alternatives,cups,drirc,fonts,passwd,xdg
-#private-lib
 private-tmp
 
 dbus-user none

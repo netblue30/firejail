@@ -47,7 +47,6 @@ private-bin devilspie
 private-cache
 private-dev
 private-etc
-private-lib gconv
 private-tmp
 
 dbus-user none

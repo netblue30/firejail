@@ -47,7 +47,6 @@ private-bin enchant,enchant-*
 private-cache
 private-dev
 private-etc
-private-lib
 private-tmp
 
 dbus-user none

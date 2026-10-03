@@ -44,8 +44,6 @@ disable-mnt
 private-cache
 private-dev
 private-etc
-# breaks custom shell command functionality
-#private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
 
 #dbus-user none

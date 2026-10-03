@@ -57,7 +57,6 @@ private-bin rtin,tin
 private-cache
 private-dev
 private-etc terminfo,tin
-private-lib terminfo
 private-tmp
 
 dbus-user none

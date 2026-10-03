@@ -52,7 +52,6 @@ private-bin cointop
 private-cache
 private-dev
 private-etc @tls-ca,host.conf,rpc,services
-private-lib
 private-tmp
 
 dbus-user none

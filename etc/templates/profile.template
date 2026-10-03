@@ -253,7 +253,6 @@ include globals.local
 ##   Networking: ca-certificates,crypto-policies,host.conf,hostname,hosts,nsswitch.conf,pki,protocols,resolv.conf,rpc,services,ssl
 ##     Extra: gai.conf,proxychains.conf
 ##   Qt: Trolltech.conf
-##private-lib LIBS
 ## Note: private-opt copies the entire path(s) to RAM, which may break
 ## file-copy-limit in firejail.config (see firejail(1)), so for new profiles
 ## use 'whitelist /opt/NAME' instead of 'private-opt NAME'.

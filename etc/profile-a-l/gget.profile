@@ -48,7 +48,6 @@ private-bin gget
 private-cache
 private-dev
 private-etc @tls-ca
-private-lib
 private-tmp
 
 dbus-user none

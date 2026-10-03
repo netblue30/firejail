@@ -45,7 +45,6 @@ private-bin gtk-update-icon-cache
 private-cache
 private-dev
 private-etc
-private-lib
 private-tmp
 
 dbus-user none

@@ -46,7 +46,6 @@ disable-mnt
 private-bin gnome-recipes,tar
 private-dev
 private-etc @tls-ca
-private-lib gdk-pixbuf-2.0,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,libgnutls.so.*,libjpeg.so.*,libp11-kit.so.*,libproxy.so.*,librsvg-2.so.*
 private-tmp
 
 restrict-namespaces

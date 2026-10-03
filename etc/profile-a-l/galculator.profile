@@ -41,7 +41,6 @@ private-bin galculator
 private-cache
 private-dev
 private-etc @x11
-private-lib
 private-tmp
 
 dbus-user none

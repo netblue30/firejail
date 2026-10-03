@@ -42,7 +42,6 @@ private-bin gnome-character-map,gucharmap
 private-cache
 private-dev
 private-etc @x11,dbus-1,gconf,mime.types
-private-lib
 private-tmp
 
 # breaks state saving

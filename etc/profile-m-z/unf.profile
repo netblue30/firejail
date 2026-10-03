@@ -47,7 +47,6 @@ private-cache
 ?HAS_APPIMAGE: ignore private-dev
 private-dev
 private-etc
-private-lib gcc/*/*/libgcc_s.so.*
 private-tmp
 
 dbus-user none

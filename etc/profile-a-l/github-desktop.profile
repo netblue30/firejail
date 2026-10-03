@@ -34,7 +34,6 @@ nosound
 
 #private-bin github-desktop
 ?HAS_APPIMAGE: ignore private-dev
-#private-lib
 
 #memory-deny-write-execute
 

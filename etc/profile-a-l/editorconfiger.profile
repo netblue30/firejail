@@ -44,7 +44,6 @@ private-bin editorconfiger
 private-cache
 private-dev
 private-etc .editorconfig
-private-lib
 private-tmp
 
 dbus-user none

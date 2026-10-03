@@ -54,7 +54,6 @@ private-bin artha,enchant,notify-send
 private-cache
 private-dev
 private-etc
-private-lib libnotify.so.*
 private-tmp
 
 dbus-user filter

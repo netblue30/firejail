@@ -56,7 +56,6 @@ private-bin python*,statusof
 private-cache
 private-dev
 private-etc @network,@tls-ca,httpd
-private-lib engines*,libcrypto.so.*,libssl.so.*,libz.so.*,python*
 private-tmp
 
 dbus-user none

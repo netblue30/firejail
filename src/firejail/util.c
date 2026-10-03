@@ -605,26 +605,6 @@ int is_link(const char *fname) {
 	return (rv != -1);
 }
 
-#if 0
-char *realpath_as_user(const char *fname) {
-	assert(fname);
-
-	int called_as_root = 0;
-	if (geteuid() == 0)
-		called_as_root = 1;
-
-	if (called_as_root)
-		EUID_USER();
-
-	char *rv = realpath(fname, NULL);
-
-	if (called_as_root)
-		EUID_ROOT();
-
-	return rv;
-}
-#endif
-
 ssize_t readlink_as_user(const char *fname, char *buf, size_t sz) {
 	assert(fname && buf && sz);
 
@@ -660,26 +640,6 @@ int stat_as_user(const char *fname, struct stat *s) {
 
 	return rv;
 }
-
-#if 0
-int lstat_as_user(const char *fname, struct stat *s) {
-	assert(fname);
-
-	int called_as_root = 0;
-	if (geteuid() == 0)
-		called_as_root = 1;
-
-	if (called_as_root)
-		EUID_USER();
-
-	int rv = lstat(fname, s);
-
-	if (called_as_root)
-		EUID_ROOT();
-
-	return rv;
-}
-#endif
 
 // remove all slashes and single dots from the end of a path
 // for example /foo/bar///././. -> /foo/bar
@@ -1526,13 +1486,6 @@ int ascii_islower(unsigned char c) {
 
 int ascii_isupper(unsigned char c) {
 	return (c >= 'A' && c <= 'Z');
-}
-
-int ascii_isxdigit(unsigned char c) {
-	int ret = (ascii_isdigit(c) ||
-	          (c >= 'a' && c <= 'f') ||
-	          (c >= 'A' && c <= 'F'));
-	return ret;
 }
 
 // Note: Keep this in sync with NAME VALIDATION in src/man/firejail.1.in.

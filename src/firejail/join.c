@@ -107,27 +107,6 @@ static void extract_command(int argc, char **argv, int index) {
 	build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, index, true);
 }
 
-#if 0
-static int open_shell(void) {
-	EUID_ASSERT();
-
-	if (arg_debug)
-		printf("Opening shell %s\n", cfg.usershell);
-	// file descriptor will leak if not opened with O_CLOEXEC !!
-	int fd = open(cfg.usershell, O_PATH|O_CLOEXEC);
-	if (fd == -1) {
-		fprintf(stderr, "Error: cannot open shell %s\n", cfg.usershell);
-		exit(1);
-	}
-
-	// file descriptor needs to reach final fexecve
-	if (asprintf(&cfg.keep_fd, "%s,%d", cfg.keep_fd ? cfg.keep_fd : "", fd) == -1)
-		errExit("asprintf");
-
-	return fd;
-}
-#endif
-
 static void extract_nogroups(ProcessHandle sandbox) {
 	struct stat s;
 

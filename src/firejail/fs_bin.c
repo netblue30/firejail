@@ -167,19 +167,6 @@ static void duplicate(char *fname) {
 			errExit("asprintf");
 	}
 
-	// add to private-lib list
-	if (cfg.bin_private_lib == NULL) {
-		if (asprintf(&cfg.bin_private_lib, "%s,%s",fname, full_path) == -1)
-			errExit("asprintf");
-	}
-	else {
-		char *tmp;
-		if (asprintf(&tmp, "%s,%s,%s", cfg.bin_private_lib, fname, full_path) == -1)
-			errExit("asprintf");
-		free(cfg.bin_private_lib);
-		cfg.bin_private_lib = tmp;
-	}
-
 	// if full_path is symlink, and the link is in our path, copy both the file and the symlink
 	if (is_link(full_path)) {
 		char *actual_path = realpath(full_path, NULL);

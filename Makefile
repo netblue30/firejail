@@ -26,7 +26,7 @@ COMPLETIONDIRS = src/zsh_completion src/bash_completion
 
 APPS = src/firecfg/firecfg src/firejail/firejail src/firemon/firemon src/profstats/profstats src/jailcheck/jailcheck src/etc-cleanup/etc-cleanup src/fbwrap/fbwrap
 SBOX_APPS = src/fbuilder/fbuilder src/ftee/ftee
-SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fldd/fldd src/fnet/fnet src/fnetfilter/fnetfilter
+SBOX_APPS_NON_DUMPABLE = src/fcopy/fcopy src/fnet/fnet src/fnetfilter/fnetfilter
 SBOX_APPS_NON_DUMPABLE += src/fsec-optimize/fsec-optimize src/fsec-print/fsec-print src/fseccomp/fseccomp
 SBOX_APPS_NON_DUMPABLE += src/fnettrace/fnettrace src/fnettrace-dns/fnettrace-dns src/fnettrace-sni/fnettrace-sni
 SBOX_APPS_NON_DUMPABLE += src/fnettrace-icmp/fnettrace-icmp src/fnetlock/fnetlock

@@ -745,11 +745,6 @@ Print all recognized error numbers in the current Firejail software build and ex
 Example:
 .br
 $ firejail \-\-debug\-errnos
-#ifdef HAVE_PRIVATE_LIB
-.TP
-\fB\-\-debug\-private\-lib
-Debug messages for \-\-private\-lib option.
-#endif
 .TP
 \fB\-\-debug\-protocols
 Print all recognized protocols in the current Firejail software build and exit.
@@ -2321,63 +2316,6 @@ $ firejail \-\-allow\-debuggers \-\-profile=/etc/firejail/transmission\-qt.profi
 strace \-f \-\-trace=%file /usr/bin/transmission-qt 2>&1 | grep etc
 
 See also \fB\-\-allow-debuggers\fR and \fB\-\-trace\fR.
-#ifdef HAVE_PRIVATE_LIB
-.TP
-\fB\-\-private\-lib=file,directory
-This feature is currently under heavy development. Only amd64 platforms are supported at this moment.
-The files and directories in the list must be expressed as relative to
-the /lib directory.
-The idea is to build a new /lib in a temporary filesystem,
-with only the library files necessary to run the application.
-It could be as simple as:
-.br
-
-.br
-$ firejail \-\-private\-lib /usr/bin/galculator
-.br
-
-.br
-but it gets complicated really fast:
-.br
-
-.br
-$ firejail \-\-private\-lib=x86_64\-linux\-gnu/xed,x86_64\-linux\-gnu/gdk\-pixbuf\-2.0,libenchant.so.1,librsvg\-2.so.2 /usr/bin/xed
-.br
-
-.br
-The feature is integrated with \-\-private\-bin:
-.br
-
-.br
-$ firejail \-\-private\-lib \-\-private\-bin=bash,ls,ps
-.br
-$ ls /lib
-.br
-ld-linux-x86-64.so.2 libgpg-error.so.0 libprocps.so.6 libsystemd.so.0
-.br
-libc.so.6 liblz4.so.1 libpthread.so.0 libtinfo.so.5
-.br
-libdl.so.2 liblzma.so.5 librt.so.1 x86_64-linux-gnu
-.br
-libgcrypt.so.20 libpcre.so.3 libselinux.so.1
-.br
-$ ps
-.br
- PID TTY          TIME CMD
-.br
-    1 pts/0    00:00:00 firejail
-.br
-   45 pts/0    00:00:00 bash
-.br
-   48 pts/0    00:00:00 ps
-.br
-$
-.br
-
-.br
-Note: Support for this command is controlled in firejail.config with the
-\fBprivate\-lib\fR option.
-#endif
 .TP
 \fB\-\-private\-opt=file,directory
 Build a new /opt in a temporary

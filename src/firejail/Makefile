@@ -9,7 +9,6 @@ TARGET = $(PROG)
 
 EXTRA_OBJS = \
 ../lib/common.o \
-../lib/ldd_utils.o \
 ../lib/firejail_user.o \
 ../lib/errno.o \
 ../lib/syscall.o

@@ -70,7 +70,6 @@ int arg_private_cache = 0;		// mount private home/.cache
 int arg_debug = 0;				// print debug messages
 int arg_debug_blacklists = 0;			// print debug messages for blacklists
 int arg_debug_whitelists = 0;			// print debug messages for whitelists
-int arg_debug_private_lib = 0;			// print debug messages for private-lib
 int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
 
@@ -118,7 +117,6 @@ int arg_private_opt = 0;			// private opt directory
 int arg_private_srv = 0;			// private srv directory
 int arg_private_bin = 0;			// private bin directory
 int arg_private_tmp = 0;			// private tmp directory
-int arg_private_lib = 0;			// private lib directory
 int arg_private_cwd = 0;			// private working directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist command
@@ -1297,10 +1295,6 @@ int main(int argc, char **argv, char **envp) {
 			arg_debug_blacklists = 1;
 		else if (strcmp(argv[i], "--debug-whitelists") == 0)
 			arg_debug_whitelists = 1;
-#ifdef HAVE_PRIVATE_LIB
-		else if (strcmp(argv[i], "--debug-private-lib") == 0)
-			arg_debug_private_lib = 1;
-#endif
 		else if (strcmp(argv[i], "--quiet") == 0) {
 			if (!arg_debug)
 				arg_quiet = 1;
@@ -1965,23 +1959,6 @@ int main(int argc, char **argv, char **envp) {
 			else
 				exit_err_feature(argv[i], CFG_PRIVATE_BIN);
 		}
-#ifdef HAVE_PRIVATE_LIB
-		else if (strncmp(argv[i], "--private-lib", 13) == 0) {
-			if (checkcfg(CFG_PRIVATE_LIB)) {
-				// extract private lib list (if any)
-				if (argv[i][13] == '=') {
-					if (cfg.lib_private_keep) {
-						if (argv[i][14] != '\0' && asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, argv[i] + 14) < 0)
-							errExit("asprintf");
-					} else
-						cfg.lib_private_keep = argv[i] + 14;
-				}
-				arg_private_lib = 1;
-			}
-			else
-				exit_err_feature(argv[i], CFG_PRIVATE_LIB);
-		}
-#endif
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;
 		}

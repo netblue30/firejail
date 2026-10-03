@@ -182,7 +182,6 @@ typedef struct config_t {
 	char *opt_private_keep;	// keep list for private opt directory
 	char *srv_private_keep;	// keep list for private srv directory
 	char *bin_private_keep;	// keep list for private bin directory
-	char *bin_private_lib;	// executable list sent by private-bin to private-lib
 	char *lib_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
 
@@ -287,7 +286,6 @@ extern int arg_private_cache;	// private home/.cache
 extern int arg_debug;		// print debug messages
 extern int arg_debug_blacklists;	// print debug messages for blacklists
 extern int arg_debug_whitelists;	// print debug messages for whitelists
-extern int arg_debug_private_lib;	// print debug messages for private-lib
 extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
 
@@ -330,7 +328,6 @@ extern int arg_private_opt;	// private opt directory
 extern int arg_private_srv;	// private srv directory
 extern int arg_private_bin;	// private bin directory
 extern int arg_private_tmp;	// private tmp directory
-extern int arg_private_lib;	// private lib directory
 extern int arg_private_cwd;	// private working directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist command
@@ -610,6 +607,9 @@ int ascii_isupper(unsigned char c);
 int ascii_isxdigit(unsigned char c);
 int invalid_name(const char *name);
 void check_homedir(const char *dir);
+int is_firejail_link(const char *fname);
+char *find_in_path(const char *program);
+
 
 // Get info regarding the last kernel mount operation from /proc/self/mountinfo
 // The return value points to a static area, and will be overwritten by subsequent calls.
@@ -757,11 +757,6 @@ void pulseaudio_disable(void);
 // fs_bin.c
 void fs_private_bin_list(void);
 
-// fs_lib.c
-int is_firejail_link(const char *fname);
-char *find_in_path(const char *program);
-void fs_private_lib(void);
-
 // protocol.c
 void protocol_filter_save(void);
 void protocol_filter_load(const char *fname);
@@ -845,7 +840,6 @@ enum {
 	CFG_PRIVATE_BIN_NO_LOCAL,
 	CFG_PRIVATE_CACHE,
 	CFG_PRIVATE_ETC,
-	CFG_PRIVATE_LIB,
 	CFG_PRIVATE_OPT,
 	CFG_PRIVATE_SRV,
 	CFG_RESTRICTED_NETWORK,

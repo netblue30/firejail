@@ -1592,3 +1592,58 @@ void check_homedir(const char *dir) {
 		fmessage("No full support for symbolic links in path of user directory.\n"
 			"Please provide resolved path in password database (/etc/passwd).\n\n");
 }
+
+// return 1 if symlink to firejail executable
+int is_firejail_link(const char *fname) {
+	EUID_ASSERT();
+
+	if (!is_link(fname))
+		return 0;
+
+	char *rp = realpath(fname, NULL);
+	if (!rp)
+		return 0;
+
+	int rv = 0;
+	const char *base = gnu_basename(rp);
+	if (strcmp(base, "firejail") == 0)
+		rv = 1;
+
+	free(rp);
+	return rv;
+}
+
+char *find_in_path(const char *program) {
+	EUID_ASSERT();
+	if (arg_debug)
+		printf("Searching $PATH for %s\n", program);
+
+	const char *path = env_get("PATH");
+	if (!path)
+		return NULL;
+
+	char *dup = strdup(path);
+	if (!dup)
+		errExit("strdup");
+	char *tok = strtok(dup, ":");
+	while (tok) {
+		char *fname;
+		if (asprintf(&fname, "%s/%s", tok, program) == -1)
+			errExit("asprintf");
+
+		if (arg_debug)
+			printf("trying #%s#\n", fname);
+		struct stat s;
+		if (stat(fname, &s) == 0 &&
+		    !is_firejail_link(fname)) { // skip links created by firecfg
+			free(dup);
+			return fname;
+		}
+
+		free(fname);
+		tok = strtok(NULL, ":");
+	}
+
+	free(dup);
+	return NULL;
+}

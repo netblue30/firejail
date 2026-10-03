@@ -41,7 +41,6 @@ private-cache
 private-cwd
 private-dev
 private-etc
-private-lib
 private-tmp
 quiet
 restrict-namespaces

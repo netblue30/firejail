@@ -64,7 +64,6 @@ const char *const cfgstr[] = {
 	[CFG_PRIVATE_BIN_NO_LOCAL] = "private-bin-no-local",
 	[CFG_PRIVATE_CACHE] = "private-cache",
 	[CFG_PRIVATE_ETC] = "private-etc",
-	[CFG_PRIVATE_LIB] = "private-lib",
 	[CFG_PRIVATE_OPT] = "private-opt",
 	[CFG_PRIVATE_SRV] = "private-srv",
 	[CFG_RESTRICTED_NETWORK] = "restricted-network",
@@ -119,7 +118,6 @@ int checkcfg(int val) {
 		cfg_val[CFG_ALLOW_TRAY] = 0;
 		cfg_val[CFG_CHROOT] = 0;
 		cfg_val[CFG_SECCOMP_LOG] = 0;
-		cfg_val[CFG_PRIVATE_LIB] = 0;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -169,7 +167,6 @@ int checkcfg(int val) {
 			PARSE_YESNO(CFG_PRIVATE_BIN_NO_LOCAL, "private-bin-no-local")
 			PARSE_YESNO(CFG_PRIVATE_CACHE, "private-cache")
 			PARSE_YESNO(CFG_PRIVATE_ETC, "private-etc")
-			PARSE_YESNO(CFG_PRIVATE_LIB, "private-lib")
 			PARSE_YESNO(CFG_PRIVATE_OPT, "private-opt")
 			PARSE_YESNO(CFG_PRIVATE_SRV, "private-srv")
 			PARSE_YESNO(CFG_RESTRICTED_NETWORK, "restricted-network")
@@ -454,13 +451,6 @@ static const char *const compiletime_support =
 
 	"\n\t- output logging is "
 #ifdef HAVE_OUTPUT
-		"enabled"
-#else
-		"disabled"
-#endif
-
-	"\n\t- private-lib support is "
-#ifdef HAVE_PRIVATE_LIB
 		"enabled"
 #else
 		"disabled"

@@ -940,17 +940,6 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-#ifdef HAVE_PRIVATE_LIB
-	// private-lib is disabled for appimages
-	if (arg_private_lib && !arg_appimage) {
-		if (cfg.chrootdir)
-			fwarning("private-lib feature is disabled in chroot\n");
-		else {
-			fs_private_lib();
-		}
-	}
-#endif
-
 	if (arg_private_cache) {
 		EUID_USER();
 		profile_add("tmpfs ${HOME}/.cache");

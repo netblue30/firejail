@@ -654,7 +654,6 @@ HAVE_X11
 HAVE_USERNS
 HAVE_NETWORK
 HAVE_CHROOT
-HAVE_PRIVATE_LIB
 HAVE_OUTPUT
 HAVE_DBUSPROXY
 EXTRA_LDFLAGS
@@ -731,7 +730,6 @@ enable_selinux
 enable_landlock
 enable_dbusproxy
 enable_output
-enable_private_lib
 enable_chroot
 enable_network
 enable_userns
@@ -1383,7 +1381,6 @@ Optional Features:
   --disable-landlock      disable Landlock self-restriction support
   --disable-dbusproxy     disable dbus proxy
   --disable-output        disable --output logging
-  --disable-private-lib   disable private lib feature
   --enable-chroot         disable chroot
   --disable-network       disable network
   --disable-userns        disable user namespace
@@ -4279,21 +4276,6 @@ then :
 
 fi
 
-HAVE_PRIVATE_LIB=""
-
-# Check whether --enable-private-lib was given.
-if test ${enable_private_lib+y}
-then :
-  enableval=$enable_private_lib;
-fi
-
-if test "x$enable_private_lib" = "xyes"
-then :
-
-	HAVE_PRIVATE_LIB="-DHAVE_PRIVATE_LIB"
-
-fi
-
 HAVE_CHROOT=""
 
 # Check whether --enable-chroot was given.
@@ -5661,7 +5643,6 @@ Features:
    file transfer support: $HAVE_FILE_TRANSFER
    Landlock support: $HAVE_LANDLOCK
    network: $HAVE_NETWORK
-   private lib support: $HAVE_PRIVATE_LIB
    SELinux labeling support: $HAVE_SELINUX
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11

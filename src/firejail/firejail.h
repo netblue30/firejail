@@ -26,11 +26,6 @@
 #include <stdarg.h>
 #include <sys/stat.h>
 
-// debug restricted shell
-//#define DEBUG_RESTRICTED_SHELL
-
-
-
 // profiles
 #define DEFAULT_USER_PROFILE	"default"
 #define DEFAULT_ROOT_PROFILE	"server"
@@ -395,8 +390,6 @@ extern unsigned long long start_timestamp;
 #define MAX_ARG_LEN (PATH_MAX + 32) // --foobar=PATH
 extern int arg_max_count;
 extern unsigned long arg_max_len;
-extern char **fullargv;
-extern int fullargc;
 
 // main.c
 void check_user_namespace(void);
@@ -524,9 +517,6 @@ void join(pid_t pid, int argc, char **argv, int index) __attribute__((noreturn))
 
 // shutdown.c
 void shut(pid_t pid);
-
-// restricted_shell.c
-int restricted_shell(const char *user);
 
 // arp.c
 void arp_announce(const char *dev, Bridge *br);

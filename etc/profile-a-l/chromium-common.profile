@@ -46,6 +46,7 @@ include whitelist-run-common.inc
 ?BROWSER_DISABLE_U2F: nou2f
 
 ?BROWSER_DISABLE_U2F: private-dev
+private-cache
 #private-tmp # issues when using multiple browser sessions
 
 # Note: This prevents access to passwords saved in GNOME Keyring and KWallet

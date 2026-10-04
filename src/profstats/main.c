@@ -19,8 +19,8 @@
 */
 
 #include "../include/common.h"
-
 #define MAXBUF 2048
+
 // stats
 static int cnt_profiles = 0;
 static int cnt_apparmor = 0;
@@ -49,6 +49,7 @@ static int cnt_whitelisthome = 0;
 static int cnt_noroot = 0;
 
 static int level = 0;
+static int arg_include = 0;
 static int arg_debug = 0;
 static int arg_apparmor = 0;
 static int arg_caps = 0;
@@ -83,6 +84,7 @@ static const char *const usage_str =
 	"   --caps - print profiles without caps\n"
 	"   --dbus-system-none - print profiles without \"dbus-system none\"\n"
 	"   --dbus-user-none - print profiles without \"dbus-user none\"\n"
+	"   --include - print all the files loaded by the program\n"
 	"   --ssh - print profiles without \"include disable-common.inc\"\n"
 	"   --noexec - print profiles without \"include disable-exec.inc\"\n"
 	"   --noroot - print profiles without \"noroot\"\n"
@@ -108,6 +110,8 @@ static void usage(void) {
 }
 
 static void process_file(char *fname) {
+	if (arg_include)
+		printf("loading %s\n", fname);
 	assert(fname);
 	char *tmpfname = NULL;
 
@@ -246,6 +250,8 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--debug") == 0)
 			arg_debug = 1;
+		else if (strcmp(argv[i], "--include") == 0)
+			arg_include = 1;
 		else if (strcmp(argv[i], "--apparmor") == 0)
 			arg_apparmor = 1;
 		else if (strcmp(argv[i], "--caps") == 0)

@@ -27,6 +27,16 @@ testapp() {
 # keeping sudo available
 sudo ls
 
+echo "TESTING: firejail problems **************************"
+echo "TESTING: --version check (test/apps/version.exp)"
+./seccomp-clock.exp
+
+echo "TESTING: seccomp @clock group (test/apps/seccomp-clock.exp)"
+./seccomp-clock.exp
+
+echo "TESTING: pid 1 functionality (test/apps/pid1.exp)"
+./pid1.exp
+
 # console apps
 for app in "${apps[@]}"; do
 	if command -v "$app"
@@ -42,13 +52,6 @@ done
 rm -f index.html
 rm wget-log*
 sudo true
-
-echo "TESTING: firejail problems **************************"
-echo "TESTING: seccomp @clock group (test/apps/seccomp-clock.exp)"
-./seccomp-clock.exp
-
-echo "TESTING: pid 1 functionality (test/apps/pid1.exp)"
-./pid1.exp
 
 echo "TESTING: x11 sandboxing *********************************"
 for app in "${x11apps[@]}"; do

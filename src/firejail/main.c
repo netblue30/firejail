@@ -363,6 +363,12 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		usage();
 		exit(0);
 	}
+	if (strcmp(argv[i], "--version") == 0) {
+		print_version_full();
+		exit(0);
+	}
+
+
 #ifdef HAVE_X11
 	else if (strcmp(argv[i], "--x11") == 0) {
 		if (checkcfg(CFG_X11)) {
@@ -1011,12 +1017,6 @@ int main(int argc, char **argv, char **envp) {
 	if (check_arg(argc, argv, "--debug", 1)) {
 		arg_debug = 1;
 		arg_quiet = 0;
-	}
-
-	// process --version
-	if (check_arg(argc, argv, "--version", 1)) {
-		print_version_full();
-		exit(0);
 	}
 
 	// initialize values from firejail.config (needed for arg/env checks)

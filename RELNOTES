@@ -5,6 +5,9 @@ firejail (0.9.81) baseline; urgency=low
   * feature: allow subpaths in xdg macros (#2359 #7151)
   * feature: add `${PROJECTS}` macro (#7157)
   * feature: add `${PUBLICSHARE}` and `${TEMPLATES}` macros (#7164)
+  * feature: add --include command line option to profstats
+  * modif: added private-cache to all firefox-based and chromium-based
+    browsers (d3bf6ac, 70107ef)
   * modif: create a new syscall group: `@program-keep` (9d90daf)
   * modif: stop following symlinks to /dev/null on disable (#5803 #7129)
   * modif: add backtick in `reject_meta_chars()` (#7183)
@@ -17,6 +20,10 @@ firejail (0.9.81) baseline; urgency=low
   * removal: --private-home command (#7200)
   * removal: ./configure --disable-sandbox-check option (#7201)
   * removal: --x11=xpra option (#7207)
+  * removal: ssh restricted shell feature (4a8c59e)
+  * removal: private-lib (bbcc23d)
+  * removal: firecfg --guide; the pertinent information was moved in
+    man firejail (c30b44d)
   * bugfix: disable /run/systemd/resolve with net=none - fixes potential DNS
     leaks when using systemd-resolved (#7209 #7216)
   * bugfix: fbwrap: wait for target and propagate exit code (#7081 #7224)

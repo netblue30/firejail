@@ -15,6 +15,8 @@ $(TESTS):
 clean:
 	for test in $(TESTS); do $(RM) "$$test/$$test.log"; done
 	$(RM) -r environment/-testdir
+	$(RM) apps/index.html
+	$(RM) apps/wget-log
 	$(RM) chroot/unchroot
 	$(RM) environment/index.html*
 	$(RM) environment/logfile*
@@ -26,5 +28,3 @@ clean:
 	$(RM) utils/index.html*
 	$(RM) utils/lstesting
 	$(RM) utils/wget-log
-	$(RM) apps/wget-log
-	$(RM) apps/index.html

@@ -26,3 +26,5 @@ clean:
 	$(RM) utils/index.html*
 	$(RM) utils/lstesting
 	$(RM) utils/wget-log
+	$(RM) apps/wget-log
+	$(RM) apps/index.html

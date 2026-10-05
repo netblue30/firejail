@@ -1199,6 +1199,8 @@ sak96 (https://github.com/sak96)
 	- Fix Firefox 'Profile not found' for psd (v6.45)
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
+sanka-eu (https://github.com/sanka-eu)
+	- profile.c: fix use of dangling pointer for netns argument (#7246)
 sarneaud (https://github.com/sarneaud)
 	- rewrite globbing code to fix various minor issues
 	- added noblacklist command for profile files

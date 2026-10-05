@@ -1,6 +1,7 @@
 firejail (0.9.81) baseline; urgency=low
   * work in progress
   * security: create `~/.config/firejail` to prevent sandbox escape (#7154)
+  * security: fix use of dangling pointer for netns argument (#7246)
   * feature: allow subpaths in xdg macros (#2359 #7151)
   * feature: add `${PROJECTS}` macro (#7157)
   * feature: add `${PUBLICSHARE}` and `${TEMPLATES}` macros (#7164)

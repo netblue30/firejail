@@ -104,7 +104,7 @@ static void extract_command(int argc, char **argv, int index) {
 	}
 
 	// build command
-	build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, index, true);
+	build_cmdline(&cfg.command_line, argc, argv, index, true);
 }
 
 static void extract_nogroups(ProcessHandle sandbox) {
@@ -494,9 +494,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
 
 		extract_command(argc, argv, index);
-		if (cfg.command_line == NULL)
-			cfg.window_title = cfg.usershell;
-		else if (arg_debug)
+		if (arg_debug && cfg.command_line != NULL)
 			printf("Extracted command #%s#\n", cfg.command_line);
 
 		// set cpu affinity

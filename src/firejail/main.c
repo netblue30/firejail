@@ -2609,18 +2609,17 @@ int main(int argc, char **argv, char **envp) {
 			exit(1);
 		}
 
-		cfg.window_title = cfg.usershell;
 		cfg.command_name = cfg.usershell;
 	}
 	else if (arg_appimage) {
 		if (arg_debug)
 			printf("Configuring appimage environment\n");
 		appimage_set(cfg.command_name);
-		build_appimage_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index, true);
+		build_appimage_cmdline(&cfg.command_line, argc, argv, prog_index, true);
 	}
 	else {
 		// Only add extra quotes if we were not launched by sshd.
-		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index, 1);
+		build_cmdline(&cfg.command_line, argc, argv, prog_index, 1);
 	}
 /*	else {
 		fprintf(stderr, "Error: command must be specified when --shell=none used.\n");

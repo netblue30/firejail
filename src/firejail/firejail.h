@@ -221,7 +221,6 @@ typedef struct config_t {
 
 	// command line
 	char *command_line;
-	char *window_title;
 	char *command_name;
 	char **original_argv;
 	int original_argc;
@@ -870,8 +869,8 @@ void appimage_clear(void);
 long unsigned int appimage2_size(int fd);
 
 // cmdline.c
-void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, bool want_extra_quotes);
-void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, bool want_extra_quotes);
+void build_cmdline(char **command_line, int argc, char **argv, int index, bool want_extra_quotes);
+void build_appimage_cmdline(char **command_line, int argc, char **argv, int index, bool want_extra_quotes);
 
 // sbox.c
 // programs

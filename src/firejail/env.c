@@ -141,8 +141,8 @@ void env_defaults(void) {
 		env_store_name_val("PROMPT_COMMAND", ":", SETENV); // unsetenv() will not work here, bash still picks it up from somewhere
 
 	// set the window title
-	if (!arg_quiet && isatty(STDOUT_FILENO))
-		printf("\033]0;firejail %s\007", cfg.window_title);
+	//	if (!arg_quiet && isatty(STDOUT_FILENO))
+	//	printf("\033]0;firejail %s\007", cfg.window_title);
 
 	// pass --quiet as an environment variable, in case the command calls further firejailed commands
 	if (arg_quiet)

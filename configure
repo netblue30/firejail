@@ -650,6 +650,7 @@ HAVE_GCOV
 HAVE_FATAL_WARNINGS
 HAVE_SUID
 HAVE_FILE_TRANSFER
+HAVE_X11_LEGACY
 HAVE_X11
 HAVE_USERNS
 HAVE_NETWORK
@@ -734,6 +735,7 @@ enable_chroot
 enable_network
 enable_userns
 enable_x11
+enable_x11_legacy
 enable_file_transfer
 enable_suid
 enable_fatal_warnings
@@ -1385,6 +1387,8 @@ Optional Features:
   --disable-network       disable network
   --disable-userns        disable user namespace
   --disable-x11           disable X11 sandboxing support
+  --enable-x11-legacy     add support for Xorg security extension and xvfb X11
+                          server
   --disable-file-transfer disable file transfer
   --disable-suid          install as a non-SUID executable
   --enable-fatal-warnings -W -Werror
@@ -4336,6 +4340,21 @@ then :
 
 fi
 
+HAVE_X11_LEGACY=""
+
+# Check whether --enable-x11-legacy was given.
+if test ${enable_x11_legacy+y}
+then :
+  enableval=$enable_x11_legacy;
+fi
+
+if test "x$enable_x11_legacy" = "xyes"
+then :
+
+	HAVE_X11_LEGACY="-DHAVE_X11_LEGACY"
+
+fi
+
 HAVE_FILE_TRANSFER=""
 
 # Check whether --enable-file-transfer was given.
@@ -5646,6 +5665,7 @@ Features:
    SELinux labeling support: $HAVE_SELINUX
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11
+   X11 legacy servers: $HAVE_X11_LEGACY
 
 EOF
 

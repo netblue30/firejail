@@ -476,6 +476,13 @@ static const char *const compiletime_support =
 #else
 		"disabled"
 #endif
+
+	"\n\t- Xorg security extension xvfb support is "
+#ifdef HAVE_X11_LEGACY
+		"enabled"
+#else
+		"disabled"
+#endif
 	"\n";
 
 void print_compiletime_support(void) {

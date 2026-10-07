@@ -3186,19 +3186,22 @@ Example:
 .br
 $ firejail \-\-version
 .br
-firejail version 0.9.27
+firejail version 0.9.81
 
 Compile time support:
+    - always force nonewprivs support is disabled
     - AppArmor support is enabled
     - AppImage support is enabled
-    - chroot support is enabled
-    - file and directory whitelisting support is enabled
+    - chroot support is disabled
+    - D-BUS proxy support is enabled
     - file transfer support is enabled
-    - firetunnel support is enabled
+    - Landlock support is enabled
     - networking support is enabled
-    - seccomp-bpf support is enabled
+    - output logging is enabled
+    - SELinux support is disabled
     - user namespace support is enabled
     - X11 sandboxing support is enabled
+    - Xorg security extension and xvfb support is enabled
 .br
 #ifdef HAVE_NETWORK
 .TP
@@ -3307,45 +3310,14 @@ $ sudo firejail \-\-writable\-var\-log
 #ifdef HAVE_X11
 .TP
 \fB\-\-x11
-Sandbox the application using Xephyr, Xvfb or Xorg security extension.
+Sandbox the application using Xephyr X11 server.
 The sandbox will prevent screenshot and keylogger applications started inside the sandbox from accessing
-clients running outside the sandbox.
-By default Firejail will use Xephyr.
-If this fails, Firejail will not attempt to use Xvfb or X11 security extension.
-.br
-
-.br
-Xephyr and Xvfb modes require a network namespace to be instantiated in order to disable
-X11 abstract Unix socket. If this is not possible, the user can disable the abstract socket
-by adding "-nolisten local" on Xorg command line at system level.
-.br
-
-.br
-Example:
-.br
-$ firejail \-\-x11 \-\-net=eth0 /usr/bin/firefox
-
-.TP
-\fB\-\-x11=none
-Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and the file specified in ${XAUTHORITY} environment variable.
-Remove DISPLAY and XAUTHORITY environment variables.
-Stop with error message if X11 abstract socket will be accessible in jail.
-
-.TP
-\fB\-\-x11=xephyr
-Start Xephyr and attach the sandbox to this server.
-Xephyr is a display server implementing the X11 display server protocol.
-A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
-.br
-
-.br
-Xephyr runs in a window just like any other X11 application. The default window size is 800x600.
+clients running outside the sandbox. The default window size is 800x600.
 This can be modified in /etc/firejail/firejail.config file.
-.br
+.r
 
 .br
-The recommended way to use this feature is to run a window manager inside the sandbox.
-A security profile for OpenBox is provided.
+Note: A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
 .br
 
 .br
@@ -3356,8 +3328,32 @@ This feature is not available when running as root.
 .br
 Example:
 .br
-$ firejail \-\-x11=xephyr --net=eth0 /usr/bin/openbox
+Start Xephyr and attach the sandbox to this server. Run Xephyr \-\-help to get a list of available options.
+.br
 
+.br
+$ firejail \-\-x11 \-\-net=eth0 /usr/bin/firefox
+.br
+
+.br
+You can also run a display server inside the sandbox.
+.br
+
+.br
+$ firejail \-\-x11 \-\-net=eth0 /usr/bin/openbox
+.br
+
+.br
+A security profile for openbox is provided.
+
+.TP
+\fB\-\-x11=none
+Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and the file specified in ${XAUTHORITY} environment variable.
+Remove DISPLAY and XAUTHORITY environment variables.
+Stop with error message if X11 abstract socket will be accessible in jail.
+#endif
+
+#ifdef HAVE_X11_LEGACY
 .TP
 \fB\-\-x11=xorg
 Sandbox the application using the untrusted mode implemented by X11 security extension.
@@ -3435,29 +3431,31 @@ On the client machine we start a VNC viewer and use it to connect to our server:
 .br
 $ vncviewer
 .br
+#endif
 
+#ifdef HAVE_X11
 .TP
 \fB\-\-xephyr\-extra\-params=OPTIONS
-Set Xephyr server command extra parameters for x11 \-\-x11=xephyr. The setting will overwrite the default set in /etc/firejail/firejail.config
+Set Xephyr server command extra parameters for Xephyr X11 server. The setting will overwrite the default set in /etc/firejail/firejail.config
 for the current sandbox. Run Xephyr -help to get a list of available options.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-net=eth0 \-\-x11=xephyr \-\-xephyr\-extra\-params="\-title firefox" /usr/bin/firefox
+$ firejail \-\-net=eth0 \-\-x11 \-\-xephyr\-extra\-params="\-title firefox" /usr/bin/firefox
 .br
 
 .TP
 \fB\-\-xephyr\-screen=WIDTHxHEIGHT
-Set screen size for \-\-x11=xephyr. The setting will overwrite the default set in /etc/firejail/firejail.config
+Set screen size for Xephyr X11 server. The setting will overwrite the default set in /etc/firejail/firejail.config
 for the current sandbox. Run xrandr to get a list of supported resolutions on your computer.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-net=eth0 \-\-x11=xephyr \-\-xephyr\-screen=640x480 /usr/bin/firefox
+$ firejail \-\-net=eth0 \-\-x11 \-\-xephyr\-screen=640x480 /usr/bin/firefox
 .br
 
 #endif

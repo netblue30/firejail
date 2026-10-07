@@ -43,6 +43,7 @@ HAVE_SELINUX=@HAVE_SELINUX@
 HAVE_SUID=@HAVE_SUID@
 HAVE_USERNS=@HAVE_USERNS@
 HAVE_X11=@HAVE_X11@
+HAVE_X11_LEGACY=@HAVE_X11_LEGACY@
 
 MANFLAGS = \
 	$(HAVE_APPARMOR) \
@@ -57,7 +58,8 @@ MANFLAGS = \
 	$(HAVE_SELINUX) \
 	$(HAVE_SUID) \
 	$(HAVE_USERNS) \
-	$(HAVE_X11)
+	$(HAVE_X11) \
+	$(HAVE_X11_LEGACY)
 
 # User variables - should not be modified in the code (as they are reserved for
 # the user building the package); see the following for details:

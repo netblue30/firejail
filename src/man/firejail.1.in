@@ -208,10 +208,22 @@ $ firejail \-\-appimage \-\-net=none \-\-x11 \-\-profile=krita krita\-3.0\-x86_6
 .br
 
 .br
-Note: When using both \fB\-\-appimage\fR and \fB\-\-profile\fR, it is recommended
+Note 1: When using both \fB\-\-appimage\fR and \fB\-\-profile\fR, it is recommended
 to always specify the former before the latter, so that any \fB?HAS_APPIMAGE\fR
 conditionals inside of the profile evaluate to true (see \fB?CONDITIONAL\fR in
 firejail\-profile(5)).
+.br
+
+.br
+Note 2: If you want to disable networking by default every time you sandbox an
+appimage, add a conditional in /etc/firejail/globals.local as follows:
+.br
+
+.br
+$ cat /etc/firejail/globals.local
+.br
+?HAS_APPIMAGE: net none
+.br
 .TP
 \fB\-\-bind=filename1,filename2
 Mount-bind filename1 on top of filename2. This option is only available when running as root.

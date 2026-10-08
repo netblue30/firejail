@@ -5,7 +5,6 @@ apps=(
 	curl
 	dig
 	ffmpeg
-	ftp
 	less
 	ping
 	ssh
@@ -16,10 +15,8 @@ apps=(
 
 x11apps=(
 	firefox-xephyr
-	firefox-xorg
 	x11-none
 	xterm-xephyr
-	xterm-xorg
 )
 
 browsers=(

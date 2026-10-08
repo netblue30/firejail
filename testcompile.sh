@@ -79,6 +79,10 @@ msg='disable X11 support'
 testconfigure "$msg" --enable-fatal-warnings --disable-x11 &&
 testmake "$msg"
 
+msg='enable X11 legacy support'
+testconfigure "$msg" --enable-fatal-warnings --enable-x11-legacy &&
+testmake "$msg"
+
 msg='enable selinux'
 testconfigure "$msg" --enable-fatal-warnings --enable-selinux &&
 testmake "$msg"
@@ -97,10 +101,6 @@ testmake "$msg"
 
 msg='disable output logging'
 testconfigure "$msg" --enable-fatal-warnings --disable-output &&
-testmake "$msg"
-
-msg='disable private-lib'
-testconfigure "$msg" --enable-fatal-warnings --disable-private-lib &&
 testmake "$msg"
 
 msg='enable-only-syscfg-profiles'

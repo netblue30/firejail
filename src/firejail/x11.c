@@ -81,7 +81,6 @@ int x11_display(void) {
 }
 
 
-#ifdef HAVE_X11
 // check for X11 abstract sockets
 static int x11_abstract_sockets_present(void) {
 
@@ -124,6 +123,7 @@ static int x11_abstract_sockets_present(void) {
 }
 
 
+#ifdef HAVE_X11
 // Choose a random, unallocated display number.  This has an inherent
 // and unavoidable TOCTOU race, since we cannot create either the
 // socket or a lockfile ourselves.

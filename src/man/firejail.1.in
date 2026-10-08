@@ -3328,10 +3328,6 @@ This feature is not available when running as root.
 .br
 Example:
 .br
-Start Xephyr and attach the sandbox to this server. Run Xephyr \-\-help to get a list of available options.
-.br
-
-.br
 $ firejail \-\-x11 \-\-net=eth0 /usr/bin/firefox
 .br
 

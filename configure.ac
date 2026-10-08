@@ -157,6 +157,7 @@ AC_ARG_ENABLE([x11-legacy],
     [AS_HELP_STRING([--enable-x11-legacy], [add support for Xorg security extension and xvfb X11 server])])
 AS_IF([test "x$enable_x11_legacy" = "xyes"], [
 	HAVE_X11_LEGACY="-DHAVE_X11_LEGACY"
+	HAVE_X11="-DHAVE_X11"
 ])
 
 HAVE_FILE_TRANSFER=""

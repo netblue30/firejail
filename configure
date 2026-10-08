@@ -4352,6 +4352,7 @@ if test "x$enable_x11_legacy" = "xyes"
 then :
 
 	HAVE_X11_LEGACY="-DHAVE_X11_LEGACY"
+	HAVE_X11="-DHAVE_X11"
 
 fi
 

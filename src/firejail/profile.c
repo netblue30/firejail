@@ -1329,61 +1329,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-	if (strcmp(ptr, "x11 xephyr") == 0) {
-#ifdef HAVE_X11
-		if (checkcfg(CFG_X11)) {
-			const char *x11env = env_get("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0) {
-				return 0;
-			}
-			else {
-				// start x11
-				x11_start_xephyr(cfg.original_argc, cfg.original_argv);
-				exit(0);
-			}
-		}
-		else
-			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
-#endif
-		return 0;
-	}
-
-	if (strcmp(ptr, "x11 xorg") == 0) {
-#ifdef HAVE_X11
-		if (checkcfg(CFG_X11))
-			arg_x11_xorg = 1;
-		else
-			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
-#endif
-		return 0;
-	}
-
-	if (strcmp(ptr, "x11 xpra") == 0) {
-#ifdef HAVE_X11
-		fprintf(stderr, "Error: \"--x11=xpra\" feature was removed in firejail version 0.9.81\n");
-#endif
-		exit(1);
-	}
-
-	if (strcmp(ptr, "x11 xvfb") == 0) {
-#ifdef HAVE_X11
-		if (checkcfg(CFG_X11)) {
-			const char *x11env = env_get("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0) {
-				return 0;
-			}
-			else {
-				// start x11
-				x11_start_xvfb(cfg.original_argc, cfg.original_argv);
-				exit(0);
-			}
-		}
-		else
-			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
-#endif
-		return 0;
-	}
-
 	if (strcmp(ptr, "x11") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {

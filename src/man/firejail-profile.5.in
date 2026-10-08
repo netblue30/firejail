@@ -627,17 +627,8 @@ Blacklist /tmp/.X11\-unix directory, ${HOME}/.Xauthority and file specified in $
 Remove DISPLAY and XAUTHORITY environment variables.
 Stop with error message if X11 abstract socket will be accessible in jail.
 .TP
-\fBx11 xephyr
-Enable X11 sandboxing with Xephyr server.
-.TP
-\fBx11 xorg
-Enable X11 sandboxing with X11 security extension.
-.TP
-\fBx11 xvfb
-Enable X11 sandboxing with Xvfb server.
-.TP
 \fBxephyr\-extra\-params OPTIONS
-Set Xephyr server command extra parameters for x11 xephyr. This command should be included in the profile file before x11 xephyr command.
+Set Xephyr server command extra parameters for x11 command. This command should be included in the profile file before x11 command.
 .br
 
 .br
@@ -647,10 +638,10 @@ Example:
 .br
 xephyr\-extra\-params \-grayscale
 .br
-x11 xephyr
+x11
 .TP
 \fBxephyr\-screen WIDTHxHEIGHT
-Set screen size for x11 xephyr. This command should be included in the profile file before x11 xephyr command.
+Set screen size for x11 command. This command should be included in the profile file before x11 command.
 .br
 
 .br
@@ -660,7 +651,7 @@ Example:
 .br
 xephyr\-screen 640x480
 .br
-x11 xephyr
+x11
 
 #endif
 #ifdef HAVE_DBUSPROXY

@@ -207,6 +207,7 @@ static int random_display_number(void) {
 #endif
 
 #ifdef HAVE_X11
+#ifdef HAVE_X11_LEGACY	
 void x11_start_xvfb(int argc, char **argv) {
 	EUID_ASSERT();
 	int i;
@@ -406,7 +407,7 @@ void x11_start_xvfb(int argc, char **argv) {
 	__gcov_flush();
 	exit(0);
 }
-
+#endif
 
 static char *extract_setting(int argc, char **argv, const char *argument) {
 	int i;
@@ -677,6 +678,7 @@ void x11_start(int argc, char **argv) {
 
 void x11_xorg(void) {
 #ifdef HAVE_X11
+#ifdef HAVE_X11_LEGACY
 
 	// get DISPLAY env
 	const char *display = env_get("DISPLAY");
@@ -821,6 +823,7 @@ void x11_xorg(void) {
 	// cleanup
 	unlink(RUN_XAUTH_FILE);
 #endif
+#endif
 }
 
 
@@ -887,7 +890,6 @@ void fs_x11(void) {
 
 
 void x11_block(void) {
-#ifdef HAVE_X11
 	// check abstract socket presence and network namespace options
 	if ((!arg_nonetwork && !arg_netns && !cfg.bridge0.configured && !cfg.interface0.configured)
 	&& x11_abstract_sockets_present()) {
@@ -924,5 +926,4 @@ void x11_block(void) {
 	// clear environment
 	env_store("DISPLAY", RMENV);
 	env_store("XAUTHORITY", RMENV);
-#endif
 }

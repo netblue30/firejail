@@ -378,14 +378,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			exit_err_feature(argv[i], CFG_X11);
 	}
-	else if (strcmp(argv[i], "--x11=xephyr") == 0) {
-		if (checkcfg(CFG_X11)) {
-			x11_start_xephyr(argc, argv);
-			exit(0);
-		}
-		else
-			exit_err_feature(argv[i], CFG_X11);
-	}
+#ifdef HAVE_X11_LEGACY
 	else if (strcmp(argv[i], "--x11=xvfb") == 0) {
 		if (checkcfg(CFG_X11)) {
 			x11_start_xvfb(argc, argv);
@@ -394,6 +387,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			exit_err_feature(argv[i], CFG_X11);
 	}
+#endif
 #endif
 	else if (strcmp(argv[i], "--nettrace") == 0) {
 		if (checkcfg(CFG_NETWORK)) {
@@ -2497,12 +2491,14 @@ int main(int argc, char **argv, char **envp) {
 			arg_x11_block = 1;
 		}
 #ifdef HAVE_X11
+#ifdef HAVE_X11_LEGACY
 		else if (strcmp(argv[i], "--x11=xorg") == 0) {
 			if (checkcfg(CFG_X11))
 				arg_x11_xorg = 1;
 			else
 				exit_err_feature(argv[i], CFG_X11);
 		}
+#endif
 #endif
 		else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
 			// Note: This is the second part of the option handler;

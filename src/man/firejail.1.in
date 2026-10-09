@@ -1101,6 +1101,7 @@ Example:
 .br
 $ firejail \-\-net=eth0 \-\-ip=10.10.20.56 /usr/bin/firefox
 
+#if 0
 .TP
 \fB\-\-ip=dhcp
 Acquire an IP address and default gateway for the last interface defined by a
@@ -1125,12 +1126,11 @@ The DHCP client will NOT release the DHCP lease when the sandbox terminates.
 If your DHCP server requires leases to be explicitly released, consider running
 a DHCP client and releasing the lease manually in conjunction with the
 \-\-net=none option.
-
+#endif
 .TP
 \fB\-\-ip=none
 No IP address and no default gateway are configured for the last interface
-defined by a \-\-net option. Use this option
-in case you intend to start an external DHCP client in the sandbox.
+defined by a \-\-net option.
 .br
 
 .br
@@ -1154,7 +1154,7 @@ Example:
 $ firejail \-\-net=eth0 \-\-ip6=2001:0db8:0:f101::1/64 /usr/bin/firefox
 
 Note: you don't need this option if you obtain your ip6 address from router via SLAAC (your ip6 address and default route will be configured by kernel automatically).
-
+#if 0
 .TP
 \fB\-\-ip6=dhcp
 Acquire an IPv6 address and default gateway for the last interface defined by a
@@ -1178,7 +1178,7 @@ manually specified DNS servers will be overwritten.
 The DHCP client will NOT release the DHCP lease when the sandbox terminates.
 If your DHCP server requires leases to be explicitly released, consider running
 a DHCP client and releasing the lease manually.
-
+#endif
 .TP
 \fB\-\-iprange=address,address
 Assign an IP address in the provided range to the last network interface defined by a \-\-net option. A

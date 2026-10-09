@@ -1100,6 +1100,7 @@ int main(int argc, char **argv, char **envp) {
 #endif
 	EUID_ASSERT();
 
+#if 0 // --ip=dhcp disabled in 0.9.81
 	// --ip=dhcp - we need access to /sbin and /usr/sbin directories in order to run ISC DHCP client (dhclient)
 	// these paths are disabled in disable-common.inc
 	if ((i = check_arg(argc, argv, "--ip", 0)) != 0) {
@@ -1108,7 +1109,7 @@ int main(int argc, char **argv, char **envp) {
 			profile_add("noblacklist /usr/sbin");
 		}
 	}
-
+#endif
 	// process allow-debuggers
 	if (check_arg(argc, argv, "--allow-debuggers", 1)) {
 		// check kernel version
@@ -2321,10 +2322,13 @@ int main(int argc, char **argv, char **envp) {
 				// configure this IP address for the last bridge defined
 				if (strcmp(argv[i] + 5, "none") == 0)
 					br->arg_ip_none = 1;
+#if 0 // --ip=dhcp disabled in 0.9.81
 				else if (strcmp(argv[i] + 5, "dhcp") == 0) {
 					br->arg_ip_none = 1;
 					br->arg_ip_dhcp = 1;
-				} else {
+				}
+#endif
+				else {
 					if (atoip(argv[i] + 5, &br->ipsandbox)) {
 						fprintf(stderr, "Error: invalid IP address\n");
 						exit(1);
@@ -2368,11 +2372,12 @@ int main(int argc, char **argv, char **envp) {
 					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
 					exit(1);
 				}
-
+#if 0 // --ip6=dhcp disabled in 0.9.81
 				// configure this IP address for the last bridge defined
 				if (strcmp(argv[i] + 6, "dhcp") == 0)
 					br->arg_ip6_dhcp = 1;
 				else {
+#endif
 					if (check_ip46_address(argv[i] + 6) == 0) {
 						fprintf(stderr, "Error: invalid IPv6 address\n");
 						exit(1);
@@ -2381,7 +2386,7 @@ int main(int argc, char **argv, char **envp) {
 					br->ip6sandbox = strdup(argv[i] + 6);
 					if (br->ip6sandbox == NULL)
 						errExit("strdup");
-				}
+// --ip6=dhcp disabled in 0.9.81 }
 			}
 			else
 				exit_err_feature(argv[i], CFG_NETWORK);

@@ -114,9 +114,13 @@ static const char *const usage_str =
 	"    --interface=name - move interface in sandbox.\n"
 	"    --ip=address - set interface IP address.\n"
 	"    --ip=none - no IP address and no default gateway are configured.\n"
+#if 0 // --ip=dhcp disabled in 0.9.81
 	"    --ip=dhcp - acquire IP address by running dhclient.\n"
+#endif
 	"    --ip6=address - set interface IPv6 address.\n"
+#if 0 // --ip=dhcp disabled in 0.9.81
 	"    --ip6=dhcp - acquire IPv6 address by running dhclient.\n"
+#endif
 	"    --iprange=address,address - configure an IP address in this range.\n"
 #endif
 	"    --ipc-namespace - enable a new IPC namespace.\n"

@@ -151,7 +151,6 @@ void build_profile(int argc, char **argv, int index, FILE *fp) {
 		fprintf(fp, "#private-cache\t# run with an empty ~/.cache directory\n");
 		build_dev(trace_output, fp);
 		build_etc(trace_output, fp);
-		fprintf(fp, "#private-lib\n");
 		build_tmp(trace_output, fp);
 		fprintf(fp, "\n");
 

@@ -15,8 +15,8 @@ Usage: {path.basename(argv[0])} [-h] [-i] [-n] [--] [/path/to/profile ...]
 
 The following commands are supported:
 
-    private-bin, private-etc, private-lib, caps.drop, caps.keep, seccomp,
-    seccomp.drop, seccomp.keep, protocol
+    private-bin, private-etc, caps.drop, caps.keep, seccomp, seccomp.drop,
+    seccomp.keep, protocol
 
 Note that this is only applicable to commands that support multiple arguments.
 
@@ -85,7 +85,7 @@ def check_profile(filename, overwrite):
         fixed_profile = []
         for lineno, original_line in enumerate(lines, 1):
             line = original_line.rstrip()
-            if line[:12] in ("private-bin ", "private-etc ", "private-lib "):
+            if line[:12] in ("private-bin ", "private-etc "):
                 line = f"{line[:12]}{sort_alphabetical(line[12:])}"
             elif line[:13] in ("seccomp.drop ", "seccomp.keep "):
                 line = f"{line[:13]}{sort_alphabetical(line[13:])}"

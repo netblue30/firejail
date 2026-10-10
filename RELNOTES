@@ -18,10 +18,10 @@ firejail (0.9.81) baseline; urgency=low
   * removal: --private-home command (#7200)
   * removal: ./configure --disable-sandbox-check option (#7201)
   * removal: --x11=xpra option (#7207)
-  * removal: ssh restricted shell feature (4a8c59e)
-  * removal: private-lib (bbcc23d)
   * removal: firecfg --guide; the pertinent information was moved in
     man firejail (c30b44d)
+  * removal: private-lib (bbcc23d)
+  * removal: ssh restricted shell feature (4a8c59e)
   * bugfix: disable /run/systemd/resolve with net=none - fixes potential DNS
     leaks when using systemd-resolved (#7209 #7216)
   * bugfix: fbwrap: wait for target and propagate exit code (#7081 #7224)

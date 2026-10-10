@@ -307,7 +307,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	if (strncmp(ptr, "xephyr-screen ", 14) == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
-			xephyr_screen = ptr + 14;
+			xephyr_screen = strdup(ptr + 14);
+			if (!xephyr_screen)
+				errExit("strdup");
 		}
 		else
 			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
@@ -326,7 +328,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	}
 	// sandbox name
 	else if (strncmp(ptr, "name ", 5) == 0) {
-		cfg.name = ptr + 5;
+		cfg.name = strdup(ptr + 5);
+		if (!cfg.name)
+			errExit("strdup");
 		if (strlen(cfg.name) == 0) {
 			fprintf(stderr, "Error: invalid sandbox name: cannot be empty\n");
 			exit(1);
@@ -1198,7 +1202,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			fprintf(stderr, "Error: hostname and hostname-randomize are mutually exclusive\n");
 			exit(1);
 		}
-		cfg.hostname = ptr + 9;
+		cfg.hostname = strdup(ptr + 9);
+		if (!cfg.hostname)
+			errExit("strdup");
 		if (strlen(cfg.hostname) == 0) {
 			fprintf(stderr, "Error: invalid hostname: cannot be empty\n");
 			exit(1);
@@ -1317,7 +1323,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// private directory
 	if (strncmp(ptr, "private ", 8) == 0) {
-		cfg.home_private = ptr + 8;
+		cfg.home_private = strdup(ptr + 8);
+		if (!cfg.home_private)
+			errExit("strdup");
 		fs_check_private_dir();
 		arg_private = 1;
 		return 0;
@@ -1363,7 +1371,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				if ( asprintf(&cfg.etc_private_keep, "%s,%s", cfg.etc_private_keep, ptr + 12) < 0 )
 					errExit("asprintf");
 			} else {
-				cfg.etc_private_keep = ptr + 12;
+				cfg.etc_private_keep = strdup(ptr + 12);
+				if (!cfg.etc_private_keep)
+					errExit("strdup");
 			}
 			arg_private_etc = 1;
 		}
@@ -1393,7 +1403,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				if ( asprintf(&cfg.opt_private_keep, "%s,%s", cfg.opt_private_keep, ptr + 12) < 0 )
 					errExit("asprintf");
 			} else {
-				cfg.opt_private_keep = ptr + 12;
+				cfg.opt_private_keep = strdup(ptr + 12);
+				if (!cfg.opt_private_keep)
+					errExit("strdup");
 			}
 			arg_private_opt = 1;
 		}
@@ -1409,7 +1421,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				if ( asprintf(&cfg.srv_private_keep, "%s,%s", cfg.srv_private_keep, ptr + 12) < 0 )
 					errExit("asprintf");
 			} else {
-				cfg.srv_private_keep = ptr + 12;
+				cfg.srv_private_keep = strdup(ptr + 12);
+				if (!cfg.srv_private_keep)
+					errExit("strdup");
 			}
 			arg_private_srv = 1;
 		}
@@ -1425,7 +1439,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				if ( asprintf(&cfg.bin_private_keep, "%s,%s", cfg.bin_private_keep, ptr + 12) < 0 )
 					errExit("asprintf");
 			} else {
-				cfg.bin_private_keep = ptr + 12;
+				cfg.bin_private_keep = strdup(ptr + 12);
+				if (!cfg.bin_private_keep)
+					errExit("strdup");
 			}
 			arg_private_bin = 1;
 		}
@@ -1541,7 +1557,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			}
 
 			// set sandbox name and start normally
-			cfg.name = ptr + 14;
+			cfg.name = strdup(ptr + 14);
+			if (!cfg.name)
+				errExit("strdup");
 			if (strlen(cfg.name) == 0) {
 				fprintf(stderr, "Error: invalid sandbox name: cannot be empty\n");
 				exit(1);

@@ -2557,20 +2557,6 @@ int main(int argc, char **argv, char **envp) {
 			break;
 		}
 	}
-	if (arg_appimage && checkcfg(CFG_APPIMAGE_NET) && !arg_nonetwork &&
-	    !any_bridge_configured() && !any_interface_configured() &&
-	    !arg_netfilter && !arg_netfilter6 && !arg_netns) {
-		arg_nonetwork = 1;
-		cfg.bridge0.configured = 0;
-		cfg.bridge1.configured = 0;
-		cfg.bridge2.configured = 0;
-		cfg.bridge3.configured = 0;
-		cfg.interface0.configured = 0;
-		cfg.interface1.configured = 0;
-		cfg.interface2.configured = 0;
-		cfg.interface3.configured = 0;
-		profile_add("blacklist /run/systemd/resolve");
-	}
 	EUID_ASSERT();
 
 	// exit chroot and appimage sandboxes when caps are explicitly specified on command line

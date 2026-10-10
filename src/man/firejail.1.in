@@ -216,11 +216,17 @@ firejail\-profile(5)).
 
 .br
 Note 2: If you want to disable networking by default every time you sandbox an
-appimage, add a conditional in /etc/firejail/globals.local as follows:
+appimage, set the following option in /etc/firejail/firejail.config:
 .br
 
 .br
-$ cat /etc/firejail/globals.local
+$ grep appimage-net /etc/firejail/firejail.config
+.br
+# appimage-net yes
+.br
+
+.br
+The same behavior can also be expressed in /etc/firejail/globals.local as:
 .br
 ?HAS_APPIMAGE: net none
 .br

@@ -5,7 +5,7 @@ firejail (0.9.81) baseline; urgency=low
   * feature: allow subpaths in xdg macros (#2359 #7151)
   * feature: add `${PROJECTS}` macro (#7157)
   * feature: add `${PUBLICSHARE}` and `${TEMPLATES}` macros (#7164)
-  * feature: add --include command line option to profstats
+  * feature: profstats: add --include command line option (#7265)
   * modif: create a new syscall group: `@program-keep` (9d90daf)
   * modif: stop following symlinks to /dev/null on disable (#5803 #7129)
   * modif: add backtick in `reject_meta_chars()` (#7183)
@@ -19,9 +19,9 @@ firejail (0.9.81) baseline; urgency=low
   * removal: ./configure --disable-sandbox-check option (#7201)
   * removal: --x11=xpra option (#7207)
   * removal: firecfg --guide; the pertinent information was moved in
-    man firejail (c30b44d)
-  * removal: private-lib (bbcc23d)
-  * removal: ssh restricted shell feature (4a8c59e)
+    man firejail (#7260)
+  * removal: private-lib (#7261)
+  * removal: ssh restricted shell feature (#7262)
   * bugfix: disable /run/systemd/resolve with net=none - fixes potential DNS
     leaks when using systemd-resolved (#7209 #7216)
   * bugfix: fbwrap: wait for target and propagate exit code (#7081 #7224)

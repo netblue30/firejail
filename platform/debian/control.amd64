@@ -15,7 +15,3 @@ Description: Linux namespaces sandbox program.
  using Linux namespaces and seccmp-bpf. It includes sandbox profiles for
  Iceweasel/Mozilla Firefox, Chromium, Midori, Opera, Evince, Transmission
  and VLC.
- .
- Firejail also expands the restricted shell facility found in bash by
- adding Linux namespace support. It also supports sandboxing SSH users
- upon login.

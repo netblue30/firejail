@@ -3793,16 +3793,6 @@ The name can only contain ASCII letters, digits and the special characters
 The name cannot contain only digits.
 The first and last characters must be an ASCII letter or digit and the name
 may contain special characters in the middle.
-
-.SH RESTRICTED SHELL
-To configure a restricted shell, replace /bin/bash with /usr/bin/firejail in
-/etc/passwd file for each user that needs to be restricted. Alternatively,
-you can specify /usr/bin/firejail in adduser command:
-
-adduser \-\-shell /usr/bin/firejail username
-
-Additional arguments passed to firejail executable upon login are declared in /etc/firejail/login.users file.
-
 .SH GLOBAL CONFIG FILE
 firejail.config is the global configuration file, and resides in /etc/firejail directory.
 Most major Firejail features can be enabled or disabled.

@@ -46,6 +46,7 @@ const char *const cfgstr[] = {
 	[CFG_NONE] = "none",
 	[CFG_ALLOW_TRAY] = "allow-tray",
 	[CFG_APPARMOR] = "apparmor",
+	[CFG_APPIMAGE_NET] = "appimage-net",
 	[CFG_ARP_PROBES] = "arp-probes",
 	[CFG_BIND] = "bind",
 	[CFG_BROWSER_ALLOW_DRM] = "browser-allow-drm",
@@ -112,6 +113,7 @@ int checkcfg(int val) {
 		cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0;
 		cfg_val[CFG_FIREJAIL_PROMPT] = 0;
 		cfg_val[CFG_DISABLE_MNT] = 0;
+		cfg_val[CFG_APPIMAGE_NET] = 0;
 		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
 		cfg_val[CFG_SECCOMP_ERROR_ACTION] = -1;
 		cfg_val[CFG_BROWSER_ALLOW_DRM] = 0;
@@ -151,6 +153,7 @@ int checkcfg(int val) {
 				continue;
 			PARSE_YESNO(CFG_ALLOW_TRAY, "allow-tray")
 			PARSE_YESNO(CFG_APPARMOR, "apparmor")
+			PARSE_YESNO(CFG_APPIMAGE_NET, "appimage-net")
 			PARSE_YESNO(CFG_BIND, "bind")
 			PARSE_YESNO(CFG_BROWSER_ALLOW_DRM, "browser-allow-drm")
 			PARSE_YESNO(CFG_BROWSER_DISABLE_U2F, "browser-disable-u2f")

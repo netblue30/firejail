@@ -40,7 +40,6 @@ sleep 2
 /usr/lib/firejail/fsec-optimize --help
 /usr/lib/firejail/fsec-print --help
 /usr/lib/firejail/ftee --help
-/usr/lib/firejail/fzenity --help
 sleep 2
 
 make test-apps

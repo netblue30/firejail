@@ -43,7 +43,6 @@
 
 // programs
 #define FIREJAIL_EXEC PREFIX "/bin/firejail"
-#define FIREJAIL_WELCOME_SH LIBDIR "/firejail/firejail-welcome.sh"
 #define SUDO_EXEC "sudo"
 
 // main.c

@@ -40,6 +40,5 @@ if test -f src/firejail/main.gcno; then
 	  src/fsec-optimize \
 	  src/fsec-print \
 	  src/ftee \
-	  src/fzenity \
 	  src/lib
 fi

@@ -105,6 +105,9 @@ include allow-python3.inc
 # KeePassXC Browser Integration
 #private-bin keepassxc-proxy
 
+# ChiPass Browser Integration
+#private-bin ChiPass-proxy
+
 # Flash plugin
 private-etc adobe
 

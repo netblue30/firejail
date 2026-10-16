@@ -1,5 +1,5 @@
 # Firejail profile for tasks-org
-# Description: Tasks.org task manager
+# Description: Tasks.org Open-source To-Do Lists & Reminders
 # This file is overwritten after every install/update
 # Persistent local customizations
 include tasks-org.local

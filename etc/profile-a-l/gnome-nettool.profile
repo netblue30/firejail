@@ -40,7 +40,6 @@ disable-mnt
 private
 private-cache
 private-dev
-private-lib libbind9.so.*,libcrypto.so.*,libdns.so.*,libgtk-3.so.*,libgtop*,libirs.so.*,liblua.so.*,libssh2.so.*,libssl.so.*
 private-tmp
 
 dbus-user none

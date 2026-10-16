@@ -13,8 +13,14 @@ ignore noexec /tmp
 # uncomment the 'brave + tor' rule in /etc/apparmor.d/local/firejail-default.
 # Alternatively you can add 'ignore apparmor' to your brave.local.
 ignore noexec ${HOME}
+
 # Causes slow starts (#4604)
-ignore private-cache
+# ignore private-cache
+# The fix to #4604 was to disable private-cache with the ignore
+# statement above. However, the fix is from Oct 2021. I think
+# it is worth (Oct 2026 now) trying again with a private cache.
+# This problem was only seen on Brave, all other chromium-based
+# browsers don't have this problem.
 
 noblacklist ${HOME}/.cache/BraveSoftware
 noblacklist ${HOME}/.config/BraveSoftware

@@ -70,7 +70,6 @@ int arg_private_cache = 0;		// mount private home/.cache
 int arg_debug = 0;				// print debug messages
 int arg_debug_blacklists = 0;			// print debug messages for blacklists
 int arg_debug_whitelists = 0;			// print debug messages for whitelists
-int arg_debug_private_lib = 0;			// print debug messages for private-lib
 int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
 
@@ -118,7 +117,6 @@ int arg_private_opt = 0;			// private opt directory
 int arg_private_srv = 0;			// private srv directory
 int arg_private_bin = 0;			// private bin directory
 int arg_private_tmp = 0;			// private tmp directory
-int arg_private_lib = 0;			// private lib directory
 int arg_private_cwd = 0;			// private working directory
 int arg_scan = 0;				// arp-scan all interfaces
 int arg_whitelist = 0;				// whitelist command
@@ -175,8 +173,6 @@ int arg_hostname_randomize = 0;
 int parent_to_child_fds[2];
 int child_to_parent_fds[2];
 
-char **fullargv = NULL;				// expanded argv for restricted shell
-int fullargc = 0;
 static pid_t child = 0;
 pid_t sandbox_pid;
 mode_t orig_umask = 022;
@@ -367,6 +363,12 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		usage();
 		exit(0);
 	}
+	if (strcmp(argv[i], "--version") == 0) {
+		print_version_full();
+		exit(0);
+	}
+
+
 #ifdef HAVE_X11
 	else if (strcmp(argv[i], "--x11") == 0) {
 		if (checkcfg(CFG_X11)) {
@@ -376,14 +378,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			exit_err_feature(argv[i], CFG_X11);
 	}
-	else if (strcmp(argv[i], "--x11=xephyr") == 0) {
-		if (checkcfg(CFG_X11)) {
-			x11_start_xephyr(argc, argv);
-			exit(0);
-		}
-		else
-			exit_err_feature(argv[i], CFG_X11);
-	}
+#ifdef HAVE_X11_LEGACY
 	else if (strcmp(argv[i], "--x11=xvfb") == 0) {
 		if (checkcfg(CFG_X11)) {
 			x11_start_xvfb(argc, argv);
@@ -392,6 +387,7 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			exit_err_feature(argv[i], CFG_X11);
 	}
+#endif
 #endif
 	else if (strcmp(argv[i], "--nettrace") == 0) {
 		if (checkcfg(CFG_NETWORK)) {
@@ -1017,12 +1013,6 @@ int main(int argc, char **argv, char **envp) {
 		arg_quiet = 0;
 	}
 
-	// process --version
-	if (check_arg(argc, argv, "--version", 1)) {
-		print_version_full();
-		exit(0);
-	}
-
 	// initialize values from firejail.config (needed for arg/env checks)
 	checkcfg(0);
 
@@ -1104,135 +1094,13 @@ int main(int argc, char **argv, char **envp) {
 	atexit(clear_atexit);
 	EUID_USER();
 
-	// check if the parent is sshd daemon
-	int parent_sshd = 0;
-	{
-		pid_t ppid = getppid();
-		EUID_ROOT();
-		char *comm = pid_proc_comm(ppid);
-		EUID_USER();
-		if (comm) {
-			if (strcmp(comm, "sshd") == 0) {
-				arg_quiet = 1;
-				parent_sshd = 1;
-
-#ifdef DEBUG_RESTRICTED_SHELL
-				{EUID_ROOT();
-				FILE *fp = fopen("/firelog", "we");
-				if (fp) {
-					int i;
-					fprintf(fp, "argc %d: ", argc);
-					for (i = 0; i < argc; i++)
-						fprintf(fp, "#%s# ", argv[i]);
-					fprintf(fp, "\n");
-					fclose(fp);
-				}
-				EUID_USER();}
-#endif
-				// run sftp and scp directly without any sandboxing
-				// regular login has argv[0] == "-firejail"
-				if (*argv[0] != '-') {
-					if (strcmp(argv[1], "-c") == 0 && argc > 2) {
-						if (strcmp(argv[2], "/usr/lib/openssh/sftp-server") == 0 ||
-						    strncmp(argv[2], "scp ", 4) == 0) {
-#ifdef DEBUG_RESTRICTED_SHELL
-							{EUID_ROOT();
-							FILE *fp = fopen("/firelog", "ae");
-							if (fp) {
-								fprintf(fp, "run without a sandbox\n");
-								fclose(fp);
-							}
-							EUID_USER();}
-#endif
-
-							drop_privs(1);
-							umask(orig_umask);
-
-							// restore original environment variables
-							env_apply_all();
-							int rv = system(argv[2]);
-							exit(rv);
-						}
-					}
-				}
-			}
-			free(comm);
-		}
-	}
-	EUID_ASSERT();
-
-#ifndef ARGC_MAX_RESTRICTED_SHELL
-#define ARGC_MAX_RESTRICTED_SHELL 4096
-#endif
-	// is this a login shell, or a command passed by sshd,
-	// insert command line options from /etc/firejail/login.users
-	if (*argv[0] == '-' || parent_sshd) {
-		// use a sane size for allocation
-		int fullargv_sz = arg_max_count;
-		if (fullargv_sz > ARGC_MAX_RESTRICTED_SHELL) {
-			if (arg_debug) {
-				printf("arg-max-count %d > %d, allocating %d elements for fullargv\n",
-				       arg_max_count, ARGC_MAX_RESTRICTED_SHELL,
-				       ARGC_MAX_RESTRICTED_SHELL);
-			}
-			fullargv_sz = ARGC_MAX_RESTRICTED_SHELL;
-		}
-
-		fullargv = malloc(fullargv_sz * sizeof(char *));
-		if (!fullargv)
-			errExit("malloc");
-		memset(fullargv, 0, fullargv_sz * sizeof(char *));
-
-		if (argc == 1)
-			login_shell = 1;
-		fullargc = restricted_shell(cfg.username);
-		if (fullargc) {
-
-#ifdef DEBUG_RESTRICTED_SHELL
-			{EUID_ROOT();
-			FILE *fp = fopen("/firelog", "ae");
-			if (fp) {
-				fprintf(fp, "fullargc %d: ",  fullargc);
-				int i;
-				for (i = 0; i < fullargc; i++)
-					fprintf(fp, "#%s# ", fullargv[i]);
-				fprintf(fp, "\n");
-				fclose(fp);
-			}
-			EUID_USER();}
-#endif
-
-			int j;
-			for (i = 1, j = fullargc; i < argc && j < fullargv_sz; i++, j++, fullargc++)
-				fullargv[j] = argv[i];
-
-			// replace argc/argv with fullargc/fullargv
-			argv = fullargv;
-			argc = j;
-
-#ifdef DEBUG_RESTRICTED_SHELL
-			{EUID_ROOT();
-			FILE *fp = fopen("/firelog", "ae");
-			if (fp) {
-				fprintf(fp, "argc %d: ", argc);
-				int i;
-				for (i = 0; i < argc; i++)
-					fprintf(fp, "#%s# ", argv[i]);
-				fprintf(fp, "\n");
-				fclose(fp);
-			}
-			EUID_USER();}
-#endif
-		}
-	}
 #ifdef HAVE_OUTPUT
-	else {
-		// check --output option and execute it;
-		check_output(argc, argv); // the function will not return if --output or --output-stderr option was found
-	}
+	// check --output option and execute it;
+	check_output(argc, argv); // the function will not return if --output or --output-stderr option was found
 #endif
 	EUID_ASSERT();
 
+#if 0 // --ip=dhcp disabled in 0.9.81
 	// --ip=dhcp - we need access to /sbin and /usr/sbin directories in order to run ISC DHCP client (dhclient)
 	// these paths are disabled in disable-common.inc
 	if ((i = check_arg(argc, argv, "--ip", 0)) != 0) {
@@ -1241,7 +1109,7 @@ int main(int argc, char **argv, char **envp) {
 			profile_add("noblacklist /usr/sbin");
 		}
 	}
-
+#endif
 	// process allow-debuggers
 	if (check_arg(argc, argv, "--allow-debuggers", 1)) {
 		// check kernel version
@@ -1297,10 +1165,6 @@ int main(int argc, char **argv, char **envp) {
 			arg_debug_blacklists = 1;
 		else if (strcmp(argv[i], "--debug-whitelists") == 0)
 			arg_debug_whitelists = 1;
-#ifdef HAVE_PRIVATE_LIB
-		else if (strcmp(argv[i], "--debug-private-lib") == 0)
-			arg_debug_private_lib = 1;
-#endif
 		else if (strcmp(argv[i], "--quiet") == 0) {
 			if (!arg_debug)
 				arg_quiet = 1;
@@ -1965,23 +1829,6 @@ int main(int argc, char **argv, char **envp) {
 			else
 				exit_err_feature(argv[i], CFG_PRIVATE_BIN);
 		}
-#ifdef HAVE_PRIVATE_LIB
-		else if (strncmp(argv[i], "--private-lib", 13) == 0) {
-			if (checkcfg(CFG_PRIVATE_LIB)) {
-				// extract private lib list (if any)
-				if (argv[i][13] == '=') {
-					if (cfg.lib_private_keep) {
-						if (argv[i][14] != '\0' && asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, argv[i] + 14) < 0)
-							errExit("asprintf");
-					} else
-						cfg.lib_private_keep = argv[i] + 14;
-				}
-				arg_private_lib = 1;
-			}
-			else
-				exit_err_feature(argv[i], CFG_PRIVATE_LIB);
-		}
-#endif
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;
 		}
@@ -2475,10 +2322,13 @@ int main(int argc, char **argv, char **envp) {
 				// configure this IP address for the last bridge defined
 				if (strcmp(argv[i] + 5, "none") == 0)
 					br->arg_ip_none = 1;
+#if 0 // --ip=dhcp disabled in 0.9.81
 				else if (strcmp(argv[i] + 5, "dhcp") == 0) {
 					br->arg_ip_none = 1;
 					br->arg_ip_dhcp = 1;
-				} else {
+				}
+#endif
+				else {
 					if (atoip(argv[i] + 5, &br->ipsandbox)) {
 						fprintf(stderr, "Error: invalid IP address\n");
 						exit(1);
@@ -2522,11 +2372,12 @@ int main(int argc, char **argv, char **envp) {
 					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
 					exit(1);
 				}
-
+#if 0 // --ip6=dhcp disabled in 0.9.81
 				// configure this IP address for the last bridge defined
 				if (strcmp(argv[i] + 6, "dhcp") == 0)
 					br->arg_ip6_dhcp = 1;
 				else {
+#endif
 					if (check_ip46_address(argv[i] + 6) == 0) {
 						fprintf(stderr, "Error: invalid IPv6 address\n");
 						exit(1);
@@ -2535,7 +2386,7 @@ int main(int argc, char **argv, char **envp) {
 					br->ip6sandbox = strdup(argv[i] + 6);
 					if (br->ip6sandbox == NULL)
 						errExit("strdup");
-				}
+// --ip6=dhcp disabled in 0.9.81 }
 			}
 			else
 				exit_err_feature(argv[i], CFG_NETWORK);
@@ -2645,12 +2496,14 @@ int main(int argc, char **argv, char **envp) {
 			arg_x11_block = 1;
 		}
 #ifdef HAVE_X11
+#ifdef HAVE_X11_LEGACY
 		else if (strcmp(argv[i], "--x11=xorg") == 0) {
 			if (checkcfg(CFG_X11))
 				arg_x11_xorg = 1;
 			else
 				exit_err_feature(argv[i], CFG_X11);
 		}
+#endif
 #endif
 		else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
 			// Note: This is the second part of the option handler;
@@ -2746,13 +2599,6 @@ int main(int argc, char **argv, char **envp) {
 
 	// log command
 	logargs(argc, argv);
-	if (fullargc) {
-		char *msg;
-		if (asprintf(&msg, "user %s entering restricted shell", cfg.username) == -1)
-			errExit("asprintf");
-		logmsg(msg);
-		free(msg);
-	}
 
 	// build the sandbox command
 	if (prog_index == -1) {
@@ -2764,18 +2610,17 @@ int main(int argc, char **argv, char **envp) {
 			exit(1);
 		}
 
-		cfg.window_title = cfg.usershell;
 		cfg.command_name = cfg.usershell;
 	}
 	else if (arg_appimage) {
 		if (arg_debug)
 			printf("Configuring appimage environment\n");
 		appimage_set(cfg.command_name);
-		build_appimage_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index, true);
+		build_appimage_cmdline(&cfg.command_line, argc, argv, prog_index, true);
 	}
 	else {
 		// Only add extra quotes if we were not launched by sshd.
-		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index, !parent_sshd);
+		build_cmdline(&cfg.command_line, argc, argv, prog_index, 1);
 	}
 /*	else {
 		fprintf(stderr, "Error: command must be specified when --shell=none used.\n");

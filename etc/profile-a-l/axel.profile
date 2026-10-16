@@ -50,7 +50,6 @@ private-bin axel
 private-cache
 private-dev
 private-etc @network,@tls-ca,axelrc
-private-lib
 private-tmp
 
 dbus-user none

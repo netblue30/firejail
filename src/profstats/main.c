@@ -19,8 +19,8 @@
 */
 
 #include "../include/common.h"
-
 #define MAXBUF 2048
+
 // stats
 static int cnt_profiles = 0;
 static int cnt_apparmor = 0;
@@ -40,7 +40,6 @@ static int cnt_privatedev = 0;
 static int cnt_privatetmp = 0;
 static int cnt_privateetc = 0;
 static int cnt_privatecache = 0;
-static int cnt_privatelib = 0;
 static int cnt_whitelistvar = 0;	// include whitelist-var-common.inc
 static int cnt_whitelistrunuser = 0;	// include whitelist-runuser-common.inc
 static int cnt_whitelistusrshare = 0;	// include whitelist-usr-share-common.inc
@@ -50,6 +49,7 @@ static int cnt_whitelisthome = 0;
 static int cnt_noroot = 0;
 
 static int level = 0;
+static int arg_include = 0;
 static int arg_debug = 0;
 static int arg_apparmor = 0;
 static int arg_caps = 0;
@@ -60,7 +60,6 @@ static int arg_privatedev = 0;
 static int arg_privatetmp = 0;
 static int arg_privateetc = 0;
 static int arg_privatecache = 0;
-static int arg_privatelib = 0;
 static int arg_whitelistvar = 0;
 static int arg_whitelistrunuser = 0;
 static int arg_whitelistusrshare = 0;
@@ -85,6 +84,7 @@ static const char *const usage_str =
 	"   --caps - print profiles without caps\n"
 	"   --dbus-system-none - print profiles without \"dbus-system none\"\n"
 	"   --dbus-user-none - print profiles without \"dbus-user none\"\n"
+	"   --include - print all the files loaded by the program\n"
 	"   --ssh - print profiles without \"include disable-common.inc\"\n"
 	"   --noexec - print profiles without \"include disable-exec.inc\"\n"
 	"   --noroot - print profiles without \"noroot\"\n"
@@ -110,6 +110,8 @@ static void usage(void) {
 }
 
 static void process_file(char *fname) {
+	if (arg_include)
+		printf("loading %s\n", fname);
 	assert(fname);
 	char *tmpfname = NULL;
 
@@ -197,8 +199,6 @@ static void process_file(char *fname) {
 			cnt_privateetc++;
 		else if (strncmp(ptr, "private-cache", 11) == 0)
 			cnt_privatecache++;
-		else if (strncmp(ptr, "private-lib", 11) == 0)
-			cnt_privatelib++;
 		else if (strncmp(ptr, "dbus-system none", 16) == 0)
 			cnt_dbus_system_none++;
 		else if (strncmp(ptr, "dbus-system", 11) == 0)
@@ -250,6 +250,8 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--debug") == 0)
 			arg_debug = 1;
+		else if (strcmp(argv[i], "--include") == 0)
+			arg_include = 1;
 		else if (strcmp(argv[i], "--apparmor") == 0)
 			arg_apparmor = 1;
 		else if (strcmp(argv[i], "--caps") == 0)
@@ -323,7 +325,6 @@ int main(int argc, char **argv) {
 		int privatedev = cnt_privatedev;
 		int privateetc = cnt_privateetc;
 		int privatecache = cnt_privatecache;
-		int privatelib = cnt_privatelib;
 		int dotlocal = cnt_dotlocal;
 		int globalsdotlocal = cnt_globalsdotlocal;
 		int whitelisthome = cnt_whitelisthome;
@@ -393,8 +394,6 @@ int main(int argc, char **argv) {
 			printf("No private-etc found in %s\n", argv[i]);
 		if (arg_privatecache && privatecache == cnt_privatecache)
 			printf("No private-cache found in %s\n", argv[i]);
-		if (arg_privatelib && privatelib == cnt_privatelib)
-			printf("No private-lib found in %s\n", argv[i]);
 		if (arg_whitelisthome && whitelisthome == cnt_whitelisthome)
 			printf("Home directory not whitelisted in %s\n", argv[i]);
 		if (arg_whitelistvar && whitelistvar == cnt_whitelistvar)
@@ -433,7 +432,6 @@ int main(int argc, char **argv) {
 	printf("    private-dev\t\t\t%d\n", cnt_privatedev);
 	printf("    private-etc\t\t\t%d\n", cnt_privateetc);
 	printf("    private-cache\t\t%d\n", cnt_privatecache);
-	printf("    private-lib\t\t\t%d\n", cnt_privatelib);
 	printf("    private-tmp\t\t\t%d\n", cnt_privatetmp);
 	printf("    whitelist home directory\t%d\n", cnt_whitelisthome);
 	printf("    whitelist var\t\t%d   (include whitelist-var-common.inc)\n", cnt_whitelistvar);

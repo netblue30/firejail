@@ -131,13 +131,9 @@ void run_no_sandbox(int argc, char **argv) {
 		}
 	}
 
-	if (prog_index == 0) {
-		assert(cfg.command_line == NULL);
-		cfg.window_title = cfg.usershell;
-	} else {
+	if (prog_index != 0)
 		// this sandbox might not allow execution of a shell
-		build_cmdline(&cfg.command_line, &cfg.window_title, argc, argv, prog_index, true);
-	}
+		build_cmdline(&cfg.command_line, argc, argv, prog_index, true);
 
 	fwarning("an existing sandbox was detected. "
 		"%s will run without any additional sandboxing features\n", prog_index ? argv[prog_index] : cfg.usershell);

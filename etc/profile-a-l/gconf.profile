@@ -53,7 +53,6 @@ private-bin gconf-editor,gconf-merge-*,gconfpkg,gconftool-2,gsettings-*-convert,
 private-cache
 private-dev
 private-etc gconf
-private-lib GConf,libpython*,python2*
 private-tmp
 
 memory-deny-write-execute

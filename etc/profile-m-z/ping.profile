@@ -58,7 +58,6 @@ private
 private-cache
 private-dev
 private-etc @tls-ca
-private-lib
 private-tmp
 
 # memory-deny-write-execute is built using seccomp; nonewprivs will kill it

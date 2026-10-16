@@ -49,7 +49,6 @@ private-bin dbus-send
 private-cache
 private-dev
 private-etc dbus-1
-private-lib libpcre*
 private-tmp
 
 memory-deny-write-execute

@@ -43,7 +43,6 @@ disable-mnt
 private-bin blobby
 private-dev
 private-etc @x11
-private-lib
 private-tmp
 
 dbus-user none

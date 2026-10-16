@@ -14,7 +14,6 @@ noblacklist ${HOME}/.config/pavucontrol-qt
 #whitelist ${HOME}/.config/pavucontrol-qt
 
 private-bin pavucontrol-qt
-ignore private-lib
 
 # Redirect
 include pavucontrol.profile

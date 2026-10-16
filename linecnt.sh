@@ -29,7 +29,6 @@
 #     fsec-optimize  116
 #     fsec-print     205
 #     ftee           135
-#     fzenity        122
 #     lib            975
 
 #!/bin/bash
@@ -52,5 +51,4 @@ printf "fnettrace-sni  " && gcovr src/fnettrace-sni 2>/dev/null | grep TOTAL | a
 printf "fsec-optimize  " && gcovr src/fsec-optimize 2>/dev/null | grep TOTAL | awk '{print msg $2}'
 printf "fsec-print     " && gcovr src/fsec-print 2>/dev/null | grep TOTAL | awk '{print msg $2}'
 printf "ftee           " && gcovr src/ftee 2>/dev/null | grep TOTAL | awk '{print msg $2}'
-printf "fzenity        " && gcovr src/fzenity 2>/dev/null | grep TOTAL | awk '{print msg $2}'
 printf "lib            " && gcovr src/lib 2>/dev/null | grep TOTAL | awk '{print msg $2}'

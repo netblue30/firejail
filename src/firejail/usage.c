@@ -79,9 +79,6 @@ static const char *const usage_str =
 	"    --debug-blacklists - debug blacklisting.\n"
 	"    --debug-caps - print all recognized capabilities.\n"
 	"    --debug-errnos - print all recognized error numbers.\n"
-#ifdef HAVE_PRIVATE_LIB
-	"    --debug-private-lib - debug for --private-lib option.\n"
-#endif
 	"    --debug-protocols - print all recognized protocols.\n"
 	"    --debug-syscall-groups - print all system call groups and descriptions.\n"
 	"    --debug-syscall-groups=@group1,@group2,@all,... - print all recognized system calls in specified groups.\n"
@@ -117,9 +114,13 @@ static const char *const usage_str =
 	"    --interface=name - move interface in sandbox.\n"
 	"    --ip=address - set interface IP address.\n"
 	"    --ip=none - no IP address and no default gateway are configured.\n"
+#if 0 // --ip=dhcp disabled in 0.9.81
 	"    --ip=dhcp - acquire IP address by running dhclient.\n"
+#endif
 	"    --ip6=address - set interface IPv6 address.\n"
+#if 0 // --ip=dhcp disabled in 0.9.81
 	"    --ip6=dhcp - acquire IPv6 address by running dhclient.\n"
+#endif
 	"    --iprange=address,address - configure an IP address in this range.\n"
 #endif
 	"    --ipc-namespace - enable a new IPC namespace.\n"
@@ -209,9 +210,6 @@ static const char *const usage_str =
 	"\tcommon device files.\n"
 	"    --private-etc=file,directory - build a new /etc in a temporary\n"
 	"\tfilesystem, and copy the files and directories in the list.\n"
-#ifdef HAVE_PRIVATE_LIB
-	"    --private-lib - create a private /lib directory\n"
-#endif
 	"    --private-tmp - mount a tmpfs on top of /tmp directory.\n"
 	"    --private-cwd - do not inherit working directory inside jail.\n"
 	"    --private-cwd=directory - set working directory inside jail.\n"

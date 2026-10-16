@@ -10,11 +10,10 @@ noblacklist ${HOME}/.config/mate/eom
 
 whitelist /usr/share/eom
 
-# private-bin, private-etc and private-lib break 'Open With' / 'Open in file manager'.
+# private-bin, and private-etc break 'Open With' / 'Open in file manager'.
 # Add the next lines to your eom.local if you need that functionality.
 #ignore private-bin
 #ignore private-etc
-#ignore private-lib
 
 private-bin eom
 

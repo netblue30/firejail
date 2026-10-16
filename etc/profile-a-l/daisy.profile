@@ -50,7 +50,6 @@ private-bin daisy
 private-cache
 private-dev
 private-etc
-private-lib
 private-opt none
 private-tmp
 

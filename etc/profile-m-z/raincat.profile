@@ -39,7 +39,6 @@ private-bin raincat
 private-cache
 private-dev
 private-etc @games,@x11
-#private-lib
 private-tmp
 
 dbus-user none

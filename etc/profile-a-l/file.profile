@@ -35,7 +35,6 @@ x11 none
 private-cache
 private-dev
 #private-etc alternatives,localtime,magic,magic.mgc
-#private-lib file,libarchive.so.*,libfakeroot,libmagic.so.*,libseccomp.so.*
 
 dbus-user none
 dbus-system none

@@ -411,14 +411,6 @@ the /etc directory, and must not contain the / character
 expressed as foo/bar -- is disallowed).
 All modifications are discarded when the sandbox is closed.
 Multiple private-etc commands are allowed and they accumulate.
-#ifdef HAVE_PRIVATE_LIB
-.TP
-\fBprivate\-lib file,directory
-Build a new /lib directory and bring in the libraries required by the application to run.
-The files and directories in the list must be expressed as relative to
-the /lib directory.
-This feature is still under development, see \fBman 1 firejail\fR for some examples.
-#endif
 .TP
 \fBprivate\-opt file,directory
 Build a new /opt in a temporary
@@ -635,17 +627,8 @@ Blacklist /tmp/.X11\-unix directory, ${HOME}/.Xauthority and file specified in $
 Remove DISPLAY and XAUTHORITY environment variables.
 Stop with error message if X11 abstract socket will be accessible in jail.
 .TP
-\fBx11 xephyr
-Enable X11 sandboxing with Xephyr server.
-.TP
-\fBx11 xorg
-Enable X11 sandboxing with X11 security extension.
-.TP
-\fBx11 xvfb
-Enable X11 sandboxing with Xvfb server.
-.TP
 \fBxephyr\-extra\-params OPTIONS
-Set Xephyr server command extra parameters for x11 xephyr. This command should be included in the profile file before x11 xephyr command.
+Set Xephyr server command extra parameters for x11 command. This command should be included in the profile file before x11 command.
 .br
 
 .br
@@ -655,10 +638,10 @@ Example:
 .br
 xephyr\-extra\-params \-grayscale
 .br
-x11 xephyr
+x11
 .TP
 \fBxephyr\-screen WIDTHxHEIGHT
-Set screen size for x11 xephyr. This command should be included in the profile file before x11 xephyr command.
+Set screen size for x11 command. This command should be included in the profile file before x11 command.
 .br
 
 .br
@@ -668,7 +651,7 @@ Example:
 .br
 xephyr\-screen 640x480
 .br
-x11 xephyr
+x11
 
 #endif
 #ifdef HAVE_DBUSPROXY
@@ -913,7 +896,7 @@ Example:
 net eth0
 .br
 ip 10.10.20.56
-
+#if 0
 .TP
 \fBip dhcp
 Acquire an IP address and default gateway for the last interface defined by a
@@ -940,12 +923,11 @@ The DHCP client will NOT release the DHCP lease when the sandbox terminates.
 If your DHCP server requires leases to be explicitly released, consider running
 a DHCP client and releasing the lease manually in conjunction with the
 net none command.
-
+#endif
 .TP
 \fBip none
 No IP address and no default gateway are configured for the last interface
-defined by a net command. Use this option
-in case you intend to start an external DHCP client in the sandbox.
+defined by a net command.
 .br
 
 .br
@@ -967,6 +949,7 @@ net eth0
 .br
 ip6 2001:0db8:0:f101::1/64
 
+#if 0
 .TP
 \fBip6 dhcp
 Acquire an IPv6 address and default gateway for the last interface defined by a
@@ -992,7 +975,7 @@ manually specified DNS servers will be overwritten.
 The DHCP client will NOT release the DHCP lease when the sandbox terminates.
 If your DHCP server requires leases to be explicitly released, consider running
 a DHCP client and releasing the lease manually.
-
+#endif
 .TP
 \fBiprange address,address
 Assign an IP address in the provided range to the last network

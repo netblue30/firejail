@@ -9,7 +9,6 @@ include sysprof-cli.local
 
 # There is no GUI help menu to break in the CLI version
 private-bin sysprof-cli
-private-lib
 
 dbus-user none
 dbus-system none

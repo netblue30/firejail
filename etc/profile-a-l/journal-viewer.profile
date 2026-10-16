@@ -15,7 +15,6 @@ whitelist ${HOME}/.cache/journal-viewer
 whitelist ${HOME}/.local/share/com.vmingueza.journal-viewer
 
 private-bin journal-viewer
-private-lib webkit2gtk-*
 
 read-write ${HOME}/.cache/journal-viewer
 read-write ${HOME}/.local/share/com.vmingueza.journal-viewer

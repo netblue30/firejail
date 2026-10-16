@@ -666,7 +666,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 	else if (strncmp(ptr, "netns ", 6) == 0) {
 #ifdef HAVE_NETWORK
 		if (checkcfg(CFG_NETWORK)) {
-			arg_netns = ptr + 6;
+			arg_netns = strdup(ptr + 6);
+			if (!arg_netns)
+				errExit("strdup");
 			check_netns(arg_netns);
 		}
 		else
@@ -884,10 +886,13 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			// configure this IP address for the last bridge defined
 			if (strcmp(ptr + 3, "none") == 0)
 				br->arg_ip_none = 1;
+#if 0 // --ip=dhcp disabled in 0.9.81
 			else if (strcmp(ptr + 3, "dhcp") == 0) {
 				br->arg_ip_none = 1;
 				br->arg_ip_dhcp = 1;
-			} else {
+			}
+#endif
+			else {
 				if (atoip(ptr + 3, &br->ipsandbox)) {
 					fprintf(stderr, "Error: invalid IP address\n");
 					exit(1);
@@ -912,11 +917,12 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
 				exit(1);
 			}
-
+#if 0 // --ip=dhcp disabled in 0.9.81
 			// configure this IP address for the last bridge defined
 			if (strcmp(ptr + 4, "dhcp") == 0)
 				br->arg_ip6_dhcp = 1;
 			else {
+#endif				
 				if (check_ip46_address(ptr + 4) == 0) {
 					fprintf(stderr, "Error: invalid IPv6 address\n");
 					exit(1);
@@ -925,7 +931,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				br->ip6sandbox = strdup(ptr + 4);
 				if (br->ip6sandbox == NULL)
 					errExit("strdup");
-			}
+// --ip=dhcp disabled in 0.9.81			}
 		}
 		else
 			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);
@@ -1327,61 +1333,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-	if (strcmp(ptr, "x11 xephyr") == 0) {
-#ifdef HAVE_X11
-		if (checkcfg(CFG_X11)) {
-			const char *x11env = env_get("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0) {
-				return 0;
-			}
-			else {
-				// start x11
-				x11_start_xephyr(cfg.original_argc, cfg.original_argv);
-				exit(0);
-			}
-		}
-		else
-			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
-#endif
-		return 0;
-	}
-
-	if (strcmp(ptr, "x11 xorg") == 0) {
-#ifdef HAVE_X11
-		if (checkcfg(CFG_X11))
-			arg_x11_xorg = 1;
-		else
-			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
-#endif
-		return 0;
-	}
-
-	if (strcmp(ptr, "x11 xpra") == 0) {
-#ifdef HAVE_X11
-		fprintf(stderr, "Error: \"--x11=xpra\" feature was removed in firejail version 0.9.81\n");
-#endif
-		exit(1);
-	}
-
-	if (strcmp(ptr, "x11 xvfb") == 0) {
-#ifdef HAVE_X11
-		if (checkcfg(CFG_X11)) {
-			const char *x11env = env_get("FIREJAIL_X11");
-			if (x11env && strcmp(x11env, "yes") == 0) {
-				return 0;
-			}
-			else {
-				// start x11
-				x11_start_xvfb(cfg.original_argc, cfg.original_argv);
-				exit(0);
-			}
-		}
-		else
-			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
-#endif
-		return 0;
-	}
-
 	if (strcmp(ptr, "x11") == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
@@ -1480,24 +1431,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		else
 			warning_feature_disabled(fname, lineno, ptr, CFG_PRIVATE_BIN);
-		return 0;
-	}
-
-	// private /lib list of files
-	if (strncmp(ptr, "private-lib", 11) == 0) {
-		if (checkcfg(CFG_PRIVATE_LIB)) {
-			if (ptr[11] == ' ') {
-				if (cfg.lib_private_keep) {
-					if (ptr[12] != '\0' && asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, ptr + 12) < 0)
-						errExit("asprintf");
-				} else {
-					cfg.lib_private_keep = ptr + 12;
-				}
-			}
-			arg_private_lib = 1;
-		}
-		else
-			warning_feature_disabled(fname, lineno, ptr, CFG_PRIVATE_LIB);
 		return 0;
 	}
 

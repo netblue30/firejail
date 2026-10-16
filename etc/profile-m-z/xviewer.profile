@@ -37,7 +37,6 @@ seccomp
 
 private-bin xviewer
 private-dev
-private-lib
 private-tmp
 
 # makes settings immutable

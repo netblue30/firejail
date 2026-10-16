@@ -86,6 +86,7 @@ seccomp.block-secondary
 
 disable-mnt
 ?BROWSER_DISABLE_U2F: private-dev
+private-cache
 # Note: The private-etc line below works fine on most distributions but it
 # could cause problems on CentOS.
 private-etc @tls-ca,@x11,mailcap,mime.types,os-release

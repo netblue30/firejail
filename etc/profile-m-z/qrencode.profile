@@ -46,7 +46,6 @@ private-bin qrencode
 private-cache
 private-dev
 private-etc
-private-lib libpcre*
 private-tmp
 
 dbus-user none

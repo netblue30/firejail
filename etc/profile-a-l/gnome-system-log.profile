@@ -10,7 +10,6 @@ include globals.local
 ignore net none
 
 private-bin gnome-system-log
-private-lib
 
 memory-deny-write-execute
 

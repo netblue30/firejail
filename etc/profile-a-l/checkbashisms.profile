@@ -45,7 +45,6 @@ x11 none
 
 private-cache
 private-dev
-private-lib libfreebl3.so,perl*
 private-tmp
 
 dbus-user none

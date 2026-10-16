@@ -45,7 +45,6 @@ private-bin gnome-calculator
 private-cache
 private-dev
 private-etc @x11
-#private-lib gdk-pixbuf-2.*,gio,girepository-1.*,gvfs,libgconf-2.so.*,libgnutls.so.*,libproxy.so.*,librsvg-2.so.*,libxml2.so.*
 private-tmp
 
 dbus-user filter

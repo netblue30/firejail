@@ -47,7 +47,6 @@ seccomp.block-secondary
 private-cache
 private-dev
 private-etc @x11
-private-lib eog,eom,gdk-pixbuf-2.*,gio,girepository-1.*,gvfs,libgconf-2.so.*
 private-tmp
 
 restrict-namespaces

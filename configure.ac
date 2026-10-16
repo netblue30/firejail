@@ -119,14 +119,6 @@ AS_IF([test "x$enable_output" != "xno"], [
 	HAVE_OUTPUT="-DHAVE_OUTPUT"
 ])
 
-HAVE_PRIVATE_LIB=""
-AC_SUBST([HAVE_PRIVATE_LIB])
-AC_ARG_ENABLE([private-lib],
-    [AS_HELP_STRING([--disable-private-lib], [disable private lib feature])])
-AS_IF([test "x$enable_private_lib" = "xyes"], [
-	HAVE_PRIVATE_LIB="-DHAVE_PRIVATE_LIB"
-])
-
 HAVE_CHROOT=""
 AC_SUBST([HAVE_CHROOT])
 AC_ARG_ENABLE([chroot],
@@ -156,6 +148,15 @@ AC_SUBST([HAVE_X11])
 AC_ARG_ENABLE([x11],
     [AS_HELP_STRING([--disable-x11], [disable X11 sandboxing support])])
 AS_IF([test "x$enable_x11" != "xno"], [
+	HAVE_X11="-DHAVE_X11"
+])
+
+HAVE_X11_LEGACY=""
+AC_SUBST([HAVE_X11_LEGACY])
+AC_ARG_ENABLE([x11-legacy],
+    [AS_HELP_STRING([--enable-x11-legacy], [add support for Xorg security extension and xvfb X11 server])])
+AS_IF([test "x$enable_x11_legacy" = "xyes"], [
+	HAVE_X11_LEGACY="-DHAVE_X11_LEGACY"
 	HAVE_X11="-DHAVE_X11"
 ])
 
@@ -257,9 +258,9 @@ Features:
    file transfer support: $HAVE_FILE_TRANSFER
    Landlock support: $HAVE_LANDLOCK
    network: $HAVE_NETWORK
-   private lib support: $HAVE_PRIVATE_LIB
    SELinux labeling support: $HAVE_SELINUX
    user namespace: $HAVE_USERNS
    X11 sandboxing support: $HAVE_X11
+   X11 legacy servers: $HAVE_X11_LEGACY
 
 EOF

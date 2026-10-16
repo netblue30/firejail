@@ -46,7 +46,6 @@ private-bin aria2c,gzip
 #private-cache
 private-dev
 private-etc @tls-ca
-private-lib libreadline.so.*
 private-tmp
 
 dbus-user none

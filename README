@@ -169,6 +169,7 @@ Amin Vakil (https://github.com/aminvakil)
 	- new profile: pi (#7136)
 	- profiles: add llm-agent-common.profile (#7158)
 	- new profile: claude (#7169)
+	- profiles: llm-agent-common: disable private-cache (#7212)
 Ammon Smith (https://github.com/ammongit)
 	- Add DBus filter rules specific to firefox-developer-edition
 Andreas Hunkeler (https://github.com/Karneades)
@@ -257,6 +258,9 @@ bbhtt (https://github.com/bbhtt)
 	- fixes to cheese, authenticator, liferea
 	- add profile for straw-viewer
 	- email clients whitelisting and fixes
+Ben Younes (https://github.com/ousamabenyounes)
+	- bugfix: fbwrap: wait for target and propagate exit code (#7081 #7224)
+	- bugfix: mountinfo: handle lines longer than 4096 bytes (#6450 #7225)
 Benjamin Kampmann (https://github.com/ligthyear)
 	- Forward exit code from child process
 BeautyYuYanli (https://github.com/BeautyYuYanli)
@@ -747,7 +751,7 @@ Jose Riha (https://github.com/jose1711)
 	- fix udiskie.profile
 	- improve hints for allowing browser access to Gnome extensions connector
 	- fix warshow, jumpnbump, tremulous, blobwars profile fixes
-	- drop noinput for games with gampad/joystick support
+	- drop noinput for games with gamepad/joystick support
 	- goldendict profile fix
 	- whitelist /usr/share/nextcloud to allow access to translation files
 	- fix clipgrab profile
@@ -872,6 +876,9 @@ mammo0 (https://github.com/mammo0)
 	- remove 'text/plain' from firejail-profile.lang.in
 Manuel Dipolt (https://github.com/xeniter)
 	- stack alignment for the ARM Architecture
+Markus Probst (https://github.com/0xIO32)
+	- profiles: librewolf: add new ~/.config/librewolf dir (#7233)
+	- profiles: keepassxc: add ~/.local/state/keepassxc (#7235)
 Marek Küthe (https://github.com/marek22k)
 	- allow loading plugins in gajim
 	- allow bsfilter in email-common.profile
@@ -1192,6 +1199,8 @@ sak96 (https://github.com/sak96)
 	- Fix Firefox 'Profile not found' for psd (v6.45)
 Salvo 'LtWorf' Tomaselli (https://github.com/ltworf)
 	- fixed ktorrent profile
+sanka-eu (https://github.com/sanka-eu)
+	- profile.c: fix use of dangling pointer for netns argument (#7246)
 sarneaud (https://github.com/sarneaud)
 	- rewrite globbing code to fix various minor issues
 	- added noblacklist command for profile files
@@ -1380,6 +1389,8 @@ tinmanx (https://github.com/tinmanx)
 	- remove network access from cherrytree.profile
 t-m-w (https://github.com/t-m-w)
 	- profiles: mullvad-browser: allow readlink and realpath (#6923)
+Tom Hense (https://github.com/tomhense)
+	- profiles: mpv: allow dbus mpris (#7134 #7237)
 Tom Mellor (https://github.com/kalegrill)
 	- mupen64plus profile
 Tomasz Jan Góralczyk (https://github.com/tjg)

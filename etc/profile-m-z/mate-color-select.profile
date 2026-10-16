@@ -34,7 +34,6 @@ disable-mnt
 private-bin mate-color-select
 private-etc
 private-dev
-private-lib
 private-tmp
 
 memory-deny-write-execute

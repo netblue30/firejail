@@ -42,7 +42,6 @@ private-bin xournal
 private-cache
 private-dev
 private-etc
-# TODO should use private-lib
 private-tmp
 
 dbus-user none

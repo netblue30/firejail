@@ -376,6 +376,21 @@ so uninstalling without doing the above should not cause issues.
 
 ## Current development version: 0.9.81
 
+### X11 support restructuring
+
+With the transition from X11 to Wayland for what feels like forever,
+some restructuring is in order:
+
+* --x11=xpra support was removed.
+* --x11=xorg support (Xorg security extension) is disabled in the default
+  software configuration, the user will need to add --enable-x11-legacy flag
+  for ./configure (./configure --enable-x11-legacy)
+* --x11=xvfb support (xvfb display server) is disabled in the default
+  software configuration, the user will need to add --enable-x11-legacy flag
+  for ./configure (./configure --enable-x11-legacy)
+* --x11=xephyr command is removed, however, Xephyr display server is used
+  by default by --x11 command.
+
 ### Landlock support - ongoing/experimental
 
 * Added on #6078, which is based on #5315 from ChrysoliteAzalea/landlock
@@ -439,32 +454,31 @@ Warning: multiple caps in /etc/firejail/transmission-daemon.profile
 Warning: multiple caps in /etc/firejail/trivalent.profile
 
 Stats:
-    profiles			1342
-    include local profile	1341   (include profile-name.local)
-    include globals		1307   (include globals.local)
-    blacklist ~/.ssh		1201   (include disable-common.inc)
-    seccomp			1213
-    capabilities		1335
-    noexec			1214   (include disable-exec.inc)
-    noroot			1105
+    profiles			1350
+    include local profile	1349   (include profile-name.local)
+    include globals		1314   (include globals.local)
+    blacklist ~/.ssh		1209   (include disable-common.inc)
+    seccomp			1221
+    capabilities		1343
+    noexec			1217   (include disable-exec.inc)
+    noroot			1113
     memory-deny-write-execute	320
-    restrict-namespaces		1048
-    apparmor			869
-    private-bin			817
-    private-dev			1172
-    private-etc			842
-    private-cache		865
-    private-lib			86
-    private-tmp			1036
-    whitelist home directory	662
-    whitelist var		975   (include whitelist-var-common.inc)
-    whitelist run/user		1305   (include whitelist-runuser-common.inc
+    restrict-namespaces		1055
+    apparmor			873
+    private-bin			816
+    private-dev			1179
+    private-etc			850
+    private-cache		937
+    private-tmp			1044
+    whitelist home directory	663
+    whitelist var		982   (include whitelist-var-common.inc)
+    whitelist run/user		1313   (include whitelist-runuser-common.inc
 					or blacklist ${RUNUSER})
-    whitelist usr/share		760   (include whitelist-usr-share-common.inc
-    net none			452
-    dbus-user none 		766
-    dbus-user filter 		206
-    dbus-system none 		970
+    whitelist usr/share		762   (include whitelist-usr-share-common.inc
+    net none			454
+    dbus-user none 		770
+    dbus-user filter 		210
+    dbus-system none 		978
     dbus-system filter 		13
 
 

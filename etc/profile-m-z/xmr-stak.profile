@@ -39,7 +39,6 @@ private ${HOME}/.xmr-stak
 private-bin xmr-stak
 private-dev
 private-etc @tls-ca
-#private-lib libxmrstak_opencl_backend,libxmrstak_cuda_backend
 private-tmp
 
 memory-deny-write-execute

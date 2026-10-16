@@ -65,14 +65,14 @@ static int cmdline_length(int argc, char **argv, int index, bool want_extra_quot
 	return len;
 }
 
-static void quote_cmdline(char *command_line, char *window_title, int len, int argc, char **argv, int index, bool want_extra_quotes) {
+static void quote_cmdline(char *command_line, int argc, char **argv, int index, bool want_extra_quotes) {
 	assert(index != -1);
+	assert(command_line);
 
 	unsigned i,j;
 	unsigned argcnt = argc - index;
 	bool in_quotes = false;
 	char *ptr1 = command_line;
-	char *ptr2 = window_title;
 
 	for (i = 0; i < argcnt; i++) {
 
@@ -128,18 +128,14 @@ static void quote_cmdline(char *command_line, char *window_title, int len, int a
 		// add space
 		sprintf(ptr1, " ");
 		ptr1 += strlen(ptr1);
-
-		sprintf(ptr2, "%s ", argv[i + index]);
-		ptr2 += strlen(ptr2);
 	}
-
-	assert((unsigned) len == strlen(command_line));
 }
 
-void build_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, bool want_extra_quotes) {
+void build_cmdline(char **command_line, int argc, char **argv, int index, bool want_extra_quotes) {
 	// index == -1 could happen if we have --shell=none and no program was specified
 	// the program should exit with an error before entering this function
 	assert(index != -1);
+	assert(command_line);
 
 	int len = cmdline_length(argc, argv, index, want_extra_quotes);
 	if (len > ARG_MAX) {
@@ -150,23 +146,20 @@ void build_cmdline(char **command_line, char **window_title, int argc, char **ar
 	*command_line = malloc(len + 1);
 	if (!*command_line)
 			errExit("malloc");
-	*window_title = malloc(len + 1);
-	if (!*window_title)
-			errExit("malloc");
 
-	quote_cmdline(*command_line, *window_title, len, argc, argv, index, want_extra_quotes);
+	quote_cmdline(*command_line, argc, argv, index, want_extra_quotes);
 
 	if (arg_debug)
 		printf("Building quoted command line: %s\n", *command_line);
 
 	assert(*command_line);
-	assert(*window_title);
 }
 
-void build_appimage_cmdline(char **command_line, char **window_title, int argc, char **argv, int index, bool want_extra_quotes) {
+void build_appimage_cmdline(char **command_line, int argc, char **argv, int index, bool want_extra_quotes) {
 	// index == -1 could happen if we have --shell=none and no program was specified
 	// the program should exit with an error before entering this function
 	assert(index != -1);
+	assert(command_line);
 
 	char *apprun_path = RUN_FIREJAIL_APPIMAGE_DIR "/AppRun";
 
@@ -184,15 +177,11 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 	char *command_line_tmp = malloc(len1 + len3 + 1);
 	if (!command_line_tmp)
 			errExit("malloc");
-	*window_title = malloc(len1 + len3 + 1);
-	if (!*window_title)
-			errExit("malloc");
 
 	// run default quote_cmdline
-	quote_cmdline(command_line_tmp, *window_title, len1, argc, argv, index, want_extra_quotes);
+	quote_cmdline(command_line_tmp, argc, argv, index, want_extra_quotes);
 
 	assert(command_line_tmp);
-	assert(*window_title);
 
 	// 'fix' command_line now
 	if (asprintf(command_line, "'%s' %s", apprun_path, command_line_tmp + len2) == -1)

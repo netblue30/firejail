@@ -40,7 +40,6 @@ seccomp
 
 private-bin pluma
 private-dev
-private-lib aspell,gconv,libgspell-1.so.*,libreadline.so.*,libtinfo.so.*,pluma
 private-tmp
 
 # makes settings immutable

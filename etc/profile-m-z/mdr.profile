@@ -43,7 +43,6 @@ private-bin mdr
 private-cache
 private-dev
 private-etc
-private-lib
 private-tmp
 
 dbus-user none

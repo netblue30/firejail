@@ -42,7 +42,6 @@ private-bin regextester
 private-cache
 private-dev
 private-etc
-private-lib libgranite.so.*
 private-tmp
 
 dbus-user filter

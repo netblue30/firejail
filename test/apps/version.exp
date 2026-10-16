@@ -1,0 +1,55 @@
+#!/usr/bin/expect -f
+# This file is part of Firejail project
+# Copyright (C) 2014-2026 Firejail Authors
+# License GPL v2
+
+set timeout 10
+spawn $env(SHELL)
+match_max 100000
+
+set program ping
+
+if {![file exists /usr/bin/$program]} {
+	puts "TESTING: $program not installed, skip$program...\n"
+	after 100
+	exit
+}
+
+send -- "firejail --version\r"
+expect {
+	timeout {puts "TESTING ERROR 0\n";exit}
+	"firejail version"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"X11 sandboxing support"
+}
+after 100
+
+send -- "firejail ping --version\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"/usr/bin/ping: invalid option"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"use IPv4"
+}
+after 100
+
+send -- "ping --version\r"
+expect {
+	timeout {puts "TESTING ERROR 2\n";exit}
+	"/usr/bin/ping: invalid option"
+}
+expect {
+	timeout {puts "TESTING ERROR 1\n";exit}
+	"use IPv4"
+}
+after 100
+
+
+
+
+
+puts "\nall done\n"

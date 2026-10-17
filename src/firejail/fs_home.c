@@ -482,4 +482,3 @@ errout:
 	fprintf(stderr, "Error: invalid private working directory\n");
 	exit(1);
 }
-

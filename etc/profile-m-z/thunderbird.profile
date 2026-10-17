@@ -39,6 +39,12 @@ noblacklist ${HOME}/.mozilla
 whitelist ${HOME}/.config/mozilla/firefox/profiles.ini
 whitelist ${HOME}/.mozilla/firefox/profiles.ini
 
+# These lines are needed to allow LibreWolf to load your profile when clicking a link in an email
+noblacklist ${HOME}/.config/librewolf
+noblacklist ${HOME}/.librewolf
+whitelist ${HOME}/.config/librewolf/librewolf/profiles.ini
+whitelist ${HOME}/.librewolf/librewolf/profiles.ini
+
 noblacklist ${HOME}/.cache/thunderbird
 noblacklist ${HOME}/.gnupg
 #noblacklist ${HOME}/.icedove

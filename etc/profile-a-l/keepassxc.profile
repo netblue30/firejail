@@ -22,8 +22,10 @@ noblacklist /tmp/ssh-*
 noblacklist ${HOME}/.config/BraveSoftware
 noblacklist ${HOME}/.config/chromium
 noblacklist ${HOME}/.config/google-chrome
+noblacklist ${HOME}/.config/librewolf
 noblacklist ${HOME}/.config/mozilla
 noblacklist ${HOME}/.config/vivaldi
+noblacklist ${HOME}/.librewolf
 noblacklist ${HOME}/.local/share/torbrowser
 noblacklist ${HOME}/.mozilla
 

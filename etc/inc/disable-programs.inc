@@ -1116,6 +1116,7 @@ blacklist ${HOME}/.local/share/strawberry
 blacklist ${HOME}/.local/share/supertux2
 blacklist ${HOME}/.local/share/supertuxkart
 blacklist ${HOME}/.local/share/swell-foop
+blacklist ${HOME}/.local/share/tasks.org
 blacklist ${HOME}/.local/share/telegram-desktop
 blacklist ${HOME}/.local/share/telepathy
 blacklist ${HOME}/.local/share/terasology
@@ -1142,6 +1143,7 @@ blacklist ${HOME}/.local/state/mpv
 blacklist ${HOME}/.local/state/opencode
 blacklist ${HOME}/.local/state/pipewire
 blacklist ${HOME}/.local/state/pyradio
+blacklist ${HOME}/.local/state/tasks.org
 blacklist ${HOME}/.lv2
 blacklist ${HOME}/.lyrics
 blacklist ${HOME}/.lyx

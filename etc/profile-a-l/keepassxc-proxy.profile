@@ -1,4 +1,4 @@
-# Firejail profile for keepassxc-cli
+# Firejail profile for keepassxc-proxy
 # This file is overwritten after every install/update
 # Persistent local customizations
 include keepassxc-proxy.local

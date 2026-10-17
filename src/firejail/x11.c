@@ -207,7 +207,7 @@ static int random_display_number(void) {
 #endif
 
 #ifdef HAVE_X11
-#ifdef HAVE_X11_LEGACY	
+#ifdef HAVE_X11_LEGACY
 void x11_start_xvfb(int argc, char **argv) {
 	EUID_ASSERT();
 	int i;

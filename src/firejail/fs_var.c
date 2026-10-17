@@ -167,7 +167,6 @@ void fs_var_lib(void) {
 		}
 	}
 #endif
-	
 	// nginx multiserver
 	if (stat("/var/lib/nginx", &s) == 0) {
 		if (arg_debug)

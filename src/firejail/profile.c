@@ -926,7 +926,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 			if (strcmp(ptr + 4, "dhcp") == 0)
 				br->arg_ip6_dhcp = 1;
 			else {
-#endif				
+#endif
 				if (check_ip46_address(ptr + 4) == 0) {
 					fprintf(stderr, "Error: invalid IPv6 address\n");
 					exit(1);
@@ -935,7 +935,9 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 				br->ip6sandbox = strdup(ptr + 4);
 				if (br->ip6sandbox == NULL)
 					errExit("strdup");
-// --ip=dhcp disabled in 0.9.81			}
+#if 0 // --ip=dhcp disabled in 0.9.81
+			}
+#endif
 		}
 		else
 			warning_feature_disabled(fname, lineno, ptr, CFG_NETWORK);

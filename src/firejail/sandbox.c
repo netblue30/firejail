@@ -694,7 +694,6 @@ int sandbox(void* sandbox_arg) {
 	// keep a copy of dhclient executable before the filesystem is modified
 	dhcp_store_exec();
 #endif
-	
 	//****************************
 	// log sandbox data
 	//****************************
@@ -1098,7 +1097,6 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	dhcp_start();
 #endif
-	
 	//****************************
 	// set application environment
 	//****************************

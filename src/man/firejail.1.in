@@ -1100,7 +1100,6 @@ default gateway is assigned by default.
 Example:
 .br
 $ firejail \-\-net=eth0 \-\-ip=10.10.20.56 /usr/bin/firefox
-
 #if 0
 .TP
 \fB\-\-ip=dhcp

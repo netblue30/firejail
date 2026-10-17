@@ -2386,7 +2386,9 @@ int main(int argc, char **argv, char **envp) {
 					br->ip6sandbox = strdup(argv[i] + 6);
 					if (br->ip6sandbox == NULL)
 						errExit("strdup");
-// --ip6=dhcp disabled in 0.9.81 }
+#if 0 // --ip6=dhcp disabled in 0.9.81
+				}
+#endif
 			}
 			else
 				exit_err_feature(argv[i], CFG_NETWORK);

@@ -20,9 +20,10 @@ include firefox-common.local
 
 # To enable support for the KeePassXC extension, add the following lines to
 # firefox-common.local.
-# Note: Start KeePassXC before the web browser and keep it open to allow
+# Note: Start KeePassXC/ChiPass before the web browser and keep it open to allow
 # communication between them.
 #noblacklist ${RUNUSER}/app
+#whitelist ${RUNUSER}/app/org.chipass.ChiPass
 #whitelist ${RUNUSER}/app/org.keepassxc.KeePassXC
 #whitelist ${RUNUSER}/kpxc_server
 #whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer

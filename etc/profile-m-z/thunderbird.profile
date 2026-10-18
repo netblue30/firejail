@@ -8,6 +8,7 @@ include globals.local
 
 # Ignore wruc from firefox-common.profile:
 ignore include whitelist-runuser-common.inc
+ignore whitelist ${RUNUSER}/app/org.chipass.ChiPass
 ignore whitelist ${RUNUSER}/app/org.keepassxc.KeePassXC
 ignore whitelist ${RUNUSER}/kpxc_server
 ignore whitelist ${RUNUSER}/org.keepassxc.KeePassXC.BrowserServer

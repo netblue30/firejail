@@ -103,11 +103,11 @@ dbus-user.talk org.gnome.Shell
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
 
-# KeePassXC Browser Integration
-#private-bin keepassxc-proxy
-
 # ChiPass Browser Integration
 #private-bin ChiPass-proxy
+
+# KeePassXC Browser Integration
+#private-bin keepassxc-proxy
 
 # Flash plugin
 private-etc adobe

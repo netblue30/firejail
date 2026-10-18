@@ -19,6 +19,7 @@ ignore join-or-start keepassxc
 # If you do, you MUST store your database under ${DOCUMENTS}/ChiPass/foo.kdbx.
 #mkdir ${DOCUMENTS}/ChiPass
 #whitelist ${DOCUMENTS}/ChiPass
+#include whitelist-common.inc
 
 mkdir ${RUNUSER}/app/org.chipass.ChiPass
 whitelist ${RUNUSER}/app/org.chipass.ChiPass

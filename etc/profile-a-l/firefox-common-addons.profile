@@ -12,6 +12,7 @@ include firefox-common-addons.local
 # Prevent whitelisting in ${RUNUSER}
 ignore whitelist ${RUNUSER}/*firefox*
 ignore whitelist ${RUNUSER}/*floorp*
+ignore whitelist ${RUNUSER}/app/org.chipass.ChiPass
 ignore whitelist ${RUNUSER}/app/org.keepassxc.KeePassXC
 ignore whitelist ${RUNUSER}/psd/*firefox*
 ignore whitelist ${RUNUSER}/psd/*floorp*
@@ -101,6 +102,9 @@ dbus-user.talk org.gnome.ChromeGnomeShell
 dbus-user.talk org.gnome.Shell
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python3.inc
+
+# ChiPass Browser Integration
+#private-bin ChiPass-proxy
 
 # KeePassXC Browser Integration
 #private-bin keepassxc-proxy

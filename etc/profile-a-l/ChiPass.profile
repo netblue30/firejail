@@ -7,11 +7,9 @@ include ChiPass.local
 # added by included profile
 #include globals.local
 
-# Ignore options from keepassxc.profile that need adaptations
+# Ignore entries from keepassxc.profile.
 ignore mkdir ${RUNUSER}/app/org.keepassxc.KeePassXC
 ignore whitelist ${RUNUSER}/app/org.keepassxc.KeePassXC
-ignore whitelist /usr/share/keepassxc
-ignore private-bin keepassxc,keepassxc-cli,keepassxc-proxy
 ignore dbus-user.own org.keepassxc.KeePassXC.*
 ignore join-or-start keepassxc
 

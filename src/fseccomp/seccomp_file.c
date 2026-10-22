@@ -96,7 +96,7 @@ void filter_add_whitelist_for_excluded(int fd, int syscall, int arg, void *ptrar
 	(void) native;
 
 	if (syscall < 0) {
-		write_whitelist(fd, -syscall);
+		write_whitelist(fd, ~syscall);
 	}
 }
 
@@ -130,7 +130,7 @@ void filter_add_blacklist_for_excluded(int fd, int syscall, int arg, void *ptrar
 	(void) native;
 
 	if (syscall < 0) {
-		write_blacklist(fd, -syscall);
+		write_blacklist(fd, ~syscall);
 	}
 }
 

@@ -2672,7 +2672,7 @@ int syscall_check_list(const char *slist, filter_fn *callback, int fd, int arg, 
 			syscall_process_name(ptr, &syscall_nr, &error_nr, native);
 			if (syscall_nr != SYSCALL_ERROR && callback != NULL) {
 				if (negate) {
-					syscall_nr = -syscall_nr;
+					syscall_nr = ~syscall_nr;
 				}
 				if (error_nr >= 0 && fd > 0)
 					filter_add_errno(fd, syscall_nr, error_nr, ptrarg, native);
@@ -2698,7 +2698,7 @@ static void find_syscall(int fd, int syscall, int arg, void *ptrarg, bool native
 	(void) arg;
 	(void)native;
 	SyscallCheckList *ptr = ptrarg;
-	if (abs(syscall) == ptr->syscall)
+	if ((syscall < 0 ? ~syscall : syscall) == ptr->syscall)
 		ptr->found = true;
 }
 
@@ -2709,6 +2709,10 @@ static void syscall_in_list(int fd, int syscall, int arg, void *ptrarg, bool nat
 	SyscallCheckList *ptr = ptrarg;
 	SyscallCheckList sl;
 	const char *name;
+
+	// negated entries (!syscall) are handled by the *_for_excluded callbacks
+	if (syscall < 0)
+		return;
 
 	sl.found = false;
 	sl.syscall = syscall;

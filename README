@@ -339,6 +339,7 @@ cobratbq (https://github.com/cobratbq)
 	- tor profile: add memory-deny-write-execute
 	- torbrowser-launcher fixes
 	- profiles: torbrowser-launcher: add no3d (#7143)
+	- profile: blink-common-hardened: drop netlink & add mdwe comment - #7165#7165
 CodeWithMa (https://github.com/CodeWithMa)
 	- mpv.profile: add new XDG_STATE_HOME path
 corecontingency (https://https://github.com/corecontingency)

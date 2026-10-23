@@ -29,7 +29,7 @@ firejail (0.9.81) baseline; urgency=low
   * docs: man: fix typo in example (#7106)
   * docs: recommend .deb or building from source on debian/ubuntu (#7110)
   * docs: note how to use net=none for appimages (#7257)
-  * docs: firecfg: note to not enable devtools - #7276
+  * docs: firecfg: note to not enable devtools (#7276)
   * build: fix empty lists in syscall.c breaking compilation (#7108 #7109)
   * build: remove unused install.sh (#7124)
   * build: merge fnettrace headers into `fnettrace_common.h` (#7127)
@@ -78,6 +78,7 @@ firejail (0.9.81) baseline; urgency=low
   * profiles: mpv: allow dbus mpris (#7134 #7237)
   * profiles: browsers: add private-cache to firefox-common and chromium-common
     browsers (d3bf6ac, 70107ef)
+  * profiles: blink-common-hardened: drop netlink & add mdwe comment (#7165)
   * new profile: gemini (#6936)
   * new profile: opencode (#7135)
   * new profile: pi (#7136)

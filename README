@@ -321,9 +321,6 @@ Charly Coste (https://github.com/Changaco)
 Christian Pinedo (https://github.com/chrpinedo)
 	- added nicotine profile
 	- allow python3 in totem profile
-creideiki (https://github.com/creideiki)
-	- make the sandbox process reap all children
-	- tor browser profile fix
 chiraag-nataraj (https://github.com/chiraag-nataraj)
 	- support for newer Xpra versions (2.1+)
 	- added Viber, amule, ardour5, brackets, calligra, cin, fetchmail profiles
@@ -350,6 +347,9 @@ crass (https://github.com/crass)
 	- extract_command_name fixes
 	- update appimage size calculation to newest code from libappimage
 	- firejail should look for processes with names exactly named
+creideiki (https://github.com/creideiki)
+	- make the sandbox process reap all children
+	- tor browser profile fix
 croket (https://github.com/crocket)
 	- fix librewolf profile
 	- added profiles for imv, retroarch, and torbrowser

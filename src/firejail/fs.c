@@ -890,7 +890,9 @@ void fs_proc_sys_dev_boot(void) {
 	EUID_ROOT();
 }
 
-// disable firejail configuration in ~/.config/firejail
+// disable firejail configuration and runtime paths.
+//
+// Note: This is also handled by disable-common.inc (see #7132).
 void disable_config(void) {
 	EUID_USER();
 #ifndef HAVE_ONLY_SYSCFG_PROFILES
@@ -898,7 +900,6 @@ void disable_config(void) {
 	if (asprintf(&fname, "%s/.config/firejail", cfg.homedir) == -1)
 		errExit("asprintf");
 	fs_mkdir(fname);
-	disable_file(BLACKLIST_FILE, fname);
 	free(fname);
 #endif
 

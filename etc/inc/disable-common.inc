@@ -2,6 +2,9 @@
 # Persistent customizations should go in a .local file.
 include disable-common.local
 
+# firejail paths
+blacklist ${HOME}/.config/firejail
+
 # The following block breaks trash functionality in file managers
 #read-only ${HOME}/.local
 #read-write ${HOME}/.local/share

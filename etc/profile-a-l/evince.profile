@@ -64,4 +64,5 @@ dbus-user.talk org.gtk.vfs.Daemon
 dbus-user.talk org.gtk.vfs.Metadata
 dbus-system none
 
+deterministic-shutdown
 restrict-namespaces

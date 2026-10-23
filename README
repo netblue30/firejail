@@ -350,6 +350,8 @@ crass (https://github.com/crass)
 creideiki (https://github.com/creideiki)
 	- make the sandbox process reap all children
 	- tor browser profile fix
+cristianmgrass-ctrl (https://github.com/cristianmgrass-ctrl)
+	- bugfix: fix string lifetimes in profile.c (#7267)
 croket (https://github.com/crocket)
 	- fix librewolf profile
 	- added profiles for imv, retroarch, and torbrowser
@@ -1144,6 +1146,10 @@ Raphaël Droz (https://github.com/drzraf)
 	- zoom profile fixes
 realaltffour (https://github.com/realaltffour)
 	- add lynx support to newsboat profile
+Robin Candau (https://github.com/Antiz96)
+	- profiles: keepassxc & thunderbird: allow librewolf paths (#7272)
+	- profiles: keepassxc-proxy: fix typo (#7278)
+	- new profile: ChiPass (#7271)
 RedRampage (https://github.com/redrampage)
 	- profiles: ssh: add `${RUNUSER}/openssh_agent` socket path (#6975)
 Reed Riley (https://github.com/reedriley)
@@ -1392,6 +1398,7 @@ t-m-w (https://github.com/t-m-w)
 	- profiles: mullvad-browser: allow readlink and realpath (#6923)
 Tom Hense (https://github.com/tomhense)
 	- profiles: mpv: allow dbus mpris (#7134 #7237)
+	- new profile: tasks-org (#7273)
 Tom Mellor (https://github.com/kalegrill)
 	- mupen64plus profile
 Tomasz Jan Góralczyk (https://github.com/tjg)

@@ -26,6 +26,8 @@ firejail (0.9.81) baseline; urgency=low
     leaks when using systemd-resolved (#7209 #7216)
   * bugfix: fbwrap: wait for target and propagate exit code (#7081 #7224)
   * bugfix: mountinfo: handle lines longer than 4096 bytes (#6450 #7225)
+  * bugfix: fix string lifetimes in profile.c (#7267)
+  * bugfix: fix ignored negation for syscalls number 0 (#7255 #7280)
   * docs: man: fix typo in example (#7106)
   * docs: recommend .deb or building from source on debian/ubuntu (#7110)
   * docs: note how to use net=none for appimages (#7257)
@@ -78,6 +80,9 @@ firejail (0.9.81) baseline; urgency=low
   * profiles: mpv: allow dbus mpris (#7134 #7237)
   * profiles: browsers: add private-cache to firefox-common and chromium-common
     browsers (d3bf6ac, 70107ef)
+  * profiles: keepassxc & thunderbird: allow librewolf paths (#7272)
+  * profiles: keepassxc-proxy: fix typo (#7278)
+  * profiles: evince: add deterministic-shutdown (#7269 #7277)
   * profiles: blink-common-hardened: drop netlink & add mdwe comment (#7165)
   * new profile: gemini (#6936)
   * new profile: opencode (#7135)
@@ -85,6 +90,8 @@ firejail (0.9.81) baseline; urgency=low
   * new profile: ephoto (#7153)
   * new profile: tldr (#7166)
   * new profile: claude (#7169)
+  * new profile: tasks-org (#7273)
+  * new profile: ChiPass (#7271)
 -- netblue30 <netblue30@yahoo.com>  Sat, 14 Mar 2026 08:00:00 -0500
 
 firejail (0.9.80) baseline; urgency=low

@@ -111,13 +111,12 @@ void fs_hostname(const char *orig_hostname) {
 			// copy line
 			if (strstr(buf, "127.0.0.1") && done_ipv4 == 0) {
 				done_ipv4 = 1;
-				fprintf(fp2, "127.0.0.1 %s\n", hostname);
 				fprintf(fp2, "127.0.0.1 localhost\n");
+				fprintf(fp2, "127.0.1.1 %s\n", hostname);
 			}
 			else if (strstr(buf, "::1") && done_ipv6 == 0) {
 				done_ipv6 = 1;
-				fprintf(fp2, "::1 %s\n", hostname);
-				fprintf(fp2, "::1 localhost\n");
+				fprintf(fp2, "::1 localhost %s\n", hostname);
 			}
 			else
 				fprintf(fp2, "%s\n", buf);

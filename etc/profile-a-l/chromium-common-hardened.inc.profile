@@ -6,5 +6,8 @@ include chromium-common-hardened.inc.local
 # added by caller profile
 #include globals.local
 
+# Running with `--js-flags=--jitless` satisfies W^X
+#memory-deny-write-execute
+
 # Redirect
 include blink-common-hardened.inc.profile

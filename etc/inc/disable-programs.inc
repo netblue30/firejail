@@ -174,6 +174,7 @@ blacklist ${HOME}/.cache/libgweather
 blacklist ${HOME}/.cache/librewolf
 blacklist ${HOME}/.cache/liferea
 blacklist ${HOME}/.cache/lutris
+blacklist ${HOME}/.cache/maki
 blacklist ${HOME}/.cache/marker
 blacklist ${HOME}/.cache/matrix-mirage
 blacklist ${HOME}/.cache/microsoft-edge
@@ -577,6 +578,7 @@ blacklist ${HOME}/.config/lutris
 blacklist ${HOME}/.config/lximage-qt
 blacklist ${HOME}/.config/lzdoom
 blacklist ${HOME}/.config/mailtransports
+blacklist ${HOME}/.config/maki
 blacklist ${HOME}/.config/mana
 blacklist ${HOME}/.config/mate-calc
 blacklist ${HOME}/.config/mate/eom
@@ -908,6 +910,7 @@ blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
 blacklist ${HOME}/.lmmsrc.xml
 blacklist ${HOME}/.local/lib/vivaldi
+blacklist ${HOME}/.local/logs/maki
 blacklist ${HOME}/.local/opt/tor-browser
 blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/3909/PapersPlease
@@ -1058,6 +1061,7 @@ blacklist ${HOME}/.local/share/lollypop
 blacklist ${HOME}/.local/share/love
 blacklist ${HOME}/.local/share/lugaru
 blacklist ${HOME}/.local/share/lutris
+blacklist ${HOME}/.local/share/maki
 blacklist ${HOME}/.local/share/man
 blacklist ${HOME}/.local/share/mana
 blacklist ${HOME}/.local/share/maps-places.json
@@ -1139,6 +1143,7 @@ blacklist ${HOME}/.local/share/zathura
 blacklist ${HOME}/.local/state/ani-cli
 blacklist ${HOME}/.local/state/audacity
 blacklist ${HOME}/.local/state/keepassxc
+blacklist ${HOME}/.local/state/maki
 blacklist ${HOME}/.local/state/mpv
 blacklist ${HOME}/.local/state/opencode
 blacklist ${HOME}/.local/state/pipewire

@@ -162,6 +162,7 @@ include whitelist-var-common.inc
 
 keep-dev-ntsync
 
+allow-bwrap
 caps.drop all
 #ipc-namespace
 netfilter

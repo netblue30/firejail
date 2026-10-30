@@ -333,6 +333,7 @@ Christian Stadelmann (https://github.com/genodeftest)
 Clayton Williams (https://github.com/gosre)
 	- addition of RLIMIT_AS
 cobratbq (https://github.com/cobratbq)
+	- torbrowser-launcher: add getconf to private-bin,dri-access, glxtest - #7152#7152
 	- tor profile: add memory-deny-write-execute
 	- torbrowser-launcher fixes
 	- profiles: torbrowser-launcher: add no3d (#7143)
@@ -405,6 +406,7 @@ David Fetter (https://github.com/davidfetter)
 David Thole (https://github.com/TheDarkTrumpet)
 	- added profile for teams-for-linux
 Davide Beatrici (https://github.com/davidebeatrici)
+        - steam: allow bwrap - #7279
 	- steam.profile: correctly blacklist unneeded directories in user's home
 	- minetest fixes
 	- map /dev/input with "--private-dev", add "--no-input" option to disable it

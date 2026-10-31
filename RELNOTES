@@ -12,6 +12,8 @@ firejail (0.9.81) baseline; urgency=low
   * modif: add more metachars in `reject_meta_chars()` (#7186)
   * modif: fbwrap: improve log messages (#7227)
   * modif: add fchroot syscall (928e6ff 541dd07)
+  * modif: move hardcoded blacklist ~/.config/firejail into disable-common
+    (#7132 #7282)
   * removal: --bandwidth= command (#7197)
   * removal: --tracelog/blacklist-nolog commands (#7198)
   * removal: ./configure --enable-busybox-workaround option (#7199)
@@ -28,6 +30,7 @@ firejail (0.9.81) baseline; urgency=low
   * bugfix: mountinfo: handle lines longer than 4096 bytes (#6450 #7225)
   * bugfix: fix string lifetimes in profile.c (#7267)
   * bugfix: fix ignored negation for syscalls number 0 (#7255 #7280)
+  * bugfix: fix non-standard /etc/hosts lines (#6210 #7281)
   * docs: man: fix typo in example (#7106)
   * docs: recommend .deb or building from source on debian/ubuntu (#7110)
   * docs: note how to use net=none for appimages (#7257)
@@ -85,6 +88,7 @@ firejail (0.9.81) baseline; urgency=low
   * profiles: evince: add deterministic-shutdown (#7269 #7277)
   * profiles: blink-common-hardened: drop netlink & add mdwe comment (#7165)
   * profiles: torbrowser-launcher: add getconf to private-bin (#7152)
+  * profiles: firefox-common: allow `ioprio_set` syscall (#7284)
   * profiles: steam: allow `mount_setattr` syscall (#7268 #7287)
   * new profile: gemini (#6936)
   * new profile: opencode (#7135)
@@ -94,6 +98,7 @@ firejail (0.9.81) baseline; urgency=low
   * new profile: claude (#7169)
   * new profile: tasks-org (#7273)
   * new profile: ChiPass (#7271)
+  * new profile: maki (#7285)
 -- netblue30 <netblue30@yahoo.com>  Sat, 14 Mar 2026 08:00:00 -0500
 
 firejail (0.9.80) baseline; urgency=low

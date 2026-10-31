@@ -333,11 +333,11 @@ Christian Stadelmann (https://github.com/genodeftest)
 Clayton Williams (https://github.com/gosre)
 	- addition of RLIMIT_AS
 cobratbq (https://github.com/cobratbq)
-	- torbrowser-launcher: add getconf to private-bin,dri-access, glxtest - #7152#7152
 	- tor profile: add memory-deny-write-execute
 	- torbrowser-launcher fixes
 	- profiles: torbrowser-launcher: add no3d (#7143)
 	- profiles: blink-common-hardened: drop netlink & add mdwe comment (#7165)
+	- profiles: torbrowser-launcher: add getconf to private-bin (#7152)
 CodeWithMa (https://github.com/CodeWithMa)
 	- mpv.profile: add new XDG_STATE_HOME path
 corecontingency (https://https://github.com/corecontingency)
@@ -406,7 +406,6 @@ David Fetter (https://github.com/davidfetter)
 David Thole (https://github.com/TheDarkTrumpet)
 	- added profile for teams-for-linux
 Davide Beatrici (https://github.com/davidebeatrici)
-        - steam: allow bwrap - #7279
 	- steam.profile: correctly blacklist unneeded directories in user's home
 	- minetest fixes
 	- map /dev/input with "--private-dev", add "--no-input" option to disable it
@@ -1152,6 +1151,7 @@ Robin Candau (https://github.com/Antiz96)
 	- profiles: keepassxc & thunderbird: allow librewolf paths (#7272)
 	- profiles: keepassxc-proxy: fix typo (#7278)
 	- new profile: ChiPass (#7271)
+	- profiles: steam: allow `mount_setattr` syscall (#7268 #7287)
 RedRampage (https://github.com/redrampage)
 	- profiles: ssh: add `${RUNUSER}/openssh_agent` socket path (#6975)
 Reed Riley (https://github.com/reedriley)

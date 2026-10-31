@@ -84,6 +84,8 @@ firejail (0.9.81) baseline; urgency=low
   * profiles: keepassxc-proxy: fix typo (#7278)
   * profiles: evince: add deterministic-shutdown (#7269 #7277)
   * profiles: blink-common-hardened: drop netlink & add mdwe comment (#7165)
+  * profiles: torbrowser-launcher: add getconf to private-bin (#7152)
+  * profiles: steam: allow `mount_setattr` syscall (#7268 #7287)
   * new profile: gemini (#6936)
   * new profile: opencode (#7135)
   * new profile: pi (#7136)

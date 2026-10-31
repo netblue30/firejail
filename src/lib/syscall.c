@@ -30,6 +30,7 @@
 
 #define SYSCALL_ERROR INT_MAX
 #define ERRNO_KILL -2
+#define ERRNO_LOG -3
 
 typedef struct {
 	const char * const name;
@@ -2583,7 +2584,9 @@ static const char *syscall_find_group(const char *name) {
 
 // allowed input:
 // - syscall
-// - syscall(error)
+// - syscall:errno
+// - syscall:kill
+// - syscall:log
 static void syscall_process_name(const char *name, int *syscall_nr, int *error_nr, bool native) {
 	assert(name);
 	if (strlen(name) == 0)
@@ -2617,6 +2620,8 @@ static void syscall_process_name(const char *name, int *syscall_nr, int *error_n
 	if (error_name) {
 		if (strcmp(error_name, "kill") == 0)
 			*error_nr = ERRNO_KILL;
+		else if (strcmp(error_name, "log") == 0)
+			*error_nr = ERRNO_LOG;
 		else {
 			*error_nr = errno_find_name(error_name);
 			if (*error_nr == -1)
@@ -2677,7 +2682,9 @@ int syscall_check_list(const char *slist, filter_fn *callback, int fd, int arg, 
 				if (error_nr >= 0 && fd > 0)
 					filter_add_errno(fd, syscall_nr, error_nr, ptrarg, native);
 				else if (error_nr == ERRNO_KILL && fd > 0)
-					filter_add_blacklist_override(fd, syscall_nr, 0, ptrarg, native);
+					filter_add_blacklist_override(fd, syscall_nr, SECCOMP_RET_KILL, ptrarg, native);
+				else if (error_nr == ERRNO_LOG && fd > 0)
+					filter_add_blacklist_override(fd, syscall_nr, SECCOMP_RET_LOG, ptrarg, native);
 				else if (error_nr >= 0 && fd == 0) {
 					callback(fd, syscall_nr, error_nr, ptrarg, native);
 				}

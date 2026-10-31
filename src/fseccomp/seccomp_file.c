@@ -110,14 +110,15 @@ void filter_add_blacklist(int fd, int syscall, int arg, void *ptrarg, bool nativ
 	}
 }
 
+// blacklist a syscall with a specific action (arg), ignoring the global error
+// action: SECCOMP_RET_KILL for syscall:kill, SECCOMP_RET_LOG for syscall:log
 void filter_add_blacklist_override(int fd, int syscall, int arg, void *ptrarg, bool native) {
-	(void) arg;
 	(void) ptrarg;
 	(void) native;
 
 	if (syscall >= 0) {
 		int saved_error_action = arg_seccomp_error_action;
-		arg_seccomp_error_action = SECCOMP_RET_KILL;
+		arg_seccomp_error_action = arg;
 		write_blacklist(fd, syscall);
 		arg_seccomp_error_action = saved_error_action;
 	}

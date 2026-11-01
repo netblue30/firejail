@@ -141,6 +141,7 @@ typedef struct profile_entry_t {
 		char *file;		// resolved file path
 		char *link;		// link path
 		TopDir *top;	// top level directory
+		int overlay_fd; // fd of the overlay (-1 if not overlaying)
 	} *wparam;
 
 } ProfileEntry;

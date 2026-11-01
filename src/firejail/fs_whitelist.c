@@ -129,7 +129,7 @@ static int whitelist_mkpath(const char *parentdir, const char *relpath, mode_t m
 	return fd;
 }
 
-static void whitelist_file(const TopDir * const top, const char *path) {
+static void whitelist_file_with_overlay(const TopDir * const top, const char *path, int overlay_fd) {
 	EUID_ASSERT();
 	assert(top && path);
 
@@ -139,17 +139,22 @@ static void whitelist_file(const TopDir * const top, const char *path) {
 		return;
 	const char *relpath = path + top_pathlen + 1;
 
-	// open mount source, using a file descriptor that refers to the
-	// top level directory
-	// as the top level directory was opened before mounting the tmpfs
-	// we still have full access to all directory contents
-	// take care to not follow symbolic links (top->fd was obtained without
-	// following a link, too)
-	int fd = safer_openat(top->fd, relpath, O_PATH|O_NOFOLLOW|O_CLOEXEC);
-	if (fd == -1) {
-		if (arg_debug || arg_debug_whitelists)
-			printf("Debug %d: skip whitelist %s\n", __LINE__, path);
-		return;
+	int fd;
+	if (overlay_fd >= 0) {
+		fd = overlay_fd;
+	} else {
+		// open mount source, using a file descriptor that refers to the
+		// top level directory
+		// as the top level directory was opened before mounting the tmpfs
+		// we still have full access to all directory contents
+		// take care to not follow symbolic links (top->fd was obtained without
+		// following a link, too)
+		fd = safer_openat(top->fd, relpath, O_PATH|O_NOFOLLOW|O_CLOEXEC);
+		if (fd == -1) {
+			if (arg_debug || arg_debug_whitelists)
+				printf("Debug %d: skip whitelist %s\n", __LINE__, path);
+			return;
+		}
 	}
 	struct stat s;
 	if (fstat(fd, &s) == -1)
@@ -240,6 +245,10 @@ static void whitelist_file(const TopDir * const top, const char *path) {
 	close(fd);
 	close(fd3);
 	fs_logger2("whitelist", path);
+}
+
+static void whitelist_file(const TopDir * const top, const char *path) {
+	whitelist_file_with_overlay(top, path, -1);
 }
 
 static void whitelist_symlink(const TopDir * const top, const char *link, const char *target) {
@@ -549,6 +558,21 @@ static char *extract_topdir(const char *path) {
 	return dup;
 }
 
+static int extract_and_open_overlay(char *path)
+{
+	char *equal_sign = strchr(path, '=');
+	if (equal_sign == NULL)
+		return -1;
+
+	char *overlay = equal_sign + 1;
+	/* terminate the path at the equal sign */
+	*equal_sign = '\0';
+	int fd = open(overlay, O_PATH|O_CLOEXEC);
+	if (fd == -1)
+		errExit("open overlay");
+	return fd;
+}
+
 void fs_whitelist(void) {
 	EUID_ASSERT();
 
@@ -612,6 +636,7 @@ void fs_whitelist(void) {
 		if (expanded[0] != '/')
 			whitelist_error(expanded);
 
+		int overlay_fd = extract_and_open_overlay(expanded);
 		// sane pathname
 		char *new_name = clean_pathname(expanded);
 		free(expanded);
@@ -637,6 +662,7 @@ void fs_whitelist(void) {
 					entry = entry->next;
 					free(new_name);
 					free(dir);
+					if (overlay_fd >= 0) close(overlay_fd);
 					continue;
 				}
 			}
@@ -647,6 +673,7 @@ void fs_whitelist(void) {
 		if (strncmp(new_name, RUN_FIREJAIL_DIR, strlen(RUN_FIREJAIL_DIR)) == 0) {
 			entry = entry->next;
 			free(new_name);
+			if (overlay_fd >= 0) close(overlay_fd);
 			continue;
 		}
 
@@ -662,6 +689,8 @@ void fs_whitelist(void) {
 			fname = strdup("/proc/self/fd/1");
 		else if (strcmp(new_name, "/dev/stderr") == 0)
 			fname = strdup("/proc/self/fd/2");
+		else if (overlay_fd >= 0)
+			fname = strdup(new_name);
 		else
 			fname = realpath(new_name, NULL);
 
@@ -683,6 +712,7 @@ void fs_whitelist(void) {
 
 			entry = entry->next;
 			free(new_name);
+			if (overlay_fd >= 0) close(overlay_fd);
 			continue;
 		}
 
@@ -691,6 +721,7 @@ void fs_whitelist(void) {
 			entry = entry->next;
 			free(new_name);
 			free(fname);
+			if (overlay_fd >= 0) close(overlay_fd);
 			continue;
 		}
 
@@ -708,6 +739,7 @@ void fs_whitelist(void) {
 			nowhitelist[nowhitelist_c++] = fname;
 			entry = entry->next;
 			free(new_name);
+			if (overlay_fd >= 0) close(overlay_fd);
 			continue;
 		}
 		else {
@@ -728,6 +760,7 @@ void fs_whitelist(void) {
 				entry = entry->next;
 				free(new_name);
 				free(fname);
+				if (overlay_fd >= 0) close(overlay_fd);
 				continue;
 			}
 		}
@@ -740,6 +773,7 @@ void fs_whitelist(void) {
 		assert(current_top);
 		entry->wparam->top = current_top;
 		entry->wparam->file = fname;
+		entry->wparam->overlay_fd = overlay_fd;
 
 		// mark link
 		if (is_link(new_name))
@@ -760,10 +794,11 @@ void fs_whitelist(void) {
 			char *file = entry->wparam->file;
 			char *link = entry->wparam->link;
 			const TopDir * const current_top = entry->wparam->top;
+			int overlay_fd = entry->wparam->overlay_fd;
 
 			// top level directories of link and file can differ
 			// will whitelist the file only if it is in same top level directory
-			whitelist_file(current_top, file);
+			whitelist_file_with_overlay(current_top, file, overlay_fd);
 
 			// create the link if any
 			if (link) {

@@ -2689,8 +2689,8 @@ Instead of dropping the syscall by returning EPERM, another error
 number can be returned using \fBsyscall:errno\fR syntax. This can be
 also changed globally with \-\-seccomp-error-action or
 in /etc/firejail/firejail.config file.  The process can also be killed
-by using \fBsyscall:kill\fR syntax, or the attempt may be logged with
-\fBsyscall:log\fR.
+by using \fBsyscall:kill\fR syntax, or the attempt may be logged, without
+blocking the syscall, with \fBsyscall:log\fR.
 .br
 
 .br
@@ -2764,8 +2764,8 @@ Instead of dropping the syscall by returning EPERM, another error
 number can be returned using \fBsyscall:errno\fR syntax. This can be
 also changed globally with \-\-seccomp\-error\-action or
 in /etc/firejail/firejail.config file.  The process can also be killed
-by using \fBsyscall:kill\fR syntax, or the attempt may be logged with
-\fBsyscall:log\fR.
+by using \fBsyscall:kill\fR syntax, or the attempt may be logged, without
+blocking the syscall, with \fBsyscall:log\fR.
 .br
 
 .br

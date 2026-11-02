@@ -20,7 +20,7 @@ include disable-exec.inc
 include disable-interpreters.inc
 include disable-programs.inc
 
-#whitelist ${HOME}/YOUR_GIT_PROJECTS_DIRECTORY
+#whitelist ${PROJECTS}
 #whitelist ${HOME}/.config/git
 #whitelist ${HOME}/.gitconfig
 #whitelist ${HOME}/.git-credentials

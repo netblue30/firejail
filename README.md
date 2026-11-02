@@ -372,24 +372,9 @@ See `man firecfg` for details.
 Note: Broken symlinks are ignored when searching for an executable in `$PATH`,
 so uninstalling without doing the above should not cause issues.
 
-## Latest released version: 0.9.80
+## Latest released version: 0.9.82
 
-## Current development version: 0.9.81
-
-### X11 support restructuring
-
-With the transition from X11 to Wayland for what feels like forever,
-some restructuring is in order:
-
-* --x11=xpra support was removed.
-* --x11=xorg support (Xorg security extension) is disabled in the default
-  software configuration, the user will need to add --enable-x11-legacy flag
-  for ./configure (./configure --enable-x11-legacy)
-* --x11=xvfb support (xvfb display server) is disabled in the default
-  software configuration, the user will need to add --enable-x11-legacy flag
-  for ./configure (./configure --enable-x11-legacy)
-* --x11=xephyr command is removed, however, Xephyr display server is used
-  by default by --x11 command.
+## Current development version: 0.9.83
 
 ### Landlock support - ongoing/experimental
 

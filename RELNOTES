@@ -6,6 +6,7 @@ firejail (0.9.81) baseline; urgency=low
   * feature: add `${PROJECTS}` macro (#7157)
   * feature: add `${PUBLICSHARE}` and `${TEMPLATES}` macros (#7164)
   * feature: profstats: add --include command line option (#7265)
+  * feature: implement `syscall:log` in seccomp lists (#7289)
   * modif: create a new syscall group: `@program-keep` (9d90daf)
   * modif: stop following symlinks to /dev/null on disable (#5803 #7129)
   * modif: add backtick in `reject_meta_chars()` (#7183)

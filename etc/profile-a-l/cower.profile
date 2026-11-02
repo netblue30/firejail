@@ -19,7 +19,7 @@ include disable-shell.inc
 include disable-xdg.inc
 
 # This profile could be significantly strengthened by adding the following to cower.local
-#whitelist ${HOME}/<Your Build Folder>
+#whitelist ${PROJECTS}
 #whitelist ${HOME}/.config/cower
 
 caps.drop all

@@ -11,7 +11,7 @@ include globals.local
 # for potential issues and their solutions when Firejailing makepkg
 
 # This profile could be significantly strengthened by adding the following to makepkg.local
-#whitelist ${HOME}/<Your Build Folder>
+#whitelist ${PROJECTS}
 #whitelist ${HOME}/.gnupg
 
 # Enable severely restricted access to ${HOME}/.gnupg

@@ -7,15 +7,15 @@ include tor.local
 include globals.local
 
 # How to use:
-# Create a script called anything (e.g. mytor)
-# with the following contents:
+# Create a script called anything (e.g. "mytor") with the following contents:
 
 # #!/bin/bash
 # TORCMD="/usr/bin/tor --defaults-torrc /usr/share/tor/tor-service-defaults-torrc -f /etc/tor/torrc --RunAsDaemon 1"
 # sudo -b daemon -f -d -- firejail --profile=tor $TORCMD
 
-# You'll also likely want to disable the system service (if it exists)
-# Run mytor (or whatever you called the script above) whenever you want to start tor
+# You'll also likely want to disable the system service (if it exists).
+# Run "mytor" (or whatever you called the script above) whenever you want to
+# start tor.
 
 include disable-common.inc
 include disable-devel.inc

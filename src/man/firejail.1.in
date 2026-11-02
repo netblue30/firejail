@@ -2722,17 +2722,21 @@ Example:
 .br
 $ firejail \-\-noprofile \-\-seccomp=execve sh
 .br
-Parent pid 32751, child pid 32752
+\&...
+.br
+Parent pid 728916, child pid 728917
+.br
+Base filesystem installed in 0.05 ms
+.br
+Seccomp list in: execve; check list: @default-keep; postlist: execve
 .br
 Post-exec seccomp protector enabled
 .br
-list in: execve, check list: @default-keep prelist: (null), postlist: execve
-.br
-Child process initialized in 46.44 ms
+Child process initialized in 9.59 ms
 .br
 $ ls
 .br
-Operation not permitted
+sh: 1: ls: Operation not permitted
 
 .TP
 \fB\-\-seccomp.block\-secondary

@@ -32,16 +32,16 @@ firejail (0.9.82) baseline; urgency=low
      in Debian. We will bring back this option in release 0.9.84 using
      a different DHCP client
      (https://tracker.debian.org/news/1782808/removed-443-p1-8-from-unstable/)
-  * removal: --bandwidth= command (#7197)
-  * removal: --tracelog/blacklist-nolog commands (#7198)
-  * removal: ./configure --enable-busybox-workaround option (#7199)
-  * removal: --private-home command (#7200)
-  * removal: ./configure --disable-sandbox-check option (#7201)
-  * removal: --x11=xpra option (#7207)
-  * removal: firecfg --guide; the pertinent information was moved in
+  * removal: remove --bandwidth= command (#7197)
+  * removal: remove --tracelog/blacklist-nolog commands (#7198)
+  * removal: remove ./configure --enable-busybox-workaround option (#7199)
+  * removal: remove --private-home command (#7200)
+  * removal: remove ./configure --disable-sandbox-check option (#7201)
+  * removal: remove --x11=xpra option (#7207)
+  * removal: remove firecfg --guide - the pertinent information was moved in
     man firejail (#7260)
-  * removal: private-lib (#7261)
-  * removal: ssh restricted shell feature (#7262)
+  * removal: remove private-lib (#7261)
+  * removal: remove ssh restricted shell feature (#7262)
   * bugfix: disable /run/systemd/resolve with net=none - fixes potential DNS
     leaks when using systemd-resolved (#7209 #7216)
   * bugfix: fbwrap: wait for target and propagate exit code (#7081 #7224)

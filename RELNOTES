@@ -1,8 +1,4 @@
-firejail (0.9.83) baseline; urgency=low
-  * work in progress
--- netblue30 <netblue30@yahoo.com>  Mon, 2 Nov 2026 08:00:00 -0500
-
-firejail (0.9.82) baseline; urgency=low
+firejail (0.9.82.2) baseline; urgency=low
   * security: create `~/.config/firejail` to prevent sandbox escape (#7154)
   * security: fix use of dangling pointer for netns argument (#7246)
   * feature: allow subpaths in xdg macros (#2359 #7151)
@@ -65,6 +61,7 @@ firejail (0.9.82) baseline; urgency=low
   * build: test: fix cleaning of some temporary files (#7222)
   * build: test: format/improve targets (#7223)
   * build: test: sync `DISTFILES_TEST` with `TESTS` (#7238)
+  * build: fix date in RELNOTES for 0.9.82, and some other fixes
   * test: fix unescaped newlines in error messages (#7146)
   * test/fs: improve tests related to macros (#7147)
   * test/fs: deduplicate xdg dirs in macro tests (#7163)
@@ -114,7 +111,7 @@ firejail (0.9.82) baseline; urgency=low
   * new profile: tasks-org (#7273)
   * new profile: ChiPass (#7271)
   * new profile: maki (#7285)
--- netblue30 <netblue30@yahoo.com>  Mon, 2 Nov 2026 08:00:00 -0500
+-- netblue30 <netblue30@yahoo.com>  Mon, 3 Nov 2026 08:00:00 -0500
 
 firejail (0.9.80) baseline; urgency=low
   * security: require a full or relative file path for --profile=FILE -

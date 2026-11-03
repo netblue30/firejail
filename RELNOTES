@@ -1,3 +1,7 @@
+firejail (0.9.83) baseline; urgency=low
+  * work in progress
+-- netblue30 <netblue30@yahoo.com>  Mon, 3 Nov 2026 08:00:00 -0500
+
 firejail (0.9.82.2) baseline; urgency=low
   * security: create `~/.config/firejail` to prevent sandbox escape (#7154)
   * security: fix use of dangling pointer for netns argument (#7246)

@@ -29,7 +29,8 @@ historical reference and may be outdated and/or incomplete.
 
 | Version | Supported by us    | EOL                | Supported by distribution                                                         |
 | ------- | ------------------ | ------------------ | --------------------------------------------------------------------------------- |
-| 0.9.80  | :heavy_check_mark: |                    |                                                                                   |
+| 0.9.82  | :heavy_check_mark: |                    |                                                                                   |
+| 0.9.80  | :x:                |                    |                                                                                   |
 | 0.9.78  | :x:                |                    |                                                                                   |
 | 0.9.76  | :x:                |                    |                                                                                   |
 | 0.9.74  | :x:                |                    |                                                                                   |

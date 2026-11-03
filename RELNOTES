@@ -37,6 +37,7 @@ firejail (0.9.82) baseline; urgency=low
   * removal: remove ./configure --enable-busybox-workaround option (#7199)
   * removal: remove --private-home command (#7200)
   * removal: remove ./configure --disable-sandbox-check option (#7201)
+  * removal: disable --chroot= by default (#7202)
   * removal: remove --x11=xpra option (#7207)
   * removal: remove firecfg --guide - the pertinent information was moved in
     man firejail (#7260)
@@ -64,7 +65,6 @@ firejail (0.9.82) baseline; urgency=low
   * build: netfilter.c: replace `system()` with `execv()` (#7159)
   * build: remove etc-fixes directory (#7148)
   * build: fix scan-build warnings (#7205)
-  * build: disable --chroot= by default (#7202)
   * build: simplify and improve test-compile (#7206)
   * build: test: fix cleaning of some temporary files (#7222)
   * build: test: format/improve targets (#7223)

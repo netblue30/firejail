@@ -18,20 +18,6 @@ firejail (0.9.82) baseline; urgency=low
   * modif: add fchroot syscall (928e6ff 541dd07)
   * modif: move hardcoded blacklist ~/.config/firejail into disable-common
     (#7132 #7282)
-  * modif/removal: X11 code restructuring:
-    --x11=xpra support was removed.
-    --x11=xorg support (Xorg security extension) was disabled in the default
-    software configuration, the user will need to add --enable-x11-legacy flag
-    for ./configure (./configure --enable-x11-legacy)
-    --x11=xvfb support (xvfb display server) is disabled in the default software
-    configuration, the user will need to add --enable-x11-legacy flag for
-    ./configure (./configure --enable-x11-legacy)
-    --x11=xephyr command is removed, however, Xephyr display server is used by
-    default by --x11 command.
-  * removal: temporarily disabled --ip=dhcp. ISC-DHCP is no longer supported
-     in Debian. We will bring back this option in release 0.9.84 using
-     a different DHCP client
-     (https://tracker.debian.org/news/1782808/removed-443-p1-8-from-unstable/)
   * removal: remove --bandwidth= command (#7197)
   * removal: remove --tracelog/blacklist-nolog commands (#7198)
   * removal: remove ./configure --enable-busybox-workaround option (#7199)
@@ -43,6 +29,16 @@ firejail (0.9.82) baseline; urgency=low
     man firejail (#7260)
   * removal: remove private-lib (#7261)
   * removal: remove ssh restricted shell feature (#7262)
+  * removal: disable --x11=(xorg|xvfb) options by default - this means the Xorg
+    security extension and the xvfb display server; use ./configure
+    --enable-x11-legacy to re-enable (#7263)
+  * removal: remove --x11=xephyr option - the Xephyr display server is used by
+    --x11 by default (#7297)
+  * removal: temporarily disable --ip=dhcp - ISC-DHCP is no longer supported in
+    Debian. We plan to bring back this option in release 0.9.84 using a
+    different DHCP client
+    (https://tracker.debian.org/news/1782808/removed-443-p1-8-from-unstable/)
+    (#7264)
   * bugfix: disable /run/systemd/resolve with net=none - fixes potential DNS
     leaks when using systemd-resolved (#7209 #7216)
   * bugfix: fbwrap: wait for target and propagate exit code (#7081 #7224)
@@ -69,8 +65,6 @@ firejail (0.9.82) baseline; urgency=low
   * build: test: fix cleaning of some temporary files (#7222)
   * build: test: format/improve targets (#7223)
   * build: test: sync `DISTFILES_TEST` with `TESTS` (#7238)
-  * build: disable --x11=(xorg|xvfb) options by default (#7263)
-  * build: disable --ip=dhcp by default (#7264)
   * test: fix unescaped newlines in error messages (#7146)
   * test/fs: improve tests related to macros (#7147)
   * test/fs: deduplicate xdg dirs in macro tests (#7163)

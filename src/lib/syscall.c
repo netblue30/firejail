@@ -2776,13 +2776,14 @@ void syscalls_in_list(const char *list, const char *slist, int fd, char **prelis
 	sl.postlist = NULL;
 	syscall_check_list(list, syscall_in_list, 0, 0, &sl, native);
 	if (!arg_quiet) {
-		fprintf(stderr, "Seccomp list in: %s,", list);
+		// fields are separated by semicolons, syscalls by commas
+		fprintf(stderr, "Seccomp list in: %s", list);
 		if (sl.slist)
-			fprintf(stderr, " check list: %s,", sl.slist);
+			fprintf(stderr, "; check list: %s", sl.slist);
 		if (sl.prelist)
-			fprintf(stderr, " prelist: %s,", sl.prelist);
+			fprintf(stderr, "; prelist: %s", sl.prelist);
 		if (sl.postlist)
-			fprintf(stderr, " postlist: %s", sl.postlist);
+			fprintf(stderr, "; postlist: %s", sl.postlist);
 		fprintf(stderr, "\n");
 	}
 	*prelist = sl.prelist;

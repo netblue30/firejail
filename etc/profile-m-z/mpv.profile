@@ -94,6 +94,8 @@ private-dev
 
 dbus-user filter
 dbus-user.own org.mpris.MediaPlayer2.mpv
+dbus-user.own org.mpris.MediaPlayer2.mpv.*
+dbus-user.talk org.mpris.MediaPlayer2.*
 dbus-system none
 
 restrict-namespaces

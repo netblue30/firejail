@@ -38,8 +38,6 @@ blacklist ${HOME}/.viminfo
 blacklist /tmp/clipmenu*
 
 # X11 session autostart
-# this will kill --x11=xpra cmdline option for all programs
-#blacklist ${HOME}/.xpra
 blacklist ${HOME}/.Xresources
 blacklist ${HOME}/.Xsession
 blacklist ${HOME}/.blackbox
@@ -70,6 +68,7 @@ blacklist ${HOME}/.kde4/shutdown
 blacklist ${HOME}/.local/share/autostart
 blacklist ${HOME}/.local/share/xorg
 blacklist ${HOME}/.xinitrc
+blacklist ${HOME}/.xpra
 blacklist ${HOME}/.xprofile
 blacklist ${HOME}/.xserverrc
 blacklist ${HOME}/.xsession

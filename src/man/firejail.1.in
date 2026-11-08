@@ -3326,7 +3326,7 @@ Sandbox the application using Xephyr X11 server.
 The sandbox will prevent screenshot and keylogger applications started inside the sandbox from accessing
 clients running outside the sandbox. The default window size is 800x600.
 This can be modified in /etc/firejail/firejail.config file.
-.r
+.br
 
 .br
 Note: A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.

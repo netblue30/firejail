@@ -692,6 +692,7 @@ blacklist ${HOME}/.config/sqlitebrowser
 blacklist ${HOME}/.config/stellarium
 blacklist ${HOME}/.config/straw-viewer
 blacklist ${HOME}/.config/strawberry
+blacklist ${HOME}/.config/streamlink
 blacklist ${HOME}/.config/supertuxkart
 blacklist ${HOME}/.config/synfig
 blacklist ${HOME}/.config/teams
@@ -1148,6 +1149,7 @@ blacklist ${HOME}/.local/state/mpv
 blacklist ${HOME}/.local/state/opencode
 blacklist ${HOME}/.local/state/pipewire
 blacklist ${HOME}/.local/state/pyradio
+blacklist ${HOME}/.local/state/streamlink
 blacklist ${HOME}/.local/state/tasks.org
 blacklist ${HOME}/.lv2
 blacklist ${HOME}/.lyrics

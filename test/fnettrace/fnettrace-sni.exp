@@ -15,7 +15,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 1\n";exit}
-	-re "SNI debian.org"
+	-re "SNI (www\.)?debian.org"
 }
 
 after 100

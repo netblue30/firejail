@@ -7,14 +7,10 @@ include xpra.local
 # Persistent global definitions
 include globals.local
 
-# This profile will sandbox Xpra server itself when used with firejail
-# --x11=xpra.
-#
-# To enable it, create a firejail-xpra symlink in /usr/local/bin:
-#
-#    $ sudo ln -s /usr/bin/firejail /usr/local/bin/xpra
-#
-# Or run "sudo firecfg".
+# Note: This profile is intended for sandboxing the Xpra server; sandboxing
+# Xpra clients is not supported by firejail (see #7207).
+
+noblacklist ${HOME}/.xpra
 
 # Allow python (blacklisted by disable-interpreters.inc)
 include allow-python2.inc

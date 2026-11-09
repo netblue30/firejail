@@ -1080,6 +1080,7 @@ blacklist ${HOME}/.local/share/nautilus
 blacklist ${HOME}/.local/share/nautilus-python
 blacklist ${HOME}/.local/share/nemo
 blacklist ${HOME}/.local/share/nemo-python
+blacklist ${HOME}/.local/share/net.lrclib.lrcget
 blacklist ${HOME}/.local/share/news-flash
 blacklist ${HOME}/.local/share/newsbeuter
 blacklist ${HOME}/.local/share/newsboat

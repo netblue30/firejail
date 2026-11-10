@@ -1059,13 +1059,17 @@ int main(int argc, char **argv, char **envp) {
 	// start the application in a /bin/bash shell.
 	// This is supposed to take care of firejail symlinks
 	// in /usr/local/bin
-	EUID_ROOT();
-	int rv = check_kernel_procs();
-	EUID_USER();
-	if (rv == 0) {
-		// start the program directly without sandboxing
-		run_no_sandbox(argc, argv);
-		__builtin_unreachable();
+	// A container (LXC, Docker etc.) has no kernel processes either, but
+	// it is not a firejail sandbox: start a regular sandbox there.
+	if (check_namespace_virt() == 0) {
+		EUID_ROOT();
+		int rv = check_kernel_procs();
+		EUID_USER();
+		if (rv == 0) {
+			// start the program directly without sandboxing
+			run_no_sandbox(argc, argv);
+			__builtin_unreachable();
+		}
 	}
 
 	// profile builder

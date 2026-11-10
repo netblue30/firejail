@@ -181,8 +181,9 @@ int arp_check(const char *dev, uint32_t destaddr) {
 		errExit("send");
 	fflush(0);
 
-	// send two probes at 0.5 seconds interva;
+	// send the probes, waiting for the configured timeout after each one
 	int  cnt = checkcfg(CFG_ARP_PROBES);
+	double probe_timeout = checkcfg(CFG_ARP_PROBE_TIMEOUT) / 1000.0;
 	uint8_t framerx[ETH_FRAME_LEN]; // includes eth header, vlan, and crc
 	fd_set fds;
 	FD_ZERO(&fds);
@@ -190,7 +191,7 @@ int arp_check(const char *dev, uint32_t destaddr) {
 	int maxfd = sock;
 	struct timeval ts;
 	gettimeofday(&ts, NULL);
-	double timerend = ts.tv_sec + ts.tv_usec / 1000000.0 + 0.5;
+	double timerend = ts.tv_sec + ts.tv_usec / 1000000.0 + probe_timeout;
 	while (1) {
 		gettimeofday(&ts, NULL);
 		double now = ts.tv_sec + ts.tv_usec / 1000000.0;
@@ -212,7 +213,7 @@ int arp_check(const char *dev, uint32_t destaddr) {
 			if (sendto (sock, frame, 14 + sizeof(ArpHdr), 0, (struct sockaddr *) &addr, sizeof (addr)) <= 0)
 				errExit("send");
 			gettimeofday(&ts, NULL);
-			timerend = ts.tv_sec + ts.tv_usec / 1000000.0 + 0.5;
+			timerend = ts.tv_sec + ts.tv_usec / 1000000.0 + probe_timeout;
 			fflush(0);
 		}
 		else {

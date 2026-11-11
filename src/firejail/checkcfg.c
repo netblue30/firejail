@@ -47,6 +47,7 @@ const char *const cfgstr[] = {
 	[CFG_ALLOW_TRAY] = "allow-tray",
 	[CFG_APPARMOR] = "apparmor",
 	[CFG_ARP_PROBES] = "arp-probes",
+	[CFG_ARP_PROBE_TIMEOUT] = "arp-probe-timeout",
 	[CFG_BIND] = "bind",
 	[CFG_BROWSER_ALLOW_DRM] = "browser-allow-drm",
 	[CFG_BROWSER_DISABLE_U2F] = "browser-disable-u2f",
@@ -113,6 +114,7 @@ int checkcfg(int val) {
 		cfg_val[CFG_FIREJAIL_PROMPT] = 0;
 		cfg_val[CFG_DISABLE_MNT] = 0;
 		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
+		cfg_val[CFG_ARP_PROBE_TIMEOUT] = DEFAULT_ARP_PROBE_TIMEOUT;
 		cfg_val[CFG_SECCOMP_ERROR_ACTION] = -1;
 		cfg_val[CFG_BROWSER_ALLOW_DRM] = 0;
 		cfg_val[CFG_ALLOW_TRAY] = 0;
@@ -308,6 +310,14 @@ int checkcfg(int val) {
 				if (arp_probes <= 1 || arp_probes > 30)
 					goto errout;
 				cfg_val[CFG_ARP_PROBES] = arp_probes;
+			}
+
+			// arp probe timeout
+			else if (strncmp(ptr, "arp-probe-timeout ", 18) == 0) {
+				int arp_probe_timeout = atoi(ptr + 18);
+				if (arp_probe_timeout < 10 || arp_probe_timeout > 5000)
+					goto errout;
+				cfg_val[CFG_ARP_PROBE_TIMEOUT] = arp_probe_timeout;
 			}
 
 			// file copy limit

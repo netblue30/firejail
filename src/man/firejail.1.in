@@ -3489,7 +3489,6 @@ $ firejail \-\-net=eth0 \-\-x11=xephyr \-\-xephyr\-screen=640x480 /usr/bin/firef
 .br
 
 #endif
-.\" Note: Keep this in sync with invalid_name() in src/firejail/util.c.
 #ifdef HAVE_APPARMOR
 .SH APPARMOR
 .TP
@@ -3804,7 +3803,7 @@ Sandbox running time in hours:minutes:seconds format.
 .TP
 USER
 The owner of the sandbox.
-
+.\" Note: Keep this in sync with invalid_name() in src/firejail/util.c.
 .SH NAME VALIDATION
 For simplicity, the same name validation is used for multiple options.
 Rules:

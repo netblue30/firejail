@@ -289,6 +289,11 @@ static const char *const usage_str =
 	"    --xephyr-extra-params=OPTIONS - set Xephyr server command extra parameters\n"
 	"\tfor --x11=xephyr.\n"
 	"    --xephyr-screen=WIDTHxHEIGHT - set screen size for --x11=xephyr.\n"
+#ifdef HAVE_X11_LEGACY
+	"    --xvfb-extra-params=OPTIONS - set Xvfb command extra parameters\n"
+	"\tfor --x11=xvfb.\n"
+	"    --xvfb-screen=WIDTHxHEIGHTxCOLORDEPTH - set screen size for --x11=xvfb.\n"
+#endif
 #endif
 	"\n"
 	"Examples:\n"

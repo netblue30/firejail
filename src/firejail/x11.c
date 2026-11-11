@@ -214,6 +214,16 @@ void x11_start_xvfb(int argc, char **argv) {
 	pid_t jail = 0;
 	pid_t server = 0;
 
+	// default xvfb screen can be overwritten by a --xvfb-screen= command line option
+	char *newscreen = extract_setting(argc, argv, "--xvfb-screen=");
+	if (newscreen)
+		xvfb_screen = newscreen;
+
+	// default xvfb options can be overwritten by a --xvfb-extra-params= command line option
+	char *new_xvfb_extra_params = extract_setting(argc, argv, "--xvfb-extra-params=");
+	if (new_xvfb_extra_params)
+		xvfb_extra_params = new_xvfb_extra_params;
+
 	env_store_name_val("FIREJAIL_X11", "yes", SETENV);
 
 	// never try to run X servers as root!!!

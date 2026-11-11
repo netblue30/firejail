@@ -378,6 +378,14 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		else
 			exit_err_feature(argv[i], CFG_X11);
 	}
+	else if (strcmp(argv[i], "--x11=xephyr") == 0) {
+		if (checkcfg(CFG_X11)) {
+			x11_start_xephyr(argc, argv);
+			exit(0);
+		}
+		else
+			exit_err_feature(argv[i], CFG_X11);
+	}
 #ifdef HAVE_X11_LEGACY
 	else if (strcmp(argv[i], "--x11=xvfb") == 0) {
 		if (checkcfg(CFG_X11)) {

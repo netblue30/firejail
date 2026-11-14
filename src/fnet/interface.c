@@ -82,7 +82,8 @@ void net_bridge_add_interface(const char *bridge, const char *dev) {
 
 
 // bring interface up
-void net_if_up(const char *ifname) {
+// wait: wait not more than 500ms for the interface to be running
+static void if_up(const char *ifname, int wait) {
 	check_if_name(ifname);
 
 	int sock = socket(AF_INET,SOCK_DGRAM,0);
@@ -112,7 +113,7 @@ void net_if_up(const char *ifname) {
 
 	// wait not more than 500ms for the interface to come up
 	int cnt = 0;
-	while (cnt < 50) {
+	while (wait && cnt < 50) {
 		usleep(10000);			  // sleep 10ms
 
 		// read the existing flags
@@ -124,6 +125,16 @@ void net_if_up(const char *ifname) {
 	}
 
 	close(sock);
+}
+
+// bring interface up and wait for it to be running
+void net_if_up(const char *ifname) {
+	if_up(ifname, 1);
+}
+
+// bring interface up without waiting for it to be running
+void net_if_up_nowait(const char *ifname) {
+	if_up(ifname, 0);
 }
 
 int net_get_mtu(const char *ifname) {

@@ -91,8 +91,9 @@ printf("\n");
 		net_create_veth(argv[3], argv[4], atoi(argv[6]));
 		// connect the other veth end to the bridge ...
 		net_bridge_add_interface(argv[5], argv[3]);
-		// ... and bring it  up
-		net_if_up(argv[3]);
+		// ... and bring it up; this end is not running until the other
+		// end is brought up in the sandbox, so there is nothing to wait for
+		net_if_up_nowait(argv[3]);
 	}
 	else if (argc == 6 && strcmp(argv[1], "create") == 0 && strcmp(argv[2], "macvlan") == 0) {
 		// use ipvlan for wireless devices

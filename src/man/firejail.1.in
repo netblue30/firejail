@@ -3322,9 +3322,34 @@ $ sudo firejail \-\-writable\-var\-log
 #ifdef HAVE_X11
 .TP
 \fB\-\-x11
-Sandbox the application using Xephyr X11 server.
-The sandbox will prevent screenshot and keylogger applications started inside the sandbox from accessing
-clients running outside the sandbox. The default window size is 800x600.
+Enable X11 sandboxing.
+The sandbox will prevent screenshot and keylogger applications started inside
+the sandbox from accessing clients running outside the sandbox.
+By default this command tries to use Xephyr (see \fB\-\-x11=xephyr\fR).
+.br
+
+.br
+Some modes (such as Xephyr) require a network namespace to be instantiated in
+order to disable access to the X11 abstract Unix socket.
+If this is not possible, the user can disable the abstract socket by adding
+"-nolisten local" to the Xorg command line at the system level.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-x11 \-\-net=eth0 /usr/bin/firefox
+
+.TP
+\fB\-\-x11=none
+Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and the file specified in ${XAUTHORITY} environment variable.
+Remove DISPLAY and XAUTHORITY environment variables.
+Stop with error message if X11 abstract socket will be accessible in jail.
+
+.TP
+\fB\-\-x11=xephyr
+Enable X11 sandboxing using Xephyr.
+The default window size is 800x600.
 This can be modified in /etc/firejail/firejail.config file.
 .br
 
@@ -3340,7 +3365,7 @@ This feature is not available when running as root.
 .br
 Example:
 .br
-$ firejail \-\-x11 \-\-net=eth0 /usr/bin/firefox
+$ firejail \-\-x11=xephyr \-\-net=eth0 /usr/bin/firefox
 .br
 
 .br
@@ -3348,19 +3373,12 @@ You can also run a display server inside the sandbox.
 .br
 
 .br
-$ firejail \-\-x11 \-\-net=eth0 /usr/bin/openbox
+$ firejail \-\-x11=xephyr \-\-net=eth0 /usr/bin/openbox
 .br
 
 .br
 A security profile for openbox is provided.
-
-.TP
-\fB\-\-x11=none
-Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and the file specified in ${XAUTHORITY} environment variable.
-Remove DISPLAY and XAUTHORITY environment variables.
-Stop with error message if X11 abstract socket will be accessible in jail.
 #endif
-
 #ifdef HAVE_X11_LEGACY
 .TP
 \fB\-\-x11=xorg
@@ -3444,26 +3462,30 @@ $ vncviewer
 #ifdef HAVE_X11
 .TP
 \fB\-\-xephyr\-extra\-params=OPTIONS
-Set Xephyr server command extra parameters for Xephyr X11 server. The setting will overwrite the default set in /etc/firejail/firejail.config
-for the current sandbox. Run Xephyr -help to get a list of available options.
+Set Xephyr server command extra parameters for \-\-x11=xephyr.
+The setting will overwrite the default set in /etc/firejail/firejail.config for
+the current sandbox.
+Run Xephyr -help to get a list of available options.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-net=eth0 \-\-x11 \-\-xephyr\-extra\-params="\-title firefox" /usr/bin/firefox
+$ firejail \-\-net=eth0 \-\-x11=xephyr \-\-xephyr\-extra\-params="\-title firefox" /usr/bin/firefox
 .br
 
 .TP
 \fB\-\-xephyr\-screen=WIDTHxHEIGHT
-Set screen size for Xephyr X11 server. The setting will overwrite the default set in /etc/firejail/firejail.config
-for the current sandbox. Run xrandr to get a list of supported resolutions on your computer.
+Set screen size for \-\-x11=xephyr.
+The setting will overwrite the default set in /etc/firejail/firejail.config for
+the current sandbox.
+Run xrandr to get a list of supported resolutions on your computer.
 .br
 
 .br
 Example:
 .br
-$ firejail \-\-net=eth0 \-\-x11 \-\-xephyr\-screen=640x480 /usr/bin/firefox
+$ firejail \-\-net=eth0 \-\-x11=xephyr \-\-xephyr\-screen=640x480 /usr/bin/firefox
 .br
 
 #endif

@@ -1343,6 +1343,25 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
+	if (strcmp(ptr, "x11 xephyr") == 0) {
+#ifdef HAVE_X11
+		if (checkcfg(CFG_X11)) {
+			const char *x11env = env_get("FIREJAIL_X11");
+			if (x11env && strcmp(x11env, "yes") == 0) {
+				return 0;
+			}
+			else {
+				// start x11
+				x11_start_xephyr(cfg.original_argc, cfg.original_argv);
+				exit(0);
+			}
+		}
+		else
+			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
+#endif
+		return 0;
+	}
+
 	if (strcmp(ptr, "x11 xorg") == 0) {
 #ifdef HAVE_X11
 #ifdef HAVE_X11_LEGACY

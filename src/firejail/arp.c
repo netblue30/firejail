@@ -190,7 +190,6 @@ int arp_check(const char *dev, uint32_t destaddr) {
 	gettimeofday(&ts, NULL);
 	double timerend = ts.tv_sec + ts.tv_usec / 1000000.0 + 0.5;
 	while (1) {
-		// select() modifies the set: it is empty after a timeout
 		FD_ZERO(&fds);
 		FD_SET(sock, &fds);
 		gettimeofday(&ts, NULL);

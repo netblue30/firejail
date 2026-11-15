@@ -807,11 +807,13 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2) __attrib
 
 // checkcfg.c
 #define DEFAULT_ARP_PROBES 2
+#define DEFAULT_ARP_PROBE_TIMEOUT 500 // milliseconds
 enum {
 	CFG_NONE = 0,
 	CFG_ALLOW_TRAY,
 	CFG_APPARMOR,
 	CFG_ARP_PROBES,
+	CFG_ARP_PROBE_TIMEOUT,
 	CFG_BIND,
 	CFG_BROWSER_ALLOW_DRM,
 	CFG_BROWSER_DISABLE_U2F,

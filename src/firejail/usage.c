@@ -301,7 +301,7 @@ static const char *const usage_str =
 	"\tserver setting.\n"
 	"    $ firejail --net=eth0 /usr/bin/firefox\n"
 	"\tstart Firefox in a new network namespace\n"
-	"    $ firejail --x11=xorg /usr/bin/firefox\n"
+	"    $ firejail --x11=xephyr /usr/bin/firefox\n"
 	"\tstart Firefox and sandbox X11\n"
 	"    $ firejail --list\n"
 	"\tlist all running sandboxes\n"

@@ -70,6 +70,7 @@ private-tmp
 # even when its dbus name gets activated
 # see https://github.com/netblue30/firejail/wiki/Frequently-Asked-Questions#how-do-i-sandbox-applications-started-via-systemd-or-d-bus-services
 dbus-user filter
+dbus-user.own com.nextcloud.desktopclient.nextcloud
 dbus-user.own com.nextcloudgmbh.Nextcloud
 dbus-user.talk org.freedesktop.secrets
 ?ALLOW_TRAY: dbus-user.talk org.kde.StatusNotifierWatcher

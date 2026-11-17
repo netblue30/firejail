@@ -376,6 +376,12 @@ so uninstalling without doing the above should not cause issues.
 
 ## Current development version: 0.9.83
 
+### AppArmor
+We have enabled user namespace in our default apparmor profile. This profile is
+enabled by most applications if AppArmor is configured on the system. Basically, all
+browsers are using user namespace, if you run into problems please log a bug, thanks!
+
+
 ### Landlock support - ongoing/experimental
 
 * Added on #6078, which is based on #5315 from ChrysoliteAzalea/landlock

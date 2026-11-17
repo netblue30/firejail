@@ -377,10 +377,15 @@ so uninstalling without doing the above should not cause issues.
 ## Current development version: 0.9.83
 
 ### AppArmor
-We have enabled user namespace in our default apparmor profile. This profile is
-enabled by most applications if AppArmor is configured on the system. Basically, all
-browsers are using user namespace, if you run into problems please log a bug, thanks!
 
+We have enabled user namespaces (`userns`) in our default apparmor profile.
+This profile is enabled by most applications if AppArmor is configured on the
+system.  Basically, all browsers are using user namespaces.  If you run into
+problems please open a bug report, thanks!
+
+Note: `userns` is needed for certain programs on apparmor >= 4 but is
+unsupported in earlier apparmor versions (see
+[#7080](https://github.com/netblue30/firejail/issues/7080)).
 
 ### Landlock support - ongoing/experimental
 

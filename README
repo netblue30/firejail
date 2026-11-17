@@ -341,7 +341,7 @@ cobratbq (https://github.com/cobratbq)
 	- profiles: torbrowser-launcher: add no3d (#7143)
 	- profiles: blink-common-hardened: drop netlink & add mdwe comment (#7165)
 	- profiles: torbrowser-launcher: add getconf to private-bin (#7152)
-	- allow userns in firejail-default apparmor profile (#7080)
+	- modif: allow `userns` in firejail-default apparmor profile (#7078 #7080)
 CodeWithMa (https://github.com/CodeWithMa)
 	- mpv.profile: add new XDG_STATE_HOME path
 corecontingency (https://https://github.com/corecontingency)

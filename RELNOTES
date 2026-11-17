@@ -5,6 +5,7 @@ firejail (0.9.83) baseline; urgency=low
   * feature: add arp-probe-timeout to firejail.config (#7309)
   * feature: add missing xephyr-extra-params profile command (#7314)
   * modif: use semicolons to split fields in seccomp list message (#7294)
+  * modif: allow `userns` in firejail-default apparmor profile (#7078 #7080)
   * bugfix: arp: listen for a reply after every probe (#7307)
   * test: fnettrace-sni: fix for debian.org redirect (e9481ec)
   * docs: fix removal of x11 options (4029341 4b8805f 3179278)

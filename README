@@ -236,6 +236,9 @@ avoidr (https://github.com/avoidr)
 	- various other fixes
 ayham (https://github.com/ayham-1)
 	- allow custom homedir support for gpgagent
+azixaka (https://github.com/azixaka)
+	- bugfix: arp: listen for a reply after every probe (#7307)
+	- feature: add arp-probe-timeout to firejail.config (#7309)
 Азалия Смарагдова/ChrysoliteAzalea (https://github.com/ChrysoliteAzalea)
 	- add support for custom AppArmor profiles (--apparmor=)
 	- add Landlock support
@@ -452,6 +455,7 @@ Dmitriy Chestnykh (https://github.com/chestnykh)
 	- lookup xauth in PATH
 dogknowsnx (https://github.com/dogknowsnx)
 	- profiles: blobby: allow lua (#7102)
+	- profiles: mpv: fix dbus mpris (#7298)
 Dpeta (https://github.com/Dpeta)
 	- add Chatterino profile
 dringsim (https://github.com/dringsim)

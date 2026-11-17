@@ -40,6 +40,7 @@ int net_move_interface(const char *dev, unsigned pid);
 // interface.c
 void net_bridge_add_interface(const char *bridge, const char *dev);
 void net_if_up(const char *ifname);
+void net_if_up_nowait(const char *ifname);
 int net_get_mtu(const char *ifname);
 void net_set_mtu(const char *ifname, int mtu);
 void net_ifprint(int scan);

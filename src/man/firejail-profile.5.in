@@ -667,6 +667,38 @@ Example:
 xephyr\-screen 640x480
 .br
 x11 xephyr
+#ifdef HAVE_X11_LEGACY
+.TP
+\fBxvfb\-extra\-params OPTIONS
+Set Xvfb command extra parameters for the "x11 xvfb" command.
+This command should be included in the profile file before the "x11 xvfb"
+command.
+.br
+
+.br
+Example:
+.br
+
+.br
+xvfb\-extra\-params \-pixdepths 8 24 32
+.br
+x11 xvfb
+.TP
+\fBxvfb\-screen WIDTHxHEIGHTxCOLORDEPTH
+Set screen size for the "x11 xvfb" command.
+This command should be included in the profile file before the "x11 xvfb"
+command.
+.br
+
+.br
+Example:
+.br
+
+.br
+xvfb\-screen 640x480x24
+.br
+x11 xvfb
+#endif
 #endif
 #ifdef HAVE_DBUSPROXY
 .SH DBus filtering

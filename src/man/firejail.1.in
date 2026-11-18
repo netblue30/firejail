@@ -3318,7 +3318,6 @@ directory, and a skeleton filesystem is created based on the original /var/log.
 Example:
 .br
 $ sudo firejail \-\-writable\-var\-log
-
 #ifdef HAVE_X11
 .TP
 \fB\-\-x11
@@ -3339,13 +3338,12 @@ If this is not possible, the user can disable the abstract socket by adding
 Example:
 .br
 $ firejail \-\-x11 \-\-net=eth0 /usr/bin/firefox
-
 .TP
 \fB\-\-x11=none
-Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and the file specified in ${XAUTHORITY} environment variable.
+Blacklist /tmp/.X11-unix directory, ${HOME}/.Xauthority and the file specified
+in ${XAUTHORITY} environment variable.
 Remove DISPLAY and XAUTHORITY environment variables.
 Stop with error message if X11 abstract socket will be accessible in jail.
-
 .TP
 \fB\-\-x11=xephyr
 Enable X11 sandboxing using Xephyr.
@@ -3354,11 +3352,14 @@ This can be modified in /etc/firejail/firejail.config file.
 .br
 
 .br
-Note: A network namespace needs to be instantiated in order to deny access to X11 abstract Unix domain socket.
+Note: A network namespace needs to be instantiated in order to deny access to
+X11 abstract Unix domain socket.
 .br
 
 .br
-Xephyr is developed by Xorg project. On Debian platforms it is installed with the command \fBsudo apt-get install xserver-xephyr\fR.
+Xephyr is developed by Xorg project.
+On Debian platforms it is installed with the command \fBsudo apt-get install
+xserver-xephyr\fR.
 This feature is not available when running as root.
 .br
 
@@ -3382,14 +3383,20 @@ A security profile for openbox is provided.
 #ifdef HAVE_X11_LEGACY
 .TP
 \fB\-\-x11=xorg
-Sandbox the application using the untrusted mode implemented by X11 security extension.
-The extension is available in Xorg package
-and it is installed by default on most Linux distributions. It provides support for a simple trusted/untrusted
-connection model. Untrusted clients are restricted in certain ways to prevent them from reading window
-contents of other clients, stealing input events, etc.
+Sandbox the application using the untrusted mode implemented by X11 security
+extension.
+The extension is available in Xorg package and it is installed by default on
+most Linux distributions.
+It provides support for a simple trusted/untrusted connection model.
+Untrusted clients are restricted in certain ways to prevent them from reading
+window contents of other clients, stealing input events, etc.
+.br
 
-The untrusted mode has several limitations. A lot of regular programs assume they are a trusted X11 clients
-and will crash or lock up when run in untrusted mode. Chromium browser and xterm are two examples.
+.br
+The untrusted mode has several limitations.
+A lot of regular programs assume they are a trusted X11 clients and will crash
+or lock up when run in untrusted mode.
+Chromium browser and xterm are two examples.
 Firefox and transmission-gtk seem to be working fine.
 A network namespace is not required for this option.
 .br
@@ -3398,17 +3405,17 @@ A network namespace is not required for this option.
 Example:
 .br
 $ firejail \-\-x11=xorg /usr/bin/firefox
-
 .TP
 \fB\-\-x11=xvfb
 Start Xvfb X11 server and attach the sandbox to this server.
-Xvfb, short for X virtual framebuffer, performs all graphical operations in memory
-without showing any screen output. Xvfb is mainly used for remote access and software
-testing on headless servers.
+Xvfb, short for X virtual framebuffer, performs all graphical operations in
+memory without showing any screen output.
+Xvfb is mainly used for remote access and software testing on headless servers.
 .br
 
 .br
-On Debian platforms Xvfb is installed with the command \fBsudo apt\-get install xvfb\fR.
+On Debian platforms Xvfb is installed with the command \fBsudo apt\-get install
+xvfb\fR.
 This feature is not available when running as root.
 .br
 
@@ -3417,10 +3424,11 @@ Example: remote VNC access
 .br
 
 .br
-On the server we start a sandbox using Xvfb and openbox
-window manager. The default size of Xvfb screen is 800x600 - it can be changed
-in /etc/firejail/firejail.config (xvfb-screen). Some sort of networking (--net) is required
-in order to isolate the abstract sockets used by other X servers.
+On the server we start a sandbox using Xvfb and openbox window manager.
+The default size of Xvfb screen is 800x600 - it can be changed in
+/etc/firejail/firejail.config (xvfb-screen).
+Some sort of networking (--net) is required in order to isolate the abstract
+sockets used by other X servers.
 .br
 
 .br
@@ -3456,9 +3464,7 @@ On the client machine we start a VNC viewer and use it to connect to our server:
 
 .br
 $ vncviewer
-.br
 #endif
-
 #ifdef HAVE_X11
 .TP
 \fB\-\-xephyr\-extra\-params=OPTIONS
@@ -3472,8 +3478,6 @@ Run Xephyr -help to get a list of available options.
 Example:
 .br
 $ firejail \-\-net=eth0 \-\-x11=xephyr \-\-xephyr\-extra\-params="\-title firefox" /usr/bin/firefox
-.br
-
 .TP
 \fB\-\-xephyr\-screen=WIDTHxHEIGHT
 Set screen size for \-\-x11=xephyr.
@@ -3486,8 +3490,6 @@ Run xrandr to get a list of supported resolutions on your computer.
 Example:
 .br
 $ firejail \-\-net=eth0 \-\-x11=xephyr \-\-xephyr\-screen=640x480 /usr/bin/firefox
-.br
-
 #endif
 #ifdef HAVE_APPARMOR
 .SH APPARMOR

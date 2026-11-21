@@ -30,5 +30,14 @@ expect {
 	"ret 143"
 }
 
+# A target started with --die-with-parent should be killed when the caller
+# exits (see #7303). Note: cat returns only after the target is gone.
+after 100
+send -- "(fbwrap --die-with-parent /usr/bin/sleep 30 & sleep 1) | cat; echo ret $?\r"
+expect {
+	timeout {puts "TESTING ERROR 4\n";exit}
+	"ret 0"
+}
+
 after 100
 puts "\nall done\n"

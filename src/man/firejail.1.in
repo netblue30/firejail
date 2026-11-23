@@ -3490,6 +3490,31 @@ Run xrandr to get a list of supported resolutions on your computer.
 Example:
 .br
 $ firejail \-\-net=eth0 \-\-x11=xephyr \-\-xephyr\-screen=640x480 /usr/bin/firefox
+#ifdef HAVE_X11_LEGACY
+.TP
+\fB\-\-xephyr\-extra\-params=OPTIONS
+Set Xvfb command extra parameters for \-\-x11=xvfb.
+The setting will overwrite the default set in /etc/firejail/firejail.config for
+the current sandbox.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-net=eth0 \-\-x11=xvfb \-\-xvfb\-extra\-params="-pixdepths 8 24 32" /usr/bin/firefox
+.TP
+\fB\-\-xvfb\-screen=WIDTHxHEIGHTxCOLORDEPTH
+Set screen size for \-\-x11=xvfb.
+The setting will overwrite the default set in /etc/firejail/firejail.config for
+the current sandbox.
+Run xrandr to get a list of supported resolutions on your computer.
+.br
+
+.br
+Example:
+.br
+$ firejail \-\-net=eth0 \-\-x11=xvfb \-\-xvfb\-screen=640x480x24 /usr/bin/firefox
+#endif
 #endif
 #ifdef HAVE_APPARMOR
 .SH APPARMOR

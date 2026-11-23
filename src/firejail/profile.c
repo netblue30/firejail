@@ -26,6 +26,8 @@
 
 extern char *xephyr_screen;
 extern char *xephyr_extra_params;
+extern char *xvfb_screen;
+extern char *xvfb_extra_params;
 
 #define MAX_READ 8192		// line buffer for profile files
 #define MAX_LIST 16384		// size limit for argument lists
@@ -326,6 +328,34 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		else
 			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
+#endif
+		return 0;
+	}
+	if (strncmp(ptr, "xvfb-extra-params ", 18) == 0) {
+#ifdef HAVE_X11
+#ifdef HAVE_X11_LEGACY
+		if (checkcfg(CFG_X11)) {
+			xvfb_extra_params = strdup(ptr + 18);
+			if (!xvfb_extra_params)
+				errExit("strdup");
+		}
+		else
+			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
+#endif
+#endif
+		return 0;
+	}
+	if (strncmp(ptr, "xvfb-screen ", 12) == 0) {
+#ifdef HAVE_X11
+#ifdef HAVE_X11_LEGACY
+		if (checkcfg(CFG_X11)) {
+			xvfb_screen = strdup(ptr + 12);
+			if (!xvfb_screen)
+				errExit("strdup");
+		}
+		else
+			warning_feature_disabled(fname, lineno, ptr, CFG_X11);
+#endif
 #endif
 		return 0;
 	}

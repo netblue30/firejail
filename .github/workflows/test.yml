@@ -48,7 +48,7 @@ permissions:  # added using https://github.com/step-security/secure-workflows
 
 jobs:
   test-main:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       SHELL: /bin/bash
@@ -97,7 +97,7 @@ jobs:
 #
 
   test-fs:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       SHELL: /bin/bash
@@ -138,7 +138,7 @@ jobs:
     - run: make test-filters
 
   test-environment:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       SHELL: /bin/bash
@@ -178,7 +178,7 @@ jobs:
     - run: make test-profiles
 
   test-utils:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       SHELL: /bin/bash
@@ -220,7 +220,7 @@ jobs:
     - run: make test-utils
 
   test-network:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
       SHELL: /bin/bash

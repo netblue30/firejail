@@ -21,7 +21,7 @@ if {![file exists /usr/bin/Xephyr]} {
 	exit
 }
 
-send -- "firejail --name=$program-test --xephyr-screen=1024x768 --private --x11 $program --no-remote www.debian.org\r"
+send -- "firejail --name=$program-test --xephyr-screen=1024x768 --private --x11=xephyr $program --no-remote www.debian.org\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Reading profile /etc/firejail/$program.profile"

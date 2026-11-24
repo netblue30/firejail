@@ -21,7 +21,7 @@ if {![file exists /usr/bin/Xephyr]} {
 	exit
 }
 
-send -- "firejail --name=test --x11 $program\r"
+send -- "firejail --name=test --x11=xephyr $program\r"
 sleep 5
 
 spawn $env(SHELL)

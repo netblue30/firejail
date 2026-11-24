@@ -57,6 +57,8 @@ jobs:
           ppa.launchpadcontent.net:443
           security.ubuntu.com:80
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - name: fix apt mirrors
+      run: ./ci/fix-apt-mirrors.sh
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies
@@ -90,6 +92,8 @@ jobs:
           ppa.launchpadcontent.net:443
           security.ubuntu.com:80
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - name: fix apt mirrors
+      run: ./ci/fix-apt-mirrors.sh
     - name: update package information
       run: sudo apt-get update -qy
     - name: install dependencies

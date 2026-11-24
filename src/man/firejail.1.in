@@ -3492,7 +3492,7 @@ Example:
 $ firejail \-\-net=eth0 \-\-x11=xephyr \-\-xephyr\-screen=640x480 /usr/bin/firefox
 #ifdef HAVE_X11_LEGACY
 .TP
-\fB\-\-xephyr\-extra\-params=OPTIONS
+\fB\-\-xvfb\-extra\-params=OPTIONS
 Set Xvfb command extra parameters for \-\-x11=xvfb.
 The setting will overwrite the default set in /etc/firejail/firejail.config for
 the current sandbox.

@@ -109,10 +109,13 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 
+	int die_with_parent = 0;
 	for (i = 1; i < argc; i++) {
 #ifdef DEBUG
 		printf("%s:%d: %s: %s\n", __FILE__, __LINE__, __func__, argv[i]);
 #endif
+		if (strcmp(argv[i], "--die-with-parent") == 0)
+			die_with_parent = 1;
 		if (*argv[i] != '/') // enforcing $(PATH) for our target
 			continue;
 		if (ok_to_run(argv[i])) {
@@ -137,6 +140,11 @@ int main(int argc, char **argv) {
 		        argc, MAX_ARGLIST - 1);
 		exit(1);
 	}
+
+	// Note: Callers that use --die-with-parent expect bwrap and the target
+	// to be killed when they exit (see #7303).
+	if (die_with_parent && prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0) == -1)
+		errExit("prctl");
 
 	pid_t child = fork();
 	if (child == -1)

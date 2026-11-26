@@ -844,10 +844,10 @@ enum {
 };
 
 extern const char *const cfgstr[];
-extern char *xephyr_screen;
 extern char *xephyr_extra_params;
-extern char *xvfb_screen;
+extern char *xephyr_screen;
 extern char *xvfb_extra_params;
+extern char *xvfb_screen;
 extern char *netfilter_default;
 extern int env_max_count;
 extern unsigned long env_max_len;

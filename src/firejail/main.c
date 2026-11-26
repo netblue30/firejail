@@ -1189,26 +1189,26 @@ int main(int argc, char **argv, char **envp) {
 		//*************************************
 
 #ifdef HAVE_X11
-		else if (strncmp(argv[i], "--xephyr-screen=", 16) == 0) {
-			if (checkcfg(CFG_X11))
-				; // the processing is done directly in x11.c
-			else
-				exit_err_feature(argv[i], CFG_X11);
-		}
 		else if (strncmp(argv[i], "--xephyr-extra-params=", 22) == 0) {
 			if (checkcfg(CFG_X11))
 				; // the processing is done directly in x11.c
 			else
 				exit_err_feature(argv[i], CFG_X11);
 		}
-#ifdef HAVE_X11_LEGACY
-		else if (strncmp(argv[i], "--xvfb-screen=", 14) == 0) {
+		else if (strncmp(argv[i], "--xephyr-screen=", 16) == 0) {
 			if (checkcfg(CFG_X11))
 				; // the processing is done directly in x11.c
 			else
 				exit_err_feature(argv[i], CFG_X11);
 		}
+#ifdef HAVE_X11_LEGACY
 		else if (strncmp(argv[i], "--xvfb-extra-params=", 20) == 0) {
+			if (checkcfg(CFG_X11))
+				; // the processing is done directly in x11.c
+			else
+				exit_err_feature(argv[i], CFG_X11);
+		}
+		else if (strncmp(argv[i], "--xvfb-screen=", 14) == 0) {
 			if (checkcfg(CFG_X11))
 				; // the processing is done directly in x11.c
 			else

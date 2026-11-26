@@ -28,10 +28,10 @@
 
 static int initialized = 0;
 static int cfg_val[CFG_MAX];
-char *xephyr_screen = "800x600";
 char *xephyr_extra_params = "";
-char *xvfb_screen = "800x600x24";
+char *xephyr_screen = "800x600";
 char *xvfb_extra_params = "";
+char *xvfb_screen = "800x600x24";
 char *netfilter_default = NULL;
 int arg_max_count = MAX_ARGS; // maximum number of command arguments (argc)
 unsigned long arg_max_len = MAX_ARG_LEN; // --foobar=PATH
@@ -208,6 +208,15 @@ int checkcfg(int val) {
 					printf("netfilter default file %s\n", fname);
 			}
 
+			// Xephyr command extra parameters
+			else if (strncmp(ptr, "xephyr-extra-params ", 20) == 0) {
+				if (*xephyr_extra_params != '\0')
+					goto errout;
+				xephyr_extra_params = strdup(ptr + 20);
+				if (!xephyr_extra_params)
+					errExit("strdup");
+			}
+
 			// Xephyr screen size
 			else if (strncmp(ptr, "xephyr-screen ", 14) == 0) {
 				// expecting two numbers and an x between them
@@ -220,18 +229,18 @@ int checkcfg(int val) {
 					errExit("asprintf");
 			}
 
-			// Xephyr command extra parameters
-			else if (strncmp(ptr, "xephyr-extra-params ", 20) == 0) {
-				if (*xephyr_extra_params != '\0')
-					goto errout;
-				xephyr_extra_params = strdup(ptr + 20);
-				if (!xephyr_extra_params)
-					errExit("strdup");
-			}
-
 			// xpra server extra parameters
 			else if (strncmp(ptr, "xpra-extra-params ", 18) == 0) {
 				fwarning("%s:%d: 'x11=xpra' feature was removed in firejail version 0.9.81\n", fname, line);
+			}
+
+			// Xvfb extra parameters
+			else if (strncmp(ptr, "xvfb-extra-params ", 18) == 0) {
+				if (*xvfb_extra_params != '\0')
+					goto errout;
+				xvfb_extra_params = strdup(ptr + 18);
+				if (!xvfb_extra_params)
+					errExit("strdup");
 			}
 
 			// Xvfb screen size
@@ -245,15 +254,6 @@ int checkcfg(int val) {
 					goto errout;
 				if (asprintf(&xvfb_screen, "%ux%ux%u", n1, n2, n3) == -1)
 					errExit("asprintf");
-			}
-
-			// Xvfb extra parameters
-			else if (strncmp(ptr, "xvfb-extra-params ", 18) == 0) {
-				if (*xvfb_extra_params != '\0')
-					goto errout;
-				xvfb_extra_params = strdup(ptr + 18);
-				if (!xvfb_extra_params)
-					errExit("strdup");
 			}
 
 			// quiet by default

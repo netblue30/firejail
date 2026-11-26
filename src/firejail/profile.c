@@ -24,10 +24,10 @@
 #include <dirent.h>
 #include <sys/stat.h>
 
-extern char *xephyr_screen;
 extern char *xephyr_extra_params;
-extern char *xvfb_screen;
+extern char *xephyr_screen;
 extern char *xvfb_extra_params;
+extern char *xvfb_screen;
 
 #define MAX_READ 8192		// line buffer for profile files
 #define MAX_LIST 16384		// size limit for argument lists
@@ -307,11 +307,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		return 0;
 	}
-	if (strncmp(ptr, "xephyr-screen ", 14) == 0) {
+	if (strncmp(ptr, "xephyr-extra-params ", 20) == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
-			xephyr_screen = strdup(ptr + 14);
-			if (!xephyr_screen)
+			xephyr_extra_params = strdup(ptr + 20);
+			if (!xephyr_extra_params)
 				errExit("strdup");
 		}
 		else
@@ -319,11 +319,11 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 #endif
 		return 0;
 	}
-	if (strncmp(ptr, "xephyr-extra-params ", 20) == 0) {
+	if (strncmp(ptr, "xephyr-screen ", 14) == 0) {
 #ifdef HAVE_X11
 		if (checkcfg(CFG_X11)) {
-			xephyr_extra_params = strdup(ptr + 20);
-			if (!xephyr_extra_params)
+			xephyr_screen = strdup(ptr + 14);
+			if (!xephyr_screen)
 				errExit("strdup");
 		}
 		else

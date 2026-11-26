@@ -141,8 +141,8 @@ int main(int argc, char **argv) {
 		exit(1);
 	}
 
-	// Note: Callers that use --die-with-parent expect bwrap and the target to be
-	// killed when they exit (see #7303).
+	// Note: Callers that use --die-with-parent expect bwrap and the target
+	// to be killed when they exit (see #7303).
 	if (die_with_parent && prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0) == -1)
 		errExit("prctl");
 

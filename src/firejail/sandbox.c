@@ -690,7 +690,7 @@ int sandbox(void* sandbox_arg) {
 	if (mount(LIBDIR "/firejail", RUN_FIREJAIL_LIB_DIR, NULL, MS_BIND, NULL) < 0 ||
 	    mount(NULL, RUN_FIREJAIL_LIB_DIR, NULL, MS_RDONLY|MS_NOSUID|MS_NODEV|MS_BIND|MS_REMOUNT, NULL) < 0)
 		errExit("mounting " RUN_FIREJAIL_LIB_DIR);
-#if 0 // --ip=dhcp disabled in 0.9.81
+#ifdef HAVE_IP_DHCP // --ip=dhcp disabled in 0.9.81
 	// keep a copy of dhclient executable before the filesystem is modified
 	dhcp_store_exec();
 #endif
@@ -1091,7 +1091,7 @@ int sandbox(void* sandbox_arg) {
 	if (cfg.dns1 != NULL || any_dhcp())
 		fs_resolvconf();
 
-#if 0 // --ip=dhcp disabled in 0.9.81
+#ifdef HAVE_IP_DHCP // --ip=dhcp disabled in 0.9.81
 	//****************************
 	// start dhcp client
 	//****************************

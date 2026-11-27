@@ -148,7 +148,7 @@ void fs_var_log(void) {
 void fs_var_lib(void) {
 	struct stat s;
 
-#if 0 // --ip=dhcp disabled in 0.9.81
+#ifdef HAVE_IP_DHCP // --ip=dhcp disabled in 0.9.81
 	// ISC DHCP multiserver
 	if (stat("/var/lib/dhcp", &s) == 0) {
 		if (arg_debug)

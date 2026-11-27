@@ -942,7 +942,7 @@ Example:
 net eth0
 .br
 ip 10.10.20.56
-#if 0
+#ifdef HAVE_IP_DHCP
 .TP
 \fBip dhcp
 Acquire an IP address and default gateway for the last interface defined by a
@@ -994,7 +994,7 @@ Example:
 net eth0
 .br
 ip6 2001:0db8:0:f101::1/64
-#if 0
+#ifdef HAVE_IP_DHCP
 .TP
 \fBip6 dhcp
 Acquire an IPv6 address and default gateway for the last interface defined by a

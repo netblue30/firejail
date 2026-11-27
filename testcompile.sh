@@ -95,6 +95,10 @@ msg='enable apparmor'
 testconfigure "$msg" --enable-fatal-warnings --enable-apparmor &&
 testmake "$msg"
 
+msg='enable --ip=dhcp'
+testconfigure "$msg" --enable-fatal-warnings --enable-ip-dhcp &&
+testmake "$msg"
+
 msg='disable landlock'
 testconfigure "$msg" --enable-fatal-warnings --disable-landlock &&
 testmake "$msg"

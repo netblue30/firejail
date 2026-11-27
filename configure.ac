@@ -90,6 +90,14 @@ AS_IF([test "x$enable_selinux" = "xyes"], [
 	LIBS="$LIBS -lselinux"
 ])
 
+HAVE_IP_DHCP=""
+AC_SUBST([HAVE_IP_DHCP])
+AC_ARG_ENABLE([ip-dhcp],
+    [AS_HELP_STRING([--enable-ip-dhcp], [enable --ip=dhcp])])
+AS_IF([test "x$enable_ip_dhcp" = "xyes"], [
+	HAVE_IP_DHCP="-DHAVE_IP_DHCP"
+])
+
 HAVE_LANDLOCK=""
 AC_SUBST([HAVE_LANDLOCK])
 AC_ARG_ENABLE([landlock],
@@ -256,6 +264,7 @@ Features:
    disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
    enable --output logging: $HAVE_OUTPUT
    file transfer support: $HAVE_FILE_TRANSFER
+   --ip=dhcp: $HAVE_IP_DHCP
    Landlock support: $HAVE_LANDLOCK
    network: $HAVE_NETWORK
    SELinux labeling support: $HAVE_SELINUX

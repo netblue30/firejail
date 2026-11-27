@@ -445,6 +445,13 @@ static const char *const compiletime_support =
 		"disabled"
 #endif
 
+	"\n\t- --ip=dhcp support is "
+#ifdef HAVE_IP_DHCP
+		"enabled"
+#else
+		"disabled"
+#endif
+
 	"\n\t- Landlock support is "
 #ifdef HAVE_LANDLOCK
 		"enabled"

@@ -1108,7 +1108,7 @@ int main(int argc, char **argv, char **envp) {
 #endif
 	EUID_ASSERT();
 
-#if 0 // --ip=dhcp disabled in 0.9.81
+#ifdef HAVE_IP_DHCP // --ip=dhcp disabled in 0.9.81
 	// --ip=dhcp - we need access to /sbin and /usr/sbin directories in order to run ISC DHCP client (dhclient)
 	// these paths are disabled in disable-common.inc
 	if ((i = check_arg(argc, argv, "--ip", 0)) != 0) {
@@ -2344,7 +2344,7 @@ int main(int argc, char **argv, char **envp) {
 				// configure this IP address for the last bridge defined
 				if (strcmp(argv[i] + 5, "none") == 0)
 					br->arg_ip_none = 1;
-#if 0 // --ip=dhcp disabled in 0.9.81
+#ifdef HAVE_IP_DHCP // --ip=dhcp disabled in 0.9.81
 				else if (strcmp(argv[i] + 5, "dhcp") == 0) {
 					br->arg_ip_none = 1;
 					br->arg_ip_dhcp = 1;
@@ -2394,7 +2394,7 @@ int main(int argc, char **argv, char **envp) {
 					fprintf(stderr, "Error: cannot configure the IP address twice for the same interface\n");
 					exit(1);
 				}
-#if 0 // --ip6=dhcp disabled in 0.9.81
+#ifdef HAVE_IP_DHCP // --ip6=dhcp disabled in 0.9.81
 				// configure this IP address for the last bridge defined
 				if (strcmp(argv[i] + 6, "dhcp") == 0)
 					br->arg_ip6_dhcp = 1;
@@ -2408,7 +2408,7 @@ int main(int argc, char **argv, char **envp) {
 					br->ip6sandbox = strdup(argv[i] + 6);
 					if (br->ip6sandbox == NULL)
 						errExit("strdup");
-#if 0 // --ip6=dhcp disabled in 0.9.81
+#ifdef HAVE_IP_DHCP // --ip6=dhcp disabled in 0.9.81
 				}
 #endif
 			}

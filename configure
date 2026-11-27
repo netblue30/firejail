@@ -660,6 +660,7 @@ HAVE_DBUSPROXY
 EXTRA_LDFLAGS
 EXTRA_CFLAGS
 HAVE_LANDLOCK
+HAVE_IP_DHCP
 HAVE_SELINUX
 AA_LIBS
 AA_CFLAGS
@@ -728,6 +729,7 @@ enable_analyzer
 enable_sanitizer
 enable_apparmor
 enable_selinux
+enable_ip_dhcp
 enable_landlock
 enable_dbusproxy
 enable_output
@@ -1380,6 +1382,7 @@ Optional Features:
                           enable a compiler-based sanitizer (debug)
   --enable-apparmor       enable apparmor
   --enable-selinux        SELinux labeling support
+  --enable-ip-dhcp        enable --ip=dhcp
   --disable-landlock      disable Landlock self-restriction support
   --disable-dbusproxy     disable dbus proxy
   --disable-output        disable --output logging
@@ -4194,6 +4197,21 @@ then :
 
 fi
 
+HAVE_IP_DHCP=""
+
+# Check whether --enable-ip-dhcp was given.
+if test ${enable_ip_dhcp+y}
+then :
+  enableval=$enable_ip_dhcp;
+fi
+
+if test "x$enable_ip_dhcp" = "xyes"
+then :
+
+	HAVE_IP_DHCP="-DHAVE_IP_DHCP"
+
+fi
+
 HAVE_LANDLOCK=""
 
 # Check whether --enable-landlock was given.
@@ -5661,6 +5679,7 @@ Features:
    disable user profiles: $HAVE_ONLY_SYSCFG_PROFILES
    enable --output logging: $HAVE_OUTPUT
    file transfer support: $HAVE_FILE_TRANSFER
+   --ip=dhcp: $HAVE_IP_DHCP
    Landlock support: $HAVE_LANDLOCK
    network: $HAVE_NETWORK
    SELinux labeling support: $HAVE_SELINUX
